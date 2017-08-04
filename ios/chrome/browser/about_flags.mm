@@ -29,7 +29,6 @@
 #include "components/flags_ui/flags_ui_switches.h"
 #include "components/ntp_tiles/switches.h"
 #include "components/payments/core/features.h"
-#include "components/search_provider_logos/features.h"
 #include "components/security_state/core/switches.h"
 #include "components/signin/core/common/signin_switches.h"
 #include "components/strings/grit/components_strings.h"
@@ -66,29 +65,6 @@ const FeatureEntry::Choice kMarkHttpAsChoices[] = {
     {flag_descriptions::kMarkHttpAsDangerous,
      security_state::switches::kMarkHttpAs,
      security_state::switches::kMarkHttpAsDangerous}};
-
-const FeatureEntry::FeatureParam kUseDdljsonApiTest1[] = {
-    {search_provider_logos::features::kDdljsonOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_ios1.json"}};
-const FeatureEntry::FeatureParam kUseDdljsonApiTest2[] = {
-    {search_provider_logos::features::kDdljsonOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_ios2.json"}};
-const FeatureEntry::FeatureParam kUseDdljsonApiTest3[] = {
-    {search_provider_logos::features::kDdljsonOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_ios3.json"}};
-const FeatureEntry::FeatureParam kUseDdljsonApiTest4[] = {
-    {search_provider_logos::features::kDdljsonOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_ios4.json"}};
-
-const FeatureEntry::FeatureVariation kUseDdljsonApiVariations[] = {
-    {"(force test doodle 1)", kUseDdljsonApiTest1,
-     arraysize(kUseDdljsonApiTest1), nullptr},
-    {"(force test doodle 2)", kUseDdljsonApiTest2,
-     arraysize(kUseDdljsonApiTest2), nullptr},
-    {"(force test doodle 3)", kUseDdljsonApiTest3,
-     arraysize(kUseDdljsonApiTest3), nullptr},
-    {"(force test doodle 4)", kUseDdljsonApiTest4,
-     arraysize(kUseDdljsonApiTest4), nullptr}};
 
 // To add a new entry, add to the end of kFeatureEntries. There are four
 // distinct types of entries:
@@ -141,17 +117,35 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      FEATURE_WITH_PARAMS_VALUE_TYPE(
          feature_engagement::kIPHDemoMode,
          feature_engagement::kIPHDemoModeChoiceVariations,
-         "IPH_DemoMode")},
-    {"use-ddljson-api", flag_descriptions::kUseDdljsonApiName,
-     flag_descriptions::kUseDdljsonApiDescription, flags_ui::kOsIos,
-     FEATURE_WITH_PARAMS_VALUE_TYPE(
-         search_provider_logos::features::kUseDdljsonApi,
-         kUseDdljsonApiVariations,
-         search_provider_logos::features::kUseDdljsonApi.name)}};
+         "IPH_DemoMode")}};
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+
+  // Populate command line flag for the tab strip auto scroll new tabs
+  // experiment from the configuration plist.
+  if ([defaults boolForKey:@"TabStripAutoScrollNewTabsDisabled"])
+    command_line->AppendSwitch(switches::kDisableTabStripAutoScrollNewTabs);
+
+  // Populate command line flag for the SnapshotLRUCache experiment from the
+  // configuration plist.
+  NSString* enableLRUSnapshotCache =
+      [defaults stringForKey:@"SnapshotLRUCache"];
+  if ([enableLRUSnapshotCache isEqualToString:@"Enabled"]) {
+    command_line->AppendSwitch(switches::kEnableLRUSnapshotCache);
+  } else if ([enableLRUSnapshotCache isEqualToString:@"Disabled"]) {
+    command_line->AppendSwitch(switches::kDisableLRUSnapshotCache);
+  }
+
+  // Populate command line flags from PasswordGenerationEnabled.
+  NSString* enablePasswordGenerationValue =
+      [defaults stringForKey:@"PasswordGenerationEnabled"];
+  if ([enablePasswordGenerationValue isEqualToString:@"Enabled"]) {
+    command_line->AppendSwitch(switches::kEnableIOSPasswordGeneration);
+  } else if ([enablePasswordGenerationValue isEqualToString:@"Disabled"]) {
+    command_line->AppendSwitch(switches::kDisableIOSPasswordGeneration);
+  }
 
   // Populate command line flags from PhysicalWebEnabled.
   NSString* enablePhysicalWebValue =
@@ -174,6 +168,23 @@ void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
     command_line->AppendSwitchASCII(
         switches::kIOSHostResolverRules,
         "MAP * " + base::SysNSStringToUTF8(webPageReplayProxy));
+  }
+
+  NSString* autoReloadEnabledValue =
+      [defaults stringForKey:@"AutoReloadEnabled"];
+  if ([autoReloadEnabledValue isEqualToString:@"Enabled"]) {
+    command_line->AppendSwitch(switches::kEnableOfflineAutoReload);
+  } else if ([autoReloadEnabledValue isEqualToString:@"Disabled"]) {
+    command_line->AppendSwitch(switches::kDisableOfflineAutoReload);
+  }
+
+  // Populate command line flags from EnableFastWebScrollViewInsets.
+  NSString* enableFastWebScrollViewInsets =
+      [defaults stringForKey:@"EnableFastWebScrollViewInsets"];
+  if ([enableFastWebScrollViewInsets isEqualToString:@"Enabled"]) {
+    command_line->AppendSwitch(switches::kEnableIOSFastWebScrollViewInsets);
+  } else if ([enableFastWebScrollViewInsets isEqualToString:@"Disabled"]) {
+    command_line->AppendSwitch(switches::kDisableIOSFastWebScrollViewInsets);
   }
 
   // Populate command line flags from ReaderModeEnabled.

@@ -95,7 +95,8 @@ void Worklet::ContextDestroyed(ExecutionContext* execution_context) {
 
 WorkletGlobalScopeProxy* Worklet::FindAvailableGlobalScope() const {
   DCHECK(IsMainThread());
-  return proxies_.at(SelectGlobalScope());
+  // TODO(nhiroki): Support the case where there are multiple global scopes.
+  return proxies_.begin()->Get();
 }
 
 // Implementation of the second half of the "addModule(moduleURL, options)"
@@ -155,11 +156,6 @@ void Worklet::FetchAndInvokeScript(const KURL& module_url_record,
                                 credentials_mode, outside_settings_task_runner,
                                 pending_tasks);
   }
-}
-
-size_t Worklet::SelectGlobalScope() const {
-  DCHECK_EQ(GetNumberOfGlobalScopes(), 1u);
-  return 0u;
 }
 
 DEFINE_TRACE(Worklet) {

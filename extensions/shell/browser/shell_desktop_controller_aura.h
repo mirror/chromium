@@ -70,8 +70,6 @@ class ShellDesktopControllerAura
   ShellDesktopControllerAura();
   ~ShellDesktopControllerAura() override;
 
-  aura::WindowTreeHost* host() { return host_.get(); }
-
   // DesktopController:
   gfx::Size GetWindowSize() override;
   AppWindow* CreateAppWindow(content::BrowserContext* context,
@@ -107,6 +105,8 @@ class ShellDesktopControllerAura
   virtual void InitWindowManager();
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(ShellDesktopControllerAuraTest, InputEvents);
+
   // Creates the window that hosts the app.
   void CreateRootWindow();
 

@@ -831,10 +831,7 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureScrollBegin(
                            "InputHandlerProxy::handle_input gesture scroll",
                            TRACE_EVENT_SCOPE_THREAD);
       gesture_scroll_on_impl_thread_ = true;
-      if (scroll_status.bubble)
-        result = DID_HANDLE_SHOULD_BUBBLE;
-      else
-        result = DID_HANDLE;
+      result = DID_HANDLE;
       break;
     case cc::InputHandler::SCROLL_UNKNOWN:
     case cc::InputHandler::SCROLL_ON_MAIN_THREAD:
@@ -1115,6 +1112,8 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleTouchStart(
   cc::TouchAction white_listed_touch_action = cc::kTouchActionAuto;
   EventDisposition result = HitTestTouchEvent(
       touch_event, &is_touching_scrolling_layer, &white_listed_touch_action);
+  client_->SetWhiteListedTouchAction(white_listed_touch_action,
+                                     touch_event.unique_touch_event_id);
 
   // If |result| is still DROP_EVENT look at the touch end handler as
   // we may not want to discard the entire touch sequence. Note this
@@ -1132,9 +1131,6 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleTouchStart(
   if (is_flinging_on_impl && is_touching_scrolling_layer)
     result = DID_NOT_HANDLE_NON_BLOCKING_DUE_TO_FLING;
 
-  client_->SetWhiteListedTouchAction(white_listed_touch_action,
-                                     touch_event.unique_touch_event_id, result);
-
   return result;
 }
 
@@ -1148,8 +1144,8 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleTouchMove(
     cc::TouchAction white_listed_touch_action = cc::kTouchActionAuto;
     EventDisposition result = HitTestTouchEvent(
         touch_event, &is_touching_scrolling_layer, &white_listed_touch_action);
-    client_->SetWhiteListedTouchAction(
-        white_listed_touch_action, touch_event.unique_touch_event_id, result);
+    client_->SetWhiteListedTouchAction(white_listed_touch_action,
+                                       touch_event.unique_touch_event_id);
     return result;
   }
   return static_cast<EventDisposition>(touch_result_);
@@ -1592,7 +1588,6 @@ bool InputHandlerProxy::TouchpadFlingScroll(
       CancelCurrentFlingWithoutNotifyingClient();
       break;
     case DID_NOT_HANDLE_NON_BLOCKING_DUE_TO_FLING:
-    case DID_HANDLE_SHOULD_BUBBLE:
       NOTREACHED();
       return false;
   }

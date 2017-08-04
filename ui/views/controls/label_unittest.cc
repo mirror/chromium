@@ -56,10 +56,7 @@ class TestLabel : public Label {
   void SimulatePaint() {
     SkBitmap bitmap;
     SkColor color = SK_ColorTRANSPARENT;
-    Paint(PaintInfo::CreateRootPaintInfo(
-        ui::CanvasPainter(&bitmap, bounds().size(), 1.f, color, false)
-            .context(),
-        bounds().size()));
+    Paint(ui::CanvasPainter(&bitmap, bounds().size(), 1.f, color).context());
   }
 
   // View:

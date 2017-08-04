@@ -217,8 +217,7 @@ bool RemoteFontFaceSource::IsLowPriorityLoadingAllowedForRemoteFont() const {
 }
 
 RefPtr<SimpleFontData> RemoteFontFaceSource::CreateFontData(
-    const FontDescription& font_description,
-    const FontSelectionCapabilities& font_selection_capabilities) {
+    const FontDescription& font_description) {
   if (period_ == kFailurePeriod || !IsValid())
     return nullptr;
   if (!IsLoaded())
@@ -231,9 +230,7 @@ RefPtr<SimpleFontData> RemoteFontFaceSource::CreateFontData(
       custom_font_data_->GetFontPlatformData(
           font_description.EffectiveFontSize(),
           font_description.IsSyntheticBold(),
-          font_description.IsSyntheticItalic(),
-          font_description.GetFontSelectionRequest(),
-          font_selection_capabilities, font_description.Orientation(),
+          font_description.IsSyntheticItalic(), font_description.Orientation(),
           font_description.VariationSettings()),
       CustomFontData::Create());
 }

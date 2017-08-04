@@ -61,10 +61,6 @@ to fast/dom/HTML*Element/ for HTML forms.
 
     `<input type=button>`
 
-*   input-common/
-
-    Common behavior in input types, or tests involving multiple input types.
-
 *   label/
 
     `<label>`

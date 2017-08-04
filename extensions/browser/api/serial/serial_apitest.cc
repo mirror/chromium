@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "content/public/browser/browser_thread.h"
+#include "device/serial/serial_device_enumerator.h"
 #include "device/serial/test_serial_io_handler.h"
 #include "extensions/browser/api/serial/serial_api.h"
 #include "extensions/browser/api/serial/serial_connection.h"
@@ -17,10 +18,6 @@
 #include "extensions/common/api/serial.h"
 #include "extensions/common/switches.h"
 #include "extensions/test/result_catcher.h"
-#include "mojo/public/cpp/bindings/strong_binding.h"
-#include "services/device/public/interfaces/constants.mojom.h"
-#include "services/device/public/interfaces/serial.mojom.h"
-#include "services/service_manager/public/cpp/service_context.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 using testing::_;
@@ -29,26 +26,41 @@ using testing::Return;
 namespace extensions {
 namespace {
 
-class FakeSerialDeviceEnumerator
-    : public device::mojom::SerialDeviceEnumerator {
+class FakeSerialGetDevicesFunction : public AsyncExtensionFunction {
  public:
-  FakeSerialDeviceEnumerator() = default;
-  ~FakeSerialDeviceEnumerator() override = default;
+  bool RunAsync() override {
+    std::unique_ptr<base::ListValue> devices(new base::ListValue());
+    std::unique_ptr<base::DictionaryValue> device0(new base::DictionaryValue());
+    device0->SetString("path", "/dev/fakeserial");
+    std::unique_ptr<base::DictionaryValue> device1(new base::DictionaryValue());
+    device1->SetString("path", "\\\\COM800\\");
+    devices->Append(std::move(device0));
+    devices->Append(std::move(device1));
+    SetResult(std::move(devices));
+    SendResponse(true);
+    return true;
+  }
 
- private:
-  // device::mojom::SerialDeviceEnumerator methods:
-  void GetDevices(GetDevicesCallback callback) override {
+ protected:
+  ~FakeSerialGetDevicesFunction() override {}
+};
+
+class FakeSerialDeviceEnumerator : public device::SerialDeviceEnumerator {
+ public:
+  ~FakeSerialDeviceEnumerator() override {}
+
+  std::vector<device::mojom::SerialDeviceInfoPtr> GetDevices() override {
     std::vector<device::mojom::SerialDeviceInfoPtr> devices;
-    auto device0 = device::mojom::SerialDeviceInfo::New();
+    device::mojom::SerialDeviceInfoPtr device0(
+        device::mojom::SerialDeviceInfo::New());
     device0->path = "/dev/fakeserialmojo";
-    auto device1 = device::mojom::SerialDeviceInfo::New();
+    device::mojom::SerialDeviceInfoPtr device1(
+        device::mojom::SerialDeviceInfo::New());
     device1->path = "\\\\COM800\\";
     devices.push_back(std::move(device0));
     devices.push_back(std::move(device1));
-    std::move(callback).Run(std::move(devices));
+    return devices;
   }
-
-  DISALLOW_COPY_AND_ASSIGN(FakeSerialDeviceEnumerator);
 };
 
 class FakeEchoSerialIoHandler : public device::TestSerialIoHandler {
@@ -92,19 +104,6 @@ class FakeSerialConnectFunction : public api::SerialConnectFunction {
   ~FakeSerialConnectFunction() override {}
 };
 
-void BindSerialDeviceEnumerator(
-    const std::string& interface_name,
-    mojo::ScopedMessagePipeHandle handle,
-    const service_manager::BindSourceInfo& source_info) {
-  mojo::MakeStrongBinding(
-      base::MakeUnique<FakeSerialDeviceEnumerator>(),
-      device::mojom::SerialDeviceEnumeratorRequest(std::move(handle)));
-}
-
-void DropBindRequest(const std::string& interface_name,
-                     mojo::ScopedMessagePipeHandle handle,
-                     const service_manager::BindSourceInfo& source_info) {}
-
 class SerialApiTest : public ExtensionApiTest {
  public:
   SerialApiTest() {}
@@ -113,22 +112,14 @@ class SerialApiTest : public ExtensionApiTest {
     ExtensionApiTest::SetUpCommandLine(command_line);
   }
 
-  void SetUpOnMainThread() override {
-    ExtensionApiTest::SetUpOnMainThread();
-
-    // Because Device Service also runs in this process(browser process), we can
-    // set our binder to intercept requests for SerialDeviceEnumerator interface
-    // to it.
-    service_manager::ServiceContext::SetGlobalBinderForTesting(
-        device::mojom::kServiceName,
-        device::mojom::SerialDeviceEnumerator::Name_,
-        base::Bind(&BindSerialDeviceEnumerator));
-  }
-
   void TearDownOnMainThread() override {
     ExtensionApiTest::TearDownOnMainThread();
   }
 };
+
+ExtensionFunction* FakeSerialGetDevicesFunctionFactory() {
+  return new FakeSerialGetDevicesFunction();
+}
 
 ExtensionFunction* FakeSerialConnectFunctionFactory() {
   return new FakeSerialConnectFunction();
@@ -167,6 +158,8 @@ IN_PROC_BROWSER_TEST_F(SerialApiTest, SerialFakeHardware) {
   catcher.RestrictToBrowserContext(browser()->profile());
 
 #if SIMULATE_SERIAL_PORTS
+  ASSERT_TRUE(OverrideFunction("serial.getDevices",
+                               FakeSerialGetDevicesFunctionFactory));
   ASSERT_TRUE(
       OverrideFunction("serial.connect", FakeSerialConnectFunctionFactory));
 #endif
@@ -179,19 +172,6 @@ IN_PROC_BROWSER_TEST_F(SerialApiTest, SerialRealHardware) {
   catcher.RestrictToBrowserContext(browser()->profile());
 
   ASSERT_TRUE(RunExtensionTest("serial/real_hardware")) << message_;
-}
-
-IN_PROC_BROWSER_TEST_F(SerialApiTest, SerialRealHardwareFail) {
-  // Intercept the request and then drop it, chrome.serial.getDevices() should
-  // get an empty list.
-  service_manager::ServiceContext::SetGlobalBinderForTesting(
-      device::mojom::kServiceName, device::mojom::SerialDeviceEnumerator::Name_,
-      base::Bind(&DropBindRequest));
-
-  ResultCatcher catcher;
-  catcher.RestrictToBrowserContext(browser()->profile());
-
-  ASSERT_TRUE(RunExtensionTest("serial/real_hardware_fail")) << message_;
 }
 
 }  // namespace extensions

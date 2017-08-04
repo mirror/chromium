@@ -621,7 +621,7 @@ void WindowEventTargetingHelper::CreateSecondaryTree(
   ASSERT_TRUE(child1);
   EXPECT_TRUE(tree1->AddWindow(ClientWindowIdForWindow(tree1, embed_window),
                                child1_id));
-  embed_window->set_is_activation_parent(true);
+  tree1->GetDisplay(embed_window)->AddActivationParent(embed_window);
 
   child1->SetVisible(true);
   child1->SetBounds(window_bounds, base::nullopt);
@@ -700,9 +700,6 @@ void TestPlatformDisplay::SetCursor(const ui::CursorData& cursor) {
   *cursor_storage_ = cursor;
 }
 void TestPlatformDisplay::SetCursorSize(const ui::CursorSize& cursor_size) {}
-void TestPlatformDisplay::ConfineCursorToBounds(const gfx::Rect& pixel_bounds) {
-  confine_cursor_bounds_ = pixel_bounds;
-}
 void TestPlatformDisplay::MoveCursorTo(
     const gfx::Point& window_pixel_location) {}
 void TestPlatformDisplay::UpdateTextInputState(

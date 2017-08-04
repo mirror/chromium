@@ -679,7 +679,8 @@ bool WifiConfigView::Login() {
   bool only_policy_autoconnect =
       onc::PolicyAllowsOnlyPolicyNetworksToAutoconnect(!share_network);
   if (only_policy_autoconnect) {
-    properties.SetKey(shill::kAutoConnectProperty, base::Value(false));
+    properties.SetBooleanWithoutPathExpansion(shill::kAutoConnectProperty,
+                                              false);
   }
 
   if (service_path_.empty()) {
@@ -690,8 +691,8 @@ bool WifiConfigView::Login() {
     shill_property_util::SetSSID(GetSsid(), &properties);
     properties.SetStringWithoutPathExpansion(
         shill::kModeProperty, shill::kModeManaged);
-    properties.SetKey(shill::kSaveCredentialsProperty,
-                      base::Value(GetSaveCredentials()));
+    properties.SetBooleanWithoutPathExpansion(
+        shill::kSaveCredentialsProperty, GetSaveCredentials());
     std::string security_class = shill::kSecurityNone;
     if (!eap_method_combobox_) {
       switch (security_combobox_->selected_index()) {
@@ -729,8 +730,8 @@ bool WifiConfigView::Login() {
     }
     if (eap_method_combobox_) {
       SetEapProperties(&properties, true /* configured */);
-      properties.SetKey(shill::kSaveCredentialsProperty,
-                        base::Value(GetSaveCredentials()));
+      properties.SetBooleanWithoutPathExpansion(
+          shill::kSaveCredentialsProperty, GetSaveCredentials());
     } else {
       const std::string passphrase = GetPassphrase();
       if (!passphrase.empty()) {
@@ -890,8 +891,8 @@ void WifiConfigView::SetEapProperties(base::DictionaryValue* properties,
 
   SetEapClientCertProperties(properties);
 
-  properties->SetKey(shill::kEapUseSystemCasProperty,
-                     base::Value(GetEapUseSystemCas()));
+  properties->SetBooleanWithoutPathExpansion(
+      shill::kEapUseSystemCasProperty, GetEapUseSystemCas());
   if (!configured || passphrase_textfield_->changed()) {
     properties->SetStringWithoutPathExpansion(
         shill::kEapPasswordProperty, GetPassphrase());

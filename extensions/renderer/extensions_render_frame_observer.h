@@ -20,8 +20,8 @@ namespace extensions {
 class ExtensionsRenderFrameObserver : public content::RenderFrameObserver,
                                       public mojom::AppWindow {
  public:
-  ExtensionsRenderFrameObserver(content::RenderFrame* render_frame,
-                                service_manager::BinderRegistry* registry);
+  explicit ExtensionsRenderFrameObserver(
+      content::RenderFrame* render_frame);
   ~ExtensionsRenderFrameObserver() override;
 
  private:
@@ -32,6 +32,9 @@ class ExtensionsRenderFrameObserver : public content::RenderFrameObserver,
   void SetVisuallyDeemphasized(bool deemphasized) override;
 
   // RenderFrameObserver implementation.
+  void OnInterfaceRequestForFrame(
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle* interface_pipe) override;
   void DetailedConsoleMessageAdded(const base::string16& message,
                                    const base::string16& source,
                                    const base::string16& stack_trace,
@@ -43,6 +46,8 @@ class ExtensionsRenderFrameObserver : public content::RenderFrameObserver,
   bool webview_visually_deemphasized_;
 
   mojo::BindingSet<mojom::AppWindow> bindings_;
+
+  service_manager::BinderRegistry registry_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionsRenderFrameObserver);
 };

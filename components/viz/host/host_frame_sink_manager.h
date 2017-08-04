@@ -90,6 +90,7 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
       CompositorFrameSinkSupportClient* client,
       const FrameSinkId& frame_sink_id,
       bool is_root,
+      bool handles_frame_sink_id_invalidation,
       bool needs_sync_points) override;
 
  private:

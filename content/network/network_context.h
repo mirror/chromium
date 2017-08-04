@@ -47,8 +47,7 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
 
   // Temporary constructor that allows creating an in-process NetworkContext
   // with a pre-populated URLRequestContextBuilder.
-  NetworkContext(NetworkServiceImpl* network_service,
-                 mojom::NetworkContextRequest request,
+  NetworkContext(mojom::NetworkContextRequest request,
                  mojom::NetworkContextParamsPtr params,
                  std::unique_ptr<net::URLRequestContextBuilder> builder);
 
@@ -74,9 +73,6 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   // Called when the associated NetworkServiceImpl is going away. Guaranteed to
   // destroy NetworkContext's URLRequestContext.
   void Cleanup();
-
-  // Disables use of QUIC by the NetworkContext.
-  void DisableQuic();
 
  private:
   NetworkContext();

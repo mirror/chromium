@@ -6,10 +6,8 @@
 
 #include <dwmapi.h>
 #include <shlobj.h>  // Must be before propkey.
-
 #include <propkey.h>
 #include <shellapi.h>
-#include <wrl/client.h>
 
 #include "base/command_line.h"
 #include "base/debug/alias.h"
@@ -19,6 +17,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_restrictions.h"
+#include "base/win/scoped_comptr.h"
 #include "base/win/win_util.h"
 #include "ui/base/ui_base_switches.h"
 
@@ -99,7 +98,7 @@ bool OpenFolderViaShell(const base::FilePath& full_path) {
 bool PreventWindowFromPinning(HWND hwnd) {
   DCHECK(hwnd);
 
-  Microsoft::WRL::ComPtr<IPropertyStore> pps;
+  base::win::ScopedComPtr<IPropertyStore> pps;
   if (FAILED(
           SHGetPropertyStoreForWindow(hwnd, IID_PPV_ARGS(pps.GetAddressOf()))))
     return false;
@@ -118,7 +117,7 @@ void SetAppDetailsForWindow(const base::string16& app_id,
                             HWND hwnd) {
   DCHECK(hwnd);
 
-  Microsoft::WRL::ComPtr<IPropertyStore> pps;
+  base::win::ScopedComPtr<IPropertyStore> pps;
   if (FAILED(
           SHGetPropertyStoreForWindow(hwnd, IID_PPV_ARGS(pps.GetAddressOf()))))
     return;
@@ -168,7 +167,7 @@ void SetRelaunchDetailsForWindow(const base::string16& relaunch_command,
 void ClearWindowPropertyStore(HWND hwnd) {
   DCHECK(hwnd);
 
-  Microsoft::WRL::ComPtr<IPropertyStore> pps;
+  base::win::ScopedComPtr<IPropertyStore> pps;
   if (FAILED(
           SHGetPropertyStoreForWindow(hwnd, IID_PPV_ARGS(pps.GetAddressOf()))))
     return;
@@ -178,18 +177,13 @@ void ClearWindowPropertyStore(HWND hwnd) {
     return;
 
   PROPVARIANT empty_property_variant = {};
-  for (DWORD i = property_count; i > 0; i--) {
+  for (DWORD i = 0; i < property_count; i++) {
     PROPERTYKEY key;
-    if (SUCCEEDED(pps->GetAt(i - 1, &key))) {
-      // Removes the value from |pps|'s array.
+    if (SUCCEEDED(pps->GetAt(i, &key)))
       pps->SetValue(key, empty_property_variant);
-    }
   }
-  if (FAILED(pps->Commit()))
-    return;
 
-  // Verify none of the keys are leaking.
-  DCHECK(FAILED(pps->GetCount(&property_count)) || property_count == 0);
+  pps->Commit();
 }
 
 bool IsAeroGlassEnabled() {

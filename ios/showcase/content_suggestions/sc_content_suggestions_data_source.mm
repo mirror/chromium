@@ -111,6 +111,9 @@ using CSCollectionViewItem = CollectionViewItem<SuggestedContent>;
       }
       return items;
     }
+    case ContentSuggestionsSectionLogo: {
+      return @[];
+    }
     case ContentSuggestionsSectionLearnMore: {
       ContentSuggestionsLearnMoreItem* learnMore =
           [[ContentSuggestionsLearnMoreItem alloc] init];
@@ -119,8 +122,6 @@ using CSCollectionViewItem = CollectionViewItem<SuggestedContent>;
       learnMore.suggestionIdentifier.sectionInfo = self.learnMoreSection;
       return @[ learnMore ];
     }
-    case ContentSuggestionsSectionLogo:
-    case ContentSuggestionsSectionPromo:
     case ContentSuggestionsSectionUnknown:
       return @[];
   }

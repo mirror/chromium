@@ -105,9 +105,8 @@ void WKBasedNavigationManagerImpl::AddTransientItem(const GURL& url) {
 
   // Transient item is only supposed to be added for pending non-app-specific
   // navigations.
-  NavigationItem* pending_item = GetPendingItem();
-  DCHECK(pending_item->GetUserAgentType() != UserAgentType::NONE);
-  transient_item_->SetUserAgentType(pending_item->GetUserAgentType());
+  DCHECK(pending_item_->GetUserAgentType() != UserAgentType::NONE);
+  transient_item_->SetUserAgentType(pending_item_->GetUserAgentType());
 }
 
 void WKBasedNavigationManagerImpl::AddPendingItem(
@@ -177,11 +176,12 @@ void WKBasedNavigationManagerImpl::CommitPendingItem() {
   pending_item_index_ = -1;
   previous_item_index_ = last_committed_item_index_;
   last_committed_item_index_ = GetWKCurrentItemIndex();
+
   OnNavigationItemCommitted();
 }
 
 int WKBasedNavigationManagerImpl::GetIndexForOffset(int offset) const {
-  int result = (pending_item_index_ == -1) ? GetWKCurrentItemIndex()
+  int result = (pending_item_index_ == -1) ? GetLastCommittedItemIndex()
                                            : pending_item_index_;
 
   if (offset < 0 && GetTransientItem() && pending_item_index_ == -1) {
@@ -259,11 +259,7 @@ NavigationItem* WKBasedNavigationManagerImpl::GetItemAtIndex(
 
 int WKBasedNavigationManagerImpl::GetIndexOfItem(
     const NavigationItem* item) const {
-  for (int index = 0; index < GetItemCount(); index++) {
-    if (GetNavigationItemFromWKItem(GetWKItemAtIndex(index)) == item) {
-      return index;
-    }
-  }
+  DLOG(WARNING) << "Not yet implemented.";
   return -1;
 }
 
@@ -280,15 +276,6 @@ int WKBasedNavigationManagerImpl::GetPendingItemIndex() const {
 }
 
 int WKBasedNavigationManagerImpl::GetLastCommittedItemIndex() const {
-  // WKBackForwardList's |currentItem| is usually the last committed item,
-  // except when the pending navigation is a back-forward navigation, in which
-  // case it is actually the pending item. As a workaround, fall back to
-  // last_committed_item_index_. This is not 100% correct (since
-  // last_committed_item_index_ is only updated for main frame navigations),
-  // but is the best possible answer.
-  if (pending_item_index_ >= 0) {
-    return last_committed_item_index_;
-  }
   return GetWKCurrentItemIndex();
 }
 
@@ -328,29 +315,13 @@ void WKBasedNavigationManagerImpl::GoToIndex(int index) {
 }
 
 NavigationItemList WKBasedNavigationManagerImpl::GetBackwardItems() const {
-  NavigationItemList items;
-
-  // If the current navigation item is a transient item (e.g. SSL
-  // interstitial), the last committed item should also be considered part of
-  // the backward history.
-  int wk_current_item_index = GetWKCurrentItemIndex();
-  if (GetTransientItem() && wk_current_item_index >= 0) {
-    items.push_back(GetItemAtIndex(wk_current_item_index));
-  }
-
-  for (int index = wk_current_item_index - 1; index >= 0; index--) {
-    items.push_back(GetItemAtIndex(index));
-  }
-  return items;
+  DLOG(WARNING) << "Not yet implemented.";
+  return NavigationItemList();
 }
 
 NavigationItemList WKBasedNavigationManagerImpl::GetForwardItems() const {
-  NavigationItemList items;
-  for (int index = GetWKCurrentItemIndex() + 1; index < GetItemCount();
-       index++) {
-    items.push_back(GetItemAtIndex(index));
-  }
-  return items;
+  DLOG(WARNING) << "Not yet implemented.";
+  return NavigationItemList();
 }
 
 void WKBasedNavigationManagerImpl::CopyStateFromAndPrune(

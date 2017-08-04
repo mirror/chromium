@@ -192,7 +192,7 @@ void MutationObserver::observe(Node* node,
 MutationRecordVector MutationObserver::takeRecords() {
   MutationRecordVector records;
   CancelInspectorAsyncTasks();
-  swap(records_, records);
+  swap(records_, records, this);
   return records;
 }
 
@@ -317,7 +317,7 @@ void MutationObserver::Deliver() {
     return;
 
   MutationRecordVector records;
-  swap(records_, records);
+  swap(records_, records, this);
 
   // Report the first (earliest) stack as the async cause.
   probe::AsyncTask async_task(delegate_->GetExecutionContext(),

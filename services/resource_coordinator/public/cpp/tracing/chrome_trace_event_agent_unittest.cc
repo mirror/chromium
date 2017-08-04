@@ -47,8 +47,7 @@ class MockRecorder : public mojom::Recorder {
   }
 
   void AddChunk(const std::string& chunk) override {
-    std::unique_ptr<trace_analyzer::TraceAnalyzer> analyzer(
-        trace_analyzer::TraceAnalyzer::Create("[" + chunk + "]"));
+    auto* analyzer = trace_analyzer::TraceAnalyzer::Create("[" + chunk + "]");
     trace_analyzer::TraceEventVector events;
     analyzer->FindEvents(trace_analyzer::Query::EventCategoryIs(kTestCategory),
                          &events);

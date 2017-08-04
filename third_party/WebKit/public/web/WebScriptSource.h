@@ -49,7 +49,7 @@ struct WebScriptSource {
   WebScriptSource(const WebString& code, const WebURL& url, int start_line)
       : code(code), url(url), start_line(start_line) {}
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   BLINK_EXPORT operator ScriptSourceCode() const;
 #endif
 };

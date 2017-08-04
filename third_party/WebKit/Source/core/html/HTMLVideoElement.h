@@ -147,7 +147,7 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
   }
   void DisableMediaRemoting();
 
-  void MediaRemotingStarted(const WebString& remote_device_friendly_name) final;
+  void MediaRemotingStarted() final;
   void MediaRemotingStopped() final;
   WebMediaPlayer::DisplayType DisplayType() const final;
 

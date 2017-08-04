@@ -378,7 +378,7 @@ void TestWebFrameClient::BindWidgetClient(
   owned_widget_client_ = std::move(client);
 }
 
-void TestWebFrameClient::FrameDetached(DetachType type) {
+void TestWebFrameClient::FrameDetached(WebLocalFrame* frame, DetachType type) {
   if (frame_->FrameWidget()) {
     frame_->FrameWidget()->WillCloseLayerTreeView();
     frame_->FrameWidget()->Close();

@@ -4,9 +4,6 @@
 
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 
-#include "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h"
-#include "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h"
-
 namespace resource_coordinator {
 
 FrameCoordinationUnitImpl::FrameCoordinationUnitImpl(
@@ -18,7 +15,7 @@ FrameCoordinationUnitImpl::~FrameCoordinationUnitImpl() = default;
 
 std::set<CoordinationUnitImpl*>
 FrameCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
-    CoordinationUnitType type) const {
+    CoordinationUnitType type) {
   switch (type) {
     case CoordinationUnitType::kProcess:
     case CoordinationUnitType::kWebContents:
@@ -31,7 +28,7 @@ FrameCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
       // back to the root frame, get all child frame coordination units from the
       // root frame, add the root frame coordination unit and remove the current
       // frame coordination unit.
-      const CoordinationUnitImpl* root_frame_coordination_unit = this;
+      CoordinationUnitImpl* root_frame_coordination_unit = this;
       while (true) {
         bool has_parent_frame_cu = false;
         for (auto* parent : root_frame_coordination_unit->parents()) {
@@ -48,26 +45,14 @@ FrameCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
       auto frame_coordination_units =
           root_frame_coordination_unit->GetChildCoordinationUnitsOfType(type);
       // Insert the root frame coordination unit.
-      frame_coordination_units.insert(
-          const_cast<CoordinationUnitImpl*>(root_frame_coordination_unit));
+      frame_coordination_units.insert(root_frame_coordination_unit);
       // Remove itself.
-      frame_coordination_units.erase(
-          const_cast<FrameCoordinationUnitImpl*>(this));
+      frame_coordination_units.erase(this);
       return frame_coordination_units;
     }
     default:
       return std::set<CoordinationUnitImpl*>();
   }
-}
-
-const WebContentsCoordinationUnitImpl*
-FrameCoordinationUnitImpl::GetWebContentsCoordinationUnit() const {
-  for (auto* parent : parents_) {
-    if (parent->id().type != CoordinationUnitType::kWebContents)
-      continue;
-    return CoordinationUnitImpl::ToWebContentsCoordinationUnit(parent);
-  }
-  return nullptr;
 }
 
 bool FrameCoordinationUnitImpl::IsMainFrame() const {
@@ -76,13 +61,6 @@ bool FrameCoordinationUnitImpl::IsMainFrame() const {
       return false;
   }
   return true;
-}
-
-void FrameCoordinationUnitImpl::OnPropertyChanged(
-    const mojom::PropertyType property_type,
-    const base::Value& value) {
-  for (auto& observer : observers())
-    observer.OnFramePropertyChanged(this, property_type, value);
 }
 
 }  // namespace resource_coordinator

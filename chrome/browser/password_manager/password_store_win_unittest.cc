@@ -129,10 +129,10 @@ class PasswordStoreWinTest : public testing::Test {
     base::FilePath path = temp_dir_.GetPath().AppendASCII("web_data_test");
     // TODO(pkasting): http://crbug.com/740773 This should likely be sequenced,
     // not single-threaded.
-    auto db_task_runner =
+    auto db_thread =
         base::CreateSingleThreadTaskRunnerWithTraits({base::MayBlock()});
     wdbs_ = new WebDatabaseService(path, base::ThreadTaskRunnerHandle::Get(),
-                                   db_task_runner);
+                                   db_thread);
     // Need to add at least one table so the database gets created.
     wdbs_->AddTable(std::unique_ptr<WebDatabaseTable>(new LoginsTable()));
     wdbs_->LoadDatabase();
@@ -146,7 +146,7 @@ class PasswordStoreWinTest : public testing::Test {
     if (store_.get())
       store_->ShutdownOnUIThread();
     if (wds_) {
-      wds_->ShutdownOnUISequence();
+      wds_->ShutdownOnUIThread();
       wds_ = nullptr;
     }
     if (wdbs_) {
@@ -162,6 +162,8 @@ class PasswordStoreWinTest : public testing::Test {
 
   PasswordStoreWin* CreatePasswordStore() {
     return new PasswordStoreWin(
+        base::SequencedTaskRunnerHandle::Get(),
+        base::SequencedTaskRunnerHandle::Get(),
         base::MakeUnique<LoginDatabase>(test_login_db_file_path()), wds_.get());
   }
 
@@ -311,7 +313,7 @@ TEST_F(PasswordStoreWinTest, OutstandingWDSQueries) {
   // Release the PSW and the WDS before the query can return.
   store_->ShutdownOnUIThread();
   store_ = nullptr;
-  wds_->ShutdownOnUISequence();
+  wds_->ShutdownOnUIThread();
   wds_ = nullptr;
   wdbs_->ShutdownDatabase();
   wdbs_ = nullptr;
@@ -319,7 +321,7 @@ TEST_F(PasswordStoreWinTest, OutstandingWDSQueries) {
   content::RunAllBlockingPoolTasksUntilIdle();
 }
 
-TEST_F(PasswordStoreWinTest, MultipleWDSQueriesOnDifferentSequences) {
+TEST_F(PasswordStoreWinTest, MultipleWDSQueriesOnDifferentThreads) {
   IE7PasswordInfo password_info;
   ASSERT_TRUE(CreateIE7PasswordInfo(L"http://example.com/origin",
                                     base::Time::FromDoubleT(1),

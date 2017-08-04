@@ -101,10 +101,10 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   CategoryInfo GetCategoryInfo(Category category) override;
   void DismissSuggestion(const ContentSuggestion::ID& suggestion_id) override;
   void FetchSuggestionImage(const ContentSuggestion::ID& suggestion_id,
-                            ImageFetchedCallback callback) override;
+                            const ImageFetchedCallback& callback) override;
   void Fetch(const Category& category,
              const std::set<std::string>& known_suggestion_ids,
-             FetchDoneCallback callback) override;
+             const FetchDoneCallback& callback) override;
   void ReloadSuggestions() override;
   void ClearHistory(
       base::Time begin,
@@ -114,7 +114,7 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   void OnSignInStateChanged() override;
   void GetDismissedSuggestionsForDebugging(
       Category category,
-      DismissedSuggestionsCallback callback) override;
+      const DismissedSuggestionsCallback& callback) override;
   void ClearDismissedSuggestionsForDebugging(Category category) override;
 
   // Returns the maximum number of suggestions that will be shown at once.
@@ -260,7 +260,7 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
 
   // Callback for fetch-more requests with the RemoteSuggestionsFetcher.
   void OnFetchMoreFinished(
-      FetchDoneCallback fetching_callback,
+      const FetchDoneCallback& fetching_callback,
       Status status,
       RemoteSuggestionsFetcher::OptionalFetchedCategories fetched_categories);
 

@@ -79,7 +79,7 @@ TEST_F(VirtualKeyboardAlwaysOnTopControllerTest, NotifyKeyboardBoundsChanged) {
   aura::Window* contents_window =
       keyboard_controller->ui()->GetContentsWindow();
   const int kKeyboardHeight = 200;
-  gfx::Rect keyboard_bounds = keyboard::KeyboardBoundsFromRootBounds(
+  gfx::Rect keyboard_bounds = keyboard::FullWidthKeyboardBoundsFromRootBounds(
       root_window->bounds(), kKeyboardHeight);
   contents_window->SetBounds(keyboard_bounds);
   contents_window->Show();

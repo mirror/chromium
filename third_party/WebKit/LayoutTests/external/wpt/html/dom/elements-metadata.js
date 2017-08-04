@@ -18,13 +18,6 @@ var metadataElements = {
       defaultVal: "",
       invalidVal: ""
     },
-    scope: "string",
-    updateViaCache: {
-      type: "enum",
-      keywords: ["imports", "all", "none"],
-      defaultVal: "imports",
-      invalidVal: "imports"
-    },
     media: "string",
     nonce: "string",
     integrity: "string",

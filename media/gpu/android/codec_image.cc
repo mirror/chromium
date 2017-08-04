@@ -68,8 +68,7 @@ bool CodecImage::CopyTexImage(unsigned target) {
   if (bound_service_id != static_cast<GLint>(surface_texture_->GetTextureId()))
     return false;
 
-  RenderToSurfaceTextureFrontBuffer(BindingsMode::kDontRestore);
-  return true;
+  return RenderToSurfaceTextureFrontBuffer(BindingsMode::kDontRestore);
 }
 
 bool CodecImage::CopyTexSubImage(unsigned target,

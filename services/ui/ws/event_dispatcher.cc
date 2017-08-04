@@ -183,6 +183,17 @@ void EventDispatcher::AddSystemModalWindow(ServerWindow* window) {
   modal_window_controller_.AddSystemModalWindow(window);
 }
 
+void EventDispatcher::ReleaseCaptureBlockedByModalWindow(
+    const ServerWindow* modal_window) {
+  if (!capture_window_)
+    return;
+
+  if (modal_window_controller_.IsWindowBlockedBy(capture_window_,
+                                                 modal_window)) {
+    SetCaptureWindow(nullptr, kInvalidClientId);
+  }
+}
+
 void EventDispatcher::ReleaseCaptureBlockedByAnyModalWindow() {
   if (!capture_window_)
     return;
@@ -398,26 +409,13 @@ void EventDispatcher::ProcessPointerEventOnFoundTarget(
     const ui::PointerEvent& event,
     const LocationTarget& location_target) {
   PointerTarget pointer_target;
-  ServerWindow* modal_transient = modal_window_controller_.GetModalTransient(
+  pointer_target.window = modal_window_controller_.GetTargetForWindow(
       location_target.deepest_window.window);
   pointer_target.is_mouse_event = event.IsMousePointerEvent();
-  if (!modal_transient && !modal_window_controller_.IsWindowBlocked(
-                              location_target.deepest_window.window)) {
-    pointer_target.window = location_target.deepest_window.window;
-    pointer_target.in_nonclient_area =
-        location_target.deepest_window.window != pointer_target.window ||
-        !pointer_target.window ||
-        location_target.deepest_window.in_non_client_area;
-  } else {
-    // The event is blocked by a modal window.
-    pointer_target.in_nonclient_area = true;
-    if (fallback_to_root_) {
-      pointer_target.window =
-          location_target.deepest_window.window
-              ? location_target.deepest_window.window->GetRoot()
-              : nullptr;
-    }
-  }
+  pointer_target.in_nonclient_area =
+      location_target.deepest_window.window != pointer_target.window ||
+      !pointer_target.window ||
+      location_target.deepest_window.in_non_client_area;
   pointer_target.is_pointer_down = event.type() == ui::ET_POINTER_DOWN;
 
   std::unique_ptr<ui::Event> cloned_event = ui::Event::Clone(event);
@@ -522,14 +520,6 @@ void EventDispatcher::ProcessPointerEventOnFoundTarget(
       StopTrackingPointer(pointer_id);
     if (!AreAnyPointersDown())
       delegate_->ReleaseNativeCapture();
-  }
-
-  if (modal_transient && event.type() == ET_POINTER_DOWN) {
-    ServerWindow* toplevel = modal_window_controller_.GetToplevelWindow(
-        location_target.deepest_window.window);
-    DCHECK(toplevel);
-    delegate_->SetFocusedWindowFromEventDispatcher(toplevel);
-    delegate_->OnEventOccurredOutsideOfModalWindow(modal_transient);
   }
 }
 

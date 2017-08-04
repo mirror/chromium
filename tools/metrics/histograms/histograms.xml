@@ -24606,45 +24606,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The time to compile a shader.</summary>
 </histogram>
 
-<histogram name="GPU.ProgramCache.CompressDataSuccess" units="BooleanSuccess">
-  <owner>ericrk@chromium.org</owner>
-  <summary>
-    Whether we succeeded in compressing program data. Expected to always be
-    true.
-  </summary>
-</histogram>
-
-<histogram name="GPU.ProgramCache.CompressDataTime" units="microseconds">
-  <owner>ericrk@chromium.org</owner>
-  <summary>
-    The time to compress a program's binary data during insertion into the
-    program cache.
-  </summary>
-</histogram>
-
-<histogram name="GPU.ProgramCache.CompressionPercentage" units="%">
-  <owner>ericrk@chromium.org</owner>
-  <summary>
-    The percentage of raw size that a program binary takes after compression.
-  </summary>
-</histogram>
-
-<histogram name="GPU.ProgramCache.DecompressDataSuccess" units="BooleanSuccess">
-  <owner>ericrk@chromium.org</owner>
-  <summary>
-    Whether we succeeded in decompressing program data. Failure indicates disk
-    or memory corruption.
-  </summary>
-</histogram>
-
-<histogram name="GPU.ProgramCache.DecompressDataTime" units="microseconds">
-  <owner>ericrk@chromium.org</owner>
-  <summary>
-    The time to decompress a program's binary data during retrieval from the
-    program cache.
-  </summary>
-</histogram>
-
 <histogram name="GPU.ProgramCache.LoadBinarySuccess" enum="BooleanSuccess">
   <owner>vmiura@chromium.org</owner>
   <summary>
@@ -54473,9 +54434,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Pepper.SecureOrigin.MediaStreamRequest" enum="BooleanSecure">
-  <obsolete>
-    Deprecated as of 8/2017.
-  </obsolete>
   <owner>raymes@chromium.org</owner>
   <summary>
     Whether a Pepper media stream request (mic/cam access) comes from a plugin
@@ -63270,18 +63228,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="RendererScheduler.ExpectedQueueingTimeWhenQueueingTime"
-    units="ms">
-  <owner>tdresser@chromium.org</owner>
-  <summary>
-    Expected queueing time for events which were queued on the main thread
-    longer or shorter than a threshold, given by the QueueingTimeThreshold
-    suffix.
-
-    Team: input-dev@chromium.org.
-  </summary>
-</histogram>
-
 <histogram name="RendererScheduler.ExpectedTaskQueueingDuration" units="ms">
   <owner>tdresser@chromium.org</owner>
   <summary>
@@ -63377,10 +63323,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="RendererScheduler.QueueingDurationWhenExpectedQueueingTime"
     units="ms">
-  <obsolete>
-    Deprecated as of 08/2017. Replaced with
-    RendererScheduler.ExpectedQueueingTimeWhenQueueingTime.
-  </obsolete>
   <owner>tdresser@chromium.org</owner>
   <summary>
     Time between sending an event to the renderer main thread and when the
@@ -80132,16 +80074,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="TabManager.Heuristics.FromBackgroundedToFirstAudioStarts"
-    units="ms">
-  <owner>chrisha@chromium.org</owner>
-  <owner>lpy@chromium.org</owner>
-  <summary>
-    Measures the time duration from when the tab is backgrounded to when audio
-    starts to play. Only recorded when the tab is in the background.
-  </summary>
-</histogram>
-
 <histogram name="TabManager.SessionRestore.CompressedPagesPerSecond"
     units="pages/s">
   <owner>fmeawad@chromium.org</owner>
@@ -83922,17 +83854,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.GCIdleTimeAllottedInMS" units="ms">
-  <obsolete>
-    Deprecated in August 2017. No longer tracked.
-  </obsolete>
   <owner>hpayer@chromium.org</owner>
   <summary>Idle time passed to V8 via IdleNotifications.</summary>
 </histogram>
 
 <histogram name="V8.GCIdleTimeLimit.Overshot" units="ms">
-  <obsolete>
-    Deprecated in August 2017. No longer tracked.
-  </obsolete>
   <owner>hpayer@chromium.org</owner>
   <summary>
     Milliseconds the idle time limit was overshot by the IdleNotification.
@@ -83940,9 +83866,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="V8.GCIdleTimeLimit.Undershot" units="ms">
-  <obsolete>
-    Deprecated in August 2017. No longer tracked.
-  </obsolete>
   <owner>hpayer@chromium.org</owner>
   <summary>
     Milliseconds the idle time limit was undershot by the IdleNotification.
@@ -84339,14 +84262,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>bradnelson@chromium.org</owner>
   <owner>titzer@chromium.org</owner>
   <summary>Peak memory used to decode a WebAssembly module.</summary>
-</histogram>
-
-<histogram name="V8.WasmExecutionTimeMicroSeconds" units="microseconds">
-  <owner>bradnelson@chromium.org</owner>
-  <owner>titzer@chromium.org</owner>
-  <owner>eholk@chromium.org</owner>
-  <owner>kschimpf@chromium.org</owner>
-  <summary>Time spent executing WebAssembly.</summary>
 </histogram>
 
 <histogram name="V8.WasmFunctionSizeBytes" units="bytes">
@@ -91051,10 +90966,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram_suffixes name="CompositorPendingTreeType" separator=".">
   <suffix name="Main" label="Commit initiated pending tree"/>
   <suffix name="Impl" label="Impl side invalidation initiated pending tree"/>
-  <affected-histogram
-      name="Scheduling.Browser.ReadyToActivateToActivationDuration2"/>
-  <affected-histogram
-      name="Scheduling.Renderer.ReadyToActivateToActivationDuration2"/>
+  <affected-histogram name="Scheduling.ReadyToActivateToActivationDuration2"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="CompositorTimingHistoryProcess" separator="."
@@ -92482,9 +92394,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram_suffixes>
 
 <histogram_suffixes name="ExpectedQueueingDurationThreshold" separator="_">
-  <obsolete>
-    Deprecated as of 08/2017. Replaced with ExpectedQueueingDurationThreshold.
-  </obsolete>
   <suffix name="GreaterThan.10ms"
       label="Expected Queueing Time greater than 10ms."/>
   <suffix name="GreaterThan.150ms"
@@ -97912,19 +97821,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="ShortcutsProvider.QueryIndexTime"/>
 </histogram_suffixes>
 
-<histogram_suffixes name="QueueingTimeThreshold" separator="_">
-  <suffix name="GreaterThan.10ms" label="Queueing Time greater than 10ms."/>
-  <suffix name="GreaterThan.150ms" label="Queueing Time greater than 150ms."/>
-  <suffix name="GreaterThan.300ms" label="Queueing Time greater than 300ms."/>
-  <suffix name="GreaterThan.450ms" label="Queueing Time greater than 450ms."/>
-  <suffix name="LessThan.10ms" label="Queueing Time less than 10ms."/>
-  <suffix name="LessThan.150ms" label="Queueing Time less than 150ms."/>
-  <suffix name="LessThan.300ms" label="Queueing Time less than 300ms."/>
-  <suffix name="LessThan.450ms" label="Queueing Time less than 450ms."/>
-  <affected-histogram
-      name="RendererScheduler.ExpectedQueueingTimeWhenQueueingTime"/>
-</histogram_suffixes>
-
 <histogram_suffixes name="QuicConnectionType" separator="">
   <owner>rch@chromium.org</owner>
   <suffix name="ForHTTP" label="Only insecure HTTP connections are counted.">
@@ -99940,7 +99836,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram_suffixes name="V8WasmSeparateAsmAndWasm" separator=".">
   <suffix name="asm" label="This histogram contains results for asm.js"/>
   <suffix name="wasm" label="This histogram contains results for WASM modules"/>
-  <affected-histogram name="V8.WasmCompileFunctionMicroSeconds"/>
   <affected-histogram name="V8.WasmCompileModuleMicroSeconds"/>
   <affected-histogram name="V8.WasmDecodeFunctionMicroSeconds"/>
   <affected-histogram name="V8.WasmDecodeModuleMicroSeconds"/>

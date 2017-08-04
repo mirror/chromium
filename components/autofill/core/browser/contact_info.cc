@@ -69,6 +69,14 @@ bool NameInfo::NamePartsAreEmpty() const {
   return given_.empty() && middle_.empty() && family_.empty();
 }
 
+void NameInfo::GetSupportedTypes(ServerFieldTypeSet* supported_types) const {
+  supported_types->insert(NAME_FIRST);
+  supported_types->insert(NAME_MIDDLE);
+  supported_types->insert(NAME_LAST);
+  supported_types->insert(NAME_MIDDLE_INITIAL);
+  supported_types->insert(NAME_FULL);
+}
+
 base::string16 NameInfo::GetRawInfo(ServerFieldType type) const {
   DCHECK_EQ(NAME, AutofillType(type).group());
   switch (type) {
@@ -94,6 +102,7 @@ base::string16 NameInfo::GetRawInfo(ServerFieldType type) const {
 
 void NameInfo::SetRawInfo(ServerFieldType type, const base::string16& value) {
   DCHECK_EQ(NAME, AutofillType(type).group());
+
   switch (type) {
     case NAME_FIRST:
       given_ = value;
@@ -117,25 +126,17 @@ void NameInfo::SetRawInfo(ServerFieldType type, const base::string16& value) {
   }
 }
 
-void NameInfo::GetSupportedTypes(ServerFieldTypeSet* supported_types) const {
-  supported_types->insert(NAME_FIRST);
-  supported_types->insert(NAME_MIDDLE);
-  supported_types->insert(NAME_LAST);
-  supported_types->insert(NAME_MIDDLE_INITIAL);
-  supported_types->insert(NAME_FULL);
-}
-
-base::string16 NameInfo::GetInfoImpl(const AutofillType& type,
-                                     const std::string& app_locale) const {
+base::string16 NameInfo::GetInfo(const AutofillType& type,
+                                 const std::string& app_locale) const {
   if (type.GetStorableType() == NAME_FULL)
     return FullName();
 
   return GetRawInfo(type.GetStorableType());
 }
 
-bool NameInfo::SetInfoImpl(const AutofillType& type,
-                           const base::string16& value,
-                           const std::string& app_locale) {
+bool NameInfo::SetInfo(const AutofillType& type,
+                       const base::string16& value,
+                       const std::string& app_locale) {
   // Always clear out the full name if we're making a change.
   if (value != GetInfo(type, app_locale))
     full_.clear();
@@ -145,7 +146,7 @@ bool NameInfo::SetInfoImpl(const AutofillType& type,
     return true;
   }
 
-  return FormGroup::SetInfoImpl(type, value, app_locale);
+  return FormGroup::SetInfo(type, value, app_locale);
 }
 
 base::string16 NameInfo::FullName() const {

@@ -12,9 +12,10 @@
 
 PasswordWebDataService::PasswordWebDataService(
     scoped_refptr<WebDatabaseService> wdbs,
-    scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> ui_thread,
     const ProfileErrorCallback& callback)
-    : WebDataServiceBase(wdbs, callback, ui_task_runner) {}
+    : WebDataServiceBase(wdbs, callback, ui_thread) {
+}
 
 void PasswordWebDataService::AddIE7Login(const IE7PasswordInfo& info) {
   wdbs_->ScheduleDBTask(
@@ -63,8 +64,9 @@ std::unique_ptr<WDTypedResult> PasswordWebDataService::GetIE7LoginImpl(
 ////////////////////////////////////////////////////////////////////////////////
 
 PasswordWebDataService::PasswordWebDataService(
-    scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner)
-    : WebDataServiceBase(nullptr, ProfileErrorCallback(), ui_task_runner) {}
+    scoped_refptr<base::SingleThreadTaskRunner> ui_thread)
+    : WebDataServiceBase(nullptr, ProfileErrorCallback(), ui_thread) {
+}
 
 PasswordWebDataService::~PasswordWebDataService() {
 }

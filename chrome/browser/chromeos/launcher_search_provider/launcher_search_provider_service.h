@@ -78,10 +78,9 @@ class Service : public KeyedService,
 
   Profile* const profile_;
   extensions::ExtensionRegistry* extension_registry_;
-  app_list::LauncherSearchProvider* provider_ = nullptr;
-  int query_id_ = 0;
-  bool is_query_running_ = false;
-  std::string query_;
+  app_list::LauncherSearchProvider* provider_;
+  int query_id_;
+  bool is_query_running_;
   std::unique_ptr<std::set<extensions::ExtensionId>>
       cached_listener_extension_ids_;
 

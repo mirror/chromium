@@ -4,8 +4,6 @@
 
 #include "platform/graphics/paint/TransformPaintPropertyNode.h"
 
-#include <inttypes.h>
-
 #include "platform/graphics/paint/PropertyTreeState.h"
 
 namespace blink {
@@ -41,12 +39,12 @@ String TransformPaintPropertyNode::ToString() const {
   auto transform = String::Format(
       "parent=%p transform=%s origin=%s flattensInheritedTransform=%s "
       "renderingContextId=%x directCompositingReasons=%s "
-      "compositorElementId=%s",
+      "compositorElementId=%lu",
       Parent(), matrix_.ToString().Ascii().data(),
       origin_.ToString().Ascii().data(),
       flattens_inherited_transform_ ? "yes" : "no", rendering_context_id_,
       CompositingReasonsAsString(direct_compositing_reasons_).Ascii().data(),
-      compositor_element_id_.ToString().c_str());
+      static_cast<unsigned long>(compositor_element_id_.id_));
   if (scroll_)
     return transform + " scroll=" + scroll_->ToString();
   return transform;

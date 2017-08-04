@@ -73,8 +73,9 @@ bool DirectLayerTreeFrameSink::BindToClient(
     cp->SetLostContextCallback(base::Closure());
 
   constexpr bool is_root = true;
+  constexpr bool handles_frame_sink_id_invalidation = false;
   support_ = support_manager_->CreateCompositorFrameSinkSupport(
-      this, frame_sink_id_, is_root,
+      this, frame_sink_id_, is_root, handles_frame_sink_id_invalidation,
       capabilities_.delegated_sync_points_required);
   begin_frame_source_ = base::MakeUnique<ExternalBeginFrameSource>(this);
   client_->SetBeginFrameSource(begin_frame_source_.get());

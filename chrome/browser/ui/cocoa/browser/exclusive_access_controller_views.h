@@ -61,8 +61,7 @@ class ExclusiveAccessController : public ExclusiveAccessContext,
   void ExitFullscreen() override;
   void UpdateExclusiveAccessExitBubbleContent(
       const GURL& url,
-      ExclusiveAccessBubbleType bubble_type,
-      ExclusiveAccessBubbleHideCallback bubble_first_hide_callback) override;
+      ExclusiveAccessBubbleType bubble_type) override;
   void OnExclusiveAccessUserInput() override;
   content::WebContents* GetActiveWebContents() override;
   void UnhideDownloadShelf() override;
@@ -94,7 +93,6 @@ class ExclusiveAccessController : public ExclusiveAccessContext,
   // -windowDidEnterFullScreen: gets called.
   GURL url_;
   ExclusiveAccessBubbleType bubble_type_;
-  ExclusiveAccessBubbleHideCallback bubble_first_hide_callback_;
 
   std::unique_ptr<ExclusiveAccessBubbleViews> views_bubble_;
 

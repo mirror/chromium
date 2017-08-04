@@ -65,18 +65,11 @@ enum {
                                   // two animation frames behind.
 };
 
-static void ReleaseMailboxImageResource(
-    WeakPtr<blink::WebGraphicsContext3DProviderWrapper>
-        context_provider_wrapper,
-    const gpu::SyncToken& sync_token,
-    sk_sp<SkImage> skImage,
-    const gpu::Mailbox& mailbox,
-    bool lost_resource) {
-  if (!context_provider_wrapper)
-    return;
-  gpu::gles2::GLES2Interface* gl =
-      context_provider_wrapper->ContextProvider()->ContextGL();
-
+static void ReleaseMailboxImageResource(gpu::gles2::GLES2Interface* gl,
+                                        const gpu::SyncToken& sync_token,
+                                        sk_sp<SkImage> skImage,
+                                        const gpu::Mailbox& mailbox,
+                                        bool lost_resource) {
   if (sync_token.HasData() && gl)
     gl->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
   GrTexture* texture = skImage->getTexture();
@@ -113,7 +106,7 @@ static void DeleteCHROMIUMImage(
     std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer,
     const GLuint& image_id,
     const GLuint& texture_id) {
-  if (!context_provider_wrapper)
+  if (!context_provider_wrapper->ContextProvider())
     return;
   gpu::gles2::GLES2Interface* gl =
       context_provider_wrapper->ContextProvider()->ContextGL();
@@ -198,10 +191,8 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
                                          int msaa_sample_count,
                                          OpacityMode opacity_mode,
                                          AccelerationMode acceleration_mode,
-                                         const CanvasColorParams& color_params,
-                                         bool is_unit_test)
-    : ImageBufferSurface(size, opacity_mode, color_params),
-      context_provider_wrapper_(SharedGpuContext::ContextProviderWrapper()),
+                                         const CanvasColorParams& color_params)
+    : context_provider_wrapper_(SharedGpuContext::ContextProviderWrapper()),
       logger_(WTF::WrapUnique(new Logger)),
       weak_ptr_factory_(this),
       image_buffer_(0),
@@ -226,23 +217,14 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
   TRACE_EVENT_INSTANT0("test_gpu", "Canvas2DLayerBridgeCreation",
                        TRACE_EVENT_SCOPE_GLOBAL);
   StartRecording();
-  if (!is_unit_test)
-    Init();
 }
 
 Canvas2DLayerBridge::~Canvas2DLayerBridge() {
-  BeginDestruction();
   DCHECK(destruction_in_progress_);
 #if USE_IOSURFACE_FOR_2D_CANVAS
   ClearCHROMIUMImageCache();
 #endif  // USE_IOSURFACE_FOR_2D_CANVAS
   layer_.reset();
-}
-
-void Canvas2DLayerBridge::Init() {
-  Clear();
-  if (CheckSurfaceValid())
-    FlushInternal();
 }
 
 void Canvas2DLayerBridge::StartRecording() {
@@ -546,7 +528,7 @@ void Canvas2DLayerBridge::Hibernate() {
     return;
   }
 
-  if (!IsValid()) {
+  if (!CheckSurfaceValid()) {
     logger_->ReportHibernationEvent(kHibernationAbortedDueGpuContextLoss);
     return;
   }
@@ -811,7 +793,7 @@ bool Canvas2DLayerBridge::WritePixels(const SkImageInfo& orig_info,
       y + orig_info.height() >= size_.Height()) {
     SkipQueuedDrawCommands();
   } else {
-    FlushInternal();
+    Flush();
   }
   DCHECK(!have_recorded_draw_commands_);
   // call write pixels on the surface, not the recording canvas.
@@ -859,7 +841,7 @@ void Canvas2DLayerBridge::FlushRecordingOnly() {
   }
 }
 
-void Canvas2DLayerBridge::FlushInternal() {
+void Canvas2DLayerBridge::Flush() {
   if (!did_draw_since_last_flush_)
     return;
   TRACE_EVENT0("cc", "Canvas2DLayerBridge::flush");
@@ -870,22 +852,14 @@ void Canvas2DLayerBridge::FlushInternal() {
   did_draw_since_last_flush_ = false;
 }
 
-void Canvas2DLayerBridge::Flush(FlushReason reason) {
-  FlushInternal();
-}
-
-void Canvas2DLayerBridge::FlushGpuInternal() {
-  FlushInternal();
+void Canvas2DLayerBridge::FlushGpu() {
+  Flush();
   gpu::gles2::GLES2Interface* gl = ContextGL();
   if (IsAccelerated() && gl && did_draw_since_last_gpu_flush_) {
     TRACE_EVENT0("cc", "Canvas2DLayerBridge::flushGpu");
     gl->Flush();
     did_draw_since_last_gpu_flush_ = false;
   }
-}
-
-void Canvas2DLayerBridge::FlushGpu(FlushReason reason) {
-  FlushGpuInternal();
 }
 
 gpu::gles2::GLES2Interface* Canvas2DLayerBridge::ContextGL() {
@@ -895,16 +869,12 @@ gpu::gles2::GLES2Interface* Canvas2DLayerBridge::ContextGL() {
       !destruction_in_progress_) {
     // Call checkSurfaceValid to ensure the rate limiter is disabled if the
     // context is lost.
-    if (!IsValid())
+    if (!CheckSurfaceValid())
       return nullptr;
   }
   return context_provider_wrapper_
              ? context_provider_wrapper_->ContextProvider()->ContextGL()
              : nullptr;
-}
-
-bool Canvas2DLayerBridge::IsValid() const {
-  return const_cast<Canvas2DLayerBridge*>(this)->CheckSurfaceValid();
 }
 
 bool Canvas2DLayerBridge::CheckSurfaceValid() {
@@ -930,7 +900,7 @@ bool Canvas2DLayerBridge::CheckSurfaceValid() {
   return surface_.get();
 }
 
-bool Canvas2DLayerBridge::Restore() {
+bool Canvas2DLayerBridge::RestoreSurface() {
   DCHECK(!destruction_in_progress_);
   if (destruction_in_progress_ || !IsAccelerated())
     return false;
@@ -1072,10 +1042,10 @@ void Canvas2DLayerBridge::ReleaseFrameResources(
     bool layer_bridge_with_valid_context =
         layer_bridge && !context_or_layer_bridge_lost;
     if (layer_bridge_with_valid_context || !layer_bridge) {
-      ReleaseMailboxImageResource(context_provider_wrapper, sync_token,
-                                  std::move(released_mailbox_info->image_),
-                                  released_mailbox_info->mailbox_,
-                                  lost_resource);
+      ReleaseMailboxImageResource(
+          context_provider_wrapper->ContextProvider()->ContextGL(), sync_token,
+          std::move(released_mailbox_info->image_),
+          released_mailbox_info->mailbox_, lost_resource);
     }
   }
 
@@ -1116,13 +1086,13 @@ void Canvas2DLayerBridge::FinalizeFrame() {
 
   if (frames_since_last_commit_ >= 2) {
     if (IsAccelerated()) {
-      FlushGpuInternal();
+      FlushGpu();
       if (!rate_limiter_) {
         rate_limiter_ =
             SharedContextRateLimiter::Create(MaxCanvasAnimationBacklog);
       }
     } else {
-      FlushInternal();
+      Flush();
     }
   }
 
@@ -1142,11 +1112,11 @@ RefPtr<StaticBitmapImage> Canvas2DLayerBridge::NewImageSnapshot(
     SnapshotReason) {
   if (IsHibernating())
     return StaticBitmapImage::Create(hibernation_image_);
-  if (!IsValid())
+  if (!CheckSurfaceValid())
     return nullptr;
   if (!GetOrCreateSurface(hint))
     return nullptr;
-  FlushInternal();
+  Flush();
   // A readback operation may alter the texture parameters, which may affect
   // the compositor's behavior. Therefore, we must trigger copy-on-write
   // even though we are not technically writing to the texture, only to its

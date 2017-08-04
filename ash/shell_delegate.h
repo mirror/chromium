@@ -32,7 +32,9 @@ class Connector;
 }
 
 namespace ui {
+#if defined(USE_OZONE)
 class InputDeviceControllerClient;
+#endif
 class MenuModel;
 }
 
@@ -145,8 +147,10 @@ class ASH_EXPORT ShellDelegate {
   // Suspends all WebContents-associated media sessions to stop managed players.
   virtual void SuspendMediaSessions() {}
 
+#if defined(USE_OZONE)
   // Creator of Shell owns this; it's assumed this outlives Shell.
   virtual ui::InputDeviceControllerClient* GetInputDeviceControllerClient() = 0;
+#endif
 };
 
 }  // namespace ash

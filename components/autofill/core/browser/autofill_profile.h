@@ -49,9 +49,6 @@ class AutofillProfile : public AutofillDataModel {
 
     // The field is valid.
     VALID,
-
-    // The validation for the field is unsupported.
-    UNSUPPORTED,
   };
 
   AutofillProfile(const std::string& guid, const std::string& origin);
@@ -74,7 +71,11 @@ class AutofillProfile : public AutofillDataModel {
                         ServerFieldTypeSet* matching_types) const override;
   base::string16 GetRawInfo(ServerFieldType type) const override;
   void SetRawInfo(ServerFieldType type, const base::string16& value) override;
-
+  base::string16 GetInfo(const AutofillType& type,
+                         const std::string& app_locale) const override;
+  bool SetInfo(const AutofillType& type,
+               const base::string16& value,
+               const std::string& app_locale) override;
   void GetSupportedTypes(ServerFieldTypeSet* supported_types) const override;
 
   // How this card is stored.
@@ -205,18 +206,8 @@ class AutofillProfile : public AutofillDataModel {
   // Sets the validity state of the specified autofill type.
   void SetValidityState(ServerFieldType type, ValidityState validity);
 
-  // Returns whether autofill does the validation of the specified |type|.
-  bool IsValidationSupportedForType(ServerFieldType type);
-
  private:
   typedef std::vector<const FormGroup*> FormGroupList;
-
-  // FormGroup:
-  base::string16 GetInfoImpl(const AutofillType& type,
-                             const std::string& app_locale) const override;
-  bool SetInfoImpl(const AutofillType& type,
-                   const base::string16& value,
-                   const std::string& app_locale) override;
 
   // Creates inferred labels for |profiles| at indices corresponding to
   // |indices|, and stores the results to the corresponding elements of

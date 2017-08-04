@@ -22,26 +22,6 @@ using content::WebContents;
 const char FullscreenControllerTest::kFullscreenMouseLockHTML[] =
     "/fullscreen_mouselock/fullscreen_mouselock.html";
 
-FullscreenControllerTest::FullscreenControllerTest()
-    : weak_ptr_factory_(this) {}
-
-FullscreenControllerTest::~FullscreenControllerTest() = default;
-
-void FullscreenControllerTest::SetUpOnMainThread() {
-  GetExclusiveAccessManager()
-      ->mouse_lock_controller()
-      ->set_bubble_hide_callback_for_test_(
-          base::BindRepeating(&FullscreenControllerTest::OnBubbleHidden,
-                              weak_ptr_factory_.GetWeakPtr()));
-}
-
-void FullscreenControllerTest::TearDownOnMainThread() {
-  GetExclusiveAccessManager()
-      ->mouse_lock_controller()
-      ->set_bubble_hide_callback_for_test_(
-          base::RepeatingCallback<void(ExclusiveAccessBubbleHideReason)>());
-}
-
 void FullscreenControllerTest::RequestToLockMouse(
     bool user_gesture,
     bool last_unlocked_by_target) {
@@ -114,9 +94,4 @@ void FullscreenControllerTest::EnterActiveTabFullscreen() {
   FullscreenNotificationObserver fullscreen_observer;
   browser()->EnterFullscreenModeForTab(tab, GURL());
   fullscreen_observer.Wait();
-}
-
-void FullscreenControllerTest::OnBubbleHidden(
-    ExclusiveAccessBubbleHideReason reason) {
-  mouse_lock_bubble_hide_reason_recorder_.push_back(reason);
 }

@@ -1306,7 +1306,6 @@ bool AXNodeObject::CanSupportAriaReadOnly() const {
     case kCellRole:
     case kCheckBoxRole:
     case kColorWellRole:
-    case kColumnHeaderRole:
     case kComboBoxRole:
     case kDateRole:
     case kDateTimeRole:
@@ -1318,14 +1317,12 @@ bool AXNodeObject::CanSupportAriaReadOnly() const {
     case kMenuItemRadioRole:
     case kPopUpButtonRole:
     case kRadioGroupRole:
-    case kRowHeaderRole:
     case kSearchBoxRole:
     case kSliderRole:
     case kSpinButtonRole:
     case kSwitchRole:
     case kTextFieldRole:
     case kToggleButtonRole:
-    case kTreeGridRole:
       return true;
     default:
       break;

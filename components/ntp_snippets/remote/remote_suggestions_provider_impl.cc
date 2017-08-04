@@ -223,11 +223,12 @@ std::vector<ContentSuggestion> ConvertToContentSuggestions(
   return result;
 }
 
-void CallWithEmptyResults(FetchDoneCallback callback, const Status& status) {
+void CallWithEmptyResults(const FetchDoneCallback& callback,
+                          const Status& status) {
   if (callback.is_null()) {
     return;
   }
-  std::move(callback).Run(status, std::vector<ContentSuggestion>());
+  callback.Run(status, std::vector<ContentSuggestion>());
 }
 
 void AddDismissedIdsToRequest(const RemoteSuggestion::PtrVector& dismissed,
@@ -374,27 +375,27 @@ void RemoteSuggestionsProviderImpl::FetchSuggestions(
 void RemoteSuggestionsProviderImpl::Fetch(
     const Category& category,
     const std::set<std::string>& known_suggestion_ids,
-    FetchDoneCallback callback) {
+    const FetchDoneCallback& callback) {
   if (!ready()) {
-    CallWithEmptyResults(std::move(callback),
+    CallWithEmptyResults(callback,
                          Status(StatusCode::TEMPORARY_ERROR,
                                 "RemoteSuggestionsProvider is not ready!"));
     return;
   }
   if (!remote_suggestions_scheduler_->AcquireQuotaForInteractiveFetch()) {
-    CallWithEmptyResults(
-        std::move(callback),
-        Status(StatusCode::TEMPORARY_ERROR, "Interactive quota exceeded!"));
+    CallWithEmptyResults(callback, Status(StatusCode::TEMPORARY_ERROR,
+                                          "Interactive quota exceeded!"));
     return;
   }
   // Make sure after the fetch, the scheduler is informed about the status.
-  FetchDoneCallback callback_wrapper = base::BindOnce(
-      [](RemoteSuggestionsScheduler* scheduler, FetchDoneCallback callback,
-         Status status_code, std::vector<ContentSuggestion> suggestions) {
+  FetchDoneCallback callback_wrapper = base::Bind(
+      [](RemoteSuggestionsScheduler* scheduler,
+         const FetchDoneCallback& callback, Status status_code,
+         std::vector<ContentSuggestion> suggestions) {
         scheduler->OnInteractiveFetchFinished(status_code);
-        std::move(callback).Run(status_code, std::move(suggestions));
+        callback.Run(status_code, std::move(suggestions));
       },
-      base::Unretained(remote_suggestions_scheduler_), std::move(callback));
+      base::Unretained(remote_suggestions_scheduler_), callback);
 
   RequestParams params = BuildFetchParams(category);
   params.excluded_ids.insert(known_suggestion_ids.begin(),
@@ -405,7 +406,7 @@ void RemoteSuggestionsProviderImpl::Fetch(
   suggestions_fetcher_->FetchSnippets(
       params,
       base::BindOnce(&RemoteSuggestionsProviderImpl::OnFetchMoreFinished,
-                     base::Unretained(this), std::move(callback_wrapper)));
+                     base::Unretained(this), callback_wrapper));
 }
 
 // Builds default fetcher params.
@@ -513,10 +514,10 @@ void RemoteSuggestionsProviderImpl::OnSignInStateChanged() {
 
 void RemoteSuggestionsProviderImpl::GetDismissedSuggestionsForDebugging(
     Category category,
-    DismissedSuggestionsCallback callback) {
+    const DismissedSuggestionsCallback& callback) {
   auto content_it = category_contents_.find(category);
   DCHECK(content_it != category_contents_.end());
-  std::move(callback).Run(
+  callback.Run(
       ConvertToContentSuggestions(category, content_it->second.dismissed));
 }
 
@@ -634,18 +635,18 @@ void RemoteSuggestionsProviderImpl::OnDatabaseError() {
 }
 
 void RemoteSuggestionsProviderImpl::OnFetchMoreFinished(
-    FetchDoneCallback fetching_callback,
+    const FetchDoneCallback& fetching_callback,
     Status status,
     RemoteSuggestionsFetcher::OptionalFetchedCategories fetched_categories) {
   if (!fetched_categories) {
     DCHECK(!status.IsSuccess());
-    CallWithEmptyResults(std::move(fetching_callback), status);
+    CallWithEmptyResults(fetching_callback, status);
     return;
   }
   if (fetched_categories->size() != 1u) {
     LOG(DFATAL) << "Requested one exclusive category but received "
                 << fetched_categories->size() << " categories.";
-    CallWithEmptyResults(std::move(fetching_callback),
+    CallWithEmptyResults(fetching_callback,
                          Status(StatusCode::PERMANENT_ERROR,
                                 "RemoteSuggestionsProvider received more "
                                 "categories than requested."));
@@ -664,7 +665,7 @@ void RemoteSuggestionsProviderImpl::OnFetchMoreFinished(
   // |fetched_category.suggestions|.
   ArchiveSuggestions(existing_content, &fetched_category.suggestions);
 
-  std::move(fetching_callback).Run(Status::Success(), std::move(result));
+  fetching_callback.Run(Status::Success(), std::move(result));
 }
 
 void RemoteSuggestionsProviderImpl::OnFetchFinished(
@@ -1032,10 +1033,10 @@ void RemoteSuggestionsProviderImpl::NukeAllSuggestions() {
 
 void RemoteSuggestionsProviderImpl::FetchSuggestionImage(
     const ContentSuggestion::ID& suggestion_id,
-    ImageFetchedCallback callback) {
+    const ImageFetchedCallback& callback) {
   if (!base::ContainsKey(category_contents_, suggestion_id.category())) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(std::move(callback), gfx::Image()));
+        FROM_HERE, base::Bind(callback, gfx::Image()));
     return;
   }
   GURL image_url = FindSuggestionImageUrl(suggestion_id);
@@ -1044,11 +1045,10 @@ void RemoteSuggestionsProviderImpl::FetchSuggestionImage(
     // find it in the database (and also can't fetch it remotely). Cut the
     // lookup short and return directly.
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(std::move(callback), gfx::Image()));
+        FROM_HERE, base::Bind(callback, gfx::Image()));
     return;
   }
-  image_fetcher_.FetchSuggestionImage(suggestion_id, image_url,
-                                      std::move(callback));
+  image_fetcher_.FetchSuggestionImage(suggestion_id, image_url, callback);
 }
 
 void RemoteSuggestionsProviderImpl::EnterStateReady() {

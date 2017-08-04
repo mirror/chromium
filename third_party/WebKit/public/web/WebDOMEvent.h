@@ -54,7 +54,7 @@ class WebDOMEvent {
 
   bool IsNull() const { return private_.IsNull(); }
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   BLINK_EXPORT WebDOMEvent(Event*);
   BLINK_EXPORT operator Event*() const;
 #endif
@@ -74,7 +74,7 @@ class WebDOMEvent {
   }
 
  protected:
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   void Assign(Event*);
 
   template <typename T>

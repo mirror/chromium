@@ -21,7 +21,7 @@ class ProcessCoordinationUnitImpl : public CoordinationUnitImpl {
 
   // CoordinationUnitImpl implementation.
   std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
-      CoordinationUnitType type) const override;
+      CoordinationUnitType type) override;
 
  private:
   // CoordinationUnitImpl implementation.

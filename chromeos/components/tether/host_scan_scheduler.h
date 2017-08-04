@@ -29,7 +29,7 @@ class HostScanScheduler : public NetworkStateHandlerObserver,
                     HostScanner* host_scanner);
   ~HostScanScheduler() override;
 
-  void ScheduleScan();
+  void UserLoggedIn();
 
   // NetworkStateHandlerObserver:
   void DefaultNetworkChanged(const NetworkState* network) override;
@@ -43,7 +43,6 @@ class HostScanScheduler : public NetworkStateHandlerObserver,
 
   void EnsureScan();
   bool IsNetworkConnectingOrConnected(const NetworkState* network);
-  bool IsTetherNetworkConnectingOrConnected();
 
   NetworkStateHandler* network_state_handler_;
   HostScanner* host_scanner_;

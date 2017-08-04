@@ -200,9 +200,9 @@ suite('SiteDetails', function() {
     browserProxy.setPrefs(prefs);
     testElement = createSiteDetails('https://foo.com:443');
 
-    return browserProxy.whenCalled('getOriginPermissions').then(() => {
+    return browserProxy.whenCalled('getOriginPermissions').then(function() {
       testElement.root.querySelectorAll('site-details-permission')
-          .forEach((siteDetailsPermission) => {
+          .forEach(function(siteDetailsPermission) {
             // Verify settings match the values specified in |prefs|.
             var expectedSetting = settings.ContentSetting.ALLOW;
             var expectedSource = settings.SiteSettingSource.PREFERENCE;
@@ -253,61 +253,10 @@ suite('SiteDetails', function() {
     });
 
     // Accepting the dialog will make a call to setOriginPermissions.
-    return browserProxy.whenCalled('setOriginPermissions').then((args) => {
+    return browserProxy.whenCalled('setOriginPermissions').then(function(args) {
       assertEquals(testElement.origin, args[0]);
       assertDeepEquals(testElement.getCategoryList_(), args[1]);
       assertEquals(settings.ContentSetting.DEFAULT, args[2]);
     })
-  });
-
-  test('permissions update dynamically', function() {
-    browserProxy.setPrefs(prefs);
-    testElement = createSiteDetails('https://foo.com:443');
-
-    var siteDetailsPermission =
-        testElement.root.querySelector('#notifications');
-
-    // Wait for all the permissions to be populated initially.
-    return browserProxy.whenCalled('getOriginPermissions')
-        .then(() => {
-          // Make sure initial state is as expected.
-          assertEquals(
-              settings.ContentSetting.BLOCK,
-              siteDetailsPermission.site.setting);
-          assertEquals(
-              settings.SiteSettingSource.POLICY,
-              siteDetailsPermission.site.source);
-          assertEquals(
-              settings.ContentSetting.BLOCK,
-              siteDetailsPermission.$.permission.value);
-
-          // Set new prefs and make sure only that permission is updated.
-          var newException = {
-            embeddingOrigin: testElement.origin,
-            origin: testElement.origin,
-            setting: settings.ContentSetting.ASK,
-            source: settings.SiteSettingSource.DEFAULT,
-          };
-          browserProxy.resetResolver('getOriginPermissions');
-          browserProxy.setSingleException(
-              settings.ContentSettingsTypes.NOTIFICATIONS, newException);
-          return browserProxy.whenCalled('getOriginPermissions');
-        })
-        .then((args) => {
-          // The notification pref was just updated, so make sure the call to
-          // getOriginPermissions was to check notifications.
-          assertTrue(
-              args[1].includes(settings.ContentSettingsTypes.NOTIFICATIONS));
-
-          // Check |siteDetailsPermission| now shows the new permission value.
-          assertEquals(
-              settings.ContentSetting.ASK, siteDetailsPermission.site.setting);
-          assertEquals(
-              settings.SiteSettingSource.DEFAULT,
-              siteDetailsPermission.site.source);
-          assertEquals(
-              settings.ContentSetting.DEFAULT,
-              siteDetailsPermission.$.permission.value);
-        });
   });
 });

@@ -69,9 +69,6 @@ const NSInteger kMaxNumMostVisitedTiles = 8;
 // Section Info for the logo and omnibox section.
 @property(nonatomic, strong)
     ContentSuggestionsSectionInformation* logoSectionInfo;
-// Section Info for the What's New promo section.
-@property(nonatomic, strong)
-    ContentSuggestionsSectionInformation* promoSectionInfo;
 // Section Info for the Most Visited section.
 @property(nonatomic, strong)
     ContentSuggestionsSectionInformation* mostVisitedSectionInfo;
@@ -101,7 +98,6 @@ const NSInteger kMaxNumMostVisitedTiles = 8;
 @synthesize mostVisitedItems = _mostVisitedItems;
 @synthesize freshMostVisitedItems = _freshMostVisitedItems;
 @synthesize logoSectionInfo = _logoSectionInfo;
-@synthesize promoSectionInfo = _promoSectionInfo;
 @synthesize mostVisitedSectionInfo = _mostVisitedSectionInfo;
 @synthesize learnMoreSectionInfo = _learnMoreSectionInfo;
 @synthesize recordedPageImpression = _recordedPageImpression;
@@ -133,7 +129,6 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
                 largeIconCache:largeIconCache];
 
     _logoSectionInfo = LogoSectionInformation();
-    _promoSectionInfo = PromoSectionInformation();
     _mostVisitedSectionInfo = MostVisitedSectionInformation();
     _learnMoreSectionInfo = LearnMoreSectionInformation();
 
@@ -179,10 +174,6 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
 
   [sectionsInfo addObject:self.logoSectionInfo];
 
-  if (_notificationPromo->CanShow()) {
-    [sectionsInfo addObject:self.promoSectionInfo];
-  }
-
   if (self.mostVisitedItems.count > 0) {
     [sectionsInfo addObject:self.mostVisitedSectionInfo];
   }
@@ -210,8 +201,6 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
       [NSMutableArray array];
 
   if (sectionInfo == self.logoSectionInfo) {
-    // Section empty on purpose.
-  } else if (sectionInfo == self.promoSectionInfo) {
     if (_notificationPromo->CanShow()) {
       ContentSuggestionsWhatsNewItem* item =
           [[ContentSuggestionsWhatsNewItem alloc] initWithType:0];
@@ -300,7 +289,7 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
           }));
 
       self.contentService->Fetch([wrapper category], known_suggestion_ids,
-                                 std::move(serviceCallback));
+                                 serviceCallback);
 
       break;
     }

@@ -7,7 +7,6 @@
 
 #include "base/macros.h"
 #include "base/timer/timer.h"
-#include "build/build_config.h"
 #include "chrome/common/image_context_menu_renderer.mojom.h"
 #include "chrome/common/prerender_types.h"
 #include "chrome/common/thumbnail_capturer.mojom.h"
@@ -17,11 +16,6 @@
 
 #if defined(SAFE_BROWSING_CSD)
 #include "chrome/common/safe_browsing/phishing_detector.mojom.h"
-#endif
-
-#if !defined(OS_ANDROID)
-#include "chrome/common/web_ui_tester.mojom.h"
-#include "mojo/public/cpp/bindings/associated_binding_set.h"
 #endif
 
 namespace gfx {
@@ -44,15 +38,10 @@ class ChromeRenderFrameObserver
 #if defined(SAFE_BROWSING_CSD)
       public chrome::mojom::PhishingDetector,
 #endif
-#if !defined(OS_ANDROID)
-      public chrome::mojom::WebUITester,
-#endif
       public chrome::mojom::ThumbnailCapturer {
  public:
   explicit ChromeRenderFrameObserver(content::RenderFrame* render_frame);
   ~ChromeRenderFrameObserver() override;
-
-  service_manager::BinderRegistry* registry() { return &registry_; }
 
  private:
   enum TextCaptureType { PRELIMINARY_CAPTURE, FINAL_CAPTURE };
@@ -77,11 +66,6 @@ class ChromeRenderFrameObserver
   void SetClientSidePhishingDetection(bool enable_phishing_detection) override;
 #endif
 
-#if !defined(OS_ANDROID)
-  // chrome::mojom::WebUITester:
-  void ExecuteWebUIJavaScript(const base::string16& javascript) override;
-#endif
-
   // chrome::mojom::ThumbnailCapturer:
   void RequestThumbnailForContextNode(
       int32_t thumbnail_min_area_pixels,
@@ -95,10 +79,6 @@ class ChromeRenderFrameObserver
 #if defined(SAFE_BROWSING_CSD)
   void OnPhishingDetectorRequest(
       chrome::mojom::PhishingDetectorRequest request);
-#endif
-#if !defined(OS_ANDROID)
-  void OnWebUITesterRequest(
-      chrome::mojom::WebUITesterAssociatedRequest request);
 #endif
   void OnThumbnailCapturerRequest(
       chrome::mojom::ThumbnailCapturerRequest request);
@@ -132,13 +112,6 @@ class ChromeRenderFrameObserver
 
 #if defined(SAFE_BROWSING_CSD)
   mojo::BindingSet<chrome::mojom::PhishingDetector> phishing_detector_bindings_;
-#endif
-
-#if !defined(OS_ANDROID)
-  // Save the JavaScript to preload if ExecuteWebUIJavaScript is invoked.
-  std::vector<base::string16> webui_javascript_;
-  mojo::AssociatedBindingSet<chrome::mojom::WebUITester>
-      web_ui_tester_bindings_;
 #endif
 
   mojo::BindingSet<chrome::mojom::ThumbnailCapturer>

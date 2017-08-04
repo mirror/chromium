@@ -181,9 +181,6 @@ extern const char kEnableAutofillCreditCardLastUsedDateDisplayDescription[];
 extern const char kEnableAutofillCreditCardUploadCvcPromptName[];
 extern const char kEnableAutofillCreditCardUploadCvcPromptDescription[];
 
-extern const char kEnableBreakingNewsPushName[];
-extern const char kEnableBreakingNewsPushDescription[];
-
 extern const char kEnableBrotliName[];
 extern const char kEnableBrotliDescription[];
 
@@ -256,6 +253,9 @@ extern const char kEnableNightLightDescription[];
 
 extern const char kEnablePictureInPictureName[];
 extern const char kEnablePictureInPictureDescription[];
+
+extern const char kEnableSuggestionsHomeModernLayoutName[];
+extern const char kEnableSuggestionsHomeModernLayoutDescription[];
 
 extern const char kEnableTokenBindingName[];
 extern const char kEnableTokenBindingDescription[];
@@ -882,9 +882,6 @@ extern const char kBackgroundLoaderForDownloadsDescription[];
 extern const char kChromeHomeExpandButtonName[];
 extern const char kChromeHomeExpandButtonDescription[];
 
-extern const char kChromeHomeModernLayoutName[];
-extern const char kChromeHomeModernLayoutDescription[];
-
 extern const char kChromeHomeSwipeLogicName[];
 extern const char kChromeHomeSwipeLogicDescription[];
 extern const char kChromeHomeSwipeLogicRestrictArea[];
@@ -976,9 +973,6 @@ extern const char kEnableNtpForeignSessionsSuggestionsDescription[];
 
 extern const char kEnableNtpMostLikelyFaviconsFromServerName[];
 extern const char kEnableNtpMostLikelyFaviconsFromServerDescription[];
-
-extern const char kNtpTilesLowerResolutionFaviconsName[];
-extern const char kNtpTilesLowerResolutionFaviconsDescription[];
 
 extern const char kEnableNtpOfflinePageDownloadSuggestionsName[];
 extern const char kEnableNtpOfflinePageDownloadSuggestionsDescription[];
@@ -1229,9 +1223,6 @@ extern const char kAppWindowCyclingDescription[];
 
 extern const char kFullscreenToolbarRevealName[];
 extern const char kFullscreenToolbarRevealDescription[];
-
-extern const char kContentFullscreenName[];
-extern const char kContentFullscreenDescription[];
 
 extern const char kHostedAppsInWindowsName[];
 extern const char kHostedAppsInWindowsDescription[];

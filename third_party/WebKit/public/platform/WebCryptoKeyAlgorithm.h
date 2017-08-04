@@ -58,7 +58,7 @@ class WebCryptoKeyAlgorithm {
       std::unique_ptr<WebCryptoKeyAlgorithmParams>);
 #endif
 
-  // FIXME: Delete this in favor of the Create*() functions.
+  // FIXME: Delete this in favor of the create*() functions.
   BLINK_PLATFORM_EXPORT static WebCryptoKeyAlgorithm AdoptParamsAndCreate(
       WebCryptoAlgorithmId,
       WebCryptoKeyAlgorithmParams*);

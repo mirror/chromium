@@ -4,9 +4,6 @@
 
 #include "net/http2/hpack/decoder/hpack_block_decoder.h"
 
-#include <cstdint>
-#include <strstream>
-
 // Tests of HpackBlockDecoder.
 
 #include <sstream>
@@ -56,14 +53,14 @@ class HpackBlockDecoderTest : public RandomDecoderTest {
   }
 
   AssertionResult DecodeAndValidateSeveralWays(DecodeBuffer* db,
-                                               const Validator& validator) {
+                                               Validator validator) {
     bool return_non_zero_on_first = false;
     return RandomDecoderTest::DecodeAndValidateSeveralWays(
         db, return_non_zero_on_first, validator);
   }
 
   AssertionResult DecodeAndValidateSeveralWays(const HpackBlockBuilder& hbb,
-                                               const Validator& validator) {
+                                               Validator validator) {
     DecodeBuffer db(hbb.buffer());
     return DecodeAndValidateSeveralWays(&db, validator);
   }

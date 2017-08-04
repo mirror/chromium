@@ -100,7 +100,7 @@ class WebDOMFileSystem {
 
   bool IsNull() const { return private_.IsNull(); }
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   WebDOMFileSystem(DOMFileSystem*);
   WebDOMFileSystem& operator=(DOMFileSystem*);
 #endif

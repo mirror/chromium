@@ -12,7 +12,7 @@
 namespace content {
 namespace {
 
-base::string16 DecodeWithV8(const std::vector<uint8_t>& encoded) {
+base::string16 DecodeWithV8(const base::string16& encoded) {
   base::test::ScopedAsyncTaskScheduler task_scheduler;
   base::string16 result;
 
@@ -26,7 +26,10 @@ base::string16 DecodeWithV8(const std::vector<uint8_t>& encoded) {
 
     v8::Local<v8::Context> context = v8::Context::New(isolate);
 
-    v8::ValueDeserializer deserializer(isolate, encoded.data(), encoded.size());
+    v8::ValueDeserializer deserializer(
+        isolate,
+        reinterpret_cast<const uint8_t*>(encoded.data()),
+        encoded.size() * sizeof(base::char16));
     deserializer.SetSupportsLegacyWireFormat(true);
 
     EXPECT_TRUE(deserializer.ReadHeader(context).ToChecked());
@@ -44,9 +47,9 @@ base::string16 DecodeWithV8(const std::vector<uint8_t>& encoded) {
   return result;
 }
 
-std::vector<uint8_t> EncodeWithV8(const base::string16& message) {
+base::string16 EncodeWithV8(const base::string16& message) {
   base::test::ScopedAsyncTaskScheduler task_scheduler;
-  std::vector<uint8_t> result;
+  base::string16 result;
 
   v8::Isolate::CreateParams params;
   params.array_buffer_allocator =
@@ -69,7 +72,11 @@ std::vector<uint8_t> EncodeWithV8(const base::string16& message) {
     EXPECT_TRUE(serializer.WriteValue(context, message_as_value).ToChecked());
 
     std::pair<uint8_t*, size_t> buffer = serializer.Release();
-    result = std::vector<uint8_t>(buffer.first, buffer.first + buffer.second);
+
+    size_t result_num_bytes = (buffer.second + 1) & ~1;
+    result.resize(result_num_bytes / 2);
+    memcpy(reinterpret_cast<uint8_t*>(&result[0]), buffer.first, buffer.second);
+
     free(buffer.first);
   }
   isolate->Dispose();

@@ -189,7 +189,7 @@
                                      title:l10n_util::GetNSStringWithFixup(
                                                IDS_HISTORY_SHOW_HISTORY)
                                     action:^{
-                                      [weakDispatcher showHistory];
+                                      execute(IDC_SHOW_HISTORY);
                                     }],
       [UIKeyCommand
           cr_keyCommandWithInput:@"."
@@ -210,7 +210,7 @@
                            modifierFlags:Cr_UIKeyModifierNone
                                    title:nil
                                   action:^{
-                                    [weakDispatcher dismissModalDialogs];
+                                    execute(IDC_CLOSE_MODALS);
                                   }],
     [UIKeyCommand cr_keyCommandWithInput:@"n"
                            modifierFlags:UIKeyModifierCommand

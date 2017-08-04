@@ -5,11 +5,8 @@
 #ifndef COMPONENTS_EXO_WM_HELPER_H_
 #define COMPONENTS_EXO_WM_HELPER_H_
 
-#include <memory>
-
 #include "base/macros.h"
 #include "base/observer_list.h"
-#include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/base/cursor/cursor.h"
 
 namespace aura {
@@ -23,13 +20,12 @@ class ManagedDisplayInfo;
 
 namespace ui {
 class EventHandler;
-class DropTargetEvent;
 }
 
 namespace exo {
 
 // A helper class for accessing WindowManager related features.
-class WMHelper : public aura::client::DragDropDelegate {
+class WMHelper {
  public:
   class ActivationObserver {
    public:
@@ -85,18 +81,7 @@ class WMHelper : public aura::client::DragDropDelegate {
     virtual ~DisplayConfigurationObserver() {}
   };
 
-  class DragDropObserver {
-   public:
-    virtual void OnDragEntered(const ui::DropTargetEvent& event) = 0;
-    virtual int OnDragUpdated(const ui::DropTargetEvent& event) = 0;
-    virtual void OnDragExited() = 0;
-    virtual int OnPerformDrop(const ui::DropTargetEvent& event) = 0;
-
-   protected:
-    virtual ~DragDropObserver() {}
-  };
-
-  ~WMHelper() override;
+  virtual ~WMHelper();
 
   static void SetInstance(WMHelper* helper);
   static WMHelper* GetInstance();
@@ -115,10 +100,6 @@ class WMHelper : public aura::client::DragDropDelegate {
   void AddDisplayConfigurationObserver(DisplayConfigurationObserver* observer);
   void RemoveDisplayConfigurationObserver(
       DisplayConfigurationObserver* observer);
-  void AddDragDropObserver(DragDropObserver* observer);
-  void RemoveDragDropObserver(DragDropObserver* observer);
-  void SetDragDropDelegate(aura::Window*);
-  void ResetDragDropDelegate(aura::Window*);
 
   virtual const display::ManagedDisplayInfo& GetDisplayInfo(
       int64_t display_id) const = 0;
@@ -133,12 +114,6 @@ class WMHelper : public aura::client::DragDropDelegate {
   virtual void AddPostTargetHandler(ui::EventHandler* handler) = 0;
   virtual void RemovePostTargetHandler(ui::EventHandler* handler) = 0;
   virtual bool IsTabletModeWindowManagerEnabled() const = 0;
-
-  // Overridden from aura::client::DragDropDelegate:
-  void OnDragEntered(const ui::DropTargetEvent& event) override;
-  int OnDragUpdated(const ui::DropTargetEvent& event) override;
-  void OnDragExited() override;
-  int OnPerformDrop(const ui::DropTargetEvent& event) override;
 
  protected:
   WMHelper();
@@ -163,7 +138,6 @@ class WMHelper : public aura::client::DragDropDelegate {
   base::ObserverList<TabletModeObserver> tablet_mode_observers_;
   base::ObserverList<InputDeviceEventObserver> input_device_event_observers_;
   base::ObserverList<DisplayConfigurationObserver> display_config_observers_;
-  base::ObserverList<DragDropObserver> drag_drop_observers_;
 
   DISALLOW_COPY_AND_ASSIGN(WMHelper);
 };

@@ -4,8 +4,6 @@
 
 #include "chrome/browser/profiles/profile_shortcut_manager.h"
 
-void ProfileShortcutManager::DisableForUnitTests() {}
-
 // static
 bool ProfileShortcutManager::IsFeatureEnabled() {
   return false;

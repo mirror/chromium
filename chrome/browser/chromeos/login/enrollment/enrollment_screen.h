@@ -74,8 +74,6 @@ class EnrollmentScreen
 
   // EnterpriseEnrollmentHelper::EnrollmentStatusConsumer implementation:
   void OnAuthError(const GoogleServiceAuthError& error) override;
-  void OnMultipleLicensesAvailable(
-      const EnrollmentLicenseMap& licenses) override;
   void OnEnrollmentError(policy::EnrollmentStatus status) override;
   void OnOtherError(EnterpriseEnrollmentHelper::OtherError error) override;
   void OnDeviceEnrolled(const std::string& additional_token) override;
@@ -89,8 +87,8 @@ class EnrollmentScreen
   EnrollmentScreenView* GetView() { return view_; }
 
  private:
-  friend class MultiLicenseEnrollmentScreenUnitTest;
-  friend class ZeroTouchEnrollmentScreenUnitTest;
+  friend class EnrollmentScreenUnitTest;
+  FRIEND_TEST_ALL_PREFIXES(EnrollmentScreenTest, TestSuccess);
   FRIEND_TEST_ALL_PREFIXES(AttestationAuthEnrollmentScreenTest, TestCancel);
   FRIEND_TEST_ALL_PREFIXES(ForcedAttestationAuthEnrollmentScreenTest,
                            TestCancel);
@@ -107,12 +105,9 @@ class EnrollmentScreen
                            TestActiveDirectoryEnrollment_UIErrors);
   FRIEND_TEST_ALL_PREFIXES(HandsOffNetworkScreenTest, RequiresNoInput);
   FRIEND_TEST_ALL_PREFIXES(HandsOffNetworkScreenTest, ContinueClickedOnlyOnce);
-  FRIEND_TEST_ALL_PREFIXES(ZeroTouchEnrollmentScreenUnitTest, Retries);
-  FRIEND_TEST_ALL_PREFIXES(ZeroTouchEnrollmentScreenUnitTest, TestSuccess);
-  FRIEND_TEST_ALL_PREFIXES(ZeroTouchEnrollmentScreenUnitTest,
-                           DoesNotRetryOnTopOfUser);
-  FRIEND_TEST_ALL_PREFIXES(ZeroTouchEnrollmentScreenUnitTest,
-                           DoesNotRetryAfterSuccess);
+  FRIEND_TEST_ALL_PREFIXES(EnrollmentScreenUnitTest, Retries);
+  FRIEND_TEST_ALL_PREFIXES(EnrollmentScreenUnitTest, DoesNotRetryOnTopOfUser);
+  FRIEND_TEST_ALL_PREFIXES(EnrollmentScreenUnitTest, DoesNotRetryAfterSuccess);
 
   // The authentication mechanisms that this class can use.
   enum Auth {

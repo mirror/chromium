@@ -39,6 +39,10 @@ using syncer::SyncCycleSnapshot;
 
 namespace {
 
+std::string GetGaiaIdForUsername(const std::string& username) {
+  return "gaia-id-" + username;
+}
+
 bool HasAuthError(ProfileSyncService* service) {
   return service->GetAuthError().state() ==
              GoogleServiceAuthError::INVALID_GAIA_CREDENTIALS ||
@@ -98,27 +102,25 @@ class SyncSetupChecker : public SingleClientStatusChangeChecker {
 std::unique_ptr<ProfileSyncServiceHarness> ProfileSyncServiceHarness::Create(
     Profile* profile,
     const std::string& username,
-    const std::string& gaia_id,
     const std::string& password,
     SigninType signin_type) {
-  return base::WrapUnique(new ProfileSyncServiceHarness(
-      profile, username, gaia_id, password, signin_type));
+  return base::WrapUnique(
+      new ProfileSyncServiceHarness(profile, username, password, signin_type));
 }
 
 ProfileSyncServiceHarness::ProfileSyncServiceHarness(
     Profile* profile,
     const std::string& username,
-    const std::string& gaia_id,
     const std::string& password,
     SigninType signin_type)
     : profile_(profile),
       service_(ProfileSyncServiceFactory::GetForProfile(profile)),
       username_(username),
-      gaia_id_(gaia_id),
       password_(password),
       signin_type_(signin_type),
       oauth2_refesh_token_number_(0),
-      profile_debug_name_(profile->GetDebugName()) {}
+      profile_debug_name_(profile->GetDebugName()) {
+}
 
 ProfileSyncServiceHarness::~ProfileSyncServiceHarness() { }
 
@@ -170,7 +172,8 @@ bool ProfileSyncServiceHarness::SetupSync(syncer::ModelTypeSet synced_datatypes,
     }
   } else if (signin_type_ == SigninType::FAKE_SIGNIN) {
     // Authenticate sync client using GAIA credentials.
-    service()->signin()->SetAuthenticatedAccountInfo(gaia_id_, username_);
+    std::string gaia_id = GetGaiaIdForUsername(username_);
+    service()->signin()->SetAuthenticatedAccountInfo(gaia_id, username_);
     std::string account_id = service()->signin()->GetAuthenticatedAccountId();
     service()->GoogleSigninSucceeded(account_id, username_);
     ProfileOAuth2TokenServiceFactory::GetForProfile(profile_)->

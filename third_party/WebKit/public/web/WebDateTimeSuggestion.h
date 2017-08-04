@@ -40,7 +40,7 @@ struct WebDateTimeSuggestion {
 
   WebDateTimeSuggestion() {}
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   BLINK_EXPORT WebDateTimeSuggestion(const DateTimeSuggestion&);
   BLINK_EXPORT WebDateTimeSuggestion& operator=(const DateTimeSuggestion&);
 #endif

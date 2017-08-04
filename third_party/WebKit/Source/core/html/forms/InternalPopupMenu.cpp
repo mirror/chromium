@@ -23,8 +23,6 @@
 #include "core/layout/LayoutTheme.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/PagePopup.h"
-#include "platform/fonts/FontSelector.h"
-#include "platform/fonts/FontSelectorClient.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/text/PlatformLocale.h"
 #include "public/platform/Platform.h"
@@ -61,7 +59,7 @@ const char* TextTransformToString(ETextTransform transform) {
 }  // anonymous namespace
 
 class PopupMenuCSSFontSelector : public CSSFontSelector,
-                                 private FontSelectorClient {
+                                 private CSSFontSelectorClient {
   USING_GARBAGE_COLLECTED_MIXIN(PopupMenuCSSFontSelector);
 
  public:
@@ -83,7 +81,7 @@ class PopupMenuCSSFontSelector : public CSSFontSelector,
  private:
   PopupMenuCSSFontSelector(Document*, CSSFontSelector*);
 
-  void FontsNeedUpdate(FontSelector*) override;
+  void FontsNeedUpdate(CSSFontSelector*) override;
 
   Member<CSSFontSelector> owner_font_selector_;
 };
@@ -103,14 +101,14 @@ RefPtr<FontData> PopupMenuCSSFontSelector::GetFontData(
   return owner_font_selector_->GetFontData(description, name);
 }
 
-void PopupMenuCSSFontSelector::FontsNeedUpdate(FontSelector* font_selector) {
+void PopupMenuCSSFontSelector::FontsNeedUpdate(CSSFontSelector* font_selector) {
   DispatchInvalidationCallbacks();
 }
 
 DEFINE_TRACE(PopupMenuCSSFontSelector) {
   visitor->Trace(owner_font_selector_);
   CSSFontSelector::Trace(visitor);
-  FontSelectorClient::Trace(visitor);
+  CSSFontSelectorClient::Trace(visitor);
 }
 
 // ----------------------------------------------------------------
@@ -415,7 +413,7 @@ void InternalPopupMenu::AddSeparator(ItemIterationContext& context,
 void InternalPopupMenu::SelectFontsFromOwnerDocument(Document& document) {
   Document& owner_document = OwnerElement().GetDocument();
   document.GetStyleEngine().SetFontSelector(PopupMenuCSSFontSelector::Create(
-      &document, owner_document.GetStyleEngine().GetFontSelector()));
+      &document, owner_document.GetStyleEngine().FontSelector()));
 }
 
 void InternalPopupMenu::SetValueAndClosePopup(int num_value,

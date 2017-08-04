@@ -64,6 +64,7 @@ class CORE_EXPORT SelectionTemplate final {
 
     Builder& SetAffinity(TextAffinity);
     Builder& SetIsDirectional(bool);
+    Builder& SetIsHandleVisible(bool);
 
    private:
     SelectionTemplate selection_;
@@ -82,9 +83,9 @@ class CORE_EXPORT SelectionTemplate final {
   const PositionTemplate<Strategy>& Base() const;
   const PositionTemplate<Strategy>& Extent() const;
   TextAffinity Affinity() const { return affinity_; }
-  bool IsBaseFirst() const;
   bool IsCaret() const;
   bool IsDirectional() const { return is_directional_; }
+  bool IsHandleVisible() const { return is_handle_visible_; }
   bool IsNone() const { return base_.IsNull(); }
   bool IsRange() const;
 
@@ -109,19 +110,13 @@ class CORE_EXPORT SelectionTemplate final {
  private:
   friend class SelectionEditor;
 
-  enum class Direction {
-    kNotComputed,
-    kForward,   // base <= extent
-    kBackward,  // base > extent
-  };
-
   Document* GetDocument() const;
 
   PositionTemplate<Strategy> base_;
   PositionTemplate<Strategy> extent_;
   TextAffinity affinity_ = TextAffinity::kDownstream;
-  mutable Direction direction_ = Direction::kForward;
   bool is_directional_ = false;
+  bool is_handle_visible_ = false;
 #if DCHECK_IS_ON()
   uint64_t dom_tree_version_;
 #endif

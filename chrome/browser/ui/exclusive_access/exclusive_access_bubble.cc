@@ -174,10 +174,6 @@ base::string16 ExclusiveAccessBubble::GetInstructionText(
                                                             accelerator);
 }
 
-bool ExclusiveAccessBubble::IsHideTimeoutRunning() const {
-  return hide_timeout_.IsRunning();
-}
-
 void ExclusiveAccessBubble::ShowAndStartTimers() {
   Show();
 

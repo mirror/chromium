@@ -79,7 +79,8 @@ base::string16 ContactInfoEditorViewController::GetInitialValueForType(
         *profile_to_edit_, state()->GetApplicationLocale());
   }
 
-  return profile_to_edit_->GetInfo(type, state()->GetApplicationLocale());
+  return profile_to_edit_->GetInfo(autofill::AutofillType(type),
+                                   state()->GetApplicationLocale());
 }
 
 bool ContactInfoEditorViewController::ValidateModelAndSave() {

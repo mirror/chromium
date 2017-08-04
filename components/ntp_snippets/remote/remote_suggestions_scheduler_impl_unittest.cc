@@ -88,16 +88,7 @@ class MockRemoteSuggestionsProvider : public RemoteSuggestionsProvider {
                void(base::Time begin,
                     base::Time end,
                     const base::Callback<bool(const GURL& url)>& filter));
-  // Gmock cannot mock methods that have movable-only type callbacks as
-  // parameters such as FetchDoneCallback, DismissedSuggestionsCallback,
-  // ImageFetchedCallback. As a work-around, Fetch calls the mock method
-  // FetchMock, which may then be checked with EXPECT_CALL.
-  void Fetch(const Category& category,
-             const std::set<std::string>& set,
-             FetchDoneCallback callback) override {
-    FetchMock(category, set, callback);
-  }
-  MOCK_METHOD3(FetchMock,
+  MOCK_METHOD3(Fetch,
                void(const Category&,
                     const std::set<std::string>&,
                     const FetchDoneCallback&));
@@ -105,20 +96,10 @@ class MockRemoteSuggestionsProvider : public RemoteSuggestionsProvider {
   MOCK_METHOD1(ClearCachedSuggestions, void(Category));
   MOCK_METHOD1(ClearDismissedSuggestionsForDebugging, void(Category));
   MOCK_METHOD1(DismissSuggestion, void(const ContentSuggestion::ID&));
-  void FetchSuggestionImage(const ContentSuggestion::ID& id,
-                            ImageFetchedCallback callback) override {
-    FetchSuggestionImageMock(id, callback);
-  }
-  MOCK_METHOD2(FetchSuggestionImageMock,
+  MOCK_METHOD2(FetchSuggestionImage,
                void(const ContentSuggestion::ID&, const ImageFetchedCallback&));
-  void GetDismissedSuggestionsForDebugging(
-      Category category,
-      DismissedSuggestionsCallback callback) override {
-    GetDismissedSuggestionsForDebuggingMock(category, callback);
-  }
-  MOCK_METHOD2(GetDismissedSuggestionsForDebuggingMock,
-               void(Category category,
-                    const DismissedSuggestionsCallback& callback));
+  MOCK_METHOD2(GetDismissedSuggestionsForDebugging,
+               void(Category, const DismissedSuggestionsCallback&));
   MOCK_METHOD0(OnSignInStateChanged, void());
 };
 

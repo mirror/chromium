@@ -155,8 +155,8 @@ bool WimaxConfigView::Login() {
       shill::kEapIdentityProperty, GetEapIdentity());
   properties.SetStringWithoutPathExpansion(
       shill::kEapPasswordProperty, GetEapPassphrase());
-  properties.SetKey(shill::kSaveCredentialsProperty,
-                    base::Value(GetSaveCredentials()));
+  properties.SetBooleanWithoutPathExpansion(
+      shill::kSaveCredentialsProperty, GetSaveCredentials());
 
   const bool share_default = true;
   bool share_network = GetShareNetwork(share_default);
@@ -164,7 +164,8 @@ bool WimaxConfigView::Login() {
   bool only_policy_autoconnect =
       onc::PolicyAllowsOnlyPolicyNetworksToAutoconnect(!share_network);
   if (only_policy_autoconnect) {
-    properties.SetKey(shill::kAutoConnectProperty, base::Value(false));
+    properties.SetBooleanWithoutPathExpansion(shill::kAutoConnectProperty,
+                                              false);
   }
 
   NetworkConnect::Get()->ConfigureNetworkIdAndConnect(wimax->guid(), properties,

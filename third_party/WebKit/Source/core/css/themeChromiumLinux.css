@@ -30,7 +30,9 @@
 
 /* These styles override other user-agent styles for Chromium on Linux. */
 
-select:not(:-internal-list-box) {
+select:not([size]):not([multiple]),
+select[size="0"],
+select[size="1"] {
     /* Selects with popup menus look like buttons with a drop down triangle on Linux. */
     background-color: ButtonFace;
 }

@@ -35,7 +35,6 @@
 #import "ui/base/cocoa/controls/hyperlink_button_cell.h"
 #import "ui/base/cocoa/touch_bar_util.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/events/cocoa/cocoa_event_utils.h"
 
 using content::PluginService;
 
@@ -995,8 +994,7 @@ const ContentTypeToNibPath kNibPaths[] = {
 - (void)popupLinkClicked:(id)sender {
   content_setting_bubble::PopupLinks::iterator i(popupLinks_.find(sender));
   DCHECK(i != popupLinks_.end());
-  const int event_flags = ui::EventFlagsFromModifiers([NSEvent modifierFlags]);
-  contentSettingBubbleModel_->OnListItemClicked(i->second, event_flags);
+  contentSettingBubbleModel_->OnListItemClicked(i->second);
 }
 
 - (void)clearGeolocationForCurrentHost:(id)sender {

@@ -7,6 +7,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "services/ui/public/interfaces/window_manager.mojom.h"
+#include "services/ui/ws/focus_controller_delegate.h"
 #include "services/ui/ws/focus_controller_observer.h"
 #include "services/ui/ws/server_window.h"
 #include "services/ui/ws/server_window_drawn_tracker.h"
@@ -57,11 +58,14 @@ class WindowTreeIterator {
 
 }  // namespace
 
-FocusController::FocusController(ServerWindow* root)
-    : root_(root),
+FocusController::FocusController(FocusControllerDelegate* delegate,
+                                 ServerWindow* root)
+    : delegate_(delegate),
+      root_(root),
       focused_window_(nullptr),
       active_window_(nullptr),
       activation_reason_(ActivationChangeReason::UNKNONW) {
+  DCHECK(delegate_);
   DCHECK(root_);
 }
 
@@ -98,12 +102,6 @@ void FocusController::ActivateNextWindow() {
         continue;
       }
     }
-    if (active_window_ == nullptr && activate == root_) {
-      // The root can't be active, so if we get here we've looped. Early out
-      // to avoid cycling forever.
-      return;
-    }
-
     if (activate == active_window_ || CanBeActivated(activate))
       break;
   }
@@ -177,7 +175,7 @@ bool FocusController::CanBeActivated(ServerWindow* window) const {
     return false;
 
   // The parent window must be allowed to have active children.
-  if (!window->parent() || !window->parent()->is_activation_parent())
+  if (!delegate_->CanHaveActiveChildren(window->parent()))
     return false;
 
   if (!window->can_focus())

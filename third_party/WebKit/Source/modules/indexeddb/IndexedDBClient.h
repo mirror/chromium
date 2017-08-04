@@ -41,31 +41,30 @@ class ExecutionContext;
 class LocalFrame;
 class WorkerClients;
 
-class IndexedDBClient : public GarbageCollected<IndexedDBClient>,
-                        public Supplement<LocalFrame>,
-                        public Supplement<WorkerClients> {
+class MODULES_EXPORT IndexedDBClient
+    : public GarbageCollectedFinalized<IndexedDBClient>,
+      public Supplement<LocalFrame>,
+      public Supplement<WorkerClients> {
   USING_GARBAGE_COLLECTED_MIXIN(IndexedDBClient);
   WTF_MAKE_NONCOPYABLE(IndexedDBClient);
 
  public:
-  static IndexedDBClient* Create(LocalFrame&);
-  static IndexedDBClient* Create(WorkerClients&);
+  explicit IndexedDBClient(LocalFrame&);
+  explicit IndexedDBClient(WorkerClients&);
+  virtual ~IndexedDBClient() {}
 
   DECLARE_VIRTUAL_TRACE();
 
-  bool AllowIndexedDB(ExecutionContext*, const String& name);
+  virtual bool AllowIndexedDB(ExecutionContext*, const String& name) = 0;
 
   static IndexedDBClient* From(ExecutionContext*);
   static const char* SupplementName();
-
- private:
-  explicit IndexedDBClient(LocalFrame&);
-  explicit IndexedDBClient(WorkerClients&);
 };
 
-void ProvideIndexedDBClientTo(LocalFrame&, IndexedDBClient*);
+MODULES_EXPORT void ProvideIndexedDBClientTo(LocalFrame&, IndexedDBClient*);
 
-void ProvideIndexedDBClientToWorker(WorkerClients*, IndexedDBClient*);
+MODULES_EXPORT void ProvideIndexedDBClientToWorker(WorkerClients*,
+                                                   IndexedDBClient*);
 
 }  // namespace blink
 

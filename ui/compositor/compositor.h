@@ -194,7 +194,6 @@ class COMPOSITOR_EXPORT Compositor
              ui::ContextFactoryPrivate* context_factory_private,
              scoped_refptr<base::SingleThreadTaskRunner> task_runner,
              bool enable_surface_synchronization,
-             bool enable_pixel_canvas,
              bool external_begin_frames_enabled = false);
   ~Compositor() override;
 
@@ -233,11 +232,6 @@ class COMPOSITOR_EXPORT Compositor
   // The scale factor of the device that this compositor is
   // compositing layers on.
   float device_scale_factor() const { return device_scale_factor_; }
-
-  // The color space of the device that this compositor is being displayed on.
-  const gfx::ColorSpace& output_color_space() const {
-    return output_color_space_;
-  }
 
   // Where possible, draws are scissored to a damage region calculated from
   // changes to layer properties.  This bypasses that and indicates that
@@ -411,9 +405,6 @@ class COMPOSITOR_EXPORT Compositor
     allow_locks_to_extend_timeout_ = allowed;
   }
 
-  // If true, all paint commands are recorded at pixel size instead of DIP.
-  bool is_pixel_canvas() const { return is_pixel_canvas_; }
-
  private:
   friend class base::RefCounted<Compositor>;
 
@@ -478,8 +469,6 @@ class COMPOSITOR_EXPORT Compositor
   base::TimeTicks scheduled_timeout_;
   // If true, the |scheduled_timeout_| might be recalculated and extended.
   bool allow_locks_to_extend_timeout_;
-  // If true, all paint commands are recorded at pixel size instead of DIP.
-  const bool is_pixel_canvas_;
 
   base::WeakPtrFactory<Compositor> weak_ptr_factory_;
   base::WeakPtrFactory<Compositor> lock_timeout_weak_ptr_factory_;

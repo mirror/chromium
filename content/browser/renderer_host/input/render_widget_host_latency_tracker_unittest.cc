@@ -1300,15 +1300,11 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, WheelDuringMultiFingerTouch) {
 
 TEST_F(RenderWidgetHostLatencyTrackerTest, ExpectedQueueingTimeAccuracy) {
   // These numbers are sensitive to where the histogram buckets are.
-  base::TimeTicks event_timestamp =
-      base::TimeTicks() + base::TimeDelta::FromMilliseconds(11);
-  int expected_queueing_time_ms = 1;
-  base::TimeDelta expected_queueing_time =
-      base::TimeDelta::FromMilliseconds(expected_queueing_time_ms);
+  int event_timestamps_ms[] = {11, 25, 35};
 
-  for (float queueing_time_ms : {2, 15, 200, 400}) {
-    base::TimeDelta queueing_time =
-        base::TimeDelta::FromMilliseconds(queueing_time_ms);
+  for (float expected_queueing_time_ms : {2, 15, 200, 400}) {
+    base::TimeDelta expected_queueing_time =
+        base::TimeDelta::FromMilliseconds(expected_queueing_time_ms);
     SyntheticWebTouchEvent event;
     // Touch start.
     event.PressPoint(1, 1);
@@ -1323,15 +1319,22 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, ExpectedQueueingTimeAccuracy) {
     fake_latency.set_source_event_type(ui::SourceEventType::TOUCH);
     fake_latency.AddLatencyNumberWithTimestamp(
         ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT,
-        tracker()->latency_component_id(), 0, event_timestamp, 1);
+        tracker()->latency_component_id(), 0,
+        base::TimeTicks() +
+            base::TimeDelta::FromMilliseconds(event_timestamps_ms[0]),
+        1);
 
     fake_latency.AddLatencyNumberWithTimestamp(
         ui::INPUT_EVENT_LATENCY_RENDERER_MAIN_COMPONENT, 0, 0,
-        event_timestamp + queueing_time, 1);
+        base::TimeTicks() +
+            base::TimeDelta::FromMilliseconds(event_timestamps_ms[1]),
+        1);
 
     fake_latency.AddLatencyNumberWithTimestamp(
         ui::INPUT_EVENT_LATENCY_ACK_RWH_COMPONENT, 0, 0,
-        event_timestamp + queueing_time, 1);
+        base::TimeTicks() +
+            base::TimeDelta::FromMilliseconds(event_timestamps_ms[2]),
+        1);
 
     // Call ComputeInputLatencyHistograms directly to avoid OnInputEventAck
     // overwriting components.
@@ -1343,44 +1346,51 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, ExpectedQueueingTimeAccuracy) {
                                INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
   }
 
-  EXPECT_THAT(histogram_tester().GetAllSamples(
-                  "RendererScheduler."
-                  "ExpectedQueueingTimeWhenQueueingTime_LessThan.10ms"),
-              ElementsAre(Bucket(expected_queueing_time_ms, 1)));
+  EXPECT_THAT(
+      histogram_tester().GetAllSamples(
+          "RendererScheduler."
+          "QueueingDurationWhenExpectedQueueingTime_LessThan.10ms"),
+      ElementsAre(Bucket(event_timestamps_ms[1] - event_timestamps_ms[0], 1)));
+
+  EXPECT_THAT(
+      histogram_tester().GetAllSamples(
+          "RendererScheduler."
+          "QueueingDurationWhenExpectedQueueingTime_LessThan.150ms"),
+      ElementsAre(Bucket(event_timestamps_ms[1] - event_timestamps_ms[0], 2)));
+
+  EXPECT_THAT(
+      histogram_tester().GetAllSamples(
+          "RendererScheduler."
+          "QueueingDurationWhenExpectedQueueingTime_LessThan.300ms"),
+      ElementsAre(Bucket(event_timestamps_ms[1] - event_timestamps_ms[0], 3)));
+
+  EXPECT_THAT(
+      histogram_tester().GetAllSamples(
+          "RendererScheduler."
+          "QueueingDurationWhenExpectedQueueingTime_LessThan.450ms"),
+      ElementsAre(Bucket(event_timestamps_ms[1] - event_timestamps_ms[0], 4)));
+
+  EXPECT_THAT(
+      histogram_tester().GetAllSamples(
+          "RendererScheduler."
+          "QueueingDurationWhenExpectedQueueingTime_GreaterThan.10ms"),
+      ElementsAre(Bucket(event_timestamps_ms[1] - event_timestamps_ms[0], 3)));
+
+  EXPECT_THAT(
+      histogram_tester().GetAllSamples(
+          "RendererScheduler."
+          "QueueingDurationWhenExpectedQueueingTime_GreaterThan.150ms"),
+      ElementsAre(Bucket(event_timestamps_ms[1] - event_timestamps_ms[0], 2)));
+
+  EXPECT_THAT(
+      histogram_tester().GetAllSamples(
+          "RendererScheduler."
+          "QueueingDurationWhenExpectedQueueingTime_GreaterThan.300ms"),
+      ElementsAre(Bucket(event_timestamps_ms[1] - event_timestamps_ms[0], 1)));
 
   EXPECT_THAT(histogram_tester().GetAllSamples(
                   "RendererScheduler."
-                  "ExpectedQueueingTimeWhenQueueingTime_LessThan.150ms"),
-              ElementsAre(Bucket(expected_queueing_time_ms, 2)));
-
-  EXPECT_THAT(histogram_tester().GetAllSamples(
-                  "RendererScheduler."
-                  "ExpectedQueueingTimeWhenQueueingTime_LessThan.300ms"),
-              ElementsAre(Bucket(expected_queueing_time_ms, 3)));
-
-  EXPECT_THAT(histogram_tester().GetAllSamples(
-                  "RendererScheduler."
-                  "ExpectedQueueingTimeWhenQueueingTime_LessThan.450ms"),
-              ElementsAre(Bucket(expected_queueing_time_ms, 4)));
-
-  EXPECT_THAT(histogram_tester().GetAllSamples(
-                  "RendererScheduler."
-                  "ExpectedQueueingTimeWhenQueueingTime_GreaterThan.10ms"),
-              ElementsAre(Bucket(expected_queueing_time_ms, 3)));
-
-  EXPECT_THAT(histogram_tester().GetAllSamples(
-                  "RendererScheduler."
-                  "ExpectedQueueingTimeWhenQueueingTime_GreaterThan.150ms"),
-              ElementsAre(Bucket(expected_queueing_time_ms, 2)));
-
-  EXPECT_THAT(histogram_tester().GetAllSamples(
-                  "RendererScheduler."
-                  "ExpectedQueueingTimeWhenQueueingTime_GreaterThan.300ms"),
-              ElementsAre(Bucket(expected_queueing_time_ms, 1)));
-
-  EXPECT_THAT(histogram_tester().GetAllSamples(
-                  "RendererScheduler."
-                  "ExpectedQueueingTimeWhenQueueingTime_GreaterThan.450ms"),
+                  "QueueingDurationWhenExpectedQueueingTime_GreaterThan.450ms"),
               ElementsAre());
 }
 

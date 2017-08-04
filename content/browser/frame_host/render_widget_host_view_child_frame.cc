@@ -407,10 +407,8 @@ void RenderWidgetHostViewChildFrame::SetIsInert() {
 void RenderWidgetHostViewChildFrame::GestureEventAck(
     const blink::WebGestureEvent& event,
     InputEventAckState ack_result) {
-  bool should_bubble =
-      ack_result == INPUT_EVENT_ACK_STATE_NOT_CONSUMED ||
-      ack_result == INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS ||
-      ack_result == INPUT_EVENT_ACK_STATE_CONSUMED_SHOULD_BUBBLE;
+  bool not_consumed = ack_result == INPUT_EVENT_ACK_STATE_NOT_CONSUMED ||
+                      ack_result == INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS;
 
   if (!frame_connector_)
     return;
@@ -421,7 +419,7 @@ void RenderWidgetHostViewChildFrame::GestureEventAck(
     // frame_connector_ decides to forward them for bubbling if the
     // GestureScrollBegin event is forwarded.
     if ((event.GetType() == blink::WebInputEvent::kGestureScrollBegin &&
-         should_bubble) ||
+         not_consumed) ||
         event.GetType() == blink::WebInputEvent::kGestureScrollUpdate ||
         event.GetType() == blink::WebInputEvent::kGestureScrollEnd ||
         event.GetType() == blink::WebInputEvent::kGestureFlingStart) {
@@ -435,7 +433,7 @@ void RenderWidgetHostViewChildFrame::GestureEventAck(
     // always forwarded and handled according to current scroll state in the
     // RenderWidgetHostInputEventRouter.
     if ((event.GetType() == blink::WebInputEvent::kGestureScrollUpdate &&
-         should_bubble) ||
+         not_consumed) ||
         event.GetType() == blink::WebInputEvent::kGestureScrollEnd ||
         event.GetType() == blink::WebInputEvent::kGestureFlingStart) {
       frame_connector_->BubbleScrollEvent(event);
@@ -850,9 +848,11 @@ void RenderWidgetHostViewChildFrame::CreateCompositorFrameSinkSupport() {
 
   DCHECK(!support_);
   constexpr bool is_root = false;
+  constexpr bool handles_frame_sink_id_invalidation = false;
   constexpr bool needs_sync_points = true;
   support_ = GetHostFrameSinkManager()->CreateCompositorFrameSinkSupport(
-      this, frame_sink_id_, is_root, needs_sync_points);
+      this, frame_sink_id_, is_root, handles_frame_sink_id_invalidation,
+      needs_sync_points);
   if (parent_frame_sink_id_.is_valid()) {
     GetHostFrameSinkManager()->RegisterFrameSinkHierarchy(parent_frame_sink_id_,
                                                           frame_sink_id_);

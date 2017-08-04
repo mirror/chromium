@@ -879,34 +879,26 @@ void BrowserView::ExitFullscreen() {
 
 void BrowserView::UpdateExclusiveAccessExitBubbleContent(
     const GURL& url,
-    ExclusiveAccessBubbleType bubble_type,
-    ExclusiveAccessBubbleHideCallback bubble_first_hide_callback) {
+    ExclusiveAccessBubbleType bubble_type) {
   // Immersive mode has no exit bubble because it has a visible strip at the
   // top that gives the user a hover target.
   // TODO(jamescook): Figure out what to do with mouse-lock.
   if (bubble_type == EXCLUSIVE_ACCESS_BUBBLE_TYPE_NONE ||
       ShouldUseImmersiveFullscreenForUrl(url)) {
-    // |exclusive_access_bubble_.reset()| will trigger callback for current
-    // bubble with |ExclusiveAccessBubbleHideReason::kInterrupted| if available.
     exclusive_access_bubble_.reset();
-    if (bubble_first_hide_callback) {
-      std::move(bubble_first_hide_callback)
-          .Run(ExclusiveAccessBubbleHideReason::kNotShown);
-    }
     return;
   }
 
   if (exclusive_access_bubble_) {
-    exclusive_access_bubble_->UpdateContent(
-        url, bubble_type, std::move(bubble_first_hide_callback));
+    exclusive_access_bubble_->UpdateContent(url, bubble_type);
     return;
   }
 
   // Hide the backspace shortcut bubble, to avoid overlapping.
   new_back_shortcut_bubble_.reset();
 
-  exclusive_access_bubble_.reset(new ExclusiveAccessBubbleViews(
-      this, url, bubble_type, std::move(bubble_first_hide_callback)));
+  exclusive_access_bubble_.reset(
+      new ExclusiveAccessBubbleViews(this, url, bubble_type));
 }
 
 void BrowserView::OnExclusiveAccessUserInput() {
@@ -2013,8 +2005,8 @@ void BrowserView::ViewHierarchyChanged(
 #endif
 }
 
-void BrowserView::PaintChildren(const views::PaintInfo& paint_info) {
-  views::ClientView::PaintChildren(paint_info);
+void BrowserView::PaintChildren(const ui::PaintContext& context) {
+  views::ClientView::PaintChildren(context);
   // Don't reset the instance before it had a chance to get compositor callback.
   if (!histogram_helper_) {
     histogram_helper_ = BrowserWindowHistogramHelper::
@@ -2228,7 +2220,7 @@ ContentsLayoutManager* BrowserView::GetContentsLayoutManager() const {
 bool BrowserView::MaybeShowBookmarkBar(WebContents* contents) {
   bool show_bookmark_bar =
       browser_->SupportsWindowFeature(Browser::FEATURE_BOOKMARKBAR);
-  if ((!show_bookmark_bar || !contents) && !bookmark_bar_view_.get())
+  if (!show_bookmark_bar && !bookmark_bar_view_.get())
     return false;
   if (!bookmark_bar_view_.get()) {
     bookmark_bar_view_.reset(new BookmarkBarView(browser_.get(), this));
@@ -2402,8 +2394,7 @@ void BrowserView::ProcessFullscreen(bool fullscreen,
   browser_->WindowFullscreenStateChanged();
 
   if (fullscreen && !chrome::IsRunningInAppMode()) {
-    UpdateExclusiveAccessExitBubbleContent(url, bubble_type,
-                                           ExclusiveAccessBubbleHideCallback());
+    UpdateExclusiveAccessExitBubbleContent(url, bubble_type);
   }
 
   // Undo our anti-jankiness hacks and force a re-layout. We also need to

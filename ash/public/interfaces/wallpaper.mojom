@@ -15,7 +15,7 @@ enum WallpaperLayout {
   TILE,
 };
 
-// These values match wallpaper::WallpaperType.
+// These values match user_manager::User::WallpaperType.
 enum WallpaperType {
   DAILY,
   CUSTOMIZED,

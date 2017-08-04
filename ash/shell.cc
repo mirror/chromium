@@ -76,7 +76,6 @@
 #include "ash/system/network/sms_observer.h"
 #include "ash/system/network/vpn_list.h"
 #include "ash/system/night_light/night_light_controller.h"
-#include "ash/system/palette/palette_tray.h"
 #include "ash/system/power/power_event_observer.h"
 #include "ash/system/power/power_status.h"
 #include "ash/system/power/video_activity_notifier.h"
@@ -330,7 +329,6 @@ bool Shell::ShouldUseIMEService() {
 
 // static
 void Shell::RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
-  PaletteTray::RegisterLocalStatePrefs(registry);
   WallpaperController::RegisterLocalStatePrefs(registry);
 }
 
@@ -420,13 +418,6 @@ ShelfModel* Shell::shelf_model() {
 void Shell::UpdateShelfVisibility() {
   for (aura::Window* root : GetAllRootWindows())
     Shelf::ForWindow(root)->UpdateVisibilityState();
-}
-
-PrefService* Shell::GetActiveUserPrefService() const {
-  if (shell_port_->GetAshConfig() == Config::MASH)
-    return profile_pref_service_.get();
-
-  return shell_delegate_->GetActiveUserPrefService();
 }
 
 PrefService* Shell::GetLocalStatePrefService() const {
@@ -1249,8 +1240,15 @@ void Shell::OnWindowActivated(
 
 void Shell::OnActiveUserSessionChanged(const AccountId& account_id) {
   if (GetAshConfig() == Config::MASH && shell_delegate_->GetShellConnector()) {
-    // NOTE: |profile_pref_service_| will point to the previous user's profile
-    // while the connection is being made.
+    // Profile pref service is null while connecting after profile switch.
+    if (profile_pref_service_) {
+      for (auto& observer : shell_observers_)
+        observer.OnActiveUserPrefServiceChanged(nullptr);
+      // Reset after notification so clients can unregister pref observers on
+      // the old PrefService.
+      profile_pref_service_.reset();
+    }
+
     auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
     RegisterProfilePrefs(pref_registry.get());
     prefs::ConnectToPrefService(

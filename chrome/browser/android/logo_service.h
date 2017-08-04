@@ -5,27 +5,13 @@
 #ifndef CHROME_BROWSER_ANDROID_LOGO_SERVICE_H_
 #define CHROME_BROWSER_ANDROID_LOGO_SERVICE_H_
 
-#include <memory>
-
-#include "base/files/file_path.h"
 #include "base/macros.h"
-#include "base/memory/ref_counted.h"
+#include "base/memory/singleton.h"
+#include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "components/search_provider_logos/logo_tracker.h"
 
-class TemplateURLService;
-
-namespace image_fetcher {
-class ImageDecoder;
-}  // namespace image_fetcher
-
-namespace net {
-class URLRequestContextGetter;
-}  // namespace net
-
-namespace search_provider_logos {
-class LogoTracker;
-class LogoObserver;
-}  // namespace search_provider_logos
+class Profile;
 
 // Provides the logo for a profile's default search provider.
 //
@@ -35,12 +21,7 @@ class LogoObserver;
 //
 class LogoService : public KeyedService {
  public:
-  LogoService(
-      const base::FilePath& cache_directory,
-      TemplateURLService* template_url_service,
-      std::unique_ptr<image_fetcher::ImageDecoder> image_decoder,
-      scoped_refptr<net::URLRequestContextGetter> request_context_getter,
-      bool use_gray_background);
+  explicit LogoService(Profile* profile);
   ~LogoService() override;
 
   // Gets the logo for the default search provider and notifies |observer|
@@ -48,19 +29,28 @@ class LogoService : public KeyedService {
   void GetLogo(search_provider_logos::LogoObserver* observer);
 
  private:
-  // Constructor arguments.
-  const base::FilePath cache_directory_;
-  TemplateURLService* const template_url_service_;
-  const scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
-  const bool use_gray_background_;
-
-  // logo_tracker_ takes ownership if/when it is initialized.
-  std::unique_ptr<image_fetcher::ImageDecoder> image_decoder_;
-
-  // Lazily initialized on first call to GetLogo().
+  Profile* profile_;
   std::unique_ptr<search_provider_logos::LogoTracker> logo_tracker_;
 
   DISALLOW_COPY_AND_ASSIGN(LogoService);
+};
+
+// Singleton that owns all LogoServices and associates them with Profiles.
+class LogoServiceFactory : public BrowserContextKeyedServiceFactory {
+ public:
+  static LogoService* GetForProfile(Profile* profile);
+
+  static LogoServiceFactory* GetInstance();
+
+ private:
+  friend struct base::DefaultSingletonTraits<LogoServiceFactory>;
+
+  LogoServiceFactory();
+  ~LogoServiceFactory() override;
+
+  // BrowserContextKeyedServiceFactory:
+  KeyedService* BuildServiceInstanceFor(
+      content::BrowserContext* context) const override;
 };
 
 #endif  // CHROME_BROWSER_ANDROID_LOGO_SERVICE_H_

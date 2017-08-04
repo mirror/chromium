@@ -79,6 +79,11 @@ int64_t GetPrimaryDisplayId() {
   return display::Screen::GetScreen()->GetPrimaryDisplay().id();
 }
 
+}  // namespace
+
+////////////////////////////////////////////////////////////////////////////////
+// ShelfObserver::OnShelfIconPositionsChanged tests.
+
 class TestShelfObserver : public ShelfObserver {
  public:
   explicit TestShelfObserver(Shelf* shelf) : shelf_(shelf) {
@@ -112,11 +117,6 @@ class TestShelfObserver : public ShelfObserver {
 
   DISALLOW_COPY_AND_ASSIGN(TestShelfObserver);
 };
-
-}  // namespace
-
-////////////////////////////////////////////////////////////////////////////////
-// ShelfObserver::OnShelfIconPositionsChanged tests.
 
 class ShelfObserverIconTest : public AshTestBase {
  public:

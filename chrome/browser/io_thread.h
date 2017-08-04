@@ -33,6 +33,7 @@
 #include "content/public/network/network_service.h"
 #include "extensions/features/features.h"
 #include "net/base/network_change_notifier.h"
+#include "net/http/http_network_session.h"
 #include "net/nqe/network_quality_estimator.h"
 
 class PrefProxyConfigTracker;
@@ -46,6 +47,10 @@ class ExternalDataUseObserver;
 }
 }
 #endif  // defined(OS_ANDROID)
+
+namespace base {
+class CommandLine;
+}
 
 namespace certificate_transparency {
 class TreeStateTracker;
@@ -195,10 +200,12 @@ class IOThread : public content::BrowserThreadDelegate {
   void ClearHostCache(
       const base::Callback<bool(const std::string&)>& host_filter);
 
-  // Dynamically disables QUIC for all NetworkContexts using the IOThread's
-  // NetworkService. Re-enabling Quic dynamically is not supported for
-  // simplicity and requires a browser restart. May only be called on the IO
-  // thread.
+  const net::HttpNetworkSession::Params& NetworkSessionParams() const;
+
+  // Dynamically disables QUIC for HttpNetworkSessions owned by io_thread, and
+  // to HttpNetworkSession::Params which are used for the creation of new
+  // HttpNetworkSessions. Not that re-enabling Quic dynamically is not
+  // supported for simplicity and requires a browser restart.
   void DisableQuic();
 
   // Returns the callback for updating data use prefs.
@@ -262,6 +269,14 @@ class IOThread : public content::BrowserThreadDelegate {
   }
   void ConstructSystemRequestContext();
 
+  // Parse command line flags and use components/network_session_configurator to
+  // configure |params|.
+  static void ConfigureParamsFromFieldTrialsAndCommandLine(
+      const base::CommandLine& command_line,
+      bool is_quic_allowed_by_policy,
+      bool http_09_on_non_default_ports_enabled,
+      net::HttpNetworkSession::Params* params);
+
   // The NetLog is owned by the browser process, to allow logging from other
   // threads during shutdown, but is used most frequently on the IOThread.
   net_log::ChromeNetLog* net_log_;
@@ -281,6 +296,8 @@ class IOThread : public content::BrowserThreadDelegate {
   // lifetime of the IO thread.
 
   Globals* globals_;
+
+  net::HttpNetworkSession::Params session_params_;
 
   // Observer that logs network changes to the ChromeNetLog.
   std::unique_ptr<net::LoggingNetworkChangeObserver> network_change_observer_;
@@ -337,8 +354,11 @@ class IOThread : public content::BrowserThreadDelegate {
   scoped_refptr<net::URLRequestContextGetter>
       system_url_request_context_getter_;
 
-  // True if QUIC is initially enabled.
-  bool is_quic_allowed_on_init_;
+  // True if QUIC is allowed by policy.
+  bool is_quic_allowed_by_policy_;
+
+  // True if HTTP/0.9 is allowed on non-default ports by policy.
+  bool http_09_on_non_default_ports_enabled_;
 
   base::WeakPtrFactory<IOThread> weak_factory_;
 

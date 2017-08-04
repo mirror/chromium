@@ -14,6 +14,7 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/compositor/paint_context.h"
 #include "ui/compositor/paint_recorder.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
@@ -30,7 +31,6 @@
 #include "ui/views/controls/image_view.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/layout_provider.h"
-#include "ui/views/paint_info.h"
 #include "ui/views/resources/grit/views_resources.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
@@ -404,14 +404,10 @@ void BubbleFrameView::OnPaint(gfx::Canvas* canvas) {
   // Border comes after children.
 }
 
-void BubbleFrameView::PaintChildren(const PaintInfo& paint_info) {
-  NonClientFrameView::PaintChildren(paint_info);
+void BubbleFrameView::PaintChildren(const ui::PaintContext& context) {
+  NonClientFrameView::PaintChildren(context);
 
-  ui::PaintCache paint_cache;
-  ui::PaintRecorder recorder(
-      paint_info.context(), paint_info.paint_recording_size(),
-      paint_info.paint_recording_scale_x(),
-      paint_info.paint_recording_scale_y(), &paint_cache);
+  ui::PaintRecorder recorder(context, size());
   OnPaintBorder(recorder.canvas());
 }
 

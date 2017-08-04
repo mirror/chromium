@@ -16,6 +16,65 @@ suite('CategoryDefaultSetting', function() {
    */
   var browserProxy = null;
 
+  /**
+   * An example pref where the location category is disabled.
+   * @type {SiteSettingsPref}
+   */
+  var prefsLocationDisabled = {
+    defaults: {
+      geolocation: {
+        setting: 'block',
+      },
+    },
+    exceptions: {
+      geolocation: [],
+    },
+  };
+
+  /**
+   * An example pref where the location category is enabled.
+   * @type {SiteSettingsPref}
+   */
+  var prefsLocationEnabled = {
+    defaults: {
+      geolocation: {
+        setting: 'allow',
+      },
+    },
+    exceptions: {
+      geolocation: [],
+    },
+  };
+
+  /**
+   * An example pref where the Flash category is set on detect mode.
+   */
+  var prefsFlashDetect = {
+    defaults: {
+      plugins: {
+        setting: 'detect_important_content',
+      },
+    },
+    exceptions: {
+      plugins: [],
+    },
+  };
+
+  /**
+   * An example pref where the Cookies category is set to delete when
+   * session ends.
+   */
+  var prefsCookesSessionOnly = {
+    defaults: {
+      cookies: {
+        setting: 'session_only',
+      },
+    },
+    exceptions: {
+      cookies: [],
+    },
+  };
+
   // Initialize a site-settings-category before each test.
   setup(function() {
     browserProxy = new TestSiteSettingsPrefsBrowserProxy();
@@ -34,109 +93,36 @@ suite('CategoryDefaultSetting', function() {
         });
   });
 
-  // Verifies that the widget works as expected for a given |category|, initial
-  // |prefs|, and given expectations.
-  function testCategoryEnabled(
-      testElement, category, prefs, expectedEnabled,
-      expectedEnabledContentSetting) {
+  function testCategoryEnabled(testElement, enabled) {
     browserProxy.reset();
-    browserProxy.setPrefs(prefs);
+    browserProxy.setPrefs(
+        enabled ? prefsLocationEnabled : prefsLocationDisabled);
 
-    testElement.category = category;
+    testElement.category = settings.ContentSettingsTypes.GEOLOCATION;
     return browserProxy.whenCalled('getDefaultValueForContentType')
         .then(function(contentType) {
-          assertEquals(category, contentType);
-          assertEquals(expectedEnabled, testElement.categoryEnabled);
+          assertEquals(settings.ContentSettingsTypes.GEOLOCATION, contentType);
+          assertEquals(enabled, testElement.categoryEnabled);
           browserProxy.resetResolver('setDefaultValueForContentType');
           MockInteractions.tap(testElement.$.toggle.$.control);
           return browserProxy.whenCalled('setDefaultValueForContentType');
         })
         .then(function(args) {
-          assertEquals(category, args[0]);
-          var oppositeSetting = expectedEnabled ?
-              settings.ContentSetting.BLOCK :
-              expectedEnabledContentSetting;
-          assertEquals(oppositeSetting, args[1]);
-          assertNotEquals(expectedEnabled, testElement.categoryEnabled);
+          assertEquals(settings.ContentSettingsTypes.GEOLOCATION, args[0]);
+          assertEquals(
+              enabled ? settings.ContentSetting.BLOCK :
+                        settings.ContentSetting.ASK,
+              args[1]);
+          assertNotEquals(enabled, testElement.categoryEnabled);
         });
   }
 
   test('categoryEnabled correctly represents prefs (enabled)', function() {
-    /**
-     * An example pref where the location category is enabled.
-     * @type {SiteSettingsPref}
-     */
-    var prefsLocationEnabled = {
-      defaults: {
-        geolocation: {
-          setting: 'allow',
-        },
-      },
-    };
-
-    return testCategoryEnabled(
-        testElement, settings.ContentSettingsTypes.GEOLOCATION,
-        prefsLocationEnabled, true, settings.ContentSetting.ASK);
+    return testCategoryEnabled(testElement, true);
   });
 
   test('categoryEnabled correctly represents prefs (disabled)', function() {
-    /**
-     * An example pref where the location category is disabled.
-     * @type {SiteSettingsPref}
-     */
-    var prefsLocationDisabled = {
-      defaults: {
-        geolocation: {
-          setting: 'block',
-        },
-      },
-    };
-
-    return testCategoryEnabled(
-        testElement, settings.ContentSettingsTypes.GEOLOCATION,
-        prefsLocationDisabled, false, settings.ContentSetting.ASK);
-  });
-
-  test('test Flash content setting in DETECT/ASK setting', function() {
-    var prefsFlash = {
-      defaults: {
-        plugins: {
-          setting: 'detect_important_content',
-        },
-      },
-    };
-
-    return testCategoryEnabled(
-        testElement, settings.ContentSettingsTypes.PLUGINS, prefsFlash, true,
-        settings.ContentSetting.IMPORTANT_CONTENT);
-  });
-
-  test('test Flash content setting in legacy ALLOW setting', function() {
-    var prefsFlash = {
-      defaults: {
-        plugins: {
-          setting: 'allow',
-        },
-      },
-    };
-
-    return testCategoryEnabled(
-        testElement, settings.ContentSettingsTypes.PLUGINS, prefsFlash, true,
-        settings.ContentSetting.IMPORTANT_CONTENT);
-  });
-
-  test('test Flash content setting in BLOCK setting', function() {
-    var prefsFlash = {
-      defaults: {
-        plugins: {
-          setting: 'block',
-        },
-      },
-    };
-
-    return testCategoryEnabled(
-        testElement, settings.ContentSettingsTypes.PLUGINS, prefsFlash, false,
-        settings.ContentSetting.IMPORTANT_CONTENT);
+    return testCategoryEnabled(testElement, false);
   });
 
   function testTristateCategory(
@@ -243,21 +229,15 @@ suite('CategoryDefaultSetting', function() {
         });
   }
 
-  test('test special tri-state Cookies category', function() {
-    /**
-     * An example pref where the Cookies category is set to delete when
-     * session ends.
-     */
-    var prefsCookiesSessionOnly = {
-      defaults: {
-        cookies: {
-          setting: 'session_only',
-        },
-      },
-    };
-
+  test('test special tri-state Flash category', function() {
     return testTristateCategory(
-        prefsCookiesSessionOnly, settings.ContentSettingsTypes.COOKIES,
+        prefsFlashDetect, settings.ContentSettingsTypes.PLUGINS,
+        settings.ContentSetting.IMPORTANT_CONTENT, '#subOptionToggle');
+  });
+
+  test('test special tri-state Cookies category', function() {
+    return testTristateCategory(
+        prefsCookesSessionOnly, settings.ContentSettingsTypes.COOKIES,
         settings.ContentSetting.SESSION_ONLY, '#subOptionToggle');
   });
 });

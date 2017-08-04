@@ -70,7 +70,6 @@ static_library("test_support") {
   deps = [
     "//components/autofill/content/renderer",
     "//ipc",
-    "//services/service_manager/public/cpp",
     "//skia",
     "//third_party/WebKit/public:blink",
   ]

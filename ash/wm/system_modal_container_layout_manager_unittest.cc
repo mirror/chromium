@@ -194,7 +194,7 @@ class SystemModalContainerLayoutManagerTest : public AshTestBase {
       keyboard->ShowKeyboard(true);
       if (keyboard->ui()->GetContentsWindow()->bounds().height() == 0) {
         keyboard->ui()->GetContentsWindow()->SetBounds(
-            keyboard::KeyboardBoundsFromRootBounds(
+            keyboard::FullWidthKeyboardBoundsFromRootBounds(
                 Shell::GetPrimaryRootWindow()->bounds(), 100));
       }
     } else {

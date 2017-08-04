@@ -165,6 +165,24 @@ void NetworkHandlerFailureCallback(
   callback.Run(error_name);
 }
 
+void RequirePinSuccess(
+    const std::string& device_path,
+    const std::string& current_pin,
+    const std::string& new_pin,
+    const extensions::NetworkingPrivateChromeOS::VoidCallback& success_callback,
+    const extensions::NetworkingPrivateChromeOS::FailureCallback&
+        failure_callback) {
+  // After RequirePin succeeds, call ChangePIN iff a different new_pin is
+  // provided.
+  if (new_pin.empty() || new_pin == current_pin) {
+    success_callback.Run();
+    return;
+  }
+  NetworkHandler::Get()->network_device_handler()->ChangePin(
+      device_path, current_pin, new_pin, success_callback,
+      base::Bind(&NetworkHandlerFailureCallback, failure_callback));
+}
+
 // Returns the string corresponding to |key|. If the property is a managed
 // dictionary, returns the active value. If the property does not exist or
 // has no active value, returns an empty string.
@@ -248,7 +266,7 @@ void SetProxyEffectiveValue(base::DictionaryValue* dict,
   }
   dict->SetWithoutPathExpansion(::onc::kAugmentationActiveSetting,
                                 std::move(value));
-  dict->SetKey(::onc::kAugmentationUserEditable, base::Value(false));
+  dict->SetBooleanWithoutPathExpansion(::onc::kAugmentationUserEditable, false);
 }
 
 std::string GetProxySettingsType(const UIProxyConfig::Mode& mode) {
@@ -678,29 +696,12 @@ void NetworkingPrivateChromeOS::SetCellularSimState(
     return;
   }
 
-  // TODO(benchan): Add more checks to validate the parameters of this method
-  // and the state of the SIM lock on the cellular device. Consider refactoring
-  // some of the code by moving the logic into shill instead.
-
-  // If |new_pin| is empty, we're trying to enable (require_pin == true) or
-  // disable (require_pin == false) SIM locking.
-  if (new_pin.empty()) {
-    NetworkHandler::Get()->network_device_handler()->RequirePin(
-        device_state->path(), require_pin, current_pin, success_callback,
-        base::Bind(&NetworkHandlerFailureCallback, failure_callback));
-    return;
-  }
-
-  // Otherwise, we're trying to change the PIN from |current_pin| to
-  // |new_pin|, which also requires SIM locking to be enabled, i.e.
-  // require_pin == true.
-  if (!require_pin) {
-    failure_callback.Run(networking_private::kErrorInvalidArguments);
-    return;
-  }
-
-  NetworkHandler::Get()->network_device_handler()->ChangePin(
-      device_state->path(), current_pin, new_pin, success_callback,
+  // Only set a new pin if require_pin is true.
+  std::string set_new_pin = require_pin ? new_pin : "";
+  NetworkHandler::Get()->network_device_handler()->RequirePin(
+      device_state->path(), require_pin, current_pin,
+      base::Bind(&RequirePinSuccess, device_state->path(), current_pin,
+                 set_new_pin, success_callback, failure_callback),
       base::Bind(&NetworkHandlerFailureCallback, failure_callback));
 }
 

@@ -174,7 +174,7 @@ DecryptingDemuxerStream::~DecryptingDemuxerStream() {
 void DecryptingDemuxerStream::DecryptBuffer(
     DemuxerStream::Status status,
     const scoped_refptr<DecoderBuffer>& buffer) {
-  DVLOG(3) << __func__ << ": status = " << status;
+  DVLOG(3) << __func__;
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK_EQ(state_, kPendingDemuxerRead) << state_;
   DCHECK(!read_cb_.is_null());
@@ -204,13 +204,10 @@ void DecryptingDemuxerStream::DecryptBuffer(
     return;
   }
 
-  if (status == kAborted || status == kError) {
-    if (status == kError) {
-      MEDIA_LOG(ERROR, media_log_)
-          << GetDisplayName() << ": demuxer stream read error.";
-    }
+  if (status == kAborted) {
+    DVLOG(2) << "DoDecryptBuffer() - kAborted.";
     state_ = kIdle;
-    base::ResetAndReturn(&read_cb_).Run(status, nullptr);
+    base::ResetAndReturn(&read_cb_).Run(kAborted, NULL);
     return;
   }
 
@@ -288,7 +285,7 @@ void DecryptingDemuxerStream::DeliverBuffer(
     MEDIA_LOG(ERROR, media_log_) << GetDisplayName() << ": decrypt error";
     pending_buffer_to_decrypt_ = NULL;
     state_ = kIdle;
-    base::ResetAndReturn(&read_cb_).Run(kError, nullptr);
+    base::ResetAndReturn(&read_cb_).Run(kAborted, NULL);
     return;
   }
 
@@ -333,8 +330,8 @@ void DecryptingDemuxerStream::OnKeyAdded() {
   }
 
   if (state_ == kWaitingForKey) {
-    MEDIA_LOG(INFO, media_log_)
-        << GetDisplayName() << ": key was added, resuming decrypt";
+    MEDIA_LOG(INFO, media_log_) << GetDisplayName()
+                                << ": key added, resuming decrypt";
     state_ = kPendingDecrypt;
     DecryptPendingBuffer();
   }

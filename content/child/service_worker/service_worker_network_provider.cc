@@ -266,8 +266,9 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
           ChildThreadImpl::current()->thread_safe_sender(),
           base::ThreadTaskRunnerHandle::Get().get());
   // TODO(shimazu): Set registration/attributes directly to |context_|.
-  dispatcher->OnAssociateRegistrationForController(
-      info->provider_id, info->registration, info->attributes);
+  dispatcher->OnAssociateRegistration(-1 /* unused thread_id */,
+                                      info->provider_id, info->registration,
+                                      info->attributes);
   provider_host_.Bind(std::move(info->host_ptr_info));
 }
 

@@ -255,11 +255,6 @@ const char kEnableAutofillCreditCardUploadCvcPromptDescription[] =
     "If enabled, requests missing CVC when offering to upload credit cards to "
     "Google Payments.";
 
-const char kEnableBreakingNewsPushName[] = "Breaking News Push";
-const char kEnableBreakingNewsPushDescription[] =
-    "Listen for breaking news content suggestions (e.g. for New Tab Page) "
-    "through Google Cloud Messaging.";
-
 const char kEnableBrotliName[] = "Brotli Content-Encoding.";
 const char kEnableBrotliDescription[] =
     "Enable Brotli Content-Encoding support.";
@@ -389,6 +384,11 @@ const char kEnableNightLightDescription[] =
 const char kEnablePictureInPictureName[] = "Enable picture in picture.";
 const char kEnablePictureInPictureDescription[] =
     "Enable the picture in picture feature for videos.";
+
+const char kEnableSuggestionsHomeModernLayoutName[] =
+    "Enable modern layout for suggestions.";
+const char kEnableSuggestionsHomeModernLayoutDescription[] =
+    "Enable modern layout for suggestions in Chrome Home.";
 
 const char kEnableTokenBindingName[] = "Token Binding.";
 const char kEnableTokenBindingDescription[] = "Enable Token Binding support.";
@@ -1428,10 +1428,6 @@ const char kChromeHomeExpandButtonName[] = "Chrome Home Expand Button";
 const char kChromeHomeExpandButtonDescription[] =
     "Enables the expand button for Chrome Home.";
 
-const char kChromeHomeModernLayoutName[] = "Modern layout for Chrome Home.";
-const char kChromeHomeModernLayoutDescription[] =
-    "Enables the modern layout for Chrome Home.";
-
 const char kChromeHomeSwipeLogicName[] = "Chrome Home Swipe Logic";
 const char kChromeHomeSwipeLogicDescription[] =
     "Various swipe logic options for Chrome Home for sheet expansion.";
@@ -1595,13 +1591,6 @@ const char kEnableNtpMostLikelyFaviconsFromServerName[] =
 const char kEnableNtpMostLikelyFaviconsFromServerDescription[] =
     "If enabled, missing favicons for NTP tiles get downloaded from Google. "
     "This only applies to tiles that originate from synced history.";
-
-const char kNtpTilesLowerResolutionFaviconsName[] =
-    "Show also lower resolution favicons in NTP tiles.";
-const char kNtpTilesLowerResolutionFaviconsDescription[] =
-    "If enabled, the size limit for a favicon to get displayed in an NTP tile "
-    "decreases. Tiles where the largest available favicon is below this limit "
-    "get displayed as colored tiles.";
 
 const char kEnableNtpOfflinePageDownloadSuggestionsName[] =
     "Show offline page downloads on the New Tab page";
@@ -2096,12 +2085,6 @@ const char kFullscreenToolbarRevealName[] =
 const char kFullscreenToolbarRevealDescription[] =
     "Reveal the toolbar in fullscreen for a short period when the tab strip "
     "has changed.";
-
-const char kContentFullscreenName[] = "Improved Content Fullscreen";
-
-const char kContentFullscreenDescription[] =
-    "Fullscreen content window detaches from main browser window and goes to "
-    "a new space without moving or changing the original browser window.";
 
 const char kTabStripKeyboardFocusName[] = "Tab Strip Keyboard Focus";
 

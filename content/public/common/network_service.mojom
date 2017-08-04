@@ -11,26 +11,16 @@ import "url/mojo/url.mojom";
 
 // Parameters for constructing a network context.
 struct NetworkContextParams {
-  // QUIC user agent.
-  string quic_user_agent_id;
-
   // Points to the cookie file. Currently ignored. An in-memory cookie store is
   // always used instead.
   // TODO(mmenke): Respect this parameter.
   mojo.common.mojom.FilePath? cookie_path;
-
-  // True if an HTTP cache should be used.
-  bool http_cache_enabled = true;
-  // Maximum size of the HTTP cache. 0 means to use the default size.
-  // Ignored if the cache is disabled.
-  int32 http_cache_max_size = 0;
-  // Points to the HTTP cache directory. Ignored if the cache is disabled.
-  // If null and the cache is enabled, an in-memory database is used.
-  mojo.common.mojom.FilePath? http_cache_path;
+  // Points to the cache directory. If null, an in-memory database is used.
+  mojo.common.mojom.FilePath? cache_dir;
 
   // Enabled protocols. Note that these apply to all fetches, including those
   // used to fetch PAC scripts.
-
+  
   // True if data URLs should be supported.
   bool enable_data_url_support = false;
   // True if file URLs should be supported.
@@ -39,9 +29,6 @@ struct NetworkContextParams {
   // True if ftp URLs should be supported.
   // Must be false if built without FTP support.
   bool enable_ftp_url_support = false;
-
-  // Enables HTTP/0.9 on ports other than 80 for HTTP and 443 for HTTPS.
-  bool http_09_on_non_default_ports_enabled = false;
 };
 
 // Represents a distinct context for making network requests, with its own
@@ -63,8 +50,4 @@ interface NetworkService {
   // Creates a new network context with the given parameters.
   CreateNetworkContext(NetworkContext& context,
                        NetworkContextParams params);
-
-  // Disables QUIC for the NetworkService. Affects all existing NetworkContexts,
-  // and all new ones that are created. Once called, QUIC cannot be re-enabled.
-  DisableQuic();
 };

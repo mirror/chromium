@@ -46,8 +46,7 @@ SearchResultTileItemListView::SearchResultTileItemListView(
     AppListViewDelegate* view_delegate)
     : search_box_(search_box),
       is_play_store_app_search_enabled_(
-          features::IsPlayStoreAppSearchEnabled()),
-      is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
+          features::IsPlayStoreAppSearchEnabled()) {
   if (is_play_store_app_search_enabled_) {
     SetLayoutManager(new views::BoxLayout(
         views::BoxLayout::kHorizontal,
@@ -66,9 +65,7 @@ SearchResultTileItemListView::SearchResultTileItemListView(
 
       SearchResultTileItemView* tile_item =
           new SearchResultTileItemView(this, view_delegate);
-      tile_item->SetParentBackgroundColor(is_fullscreen_app_list_enabled_
-                                              ? kCardBackgroundColorFullscreen
-                                              : kCardBackgroundColor);
+      tile_item->SetParentBackgroundColor(kCardBackgroundColor);
       tile_views_.push_back(tile_item);
       AddChildView(tile_item);
     }
@@ -79,9 +76,7 @@ SearchResultTileItemListView::SearchResultTileItemListView(
     for (size_t i = 0; i < kNumSearchResultTiles; ++i) {
       SearchResultTileItemView* tile_item =
           new SearchResultTileItemView(this, view_delegate);
-      tile_item->SetParentBackgroundColor(is_fullscreen_app_list_enabled_
-                                              ? kCardBackgroundColorFullscreen
-                                              : kCardBackgroundColor);
+      tile_item->SetParentBackgroundColor(kCardBackgroundColor);
       tile_item->SetBorder(
           views::CreateEmptyBorder(kTopBottomPadding, 0, kTopBottomPadding, 0));
       tile_views_.push_back(tile_item);
@@ -90,7 +85,8 @@ SearchResultTileItemListView::SearchResultTileItemListView(
   }
 }
 
-SearchResultTileItemListView::~SearchResultTileItemListView() = default;
+SearchResultTileItemListView::~SearchResultTileItemListView() {
+}
 
 void SearchResultTileItemListView::OnContainerSelected(
     bool from_bottom,

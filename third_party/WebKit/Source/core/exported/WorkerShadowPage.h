@@ -59,11 +59,7 @@ class CORE_EXPORT WorkerShadowPage : public WebFrameClient {
   // WebFrameClient overrides.
   std::unique_ptr<WebApplicationCacheHost> CreateApplicationCacheHost(
       WebApplicationCacheHostClient*) override;
-  // Note: usually WebFrameClient implementations override WebFrameClient to
-  // call Close() on the corresponding WebLocalFrame. Shadow pages are set up a
-  // bit differently and clear the WebFrameClient pointer before shutting down,
-  // so the shadow page must also manually call Close() on the corresponding
-  // frame and its widget.
+  void FrameDetached(WebLocalFrame*, DetachType) override;
   void DidFinishDocumentLoad() override;
   service_manager::InterfaceProvider* GetInterfaceProvider() override;
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(

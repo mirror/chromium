@@ -91,14 +91,12 @@ class CC_EXPORT InputHandler {
     ScrollStatus()
         : thread(SCROLL_ON_IMPL_THREAD),
           main_thread_scrolling_reasons(
-              MainThreadScrollingReason::kNotScrollingOnMain),
-          bubble(false) {}
+              MainThreadScrollingReason::kNotScrollingOnMain) {}
     ScrollStatus(ScrollThread thread, uint32_t main_thread_scrolling_reasons)
         : thread(thread),
           main_thread_scrolling_reasons(main_thread_scrolling_reasons) {}
     ScrollThread thread;
     uint32_t main_thread_scrolling_reasons;
-    bool bubble;
   };
 
   enum ScrollInputType {

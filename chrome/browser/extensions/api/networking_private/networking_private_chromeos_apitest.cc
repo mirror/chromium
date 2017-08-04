@@ -880,13 +880,12 @@ IN_PROC_BROWSER_TEST_F(NetworkingPrivateChromeOSApiTest, CellularSimPuk) {
 
 IN_PROC_BROWSER_TEST_F(NetworkingPrivateChromeOSApiTest, GetGlobalPolicy) {
   base::DictionaryValue global_config;
-  global_config.SetKey(
+  global_config.SetBooleanWithoutPathExpansion(
       ::onc::global_network_config::kAllowOnlyPolicyNetworksToAutoconnect,
-      base::Value(true));
-  global_config.SetKey(
-      ::onc::global_network_config::kAllowOnlyPolicyNetworksToConnect,
-      base::Value(false));
-  global_config.SetKey("SomeNewGlobalPolicy", base::Value(false));
+      true);
+  global_config.SetBooleanWithoutPathExpansion(
+      ::onc::global_network_config::kAllowOnlyPolicyNetworksToConnect, false);
+  global_config.SetBooleanWithoutPathExpansion("SomeNewGlobalPolicy", false);
   chromeos::NetworkHandler::Get()
       ->managed_network_configuration_handler()
       ->SetPolicy(::onc::ONC_SOURCE_DEVICE_POLICY,

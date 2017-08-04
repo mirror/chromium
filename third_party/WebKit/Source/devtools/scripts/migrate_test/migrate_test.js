@@ -13,7 +13,6 @@ const recast = require('recast');
 const types = recast.types;
 const b = recast.types.builders;
 
-const migrateUtils = require('./migrate_utils');
 const utils = require('../utils');
 
 const DRY_RUN = process.env.DRY_RUN || false;
@@ -56,13 +55,9 @@ function migrateTest(inputPath, identifierMap) {
     helperScripts.push(filename);
   });
 
-  const testsPath = path.resolve(__dirname, 'tests.txt');
-  const newToOldTests = new Map(fs.readFileSync(testsPath, 'utf-8').split('\n').map(line => line.split(' ').reverse()));
-  const originalTestPath = path.resolve(
-      __dirname, '..', '..', '..', '..', 'LayoutTests', newToOldTests.get(inputPath.slice(inputPath.indexOf('http/'))));
-
-  const srcResourcePaths = resourceScripts.map(s => path.resolve(path.dirname(originalTestPath), s));
-  const destResourcePaths = resourceScripts.map(s => path.resolve(path.dirname(inputPath), s));
+  const outPath = getOutPath(inputPath);
+  const srcResourcePaths = resourceScripts.map(s => path.resolve(path.dirname(inputPath), s));
+  const destResourcePaths = resourceScripts.map(s => path.resolve(path.dirname(outPath), s));
   const relativeResourcePaths = destResourcePaths.map(p => p.slice(p.indexOf('/http/tests') + '/http/tests'.length));
 
   let outputCode;
@@ -85,14 +80,21 @@ function migrateTest(inputPath, identifierMap) {
   } catch (err) {
     console.log('Unable to migrate: ', inputPath);
     console.log('ERROR: ', err);
-    process.exit(1);
+    return;
   }
 
   console.log(outputCode);
   if (!DRY_RUN) {
-    fs.writeFileSync(inputPath, outputCode);
+    mkdirp.sync(path.dirname(outPath));
+
+    fs.writeFileSync(outPath, outputCode);
+    const expectationsPath = inputPath.replace('.html', '-expected.txt');
+    copyExpectations(expectationsPath, outPath);
     copyResourceScripts(srcResourcePaths, destResourcePaths);
-    console.log('Migrated: ', inputPath);
+
+    fs.unlinkSync(inputPath);
+    fs.unlinkSync(expectationsPath);
+    console.log('Migrated to: ', outPath);
   }
 }
 
@@ -176,11 +178,12 @@ function transformTestScript(
    * Create test header based on extracted data
    */
   const headerLines = [];
-  headerLines.push(createExpressionNode(`TestRunner.addResult(\`${bodyText}\\n\`);`));
+  headerLines.push(createExpressionNode(`TestRunner.addResult('${bodyText}\\n');`));
   headerLines.push(createNewLineNode());
   for (const helper of allTestHelpers) {
     headerLines.push(createAwaitExpressionNode(`await TestRunner.loadModule('${helper}');`));
   }
+  headerLines.push(createAwaitExpressionNode(`await TestRunner.loadPanel('${panel}');`));
   headerLines.push(createAwaitExpressionNode(`await TestRunner.showPanel('${panel}');`));
 
   if (domFixture) {
@@ -295,6 +298,19 @@ function print(ast) {
   code = code.replace(/\s*\$\$SECRET_IDENTIFIER_FOR_LINE_BREAK\$\$\(\);/g, '\n');
   const copyrightedCode = copyrightNotice + code + '\n';
   return copyrightedCode;
+}
+
+
+function getOutPath(inputPath) {
+  const nonHttpLayoutTestPrefix = 'LayoutTests/inspector';
+  const httpLayoutTestPrefix = 'LayoutTests/http/tests/inspector';
+  const postfix = inputPath.indexOf(nonHttpLayoutTestPrefix) === -1 ?
+      inputPath.slice(inputPath.indexOf(httpLayoutTestPrefix) + httpLayoutTestPrefix.length + 1)
+          .replace('.html', '.js') :
+      inputPath.slice(inputPath.indexOf(nonHttpLayoutTestPrefix) + nonHttpLayoutTestPrefix.length + 1)
+          .replace('.html', '.js');
+  const out = path.resolve(__dirname, '..', '..', '..', '..', 'LayoutTests', 'http', 'tests', 'devtools', postfix);
+  return out;
 }
 
 function getPanel(inputPath) {

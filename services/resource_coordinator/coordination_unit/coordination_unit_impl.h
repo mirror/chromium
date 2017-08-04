@@ -24,7 +24,6 @@ namespace resource_coordinator {
 
 class CoordinationUnitGraphObserver;
 class FrameCoordinationUnitImpl;
-class WebContentsCoordinationUnitImpl;
 
 class CoordinationUnitImpl : public mojom::CoordinationUnit {
  public:
@@ -36,9 +35,6 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
 
   static const FrameCoordinationUnitImpl* ToFrameCoordinationUnit(
       const CoordinationUnitImpl* coordination_unit);
-  static const WebContentsCoordinationUnitImpl* ToWebContentsCoordinationUnit(
-      const CoordinationUnitImpl* coordination_unit);
-
   static std::vector<CoordinationUnitImpl*> GetCoordinationUnitsOfType(
       CoordinationUnitType type);
 
@@ -68,7 +64,7 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   // of type |CoordinationUnitType|. Note that a callee should
   // never be associated with itself.
   virtual std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
-      CoordinationUnitType type) const;
+      CoordinationUnitType type);
   // Recalculate property internally.
   virtual void RecalculateProperty(const mojom::PropertyType property_type) {}
 
@@ -93,21 +89,15 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
  protected:
   friend class FrameCoordinationUnitImpl;
 
-  virtual void OnPropertyChanged(const mojom::PropertyType property_type,
-                                 const base::Value& value);
   // Propagate property change to relevant |CoordinationUnitImpl| instances.
   virtual void PropagateProperty(mojom::PropertyType property_type,
                                  const base::Value& value) {}
 
   // Coordination unit graph traversal helper functions.
   std::set<CoordinationUnitImpl*> GetChildCoordinationUnitsOfType(
-      CoordinationUnitType type) const;
+      CoordinationUnitType type);
   std::set<CoordinationUnitImpl*> GetParentCoordinationUnitsOfType(
-      CoordinationUnitType type) const;
-
-  const base::ObserverList<CoordinationUnitGraphObserver>& observers() const {
-    return observers_;
-  }
+      CoordinationUnitType type);
 
   const CoordinationUnitID id_;
   std::set<CoordinationUnitImpl*> children_;

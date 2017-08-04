@@ -187,7 +187,7 @@ Polymer({
     this.addClass_('value-prop-loaded');
 
     this.valuePropButtonsDisabled = false;
-    this.$['next-button'].focus();
+    this.$['continue-button'].focus();
   },
 
   /**

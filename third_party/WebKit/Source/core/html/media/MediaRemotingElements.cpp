@@ -87,6 +87,9 @@ MediaRemotingCastMessageElement::MediaRemotingCastMessageElement(
     MediaRemotingInterstitial& interstitial)
     : HTMLDivElement(interstitial.GetDocument()) {
   SetShadowPseudoId(AtomicString("-internal-media-remoting-cast-text-message"));
+  setInnerText(interstitial.GetVideoElement().GetLocale().QueryString(
+                   WebLocalizedString::kMediaRemotingCastText),
+               ASSERT_NO_EXCEPTION);
 }
 
 // ----------------------------

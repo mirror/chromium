@@ -43,11 +43,6 @@ class ExtensionsTest : public testing::Test {
       std::unique_ptr<content::TestBrowserThreadBundle> thread_bundle);
   ~ExtensionsTest() override;
 
-  // Allows setting a custom TestExtensionsBrowserClient. Must only be called
-  // before SetUp().
-  void SetExtensionsBrowserClient(
-      std::unique_ptr<TestExtensionsBrowserClient> extensions_browser_client);
-
   // Returned as a BrowserContext since most users don't need methods from
   // TestBrowserContext.
   content::BrowserContext* browser_context() { return browser_context_.get(); }

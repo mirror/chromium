@@ -22,7 +22,6 @@
 #include "services/ui/ws/operation.h"
 #include "services/ui/ws/server_window_delegate.h"
 #include "services/ui/ws/server_window_observer.h"
-#include "services/ui/ws/server_window_tracker.h"
 #include "services/ui/ws/user_display_manager_delegate.h"
 #include "services/ui/ws/user_id_tracker.h"
 #include "services/ui/ws/user_id_tracker_observer.h"
@@ -358,8 +357,6 @@ class WindowServer : public ServerWindowDelegate,
                               ServerWindow* transient_child) override;
   void OnTransientWindowRemoved(ServerWindow* window,
                                 ServerWindow* transient_child) override;
-  void OnWindowModalTypeChanged(ServerWindow* window,
-                                ModalType old_modal_type) override;
 
   // GpuHostDelegate:
   void OnGpuServiceInitialized() override;
@@ -414,10 +411,6 @@ class WindowServer : public ServerWindowDelegate,
 
   // Provides interfaces to create and manage FrameSinks.
   std::unique_ptr<viz::mojom::FrameSinkManager> frame_sink_manager_;
-
-  // System modal windows not attached to a display are added here. Once
-  // attached to a display they are removed.
-  ServerWindowTracker pending_system_modal_windows_;
 
   DisplayCreationConfig display_creation_config_;
 

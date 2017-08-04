@@ -128,7 +128,6 @@ namespace networking_private {
 
 // static
 const char kErrorAccessToSharedConfig[] = "Error.CannotChangeSharedConfig";
-const char kErrorInvalidArguments[] = "Error.InvalidArguments";
 const char kErrorInvalidNetworkGuid[] = "Error.InvalidNetworkGuid";
 const char kErrorInvalidNetworkOperation[] = "Error.InvalidNetworkOperation";
 const char kErrorNetworkUnavailable[] = "Error.NetworkUnavailable";

@@ -167,8 +167,7 @@ class VoiceInteractionIcon : public ui::Layer {
   void AnimationProgressed() {
     gfx::Transform transform;
 
-    uint64_t now =
-        (base::TimeTicks::Now() - base::TimeTicks()).InMilliseconds();
+    uint64_t now = base::TimeTicks::Now().since_origin().InMilliseconds();
     for (int i = 0; i < DOT_COUNT; ++i) {
       float normalizedTime =
           ((now - kMoleculeAnimationOffset * kMoleculeOrder[i]) %

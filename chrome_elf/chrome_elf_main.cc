@@ -29,10 +29,10 @@ void SignalChromeElf() {
   blacklist::ResetBeacon();
 }
 
-void GetUserDataDirectoryThunk(wchar_t* user_data_dir,
-                               size_t user_data_dir_length,
-                               wchar_t* invalid_user_data_dir,
-                               size_t invalid_user_data_dir_length) {
+extern "C" void GetUserDataDirectoryThunk(wchar_t* user_data_dir,
+                                          size_t user_data_dir_length,
+                                          wchar_t* invalid_user_data_dir,
+                                          size_t invalid_user_data_dir_length) {
   std::wstring user_data_dir_str, invalid_user_data_dir_str;
   bool ret = install_static::GetUserDataDirectory(&user_data_dir_str,
                                                   &invalid_user_data_dir_str);

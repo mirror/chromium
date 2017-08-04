@@ -33,7 +33,6 @@
 #include "components/ntp_snippets/category.h"
 #include "components/ntp_snippets/category_info.h"
 #include "components/ntp_snippets/category_rankers/category_ranker.h"
-#include "components/ntp_snippets/contextual_suggestions_source.h"
 #include "components/ntp_snippets/features.h"
 #include "components/ntp_snippets/pref_names.h"
 #include "components/ntp_snippets/remote/remote_suggestions_fetcher.h"
@@ -44,7 +43,6 @@
 #include "components/prefs/pref_service.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/web_ui.h"
-#include "url/gurl.h"
 
 using ntp_snippets::Category;
 using ntp_snippets::CategoryInfo;
@@ -188,7 +186,7 @@ void SnippetsInternalsMessageHandler::RegisterMessages() {
 
   web_ui()->RegisterMessageCallback(
       "clearClassification",
-      base::Bind(&SnippetsInternalsMessageHandler::HandleClearClassification,
+      base::Bind(&SnippetsInternalsMessageHandler::ClearClassification,
                  base::Unretained(this)));
 
   web_ui()->RegisterMessageCallback(
@@ -204,14 +202,8 @@ void SnippetsInternalsMessageHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "fetchRemoteSuggestionsInTheBackground",
       base::Bind(&SnippetsInternalsMessageHandler::
-                     HandleFetchRemoteSuggestionsInTheBackground,
+                     FetchRemoteSuggestionsInTheBackground,
                  base::Unretained(this)));
-
-  web_ui()->RegisterMessageCallback(
-      "fetchContextualSuggestions",
-      base::Bind(
-          &SnippetsInternalsMessageHandler::HandleFetchContextualSuggestions,
-          base::Unretained(this)));
 
   web_ui()->RegisterMessageCallback(
       "pushDummySuggestionIn10Seconds",
@@ -360,7 +352,7 @@ void SnippetsInternalsMessageHandler::HandleToggleDismissedSuggestions(
   }
 }
 
-void SnippetsInternalsMessageHandler::HandleClearClassification(
+void SnippetsInternalsMessageHandler::ClearClassification(
     const base::ListValue* args) {
   DCHECK_EQ(0u, args->GetSize());
   content_suggestions_service_->user_classifier()
@@ -368,41 +360,11 @@ void SnippetsInternalsMessageHandler::HandleClearClassification(
   SendClassification();
 }
 
-void SnippetsInternalsMessageHandler::
-    HandleFetchRemoteSuggestionsInTheBackground(const base::ListValue* args) {
+void SnippetsInternalsMessageHandler::FetchRemoteSuggestionsInTheBackground(
+    const base::ListValue* args) {
   DCHECK_EQ(0u, args->GetSize());
   remote_suggestions_provider_->RefetchInTheBackground(
       RemoteSuggestionsProvider::FetchStatusCallback());
-}
-
-void SnippetsInternalsMessageHandler::HandleFetchContextualSuggestions(
-    const base::ListValue* args) {
-  DCHECK_EQ(1u, args->GetSize());
-  std::string url_str;
-  args->GetString(0, &url_str);
-  content_suggestions_service_->contextual_suggestions_source()
-      ->FetchContextualSuggestions(
-          GURL(url_str),
-          base::BindOnce(
-              &SnippetsInternalsMessageHandler::OnContextualSuggestionsFetched,
-              weak_ptr_factory_.GetWeakPtr()));
-}
-
-void SnippetsInternalsMessageHandler::OnContextualSuggestionsFetched(
-    ntp_snippets::Status status,
-    const GURL& url,
-    std::vector<ntp_snippets::ContentSuggestion> suggestions) {
-  // Ids start in a range distinct from those created by SendContentSuggestions.
-  int id = 10000;
-  auto suggestions_list = base::MakeUnique<base::ListValue>();
-  for (const ContentSuggestion& suggestion : suggestions) {
-    suggestions_list->Append(PrepareSuggestion(suggestion, id++));
-  }
-  base::DictionaryValue result;
-  result.Set("list", std::move(suggestions_list));
-  web_ui()->CallJavascriptFunctionUnsafe(
-      "chrome.SnippetsInternals.receiveContextualSuggestions", result,
-      base::Value(static_cast<int>(status.code)));
 }
 
 void SnippetsInternalsMessageHandler::HandlePushDummySuggestionIn10Seconds(

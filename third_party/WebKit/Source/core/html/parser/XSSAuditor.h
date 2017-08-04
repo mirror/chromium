@@ -86,8 +86,7 @@ class XSSAuditor {
     kNoTruncation,
     kNormalAttributeTruncation,
     kSrcLikeAttributeTruncation,
-    kScriptLikeAttributeTruncation,
-    kSemicolonSeparatedScriptLikeAttributeTruncation,
+    kScriptLikeAttributeTruncation
   };
 
   enum HrefRestriction { kProhibitSameOriginHref, kAllowSameOriginHref };

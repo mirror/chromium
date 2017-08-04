@@ -41,8 +41,6 @@ InputEventAckState InputEventDispositionToAck(
       return INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS;
     case InputHandlerProxy::DID_HANDLE_NON_BLOCKING:
       return INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING;
-    case InputHandlerProxy::DID_HANDLE_SHOULD_BUBBLE:
-      return INPUT_EVENT_ACK_STATE_CONSUMED_SHOULD_BUBBLE;
   }
   NOTREACHED();
   return INPUT_EVENT_ACK_STATE_UNKNOWN;
@@ -287,12 +285,9 @@ void InputHandlerManager::DispatchNonBlockingEventToMainThread(
 void InputHandlerManager::SetWhiteListedTouchAction(
     int routing_id,
     cc::TouchAction touch_action,
-    uint32_t unique_touch_event_id,
-    InputHandlerProxy::EventDisposition event_disposition) {
-  InputEventAckState input_event_ack_state =
-      InputEventDispositionToAck(event_disposition);
-  client_->SetWhiteListedTouchAction(
-      routing_id, touch_action, unique_touch_event_id, input_event_ack_state);
+    uint32_t unique_touch_event_id) {
+  client_->SetWhiteListedTouchAction(routing_id, touch_action,
+                                     unique_touch_event_id);
 }
 
 }  // namespace content

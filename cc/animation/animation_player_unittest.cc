@@ -4,7 +4,6 @@
 
 #include "cc/animation/animation_player.h"
 
-#include "base/strings/stringprintf.h"
 #include "cc/animation/animation_delegate.h"
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_id_provider.h"
@@ -413,33 +412,26 @@ TEST_F(AnimationPlayerTest, SwitchToLayer) {
 
 TEST_F(AnimationPlayerTest, ToString) {
   player_->AttachElement(element_id_);
-  EXPECT_EQ(
-      base::StringPrintf("AnimationPlayer{id=%d, element_id=%s, animations=[]}",
-                         player_->id(), element_id_.ToString().c_str()),
-      player_->ToString());
+  EXPECT_EQ("AnimationPlayer{id=2, element_id=(1), animations=[]}",
+            player_->ToString());
 
   player_->AddAnimation(
       Animation::Create(base::MakeUnique<FakeFloatAnimationCurve>(15), 42, 73,
                         TargetProperty::OPACITY));
-  EXPECT_EQ(base::StringPrintf("AnimationPlayer{id=%d, element_id=%s, "
-                               "animations=[Animation{id=42, "
-                               "group=73, target_property_id=1, "
-                               "run_state=WAITING_FOR_TARGET_AVAILABILITY}]}",
-                               player_->id(), element_id_.ToString().c_str()),
-            player_->ToString());
+  EXPECT_EQ(
+      "AnimationPlayer{id=2, element_id=(1), animations=[Animation{id=42, "
+      "group=73, target_property_id=1, "
+      "run_state=WAITING_FOR_TARGET_AVAILABILITY}]}",
+      player_->ToString());
 
   player_->AddAnimation(
       Animation::Create(base::MakeUnique<FakeFloatAnimationCurve>(18), 45, 76,
                         TargetProperty::BOUNDS));
   EXPECT_EQ(
-      base::StringPrintf(
-          "AnimationPlayer{id=%d, element_id=%s, "
-          "animations=[Animation{id=42, "
-          "group=73, target_property_id=1, "
-          "run_state=WAITING_FOR_TARGET_AVAILABILITY}, Animation{id=45, "
-          "group=76, "
-          "target_property_id=5, run_state=WAITING_FOR_TARGET_AVAILABILITY}]}",
-          player_->id(), element_id_.ToString().c_str()),
+      "AnimationPlayer{id=2, element_id=(1), animations=[Animation{id=42, "
+      "group=73, target_property_id=1, "
+      "run_state=WAITING_FOR_TARGET_AVAILABILITY}, Animation{id=45, group=76, "
+      "target_property_id=5, run_state=WAITING_FOR_TARGET_AVAILABILITY}]}",
       player_->ToString());
 }
 

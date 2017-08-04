@@ -1,5 +1,4 @@
 This is a testharness.js-based test.
-Found 2809 tests; 2351 PASS, 458 FAIL, 0 TIMEOUT, 0 NOTRUN.
 PASS applet.title: 32 tests
 PASS applet.lang: 32 tests
 PASS applet.dir: 62 tests

@@ -419,7 +419,7 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Basic) {
         EXPECT_TRUE(out);
       },
       [](ScopedDictionaryPrefUpdate* update) {
-        (*update)->SetKey("key.for.boolean", base::Value(false));
+        (*update)->SetBooleanWithoutPathExpansion("key.for.boolean", false);
         bool out = 0;
         ASSERT_TRUE(
             (*update)->GetBooleanWithoutPathExpansion("key.for.boolean", &out));

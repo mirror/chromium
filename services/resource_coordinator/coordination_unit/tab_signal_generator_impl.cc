@@ -4,11 +4,9 @@
 
 #include "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h"
 
-#include <utility>
-
-#include "base/values.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
+#include "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h"
 
 namespace resource_coordinator {
 
@@ -32,6 +30,22 @@ bool TabSignalGeneratorImpl::ShouldObserve(
          coordination_unit_type == CoordinationUnitType::kFrame;
 }
 
+void TabSignalGeneratorImpl::OnPropertyChanged(
+    const CoordinationUnitImpl* coordination_unit,
+    const mojom::PropertyType property_type,
+    const base::Value& value) {
+  if (coordination_unit->id().type == CoordinationUnitType::kFrame) {
+    OnFramePropertyChanged(
+        CoordinationUnitImpl::ToFrameCoordinationUnit(coordination_unit),
+        property_type, value);
+  }
+}
+
+void TabSignalGeneratorImpl::BindToInterface(
+    resource_coordinator::mojom::TabSignalGeneratorRequest request) {
+  bindings_.AddBinding(this, std::move(request));
+}
+
 void TabSignalGeneratorImpl::OnFramePropertyChanged(
     const FrameCoordinationUnitImpl* coordination_unit,
     const mojom::PropertyType property_type,
@@ -49,11 +63,6 @@ void TabSignalGeneratorImpl::OnFramePropertyChanged(
       break;
     }
   }
-}
-
-void TabSignalGeneratorImpl::BindToInterface(
-    resource_coordinator::mojom::TabSignalGeneratorRequest request) {
-  bindings_.AddBinding(this, std::move(request));
 }
 
 }  // namespace resource_coordinator

@@ -81,23 +81,23 @@ void ReadingListSuggestionsProvider::DismissSuggestion(
 
 void ReadingListSuggestionsProvider::FetchSuggestionImage(
     const ContentSuggestion::ID& suggestion_id,
-    ImageFetchedCallback callback) {
+    const ImageFetchedCallback& callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), gfx::Image()));
+      FROM_HERE, base::Bind(callback, gfx::Image()));
 }
 
 void ReadingListSuggestionsProvider::Fetch(
     const Category& category,
     const std::set<std::string>& known_suggestion_ids,
-    FetchDoneCallback callback) {
+    const FetchDoneCallback& callback) {
   LOG(DFATAL) << "ReadingListSuggestionsProvider has no |Fetch| functionality!";
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
-      base::BindOnce(std::move(callback),
-                     Status(StatusCode::PERMANENT_ERROR,
-                            "ReadingListSuggestionsProvider has no |Fetch| "
-                            "functionality!"),
-                     std::vector<ContentSuggestion>()));
+      base::Bind(callback,
+                 Status(StatusCode::PERMANENT_ERROR,
+                        "ReadingListSuggestionsProvider has no |Fetch| "
+                        "functionality!"),
+                 base::Passed(std::vector<ContentSuggestion>())));
 }
 
 void ReadingListSuggestionsProvider::ClearHistory(
@@ -114,9 +114,9 @@ void ReadingListSuggestionsProvider::ClearCachedSuggestions(Category category) {
 
 void ReadingListSuggestionsProvider::GetDismissedSuggestionsForDebugging(
     Category category,
-    DismissedSuggestionsCallback callback) {
+    const DismissedSuggestionsCallback& callback) {
   if (!reading_list_model_ || reading_list_model_->IsPerformingBatchUpdates()) {
-    std::move(callback).Run(std::vector<ContentSuggestion>());
+    callback.Run(std::vector<ContentSuggestion>());
     return;
   }
 
@@ -136,7 +136,7 @@ void ReadingListSuggestionsProvider::GetDismissedSuggestionsForDebugging(
     suggestions.emplace_back(ConvertEntry(entry));
   }
 
-  std::move(callback).Run(std::move(suggestions));
+  callback.Run(std::move(suggestions));
 }
 
 void ReadingListSuggestionsProvider::ClearDismissedSuggestionsForDebugging(

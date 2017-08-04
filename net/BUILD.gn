@@ -430,8 +430,6 @@ component("net") {
       "base/filename_util.h",
       "base/filename_util_internal.cc",
       "base/filename_util_internal.h",
-      "base/hex_utils.cc",
-      "base/hex_utils.h",
       "base/host_mapping_rules.cc",
       "base/host_mapping_rules.h",
       "base/int128.cc",
@@ -1043,8 +1041,6 @@ component("net") {
       "ntlm/ntlm_buffer_reader.h",
       "ntlm/ntlm_buffer_writer.cc",
       "ntlm/ntlm_buffer_writer.h",
-      "ntlm/ntlm_client.cc",
-      "ntlm/ntlm_client.h",
       "ntlm/ntlm_constants.h",
       "proxy/dhcp_proxy_script_adapter_fetcher_win.cc",
       "proxy/dhcp_proxy_script_adapter_fetcher_win.h",
@@ -1801,8 +1797,6 @@ component("net") {
         "ntlm/ntlm_buffer_reader.h",
         "ntlm/ntlm_buffer_writer.cc",
         "ntlm/ntlm_buffer_writer.h",
-        "ntlm/ntlm_client.cc",
-        "ntlm/ntlm_client.h",
         "ntlm/ntlm_constants.h",
       ]
     }
@@ -3539,9 +3533,6 @@ bundle_data("net_unittests_bundle_data") {
     "data/parse_certificate_unittest/policy_qualifiers_empty_sequence.pem",
     "data/parse_certificate_unittest/serial_37_bytes.pem",
     "data/parse_certificate_unittest/serial_negative.pem",
-    "data/parse_certificate_unittest/serial_not_minimal.pem",
-    "data/parse_certificate_unittest/serial_not_number.pem",
-    "data/parse_certificate_unittest/serial_zero.pem",
     "data/parse_certificate_unittest/serial_zero_padded.pem",
     "data/parse_certificate_unittest/serial_zero_padded_21_bytes.pem",
     "data/parse_certificate_unittest/signature_algorithm_null.pem",
@@ -4597,7 +4588,6 @@ test("net_unittests") {
     "base/expiring_cache_unittest.cc",
     "base/file_stream_unittest.cc",
     "base/filename_util_unittest.cc",
-    "base/hex_utils_test.cc",
     "base/host_mapping_rules_unittest.cc",
     "base/host_port_pair_unittest.cc",
     "base/int128_unittest.cc",
@@ -4905,7 +4895,6 @@ test("net_unittests") {
     "ntlm/des_unittest.cc",
     "ntlm/ntlm_buffer_reader_unittest.cc",
     "ntlm/ntlm_buffer_writer_unittest.cc",
-    "ntlm/ntlm_client_unittest.cc",
     "ntlm/ntlm_test_data.h",
     "ntlm/ntlm_unittest.cc",
     "proxy/dhcp_proxy_script_adapter_fetcher_win_unittest.cc",
@@ -5324,7 +5313,6 @@ test("net_unittests") {
       "ntlm/des_unittest.cc",
       "ntlm/ntlm_buffer_reader_unittest.cc",
       "ntlm/ntlm_buffer_writer_unittest.cc",
-      "ntlm/ntlm_client_unittest.cc",
       "ntlm/ntlm_test_data.h",
       "ntlm/ntlm_unittest.cc",
     ]
@@ -5885,21 +5873,6 @@ fuzzer_test("net_http_stream_parser_fuzzer") {
     "//net",
   ]
   dict = "data/fuzzer_dictionaries/net_http_stream_parser_fuzzer.dict"
-}
-
-fuzzer_test("net_ntlm_ntlm_client_fuzzer") {
-  sources = [
-    "ntlm/ntlm_client_fuzzer.cc",
-  ]
-  deps = [
-    ":net_fuzzer_test_support",
-    ":test_support",
-    "//base",
-    "//net",
-    "//net:net_unittests",
-  ]
-  dict = "data/fuzzer_dictionaries/net_ntlm_ntlm_client_fuzzer.dict"
-  seed_corpus = "data/fuzzer_data/ntlm_client_fuzzer/"
 }
 
 if (!disable_brotli_filter) {

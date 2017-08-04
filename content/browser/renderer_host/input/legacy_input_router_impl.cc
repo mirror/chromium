@@ -58,8 +58,6 @@ const char* GetEventAckName(InputEventAckState ack_result) {
       return "CONSUMED";
     case INPUT_EVENT_ACK_STATE_NOT_CONSUMED:
       return "NOT_CONSUMED";
-    case INPUT_EVENT_ACK_STATE_CONSUMED_SHOULD_BUBBLE:
-      return "CONSUMED_SHOULD_BUBBLE";
     case INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS:
       return "NO_CONSUMER_EXISTS";
     case INPUT_EVENT_ACK_STATE_IGNORED:
@@ -511,11 +509,7 @@ void LegacyInputRouterImpl::OnSetTouchAction(cc::TouchAction touch_action) {
 
 void LegacyInputRouterImpl::OnSetWhiteListedTouchAction(
     cc::TouchAction white_listed_touch_action,
-    uint32_t unique_touch_event_id,
-    InputEventAckState ack_result) {
-  // TODO(hayleyferr): Catch the cases that we have filtered out sending the
-  // touchstart.
-
+    uint32_t unique_touch_event_id) {
   touch_action_filter_.OnSetWhiteListedTouchAction(white_listed_touch_action);
   client_->OnSetWhiteListedTouchAction(white_listed_touch_action);
 }

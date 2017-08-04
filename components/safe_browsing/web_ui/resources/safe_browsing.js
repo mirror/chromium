@@ -15,7 +15,7 @@ cr.define('safe_browsing', function() {
         addExperiments(experiments));
     cr.sendWithPromise('getPrefs', []).then((prefs) => addPrefs(prefs));
     cr.sendWithPromise('getDatabaseManagerInfo', []).then(
-        (databaseState) => addDatabaseManagerInfo(databaseState));
+        (databaseState) => addDatabaseInfo(databaseState));
   }
 
   function addExperiments(result) {
@@ -26,6 +26,7 @@ cr.define('safe_browsing', function() {
       experimentsListFormatted += "<div><b>" + result[i + 1] +
           "</b>: " + result[i] + "</div>";
       }
+
       $('experiments-list').innerHTML = experimentsListFormatted;
   }
 
@@ -41,7 +42,7 @@ cr.define('safe_browsing', function() {
   }
 
 
-  function addDatabaseManagerInfo(result) {
+  function addDatabaseInfo(result) {
       var resLength = result.length;
       var preferencesListFormatted = "";
 

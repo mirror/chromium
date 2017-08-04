@@ -54,7 +54,4 @@ class SimpleMobileSitesPageSet(story.StorySet):
 
 class SimpleMobileSitesStoryExpectations(story.expectations.StoryExpectations):
   def SetExpectations(self):
-    self.DisableStory(
-      'https://www.flickr.com/',
-      [story.expectations.ALL],
-      'crbug.com/752228')
+    pass

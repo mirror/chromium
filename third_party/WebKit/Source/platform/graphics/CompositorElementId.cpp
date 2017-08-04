@@ -59,7 +59,7 @@ CompositorElementId CompositorElementIdFromRootEffectId(uint64_t id) {
 CompositorElementIdNamespace NamespaceFromCompositorElementId(
     CompositorElementId element_id) {
   return static_cast<CompositorElementIdNamespace>(
-      element_id.ToInternalValue() %
+      element_id.id_ %
       static_cast<uint64_t>(
           CompositorElementIdNamespace::kMaxRepresentableNamespaceId));
 }

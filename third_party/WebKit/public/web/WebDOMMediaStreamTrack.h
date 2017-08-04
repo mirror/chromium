@@ -63,7 +63,7 @@ class WebDOMMediaStreamTrack {
   BLINK_EXPORT WebMediaStreamTrack Component() const;
 
  private:
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   WebDOMMediaStreamTrack(MediaStreamTrack*);
 #endif
 

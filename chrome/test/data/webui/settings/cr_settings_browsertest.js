@@ -64,6 +64,7 @@ CrSettingsCheckboxTest.prototype = {
 };
 
 TEST_F('CrSettingsCheckboxTest', 'All', function() {
+  settings_checkbox.registerTests();
   mocha.run();
 });
 
@@ -108,6 +109,7 @@ CrSettingsToggleButtonTest.prototype = {
 };
 
 TEST_F('CrSettingsToggleButtonTest', 'All', function() {
+  settings_toggle_button.registerTests();
   mocha.run();
 });
 
@@ -126,6 +128,7 @@ CrSettingsDropdownMenuTest.prototype = {
 };
 
 TEST_F('CrSettingsDropdownMenuTest', 'All', function() {
+  settings_dropdown_menu.registerTests();
   mocha.run();
 });
 
@@ -144,6 +147,7 @@ CrSettingsPrefUtilTest.prototype = {
 };
 
 TEST_F('CrSettingsPrefUtilTest', 'All', function() {
+  settings_prefUtil.registerTests();
   mocha.run();
 });
 
@@ -165,6 +169,7 @@ CrSettingsPrefsTest.prototype = {
 };
 
 TEST_F('CrSettingsPrefsTest', 'All', function() {
+  settings_prefs.registerTests();
   mocha.run();
 });
 
@@ -365,6 +370,7 @@ CrSettingsPeoplePageChangePictureTest.prototype = {
 };
 
 TEST_F('CrSettingsPeoplePageChangePictureTest', 'All', function() {
+  settings_people_page_change_picture.registerTests();
   mocha.run();
 });
 GEN('#else');  // !defined(OS_CHROMEOS)
@@ -391,6 +397,7 @@ CrSettingsPeoplePageManageProfileTest.prototype = {
 };
 
 TEST_F('CrSettingsPeoplePageManageProfileTest', 'All', function() {
+  settings_people_page_manage_profile.registerTests();
   mocha.run();
 });
 GEN('#endif');
@@ -417,6 +424,7 @@ CrSettingsPeoplePageTest.prototype = {
 };
 
 TEST_F('CrSettingsPeoplePageTest', 'All', function() {
+  settings_people_page.registerTests();
   mocha.run();
 });
 
@@ -442,6 +450,7 @@ CrSettingsPeoplePageSyncPageTest.prototype = {
 };
 
 TEST_F('CrSettingsPeoplePageSyncPageTest', 'All', function() {
+  settings_people_page_sync_page.registerTests();
   mocha.run();
 });
 
@@ -465,6 +474,7 @@ CrSettingsRtlTest.prototype = {
 
 TEST_F('CrSettingsRtlTest', 'All', function() {
   settingsHidePagesByDefaultForTest = true;
+  settings_rtl_tests.registerDrawerPanelTests();
   mocha.run();
 });
 
@@ -641,6 +651,7 @@ CrSettingsDefaultBrowserTest.prototype = {
 };
 
 TEST_F('CrSettingsDefaultBrowserTest', 'All', function() {
+  settings_default_browser.registerTests();
   mocha.run();
 });
 
@@ -692,6 +703,7 @@ CrSettingsSearchPageTest.prototype = {
 };
 
 TEST_F('CrSettingsSearchPageTest', 'All', function() {
+  settings_search_page.registerTests();
   mocha.run();
 });
 
@@ -719,6 +731,7 @@ CrSettingsSearchEnginesTest.prototype = {
 };
 
 TEST_F('CrSettingsSearchEnginesTest', 'All', function() {
+  settings_search_engines_page.registerTests();
   mocha.run();
 });
 
@@ -746,6 +759,7 @@ CrSettingsCertificateManagerTest.prototype = {
 };
 
 TEST_F('CrSettingsCertificateManagerTest', 'All', function() {
+  certificate_manager_page.registerTests();
   mocha.run();
 });
 GEN('#endif');
@@ -774,6 +788,7 @@ CrSettingsPrivacyPageTest.prototype = {
 };
 
 TEST_F('CrSettingsPrivacyPageTest', 'All', function() {
+  settings_privacy_page.registerTests();
   mocha.run();
 });
 
@@ -1191,6 +1206,7 @@ CrSettingsMenuTest.prototype = {
 };
 
 TEST_F('CrSettingsMenuTest', 'SettingsMenu', function() {
+  settings_menu.registerTests();
   mocha.run();
 });
 
@@ -1491,6 +1507,7 @@ GEN('#else');
 GEN('#define MAYBE_MainPage MainPage');
 GEN('#endif');
 TEST_F('CrSettingsMainPageTest', 'MAYBE_MainPage', function() {
+  settings_main_page.registerTests();
   mocha.run();
 });
 
@@ -1681,36 +1698,6 @@ CrSettingsDateTimePageTest.prototype = {
 };
 
 TEST_F('CrSettingsDateTimePageTest', 'All', function() {
-  mocha.run();
-});
-
-/**
- * @constructor
- * @extends {CrSettingsBrowserTest}
- */
-function CrSettingsGoogleAssistantPageTest() {}
-
-CrSettingsGoogleAssistantPageTest.prototype = {
-  __proto__: CrSettingsBrowserTest.prototype,
-
-  /** @override */
-  browsePreload:
-      'chrome://md-settings/google_assistant_page/google_assistant_page.html',
-
-  /** @override */
-  commandLineSwitches: [{
-    switchName: 'enable-voice-interaction',
-  }],
-
-  /** @override */
-  extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
-    ROOT_PATH + 'ui/webui/resources/js/promise_resolver.js',
-    '../test_browser_proxy.js',
-    'google_assistant_page_test.js',
-  ]),
-};
-
-TEST_F('CrSettingsGoogleAssistantPageTest', 'All', function() {
   mocha.run();
 });
 

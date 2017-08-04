@@ -106,6 +106,7 @@ HostFrameSinkManager::CreateCompositorFrameSinkSupport(
     CompositorFrameSinkSupportClient* client,
     const FrameSinkId& frame_sink_id,
     bool is_root,
+    bool handles_frame_sink_id_invalidation,
     bool needs_sync_points) {
   DCHECK(frame_sink_manager_impl_);
 
@@ -114,7 +115,7 @@ HostFrameSinkManager::CreateCompositorFrameSinkSupport(
 
   auto support = CompositorFrameSinkSupport::Create(
       client, frame_sink_manager_impl_, frame_sink_id, is_root,
-      needs_sync_points);
+      handles_frame_sink_id_invalidation, needs_sync_points);
   support->SetDestructionCallback(
       base::BindOnce(&HostFrameSinkManager::DestroyCompositorFrameSink,
                      weak_ptr_factory_.GetWeakPtr(), frame_sink_id));
@@ -147,17 +148,18 @@ void HostFrameSinkManager::PerformAssignTemporaryReference(
   // Find the expected embedder for the new surface and assign the temporary
   // reference to it.
   auto iter = frame_sink_data_map_.find(surface_id.frame_sink_id());
-  DCHECK(iter != frame_sink_data_map_.end());
-  const FrameSinkData& data = iter->second;
+  if (iter != frame_sink_data_map_.end()) {
+    const FrameSinkData& data = iter->second;
 
-  // Display roots don't have temporary references to assign.
-  if (data.is_root)
-    return;
+    // Display roots don't have temporary references to assign.
+    if (data.is_root)
+      return;
 
-  if (data.parent.has_value()) {
-    frame_sink_manager_impl_->AssignTemporaryReference(surface_id,
-                                                       data.parent.value());
-    return;
+    if (data.parent.has_value()) {
+      frame_sink_manager_impl_->AssignTemporaryReference(surface_id,
+                                                         data.parent.value());
+      return;
+    }
   }
 
   // We don't have any hierarchy information for what will embed the new
@@ -168,12 +170,8 @@ void HostFrameSinkManager::PerformAssignTemporaryReference(
 void HostFrameSinkManager::OnSurfaceCreated(const SurfaceInfo& surface_info) {
   auto it = frame_sink_data_map_.find(surface_info.id().frame_sink_id());
   // If we've received a bogus or stale SurfaceId from Viz then just ignore it.
-  if (it == frame_sink_data_map_.end()) {
-    // We don't have any hierarchy information for what will embed the new
-    // surface, drop the temporary reference.
-    frame_sink_manager_->DropTemporaryReference(surface_info.id());
+  if (it == frame_sink_data_map_.end())
     return;
-  }
 
   FrameSinkData& frame_sink_data = it->second;
   if (frame_sink_data.client)

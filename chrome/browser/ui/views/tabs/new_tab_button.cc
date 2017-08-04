@@ -4,10 +4,8 @@
 
 #include "chrome/browser/ui/views/tabs/new_tab_button.h"
 
-#include "build/build_config.h"
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/ui/layout_constants.h"
-#include "chrome/browser/ui/views/tabs/browser_tab_strip_controller.h"
 #include "chrome/browser/ui/views/tabs/new_tab_promo.h"
 #include "third_party/skia/include/core/SkColorFilter.h"
 #include "third_party/skia/include/effects/SkBlurMaskFilter.h"
@@ -22,11 +20,6 @@
 #include "ui/display/win/screen_win.h"
 #include "ui/gfx/win/hwnd_util.h"
 #include "ui/views/win/hwnd_util.h"
-#endif
-
-#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
-#include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
-#include "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.h"
 #endif
 
 namespace {
@@ -53,7 +46,6 @@ sk_sp<SkDrawLooper> CreateShadowDrawLooper(SkColor color) {
 NewTabButton::NewTabButton(TabStrip* tab_strip, views::ButtonListener* listener)
     : views::ImageButton(listener),
       tab_strip_(tab_strip),
-      new_tab_promo_(nullptr),
       destroyed_(nullptr),
       new_tab_promo_observer_(this) {
   set_animate_on_state_change(true);
@@ -79,8 +71,8 @@ int NewTabButton::GetTopOffset() {
 
 void NewTabButton::ShowPromo() {
   // Owned by its native widget. Will be destroyed as its widget is destroyed.
-  new_tab_promo_ = NewTabPromo::Create(GetVisibleBounds());
-  new_tab_promo_observer_.Add(new_tab_promo_->GetWidget());
+  NewTabPromo* new_tab_promo = NewTabPromo::CreateSelfOwned(GetVisibleBounds());
+  new_tab_promo_observer_.Add(new_tab_promo->GetWidget());
   NewTabButton::SchedulePaint();
 }
 
@@ -185,11 +177,6 @@ bool NewTabButton::GetHitTestMask(gfx::Path* mask) const {
 }
 
 void NewTabButton::OnWidgetDestroying(views::Widget* widget) {
-#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
-  feature_engagement::NewTabTrackerFactory::GetInstance()
-      ->GetForProfile(tab_strip_->controller()->GetProfile())
-      ->DismissNewTabTracker();
-#endif
   new_tab_promo_observer_.Remove(widget);
   // When the promo widget is destroyed, the NewTabButton needs to be
   // recolored.

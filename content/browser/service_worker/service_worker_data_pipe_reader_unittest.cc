@@ -160,8 +160,9 @@ TEST_P(ServiceWorkerDataPipeReaderTestP, SyncRead) {
     for (int i = 0; i < 1024; ++i) {
       expected_response += kTestData;
       uint32_t written_bytes = sizeof(kTestData) - 1;
-      MojoResult result = data_pipe.producer_handle->WriteData(
-          kTestData, &written_bytes, MOJO_WRITE_DATA_FLAG_NONE);
+      MojoResult result =
+          mojo::WriteDataRaw(data_pipe.producer_handle.get(), kTestData,
+                             &written_bytes, MOJO_WRITE_DATA_FLAG_NONE);
       ASSERT_EQ(MOJO_RESULT_OK, result);
       EXPECT_EQ(sizeof(kTestData) - 1, written_bytes);
     }
@@ -216,8 +217,9 @@ TEST_P(ServiceWorkerDataPipeReaderTestP, SyncAbort) {
     for (int i = 0; i < 1024; ++i) {
       expected_response += kTestData;
       uint32_t written_bytes = sizeof(kTestData) - 1;
-      MojoResult result = data_pipe.producer_handle->WriteData(
-          kTestData, &written_bytes, MOJO_WRITE_DATA_FLAG_NONE);
+      MojoResult result =
+          mojo::WriteDataRaw(data_pipe.producer_handle.get(), kTestData,
+                             &written_bytes, MOJO_WRITE_DATA_FLAG_NONE);
       ASSERT_EQ(MOJO_RESULT_OK, result);
       EXPECT_EQ(sizeof(kTestData) - 1, written_bytes);
     }
@@ -288,8 +290,9 @@ TEST_P(ServiceWorkerDataPipeReaderTestP, AsyncRead) {
 
       // Push a portion of data.
       uint32_t written_bytes = sizeof(kTestData) - 1;
-      MojoResult result = data_pipe.producer_handle->WriteData(
-          kTestData, &written_bytes, MOJO_WRITE_DATA_FLAG_NONE);
+      MojoResult result =
+          mojo::WriteDataRaw(data_pipe.producer_handle.get(), kTestData,
+                             &written_bytes, MOJO_WRITE_DATA_FLAG_NONE);
       ASSERT_EQ(MOJO_RESULT_OK, result);
       EXPECT_EQ(sizeof(kTestData) - 1, written_bytes);
       expected_response += kTestData;
@@ -361,8 +364,9 @@ TEST_P(ServiceWorkerDataPipeReaderTestP, AsyncAbort) {
 
       // Push a portion of data.
       uint32_t written_bytes = sizeof(kTestData) - 1;
-      MojoResult result = data_pipe.producer_handle->WriteData(
-          kTestData, &written_bytes, MOJO_WRITE_DATA_FLAG_NONE);
+      MojoResult result =
+          mojo::WriteDataRaw(data_pipe.producer_handle.get(), kTestData,
+                             &written_bytes, MOJO_WRITE_DATA_FLAG_NONE);
       ASSERT_EQ(MOJO_RESULT_OK, result);
       EXPECT_EQ(sizeof(kTestData) - 1, written_bytes);
       expected_response += kTestData;

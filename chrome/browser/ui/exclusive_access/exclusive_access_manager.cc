@@ -80,13 +80,12 @@ ExclusiveAccessManager::GetExclusiveAccessExitBubbleType() const {
   return EXCLUSIVE_ACCESS_BUBBLE_TYPE_NONE;
 }
 
-void ExclusiveAccessManager::UpdateExclusiveAccessExitBubbleContent(
-    ExclusiveAccessBubbleHideCallback bubble_first_hide_callback) {
+void ExclusiveAccessManager::UpdateExclusiveAccessExitBubbleContent() {
   GURL url = GetExclusiveAccessBubbleURL();
   ExclusiveAccessBubbleType bubble_type = GetExclusiveAccessExitBubbleType();
 
   exclusive_access_context_->UpdateExclusiveAccessExitBubbleContent(
-      url, bubble_type, std::move(bubble_first_hide_callback));
+      url, bubble_type);
 }
 
 GURL ExclusiveAccessManager::GetExclusiveAccessBubbleURL() const {

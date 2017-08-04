@@ -135,7 +135,7 @@ WindowTreeHostMus* GetWindowTreeHostMus(WindowMus* window) {
 }
 
 bool IsInternalProperty(const void* key) {
-  return key == client::kModalKey || key == client::kChildModalParentKey;
+  return key == client::kModalKey;
 }
 
 void SetWindowTypeFromProperties(
@@ -567,27 +567,15 @@ void WindowTreeClient::OnConnectionLost() {
 bool WindowTreeClient::HandleInternalPropertyChanged(WindowMus* window,
                                                      const void* key,
                                                      int64_t old_value) {
-  if (key == client::kModalKey) {
-    const uint32_t change_id =
-        ScheduleInFlightChange(base::MakeUnique<InFlightSetModalTypeChange>(
-            window, static_cast<ui::ModalType>(old_value)));
-    tree_->SetModalType(change_id, window->server_id(),
-                        window->GetWindow()->GetProperty(client::kModalKey));
-    return true;
-  }
-  if (key == client::kChildModalParentKey) {
-    const uint32_t change_id =
-        ScheduleInFlightChange(base::MakeUnique<CrashInFlightChange>(
-            window, ChangeType::CHILD_MODAL_PARENT));
-    Window* child_modal_parent =
-        window->GetWindow()->GetProperty(client::kChildModalParentKey);
-    tree_->SetChildModalParent(
-        change_id, window->server_id(),
-        child_modal_parent ? WindowMus::Get(child_modal_parent)->server_id()
-                           : kInvalidServerId);
-    return true;
-  }
-  return false;
+  if (key != client::kModalKey)
+    return false;
+
+  const uint32_t change_id =
+      ScheduleInFlightChange(base::MakeUnique<InFlightSetModalTypeChange>(
+          window, static_cast<ui::ModalType>(old_value)));
+  tree_->SetModalType(change_id, window->server_id(),
+                      window->GetWindow()->GetProperty(client::kModalKey));
+  return true;
 }
 
 void WindowTreeClient::OnEmbedImpl(
@@ -2123,16 +2111,6 @@ void WindowTreeClient::OnWindowTreeHostMoveCursorToDisplayLocation(
   if (window_manager_client_) {
     window_manager_client_->WmMoveCursorToDisplayLocation(location_in_pixels,
                                                           display_id);
-  }
-}
-
-void WindowTreeClient::OnWindowTreeHostConfineCursorToBounds(
-    const gfx::Rect& bounds_in_pixels,
-    int64_t display_id) {
-  DCHECK(window_manager_client_);
-  if (window_manager_client_) {
-    window_manager_client_->WmConfineCursorToBounds(bounds_in_pixels,
-                                                    display_id);
   }
 }
 

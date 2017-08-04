@@ -81,11 +81,11 @@ class CachedImageFetcherTest : public testing::Test {
     EXPECT_TRUE(database_->IsInitialized());
   }
 
-  void FetchImage(ImageFetchedCallback callback) {
+  void FetchImage(const ImageFetchedCallback& callback) {
     ContentSuggestion::ID content_suggestion_id(
         Category::FromKnownCategory(KnownCategories::ARTICLES), kSnippetID);
-    cached_image_fetcher_->FetchSuggestionImage(
-        content_suggestion_id, GURL(kImageURL), std::move(callback));
+    cached_image_fetcher_->FetchSuggestionImage(content_suggestion_id,
+                                                GURL(kImageURL), callback);
   }
 
   void RunUntilIdle() { mock_task_runner_->RunUntilIdle(); }

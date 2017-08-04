@@ -153,7 +153,7 @@ class GpuVSyncWorker : public base::Thread,
 GpuVSyncWorker::GpuVSyncWorker(
     const gfx::VSyncProvider::UpdateVSyncCallback& callback,
     SurfaceHandle surface_handle)
-    : base::Thread(base::StringPrintf("VSync-%p", surface_handle)),
+    : base::Thread(base::StringPrintf("VSync-%d", surface_handle)),
       callback_(callback),
       surface_handle_(surface_handle) {
   HMODULE gdi32 = GetModuleHandle(L"gdi32");
@@ -558,12 +558,8 @@ GpuVSyncProviderWin::GpuVSyncProviderWin(
 
   // Start the thread.
   base::Thread::Options options;
-  // Realtime priority is needed to ensure the minimal possible wakeup latency
-  // and to ensure that the thread isn't pre-empted when it handles the v-blank
-  // wake-up.  The thread sleeps most of the time and does a tiny amount of
-  // actual work on each cycle. So the increased priority is mostly for the best
-  // possible latency.
-  options.priority = base::ThreadPriority::REALTIME_AUDIO;
+  // TODO(stanisc): might consider even higher priority - REALTIME_AUDIO.
+  options.priority = base::ThreadPriority::DISPLAY;
   vsync_worker_->StartWithOptions(options);
 }
 

@@ -16,7 +16,6 @@
 #include "components/autofill/core/browser/autofill_experiments.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/ntp_snippets/features.h"
-#include "components/ntp_tiles/constants.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "components/payments/core/features.h"
@@ -59,7 +58,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kCCTRedirectPreconnect,
     &kChromeHomeFeature,
     &kChromeHomeExpandButton,
-    &kChromeHomeModernLayout,
     &kChromeHomeSwipeLogic,
     &kContentSuggestionsLargeThumbnail,
     &kContentSuggestionsVideoOverlay,
@@ -94,6 +92,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kSpannableInlineAutocomplete,
     &kSpecialLocaleFeature,
     &kSpecialLocaleWrapper,
+    &kSuggestionsHomeModernLayout,
     &kTabReparenting,
     &kVideoPersistence,
     &kVrBrowsingFeedback,
@@ -108,7 +107,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &ntp_snippets::kForeignSessionsSuggestionsFeature,
     &ntp_snippets::kNotificationsFeature,
     &ntp_snippets::kPublisherFaviconsFromNewServerFeature,
-    &ntp_tiles::kLowerResolutionFaviconsFeature,
     &offline_pages::kBackgroundLoaderForDownloadsFeature,
     &offline_pages::kOfflinePagesCTFeature,  // See crbug.com/620421.
     &offline_pages::kOfflinePagesSharingFeature,
@@ -260,8 +258,8 @@ const base::Feature kSpecialLocaleFeature{"SpecialLocale",
 const base::Feature kSpecialLocaleWrapper{"SpecialLocaleWrapper",
                                           base::FEATURE_ENABLED_BY_DEFAULT};
 
-const base::Feature kChromeHomeModernLayout{"ChromeHomeModernLayout",
-                                            base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kSuggestionsHomeModernLayout{
+    "SuggestionsHomeModernLayout", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kTabReparenting{"TabReparenting",
                                     base::FEATURE_ENABLED_BY_DEFAULT};

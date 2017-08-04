@@ -334,7 +334,7 @@ bool TextTrack::CanBeRendered() const {
 TextTrackCueList* TextTrack::EnsureTextTrackCueList() {
   if (!cues_) {
     cues_ = TextTrackCueList::Create();
-    ScriptWrappableVisitor::WriteBarrier(cues_);
+    ScriptWrappableVisitor::WriteBarrier(this, cues_);
   }
 
   return cues_.Get();

@@ -53,22 +53,8 @@ void MediaStreamDispatcherHost::StreamGenerated(
   DVLOG(1) << __func__ << " label= " << label;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  auto it = dispatchers_.find(render_frame_id);
-  if (it != dispatchers_.end()) {
-    it->second->OnStreamGenerated(page_request_id, label, audio_devices,
-                                  video_devices);
-    return;
-  }
-
-  // TODO(c.padhi): Avoid this hop between threads if possible, see
-  // https://crbug.com/742682.
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::UI, FROM_HERE,
-      base::Bind(&GetMediaStreamDispatcherPtrInfo, render_process_id_,
-                 render_frame_id),
-      base::Bind(&MediaStreamDispatcherHost::OnStreamGenerated,
-                 base::Unretained(this), render_frame_id, page_request_id,
-                 label, audio_devices, video_devices));
+  Send(new MediaStreamMsg_StreamGenerated(
+      render_frame_id, page_request_id, label, audio_devices, video_devices));
 }
 
 void MediaStreamDispatcherHost::StreamGenerationFailed(
@@ -103,20 +89,7 @@ void MediaStreamDispatcherHost::DeviceStopped(int render_frame_id,
            << " device_id=" << device.device.id;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  auto it = dispatchers_.find(render_frame_id);
-  if (it != dispatchers_.end()) {
-    it->second->OnDeviceStopped(label, device);
-    return;
-  }
-
-  // TODO(c.padhi): Avoid this hop between threads if possible, see
-  // https://crbug.com/742682.
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::UI, FROM_HERE,
-      base::Bind(&GetMediaStreamDispatcherPtrInfo, render_process_id_,
-                 render_frame_id),
-      base::Bind(&MediaStreamDispatcherHost::OnDeviceStopped,
-                 base::Unretained(this), render_frame_id, label, device));
+  Send(new MediaStreamMsg_DeviceStopped(render_frame_id, label, device));
 }
 
 void MediaStreamDispatcherHost::DeviceOpened(
@@ -127,21 +100,8 @@ void MediaStreamDispatcherHost::DeviceOpened(
   DVLOG(1) << __func__ << " page_request_id=" << page_request_id;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  auto it = dispatchers_.find(render_frame_id);
-  if (it != dispatchers_.end()) {
-    it->second->OnDeviceOpened(page_request_id, label, video_device);
-    return;
-  }
-
-  // TODO(c.padhi): Avoid this hop between threads if possible, see
-  // https://crbug.com/742682.
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::UI, FROM_HERE,
-      base::Bind(&GetMediaStreamDispatcherPtrInfo, render_process_id_,
-                 render_frame_id),
-      base::Bind(&MediaStreamDispatcherHost::OnDeviceOpened,
-                 base::Unretained(this), render_frame_id, page_request_id,
-                 label, video_device));
+  Send(new MediaStreamMsg_DeviceOpened(
+      render_frame_id, page_request_id, label, video_device));
 }
 
 bool MediaStreamDispatcherHost::OnMessageReceived(const IPC::Message& message) {
@@ -159,27 +119,6 @@ void MediaStreamDispatcherHost::OnChannelClosing() {
 MediaStreamDispatcherHost::~MediaStreamDispatcherHost() {
 }
 
-void MediaStreamDispatcherHost::DeviceOpenFailed(int render_frame_id,
-                                                 int page_request_id) {
-  DVLOG(1) << __func__ << " page_request_id=" << page_request_id;
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  auto it = dispatchers_.find(render_frame_id);
-  if (it != dispatchers_.end()) {
-    it->second->OnDeviceOpenFailed(page_request_id);
-    return;
-  }
-
-  // TODO(c.padhi): Avoid this hop between threads if possible, see
-  // https://crbug.com/742682.
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::UI, FROM_HERE,
-      base::Bind(&GetMediaStreamDispatcherPtrInfo, render_process_id_,
-                 render_frame_id),
-      base::Bind(&MediaStreamDispatcherHost::OnDeviceOpenFailed,
-                 base::Unretained(this), render_frame_id, page_request_id));
-}
-
 void MediaStreamDispatcherHost::GenerateStream(
     int32_t render_frame_id,
     int32_t page_request_id,
@@ -194,12 +133,10 @@ void MediaStreamDispatcherHost::GenerateStream(
            << " user_gesture=" << user_gesture;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  if (!MediaStreamManager::IsOriginAllowed(render_process_id_,
-                                           security_origin)) {
-    StreamGenerationFailed(render_frame_id, page_request_id,
-                           MEDIA_DEVICE_INVALID_SECURITY_ORIGIN_DEPRECATED);
+  // TODO(c.padhi): Report GenerateStream failure to renderer, see
+  // https://crbug.com/742682.
+  if (!MediaStreamManager::IsOriginAllowed(render_process_id_, security_origin))
     return;
-  }
 
   media_stream_manager_->GenerateStream(
       this, render_process_id_, render_frame_id, salt_, page_request_id,
@@ -237,11 +174,10 @@ void MediaStreamDispatcherHost::OpenDevice(int32_t render_frame_id,
            << " security_origin=" << security_origin;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  if (!MediaStreamManager::IsOriginAllowed(render_process_id_,
-                                           security_origin)) {
-    DeviceOpenFailed(render_frame_id, page_request_id);
+  // TODO(c.padhi): Report OpenDevice failure to renderer, see
+  // https://crbug.com/742682.
+  if (!MediaStreamManager::IsOriginAllowed(render_process_id_, security_origin))
     return;
-  }
 
   media_stream_manager_->OpenDevice(this, render_process_id_, render_frame_id,
                                     salt_, page_request_id, device_id, type,
@@ -273,23 +209,6 @@ void MediaStreamDispatcherHost::StreamStarted(const std::string& label) {
   media_stream_manager_->OnStreamStarted(label);
 }
 
-void MediaStreamDispatcherHost::OnStreamGenerated(
-    int render_frame_id,
-    int page_request_id,
-    const std::string& label,
-    const StreamDeviceInfoArray& audio_devices,
-    const StreamDeviceInfoArray& video_devices,
-    mojom::MediaStreamDispatcherPtrInfo dispatcher_info) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  mojom::MediaStreamDispatcherPtr dispatcher =
-      mojo::MakeProxy(std::move(dispatcher_info));
-  DCHECK(dispatcher.is_bound());
-  dispatcher->OnStreamGenerated(page_request_id, label, audio_devices,
-                                video_devices);
-  dispatchers_[render_frame_id] = std::move(dispatcher);
-}
-
 void MediaStreamDispatcherHost::OnStreamGenerationFailed(
     int render_frame_id,
     int page_request_id,
@@ -301,48 +220,6 @@ void MediaStreamDispatcherHost::OnStreamGenerationFailed(
       mojo::MakeProxy(std::move(dispatcher_info));
   DCHECK(dispatcher.is_bound());
   dispatcher->OnStreamGenerationFailed(page_request_id, result);
-  dispatchers_[render_frame_id] = std::move(dispatcher);
-}
-
-void MediaStreamDispatcherHost::OnDeviceOpened(
-    int render_frame_id,
-    int page_request_id,
-    const std::string& label,
-    const StreamDeviceInfo& video_device,
-    mojom::MediaStreamDispatcherPtrInfo dispatcher_info) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  mojom::MediaStreamDispatcherPtr dispatcher =
-      mojo::MakeProxy(std::move(dispatcher_info));
-  DCHECK(dispatcher.is_bound());
-  dispatcher->OnDeviceOpened(page_request_id, label, video_device);
-  dispatchers_[render_frame_id] = std::move(dispatcher);
-}
-
-void MediaStreamDispatcherHost::OnDeviceOpenFailed(
-    int render_frame_id,
-    int page_request_id,
-    mojom::MediaStreamDispatcherPtrInfo dispatcher_info) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  mojom::MediaStreamDispatcherPtr dispatcher =
-      mojo::MakeProxy(std::move(dispatcher_info));
-  DCHECK(dispatcher.is_bound());
-  dispatcher->OnDeviceOpenFailed(page_request_id);
-  dispatchers_[render_frame_id] = std::move(dispatcher);
-}
-
-void MediaStreamDispatcherHost::OnDeviceStopped(
-    int render_frame_id,
-    const std::string& label,
-    const StreamDeviceInfo& device,
-    mojom::MediaStreamDispatcherPtrInfo dispatcher_info) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  mojom::MediaStreamDispatcherPtr dispatcher =
-      mojo::MakeProxy(std::move(dispatcher_info));
-  DCHECK(dispatcher.is_bound());
-  dispatcher->OnDeviceStopped(label, device);
   dispatchers_[render_frame_id] = std::move(dispatcher);
 }
 

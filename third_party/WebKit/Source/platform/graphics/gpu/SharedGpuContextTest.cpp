@@ -32,8 +32,6 @@ class SharedGpuContextTest : public Test {
     SharedGpuContext::SetContextProviderFactoryForTesting(nullptr);
   }
 
-  bool IsUnitTest() { return true; }
-
   FakeGLES2Interface gl_;
 };
 
@@ -82,11 +80,9 @@ TEST_F(SharedGpuContextTest, Canvas2DLayerBridgeAutoRecovery) {
   EXPECT_FALSE(SharedGpuContext::IsValidWithoutRestoring());
   IntSize size(10, 10);
   CanvasColorParams color_params;
-  std::unique_ptr<Canvas2DLayerBridge> bridge =
-      WTF::WrapUnique(new Canvas2DLayerBridge(
-          size, 0, /*msaa sample count*/
-          kNonOpaque, Canvas2DLayerBridge::kEnableAcceleration, color_params,
-          IsUnitTest()));
+  RefPtr<Canvas2DLayerBridge> bridge = AdoptRef(new Canvas2DLayerBridge(
+      size, 0, /*msaa sample count*/
+      kNonOpaque, Canvas2DLayerBridge::kEnableAcceleration, color_params));
   EXPECT_TRUE(bridge->IsAccelerated());
   EXPECT_TRUE(SharedGpuContext::IsValidWithoutRestoring());
   bridge->BeginDestruction();

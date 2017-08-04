@@ -278,9 +278,9 @@ void SupervisedUserManagerImpl::GetPasswordInformation(
 
   bool flag;
   if (GetUserBooleanValue(user_id, kSupervisedUserNeedPasswordUpdate, &flag))
-    result->SetKey(kRequirePasswordUpdate, base::Value(flag));
+    result->SetBooleanWithoutPathExpansion(kRequirePasswordUpdate, flag);
   if (GetUserBooleanValue(user_id, kSupervisedUserIncompleteKey, &flag))
-    result->SetKey(kHasIncompleteKey, base::Value(flag));
+    result->SetBooleanWithoutPathExpansion(kHasIncompleteKey, flag);
 
   std::string salt;
   if (GetUserStringValue(user_id, kSupervisedUserPasswordSalt, &salt))
@@ -359,7 +359,7 @@ void SupervisedUserManagerImpl::SetUserBooleanValue(const std::string& user_id,
                                                     const bool value) {
   PrefService* local_state = g_browser_process->local_state();
   DictionaryPrefUpdate update(local_state, key);
-  update->SetKey(user_id, base::Value(value));
+  update->SetBooleanWithoutPathExpansion(user_id, value);
 }
 
 const user_manager::User* SupervisedUserManagerImpl::FindByDisplayName(

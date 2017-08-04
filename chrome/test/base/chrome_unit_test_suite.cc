@@ -10,7 +10,6 @@
 #include "base/process/process_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_content_browser_client.h"
-#include "chrome/browser/profiles/profile_shortcut_manager.h"
 #include "chrome/browser/ui/webui/chrome_web_ui_controller_factory.h"
 #include "chrome/browser/update_client/chrome_update_query_params_delegate.h"
 #include "chrome/common/chrome_content_client.h"
@@ -113,7 +112,6 @@ void ChromeUnitTestSuite::Initialize() {
   InitializeResourceBundle();
 
   base::DiscardableMemoryAllocator::SetInstance(&discardable_memory_allocator_);
-  ProfileShortcutManager::DisableForUnitTests();
 }
 
 void ChromeUnitTestSuite::Shutdown() {

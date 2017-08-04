@@ -91,10 +91,11 @@ class ContentSettingBubbleContents : public content::WebContentsObserver,
   };
 
   class Favicon;
-  class ListItemContainer;
 
   // This allows ContentSettingBubbleViewsBridge to call SetAnchorRect().
   friend class chrome::ContentSettingBubbleViewsBridge;
+
+  typedef std::map<views::Link*, int> ListItemLinks;
 
   // Applies the colors appropriate for |theme| to the learn more button.
   void StyleLearnMoreButton(const ui::NativeTheme* theme);
@@ -115,8 +116,9 @@ class ContentSettingBubbleContents : public content::WebContentsObserver,
   // Provides data for this bubble.
   std::unique_ptr<ContentSettingBubbleModel> content_setting_bubble_model_;
 
-  ListItemContainer* list_item_container_;
-
+  // Some of our controls, so we can tell what's been clicked when we get a
+  // message.
+  ListItemLinks list_item_links_;
   typedef std::vector<views::RadioButton*> RadioGroup;
   RadioGroup radio_group_;
   views::Link* custom_link_;

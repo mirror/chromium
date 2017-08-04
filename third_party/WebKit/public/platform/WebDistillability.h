@@ -9,7 +9,7 @@ namespace blink {
 
 struct WebDistillabilityFeatures {
   bool is_mobile_friendly;
-  // The rest of the fields are only valid when is_mobile_friendly==false.
+  // The rest of the fields are only valid when isMobileFriendly==false.
   bool open_graph;
   unsigned element_count;
   unsigned anchor_count;

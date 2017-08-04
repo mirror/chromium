@@ -245,11 +245,5 @@ void SharedSession::SendMessageToSink(
   remoter_->SendMessageToSink(*message);
 }
 
-void SharedSession::EstimateTransmissionCapacity(
-    mojom::Remoter::EstimateTransmissionCapacityCallback callback) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  remoter_->EstimateTransmissionCapacity(std::move(callback));
-}
-
 }  // namespace remoting
 }  // namespace media

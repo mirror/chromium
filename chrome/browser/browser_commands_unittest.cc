@@ -21,7 +21,6 @@
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_renderer_host.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -118,8 +117,11 @@ TEST_F(BrowserCommandsTest, ViewSource) {
       content::RenderFrameHostTester::For(
           browser()->tab_strip_model()->GetWebContentsAt(0)->GetMainFrame());
   content::RenderFrameHost* subframe = rfh_tester->AppendChild("subframe");
-  content::NavigationSimulator::NavigateAndCommitFromDocument(
-      GURL(url1_subframe), subframe);
+  content::RenderFrameHostTester* subframe_tester =
+      content::RenderFrameHostTester::For(subframe);
+  subframe_tester->SimulateNavigationStart(GURL(url1_subframe));
+  subframe_tester->SimulateNavigationCommit(GURL(url1_subframe));
+  subframe_tester->SimulateNavigationStop();
 
   // Now start a pending navigation that hasn't committed.
   content::NavigationController& orig_controller =

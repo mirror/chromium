@@ -611,31 +611,32 @@ TEST_F(AudioRendererMixerManagerTest, MixerParamsLatencyPlayback) {
 
   media::AudioParameters params(AudioParameters::AUDIO_PCM_LINEAR,
                                 kChannelLayout, 32000, kBitsPerChannel, 512);
-  params.set_latency_tag(AudioLatency::LATENCY_PLAYBACK);
 
   media::AudioRendererMixer* mixer =
-      GetMixer(kRenderFrameId, params, params.latency_tag(), kDefaultDeviceId,
-               kSecurityOrigin, nullptr);
+      GetMixer(kRenderFrameId, params, AudioLatency::LATENCY_PLAYBACK,
+               kDefaultDeviceId, kSecurityOrigin, nullptr);
 
-  if (AudioLatency::IsResamplingPassthroughSupported(params.latency_tag())) {
-    // Expecting input sample rate
-    EXPECT_EQ(32000, mixer->GetOutputParamsForTesting().sample_rate());
-    // Round up 20 ms (640) to the power of 2.
-    EXPECT_EQ(1024, mixer->GetOutputParamsForTesting().frames_per_buffer());
-  } else {
-    // Expecting hardware sample rate
-    EXPECT_EQ(44100, mixer->GetOutputParamsForTesting().sample_rate());
+#if defined(OS_CHROMEOS)
+  // Expecting input sample rate
+  EXPECT_EQ(32000, mixer->GetOutputParamsForTesting().sample_rate());
+  // Round up 20 ms (640) to the power of 2.
+  EXPECT_EQ(1024, mixer->GetOutputParamsForTesting().frames_per_buffer());
+
+#else
+  // Expecting hardware sample rate
+  EXPECT_EQ(44100, mixer->GetOutputParamsForTesting().sample_rate());
 
 // 20 ms at 44100 is 882 frames per buffer.
 #if defined(OS_WIN)
-    // Round up 882 to the nearest multiple of the output buffer size (128).
-    // which is 7 * 128 = 896
-    EXPECT_EQ(896, mixer->GetOutputParamsForTesting().frames_per_buffer());
+  // Round up 882 to the nearest multiple of the output buffer size (128). which
+  // is 7 * 128 = 896
+  EXPECT_EQ(896, mixer->GetOutputParamsForTesting().frames_per_buffer());
 #else
-    // Round up 882 to the power of 2.
-    EXPECT_EQ(1024, mixer->GetOutputParamsForTesting().frames_per_buffer());
+  // Round up 882 to the power of 2.
+  EXPECT_EQ(1024, mixer->GetOutputParamsForTesting().frames_per_buffer());
 #endif  // defined(OS_WIN)
-  }
+
+#endif  // defined(OS_CHROMEOS)
 
   ReturnMixer(mixer);
 }
@@ -655,23 +656,23 @@ TEST_F(AudioRendererMixerManagerTest,
 
   media::AudioParameters params(AudioParameters::AUDIO_PCM_LINEAR,
                                 kChannelLayout, 32000, kBitsPerChannel, 512);
-  params.set_latency_tag(AudioLatency::LATENCY_PLAYBACK);
 
   media::AudioRendererMixer* mixer =
-      GetMixer(kRenderFrameId, params, params.latency_tag(), kDefaultDeviceId,
-               kSecurityOrigin, nullptr);
+      GetMixer(kRenderFrameId, params, AudioLatency::LATENCY_PLAYBACK,
+               kDefaultDeviceId, kSecurityOrigin, nullptr);
 
-  // 20 ms at 44100 is 882 frames per buffer.
-  if (AudioLatency::IsResamplingPassthroughSupported(params.latency_tag())) {
-    // Expecting input sample rate
-    EXPECT_EQ(32000, mixer->GetOutputParamsForTesting().sample_rate());
-  } else {
-    // Expecting hardware sample rate
-    EXPECT_EQ(44100, mixer->GetOutputParamsForTesting().sample_rate());
-  }
-
-  // Prefer device buffer size (2048) if is larger than 20 ms buffer size.
+// 20 ms at 44100 is 882 frames per buffer.
+#if defined(OS_CHROMEOS)
+  // Expecting input sample rate
+  EXPECT_EQ(32000, mixer->GetOutputParamsForTesting().sample_rate());
+  // Ignore device buffer size, round up 20 ms (640) to the power of 2.
+  EXPECT_EQ(1024, mixer->GetOutputParamsForTesting().frames_per_buffer());
+#else
+  // Expecting hardware sample rate
+  EXPECT_EQ(44100, mixer->GetOutputParamsForTesting().sample_rate());
+  // Prefer device buffer size (2048) if is larger than 20 ms buffer size (882).
   EXPECT_EQ(2048, mixer->GetOutputParamsForTesting().frames_per_buffer());
+#endif
 
   ReturnMixer(mixer);
 }
@@ -726,16 +727,17 @@ TEST_F(AudioRendererMixerManagerTest, MixerParamsLatencyRtc) {
 
   media::AudioParameters params(AudioParameters::AUDIO_PCM_LINEAR,
                                 kChannelLayout, 32000, kBitsPerChannel, 512);
-  params.set_latency_tag(AudioLatency::LATENCY_RTC);
 
   media::AudioRendererMixer* mixer =
-      GetMixer(kRenderFrameId, params, params.latency_tag(), kDefaultDeviceId,
-               kSecurityOrigin, nullptr);
+      GetMixer(kRenderFrameId, params, AudioLatency::LATENCY_RTC,
+               kDefaultDeviceId, kSecurityOrigin, nullptr);
 
-  int output_sample_rate =
-      AudioLatency::IsResamplingPassthroughSupported(params.latency_tag())
-          ? 32000
-          : 44100;
+#if defined(OS_CHROMEOS)
+  int output_sample_rate = 32000;
+#else
+  // Expecting hardware sample rate.
+  int output_sample_rate = 44100;
+#endif  // defined(OS_CHROMEOS)
 
   EXPECT_EQ(output_sample_rate,
             mixer->GetOutputParamsForTesting().sample_rate());
@@ -802,19 +804,18 @@ TEST_F(AudioRendererMixerManagerTest, MixerParamsLatencyInteractive) {
 
   media::AudioParameters params(AudioParameters::AUDIO_PCM_LINEAR,
                                 kChannelLayout, 32000, kBitsPerChannel, 512);
-  params.set_latency_tag(AudioLatency::LATENCY_INTERACTIVE);
 
   media::AudioRendererMixer* mixer =
-      GetMixer(kRenderFrameId, params, params.latency_tag(), kDefaultDeviceId,
-               kSecurityOrigin, nullptr);
+      GetMixer(kRenderFrameId, params, AudioLatency::LATENCY_INTERACTIVE,
+               kDefaultDeviceId, kSecurityOrigin, nullptr);
 
-  if (AudioLatency::IsResamplingPassthroughSupported(params.latency_tag())) {
-    // Expecting input sample rate.
-    EXPECT_EQ(32000, mixer->GetOutputParamsForTesting().sample_rate());
-  } else {
-    // Expecting hardware sample rate.
-    EXPECT_EQ(44100, mixer->GetOutputParamsForTesting().sample_rate());
-  }
+#if defined(OS_CHROMEOS)
+  // Expecting input sample rate.
+  EXPECT_EQ(32000, mixer->GetOutputParamsForTesting().sample_rate());
+#else
+  // Expecting hardware sample rate.
+  EXPECT_EQ(44100, mixer->GetOutputParamsForTesting().sample_rate());
+#endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_ANDROID)
   // If hardware buffer size (128) is less than 1024, use 2048.

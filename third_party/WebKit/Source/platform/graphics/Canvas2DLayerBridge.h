@@ -79,7 +79,7 @@ class SharedContextRateLimiter;
 
 class PLATFORM_EXPORT Canvas2DLayerBridge
     : public NON_EXPORTED_BASE(cc::TextureLayerClient),
-      public ImageBufferSurface {
+      public RefCounted<Canvas2DLayerBridge> {
   WTF_MAKE_NONCOPYABLE(Canvas2DLayerBridge);
 
  public:
@@ -93,8 +93,7 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
                       int msaa_sample_count,
                       OpacityMode,
                       AccelerationMode,
-                      const CanvasColorParams&,
-                      bool is_unit_test = false);
+                      const CanvasColorParams&);
 
   ~Canvas2DLayerBridge() override;
 
@@ -104,26 +103,26 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
                                  out_release_callback) override;
 
   // ImageBufferSurface implementation
-  void FinalizeFrame() override;
-  void DoPaintInvalidation(const FloatRect& dirty_rect) override;
-  void WillOverwriteCanvas() override;
-  PaintCanvas* Canvas() override;
-  void DisableDeferral(DisableDeferralReason) override;
-  bool IsValid() const override;
-  bool Restore() override;
-  WebLayer* Layer() const override;
-  bool IsAccelerated() const override;
-  void SetFilterQuality(SkFilterQuality) override;
-  void SetIsHidden(bool) override;
-  void SetImageBuffer(ImageBuffer*) override;
-  void DidDraw(const FloatRect&) override;
+  void FinalizeFrame();
+  void DoPaintInvalidation(const FloatRect& dirty_rect);
+  void WillOverwriteCanvas();
+  PaintCanvas* Canvas();
+  void DisableDeferral(DisableDeferralReason);
+  bool CheckSurfaceValid();
+  bool RestoreSurface();
+  WebLayer* Layer() const;
+  bool IsAccelerated() const;
+  void SetFilterQuality(SkFilterQuality);
+  void SetIsHidden(bool);
+  void SetImageBuffer(ImageBuffer*);
+  void DidDraw(const FloatRect&);
   bool WritePixels(const SkImageInfo&,
                    const void* pixels,
                    size_t row_bytes,
                    int x,
-                   int y) override;
-  void Flush(FlushReason) override;
-  void FlushGpu(FlushReason) override;
+                   int y);
+  void Flush();
+  void FlushGpu();
   OpacityMode GetOpacityMode() { return opacity_mode_; }
   void DontUseIdleSchedulingForTesting() {
     dont_use_idle_scheduling_for_testing_ = true;
@@ -169,10 +168,6 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
  private:
   void ResetSurface();
   bool IsHidden() { return is_hidden_; }
-  bool CheckSurfaceValid();
-  void Init();
-  void FlushInternal();
-  void FlushGpuInternal();
 
 #if USE_IOSURFACE_FOR_2D_CANVAS
   // All information associated with a CHROMIUM image.
@@ -182,6 +177,7 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
   struct MailboxInfo {
     gpu::Mailbox mailbox_;
     sk_sp<SkImage> image_;
+    RefPtr<Canvas2DLayerBridge> parent_layer_bridge_;
 
 #if USE_IOSURFACE_FOR_2D_CANVAS
     // If this mailbox wraps an IOSurface-backed texture, the ids of the

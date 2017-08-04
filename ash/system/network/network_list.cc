@@ -114,7 +114,7 @@ class NetworkListView::SectionHeaderRowView : public views::View,
   }
 
   virtual void SetIsOn(bool enabled) {
-    toggle_->set_accepts_events(true);
+    toggle_->SetEnabled(true);
     toggle_->SetIsOn(enabled, true);
   }
 
@@ -141,10 +141,9 @@ class NetworkListView::SectionHeaderRowView : public views::View,
     DCHECK_EQ(toggle_, sender);
     // In the event of frequent clicks, helps to prevent a toggle button state
     // from becoming inconsistent with the async operation of enabling /
-    // disabling of mobile radio. The toggle will get unlocked in the next
-    // call to NetworkListView::Update(). Note that we don't disable/enable
-    // because that would clear focus.
-    toggle_->set_accepts_events(false);
+    // disabling of mobile radio. The toggle will get re-enabled in the next
+    // call to NetworkListView::Update().
+    toggle_->SetEnabled(false);
     OnToggleToggled(toggle_->is_on());
   }
 

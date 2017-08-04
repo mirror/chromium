@@ -116,12 +116,15 @@ class SampleFactoryImpl : public sample::Factory {
               mojo::Wait(pipe.get(), MOJO_HANDLE_SIGNAL_READABLE, &state));
     ASSERT_TRUE(state.satisfied_signals & MOJO_HANDLE_SIGNAL_READABLE);
     ASSERT_EQ(MOJO_RESULT_OK,
-              pipe->ReadData(nullptr, &data_size, MOJO_READ_DATA_FLAG_QUERY));
+              ReadDataRaw(
+                  pipe.get(), nullptr, &data_size, MOJO_READ_DATA_FLAG_QUERY));
     ASSERT_NE(0, static_cast<int>(data_size));
     char data[64];
     ASSERT_LT(static_cast<int>(data_size), 64);
-    ASSERT_EQ(MOJO_RESULT_OK, pipe->ReadData(data, &data_size,
-                                             MOJO_READ_DATA_FLAG_ALL_OR_NONE));
+    ASSERT_EQ(
+        MOJO_RESULT_OK,
+        ReadDataRaw(
+            pipe.get(), data, &data_size, MOJO_READ_DATA_FLAG_ALL_OR_NONE));
 
     callback.Run(data);
   }
@@ -268,8 +271,10 @@ TEST_P(HandlePassingTest, DataPipe) {
   // +1 for \0.
   uint32_t data_size = static_cast<uint32_t>(expected_text_reply.size() + 1);
   ASSERT_EQ(MOJO_RESULT_OK,
-            producer_handle->WriteData(expected_text_reply.c_str(), &data_size,
-                                       MOJO_WRITE_DATA_FLAG_ALL_OR_NONE));
+            WriteDataRaw(producer_handle.get(),
+                         expected_text_reply.c_str(),
+                         &data_size,
+                         MOJO_WRITE_DATA_FLAG_ALL_OR_NONE));
 
   bool got_response = false;
   std::string got_text_reply;

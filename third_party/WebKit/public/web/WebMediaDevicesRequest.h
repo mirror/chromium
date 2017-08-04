@@ -62,7 +62,7 @@ class WebMediaDevicesRequest {
 
   BLINK_EXPORT void RequestSucceeded(WebVector<WebMediaDeviceInfo>);
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   WebMediaDevicesRequest(MediaDevicesRequest*);
   operator MediaDevicesRequest*() const;
 #endif

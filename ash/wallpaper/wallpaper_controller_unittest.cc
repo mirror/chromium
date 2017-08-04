@@ -242,7 +242,7 @@ class WallpaperControllerTest : public AshTestBase {
   // given the desired layout.
   wallpaper::WallpaperInfo CreateWallpaperInfo(
       wallpaper::WallpaperLayout layout) {
-    return wallpaper::WallpaperInfo("", layout, wallpaper::DEFAULT,
+    return wallpaper::WallpaperInfo("", layout, user_manager::User::DEFAULT,
                                     base::Time::Now().LocalMidnight());
   }
 

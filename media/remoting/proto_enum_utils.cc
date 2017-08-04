@@ -577,7 +577,6 @@ base::Optional<DemuxerStream::Status> ToDemuxerStreamStatus(
     CASE_RETURN_OTHER(kOk);
     CASE_RETURN_OTHER(kAborted);
     CASE_RETURN_OTHER(kConfigChanged);
-    CASE_RETURN_OTHER(kError);
   }
   return base::nullopt;  // Not a 'default' to ensure compile-time checks.
 }
@@ -590,7 +589,6 @@ ToProtoDemuxerStreamStatus(DemuxerStream::Status value) {
     CASE_RETURN_OTHER(kOk);
     CASE_RETURN_OTHER(kAborted);
     CASE_RETURN_OTHER(kConfigChanged);
-    CASE_RETURN_OTHER(kError);
   }
   return base::nullopt;  // Not a 'default' to ensure compile-time checks.
 }

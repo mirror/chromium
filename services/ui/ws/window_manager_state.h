@@ -67,6 +67,7 @@ class WindowManagerState : public EventDispatcherDelegate,
     return event_dispatcher_.capture_window();
   }
 
+  void ReleaseCaptureBlockedByModalWindow(const ServerWindow* modal_window);
   void ReleaseCaptureBlockedByAnyModalWindow();
 
   // Sets the location of the cursor to a location on display |display_id|.
@@ -285,8 +286,6 @@ class WindowManagerState : public EventDispatcherDelegate,
   ServerWindow* GetRootWindowContaining(gfx::Point* location_in_display,
                                         int64_t* display_id) override;
   void OnEventTargetNotFound(const Event& event, int64_t display_id) override;
-  void OnEventOccurredOutsideOfModalWindow(
-      ServerWindow* modal_transient) override;
 
   // ServerWindowObserver:
   void OnWindowEmbeddedAppDisconnected(ServerWindow* window) override;

@@ -8,10 +8,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <string>
-#include <vector>
+#include <map>
 
-#include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/base/clipboard/clipboard.h"
@@ -80,7 +78,7 @@ class TestClipboard : public Clipboard {
     ~DataStore();
     void Clear();
     uint64_t sequence_number;
-    base::flat_map<FormatType, std::string> data;
+    std::map<FormatType, std::string> data;
     std::string url_title;
     std::string html_src_url;
     SkBitmap image;
@@ -93,7 +91,7 @@ class TestClipboard : public Clipboard {
   DataStore& GetDefaultStore();
 
   ClipboardType default_store_type_;
-  mutable base::flat_map<ClipboardType, DataStore> stores_;
+  mutable std::map<ClipboardType, DataStore> stores_;
   base::Time last_modified_time_;
 
   DISALLOW_COPY_AND_ASSIGN(TestClipboard);

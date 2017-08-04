@@ -488,8 +488,12 @@ cr.define('settings_search_engines_page', function() {
     });
   }
 
-  registerDialogTests();
-  registerSearchEngineEntryTests();
-  registerOmniboxExtensionEntryTests();
-  registerPageTests();
+  return {
+    registerTests: function() {
+      registerDialogTests();
+      registerSearchEngineEntryTests();
+      registerOmniboxExtensionEntryTests();
+      registerPageTests();
+    },
+  };
 });

@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "base/macros.h"
+#include "services/ui/ws/focus_controller_delegate.h"
 #include "services/ui/ws/focus_controller_observer.h"
 #include "services/ui/ws/server_window.h"
 #include "services/ui/ws/test_server_window_delegate.h"
@@ -18,7 +19,10 @@ namespace ui {
 namespace ws {
 namespace {
 
-class TestFocusControllerObserver : public FocusControllerObserver {
+const char kDisallowActiveChildren[] = "disallow-active-children";
+
+class TestFocusControllerObserver : public FocusControllerObserver,
+                                    public FocusControllerDelegate {
  public:
   TestFocusControllerObserver()
       : ignore_explicit_(true),
@@ -45,6 +49,10 @@ class TestFocusControllerObserver : public FocusControllerObserver {
   void set_ignore_explicit(bool ignore) { ignore_explicit_ = ignore; }
 
  private:
+  // FocusControllerDelegate:
+  bool CanHaveActiveChildren(ServerWindow* window) const override {
+    return !window || window->properties().count(kDisallowActiveChildren) == 0;
+  }
   // FocusControllerObserver:
   void OnActivationChanged(ServerWindow* old_active_window,
                            ServerWindow* new_active_window) override {
@@ -79,45 +87,37 @@ TEST(FocusControllerTest, Basic) {
   ServerWindow root(&server_window_delegate, WindowId());
   server_window_delegate.set_root_window(&root);
   root.SetVisible(true);
-  root.set_is_activation_parent(true);
   ServerWindow child(&server_window_delegate, WindowId());
   child.SetVisible(true);
-  child.set_is_activation_parent(true);
   root.Add(&child);
   ServerWindow child_child(&server_window_delegate, WindowId());
   child_child.SetVisible(true);
   child.Add(&child_child);
-  child_child.set_is_activation_parent(true);
-
-  // Sibling of |child|.
-  ServerWindow child2(&server_window_delegate, WindowId());
-  child2.SetVisible(true);
-  root.Add(&child2);
 
   TestFocusControllerObserver focus_observer;
-  FocusController focus_controller(&root);
+  FocusController focus_controller(&focus_observer, &root);
   focus_controller.AddObserver(&focus_observer);
 
   focus_controller.SetFocusedWindow(&child_child);
   EXPECT_EQ(0u, focus_observer.focus_change_count());
 
-  // Remove the ancestor of the focused window, focus should go to |child2|.
+  // Remove the ancestor of the focused window, focus should go to the |root|.
   root.Remove(&child);
   EXPECT_EQ(1u, focus_observer.focus_change_count());
-  EXPECT_EQ(&child2, focus_observer.new_focused_window());
+  EXPECT_EQ(&root, focus_observer.new_focused_window());
   EXPECT_EQ(&child_child, focus_observer.old_focused_window());
   focus_observer.ClearAll();
 
   // Make the focused window invisible. Focus is lost in this case (as no one
   // to give focus to).
-  child2.SetVisible(false);
+  root.SetVisible(false);
   EXPECT_EQ(1u, focus_observer.focus_change_count());
   EXPECT_EQ(nullptr, focus_observer.new_focused_window());
-  EXPECT_EQ(&child2, focus_observer.old_focused_window());
+  EXPECT_EQ(&root, focus_observer.old_focused_window());
   focus_observer.ClearAll();
 
   // Go back to initial state and focus |child_child|.
-  child2.SetVisible(false);
+  root.SetVisible(true);
   root.Add(&child);
   focus_controller.SetFocusedWindow(&child_child);
   EXPECT_EQ(0u, focus_observer.focus_change_count());
@@ -133,17 +133,17 @@ TEST(FocusControllerTest, Basic) {
   focus_controller.SetFocusedWindow(&child_child);
   EXPECT_EQ(0u, focus_observer.focus_change_count());
 
-  // Hide the parent of the focused window, focus is lost as there no visible
-  // windows to move focus to.
+  // Hide the parent of the focused window.
   child.SetVisible(false);
   EXPECT_EQ(1u, focus_observer.focus_change_count());
-  EXPECT_EQ(nullptr, focus_observer.new_focused_window());
+  EXPECT_EQ(&root, focus_observer.new_focused_window());
   EXPECT_EQ(&child_child, focus_observer.old_focused_window());
   focus_observer.ClearAll();
   focus_controller.RemoveObserver(&focus_observer);
 }
 
-TEST(FocusControllerTest, NoFocusableWindows) {
+// Tests that focus shifts correctly if the focused window is destroyed.
+TEST(FocusControllerTest, FocusShiftsOnDestroy) {
   TestServerWindowDelegate server_window_delegate;
   ServerWindow parent(&server_window_delegate, WindowId());
   server_window_delegate.set_root_window(&parent);
@@ -155,40 +155,13 @@ TEST(FocusControllerTest, NoFocusableWindows) {
       new ServerWindow(&server_window_delegate, WindowId()));
   child_second->SetVisible(true);
   parent.Add(child_second.get());
+  std::vector<uint8_t> dummy;
+  // Allow only |parent| to be activated.
+  parent.SetProperty(kDisallowActiveChildren, &dummy);
 
   TestFocusControllerObserver focus_observer;
   focus_observer.set_ignore_explicit(false);
-  FocusController focus_controller(&parent);
-  focus_controller.AddObserver(&focus_observer);
-
-  focus_controller.ActivateNextWindow();
-  EXPECT_EQ(nullptr, focus_observer.old_active_window());
-  EXPECT_EQ(nullptr, focus_observer.new_active_window());
-  EXPECT_EQ(nullptr, focus_observer.old_focused_window());
-  EXPECT_EQ(nullptr, focus_observer.new_focused_window());
-}
-
-// Tests that focus shifts correctly if the focused window is destroyed.
-TEST(FocusControllerTest, FocusShiftsOnDestroy) {
-  TestServerWindowDelegate server_window_delegate;
-  ServerWindow root(&server_window_delegate, WindowId());
-  server_window_delegate.set_root_window(&root);
-  root.SetVisible(true);
-  root.set_is_activation_parent(true);
-  ServerWindow parent(&server_window_delegate, WindowId());
-  root.Add(&parent);
-  parent.SetVisible(true);
-  ServerWindow child_first(&server_window_delegate, WindowId());
-  child_first.SetVisible(true);
-  parent.Add(&child_first);
-  std::unique_ptr<ServerWindow> child_second(
-      new ServerWindow(&server_window_delegate, WindowId()));
-  child_second->SetVisible(true);
-  parent.Add(child_second.get());
-
-  TestFocusControllerObserver focus_observer;
-  focus_observer.set_ignore_explicit(false);
-  FocusController focus_controller(&root);
+  FocusController focus_controller(&focus_observer, &parent);
   focus_controller.AddObserver(&focus_observer);
 
   focus_controller.ActivateNextWindow();
@@ -208,14 +181,9 @@ TEST(FocusControllerTest, FocusShiftsOnDestroy) {
 
 TEST(FocusControllerTest, ActivationSkipsOverHiddenWindow) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow root(&server_window_delegate, WindowId());
-  server_window_delegate.set_root_window(&root);
-  root.SetVisible(true);
-  root.set_is_activation_parent(true);
   ServerWindow parent(&server_window_delegate, WindowId());
-  root.Add(&parent);
+  server_window_delegate.set_root_window(&parent);
   parent.SetVisible(true);
-  parent.set_is_activation_parent(true);
 
   ServerWindow child_first(&server_window_delegate, WindowId());
   ServerWindow child_second(&server_window_delegate, WindowId());
@@ -231,7 +199,7 @@ TEST(FocusControllerTest, ActivationSkipsOverHiddenWindow) {
 
   TestFocusControllerObserver focus_observer;
   focus_observer.set_ignore_explicit(false);
-  FocusController focus_controller(&root);
+  FocusController focus_controller(&focus_observer, &parent);
   focus_controller.AddObserver(&focus_observer);
 
   // Since |child_second| is invisible, activation should cycle from
@@ -266,19 +234,12 @@ TEST(FocusControllerTest, ActivationSkipsOverHiddenWindow) {
 
 TEST(FocusControllerTest, ActivationSkipsOverHiddenContainers) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow root(&server_window_delegate, WindowId());
-  root.SetVisible(true);
-  root.set_is_activation_parent(true);
   ServerWindow parent(&server_window_delegate, WindowId());
-  root.Add(&parent);
-  server_window_delegate.set_root_window(&root);
+  server_window_delegate.set_root_window(&parent);
   parent.SetVisible(true);
-  parent.set_is_activation_parent(true);
 
   ServerWindow child1(&server_window_delegate, WindowId());
-  child1.set_is_activation_parent(true);
   ServerWindow child2(&server_window_delegate, WindowId());
-  child2.set_is_activation_parent(true);
 
   parent.Add(&child1);
   parent.Add(&child2);
@@ -302,7 +263,7 @@ TEST(FocusControllerTest, ActivationSkipsOverHiddenContainers) {
   child22.SetVisible(true);
 
   TestFocusControllerObserver focus_observer;
-  FocusController focus_controller(&root);
+  FocusController focus_controller(&focus_observer, &parent);
   focus_controller.AddObserver(&focus_observer);
 
   focus_controller.ActivateNextWindow();
@@ -317,14 +278,9 @@ TEST(FocusControllerTest, ActivationSkipsOverHiddenContainers) {
 
 TEST(FocusControllerTest, NonFocusableWindowNotActivated) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow root(&server_window_delegate, WindowId());
-  server_window_delegate.set_root_window(&root);
-  root.SetVisible(true);
-  root.set_is_activation_parent(true);
   ServerWindow parent(&server_window_delegate, WindowId());
-  root.Add(&parent);
+  server_window_delegate.set_root_window(&parent);
   parent.SetVisible(true);
-  parent.set_is_activation_parent(true);
 
   ServerWindow child_first(&server_window_delegate, WindowId());
   ServerWindow child_second(&server_window_delegate, WindowId());
@@ -335,7 +291,7 @@ TEST(FocusControllerTest, NonFocusableWindowNotActivated) {
 
   TestFocusControllerObserver focus_observer;
   focus_observer.set_ignore_explicit(false);
-  FocusController focus_controller(&root);
+  FocusController focus_controller(&focus_observer, &parent);
   focus_controller.AddObserver(&focus_observer);
 
   child_first.set_can_focus(false);
@@ -383,32 +339,25 @@ TEST(FocusControllerTest, ActiveWindowMovesToDifferentDisplay) {
   TestServerWindowDelegate2 server_window_delegate;
   ServerWindow root1(&server_window_delegate, WindowId());
   root1.SetVisible(true);
-  root1.set_is_activation_parent(true);
   ServerWindow root2(&server_window_delegate, WindowId());
   root2.SetVisible(true);
-  root2.set_is_activation_parent(true);
 
   ServerWindow child(&server_window_delegate, WindowId());
   root1.Add(&child);
   child.SetVisible(true);
-  child.set_is_activation_parent(true);
-
-  ServerWindow child_child(&server_window_delegate, WindowId());
-  child.Add(&child_child);
-  child_child.SetVisible(true);
 
   TestFocusControllerObserver focus_observer;
   focus_observer.set_ignore_explicit(false);
-  FocusController focus_controller(&root1);
+  FocusController focus_controller(&focus_observer, &root1);
   focus_controller.AddObserver(&focus_observer);
 
-  focus_controller.SetFocusedWindow(&child_child);
-  EXPECT_EQ(&child_child, focus_controller.GetFocusedWindow());
-
-  root2.Add(&child_child);
-  // As the focused window is moving to a different root focus should move
-  // to the parent of the old focused window.
+  focus_controller.SetFocusedWindow(&child);
   EXPECT_EQ(&child, focus_controller.GetFocusedWindow());
+
+  root2.Add(&child);
+  // As the focused window is moving to a different root focus should move
+  // to the root.
+  EXPECT_EQ(&root1, focus_controller.GetFocusedWindow());
 }
 
 }  // namespace ws

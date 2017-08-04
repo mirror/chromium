@@ -11,12 +11,12 @@
   var header = 'Feature-Policy header {"payment" : ["*"]}';
 
   test(() => {
-    var supportedMethods = [ { supportedMethods: 'https://wpt.fyi/payment-request' } ];
+    var supportedInstruments = [ { supportedMethods: 'visa' } ];
     var details = {
       total: { label: 'Test', amount: { currency: 'USD', value: '5.00' } }
     };
     try {
-      new PaymentRequest(supportedMethods, details);
+      new PaymentRequest(supportedInstruments, details);
     } catch (e) {
       assert_unreached();
     }

@@ -683,9 +683,8 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
                         ? element_document.Url()
                         : KURL();
 
-  ExecuteScriptBlock(ClassicPendingScript::Create(element_, position),
-                     script_url);
-  return true;
+  return ExecuteScriptBlock(ClassicPendingScript::Create(element_, position),
+                            script_url);
 }
 
 bool ScriptLoader::FetchClassicScript(
@@ -796,9 +795,29 @@ PendingScript* ScriptLoader::CreatePendingScript() {
   return nullptr;
 }
 
-// Steps 3--7 of https://html.spec.whatwg.org/#execute-the-script-block
+ScriptLoader::ExecuteScriptResult ScriptLoader::ExecuteScript(
+    const Script* script) {
+  double script_exec_start_time = MonotonicallyIncreasingTime();
+  ExecuteScriptResult result = DoExecuteScript(script);
+
+  // NOTE: we do not check m_willBeParserExecuted here, since
+  // m_willBeParserExecuted is false for inline scripts, and we want to
+  // include inline script execution time as part of parser blocked script
+  // execution time.
+  if (async_exec_type_ == ScriptRunner::kNone)
+    DocumentParserTiming::From(element_->GetDocument())
+        .RecordParserBlockedOnScriptExecutionDuration(
+            MonotonicallyIncreasingTime() - script_exec_start_time,
+            WasCreatedDuringDocumentWrite());
+  return result;
+}
+
+// https://html.spec.whatwg.org/#execute-the-script-block
 // with additional support for HTML imports.
-// Steps 2 and 8 are handled in ExecuteScriptBlock().
+// Note that Steps 2 and 8 must be handled by the caller of doExecuteScript(),
+// i.e. load/error events are dispatched by the caller.
+// Steps 3--7 are implemented here in doExecuteScript().
+// TODO(hiroshige): Move event dispatching code to doExecuteScript().
 ScriptLoader::ExecuteScriptResult ScriptLoader::DoExecuteScript(
     const Script* script) {
   DCHECK(already_started_);
@@ -893,7 +912,7 @@ void ScriptLoader::Execute() {
 }
 
 // https://html.spec.whatwg.org/#execute-the-script-block
-void ScriptLoader::ExecuteScriptBlock(PendingScript* pending_script,
+bool ScriptLoader::ExecuteScriptBlock(PendingScript* pending_script,
                                       const KURL& document_url) {
   DCHECK(pending_script);
   DCHECK_EQ(pending_script->IsExternal(), is_external_script_);
@@ -910,51 +929,39 @@ void ScriptLoader::ExecuteScriptBlock(PendingScript* pending_script,
   Document* context_document = element_document->ContextDocument();
   if (original_document_ != context_document &&
       script->GetScriptType() == ScriptType::kModule)
-    return;
+    return false;
 
   // 2. "If the script's script is null, fire an event named error at the
   //     element, and abort these steps."
   if (error_occurred) {
     DispatchErrorEvent();
-    return;
+    return false;
   }
 
   if (was_canceled)
-    return;
+    return false;
 
-  double script_exec_start_time = MonotonicallyIncreasingTime();
-
-  // Steps 3--7 are in DoExecuteScript().
-  ExecuteScriptResult result = DoExecuteScript(script);
-
-  // NOTE: we do not check m_willBeParserExecuted here, since
-  // m_willBeParserExecuted is false for inline scripts, and we want to
-  // include inline script execution time as part of parser blocked script
-  // execution time.
-  if (async_exec_type_ == ScriptRunner::kNone) {
-    DocumentParserTiming::From(element_->GetDocument())
-        .RecordParserBlockedOnScriptExecutionDuration(
-            MonotonicallyIncreasingTime() - script_exec_start_time,
-            WasCreatedDuringDocumentWrite());
-  }
-
-  switch (result) {
+  // Steps 3--7 are in ExecuteScript().
+  switch (ExecuteScript(script)) {
     case ExecuteScriptResult::kShouldFireLoadEvent:
       // 8. "If the script is from an external file, then fire an event named
       //     load at the script element."
       if (is_external)
         DispatchLoadEvent();
-      break;
+      return true;
 
     case ExecuteScriptResult::kShouldFireErrorEvent:
       // Consider as if "the script's script is null" retrospectively,
       // due to CSP check failures etc., which are considered as load failure.
       DispatchErrorEvent();
-      break;
+      return false;
 
     case ExecuteScriptResult::kShouldFireNone:
-      break;
+      return true;
   }
+
+  NOTREACHED();
+  return false;
 }
 
 void ScriptLoader::PendingScriptFinished(PendingScript* pending_script) {

@@ -599,7 +599,7 @@ int SearchBoxView::GetSearchBoxBorderCornerRadiusForState(
 SkColor SearchBoxView::GetBackgroundColorForState(
     AppListModel::State state) const {
   if (state == AppListModel::STATE_SEARCH_RESULTS)
-    return kCardBackgroundColorFullscreen;
+    return kSearchBoxBackgroundDefault;
   return background_color_;
 }
 

@@ -63,7 +63,6 @@
 #include "platform/wtf/dtoa/utils.h"
 #include "platform/wtf/text/StringBuffer.h"
 #include "platform/wtf/text/StringHash.h"
-#include "public/web/WebSerializedScriptValueVersion.h"
 
 namespace blink {
 
@@ -204,8 +203,7 @@ inline static bool IsByteSwappedWiredData(const uint8_t* data, size_t length) {
 }
 
 static void SwapWiredDataIfNeeded(uint8_t* buffer, size_t buffer_size) {
-  if (buffer_size % sizeof(UChar))
-    return;
+  DCHECK(!(buffer_size % sizeof(UChar)));
 
   if (!IsByteSwappedWiredData(buffer, buffer_size))
     return;
@@ -604,13 +602,5 @@ void SerializedScriptValue::RegisterMemoryAllocatedWithCurrentScriptContext() {
       buffer.RegisterExternalAllocationWithCurrentContext();
   }
 }
-
-// This ensures that the version number published in
-// WebSerializedScriptValueVersion.h matches the serializer's understanding.
-// TODO(jbroman): Fix this to also account for the V8-side version. See
-// https://crbug.com/704293.
-static_assert(kSerializedScriptValueVersion ==
-                  SerializedScriptValue::kWireFormatVersion,
-              "Update WebSerializedScriptValueVersion.h.");
 
 }  // namespace blink

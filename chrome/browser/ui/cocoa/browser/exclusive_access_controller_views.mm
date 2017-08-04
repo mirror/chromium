@@ -18,18 +18,6 @@
 #include "ui/base/cocoa/cocoa_base_utils.h"
 #import "ui/gfx/mac/coordinate_conversion.h"
 
-namespace {
-
-// If |callback| was never passed to |ExclusiveAccessBubbleViews|, calls it
-// with |kNotShown|, otherwise does nothing.
-void CallHideCallbackAsNotShownIfNecessary(
-    ExclusiveAccessBubbleHideCallback callback) {
-  if (callback)
-    std::move(callback).Run(ExclusiveAccessBubbleHideReason::kNotShown);
-}
-
-}  // anonymous namespace
-
 ExclusiveAccessController::ExclusiveAccessController(
     BrowserWindowController* controller,
     Browser* browser)
@@ -43,16 +31,13 @@ ExclusiveAccessController::ExclusiveAccessController(
                  base::Unretained(this)));
 }
 
-ExclusiveAccessController::~ExclusiveAccessController() {
-  CallHideCallbackAsNotShownIfNecessary(std::move(bubble_first_hide_callback_));
-}
+ExclusiveAccessController::~ExclusiveAccessController() {}
 
 void ExclusiveAccessController::Show() {
   // Hide the backspace shortcut bubble, to avoid overlapping.
   new_back_shortcut_bubble_.reset();
 
-  views_bubble_.reset(new ExclusiveAccessBubbleViews(
-      this, url_, bubble_type_, std::move(bubble_first_hide_callback_)));
+  views_bubble_.reset(new ExclusiveAccessBubbleViews(this, url_, bubble_type_));
 }
 
 void ExclusiveAccessController::MaybeShowNewBackShortcutBubble(bool forward) {
@@ -94,7 +79,6 @@ void ExclusiveAccessController::Destroy() {
   views_bubble_.reset();
   url_ = GURL();
   bubble_type_ = EXCLUSIVE_ACCESS_BUBBLE_TYPE_NONE;
-  CallHideCallbackAsNotShownIfNecessary(std::move(bubble_first_hide_callback_));
 }
 
 Profile* ExclusiveAccessController::GetProfile() {
@@ -123,7 +107,6 @@ void ExclusiveAccessController::EnterFullscreen(
     ExclusiveAccessBubbleType bubble_type) {
   url_ = url;
   bubble_type_ = bubble_type;
-  CallHideCallbackAsNotShownIfNecessary(std::move(bubble_first_hide_callback_));
   if (browser_->exclusive_access_manager()
           ->fullscreen_controller()
           ->IsWindowFullscreenForTabOrPending())
@@ -138,12 +121,9 @@ void ExclusiveAccessController::ExitFullscreen() {
 
 void ExclusiveAccessController::UpdateExclusiveAccessExitBubbleContent(
     const GURL& url,
-    ExclusiveAccessBubbleType bubble_type,
-    ExclusiveAccessBubbleHideCallback bubble_first_hide_callback) {
+    ExclusiveAccessBubbleType bubble_type) {
   url_ = url;
   bubble_type_ = bubble_type;
-  CallHideCallbackAsNotShownIfNecessary(std::move(bubble_first_hide_callback_));
-  bubble_first_hide_callback_ = std::move(bubble_first_hide_callback);
   [controller_ updateFullscreenExitBubble];
 }
 

@@ -265,8 +265,7 @@ void CloudPolicyClientRegistrationHelper::OnGetUserInfoSuccess(
   client_->Register(
       registration_type_,
       enterprise_management::DeviceRegisterRequest::FLAVOR_USER_REGISTRATION,
-      enterprise_management::LicenseType::UNDEFINED, oauth_access_token_,
-      std::string(), std::string(), std::string());
+      oauth_access_token_, std::string(), std::string(), std::string());
 }
 
 void CloudPolicyClientRegistrationHelper::OnPolicyFetched(

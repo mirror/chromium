@@ -202,7 +202,6 @@ class DecryptingAudioDecoderTest : public testing::Test {
     decoder_->Decode(encrypted_buffer_,
                      base::Bind(&DecryptingAudioDecoderTest::DecodeDone,
                                 base::Unretained(this)));
-
     base::RunLoop().RunUntilIdle();
   }
 

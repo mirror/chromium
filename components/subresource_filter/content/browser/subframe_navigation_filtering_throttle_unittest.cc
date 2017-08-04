@@ -199,11 +199,11 @@ TEST_F(SubframeNavigationFilteringThrottleTest, FilterSubsubframe) {
       content::RenderFrameHostTester::For(main_rfh())
           ->AppendChild("parent-sub");
   GURL test_url = GURL("https://example.test");
-  auto navigation = content::NavigationSimulator::CreateRendererInitiated(
-      test_url, parent_subframe);
-  navigation->Start();
+  content::RenderFrameHostTester::For(parent_subframe)
+      ->SimulateNavigationStart(test_url);
   InitializeDocumentSubresourceFilter(GURL("https://example.test"));
-  navigation->Commit();
+  content::RenderFrameHostTester::For(parent_subframe)
+      ->SimulateNavigationCommit(test_url);
 
   CreateTestSubframeAndInitNavigation(
       GURL("https://example.test/disallowed.html"), parent_subframe);

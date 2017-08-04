@@ -90,8 +90,9 @@ void FakeRemotingDataStreamSender::ConsumeDataChunk(
     uint32_t size,
     uint32_t total_payload_size) {
   next_frame_data_.resize(total_payload_size);
-  MojoResult result = consumer_handle_->ReadData(
-      next_frame_data_.data() + offset, &size, MOJO_READ_DATA_FLAG_ALL_OR_NONE);
+  MojoResult result = mojo::ReadDataRaw(consumer_handle_.get(),
+                                        next_frame_data_.data() + offset, &size,
+                                        MOJO_READ_DATA_FLAG_ALL_OR_NONE);
   CHECK(result == MOJO_RESULT_OK);
   ++consume_data_chunk_count_;
 }
@@ -150,11 +151,6 @@ void FakeRemoter::Stop(mojom::RemotingStopReason reason) {
 }
 
 void FakeRemoter::SendMessageToSink(const std::vector<uint8_t>& message) {}
-
-void FakeRemoter::EstimateTransmissionCapacity(
-    mojom::Remoter::EstimateTransmissionCapacityCallback callback) {
-  std::move(callback).Run(10000000 / 8.0);
-}
 
 void FakeRemoter::Started() {
   source_->OnStarted();

@@ -29,46 +29,45 @@ class WebDatabaseBackend;
 namespace autofill {
 
 class AutofillProfile;
-class AutofillWebDataServiceObserverOnDBSequence;
+class AutofillWebDataServiceObserverOnDBThread;
 class CreditCard;
 
 // Backend implentation for the AutofillWebDataService. This class runs on the
-// DB sequence, as it handles reads and writes to the WebDatabase, and functions
-// in it should only be called from that sequence. Most functions here are just
+// DB thread, as it handles reads and writes to the WebDatabase, and functions
+// in it should only be called from that thread. Most functions here are just
 // the implementations of the corresponding functions in the Autofill
 // WebDataService.
-// This class is destroyed on the DB sequence.
+// This class is destroyed on the DB thread.
 class AutofillWebDataBackendImpl
     : public base::RefCountedDeleteOnSequence<AutofillWebDataBackendImpl>,
       public AutofillWebDataBackend {
  public:
   // |web_database_backend| is used to access the WebDatabase directly for
-  // Sync-related operations. |ui_task_runner| and |db_task_runner| are the task
-  // runners that this class uses for UI and DB tasks respectively.
+  // Sync-related operations. |ui_thread| and |db_thread| are the threads that
+  // this class uses as its UI and DB threads respectively.
   // |on_changed_callback| is a closure which can be used to notify the UI
-  // sequence of changes initiated by Sync (this callback may be called multiple
+  // thread of changes initiated by Sync (this callback may be called multiple
   // times).
   AutofillWebDataBackendImpl(
       scoped_refptr<WebDatabaseBackend> web_database_backend,
-      scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
-      scoped_refptr<base::SingleThreadTaskRunner> db_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> ui_thread,
+      scoped_refptr<base::SingleThreadTaskRunner> db_thread,
       const base::Closure& on_changed_callback,
       const base::Callback<void(syncer::ModelType)>& on_sync_started_callback);
 
   // AutofillWebDataBackend implementation.
-  void AddObserver(
-      AutofillWebDataServiceObserverOnDBSequence* observer) override;
+  void AddObserver(AutofillWebDataServiceObserverOnDBThread* observer) override;
   void RemoveObserver(
-      AutofillWebDataServiceObserverOnDBSequence* observer) override;
+      AutofillWebDataServiceObserverOnDBThread* observer) override;
   WebDatabase* GetDatabase() override;
   void RemoveExpiredFormElements() override;
   void NotifyOfMultipleAutofillChanges() override;
   void NotifyThatSyncHasStarted(syncer::ModelType model_type) override;
 
-  // Returns a SupportsUserData object that may be used to store data accessible
-  // from the DB sequence. Should be called only from the DB sequence, and will
-  // be destroyed on the DB sequence soon after ShutdownOnUISequence() is
-  // called.
+  // Returns a SupportsUserData objects that may be used to store data
+  // owned by the DB thread on this object. Should be called only from
+  // the DB thread, and will be destroyed on the DB thread soon after
+  // |ShutdownOnUIThread()| is called.
   base::SupportsUserData* GetDBUserData();
 
   void ResetUserData();
@@ -199,20 +198,20 @@ class AutofillWebDataBackendImpl
     DISALLOW_COPY_AND_ASSIGN(SupportsUserDataAggregatable);
   };
 
-  // The task runner that this class uses for its UI tasks.
-  scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner_;
+  // The task runner that this class uses as its UI thread.
+  scoped_refptr<base::SingleThreadTaskRunner> ui_thread_;
 
-  // The task runner that this class uses for its DB tasks.
-  scoped_refptr<base::SingleThreadTaskRunner> db_task_runner_;
+  // The task runner that this class uses as its DB thread.
+  scoped_refptr<base::SingleThreadTaskRunner> db_thread_;
 
-  // Storage for user data to be accessed only on the DB sequence. May
+  // Storage for user data to be accessed only on the DB thread. May
   // be used e.g. for SyncableService subclasses that need to be owned
   // by this object. Is created on first call to |GetDBUserData()|.
   std::unique_ptr<SupportsUserDataAggregatable> user_data_;
 
   WebDatabase::State RemoveExpiredFormElementsImpl(WebDatabase* db);
 
-  base::ObserverList<AutofillWebDataServiceObserverOnDBSequence>
+  base::ObserverList<AutofillWebDataServiceObserverOnDBThread>
       db_observer_list_;
 
   // WebDatabaseBackend allows direct access to DB.

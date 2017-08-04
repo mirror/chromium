@@ -28,9 +28,6 @@
 
 @protocol ApplicationCommands<NSObject, ApplicationSettingsCommands>
 
-// Dismisses all modal dialogs.
-- (void)dismissModalDialogs;
-
 // Shows the Settings UI.
 - (void)showSettings;
 
@@ -41,9 +38,6 @@
 
 // Starts a voice search on the current BVC.
 - (void)startVoiceSearch:(StartVoiceSearchCommand*)command;
-
-// Shows the History UI.
-- (void)showHistory;
 
 @end
 

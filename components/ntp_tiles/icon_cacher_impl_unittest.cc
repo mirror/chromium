@@ -437,7 +437,9 @@ TEST_F(IconCacherTestPopularSites, LargeNotCachedAndFetchPerformedOnlyOnce) {
 class IconCacherTestMostLikely : public IconCacherTestBase {
  protected:
   IconCacherTestMostLikely()
-      : fetcher_for_large_icon_service_(
+      : large_icon_service_background_task_runner_(
+            new base::TestSimpleTaskRunner()),
+        fetcher_for_large_icon_service_(
             base::MakeUnique<::testing::StrictMock<MockImageFetcher>>()),
         fetcher_for_icon_cacher_(
             base::MakeUnique<::testing::StrictMock<MockImageFetcher>>()) {
@@ -451,6 +453,8 @@ class IconCacherTestMostLikely : public IconCacherTestBase {
                 SetDesiredImageFrameSize(gfx::Size(128, 128)));
   }
 
+  scoped_refptr<base::TestSimpleTaskRunner>
+      large_icon_service_background_task_runner_;
   std::unique_ptr<MockImageFetcher> fetcher_for_large_icon_service_;
   std::unique_ptr<MockImageFetcher> fetcher_for_icon_cacher_;
 };
@@ -463,7 +467,8 @@ TEST_F(IconCacherTestMostLikely, Cached) {
   PreloadIcon(page_url, icon_url, favicon_base::TOUCH_ICON, 128, 128);
 
   favicon::LargeIconService large_icon_service(
-      &favicon_service_, std::move(fetcher_for_large_icon_service_));
+      &favicon_service_, large_icon_service_background_task_runner_,
+      std::move(fetcher_for_large_icon_service_));
   IconCacherImpl cacher(&favicon_service_, &large_icon_service,
                         std::move(fetcher_for_icon_cacher_));
 
@@ -497,7 +502,8 @@ TEST_F(IconCacherTestMostLikely, NotCachedAndFetchSucceeded) {
   }
 
   favicon::LargeIconService large_icon_service(
-      &favicon_service_, std::move(fetcher_for_large_icon_service_));
+      &favicon_service_, large_icon_service_background_task_runner_,
+      std::move(fetcher_for_large_icon_service_));
   IconCacherImpl cacher(&favicon_service_, &large_icon_service,
                         std::move(fetcher_for_icon_cacher_));
 
@@ -505,7 +511,7 @@ TEST_F(IconCacherTestMostLikely, NotCachedAndFetchSucceeded) {
   // Both these task runners need to be flushed in order to get |done| called by
   // running the main loop.
   WaitForHistoryThreadTasksToFinish();
-  scoped_task_environment_.RunUntilIdle();
+  large_icon_service_background_task_runner_->RunUntilIdle();
 
   loop.Run();
   EXPECT_FALSE(IconIsCachedFor(page_url, favicon_base::FAVICON));
@@ -535,7 +541,8 @@ TEST_F(IconCacherTestMostLikely, NotCachedAndFetchFailed) {
   }
 
   favicon::LargeIconService large_icon_service(
-      &favicon_service_, std::move(fetcher_for_large_icon_service_));
+      &favicon_service_, large_icon_service_background_task_runner_,
+      std::move(fetcher_for_large_icon_service_));
   IconCacherImpl cacher(&favicon_service_, &large_icon_service,
                         std::move(fetcher_for_icon_cacher_));
 
@@ -543,7 +550,7 @@ TEST_F(IconCacherTestMostLikely, NotCachedAndFetchFailed) {
   // Both these task runners need to be flushed before flushing the main thread
   // queue in order to finish the work.
   WaitForHistoryThreadTasksToFinish();
-  scoped_task_environment_.RunUntilIdle();
+  large_icon_service_background_task_runner_->RunUntilIdle();
   WaitForMainThreadTasksToFinish();
 
   EXPECT_FALSE(IconIsCachedFor(page_url, favicon_base::FAVICON));
@@ -566,7 +573,8 @@ TEST_F(IconCacherTestMostLikely, HandlesEmptyCallbacksNicely) {
       .WillOnce(PassFetch(128, 128));
 
   favicon::LargeIconService large_icon_service(
-      &favicon_service_, std::move(fetcher_for_large_icon_service_));
+      &favicon_service_, large_icon_service_background_task_runner_,
+      std::move(fetcher_for_large_icon_service_));
   IconCacherImpl cacher(&favicon_service_, &large_icon_service,
                         std::move(fetcher_for_icon_cacher_));
 
@@ -574,7 +582,7 @@ TEST_F(IconCacherTestMostLikely, HandlesEmptyCallbacksNicely) {
   // Both these task runners need to be flushed before flushing the main thread
   // queue in order to finish the work.
   WaitForHistoryThreadTasksToFinish();
-  scoped_task_environment_.RunUntilIdle();
+  large_icon_service_background_task_runner_->RunUntilIdle();
   WaitForMainThreadTasksToFinish();
 
   // Even though the callbacks are not called, the icon gets written out.
@@ -601,7 +609,8 @@ TEST_F(IconCacherTestMostLikely, NotCachedAndFetchPerformedOnlyOnce) {
   }
 
   favicon::LargeIconService large_icon_service(
-      &favicon_service_, std::move(fetcher_for_large_icon_service_));
+      &favicon_service_, large_icon_service_background_task_runner_,
+      std::move(fetcher_for_large_icon_service_));
   IconCacherImpl cacher(&favicon_service_, &large_icon_service,
                         std::move(fetcher_for_icon_cacher_));
 
@@ -610,7 +619,7 @@ TEST_F(IconCacherTestMostLikely, NotCachedAndFetchPerformedOnlyOnce) {
   // Both these task runners need to be flushed in order to get |done| called by
   // running the main loop.
   WaitForHistoryThreadTasksToFinish();
-  scoped_task_environment_.RunUntilIdle();
+  large_icon_service_background_task_runner_->RunUntilIdle();
 
   loop.Run();
   EXPECT_FALSE(IconIsCachedFor(page_url, favicon_base::FAVICON));

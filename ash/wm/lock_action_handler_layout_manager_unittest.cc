@@ -137,7 +137,7 @@ class LockActionHandlerLayoutManagerTest : public AshTestBase {
     if (show) {
       keyboard->ShowKeyboard(true);
       keyboard->ui()->GetContentsWindow()->SetBounds(
-          keyboard::KeyboardBoundsFromRootBounds(
+          keyboard::FullWidthKeyboardBoundsFromRootBounds(
               Shell::GetPrimaryRootWindow()->bounds(), kVirtualKeyboardHeight));
     } else {
       keyboard->HideKeyboard(keyboard::KeyboardController::HIDE_REASON_MANUAL);

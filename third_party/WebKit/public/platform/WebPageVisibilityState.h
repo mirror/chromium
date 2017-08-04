@@ -34,7 +34,7 @@
 namespace blink {
 
 // The following enum should be consistent with the PageVisibilityState enum
-// defined in core/page/PageVisibilityState.h
+// defined in WebCore.
 enum WebPageVisibilityState {
   kWebPageVisibilityStateVisible,
   kWebPageVisibilityStateHidden,

@@ -38,6 +38,9 @@ NSString* const kEnableViewCopyPasswords = @"EnableViewCopyPasswords";
 NSString* const kFirstRunForceEnabled = @"FirstRunForceEnabled";
 NSString* const kForceResetContextualSearch = @"ForceResetContextualSearch";
 NSString* const kGaiaEnvironment = @"GAIAEnvironment";
+NSString* const kHeuristicsForPasswordGeneration =
+    @"HeuristicsForPasswordGeneration";
+NSString* const kMDMIntegrationDisabled = @"MDMIntegrationDisabled";
 NSString* const kOriginServerHost = @"AlternateOriginServerHost";
 NSString* const kSafariVCSignInDisabled = @"SafariVCSignInDisabled";
 NSString* const kWhatsNewPromoStatus = @"WhatsNewPromoStatus";
@@ -93,19 +96,35 @@ bool IsAlertOnBackgroundUploadEnabled() {
 }
 
 bool IsAutoReloadEnabled() {
-  // TODO(crbug.com/752084): Remove this function and its associated code.
-  return false;
+  std::string group_name = base::FieldTrialList::FindFullName("IOSAutoReload");
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(switches::kEnableOfflineAutoReload))
+    return true;
+  if (command_line->HasSwitch(switches::kDisableOfflineAutoReload))
+    return false;
+  return base::StartsWith(group_name, "Enabled",
+                          base::CompareCase::INSENSITIVE_ASCII);
 }
 
 bool IsLRUSnapshotCacheEnabled() {
-  // TODO(crbug.com/751553): Remove this function and its associated code.
-  return NO;
+  // Check if the experimental flag is forced on or off.
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(switches::kEnableLRUSnapshotCache)) {
+    return true;
+  } else if (command_line->HasSwitch(switches::kDisableLRUSnapshotCache)) {
+    return false;
+  }
+
+  // Check if the finch experiment is turned on.
+  std::string group_name =
+      base::FieldTrialList::FindFullName("IOSLRUSnapshotCache");
+  return base::StartsWith(group_name, "Enabled",
+                          base::CompareCase::INSENSITIVE_ASCII);
 }
 
 bool IsMDMIntegrationEnabled() {
-  // TODO(crbug.com/752073): Remove this function and its associated code,
-  // or convert it into a base::Feature.
-  return YES;
+  return ![[NSUserDefaults standardUserDefaults]
+      boolForKey:kMDMIntegrationDisabled];
 }
 
 bool IsMemoryDebuggingEnabled() {
@@ -138,9 +157,16 @@ bool IsPageIconForDowngradedHTTPSEnabled() {
 }
 
 bool IsPasswordGenerationEnabled() {
-  // TODO(crbug.com/752077): Remove this function and its associated code.
-  // Either by replacing it with a base::Feature or by removing all its uses.
-  return false;
+  // This call activates the field trial, if needed, so it must come before any
+  // early returns.
+  std::string group_name =
+      base::FieldTrialList::FindFullName("PasswordGeneration");
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(switches::kEnableIOSPasswordGeneration))
+    return true;
+  if (command_line->HasSwitch(switches::kDisableIOSPasswordGeneration))
+    return false;
+  return group_name != "Disabled";
 }
 
 bool IsPhysicalWebEnabled() {
@@ -172,6 +198,11 @@ bool IsStartupCrashEnabled() {
   return [[NSUserDefaults standardUserDefaults] boolForKey:kEnableStartupCrash];
 }
 
+bool IsTabStripAutoScrollNewTabsEnabled() {
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  return !command_line->HasSwitch(switches::kDisableTabStripAutoScrollNewTabs);
+}
+
 // This feature is on by default. Finch and experimental settings can be used to
 // disable it.
 // TODO(crbug.com/739404): Remove this method and the experimental flag once the
@@ -185,9 +216,13 @@ bool IsViewCopyPasswordsEnabled() {
 }
 
 bool UseOnlyLocalHeuristicsForPasswordGeneration() {
-  // TODO(crbug.com/752077): Remove this function and its associated code.
-  // Either by replacing it with a base::Feature or by removing all its uses.
-  return false;
+  if ([[NSUserDefaults standardUserDefaults]
+          boolForKey:kHeuristicsForPasswordGeneration]) {
+    return true;
+  }
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  return command_line->HasSwitch(
+      autofill::switches::kLocalHeuristicsOnlyForPasswordGeneration);
 }
 
 bool IsSuggestionsUIEnabled() {

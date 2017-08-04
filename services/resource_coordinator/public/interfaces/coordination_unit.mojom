@@ -34,12 +34,10 @@ interface CoordinationPolicyCallback {
 // CoordinationUnitImpl internal key-value store.
 enum PropertyType {
   kTest,
-  kAudible,
   kCPUUsage,
   kNetworkIdle,
   kVisible,
   kURL,
-  kUkmSourceId,
 };
 
 interface CoordinationUnit {

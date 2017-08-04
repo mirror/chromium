@@ -33,15 +33,14 @@ HostScanScheduler::~HostScanScheduler() {
   host_scanner_->RemoveObserver(this);
 }
 
-void HostScanScheduler::ScheduleScan() {
-  EnsureScan();
+void HostScanScheduler::UserLoggedIn() {
+  if (!IsNetworkConnectingOrConnected(network_state_handler_->DefaultNetwork()))
+    EnsureScan();
 }
 
 void HostScanScheduler::DefaultNetworkChanged(const NetworkState* network) {
-  if (!IsNetworkConnectingOrConnected(network) &&
-      !IsTetherNetworkConnectingOrConnected()) {
+  if (!IsNetworkConnectingOrConnected(network))
     EnsureScan();
-  }
 }
 
 void HostScanScheduler::ScanRequested() {
@@ -64,13 +63,6 @@ bool HostScanScheduler::IsNetworkConnectingOrConnected(
     const NetworkState* network) {
   return network &&
          (network->IsConnectingState() || network->IsConnectedState());
-}
-
-bool HostScanScheduler::IsTetherNetworkConnectingOrConnected() {
-  return network_state_handler_->ConnectingNetworkByType(
-             NetworkTypePattern::Tether()) ||
-         network_state_handler_->ConnectedNetworkByType(
-             NetworkTypePattern::Tether());
 }
 
 }  // namespace tether

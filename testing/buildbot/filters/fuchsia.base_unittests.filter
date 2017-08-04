@@ -27,6 +27,27 @@
 -LoggingTest.CheckCausesDistinctBreakpoints
 -NativeLibraryTest.LoadLibrary
 -NativeLibraryTest.LoadLibraryPreferOwnSymbols
+-PartitionAllocTest.Basic
+-PartitionAllocTest.DumpMemoryStats
+-PartitionAllocTest.FreeCache
+-PartitionAllocTest.FreePageListPageTransitions
+-PartitionAllocTest.GenericAlloc
+-PartitionAllocTest.GenericAllocGetSize
+-PartitionAllocTest.GenericAllocSizes
+-PartitionAllocTest.LostFreePagesBug
+-PartitionAllocTest.MappingCollision
+-PartitionAllocTest.MultiAlloc
+-PartitionAllocTest.MultiPageAllocs
+-PartitionAllocTest.MultiPages
+-PartitionAllocTest.PageRefilling
+-PartitionAllocTest.PageTransitions
+-PartitionAllocTest.PartialPageFreelists
+-PartitionAllocTest.PartialPages
+-PartitionAllocTest.PreferActiveOverEmpty
+-PartitionAllocTest.Purge
+-PartitionAllocTest.PurgeDiscardable
+-PartitionAllocTest.Realloc
+-PartitionAllocTest.ReallocMovesCookies
 -PathServiceTest.Get
 -PersistentHistogramAllocatorTest.CreateSpareFile
 -PersistentHistogramAllocatorTest.CreateWithFile
@@ -54,7 +75,7 @@
 -VerifyPathControlledByUserTest.Symlinks
 -VerifyPathControlledByUserTest.WriteBitChecks
 
-# CancelableSyncSocket tests fail: https://crbug.com/741783
+# CancelableSyncSocket tests fail: http://crbug.com/741783
 -CancelableSyncSocket*
 
 # These tests are occasionally flaking. See https://crbug.com/738275. Please be

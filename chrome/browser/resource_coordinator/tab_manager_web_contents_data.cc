@@ -212,8 +212,7 @@ TabManager::WebContentsData::Data::Data()
       engagement_score(-1.0),
       is_auto_discardable(true),
       tab_loading_state(TAB_IS_NOT_LOADING),
-      is_in_session_restore(false),
-      is_restored_in_foreground(false) {}
+      is_in_session_restore(false) {}
 
 bool TabManager::WebContentsData::Data::operator==(const Data& right) const {
   return is_discarded == right.is_discarded &&
@@ -223,9 +222,7 @@ bool TabManager::WebContentsData::Data::operator==(const Data& right) const {
          last_reload_time == right.last_reload_time &&
          last_inactive_time == right.last_inactive_time &&
          engagement_score == right.engagement_score &&
-         tab_loading_state == right.tab_loading_state &&
-         is_in_session_restore == right.is_in_session_restore &&
-         is_restored_in_foreground == right.is_restored_in_foreground;
+         tab_loading_state == right.tab_loading_state;
 }
 
 bool TabManager::WebContentsData::Data::operator!=(const Data& right) const {

@@ -15,28 +15,15 @@ size_t GetSystemCommitCharge() {
 // static
 std::unique_ptr<ProcessMetrics> ProcessMetrics::CreateProcessMetrics(
     ProcessHandle process) {
-  NOTIMPLEMENTED();  // TODO(fuchsia): https://crbug.com/706592.
+  // TODO(fuchsia): Not currently implementable. May eventually be for the
+  // current process. https://crbug.com/706592.
   return nullptr;
 }
 
 double ProcessMetrics::GetCPUUsage() {
-  NOTIMPLEMENTED();  // TODO(fuchsia): https://crbug.com/706592.
+  // TODO(fuchsia): Not current implementable. May eventually be for the current
+  // process. https://crbug.com/706592.
   return 0.0;
-}
-
-size_t ProcessMetrics::GetPagefileUsage() const {
-  NOTIMPLEMENTED();  // TODO(fuchsia): https://crbug.com/706592.
-  return 0;
-}
-
-size_t ProcessMetrics::GetWorkingSetSize() const {
-  NOTIMPLEMENTED();  // TODO(fuchsia): https://crbug.com/706592.
-  return 0;
-}
-
-size_t ProcessMetrics::GetPeakWorkingSetSize() const {
-  NOTIMPLEMENTED();  // TODO(fuchsia): https://crbug.com/706592.
-  return 0;
 }
 
 }  // namespace base

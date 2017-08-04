@@ -1126,31 +1126,6 @@ const FeatureEntry::Choice kAsyncImageDecodingChoices[] = {
      cc::switches::kDisableCheckerImaging, ""},
 };
 
-#if defined(OS_ANDROID)
-const FeatureEntry::FeatureParam kUseDdljsonApiTest1[] = {
-    {search_provider_logos::features::kDdljsonOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_android1.json"}};
-const FeatureEntry::FeatureParam kUseDdljsonApiTest2[] = {
-    {search_provider_logos::features::kDdljsonOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_android2.json"}};
-const FeatureEntry::FeatureParam kUseDdljsonApiTest3[] = {
-    {search_provider_logos::features::kDdljsonOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_android3.json"}};
-const FeatureEntry::FeatureParam kUseDdljsonApiTest4[] = {
-    {search_provider_logos::features::kDdljsonOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_android4.json"}};
-
-const FeatureEntry::FeatureVariation kUseDdljsonApiVariations[] = {
-    {"(force test doodle 1)", kUseDdljsonApiTest1,
-     arraysize(kUseDdljsonApiTest1), nullptr},
-    {"(force test doodle 2)", kUseDdljsonApiTest2,
-     arraysize(kUseDdljsonApiTest2), nullptr},
-    {"(force test doodle 3)", kUseDdljsonApiTest3,
-     arraysize(kUseDdljsonApiTest3), nullptr},
-    {"(force test doodle 4)", kUseDdljsonApiTest4,
-     arraysize(kUseDdljsonApiTest4), nullptr}};
-#endif  // OS_ANDROID
-
 // RECORDING USER METRICS FOR FLAGS:
 // -----------------------------------------------------------------------------
 // The first line of the entry is the internal name.
@@ -1873,10 +1848,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kChromeHomeExpandButtonName,
      flag_descriptions::kChromeHomeExpandButtonDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeHomeExpandButton)},
-    {"enable-chrome-home-modern-layout",
-     flag_descriptions::kChromeHomeModernLayoutName,
-     flag_descriptions::kChromeHomeModernLayoutDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kChromeHomeModernLayout)},
     {"chrome-home-swipe-logic", flag_descriptions::kChromeHomeSwipeLogicName,
      flag_descriptions::kChromeHomeSwipeLogicDescription, kOsAndroid,
      MULTI_VALUE_TYPE(kChromeHomeSwipeLogicChoices)},
@@ -2447,10 +2418,6 @@ const FeatureEntry kFeatureEntries[] = {
          ntp_snippets::kCategoryRanker,
          kContentSuggestionsCategoryRankerFeatureVariations,
          ntp_snippets::kCategoryRanker.name)},
-    {"enable-breaking-news-push",
-     flag_descriptions::kEnableBreakingNewsPushName,
-     flag_descriptions::kEnableBreakingNewsPushDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(ntp_snippets::kBreakingNewsPushFeature)},
     {"enable-ntp-snippets-increased-visibility",
      flag_descriptions::kEnableNtpSnippetsVisibilityName,
      flag_descriptions::kEnableNtpSnippetsVisibilityDescription, kOsAndroid,
@@ -2469,10 +2436,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableNtpMostLikelyFaviconsFromServerDescription,
      kOsAndroid,
      FEATURE_VALUE_TYPE(ntp_tiles::kNtpMostLikelyFaviconsFromServerFeature)},
-    {"enable-ntp-tiles-lower-resolution-favicons",
-     flag_descriptions::kNtpTilesLowerResolutionFaviconsName,
-     flag_descriptions::kNtpTilesLowerResolutionFaviconsDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(ntp_tiles::kLowerResolutionFaviconsFeature)},
     {"enable-content-suggestions-large-thumbnail",
      flag_descriptions::kEnableContentSuggestionsLargeThumbnailName,
      flag_descriptions::kEnableContentSuggestionsLargeThumbnailDescription,
@@ -2483,6 +2446,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableContentSuggestionsVideoOverlayDescription,
      kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kContentSuggestionsVideoOverlay)},
+    {"enable-suggestions-home-modern-layout",
+     flag_descriptions::kEnableSuggestionsHomeModernLayoutName,
+     flag_descriptions::kEnableSuggestionsHomeModernLayoutDescription,
+     kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kSuggestionsHomeModernLayout)},
     {"enable-content-suggestions-settings",
      flag_descriptions::kEnableContentSuggestionsSettingsName,
      flag_descriptions::kEnableContentSuggestionsSettingsDescription,
@@ -2615,13 +2583,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kTabDetachingInFullscreenDescription, kOsMac,
      ENABLE_DISABLE_VALUE_TYPE(switches::kEnableFullscreenTabDetaching,
                                switches::kDisableFullscreenTabDetaching)},
-    {"enable-content-fullscreen", flag_descriptions::kContentFullscreenName,
-     flag_descriptions::kContentFullscreenDescription, kOsMac,
-     FEATURE_VALUE_TYPE(features::kContentFullscreen)},
     {"enable-fullscreen-toolbar-reveal",
      flag_descriptions::kFullscreenToolbarRevealName,
      flag_descriptions::kFullscreenToolbarRevealDescription, kOsMac,
-     FEATURE_VALUE_TYPE(features::kFullscreenToolbarReveal)},
+     SINGLE_VALUE_TYPE(switches::kEnableFullscreenToolbarReveal)},
 #endif  // OS_MACOSX
     {"important-sites-in-cbd", flag_descriptions::kImportantSitesInCbdName,
      flag_descriptions::kImportantSitesInCbdDescription, kOsAll,
@@ -3231,10 +3196,7 @@ const FeatureEntry kFeatureEntries[] = {
 #if defined(OS_ANDROID)
     {"use-ddljson-api", flag_descriptions::kUseDdljsonApiName,
      flag_descriptions::kUseDdljsonApiDescription, kOsAndroid,
-     FEATURE_WITH_PARAMS_VALUE_TYPE(
-         search_provider_logos::features::kUseDdljsonApi,
-         kUseDdljsonApiVariations,
-         search_provider_logos::features::kUseDdljsonApi.name)},
+     FEATURE_VALUE_TYPE(search_provider_logos::features::kUseDdljsonApi)},
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_ANDROID)

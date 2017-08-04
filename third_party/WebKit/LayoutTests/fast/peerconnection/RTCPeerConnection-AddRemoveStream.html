@@ -19,7 +19,8 @@ navigator.webkitGetUserMedia(options, (stream1) => {
         pc = new RTCPeerConnection();
 
         pc.onnegotiationneeded = (event) => {
-            assert_array_equals(pc.getLocalStreams(), [stream1]);
+            assert_equals(pc.getStreamById(stream1.id), stream1);
+            assert_equals(pc.getStreamById(stream2.id), null);
 
             pc.onnegotiationneeded = () => {
                 assert_unreached('onErroneousNegotiationNeeded was called.');

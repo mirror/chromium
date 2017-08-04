@@ -343,7 +343,7 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserBlockModeTest,
 
   // Set the host as allowed.
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
-  dict->SetKey(allowed_url.host(), base::Value(true));
+  dict->SetBooleanWithoutPathExpansion(allowed_url.host(), true);
   SupervisedUserSettingsService* supervised_user_settings_service =
       SupervisedUserSettingsServiceFactory::GetForProfile(
           browser()->profile());
@@ -406,7 +406,7 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserTest, GoBackOnDontProceed) {
 
   // Set the host as blocked and wait for the interstitial to appear.
   auto dict = base::MakeUnique<base::DictionaryValue>();
-  dict->SetKey(test_url.host(), base::Value(false));
+  dict->SetBooleanWithoutPathExpansion(test_url.host(), false);
   SupervisedUserSettingsService* supervised_user_settings_service =
       SupervisedUserSettingsServiceFactory::GetForProfile(
           browser()->profile());
@@ -449,7 +449,7 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserTest, ClosingBlockedTabDoesNotCrash) {
 
   // Set the host as blocked and wait for the interstitial to appear.
   auto dict = base::MakeUnique<base::DictionaryValue>();
-  dict->SetKey(test_url.host(), base::Value(false));
+  dict->SetBooleanWithoutPathExpansion(test_url.host(), false);
   SupervisedUserSettingsService* supervised_user_settings_service =
       SupervisedUserSettingsServiceFactory::GetForProfile(browser()->profile());
   auto message_loop_runner = base::MakeRefCounted<content::MessageLoopRunner>();
@@ -486,7 +486,7 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserTest, BlockThenUnblock) {
 
   // Set the host as blocked and wait for the interstitial to appear.
   auto dict = base::MakeUnique<base::DictionaryValue>();
-  dict->SetKey(test_url.host(), base::Value(false));
+  dict->SetBooleanWithoutPathExpansion(test_url.host(), false);
   SupervisedUserSettingsService* supervised_user_settings_service =
       SupervisedUserSettingsServiceFactory::GetForProfile(
           browser()->profile());
@@ -504,7 +504,7 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserTest, BlockThenUnblock) {
   ASSERT_TRUE(ShownPageIsInterstitial(web_contents));
 
   dict = base::MakeUnique<base::DictionaryValue>();
-  dict->SetKey(test_url.host(), base::Value(true));
+  dict->SetBooleanWithoutPathExpansion(test_url.host(), true);
   supervised_user_settings_service->SetLocalSetting(
       supervised_users::kContentPackManualBehaviorHosts, std::move(dict));
   ASSERT_EQ(SupervisedUserURLFilter::ALLOW,
@@ -530,7 +530,7 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserBlockModeTest, Unblock) {
 
   // Set the host as allowed.
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
-  dict->SetKey(test_url.host(), base::Value(true));
+  dict->SetBooleanWithoutPathExpansion(test_url.host(), true);
   SupervisedUserSettingsService* supervised_user_settings_service =
       SupervisedUserSettingsServiceFactory::GetForProfile(
           browser()->profile());

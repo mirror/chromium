@@ -27,13 +27,26 @@ Polymer({
     defaultSetting_: String,
   },
 
-  observers: ['siteChanged_(site)'],
+  observers: ['siteChanged_(site, category)'],
 
   /** @override */
   attached: function() {
     this.addWebUIListener(
-        'contentSettingCategoryChanged',
-        this.onDefaultSettingChanged_.bind(this));
+        'contentSettingSitePermissionChanged',
+        this.sitePermissionChanged_.bind(this));
+  },
+
+  /**
+   * Returns true if the origins match, e.g. http://google.com and
+   * http://[*.]google.com.
+   * @param {string} left The first origin to compare.
+   * @param {string} right The second origin to compare.
+   * @return {boolean} True if the origins are the same.
+   * @private
+   */
+  sameOrigin_: function(left, right) {
+    return this.removePatternWildcard(left) ==
+        this.removePatternWildcard(right);
   },
 
   /**
@@ -47,7 +60,10 @@ Polymer({
       this.$.permission.value = settings.ContentSetting.DEFAULT;
     } else {
       // The default setting is unknown, so consult the C++ backend for it.
-      this.updateDefaultPermission_(site);
+      this.browserProxy.getDefaultValueForContentType(this.category)
+          .then((defaultValue) => {
+            this.defaultSetting_ = defaultValue.setting;
+          });
       this.$.permission.value = site.setting;
     }
 
@@ -65,26 +81,24 @@ Polymer({
   },
 
   /**
-   * Updates the default permission setting for this permission category.
-   * @param {!RawSiteException} site The site to display.
+   * Called when a site within a category has been changed.
+   * @param {number} category The category that changed.
+   * @param {string} origin The origin of the site that changed.
+   * @param {string} embeddingOrigin The embedding origin of the site that
+   *     changed.
    * @private
    */
-  updateDefaultPermission_: function(site) {
-    this.browserProxy.getDefaultValueForContentType(this.category)
-        .then((defaultValue) => {
-          this.defaultSetting_ = defaultValue.setting;
-        });
-  },
+  sitePermissionChanged_: function(category, origin, embeddingOrigin) {
+    if (this.site === undefined)
+      return;
+    if (category != this.category)
+      return;
 
-  /**
-   * Handles the category permission changing for this origin.
-   * @param {!settings.ContentSettingsTypes} category The permission category
-   *     that has changed default permission.
-   * @private
-   */
-  onDefaultSettingChanged_: function(category) {
-    if (category == this.category)
-      this.updateDefaultPermission_(this.site);
+    if (origin == '' ||
+        (origin == this.site.origin &&
+         embeddingOrigin == this.site.embeddingOrigin)) {
+      this.siteChanged_(this.site);
+    }
   },
 
   /**

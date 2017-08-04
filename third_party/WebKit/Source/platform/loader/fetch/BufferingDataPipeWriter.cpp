@@ -35,7 +35,8 @@ bool BufferingDataPipeWriter::Write(const char* buffer, uint32_t num_bytes) {
   if (buffer_.empty()) {
     while (num_bytes > 0) {
       uint32_t size = num_bytes;
-      MojoResult result = handle_->WriteData(buffer, &size, kNone);
+      MojoResult result =
+          mojo::WriteDataRaw(handle_.get(), buffer, &size, kNone);
       if (result == MOJO_RESULT_SHOULD_WAIT)
         break;
       if (result != MOJO_RESULT_OK) {
@@ -73,8 +74,8 @@ void BufferingDataPipeWriter::OnWritable(MojoResult,
 
     uint32_t size = front.size() - front_written_size_;
 
-    MojoResult result =
-        handle_->WriteData(front.data() + front_written_size_, &size, kNone);
+    MojoResult result = mojo::WriteDataRaw(
+        handle_.get(), front.data() + front_written_size_, &size, kNone);
     if (result == MOJO_RESULT_SHOULD_WAIT) {
       waiting_ = true;
       watcher_.ArmOrNotify();

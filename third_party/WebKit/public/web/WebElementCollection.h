@@ -35,7 +35,7 @@
 #include "public/platform/WebCommon.h"
 #include "public/platform/WebPrivatePtr.h"
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
 #include "platform/heap/Handle.h"
 #endif
 
@@ -65,7 +65,7 @@ class WebElementCollection {
   BLINK_EXPORT WebElement NextItem() const;
   BLINK_EXPORT WebElement FirstItem() const;
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   WebElementCollection(HTMLCollection*);
   WebElementCollection& operator=(HTMLCollection*);
 #endif

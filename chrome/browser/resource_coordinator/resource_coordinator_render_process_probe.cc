@@ -8,6 +8,8 @@
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/field_trial_params.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "content/public/browser/browser_thread.h"
@@ -65,9 +67,7 @@ ResourceCoordinatorRenderProcessProbe::ResourceCoordinatorRenderProcessProbe()
     : metrics_handler_(
           base::MakeUnique<ResourceCoordinatorRenderProcessMetricsHandler>()),
       interval_ms_(
-          base::TimeDelta::FromSeconds(kDefaultMeasurementIntervalInSeconds)) {
-  UpdateWithFieldTrialParams();
-}
+          base::TimeDelta::FromSeconds(kDefaultMeasurementIntervalInSeconds)) {}
 
 ResourceCoordinatorRenderProcessProbe::
     ~ResourceCoordinatorRenderProcessProbe() = default;
@@ -183,14 +183,6 @@ bool ResourceCoordinatorRenderProcessProbe::
     }
   }
   return true;
-}
-
-void ResourceCoordinatorRenderProcessProbe::UpdateWithFieldTrialParams() {
-  int64_t interval_ms = GetGRCRenderProcessCPUProfilingIntervalInMs();
-
-  if (interval_ms > 0) {
-    interval_ms_ = base::TimeDelta::FromMilliseconds(interval_ms);
-  }
 }
 
 }  // namespace resource_coordinator

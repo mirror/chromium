@@ -180,7 +180,7 @@ class BASE_EXPORT TaskScheduler {
   static void Create(StringPiece name);
 
   // Registers |task_scheduler| to handle tasks posted through the post_task.h
-  // API for this process. For tests, prefer base::test::ScopedTaskEnvironment
+  // API for this process. For tests, prefer base::test::ScopedTaskScheduler
   // (ensures isolation).
   static void SetInstance(std::unique_ptr<TaskScheduler> task_scheduler);
 

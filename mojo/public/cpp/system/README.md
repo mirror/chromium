@@ -101,6 +101,16 @@ mojo::ScopedDataPipeConsumerHandle consumer = std::move(pipe.consumer);
 mojo::ScopedDataPipeProducerHandle producer;
 mojo::ScopedDataPipeConsumerHandle consumer;
 mojo::CreateDataPipe(null, &producer, &consumer);
+
+// Reads from a data pipe. See |MojoReadData()| for complete documentation.
+inline MojoResult ReadDataRaw(DataPipeConsumerHandle data_pipe_consumer,
+                              void* elements,
+                              uint32_t* num_bytes,
+                              MojoReadDataFlags flags) {
+  return MojoReadData(data_pipe_consumer.value(), elements, num_bytes, flags);
+}
+
+// Begins a two-phase read
 ```
 
 C++ helpers which correspond directly to the
@@ -109,13 +119,14 @@ I/O are provided as well. For example:
 
 ``` cpp
 uint32_t num_bytes = 7;
-producer.WriteData("hihihi", &num_bytes, MOJO_WRITE_DATA_FLAG_NONE);
+mojo::WriteDataRaw(producer.get(), "hihihi",
+                   &num_bytes, MOJO_WRITE_DATA_FLAG_NONE);
 
 // Some time later...
 
 char buffer[64];
 uint32_t num_bytes = 64;
-consumer.ReadData(buffer, &num_bytes, MOJO_READ_DATA_FLAG_NONE);
+mojo::ReadDataRaw(consumer.get(), buffer, &num_bytes, MOJO_READ_DATA_FLAG_NONE);
 ```
 
 See [data_pipe.h](https://cs.chromium.org/chromium/src/mojo/public/cpp/system/data_pipe.h)

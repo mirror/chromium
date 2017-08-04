@@ -21,7 +21,6 @@
 #include "core/css/parser/CSSParserObserver.h"
 #include "core/css/parser/CSSParserObserverWrapper.h"
 #include "core/css/parser/CSSParserSelector.h"
-#include "core/css/parser/CSSParserTokenStream.h"
 #include "core/css/parser/CSSPropertyParser.h"
 #include "core/css/parser/CSSSelectorParser.h"
 #include "core/css/parser/CSSSupportsParser.h"
@@ -56,9 +55,7 @@ MutableStylePropertySet::SetResult CSSParserImpl::ParseValue(
   else if (declaration->CssParserMode() == kCSSFontFaceRuleMode)
     rule_type = StyleRule::kFontFace;
   CSSTokenizer tokenizer(string);
-  CSSParserTokenStream stream(tokenizer);
-  // TODO(shend): Use streams instead of ranges
-  parser.ConsumeDeclarationValue(stream.MakeRangeToEOF(), unresolved_property,
+  parser.ConsumeDeclarationValue(tokenizer.TokenRange(), unresolved_property,
                                  important, rule_type);
   bool did_parse = false;
   bool did_change = false;
@@ -79,10 +76,7 @@ MutableStylePropertySet::SetResult CSSParserImpl::ParseVariableValue(
     bool is_animation_tainted) {
   CSSParserImpl parser(context);
   CSSTokenizer tokenizer(value);
-  CSSParserTokenStream stream(tokenizer);
-  // TODO(shend): Use streams instead of ranges
-  const CSSParserTokenRange range = stream.MakeRangeToEOF();
-  parser.ConsumeVariableValue(range, property_name, important,
+  parser.ConsumeVariableValue(tokenizer.TokenRange(), property_name, important,
                               is_animation_tainted);
   bool did_parse = false;
   bool did_change = false;
@@ -95,7 +89,8 @@ MutableStylePropertySet::SetResult CSSParserImpl::ParseVariableValue(
       // TODO(timloh): This is a bit wasteful, we parse the registered property
       // to validate but throw away the result.
       if (registration &&
-          !registration->Syntax().Parse(range, context, is_animation_tainted)) {
+          !registration->Syntax().Parse(tokenizer.TokenRange(), context,
+                                        is_animation_tainted)) {
         return MutableStylePropertySet::SetResult{did_parse, did_change};
       }
     }
@@ -168,9 +163,7 @@ ImmutableStylePropertySet* CSSParserImpl::ParseInlineStyleDeclaration(
   context->SetMode(mode);
   CSSParserImpl parser(context, document.ElementSheet().Contents());
   CSSTokenizer tokenizer(string);
-  CSSParserTokenStream stream(tokenizer);
-  // TODO(shend): Use streams instead of ranges
-  parser.ConsumeDeclarationList(stream.MakeRangeToEOF(), StyleRule::kStyle);
+  parser.ConsumeDeclarationList(tokenizer.TokenRange(), StyleRule::kStyle);
   return CreateStylePropertySet(parser.parsed_properties_, mode);
 }
 
@@ -182,9 +175,7 @@ bool CSSParserImpl::ParseDeclarationList(MutableStylePropertySet* declaration,
   if (declaration->CssParserMode() == kCSSViewportRuleMode)
     rule_type = StyleRule::kViewport;
   CSSTokenizer tokenizer(string);
-  CSSParserTokenStream stream(tokenizer);
-  // TODO(shend): Use streams instead of ranges
-  parser.ConsumeDeclarationList(stream.MakeRangeToEOF(), rule_type);
+  parser.ConsumeDeclarationList(tokenizer.TokenRange(), rule_type);
   if (parser.parsed_properties_.IsEmpty())
     return false;
 
@@ -207,9 +198,7 @@ StyleRuleBase* CSSParserImpl::ParseRule(const String& string,
                                         AllowedRulesType allowed_rules) {
   CSSParserImpl parser(context, style_sheet);
   CSSTokenizer tokenizer(string);
-  CSSParserTokenStream stream(tokenizer);
-  // TODO(shend): Use streams instead of ranges
-  CSSParserTokenRange range = stream.MakeRangeToEOF();
+  CSSParserTokenRange range = tokenizer.TokenRange();
   range.ConsumeWhitespace();
   if (range.AtEnd())
     return nullptr;  // Parse error, empty rule
@@ -237,10 +226,6 @@ void CSSParserImpl::ParseStyleSheet(const String& string,
   TRACE_EVENT_BEGIN0("blink,blink_style",
                      "CSSParserImpl::parseStyleSheet.tokenize");
   CSSTokenizer tokenizer(string);
-  CSSParserTokenStream stream(tokenizer);
-  // TODO(shend): Use streams instead of ranges. Streams will ruin
-  // tokenize/parse metrics as we will be tokenizing on demand.
-  const CSSParserTokenRange range = stream.MakeRangeToEOF();
   TRACE_EVENT_END0("blink,blink_style",
                    "CSSParserImpl::parseStyleSheet.tokenize");
 
@@ -251,12 +236,13 @@ void CSSParserImpl::ParseStyleSheet(const String& string,
     parser.lazy_state_ = new CSSLazyParsingState(
         context, tokenizer.TakeEscapedStrings(), string, parser.style_sheet_);
   }
-  bool first_rule_valid = parser.ConsumeRuleList(
-      range, kTopLevelRuleList, [&style_sheet](StyleRuleBase* rule) {
-        if (rule->IsCharsetRule())
-          return;
-        style_sheet->ParserAppendRule(rule);
-      });
+  bool first_rule_valid =
+      parser.ConsumeRuleList(tokenizer.TokenRange(), kTopLevelRuleList,
+                             [&style_sheet](StyleRuleBase* rule) {
+                               if (rule->IsCharsetRule())
+                                 return;
+                               style_sheet->ParserAppendRule(rule);
+                             });
   style_sheet->SetHasSyntacticallyValidCSSHeader(first_rule_valid);
   if (parser.lazy_state_)
     parser.lazy_state_->FinishInitialParsing();
@@ -339,10 +325,7 @@ ImmutableStylePropertySet* CSSParserImpl::ParseCustomPropertySet(
 
 std::unique_ptr<Vector<double>> CSSParserImpl::ParseKeyframeKeyList(
     const String& key_list) {
-  CSSTokenizer tokenizer(key_list);
-  // TODO(shend): Use streams instead of ranges
-  return ConsumeKeyframeKeyList(
-      CSSParserTokenStream(tokenizer).MakeRangeToEOF());
+  return ConsumeKeyframeKeyList(CSSTokenizer(key_list).TokenRange());
 }
 
 bool CSSParserImpl::SupportsDeclaration(CSSParserTokenRange& range) {
@@ -363,7 +346,6 @@ void CSSParserImpl::ParseDeclarationListForInspector(
   CSSTokenizer tokenizer(declaration, wrapper);
   observer.StartRuleHeader(StyleRule::kStyle, 0);
   observer.EndRuleHeader(1);
-  // TODO(shend): Use streams instead of ranges
   parser.ConsumeDeclarationList(tokenizer.TokenRange(), StyleRule::kStyle);
 }
 
@@ -375,7 +357,6 @@ void CSSParserImpl::ParseStyleSheetForInspector(const String& string,
   CSSParserObserverWrapper wrapper(observer);
   parser.observer_wrapper_ = &wrapper;
   CSSTokenizer tokenizer(string, wrapper);
-  // TODO(shend): Use streams instead of ranges
   bool first_rule_valid =
       parser.ConsumeRuleList(tokenizer.TokenRange(), kTopLevelRuleList,
                              [&style_sheet](StyleRuleBase* rule) {

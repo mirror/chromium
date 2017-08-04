@@ -10,22 +10,26 @@
 
 namespace blink {
 
+class HeapObjectHeader;
 template <typename T>
 class Member;
 
-// TraceWrapperMember is used for Member fields that should participate in
-// wrapper tracing, i.e., strongly hold a ScriptWrappable alive. All
-// TraceWrapperMember fields must be traced in the class' |TraceWrappers|
-// method.
+/**
+ * TraceWrapperMember is used for Member fields that should participate in
+ * wrapper tracing, i.e., strongly hold a ScriptWrappable alive. All
+ * TraceWrapperMember fields must be traced in the class' traceWrappers method.
+ */
 template <class T>
 class TraceWrapperMember : public Member<T> {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
-  // TODO(mlippautz): Remove constructor taking |parent|.
-  TraceWrapperMember(void* parent, T* raw) : Member<T>(raw) {}
-
-  TraceWrapperMember(T* raw) : Member<T>(raw) {
+  TraceWrapperMember(void* parent, T* raw) : Member<T>(raw), parent_(parent) {
+#if DCHECK_IS_ON()
+    if (parent_) {
+      HeapObjectHeader::CheckFromPayload(parent_);
+    }
+#endif
     // We don't require a write barrier here as TraceWrapperMember is used for
     // the following scenarios:
     // - Initial initialization: The write barrier will not fire as the parent
@@ -36,26 +40,34 @@ class TraceWrapperMember : public Member<T> {
     //   write barrier.
     // Note that support for black allocation would require a barrier here.
   }
+  TraceWrapperMember(WTF::HashTableDeletedValueType x)
+      : Member<T>(x), parent_(nullptr) {}
 
-  TraceWrapperMember(WTF::HashTableDeletedValueType x) : Member<T>(x) {}
-
+  /**
+   * Copying a TraceWrapperMember means that its backpointer will also be
+   * copied.
+   */
   TraceWrapperMember(const TraceWrapperMember& other) { *this = other; }
 
   TraceWrapperMember& operator=(const TraceWrapperMember& other) {
+    DCHECK(!other.raw_ || other.parent_);
+    parent_ = other.parent_;
     Member<T>::operator=(other);
-    ScriptWrappableVisitor::WriteBarrier(other);
+    ScriptWrappableVisitor::WriteBarrier(parent_, other);
     return *this;
   }
 
   TraceWrapperMember& operator=(const Member<T>& other) {
+    DCHECK(!TraceWrapperMemberIsNotInitialized());
     Member<T>::operator=(other);
-    ScriptWrappableVisitor::WriteBarrier(other);
+    ScriptWrappableVisitor::WriteBarrier(parent_, other);
     return *this;
   }
 
   TraceWrapperMember& operator=(T* other) {
+    DCHECK(!TraceWrapperMemberIsNotInitialized());
     Member<T>::operator=(other);
-    ScriptWrappableVisitor::WriteBarrier(other);
+    ScriptWrappableVisitor::WriteBarrier(parent_, other);
     return *this;
   }
 
@@ -64,46 +76,69 @@ class TraceWrapperMember : public Member<T> {
     Member<T>::operator=(nullptr);
     return *this;
   }
+
+  void* Parent() { return parent_; }
+
+ private:
+  bool TraceWrapperMemberIsNotInitialized() { return !parent_; }
+
+  /**
+   * The parent object holding strongly onto the actual Member.
+   */
+  void* parent_;
 };
 
-// Swaps two HeapVectors specialized for TraceWrapperMember. The custom swap
-// function is required as TraceWrapperMember potentially requires emitting a
-// write barrier.
+/**
+ * Swaps two HeapVectors specialized for TraceWrapperMember. The custom swap
+ * function is required as TraceWrapperMember contains ownership information
+ * which is not copyable but has to be explicitly specified.
+ */
 template <typename T>
 void swap(HeapVector<TraceWrapperMember<T>>& a,
-          HeapVector<TraceWrapperMember<T>>& b) {
-  // HeapVector<Member<T>> and HeapVector<TraceWrapperMember<T>> have the
-  // same size and semantics.
-  HeapVector<Member<T>>& a_ = reinterpret_cast<HeapVector<Member<T>>&>(a);
-  HeapVector<Member<T>>& b_ = reinterpret_cast<HeapVector<Member<T>>&>(b);
-  a_.swap(b_);
-  if (ThreadState::Current()->WrapperTracingInProgress()) {
-    // If incremental marking is enabled we need to emit the write barrier since
-    // the swap was performed on HeapVector<Member<T>>.
-    for (auto item : a) {
-      ScriptWrappableVisitor::WriteBarrier(item.Get());
-    }
-    for (auto item : b) {
-      ScriptWrappableVisitor::WriteBarrier(item.Get());
-    }
+          HeapVector<TraceWrapperMember<T>>& b,
+          void* parent_for_a,
+          void* parent_for_b) {
+  HeapVector<TraceWrapperMember<T>> temp;
+  temp.ReserveCapacity(a.size());
+  for (auto item : a) {
+    temp.push_back(TraceWrapperMember<T>(parent_for_b, item.Get()));
+  }
+  a.clear();
+  a.ReserveCapacity(b.size());
+  for (auto item : b) {
+    a.push_back(TraceWrapperMember<T>(parent_for_a, item.Get()));
+  }
+  b.clear();
+  b.ReserveCapacity(temp.size());
+  for (auto item : temp) {
+    b.push_back(TraceWrapperMember<T>(parent_for_b, item.Get()));
   }
 }
 
-// Swaps two HeapVectors, one containing TraceWrapperMember and one with
-// regular Members. The custom swap function is required as TraceWrapperMember
-// potentially requires emitting a write barrier.
+/**
+ * Swaps two HeapVectors, one containing TraceWrapperMember and one with
+ * regular Members. The custom swap function is required as
+ * TraceWrapperMember contains ownership information which is not copyable
+ * but has to be explicitly specified.
+ */
 template <typename T>
-void swap(HeapVector<TraceWrapperMember<T>>& a, HeapVector<Member<T>>& b) {
-  // HeapVector<Member<T>> and HeapVector<TraceWrapperMember<T>> have the
-  // same size and semantics.
-  HeapVector<Member<T>>& a_ = reinterpret_cast<HeapVector<Member<T>>&>(a);
-  a_.swap(b);
-  if (ThreadState::Current()->WrapperTracingInProgress()) {
-    // If incremental marking is enabled we need to emit the write barrier since
-    // the swap was performed on HeapVector<Member<T>>.
-    for (auto item : a) {
-      ScriptWrappableVisitor::WriteBarrier(item.Get());
-    }
+void swap(HeapVector<TraceWrapperMember<T>>& a,
+          HeapVector<Member<T>>& b,
+          void* parent_for_a) {
+  HeapVector<TraceWrapperMember<T>> temp;
+  temp.ReserveCapacity(a.size());
+  for (auto item : a) {
+    temp.push_back(TraceWrapperMember<T>(item.Parent(), item.Get()));
+  }
+  a.clear();
+  a.ReserveCapacity(b.size());
+  for (auto item : b) {
+    a.push_back(TraceWrapperMember<T>(parent_for_a, item.Get()));
+  }
+  b.clear();
+  b.ReserveCapacity(temp.size());
+  for (auto item : temp) {
+    b.push_back(item.Get());
   }
 }
 

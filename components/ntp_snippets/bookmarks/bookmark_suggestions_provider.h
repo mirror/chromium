@@ -31,10 +31,10 @@ class BookmarkSuggestionsProvider : public ContentSuggestionsProvider,
   CategoryInfo GetCategoryInfo(Category category) override;
   void DismissSuggestion(const ContentSuggestion::ID& suggestion_id) override;
   void FetchSuggestionImage(const ContentSuggestion::ID& suggestion_id,
-                            ImageFetchedCallback callback) override;
+                            const ImageFetchedCallback& callback) override;
   void Fetch(const Category& category,
              const std::set<std::string>& known_suggestion_ids,
-             FetchDoneCallback callback) override;
+             const FetchDoneCallback& callback) override;
   void ClearHistory(
       base::Time begin,
       base::Time end,
@@ -42,7 +42,7 @@ class BookmarkSuggestionsProvider : public ContentSuggestionsProvider,
   void ClearCachedSuggestions(Category category) override;
   void GetDismissedSuggestionsForDebugging(
       Category category,
-      DismissedSuggestionsCallback callback) override;
+      const DismissedSuggestionsCallback& callback) override;
   void ClearDismissedSuggestionsForDebugging(Category category) override;
 
   // bookmarks::BookmarkModelObserver implementation.

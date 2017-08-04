@@ -81,12 +81,10 @@ void MessagePort::postMessage(ScriptState* script_state,
   if (exception_state.HadException())
     return;
 
-  StringView wire_data = message->GetWireData();
+  WebString message_string = message->ToWireString();
   WebMessagePortChannelArray web_channels =
       ToWebMessagePortChannelArray(std::move(channels));
-  entangled_channel_->PostMessage(
-      reinterpret_cast<const uint8_t*>(wire_data.Characters8()),
-      wire_data.length(), std::move(web_channels));
+  entangled_channel_->PostMessage(message_string, std::move(web_channels));
 }
 
 // static
@@ -163,9 +161,9 @@ const AtomicString& MessagePort::InterfaceName() const {
 static bool TryGetMessageFrom(WebMessagePortChannel& web_channel,
                               RefPtr<SerializedScriptValue>& message,
                               MessagePortChannelArray& channels) {
-  WebVector<uint8_t> message_data;
+  WebString message_string;
   WebMessagePortChannelArray web_channels;
-  if (!web_channel.TryGetMessage(&message_data, web_channels))
+  if (!web_channel.TryGetMessage(&message_string, web_channels))
     return false;
 
   if (web_channels.size()) {
@@ -173,8 +171,7 @@ static bool TryGetMessageFrom(WebMessagePortChannel& web_channel,
     for (size_t i = 0; i < web_channels.size(); ++i)
       channels[i] = std::move(web_channels[i]);
   }
-  message = SerializedScriptValue::Create(
-      reinterpret_cast<const char*>(message_data.Data()), message_data.size());
+  message = SerializedScriptValue::Create(message_string);
   return true;
 }
 

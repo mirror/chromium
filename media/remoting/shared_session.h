@@ -83,8 +83,6 @@ class SharedSession final : public mojom::RemotingSource,
     return state_;
   }
 
-  const std::string& sink_name() const { return sink_metadata_.friendly_name; }
-
   // Queries on remoting sink capabilities.
   bool HasVideoCapability(mojom::RemotingSinkVideoCapability capability) const;
   bool HasAudioCapability(mojom::RemotingSinkAudioCapability capability) const;
@@ -127,9 +125,6 @@ class SharedSession final : public mojom::RemotingSource,
   void RemoveClient(Client* client);
 
   RpcBroker* rpc_broker() { return &rpc_broker_; }
-
-  void EstimateTransmissionCapacity(
-      mojom::Remoter::EstimateTransmissionCapacityCallback callback);
 
  private:
   friend class base::RefCountedThreadSafe<SharedSession>;

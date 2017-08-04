@@ -256,7 +256,7 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebPrerenderingSupport.h"
-#include "public/platform/modules/insecure_input/insecure_input_service.mojom-blink.h"
+#include "public/platform/modules/sensitive_input_visibility/sensitive_input_visibility_service.mojom-blink.h"
 #include "public/platform/site_engagement.mojom-blink.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
@@ -1835,7 +1835,7 @@ void Document::UpdateStyleInvalidationIfNeeded() {
 
 void Document::SetupFontBuilder(ComputedStyle& document_style) {
   FontBuilder font_builder(this);
-  CSSFontSelector* selector = GetStyleEngine().GetFontSelector();
+  CSSFontSelector* selector = GetStyleEngine().FontSelector();
   font_builder.CreateFontForDocument(selector, document_style);
 }
 
@@ -4520,10 +4520,10 @@ static void LiveNodeListBaseWriteBarrier(void* parent,
                                          const LiveNodeListBase* list) {
   if (IsHTMLCollectionType(list->GetType())) {
     ScriptWrappableVisitor::WriteBarrier(
-        static_cast<const HTMLCollection*>(list));
+        parent, static_cast<const HTMLCollection*>(list));
   } else {
     ScriptWrappableVisitor::WriteBarrier(
-        static_cast<const LiveNodeList*>(list));
+        parent, static_cast<const LiveNodeList*>(list));
   }
 }
 
@@ -4762,14 +4762,14 @@ void Document::SendSensitiveInputVisibilityInternal() {
   if (!GetFrame())
     return;
 
-  mojom::blink::InsecureInputServicePtr insecure_input_service_ptr;
+  mojom::blink::SensitiveInputVisibilityServicePtr sensitive_input_service_ptr;
   GetFrame()->GetInterfaceProvider().GetInterface(
-      mojo::MakeRequest(&insecure_input_service_ptr));
+      mojo::MakeRequest(&sensitive_input_service_ptr));
   if (password_count_ > 0) {
-    insecure_input_service_ptr->PasswordFieldVisibleInInsecureContext();
+    sensitive_input_service_ptr->PasswordFieldVisibleInInsecureContext();
     return;
   }
-  insecure_input_service_ptr->AllPasswordFieldsInInsecureContextInvisible();
+  sensitive_input_service_ptr->AllPasswordFieldsInInsecureContextInvisible();
 }
 
 void Document::RegisterEventFactory(
@@ -6550,6 +6550,11 @@ void Document::UpdateActiveState(const HitTestRequest& request,
 
 void Document::UpdateHoverState(const HitTestRequest& request,
                                 Element* inner_element_in_document) {
+  // Do not set hover state if event is from touch and on mobile.
+  bool allow_hover_changes =
+      !(request.TouchEvent() && GetPage() &&
+        GetPage()->GetVisualViewport().ShouldDisableDesktopWorkarounds());
+
   Element* old_hover_element = HoverElement();
 
   // The passed in innerElement may not be a result of a hit test for the
@@ -6560,9 +6565,10 @@ void Document::UpdateHoverState(const HitTestRequest& request,
       SkipDisplayNoneAncestors(inner_element_in_document);
 
   // Update our current hover element.
-  SetHoverElement(new_hover_element);
+  if (allow_hover_changes)
+    SetHoverElement(new_hover_element);
 
-  if (old_hover_element == new_hover_element)
+  if (old_hover_element == new_hover_element || !allow_hover_changes)
     return;
 
   Node* ancestor_element = nullptr;

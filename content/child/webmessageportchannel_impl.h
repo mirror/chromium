@@ -42,10 +42,9 @@ class WebMessagePortChannelImpl : public blink::WebMessagePortChannel {
 
   // WebMessagePortChannel implementation.
   void SetClient(blink::WebMessagePortChannelClient* client) override;
-  void PostMessage(const uint8_t* encoded_message,
-                   size_t encoded_message_size,
+  void PostMessage(const blink::WebString& encoded_message,
                    blink::WebMessagePortChannelArray channels) override;
-  bool TryGetMessage(blink::WebVector<uint8_t>* encoded_message,
+  bool TryGetMessage(blink::WebString* encoded_message,
                      blink::WebMessagePortChannelArray& channels) override;
 
   MessagePort port_;

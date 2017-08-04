@@ -85,8 +85,8 @@ class WebCryptoKeyHandle;
 // safely assume any details regarding the type of the wrapped
 // WebCryptoKeyHandle*.
 //
-// If WebCryptoKey "IsNull()" then it is invalid to call any of the other
-// methods on it (other than destruction, assignment, or IsNull()).
+// If WebCryptoKey "isNull()" then it is invalid to call any of the other
+// methods on it (other than destruction, assignment, or isNull()).
 class WebCryptoKey {
  public:
   // Constructs a "null" key (One for which isNull() returns true).

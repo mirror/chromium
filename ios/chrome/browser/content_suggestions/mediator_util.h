@@ -58,9 +58,6 @@ ntp_snippets::ContentSuggestion::ID SuggestionIDForSectionID(
 // omnibox.
 ContentSuggestionsSectionInformation* LogoSectionInformation();
 
-// Creates and returns a SectionInfo for the What's New promo section.
-ContentSuggestionsSectionInformation* PromoSectionInformation();
-
 // Creates and returns a SectionInfo for the Most Visited section.
 ContentSuggestionsSectionInformation* MostVisitedSectionInformation();
 

@@ -177,12 +177,12 @@ int MessageListView::GetHeightForWidth(int width) const {
   return height + GetInsets().height();
 }
 
-void MessageListView::PaintChildren(const views::PaintInfo& paint_info) {
+void MessageListView::PaintChildren(const ui::PaintContext& context) {
   // Paint in the inversed order. Otherwise upper notification may be
   // hidden by the lower one.
   for (int i = child_count() - 1; i >= 0; --i) {
     if (!child_at(i)->layer())
-      child_at(i)->Paint(paint_info);
+      child_at(i)->Paint(context);
   }
 }
 

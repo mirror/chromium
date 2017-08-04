@@ -650,8 +650,8 @@ bool NotificationsGetAllFunction::RunNotificationsApi() {
 
   for (std::set<std::string>::iterator iter = notification_ids.begin();
        iter != notification_ids.end(); iter++) {
-    result->SetKey(StripScopeFromIdentifier(extension_->id(), *iter),
-                   base::Value(true));
+    result->SetBooleanWithoutPathExpansion(
+        StripScopeFromIdentifier(extension_->id(), *iter), true);
   }
 
   SetResult(std::move(result));

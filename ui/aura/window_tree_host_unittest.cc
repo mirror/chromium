@@ -86,12 +86,4 @@ TEST_F(WindowTreeHostTest, NoRewritesPostIME) {
   host()->RemoveEventRewriter(&event_rewriter);
 }
 
-TEST_F(WindowTreeHostTest, ColorSpace) {
-  EXPECT_EQ(gfx::ColorSpace::CreateSRGB(),
-            host()->compositor()->output_color_space());
-  test_screen()->SetColorSpace(gfx::ColorSpace::CreateSCRGBLinear());
-  EXPECT_EQ(gfx::ColorSpace::CreateSCRGBLinear(),
-            host()->compositor()->output_color_space());
-}
-
 }  // namespace aura

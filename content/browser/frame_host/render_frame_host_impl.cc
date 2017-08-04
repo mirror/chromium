@@ -289,7 +289,7 @@ class RemoterFactoryImpl final : public media::mojom::RemoterFactory {
 void CreateResourceCoordinatorFrameInterface(
     RenderFrameHostImpl* render_frame_host,
     resource_coordinator::mojom::CoordinationUnitRequest request) {
-  render_frame_host->GetFrameResourceCoordinator()->AddBinding(
+  render_frame_host->GetFrameResourceCoordinator()->service()->AddBinding(
       std::move(request));
 }
 
@@ -1237,10 +1237,6 @@ void RenderFrameHostImpl::OnAudibleStateChanged(bool is_audible) {
   else
     GetProcess()->OnAudioStreamRemoved();
   is_audible_ = is_audible;
-
-  GetFrameResourceCoordinator()->SetProperty(
-      resource_coordinator::mojom::PropertyType::kAudible,
-      base::MakeUnique<base::Value>(is_audible_));
 }
 
 void RenderFrameHostImpl::OnDidAddMessageToConsole(
@@ -1305,9 +1301,13 @@ void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {
 
 void RenderFrameHostImpl::SetLastCommittedUrl(const GURL& url) {
   last_committed_url_ = url;
-  GetFrameResourceCoordinator()->SetProperty(
-      resource_coordinator::mojom::PropertyType::kURL,
-      base::MakeUnique<base::Value>(last_committed_url_.spec()));
+  resource_coordinator::ResourceCoordinatorInterface* coordinator =
+      GetFrameResourceCoordinator();
+  if (coordinator) {
+    coordinator->SetProperty(
+        resource_coordinator::mojom::PropertyType::kURL,
+        base::MakeUnique<base::Value>(last_committed_url_.spec()));
+  }
 }
 
 void RenderFrameHostImpl::OnDetach() {
@@ -3512,23 +3512,21 @@ RenderFrameHostImpl::GetMojoImageDownloader() {
 
 resource_coordinator::ResourceCoordinatorInterface*
 RenderFrameHostImpl::GetFrameResourceCoordinator() {
-  if (frame_resource_coordinator_)
-    return frame_resource_coordinator_.get();
-
-  if (!resource_coordinator::IsResourceCoordinatorEnabled()) {
-    frame_resource_coordinator_ =
-        base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
-            nullptr, resource_coordinator::CoordinationUnitType::kFrame);
-  } else {
-    auto* connection = ServiceManagerConnection::GetForProcess();
-    frame_resource_coordinator_ =
-        base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
-            connection ? connection->GetConnector() : nullptr,
+  if (!frame_resource_coordinator_) {
+    if (resource_coordinator::IsResourceCoordinatorEnabled()) {
+      ServiceManagerConnection* connection =
+          ServiceManagerConnection::GetForProcess();
+      if (connection) {
+        frame_resource_coordinator_ = base::MakeUnique<
+            resource_coordinator::ResourceCoordinatorInterface>(
+            connection->GetConnector(),
             resource_coordinator::CoordinationUnitType::kFrame);
-  }
-  if (parent_) {
-    parent_->GetFrameResourceCoordinator()->AddChild(
-        *frame_resource_coordinator_);
+        if (parent_) {
+          parent_->GetFrameResourceCoordinator()->AddChild(
+              *frame_resource_coordinator_);
+        }
+      }
+    }
   }
   return frame_resource_coordinator_.get();
 }

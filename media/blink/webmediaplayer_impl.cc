@@ -2641,28 +2641,16 @@ void WebMediaPlayerImpl::ReportTimeFromForegroundToFirstFrame(
                         time_to_first_frame);
   }
 }
-
-void WebMediaPlayerImpl::SwitchToRemoteRenderer(
-    const std::string& remote_device_friendly_name) {
+void WebMediaPlayerImpl::SwitchRenderer(bool is_rendered_remotely) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
-  disable_pipeline_auto_suspend_ = true;
-  // Requests to restart media pipeline. A remote renderer will be created via
-  // the |renderer_factory_selector_|.
+  disable_pipeline_auto_suspend_ = is_rendered_remotely;
   ScheduleRestart();
   if (client_) {
-    client_->MediaRemotingStarted(
-        WebString::FromUTF8(remote_device_friendly_name));
+    if (is_rendered_remotely)
+      client_->MediaRemotingStarted();
+    else
+      client_->MediaRemotingStopped();
   }
-}
-
-void WebMediaPlayerImpl::SwitchToLocalRenderer() {
-  DCHECK(main_task_runner_->BelongsToCurrentThread());
-  disable_pipeline_auto_suspend_ = false;
-  // Requests to restart media pipeline. A local renderer will be created via
-  // the |renderer_factory_selector_|.
-  ScheduleRestart();
-  if (client_)
-    client_->MediaRemotingStopped();
 }
 
 void WebMediaPlayerImpl::RecordUnderflowDuration(base::TimeDelta duration) {

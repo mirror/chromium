@@ -18,9 +18,8 @@ using base::Time;
 class TokenWebDataBackend
     : public base::RefCountedDeleteOnSequence<TokenWebDataBackend> {
  public:
-  TokenWebDataBackend(
-      scoped_refptr<base::SingleThreadTaskRunner> db_task_runner)
-      : base::RefCountedDeleteOnSequence<TokenWebDataBackend>(db_task_runner) {}
+  TokenWebDataBackend(scoped_refptr<base::SingleThreadTaskRunner> db_thread)
+      : base::RefCountedDeleteOnSequence<TokenWebDataBackend>(db_thread) {}
 
   WebDatabase::State RemoveAllTokens(WebDatabase* db) {
     if (TokenServiceTable::FromWebDatabase(db)->RemoveAllTokens()) {
@@ -70,11 +69,12 @@ TokenResult::~TokenResult(){};
 
 TokenWebData::TokenWebData(
     scoped_refptr<WebDatabaseService> wdbs,
-    scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
-    scoped_refptr<base::SingleThreadTaskRunner> db_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> ui_thread,
+    scoped_refptr<base::SingleThreadTaskRunner> db_thread,
     const ProfileErrorCallback& callback)
-    : WebDataServiceBase(wdbs, callback, ui_task_runner),
-      token_backend_(new TokenWebDataBackend(db_task_runner)) {}
+    : WebDataServiceBase(wdbs, callback, ui_thread),
+      token_backend_(new TokenWebDataBackend(db_thread)) {
+}
 
 void TokenWebData::SetTokenForService(const std::string& service,
                                       const std::string& token) {
@@ -102,10 +102,11 @@ WebDataServiceBase::Handle TokenWebData::GetAllTokens(
 }
 
 TokenWebData::TokenWebData(
-    scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
-    scoped_refptr<base::SingleThreadTaskRunner> db_task_runner)
-    : WebDataServiceBase(NULL, ProfileErrorCallback(), ui_task_runner),
-      token_backend_(new TokenWebDataBackend(db_task_runner)) {}
+    scoped_refptr<base::SingleThreadTaskRunner> ui_thread,
+    scoped_refptr<base::SingleThreadTaskRunner> db_thread)
+    : WebDataServiceBase(NULL, ProfileErrorCallback(), ui_thread),
+      token_backend_(new TokenWebDataBackend(db_thread)) {
+}
 
 TokenWebData::~TokenWebData() {
 }

@@ -58,7 +58,7 @@ class WebSpeechRecognitionHandle {
   BLINK_EXPORT bool Equals(const WebSpeechRecognitionHandle&) const;
   BLINK_EXPORT bool LessThan(const WebSpeechRecognitionHandle&) const;
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   WebSpeechRecognitionHandle(SpeechRecognition*);
   operator SpeechRecognition*() const;
 #endif

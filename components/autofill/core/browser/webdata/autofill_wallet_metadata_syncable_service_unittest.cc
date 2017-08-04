@@ -154,9 +154,9 @@ class NoOpWebData : public AutofillWebDataBackend {
   // AutofillWebDataBackend implementation.
   WebDatabase* GetDatabase() override { return nullptr; }
   void AddObserver(
-      AutofillWebDataServiceObserverOnDBSequence* observer) override {}
+      AutofillWebDataServiceObserverOnDBThread* observer) override {}
   void RemoveObserver(
-      AutofillWebDataServiceObserverOnDBSequence* observer) override {}
+      AutofillWebDataServiceObserverOnDBThread* observer) override {}
   void RemoveExpiredFormElements() override {}
   void NotifyOfMultipleAutofillChanges() override {}
   void NotifyThatSyncHasStarted(syncer::ModelType /* model_type */) override {}

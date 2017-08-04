@@ -1,0 +1,16 @@
+CONSOLE MESSAGE: line 10: [object Object]
+Tests that property values can be edited inline in the console via double click.
+
+Node was hidden after dblclick: true
+Node was hidden after dblclick: true
+Node was hidden after dblclick: true
+Node was hidden after dblclick: true
+logToConsole()
+console-edit-property-value.html:10 {a: 1, b: "foo", c: null, d: 2}
+    a: 3
+    b: "foo"
+    c: (3) [1, 2, 3]
+    d: {x: 2}
+    __proto__: Object
+undefined
+

@@ -19,6 +19,7 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/string_tokenizer.h"
 #include "base/trace_event/process_memory_dump.h"
+#include "base/trace_event/process_memory_totals.h"
 
 using base::trace_event::MemoryAllocatorDump;
 

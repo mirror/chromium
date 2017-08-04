@@ -5,9 +5,12 @@
 #ifndef UI_ACCESSIBILITY_AX_UTIL_AURALINUX_H_
 #define UI_ACCESSIBILITY_AX_UTIL_AURALINUX_H_
 
-#include "base/macros.h"
 #include "base/memory/singleton.h"
 #include "ui/accessibility/ax_export.h"
+
+namespace base {
+class TaskRunner;
+}
 
 namespace ui {
 
@@ -19,14 +22,18 @@ class AtkUtilAuraLinux {
   // Get the single instance of this class.
   static AtkUtilAuraLinux* GetInstance();
 
-  AtkUtilAuraLinux() = default;
+  AtkUtilAuraLinux();
+  virtual ~AtkUtilAuraLinux();
 
-  void InitializeAsync();
+  void Initialize(scoped_refptr<base::TaskRunner> init_task_runner);
 
  private:
   friend struct base::DefaultSingletonTraits<AtkUtilAuraLinux>;
 
-  DISALLOW_COPY_AND_ASSIGN(AtkUtilAuraLinux);
+  void CheckIfAccessibilityIsEnabledOnFileThread();
+  void FinishAccessibilityInitOnUIThread();
+
+  bool is_enabled_;
 };
 
 }  // namespace ui

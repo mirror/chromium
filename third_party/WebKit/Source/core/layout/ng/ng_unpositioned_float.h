@@ -11,6 +11,7 @@
 #include "core/layout/ng/ng_block_node.h"
 #include "core/layout/ng/ng_exclusion.h"
 #include "core/style/ComputedStyleConstants.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/RefPtr.h"
 
 namespace blink {
@@ -56,7 +57,7 @@ struct CORE_EXPORT NGUnpositionedFloat
 
   // The layout result for this unpositioned float. This is only present if
   // it's in a different writing mode than the BFC.
-  RefPtr<NGLayoutResult> layout_result;
+  WTF::Optional<RefPtr<NGLayoutResult>> layout_result;
 
   bool IsLeft() const;
   bool IsRight() const;

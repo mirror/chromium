@@ -40,7 +40,6 @@
 #include "chrome/browser/chromeos/ownership/owner_settings_service_chromeos_factory.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
-#include "chrome/browser/ui/webui/chromeos/bluetooth_dialog_localized_strings_provider.h"
 #include "chrome/browser/ui/webui/chromeos/network_element_localized_strings_provider.h"
 #include "chrome/browser/ui/webui/chromeos/ui_account_tweaks.h"
 #include "chromeos/chromeos_switches.h"
@@ -369,13 +368,15 @@ void AddAppearanceStrings(content::WebUIDataSource* html_source,
 #if defined(OS_CHROMEOS)
 void AddBluetoothStrings(content::WebUIDataSource* html_source) {
   LocalizedString localized_strings[] = {
+      {"bluetoothAccept", IDS_OPTIONS_SETTINGS_BLUETOOTH_ACCEPT_PASSKEY},
       {"bluetoothConnected", IDS_SETTINGS_BLUETOOTH_CONNECTED},
       {"bluetoothConnecting", IDS_SETTINGS_BLUETOOTH_CONNECTING},
       {"bluetoothDeviceListPaired", IDS_SETTINGS_BLUETOOTH_DEVICE_LIST_PAIRED},
       {"bluetoothDeviceListUnpaired",
        IDS_SETTINGS_BLUETOOTH_DEVICE_LIST_UNPAIRED},
-      {"bluetoothConnect", IDS_SETTINGS_BLUETOOTH_CONNECT},
-      {"bluetoothDisconnect", IDS_SETTINGS_BLUETOOTH_DISCONNECT},
+      {"bluetoothConnect", IDS_OPTIONS_SETTINGS_BLUETOOTH_CONNECT},
+      {"bluetoothDisconnect", IDS_OPTIONS_SETTINGS_BLUETOOTH_DISCONNECT},
+      {"bluetoothDismiss", IDS_OPTIONS_SETTINGS_BLUETOOTH_DISMISS_ERROR},
       {"bluetoothToggleA11yLabel",
        IDS_SETTINGS_BLUETOOTH_TOGGLE_ACCESSIBILITY_LABEL},
       {"bluetoothExpandA11yLabel",
@@ -384,13 +385,54 @@ void AddBluetoothStrings(content::WebUIDataSource* html_source) {
       {"bluetoothNoDevicesFound", IDS_SETTINGS_BLUETOOTH_NO_DEVICES_FOUND},
       {"bluetoothNotConnected", IDS_SETTINGS_BLUETOOTH_NOT_CONNECTED},
       {"bluetoothPageTitle", IDS_SETTINGS_BLUETOOTH},
+      {"bluetoothPair", IDS_SETTINGS_BLUETOOTH_PAIR},
       {"bluetoothPairDevicePageTitle",
        IDS_SETTINGS_BLUETOOTH_PAIR_DEVICE_TITLE},
+      {"bluetoothReject", IDS_OPTIONS_SETTINGS_BLUETOOTH_REJECT_PASSKEY},
       {"bluetoothRemove", IDS_SETTINGS_BLUETOOTH_REMOVE},
+      // Device connecting and pairing.
+      {"bluetoothStartConnecting", IDS_SETTINGS_BLUETOOTH_START_CONNECTING},
+      {"bluetoothEnterKey", IDS_OPTIONS_SETTINGS_BLUETOOTH_ENTER_KEY},
+      // These ids are generated in JS using 'bluetooth_' + a value from
+      // bluetoothPrivate.PairingEventType (see bluetooth_private.idl).
+      // 'keysEntered', and 'requestAuthorization' have no associated message.
+      {"bluetooth_requestPincode", IDS_SETTINGS_BLUETOOTH_REQUEST_PINCODE},
+      {"bluetooth_displayPincode", IDS_SETTINGS_BLUETOOTH_DISPLAY_PINCODE},
+      {"bluetooth_requestPasskey", IDS_SETTINGS_BLUETOOTH_REQUEST_PASSKEY},
+      {"bluetooth_displayPasskey", IDS_SETTINGS_BLUETOOTH_DISPLAY_PASSKEY},
+      {"bluetooth_confirmPasskey", IDS_SETTINGS_BLUETOOTH_CONFIRM_PASSKEY},
+      // These ids are generated in JS using 'bluetooth_connect_' + a value from
+      // bluetoothPrivate.ConnectResultType (see bluetooth_private.idl).
+      {"bluetooth_connect_attributeLengthInvalid",
+       IDS_SETTINGS_BLUETOOTH_CONNECT_ATTRIBUTE_LENGTH_INVALID},
+      {"bluetooth_connect_authCanceled",
+       IDS_SETTINGS_BLUETOOTH_CONNECT_AUTH_CANCELED},
+      {"bluetooth_connect_authFailed",
+       IDS_SETTINGS_BLUETOOTH_CONNECT_AUTH_FAILED},
+      {"bluetooth_connect_authRejected",
+       IDS_SETTINGS_BLUETOOTH_CONNECT_AUTH_REJECTED},
+      {"bluetooth_connect_authTimeout",
+       IDS_SETTINGS_BLUETOOTH_CONNECT_AUTH_TIMEOUT},
+      {"bluetooth_connect_connectionCongested",
+       IDS_SETTINGS_BLUETOOTH_CONNECT_CONNECTION_CONGESTED},
+      {"bluetooth_connect_failed", IDS_SETTINGS_BLUETOOTH_CONNECT_FAILED},
+      {"bluetooth_connect_inProgress",
+       IDS_SETTINGS_BLUETOOTH_CONNECT_IN_PROGRESS},
+      {"bluetooth_connect_insufficientEncryption",
+       IDS_SETTINGS_BLUETOOTH_CONNECT_INSUFFICIENT_ENCRYPTION},
+      {"bluetooth_connect_offsetInvalid",
+       IDS_SETTINGS_BLUETOOTH_CONNECT_OFFSET_INVALID},
+      {"bluetooth_connect_readNotPermitted",
+       IDS_SETTINGS_BLUETOOTH_CONNECT_READ_NOT_PERMITTED},
+      {"bluetooth_connect_requestNotSupported",
+       IDS_SETTINGS_BLUETOOTH_CONNECT_REQUEST_NOT_SUPPORTED},
+      {"bluetooth_connect_unsupportedDevice",
+       IDS_SETTINGS_BLUETOOTH_CONNECT_UNSUPPORTED_DEVICE},
+      {"bluetooth_connect_writeNotPermitted",
+       IDS_SETTINGS_BLUETOOTH_CONNECT_WRITE_NOT_PERMITTED},
   };
   AddLocalizedStringsBulk(html_source, localized_strings,
                           arraysize(localized_strings));
-  chromeos::bluetooth_dialog::AddLocalizedStrings(html_source);
 }
 #endif
 
@@ -992,19 +1034,21 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
       {"networkProxyTypePac", IDS_SETTINGS_INTERNET_NETWORK_PROXY_TYPE_PAC},
       {"networkProxyTypeWpad", IDS_SETTINGS_INTERNET_NETWORK_PROXY_TYPE_WPAD},
       {"networkProxyUseSame", IDS_SETTINGS_INTERNET_NETWORK_PROXY_USE_SAME},
-      {"networkAccessPoint", IDS_SETTINGS_INTERNET_NETWORK_ACCESS_POINT},
-      {"networkNameservers", IDS_SETTINGS_INTERNET_NETWORK_NAMESERVERS},
-      {"networkProxyWpad", IDS_SETTINGS_INTERNET_NETWORK_PROXY_WPAD},
+      {"networkSectionAccessPoint",
+       IDS_SETTINGS_INTERNET_NETWORK_SECTION_ACCESS_POINT},
       {"networkSectionAdvanced",
        IDS_SETTINGS_INTERNET_NETWORK_SECTION_ADVANCED},
       {"networkSectionAdvancedA11yLabel",
        IDS_SETTINGS_INTERNET_NETWORK_SECTION_ADVANCED_ACCESSIBILITY_LABEL},
+      {"networkSectionNameservers",
+       IDS_SETTINGS_INTERNET_NETWORK_SECTION_NAMESERVERS},
       {"networkSectionNetwork", IDS_SETTINGS_INTERNET_NETWORK_SECTION_NETWORK},
       {"networkSectionNetworkExpandA11yLabel",
        IDS_SETTINGS_INTERNET_NETWORK_SECTION_NETWORK_ACCESSIBILITY_LABEL},
       {"networkSectionProxy", IDS_SETTINGS_INTERNET_NETWORK_SECTION_PROXY},
       {"networkSectionProxyExpandA11yLabel",
        IDS_SETTINGS_INTERNET_NETWORK_SECTION_PROXY_ACCESSIBILITY_LABEL},
+      {"networkSectionWpad", IDS_SETTINGS_INTERNET_NETWORK_SECTION_WPAD},
       {"networkShared", IDS_SETTINGS_INTERNET_NETWORK_SHARED},
       {"networkSimCardLocked", IDS_SETTINGS_INTERNET_NETWORK_SIM_CARD_LOCKED},
       {"networkSimCardMissing", IDS_SETTINGS_INTERNET_NETWORK_SIM_CARD_MISSING},
@@ -1849,6 +1893,7 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
      IDS_SETTINGS_SITE_SETTINGS_ASK_BEFORE_SENDING},
     {"siteSettingsAskBeforeSendingRecommended",
      IDS_SETTINGS_SITE_SETTINGS_ASK_BEFORE_SENDING_RECOMMENDED},
+    {"siteSettingsFlashAllow", IDS_SETTINGS_SITE_SETTINGS_FLASH_ALLOW},
     {"siteSettingsFlashBlock", IDS_SETTINGS_SITE_SETTINGS_FLASH_BLOCK},
     {"siteSettingsAllowRecentlyClosedSites",
      IDS_SETTINGS_SITE_SETTINGS_ALLOW_RECENTLY_CLOSED_SITES},
@@ -1980,18 +2025,19 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
   if (PluginUtils::ShouldPreferHtmlOverPlugins(
           HostContentSettingsMapFactory::GetForProfile(profile))) {
     LocalizedString flash_strings[] = {
-        {"siteSettingsFlashAskFirst", IDS_SETTINGS_SITE_SETTINGS_ASK_FIRST},
-        {"siteSettingsFlashAskFirstRecommended",
-         IDS_SETTINGS_SITE_SETTINGS_ASK_FIRST_RECOMMENDED},
+        {"siteSettingsFlashAskBefore",
+         IDS_SETTINGS_SITE_SETTINGS_FLASH_ASK_BEFORE_RUNNING},
+        {"siteSettingsFlashAskBeforeSubtitle",
+         IDS_SETTINGS_SITE_SETTINGS_FLASH_ASK_BEFORE_RUNNING_SUBTITLE},
     };
     AddLocalizedStringsBulk(html_source, flash_strings,
                             arraysize(flash_strings));
   } else {
     LocalizedString flash_strings[] = {
-        {"siteSettingsFlashAskFirst",
+        {"siteSettingsFlashAskBefore",
          IDS_SETTINGS_SITE_SETTINGS_FLASH_DETECT_IMPORTANT},
-        {"siteSettingsFlashAskFirstRecommended",
-         IDS_SETTINGS_SITE_SETTINGS_FLASH_DETECT_IMPORTANT_RECOMMENDED},
+        {"siteSettingsFlashAskBeforeSubtitle",
+         IDS_SETTINGS_SITE_SETTINGS_FLASH_DETECT_IMPORTANT_SUBTITLE},
     };
     AddLocalizedStringsBulk(html_source, flash_strings,
                             arraysize(flash_strings));

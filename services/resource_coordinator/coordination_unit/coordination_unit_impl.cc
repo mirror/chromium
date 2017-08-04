@@ -16,6 +16,11 @@
 
 namespace resource_coordinator {
 
+#define NOTIFY_OBSERVERS(observers, Method, ...) \
+  for (auto& observer : observers) {             \
+    observer.Method(__VA_ARGS__);                \
+  }
+
 namespace {
 
 using CUIDMap = std::unordered_map<CoordinationUnitID,
@@ -33,14 +38,6 @@ const FrameCoordinationUnitImpl* CoordinationUnitImpl::ToFrameCoordinationUnit(
     const CoordinationUnitImpl* coordination_unit) {
   DCHECK(coordination_unit->id().type == CoordinationUnitType::kFrame);
   return static_cast<const FrameCoordinationUnitImpl*>(coordination_unit);
-}
-
-// static
-const WebContentsCoordinationUnitImpl*
-CoordinationUnitImpl::ToWebContentsCoordinationUnit(
-    const CoordinationUnitImpl* coordination_unit) {
-  DCHECK(coordination_unit->id().type == CoordinationUnitType::kWebContents);
-  return static_cast<const WebContentsCoordinationUnitImpl*>(coordination_unit);
 }
 
 // static
@@ -233,8 +230,7 @@ bool CoordinationUnitImpl::AddChild(CoordinationUnitImpl* child) {
       children_.count(child) ? false : children_.insert(child).second;
 
   if (success) {
-    for (auto& observer : observers_)
-      observer.OnChildAdded(this, child);
+    NOTIFY_OBSERVERS(observers_, OnChildAdded, this, child);
   }
 
   return success;
@@ -261,8 +257,7 @@ bool CoordinationUnitImpl::RemoveChild(CoordinationUnitImpl* child) {
   bool success = children_removed > 0;
 
   if (success) {
-    for (auto& observer : observers_)
-      observer.OnChildRemoved(this, child);
+    NOTIFY_OBSERVERS(observers_, OnChildRemoved, this, child);
   }
 
   return success;
@@ -272,8 +267,7 @@ void CoordinationUnitImpl::AddParent(CoordinationUnitImpl* parent) {
   DCHECK_EQ(0u, parents_.count(parent));
   parents_.insert(parent);
 
-  for (auto& observer : observers_)
-    observer.OnParentAdded(this, parent);
+  NOTIFY_OBSERVERS(observers_, OnParentAdded, this, parent);
 
   RecalcCoordinationPolicy();
 }
@@ -284,8 +278,7 @@ void CoordinationUnitImpl::RemoveParent(CoordinationUnitImpl* parent) {
 
   // TODO(matthalp, oysteine) should this go before or
   // after RecalcCoordinationPolicy?
-  for (auto& observer : observers_)
-    observer.OnParentRemoved(this, parent);
+  NOTIFY_OBSERVERS(observers_, OnParentRemoved, this, parent);
 
   RecalcCoordinationPolicy();
 }
@@ -328,7 +321,7 @@ void CoordinationUnitImpl::UnregisterCoordinationPolicyCallback() {
 
 std::set<CoordinationUnitImpl*>
 CoordinationUnitImpl::GetChildCoordinationUnitsOfType(
-    CoordinationUnitType type) const {
+    CoordinationUnitType type) {
   std::set<CoordinationUnitImpl*> coordination_units;
 
   for (auto* child : children()) {
@@ -346,7 +339,7 @@ CoordinationUnitImpl::GetChildCoordinationUnitsOfType(
 
 std::set<CoordinationUnitImpl*>
 CoordinationUnitImpl::GetParentCoordinationUnitsOfType(
-    CoordinationUnitType type) const {
+    CoordinationUnitType type) {
   std::set<CoordinationUnitImpl*> coordination_units;
 
   for (auto* parent : parents()) {
@@ -364,7 +357,7 @@ CoordinationUnitImpl::GetParentCoordinationUnitsOfType(
 
 std::set<CoordinationUnitImpl*>
 CoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
-    CoordinationUnitType type) const {
+    CoordinationUnitType type) {
   NOTREACHED();
   return std::set<CoordinationUnitImpl*>();
 }
@@ -386,12 +379,12 @@ void CoordinationUnitImpl::SetProperty(mojom::PropertyType property_type,
   const base::Value& property =
       *(properties_[property_type] = std::move(value));
   PropagateProperty(property_type, property);
-  OnPropertyChanged(property_type, property);
+  NOTIFY_OBSERVERS(observers_, OnPropertyChanged, this, property_type,
+                   property);
 }
 
 void CoordinationUnitImpl::BeforeDestroyed() {
-  for (auto& observer : observers_)
-    observer.OnBeforeCoordinationUnitDestroyed(this);
+  NOTIFY_OBSERVERS(observers_, OnBeforeCoordinationUnitDestroyed, this);
 }
 
 void CoordinationUnitImpl::AddObserver(
@@ -402,13 +395,6 @@ void CoordinationUnitImpl::AddObserver(
 void CoordinationUnitImpl::RemoveObserver(
     CoordinationUnitGraphObserver* observer) {
   observers_.RemoveObserver(observer);
-}
-
-void CoordinationUnitImpl::OnPropertyChanged(
-    const mojom::PropertyType property_type,
-    const base::Value& value) {
-  for (auto& observer : observers_)
-    observer.OnPropertyChanged(this, property_type, value);
 }
 
 }  // namespace resource_coordinator

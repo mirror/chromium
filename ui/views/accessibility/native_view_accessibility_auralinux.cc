@@ -131,7 +131,12 @@ class AuraLinuxApplication
     }
     ui::AXPlatformNodeAuraLinux::SetApplication(platform_node_);
     if (ViewsDelegate::GetInstance()) {
-      ui::AXPlatformNodeAuraLinux::StaticInitialize();
+      // This should be on the a blocking pool thread so that we can open
+      // libatk-bridge.so without blocking this thread.
+      scoped_refptr<base::TaskRunner> init_task_runner =
+          ViewsDelegate::GetInstance()->GetBlockingPoolTaskRunner();
+      if (init_task_runner)
+        ui::AXPlatformNodeAuraLinux::StaticInitialize(init_task_runner);
     }
   }
 

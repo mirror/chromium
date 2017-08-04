@@ -9,6 +9,7 @@
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_thread.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -24,17 +25,22 @@ spellcheck::mojom::SpellCheckPanelHostPtr GetSpellCheckPanelHost() {
 }
 }
 
-SpellCheckPanel::SpellCheckPanel(content::RenderFrame* render_frame,
-                                 service_manager::BinderRegistry* registry)
+SpellCheckPanel::SpellCheckPanel(content::RenderFrame* render_frame)
     : content::RenderFrameObserver(render_frame),
       spelling_panel_visible_(false) {
   DCHECK(render_frame);
-  registry->AddInterface(base::Bind(&SpellCheckPanel::SpellCheckPanelRequest,
+  registry_.AddInterface(base::Bind(&SpellCheckPanel::SpellCheckPanelRequest,
                                     base::Unretained(this)));
   render_frame->GetWebFrame()->SetSpellCheckPanelHostClient(this);
 }
 
 SpellCheckPanel::~SpellCheckPanel() = default;
+
+void SpellCheckPanel::OnInterfaceRequestForFrame(
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle* interface_pipe) {
+  registry_.TryBindInterface(interface_name, interface_pipe);
+}
 
 void SpellCheckPanel::OnDestruct() {
   delete this;

@@ -11,17 +11,13 @@ namespace ui {
 CanvasPainter::CanvasPainter(SkBitmap* output,
                              const gfx::Size& paint_size,
                              float raster_scale,
-                             SkColor clear_color,
-                             bool is_pixel_canvas)
+                             SkColor clear_color)
     : output_(output),
       paint_size_(paint_size),
       raster_scale_(raster_scale),
       clear_color_(clear_color),
       list_(new cc::DisplayItemList),
-      context_(list_.get(),
-               raster_scale,
-               gfx::Rect(paint_size_),
-               is_pixel_canvas) {}
+      context_(list_.get(), raster_scale, gfx::Rect(paint_size_)) {}
 
 CanvasPainter::~CanvasPainter() {
   gfx::Size pixel_size = gfx::ScaleToCeiledSize(paint_size_, raster_scale_);

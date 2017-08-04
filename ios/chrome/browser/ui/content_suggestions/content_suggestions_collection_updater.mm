@@ -56,7 +56,6 @@ typedef NS_ENUM(NSInteger, SectionIdentifier) {
   SectionIdentifierReadingList,
   SectionIdentifierMostVisited,
   SectionIdentifierLogo,
-  SectionIdentifierPromo,
   SectionIdentifierLearnMore,
   SectionIdentifierDefault,
 };
@@ -90,12 +89,11 @@ ItemType ItemTypeForInfo(ContentSuggestionsSectionInformation* info) {
       return ItemTypeReadingList;
     case ContentSuggestionsSectionMostVisited:
       return ItemTypeMostVisited;
-    case ContentSuggestionsSectionPromo:
+    case ContentSuggestionsSectionLogo:
       return ItemTypePromo;
     case ContentSuggestionsSectionLearnMore:
       return ItemTypeLearnMore;
 
-    case ContentSuggestionsSectionLogo:
     case ContentSuggestionsSectionUnknown:
       return ItemTypeUnknown;
   }
@@ -113,8 +111,6 @@ SectionIdentifier SectionIdentifierForInfo(
       return SectionIdentifierMostVisited;
     case ContentSuggestionsSectionLogo:
       return SectionIdentifierLogo;
-    case ContentSuggestionsSectionPromo:
-      return SectionIdentifierPromo;
     case ContentSuggestionsSectionLearnMore:
       return SectionIdentifierLearnMore;
 
@@ -166,6 +162,7 @@ const CGFloat kNumberOfMostVisitedLines = 2;
     _promoAdded = NO;
     _dataSource = dataSource;
     _dataSource.dataSink = self;
+    _sectionIdentifiersFromContentSuggestions = [[NSMutableSet alloc] init];
   }
   return self;
 }
@@ -451,11 +448,6 @@ addSuggestionsToModel:(NSArray<CSCollectionViewItem*>*)suggestions
              sectionIdentifierForSection:section] == SectionIdentifierLogo;
 }
 
-- (BOOL)isPromoSection:(NSInteger)section {
-  return [self.collectionViewController.collectionViewModel
-             sectionIdentifierForSection:section] == SectionIdentifierPromo;
-}
-
 - (void)updateMostVisitedForSize:(CGSize)size {
   self.collectionWidth = size.width;
 
@@ -596,7 +588,6 @@ addSuggestionsToModel:(NSArray<CSCollectionViewItem*>*)suggestions
 - (void)resetModels {
   [self.collectionViewController loadModel];
   self.sectionInfoBySectionIdentifier = [[NSMutableDictionary alloc] init];
-  self.sectionIdentifiersFromContentSuggestions = [[NSMutableSet alloc] init];
 }
 
 // Runs the additional action for the section identified by |sectionInfo|.

@@ -59,7 +59,7 @@ class WebArrayBufferView {
   BLINK_EXPORT static WebArrayBufferView* CreateFromV8Value(
       v8::Local<v8::Value>);
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   WebArrayBufferView(DOMArrayBufferView*);
   WebArrayBufferView& operator=(DOMArrayBufferView*);
   operator DOMArrayBufferView*() const;

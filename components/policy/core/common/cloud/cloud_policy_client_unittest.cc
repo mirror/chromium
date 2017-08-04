@@ -431,8 +431,7 @@ TEST_F(CloudPolicyClientTest, RegistrationAndPolicyFetch) {
   EXPECT_CALL(observer_, OnRegistrationStateChanged(_));
   client_->Register(em::DeviceRegisterRequest::USER,
                     em::DeviceRegisterRequest::FLAVOR_USER_REGISTRATION,
-                    em::LicenseType::UNDEFINED, kOAuthToken, std::string(),
-                    std::string(), std::string());
+                    kOAuthToken, std::string(), std::string(), std::string());
   EXPECT_TRUE(client_->is_registered());
   EXPECT_FALSE(client_->GetPolicyFor(policy_type_, std::string()));
   EXPECT_EQ(DM_STATUS_SUCCESS, client_->status());
@@ -448,11 +447,9 @@ TEST_F(CloudPolicyClientTest, RegistrationWithCertificateAndPolicyFetch) {
   ExpectCertBasedRegistration();
   fake_signing_service_.set_success(true);
   EXPECT_CALL(observer_, OnRegistrationStateChanged(_));
-  client_->RegisterWithCertificate(
-      em::DeviceRegisterRequest::DEVICE,
+  client_->RegisterWithCertificate(em::DeviceRegisterRequest::DEVICE,
       em::DeviceRegisterRequest::FLAVOR_ENROLLMENT_ATTESTATION,
-      em::LicenseType::UNDEFINED, kEnrollmentCertificate, std::string(),
-      std::string(), std::string());
+      kEnrollmentCertificate, std::string(), std::string(), std::string());
   EXPECT_TRUE(client_->is_registered());
   EXPECT_FALSE(client_->GetPolicyFor(policy_type_, std::string()));
   EXPECT_EQ(DM_STATUS_SUCCESS, client_->status());
@@ -467,11 +464,9 @@ TEST_F(CloudPolicyClientTest, RegistrationWithCertificateAndPolicyFetch) {
 TEST_F(CloudPolicyClientTest, RegistrationWithCertificateFailToSignRequest) {
   fake_signing_service_.set_success(false);
   EXPECT_CALL(observer_, OnClientError(_));
-  client_->RegisterWithCertificate(
-      em::DeviceRegisterRequest::DEVICE,
+  client_->RegisterWithCertificate(em::DeviceRegisterRequest::DEVICE,
       em::DeviceRegisterRequest::FLAVOR_ENROLLMENT_ATTESTATION,
-      em::LicenseType::UNDEFINED, kEnrollmentCertificate, std::string(),
-      std::string(), std::string());
+      kEnrollmentCertificate, std::string(), std::string(), std::string());
   EXPECT_FALSE(client_->is_registered());
   EXPECT_EQ(DM_STATUS_CANNOT_SIGN_REQUEST, client_->status());
 }
@@ -488,8 +483,7 @@ TEST_F(CloudPolicyClientTest, RegistrationParametersPassedThrough) {
   EXPECT_CALL(observer_, OnRegistrationStateChanged(_));
   client_->Register(em::DeviceRegisterRequest::USER,
                     em::DeviceRegisterRequest::FLAVOR_ENROLLMENT_MANUAL,
-                    em::LicenseType::UNDEFINED, kOAuthToken, kClientID,
-                    kRequisition, kStateKey);
+                    kOAuthToken, kClientID, kRequisition, kStateKey);
   EXPECT_EQ(kClientID, client_id_);
 }
 
@@ -500,8 +494,7 @@ TEST_F(CloudPolicyClientTest, RegistrationNoToken) {
   EXPECT_CALL(observer_, OnClientError(_));
   client_->Register(em::DeviceRegisterRequest::USER,
                     em::DeviceRegisterRequest::FLAVOR_USER_REGISTRATION,
-                    em::LicenseType::UNDEFINED, kOAuthToken, std::string(),
-                    std::string(), std::string());
+                    kOAuthToken, std::string(), std::string(), std::string());
   EXPECT_FALSE(client_->is_registered());
   EXPECT_FALSE(client_->GetPolicyFor(policy_type_, std::string()));
   EXPECT_EQ(DM_STATUS_RESPONSE_DECODING_ERROR, client_->status());
@@ -516,8 +509,7 @@ TEST_F(CloudPolicyClientTest, RegistrationFailure) {
   EXPECT_CALL(observer_, OnClientError(_));
   client_->Register(em::DeviceRegisterRequest::USER,
                     em::DeviceRegisterRequest::FLAVOR_USER_REGISTRATION,
-                    em::LicenseType::UNDEFINED, kOAuthToken, std::string(),
-                    std::string(), std::string());
+                    kOAuthToken, std::string(), std::string(), std::string());
   EXPECT_FALSE(client_->is_registered());
   EXPECT_FALSE(client_->GetPolicyFor(policy_type_, std::string()));
   EXPECT_EQ(DM_STATUS_REQUEST_FAILED, client_->status());
@@ -538,8 +530,7 @@ TEST_F(CloudPolicyClientTest, RetryRegistration) {
                        MatchProto(registration_request_)));
   client_->Register(em::DeviceRegisterRequest::USER,
                     em::DeviceRegisterRequest::FLAVOR_USER_REGISTRATION,
-                    em::LicenseType::UNDEFINED, kOAuthToken, std::string(),
-                    std::string(), std::string());
+                    kOAuthToken, std::string(), std::string(), std::string());
   EXPECT_FALSE(client_->is_registered());
   Mock::VerifyAndClearExpectations(&service_);
 

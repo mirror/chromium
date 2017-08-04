@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/logging.h"
+#include "chrome/installer/zucchini/disassembler.h"
 
 namespace zucchini {
 
@@ -66,8 +67,8 @@ void OrderedLabelManager::InsertOffsets(const std::vector<offset_t>& offsets) {
   SortAndUniquify(&labels_);
 }
 
-void OrderedLabelManager::InsertTargets(ReferenceReader&& reader) {
-  for (auto ref = reader.GetNext(); ref.has_value(); ref = reader.GetNext())
+void OrderedLabelManager::InsertTargets(ReferenceReader* reader) {
+  for (auto ref = reader->GetNext(); ref.has_value(); ref = reader->GetNext())
     labels_.push_back(ref->target);
   SortAndUniquify(&labels_);
 }

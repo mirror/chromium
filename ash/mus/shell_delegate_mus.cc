@@ -18,7 +18,10 @@
 #include "components/user_manager/user_info_impl.h"
 #include "ui/gfx/image/image.h"
 #include "ui/keyboard/keyboard_ui.h"
+
+#if defined(USE_OZONE)
 #include "services/ui/public/cpp/input_devices/input_device_controller_client.h"
+#endif
 
 namespace ash {
 
@@ -154,6 +157,7 @@ void ShellDelegateMus::UpdateTouchscreenStatusFromPrefs() {
   NOTIMPLEMENTED();
 }
 
+#if defined(USE_OZONE)
 ui::InputDeviceControllerClient*
 ShellDelegateMus::GetInputDeviceControllerClient() {
   if (!connector_)
@@ -165,5 +169,6 @@ ShellDelegateMus::GetInputDeviceControllerClient() {
   }
   return input_device_controller_client_.get();
 }
+#endif
 
 }  // namespace ash

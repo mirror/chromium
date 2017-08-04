@@ -22,8 +22,6 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/task_runner_util.h"
-#include "base/task_scheduler/post_task.h"
 #include "base/win/shortcut.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -175,10 +173,13 @@ base::FilePath CreateOrUpdateShortcutIconForProfile(
     const base::FilePath& profile_path,
     const SkBitmap& avatar_bitmap_1x,
     const SkBitmap& avatar_bitmap_2x) {
-  base::ThreadRestrictions::AssertIOAllowed();
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
-  if (!base::PathExists(profile_path))
+  if (!base::PathExists(profile_path)) {
+    LOG(ERROR) << "Profile directory " << profile_path.value()
+               << " did not exist when trying to create profile icon";
     return base::FilePath();
+  }
 
   std::unique_ptr<gfx::ImageFamily> family = GetAppIconImageFamily();
   if (!family)
@@ -220,8 +221,11 @@ base::FilePath CreateOrUpdateShortcutIconForProfile(
   const bool had_icon = base::PathExists(icon_path);
 
   if (!IconUtil::CreateIconFileFromImageFamily(badged_bitmaps, icon_path)) {
-    // This can happen if the profile directory is deleted between the beginning
-    // of this function and here.
+    // This can happen in theory if the profile directory is deleted between the
+    // beginning of this function and here; however this is extremely unlikely
+    // and this check will help catch any regression where this call would start
+    // failing constantly.
+    NOTREACHED();
     return base::FilePath();
   }
 
@@ -279,7 +283,7 @@ base::FilePath ConvertToLongPath(const base::FilePath& path) {
 bool IsChromeShortcut(const base::FilePath& path,
                       const base::FilePath& chrome_exe,
                       base::string16* command_line) {
-  base::ThreadRestrictions::AssertIOAllowed();
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   if (path.Extension() != installer::kLnkExt)
     return false;
@@ -359,7 +363,8 @@ bool RenameDesktopShortcut(const base::FilePath& old_shortcut_path,
   return true;
 }
 
-// Renames an existing Chrome desktop profile shortcut.
+// Renames an existing Chrome desktop profile shortcut. Must be called on the
+// FILE thread.
 // |profile_shortcuts| are Chrome desktop shortcuts for the profile (there can
 // be several).
 // |desktop_contents| is the collection of all user desktop shortcuts
@@ -374,7 +379,7 @@ void RenameChromeDesktopShortcutForProfile(
     std::set<base::FilePath>* desktop_contents) {
   DCHECK(profile_shortcuts);
   DCHECK(desktop_contents);
-  base::ThreadRestrictions::AssertIOAllowed();
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   base::FilePath user_shortcuts_directory;
   base::FilePath system_shortcuts_directory;
@@ -475,11 +480,11 @@ struct CreateOrUpdateShortcutsParams {
 // Updates all desktop shortcuts for the given profile to have the specified
 // parameters. If |params.create_mode| is CREATE_WHEN_NONE_FOUND, a new shortcut
 // is created if no existing ones were found. Whether non-profile shortcuts
-// should be updated is specified by |params.action|. File and COM operations
-// must be allowed on the calling thread.
+// should be updated is specified by |params.action|. Must be called on the FILE
+// thread.
 void CreateOrUpdateDesktopShortcutsAndIconForProfile(
     const CreateOrUpdateShortcutsParams& params) {
-  base::ThreadRestrictions::AssertIOAllowed();
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   const base::FilePath shortcut_icon =
       CreateOrUpdateShortcutIconForProfile(params.profile_path,
@@ -580,10 +585,10 @@ bool ChromeDesktopShortcutsExist(const base::FilePath& chrome_exe) {
 // Deletes all desktop shortcuts for the specified profile. If
 // |ensure_shortcuts_remain| is true, then a regular non-profile shortcut will
 // be created if this function would otherwise delete the last Chrome desktop
-// shortcut(s). File and COM operations must be allowed on the calling thread.
+// shortcut(s). Must be called on the FILE thread.
 void DeleteDesktopShortcuts(const base::FilePath& profile_path,
                             bool ensure_shortcuts_remain) {
-  base::ThreadRestrictions::AssertIOAllowed();
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   base::FilePath chrome_exe;
   if (!PathService::Get(base::FILE_EXE, &chrome_exe)) {
@@ -627,10 +632,9 @@ void DeleteDesktopShortcuts(const base::FilePath& profile_path,
 }
 
 // Returns true if profile at |profile_path| has any shortcuts. Does not
-// consider non-profile shortcuts. File and COM operations must be allowed on
-// the calling thread.
+// consider non-profile shortcuts. Must be called on the FILE thread.
 bool HasAnyProfileShortcuts(const base::FilePath& profile_path) {
-  base::ThreadRestrictions::AssertIOAllowed();
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   base::FilePath chrome_exe;
   if (!PathService::Get(base::FILE_EXE, &chrome_exe)) {
@@ -774,19 +778,8 @@ base::string16 CreateProfileShortcutFlags(const base::FilePath& profile_path) {
 }  // namespace internal
 }  // namespace profiles
 
-namespace {
-bool disabled_for_unit_tests = false;
-}
-
-void ProfileShortcutManager::DisableForUnitTests() {
-  disabled_for_unit_tests = true;
-}
-
 // static
 bool ProfileShortcutManager::IsFeatureEnabled() {
-  if (disabled_for_unit_tests)
-    return false;
-
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   if (command_line->HasSwitch(switches::kEnableProfileShortcutManager))
     return true;
@@ -837,17 +830,17 @@ void ProfileShortcutManagerWin::CreateProfileShortcut(
 
 void ProfileShortcutManagerWin::RemoveProfileShortcuts(
     const base::FilePath& profile_path) {
-  base::CreateCOMSTATaskRunnerWithTraits({base::MayBlock()})
-      ->PostTask(FROM_HERE,
-                 base::Bind(&DeleteDesktopShortcuts, profile_path, false));
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
+      base::Bind(&DeleteDesktopShortcuts, profile_path, false));
 }
 
 void ProfileShortcutManagerWin::HasProfileShortcuts(
     const base::FilePath& profile_path,
     const base::Callback<void(bool)>& callback) {
-  base::PostTaskAndReplyWithResult(
-      base::CreateCOMSTATaskRunnerWithTraits({base::MayBlock()}).get(),
-      FROM_HERE, base::Bind(&HasAnyProfileShortcuts, profile_path), callback);
+  BrowserThread::PostTaskAndReplyWithResult(
+      BrowserThread::FILE, FROM_HERE,
+      base::Bind(&HasAnyProfileShortcuts, profile_path), callback);
 }
 
 void ProfileShortcutManagerWin::GetShortcutProperties(
@@ -912,9 +905,10 @@ void ProfileShortcutManagerWin::OnProfileWasRemoved(
         IGNORE_NON_PROFILE_SHORTCUTS);
   }
 
-  base::CreateCOMSTATaskRunnerWithTraits({base::MayBlock()})
-      ->PostTask(FROM_HERE, base::Bind(&DeleteDesktopShortcuts, profile_path,
-                                       deleting_down_to_last_profile));
+  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
+                          base::Bind(&DeleteDesktopShortcuts,
+                                     profile_path,
+                                     deleting_down_to_last_profile));
 }
 
 void ProfileShortcutManagerWin::OnProfileNameChanged(
@@ -1002,15 +996,14 @@ void ProfileShortcutManagerWin::CreateOrUpdateShortcutsForProfileAtPath(
           profiles::GetDefaultAvatarIconResourceIDAtIndex(icon_index);
       const int resource_id_2x = kProfileAvatarIconResources2x[icon_index];
       // Make a copy of the SkBitmaps to ensure that we can safely use the image
-      // data on the thread we post to.
+      // data on the FILE thread.
       params.avatar_image_1x = GetImageResourceSkBitmapCopy(resource_id_1x);
       params.avatar_image_2x = GetImageResourceSkBitmapCopy(resource_id_2x);
     }
   }
-  base::CreateCOMSTATaskRunnerWithTraits({base::MayBlock()})
-      ->PostTask(
-          FROM_HERE,
-          base::Bind(&CreateOrUpdateDesktopShortcutsAndIconForProfile, params));
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
+      base::Bind(&CreateOrUpdateDesktopShortcutsAndIconForProfile, params));
 
   entry->SetShortcutName(params.profile_name);
 }

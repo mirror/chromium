@@ -11,17 +11,14 @@
 namespace net {
 namespace ntlm {
 
-NtlmBufferReader::NtlmBufferReader(const Buffer& buffer)
+NtlmBufferReader::NtlmBufferReader(base::StringPiece buffer)
     : buffer_(buffer), cursor_(0) {
   DCHECK(buffer.data());
 }
 
-NtlmBufferReader::NtlmBufferReader(base::StringPiece str)
-    : NtlmBufferReader(reinterpret_cast<const uint8_t*>(str.data()),
-                       str.size()) {}
-
 NtlmBufferReader::NtlmBufferReader(const uint8_t* ptr, size_t len)
-    : NtlmBufferReader(Buffer(ptr, len)) {}
+    : NtlmBufferReader(
+          base::StringPiece(reinterpret_cast<const char*>(ptr), len)) {}
 
 NtlmBufferReader::~NtlmBufferReader() {}
 

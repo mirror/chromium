@@ -504,11 +504,11 @@ CardUnmaskPromptViews::FadeOutView::~FadeOutView() {
 }
 
 void CardUnmaskPromptViews::FadeOutView::PaintChildren(
-    const views::PaintInfo& paint_info) {
+    const ui::PaintContext& context) {
   const bool kLcdTextRequiresOpaqueLayer = true;
-  ui::CompositingRecorder recorder(paint_info.context(), alpha_,
+  ui::CompositingRecorder recorder(context, alpha_,
                                    kLcdTextRequiresOpaqueLayer);
-  views::View::PaintChildren(paint_info);
+  views::View::PaintChildren(context);
 }
 
 void CardUnmaskPromptViews::FadeOutView::OnPaint(gfx::Canvas* canvas) {

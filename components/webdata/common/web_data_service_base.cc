@@ -22,12 +22,13 @@ using base::Time;
 WebDataServiceBase::WebDataServiceBase(
     scoped_refptr<WebDatabaseService> wdbs,
     const ProfileErrorCallback& callback,
-    const scoped_refptr<base::SingleThreadTaskRunner>& ui_task_runner)
-    : base::RefCountedDeleteOnSequence<WebDataServiceBase>(ui_task_runner),
+    const scoped_refptr<base::SingleThreadTaskRunner>& ui_thread)
+    : base::RefCountedDeleteOnSequence<WebDataServiceBase>(ui_thread),
       wdbs_(wdbs),
       profile_error_callback_(callback) {}
 
-void WebDataServiceBase::ShutdownOnUISequence() {}
+void WebDataServiceBase::ShutdownOnUIThread() {
+}
 
 void WebDataServiceBase::Init() {
   DCHECK(wdbs_.get());

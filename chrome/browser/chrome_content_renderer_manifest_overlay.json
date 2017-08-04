@@ -5,7 +5,6 @@
       "provides": {
         "browser": [
           "chrome::mojom::ResourceUsageReporter",
-          "chrome::mojom::SearchBouncer",
           "spellcheck::mojom::SpellChecker"
         ]
       },
@@ -26,7 +25,6 @@
           "chrome::mojom::InsecureContentRenderer",
           "chrome::mojom::PhishingDetector",
           "chrome::mojom::ThumbnailCapturer",
-          "chrome::mojom::WebUITester",
           "contextual_search::mojom::OverlayPageNotifierService",
           "dom_distiller::mojom::DistillerPageNotifierService",
           "spellcheck::mojom::SpellCheckPanel"

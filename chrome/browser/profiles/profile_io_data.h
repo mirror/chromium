@@ -44,6 +44,7 @@ class ChromeNetworkDelegate;
 class ChromeURLRequestContextGetter;
 class ChromeExpectCTReporter;
 class HostContentSettingsMap;
+class NetHttpSessionParamsObserver;
 class ProtocolHandlerRegistry;
 
 namespace chromeos {
@@ -250,6 +251,9 @@ class ProfileIOData {
 
   // Get platform ClientCertStore. May return nullptr.
   std::unique_ptr<net::ClientCertStore> CreateClientCertStore();
+
+  // Called on IO thread thread to disable QUIC.
+  void DisableQuicOnIOThread();
 
  protected:
   // A URLRequestContext for media that owns its HTTP factory, to ensure
@@ -558,6 +562,11 @@ class ProfileIOData {
   mutable IntegerPrefMember incognito_availibility_pref_;
 
   BooleanPrefMember enable_metrics_;
+
+  // Observes profile's preference for changes to prefs which affect
+  // HttpNetworkSession params.
+  std::unique_ptr<NetHttpSessionParamsObserver>
+      net_http_session_params_observer_;
 
   // Pointed to by NetworkDelegate.
   mutable std::unique_ptr<policy::URLBlacklistManager> url_blacklist_manager_;

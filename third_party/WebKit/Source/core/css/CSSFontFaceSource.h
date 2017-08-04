@@ -28,7 +28,6 @@
 
 #include "core/CoreExport.h"
 #include "platform/fonts/FontCacheKey.h"
-#include "platform/fonts/FontSelectionTypes.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
@@ -53,8 +52,7 @@ class CORE_EXPORT CSSFontFaceSource
 
   void SetFontFace(CSSFontFace* face) { face_ = face; }
 
-  RefPtr<SimpleFontData> GetFontData(const FontDescription&,
-                                     const FontSelectionCapabilities&);
+  RefPtr<SimpleFontData> GetFontData(const FontDescription&);
 
   virtual bool IsLocalFontAvailable(const FontDescription&) { return false; }
   virtual void BeginLoadIfNeeded() {}
@@ -68,9 +66,7 @@ class CORE_EXPORT CSSFontFaceSource
 
  protected:
   CSSFontFaceSource();
-  virtual RefPtr<SimpleFontData> CreateFontData(
-      const FontDescription&,
-      const FontSelectionCapabilities&) = 0;
+  virtual RefPtr<SimpleFontData> CreateFontData(const FontDescription&) = 0;
 
   using FontDataTable = HashMap<FontCacheKey,
                                 RefPtr<SimpleFontData>,

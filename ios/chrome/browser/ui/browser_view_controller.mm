@@ -518,7 +518,7 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
   // Notifies the toolbar menu of reading list changes.
   ReadingListMenuNotifier* _readingListMenuNotifier;
 
-  // The view used by the voice search presentation animation.
+  // The sender for the last received IDC_VOICE_SEARCH command.
   __weak UIView* _voiceSearchButton;
 
   // Coordinator for displaying alerts.
@@ -4184,8 +4184,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       } else {
         UIViewController* controller = [RecentTabsPanelViewController
             controllerToPresentForBrowserState:_browserState
-                                        loader:self
-                                    dispatcher:self.dispatcher];
+                                        loader:self];
         controller.modalPresentationStyle = UIModalPresentationFormSheet;
         controller.modalPresentationCapturesStatusBarAppearance = YES;
         [self presentViewController:controller animated:YES completion:nil];
@@ -4213,6 +4212,13 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     case IDC_RATE_THIS_APP:
       [self showRateThisAppDialog];
       break;
+    case IDC_VOICE_SEARCH: {
+      // If the voice search command is coming from a UIView sender, store it
+      // before sending the command up the responder chain.
+      StartVoiceSearchCommand* command = [[StartVoiceSearchCommand alloc]
+          initWithOriginView:base::mac::ObjCCast<UIView>(sender)];
+      [self.dispatcher startVoiceSearch:command];
+    } break;
     default:
       // Unknown commands get sent up the responder chain.
       [super chromeExecuteCommand:sender];

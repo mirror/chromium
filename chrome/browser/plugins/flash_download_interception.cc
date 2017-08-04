@@ -76,9 +76,8 @@ void FlashDownloadInterception::InterceptFlashDownloadNavigation(
         CONTENT_SETTINGS_TYPE_PLUGINS, web_contents->GetMainFrame(),
         web_contents->GetLastCommittedURL(), true, base::Bind(&DoNothing));
   } else if (flash_setting == CONTENT_SETTING_BLOCK) {
-    auto* settings = TabSpecificContentSettings::FromWebContents(web_contents);
-    if (settings)
-      settings->FlashDownloadBlocked();
+    TabSpecificContentSettings::FromWebContents(web_contents)
+        ->FlashDownloadBlocked();
   }
 
   // If the content setting has been already changed, do nothing.

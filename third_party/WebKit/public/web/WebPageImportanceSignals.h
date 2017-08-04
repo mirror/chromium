@@ -26,7 +26,7 @@ class WebPageImportanceSignals {
   BLINK_EXPORT void SetIssuedNonGetFetchFromScript();
 
   BLINK_EXPORT void Reset();
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   BLINK_EXPORT void OnCommitLoad();
 #endif
 

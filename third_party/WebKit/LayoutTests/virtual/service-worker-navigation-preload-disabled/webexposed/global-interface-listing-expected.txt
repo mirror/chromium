@@ -14,7 +14,7 @@ interface Accelerometer : Sensor
     getter y
     getter z
     method constructor
-interface AccessibleNode : EventTarget
+interface AccessibleNode
     attribute @@toStringTag
     getter activeDescendant
     getter atomic
@@ -43,7 +43,6 @@ interface AccessibleNode : EventTarget
     getter modal
     getter multiline
     getter multiselectable
-    getter onaccessibleclick
     getter orientation
     getter owns
     getter placeholder
@@ -92,7 +91,6 @@ interface AccessibleNode : EventTarget
     setter modal
     setter multiline
     setter multiselectable
-    setter onaccessibleclick
     setter orientation
     setter owns
     setter placeholder
@@ -5199,6 +5197,7 @@ interface RTCPeerConnection : EventTarget
     method getRemoteStreams
     method getSenders
     method getStats
+    method getStreamById
     method removeStream
     method removeTrack
     method setConfiguration
@@ -8848,6 +8847,7 @@ interface webkitRTCPeerConnection : EventTarget
     method getRemoteStreams
     method getSenders
     method getStats
+    method getStreamById
     method removeStream
     method removeTrack
     method setConfiguration

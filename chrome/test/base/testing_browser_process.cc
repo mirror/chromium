@@ -92,7 +92,6 @@ TestingBrowserProcess::~TestingBrowserProcess() {
   ShutdownBrowserPolicyConnector();
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   extensions::ExtensionsBrowserClient::Set(nullptr);
-  extensions::AppWindowClient::Set(nullptr);
 #endif
 
   // Destructors for some objects owned by TestingBrowserProcess will use

@@ -36,6 +36,7 @@
 #include "content/public/renderer/navigation_state.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_view.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
@@ -677,9 +678,7 @@ class PasswordAutofillAgent::FormElementObserverCallback
 ////////////////////////////////////////////////////////////////////////////////
 // PasswordAutofillAgent, public:
 
-PasswordAutofillAgent::PasswordAutofillAgent(
-    content::RenderFrame* render_frame,
-    service_manager::BinderRegistry* registry)
+PasswordAutofillAgent::PasswordAutofillAgent(content::RenderFrame* render_frame)
     : content::RenderFrameObserver(render_frame),
       logging_state_active_(false),
       was_username_autofilled_(false),
@@ -688,7 +687,7 @@ PasswordAutofillAgent::PasswordAutofillAgent(
       checked_safe_browsing_reputation_(false),
       binding_(this),
       form_element_observer_(nullptr) {
-  registry->AddInterface(
+  registry_.AddInterface(
       base::Bind(&PasswordAutofillAgent::BindRequest, base::Unretained(this)));
 }
 
@@ -1285,6 +1284,12 @@ void PasswordAutofillAgent::SendPasswordForms(bool only_visible) {
       GetPasswordManagerDriver()->PasswordFormsParsed(password_forms);
     }
   }
+}
+
+void PasswordAutofillAgent::OnInterfaceRequestForFrame(
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle* interface_pipe) {
+  registry_.TryBindInterface(interface_name, interface_pipe);
 }
 
 void PasswordAutofillAgent::DidFinishDocumentLoad() {

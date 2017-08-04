@@ -40,7 +40,6 @@
 #include "ui/views/controls/native/native_view_host.h"
 #include "ui/views/controls/scroll_view.h"
 #include "ui/views/controls/textfield/textfield.h"
-#include "ui/views/paint_info.h"
 #include "ui/views/test/views_test_base.h"
 #include "ui/views/view_observer.h"
 #include "ui/views/widget/native_widget.h"
@@ -528,9 +527,7 @@ TEST_F(ViewTest, PaintEmptyView) {
   // Paint "everything".
   gfx::Rect first_paint(1, 1);
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, first_paint, false),
-      first_paint.size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, first_paint));
 
   // The empty view has nothing to paint so it doesn't try build a cache, nor do
   // its children which would be clipped by its (empty) self.
@@ -551,8 +548,8 @@ TEST_F(ViewTest, PaintWithMovedViewUsesCache) {
   gfx::Rect pixel_rect = gfx::Rect(1, 1);
   float device_scale_factor = 1.f;
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->PaintFromPaintRoot(
-      ui::PaintContext(list.get(), device_scale_factor, pixel_rect, false));
+  root_view->Paint(
+      ui::PaintContext(list.get(), device_scale_factor, pixel_rect));
   EXPECT_TRUE(v1->did_paint_);
   v1->Reset();
   // The visual rects for (clip, drawing, transform) should be in layer space.
@@ -567,15 +564,15 @@ TEST_F(ViewTest, PaintWithMovedViewUsesCache) {
 
   // If invalidation doesn't intersect v1, we paint with the cache.
   list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->PaintFromPaintRoot(
-      ui::PaintContext(list.get(), device_scale_factor, pixel_rect, false));
+  root_view->Paint(
+      ui::PaintContext(list.get(), device_scale_factor, pixel_rect));
   EXPECT_FALSE(v1->did_paint_);
   v1->Reset();
 
   // If invalidation does intersect v1, we don't paint with the cache.
   list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->PaintFromPaintRoot(
-      ui::PaintContext(list.get(), device_scale_factor, v1->bounds(), false));
+  root_view->Paint(
+      ui::PaintContext(list.get(), device_scale_factor, v1->bounds()));
   EXPECT_TRUE(v1->did_paint_);
   v1->Reset();
 
@@ -583,8 +580,8 @@ TEST_F(ViewTest, PaintWithMovedViewUsesCache) {
   // intersect v1.
   list = base::MakeRefCounted<cc::DisplayItemList>();
   v1->SetX(9);
-  root_view->PaintFromPaintRoot(
-      ui::PaintContext(list.get(), device_scale_factor, pixel_rect, false));
+  root_view->Paint(
+      ui::PaintContext(list.get(), device_scale_factor, pixel_rect));
   EXPECT_FALSE(v1->did_paint_);
   v1->Reset();
   item_index = 3;
@@ -600,8 +597,8 @@ TEST_F(ViewTest, PaintWithMovedViewUsesCache) {
   // invalidation.
   list = base::MakeRefCounted<cc::DisplayItemList>();
   v1->SetX(8);
-  root_view->PaintFromPaintRoot(ui::PaintContext(
-      ui::PaintContext(list.get(), device_scale_factor, pixel_rect, false),
+  root_view->Paint(ui::PaintContext(
+      ui::PaintContext(list.get(), device_scale_factor, pixel_rect),
       ui::PaintContext::CLONE_WITHOUT_INVALIDATION));
   EXPECT_TRUE(v1->did_paint_);
   v1->Reset();
@@ -628,8 +625,8 @@ TEST_F(ViewTest, PaintWithMovedViewUsesCacheInRTL) {
   gfx::Rect pixel_rect = gfx::Rect(1, 1);
   float device_scale_factor = 1.f;
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->PaintFromPaintRoot(
-      ui::PaintContext(list.get(), device_scale_factor, pixel_rect, false));
+  root_view->Paint(
+      ui::PaintContext(list.get(), device_scale_factor, pixel_rect));
   EXPECT_TRUE(v1->did_paint_);
   v1->Reset();
   // The visual rects for (clip, drawing, transform) should be in layer space.
@@ -645,15 +642,15 @@ TEST_F(ViewTest, PaintWithMovedViewUsesCacheInRTL) {
 
   // If invalidation doesn't intersect v1, we paint with the cache.
   list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->PaintFromPaintRoot(
-      ui::PaintContext(list.get(), device_scale_factor, pixel_rect, false));
+  root_view->Paint(
+      ui::PaintContext(list.get(), device_scale_factor, pixel_rect));
   EXPECT_FALSE(v1->did_paint_);
   v1->Reset();
 
   // If invalidation does intersect v1, we don't paint with the cache.
   list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->PaintFromPaintRoot(
-      ui::PaintContext(list.get(), device_scale_factor, v1->bounds(), false));
+  root_view->Paint(
+      ui::PaintContext(list.get(), device_scale_factor, v1->bounds()));
   EXPECT_TRUE(v1->did_paint_);
   v1->Reset();
 
@@ -661,8 +658,8 @@ TEST_F(ViewTest, PaintWithMovedViewUsesCacheInRTL) {
   // intersect v1.
   list = base::MakeRefCounted<cc::DisplayItemList>();
   v1->SetX(9);
-  root_view->PaintFromPaintRoot(
-      ui::PaintContext(list.get(), device_scale_factor, pixel_rect, false));
+  root_view->Paint(
+      ui::PaintContext(list.get(), device_scale_factor, pixel_rect));
   EXPECT_FALSE(v1->did_paint_);
   v1->Reset();
   item_index = 3;
@@ -679,8 +676,8 @@ TEST_F(ViewTest, PaintWithMovedViewUsesCacheInRTL) {
   // invalidation.
   list = base::MakeRefCounted<cc::DisplayItemList>();
   v1->SetX(8);
-  root_view->PaintFromPaintRoot(ui::PaintContext(
-      ui::PaintContext(list.get(), device_scale_factor, pixel_rect, false),
+  root_view->Paint(ui::PaintContext(
+      ui::PaintContext(list.get(), device_scale_factor, pixel_rect),
       ui::PaintContext::CLONE_WITHOUT_INVALIDATION));
   EXPECT_TRUE(v1->did_paint_);
   v1->Reset();
@@ -711,8 +708,7 @@ TEST_F(ViewTest, PaintWithUnknownInvalidation) {
   // invalidation.
   gfx::Rect first_paint(1, 1);
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->PaintFromPaintRoot(
-      ui::PaintContext(list.get(), 1.f, first_paint, false));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, first_paint));
   v1->Reset();
   v2->Reset();
 
@@ -723,14 +719,13 @@ TEST_F(ViewTest, PaintWithUnknownInvalidation) {
   // With a known invalidation, v1 and v2 are not painted.
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
-  root_view->PaintFromPaintRoot(
-      ui::PaintContext(list.get(), 1.f, paint_area, false));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
 
   // With unknown invalidation, v1 and v2 are painted.
-  root_view->PaintFromPaintRoot(
-      ui::PaintContext(ui::PaintContext(list.get(), 1.f, paint_area, false),
+  root_view->Paint(
+      ui::PaintContext(ui::PaintContext(list.get(), 1.f, paint_area),
                        ui::PaintContext::CLONE_WITHOUT_INVALIDATION));
   EXPECT_TRUE(v1->did_paint_);
   EXPECT_TRUE(v2->did_paint_);
@@ -752,9 +747,7 @@ TEST_F(ViewTest, PaintContainsChildren) {
   // invalidation.
   gfx::Rect first_paint(1, 1);
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, first_paint, false),
-      root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, first_paint));
   v1->Reset();
   v2->Reset();
 
@@ -764,8 +757,7 @@ TEST_F(ViewTest, PaintContainsChildren) {
 
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, paint_area, false), root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
   EXPECT_TRUE(v1->did_paint_);
   EXPECT_TRUE(v2->did_paint_);
 }
@@ -798,9 +790,7 @@ TEST_F(ViewTest, PaintContainsChildrenInRTL) {
   // invalidation.
   gfx::Rect first_paint(1, 1);
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, first_paint, false),
-      root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, first_paint));
   v1->Reset();
   v2->Reset();
 
@@ -810,8 +800,7 @@ TEST_F(ViewTest, PaintContainsChildrenInRTL) {
 
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, paint_area, false), root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
   EXPECT_TRUE(v1->did_paint_);
   EXPECT_TRUE(v2->did_paint_);
 }
@@ -832,9 +821,7 @@ TEST_F(ViewTest, PaintIntersectsChildren) {
   // invalidation.
   gfx::Rect first_paint(1, 1);
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, first_paint, false),
-      root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, first_paint));
   v1->Reset();
   v2->Reset();
 
@@ -844,8 +831,7 @@ TEST_F(ViewTest, PaintIntersectsChildren) {
 
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, paint_area, false), root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
   EXPECT_TRUE(v1->did_paint_);
   EXPECT_TRUE(v2->did_paint_);
 }
@@ -878,9 +864,7 @@ TEST_F(ViewTest, PaintIntersectsChildrenInRTL) {
   // invalidation.
   gfx::Rect first_paint(1, 1);
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, first_paint, false),
-      root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, first_paint));
   v1->Reset();
   v2->Reset();
 
@@ -890,8 +874,7 @@ TEST_F(ViewTest, PaintIntersectsChildrenInRTL) {
 
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, paint_area, false), root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
   EXPECT_TRUE(v1->did_paint_);
   EXPECT_TRUE(v2->did_paint_);
 }
@@ -912,9 +895,7 @@ TEST_F(ViewTest, PaintIntersectsChildButNotGrandChild) {
   // invalidation.
   gfx::Rect first_paint(1, 1);
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, first_paint, false),
-      root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, first_paint));
   v1->Reset();
   v2->Reset();
 
@@ -924,8 +905,7 @@ TEST_F(ViewTest, PaintIntersectsChildButNotGrandChild) {
 
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, paint_area, false), root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
   EXPECT_TRUE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
 }
@@ -958,9 +938,7 @@ TEST_F(ViewTest, PaintIntersectsChildButNotGrandChildInRTL) {
   // invalidation.
   gfx::Rect first_paint(1, 1);
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, first_paint, false),
-      root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, first_paint));
   v1->Reset();
   v2->Reset();
 
@@ -970,8 +948,7 @@ TEST_F(ViewTest, PaintIntersectsChildButNotGrandChildInRTL) {
 
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, paint_area, false), root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
   EXPECT_TRUE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
 }
@@ -992,9 +969,7 @@ TEST_F(ViewTest, PaintIntersectsNoChildren) {
   // invalidation.
   gfx::Rect first_paint(1, 1);
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, first_paint, false),
-      root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, first_paint));
   v1->Reset();
   v2->Reset();
 
@@ -1004,8 +979,7 @@ TEST_F(ViewTest, PaintIntersectsNoChildren) {
 
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, paint_area, false), root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
 }
@@ -1038,9 +1012,7 @@ TEST_F(ViewTest, PaintIntersectsNoChildrenInRTL) {
   // invalidation.
   gfx::Rect first_paint(1, 1);
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, first_paint, false),
-      root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, first_paint));
   v1->Reset();
   v2->Reset();
 
@@ -1050,8 +1022,7 @@ TEST_F(ViewTest, PaintIntersectsNoChildrenInRTL) {
 
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, paint_area, false), root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
 }
@@ -1072,9 +1043,7 @@ TEST_F(ViewTest, PaintIntersectsOneChild) {
   // invalidation.
   gfx::Rect first_paint(1, 1);
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, first_paint, false),
-      root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, first_paint));
   v1->Reset();
   v2->Reset();
 
@@ -1085,8 +1054,7 @@ TEST_F(ViewTest, PaintIntersectsOneChild) {
 
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, paint_area, false), root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_TRUE(v2->did_paint_);
 
@@ -1097,8 +1065,7 @@ TEST_F(ViewTest, PaintIntersectsOneChild) {
   v2->Reset();
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, paint_area, false), root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
   EXPECT_TRUE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
 }
@@ -1131,9 +1098,7 @@ TEST_F(ViewTest, PaintIntersectsOneChildInRTL) {
   // invalidation.
   gfx::Rect first_paint(1, 1);
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, first_paint, false),
-      root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, first_paint));
   v1->Reset();
   v2->Reset();
 
@@ -1144,8 +1109,7 @@ TEST_F(ViewTest, PaintIntersectsOneChildInRTL) {
 
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, paint_area, false), root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
   EXPECT_TRUE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
 
@@ -1156,8 +1120,7 @@ TEST_F(ViewTest, PaintIntersectsOneChildInRTL) {
   v2->Reset();
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_FALSE(v2->did_paint_);
-  root_view->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, paint_area, false), root_view->size()));
+  root_view->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
   EXPECT_FALSE(v1->did_paint_);
   EXPECT_TRUE(v2->did_paint_);
 }
@@ -1179,8 +1142,7 @@ TEST_F(ViewTest, PaintInPromotedToLayer) {
   // invalidation.
   gfx::Rect first_paint(1, 1);
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  v1->Paint(PaintInfo::CreateRootPaintInfo(
-      ui::PaintContext(list.get(), 1.f, first_paint, false), v1->size()));
+  v1->Paint(ui::PaintContext(list.get(), 1.f, first_paint));
   v1->Reset();
   v2->Reset();
 
@@ -1190,9 +1152,7 @@ TEST_F(ViewTest, PaintInPromotedToLayer) {
     auto list = base::MakeRefCounted<cc::DisplayItemList>();
 
     // The promoted views are not painted as they are separate paint roots.
-    root_view->Paint(PaintInfo::CreateRootPaintInfo(
-        ui::PaintContext(list.get(), 1.f, paint_area, false),
-        root_view->size()));
+    root_view->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
     EXPECT_FALSE(v1->did_paint_);
     EXPECT_FALSE(v2->did_paint_);
   }
@@ -1204,8 +1164,7 @@ TEST_F(ViewTest, PaintInPromotedToLayer) {
 
     // The |v1| view is painted. If it used its offset incorrect, it would think
     // its at (10,11) instead of at (0,0) since it is the paint root.
-    v1->Paint(PaintInfo::CreateRootPaintInfo(
-        ui::PaintContext(list.get(), 1.f, paint_area, false), v1->size()));
+    v1->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
     EXPECT_TRUE(v1->did_paint_);
     EXPECT_FALSE(v2->did_paint_);
   }
@@ -1219,8 +1178,7 @@ TEST_F(ViewTest, PaintInPromotedToLayer) {
 
     // The |v2| view is painted also. If it used its offset incorrect, it would
     // think its at (13,15) instead of at (3,4) since |v1| is the paint root.
-    v1->Paint(PaintInfo::CreateRootPaintInfo(
-        ui::PaintContext(list.get(), 1.f, paint_area, false), v1->size()));
+    v1->Paint(ui::PaintContext(list.get(), 1.f, paint_area));
     EXPECT_TRUE(v1->did_paint_);
     EXPECT_TRUE(v2->did_paint_);
   }
@@ -1263,9 +1221,9 @@ TEST_F(ViewTest, PaintLocalBounds) {
   EXPECT_EQ(gfx::Rect(0, 1000, 100, 100), v1->GetVisibleBounds());
 
   auto list = base::MakeRefCounted<cc::DisplayItemList>();
-  ui::PaintContext context(list.get(), 1.f, gfx::Rect(), false);
+  ui::PaintContext context(list.get(), 1.f, gfx::Rect());
 
-  v1->Paint(PaintInfo::CreateRootPaintInfo(context, gfx::Size()));
+  v1->Paint(context);
   EXPECT_TRUE(v1->did_paint_);
 
   // Check that the canvas produced by |v1| for paint contains all of |v1|'s

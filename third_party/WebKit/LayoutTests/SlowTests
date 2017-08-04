@@ -104,17 +104,6 @@ crbug.com/451577 [ Mac ] inspector/network/network-domain-filter.html [ Slow ]
 
 crbug.com/237245 [ Debug Win7 ] editing/selection/programmatic-selection-on-mac-is-directionless.html [ Slow ]
 
-#############################################################
-# Marking migrated DevTools tests slow based on existing bugs
-# See crbug.com/667560 for details
-
-# Most DevTools tests are slow in Debug.
-webkit.org/b/90488 [ Debug ] http/tests/devtools/ [ Slow ]
-webkit.org/b/90488 [ Debug ] virtual/mojo-loading/http/tests/devtools/ [ Slow ]
-crbug.com/451577 http/tests/devtools/console [ Slow ]
-
-#############################################################
-
 # Most inspector tests are slow in Debug.
 webkit.org/b/90488 [ Debug ] inspector/ [ Slow ]
 webkit.org/b/90488 [ Debug ] http/tests/inspector/ [ Slow ]
@@ -421,5 +410,3 @@ crbug.com/748418 virtual/mojo-loading/http/tests/streams/chromium/simple-queue-f
 crbug.com/748418 virtual/mojo-loading/http/tests/streams/chromium/simple-queue-full-node-shift.html [ Slow ]
 crbug.com/748418 virtual/mojo-loading/http/tests/streams/chromium/simple-queue-many-foreach.html [ Slow ]
 crbug.com/748418 virtual/mojo-loading/http/tests/streams/chromium/simple-queue-push-shift-peek.html [ Slow ]
-
-crbug.com/626703 [ Debug ] external/wpt/html/nemantics/tabular-data/processing-model-1/span-limits.html [ Slow ]

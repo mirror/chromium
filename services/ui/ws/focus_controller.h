@@ -16,6 +16,7 @@ namespace ui {
 
 namespace ws {
 
+class FocusControllerDelegate;
 class FocusControllerObserver;
 class ServerWindow;
 class ServerWindowDrawnTracker;
@@ -30,7 +31,7 @@ enum class FocusControllerChangeSource {
 // state of the focused window changes.
 class FocusController : public ServerWindowDrawnTrackerObserver {
  public:
-  explicit FocusController(ServerWindow* root);
+  FocusController(FocusControllerDelegate* delegate, ServerWindow* root);
   ~FocusController() override;
 
   // Sets the focused window. Does nothing if |window| is currently focused.
@@ -78,6 +79,8 @@ class FocusController : public ServerWindowDrawnTrackerObserver {
                            ServerWindow* window,
                            bool is_drawn) override;
   void OnRootWillChange(ServerWindow* ancestor, ServerWindow* window) override;
+
+  FocusControllerDelegate* delegate_;
 
   ServerWindow* root_;
   ServerWindow* focused_window_;

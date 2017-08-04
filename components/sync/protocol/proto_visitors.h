@@ -124,7 +124,6 @@ VISIT_PROTO_FIELDS(const sync_pb::AppSpecifics& proto) {
   VISIT(bookmark_app_description);
   VISIT(bookmark_app_icon_color);
   VISIT_REP(linked_app_icons);
-  VISIT(bookmark_app_scope);
 }
 
 VISIT_PROTO_FIELDS(const sync_pb::ArcPackageSpecifics& proto) {
@@ -810,36 +809,6 @@ VISIT_PROTO_FIELDS(const sync_pb::SyncedNotificationAppInfoSpecifics& proto) {}
 
 VISIT_PROTO_FIELDS(const sync_pb::SyncedNotificationSpecifics& proto) {}
 
-VISIT_PROTO_FIELDS(
-    const sync_pb::UserEventSpecifics::SyncPasswordReuseEvent& proto) {
-  VISIT(reuse_detected);
-  VISIT(reuse_lookup);
-  VISIT(dialog_interaction);
-}
-
-VISIT_PROTO_FIELDS(const sync_pb::UserEventSpecifics::SyncPasswordReuseEvent::
-                       PasswordReuseDetected& proto) {
-  VISIT(status);
-}
-
-VISIT_PROTO_FIELDS(const sync_pb::UserEventSpecifics::SyncPasswordReuseEvent::
-                       PasswordReuseDetected::SafeBrowsingStatus& proto) {
-  VISIT(enabled);
-  VISIT_ENUM(safe_browsing_reporting_population);
-}
-
-VISIT_PROTO_FIELDS(const sync_pb::UserEventSpecifics::SyncPasswordReuseEvent::
-                       PasswordReuseDialogInteraction& proto) {
-  VISIT_ENUM(interaction_result);
-}
-
-VISIT_PROTO_FIELDS(const sync_pb::UserEventSpecifics::SyncPasswordReuseEvent::
-                       PasswordReuseLookup& proto) {
-  VISIT_ENUM(lookup_result);
-  VISIT_ENUM(verdict);
-  VISIT(verdict_token);
-}
-
 VISIT_PROTO_FIELDS(const sync_pb::TabNavigation& proto) {
   VISIT(virtual_url);
   VISIT(referrer);
@@ -916,7 +885,6 @@ VISIT_PROTO_FIELDS(const sync_pb::UserEventSpecifics& proto) {
   VISIT(field_trial_event);
   VISIT(language_detection_event);
   VISIT(translation_event);
-  VISIT(sync_password_reuse_event);
 }
 
 VISIT_PROTO_FIELDS(const sync_pb::UserEventSpecifics::Test& proto) {}

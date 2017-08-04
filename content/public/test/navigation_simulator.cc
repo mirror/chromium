@@ -64,27 +64,24 @@ class NavigationThrottleCallbackRunner : public NavigationThrottle {
 }  // namespace
 
 // static
-RenderFrameHost* NavigationSimulator::NavigateAndCommitFromDocument(
+void NavigationSimulator::NavigateAndCommitFromDocument(
     const GURL& original_url,
     RenderFrameHost* render_frame_host) {
   NavigationSimulator simulator(
       original_url, static_cast<TestRenderFrameHost*>(render_frame_host));
   simulator.Commit();
-  return simulator.GetFinalRenderFrameHost();
 }
 
 // static
-RenderFrameHost* NavigationSimulator::NavigateAndFailFromDocument(
+void NavigationSimulator::NavigateAndFailFromDocument(
     const GURL& original_url,
     int net_error_code,
     RenderFrameHost* render_frame_host) {
   NavigationSimulator simulator(
       original_url, static_cast<TestRenderFrameHost*>(render_frame_host));
   simulator.Fail(net_error_code);
-  if (net_error_code == net::ERR_ABORTED)
-    return nullptr;
-  simulator.CommitErrorPage();
-  return simulator.GetFinalRenderFrameHost();
+  if (net_error_code != net::ERR_ABORTED)
+    simulator.CommitErrorPage();
 }
 
 // static
@@ -320,8 +317,9 @@ void NavigationSimulator::Commit() {
   params.origin = url::Origin(navigation_url_);
   params.transition = transition_;
   params.should_update_history = true;
-  params.did_create_new_entry = !ui::PageTransitionCoreTypeIs(
-      transition_, ui::PAGE_TRANSITION_AUTO_SUBFRAME);
+  params.did_create_new_entry =
+      !render_frame_host_->GetParent() ||
+      render_frame_host_->frame_tree_node()->has_committed_real_load();
   params.gesture = NavigationGestureUser;
   params.contents_mime_type = "text/html";
   params.method = "GET";
@@ -424,8 +422,7 @@ void NavigationSimulator::CommitErrorPage() {
       base::TimeTicks::Now()));
   FrameHostMsg_DidCommitProvisionalLoad_Params params;
   params.nav_entry_id = 0;
-  params.did_create_new_entry = !ui::PageTransitionCoreTypeIs(
-      transition_, ui::PAGE_TRANSITION_AUTO_SUBFRAME);
+  params.did_create_new_entry = true;
   params.url = navigation_url_;
   params.transition = transition_;
   params.was_within_same_document = false;
@@ -530,20 +527,6 @@ content::GlobalRequestID NavigationSimulator::GetGlobalRequestID() const {
   return request_id_;
 }
 
-void NavigationSimulator::SetOnDeferCallback(
-    const base::Closure& on_defer_callback) {
-  CHECK_LT(state_, FINISHED)
-      << "The callback should not be set after the navigation has finished";
-  if (handle_) {
-    handle_->SetOnDeferCallbackForTesting(on_defer_callback);
-    return;
-  }
-
-  // If there is no NavigationHandle for the navigation yet, store the callback
-  // until one has been created.
-  on_defer_callback_ = on_defer_callback;
-}
-
 void NavigationSimulator::DidStartNavigation(
     NavigationHandle* navigation_handle) {
   // Check if this navigation is the one we're simulating.
@@ -573,12 +556,6 @@ void NavigationSimulator::DidStartNavigation(
                      weak_factory_.GetWeakPtr()),
           base::Bind(&NavigationSimulator::OnWillProcessResponse,
                      weak_factory_.GetWeakPtr())));
-
-  // Pass the |on_defer_callback_| if it was registered.
-  if (!on_defer_callback_.is_null()) {
-    handle->SetOnDeferCallbackForTesting(on_defer_callback_);
-    on_defer_callback_.Reset();
-  }
 
   PrepareCompleteCallbackOnHandle();
 }

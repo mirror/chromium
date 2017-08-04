@@ -3,7 +3,6 @@
      found in the LICENSE file. -->
 
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-styles/color.html">
-<link rel="import" href="chrome://resources/html/i18n_behavior.html">
 
 <!--
   OOBE Welcome screen
@@ -16,14 +15,13 @@
     <div class="layout horizontal flex">
       <div class="vertical-margin"></div>
       <div class="welcome-content flex layout vertical center">
-        <h1 id="title">[[i18nDynamic(locale, 'networkScreenGreeting')]]</h1>
+        <h1 id="title" i18n-content="networkScreenGreeting"></h1>
         <img id="welcomeIllustration"
             srcset="images/welcome_illustration_1x.png 1x,
                     images/welcome_illustration_2x.png 2x">
         <div hidden="[[!debuggingLinkVisible]]">
-          <a href="#" on-tap="onDebuggingLinkClicked_">
-            [[i18nDynamic(locale, 'debuggingFeaturesLink')]]
-          </a>
+          <a href="#" i18n-content="debuggingFeaturesLink"
+              on-tap="onDebuggingLinkClicked_"></a>
         </div>
         <div class="flex"></div>
         <div id="buttons" class="layout horizontal center">
@@ -39,19 +37,19 @@
               icon1x="oobe-welcome-32:accessibility"
               icon2x="oobe-welcome-64:accessibility"
               on-tap="onAccessibilityClicked_">
-            <div>[[i18nDynamic(locale, 'accessibilityLink')]]</div>
+            <div i18n-content="accessibilityLink"></div>
           </oobe-welcome-secondary-button>
           <oobe-welcome-secondary-button id="timezoneSettingsButton"
               icon1x="oobe-welcome-32:timezone"
               icon2x="oobe-welcome-64:timezone"
               on-tap="onTimezoneClicked_"
               hidden="[[!timezoneButtonVisible]]">
-            <div>[[i18nDynamic(locale, 'timezoneButtonText')]]</div>
+            <div i18n-content="timezoneButtonText"></div>
           </oobe-welcome-secondary-button>
           <div class="flex"></div>
           <oobe-text-button id="welcomeNextButton"
               inverse on-tap="onNextClicked_">
-            <div>[[i18nDynamic(locale, 'welcomeNextButtonText')]]</div>
+            <div i18n-content="welcomeNextButtonText"></div>
           </oobe-text-button>
         </div>
         <div id="bottom-margin"></div>

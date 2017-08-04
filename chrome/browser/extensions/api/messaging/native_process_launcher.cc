@@ -4,7 +4,6 @@
 
 #include "chrome/browser/extensions/api/messaging/native_process_launcher.h"
 
-#include <inttypes.h>
 #include <utility>
 
 #include "base/bind.h"
@@ -193,7 +192,7 @@ void NativeProcessLauncherImpl::Core::DoLaunchOnThreadPool(
   // way the host will be able to create properly focused UI windows.
 #if defined(OS_WIN)
   command_line.AppendArg(
-      base::StringPrintf("--parent-window=%" PRIdPTR, window_handle_));
+      base::StringPrintf("--parent-window=%d", window_handle_));
 #endif  // !defined(OS_WIN)
 
   base::Process process;

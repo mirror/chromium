@@ -644,10 +644,6 @@ bool ArcSessionManager::RequestEnableImpl() {
 
   if (start_arc_directly) {
     StartArc();
-    // When in ARC kiosk mode, there's no Chrome tabs to restore. Remove the
-    // cgroups now.
-    if (IsArcKioskMode())
-      SetArcCpuRestriction(false /* do_restrict */);
     // Check Android management in parallel.
     // Note: StartBackgroundAndroidManagementCheck() may call
     // OnBackgroundAndroidManagementChecked() synchronously (or
@@ -871,9 +867,6 @@ void ArcSessionManager::OnAndroidManagementChecked(
           base::Bind(&ArcSessionManager::OnArcSignInTimeout,
                      weak_ptr_factory_.GetWeakPtr()));
       StartArc();
-      // Since opt-in is an explicit user (or admin) action, relax the
-      // cgroups restriction now.
-      SetArcCpuRestriction(false /* do_restrict */);
       break;
     case policy::AndroidManagementClient::Result::MANAGED:
       ShowArcSupportHostError(

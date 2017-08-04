@@ -38,8 +38,7 @@ RecordingSource::RecordingSource()
       is_solid_color_(false),
       clear_canvas_with_debug_color_(kDefaultClearCanvasSetting),
       solid_color_(SK_ColorTRANSPARENT),
-      background_color_(SK_ColorTRANSPARENT),
-      recording_scale_factor_(1.f) {}
+      background_color_(SK_ColorTRANSPARENT) {}
 
 RecordingSource::~RecordingSource() {}
 
@@ -139,10 +138,6 @@ const DisplayItemList* RecordingSource::GetDisplayItemList() {
 
 scoped_refptr<RasterSource> RecordingSource::CreateRasterSource() const {
   return scoped_refptr<RasterSource>(new RasterSource(this));
-}
-
-void RecordingSource::SetRecordingScaleFactor(float recording_scale_factor) {
-  recording_scale_factor_ = recording_scale_factor;
 }
 
 void RecordingSource::DetermineIfSolidColor() {

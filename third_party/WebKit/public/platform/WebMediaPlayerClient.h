@@ -104,8 +104,8 @@ class BLINK_PLATFORM_EXPORT WebMediaPlayerClient {
 
   // After the monitoring is activated, the client will inform WebMediaPlayer
   // when the element becomes/stops being the dominant visible content by
-  // calling WebMediaPlayer::BecameDominantVisibleContent(bool).
-  virtual void ActivateViewportIntersectionMonitoring(bool) = 0;
+  // calling WebMediaPlayer::becameDominantVisibleContent(bool).
+  virtual void ActivateViewportIntersectionMonitoring(bool) {}
 
   // Returns whether the media element is in an autoplay muted state.
   virtual bool IsAutoplayingMuted() = 0;
@@ -117,12 +117,8 @@ class BLINK_PLATFORM_EXPORT WebMediaPlayerClient {
   virtual WebMediaPlayer::TrackId GetSelectedVideoTrackId() = 0;
 
   // Informs that media starts/stops being rendered and played back remotely.
-  // |remote_device_friendly_name| will be shown in the remoting UI to indicate
-  // which device the content is rendered on. An empty name indicates an unknown
-  // remote device. A default message will be shown in this case.
-  virtual void MediaRemotingStarted(
-      const WebString& remote_device_friendly_name) = 0;
-  virtual void MediaRemotingStopped() = 0;
+  virtual void MediaRemotingStarted() {}
+  virtual void MediaRemotingStopped() {}
 
   // Returns whether the media element has native controls. It does not mean
   // that the controls are currently visible.

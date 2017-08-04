@@ -76,6 +76,10 @@ public class AwContentsStatics {
         return sRecordFullDocument;
     }
 
+    public static void setLegacyCacheRemovalDelayForTest(long timeoutMs) {
+        nativeSetLegacyCacheRemovalDelayForTest(timeoutMs);
+    }
+
     public static String getProductVersion() {
         return nativeGetProductVersion();
     }
@@ -179,6 +183,7 @@ public class AwContentsStatics {
     //--------------------------------------------------------------------------------------------
     private static native void nativeClearClientCertPreferences(Runnable callback);
     private static native String nativeGetUnreachableWebDataUrl();
+    private static native void nativeSetLegacyCacheRemovalDelayForTest(long timeoutMs);
     private static native String nativeGetProductVersion();
     private static native void nativeSetServiceWorkerIoThreadClient(
             AwContentsIoThreadClient ioThreadClient, AwBrowserContext browserContext);

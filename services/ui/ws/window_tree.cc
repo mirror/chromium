@@ -552,28 +552,26 @@ bool WindowTree::SetModalType(const ClientWindowId& window_id,
   if (window->modal_type() == modal_type)
     return true;
 
-  window->SetModalType(modal_type);
-  return true;
-}
-
-bool WindowTree::SetChildModalParent(
-    const ClientWindowId& window_id,
-    const ClientWindowId& modal_parent_window_id) {
-  ServerWindow* window = GetWindowByClientId(window_id);
-  ServerWindow* modal_parent_window =
-      GetWindowByClientId(modal_parent_window_id);
-  // A value of null for |modal_parent_window| resets the modal parent.
-  if (!window) {
-    DVLOG(1) << "SetChildModalParent failed (invalid id)";
-    return false;
+  auto* display_root = GetWindowManagerDisplayRoot(window);
+  switch (modal_type) {
+    case MODAL_TYPE_SYSTEM:
+      if (!display_root) {
+        DVLOG(1) << "SetModalType failed (no display root)";
+        return false;
+      }
+      window->SetModalType(modal_type);
+      display_root->window_manager_state()->AddSystemModalWindow(window);
+      break;
+    case MODAL_TYPE_NONE:
+    case MODAL_TYPE_WINDOW:
+    case MODAL_TYPE_CHILD:
+      window->SetModalType(modal_type);
+      break;
   }
-
-  if (!access_policy_->CanSetChildModalParent(window, modal_parent_window)) {
-    DVLOG(1) << "SetChildModalParent failed (access denied)";
-    return false;
+  if (display_root && modal_type != MODAL_TYPE_NONE) {
+    display_root->window_manager_state()->ReleaseCaptureBlockedByModalWindow(
+        window);
   }
-
-  window->SetChildModalParent(modal_parent_window);
   return true;
 }
 
@@ -722,10 +720,17 @@ void WindowTree::OnWindowManagerCreatedTopLevelWindow(
 
 void WindowTree::AddActivationParent(const ClientWindowId& window_id) {
   ServerWindow* window = GetWindowByClientId(window_id);
-  if (window)
-    window->set_is_activation_parent(true);
-  else
+  if (window) {
+    Display* display = GetDisplay(window);
+    if (display) {
+      display->AddActivationParent(window);
+    } else {
+      DVLOG(1) << "AddActivationParent failed "
+               << "(window not associated with display)";
+    }
+  } else {
     DVLOG(1) << "AddActivationParent failed (invalid window id)";
+  }
 }
 
 void WindowTree::OnChangeCompleted(uint32_t change_id, bool success) {
@@ -1533,14 +1538,6 @@ void WindowTree::SetModalType(uint32_t change_id,
       change_id, SetModalType(ClientWindowId(window_id), modal_type));
 }
 
-void WindowTree::SetChildModalParent(uint32_t change_id,
-                                     Id window_id,
-                                     Id parent_window_id) {
-  client()->OnChangeCompleted(
-      change_id, SetChildModalParent(ClientWindowId(window_id),
-                                     ClientWindowId(parent_window_id)));
-}
-
 void WindowTree::ReorderWindow(uint32_t change_id,
                                Id window_id,
                                Id relative_window_id,
@@ -2272,7 +2269,14 @@ void WindowTree::RemoveActivationParent(Id transport_window_id) {
     DVLOG(1) << "RemoveActivationParent failed (invalid window id)";
     return;
   }
-  window->set_is_activation_parent(false);
+
+  Display* display = GetDisplay(window);
+  if (!display) {
+    DVLOG(1) << "RemoveActivationParent window not associated with display";
+    return;
+  }
+
+  display->RemoveActivationParent(window);
 }
 
 void WindowTree::ActivateNextWindow() {
@@ -2460,24 +2464,6 @@ void WindowTree::WmMoveCursorToDisplayLocation(const gfx::Point& display_pixels,
                                                int64_t display_id) {
   DCHECK(window_manager_state_);
   window_manager_state_->SetCursorLocation(display_pixels, display_id);
-}
-
-void WindowTree::WmConfineCursorToBounds(const gfx::Rect& bounds_in_pixels,
-                                         int64_t display_id) {
-  DCHECK(window_manager_state_);
-  Display* display = display_manager()->GetDisplayById(display_id);
-  if (!display) {
-    DVLOG(1) << "WmConfineCursorToBounds failed (invalid display id)";
-    return;
-  }
-
-  PlatformDisplay* platform_display = display->platform_display();
-  if (!platform_display) {
-    DVLOG(1) << "WmConfineCursorToBounds failed (no platform display)";
-    return;
-  }
-
-  platform_display->ConfineCursorToBounds(bounds_in_pixels);
 }
 
 void WindowTree::WmSetCursorTouchVisible(bool enabled) {

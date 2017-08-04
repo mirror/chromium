@@ -50,13 +50,6 @@ STAMP_FILE = os.path.join(BASE_DIR, '%s_files', 'toolchain_build_revision')
 TOOLCHAIN_URL = 'gs://chrome-mac-sdk/'
 
 
-# This logic is duplicated from build/mac/should_use_hermetic_xcode.py. It is a
-# temporary hack while waiting for a more comprehensive solution in
-# https://crbug.com/742527.
-def _IsCorpMachine():
-  return os.path.isdir('/Library/GoogleCorpSupport/')
-
-
 def PlatformMeetsHermeticXcodeRequirements(target_os):
   if target_os == 'ios':
     return True
@@ -255,7 +248,7 @@ def main():
       print 'OS version does not support toolchain.'
       continue
 
-    if target_os == 'ios' and not _IsCorpMachine():
+    if target_os == 'ios':
       default_version = IOS_TOOLCHAIN_VERSION
       toolchain_filename = 'ios-toolchain-%s.tgz'
     else:

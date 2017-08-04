@@ -46,7 +46,7 @@ class WebSpeechGrammar {
   BLINK_EXPORT void Reset();
   BLINK_EXPORT void Assign(const WebSpeechGrammar&);
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   WebSpeechGrammar& operator=(SpeechGrammar*);
 #endif
 

@@ -555,21 +555,6 @@
     <message name="IDS_SETTINGS_BLUETOOTH_TOGGLE_ACCESSIBILITY_LABEL" desc="Accessibility only label for Bluetooth enable/disable toggle.">
       Bluetooth enable
     </message>
-    <message name="IDS_SETTINGS_BLUETOOTH_ENTER_KEY" desc="Bluetooth pairing dialog: Text for enter key when pairing keyboard devices." >
-      enter
-    </message>
-    <message name="IDS_SETTINGS_BLUETOOTH_ACCEPT_PASSKEY" desc="Bluetooth pairing dialog: Text for button to accept pairing code.">
-      Accept
-    </message>
-    <message name="IDS_SETTINGS_BLUETOOTH_CONNECT" desc="Bluetooth pairing dialog: Text for dropdown meny item to connect to a device.">
-      Connect
-    </message>
-    <message name="IDS_SETTINGS_BLUETOOTH_DISCONNECT" desc="Bluetooth pairing dialog: dropdown meny item to disconnect from a device.">
-      Disconnect
-    </message>
-    <message name="IDS_SETTINGS_BLUETOOTH_REJECT_PASSKEY" desc="Bluetooth pairing dialog: Text for button to reject pairing a device.">
-      Reject
-    </message>
     <message name="IDS_SETTINGS_BLUETOOTH_EXPAND_ACCESSIBILITY_LABEL" desc="Label for the button that toggles showing available Bluetooth devices. Only visible by screen reader software.">
       Show available Bluetooth devices
     </message>
@@ -1171,14 +1156,8 @@
     <message name="IDS_SETTINGS_INTERNET_CONFIG_SAVE_CREDENTIALS" desc="Settings > Internet > Network config: Label for the setting to save identity and password.">
       Save identity and password
     </message>
-    <message name="IDS_SETTINGS_INTERNET_NETWORK_ACCESS_POINT" desc="Settings > Internet > Network details: Access Point section label.">
+    <message name="IDS_SETTINGS_INTERNET_NETWORK_SECTION_ACCESS_POINT" desc="Settings > Internet > Network details: Access Point section label.">
       Access Point
-    </message>
-    <message name="IDS_SETTINGS_INTERNET_NETWORK_NAMESERVERS" desc="Settings > Network: Name servers label.">
-      Name servers
-    </message>
-    <message name="IDS_SETTINGS_INTERNET_NETWORK_PROXY_WPAD" desc="Settings > Internet > Network details: Web Proxy Auto Discovery (WPAD) label.">
-      Web Proxy Auto Discovery URL:
     </message>
     <message name="IDS_SETTINGS_INTERNET_MOBILE_SEARCH" desc="Settings > Internet > Message in Mobile section when searching for mobile networks.">
       Searching for mobile networks
@@ -1188,6 +1167,9 @@
     </message>
     <message name="IDS_SETTINGS_INTERNET_NETWORK_SECTION_ADVANCED_ACCESSIBILITY_LABEL" desc="Label for the button that toggles showing the advanced network properties. Only visible by screen reader software.">
       Show advanced network properties
+    </message>
+    <message name="IDS_SETTINGS_INTERNET_NETWORK_SECTION_NAMESERVERS" desc="Settings > Internet > Network details: Name servers section label.">
+      Name servers
     </message>
     <message name="IDS_SETTINGS_INTERNET_NETWORK_SECTION_NETWORK" desc="Settings > Internet > Network details: Network section label.">
       Network
@@ -1200,6 +1182,9 @@
     </message>
     <message name="IDS_SETTINGS_INTERNET_NETWORK_SECTION_PROXY_ACCESSIBILITY_LABEL" desc="Label for the button that toggles showing the proxy configuration settings. Only visible by screen reader software.">
       Show proxy settings
+    </message>
+    <message name="IDS_SETTINGS_INTERNET_NETWORK_SECTION_WPAD" desc="Settings > Internet > Network details: Web Proxy Auto Discovery (WPAD) section label.">
+      Web Proxy Auto Discovery URL:
     </message>
     <message name="IDS_SETTINGS_SETTINGS_NETWORK_ALLOW_DATA_ROAMING" desc="Settings > Internet > Network details: Toggle label to allow mobile data roaming.">
       Allow mobile data roaming
@@ -2158,14 +2143,23 @@
   <message name="IDS_SETTINGS_SITE_SETTINGS_COOKIES_ALLOW_SITES_RECOMMENDED" desc="The 'allow cookies' label in site settings -- the recommended setting for when sites want to read/write cookie information.">
     Allow sites to save and read cookie data (recommended)
   </message>
+  <message name="IDS_SETTINGS_SITE_SETTINGS_FLASH_ALLOW" desc="The 'allow' label for Flash in site settings.">
+    Allow sites to run Flash
+  </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_FLASH_BLOCK" desc="The 'block' label for Flash in site settings.">
     Block sites from running Flash
   </message>
-  <message name="IDS_SETTINGS_SITE_SETTINGS_FLASH_DETECT_IMPORTANT_RECOMMENDED" desc="The 'detect and run important content' label in site settings (with the 'recommended' suffix).">
-    Run only important content (recommended)
-  </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_FLASH_DETECT_IMPORTANT" desc="The 'detect and run important content' label in site settings.">
     Run only important content
+  </message>
+  <message name="IDS_SETTINGS_SITE_SETTINGS_FLASH_DETECT_IMPORTANT_SUBTITLE" desc="The 'detect and run important content' subtitle label in site settings.">
+    Detect and run only important Flash content (recommended)
+  </message>
+  <message name="IDS_SETTINGS_SITE_SETTINGS_FLASH_ASK_BEFORE_RUNNING" desc="The 'ask before running' label for Flash in site settings.">
+    Ask first
+  </message>
+  <message name="IDS_SETTINGS_SITE_SETTINGS_FLASH_ASK_BEFORE_RUNNING_SUBTITLE" desc="The 'ask before running' subtitle label for Flash in site settings.">
+    Ask before allowing sites to run Flash (recommended)
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_ALLOW_RECENTLY_CLOSED_SITES" desc="The allow label for background sync in site settings.">
     Allow recently closed sites to finish sending and receiving data

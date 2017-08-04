@@ -77,7 +77,7 @@ class WebBlob {
       v8::Local<v8::Object> creation_context,
       v8::Isolate*);
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   WebBlob(Blob*);
   WebBlob& operator=(Blob*);
 #endif

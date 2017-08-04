@@ -289,8 +289,7 @@ bool ZipReader::LocateAndOpenEntry(const base::FilePath& path_in_zip) {
   return OpenCurrentEntryInZip();
 }
 
-bool ZipReader::ExtractCurrentEntry(WriterDelegate* delegate,
-                                    uint64_t num_bytes_to_extract) const {
+bool ZipReader::ExtractCurrentEntry(WriterDelegate* delegate) const {
   DCHECK(zip_file_);
 
   const int open_result = unzOpenCurrentFile(zip_file_);
@@ -299,39 +298,31 @@ bool ZipReader::ExtractCurrentEntry(WriterDelegate* delegate,
 
   if (!delegate->PrepareOutput())
     return false;
+
+  bool success = true;  // This becomes false when something bad happens.
   std::unique_ptr<char[]> buf(new char[internal::kZipBufSize]);
-
-  uint64_t remaining_capacity = num_bytes_to_extract;
-  bool entire_file_extracted = false;
-
-  while (remaining_capacity > 0) {
-    const int num_bytes_read =
-        unzReadCurrentFile(zip_file_, buf.get(), internal::kZipBufSize);
-
+  while (true) {
+    const int num_bytes_read = unzReadCurrentFile(zip_file_, buf.get(),
+                                                  internal::kZipBufSize);
     if (num_bytes_read == 0) {
-      entire_file_extracted = true;
+      // Reached the end of the file.
       break;
     } else if (num_bytes_read < 0) {
       // If num_bytes_read < 0, then it's a specific UNZ_* error code.
+      success = false;
       break;
     } else if (num_bytes_read > 0) {
-      uint64_t num_bytes_to_write = std::min<uint64_t>(
-          remaining_capacity, base::checked_cast<uint64_t>(num_bytes_read));
-      if (!delegate->WriteBytes(buf.get(), num_bytes_to_write))
+      // Some data is read.
+      if (!delegate->WriteBytes(buf.get(), num_bytes_read)) {
+        success = false;
         break;
-      if (remaining_capacity == base::checked_cast<uint64_t>(num_bytes_read)) {
-        // Ensures function returns true if the entire file has been read.
-        entire_file_extracted =
-            (unzReadCurrentFile(zip_file_, buf.get(), 1) == 0);
       }
-      CHECK_GE(remaining_capacity, num_bytes_to_write);
-      remaining_capacity -= num_bytes_to_write;
     }
   }
 
   unzCloseCurrentFile(zip_file_);
 
-  return entire_file_extracted;
+  return success;
 }
 
 bool ZipReader::ExtractCurrentEntryToFilePath(
@@ -345,8 +336,7 @@ bool ZipReader::ExtractCurrentEntryToFilePath(
   bool success = false;
   {
     FilePathWriterDelegate writer(output_file_path);
-    success =
-        ExtractCurrentEntry(&writer, std::numeric_limits<uint64_t>::max());
+    success = ExtractCurrentEntry(&writer);
   }
 
   if (success &&
@@ -426,18 +416,14 @@ bool ZipReader::ExtractCurrentEntryToFile(base::File* file) const {
     return false;
 
   FileWriterDelegate writer(file);
-  return ExtractCurrentEntry(&writer, std::numeric_limits<uint64_t>::max());
+  return ExtractCurrentEntry(&writer);
 }
 
-bool ZipReader::ExtractCurrentEntryToString(uint64_t max_read_bytes,
+bool ZipReader::ExtractCurrentEntryToString(size_t max_read_bytes,
                                             std::string* output) const {
   DCHECK(output);
   DCHECK(zip_file_);
-
-  if (max_read_bytes == 0) {
-    output->clear();
-    return true;
-  }
+  DCHECK_NE(0U, max_read_bytes);
 
   if (current_entry_info()->is_directory()) {
     output->clear();
@@ -450,23 +436,12 @@ bool ZipReader::ExtractCurrentEntryToString(uint64_t max_read_bytes,
   // incorrect therefore this function needs to read as much data as possible.
   std::string contents;
   contents.reserve(
-      static_cast<size_t>(std::min(base::checked_cast<int64_t>(max_read_bytes),
+      static_cast<size_t>(std::min(static_cast<int64_t>(max_read_bytes),
                                    current_entry_info()->original_size())));
 
   StringWriterDelegate writer(max_read_bytes, &contents);
-  if (!ExtractCurrentEntry(&writer, max_read_bytes)) {
-    if (contents.length() < max_read_bytes) {
-      // There was an error in extracting entry. If ExtractCurrentEntry()
-      // returns false, the entire file was not read - in which case
-      // contents.length() should equal |max_read_bytes| unless an error
-      // occurred which caused extraction to be aborted.
-      output->clear();
-    } else {
-      // |num_bytes| is less than the length of current entry.
-      output->swap(contents);
-    }
+  if (!ExtractCurrentEntry(&writer))
     return false;
-  }
   output->swap(contents);
   return true;
 }

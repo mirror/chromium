@@ -717,10 +717,9 @@ void WindowServer::OnWindowHierarchyChanged(ServerWindow* window,
 
   WindowManagerDisplayRoot* display_root =
       display_manager_->GetWindowManagerDisplayRoot(window);
-  if (display_root) {
+  if (display_root)
     display_root->window_manager_state()
         ->ReleaseCaptureBlockedByAnyModalWindow();
-  }
 
   ProcessWindowHierarchyChanged(window, new_parent, old_parent);
 
@@ -731,25 +730,6 @@ void WindowServer::OnWindowHierarchyChanged(ServerWindow* window,
   if (new_parent) {
     frame_sink_manager_->RegisterFrameSinkHierarchy(new_parent->frame_sink_id(),
                                                     window->frame_sink_id());
-  }
-
-  if (!pending_system_modal_windows_.windows().empty()) {
-    // Windows that are now in a display are put here, then removed. We do this
-    // in two passes to avoid removing from a list we're iterating over.
-    std::set<ServerWindow*> no_longer_pending;
-    for (ServerWindow* system_modal_window :
-         pending_system_modal_windows_.windows()) {
-      DCHECK_EQ(MODAL_TYPE_SYSTEM, system_modal_window->modal_type());
-      WindowManagerDisplayRoot* display_root =
-          display_manager_->GetWindowManagerDisplayRoot(system_modal_window);
-      if (display_root) {
-        no_longer_pending.insert(system_modal_window);
-        display_root->window_manager_state()->AddSystemModalWindow(window);
-      }
-    }
-
-    for (ServerWindow* system_modal_window : no_longer_pending)
-      pending_system_modal_windows_.Remove(system_modal_window);
   }
 
   UpdateNativeCursorFromMouseLocation(window);
@@ -824,10 +804,9 @@ void WindowServer::OnWindowVisibilityChanged(ServerWindow* window) {
 
   WindowManagerDisplayRoot* display_root =
       display_manager_->GetWindowManagerDisplayRoot(window);
-  if (display_root) {
-    display_root->window_manager_state()
-        ->ReleaseCaptureBlockedByAnyModalWindow();
-  }
+  if (display_root)
+    display_root->window_manager_state()->ReleaseCaptureBlockedByModalWindow(
+        window);
 }
 
 void WindowServer::OnWindowCursorChanged(ServerWindow* window,
@@ -882,25 +861,6 @@ void WindowServer::OnTransientWindowRemoved(ServerWindow* window,
   for (auto& pair : tree_map_) {
     pair.second->ProcessTransientWindowRemoved(window, transient_child,
                                                IsOperationSource(pair.first));
-  }
-}
-
-void WindowServer::OnWindowModalTypeChanged(ServerWindow* window,
-                                            ModalType old_modal_type) {
-  WindowManagerDisplayRoot* display_root =
-      display_manager_->GetWindowManagerDisplayRoot(window);
-  if (window->modal_type() == MODAL_TYPE_SYSTEM) {
-    if (display_root)
-      display_root->window_manager_state()->AddSystemModalWindow(window);
-    else
-      pending_system_modal_windows_.Add(window);
-  } else {
-    pending_system_modal_windows_.Remove(window);
-  }
-
-  if (display_root && window->modal_type() != MODAL_TYPE_NONE) {
-    display_root->window_manager_state()
-        ->ReleaseCaptureBlockedByAnyModalWindow();
   }
 }
 

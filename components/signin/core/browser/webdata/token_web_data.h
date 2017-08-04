@@ -47,12 +47,12 @@ struct TokenResult {
 class TokenWebData : public WebDataServiceBase {
  public:
   TokenWebData(scoped_refptr<WebDatabaseService> wdbs,
-               scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
-               scoped_refptr<base::SingleThreadTaskRunner> db_task_runner,
+               scoped_refptr<base::SingleThreadTaskRunner> ui_thread,
+               scoped_refptr<base::SingleThreadTaskRunner> db_thread,
                const ProfileErrorCallback& callback);
 
-  TokenWebData(scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
-               scoped_refptr<base::SingleThreadTaskRunner> db_task_runner);
+  TokenWebData(scoped_refptr<base::SingleThreadTaskRunner> ui_thread,
+               scoped_refptr<base::SingleThreadTaskRunner> db_thread);
 
   // Set a token to use for a specified service.
   void SetTokenForService(const std::string& service,

@@ -93,8 +93,9 @@ void ReadData(scoped_refptr<ResourceResponse> headers,
 
   void* buffer = nullptr;
   uint32_t num_bytes = output_size;
-  MojoResult result = data_pipe.producer_handle->BeginWriteData(
-      &buffer, &num_bytes, MOJO_WRITE_DATA_FLAG_NONE);
+  MojoResult result =
+      BeginWriteDataRaw(data_pipe.producer_handle.get(), &buffer, &num_bytes,
+                        MOJO_WRITE_DATA_FLAG_NONE);
   CHECK_EQ(result, MOJO_RESULT_OK);
   CHECK_EQ(num_bytes, output_size);
 
@@ -104,7 +105,7 @@ void ReadData(scoped_refptr<ResourceResponse> headers,
   } else {
     memcpy(buffer, bytes->front(), output_size);
   }
-  result = data_pipe.producer_handle->EndWriteData(num_bytes);
+  result = EndWriteDataRaw(data_pipe.producer_handle.get(), num_bytes);
   CHECK_EQ(result, MOJO_RESULT_OK);
 
   client->OnStartLoadingResponseBody(std::move(data_pipe.consumer_handle));

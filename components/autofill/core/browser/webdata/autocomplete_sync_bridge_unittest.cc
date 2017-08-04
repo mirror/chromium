@@ -114,11 +114,9 @@ class FakeAutofillBackend : public AutofillWebDataBackend {
   ~FakeAutofillBackend() override {}
   WebDatabase* GetDatabase() override { return db_; }
   void AddObserver(
-      autofill::AutofillWebDataServiceObserverOnDBSequence* observer) override {
-  }
+      autofill::AutofillWebDataServiceObserverOnDBThread* observer) override {}
   void RemoveObserver(
-      autofill::AutofillWebDataServiceObserverOnDBSequence* observer) override {
-  }
+      autofill::AutofillWebDataServiceObserverOnDBThread* observer) override {}
   void RemoveExpiredFormElements() override {}
   void NotifyOfMultipleAutofillChanges() override {}
   void NotifyThatSyncHasStarted(ModelType model_type) override {}

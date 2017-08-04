@@ -236,24 +236,24 @@ void DownloadSuggestionsProvider::DismissSuggestion(
 
 void DownloadSuggestionsProvider::FetchSuggestionImage(
     const ContentSuggestion::ID& suggestion_id,
-    ntp_snippets::ImageFetchedCallback callback) {
+    const ntp_snippets::ImageFetchedCallback& callback) {
   // TODO(vitaliii): Fetch proper thumbnail from OfflinePageModel once it is
   // available there.
   // TODO(vitaliii): Provide site's favicon for assets downloads or file type.
   // See crbug.com/631447.
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), gfx::Image()));
+      FROM_HERE, base::BindOnce(callback, gfx::Image()));
 }
 
 void DownloadSuggestionsProvider::Fetch(
     const ntp_snippets::Category& category,
     const std::set<std::string>& known_suggestion_ids,
-    ntp_snippets::FetchDoneCallback callback) {
+    const ntp_snippets::FetchDoneCallback& callback) {
   LOG(DFATAL) << "DownloadSuggestionsProvider has no |Fetch| functionality!";
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::BindOnce(
-          std::move(callback),
+          callback,
           ntp_snippets::Status(
               ntp_snippets::StatusCode::PERMANENT_ERROR,
               "DownloadSuggestionsProvider has no |Fetch| functionality!"),
@@ -279,7 +279,7 @@ void DownloadSuggestionsProvider::ClearCachedSuggestions(Category category) {
 
 void DownloadSuggestionsProvider::GetDismissedSuggestionsForDebugging(
     Category category,
-    ntp_snippets::DismissedSuggestionsCallback callback) {
+    const ntp_snippets::DismissedSuggestionsCallback& callback) {
   DCHECK_EQ(provided_category_, category);
 
   if (offline_page_model_) {
@@ -291,11 +291,10 @@ void DownloadSuggestionsProvider::GetDismissedSuggestionsForDebugging(
         query_builder.Build(offline_page_model_->GetPolicyController()),
         base::Bind(&DownloadSuggestionsProvider::
                        GetPagesMatchingQueryCallbackForGetDismissedSuggestions,
-                   weak_ptr_factory_.GetWeakPtr(),
-                   base::Passed(std::move(callback))));
+                   weak_ptr_factory_.GetWeakPtr(), callback));
   } else {
     GetPagesMatchingQueryCallbackForGetDismissedSuggestions(
-        std::move(callback), std::vector<OfflinePageItem>());
+        callback, std::vector<OfflinePageItem>());
   }
 }
 
@@ -319,7 +318,7 @@ void DownloadSuggestionsProvider::RegisterProfilePrefs(
 
 void DownloadSuggestionsProvider::
     GetPagesMatchingQueryCallbackForGetDismissedSuggestions(
-        ntp_snippets::DismissedSuggestionsCallback callback,
+        const ntp_snippets::DismissedSuggestionsCallback& callback,
         const std::vector<OfflinePageItem>& offline_pages) const {
   std::set<std::string> dismissed_ids = ReadOfflinePageDismissedIDsFromPrefs();
   std::vector<ContentSuggestion> suggestions;
@@ -342,7 +341,7 @@ void DownloadSuggestionsProvider::
     }
   }
 
-  std::move(callback).Run(std::move(suggestions));
+  callback.Run(std::move(suggestions));
 }
 
 void DownloadSuggestionsProvider::OfflinePageModelLoaded(

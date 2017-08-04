@@ -47,10 +47,8 @@ class ASH_EXPORT TrayUpdate : public TrayImageItem {
   // Expose label information for testing.
   views::Label* GetLabelForTesting();
 
-  // Resets everything for testing.
-  static void ResetForTesting();
-
  private:
+
   class UpdateView;
 
   // Overridden from TrayImageItem.

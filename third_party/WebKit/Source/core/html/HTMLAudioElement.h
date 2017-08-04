@@ -44,11 +44,6 @@ class CORE_EXPORT HTMLAudioElement final : public HTMLMediaElement {
 
   bool IsHTMLAudioElement() const override { return true; }
 
-  // WebMediaPlayerClient implementation.
-  void MediaRemotingStarted(
-      const WebString& remote_device_friendly_name) override {}
-  void MediaRemotingStopped() override {}
-
  private:
   HTMLAudioElement(Document&);
 };

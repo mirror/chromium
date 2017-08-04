@@ -3335,7 +3335,7 @@ void ChromeContentBrowserClient::InitFrameInterfaces() {
 
 #if defined(OS_ANDROID)
   frame_interfaces_parameterized_->AddInterface(base::Bind(
-      &ForwardToJavaFrameRegistry<blink::mojom::InstalledAppProvider>));
+      &ForwardToJavaWebContentsRegistry<blink::mojom::InstalledAppProvider>));
   frame_interfaces_parameterized_->AddInterface(
       base::Bind(&ForwardToJavaFrameRegistry<payments::mojom::PaymentRequest>));
 #else

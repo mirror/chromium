@@ -58,8 +58,6 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
   Window* window() { return window_; }
   const Window* window() const { return window_; }
 
-  viz::FrameSinkId frame_sink_id() const { return frame_sink_id_; }
-
   ClientSurfaceEmbedder* client_surface_embedder() const {
     return client_surface_embedder_.get();
   }
@@ -100,7 +98,6 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
   friend class WindowTreeClient;
   friend class WindowTreeClientPrivate;
   friend class WindowTreeHostMus;
-  friend class HitTestDataProviderAuraTest;
 
   using ServerChangeIdType = uint8_t;
 
@@ -245,7 +242,7 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
   void RemoveTransientChildFromServer(WindowMus* child) override;
   ChangeSource OnTransientChildAdded(WindowMus* child) override;
   ChangeSource OnTransientChildRemoved(WindowMus* child) override;
-  const viz::LocalSurfaceId& GetLocalSurfaceId() const override;
+  const viz::LocalSurfaceId& GetLocalSurfaceId() override;
   std::unique_ptr<WindowMusChangeData> PrepareForServerBoundsChange(
       const gfx::Rect& bounds) override;
   std::unique_ptr<WindowMusChangeData> PrepareForServerVisibilityChange(

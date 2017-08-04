@@ -10,39 +10,42 @@
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/search/one_google_bar/one_google_bar_fetcher.h"
-#include "components/signin/core/browser/gaia_cookie_manager_service.h"
+#include "components/signin/core/browser/signin_manager_base.h"
 
-class OneGoogleBarService::SigninObserver
-    : public GaiaCookieManagerService::Observer {
+class OneGoogleBarService::SigninObserver : public SigninManagerBase::Observer {
  public:
   using SigninStatusChangedCallback = base::Closure;
 
-  SigninObserver(GaiaCookieManagerService* cookie_service,
+  SigninObserver(SigninManagerBase* signin_manager,
                  const SigninStatusChangedCallback& callback)
-      : cookie_service_(cookie_service), callback_(callback) {
-    cookie_service_->AddObserver(this);
+      : signin_manager_(signin_manager), callback_(callback) {
+    signin_manager_->AddObserver(this);
   }
 
-  ~SigninObserver() override { cookie_service_->RemoveObserver(this); }
+  ~SigninObserver() override { signin_manager_->RemoveObserver(this); }
 
  private:
-  // GaiaCookieManagerService::Observer implementation.
-  void OnGaiaAccountsInCookieUpdated(const std::vector<gaia::ListedAccount>&,
-                                     const std::vector<gaia::ListedAccount>&,
-                                     const GoogleServiceAuthError&) override {
+  // SigninManagerBase::Observer implementation.
+  void GoogleSigninSucceeded(const std::string& account_id,
+                             const std::string& username) override {
     callback_.Run();
   }
 
-  GaiaCookieManagerService* const cookie_service_;
+  void GoogleSignedOut(const std::string& account_id,
+                       const std::string& username) override {
+    callback_.Run();
+  }
+
+  SigninManagerBase* const signin_manager_;
   SigninStatusChangedCallback callback_;
 };
 
 OneGoogleBarService::OneGoogleBarService(
-    GaiaCookieManagerService* cookie_service,
+    SigninManagerBase* signin_manager,
     std::unique_ptr<OneGoogleBarFetcher> fetcher)
     : fetcher_(std::move(fetcher)),
       signin_observer_(base::MakeUnique<SigninObserver>(
-          cookie_service,
+          signin_manager,
           base::Bind(&OneGoogleBarService::SigninStatusChanged,
                      base::Unretained(this)))) {}
 

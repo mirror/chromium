@@ -1222,10 +1222,15 @@ IN_PROC_BROWSER_TEST_P(BrowserCloseManagerWithDownloadsBrowserTest,
     EXPECT_EQ(0, DownloadCoreService::NonMaliciousDownloadCountAllProfiles());
 }
 
-// Fails on ChromeOS and Linux, times out on Win. crbug.com/749098
+// Fails on ChromeOS only. crbug.com/749098
+#if defined(OS_CHROMEOS)
+#define MAYBE_TestBeforeUnloadAndDownloads DISABLED_TestBeforeUnloadAndDownloads
+#else
+#define MAYBE_TestBeforeUnloadAndDownloads TestBeforeUnloadAndDownloads
+#endif
 // Test shutdown with downloads in progress and beforeunload handlers.
 IN_PROC_BROWSER_TEST_P(BrowserCloseManagerWithDownloadsBrowserTest,
-                       DISABLED_TestBeforeUnloadAndDownloads) {
+                       MAYBE_TestBeforeUnloadAndDownloads) {
   ASSERT_TRUE(embedded_test_server()->Start());
   SetDownloadPathForProfile(browser()->profile());
   ASSERT_NO_FATAL_FAILURE(CreateStalledDownload(browser()));

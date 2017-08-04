@@ -609,8 +609,7 @@ IN_PROC_BROWSER_TEST_P(SpokenFeedbackTest, DISABLED_ChromeVoxNextStickyMode) {
   }
 }
 
-// Flaky on Linux ChromiumOS MSan Tests. https://crbug.com/752427
-IN_PROC_BROWSER_TEST_P(SpokenFeedbackTest, DISABLED_TouchExploreStatusTray) {
+IN_PROC_BROWSER_TEST_P(SpokenFeedbackTest, TouchExploreStatusTray) {
   EnableChromeVox();
   SimulateTouchScreenInChromeVox();
 

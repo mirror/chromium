@@ -31,7 +31,6 @@ namespace {
 void addElement(UiScene* scene, int id) {
   auto element = base::MakeUnique<UiElement>();
   element->set_id(id);
-  element->set_draw_phase(0);
   scene->AddUiElement(std::move(element));
 }
 
@@ -79,7 +78,6 @@ TEST(UiScene, ParentTransformAppliesToChild) {
   operations.SetRotate(0, 0, 1, 90);
   operations.SetScale(3, 3, 1);
   element->SetTransformOperations(operations);
-  element->set_draw_phase(0);
   scene.AddUiElement(std::move(element));
 
   // Add a child to the parent, with different transformations.
@@ -91,7 +89,6 @@ TEST(UiScene, ParentTransformAppliesToChild) {
   child_operations.SetRotate(0, 0, 1, 90);
   child_operations.SetScale(2, 2, 1);
   element->SetTransformOperations(child_operations);
-  element->set_draw_phase(0);
   scene.AddUiElement(std::move(element));
   const UiElement* child = scene.GetUiElementById(1);
 
@@ -111,14 +108,12 @@ TEST(UiScene, Opacity) {
   auto element = base::MakeUnique<UiElement>();
   element->set_id(0);
   element->SetOpacity(0.5);
-  element->set_draw_phase(0);
   scene.AddUiElement(std::move(element));
 
   element = base::MakeUnique<UiElement>();
   element->set_id(1);
   scene.GetUiElementById(0)->AddChild(element.get());
   element->SetOpacity(0.5);
-  element->set_draw_phase(0);
   scene.AddUiElement(std::move(element));
 
   scene.OnBeginFrame(MicrosecondsToTicks(0));
@@ -132,14 +127,12 @@ TEST(UiScene, LockToFov) {
   auto element = base::MakeUnique<UiElement>();
   element->set_id(0);
   element->set_lock_to_fov(true);
-  element->set_draw_phase(0);
   scene.AddUiElement(std::move(element));
 
   element = base::MakeUnique<UiElement>();
   element->set_id(1);
   scene.GetUiElementById(0)->AddChild(element.get());
   element->set_lock_to_fov(false);
-  element->set_draw_phase(0);
   scene.AddUiElement(std::move(element));
 
   scene.OnBeginFrame(MicrosecondsToTicks(0));
@@ -164,7 +157,6 @@ TEST_P(AnchoringTest, VerifyCorrectPosition) {
   element->set_id(0);
   element->SetSize(2, 2);
   element->SetScale(2, 2, 1);
-  element->set_draw_phase(0);
   scene.AddUiElement(std::move(element));
 
   // Add a child to the parent, with anchoring.
@@ -173,7 +165,6 @@ TEST_P(AnchoringTest, VerifyCorrectPosition) {
   scene.GetUiElementById(0)->AddChild(element.get());
   element->set_x_anchoring(GetParam().x_anchoring);
   element->set_y_anchoring(GetParam().y_anchoring);
-  element->set_draw_phase(0);
   scene.AddUiElement(std::move(element));
 
   scene.OnBeginFrame(MicrosecondsToTicks(0));

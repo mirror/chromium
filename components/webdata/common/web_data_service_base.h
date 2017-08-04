@@ -21,7 +21,7 @@ class SingleThreadTaskRunner;
 }
 
 // Base for WebDataService class hierarchy.
-// WebDataServiceBase is destroyed on the UI sequence.
+// WebDataServiceBase is destroyed on the UI thread.
 class WEBDATA_EXPORT WebDataServiceBase
     : public base::RefCountedDeleteOnSequence<WebDataServiceBase> {
  public:
@@ -46,11 +46,11 @@ class WEBDATA_EXPORT WebDataServiceBase
   // WebDataServiceBase, which receive |wdbs| upon construction. The
   // WebDataServiceWrapper handles the initializing and shutting down and of
   // the |wdbs| object.
-  // WebDataServiceBase is destroyed on the UI sequence.
+  // WebDataServiceBase is destroyed on |ui_thread|.
   WebDataServiceBase(
       scoped_refptr<WebDatabaseService> wdbs,
       const ProfileErrorCallback& callback,
-      const scoped_refptr<base::SingleThreadTaskRunner>& ui_task_runner);
+      const scoped_refptr<base::SingleThreadTaskRunner>& ui_thread);
 
   // Cancel any pending request. You need to call this method if your
   // WebDataServiceConsumer is about to be deleted.
@@ -58,7 +58,7 @@ class WEBDATA_EXPORT WebDataServiceBase
 
   // Shutdown the web data service. The service can no longer be used after this
   // call.
-  virtual void ShutdownOnUISequence();
+  virtual void ShutdownOnUIThread();
 
   // Initializes the web data service.
   virtual void Init();
@@ -74,12 +74,12 @@ class WEBDATA_EXPORT WebDataServiceBase
   virtual void RegisterDBLoadedCallback(const DBLoadedCallback& callback);
 
   // Returns true if the database load has completetd successfully, and
-  // ShutdownOnUISequence() has not yet been called.
+  // ShutdownOnUIThread has not yet been called.
   virtual bool IsDatabaseLoaded();
 
   // Returns a pointer to the DB (used by SyncableServices). May return NULL if
-  // the database is not loaded or otherwise unavailable. Must be called on DB
-  // sequence.
+  // the database is not loaded or otherwise unavailable. Must be called on
+  // DBThread.
   virtual WebDatabase* GetDatabase();
 
  protected:

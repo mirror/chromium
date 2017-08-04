@@ -52,12 +52,13 @@ DiscoveryNetworkMonitor* DiscoveryNetworkMonitor::GetInstance() {
   return g_discovery_monitor.Pointer();
 }
 
-// static
-std::unique_ptr<DiscoveryNetworkMonitor>
-DiscoveryNetworkMonitor::CreateInstanceForTest(NetworkInfoFunction strategy) {
-  auto* discovery_network_monitor = new DiscoveryNetworkMonitor();
-  discovery_network_monitor->SetNetworkInfoFunctionForTest(std::move(strategy));
-  return std::unique_ptr<DiscoveryNetworkMonitor>(discovery_network_monitor);
+void DiscoveryNetworkMonitor::RebindNetworkChangeObserverForTest() {
+  net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
+}
+
+void DiscoveryNetworkMonitor::SetNetworkInfoFunctionForTest(
+    NetworkInfoFunction strategy) {
+  network_info_function_ = strategy;
 }
 
 void DiscoveryNetworkMonitor::AddObserver(Observer* const observer) {
@@ -97,11 +98,6 @@ DiscoveryNetworkMonitor::DiscoveryNetworkMonitor()
 
 DiscoveryNetworkMonitor::~DiscoveryNetworkMonitor() {
   net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
-}
-
-void DiscoveryNetworkMonitor::SetNetworkInfoFunctionForTest(
-    NetworkInfoFunction strategy) {
-  network_info_function_ = strategy;
 }
 
 void DiscoveryNetworkMonitor::OnNetworkChanged(

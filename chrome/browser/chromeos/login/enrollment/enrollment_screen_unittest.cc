@@ -29,55 +29,11 @@ namespace chromeos {
 
 class EnrollmentScreenUnitTest : public testing::Test {
  public:
-  EnrollmentScreenUnitTest() : fake_controller_("") {}
-
-  // Creates the EnrollmentScreen and sets required parameters.
-  virtual void SetUpEnrollmentScreen() {
-    enrollment_screen_.reset(
-        new EnrollmentScreen(&mock_delegate_, &mock_view_));
-    enrollment_screen_->SetParameters(enrollment_config_, &fake_controller_);
+  EnrollmentScreenUnitTest() : fake_controller_("") {
+    enrollment_config_.mode = policy::EnrollmentConfig::MODE_ATTESTATION_FORCED;
+    enrollment_config_.auth_mechanism =
+        policy::EnrollmentConfig::AUTH_MECHANISM_ATTESTATION;
   }
-
-  // Fast forwards time by the specified amount.
-  void FastForwardTime(base::TimeDelta time) {
-    runner_.task_runner()->FastForwardBy(time);
-  }
-
-  MockBaseScreenDelegate* GetBaseScreenDelegate() { return &mock_delegate_; }
-  MockEnrollmentScreenView* GetMockScreenView() { return &mock_view_; }
-
-  // testing::Test:
-  void SetUp() override {
-    // Initialize the thread manager.
-    DBusThreadManager::Initialize();
-  }
-
-  void TearDown() override {
-    TestingBrowserProcess::GetGlobal()->SetShuttingDown(true);
-    DBusThreadManager::Shutdown();
-  }
-
- protected:
-  std::unique_ptr<EnrollmentScreen> enrollment_screen_;
-
-  policy::EnrollmentConfig enrollment_config_;
-
- private:
-  // Replace main thread's task runner with a mock for duration of test.
-  base::MessageLoop loop_;
-  base::ScopedMockTimeMessageLoopTaskRunner runner_;
-
-  // Objects required by the EnrollmentScreen that can be re-used.
-  pairing_chromeos::FakeControllerPairingController fake_controller_;
-  MockBaseScreenDelegate mock_delegate_;
-  MockEnrollmentScreenView mock_view_;
-
-  DISALLOW_COPY_AND_ASSIGN(EnrollmentScreenUnitTest);
-};
-
-class ZeroTouchEnrollmentScreenUnitTest : public EnrollmentScreenUnitTest {
- public:
-  ZeroTouchEnrollmentScreenUnitTest() = default;
 
   // Closure passed to EnterpriseEnrollmentHelper::SetupEnrollmentHelperMock
   // which creates the EnterpriseEnrollmentHelperMock object that will
@@ -118,31 +74,58 @@ class ZeroTouchEnrollmentScreenUnitTest : public EnrollmentScreenUnitTest {
     return mock;
   }
 
-  void SetUpEnrollmentScreen() override {
-    enrollment_config_.mode = policy::EnrollmentConfig::MODE_ATTESTATION_FORCED;
-    enrollment_config_.auth_mechanism =
-        policy::EnrollmentConfig::AUTH_MECHANISM_ATTESTATION;
-    EnrollmentScreenUnitTest::SetUpEnrollmentScreen();
+  // Creates the EnrollmentScreen and sets required parameters.
+  void SetUpEnrollmentScreen() {
+    enrollment_screen_.reset(
+        new EnrollmentScreen(&mock_delegate_, &mock_view_));
+    enrollment_screen_->SetParameters(enrollment_config_, &fake_controller_);
   }
+
+  // Fast forwards time by the specified amount.
+  void FastForwardTime(base::TimeDelta time) {
+    runner_.task_runner()->FastForwardBy(time);
+  }
+
+  MockBaseScreenDelegate* GetBaseScreenDelegate() { return &mock_delegate_; }
 
   // testing::Test:
   void SetUp() override {
-    EnrollmentScreenUnitTest::SetUp();
+    // Initialize the thread manager.
+    DBusThreadManager::Initialize();
 
     // Configure the browser to use Hands-Off Enrollment.
     base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
         switches::kEnterpriseEnableZeroTouchEnrollment, "hands-off");
   }
 
+  void TearDown() override {
+    TestingBrowserProcess::GetGlobal()->SetShuttingDown(true);
+    DBusThreadManager::Shutdown();
+  }
+
+ protected:
+  // A pointer to the EnrollmentScreen.
+  std::unique_ptr<EnrollmentScreen> enrollment_screen_;
+
  private:
-  DISALLOW_COPY_AND_ASSIGN(ZeroTouchEnrollmentScreenUnitTest);
+  // Replace main thread's task runner with a mock for duration of test.
+  base::MessageLoop loop_;
+  base::ScopedMockTimeMessageLoopTaskRunner runner_;
+
+  // Objects required by the EnrollmentScreen that can be re-used.
+  policy::EnrollmentConfig enrollment_config_;
+  pairing_chromeos::FakeControllerPairingController fake_controller_;
+  MockBaseScreenDelegate mock_delegate_;
+  MockEnrollmentScreenView mock_view_;
+
+  DISALLOW_COPY_AND_ASSIGN(EnrollmentScreenUnitTest);
 };
 
-TEST_F(ZeroTouchEnrollmentScreenUnitTest, Retries) {
+TEST_F(EnrollmentScreenUnitTest, Retries) {
   // Define behavior of EnterpriseEnrollmentHelperMock to always fail
   // enrollment.
   EnterpriseEnrollmentHelper::SetupEnrollmentHelperMock(
-      &ZeroTouchEnrollmentScreenUnitTest::MockEnrollmentHelperCreator<false>);
+      &EnrollmentScreenUnitTest::MockEnrollmentHelperCreator<false>);
 
   SetUpEnrollmentScreen();
 
@@ -159,11 +142,11 @@ TEST_F(ZeroTouchEnrollmentScreenUnitTest, Retries) {
   EXPECT_EQ(enrollment_screen_->num_retries_, 4);
 }
 
-TEST_F(ZeroTouchEnrollmentScreenUnitTest, DoesNotRetryOnTopOfUser) {
+TEST_F(EnrollmentScreenUnitTest, DoesNotRetryOnTopOfUser) {
   // Define behavior of EnterpriseEnrollmentHelperMock to always fail
   // enrollment.
   EnterpriseEnrollmentHelper::SetupEnrollmentHelperMock(
-      &ZeroTouchEnrollmentScreenUnitTest::MockEnrollmentHelperCreator<false>);
+      &EnrollmentScreenUnitTest::MockEnrollmentHelperCreator<false>);
 
   SetUpEnrollmentScreen();
 
@@ -187,10 +170,10 @@ TEST_F(ZeroTouchEnrollmentScreenUnitTest, DoesNotRetryOnTopOfUser) {
   EXPECT_EQ(enrollment_screen_->num_retries_, 4);
 }
 
-TEST_F(ZeroTouchEnrollmentScreenUnitTest, DoesNotRetryAfterSuccess) {
+TEST_F(EnrollmentScreenUnitTest, DoesNotRetryAfterSuccess) {
   // Define behavior of EnterpriseEnrollmentHelperMock to successfully enroll.
   EnterpriseEnrollmentHelper::SetupEnrollmentHelperMock(
-      &ZeroTouchEnrollmentScreenUnitTest::MockEnrollmentHelperCreator<true>);
+      &EnrollmentScreenUnitTest::MockEnrollmentHelperCreator<true>);
 
   SetUpEnrollmentScreen();
 
@@ -204,10 +187,10 @@ TEST_F(ZeroTouchEnrollmentScreenUnitTest, DoesNotRetryAfterSuccess) {
   EXPECT_EQ(enrollment_screen_->num_retries_, 0);
 }
 
-TEST_F(ZeroTouchEnrollmentScreenUnitTest, FinishesEnrollmentFlow) {
+TEST_F(EnrollmentScreenUnitTest, FinishesEnrollmentFlow) {
   // Define behavior of EnterpriseEnrollmentHelperMock to successfully enroll.
   EnterpriseEnrollmentHelper::SetupEnrollmentHelperMock(
-      &ZeroTouchEnrollmentScreenUnitTest::MockEnrollmentHelperCreator<true>);
+      &EnrollmentScreenUnitTest::MockEnrollmentHelperCreator<true>);
 
   SetUpEnrollmentScreen();
 
@@ -222,62 +205,4 @@ TEST_F(ZeroTouchEnrollmentScreenUnitTest, FinishesEnrollmentFlow) {
   // Start zero-touch enrollment.
   enrollment_screen_->Show();
 }
-
-class MultiLicenseEnrollmentScreenUnitTest : public EnrollmentScreenUnitTest {
- public:
-  MultiLicenseEnrollmentScreenUnitTest() = default;
-
-  void SetUpEnrollmentScreen() override {
-    enrollment_config_.mode = policy::EnrollmentConfig::MODE_MANUAL;
-    enrollment_config_.auth_mechanism =
-        policy::EnrollmentConfig::AUTH_MECHANISM_INTERACTIVE;
-    EnrollmentScreenUnitTest::SetUpEnrollmentScreen();
-  }
-
-  static EnterpriseEnrollmentHelper* MockEnrollmentHelperCreator(
-      EnterpriseEnrollmentHelper::EnrollmentStatusConsumer* status_consumer,
-      const policy::EnrollmentConfig& enrollment_config,
-      const std::string& enrolling_user_domain) {
-    EnterpriseEnrollmentHelperMock* mock =
-        new EnterpriseEnrollmentHelperMock(status_consumer);
-    EXPECT_CALL(*mock, EnrollUsingAuthCode(_, _))
-        .Times(AnyNumber())
-        .WillRepeatedly(Invoke([mock](const std::string&, bool) {
-          EnrollmentLicenseMap licenses;
-          static_cast<EnrollmentScreen*>(mock->status_consumer())
-              ->OnMultipleLicensesAvailable(licenses);
-        }));
-    EXPECT_CALL(*mock, UseLicenseType(::policy::LicenseType::ANNUAL)).Times(1);
-
-    return mock;
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(MultiLicenseEnrollmentScreenUnitTest);
-};
-
-// Sign in and check that selected license type is propagated correctly.
-TEST_F(MultiLicenseEnrollmentScreenUnitTest, TestLicenseSelection) {
-  EnterpriseEnrollmentHelper::SetupEnrollmentHelperMock(
-      &MultiLicenseEnrollmentScreenUnitTest::MockEnrollmentHelperCreator);
-
-  EXPECT_CALL(*GetMockScreenView(), SetParameters(_, _)).Times(1);
-
-  SetUpEnrollmentScreen();
-
-  EXPECT_CALL(*GetMockScreenView(), Show()).Times(1);
-  EXPECT_CALL(*GetMockScreenView(), ShowSigninScreen()).Times(1);
-
-  // Start enrollment.
-  enrollment_screen_->Show();
-
-  // Once at login, once after picking license type.
-
-  EXPECT_CALL(*GetMockScreenView(), ShowEnrollmentSpinnerScreen()).Times(2);
-  EXPECT_CALL(*GetMockScreenView(), ShowLicenseTypeSelectionScreen(_)).Times(1);
-
-  enrollment_screen_->OnLoginDone("user@domain.com", "oauth");
-  enrollment_screen_->OnLicenseTypeSelected("annual");
-}
-
 }  // namespace chromeos

@@ -466,7 +466,8 @@ mojom::SerialDeviceControlSignalsPtr SerialIoHandlerWin::GetControlSignals()
     return mojom::SerialDeviceControlSignalsPtr();
   }
 
-  auto signals = mojom::SerialDeviceControlSignals::New();
+  mojom::SerialDeviceControlSignalsPtr signals(
+      mojom::SerialDeviceControlSignals::New());
   signals->dcd = (status & MS_RLSD_ON) != 0;
   signals->cts = (status & MS_CTS_ON) != 0;
   signals->dsr = (status & MS_DSR_ON) != 0;
@@ -500,7 +501,7 @@ mojom::SerialConnectionInfoPtr SerialIoHandlerWin::GetPortInfo() const {
     VPLOG(1) << "Failed to get serial port info";
     return mojom::SerialConnectionInfoPtr();
   }
-  auto info = mojom::SerialConnectionInfo::New();
+  mojom::SerialConnectionInfoPtr info(mojom::SerialConnectionInfo::New());
   info->bitrate = SpeedConstantToBitrate(config.BaudRate);
   info->data_bits = DataBitsConstantToEnum(config.ByteSize);
   info->parity_bit = ParityBitConstantToEnum(config.Parity);

@@ -46,10 +46,7 @@ class FakeHostScanner : public HostScanner {
     num_scans_started_++;
   }
 
-  void StopScan() {
-    is_scan_active_ = false;
-    NotifyScanFinished();
-  }
+  void StopScan() { is_scan_active_ = false; }
 
   bool IsScanActive() override { return is_scan_active_; }
 
@@ -60,16 +57,13 @@ class FakeHostScanner : public HostScanner {
   int num_scans_started_ = 0;
 };
 
-const char kEthernetServiceGuid[] = "ethernetServiceGuid";
 const char kWifiServiceGuid[] = "wifiServiceGuid";
-const char kTetherGuid[] = "tetherGuid";
 
-std::string CreateConfigurationJsonString(const std::string& guid,
-                                          const std::string& type) {
+std::string CreateConfigurationJsonString() {
   std::stringstream ss;
   ss << "{"
-     << "  \"GUID\": \"" << guid << "\","
-     << "  \"Type\": \"" << type << "\","
+     << "  \"GUID\": \"" << kWifiServiceGuid << "\","
+     << "  \"Type\": \"" << shill::kTypeWifi << "\","
      << "  \"State\": \"" << shill::kStateReady << "\""
      << "}";
   return ss.str();
@@ -83,10 +77,9 @@ class HostScanSchedulerTest : public NetworkStateTest {
     DBusThreadManager::Initialize();
     NetworkStateTest::SetUp();
 
-    ethernet_service_path_ = ConfigureService(CreateConfigurationJsonString(
-        kEthernetServiceGuid, shill::kTypeEthernet));
-    test_manager_client()->SetManagerProperty(
-        shill::kDefaultServiceProperty, base::Value(ethernet_service_path_));
+    wifi_service_path_ = ConfigureService(CreateConfigurationJsonString());
+    test_manager_client()->SetManagerProperty(shill::kDefaultServiceProperty,
+                                              base::Value(wifi_service_path_));
 
     network_state_handler()->SetTetherTechnologyState(
         NetworkStateHandler::TECHNOLOGY_ENABLED);
@@ -105,65 +98,42 @@ class HostScanSchedulerTest : public NetworkStateTest {
     DBusThreadManager::Shutdown();
   }
 
-  // Disconnects the Ethernet network and manually sets the default network to
-  // |new_default_service_path|. If |new_default_service_path| is empty then no
-  // default network is set.
-  void SetEthernetNetworkDisconnected(
-      const std::string& new_default_service_path) {
-    SetServiceProperty(ethernet_service_path_,
-                       std::string(shill::kStateProperty),
+  void SetDefaultNetworkDisconnected() {
+    SetServiceProperty(wifi_service_path_, std::string(shill::kStateProperty),
                        base::Value(shill::kStateIdle));
-    if (new_default_service_path.empty())
-      return;
-
-    test_manager_client()->SetManagerProperty(
-        shill::kDefaultServiceProperty, base::Value(new_default_service_path));
   }
 
-  void SetEthernetNetworkConnecting() {
-    SetServiceProperty(ethernet_service_path_,
-                       std::string(shill::kStateProperty),
+  void SetDefaultNetworkConnecting() {
+    SetServiceProperty(wifi_service_path_, std::string(shill::kStateProperty),
                        base::Value(shill::kStateAssociation));
-    test_manager_client()->SetManagerProperty(
-        shill::kDefaultServiceProperty, base::Value(ethernet_service_path_));
   }
 
-  void SetEthernetNetworkConnected() {
-    SetServiceProperty(ethernet_service_path_,
-                       std::string(shill::kStateProperty),
+  void SetDefaultNetworkConnected() {
+    SetServiceProperty(wifi_service_path_, std::string(shill::kStateProperty),
                        base::Value(shill::kStateReady));
-    test_manager_client()->SetManagerProperty(
-        shill::kDefaultServiceProperty, base::Value(ethernet_service_path_));
-  }
-
-  // Adds a Tether network state, adds a Wifi network to be used as the Wifi
-  // hotspot, and associates the two networks. Returns the service path of the
-  // Wifi network.
-  std::string AddTetherNetworkState() {
-    network_state_handler()->AddTetherNetworkState(
-        kTetherGuid, "name", "carrier", 100 /* battery_percentage */,
-        100 /* signal strength */, false /* has_connected_to_host */);
-    std::string wifi_service_path = ConfigureService(
-        CreateConfigurationJsonString(kWifiServiceGuid, shill::kTypeWifi));
-    network_state_handler()->AssociateTetherNetworkStateWithWifiNetwork(
-        kTetherGuid, kWifiServiceGuid);
-    return wifi_service_path;
   }
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;
-  std::string ethernet_service_path_;
+  std::string wifi_service_path_;
 
   std::unique_ptr<FakeHostScanner> fake_host_scanner_;
 
   std::unique_ptr<HostScanScheduler> host_scan_scheduler_;
 };
 
-TEST_F(HostScanSchedulerTest, ScheduleScan) {
+TEST_F(HostScanSchedulerTest, UserLoggedIn) {
   EXPECT_EQ(0, fake_host_scanner_->num_scans_started());
   EXPECT_FALSE(
       network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
 
-  host_scan_scheduler_->ScheduleScan();
+  host_scan_scheduler_->UserLoggedIn();
+
+  EXPECT_EQ(0, fake_host_scanner_->num_scans_started());
+  EXPECT_FALSE(
+      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
+
+  SetDefaultNetworkDisconnected();
+  host_scan_scheduler_->UserLoggedIn();
 
   EXPECT_EQ(1, fake_host_scanner_->num_scans_started());
   EXPECT_TRUE(
@@ -188,6 +158,7 @@ TEST_F(HostScanSchedulerTest, ScanRequested) {
       network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
 
   fake_host_scanner_->StopScan();
+  host_scan_scheduler_->ScanFinished();
   EXPECT_EQ(1, fake_host_scanner_->num_scans_started());
   EXPECT_FALSE(
       network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
@@ -200,101 +171,32 @@ TEST_F(HostScanSchedulerTest, ScanRequested) {
 }
 
 TEST_F(HostScanSchedulerTest, DefaultNetworkChanged) {
-  // When no Tether network is present, a scan should start when the default
-  // network is disconnected.
   EXPECT_EQ(0, fake_host_scanner_->num_scans_started());
   EXPECT_FALSE(
       network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
 
-  SetEthernetNetworkConnecting();
+  SetDefaultNetworkConnecting();
+
   EXPECT_EQ(0, fake_host_scanner_->num_scans_started());
   EXPECT_FALSE(
       network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
 
-  SetEthernetNetworkConnected();
-  EXPECT_EQ(0, fake_host_scanner_->num_scans_started());
-  EXPECT_FALSE(
-      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
+  SetDefaultNetworkDisconnected();
 
-  SetEthernetNetworkDisconnected(std::string() /* default_service_path */);
   EXPECT_EQ(1, fake_host_scanner_->num_scans_started());
   EXPECT_TRUE(
       network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
 
-  fake_host_scanner_->StopScan();
-
-  // When Tether is present but disconnected, a scan should start when the
-  // default network is disconnected.
-  std::string tether_service_path = AddTetherNetworkState();
+  SetDefaultNetworkConnecting();
 
   EXPECT_EQ(1, fake_host_scanner_->num_scans_started());
-  EXPECT_FALSE(
-      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
-
-  SetEthernetNetworkConnecting();
-  EXPECT_EQ(1, fake_host_scanner_->num_scans_started());
-  EXPECT_FALSE(
-      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
-
-  SetEthernetNetworkConnected();
-  EXPECT_EQ(1, fake_host_scanner_->num_scans_started());
-  EXPECT_FALSE(
-      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
-
-  SetEthernetNetworkDisconnected(std::string() /* default_service_path */);
-  EXPECT_EQ(2, fake_host_scanner_->num_scans_started());
   EXPECT_TRUE(
       network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
 
-  fake_host_scanner_->StopScan();
+  SetDefaultNetworkDisconnected();
 
-  // When Tether is present and connecting, no scan should start when an
-  // Ethernet network becomes the default network and then disconnects.
-  network_state_handler()->SetTetherNetworkStateConnecting(kTetherGuid);
-
-  EXPECT_EQ(2, fake_host_scanner_->num_scans_started());
-  EXPECT_FALSE(
-      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
-
-  SetEthernetNetworkConnecting();
-  EXPECT_EQ(2, fake_host_scanner_->num_scans_started());
-  EXPECT_FALSE(
-      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
-
-  SetEthernetNetworkConnected();
-  EXPECT_EQ(2, fake_host_scanner_->num_scans_started());
-  EXPECT_FALSE(
-      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
-
-  SetEthernetNetworkDisconnected(tether_service_path);
-  EXPECT_EQ(2, fake_host_scanner_->num_scans_started());
-  EXPECT_FALSE(
-      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
-
-  fake_host_scanner_->StopScan();
-
-  // When Tether is present and connected, no scan should start when an Ethernet
-  // network becomes the default network and then disconnects.
-  base::RunLoop().RunUntilIdle();
-  network_state_handler()->SetTetherNetworkStateConnected(kTetherGuid);
-
-  EXPECT_EQ(2, fake_host_scanner_->num_scans_started());
-  EXPECT_FALSE(
-      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
-
-  SetEthernetNetworkConnecting();
-  EXPECT_EQ(2, fake_host_scanner_->num_scans_started());
-  EXPECT_FALSE(
-      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
-
-  SetEthernetNetworkConnected();
-  EXPECT_EQ(2, fake_host_scanner_->num_scans_started());
-  EXPECT_FALSE(
-      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
-
-  SetEthernetNetworkDisconnected(tether_service_path);
-  EXPECT_EQ(2, fake_host_scanner_->num_scans_started());
-  EXPECT_FALSE(
+  EXPECT_EQ(1, fake_host_scanner_->num_scans_started());
+  EXPECT_TRUE(
       network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
 }
 

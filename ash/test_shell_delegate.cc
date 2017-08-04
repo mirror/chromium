@@ -140,7 +140,7 @@ PrefService* TestShellDelegate::GetActiveUserPrefService() const {
 }
 
 PrefService* TestShellDelegate::GetLocalStatePrefService() const {
-  return local_state_pref_service_;
+  return nullptr;
 }
 
 bool TestShellDelegate::IsTouchscreenEnabledInPrefs(
@@ -160,9 +160,11 @@ void TestShellDelegate::SuspendMediaSessions() {
   media_sessions_suspended_ = true;
 }
 
+#if defined(USE_OZONE)
 ui::InputDeviceControllerClient*
 TestShellDelegate::GetInputDeviceControllerClient() {
   return nullptr;
 }
+#endif
 
 }  // namespace ash

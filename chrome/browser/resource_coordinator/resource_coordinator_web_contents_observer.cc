@@ -6,17 +6,11 @@
 
 #include <utility>
 
-#include "base/atomic_sequence_num.h"
-#include "base/feature_list.h"
-#include "base/strings/string_number_conversions.h"
-#include "chrome/browser/browser_process.h"
-#include "components/ukm/ukm_interface.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
-#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 #include "services/resource_coordinator/public/interfaces/coordination_unit.mojom.h"
@@ -38,18 +32,10 @@ ResourceCoordinatorWebContentsObserver::ResourceCoordinatorWebContentsObserver(
       base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
           connector, resource_coordinator::CoordinationUnitType::kWebContents);
 
-  // Make sure to set the visibility property when we create
-  // |tab_resource_coordinator_|.
-  tab_resource_coordinator_->SetProperty(
-      resource_coordinator::mojom::PropertyType::kVisible,
-      base::MakeUnique<base::Value>(web_contents->IsVisible()));
-
   connector->BindInterface(resource_coordinator::mojom::kServiceName,
                            mojo::MakeRequest(&service_callbacks_));
 
-  if (base::FeatureList::IsEnabled(ukm::kUkmFeature)) {
-    EnsureUkmRecorderInterface();
-  }
+  EnsureUkmRecorderInterface();
 }
 
 // TODO(matthalp) integrate into ResourceCoordinatorService once the UKM mojo
@@ -66,11 +52,6 @@ void ResourceCoordinatorWebContentsObserver::EnsureUkmRecorderInterface() {
     return;
   }
 
-  service_manager::Connector* connector =
-      content::ServiceManagerConnection::GetForProcess()->GetConnector();
-  connector->BindInterface(resource_coordinator::mojom::kServiceName,
-                           mojo::MakeRequest(&service_callbacks_));
-
   service_callbacks_->IsUkmRecorderInterfaceInitialized(base::Bind(
       &ResourceCoordinatorWebContentsObserver::MaybeSetUkmRecorderInterface,
       base::Unretained(this)));
@@ -83,9 +64,10 @@ void ResourceCoordinatorWebContentsObserver::MaybeSetUkmRecorderInterface(
   }
 
   ukm::mojom::UkmRecorderInterfacePtr ukm_recorder_interface;
-  ukm::UkmInterface::Create(g_browser_process->ukm_recorder(),
-                            mojo::MakeRequest(&ukm_recorder_interface));
-
+  content::ServiceManagerConnection::GetForProcess()
+      ->GetConnector()
+      ->BindInterface(content::mojom::kBrowserServiceName,
+                      mojo::MakeRequest(&ukm_recorder_interface));
   service_callbacks_->SetUkmRecorderInterface(
       std::move(ukm_recorder_interface));
   ukm_recorder_initialized = true;
@@ -93,13 +75,6 @@ void ResourceCoordinatorWebContentsObserver::MaybeSetUkmRecorderInterface(
 
 ResourceCoordinatorWebContentsObserver::
     ~ResourceCoordinatorWebContentsObserver() = default;
-
-// static
-ukm::SourceId ResourceCoordinatorWebContentsObserver::CreateUkmSourceId() {
-  static base::AtomicSequenceNumber seq;
-  return ConvertToSourceId(seq.GetNext() + 1,
-                           ukm::SourceIdType::RESOURCE_COORDINATOR);
-}
 
 // static
 bool ResourceCoordinatorWebContentsObserver::IsEnabled() {
@@ -131,10 +106,6 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
     return;
   }
 
-  if (navigation_handle->IsInMainFrame()) {
-    UpdateUkmRecorder(navigation_handle->GetURL());
-  }
-
   content::RenderFrameHost* render_frame_host =
       navigation_handle->GetRenderFrameHost();
 
@@ -145,21 +116,4 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
   auto* process_resource_coordinator =
       render_frame_host->GetProcess()->GetProcessResourceCoordinator();
   process_resource_coordinator->AddChild(*frame_resource_coordinator);
-}
-
-void ResourceCoordinatorWebContentsObserver::UpdateUkmRecorder(
-    const GURL& url) {
-  if (!base::FeatureList::IsEnabled(ukm::kUkmFeature)) {
-    return;
-  }
-
-  ukm_source_id_ = CreateUkmSourceId();
-  g_browser_process->ukm_recorder()->UpdateSourceURL(ukm_source_id_, url);
-  // ukm::SourceId types need to be converted to a string because base::Value
-  // does not guarrantee that its int type will be 64 bits. Instead
-  // std:string is used as a canonical format. base::Int64ToString
-  // and base::StringToInt64 are used for encoding/decoding respectively.
-  tab_resource_coordinator_->SetProperty(
-      resource_coordinator::mojom::PropertyType::kUkmSourceId,
-      base::MakeUnique<base::Value>(base::Int64ToString(ukm_source_id_)));
 }

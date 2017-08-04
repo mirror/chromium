@@ -13,14 +13,13 @@
 #include "base/memory/singleton.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
-#include "base/task_scheduler/post_task.h"
-#include "base/threading/thread_restrictions.h"
+#include "base/task_runner.h"
 #include "ui/accessibility/platform/atk_util_auralinux.h"
 #include "ui/accessibility/platform/ax_platform_node_auralinux.h"
 
 namespace {
 
-typedef void (*GnomeAccessibilityModuleInitFunc)();
+typedef void (*gnome_accessibility_module_init)();
 
 const char kAccessibilityEnabled[] = "ACCESSIBILITY_ENABLED";
 const char kAtkBridgeModule[] = "atk-bridge";
@@ -28,11 +27,9 @@ const char kAtkBridgePath[] = "gtk-2.0/modules/libatk-bridge.so";
 const char kAtkBridgeSymbolName[] = "gnome_accessibility_module_init";
 const char kGtkModules[] = "GTK_MODULES";
 
-// Returns a function pointer to be invoked on the main thread to init
-// the gnome accessibility module if it's enabled (nullptr otherwise).
-GnomeAccessibilityModuleInitFunc GetAccessibilityModuleInitFunc() {
-  base::ThreadRestrictions::AssertIOAllowed();
+gnome_accessibility_module_init g_accessibility_module_init = nullptr;
 
+bool AccessibilityModuleInitOnFileThread() {
   // Try to load libatk-bridge.so.
   base::FilePath atk_bridge_path(ATK_LIB_DIR);
   atk_bridge_path = atk_bridge_path.Append(kAtkBridgePath);
@@ -40,28 +37,18 @@ GnomeAccessibilityModuleInitFunc GetAccessibilityModuleInitFunc() {
                                   static_cast<GModuleFlags>(0));
   if (!bridge) {
     VLOG(1) << "Unable to open module " << atk_bridge_path.value();
-    return nullptr;
+    return false;
   }
 
-  GnomeAccessibilityModuleInitFunc init_func = nullptr;
-
-  if (!g_module_symbol(bridge, kAtkBridgeSymbolName, (gpointer*)&init_func)) {
+  if (!g_module_symbol(bridge, kAtkBridgeSymbolName,
+                      (gpointer *)&g_accessibility_module_init)) {
     VLOG(1) << "Unable to get symbol pointer from " << atk_bridge_path.value();
-    return nullptr;
+    // Just to make sure it's null;
+    g_accessibility_module_init = nullptr;
+    return false;
   }
 
-  DCHECK(init_func);
-  return init_func;
-}
-
-void FinishAccessibilityInitOnMainThread(
-    GnomeAccessibilityModuleInitFunc init_func) {
-  if (!init_func) {
-    VLOG(1) << "Will not enable ATK accessibility support.";
-    return;
-  }
-
-  init_func();
+  return true;
 }
 
 bool PlatformShouldEnableAccessibility() {
@@ -174,18 +161,42 @@ AtkUtilAuraLinux* AtkUtilAuraLinux::GetInstance() {
   return base::Singleton<AtkUtilAuraLinux>::get();
 }
 
-void AtkUtilAuraLinux::InitializeAsync() {
+AtkUtilAuraLinux::AtkUtilAuraLinux() : is_enabled_(false) {}
+
+void AtkUtilAuraLinux::Initialize(
+    scoped_refptr<base::TaskRunner> init_task_runner) {
+
   // Register our util class.
   g_type_class_unref(g_type_class_ref(ATK_UTIL_AURALINUX_TYPE));
 
   if (!ShouldEnableAccessibility())
     return;
 
-  base::PostTaskWithTraitsAndReplyWithResult(
+  init_task_runner->PostTaskAndReply(
       FROM_HERE,
-      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-      base::Bind(&GetAccessibilityModuleInitFunc),
-      base::Bind(&FinishAccessibilityInitOnMainThread));
+      base::Bind(
+          &AtkUtilAuraLinux::CheckIfAccessibilityIsEnabledOnFileThread,
+          base::Unretained(this)),
+      base::Bind(
+          &AtkUtilAuraLinux::FinishAccessibilityInitOnUIThread,
+          base::Unretained(this)));
+}
+
+AtkUtilAuraLinux::~AtkUtilAuraLinux() {
+}
+
+void AtkUtilAuraLinux::CheckIfAccessibilityIsEnabledOnFileThread() {
+  is_enabled_ = AccessibilityModuleInitOnFileThread();
+}
+
+void AtkUtilAuraLinux::FinishAccessibilityInitOnUIThread() {
+  if (!is_enabled_) {
+    VLOG(1) << "Will not enable ATK accessibility support.";
+    return;
+  }
+
+  DCHECK(g_accessibility_module_init);
+  g_accessibility_module_init();
 }
 
 }  // namespace ui

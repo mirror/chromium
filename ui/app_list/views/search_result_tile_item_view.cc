@@ -48,6 +48,9 @@ SearchResultTileItemView::SearchResultTileItemView(
   // non-null item makes the tile visible.
   SetVisible(false);
 
+  SetPaintToLayer();
+  layer()->SetFillsBoundsOpaquely(false);
+
   if (features::IsPlayStoreAppSearchEnabled()) {
     const gfx::FontList& base_font =
         ui::ResourceBundle::GetSharedInstance().GetFontList(
@@ -112,7 +115,7 @@ void SearchResultTileItemView::SetSearchResult(SearchResult* item) {
             ui::ResourceBundle::BaseFont);
 
     if (item_->display_type() == SearchResult::DISPLAY_RECOMMENDATION) {
-      set_is_recommendation(true);
+      EnableWhiteSelectedColor(true);
 
       title()->SetFontList(base_font.DeriveWithSizeDelta(1));
       title()->SetEnabledColor(kGridTitleColorFullscreen);

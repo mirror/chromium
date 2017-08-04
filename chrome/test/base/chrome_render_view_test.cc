@@ -62,12 +62,10 @@ class MockAutofillAgent : public AutofillAgent {
  public:
   MockAutofillAgent(RenderFrame* render_frame,
                     PasswordAutofillAgent* password_autofill_agent,
-                    PasswordGenerationAgent* password_generation_agent,
-                    service_manager::BinderRegistry* registry)
+                    PasswordGenerationAgent* password_generation_agent)
       : AutofillAgent(render_frame,
                       password_autofill_agent,
-                      password_generation_agent,
-                      registry) {
+                      password_generation_agent) {
     ON_CALL(*this, IsUserGesture()).WillByDefault(Return(true));
   }
 
@@ -113,8 +111,6 @@ void ChromeRenderViewTest::SetUp() {
   chrome_render_thread_ = new ChromeMockRenderThread();
   render_thread_.reset(chrome_render_thread_);
 
-  registry_ = base::MakeUnique<service_manager::BinderRegistry>();
-
   content::RenderViewTest::SetUp();
 
   RegisterMainFrameRemoteInterfaces();
@@ -122,13 +118,14 @@ void ChromeRenderViewTest::SetUp() {
   // RenderFrame doesn't expose its Agent objects, because it has no need to
   // store them directly (they're stored as RenderFrameObserver*).  So just
   // create another set.
-  password_autofill_agent_ = new autofill::TestPasswordAutofillAgent(
-      view_->GetMainRenderFrame(), registry_.get());
-  password_generation_ = new autofill::TestPasswordGenerationAgent(
-      view_->GetMainRenderFrame(), password_autofill_agent_, registry_.get());
-  autofill_agent_ = new NiceMock<MockAutofillAgent>(
-      view_->GetMainRenderFrame(), password_autofill_agent_,
-      password_generation_, registry_.get());
+  password_autofill_agent_ =
+      new autofill::TestPasswordAutofillAgent(view_->GetMainRenderFrame());
+  password_generation_ =
+      new autofill::TestPasswordGenerationAgent(view_->GetMainRenderFrame(),
+                                                password_autofill_agent_);
+  autofill_agent_ = new NiceMock<MockAutofillAgent>(view_->GetMainRenderFrame(),
+                                                    password_autofill_agent_,
+                                                    password_generation_);
 }
 
 void ChromeRenderViewTest::TearDown() {
@@ -145,7 +142,6 @@ void ChromeRenderViewTest::TearDown() {
   __lsan_do_leak_check();
 #endif
   content::RenderViewTest::TearDown();
-  registry_.reset();
 }
 
 content::ContentClient* ChromeRenderViewTest::CreateContentClient() {

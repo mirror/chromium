@@ -8,7 +8,6 @@
 #include <deque>
 
 #include "base/macros.h"
-#include "base/synchronization/lock.h"
 #include "chrome/profiling/memlog_receiver.h"
 #include "chrome/profiling/memlog_stream_receiver.h"
 
@@ -27,8 +26,6 @@ class MemlogStreamParser : public MemlogStreamReceiver {
   // StreamReceiver implementation.
   void OnStreamData(std::unique_ptr<char[]> data, size_t sz) override;
   void OnStreamComplete() override;
-
-  base::Lock* GetLock() { return &lock_; }
 
  private:
   struct Block {
@@ -69,11 +66,6 @@ class MemlogStreamParser : public MemlogStreamReceiver {
 
   // Current offset into blocks_[0] of the next packet to process.
   size_t block_zero_offset_ = 0;
-
-  // This lock must be acquired anytime the stream is being parsed. This
-  // prevents concurrent access to data structures used by both the parser and
-  // the memory dumper.
-  base::Lock lock_;
 
   DISALLOW_COPY_AND_ASSIGN(MemlogStreamParser);
 };

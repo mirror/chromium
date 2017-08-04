@@ -1024,24 +1024,6 @@
             ]
         }
     ],
-    "GuestViewCrossProcessFrames": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "GuestViewCrossProcessFrames"
-                    ]
-                }
-            ]
-        }
-    ],
     "Html5ByDefault": [
         {
             "platforms": [
@@ -1727,31 +1709,6 @@
                     },
                     "enable_features": [
                         "NoStatePrefetch"
-                    ]
-                }
-            ]
-        }
-    ],
-    "OffMainThreadFetch": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "OffMainThreadFetch"
-                    ]
-                },
-                {
-                    "name": "Disabled",
-                    "disable_features": [
-                        "OffMainThreadFetch"
                     ]
                 }
             ]

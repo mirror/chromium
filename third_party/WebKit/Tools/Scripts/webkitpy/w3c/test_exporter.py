@@ -40,7 +40,7 @@ class TestExporter(object):
 
         exportable_commits = self.get_exportable_commits()
         for exportable_commit in exportable_commits:
-            pull_request = self.wpt_github.pr_with_change_id(exportable_commit.change_id())
+            pull_request = self.wpt_github.pr_for_chromium_commit(exportable_commit)
 
             if pull_request:
                 if pull_request.state == 'open':
@@ -118,6 +118,39 @@ class TestExporter(object):
 
         except MergeError:
             _log.info('Could not merge PR.')
+
+    def export_first_exportable_commit(self):
+        """Looks for exportable commits in Chromium, creates PR if found."""
+
+        wpt_commit, chromium_commit = self.local_wpt.most_recent_chromium_commit()
+        assert chromium_commit, 'No Chromium commit found, this is impossible'
+
+        wpt_behind_master = self.local_wpt.commits_behind_master(wpt_commit)
+
+        _log.info('\nLast Chromium export commit in web-platform-tests:')
+        _log.info('web-platform-tests@%s', wpt_commit)
+        _log.info('(%d behind web-platform-tests@origin/master)', wpt_behind_master)
+
+        _log.info('\nThe above WPT commit points to the following Chromium commit:')
+        _log.info('chromium@%s', chromium_commit.sha)
+        _log.info('(%d behind chromium@origin/master)', chromium_commit.num_behind_master())
+
+        exportable_commits = exportable_commits_over_last_n_commits(
+            chromium_commit.sha, self.host, self.local_wpt, self.wpt_github)
+
+        if not exportable_commits:
+            _log.info('No exportable commits found in Chromium, stopping.')
+            return
+
+        _log.info('Found %d exportable commits in Chromium:', len(exportable_commits))
+        for commit in exportable_commits:
+            _log.info('- %s %s', commit, commit.subject())
+
+        outbound_commit = exportable_commits[0]
+        _log.info('Picking the earliest commit and creating a PR')
+        _log.info('- %s %s', outbound_commit.sha, outbound_commit.subject())
+
+        self.create_pull_request(outbound_commit)
 
     def create_pull_request(self, outbound_commit):
         patch = outbound_commit.format_patch()
@@ -201,8 +234,11 @@ class TestExporter(object):
                 'If this CL lands and Travis CI upstream is green, we will auto-merge the PR.\n\n'
                 'Note: Please check the Travis CI status (at the bottom of the PR) '
                 'before landing this CL and only land this CL if the status is green. '
-                'Otherwise a human needs to step in and resolve it manually. '
-                '(This may be automated in the future, see https://crbug.com/711447)\n\n'
+                'Otherwise a human needs to step in and resolve it manually, during which time '
+                'the WPT Importer is blocked from operating.\n\n'
+                '(There is ongoing work to 1. prevent CLs with red upstream PRs from landing '
+                '(https://crbug.com/711447) and 2. prevent the importer from being blocked on '
+                'stuck exportable changes (https://crbug.com/734121))\n\n'
                 'WPT Export docs:\n'
                 'https://chromium.googlesource.com/chromium/src/+/master'
                 '/docs/testing/web_platform_tests.md#Automatic-export-process'

@@ -162,7 +162,6 @@ struct CONTENT_EXPORT ServiceWorkerResponse {
   // ServiceWorkerFetchResponseCallback.
   std::string blob_uuid;
   uint64_t blob_size;
-  // |blob| is only used when features::kMojoBlobs is enabled.
   scoped_refptr<storage::BlobHandle> blob;
   blink::WebServiceWorkerResponseError error;
   base::Time response_time;

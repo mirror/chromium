@@ -97,13 +97,17 @@ input[type="button" i], input[type="submit" i], input[type="reset" i], input[typ
 }
 
 /* Windows selects are not rounded. Custom borders for them shouldn't be either. */
-select {
+select, 
+select[size="0"],
+select[size="1"] {
     border-radius: 0;
     /* Same as native_theme_base. */
     border-color: #a9a9a9;
 }
 
-select:-internal-list-box {
+select[size],
+select[multiple],
+select[size][multiple] {
     /* Same as native_theme_base. */
     border: 1px solid #a9a9a9;
 }

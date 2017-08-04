@@ -22,9 +22,9 @@
 #include "base/time/time.h"
 #include "base/version.h"
 #include "components/update_client/update_query_params.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
-#include "extensions/browser/extension_file_task_runner.h"
 #include "extensions/browser/extensions_browser_client.h"
 #include "extensions/browser/notification_types.h"
 #include "extensions/browser/updater/extension_cache.h"
@@ -46,6 +46,7 @@
 
 using base::Time;
 using base::TimeDelta;
+using content::BrowserThread;
 using update_client::UpdateQueryParams;
 
 namespace extensions {
@@ -501,7 +502,7 @@ void ExtensionDownloader::CreateManifestFetcher() {
           cookies_allowed: NO
           setting:
             "This feature cannot be disabled. It is only enabled when the user "
-            "has installed extensions."
+            "has installed extentions."
           chrome_policy {
             ExtensionInstallBlacklist {
               policy_options {mode: MANDATORY}
@@ -821,7 +822,7 @@ void ExtensionDownloader::CreateExtensionFetcher() {
           trigger:
             "An update check indicates an extension update is available."
           data:
-            "URL and required data to specify the extension to download. "
+            "URL and required data to specify the extention to download. "
             "OAuth2 token is also sent if connection is secure and to Google."
           destination: WEBSITE
         }
@@ -830,7 +831,7 @@ void ExtensionDownloader::CreateExtensionFetcher() {
           cookies_store: "user"
           setting:
             "This feature cannot be disabled. It is only enabled when the user "
-            "has installed extensions and it needs updating."
+            "has installed extentions and it needs updating."
           chrome_policy {
             ExtensionInstallBlacklist {
               policy_options {mode: MANDATORY}
@@ -857,7 +858,7 @@ void ExtensionDownloader::CreateExtensionFetcher() {
   // processed in memory, so it is fetched into a string.
   if (fetch->id != kBlacklistAppID) {
     extension_fetcher_->SaveResponseToTemporaryFile(
-        GetExtensionFileTaskRunner());
+        BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE));
   }
 
   if (fetch->credentials == ExtensionFetch::CREDENTIALS_OAUTH2_TOKEN &&

@@ -24,6 +24,7 @@
 #include "ui/views/widget/widget.h"
 
 namespace base {
+class TaskRunner;
 class TimeDelta;
 }
 
@@ -211,6 +212,9 @@ class VIEWS_EXPORT ViewsDelegate {
   virtual int GetAppbarAutohideEdges(HMONITOR monitor,
                                      const base::Closure& callback);
 #endif
+
+  // Returns a blocking pool task runner given a TaskRunnerType.
+  virtual scoped_refptr<base::TaskRunner> GetBlockingPoolTaskRunner();
 
  protected:
   ViewsDelegate();

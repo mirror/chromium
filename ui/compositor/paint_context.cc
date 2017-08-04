@@ -10,14 +10,10 @@ namespace ui {
 
 PaintContext::PaintContext(cc::DisplayItemList* list,
                            float device_scale_factor,
-                           const gfx::Rect& invalidation,
-                           bool is_pixel_canvas)
+                           const gfx::Rect& invalidation)
     : list_(list),
       device_scale_factor_(device_scale_factor),
-      invalidation_(gfx::ScaleToRoundedRect(
-          invalidation,
-          is_pixel_canvas ? device_scale_factor_ : 1.f)),
-      is_pixel_canvas_(is_pixel_canvas) {
+      invalidation_(invalidation) {
 #if DCHECK_IS_ON()
   root_visited_ = nullptr;
   inside_paint_recorder_ = false;
@@ -29,8 +25,7 @@ PaintContext::PaintContext(const PaintContext& other,
     : list_(other.list_),
       device_scale_factor_(other.device_scale_factor_),
       invalidation_(other.invalidation_),
-      offset_(other.offset_ + offset),
-      is_pixel_canvas_(other.is_pixel_canvas_) {
+      offset_(other.offset_ + offset) {
 #if DCHECK_IS_ON()
   root_visited_ = other.root_visited_;
   inside_paint_recorder_ = other.inside_paint_recorder_;
@@ -42,8 +37,7 @@ PaintContext::PaintContext(const PaintContext& other,
     : list_(other.list_),
       device_scale_factor_(other.device_scale_factor_),
       invalidation_(),
-      offset_(other.offset_),
-      is_pixel_canvas_(other.is_pixel_canvas_) {
+      offset_(other.offset_) {
 #if DCHECK_IS_ON()
   root_visited_ = other.root_visited_;
   inside_paint_recorder_ = other.inside_paint_recorder_;

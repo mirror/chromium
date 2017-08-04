@@ -29,27 +29,20 @@ FakeDeviceCloudPolicyInitializer::FakeDeviceCloudPolicyInitializer()
       enrollment_status_(
           EnrollmentStatus::ForStatus(EnrollmentStatus::SUCCESS)) {}
 
-FakeDeviceCloudPolicyInitializer::~FakeDeviceCloudPolicyInitializer() = default;
-
 void FakeDeviceCloudPolicyInitializer::Init() {
 }
 
 void FakeDeviceCloudPolicyInitializer::Shutdown() {
 }
 
-void FakeDeviceCloudPolicyInitializer::PrepareEnrollment(
+void FakeDeviceCloudPolicyInitializer::StartEnrollment(
     DeviceManagementService* device_management_service,
     chromeos::ActiveDirectoryJoinDelegate* ad_join_delegate,
     const EnrollmentConfig& enrollment_config,
     const std::string& auth_token,
     const EnrollmentCallback& enrollment_callback) {
-  enrollment_callback_ = enrollment_callback;
-}
-
-void FakeDeviceCloudPolicyInitializer::StartEnrollment() {
-  if (enrollment_callback_)
-    enrollment_callback_.Run(enrollment_status_);
   was_start_enrollment_called_ = true;
+  enrollment_callback.Run(enrollment_status_);
 }
 
 }  // namespace policy

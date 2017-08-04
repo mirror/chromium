@@ -6,7 +6,7 @@
   "permissions": ["declarativeContent"],
   "page_action": {},
   "background": {
-    "persistent": false,
+    "peristent": false,
     "scripts": ["background.js"]
   }
 }

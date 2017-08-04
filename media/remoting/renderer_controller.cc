@@ -44,7 +44,7 @@ RendererController::~RendererController() {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (remote_rendering_started_) {
     DCHECK(client_);
-    client_->SwitchToLocalRenderer();
+    client_->SwitchRenderer(false);
   }
   metrics_recorder_.WillStopSession(MEDIA_ELEMENT_DESTROYED);
   session_->RemoveClient(this);
@@ -57,7 +57,7 @@ void RendererController::OnStarted(bool success) {
     if (remote_rendering_started_) {
       metrics_recorder_.DidStartSession();
       DCHECK(client_);
-      client_->SwitchToRemoteRenderer(session_->sink_name());
+      client_->SwitchRenderer(true);
     } else {
       session_->StopRemoting(this);
     }
@@ -398,7 +398,7 @@ void RendererController::UpdateAndMaybeSwitch(StartTrigger start_trigger,
     DCHECK(!is_encrypted_);
     DCHECK_NE(stop_trigger, UNKNOWN_STOP_TRIGGER);
     metrics_recorder_.WillStopSession(stop_trigger);
-    client_->SwitchToLocalRenderer();
+    client_->SwitchRenderer(false);
     VLOG(2) << "Request to stop remoting: stop_trigger=" << stop_trigger;
     session_->StopRemoting(this);
   }
@@ -416,15 +416,10 @@ void RendererController::WaitForStabilityBeforeStart(
           start_trigger,
           client_->AudioDecodedByteCount() + client_->VideoDecodedByteCount(),
           clock_->NowTicks()));
-
-  session_->EstimateTransmissionCapacity(
-      base::BindOnce(&RendererController::OnReceivedTransmissionCapacity,
-                     weak_factory_.GetWeakPtr()));
 }
 
 void RendererController::CancelDelayedStart() {
   delayed_start_stability_timer_.Stop();
-  transmission_capacity_ = 0;
 }
 
 void RendererController::OnDelayedStartTimerFired(
@@ -442,15 +437,16 @@ void RendererController::OnDelayedStartTimerFired(
        decoded_bytes_before_delay) *
       8.0 / elapsed.InSecondsF() / 1000.0;
   DCHECK_GE(kilobits_per_second, 0);
-  const double capacity_kbps = transmission_capacity_ * 8.0 / 1000.0;
+  // TODO(xjz): Gets the estimated transmission capacity (kbps) from Remoter.
+  const double capacity = 10000.0;
   metrics_recorder_.RecordMediaBitrateVersusCapacity(kilobits_per_second,
-                                                     capacity_kbps);
-  if (kilobits_per_second <= kMaxMediaBitrateCapacityFraction * capacity_kbps) {
+                                                     capacity);
+  if (kilobits_per_second <= kMaxMediaBitrateCapacityFraction * capacity) {
     StartRemoting(start_trigger);
   } else {
     VLOG(1) << "Media remoting is not supported: bitrate(kbps)="
             << kilobits_per_second
-            << " transmission_capacity(kbps)=" << capacity_kbps;
+            << " transmission_capacity(kbps)=" << capacity;
     encountered_renderer_fatal_error_ = true;
   }
 }
@@ -459,19 +455,14 @@ void RendererController::StartRemoting(StartTrigger start_trigger) {
   DCHECK(client_);
   remote_rendering_started_ = true;
   if (session_->state() == SharedSession::SESSION_PERMANENTLY_STOPPED) {
-    client_->SwitchToRemoteRenderer(session_->sink_name());
+    client_->SwitchRenderer(true);
     return;
   }
   DCHECK_NE(start_trigger, UNKNOWN_START_TRIGGER);
   metrics_recorder_.WillStartSession(start_trigger);
-  // |MediaObserverClient::SwitchToRemoteRenderer()| will be called after
-  // remoting is started successfully.
+  // |MediaObserverClient::SwitchRenderer()| will be called after remoting is
+  // started successfully.
   session_->StartRemoting(this);
-}
-
-void RendererController::OnReceivedTransmissionCapacity(double rate) {
-  DCHECK_GE(rate, 0);
-  transmission_capacity_ = rate;
 }
 
 void RendererController::OnRendererFatalError(StopTrigger stop_trigger) {

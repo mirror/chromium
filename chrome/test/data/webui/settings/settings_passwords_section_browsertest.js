@@ -135,20 +135,6 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
   }
 
   /**
-   * Helper method used to create a password list item.
-   * @param {!chrome.passwordsPrivate.PasswordUiEntry} passwordItem
-   * @return {!Object}
-   * @private
-   */
-  function createPasswordListItem(passwordItem) {
-    var passwordListItem = document.createElement('password-list-item');
-    passwordListItem.item = passwordItem;
-    document.body.appendChild(passwordListItem);
-    Polymer.dom.flush();
-    return passwordListItem;
-  }
-
-  /**
    * Helper method used to create a password editing dialog.
    * @param {!chrome.passwordsPrivate.PasswordUiEntry} passwordItem
    * @return {!Object}
@@ -475,7 +461,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
       assertTrue(passwordDialog.$.showPasswordButton.hidden);
     });
 
-    test('showSavedPasswordEditDialog', function() {
+    test('showSavedPassword', function() {
       var PASSWORD = 'bAn@n@5';
       var item = FakeDataMaker.passwordEntry('goo.gl', 'bart', PASSWORD.length);
       var passwordDialog = createPasswordDialog(item);
@@ -483,6 +469,8 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
       assertFalse(passwordDialog.$.showPasswordButton.hidden);
 
       passwordDialog.password = PASSWORD;
+      passwordDialog.showPassword = true;
+
       Polymer.dom.flush();
 
       assertEquals(PASSWORD,
@@ -493,56 +481,18 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
       assertFalse(passwordDialog.$.showPasswordButton.hidden);
     });
 
-    test('showSavedPasswordListItem', function() {
-      var PASSWORD = 'bAn@n@5';
-      var item = FakeDataMaker.passwordEntry('goo.gl', 'bart', PASSWORD.length);
-      var passwordListItem = createPasswordListItem(item);
-
-      passwordListItem.password = PASSWORD;
-      Polymer.dom.flush();
-
-      assertEquals(PASSWORD, passwordListItem.$$('#password').value);
-      // Password should be visible.
-      assertEquals('text', passwordListItem.$$('#password').type);
-
-      // Hide Password Button should be shown.
-      assertTrue(passwordListItem.$$('#showPasswordButton')
-                     .classList.contains('icon-visibility-off'));
-    });
-
     // Test will timeout if event is not received.
-    test('onShowSavedPasswordEditDialog', function(done) {
-      var expectedItem = FakeDataMaker.passwordEntry('goo.gl', 'bart', 1);
-      var passwordDialog = createPasswordDialog(expectedItem);
+    test('onShowSavedPassword', function(done) {
+      var item = FakeDataMaker.passwordEntry('goo.gl', 'bart', 1);
+      var passwordDialog = createPasswordDialog(item);
 
       passwordDialog.addEventListener('show-password', function(event) {
-        var actualItem = event.detail.item;
-        assertEquals(
-            expectedItem.loginPair.urls.origin,
-            actualItem.loginPair.urls.origin);
-        assertEquals(
-            expectedItem.loginPair.username, actualItem.loginPair.username);
+        assertEquals(item.loginPair.urls.origin, event.detail.urls.origin);
+        assertEquals(item.loginPair.username, event.detail.username);
         done();
       });
 
       MockInteractions.tap(passwordDialog.$.showPasswordButton);
-    });
-
-    test('onShowSavedPasswordListItem', function(done) {
-      var expectedItem = FakeDataMaker.passwordEntry('goo.gl', 'bart', 1);
-      var passwordListItem = createPasswordListItem(expectedItem);
-
-      passwordListItem.addEventListener('show-password', function(event) {
-        var actualItem = event.detail.item;
-        assertEquals(
-            expectedItem.loginPair.urls.origin,
-            actualItem.loginPair.urls.origin);
-        assertEquals(
-            expectedItem.loginPair.username, actualItem.loginPair.username);
-        done();
-      });
-
-      MockInteractions.tap(passwordListItem.$$('#showPasswordButton'));
     });
   });
 
