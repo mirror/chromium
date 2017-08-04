@@ -16,6 +16,24 @@
       "revId": "651ac81c816861f48eab99f8730862bd027ae790",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392edabd_dd9cf2d6",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-04T20:15:29Z",
+      "side": 0,
+      "message": "It\u0027s related to adding support for grids inside of content editables. With this, we won\u0027t observe active descendant changes for editables.",
+      "parentUuid": "9746ae58_fba77495",
+      "revId": "651ac81c816861f48eab99f8730862bd027ae790",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
