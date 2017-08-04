@@ -52,6 +52,24 @@
       "revId": "2ae3701ed1f5331e0cbc69bb2bd375c4d3375fe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a42d38_156f5600",
+        "filename": "native_client_sdk/src/libraries/error_handling/error_handling.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1182849
+      },
+      "writtenOn": "2017-08-04T16:55:51Z",
+      "side": 0,
+      "message": "Good point. I\u0027ll try to ignore the warning in a new patch set and see what happens",
+      "parentUuid": "c8bea513_0d10bc5c",
+      "revId": "2ae3701ed1f5331e0cbc69bb2bd375c4d3375fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
