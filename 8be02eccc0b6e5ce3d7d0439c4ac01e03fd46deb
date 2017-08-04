@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a1270c6_ea5844f7",
+        "filename": "ios/chrome/browser/ui/authentication/signin_confirmation_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-04T16:51:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6ecd5ea_15d5aae8",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 23
+      },
+      "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59fba670_8ef327de",
         "filename": "ios/chrome/browser/ui/authentication/signin_confirmation_view_controller.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d005772_7c184fbe",
+        "filename": "ios/chrome/browser/ui/authentication/signin_confirmation_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-04T16:51:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59fba670_8ef327de",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 12
+      },
+      "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3dbdb0eb_cd78af29",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-04T16:51:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15af8ac1_62811328",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 18
+      },
+      "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0642711_ffbef514",
         "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f2a116_286c7935",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-04T16:51:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0642711_ffbef514",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e9f13e4e_612dc762",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-04T16:51:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3660c1b_628d6331",
+      "range": {
+        "startLine": 74,
+        "startChar": 15,
+        "endLine": 74,
+        "endChar": 21
+      },
+      "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "882d431a_5c38de6f",
         "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.mm",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "d716b0e9_02bcb289",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-04T16:51:27Z",
+      "side": 1,
+      "message": "Ack, looks like there are many potential merge conflicts in the sign in tests, I\u0027ll talk to Menglu to find out the best way to approach this.",
+      "parentUuid": "882d431a_5c38de6f",
+      "range": {
+        "startLine": 170,
+        "startChar": 28,
+        "endLine": 170,
+        "endChar": 71
+      },
+      "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03c1e032_48fb4927",
         "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.mm",
         "patchSetId": 1
@@ -151,6 +295,30 @@
       "writtenOn": "2017-08-04T09:25:28Z",
       "side": 1,
       "message": "Just a quick question (I\u0027m not an english native speaker), I thought \"dismiss\" was more closing without validating (like clicking cancel). Maybe it would be clearer to rename it to \"confirmSigninConfirmationDialog\".\n\nI let you decide :)",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 39
+      },
+      "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63888f89_7181de58",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-04T16:51:27Z",
+      "side": 1,
+      "message": "haha, me neither, but I think you\u0027re right, \"dismiss\" sounds more like closing. I\u0027ll change the name to \"confirm\".",
+      "parentUuid": "03c1e032_48fb4927",
       "range": {
         "startLine": 183,
         "startChar": 8,

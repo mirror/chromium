@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d4119e0_cfcc8bfe",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-04T16:51:27Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "388c7f20_85fd85c5",
+      "range": {
+        "startLine": 193,
+        "startChar": 40,
+        "endLine": 193,
+        "endChar": 0
+      },
+      "revId": "779fc22e3cc4487b316b4523e6275ecdfbe32764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "069ac73b_725ba098",
         "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "779fc22e3cc4487b316b4523e6275ecdfbe32764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86843f1_9a3491a5",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-04T16:51:27Z",
+      "side": 0,
+      "message": "Done. Nice catch!",
+      "parentUuid": "069ac73b_725ba098",
+      "range": {
+        "startLine": 538,
+        "startChar": 1,
+        "endLine": 540,
+        "endChar": 0
+      },
+      "revId": "779fc22e3cc4487b316b4523e6275ecdfbe32764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
