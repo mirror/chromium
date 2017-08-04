@@ -57,15 +57,6 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
 
   void SetDestructionCallback(base::OnceCallback<void()> callback);
 
-  // SurfaceClient implementation.
-  void OnSurfaceActivated(Surface* surface) override;
-  void RefResources(
-      const std::vector<TransferableResource>& resources) override;
-  void UnrefResources(const std::vector<ReturnedResource>& resources) override;
-  void ReturnResources(const std::vector<ReturnedResource>& resources) override;
-  void ReceiveFromChild(
-      const std::vector<TransferableResource>& resources) override;
-
   // FrameSinkManagerClient implementation.
   void SetBeginFrameSource(BeginFrameSource* begin_frame_source) override;
 
@@ -109,6 +100,15 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
 
   void UpdateNeedsBeginFramesInternal();
   Surface* CreateSurface(const SurfaceInfo& surface_info);
+
+  // SurfaceClient implementation.
+  void OnSurfaceActivated(Surface* surface) override;
+  void RefResources(
+      const std::vector<TransferableResource>& resources) override;
+  void UnrefResources(const std::vector<ReturnedResource>& resources) override;
+  void ReturnResources(const std::vector<ReturnedResource>& resources) override;
+  void ReceiveFromChild(
+      const std::vector<TransferableResource>& resources) override;
 
   CompositorFrameSinkSupportClient* const client_;
 
