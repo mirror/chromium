@@ -845,6 +845,14 @@ public class LocationBarLayout extends FrameLayout
     }
 
     /**
+     * Retrieves the visible drawing bounds of the {@link UrlBar}.
+     * @param outRect The {@link Rect} to fill with the visible drawing bounds.
+     */
+    public void getUrlBarDrawingRect(Rect outRect) {
+        mUrlBar.getDrawingRect(outRect);
+    }
+
+    /**
      * @return The WindowDelegate for the LocationBar. This should be used for all Window related
      * state queries.
      */
