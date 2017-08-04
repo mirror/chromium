@@ -215,7 +215,8 @@ void MemoryInternalsDOMHandler::HandleDumpProcessOnUIThread(int32_t sender_id,
                            mojo::MakeRequest(&memlog));
 
   mojo::ScopedHandle sh = mojo::WrapPlatformFile(file.TakePlatformFile());
-  memlog->DumpProcess(sender_id, std::move(sh));
+  memlog->DumpProcess(mojo::common::mojom::ProcessId::New(sender_id),
+                      std::move(sh));
 }
 
 }  // namespace
