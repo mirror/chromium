@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b958177b_a3dd4606",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T01:18:05Z",
+      "side": 1,
+      "message": "is the unretained ptr safe?",
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673247b9_22e07d0f",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T01:18:05Z",
+      "side": 1,
+      "message": "i think bytes_read in the old code could be a negative error code that\u0027s not io pending, i think it\u0027d be correct to leave bytes_read here but it\u0027s not real obvious, might be worth restructuring a little, maybe put the \u0027we\u0027re done tests up top\n\nif (bytes_read \u003c\u003d 0) {\n  OnResponseCompleted(bytes_read);\n  return;\n}\n\njob made progress\nconsume the data\nif we\u0027ve consumed it all\n  post a task to read some more",
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85ba6d0_5050e376",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T01:18:05Z",
+      "side": 1,
+      "message": "we have callsites like this...\n  result_ \u003d AppCacheUpdateJob::SECURITY_ERROR;\n  OnResponseCompleted(net::ERR_ABORTED);\nwe have to be careful to not overwrite values set like that",
+      "range": {
+        "startLine": 217,
+        "startChar": 26,
+        "endLine": 217,
+        "endChar": 27
+      },
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b1ae2f_8c925b86",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T01:18:05Z",
+      "side": 1,
+      "message": "this line can be deleted now",
+      "range": {
+        "startLine": 19,
+        "startChar": 34,
+        "endLine": 19,
+        "endChar": 45
+      },
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c3c6c3_76cf09da",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T01:18:05Z",
+      "side": 1,
+      "message": "the std::move on the MakeRequest return value isn\u0027t needed here, the compiler can figure this one out",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a89dbd9_4cd42cdf",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T01:18:05Z",
+      "side": 1,
+      "message": "in the OK case, how does it complete?\nnit: {}s not needed",
+      "range": {
+        "startLine": 159,
+        "startChar": 14,
+        "endLine": 159,
+        "endChar": 33
+      },
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "985d2d97_997328ab",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T01:18:05Z",
+      "side": 1,
+      "message": "not needed any more?",
+      "range": {
+        "startLine": 169,
+        "startChar": 23,
+        "endLine": 169,
+        "endChar": 39
+      },
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547dd30e_691bb47a",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T01:18:05Z",
+      "side": 1,
+      "message": "looks like request_ can be inlined instead of heap allocated, is there a reason the new it?",
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5c182a_63bb0b42",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T01:18:05Z",
+      "side": 1,
+      "message": "can this first param be just the URLLoaderFactoryGetter?",
+      "range": {
+        "startLine": 73,
+        "startChar": 25,
+        "endLine": 73,
+        "endChar": 44
+      },
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
