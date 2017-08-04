@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71676bd0_fbabf209",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-04T13:14:08Z",
+      "side": 1,
+      "message": "Add comment saying that you do nothing in this case (that the case is not a typo).\nOr better, do a switch.",
+      "range": {
+        "startLine": 212,
+        "startChar": 26,
+        "endLine": 212,
+        "endChar": 41
+      },
+      "revId": "9d354113727e251362a57abc4bed1f71c3c37654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
