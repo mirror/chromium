@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8793159f_706c0d44",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-04T00:34:53Z",
+      "side": 1,
+      "message": "Should we call this TLSInterceptionEntry or some such? (same nit I picked on the design doc about content filters vs more general TLS interception software)",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "219af117ccaf8ebc8868d916d997f6615a4a0ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c54a782_c5619dae",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-04T00:34:53Z",
+      "side": 1,
+      "message": "nit: sometimes \"we\" can be ambiguous in comments, because it\u0027s not clear whether it refers to people, the code, which part of the code, etc. Suggested rewording: \"Regex that SSL error handling logic will match against to identify...\"",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "219af117ccaf8ebc8868d916d997f6615a4a0ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f283d11_38df6b2c",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-04T00:34:53Z",
+      "side": 1,
+      "message": "nit: same nit about \"we\". suggested rewording: \", so convert the string...\"\n(also suggest replacing \"typecast\" to \"convert\" since we aren\u0027t technically typecasting but instead constructing a std::regex... I\u0027m really nitpicking here though...)",
+      "range": {
+        "startLine": 204,
+        "startChar": 58,
+        "endLine": 204,
+        "endChar": 60
+      },
+      "revId": "219af117ccaf8ebc8868d916d997f6615a4a0ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cdba1e8_f02cd6ea",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-04T00:34:53Z",
+      "side": 1,
+      "message": "A CHECK is a bit aggressive for this situation; usually we use it in cases where a failure would be a security vulnerability because it takes down the whole browser. Maybe use LOG(ERROR) to print an error message and then just return false.",
+      "range": {
+        "startLine": 382,
+        "startChar": 4,
+        "endLine": 382,
+        "endChar": 9
+      },
+      "revId": "219af117ccaf8ebc8868d916d997f6615a4a0ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
