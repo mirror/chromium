@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f05c04f_a1222fb0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-04T07:29:55Z",
+      "side": 1,
+      "message": "nit: Could you remove a trailing whitespace?",
+      "revId": "77c388aaad158be84b1352ae2390400fa0f2e7de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260b840b_cb5a1d7c",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-04T07:29:55Z",
+      "side": 1,
+      "message": "nit: s/LayoutRect/const LayoutRect/",
+      "revId": "77c388aaad158be84b1352ae2390400fa0f2e7de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb1b067_1278cca8",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-04T07:29:55Z",
+      "side": 1,
+      "message": "Could you use early-return style to reduce indentation?",
+      "revId": "77c388aaad158be84b1352ae2390400fa0f2e7de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7632c0be_c4a73038",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-04T07:29:55Z",
+      "side": 1,
+      "message": "Could you use early-return style to reduce indentation?",
+      "revId": "77c388aaad158be84b1352ae2390400fa0f2e7de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc523d96_fb719ab5",
+        "filename": "third_party/WebKit/Source/core/editing/RenderedPosition.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-04T07:29:55Z",
+      "side": 1,
+      "message": "nit: s/II//",
+      "revId": "77c388aaad158be84b1352ae2390400fa0f2e7de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
