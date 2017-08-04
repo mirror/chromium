@@ -14,6 +14,9 @@
 #include "base/memory/ptr_util.h"
 #include "chrome/common/extensions/api/file_system_provider.h"
 #include "chrome/common/extensions/api/file_system_provider_internal.h"
+#include <iostream>
+#include <chrono>
+using namespace std::chrono;
 
 namespace chromeos {
 namespace file_system_provider {
@@ -167,6 +170,10 @@ bool GetMetadata::Execute(int request_id) {
   options.thumbnail =
       fields_ & ProvidedFileSystemInterface::METADATA_FIELD_THUMBNAIL;
 
+  int64_t ms = duration_cast< milliseconds >(
+      system_clock::now().time_since_epoch()
+  ).count();
+  std::cout << "(T5) get_metadata#Execute: " << std::to_string(ms) << std::endl;
   return SendEvent(
       request_id,
       extensions::events::FILE_SYSTEM_PROVIDER_ON_GET_METADATA_REQUESTED,
@@ -183,6 +190,10 @@ void GetMetadata::OnSuccess(int /* request_id */,
       std::move(result), fields_,
       entry_path_.AsUTF8Unsafe() == FILE_PATH_LITERAL("/"), metadata.get());
 
+  int64_t ms = duration_cast< milliseconds >(
+      system_clock::now().time_since_epoch()
+  ).count();
+  std::cout << "(T10) get_metadata#OnSuccess: " << std::to_string(ms) << std::endl;
   if (!convert_result) {
     LOG(ERROR) << "Failed to parse a response for the get metadata operation.";
     callback_.Run(base::WrapUnique<EntryMetadata>(NULL),
