@@ -46,6 +46,30 @@
       "revId": "2bc9e306b0f24bc10eacab9ccb8341c738893063",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec5ffb4a_44a8ec15",
+        "filename": "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-04T18:29:17Z",
+      "side": 1,
+      "message": "Adding a comment here sounds fine. I expect to have the preparations for this set up by next week, FYI.",
+      "parentUuid": "0440a8c5_dfd51149",
+      "range": {
+        "startLine": 38,
+        "startChar": 28,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "2bc9e306b0f24bc10eacab9ccb8341c738893063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
