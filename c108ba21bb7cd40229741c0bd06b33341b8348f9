@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2d71e74_8451fda0",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-04T21:29:15Z",
+      "side": 1,
+      "message": "Oops. wrong order.",
+      "range": {
+        "startLine": 50,
+        "startChar": 18,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "c108ba21bb7cd40229741c0bd06b33341b8348f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
