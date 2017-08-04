@@ -2248,6 +2248,8 @@ void RenderFrameHostImpl::OnDidChangeFrameOwnerProperties(
 void RenderFrameHostImpl::OnUpdateTitle(
     const base::string16& title,
     blink::WebTextDirection title_direction) {
+  GetFrameResourceCoordinator()->SendEvent(
+      resource_coordinator::mojom::Event::kTitleUpdated);
   // This message should only be sent for top-level frames.
   if (frame_tree_node_->parent())
     return;

@@ -109,16 +109,12 @@ bool ResourceCoordinatorWebContentsObserver::IsEnabled() {
 }
 
 void ResourceCoordinatorWebContentsObserver::WasShown() {
-  tab_resource_coordinator_->SendEvent(
-      resource_coordinator::EventType::kOnWebContentsShown);
   tab_resource_coordinator_->SetProperty(
       resource_coordinator::mojom::PropertyType::kVisible,
       base::MakeUnique<base::Value>(true));
 }
 
 void ResourceCoordinatorWebContentsObserver::WasHidden() {
-  tab_resource_coordinator_->SendEvent(
-      resource_coordinator::EventType::kOnWebContentsHidden);
   tab_resource_coordinator_->SetProperty(
       resource_coordinator::mojom::PropertyType::kVisible,
       base::MakeUnique<base::Value>(false));
