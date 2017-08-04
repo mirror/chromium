@@ -46,6 +46,30 @@
       "revId": "2154785dcf4ff275574b5ac27ccf2d0b759846c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0b5e9c_0a114c0d",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-04T21:31:03Z",
+      "side": 1,
+      "message": "I don\u0027t see from this CL that your code actually makes this header mandatory.\n\nTo make it mandatory you need \n\nbool ParseResponseHeaders()\nif no header \n  return false;\n\nand prevent passing not-parsed information to DidFinishNavigation.\nIf you implement this DCHECK is what you need.",
+      "parentUuid": "370df2be_ba166610",
+      "range": {
+        "startLine": 133,
+        "startChar": 52,
+        "endLine": 133,
+        "endChar": 72
+      },
+      "revId": "2154785dcf4ff275574b5ac27ccf2d0b759846c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
