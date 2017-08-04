@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65c473ed_da33804c",
+        "filename": "third_party/WebKit/LayoutTests/editing/spelling/partial_word_with_event_handler.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-04T00:51:41Z",
+      "side": 1,
+      "message": "No specific reason. I\u0027ll change it to one operation.\n\nI\u0027ll also rename the test file.",
+      "parentUuid": "1c0baca8_f7b63cd9",
+      "revId": "c143c4cc2f0b06be3754253dcf49a7903a493abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f121651_bdd3075f",
         "filename": "third_party/WebKit/Source/core/editing/spellcheck/HotModeSpellCheckRequester.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T00:27:08Z",
       "side": 1,
       "message": "Can you add a comment here explaining the case we\u0027re trying to catch?",
+      "revId": "c143c4cc2f0b06be3754253dcf49a7903a493abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6654b989_4475c873",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/HotModeSpellCheckRequester.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-04T00:51:41Z",
+      "side": 1,
+      "message": "Could you be more specific?\n\nThis line catches the case where the last edit command is not a typing command, which, to me, is self-explanatory.\n\nOr does the name |typing_command| make confusion, because it\u0027s not necessarily a TypingCommand? Is it better to rename it |last_command|?",
+      "parentUuid": "4f121651_bdd3075f",
       "revId": "c143c4cc2f0b06be3754253dcf49a7903a493abd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
