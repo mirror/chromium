@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "eb6f6997_501edf8e",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-04T15:10:40Z",
+      "side": 1,
+      "message": "Suggestion: ContentWidgetViewDelegate would be more appropriate.",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e982e6f8_468da4e3",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
         "patchSetId": 2
@@ -165,6 +188,30 @@
     },
     {
       "key": {
+        "uuid": "2b380dcd_e21550cd",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-04T15:10:40Z",
+      "side": 1,
+      "message": "Add a comment, this was also unclear to me.",
+      "parentUuid": "96c0e2b3_46950c49",
+      "range": {
+        "startLine": 156,
+        "startChar": 6,
+        "endLine": 156,
+        "endChar": 14
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cb85dbe_958fa80c",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
         "patchSetId": 2
@@ -199,6 +246,30 @@
       "writtenOn": "2017-08-04T09:33:26Z",
       "side": 1,
       "message": "Question: Why not .hidden\u003dYES?",
+      "range": {
+        "startLine": 193,
+        "startChar": 29,
+        "endLine": 193,
+        "endChar": 34
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d4f16b_bc206d95",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-04T15:10:40Z",
+      "side": 1,
+      "message": "Have you considered hiding the stack for the line instead of the tiles individually?",
+      "parentUuid": "278ef0b6_ab9c7ca7",
       "range": {
         "startLine": 193,
         "startChar": 29,
