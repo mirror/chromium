@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "943156c4_8ad370ed",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-04T00:38:32Z",
+      "side": 1,
+      "message": "Maybe scratch line 49 since it\u0027s also on line 73?",
+      "revId": "adaf8b940a011c332d321f5e482140743ddec463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a681b9f_c8b3207c",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-04T00:38:32Z",
+      "side": 1,
+      "message": "wdyt of:\n\nif (category \u003d\u003d this.category) {\n  this.updateDefaultPermission_(this.site);\n}\n\n(change not required, just wanted to write it out for consideration).",
+      "revId": "adaf8b940a011c332d321f5e482140743ddec463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477c3464_b3c47ec3",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-04T00:38:32Z",
+      "side": 1,
+      "message": "Maybe use \u003d\u003e",
+      "revId": "adaf8b940a011c332d321f5e482140743ddec463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "212fde90_626c96cd",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-04T00:38:32Z",
+      "side": 1,
+      "message": "\"This is a\" --\u003e \"This function is a\"",
+      "revId": "adaf8b940a011c332d321f5e482140743ddec463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
