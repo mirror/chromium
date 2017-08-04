@@ -22,6 +22,29 @@
       "revId": "c55a321c33a862d44d467f3645e58292663215e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64385be6_797ee5a3",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-04T22:17:17Z",
+      "side": 1,
+      "message": "This bucketing is also a little odd.  If you want the buckets to be always width 1, you will need max + 1 (101 here) buckets, and you should probably just use UMA_HISTOGRAM_EXACT_LINEAR(n,s,101).  If you don\u0027t need that, maybe just use UMA_HISTOGRAM_COUNTS_100(n,s) macro which uses 50 buckets.",
+      "range": {
+        "startLine": 286,
+        "startChar": 23,
+        "endLine": 286,
+        "endChar": 34
+      },
+      "revId": "c55a321c33a862d44d467f3645e58292663215e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
