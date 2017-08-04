@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2e8c9e42_822971ba",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T21:11:59Z",
+      "side": 1,
+      "message": "I prefer putting the exit conditions all in one place for ease of verification - i.e. break is a lesser form of goto - not that I see the two as being unrelated; we\u0027re looking for a straddling classification or the end, whichever comes first.\n\nI think the latest version is much better. See if you like it.",
+      "parentUuid": "1dbef7d0_adce02dd",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bbcb74b_ec3bca96",
         "filename": "components/omnibox/browser/autocomplete_match.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aefabd7f_c4b9ccf4",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T21:11:59Z",
+      "side": 1,
+      "message": "It\u0027s the case on line 155, \"// should have only DIM when done\". Since we\u0027re mashing a tail suggestion prefix with a completely different match\u0027s contents, I don\u0027t see that it\u0027s impossible, and it\u0027s trivial insurance.",
+      "parentUuid": "2bbcb74b_ec3bca96",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "545066eb_38b72e76",
+        "filename": "components/omnibox/browser/autocomplete_match.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T21:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30efdf95_6de29f3e",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e59a875_2a2c3c7a",
         "filename": "components/omnibox/browser/autocomplete_match.h",
         "patchSetId": 12
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2e31572a_5d05c3ac",
+        "filename": "components/omnibox/browser/autocomplete_match.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T21:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e59a875_2a2c3c7a",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fecebda_791f1ed8",
         "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
         "patchSetId": 12
@@ -84,6 +156,24 @@
       "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668bf4c9_3eff1cd9",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T21:11:59Z",
+      "side": 1,
+      "message": "Good point; I forgot about it.",
+      "parentUuid": "5fecebda_791f1ed8",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "d148a967_7d466253",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T21:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d7c7b19_8f580a4b",
+      "range": {
+        "startLine": 131,
+        "startChar": 9,
+        "endLine": 131,
+        "endChar": 37
+      },
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4388ee5_bb2f8a93",
         "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
         "patchSetId": 12
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "866b4872_46fad602",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T21:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4388ee5_bb2f8a93",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 13
+      },
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "911efceb_013bc839",
         "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
         "patchSetId": 12
@@ -147,6 +285,24 @@
       "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6731759b_ccacdbaf",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T21:11:59Z",
+      "side": 1,
+      "message": "Done, but it\u0027s really a subset of the first test.",
+      "parentUuid": "911efceb_013bc839",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "536819c7_5cba0e22",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T21:11:59Z",
+      "side": 1,
+      "message": "Ah, I was looking for that, but misspelled it. In any case, range style works here. (There must be a template begin()/end() for arrays in the standard library.)",
+      "parentUuid": "0cbef540_ceb705e9",
+      "range": {
+        "startLine": 171,
+        "startChar": 21,
+        "endLine": 171,
+        "endChar": 65
+      },
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cf893d9_710933f1",
         "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
         "patchSetId": 12
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "8b6209b0_54d86f27",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T21:11:59Z",
+      "side": 1,
+      "message": "I wanted to make adding a test as friction free as possible, and also to hoist the relevant data where it was most visible.",
+      "parentUuid": "4cf893d9_710933f1",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3db1ccf_99a54beb",
         "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
         "patchSetId": 12
@@ -204,6 +402,24 @@
       "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71ae3b7_83585f58",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T21:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3db1ccf_99a54beb",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -230,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "ca772ee9_ef20f1f2",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T21:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17e654db_3772f1da",
+      "range": {
+        "startLine": 679,
+        "startChar": 32,
+        "endLine": 679,
+        "endChar": 66
+      },
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33a8c3af_c46c5cc4",
         "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
         "patchSetId": 12
@@ -250,6 +490,30 @@
       "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a8cf95_bedb614a",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T21:11:59Z",
+      "side": 1,
+      "message": "Range style here, and arraysize below.",
+      "parentUuid": "33a8c3af_c46c5cc4",
+      "range": {
+        "startLine": 723,
+        "startChar": 21,
+        "endLine": 723,
+        "endChar": 65
+      },
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
