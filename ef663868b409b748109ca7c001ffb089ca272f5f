@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e94a354c_f5e0715e",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontCustomPlatformData.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-04T07:51:19Z",
+      "side": 1,
+      "message": "Is this a left over, or intentional?",
+      "revId": "ef663868b409b748109ca7c001ffb089ca272f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
