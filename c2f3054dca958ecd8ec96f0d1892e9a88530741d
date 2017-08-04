@@ -22,6 +22,30 @@
       "revId": "c2f3054dca958ecd8ec96f0d1892e9a88530741d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4311f9e2_ed5eef16",
+        "filename": "net/url_request/url_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-04T21:25:48Z",
+      "side": 1,
+      "message": "Removing it SGTM! I don\u0027t see any evidence in the spec that one is supposed to do this (I guess the idea is that, if the request started as a GET, we wouldn\u0027t have sent the Origin header, but then we\u0027d need to also know the CORS bit in //net which seems undesirable).\n\nI put together a quick test page. Firefox doesn\u0027t seem to send the Origin header on non-CORS POSTs at all, but Safari does and they do not strip this. I got:\n\nGET: no header\nGET -\u003e GET: no header\nPOST: yes header\nPOST -\u003e GET: no header in Chrome, yes header in Safari\nPOST -\u003e POST: yes header",
+      "parentUuid": "cfe8d13b_ef4979d9",
+      "range": {
+        "startLine": 947,
+        "startChar": 20,
+        "endLine": 947,
+        "endChar": 24
+      },
+      "revId": "c2f3054dca958ecd8ec96f0d1892e9a88530741d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
