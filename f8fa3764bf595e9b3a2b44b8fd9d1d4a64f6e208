@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "990e393d_6e27aa5f",
+        "filename": "gpu/command_buffer/client/ring_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-04T22:44:32Z",
+      "side": 1,
+      "message": "Should all these be DCHECKs? Or should we feed the result back to the caller? Otherwise I don\u0027t think it has any way to know whether the block did shrink or not.",
+      "revId": "f8fa3764bf595e9b3a2b44b8fd9d1d4a64f6e208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
