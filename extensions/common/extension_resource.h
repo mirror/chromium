@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/files/file_path.h"
+#include "base/macros.h"
 
 namespace extensions {
 
@@ -29,9 +30,10 @@ class ExtensionResource {
   ExtensionResource(const std::string& extension_id,
                     const base::FilePath& extension_root,
                     const base::FilePath& relative_path);
-
-  ExtensionResource(const ExtensionResource& other);
-
+  ExtensionResource(const ExtensionResource&);
+  ExtensionResource& operator=(const ExtensionResource&);
+  ExtensionResource(ExtensionResource&&);
+  ExtensionResource& operator=(ExtensionResource&&);
   ~ExtensionResource();
 
   // set_follow_symlinks_anywhere allows the resource to be a symlink to

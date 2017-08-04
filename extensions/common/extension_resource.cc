@@ -24,7 +24,13 @@ ExtensionResource::ExtensionResource(const std::string& extension_id,
       follow_symlinks_anywhere_(false) {
 }
 
-ExtensionResource::ExtensionResource(const ExtensionResource& other) = default;
+ExtensionResource::ExtensionResource(const ExtensionResource&) = default;
+ExtensionResource& ExtensionResource::operator=(const ExtensionResource&) =
+    default;
+
+ExtensionResource::ExtensionResource(ExtensionResource&& other) = default;
+ExtensionResource& ExtensionResource::operator=(ExtensionResource&& other) =
+    default;
 
 ExtensionResource::~ExtensionResource() {}
 

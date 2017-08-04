@@ -30,10 +30,10 @@ class FileReaderTest : public testing::Test {
 
 class Receiver {
  public:
-  Receiver(const ExtensionResource& resource)
+  Receiver(ExtensionResource resource)
       : succeeded_(false),
         file_reader_(new FileReader(
-            resource,
+            std::move(resource),
             FileReader::OptionalFileSequenceTask(),
             base::Bind(&Receiver::DidReadFile, base::Unretained(this)))) {}
 
@@ -71,7 +71,7 @@ void RunBasicTest(const char* filename) {
   std::string file_contents;
   ASSERT_TRUE(base::ReadFileToString(path, &file_contents));
 
-  Receiver receiver(resource);
+  Receiver receiver(std::move(resource));
   receiver.Run();
 
   EXPECT_TRUE(receiver.succeeded());
@@ -94,7 +94,7 @@ TEST_F(FileReaderTest, NonExistantFile) {
       FILE_PATH_LITERAL("file_that_does_not_exist")));
   path = path.AppendASCII("file_that_does_not_exist");
 
-  Receiver receiver(resource);
+  Receiver receiver(std::move(resource));
   receiver.Run();
 
   EXPECT_FALSE(receiver.succeeded());
