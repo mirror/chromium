@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e47e2e7_2c1aa227",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-04T21:35:45Z",
+      "side": 1,
+      "message": "This feels like it should be a convenience constructor in AppStartupParameters, not a utility function here.\n\nThat could then include the default behavior in the lines following.",
+      "range": {
+        "startLine": 87,
+        "startChar": 29,
+        "endLine": 87,
+        "endChar": 70
+      },
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9418f5ab_ab5714f5",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-04T21:35:45Z",
+      "side": 1,
+      "message": "Avoid using \"we\" in comments, since it\u0027s often unclear what exactly is meant. Suggested rewording:\n\n// Don\u0027t call continueUserActivityURL if the launchPaymentRequest flag is set since the \n// startup parameters need to be handled in -handleStartupParametersWithTabOpener:",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 9
+      },
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6137c7_03d30b2a",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-04T21:35:45Z",
+      "side": 1,
+      "message": "Super nit: s/navigate to/open/.  \"navigate\" usually means changing the current URL of a tab, not opening a new one. I\u0027m emphasizing this because the distinction is especially important here.",
+      "range": {
+        "startLine": 247,
+        "startChar": 31,
+        "endLine": 247,
+        "endChar": 39
+      },
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f0c22f_1a81a4e8",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 2373,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-04T21:35:45Z",
+      "side": 1,
+      "message": "Instead of nesting all of the important code inside a block, instead just start the method with:\n\nif (!startupInformation.startupParameters.launchPaymentRequest)\n  return NO;\n\n(and note the use of dot syntax for property access, which you should do throughout.)",
+      "range": {
+        "startLine": 2373,
+        "startChar": 2,
+        "endLine": 2373,
+        "endChar": 4
+      },
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac7ef0a_4b3238a2",
+        "filename": "ios/chrome/browser/app_startup_parameters.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-04T21:35:45Z",
+      "side": 1,
+      "message": "completePaymentRequest seems more accurate.",
+      "range": {
+        "startLine": 47,
+        "startChar": 45,
+        "endLine": 47,
+        "endChar": 65
+      },
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
