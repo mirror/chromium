@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "0f784189_0ba42a9d",
+        "filename": "chromecast/media/cma/backend/android/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-08-04T20:33:09Z",
+      "side": 1,
+      "message": "This is a bad dependency.  We don\u0027t depend on internal code in general.  We only added the support lib on the understanding that it was temporary and would be upstreamed soon; there is no such equivalent reasoning for internal/base.  Just move the switch upstream.",
+      "range": {
+        "startLine": 43,
+        "startChar": 35,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "4afaf1a5e52d7d993bcb043346ac43bfa598d612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dde9556_3a86dc16",
+        "filename": "chromecast/media/cma/backend/android/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-08-04T20:33:09Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "4afaf1a5e52d7d993bcb043346ac43bfa598d612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a693d57_3d3ebf87",
         "filename": "chromecast/media/cma/backend/android/loopback_audio_manager.cc",
         "patchSetId": 1
