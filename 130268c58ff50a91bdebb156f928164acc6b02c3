@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d680c0d4_5b82fec4",
+        "filename": "chromeos/components/tether/message_transfer_operation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-04T18:21:03Z",
+      "side": 1,
+      "message": "Should this still be named Start*Response*TimerForDevice?",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "130268c58ff50a91bdebb156f928164acc6b02c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ae2c44_8a55158e",
+        "filename": "chromeos/components/tether/message_transfer_operation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-04T18:21:03Z",
+      "side": 1,
+      "message": "Only DisconnectTetheringOperation overrode this method, which means that now every subclass uses a timeout. It looks like we can remove this method.",
+      "range": {
+        "startLine": 81,
+        "startChar": 15,
+        "endLine": 81,
+        "endChar": 40
+      },
+      "revId": "130268c58ff50a91bdebb156f928164acc6b02c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4f1024_3008c165",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-04T18:21:03Z",
+      "side": 1,
+      "message": "Yikes, can we do something else besides this? We should be able to reasonably expect that our object is alive while we\u0027re in it. Which Observer is destroying this Connection? Can we alter the behavior of Observer to not immediately destroy this connection?",
+      "range": {
+        "startLine": 533,
+        "startChar": 20,
+        "endLine": 533,
+        "endChar": 59
+      },
+      "revId": "130268c58ff50a91bdebb156f928164acc6b02c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
