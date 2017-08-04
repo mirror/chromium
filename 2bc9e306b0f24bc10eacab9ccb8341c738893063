@@ -70,6 +70,30 @@
       "revId": "2bc9e306b0f24bc10eacab9ccb8341c738893063",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d062968e_e4d67c67",
+        "filename": "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-04T19:34:02Z",
+      "side": 1,
+      "message": "Don\u0027t we have the ability to generate different types for blink vs chrome? Could that be used to end up with a uin64 on the blink side but timeticks on the chrome side?",
+      "parentUuid": "ec5ffb4a_44a8ec15",
+      "range": {
+        "startLine": 38,
+        "startChar": 28,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "2bc9e306b0f24bc10eacab9ccb8341c738893063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
