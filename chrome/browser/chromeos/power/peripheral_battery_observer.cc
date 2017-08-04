@@ -8,6 +8,7 @@
 
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
+#include "ash/system/system_notifier.h"
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
@@ -26,7 +27,11 @@
 #include "device/bluetooth/bluetooth_device.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/events/devices/input_device_manager.h"
+#include "ui/events/devices/touchscreen_device.h"
 #include "ui/gfx/image/image.h"
+#include "ui/message_center/message_center.h"
+#include "ui/message_center/notification.h"
 
 namespace chromeos {
 
@@ -40,8 +45,12 @@ const int kLowBatteryLevel = 15;
 // seconds.
 const int kNotificationIntervalSec = 60;
 
+// TODO(sammiequon): Add a notification url to chrome:md-settings/stylus once we
+// show battery related information there.
 const char kNotificationOriginUrl[] = "chrome://peripheral-battery";
 const char kNotifierId[] = "power.peripheral-battery";
+
+constexpr char kStylusNotificationId[] = "stylus-battery";
 
 // HID Bluetooth device's battery sysfs entry path looks like
 // "/sys/class/power_supply/hid-AA:BB:CC:DD:EE:FF-battery".
@@ -70,6 +79,21 @@ std::string ExtractBluetoothAddress(const std::string& path) {
   std::reverse(result.begin(), result.end());
   std::string address = base::JoinString(result, ":");
   return address;
+}
+
+// Checks if the device is an external stylus.
+bool IsStylusDevice(const std::string& address, const std::string& model_name) {
+  for (const ui::TouchscreenDevice& device :
+       ui::InputDeviceManager::GetInstance()->GetTouchscreenDevices()) {
+    const std::string device_address =
+        ExtractBluetoothAddress(device.sys_path.value());
+    if (device.name == model_name && device_address == address &&
+        device.is_stylus) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 class PeripheralBatteryNotificationDelegate : public NotificationDelegate {
@@ -203,6 +227,27 @@ bool PeripheralBatteryObserver::PostNotification(const std::string& address,
       base::TimeDelta::FromSeconds(kNotificationIntervalSec))
     return false;
 
+  // Stylus battery notifications are slightly different.
+  if (IsStylusDevice(address, battery.name)) {
+    auto notification = base::MakeUnique<message_center::Notification>(
+        message_center::NOTIFICATION_TYPE_SIMPLE, kStylusNotificationId,
+        l10n_util::GetStringUTF16(
+            IDS_ASH_LOW_STYLUS_BATTERY_NOTIFICATION_TITLE),
+        l10n_util::GetStringUTF16(
+            IDS_ASH_LOW_STYLUS_BATTERY_NOTIFICATION_MESSAGE),
+        ui::ResourceBundle::GetSharedInstance().GetImageNamed(
+            IDR_NOTIFICATION_STYLUS_BATTERY_LOW),
+        base::string16(), GURL(),
+        message_center::NotifierId(
+            message_center::NotifierId::SYSTEM_COMPONENT,
+            ash::system_notifier::kNotifierStylusBattery),
+        message_center::RichNotificationData(), nullptr);
+
+    message_center::MessageCenter::Get()->AddNotification(
+        std::move(notification));
+    return true;
+  }
+
   NotificationUIManager* notification_manager =
       g_browser_process->notification_ui_manager();
 
@@ -229,6 +274,14 @@ bool PeripheralBatteryObserver::PostNotification(const std::string& address,
 }
 
 void PeripheralBatteryObserver::CancelNotification(const std::string& address) {
+  if (IsStylusDevice(address, batteries_.find(address) == batteries_.end()
+                                  ? ""
+                                  : batteries_[address].name)) {
+    message_center::MessageCenter::Get()->RemoveNotification(
+        kStylusNotificationId, false);
+    return;
+  }
+
   // If last_used_profile_ is NULL then no notification has been posted yet.
   if (notification_profile_) {
     g_browser_process->notification_ui_manager()->CancelById(

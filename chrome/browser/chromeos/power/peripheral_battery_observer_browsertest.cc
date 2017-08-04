@@ -16,6 +16,10 @@
 #include "content/public/test/test_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/events/devices/touchscreen_device.h"
+#include "ui/events/test/device_data_manager_test_api.h"
+#include "ui/message_center/message_center.h"
+#include "ui/message_center/notification.h"
 
 using ::testing::_;
 using ::testing::InSequence;
@@ -166,6 +170,64 @@ IN_PROC_BROWSER_TEST_F(PeripheralBatteryObserverTest, DeviceRemove) {
                    kTestBatteryAddress,
                    NotificationUIManager::GetProfileID(
                        ProfileManager::GetPrimaryUserProfile())) != NULL);
+}
+
+IN_PROC_BROWSER_TEST_F(PeripheralBatteryObserverTest, StylusNotification) {
+  const std::string kTestStylusName = "test_stylus";
+  // The notification ID of stylus battery notifications.
+  const std::string kStylusNotificationId = "stylus-battery";
+
+  // Add an external stylus to our test device manager.
+  ui::TouchscreenDevice stylus(0, ui::INPUT_DEVICE_EXTERNAL, kTestStylusName,
+                               gfx::Size(), 1);
+  stylus.sys_path = base::FilePath(kTestBatteryPath);
+  stylus.is_stylus = true;
+
+  ui::test::DeviceDataManagerTestAPI test_api;
+  test_api.SetTouchscreenDevices({stylus});
+
+  base::SimpleTestTickClock clock;
+  observer_->set_testing_clock(&clock);
+
+  message_center::MessageCenter* message_center =
+      message_center::MessageCenter::Get();
+
+  // Verify that when the battery level is 50, no stylus low battery
+  // notification is shown.
+  clock.Advance(base::TimeDelta::FromSeconds(100));
+  observer_->PeripheralBatteryStatusReceived(kTestBatteryPath, kTestStylusName,
+                                             50);
+  EXPECT_EQ(observer_->batteries_.count(kTestBatteryAddress), 1u);
+
+  const PeripheralBatteryObserver::BatteryInfo& info =
+      observer_->batteries_[kTestBatteryAddress];
+
+  EXPECT_EQ(info.name, kTestStylusName);
+  EXPECT_EQ(info.level, 50);
+  EXPECT_EQ(info.last_notification_timestamp, base::TimeTicks());
+  EXPECT_TRUE(
+      !message_center->FindVisibleNotificationById(kStylusNotificationId));
+
+  // Verify that when the battery level is 5, a stylus low battery notification
+  // is shown.
+  clock.Advance(base::TimeDelta::FromSeconds(10));
+  observer_->PeripheralBatteryStatusReceived(kTestBatteryPath, kTestStylusName,
+                                             5);
+  EXPECT_EQ(info.level, 5);
+  EXPECT_EQ(info.last_notification_timestamp, clock.NowTicks());
+  EXPECT_TRUE(
+      !!message_center->FindVisibleNotificationById(kStylusNotificationId));
+
+  // Verify that when the battery level is -1, the previous stylus low battery
+  // notification is cancelled.
+  clock.Advance(base::TimeDelta::FromSeconds(5));
+  observer_->PeripheralBatteryStatusReceived(kTestBatteryPath, kTestStylusName,
+                                             -1);
+  EXPECT_EQ(info.level, 5);
+  EXPECT_EQ(info.last_notification_timestamp,
+            clock.NowTicks() - base::TimeDelta::FromSeconds(5));
+  EXPECT_TRUE(
+      !message_center->FindVisibleNotificationById(kStylusNotificationId));
 }
 
 }  // namespace chromeos
