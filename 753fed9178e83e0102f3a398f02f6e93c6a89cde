@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ddf9c71_bb28b386",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-04T19:22:32Z",
+      "side": 1,
+      "message": "FYI: This is now needed because we have in-place constructions and don\u0027t go through an additional instance anymore.\n\nPreviously we would have\n  vector.push_back(TraceWrapperMember\u003cT\u003e(this, value));\nwhich would construct a temporary and only emit the barrier on operator\u003d. \n\nNow we actually have\n  vector.push_back(value)\nwhich constructs the TraceWrapperMember in place so we require the barrier.\n\nThis is tested by a unit test: \n  ScriptWrappableVisitorTest.MarkedObjectMarksDependencyOnWriteBarrierHitWhenNotMarked",
+      "range": {
+        "startLine": 30,
+        "startChar": 28,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "753fed9178e83e0102f3a398f02f6e93c6a89cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
