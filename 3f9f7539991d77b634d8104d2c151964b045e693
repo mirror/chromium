@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0227920_845de8ef",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-04T20:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b940de8b_594ffde9",
+      "range": {
+        "startLine": 105,
+        "startChar": 52,
+        "endLine": 105,
+        "endChar": 60
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "379f347b_9099d897",
         "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e41a05f_9ac06d98",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-04T20:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "379f347b_9099d897",
+      "range": {
+        "startLine": 172,
+        "startChar": 6,
+        "endLine": 172,
+        "endChar": 19
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3b584dc3_cfe03b65",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-04T20:25:19Z",
+      "side": 1,
+      "message": "Good thought, I modified it to test with 2 blocks and 2 headers.",
+      "parentUuid": "4165bbc9_1c50587b",
+      "range": {
+        "startLine": 217,
+        "startChar": 55,
+        "endLine": 217,
+        "endChar": 78
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2d6f44d_ed8ab514",
         "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a8311a_845f80ed",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-04T20:25:19Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "d2d6f44d_ed8ab514",
+      "range": {
+        "startLine": 228,
+        "startChar": 22,
+        "endLine": 228,
+        "endChar": 61
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "14731e1e_b3f223d2",
+        "filename": "components/offline_pages/core/renovations/page_renovation_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-04T20:25:19Z",
+      "side": 1,
+      "message": "Done. I created a utility function to check if a string ends with another, and I use it here.",
+      "parentUuid": "284d0676_6999bbef",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 26
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7873be0a_d97194ad",
         "filename": "components/offline_pages/core/renovations/page_renovation_loader.cc",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-04T19:36:24Z",
       "side": 1,
       "message": "nit: based on recent discussion of not polluting the offline_pages namespace, this could be a static method on PageRenovationLoader I think. But you don\u0027t need to change it now necessarily. That would be nice thou.",
+      "range": {
+        "startLine": 29,
+        "startChar": 45,
+        "endLine": 29,
+        "endChar": 63
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4275859e_31a5bd2b",
+        "filename": "components/offline_pages/core/renovations/page_renovation_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-04T20:25:19Z",
+      "side": 1,
+      "message": "It\u0027s in an anonymous namespace so it won\u0027t be visible except in this file.",
+      "parentUuid": "7873be0a_d97194ad",
       "range": {
         "startLine": 29,
         "startChar": 45,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e951b4a6_d25b6343",
+        "filename": "components/offline_pages/resources/renovations.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-04T20:25:19Z",
+      "side": 1,
+      "message": "I added some better documentation. Let me know if there\u0027s anything left to clarify.",
+      "parentUuid": "c5194a93_91de53d0",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9aea0661_254a08f5",
         "filename": "components/offline_pages/resources/renovations.js",
         "patchSetId": 8
@@ -183,6 +351,30 @@
       "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590929c9_76681089",
+        "filename": "components/offline_pages/resources/renovations.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-04T20:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9aea0661_254a08f5",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 8
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
