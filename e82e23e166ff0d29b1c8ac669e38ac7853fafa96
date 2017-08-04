@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fd3e1fb_0b3bd2ef",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T18:58:48Z",
+      "side": 1,
+      "message": "did you consider moving page_renovation_loader_ creation to the if inside LoadAndSave?\n\nIs there any reason not to move it there?\n\nI\u0027d prefer we minimize the testing of a flag. You can get away with a single test for that value in this file. It helps scope the experimentation better and makes the code less scattered.",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 38
+      },
+      "revId": "e82e23e166ff0d29b1c8ac669e38ac7853fafa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f9b359_cb0df4cd",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T18:58:48Z",
+      "side": 1,
+      "message": "Some ideas of how to limit flag testing.\npage_renovator_\nor\npage_renovator_.get() !\u003d nullptr ?",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 38
+      },
+      "revId": "e82e23e166ff0d29b1c8ac669e38ac7853fafa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "505fe892_dcb21916",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T18:58:48Z",
+      "side": 1,
+      "message": "I like that you are specifically not testing the flag here, and instead look at the state of the object.",
+      "range": {
+        "startLine": 492,
+        "startChar": 6,
+        "endLine": 492,
+        "endChar": 21
+      },
+      "revId": "e82e23e166ff0d29b1c8ac669e38ac7853fafa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96caab7c_168dce3d",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T18:58:48Z",
+      "side": 1,
+      "message": "I think these two can be forward declared. Can you check that and move headers to the .cc file?\\\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Forward-declarations-vs_includes",
+      "range": {
+        "startLine": 17,
+        "startChar": 52,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "e82e23e166ff0d29b1c8ac669e38ac7853fafa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
