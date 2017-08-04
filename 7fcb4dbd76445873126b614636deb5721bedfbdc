@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7203a7b_c42d94cb",
+        "filename": "components/multidevice/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-08-04T13:34:11Z",
+      "side": 1,
+      "message": "nit: built.",
+      "range": {
+        "startLine": 3,
+        "startChar": 48,
+        "endLine": 3,
+        "endChar": 53
+      },
+      "revId": "7fcb4dbd76445873126b614636deb5721bedfbdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd54aed_0d6fbddd",
+        "filename": "components/multidevice/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-08-04T13:34:11Z",
+      "side": 1,
+      "message": "nit: can you add this sentence to the CL description as well?",
+      "range": {
+        "startLine": 3,
+        "startChar": 63,
+        "endLine": 3,
+        "endChar": 73
+      },
+      "revId": "7fcb4dbd76445873126b614636deb5721bedfbdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
