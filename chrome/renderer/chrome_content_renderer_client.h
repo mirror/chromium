@@ -208,6 +208,10 @@ class ChromeContentRendererClient : public content::ContentRendererClient {
       const GURL& script_url) override;
   bool ShouldEnforceWebRTCRoutingPreferences() override;
   GURL OverrideFlashEmbedWithHTML(const GURL& url) override;
+  GURL GetHandlerURLForPdfResource(const GURL& url) override;
+  v8::Local<v8::Object> GetV8ScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      blink::WebFrame* frame) override;
   std::unique_ptr<base::TaskScheduler::InitParams> GetTaskSchedulerInitParams()
       override;
 
