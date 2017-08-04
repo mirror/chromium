@@ -97,6 +97,7 @@ static const struct wl_message zcr_remote_surface_v1_requests[] = {
 	{ "set_systemui_visibility", "3u", types + 0 },
 	{ "set_always_on_top", "4", types + 0 },
 	{ "unset_always_on_top", "4", types + 0 },
+	{ "set_window_flags", "4u", types + 0 },
 	{ "ack_configure", "5u", types + 0 },
 	{ "move", "5", types + 0 },
 	{ "set_orientation", "6i", types + 0 },
@@ -110,7 +111,7 @@ static const struct wl_message zcr_remote_surface_v1_events[] = {
 
 WL_EXPORT const struct wl_interface zcr_remote_surface_v1_interface = {
 	"zcr_remote_surface_v1", 6,
-	25, zcr_remote_surface_v1_requests,
+	26, zcr_remote_surface_v1_requests,
 	3, zcr_remote_surface_v1_events,
 };
 

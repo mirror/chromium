@@ -684,7 +684,19 @@ struct zcr_remote_surface_v1_interface {
 	 */
 	void (*unset_always_on_top)(struct wl_client *client,
 				    struct wl_resource *resource);
-	/**
+        /**
+         * send window flags to server
+         *
+         * Request that send flags as hint to the compositor.
+         *
+         * Each field of the flags is just a hint and the compositor is
+         * free to ignore it.
+         * @since 4
+         */
+        void (*set_window_flags)(struct wl_client* client,
+                                 struct wl_resource* resource,
+                                 uint32_t flags);
+        /**
 	 * ack a configure event
 	 *
 	 * When a configure event is received, if a client commits the
@@ -848,6 +860,10 @@ struct zcr_remote_surface_v1_interface {
  * @ingroup iface_zcr_remote_surface_v1
  */
 #define ZCR_REMOTE_SURFACE_V1_UNSET_ALWAYS_ON_TOP_SINCE_VERSION 4
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ */
+#define ZCR_REMOTE_SURFACE_V1_SET_WINDOW_FLAGS_SINCE_VERSION 4
 /**
  * @ingroup iface_zcr_remote_surface_v1
  */

@@ -126,6 +126,10 @@ AURA_EXPORT extern const WindowProperty<gfx::Rect*>* const kRestoreBoundsKey;
 AURA_EXPORT extern const WindowProperty<ui::WindowShowState>* const
     kShowStateKey;
 
+// A property key to indicate that the window should not appear in window
+// selector.
+AURA_EXPORT extern const WindowProperty<bool>* const kSkipWindowSelectorKey;
+
 // A property key to store the title of the window; sometimes shown to users.
 AURA_EXPORT extern const WindowProperty<base::string16*>* const kTitleKey;
 
