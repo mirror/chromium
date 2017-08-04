@@ -104,6 +104,24 @@
       "revId": "052e05e6a03b09c1b58492149ce0ac134171a82e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca4855c_b58e791a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-04T18:46:58Z",
+      "side": 1,
+      "message": "Ah ok fair enough, I guess CanCleanup() is technically tri-state (i.e. CAN, CANT, and WONT) where WONT is that it *could* but *wont* because it\u0027s first on stack/etc. But it\u0027s easier to keep it as a bool and do this extra check here so LGTM (and new comment is great :)!)",
+      "parentUuid": "499da69c_805aad0f",
+      "revId": "052e05e6a03b09c1b58492149ce0ac134171a82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
