@@ -394,6 +394,8 @@ class MEDIA_GPU_EXPORT AndroidVideoDecodeAccelerator
 
   AndroidVideoSurfaceChooser::State surface_chooser_state_;
 
+  int hints_until_clear_relayout_flag_ = 0;
+
   // Optional factory to produce mojo AndroidOverlay instances.
   AndroidOverlayMojoFactoryCB overlay_factory_cb_;
 
