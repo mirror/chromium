@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "6869ffdd_23e8273a",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-04T22:32:23Z",
+      "side": 1,
+      "message": "Just to clarify, this is not a busy loop. Since we are using blocking AudioTrack.write(), normally, the thread is blocked in AudioTrack.write() and wait for data to be consumed.\nNormally, the 10ms spin loop is executed only when data is not available yet, i.e. the beginning of a playback.",
+      "parentUuid": "ce431920_3258282a",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6918eddc_3c0515f7",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 2
