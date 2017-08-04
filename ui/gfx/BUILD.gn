@@ -124,6 +124,8 @@ component("gfx") {
     "mac/scoped_cocoa_disable_screen_updates.h",
     "nine_image_painter.cc",
     "nine_image_painter.h",
+    "paint_vector_icon.cc",
+    "paint_vector_icon.h",
     "path.cc",
     "path.h",
     "path_mac.h",
@@ -169,6 +171,7 @@ component("gfx") {
     "ui_gfx_exports.cc",
     "utf16_indexing.cc",
     "utf16_indexing.h",
+    "vector_icon_types.h",
     "vsync_provider.cc",
     "vsync_provider.h",
     "win/direct_manipulation.cc",
@@ -328,15 +331,6 @@ component("gfx") {
     ]
   } else if (!is_ios) {
     sources -= [ "canvas_notimplemented.cc" ]
-  }
-
-  # Desktop and Android+VR only.
-  if (use_aura || (!is_ios && !is_android) || (is_android && enable_vr)) {
-    sources += [
-      "paint_vector_icon.cc",
-      "paint_vector_icon.h",
-      "vector_icon_types.h",
-    ]
   }
 
   # Windows.
