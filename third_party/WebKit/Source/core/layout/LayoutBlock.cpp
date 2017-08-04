@@ -698,7 +698,7 @@ void LayoutBlock::MarkFixedPositionObjectForLayoutIfNeeded(
          o->Style()->GetPosition() != EPosition::kAbsolute)
     o = o->Parent();
   // The LayoutView is absolute-positioned, but does not move.
-  if (o->IsLayoutView())
+  if (o && o->IsLayoutView())
     return;
 
   // We must compute child's width and height, but not update them now.
