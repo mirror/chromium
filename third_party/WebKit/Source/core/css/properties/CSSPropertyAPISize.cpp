@@ -8,8 +8,9 @@
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
-class CSSParserLocalContext;
 namespace blink {
+
+class CSSParserLocalContext;
 
 static CSSValue* ConsumePageSize(CSSParserTokenRange& range) {
   return CSSPropertyParserHelpers::ConsumeIdent<

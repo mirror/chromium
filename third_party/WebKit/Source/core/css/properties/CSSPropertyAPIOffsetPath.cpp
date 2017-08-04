@@ -6,8 +6,9 @@
 
 #include "core/css/properties/CSSPropertyOffsetPathUtils.h"
 
-class CSSParserLocalContext;
 namespace blink {
+
+class CSSParserLocalContext;
 
 const CSSValue* CSSPropertyAPIOffsetPath::parseSingleValue(
     CSSParserTokenRange& range,

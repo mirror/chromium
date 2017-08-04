@@ -9,8 +9,9 @@
 #include "core/css/properties/CSSPropertyAlignmentUtils.h"
 #include "platform/RuntimeEnabledFeatures.h"
 
-class CSSParserLocalContext;
 namespace blink {
+
+class CSSParserLocalContext;
 
 const CSSValue* CSSPropertyAPIJustifyItems::parseSingleValue(
     CSSParserTokenRange& range,

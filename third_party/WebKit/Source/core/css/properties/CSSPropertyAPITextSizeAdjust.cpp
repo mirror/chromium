@@ -7,8 +7,9 @@
 #include "core/CSSValueKeywords.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
-class CSSParserLocalContext;
 namespace blink {
+
+class CSSParserLocalContext;
 
 const CSSValue* CSSPropertyAPITextSizeAdjust::parseSingleValue(
     CSSParserTokenRange& range,
