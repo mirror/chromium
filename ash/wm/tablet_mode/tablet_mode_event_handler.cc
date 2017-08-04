@@ -6,6 +6,7 @@
 
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
@@ -27,6 +28,11 @@ TabletModeEventHandler::TabletModeEventHandler() {}
 TabletModeEventHandler::~TabletModeEventHandler() {}
 
 bool TabletModeEventHandler::ToggleFullscreen(const ui::TouchEvent& event) {
+  // Do not allow toggling full screen mode if we are hiding title bars in
+  // tablet mode.
+  if (Shell::Get()->tablet_mode_controller()->ShouldHideTitlebars())
+    return false;
+
   if (event.type() != ui::ET_TOUCH_PRESSED)
     return false;
 
