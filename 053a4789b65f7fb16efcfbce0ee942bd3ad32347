@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b398c83f_d41d98a6",
+        "filename": "components/cronet/android/java/src/org/chromium/net/urlconnection/CronetHttpURLConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-04T14:16:25Z",
+      "side": 1,
+      "message": "Constructing an exception is quite expensive.  How about we avoid constructing a new exception and also simplify the setting of mException like this: https://chromium-review.googlesource.com/c/602250",
+      "revId": "053a4789b65f7fb16efcfbce0ee942bd3ad32347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06886989_c19e01d4",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/urlconnection/CronetHttpURLConnectionTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-04T14:16:25Z",
+      "side": 1,
+      "message": "Can we verify the message in the IOException here?",
+      "range": {
+        "startLine": 1217,
+        "startChar": 31,
+        "endLine": 1217,
+        "endChar": 0
+      },
+      "revId": "053a4789b65f7fb16efcfbce0ee942bd3ad32347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306b153c_e05bea27",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/urlconnection/CronetHttpURLConnectionTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-04T14:16:25Z",
+      "side": 1,
+      "message": "This disconnect() is racing getResponseCode().  If disconnect() wins the race we might not be testing the broken behavior.  I can\u0027t think of a great way to fix that race, you could add a ConditionVariable that is opened right before getResponseCode() and blocked on right before disconnect() but that still races.  You could add a sleep() after the blocking, but that still races.\n\nCan I suggest another solution that has a few advantages:\n1. Eliminates the race.\n2. Is less code.\n3. Avoids jumping between native and Java which risks running afoul of the base/ and net/ duplication.\n\nfinal ConditionVariable connectionWaiting \u003d new ConditionVariable();\nfinal ConditionVaraible shutdownHangingServer \u003d new ConditionVariable();\nfinal ConditionVariable portSet \u003d new ConditionVariable();\nfinal AtomicInteger port \u003d new AtomicInteger();\nnew Thread(new Runnable() {\n    @Override\n    public void run() {\n        ServerSocket ss \u003d new ServerSocket(0);\n        port.set(ss.getLocalPort());\n        portSet.open();\n        Socket s \u003d ss.accept();\n        connectionWaiting.open(); // Getting here means getResponseCode() is blocked\n        shutdownHangingServer.block();\n        s.close();\n        ss.close();\n    }\n}).start();\nportSet.block();\nURL url \u003d new URL(\"http://localhost:\" + port.get());\nfinal HttpURLConnection connection \u003d (HttpURLConnection) url.openConnection();\nconnection.connect();\nt.start();\nconnectionWaiting.block();\nconnection.disconnect();\nshutdownHangingServer.block(); // To make sure test catches expected IOException\n\n(also add shutdownHangingServer.open() when we catch the expected IOException)",
+      "range": {
+        "startLine": 1222,
+        "startChar": 32,
+        "endLine": 1222,
+        "endChar": 0
+      },
+      "revId": "053a4789b65f7fb16efcfbce0ee942bd3ad32347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
