@@ -104,14 +104,19 @@ void HighlighterController::OnTouchEvent(ui::TouchEvent* event) {
   // Find the root window that the event was captured on. We never need to
   // switch between different root windows because it is not physically possible
   // to seamlessly drag a finger between two displays like it is with a mouse.
-  gfx::Point event_location = event->root_location();
   aura::Window* current_window =
       static_cast<aura::Window*>(event->target())->GetRootWindow();
 
-  // Start a new highlighter session if the stylus is pressed but not
-  // pressed over the palette.
-  if (event->type() == ui::ET_TOUCH_PRESSED &&
-      !palette_utils::PaletteContainsPointInScreen(event_location)) {
+  // Start a new highlighter session in one of two cases:
+  // 1) The stylus is pressed
+  // 2) The stylus is moving, but the highlighter session has not started yet,
+  //    probably because the press event was consumed by another handler
+  //    (see MetalayerMode::OnTouchEvent).
+  if ((event->type() == ui::ET_TOUCH_PRESSED) ||
+      (event->type() == ui::ET_TOUCH_MOVED && !highlighter_view_)) {
+    // Ignore events over the palette.
+    if (palette_utils::PaletteContainsPointInScreen(event->root_location()))
+      return;
     DestroyHighlighterView();
     UpdateHighlighterView(current_window, event->root_location_f(), event);
   }
