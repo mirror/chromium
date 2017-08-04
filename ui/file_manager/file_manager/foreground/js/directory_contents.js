@@ -653,6 +653,7 @@ DirectoryContents.prototype.update = function(updatedEntries, removedUrls) {
     updatedMap[updatedEntries[i].toURL()] = updatedEntries[i];
   }
 
+  console.log("updating list with: " + this.fileList_.length + ", on: " + (new Date).getTime());
   var updatedList = [];
   var updatedIndexes = [];
   for (var i = 0; i < this.fileList_.length; i++) {
@@ -763,6 +764,8 @@ DirectoryContents.prototype.onScanError_ = function() {
  * @private
  */
 DirectoryContents.prototype.onNewEntries_ = function(refresh, entries) {
+  console.log("(T1) " + entries.length + " new entries: " + (new Date).getTime());
+  console.log(this.processNewEntriesQueue_.toString());
   if (this.scanCancelled_)
     return;
 
@@ -781,7 +784,6 @@ DirectoryContents.prototype.onNewEntries_ = function(refresh, entries) {
 
   // Enlarge the cache size into the new filelist size.
   var newListSize = this.fileList_.length + entriesFiltered.length;
-
   this.processNewEntriesQueue_.run(function(callbackOuter) {
     var finish = function() {
       if (!this.scanCancelled_) {
@@ -811,6 +813,7 @@ DirectoryContents.prototype.onNewEntries_ = function(refresh, entries) {
       var chunk = entriesFiltered.slice(i, i + MAX_CHUNK_SIZE);
       prefetchMetadataQueue.run(function(chunk, callbackInner) {
         this.prefetchMetadata(chunk, refresh, function() {
+
           if (!prefetchMetadataQueue.isCancelled()) {
             if (this.scanCancelled_)
               prefetchMetadataQueue.cancel();

@@ -102,6 +102,8 @@ function ScanController(
  * @private
  */
 ScanController.prototype.onScanStarted_ = function() {
+  var ms = (new Date).getTime();
+  console.log("(T0) ***** SCAN STARTED: " + ms);
   if (this.scanInProgress_)
     this.listContainer_.endBatchUpdates();
 
@@ -110,7 +112,6 @@ ScanController.prototype.onScanStarted_ = function() {
 
   this.listContainer_.startBatchUpdates();
   this.scanInProgress_ = true;
-
   if (this.scanUpdatedTimer_) {
     clearTimeout(this.scanUpdatedTimer_);
     this.scanUpdatedTimer_ = 0;
@@ -129,6 +130,7 @@ ScanController.prototype.onScanCompleted_ = function() {
     console.error('Scan-completed event received. But scan is not started.');
     return;
   }
+  console.log("(T5) Scan completed: " + (new Date).getTime());
 
   if (this.commandHandler_)
     this.commandHandler_.updateAvailability();
@@ -156,6 +158,8 @@ ScanController.prototype.onScanUpdated_ = function() {
   if (this.scanUpdatedTimer_)
     return;
 
+  console.log("(T4) scan updated: " + (new Date).getTime());
+
   // Show contents incrementally by finishing batch updated, but only after
   // 200ms elapsed, to avoid flickering when it is not necessary.
   this.scanUpdatedTimer_ = setTimeout(function() {
@@ -178,6 +182,7 @@ ScanController.prototype.onScanCancelled_ = function() {
     console.error('Scan-cancelled event received. But scan is not started.');
     return;
   }
+  console.log("scan cancelled");
 
   if (this.commandHandler_)
     this.commandHandler_.updateAvailability();

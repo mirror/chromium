@@ -50,6 +50,8 @@ bool OpenFile::Execute(int request_id) {
       break;
   }
 
+  LOG(WARNING) << "Opening file";
+  timer.reset();
   return SendEvent(
       request_id,
       extensions::events::FILE_SYSTEM_PROVIDER_ON_OPEN_FILE_REQUESTED,
@@ -62,6 +64,8 @@ void OpenFile::OnSuccess(int request_id,
                          std::unique_ptr<RequestValue> result,
                          bool has_more) {
   // File handle is the same as request id of the OpenFile operation.
+  double t = timer.elapsed();
+  LOG(WARNING) << "Open File: " + std::to_string(t);
   callback_.Run(request_id, base::File::FILE_OK);
 }
 

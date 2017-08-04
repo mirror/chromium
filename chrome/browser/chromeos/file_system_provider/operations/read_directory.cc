@@ -6,12 +6,16 @@
 
 #include <stddef.h>
 
+#include <iostream>
 #include <string>
 #include <utility>
 
 #include "chrome/browser/chromeos/file_system_provider/operations/get_metadata.h"
 #include "chrome/common/extensions/api/file_system_provider.h"
 #include "chrome/common/extensions/api/file_system_provider_internal.h"
+
+#include <chrono>
+using namespace std::chrono;
 
 namespace chromeos {
 namespace file_system_provider {
@@ -74,7 +78,13 @@ bool ReadDirectory::Execute(int request_id) {
   // Request only is_directory and name metadata fields.
   options.is_directory = true;
   options.name = true;
-
+  //
+  //  int64_t ms = duration_cast< milliseconds >(
+  //      system_clock::now().time_since_epoch()
+  //  ).count();
+  //  LOG(WARNING) << "*** Reading directory, resetting timer: " +
+  //  std::to_string(ms);
+  timer.reset();
   return SendEvent(
       request_id,
       extensions::events::FILE_SYSTEM_PROVIDER_ON_READ_DIRECTORY_REQUESTED,
@@ -90,7 +100,15 @@ void ReadDirectory::OnSuccess(int /* request_id */,
   storage::AsyncFileUtil::EntryList entry_list;
   const bool convert_result =
       ConvertRequestValueToEntryList(std::move(result), &entry_list);
-
+  //
+  //  int64_t ms = duration_cast< milliseconds >(
+  //      system_clock::now().time_since_epoch()
+  //  ).count();
+  //  LOG(WARNING) << "*** Successfully read directory on: " +
+  //  std::to_string(ms);
+  //
+  //  double t = timer.elapsed();
+  //  LOG(WARNING) << "Read Directory: " + std::to_string(t);
   if (!convert_result) {
     LOG(ERROR)
         << "Failed to parse a response for the read directory operation.";

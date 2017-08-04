@@ -16,6 +16,8 @@
 #include "storage/browser/fileapi/file_system_operation_context.h"
 #include "storage/browser/fileapi/file_system_url.h"
 
+#include <chrono>
+using namespace std::chrono;
 using content::BrowserThread;
 
 namespace chromeos {
@@ -88,6 +90,10 @@ void ReadDirectoryOnUIThread(
     std::unique_ptr<storage::FileSystemOperationContext> context,
     const storage::FileSystemURL& url,
     const storage::AsyncFileUtil::ReadDirectoryCallback& callback) {
+  int64_t ms =
+      duration_cast<milliseconds>(system_clock::now().time_since_epoch())
+          .count();
+  LOG(WARNING) << "reading dir on ui thread: " + std::to_string(ms);
   util::FileSystemURLParser parser(url);
   if (!parser.Parse()) {
     callback.Run(base::File::FILE_ERROR_INVALID_OPERATION,

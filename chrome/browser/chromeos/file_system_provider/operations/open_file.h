@@ -9,6 +9,7 @@
 
 #include "base/files/file.h"
 #include "base/macros.h"
+#include "chrome/browser/chromeos/file_system_provider/operations/Timer.h"
 #include "chrome/browser/chromeos/file_system_provider/operations/operation.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_interface.h"
@@ -53,6 +54,7 @@ class OpenFile : public Operation {
   const ProvidedFileSystemInterface::OpenFileCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(OpenFile);
+  Timer timer;
 };
 
 }  // namespace operations
