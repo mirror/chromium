@@ -34,6 +34,24 @@
       "revId": "2ae3701ed1f5331e0cbc69bb2bd375c4d3375fe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8bea513_0d10bc5c",
+        "filename": "native_client_sdk/src/libraries/error_handling/error_handling.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002666
+      },
+      "writtenOn": "2017-08-04T16:52:04Z",
+      "side": 0,
+      "message": "In this case it would make the internal formatting of this file inconsistent thought wouldn\u0027t it?  Can you ignore this warning and we can look into a more widespread change to remove this double line spacing in these headers perhaps?",
+      "parentUuid": "f4df1312_8c2beee2",
+      "revId": "2ae3701ed1f5331e0cbc69bb2bd375c4d3375fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
