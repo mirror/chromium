@@ -57,7 +57,7 @@ void AppListPresenterDelegateMus::Init(app_list::AppListView* view,
                                        int64_t display_id,
                                        int current_apps_page) {
   view_ = view;
-  // TODO(newcomer): replace Initialize parameters with proper mus
+  // TODO(crbug.com/752695): replace Initialize parameters with proper mus
   // implementation as per crbug.com/726838
   // Note: This would place the app list into the USER_WINDOWS container, unlike
   // in classic ash, where it has it's own container.
@@ -100,6 +100,15 @@ gfx::Vector2d AppListPresenterDelegateMus::GetVisibilityAnimationOffset(
   // TODO(mfomitchev): Classic ash does different animation here depending on
   // shelf alignment. We should probably do that too.
   return gfx::Vector2d(0, kAnimationOffset);
+}
+
+base::TimeDelta AppListPresenterDelegateMus::GetVisibilityAnimationDuration(
+    aura::Window* root_window,
+    bool is_visible) {
+  // TODO(crbug.com/752695): Classic ash does a different animation here
+  // depending on shelf alignment. We should probably do that too.
+  return is_visible ? base::TimeDelta::FromMilliseconds(0)
+                    : kAnimationDurationMs;
 }
 
 void AppListPresenterDelegateMus::OnPointerEventObserved(
