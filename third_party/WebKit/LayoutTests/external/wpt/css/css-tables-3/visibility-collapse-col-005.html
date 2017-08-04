@@ -1,0 +1,75 @@
+<!doctype html>
+<meta charset="utf-8">
+<script src='/resources/testharness.js'></script>
+<script src='/resources/testharnessreport.js'></script>
+<link rel='stylesheet' href='support/base.css' />
+<link rel="author" title="Joy Yu" href="mailto:joysyu@mit.edu">
+<link rel="help" href="https://drafts.csswg.org/css-tables-3/#computing-the-table-width">
+<main>
+    <h1>Visibility collapse</h1>
+    <a href="https://drafts.csswg.org/css-tables-3/#computing-the-table-width">Spec</a>
+    <p>
+    Setting a spanning column to visibility:collapse changes table width but
+    not height.
+    </p>
+  <table id="one">
+    <colgroup>
+        <col style="background:#00F"; />
+        <col span="2" style="background:#F00;"/>
+    </colgroup>
+    <tbody>
+        <tr>
+            <td id="firstColumn">Row 1, Cell 1</td>
+            <td>Row 1, Cell 2</td>
+            <td>Row 1, Cell 3</td>
+        </tr>
+        <tr>
+            <td>Row 2, Cell 1</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+        </tr>
+    </tbody>
+  </table>
+    Bottom table is identical to top except right two columns have been collapsed.
+  <table id="two">
+    <colgroup>
+        <col style="background:#00F"; />
+        <col span="2" style="background:#F00; visibility: collapse"/>
+    </colgroup>
+    <tbody>
+        <tr>
+            <td>Row 1, Cell 1</td>
+            <td>Row 1, Cell 2</td>
+            <td>Row 1, Cell 3</td>
+        </tr>
+        <tr>
+            <td>Row 2, Cell 1</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+        </tr>
+    </tbody>
+  </table>
+</main>
+
+<script>
+    bordersTotalWidth = 4;
+    tests = [
+        [
+            document.getElementById('two').offsetHeight,
+            document.getElementById('one').offsetHeight,
+            "col visibility:collapse doesn't change table height",
+        ],
+        [
+            document.getElementById('two').offsetWidth,
+            document.getElementById('firstColumn').offsetWidth + bordersTotalWidth,
+            "col visibility:collapse changes table width"
+        ]];
+    for (i = 0; i< tests.length; i++) {
+        test(function()
+            {
+                assert_equals.apply(this, tests[i]);
+            },
+            tests[i][2]);
+    };
+</script>
+</html>

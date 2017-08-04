@@ -45,6 +45,7 @@
 #include "core/paint/PaintLayer.h"
 #include "core/paint/TablePaintInvalidator.h"
 #include "core/paint/TablePainter.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {
@@ -688,6 +689,51 @@ void LayoutTable::UpdateLayout() {
       }
     }
 
+    // Change lay out according to any collapsed columns.
+    bool is_any_col_collapsed = false;
+    Vector<int> col_collapsed_width;
+    if (RuntimeEnabledFeatures::VisibilityCollapseEnabled()) {
+      unsigned n_eff_cols = NumEffectiveColumns();
+
+      for (size_t i = 0; i < n_eff_cols; ++i) {
+        LayoutTableCol* col =
+            ColElementAtAbsoluteColumn(EffectiveColumnToAbsoluteColumn(i))
+                .InnermostColOrColGroup();
+        if (col && col->Style()->Visibility() == EVisibility::kCollapse) {
+          is_any_col_collapsed = true;
+          break;
+        }
+      }
+
+      if (is_any_col_collapsed) {
+        col_collapsed_width.resize(n_eff_cols);
+
+        // Update vector of collapsed widths.
+        for (size_t i = 0; i < n_eff_cols; ++i) {
+          LayoutTableCol* col =
+              ColElementAtAbsoluteColumn(EffectiveColumnToAbsoluteColumn(i))
+                  .InnermostColOrColGroup();
+
+          if (col && col->Style()->Visibility() == EVisibility::kCollapse) {
+            col_collapsed_width[i] = EffectiveColumnPositions()[i + 1] -
+                                     EffectiveColumnPositions()[i];
+          } else {
+            col_collapsed_width[i] = 0;
+          }
+        }
+
+        // Set column positions according to collapsed widths.
+        int total_collapsed_width = 0;
+        for (size_t i = 0; i < n_eff_cols; ++i) {
+          total_collapsed_width += col_collapsed_width[i];
+          SetEffectiveColumnPosition(
+              i + 1, EffectiveColumnPositions()[i + 1] - total_collapsed_width);
+        }
+
+        SetLogicalWidth(LogicalWidth() - total_collapsed_width);
+      }
+    }
+
     // Lay out table footer.
     if (LayoutTableSection* section = Footer()) {
       LayoutSection(*section, layouter, section_logical_left,
@@ -715,6 +761,8 @@ void LayoutTable::UpdateLayout() {
          section = SectionBelow(section)) {
       section->SetLogicalTop(logical_offset);
       section->LayoutRows();
+      if (is_any_col_collapsed)
+        section->UpdateCollapsedColumns(col_collapsed_width);
       logical_offset += section->LogicalHeight();
     }
 
