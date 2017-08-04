@@ -11,6 +11,7 @@
 #include "core/XLinkNames.h"
 #include "core/clipboard/Pasteboard.h"
 #include "core/dom/QualifiedName.h"
+#include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
 #include "core/editing/SelectionType.h"
 #include "core/editing/VisibleSelection.h"
@@ -61,11 +62,9 @@ String ContentAfterPastingHTML(DummyPageHolder* page_holder,
   frame.GetDocument()->UpdateStyleAndLayout();
   frame.Selection().SetSelection(
       SelectionInDOMTree::Builder().SelectAllChildren(*body).Build());
+  EXPECT_TRUE(frame.Selection().ComputeVisibleSelectionInDOMTree().IsCaret());
   EXPECT_TRUE(
-      frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated().IsCaret());
-  EXPECT_TRUE(frame.Selection()
-                  .ComputeVisibleSelectionInDOMTreeDeprecated()
-                  .IsContentEditable())
+      frame.Selection().ComputeVisibleSelectionInDOMTree().IsContentEditable())
       << "We should be pasting into something editable.";
 
   Pasteboard* pasteboard = Pasteboard::GeneralPasteboard();
