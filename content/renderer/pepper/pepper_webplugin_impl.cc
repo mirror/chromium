@@ -297,17 +297,26 @@ bool PepperWebPluginImpl::ExecuteEditCommand(const blink::WebString& name) {
 
 bool PepperWebPluginImpl::ExecuteEditCommand(const blink::WebString& name,
                                              const blink::WebString& value) {
-  if (!instance_)
+  if (!instance_ || !CanEditText())
     return false;
 
   if (name == "Cut") {
-    if (!HasSelection() || !CanEditText())
+    if (!HasSelection())
       return false;
 
     blink::Platform::Current()->Clipboard()->WriteHTML(
         SelectionAsMarkup(), WebURL(), SelectionAsText(), false);
 
     instance_->ReplaceSelection("");
+    return true;
+  }
+  if (name == "Paste") {
+    blink::WebString text =
+        RenderThreadImpl::current_blink_platform_impl()
+            ->Clipboard()
+            ->ReadPlainText(blink::WebClipboard::kBufferStandard);
+
+    instance_->ReplaceSelection(text.Utf8());
     return true;
   }
   return false;
