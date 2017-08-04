@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fe832f0_ab957947",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-08-04T03:46:54Z",
+      "side": 1,
+      "message": "I hate to nitpick on this, but... this is Cocoa. Please name your variables frontendId and iconInFrontOfText. (Cocoa camel-cases)",
+      "range": {
+        "startLine": 314,
+        "startChar": 12,
+        "endLine": 314,
+        "endChar": 23
+      },
+      "revId": "c307b411ada0be473572bb3b5ac0eb6aadd7e32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
