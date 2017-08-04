@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0284a6c0_12d8ad42",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-04T00:01:52Z",
+      "side": 1,
+      "message": "I prefer not allowing these transitions.\nInstead can we consider \u0027immediately hide\u0027 as -\u003e HIDING -\u003e HIDE without any delay?\nMaybe we can use FinishAnyAnimationWithZeroDuration in layer_animator. That is,\n1. Call HideKeyboard()\n2. Call FinishAnyAnimationWithZeroDuration",
+      "revId": "1cf0c9bb671c206ddf08c2453efad76da53d1a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9864d0_9a921267",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-04T00:01:52Z",
+      "side": 1,
+      "message": "Can you DCHECK the container and current_keyboard_bounds_ size is empty?",
+      "revId": "1cf0c9bb671c206ddf08c2453efad76da53d1a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbdc1242_ff7ae499",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-04T00:01:52Z",
+      "side": 1,
+      "message": "+1 to HideImmediately.",
+      "revId": "1cf0c9bb671c206ddf08c2453efad76da53d1a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
