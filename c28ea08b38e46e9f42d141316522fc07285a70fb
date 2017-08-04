@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d08f266c_2c63bced",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-04T23:53:59Z",
+      "side": 1,
+      "message": "This whole scenario turned out not to be a problem after all -- the Android Webview tests were failing due to URL mismatch in DidFinishLoad and not due to this.  But I had the test already written, so thought I might as well keep it to increase test coverage for it beyond Android Webview  as we keep refactoring error pages.  This logic currently lives in Blink in RenderFrameImpl::RunScriptsAtDocumentReady [1], and ideally the detection should move to the browser process if we still even care about it, but it\u0027s not something I wanted to do in this CL.\n\n[1] https://cs.chromium.org/chromium/src/content/renderer/render_frame_impl.cc?l\u003d3964\u0026rcl\u003dfbc1f06772af27fab08b74064b914cbdc5fc7418",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c32a1e_9a3493c5",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-04T23:53:59Z",
+      "side": 1,
+      "message": "This drops redirects to the error page URL for PlzNavigate (this is checked by NavigationRequest::OnRequestRedirected).  For non-PlzNavigate, sadly, this isn\u0027t enough, as that path goes through ResourceLoader::OnReceivedRedirect, which checks CanRequestURL instead of CanRedirectToURL.  We could make it work on the old path by checking CanRedirectToURL instead of/in addition to CanRequestURL, but I figured it wasn\u0027t worth the effort, given that PlzNavigate is ready to ship.",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c19ce5_0135a8d3",
+        "filename": "content/browser/child_process_security_policy_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-04T23:53:59Z",
+      "side": 1,
+      "message": "We get this for free since we don\u0027t grant special access to the error scheme or origin in CPSP.",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecefeb96_bb6595e0",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2289,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-04T23:53:59Z",
+      "side": 1,
+      "message": "It\u0027d be nice to make CanRequestURL return false for the error page URL, and it was what I tried initially to cancel the navigation if a renderer sets \"location\u003d\u0027chrome-error://chromewebdata\u0027\",  but that didn\u0027t work out.\n\nThe reason is that this causes RPHI::FilterURL to rewrite the error URL to \"about:blank\" in a lot of places (DidStart, DidCommit in the redirect chain, DidFinishLoad), and it turned out that some of those places actually care about the error URL being preserved.  For example, Android Webview monitors the URL in WCO::DidFinishLoad and has explicit checks against the error page URL for it [1].\n\nI wanted to do this as it just seems saner to not let renderers directly navigate to chrome-error://, plus not doing this causes the external protocol handler to come up.  For now, I\u0027ve replaced this with a narrowed check here in OnBeginNavigation, which works for PlzNavigate.  If we wanted to support the same without PlzNavigate, we could modify ResourceDispatcherHostImpl::ShouldServiceRequest to drop it, but again I\u0027m not sure it\u0027s worth the trouble at this point.\n\n[1] See https://cs.chromium.org/chromium/src/android_webview/browser/aw_contents_statics.cc?l\u003d67\u0026rcl\u003deb478a08ad6f0944e1ddf17e25948e6686abb300 and \nhttps://cs.chromium.org/chromium/src/android_webview/java/src/org/chromium/android_webview/AwWebContentsObserver.java?l\u003d44\u0026rcl\u003deb478a08ad6f0944e1ddf17e25948e6686abb300",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d15e68f_4d6de35f",
+        "filename": "content/public/common/url_constants.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-04T23:53:59Z",
+      "side": 1,
+      "message": "Originally, I had this without the trailing slash, which cause issues with fragment navigations on the error page.  This is apparently a thing and exercised by ErrorPageAutoReloadTest.IgnoresSameDocumentNavigation and DNSError_DoReloadAfterSameDocumentNavigation.  Having the trailing slash allows the fragment navigation to happen (apparently due to intricacies deep in the URL parsing code), which I don\u0027t think is that bad if we ever want to add more structure to chrome-error URLs.  It also makes more sense anyway.",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
