@@ -94,6 +94,8 @@ class MODULES_EXPORT OfflineAudioContext final : public BaseAudioContext {
 
   using OfflineGraphAutoLocker = DeferredTaskHandler::OfflineGraphAutoLocker;
 
+  bool HasPendingActivity() const;
+
  private:
   OfflineAudioContext(Document*,
                       unsigned number_of_channels,

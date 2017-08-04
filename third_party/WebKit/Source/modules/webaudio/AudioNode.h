@@ -36,7 +36,7 @@
 #include "platform/wtf/ThreadSafeRefCounted.h"
 #include "platform/wtf/Vector.h"
 
-#define DEBUG_AUDIONODE_REFERENCES 0
+#define DEBUG_AUDIONODE_REFERENCES 99
 
 namespace blink {
 

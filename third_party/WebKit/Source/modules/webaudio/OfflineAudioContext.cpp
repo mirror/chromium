@@ -346,6 +346,11 @@ ScriptPromise OfflineAudioContext::resumeContext(ScriptState* script_state) {
   return promise;
 }
 
+bool OfflineAudioContext::HasPendingActivity() const {
+  // There's pending activity if rendering has started
+  return is_rendering_started_;
+}
+
 void OfflineAudioContext::FireCompletionEvent() {
   DCHECK(IsMainThread());
 
