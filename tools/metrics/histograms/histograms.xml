@@ -86021,6 +86021,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="WebApk.Install.InfoBarShown" enum="WebApkInstallInfoBarShown">
+  <obsolete>
+    Deprecated 2017-08. As of M62, this is no longer recorded.
+  </obsolete>
   <owner>hanxi@chromium.org</owner>
   <owner>pkotwicz@chromium.org</owner>
   <owner>yfriedman@chromium.org</owner>
@@ -86082,6 +86085,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="WebApk.Install.UserAction" enum="WebApkUserAction">
+  <obsolete>
+    Deprecated 2017-08. As of M62, this is no longer recorded.
+  </obsolete>
   <owner>hanxi@chromium.org</owner>
   <owner>pkotwicz@chromium.org</owner>
   <owner>yfriedman@chromium.org</owner>
