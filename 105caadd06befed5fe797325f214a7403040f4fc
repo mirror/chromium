@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f2001f3_a6a0b14a",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-04T19:54:52Z",
+      "side": 1,
+      "message": "I think it\u0027s better naming this \"bar.benchmark_baz\" so this matches with the snippet below",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171ce9a3_88abb80a",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-04T19:54:52Z",
+      "side": 1,
+      "message": "Maybe mentioning something about using code search for finding out \"bar.py\" containing \"bar.benchmark_baz\" benchmark",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed16795_732d730c",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-04T19:54:52Z",
+      "side": 1,
+      "message": "needs: add \"Get Name(): return \"bar.benchmark_baz\" here",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
