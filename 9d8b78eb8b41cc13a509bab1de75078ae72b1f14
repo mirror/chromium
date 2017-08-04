@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c7e8e95_f0782e24",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-04T14:18:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63ecfc74_c70f28bd",
+      "revId": "9d8b78eb8b41cc13a509bab1de75078ae72b1f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a76a0278_828718ff",
         "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_input_assistant_items.h",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-04T08:33:00Z",
       "side": 1,
       "message": "TOOLBAR_INPUT_ASSISTANT_ITEMS",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 80
+      },
+      "revId": "9d8b78eb8b41cc13a509bab1de75078ae72b1f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246408f0_70c62b8b",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_input_assistant_items.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-04T14:18:49Z",
+      "side": 1,
+      "message": "respect\n\nDone.",
+      "parentUuid": "a76a0278_828718ff",
       "range": {
         "startLine": 5,
         "startChar": 8,
