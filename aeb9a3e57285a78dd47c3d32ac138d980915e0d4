@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a3906d4_75705a22",
+        "filename": "third_party/WebKit/Source/core/input/EventHandlerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-04T06:59:02Z",
+      "side": 1,
+      "message": "I think it is OK to use SelectionInDOMTree instead of VisibleSelection in\nEventHandlerTest.cpp. Because, it seems test cases don\u0027t have cases\nSelectionInDOMTree !\u003d VisibleSelection.",
+      "revId": "aeb9a3e57285a78dd47c3d32ac138d980915e0d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
