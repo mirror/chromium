@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5963441_fd437b11",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-04T22:53:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfab0b35_a57a8ad9",
+      "revId": "75665f4119fc6a20d8b0ed185b92b4fa01c5c243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f8a40aa_da4333b3",
         "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-01T21:21:24Z",
       "side": 1,
       "message": "Looks like this entire block can just be within MaybeCreateThrottleFor, and if the PDF plugin is available, we can just return nullptr instead of creating the throttle.",
+      "revId": "75665f4119fc6a20d8b0ed185b92b4fa01c5c243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4842130f_550b12f2",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-04T22:53:08Z",
+      "side": 1,
+      "message": "The response headers are not updated until WillRedirectRequest or WillProcessResponse is called in NavigationHandle, so we wouldn\u0027t be able to find the mime type before creating the throttle using the response headers.",
+      "parentUuid": "7f8a40aa_da4333b3",
       "revId": "75665f4119fc6a20d8b0ed185b92b4fa01c5c243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "75665f4119fc6a20d8b0ed185b92b4fa01c5c243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebbe4b7f_672750d9",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-04T22:53:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bfa810e_7bbadaa1",
+      "revId": "75665f4119fc6a20d8b0ed185b92b4fa01c5c243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
