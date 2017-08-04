@@ -8,6 +8,7 @@ $x('/html/body/p').length
 $x('//a/@href')[0]
 $x('./a/@href', document.body)[0]
 $x('./a@href', document.body)
+VM:1 complete
 42
 "html"
 false
@@ -17,5 +18,4 @@ href="http://chromium.org"
 VM:1 Uncaught DOMException: Failed to execute '$x' on 'CommandLineAPI': The string './a@href' is not a valid XPath expression.
     at <anonymous>:1:1
 (anonymous) @ VM:1
-VM:1 complete
 

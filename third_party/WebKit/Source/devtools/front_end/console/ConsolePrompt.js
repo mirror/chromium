@@ -200,9 +200,18 @@ Console.ConsolePrompt = class extends UI.Widget {
     this.setText('');
     var currentExecutionContext = UI.context.flavor(SDK.ExecutionContext);
     if (currentExecutionContext) {
-      ConsoleModel.consoleModel.evaluateCommandInConsole(currentExecutionContext, text, useCommandLineAPI);
-      if (Console.ConsolePanel.instance().isShowing())
-        Host.userMetrics.actionTaken(Host.UserMetrics.Action.CommandEvaluatedInConsolePanel);
+      var msg = ConsoleModel.consoleModel.addCommandMessage(currentExecutionContext, text);
+      var wrappedText = SDK.RuntimeModel.wrapObjectLiteralExpressionIfNeeded(text, true);
+      var preparedCommandPromise = wrappedText.indexOf('await') !== -1 ?
+          Formatter.formatterWorkerPool().preprocessTopLevelAwaitExpressions(wrappedText) :
+          Promise.resolve('');
+      preparedCommandPromise.then(preprocessedCode => {
+        ConsoleModel.consoleModel.evaluateCommandInConsole(
+            /** @type {!SDK.ExecutionContext} */ (currentExecutionContext), msg, preprocessedCode || wrappedText,
+            useCommandLineAPI, !!preprocessedCode, text);
+        if (Console.ConsolePanel.instance().isShowing())
+          Host.userMetrics.actionTaken(Host.UserMetrics.Action.CommandEvaluatedInConsolePanel);
+      });
     }
   }
 

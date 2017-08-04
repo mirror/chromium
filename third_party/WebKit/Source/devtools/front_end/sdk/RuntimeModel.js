@@ -53,20 +53,22 @@ SDK.RuntimeModel = class extends SDK.SDKModel {
 
   /**
    * @param {string} code
+   * @param {boolean} allowTopLevelAwait
    * @return {string}
    */
-  static wrapObjectLiteralExpressionIfNeeded(code) {
+  static wrapObjectLiteralExpressionIfNeeded(code, allowTopLevelAwait) {
     // Only parenthesize what appears to be an object literal.
     if (!(/^\s*\{/.test(code) && /\}\s*$/.test(code)))
       return code;
 
+    var parse = allowTopLevelAwait ? (async function() {}).constructor : Function;
     try {
       // Check if the code can be interpreted as an expression.
-      Function('return ' + code + ';');
+      parse('return ' + code + ';');
 
       // No syntax error! Does it work parenthesized?
       var wrappedCode = '(' + code + ')';
-      Function(wrappedCode);
+      parse(wrappedCode);
 
       return wrappedCode;
     } catch (e) {
@@ -597,16 +599,11 @@ SDK.ExecutionContext = class {
    * @param {boolean} returnByValue
    * @param {boolean} generatePreview
    * @param {boolean} userGesture
+   * @param {boolean} awaitPromise
    * @param {function(?SDK.RemoteObject, !Protocol.Runtime.ExceptionDetails=, string=)} callback
    */
   evaluate(
-      expression,
-      objectGroup,
-      includeCommandLineAPI,
-      silent,
-      returnByValue,
-      generatePreview,
-      userGesture,
+      expression, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview, userGesture, awaitPromise,
       callback) {
     // FIXME: It will be moved to separate ExecutionContext.
     if (this.debuggerModel.selectedCallFrame()) {
@@ -615,7 +612,8 @@ SDK.ExecutionContext = class {
       return;
     }
     this._evaluateGlobal(
-        expression, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview, userGesture, callback);
+        expression, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview, userGesture,
+        awaitPromise, callback);
   }
 
   /**
@@ -624,7 +622,7 @@ SDK.ExecutionContext = class {
    * @param {function(?SDK.RemoteObject, !Protocol.Runtime.ExceptionDetails=, string=)} callback
    */
   globalObject(objectGroup, generatePreview, callback) {
-    this._evaluateGlobal('this', objectGroup, false, true, false, generatePreview, false, callback);
+    this._evaluateGlobal('this', objectGroup, false, true, false, generatePreview, false, false, callback);
   }
 
   /**
@@ -635,10 +633,12 @@ SDK.ExecutionContext = class {
    * @param {boolean} returnByValue
    * @param {boolean} generatePreview
    * @param {boolean} userGesture
+   * @param {boolean} awaitPromise
    * @param {function(?SDK.RemoteObject, !Protocol.Runtime.ExceptionDetails=, string=)} callback
    */
   async _evaluateGlobal(
-      expression, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview, userGesture, callback) {
+      expression, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview, userGesture, awaitPromise,
+      callback) {
     if (!expression) {
       // There is no expression, so the completion should happen against global properties.
       expression = 'this';
@@ -653,7 +653,7 @@ SDK.ExecutionContext = class {
       returnByValue: returnByValue,
       generatePreview: generatePreview,
       userGesture: userGesture,
-      awaitPromise: false
+      awaitPromise: awaitPromise
     });
 
     var error = response[Protocol.Error];

@@ -121,17 +121,14 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
 
   /**
    * @param {!SDK.ExecutionContext} executionContext
+   * @param {!ConsoleModel.ConsoleMessage} originatingMessage
    * @param {string} text
    * @param {boolean} useCommandLineAPI
+   * @param {boolean} awaitPromise
+   * @param {string=} requestedText
    */
-  evaluateCommandInConsole(executionContext, text, useCommandLineAPI) {
-    var requestedText = text;
-    var commandMessage = new ConsoleModel.ConsoleMessage(
-        executionContext.runtimeModel, ConsoleModel.ConsoleMessage.MessageSource.JS, null, text,
-        ConsoleModel.ConsoleMessage.MessageType.Command);
-    commandMessage.setExecutionContextId(executionContext.id);
-    this.addMessage(commandMessage);
-
+  evaluateCommandInConsole(executionContext, originatingMessage, text, useCommandLineAPI, awaitPromise, requestedText) {
+    requestedText = requestedText || text;
     /**
      * @param {?SDK.RemoteObject} result
      * @param {!Protocol.Runtime.ExceptionDetails=} exceptionDetails
@@ -142,15 +139,31 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
         return;
 
       Common.console.showPromise().then(() => {
-        this.dispatchEventToListeners(
-            ConsoleModel.ConsoleModel.Events.CommandEvaluated,
-            {result: result, text: requestedText, commandMessage: commandMessage, exceptionDetails: exceptionDetails});
+        this.dispatchEventToListeners(ConsoleModel.ConsoleModel.Events.CommandEvaluated, {
+          result: result,
+          text: requestedText,
+          commandMessage: originatingMessage,
+          exceptionDetails: exceptionDetails
+        });
       });
     }
-
-    text = SDK.RuntimeModel.wrapObjectLiteralExpressionIfNeeded(text);
-    executionContext.evaluate(text, 'console', useCommandLineAPI, false, false, true, true, printResult.bind(this));
+    executionContext.evaluate(
+        text, 'console', useCommandLineAPI, false, false, true, true, awaitPromise, printResult.bind(this));
     Host.userMetrics.actionTaken(Host.UserMetrics.Action.ConsoleEvaluated);
+  }
+
+  /**
+   * @param {!SDK.ExecutionContext} executionContext
+   * @param {string} text
+   * @return {!ConsoleModel.ConsoleMessage}
+   */
+  addCommandMessage(executionContext, text) {
+    var commandMessage = new ConsoleModel.ConsoleMessage(
+        executionContext.runtimeModel, ConsoleModel.ConsoleMessage.MessageSource.JS, null, text,
+        ConsoleModel.ConsoleMessage.MessageType.Command);
+    commandMessage.setExecutionContextId(executionContext.id);
+    this.addMessage(commandMessage);
+    return commandMessage;
   }
 
   /**

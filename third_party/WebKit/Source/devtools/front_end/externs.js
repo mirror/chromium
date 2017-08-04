@@ -707,6 +707,17 @@ Acorn.Comment;
  */
 Acorn.TokenOrComment;
 
+var astring = {
+  /**
+   * @param {!ESTree.Node} node
+   * @param {!Object=} generatorObject
+   * @return {string}
+   */
+  generate: function(node, generatorObject) {},
+
+  baseGenerator: {}
+};
+
 var ESTree = {};
 
 /**
@@ -719,7 +730,7 @@ ESTree.Node = function() {
   this.end;
   /** @type {string} */
   this.type;
-  /** @type {(!ESTree.Node|undefined)} */
+  /** @type {(!ESTree.Node|undefined|!Array<!ESTree.Node>)} */
   this.body;
   /** @type {(!Array.<!ESTree.Node>|undefined)} */
   this.declarations;
@@ -753,6 +764,8 @@ ESTree.Node = function() {
   this.raw;
   /** @type {(boolean|undefined)} */
   this.computed;
+  /** @type {(!ESTree.Node|undefined)} */
+  this.expression;
 };
 
 /**
