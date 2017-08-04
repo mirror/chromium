@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "090401a7_ebba1957",
+        "filename": "ui/webui/resources/js/cr/ui/list.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-04T08:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0d48de3_6c654a19",
+      "revId": "06a6c8480aba1537ca16e12c32060859ae6b38c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8293632_f589f353",
         "filename": "ui/webui/resources/js/cr/ui/list.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "06a6c8480aba1537ca16e12c32060859ae6b38c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2aec9e0_faf1c755",
+        "filename": "ui/webui/resources/js/cr/ui/list.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-04T08:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8293632_f589f353",
+      "revId": "06a6c8480aba1537ca16e12c32060859ae6b38c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
