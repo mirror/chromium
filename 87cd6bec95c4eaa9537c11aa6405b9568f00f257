@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "300c8f06_5523b868",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-04T20:07:23Z",
+      "side": 1,
+      "message": "nit: Add a period to the end of comments.\n\nCan we expand on this to explain that the number of headers depends on signed-in state, so we are doing this setup to ensure the privacy disclaimers are not visible? A few years down the road we may not remember why we had to set this default.",
+      "range": {
+        "startLine": 150,
+        "startChar": 36,
+        "endLine": 150,
+        "endChar": 43
+      },
+      "revId": "87cd6bec95c4eaa9537c11aa6405b9568f00f257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a559612f_6a3c75df",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-04T20:07:23Z",
+      "side": 1,
+      "message": "Let\u0027s also explicitly set the visibility of the clear browsing data button. I think our tests are currently set up to assume that it is visible.",
+      "revId": "87cd6bec95c4eaa9537c11aa6405b9568f00f257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
