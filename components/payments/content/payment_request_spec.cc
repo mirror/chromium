@@ -150,6 +150,12 @@ PaymentRequestSpec::PaymentRequestSpec(
 }
 PaymentRequestSpec::~PaymentRequestSpec() {}
 
+// static
+bool PaymentRequestSpec::IsBasicCardTypeSpecified(
+    const mojom::PaymentMethodDataPtr& method_data) {
+  return !method_data->supported_types.empty();
+}
+
 void PaymentRequestSpec::UpdateWith(mojom::PaymentDetailsPtr details) {
   details_ = std::move(details);
   // We reparse the |details_| and update the observers.
@@ -284,8 +290,8 @@ PaymentRequestSpec::GetApplicableModifier(
         &stringified_method_data);
 
     if (selected_instrument->IsValidForModifier(
-            modifier->method_data->supported_methods, supported_types,
-            supported_networks)) {
+            modifier->method_data->supported_methods, supported_networks,
+            supported_types, IsBasicCardTypeSpecified(modifier->method_data))) {
       return &modifier;
     }
   }

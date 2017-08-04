@@ -61,6 +61,11 @@ class PaymentRequestSpec : public PaymentOptionsProvider {
                      const std::string& app_locale);
   ~PaymentRequestSpec() override;
 
+  // Returns true if |method_data| contains at least one basic card supported
+  // type specified by the website.
+  static bool IsBasicCardTypeSpecified(
+      const mojom::PaymentMethodDataPtr& method_data);
+
   // Called when the merchant has new PaymentDetails. Will recompute every spec
   // state that depends on |details|.
   void UpdateWith(mojom::PaymentDetailsPtr details);
