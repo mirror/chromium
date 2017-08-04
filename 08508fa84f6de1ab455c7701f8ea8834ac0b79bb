@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "789149d1_a5699beb",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-08-04T23:13:10Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 90,
+        "startChar": 40,
+        "endLine": 90,
+        "endChar": 46
+      },
+      "revId": "08508fa84f6de1ab455c7701f8ea8834ac0b79bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0947f5_bfe875b0",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-08-04T23:13:10Z",
+      "side": 1,
+      "message": "slightly unclear what this means. Do you mean they\u0027re unioned together?\n\nI don\u0027t know much about blink, so maybe it\u0027s obvious to someone who does know blink",
+      "range": {
+        "startLine": 90,
+        "startChar": 29,
+        "endLine": 90,
+        "endChar": 47
+      },
+      "revId": "08508fa84f6de1ab455c7701f8ea8834ac0b79bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a7848b_55211039",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-08-04T23:13:10Z",
+      "side": 1,
+      "message": "I would just call it a list.",
+      "range": {
+        "startLine": 96,
+        "startChar": 18,
+        "endLine": 96,
+        "endChar": 30
+      },
+      "revId": "08508fa84f6de1ab455c7701f8ea8834ac0b79bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
