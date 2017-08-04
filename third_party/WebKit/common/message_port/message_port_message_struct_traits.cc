@@ -10,12 +10,14 @@ bool StructTraits<blink_common::mojom::MessagePortMessage::DataView,
                   blink_common::MessagePortMessage>::
     Read(blink_common::mojom::MessagePortMessage::DataView data,
          blink_common::MessagePortMessage* out) {
+  std::vector<mojo::ScopedMessagePipeHandle> ports;
   if (!data.ReadEncodedMessage(&out->owned_encoded_message) ||
-      !data.ReadPorts(&out->ports))
+      !data.ReadPorts(&ports))
     return false;
 
   out->encoded_message = mojo::ConstCArray<uint8_t>(
       out->owned_encoded_message.size(), out->owned_encoded_message.data());
+  out->ports = blink_common::MessagePort::BindHandles(std::move(ports));
   return true;
 }
 

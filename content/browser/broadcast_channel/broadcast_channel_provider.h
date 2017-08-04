@@ -35,8 +35,9 @@ class BroadcastChannelProvider
   ~BroadcastChannelProvider() override;
 
   void UnregisterConnection(Connection*);
-  void ReceivedMessageOnConnection(Connection*,
-                                   const std::vector<uint8_t>& message);
+  void ReceivedMessageOnConnection(
+      Connection*,
+      const blink_common::MessagePortMessage& message);
 
   mojo::BindingSet<blink::mojom::BroadcastChannelProvider> bindings_;
   std::map<url::Origin, std::multimap<std::string, std::unique_ptr<Connection>>>
