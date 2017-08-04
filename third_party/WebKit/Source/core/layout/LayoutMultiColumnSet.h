@@ -253,7 +253,8 @@ class CORE_EXPORT LayoutMultiColumnSet : public LayoutBlockFlow {
   PositionWithAffinity PositionForPoint(const LayoutPoint&) override;
 
   void PaintObject(const PaintInfo&,
-                   const LayoutPoint& paint_offset) const override;
+                   const LayoutPoint& paint_offset,
+                   const LayoutSize& sub_pixel_accumulation) const override;
 
   void AddOverflowFromChildren() override;
 

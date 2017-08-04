@@ -29,7 +29,8 @@ namespace blink {
 
 DISABLE_CFI_PERF
 void BlockPainter::Paint(const PaintInfo& paint_info,
-                         const LayoutPoint& paint_offset) {
+                         const LayoutPoint& paint_offset,
+                         const LayoutSize& sub_pixel_accumulation) {
   ObjectPainter(layout_block_).CheckPaintOffset(paint_info, paint_offset);
   LayoutPoint adjusted_paint_offset = paint_offset + layout_block_.Location();
   if (!IntersectsPaintRect(paint_info, adjusted_paint_offset))
@@ -50,7 +51,8 @@ void BlockPainter::Paint(const PaintInfo& paint_info,
     local_paint_info.phase = kPaintPhaseDescendantOutlinesOnly;
   } else if (ShouldPaintSelfBlockBackground(original_phase)) {
     local_paint_info.phase = kPaintPhaseSelfBlockBackgroundOnly;
-    layout_block_.PaintObject(local_paint_info, adjusted_paint_offset);
+    layout_block_.PaintObject(local_paint_info, adjusted_paint_offset,
+                              sub_pixel_accumulation);
     if (ShouldPaintDescendantBlockBackgrounds(original_phase))
       local_paint_info.phase = kPaintPhaseDescendantBlockBackgroundsOnly;
   }
@@ -59,12 +61,14 @@ void BlockPainter::Paint(const PaintInfo& paint_info,
       original_phase != kPaintPhaseSelfOutlineOnly) {
     BoxClipper box_clipper(layout_block_, local_paint_info,
                            adjusted_paint_offset, contents_clip_behavior);
-    layout_block_.PaintObject(local_paint_info, adjusted_paint_offset);
+    layout_block_.PaintObject(local_paint_info, adjusted_paint_offset,
+                              sub_pixel_accumulation);
   }
 
   if (ShouldPaintSelfOutline(original_phase)) {
     local_paint_info.phase = kPaintPhaseSelfOutlineOnly;
-    layout_block_.PaintObject(local_paint_info, adjusted_paint_offset);
+    layout_block_.PaintObject(local_paint_info, adjusted_paint_offset,
+                              sub_pixel_accumulation);
   }
 
   // Our scrollbar widgets paint exactly when we tell them to, so that they work
@@ -110,7 +114,7 @@ void BlockPainter::PaintChild(const LayoutBox& child,
       layout_block_.FlipForWritingModeForChild(&child, paint_offset);
   if (!child.HasSelfPaintingLayer() && !child.IsFloating() &&
       !child.IsColumnSpanAll())
-    child.Paint(paint_info, child_point);
+    child.Paint(paint_info, child_point, LayoutSize());
 }
 
 void BlockPainter::PaintChildrenOfFlexibleBox(
@@ -166,7 +170,8 @@ void BlockPainter::PaintInlineBox(const InlineBox& inline_box,
 
 DISABLE_CFI_PERF
 void BlockPainter::PaintObject(const PaintInfo& paint_info,
-                               const LayoutPoint& paint_offset) {
+                               const LayoutPoint& paint_offset,
+                               const LayoutSize& sub_pixel_accumulation) {
   if (layout_block_.IsTruncated())
     return;
 
@@ -240,13 +245,14 @@ void BlockPainter::PaintObject(const PaintInfo& paint_info,
 
     if (layout_block_.IsLayoutBlockFlow()) {
       BlockFlowPainter block_flow_painter(ToLayoutBlockFlow(layout_block_));
-      block_flow_painter.PaintContents(contents_paint_info, paint_offset);
+      block_flow_painter.PaintContents(contents_paint_info, paint_offset,
+                                       sub_pixel_accumulation);
       if (paint_phase == kPaintPhaseFloat ||
           paint_phase == kPaintPhaseSelection ||
           paint_phase == kPaintPhaseTextClip)
         block_flow_painter.PaintFloats(contents_paint_info, paint_offset);
     } else {
-      PaintContents(contents_paint_info, paint_offset);
+      PaintContents(contents_paint_info, paint_offset, sub_pixel_accumulation);
     }
   }
 
@@ -310,10 +316,12 @@ bool BlockPainter::IntersectsPaintRect(
 }
 
 void BlockPainter::PaintContents(const PaintInfo& paint_info,
-                                 const LayoutPoint& paint_offset) {
+                                 const LayoutPoint& paint_offset,
+                                 const LayoutSize& sub_pixel_accumulation) {
   DCHECK(!layout_block_.ChildrenInline());
   PaintInfo paint_info_for_descendants = paint_info.ForDescendants();
-  layout_block_.PaintChildren(paint_info_for_descendants, paint_offset);
+  layout_block_.PaintChildren(paint_info_for_descendants, paint_offset,
+                              sub_pixel_accumulation);
 }
 
 }  // namespace blink

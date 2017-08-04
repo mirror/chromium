@@ -859,18 +859,23 @@ void LayoutBlock::MarkPositionedObjectsForLayout() {
 }
 
 void LayoutBlock::Paint(const PaintInfo& paint_info,
-                        const LayoutPoint& paint_offset) const {
-  BlockPainter(*this).Paint(paint_info, paint_offset);
+                        const LayoutPoint& paint_offset,
+                        const LayoutSize& sub_pixel_accumulation) const {
+  BlockPainter(*this).Paint(paint_info, paint_offset, sub_pixel_accumulation);
 }
 
-void LayoutBlock::PaintChildren(const PaintInfo& paint_info,
-                                const LayoutPoint& paint_offset) const {
+void LayoutBlock::PaintChildren(
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset,
+    const LayoutSize& sub_pixel_accumulation) const {
   BlockPainter(*this).PaintChildren(paint_info, paint_offset);
 }
 
 void LayoutBlock::PaintObject(const PaintInfo& paint_info,
-                              const LayoutPoint& paint_offset) const {
-  BlockPainter(*this).PaintObject(paint_info, paint_offset);
+                              const LayoutPoint& paint_offset,
+                              const LayoutSize& sub_pixel_accumulation) const {
+  BlockPainter(*this).PaintObject(paint_info, paint_offset,
+                                  sub_pixel_accumulation);
 }
 
 LayoutUnit LayoutBlock::BlockDirectionOffset(

@@ -41,8 +41,10 @@ bool LayoutSVGForeignObject::IsChildAllowed(LayoutObject* child,
   return !child->IsSVGChild();
 }
 
-void LayoutSVGForeignObject::Paint(const PaintInfo& paint_info,
-                                   const LayoutPoint&) const {
+void LayoutSVGForeignObject::Paint(
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset,
+    const LayoutSize& sub_pixel_accumulation) const {
   SVGForeignObjectPainter(*this).Paint(paint_info);
 }
 

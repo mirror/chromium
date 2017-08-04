@@ -24,7 +24,7 @@ namespace blink {
 
 void ImagePainter::Paint(const PaintInfo& paint_info,
                          const LayoutPoint& paint_offset) {
-  layout_image_.LayoutReplaced::Paint(paint_info, paint_offset);
+  layout_image_.LayoutReplaced::Paint(paint_info, paint_offset, LayoutSize());
 
   if (paint_info.phase == kPaintPhaseOutline)
     PaintAreaElementFocusRing(paint_info, paint_offset);

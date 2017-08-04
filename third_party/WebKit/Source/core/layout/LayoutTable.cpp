@@ -820,7 +820,8 @@ void LayoutTable::AddOverflowFromChildren() {
 }
 
 void LayoutTable::PaintObject(const PaintInfo& paint_info,
-                              const LayoutPoint& paint_offset) const {
+                              const LayoutPoint& paint_offset,
+                              const LayoutSize& sub_pixel_accumulation) const {
   TablePainter(*this).PaintObject(paint_info, paint_offset);
 }
 

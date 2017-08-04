@@ -137,7 +137,9 @@ class LayoutSVGShape : public LayoutSVGModelObject {
            LayoutSVGModelObject::IsOfType(type);
   }
   void UpdateLayout() final;
-  void Paint(const PaintInfo&, const LayoutPoint&) const final;
+  void Paint(const PaintInfo&,
+             const LayoutPoint& paint_offset,
+             const LayoutSize& sub_pixel_accumulation) const final;
   void AddOutlineRects(Vector<LayoutRect>&,
                        const LayoutPoint& additional_offset,
                        IncludeBlockVisualOverflowOrNot) const final;

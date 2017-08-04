@@ -14,7 +14,8 @@
 namespace blink {
 
 void BlockFlowPainter::PaintContents(const PaintInfo& paint_info,
-                                     const LayoutPoint& paint_offset) {
+                                     const LayoutPoint& paint_offset,
+                                     const LayoutSize& sub_pixel_accumulation) {
   // Avoid painting descendants of the root element when stylesheets haven't
   // loaded. This eliminates FOUC.  It's ok not to draw, because later on, when
   // all the stylesheets do load, styleResolverMayHaveChanged() on Document will
@@ -24,7 +25,8 @@ void BlockFlowPainter::PaintContents(const PaintInfo& paint_info,
     return;
 
   if (!layout_block_flow_.ChildrenInline()) {
-    BlockPainter(layout_block_flow_).PaintContents(paint_info, paint_offset);
+    BlockPainter(layout_block_flow_)
+        .PaintContents(paint_info, paint_offset, sub_pixel_accumulation);
     return;
   }
   if (ShouldPaintDescendantOutlines(paint_info.phase))

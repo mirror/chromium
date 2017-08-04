@@ -41,7 +41,7 @@ void TableRowPainter::Paint(const PaintInfo& paint_info,
   for (LayoutTableCell* cell = layout_table_row_.FirstCell(); cell;
        cell = cell->NextCell()) {
     if (!cell->HasSelfPaintingLayer())
-      cell->Paint(paint_info_for_cells, paint_offset);
+      cell->Paint(paint_info_for_cells, paint_offset, LayoutSize());
   }
 }
 

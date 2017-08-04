@@ -142,7 +142,7 @@ void FrameSetPainter::PaintChildren(const PaintInfo& paint_info,
       // not LayoutObject.
       if (!child->IsBoxModelObject() ||
           !ToLayoutBoxModelObject(child)->HasSelfPaintingLayer())
-        child->Paint(paint_info, adjusted_paint_offset);
+        child->Paint(paint_info, adjusted_paint_offset, LayoutSize());
       child = child->NextSibling();
       if (!child)
         return;

@@ -163,7 +163,8 @@ void LayoutSVGContainer::DescendantIsolationRequirementsChanged(
 }
 
 void LayoutSVGContainer::Paint(const PaintInfo& paint_info,
-                               const LayoutPoint&) const {
+                               const LayoutPoint& paint_offset,
+                               const LayoutSize& sub_pixel_accumulation) const {
   SVGContainerPainter(*this).Paint(paint_info);
 }
 

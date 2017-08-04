@@ -224,7 +224,8 @@ AffineTransform LayoutSVGShape::NonScalingStrokeTransform() const {
 }
 
 void LayoutSVGShape::Paint(const PaintInfo& paint_info,
-                           const LayoutPoint&) const {
+                           const LayoutPoint& paint_offset,
+                           const LayoutSize& sub_pixel_accumulation) const {
   SVGShapePainter(*this).Paint(paint_info);
 }
 

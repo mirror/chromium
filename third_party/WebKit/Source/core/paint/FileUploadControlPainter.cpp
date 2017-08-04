@@ -110,8 +110,8 @@ void FileUploadControlPainter::PaintObject(const PaintInfo& paint_info,
   }
 
   // Paint the children.
-  layout_file_upload_control_.LayoutBlockFlow::PaintObject(paint_info,
-                                                           paint_offset);
+  layout_file_upload_control_.LayoutBlockFlow::PaintObject(
+      paint_info, paint_offset, LayoutSize());
 }
 
 }  // namespace blink

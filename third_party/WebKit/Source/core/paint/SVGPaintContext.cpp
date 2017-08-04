@@ -235,7 +235,7 @@ void SVGPaintContext::PaintResourceSubtree(GraphicsContext& context,
   PaintInfo info(context, LayoutRect::InfiniteIntRect(), kPaintPhaseForeground,
                  kGlobalPaintNormalPhase,
                  kPaintLayerPaintingRenderingResourceSubtree);
-  item->Paint(info, IntPoint());
+  item->Paint(info, IntPoint(), LayoutSize());
 }
 
 bool SVGPaintContext::PaintForLayoutObject(

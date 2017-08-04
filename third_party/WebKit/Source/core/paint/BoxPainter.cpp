@@ -39,7 +39,7 @@ void BoxPainter::PaintChildren(const PaintInfo& paint_info,
   PaintInfo child_info(paint_info);
   for (LayoutObject* child = layout_box_.SlowFirstChild(); child;
        child = child->NextSibling())
-    child->Paint(child_info, paint_offset);
+    child->Paint(child_info, paint_offset, LayoutSize());
 }
 
 void BoxPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info,

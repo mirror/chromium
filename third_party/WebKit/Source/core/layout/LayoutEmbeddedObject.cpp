@@ -104,14 +104,16 @@ void LayoutEmbeddedObject::PaintContents(
   LayoutEmbeddedContent::PaintContents(paint_info, paint_offset);
 }
 
-void LayoutEmbeddedObject::Paint(const PaintInfo& paint_info,
-                                 const LayoutPoint& paint_offset) const {
+void LayoutEmbeddedObject::Paint(
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset,
+    const LayoutSize& sub_pixel_accumulation) const {
   if (ShowsUnavailablePluginIndicator()) {
-    LayoutReplaced::Paint(paint_info, paint_offset);
+    LayoutReplaced::Paint(paint_info, paint_offset, LayoutSize());
     return;
   }
 
-  LayoutEmbeddedContent::Paint(paint_info, paint_offset);
+  LayoutEmbeddedContent::Paint(paint_info, paint_offset, LayoutSize());
 }
 
 void LayoutEmbeddedObject::PaintReplaced(

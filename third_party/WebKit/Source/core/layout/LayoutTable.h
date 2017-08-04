@@ -462,7 +462,9 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
     return type == kLayoutObjectTable || LayoutBlock::IsOfType(type);
   }
 
-  void PaintObject(const PaintInfo&, const LayoutPoint&) const override;
+  void PaintObject(const PaintInfo&,
+                   const LayoutPoint& paint_offset,
+                   const LayoutSize& sub_pixel_accumulation) const override;
   void UpdateLayout() override;
   void ComputeIntrinsicLogicalWidths(LayoutUnit& min_width,
                                      LayoutUnit& max_width) const override;

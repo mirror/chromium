@@ -35,7 +35,7 @@ void ViewPainter::Paint(const PaintInfo& paint_info,
   if (frame_view->ShouldThrottleRendering())
     return;
 
-  layout_view_.PaintObject(paint_info, paint_offset);
+  layout_view_.PaintObject(paint_info, paint_offset, LayoutSize());
   BlockPainter(layout_view_)
       .PaintOverflowControlsIfNeeded(paint_info, paint_offset);
 }

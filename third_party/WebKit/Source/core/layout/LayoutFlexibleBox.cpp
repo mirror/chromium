@@ -388,8 +388,10 @@ void LayoutFlexibleBox::UpdateBlockLayout(bool relayout_children) {
   ClearNeedsLayout();
 }
 
-void LayoutFlexibleBox::PaintChildren(const PaintInfo& paint_info,
-                                      const LayoutPoint& paint_offset) const {
+void LayoutFlexibleBox::PaintChildren(
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset,
+    const LayoutSize& sub_pixel_accumulation) const {
   BlockPainter::PaintChildrenOfFlexibleBox(*this, paint_info, paint_offset);
 }
 

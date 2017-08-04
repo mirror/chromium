@@ -144,7 +144,9 @@ class CORE_EXPORT LayoutView final : public LayoutBlockFlow {
   PaintInvalidationReason InvalidatePaint(
       const PaintInvalidatorContext&) const override;
 
-  void Paint(const PaintInfo&, const LayoutPoint&) const override;
+  void Paint(const PaintInfo&,
+             const LayoutPoint& paint_offset,
+             const LayoutSize& sub_pixel_accumulation) const override;
   void PaintBoxDecorationBackground(const PaintInfo&,
                                     const LayoutPoint&) const override;
 

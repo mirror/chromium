@@ -613,7 +613,8 @@ void LayoutInline::AddChildToContinuation(LayoutObject* new_child,
 }
 
 void LayoutInline::Paint(const PaintInfo& paint_info,
-                         const LayoutPoint& paint_offset) const {
+                         const LayoutPoint& paint_offset,
+                         const LayoutSize& sub_pixel_accumulation) const {
   InlinePainter(*this).Paint(paint_info, paint_offset);
 }
 

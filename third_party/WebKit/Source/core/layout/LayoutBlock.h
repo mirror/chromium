@@ -372,11 +372,17 @@ class CORE_EXPORT LayoutBlock : public LayoutBox {
 
   LayoutUnit BeforeMarginInLineDirection(LineDirectionMode) const;
 
-  void Paint(const PaintInfo&, const LayoutPoint&) const override;
+  void Paint(const PaintInfo&,
+             const LayoutPoint& paint_offset,
+             const LayoutSize& sub_pixel_accumulation) const override;
 
  public:
-  virtual void PaintObject(const PaintInfo&, const LayoutPoint&) const;
-  virtual void PaintChildren(const PaintInfo&, const LayoutPoint&) const;
+  virtual void PaintObject(const PaintInfo&,
+                           const LayoutPoint& paint_offset,
+                           const LayoutSize& sub_pixel_accumulation) const;
+  virtual void PaintChildren(const PaintInfo&,
+                             const LayoutPoint& paint_offset,
+                             const LayoutSize& sub_pixel_accumulation) const;
 
  protected:
   virtual void AdjustInlineDirectionLineBounds(

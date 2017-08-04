@@ -210,7 +210,9 @@ class LayoutGrid final : public LayoutBlock {
 
   void ApplyStretchAlignmentToTracksIfNeeded(GridTrackSizingDirection);
 
-  void PaintChildren(const PaintInfo&, const LayoutPoint&) const override;
+  void PaintChildren(const PaintInfo&,
+                     const LayoutPoint& paint_offset,
+                     const LayoutSize& sub_pixel_accumulation) const override;
 
   LayoutUnit AvailableAlignmentSpaceForChildBeforeStretching(
       LayoutUnit grid_area_breadth_for_child,

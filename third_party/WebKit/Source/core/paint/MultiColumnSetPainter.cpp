@@ -19,7 +19,8 @@ void MultiColumnSetPainter::PaintObject(const PaintInfo& paint_info,
   if (layout_multi_column_set_.Style()->Visibility() != EVisibility::kVisible)
     return;
 
-  BlockPainter(layout_multi_column_set_).PaintObject(paint_info, paint_offset);
+  BlockPainter(layout_multi_column_set_)
+      .PaintObject(paint_info, paint_offset, LayoutSize());
 
   // FIXME: Right now we're only painting in the foreground phase.
   // Columns should technically respect phases and allow for

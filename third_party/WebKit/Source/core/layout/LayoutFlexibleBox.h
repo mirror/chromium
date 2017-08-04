@@ -68,7 +68,9 @@ class CORE_EXPORT LayoutFlexibleBox : public LayoutBlock {
   bool HasTopOverflow() const override;
   bool HasLeftOverflow() const override;
 
-  void PaintChildren(const PaintInfo&, const LayoutPoint&) const final;
+  void PaintChildren(const PaintInfo&,
+                     const LayoutPoint& paint_offset,
+                     const LayoutSize& sub_pixel_accumulation) const final;
 
   bool IsHorizontalFlow() const;
 

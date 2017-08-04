@@ -189,7 +189,9 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
 
   void UpdateLayout() override;
 
-  void Paint(const PaintInfo&, const LayoutPoint&) const override;
+  void Paint(const PaintInfo&,
+             const LayoutPoint& paint_offset,
+             const LayoutSize& sub_pixel_accumulation) const override;
 
   LayoutUnit CellBaselinePosition() const;
   bool IsBaselineAligned() const {
