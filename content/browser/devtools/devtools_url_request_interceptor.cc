@@ -119,10 +119,35 @@ void DevToolsURLRequestInterceptor::State::ContinueInterceptedRequestOnIoThread(
                                   std::move(callback));
 }
 
+// Pattern may contain stars ('*') which match to any (possibly empty) string.
+// Stars implicitly assumed at the begin/end of pattern.
+bool DevToolsURLRequestInterceptor::State::HasPatternMatch(
+    const std::string& input) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  bool hasMatch = false;
+  for (const std::vector<std::string>& parts : patterns_) {
+    size_t pos = 0;
+    hasMatch = true;
+    for (const std::string& part : parts) {
+      pos = input.find(part, pos);
+      if (pos == std::string::npos) {
+        hasMatch = false;
+        break;
+      }
+      pos += part.length();
+    }
+    if (hasMatch)
+      break;
+  }
+  return hasMatch;
+}
+
 DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
     MaybeCreateDevToolsURLInterceptorRequestJob(
         net::URLRequest* request,
         net::NetworkDelegate* network_delegate) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   // Bail out if we're not intercepting anything.
   if (intercepted_render_frames_.empty()) {
     DCHECK(intercepted_frame_tree_nodes_.empty());
@@ -162,6 +187,9 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
   if (sub_requests_.find(request) != sub_requests_.end())
     return nullptr;
 
+  if (!HasPatternMatch(request->url().spec()))
+    return nullptr;
+
   bool is_redirect;
   std::string interception_id = GetIdForRequest(request, &is_redirect);
   DevToolsURLInterceptorRequestJob* job = new DevToolsURLInterceptorRequestJob(
@@ -192,11 +220,12 @@ class DevToolsURLRequestInterceptor::State::InterceptedWebContentsObserver
       FrameDeleted(old_host);
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(
-            &DevToolsURLRequestInterceptor::State::
-                StartInterceptingRequestsInternal,
-            state_, new_host->GetRoutingID(), new_host->GetFrameTreeNodeId(),
-            new_host->GetProcess()->GetID(), web_contents(), network_handler_));
+        base::BindOnce(&DevToolsURLRequestInterceptor::State::
+                           StartInterceptingRequestsInternal,
+                       state_, new_host->GetRoutingID(),
+                       new_host->GetFrameTreeNodeId(),
+                       new_host->GetProcess()->GetID(), web_contents(), nullptr,
+                       network_handler_));
   }
 
   void FrameDeleted(RenderFrameHost* render_frame_host) override {
@@ -220,8 +249,11 @@ void DevToolsURLRequestInterceptor::State::StartInterceptingRequestsInternal(
     int frame_tree_node_id,
     int process_id,
     WebContents* web_contents,
+    std::unique_ptr<protocol::Array<protocol::String>> patterns,
     base::WeakPtr<protocol::NetworkHandler> network_handler) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(patterns->length());
+
   intercepted_render_frames_.emplace(
       std::piecewise_construct,
       std::forward_as_tuple(render_frame_id, process_id),
@@ -229,6 +261,15 @@ void DevToolsURLRequestInterceptor::State::StartInterceptingRequestsInternal(
   intercepted_frame_tree_nodes_.emplace(
       std::piecewise_construct, std::forward_as_tuple(frame_tree_node_id),
       std::forward_as_tuple(web_contents, network_handler));
+
+  if (!patterns)
+    return;
+  patterns_.clear();
+  for (size_t i = 0; i < patterns->length(); ++i) {
+    patterns_.insert(base::SplitString(patterns->get(i), "*",
+                                       base::KEEP_WHITESPACE,
+                                       base::SPLIT_WANT_NONEMPTY));
+  }
 }
 
 void DevToolsURLRequestInterceptor::State::StopInterceptingRequestsInternal(
@@ -242,6 +283,7 @@ void DevToolsURLRequestInterceptor::State::StopInterceptingRequestsInternal(
 
 void DevToolsURLRequestInterceptor::State::StartInterceptingRequests(
     WebContents* web_contents,
+    std::unique_ptr<protocol::Array<protocol::String>> patterns,
     base::WeakPtr<protocol::NetworkHandler> network_handler) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // WebContents methods are UI thread only.
@@ -253,7 +295,7 @@ void DevToolsURLRequestInterceptor::State::StartInterceptingRequests(
                        this, render_frame_host->GetRoutingID(),
                        render_frame_host->GetFrameTreeNodeId(),
                        render_frame_host->GetProcess()->GetID(), web_contents,
-                       network_handler));
+                       std::move(patterns), network_handler));
   }
 
   // Listen for future updates.

@@ -1574,9 +1574,10 @@
                 "experimental": true
             },
             {
-                "name": "setRequestInterceptionEnabled",
+                "name": "setRequestInterceptionPatterns",
+                "description": "Sets the requests to intercept that match a the provided patterns. If patterns is empty disables request interception.",
                 "parameters": [
-                    { "name": "enabled", "type": "boolean", "description": "Whether or not HTTP requests should be intercepted and Network.requestIntercepted events sent." }
+                    { "name": "patterns", "type": "array", "optional": true, "items": { "type": "string" }, "description": "URLs matching any of these patterns will be forwarded and wait for the corresponding continueInterceptedRequest call. Wildcards ('*') are allowed and wildcards are implicitly added to beginning and end of every pattern." }
                 ],
                 "experimental": true
             },

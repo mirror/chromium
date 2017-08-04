@@ -541,7 +541,7 @@ Response NetworkHandler::Enable(Maybe<int> max_total_size,
 Response NetworkHandler::Disable() {
   enabled_ = false;
   user_agent_ = std::string();
-  SetRequestInterceptionEnabled(false);
+  SetRequestInterceptionPatternsInternal(nullptr);
   return Response::FallThrough();
 }
 
@@ -859,10 +859,8 @@ std::string NetworkHandler::UserAgentOverride() const {
   return enabled_ ? user_agent_ : std::string();
 }
 
-DispatchResponse NetworkHandler::SetRequestInterceptionEnabled(bool enabled) {
-  if (interception_enabled_ == enabled)
-    return Response::OK();  // Nothing to do.
-
+DispatchResponse NetworkHandler::SetRequestInterceptionPatternsInternal(
+    std::unique_ptr<protocol::Array<String>> patterns) {
   WebContents* web_contents = WebContents::FromRenderFrameHost(host_);
   if (!web_contents)
     return Response::OK();
@@ -873,17 +871,24 @@ DispatchResponse NetworkHandler::SetRequestInterceptionEnabled(bool enabled) {
   if (!devtools_url_request_interceptor)
     return Response::OK();
 
-  if (enabled) {
+  if (patterns && patterns->length()) {
+    interception_enabled_ = true;
     devtools_url_request_interceptor->state()->StartInterceptingRequests(
-        web_contents, weak_factory_.GetWeakPtr());
+        web_contents, std::move(patterns), weak_factory_.GetWeakPtr());
   } else {
+    interception_enabled_ = false;
     devtools_url_request_interceptor->state()->StopInterceptingRequests(
         web_contents);
     navigation_requests_.clear();
     canceled_navigation_requests_.clear();
   }
-  interception_enabled_ = enabled;
   return Response::OK();
+}
+
+DispatchResponse NetworkHandler::SetRequestInterceptionPatterns(
+    Maybe<protocol::Array<String>> patterns) {
+  return NetworkHandler::SetRequestInterceptionPatternsInternal(
+      patterns.isJust() ? patterns.takeJust() : nullptr);
 }
 
 namespace {

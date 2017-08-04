@@ -184,9 +184,9 @@ void HeadlessShell::DevToolsTargetReady() {
     devtools_client_->GetNetwork()->GetExperimental()->AddObserver(this);
     devtools_client_->GetNetwork()
         ->GetExperimental()
-        ->SetRequestInterceptionEnabled(
-            headless::network::SetRequestInterceptionEnabledParams::Builder()
-                .SetEnabled(true)
+        ->SetRequestInterceptionPatterns(
+            headless::network::SetRequestInterceptionPatternsParams::Builder()
+                .SetPatterns(std::vector<std::string>({"*"}))
                 .Build());
   }
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(

@@ -104,6 +104,7 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
     // Must be called on the UI thread.
     void StartInterceptingRequests(
         WebContents* web_contents,
+        std::unique_ptr<protocol::Array<protocol::String>> patterns,
         base::WeakPtr<protocol::NetworkHandler> network_handler);
 
     // Must be called on the UI thread.
@@ -148,6 +149,7 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
         int frame_tree_node_id,
         int process_id,
         WebContents* web_contents,
+        std::unique_ptr<protocol::Array<protocol::String>> patterns,
         base::WeakPtr<protocol::NetworkHandler> network_handler);
 
     void StopInterceptingRequestsInternal(int render_frame_id,
@@ -158,10 +160,14 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
     std::string GetIdForRequest(const net::URLRequest* request,
                                 bool* is_redirect);
 
+    bool HasPatternMatch(const std::string& input);
+
     // Returns a WeakPtr to the DevToolsURLInterceptorRequestJob corresponding
     // to |interception_id|.  Must be called on the IO thread.
     DevToolsURLInterceptorRequestJob* GetJob(
         const std::string& interception_id) const;
+
+    base::flat_set<std::vector<std::string>> patterns_;
 
     base::flat_map<std::pair<int, int>, InterceptedPage>
         intercepted_render_frames_;
