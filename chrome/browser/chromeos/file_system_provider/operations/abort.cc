@@ -4,6 +4,7 @@
 
 #include "chrome/browser/chromeos/file_system_provider/operations/abort.h"
 
+#include <iostream>
 #include <string>
 
 #include "chrome/common/extensions/api/file_system_provider.h"
