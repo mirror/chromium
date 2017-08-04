@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2004e06d_79626d59",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-04T19:30:20Z",
+      "side": 1,
+      "message": "Looking at Quic, I see that in chromium, ApproximateNow() is just TimeTicks::Now().   So perhaps that\u0027s cheap enough.  I\u0027m going to do some profiles now to see.",
+      "parentUuid": "83d01e80_690311ce",
+      "revId": "90c2e7c41247540db26b33b44498ac0527ca81bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1cba636_882ba3a2",
         "filename": "net/socket/udp_socket_posix.cc",
         "patchSetId": 2
@@ -161,6 +179,30 @@
       "side": 1,
       "message": "I do not understand. This is a bug.",
       "parentUuid": "4a23dcbf_2fafe771",
+      "range": {
+        "startLine": 656,
+        "startChar": 43,
+        "endLine": 656,
+        "endChar": 61
+      },
+      "revId": "90c2e7c41247540db26b33b44498ac0527ca81bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a44e79_43d42ddb",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-04T19:30:20Z",
+      "side": 1,
+      "message": "Whoops.  I misread that.  Sorry.  Will fix.",
+      "parentUuid": "c167290f_aaf8015b",
       "range": {
         "startLine": 656,
         "startChar": 43,
