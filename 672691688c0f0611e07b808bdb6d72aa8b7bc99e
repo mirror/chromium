@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8010670_23c174bf",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-04T23:43:46Z",
+      "side": 1,
+      "message": "A concrete example would make this explanation clearer.",
+      "range": {
+        "startLine": 21,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 10
+      },
+      "revId": "672691688c0f0611e07b808bdb6d72aa8b7bc99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534aafa7_8bdb9ac2",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-04T23:43:46Z",
+      "side": 1,
+      "message": "Please add a comment, explaining this enum.",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 47
+      },
+      "revId": "672691688c0f0611e07b808bdb6d72aa8b7bc99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
