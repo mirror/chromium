@@ -37,6 +37,98 @@
     },
     {
       "key": {
+        "uuid": "791291ea_70e1b744",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T01:03:51Z",
+      "side": 1,
+      "message": "Is this something that all subclasses will need?\nIf so, this can be non-virtual as tracker_ is set by parameter (no one overrides this at the moment).\n\nIf not, this should be moved down into NewTabPromo.",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a06286_f0dd18ca",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T01:03:51Z",
+      "side": 1,
+      "message": "Group this with tracker_ above or more tracker_ down here.",
+      "range": {
+        "startLine": 51,
+        "startChar": 26,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0e5dce_a7ec22fa",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T01:03:51Z",
+      "side": 1,
+      "message": "\"* const\"\n\n(Gerrit doesn\u0027t allow *\u0027s at the first column to stay as *\u0027s)",
+      "range": {
+        "startLine": 51,
+        "startChar": 24,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f12b8b_be456a03",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T01:03:51Z",
+      "side": 1,
+      "message": "These overrides are no longer necessary depending on the answer to the GetFeatureTracker() question on feature_tracker.h",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 66
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4db0cb03_76eecda9",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
         "patchSetId": 11
@@ -69,6 +161,98 @@
       "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f774183_73328fd1",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T01:03:51Z",
+      "side": 1,
+      "message": "across Chrome restarts.",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 8
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7414a6f0_9e4311b7",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T01:03:51Z",
+      "side": 1,
+      "message": "Now that I better understand this, this isn\u0027t really double-counting because other components were manipulating the same preference in and of itself. This can be removed now.",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef12fe2_f918313e",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T01:03:51Z",
+      "side": 1,
+      "message": "Who calls this constructor?",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 27
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a6615f_d870cb78",
+        "filename": "components/feature_engagement/public/event_constants.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T01:03:51Z",
+      "side": 1,
+      "message": "This should be gone, right?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
