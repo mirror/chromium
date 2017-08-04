@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e22e710_caaa93c5",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T20:37:14Z",
+      "side": 1,
+      "message": "i think these data members should be BindRepeating callbacks, they can be used multiple times",
+      "range": {
+        "startLine": 34,
+        "startChar": 31,
+        "endLine": 34,
+        "endChar": 39
+      },
+      "revId": "5761aca27d090d0969087736ff89053b91e43f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e299b01b_ed54f750",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T20:37:14Z",
+      "side": 1,
+      "message": "but this callback passed into this method need only be called once\n\nmaybe we get rid of the data members and call base::BindOnce here creating a instance for each invocation?",
+      "range": {
+        "startLine": 173,
+        "startChar": 31,
+        "endLine": 173,
+        "endChar": 51
+      },
+      "revId": "5761aca27d090d0969087736ff89053b91e43f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c8c3df_6b272090",
+        "filename": "content/browser/appcache/appcache_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T20:37:14Z",
+      "side": 1,
+      "message": ".Reset() call should no longer be needed since it\u0027s been moved into a temporary",
+      "range": {
+        "startLine": 232,
+        "startChar": 2,
+        "endLine": 232,
+        "endChar": 30
+      },
+      "revId": "5761aca27d090d0969087736ff89053b91e43f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d50abee_67937bea",
+        "filename": "content/browser/appcache/appcache_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T20:37:14Z",
+      "side": 1,
+      "message": "ditto Reset not needed",
+      "revId": "5761aca27d090d0969087736ff89053b91e43f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5fa9da6_d578fed1",
+        "filename": "content/browser/appcache/appcache_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T20:37:14Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5761aca27d090d0969087736ff89053b91e43f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
