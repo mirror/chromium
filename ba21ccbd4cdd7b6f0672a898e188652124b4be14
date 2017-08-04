@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3776983a_393e7304",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-04T22:40:34Z",
+      "side": 1,
+      "message": "Do you also need to initialize printerUsbInfo here?",
+      "revId": "ba21ccbd4cdd7b6f0672a898e188652124b4be14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6d5cb1_645f9539",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-04T22:40:34Z",
+      "side": 1,
+      "message": "If your CL lands after my edit-printer CL, please modify it to CreateEmptyPrinterInfo() to make sure UI works properly.",
+      "revId": "ba21ccbd4cdd7b6f0672a898e188652124b4be14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
