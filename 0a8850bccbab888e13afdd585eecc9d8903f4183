@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "f4a912c1_ce028b79",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-04T17:04:39Z",
+      "side": 1,
+      "message": "If I\u0027m reading the code right, on low end devices web facing APIs use the same \"Default\" block cache, right?",
+      "range": {
+        "startLine": 11,
+        "startChar": 56,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "010bacba_754c3171",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -47,6 +70,29 @@
       "writtenOn": "2017-08-03T23:43:45Z",
       "side": 1,
       "message": "data intensive pages slowing down the Chrome application too much -\u003e malicious Web pages from mounting a denial of service attack against Chrome\u0027s UI and internals?",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6e9f51_ed3e516b",
+        "filename": "components/leveldb/leveldb_database_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-04T17:04:39Z",
+      "side": 1,
+      "message": "It might make sense to do the memory infra logging that this used to be used for in DBTracker::MemoryDumpProvider instead? I only added it here because at the time there was no DBTracker yet.\n\nActually, with the shared block cache (unless we somehow have a wrapper to attribute usage to an individual database) it doesn\u0027t really make sense to report cache memory usage like this at all. But same problem applies to memory usage in general. \"leveldb.approximate-memory-usage\" will include the full cache size in all database, so you\u0027ll definitely have to somehow change DBTracker to not double count all that memory...",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 75
+      },
       "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +116,24 @@
     },
     {
       "key": {
+        "uuid": "08a1e2c6_ea5f703c",
+        "filename": "components/leveldb/leveldb_database_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-04T17:04:39Z",
+      "side": 1,
+      "message": "It probably passes because now the code always passes nullptr as cache.",
+      "parentUuid": "a6f11ada_4b5de19c",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "908d1e7b_36c88d12",
         "filename": "components/leveldb/leveldb_service_impl.cc",
         "patchSetId": 1
@@ -87,6 +151,24 @@
     },
     {
       "key": {
+        "uuid": "08e3fa69_d4c8cc46",
+        "filename": "components/leveldb/leveldb_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-04T17:04:39Z",
+      "side": 1,
+      "message": "but options.block_cache isn\u0027t going to be null, right? The ChromiumOptions constructor initializes it to the default shared block cache.",
+      "parentUuid": "908d1e7b_36c88d12",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aab556dd_632f8f3e",
         "filename": "components/leveldb/public/interfaces/leveldb.mojom",
         "patchSetId": 1
@@ -98,6 +180,23 @@
       "writtenOn": "2017-08-03T23:43:45Z",
       "side": 1,
       "message": "It might be useful to have clients specify an abstract access class / access pattern / isolation level instead of explicitly coupling the option to the block cache. This\u0027d let us use the same option to select the right pool if we implement file descriptor pooling.\n\nIf you prefer, I\u0027m OK with deferring a change to the point where we actually implement descriptor pooling, so we don\u0027t pay the mental cost of the extra abstraction until we\u0027re ready to get some benefits out of it.",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e342e74_b925eeb9",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-04T17:04:39Z",
+      "side": 1,
+      "message": "this is probably okay (especially since on low end devices it seems this will just use the Default cache anyway, so we\u0027re not really regressing from the 100K cache it had before to the 1MB cache the new code has as default), but at some point we might want to investigate the impact of either somehow completely disabling the block cache for localstorage, or passing the dont-store-in-the-cache flag to most read operations. The localstorage access pattern isn\u0027t really helped by the block cache as far as I can tell. Generally two kinds of read operations are done: \n1) read all the storage for a particular origin and then cache that in localstorage speciic code, after which all read operations for that origin should be fulfilled from that cache, never hitting the block cache again.\n2) compactions; where the block cache might help some (especially since the write buffer size is set to such a silly low value, we\u0027re likely to have to do a compaction after every non-trivial write operation).\n\nSo since this really doesn\u0027t seem to benefit much from a block cache at all, it would be a shame if loading 1MB of localstorage data completely evicts all other data from the shared block cache, even though we\u0027re almost certainly never going to be reading that data from the block cache again... But hard to tell what the actual impact is without measurements (I wrote some code in https://chromium-review.googlesource.com/c/544019/ to try to at least measure cache hit/miss rates, but I\u0027m not convinced those are actually the right metrics to be able to do something here. I do wonder if some similar wrapper (possibly with wrapped deleters as well) would make sense to measure block cache usage for specific leveldb instances in this new shared block cache world...",
       "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
