@@ -84,6 +84,11 @@ bool AppListTestViewDelegate::IsSpeechRecognitionEnabled() {
   return false;
 }
 
+const std::vector<SkColor>&
+AppListTestViewDelegate::GetWallpaperProminentColors() const {
+  return wallpaper_prominent_colors_;
+}
+
 void AppListTestViewDelegate::ReplaceTestModel(int item_count) {
   model_.reset(new AppListTestModel);
   model_->PopulateApps(item_count);
