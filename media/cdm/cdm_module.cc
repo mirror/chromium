@@ -97,7 +97,9 @@ void CdmModule::ResetInstanceForTesting() {
   g_cdm_module = nullptr;
 }
 
-CdmModule::CdmModule() {}
+CdmModule::CdmModule() {
+  Initialize(kWidevineKeySystem);
+}
 
 CdmModule::~CdmModule() {
   if (deinitialize_cdm_module_func_)

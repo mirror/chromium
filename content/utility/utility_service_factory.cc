@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "build/build_config.h"
 #include "content/child/child_process.h"
 #include "content/network/network_service_impl.h"
 #include "content/public/common/content_client.h"
@@ -33,6 +34,16 @@
 #include "media/mojo/services/mojo_media_client.h"   // nogncheck
 #endif
 
+#if defined(OS_MACOSX)
+#include "content/common/sandbox_init_mac.h"
+#endif
+
+#if defined(OS_WIN)
+#include "sandbox/win/src/sandbox.h"
+
+extern sandbox::TargetServices* g_utility_target_services;
+#endif
+
 namespace {
 
 std::unique_ptr<service_manager::Service> CreateVideoCaptureService() {
@@ -50,6 +61,15 @@ namespace {
 static_assert(BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE), "");
 static_assert(BUILDFLAG(ENABLE_MOJO_CDM), "");
 
+void SealSandbox() {
+  LOG(ERROR) << __func__;
+#if defined(OS_WIN)
+  g_utility_target_services->LowerToken();
+#elif defined(OS_MACOSX)
+  CHECK(InitializeSandbox());
+#endif
+}
+
 std::unique_ptr<media::CdmAllocator> CreateCdmAllocator() {
   return base::MakeUnique<media::MojoCdmAllocator>();
 }
@@ -58,6 +78,8 @@ class CdmMojoMediaClient final : public media::MojoMediaClient {
  public:
   CdmMojoMediaClient() {}
   ~CdmMojoMediaClient() override {}
+
+  void OnCdmPreloaded() override { SealSandbox(); }
 
   std::unique_ptr<media::CdmFactory> CreateCdmFactory(
       service_manager::mojom::InterfaceProvider* host_interfaces) override {

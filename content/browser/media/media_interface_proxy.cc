@@ -162,6 +162,7 @@ void MediaInterfaceProxy::ConnectToMediaService() {
                  base::Unretained(this)));
 }
 
+// TODO(xhwang): Pass key system in.
 void MediaInterfaceProxy::ConnectToCdmService() {
   DVLOG(1) << __FUNCTION__;
 
@@ -171,6 +172,11 @@ void MediaInterfaceProxy::ConnectToCdmService() {
   service_manager::Connector* connector =
       ServiceManagerConnection::GetForProcess()->GetConnector();
   connector->BindInterface(media::mojom::kCdmServiceName, &media_service);
+
+  // TODO(xhwang): From key system, get the CDM type. Then check CdmRegistry to
+  // get the path of the CDM for that CDM type.
+  base::FilePath cdm_path;
+  media_service->PreloadCdm(cdm_path);
 
   media_service->CreateInterfaceFactory(
       MakeRequest(&cdm_interface_factory_ptr_), GetFrameServices());

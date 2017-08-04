@@ -26,6 +26,10 @@ enum SandboxType {
   // access is allowed to one configurable directory.
   SANDBOX_TYPE_UTILITY,
 
+  // Same as SANDBOX_TYPE_UTILITY, except that the sandbox initialization will
+  // be delayed to allow customized presandbox startup logic.
+  SANDBOX_TYPE_UTILITY_DELAYED_INITIALIZATION,
+
   // GPU process.
   SANDBOX_TYPE_GPU,
 

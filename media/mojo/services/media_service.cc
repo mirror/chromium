@@ -8,10 +8,13 @@
 
 #include "base/memory/ptr_util.h"
 #include "media/base/media_log.h"
+#include "media/cdm/cdm_module.h"
 #include "media/mojo/services/interface_factory_impl.h"
 #include "media/mojo/services/mojo_media_client.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/connector.h"
+
+#include "base/files/scoped_temp_dir.h"
 
 namespace media {
 
@@ -47,6 +50,26 @@ bool MediaService::OnServiceManagerConnectionLost() {
 
 void MediaService::Create(mojom::MediaServiceRequest request) {
   bindings_.AddBinding(this, std::move(request));
+}
+
+void MediaService::PreloadCdm(const base::FilePath& cdm_path) {
+  // This will preload the CDM.
+  // TODO(xhwang): Pass |cdm_path| to CdmModule to load the CDM.
+  // Also let MediaService own the CdmModule.
+  CdmModule::GetInstance();
+
+  // This will trigger the sandbox to be sealed.
+  mojo_media_client_->OnCdmPreloaded();
+
+  // Test the sandbox is initialized.
+  // TODO(xhwang): Remove this before commit.
+  base::ScopedTempDir temp_dir;
+  bool success = temp_dir.CreateUniqueTempDir();
+  LOG(ERROR) << "CreateUniqueTempDir: " << success;
+  base::FilePath file_path = temp_dir.GetPath().AppendASCII("read_write_file");
+  base::File file(file_path, base::File::FLAG_CREATE | base::File::FLAG_READ |
+                                 base::File::FLAG_WRITE);
+  LOG(ERROR) << "file valid? " << file.IsValid();
 }
 
 void MediaService::CreateInterfaceFactory(
