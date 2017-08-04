@@ -416,6 +416,8 @@ const char* kAsanDefaultOptionsNaCl = "handle_segv=0:detect_odr_violation=0";
 
 int main(int argc, char* argv[]) {
   base::CommandLine::Init(argc, argv);
+  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII("type", "nacl");
+
   base::AtExitManager exit_manager;
   base::RandUint64();  // acquire /dev/urandom fd before sandbox is raised
 
