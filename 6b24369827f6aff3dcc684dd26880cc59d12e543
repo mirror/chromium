@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ee5c6e1_49a3cff7",
+        "filename": "mojo/public/tools/fuzzers/mojo_fuzzer_message_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-04T22:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db562044_57371f6b",
+      "range": {
+        "startLine": 70,
+        "startChar": 27,
+        "endLine": 70,
+        "endChar": 49
+      },
+      "revId": "6b24369827f6aff3dcc684dd26880cc59d12e543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6bbb567_3da43250",
         "filename": "mojo/public/tools/fuzzers/mojo_fuzzer_message_dump.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "6b24369827f6aff3dcc684dd26880cc59d12e543",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4441c954_c270b6b5",
+        "filename": "mojo/public/tools/fuzzers/mojo_fuzzer_message_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-04T22:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6bbb567_3da43250",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 48
+      },
+      "revId": "6b24369827f6aff3dcc684dd26880cc59d12e543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
