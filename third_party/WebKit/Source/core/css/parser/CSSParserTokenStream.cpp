@@ -6,6 +6,17 @@
 
 namespace blink {
 
+void CSSParserTokenStream::ConsumeWhitespace() {
+  while (Peek().GetType() == kWhitespaceToken)
+    UncheckedConsume();
+}
+
+const CSSParserToken& CSSParserTokenStream::ConsumeIncludingWhitespace() {
+  const CSSParserToken& result = Consume();
+  ConsumeWhitespace();
+  return result;
+}
+
 void CSSParserTokenStream::UncheckedConsumeComponentValue() {
   unsigned nesting_level = 0;
   do {
