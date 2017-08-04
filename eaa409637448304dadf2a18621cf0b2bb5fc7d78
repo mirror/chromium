@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a0e421a_e9885528",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "sort to match header",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6459e308_d9f6c90b",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "Are these new settings? (Never before seen by the sync system, I mean?)\n\nIf so, I think the names should start with \"ash.\" since they are owned by ash. So perhaps \"ash.system.bluetooth.adapter_enabled\" and \"ash.user.bluetooth.adapter_enabled\".\n\nThe logout button ones don\u0027t have ash because they were previously synced and I can\u0027t change the names.",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46409e99_157bc05a",
+        "filename": "ash/public/cpp/ash_pref_names.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "nit: blank line above (group into sections)\n\nBonus point for adding a blank line after line 14 :-)",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f44374d6_dbda41c9",
+        "filename": "ash/public/interfaces/user_info.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "nit: document what this means\n\nAll mojom files need extensive documentation, since they are a more permanent API contract than our C++ headers. I don\u0027t know why the rest of this struct isn\u0027t documented.",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbcdb525_078af985",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "alemate, supervised users don\u0027t have Gaia, right? So this is correct?",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5e5393_5e93a380",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "nit: UserHasGaiaAccount() or IsUserWithGaiaAccount()",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c9c9d5_98556392",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "only multi-profile, or is this the primary user in a regular session as well?",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b0effd_c622e18b",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "nit: How about something like IsUserFirstLogin()?",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2412fd7e_065b6dc1",
+        "filename": "ash/shell.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "nit: RegisterLocalStatePrefs() please",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f70c67_af8b443c",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "nit: class comment please. What does this class do and why does it exist?",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57bcb7b2_92fe99c4",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "super-nit: No ash::",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88166ba3_a209c88f",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "Can you use base::Optional\u003c\u003e?\n\nOr two bools would work, like |should_set_bluetooth_power_| and |bluetooth_power_| or something like that.",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69aff6ab_78c3dd18",
+        "filename": "ash/system/bluetooth/tray_bluetooth.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "nit: This could use a comment. I suspect you\u0027re trying to block the session for non-primary multiprofile users, but I\u0027m not completely sure. You could also pull this out into a utility function, like ShouldEnableDefaultView(), which might give you more space for comments.",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e26419d_1ea697d3",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "I think it would be clearer to move this method into BluetoothController. Then all the power management stuff would be in one place, and the reader could see the interactions with prefs.\n\nIt should also make it more clear when the various registries are available.",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5644b5_0c7938ac",
+        "filename": "chrome/browser/ui/ash/chrome_shell_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "Do you need to add this method?\n\nI don\u0027t think so, but if so, sort to match header order.",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84bbfe1_71d6f905",
+        "filename": "chrome/browser/ui/ash/chrome_shell_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "Do you need to add this method?\n\nI don\u0027t think so, but if so, sort to match header order.",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efad414e_53ab663d",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T22:03:39Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
