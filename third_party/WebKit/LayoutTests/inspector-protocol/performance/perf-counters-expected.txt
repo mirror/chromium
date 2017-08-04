@@ -1,0 +1,8 @@
+Test that page performance metrics are retrieved.
+[]
+["DocumentCount","NodeCount"]
+["DocumentCount","NodeCount"]
+["DocumentCount","NodeCount"]
+["NodeCount"]
+[]
+
