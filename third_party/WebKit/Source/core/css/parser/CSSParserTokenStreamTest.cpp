@@ -8,16 +8,31 @@
 
 namespace blink {
 
-TEST(CSSParserTokenStreamTest, EmptyStream) {
+namespace {
+
+// Parameterized tests for whether we are constructing a stream from
+// an empty or exhausted tokenizer.
+// TODO(shend): Remove this once we no longer need to construct streams
+// from exhausted tokenizers.
+class CSSParserTokenStreamTest : public ::testing::TestWithParam<bool> {};
+
+CSSParserTokenStream GetStream(CSSTokenizer& tokenizer,
+                               bool should_tokenize_to_end) {
+  if (should_tokenize_to_end)
+    tokenizer.TokenRange();
+  return CSSParserTokenStream(tokenizer);
+}
+
+TEST_P(CSSParserTokenStreamTest, EmptyStream) {
   CSSTokenizer tokenizer("");
-  CSSParserTokenStream stream(tokenizer);
+  auto stream = GetStream(tokenizer, GetParam());
   EXPECT_TRUE(stream.Consume().IsEOF());
   EXPECT_TRUE(stream.Peek().IsEOF());
   EXPECT_TRUE(stream.AtEnd());
   EXPECT_TRUE(stream.MakeRangeToEOF().AtEnd());
 }
 
-TEST(CSSParserTokenStreamTest, PeekThenConsume) {
+TEST_P(CSSParserTokenStreamTest, PeekThenConsume) {
   CSSTokenizer tokenizer("A");  // kIdent
   CSSParserTokenStream stream(tokenizer);
   EXPECT_EQ(kIdentToken, stream.Peek().GetType());
@@ -25,14 +40,14 @@ TEST(CSSParserTokenStreamTest, PeekThenConsume) {
   EXPECT_TRUE(stream.AtEnd());
 }
 
-TEST(CSSParserTokenStreamTest, ConsumeThenPeek) {
+TEST_P(CSSParserTokenStreamTest, ConsumeThenPeek) {
   CSSTokenizer tokenizer("A");  // kIdent
   CSSParserTokenStream stream(tokenizer);
   EXPECT_EQ(kIdentToken, stream.Consume().GetType());
   EXPECT_TRUE(stream.AtEnd());
 }
 
-TEST(CSSParserTokenStreamTest, ConsumeMultipleTokens) {
+TEST_P(CSSParserTokenStreamTest, ConsumeMultipleTokens) {
   CSSTokenizer tokenizer("A 1");  // kIdent kWhitespace kNumber
   CSSParserTokenStream stream(tokenizer);
   EXPECT_EQ(kIdentToken, stream.Consume().GetType());
@@ -41,7 +56,7 @@ TEST(CSSParserTokenStreamTest, ConsumeMultipleTokens) {
   EXPECT_TRUE(stream.AtEnd());
 }
 
-TEST(CSSParserTokenStreamTest, UncheckedPeekAndConsumeAfterPeek) {
+TEST_P(CSSParserTokenStreamTest, UncheckedPeekAndConsumeAfterPeek) {
   CSSTokenizer tokenizer("A");  // kIdent
   CSSParserTokenStream stream(tokenizer);
   EXPECT_EQ(kIdentToken, stream.Peek().GetType());
@@ -50,7 +65,7 @@ TEST(CSSParserTokenStreamTest, UncheckedPeekAndConsumeAfterPeek) {
   EXPECT_TRUE(stream.AtEnd());
 }
 
-TEST(CSSParserTokenStreamTest, UncheckedPeekAndConsumeAfterAtEnd) {
+TEST_P(CSSParserTokenStreamTest, UncheckedPeekAndConsumeAfterAtEnd) {
   CSSTokenizer tokenizer("A");  // kIdent
   CSSParserTokenStream stream(tokenizer);
   EXPECT_FALSE(stream.AtEnd());
@@ -59,7 +74,7 @@ TEST(CSSParserTokenStreamTest, UncheckedPeekAndConsumeAfterAtEnd) {
   EXPECT_TRUE(stream.AtEnd());
 }
 
-TEST(CSSParserTokenStreamTest, MakeRangeToEOF) {
+TEST_P(CSSParserTokenStreamTest, MakeRangeToEOF) {
   CSSTokenizer tokenizer("A 1");  // kIdent kWhitespace kNumber
   CSSParserTokenStream stream(tokenizer);
   EXPECT_EQ(kIdentToken, stream.Consume().GetType());
@@ -74,7 +89,7 @@ TEST(CSSParserTokenStreamTest, MakeRangeToEOF) {
   EXPECT_FALSE(stream.AtEnd());
 }
 
-TEST(CSSParserTokenStreamTest, UncheckedConsumeComponentValue) {
+TEST_P(CSSParserTokenStreamTest, UncheckedConsumeComponentValue) {
   CSSTokenizer tokenizer("A{1}{2{3}}B");
   CSSParserTokenStream stream(tokenizer);
 
@@ -89,5 +104,11 @@ TEST(CSSParserTokenStreamTest, UncheckedConsumeComponentValue) {
 
   EXPECT_TRUE(stream.AtEnd());
 }
+
+INSTANTIATE_TEST_CASE_P(ShouldTokenizeToEnd,
+                        CSSParserTokenStreamTest,
+                        ::testing::Bool());
+
+}  // namespace
 
 }  // namespace blink
