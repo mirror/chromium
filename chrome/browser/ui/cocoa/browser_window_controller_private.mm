@@ -47,6 +47,7 @@
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_view.h"
 #import "chrome/browser/ui/cocoa/toolbar/toolbar_controller.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
+#include "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_switches.h"
 #include "components/prefs/pref_service.h"
@@ -671,7 +672,8 @@ willPositionSheet:(NSWindow*)sheet
 
   [self invalidateTouchBar];
 
-  [self showFullscreenExitBubbleIfNecessary];
+  if (!FullscreenWithinTabHelper::IsContentFullscreenEnabled())
+    [self showFullscreenExitBubbleIfNecessary];
   browser_->WindowFullscreenStateChanged();
 
   if (fullscreenLowPowerCoordinator_)
