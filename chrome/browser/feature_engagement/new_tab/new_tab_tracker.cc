@@ -4,16 +4,20 @@
 
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
 
+#include "base/metrics/field_trial.h"
+#include "base/strings/string_util.h"
 #include "base/time/time.h"
 #include "chrome/browser/feature_engagement/tracker_factory.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/views/tabs/new_tab_button.h"
 #include "chrome/common/pref_names.h"
 #include "components/feature_engagement/public/event_constants.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/tracker.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
+#include "components/variations/variations_associated_data.h"
 
 namespace {
 
@@ -38,10 +42,6 @@ void NewTabTracker::RegisterProfilePrefs(
   registry->RegisterIntegerPref(prefs::kSessionTimeTotal, 0);
 }
 
-void NewTabTracker::DismissNewTabTracker() {
-  GetFeatureTracker()->Dismissed(kIPHNewTabFeature);
-}
-
 void NewTabTracker::OnNewTabOpened() {
   GetFeatureTracker()->NotifyEvent(events::kNewTabOpened);
 }
@@ -55,8 +55,18 @@ void NewTabTracker::OnSessionTimeMet() {
 }
 
 void NewTabTracker::OnOmniboxFocused() {
+  // If the flag for demo mode is enabled, then bypass the session time
+  // requirement to make testing easier.
+  if (IsIPHNewTabEnabled()) {
+    OnSessionTimeMet();
+  }
+
   if (ShouldShowPromo())
     ShowPromo();
+}
+
+void NewTabTracker::OnPromoClosed() {
+  GetFeatureTracker()->Dismissed(kIPHNewTabFeature);
 }
 
 bool NewTabTracker::ShouldShowPromo() {
@@ -76,11 +86,15 @@ bool NewTabTracker::HasEnoughSessionTimeElapsed() {
   return GetPrefs()->GetInteger(prefs::kSessionTimeTotal) >= kTwoHoursInMinutes;
 }
 
-void NewTabTracker::ShowPromo() {
-  // TODO(crbug.com/737830): Call the promo.
+bool NewTabTracker::IsIPHNewTabEnabled() {
+  const std::string group_name =
+      base::FieldTrialList::FindFullName("NewTabInProductHelp");
+  return base::StartsWith(group_name, "Enabled",
+                          base::CompareCase::INSENSITIVE_ASCII);
+}
 
-  // Clears the flag for whether there is any in-product help being displayed.
-  GetFeatureTracker()->Dismissed(kIPHNewTabFeature);
+void NewTabTracker::ShowPromo() {
+  NewTabButton::ShowPromoForLastActiveBrowser();
 }
 
 Tracker* NewTabTracker::GetFeatureTracker() {

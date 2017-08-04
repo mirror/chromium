@@ -2104,11 +2104,13 @@ test("browser_tests") {
           "../browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
         ]
       }
+      deps += [ "//components/feature_engagement/test:test_support" ]
       if (!is_mac || mac_views_browser) {
         sources += [
           # TODO(tapted): Move these to chrome_browser_tests_views_sources when the
           # the corresponding files are moved in chrome_browser_ui.gypi (i.e. out of
           # chrome_browser_ui_views_non_mac_sources). http://crbug.com/404979.
+          "../browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
           "../browser/ui/views/autofill/autofill_popup_base_view_browsertest.cc",
           "../browser/ui/views/autofill/autofill_popup_view_views_browsertest.cc",
           "../browser/ui/views/autofill/card_unmask_prompt_view_tester_views.cc",
@@ -2317,6 +2319,7 @@ test("browser_tests") {
       ]
       sources -= [
         "../../apps/load_and_launch_browsertest.cc",
+        "../browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
         "../browser/policy/policy_startup_browsertest.cc",
 
         # chromeos does not support profile list avatar menu
