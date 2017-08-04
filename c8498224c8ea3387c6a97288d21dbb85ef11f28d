@@ -16,6 +16,24 @@
       "revId": "c8498224c8ea3387c6a97288d21dbb85ef11f28d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55322b64_5b7d5497",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 17
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-04T17:19:48Z",
+      "side": 1,
+      "message": "Rebased",
+      "parentUuid": "4a6939ef_3a7893b0",
+      "revId": "c8498224c8ea3387c6a97288d21dbb85ef11f28d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
