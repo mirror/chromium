@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52355416_ca06d745",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-04T21:31:33Z",
+      "side": 1,
+      "message": "I don\u0027t know that this assumption holds in all cases.  Can you compare manufacturer to ppdManufacturer?",
+      "range": {
+        "startLine": 47,
+        "startChar": 28,
+        "endLine": 47,
+        "endChar": 61
+      },
+      "revId": "4e1613528bbfec271a8d1d8a95a86173a865b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce85b8c3_f097ac17",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-04T21:31:33Z",
+      "side": 1,
+      "message": "Clearing this here is problematic since this is supposed to contain the value detected during setup.  It doesn\u0027t necessarily match the PPD information.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 56
+      },
+      "revId": "4e1613528bbfec271a8d1d8a95a86173a865b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
