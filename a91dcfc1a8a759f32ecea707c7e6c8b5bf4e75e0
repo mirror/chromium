@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c30073be_f342d691",
+        "filename": "chrome/installer/mini_installer/mini_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-04T13:48:19Z",
+      "side": 1,
+      "message": "I don\u0027t suppose exe_path will ever contain quotes? \u003cducks for cover\u003e",
+      "range": {
+        "startLine": 372,
+        "startChar": 20,
+        "endLine": 372,
+        "endChar": 26
+      },
+      "revId": "a91dcfc1a8a759f32ecea707c7e6c8b5bf4e75e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
