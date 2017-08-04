@@ -194,7 +194,7 @@ class MODULES_EXPORT BaseAudioContext
 
   AudioListener* listener() { return listener_; }
 
-  virtual bool HasRealtimeConstraint() = 0;
+  bool HasRealtimeConstraint() { return has_realtime_constraint_; }
 
   // The AudioNode create methods are called on the main thread (from
   // JavaScript).
@@ -334,11 +334,7 @@ class MODULES_EXPORT BaseAudioContext
   void MaybeRecordStartAttempt();
 
  protected:
-  explicit BaseAudioContext(Document*);
-  BaseAudioContext(Document*,
-                   unsigned number_of_channels,
-                   size_t number_of_frames,
-                   float sample_rate);
+  explicit BaseAudioContext(Document*, bool has_realtime_constraint);
 
   void Initialize();
   void Uninitialize();
@@ -395,6 +391,7 @@ class MODULES_EXPORT BaseAudioContext
     kAutoplayStatusCount
   };
 
+  bool has_realtime_constraint_;
   bool is_cleared_;
   void Clear();
 

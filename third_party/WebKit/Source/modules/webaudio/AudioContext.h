@@ -39,8 +39,6 @@ class MODULES_EXPORT AudioContext : public BaseAudioContext {
   ScriptPromise suspendContext(ScriptState*) final;
   ScriptPromise resumeContext(ScriptState*) final;
 
-  bool HasRealtimeConstraint() final { return true; }
-
   void getOutputTimestamp(ScriptState*, AudioTimestamp&);
   double baseLatency() const;
 

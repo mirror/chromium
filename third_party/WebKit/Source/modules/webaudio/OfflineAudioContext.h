@@ -67,8 +67,6 @@ class MODULES_EXPORT OfflineAudioContext final : public BaseAudioContext {
 
   void RejectPendingResolvers() override;
 
-  bool HasRealtimeConstraint() final { return false; }
-
   DEFINE_ATTRIBUTE_EVENT_LISTENER(complete);
 
   // Fire completion event when the rendering is finished.
