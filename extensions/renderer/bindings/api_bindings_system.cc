@@ -93,6 +93,7 @@ void APIBindingsSystem::InitializeType(const std::string& type_name) {
   // close enough to the same cost. Additionally, this happens lazily on API
   // use, and relatively few APIs specify types from another API. Finally, this
   // will also go away if/when we generate all these specifications.
+  LOG(WARNING) << "initializing type: " << type_name;
   std::string::size_type dot = type_name.rfind('.');
   // The type name should be fully qualified (include the API name).
   DCHECK_NE(std::string::npos, dot) << type_name;

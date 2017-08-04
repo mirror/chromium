@@ -7,6 +7,7 @@
 #include "gin/converter.h"
 #include "gin/data_object_builder.h"
 #include "gin/handle.h"
+#include "gin/data_object_builder.h"
 #include "gin/object_template_builder.h"
 #include "gin/wrappable.h"
 

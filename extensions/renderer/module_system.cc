@@ -710,6 +710,8 @@ v8::Local<v8::Value> ModuleSystem::LoadModuleWithNativeAPIBridge(
   v8::Local<v8::Context> v8_context = context()->v8_context();
   v8::Context::Scope context_scope(v8_context);
 
+  LOG(WARNING) << "\n\nLOADING: " << module_name << "\n\n";
+
   v8::Local<v8::String> source =
       source_map_->GetSource(GetIsolate(), module_name);
   if (source.IsEmpty()) {

@@ -63,6 +63,7 @@ void APIBindingJSUtil::SendRequest(
   v8::HandleScope handle_scope(isolate);
   v8::Local<v8::Context> context = arguments->GetHolderCreationContext();
 
+  LOG(WARNING) << "Getting signature: " << name;
   const APISignature* signature = type_refs_->GetAPIMethodSignature(name);
   DCHECK(signature);
 

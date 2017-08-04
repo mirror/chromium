@@ -9,9 +9,8 @@ var exceptionHandler = require('uncaught_exception_handler');
 var runCallbackWithLastError;
 if (bindingUtil) {
   runCallbackWithLastError = function(name, message, stack, callback, args) {
-    bindingUtil.runCallbackWithLastError(message, function() {
-      $Function.apply(callback, null, args);
-    });
+    bindingUtil.runCallbackWithLastError(
+        message, $Function.bind(callback, null, args));
   }
 } else {
   var lastError = require('lastError');

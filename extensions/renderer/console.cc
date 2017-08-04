@@ -53,6 +53,7 @@ void BoundLogMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Local<v8::Context> context = info.GetIsolate()->GetCurrentContext();
   ScriptContext* script_context =
       ScriptContextSet::GetContextByV8Context(context);
+  LOG(WARNING) << "LOG (" << script_context << "): " << message;
   // TODO(devlin): Consider (D)CHECK(script_context)
   const auto level = static_cast<content::ConsoleMessageLevel>(
       info.Data().As<v8::Int32>()->Value());
