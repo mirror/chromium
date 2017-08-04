@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e37de10_a58d0449",
+        "filename": "ios/chrome/browser/web/page_placeholder_tab_helper_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-04T17:03:51Z",
+      "side": 1,
+      "message": "nit: delegate methods are requests made to the delegate, so the comments read best when phrased as \"asking\" or \"telling\".\n\n\"Asks the delegate to display a placeholder over a loading WebState.\", maybe.",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "c71b8df4b2c9bce1f98ec21c8fca30522a068491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d0abd37_2f9229ae",
+        "filename": "ios/chrome/browser/web/page_placeholder_tab_helper_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-04T17:03:51Z",
+      "side": 1,
+      "message": "\"Asks the delegate to remove any placeholder being displayed.\"",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 10
+      },
+      "revId": "c71b8df4b2c9bce1f98ec21c8fca30522a068491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
