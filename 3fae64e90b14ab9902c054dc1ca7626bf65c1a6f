@@ -16,6 +16,63 @@
       "revId": "3fae64e90b14ab9902c054dc1ca7626bf65c1a6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f5e406_6e97d604",
+        "filename": "net/cert/x509_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-04T23:14:32Z",
+      "side": 1,
+      "message": "\u003e\u003d ?",
+      "revId": "3fae64e90b14ab9902c054dc1ca7626bf65c1a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574e002d_b8142cb6",
+        "filename": "net/cert/x509_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-04T23:14:32Z",
+      "side": 1,
+      "message": "sig_out ?",
+      "range": {
+        "startLine": 326,
+        "startChar": 11,
+        "endLine": 326,
+        "endChar": 14
+      },
+      "revId": "3fae64e90b14ab9902c054dc1ca7626bf65c1a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5dcb25_ea17087a",
+        "filename": "net/cert/x509_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-04T23:14:32Z",
+      "side": 1,
+      "message": "nitpicky, but could be more consistent with the naming for the cert variables here and above for the tbs_cert_* variables.",
+      "revId": "3fae64e90b14ab9902c054dc1ca7626bf65c1a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
