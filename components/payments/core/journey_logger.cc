@@ -103,6 +103,8 @@ void JourneyLogger::SetNumberOfSuggestionsShown(Section section,
 void JourneyLogger::SetCanMakePaymentValue(bool value) {
   was_can_make_payments_used_ = true;
   could_make_payment_ |= value;
+  SetEventOccurred(value ? EVENT_CAN_MAKE_PAYMENT_TRUE
+                         : EVENT_CAN_MAKE_PAYMENT_FALSE);
 }
 
 void JourneyLogger::SetEventOccurred(Event event) {
