@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cf804291_ecc22d36",
+        "filename": "services/viz/public/cpp/compositing/returned_resource_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-04T18:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "895f53fa_f38b8a4a",
+      "revId": "f82a1ac882b91a48e81e0a9a4ab17a01b0e2130e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76481810_961d7f31",
         "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
         "patchSetId": 2
@@ -150,6 +168,24 @@
       "revId": "f82a1ac882b91a48e81e0a9a4ab17a01b0e2130e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1343c705_5924a1c0",
+        "filename": "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-04T18:59:50Z",
+      "side": 1,
+      "message": "Right.  Thank you.  \n\nDone",
+      "parentUuid": "59f341b2_ae008b73",
+      "revId": "f82a1ac882b91a48e81e0a9a4ab17a01b0e2130e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
