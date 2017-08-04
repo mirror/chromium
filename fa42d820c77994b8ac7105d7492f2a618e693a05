@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad7e3758_02f764d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-04T04:44:12Z",
+      "side": 1,
+      "message": "You duplicated this line.",
+      "revId": "fa42d820c77994b8ac7105d7492f2a618e693a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "130378e0_2c2e9c51",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-04T04:44:12Z",
+      "side": 1,
+      "message": "nit: Bug:\u003cspace\u003e750934",
+      "revId": "fa42d820c77994b8ac7105d7492f2a618e693a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
