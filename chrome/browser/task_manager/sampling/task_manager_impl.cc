@@ -16,7 +16,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/task_manager/providers/browser_process_task_provider.h"
 #include "chrome/browser/task_manager/providers/child_process_task_provider.h"
-#include "chrome/browser/task_manager/providers/render_process_host_task_provider.h"
+#include "chrome/browser/task_manager/providers/fallback_task_provider.h"
 #include "chrome/browser/task_manager/providers/web_contents/web_contents_task_provider.h"
 #include "chrome/browser/task_manager/sampling/shared_sampler.h"
 #include "chrome/common/chrome_switches.h"
@@ -54,10 +54,11 @@ TaskManagerImpl::TaskManagerImpl()
 
   task_providers_.emplace_back(new BrowserProcessTaskProvider());
   task_providers_.emplace_back(new ChildProcessTaskProvider());
-  task_providers_.emplace_back(new WebContentsTaskProvider());
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kTaskManagerShowExtraRenderers)) {
-    task_providers_.emplace_back(new RenderProcessHostTaskProvider());
+    task_providers_.emplace_back(new WebContentsTaskProvider());
+  } else {
+    task_providers_.emplace_back(new FallbackTaskProvider());
   }
 
 #if defined(OS_CHROMEOS)
