@@ -18,8 +18,8 @@ std::vector<blink::WebCompositionUnderline> ConvertToBlinkUnderline(
   std::vector<blink::WebCompositionUnderline> underlines;
   for (const auto& underline : ui_underlines) {
     underlines.emplace_back(blink::WebCompositionUnderline(
-        underline.start_offset, underline.end_offset, underline.color,
-        underline.thick, underline.background_color));
+        underline.start_offset, underline.end_offset, underline.use_text_color,
+        underline.color, underline.thick, underline.background_color));
   }
   return underlines;
 }

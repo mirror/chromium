@@ -40,6 +40,7 @@ class CORE_EXPORT CompositionUnderline {
  public:
   CompositionUnderline(unsigned start_offset,
                        unsigned end_offset,
+                       bool use_text_color,
                        const Color&,
                        bool thick,
                        const Color& background_color);
@@ -48,6 +49,7 @@ class CORE_EXPORT CompositionUnderline {
 
   unsigned StartOffset() const { return start_offset_; }
   unsigned EndOffset() const { return end_offset_; }
+  bool UseTextColor() const { return use_text_color_; }
   const Color& GetColor() const { return color_; }
   bool Thick() const { return thick_; }
   const Color& BackgroundColor() const { return background_color_; }
@@ -55,6 +57,7 @@ class CORE_EXPORT CompositionUnderline {
  private:
   unsigned start_offset_;
   unsigned end_offset_;
+  bool use_text_color_;
   Color color_;
   bool thick_;
   Color background_color_;

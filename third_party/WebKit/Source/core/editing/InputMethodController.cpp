@@ -493,7 +493,7 @@ void InputMethodController::AddCompositionUnderlines(
       continue;
 
     GetDocument().Markers().AddCompositionMarker(
-        ephemeral_line_range, underline.GetColor(),
+        ephemeral_line_range, underline.UseTextColor(), underline.GetColor(),
         underline.Thick() ? StyleableMarker::Thickness::kThick
                           : StyleableMarker::Thickness::kThin,
         underline.BackgroundColor());
@@ -719,7 +719,7 @@ void InputMethodController::SetComposition(
 
   if (underlines.IsEmpty()) {
     GetDocument().Markers().AddCompositionMarker(
-        EphemeralRange(composition_range_), Color::kBlack,
+        EphemeralRange(composition_range_), true, 0,
         StyleableMarker::Thickness::kThin,
         LayoutTheme::GetTheme().PlatformDefaultCompositionBackgroundColor());
     return;

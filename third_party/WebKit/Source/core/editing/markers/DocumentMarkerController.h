@@ -61,10 +61,12 @@ class CORE_EXPORT DocumentMarkerController final
                         const String& description = g_empty_string);
   void AddTextMatchMarker(const EphemeralRange&, TextMatchMarker::MatchStatus);
   void AddCompositionMarker(const EphemeralRange&,
+                            bool use_text_color,
                             Color underline_color,
                             StyleableMarker::Thickness,
                             Color background_color);
   void AddActiveSuggestionMarker(const EphemeralRange&,
+                                 bool use_text_color,
                                  Color underline_color,
                                  StyleableMarker::Thickness,
                                  Color background_color);
