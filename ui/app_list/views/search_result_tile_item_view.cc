@@ -12,6 +12,7 @@
 #include "ui/app_list/vector_icons/vector_icons.h"
 #include "ui/app_list/views/search_result_container_view.h"
 #include "ui/gfx/paint_vector_icon.h"
+#include "ui/views/background.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/menu/menu_runner.h"
@@ -119,6 +120,8 @@ void SearchResultTileItemView::SetSearchResult(SearchResult* item) {
     } else if (item_->display_type() == SearchResult::DISPLAY_TILE) {
       title()->SetFontList(base_font.DeriveWithSizeDelta(1));
       title()->SetEnabledColor(kSearchTitleColor);
+      title()->SetBackground(
+          views::CreateSolidBackground(kCardBackgroundColorFullscreen));
     }
   }
 
