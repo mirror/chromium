@@ -91,7 +91,7 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
     return LayoutUnit::FromFloatCeil(PositionForOffset(offset));
   }
 
-  void ApplySpacing(ShapeResultSpacing<String>&, TextDirection);
+  void ApplySpacing(ShapeResultSpacing<String>&);
   PassRefPtr<ShapeResult> ApplySpacingToCopy(ShapeResultSpacing<TextRun>&,
                                              const TextRun&) const;
 
@@ -109,8 +109,7 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
 
   template <typename TextContainerType>
   void ApplySpacing(ShapeResultSpacing<TextContainerType>&,
-                    const TextContainerType&,
-                    bool is_rtl);
+                    const TextContainerType&);
   void InsertRun(std::unique_ptr<ShapeResult::RunInfo>,
                  unsigned start_glyph,
                  unsigned num_glyphs,
