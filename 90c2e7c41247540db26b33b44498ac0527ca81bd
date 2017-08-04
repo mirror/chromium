@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "8a7ed30e_b4fc53c9",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-04T22:14:19Z",
+      "side": 1,
+      "message": "Calling Now() turned out expensive, almost 1% in my benchmark.  I\u0027ve implemented counters as you suggested.",
+      "parentUuid": "2004e06d_79626d59",
+      "revId": "90c2e7c41247540db26b33b44498ac0527ca81bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1cba636_882ba3a2",
         "filename": "net/socket/udp_socket_posix.cc",
         "patchSetId": 2
@@ -212,6 +230,30 @@
       "revId": "90c2e7c41247540db26b33b44498ac0527ca81bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb67d82b_34a70cd0",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-04T22:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01a44e79_43d42ddb",
+      "range": {
+        "startLine": 656,
+        "startChar": 43,
+        "endLine": 656,
+        "endChar": 61
+      },
+      "revId": "90c2e7c41247540db26b33b44498ac0527ca81bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
