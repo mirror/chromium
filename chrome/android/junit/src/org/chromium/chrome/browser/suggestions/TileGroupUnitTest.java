@@ -41,6 +41,7 @@ import org.robolectric.annotation.Config;
 
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.favicon.LargeIconBridge.LargeIconCallback;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
@@ -94,6 +95,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testInitialiseWithTileList() {
         TileGroup tileGroup =
                 new TileGroup(RuntimeEnvironment.application, mock(SuggestionsUiDelegate.class),
@@ -116,6 +118,7 @@ public class TileGroupUnitTest {
      * event though the data did not change (still empty just like before initialisation).
      */
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testInitialiseWithEmptyTileList() {
         TileGroup tileGroup =
                 new TileGroup(RuntimeEnvironment.application, mock(SuggestionsUiDelegate.class),
@@ -134,6 +137,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testReceiveNewTilesWithoutChanges() {
         TileGroup tileGroup = initialiseTileGroup(URLS);
 
@@ -146,6 +150,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testReceiveNewTilesWithoutChanges_TrackLoad() {
         TileGroup tileGroup = initialiseTileGroup(/* deferLoad: */ true, URLS);
 
@@ -159,6 +164,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testReceiveNewTilesWithDataChanges() {
         TileGroup tileGroup = initialiseTileGroup(URLS);
 
@@ -175,6 +181,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testReceiveNewTilesWithDataChanges_TrackLoad() {
         TileGroup tileGroup = initialiseTileGroup(/* deferLoad: */ true, URLS);
 
@@ -192,6 +199,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testReceiveNewTilesWithCountChanges() {
         TileGroup tileGroup = initialiseTileGroup(URLS);
 
@@ -205,6 +213,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testTileLoadingWhenVisibleNotBlockedForInit() {
         SuggestionsUiDelegate uiDelegate = mock(SuggestionsUiDelegate.class);
         when(uiDelegate.isVisible()).thenReturn(true);
@@ -220,6 +229,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testTileLoadingWhenVisibleBlocked() {
         SuggestionsUiDelegate uiDelegate = mock(SuggestionsUiDelegate.class);
         when(uiDelegate.isVisible()).thenReturn(true);
@@ -244,6 +254,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testTileLoadingWhenVisibleBlocked_2() {
         TileGroup tileGroup = initialiseTileGroup(true, URLS);
 
@@ -260,6 +271,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testRenderTileView() {
         SuggestionsUiDelegate uiDelegate = mock(SuggestionsUiDelegate.class);
         when(uiDelegate.getImageFetcher()).thenReturn(mock(ImageFetcher.class));
@@ -281,6 +293,7 @@ public class TileGroupUnitTest {
 
     /** Check for https://crbug.com/703628: handle duplicated URLs by ignoring them. */
     @Test(expected = IllegalStateException.class)
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testRenderTileViewWithDuplicatedUrl() {
         SuggestionsUiDelegate uiDelegate = mock(SuggestionsUiDelegate.class);
         when(uiDelegate.getImageFetcher()).thenReturn(mock(ImageFetcher.class));
@@ -298,6 +311,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testRenderTileViewReplacing() {
         SuggestionsUiDelegate uiDelegate = mock(SuggestionsUiDelegate.class);
         when(uiDelegate.getImageFetcher()).thenReturn(mock(ImageFetcher.class));
@@ -325,6 +339,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testRenderTileViewRecycling() {
         TileGroup tileGroup =
                 new TileGroup(RuntimeEnvironment.application, mock(SuggestionsUiDelegate.class),
@@ -353,6 +368,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testIconLoadingForInit() {
         TileGroup tileGroup = initialiseTileGroup(URLS);
         Tile tile = tileGroup.getTiles()[0];
@@ -369,6 +385,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testIconLoadingWhenTileNotRegistered() {
         TileGroup tileGroup = initialiseTileGroup();
         Tile tile = new Tile("title", URLS[0], "", 0, TileSource.POPULAR);
@@ -384,6 +401,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testIconLoading_Sync() {
         TileGroup tileGroup = initialiseTileGroup();
         mImageFetcher.fulfillLargeIconRequests();
@@ -402,6 +420,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testIconLoading_AsyncNoTrack() {
         TileGroup tileGroup = initialiseTileGroup(/* deferLoad: */ true);
         mImageFetcher.fulfillLargeIconRequests();
@@ -421,6 +440,7 @@ public class TileGroupUnitTest {
     }
 
     @Test
+    @Feature({"NTPTilesLowerResolutionFavicons"})
     public void testIconLoading_AsyncTrack() {
         TileGroup tileGroup = initialiseTileGroup(/* deferLoad: */ true);
         mImageFetcher.fulfillLargeIconRequests();
