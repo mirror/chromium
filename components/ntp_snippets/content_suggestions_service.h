@@ -20,6 +20,7 @@
 #include "components/history/core/browser/history_service.h"
 #include "components/history/core/browser/history_service_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h"
 #include "components/ntp_snippets/callbacks.h"
 #include "components/ntp_snippets/category.h"
 #include "components/ntp_snippets/category_rankers/category_ranker.h"
@@ -280,6 +281,14 @@ class ContentSuggestionsService : public KeyedService,
 
   CategoryRanker* category_ranker() { return category_ranker_.get(); }
 
+  void set_breaking_news_gcm_app_handler(
+      BreakingNewsGCMAppHandler* breaking_news_gcm_app_handler) {
+    breaking_news_gcm_app_handler_ = breaking_news_gcm_app_handler;
+  }
+  BreakingNewsGCMAppHandler* breaking_news_gcm_app_handler() {
+    return breaking_news_gcm_app_handler_;
+  }
+
   ContextualSuggestionsSource* contextual_suggestions_source() {
     DCHECK(contextual_suggestions_source_);
     return contextual_suggestions_source_.get();
@@ -429,6 +438,8 @@ class ContentSuggestionsService : public KeyedService,
 
   // Provides order for categories.
   std::unique_ptr<CategoryRanker> category_ranker_;
+
+  BreakingNewsGCMAppHandler* breaking_news_gcm_app_handler_;
 
   // Fetches and caches contextual suggestions for a given URL.
   std::unique_ptr<ContextualSuggestionsSource> contextual_suggestions_source_;

@@ -451,8 +451,11 @@ void RegisterArticleProviderIfEnabled(ContentSuggestionsService* service,
 
   std::unique_ptr<BreakingNewsListener> breaking_news_raw_data_provider;
 #if defined(OS_ANDROID)
-  breaking_news_raw_data_provider =
+  auto breaking_news_gcm_app_handler =
       MakeBreakingNewsGCMAppHandlerIfEnabled(profile);
+  service->set_breaking_news_gcm_app_handler(
+      breaking_news_gcm_app_handler.get());
+  breaking_news_raw_data_provider = std::move(breaking_news_gcm_app_handler);
 #endif  //  OS_ANDROID
 
   auto provider = base::MakeUnique<RemoteSuggestionsProviderImpl>(
