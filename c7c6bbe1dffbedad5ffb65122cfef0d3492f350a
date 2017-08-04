@@ -204,6 +204,24 @@
       "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796c4f8b_c8f13ee6",
+        "filename": "chrome/renderer/searchbox/search_bouncer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-08-04T00:34:17Z",
+      "side": 1,
+      "message": "We are both in the same boat about mojo being black magic.  This is the 4th IPC that I\u0027ve converted to mojo in the last 2 or 3 weeks since I first laid eyes on mojo.  It isn\u0027t entirely clear how it all works, and frankly some of the code ends up looking messy to my eyes.  And to make it even a little harder, the mojo interfaces are still changing in fairly large ways quite often.\n\nSo your comments seem very fair, and I\u0027m not sure that I have good answers.  My gut feel is that \u0027mojo is magic\u0027 so unretained is fine.  This mojo documentation has a short reference to why Unretained is safe when used in one particular situation relating to the lifetime of |bindings| and |this|, but I don\u0027t believe it is relevant right here where we are using a |registry|.  https://chromium.googlesource.com/chromium/src/+/master/mojo/public/cpp/bindings\n\nOn looking at this a little right now, I can see that like you mention, RenderThreadObserver::UnregisterMojoInterfaces will take care of removing references, so using Unretained is fine, even if this class was not a leaky singleton.\n\nThanks for you comments on this review.",
+      "parentUuid": "ac6c1493_e5c14ad4",
+      "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
