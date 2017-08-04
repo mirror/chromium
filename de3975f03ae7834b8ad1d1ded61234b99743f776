@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab23a688_6b2b9115",
+        "filename": "extensions/browser/extension_function_histogram_value.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-04T20:04:55Z",
+      "side": 1,
+      "message": "Please run python tools/metrics/histograms/update_extension_histograms.py to update enums.xml and add it to this changelist.",
+      "range": {
+        "startLine": 1249,
+        "startChar": 2,
+        "endLine": 1249,
+        "endChar": 35
+      },
+      "revId": "de3975f03ae7834b8ad1d1ded61234b99743f776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
