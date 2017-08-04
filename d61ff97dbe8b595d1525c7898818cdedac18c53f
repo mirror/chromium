@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9bf2008_75653750",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-04T18:25:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecfc4722_9c1c257c",
+      "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "038c824e_5c15dea1",
         "filename": "ash/highlighter/highlighter_controller_test_api.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9146a2eb_48c8a91a",
+        "filename": "ash/highlighter/highlighter_controller_test_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-04T18:25:26Z",
+      "side": 1,
+      "message": "In the test where it is used the controller does not survive the observer my much, but you are right, this is cleaner.",
+      "parentUuid": "038c824e_5c15dea1",
+      "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49fbb77a_e16af5e5",
         "filename": "ash/highlighter/highlighter_result_view.h",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-04T16:56:31Z",
       "side": 1,
       "message": "Can this be a OnceClosure? Or can it be called multiple times?",
+      "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49d6b44_2c8431d5",
+        "filename": "ash/highlighter/highlighter_result_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-04T18:25:26Z",
+      "side": 1,
+      "message": "Could not get it working, as this closure is ultimately passed to a Timer which requires base::Closure",
+      "parentUuid": "49fbb77a_e16af5e5",
       "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "c2997e7d_3b0d03d4",
+        "filename": "ash/highlighter/highlighter_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-04T18:25:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00937689_743df249",
+      "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a691e20b_63bb4376",
         "filename": "ash/highlighter/highlighter_view.h",
         "patchSetId": 4
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "20317293_e0ce2354",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-04T18:25:26Z",
+      "side": 1,
+      "message": "Of course. This has been my oversight since the member was introduced.",
+      "parentUuid": "7479c0a6_7e225853",
+      "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "319a04fa_61f6a73e",
         "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
         "patchSetId": 4
@@ -132,6 +222,24 @@
       "writtenOn": "2017-08-04T16:56:31Z",
       "side": 1,
       "message": "Does this object need to SetObserver(null), or is HighlighterController destroyed first?",
+      "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00839501_f012e157",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-04T18:25:26Z",
+      "side": 1,
+      "message": "Added SetObserverNull to the destructor",
+      "parentUuid": "319a04fa_61f6a73e",
       "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
