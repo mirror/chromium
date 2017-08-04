@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b22ffe6a_9959cfe0",
+        "filename": "chrome/browser/vr/elements/transience_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1117469
+      },
+      "writtenOn": "2017-08-04T14:21:09Z",
+      "side": 1,
+      "message": "IMO, it\u0027s worth commenting here that we show elements immediately for a reason, unlike hiding.",
+      "revId": "4cf381c790ffbf031eb3c5307fee720908ae66bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a99a537_eed0971e",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1117469
+      },
+      "writtenOn": "2017-08-04T14:21:09Z",
+      "side": 1,
+      "message": "Can you remind me why this isn\u0027t called NotifyClientVisibilityAnimated?",
+      "revId": "4cf381c790ffbf031eb3c5307fee720908ae66bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf3bb35_9736577e",
+        "filename": "chrome/browser/vr/elements/ui_element_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1117469
+      },
+      "writtenOn": "2017-08-04T14:21:09Z",
+      "side": 1,
+      "message": "The visibility toggle points are different when becoming visible vs. invisible.  I think there\u0027s value in testing the opposites here as well, or at least SetVisibleImmediately(false).",
+      "revId": "4cf381c790ffbf031eb3c5307fee720908ae66bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678b72ed_0a46458d",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1117469
+      },
+      "writtenOn": "2017-08-04T14:21:09Z",
+      "side": 1,
+      "message": "Is this a good time to add those helper wrappers?\nelement-\u003eSetTransitionedProperties(...) ?",
+      "revId": "4cf381c790ffbf031eb3c5307fee720908ae66bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
