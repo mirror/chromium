@@ -368,6 +368,8 @@ class VoiceSearchDomHandler : public WebUIMessageHandler {
       case extensions::Extension::EXTERNAL_EXTENSION_UNINSTALLED:
         state = "EXTERNAL_EXTENSION_UNINSTALLED";
         break;
+      case extensions::Extension::BLOCKED_BY_POLICY:
+        state = "BLOCKED_BY_POLICY";
       default:
         state = "undefined";
     }
