@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f82c959_316a66f6",
+        "filename": "cc/paint/paint_image_generator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T22:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b86bee9_66c554d9",
+      "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "479c7d91_3608a6db",
         "filename": "cc/paint/paint_image_generator.h",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad85e9c_02ac9679",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T22:35:19Z",
+      "side": 1,
+      "message": "Since it was pretty much pass through right now, I wasn\u0027t sure if it was worth copying the comments. I was going PaintCanvas style with this.\n\nBut we are going to modify this interface going forward anyway. So might as well start now. Done.",
+      "parentUuid": "479c7d91_3608a6db",
+      "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "65b82ba7_7318756d",
+        "filename": "cc/paint/skia_paint_image_generator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T22:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5b20313_930928c2",
+      "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "399db1fe_05b9532d",
         "filename": "cc/tiles/image_decode_cache.h",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af46e4a_d0716390",
+        "filename": "cc/tiles/image_decode_cache.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T22:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "399db1fe_05b9532d",
+      "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "67fb98db_167fce67",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T22:35:19Z",
+      "side": 1,
+      "message": "I restructured and added some comments. Does this look better?",
+      "parentUuid": "905a4320_d047052c",
+      "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f44c7fd_bf306148",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImageTest.cpp",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c55c60_4f247740",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImageTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T22:35:19Z",
+      "side": 1,
+      "message": "It just ensures that the metadata for the frame is present in BitmapImage. I\u0027m not completely sure why this is needed.",
+      "parentUuid": "1f44c7fd_bf306148",
+      "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

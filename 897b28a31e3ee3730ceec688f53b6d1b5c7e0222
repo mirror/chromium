@@ -16,6 +16,24 @@
       "revId": "897b28a31e3ee3730ceec688f53b6d1b5c7e0222",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b58638_024bf494",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T22:35:19Z",
+      "side": 0,
+      "message": "Yup. I removed it and no one complained. It was only meant for tests anyway.",
+      "parentUuid": "94e17dea_762941ed",
+      "revId": "897b28a31e3ee3730ceec688f53b6d1b5c7e0222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
