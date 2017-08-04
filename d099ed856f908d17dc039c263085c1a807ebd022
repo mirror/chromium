@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ab58437_7243565f",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-04T00:42:35Z",
+      "side": 1,
+      "message": "perhaps pull the angle check out into another function instead of duplicating for start and end? also consider making 90 a named constant instead of a magic number",
+      "revId": "d099ed856f908d17dc039c263085c1a807ebd022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a75b40dd_84d18694",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-04T00:42:35Z",
+      "side": 1,
+      "message": "do you anticipate this use case of adding a start only value to a range list to occur again? if so i would change the CombineToRangeListOrNull method to support it by making the second argument optional",
+      "revId": "d099ed856f908d17dc039c263085c1a807ebd022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
