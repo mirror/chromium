@@ -70,6 +70,24 @@
       "revId": "669aaf3977523727352a4fb500a7802779a2edfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a22008_452b91e3",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-08-04T00:10:45Z",
+      "side": 1,
+      "message": "Because \"usually\", opening means first rendering of the element, when it initially was hidden with dom-if. Then, the second opening will just re-use previously populated element.\n\nIf it works with your CL, it means that the UI was really re-fetched, which is uncommon, I believe ;)",
+      "parentUuid": "a96e8227_f06362e1",
+      "revId": "669aaf3977523727352a4fb500a7802779a2edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
