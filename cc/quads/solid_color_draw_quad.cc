@@ -18,9 +18,11 @@ void SolidColorDrawQuad::SetNew(const SharedQuadState* shared_quad_state,
                                 const gfx::Rect& visible_rect,
                                 SkColor color,
                                 bool force_anti_aliasing_off) {
-  gfx::Rect opaque_rect = SkColorGetA(color) == 255 ? rect : gfx::Rect();
   bool needs_blending = false;
-  DrawQuad::SetAll(shared_quad_state, DrawQuad::SOLID_COLOR, rect, opaque_rect,
+  if (SkColorGetA(color) != 255)
+    needs_blending = true;
+
+  DrawQuad::SetAll(shared_quad_state, DrawQuad::SOLID_COLOR, rect, gfx::Rect(),
                    visible_rect, needs_blending);
   this->color = color;
   this->force_anti_aliasing_off = force_anti_aliasing_off;
