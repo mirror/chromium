@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1da9ef0_4c1a7441",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T02:09:07Z",
+      "side": 1,
+      "message": "this is a special case, let\u0027s not run this branch for all the sorting comparisons",
+      "revId": "196a3565ebe97fc1bafdd9873d5e9c98602cce66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
