@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "707bca6b_e2afd713",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-04T02:17:09Z",
+      "side": 1,
+      "message": "Nit: What is a \"security color\"?  Maybe GetSecurityChipForegroundColor()?",
+      "revId": "8fa7ff31a0b43c1a94cad669eece5d1b4e1ade12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117ab545_43b18fe7",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-04T02:17:09Z",
+      "side": 1,
+      "message": "I\u0027m concerned about always running this through DeriveDefaultIconColor(), and then GetReadableColor().  These two functions work somewhat at cross purposes, with one reducing contrast and the other increasing it.  The result isn\u0027t necessarily the same as the old text _or_ icon colors, since the old icon color was not run through DeriveDefaultIconColor() except in a few states.\n\nI think the result of DeriveDefaultIconColor() isn\u0027t actually what you want in the incognito case either, since I think it will make your white lock/text not actually pure white.\n\nAlso, these call into question whether we really want the early-return above to bypass either/both of these adjustment calls.  For example, we probably want GetReadableColor() run on it, at least.\n\nSo, basically, I think we might need a bigger rewrite here.\n\nNit: |text_color| should probably be renamed |color| or some name that matches the function name.",
+      "revId": "8fa7ff31a0b43c1a94cad669eece5d1b4e1ade12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
