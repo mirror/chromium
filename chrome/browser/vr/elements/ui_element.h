@@ -122,6 +122,8 @@ class UiElement : public cc::AnimationTarget {
   // If true, this object will be visible.
   bool visible() const { return visible_; }
   void SetVisible(bool visible);
+  // This will bypass any transition.
+  void SetVisibleImmediately(bool visible);
 
   // If false, the reticle will not hit the element, even if visible.
   bool hit_testable() const { return hit_testable_; }
@@ -147,7 +149,7 @@ class UiElement : public cc::AnimationTarget {
 
   // The size of the object.  This does not affect children.
   gfx::SizeF size() const { return size_; }
-  void SetSize(float width, float hight);
+  void SetSize(float width, float height);
 
   // It is assumed that operations is of size 4 with a component for layout
   // translation, translation, rotation and scale, in that order (see

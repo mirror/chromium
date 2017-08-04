@@ -10,6 +10,7 @@
 #include "cc/animation/animation.h"
 #include "cc/animation/keyframed_animation_curve.h"
 #include "cc/test/geometry_test_utils.h"
+#include "chrome/browser/vr/target_property.h"
 #include "chrome/browser/vr/test/animation_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -47,6 +48,21 @@ TEST(UiElements, AnimationAffectsInheritableTransform) {
   rect.Animate(start_time + MicrosecondsToDelta(10000));
   rect.LocalTransform().TransformPoint(&p);
   EXPECT_VECTOR3DF_EQ(gfx::Vector3dF(20, 200, 2000), p);
+}
+
+TEST(UiElements, SetVisibleImmediately) {
+  UiElement rect;
+  EXPECT_FALSE(rect.visible());
+  rect.animation_player().SetTransitionedProperties({VISIBILITY});
+  rect.SetVisibleImmediately(true);
+  EXPECT_TRUE(rect.visible());
+  rect.SetVisible(false);
+  EXPECT_TRUE(rect.visible());
+  base::TimeTicks start_time = MsToTicks(1);
+  rect.Animate(start_time);
+  EXPECT_TRUE(rect.visible());
+  rect.Animate(start_time + MsToDelta(500));
+  EXPECT_FALSE(rect.visible());
 }
 
 }  // namespace vr

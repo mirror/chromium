@@ -516,6 +516,7 @@ void UiSceneManager::CreateToasts() {
   element->SetSize(kToastWidthDMM, kToastHeightDMM);
   element->SetVisible(false);
   element->set_hit_testable(false);
+  element->animation_player().SetTransitionedProperties({OPACITY, VISIBILITY});
   exclusive_screen_toast_ = element.get();
   scene_->AddUiElement(std::move(element));
 }

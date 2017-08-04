@@ -53,7 +53,7 @@ void TransienceManager::OnTimeout() {
 }
 
 void TransienceManager::Show() {
-  element_->SetVisible(true);
+  element_->SetVisibleImmediately(true);
   element_->SetOpacity(opacity_when_enabled_);
 }
 
