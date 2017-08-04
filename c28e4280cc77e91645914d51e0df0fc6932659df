@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9e400e6c_d8509971",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-04T01:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9284059d_6fd6e188",
+      "revId": "c28e4280cc77e91645914d51e0df0fc6932659df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38d4aa9b_9b899426",
         "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
         "patchSetId": 10
@@ -50,6 +68,24 @@
       "revId": "c28e4280cc77e91645914d51e0df0fc6932659df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5213286f_99ab718a",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-04T01:12:13Z",
+      "side": 1,
+      "message": "Done as second. Thanks for idea.",
+      "parentUuid": "38d4aa9b_9b899426",
+      "revId": "c28e4280cc77e91645914d51e0df0fc6932659df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
