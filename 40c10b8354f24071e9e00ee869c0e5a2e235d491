@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3681af68_e9467b98",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T22:48:39Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s relevant to make a function for this, because it is part of the whole projection function and never used elsewhere. Note that encode is a misnomer, because there is no decoding associated with \u0027encoding\u0027. I fixed this in comments. \nAdditional rant about nomenclature:\nI don\u0027t think that hash is suitable either, from wikipedia: \"A hash function is any function that can be used to map data of arbitrary size to data of fixed size.\"\nIn this case, we have fixed size input, projected to fixed size input, so really it is just a projection to something more interesting for when we\u0027re going to compare old and new file.",
+      "parentUuid": "dcb948e1_656efb59",
+      "revId": "40c10b8354f24071e9e00ee869c0e5a2e235d491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6297df9_ed3ade75",
         "filename": "chrome/installer/zucchini/encoded_view.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T21:41:18Z",
       "side": 1,
       "message": "I\u0027m not sure I follow this marking/unmarking logic. :(",
+      "revId": "40c10b8354f24071e9e00ee869c0e5a2e235d491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612938f4_cb8e7ff8",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T22:48:39Z",
+      "side": 1,
+      "message": "I\u0027ll fix this by making it clearer. We don\u0027t even need to mention mark/unmark.",
+      "parentUuid": "d6297df9_ed3ade75",
       "revId": "40c10b8354f24071e9e00ee869c0e5a2e235d491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "40c10b8354f24071e9e00ee869c0e5a2e235d491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b375ebb1_2a109c84",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T22:48:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a297b9f_7d5859cc",
+      "revId": "40c10b8354f24071e9e00ee869c0e5a2e235d491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
