@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db562044_57371f6b",
+        "filename": "mojo/public/tools/fuzzers/mojo_fuzzer_message_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-04T20:42:29Z",
+      "side": 1,
+      "message": "this function is really difficult to follow. could you break this up into smaller functions? e.g.\n\nfuzz_primitive_array \u003d CreatePrimitiveArray()\nfuzz_array_map \u003d CreateArrayMap()\n...",
+      "range": {
+        "startLine": 70,
+        "startChar": 27,
+        "endLine": 70,
+        "endChar": 49
+      },
+      "revId": "6b24369827f6aff3dcc684dd26880cc59d12e543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6bbb567_3da43250",
+        "filename": "mojo/public/tools/fuzzers/mojo_fuzzer_message_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-04T20:42:29Z",
+      "side": 1,
+      "message": "I think you can use decltype here instead of typing all of these.",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 48
+      },
+      "revId": "6b24369827f6aff3dcc684dd26880cc59d12e543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
