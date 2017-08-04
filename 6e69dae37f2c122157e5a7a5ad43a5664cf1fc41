@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04ef6a1b_963ae168",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T20:53:09Z",
+      "side": 1,
+      "message": "can you cap the line width to 72 characters",
+      "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "515c2f6c_aff341c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T20:53:09Z",
+      "side": 1,
+      "message": "remove the space",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e95bc4_2eeaad51",
+        "filename": "chromeos/components/tether/ble_advertiser_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T20:53:09Z",
+      "side": 1,
+      "message": "make unique is preferred:\n\nbase::MakeUnique\u003cFakeBluetoothAdvertisement\u003e(\n    base::Bind(....))",
+      "range": {
+        "startLine": 250,
+        "startChar": 29,
+        "endLine": 250,
+        "endChar": 39
+      },
+      "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789eaf81_9f8329a9",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T20:53:09Z",
+      "side": 1,
+      "message": "the comment might need to be updated",
+      "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676555c9_585db9ff",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T20:53:09Z",
+      "side": 1,
+      "message": "would something like this work:\n\nstd::unique_ptr\u003cBluetoothAdvertisementBlueZ\u003e advertisement \u003d\n    base::MakeUnique\u003cBluetoothAdvertisementBlueZ\u003e(std::move(advertisement_data), this);\nadvertisements_.emplace_back(advertisement-\u003eGetWeakPtr());\n\nBluetoothAdvertisementBlueZ* advertisement_ptr \u003d advertisement.get();\nadvertisement_ptr-\u003eRegister(base::BindOnce(callback, std::move(advertisement)), error_callback);",
+      "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13d3ae2d_408d3e8a",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T20:53:09Z",
+      "side": 1,
+      "message": "what\u0027s expected to happen with advertisement object on error, should it be deleted at this point?\n\nwith the current code, it seems to leak (and we might call Unregister on it later in Shutdown).",
+      "range": {
+        "startLine": 523,
+        "startChar": 6,
+        "endLine": 523,
+        "endChar": 20
+      },
+      "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc9bee50_677188c5",
+        "filename": "device/bluetooth/test/mock_bluetooth_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T20:53:09Z",
+      "side": 1,
+      "message": "base::MakeUnique\u003cMockBluetoothAdvertisement\u003e()",
+      "range": {
+        "startLine": 103,
+        "startChar": 21,
+        "endLine": 103,
+        "endChar": 31
+      },
+      "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
