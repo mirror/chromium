@@ -31,11 +31,12 @@
 #include "core/exported/WebSettingsImpl.h"
 
 #include "core/frame/Settings.h"
-#include "platform/graphics/DeferredImageDecoder.h"
-
 #include "core/inspector/DevToolsEmulator.h"
+#include "platform/graphics/DeferredImageDecoder.h"
+#include "platform/wtf/Assertions.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
+#include "public/web/WebSettings.h"
 
 namespace blink {
 
@@ -702,4 +703,12 @@ void WebSettingsImpl::SetDoNotUpdateSelectionOnMutatingSelectionRange(
   settings_->SetDoNotUpdateSelectionOnMutatingSelectionRange(enabled);
 }
 
+STATIC_ASSERT_ENUM(WebSettings::V8CacheStrategiesForCacheStorage::kDefault,
+                   V8CacheStrategiesForCacheStorage::kDefault);
+STATIC_ASSERT_ENUM(WebSettings::V8CacheStrategiesForCacheStorage::kNone,
+                   V8CacheStrategiesForCacheStorage::kNone);
+STATIC_ASSERT_ENUM(WebSettings::V8CacheStrategiesForCacheStorage::kNormal,
+                   V8CacheStrategiesForCacheStorage::kNormal);
+STATIC_ASSERT_ENUM(WebSettings::V8CacheStrategiesForCacheStorage::kAggressive,
+                   V8CacheStrategiesForCacheStorage::kAggressive);
 }  // namespace blink

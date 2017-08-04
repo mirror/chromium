@@ -35,9 +35,7 @@ component("web") {
 
   defines = [ "BLINK_WEB_IMPLEMENTATION=1" ]
 
-  sources = [
-    "AssertMatchingEnums.cpp",
-  ]
+  sources = []
 
   if (is_mac) {
     libs = [
