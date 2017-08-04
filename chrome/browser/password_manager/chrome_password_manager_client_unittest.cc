@@ -41,6 +41,7 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/url_constants.h"
+#include "content/public/test/test_renderer_host.h"
 #include "content/public/test/web_contents_tester.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -52,8 +53,12 @@
 #endif
 
 #if defined(SAFE_BROWSING_DB_LOCAL)
+#include "base/test/scoped_feature_list.h"
+#include "chrome/browser/sync/user_event_service_factory.h"
+#include "components/safe_browsing/features.h"
 #include "components/safe_browsing/password_protection/password_protection_service.h"
 #include "components/safe_browsing_db/database_manager.h"
+#include "components/sync/user_events/fake_user_event_service.h"
 #endif
 
 using browser_sync::ProfileSyncServiceMock;
@@ -66,6 +71,11 @@ using testing::_;
 
 namespace {
 #if defined(SAFE_BROWSING_DB_LOCAL)
+std::unique_ptr<KeyedService> BuildFakeUserEventService(
+    content::BrowserContext* context) {
+  return base::MakeUnique<syncer::FakeUserEventService>();
+}
+
 class MockPasswordProtectionService
     : public safe_browsing::PasswordProtectionService {
  public:
@@ -237,11 +247,27 @@ class ChromePasswordManagerClientTest : public ChromeRenderViewHostTestHarness {
   // returns false.
   bool WasLoggingActivationMessageSent(bool* activation_flag);
 
+#if defined(SAFE_BROWSING_DB_LOCAL)
+  syncer::FakeUserEventService* GetUserEventService() {
+    return fake_user_event_service_;
+  }
+
+  void EnableSyncPasswordReuseEvent() {
+    scoped_feature_list_ = base::MakeUnique<base::test::ScopedFeatureList>();
+    scoped_feature_list_->InitWithFeatures(
+        {safe_browsing::kSyncPasswordReuseEvent}, {});
+  }
+#endif
+
   FakePasswordAutofillAgent fake_agent_;
 
   TestingPrefServiceSimple prefs_;
   base::FieldTrialList field_trial_list_;
   bool metrics_enabled_;
+#if defined(SAFE_BROWSING_DB_LOCAL)
+  syncer::FakeUserEventService* fake_user_event_service_;
+  std::unique_ptr<base::test::ScopedFeatureList> scoped_feature_list_;
+#endif
 };
 
 void ChromePasswordManagerClientTest::SetUp() {
@@ -262,6 +288,13 @@ void ChromePasswordManagerClientTest::SetUp() {
   // Connect our bool for testing.
   ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
       &metrics_enabled_);
+
+#if defined(SAFE_BROWSING_DB_LOCAL)
+  fake_user_event_service_ = static_cast<syncer::FakeUserEventService*>(
+      browser_sync::UserEventServiceFactory::GetInstance()
+          ->SetTestingFactoryAndUse(browser_context(),
+                                    &BuildFakeUserEventService));
+#endif
 }
 
 void ChromePasswordManagerClientTest::TearDown() {
@@ -640,6 +673,25 @@ TEST_F(ChromePasswordManagerClientTest,
               MaybeStartProtectedPasswordEntryRequest(_, _, _, true))
       .Times(1);
   client->CheckProtectedPasswordEntry(std::string("saved_domain.com"), true);
+}
+
+TEST_F(ChromePasswordManagerClientTest,
+       VerifyPasswordReuseUserEventNotRecorded) {
+  // Feature not enabled.
+  GetClient()->LogPasswordReuseDetectedEvent();
+  EXPECT_TRUE(GetUserEventService()->GetRecordedUserEvents().empty());
+
+  EnableSyncPasswordReuseEvent();
+  // Feature enabled but no committed navigation entry.
+  GetClient()->LogPasswordReuseDetectedEvent();
+  EXPECT_TRUE(GetUserEventService()->GetRecordedUserEvents().empty());
+}
+
+TEST_F(ChromePasswordManagerClientTest, VerifyPasswordReuseUserEventRecorded) {
+  EnableSyncPasswordReuseEvent();
+  NavigateAndCommit(GURL("https://www.example.com/"));
+  GetClient()->LogPasswordReuseDetectedEvent();
+  EXPECT_EQ(1ul, GetUserEventService()->GetRecordedUserEvents().size());
 }
 
 #endif
