@@ -18,7 +18,19 @@ message CaptivePortalCert {
   optional string sha256_hash = 1;
 }
 
+message TLSInterceptionEntry {
+  // Regex that SSL error handling logic will match against to identify
+  // certificates issued by tls interceptions.
+  optional string regex = 1;
+  // Name of the tls interception to display on the interstitial.
+  optional string name = 2;
+  // Link to a help center URL with information about how to uninstall or
+  // reconfigure the offending tls interception.
+  optional string help_url = 3;
+}
+
 message SSLErrorAssistantConfig {
   optional uint32 version_id = 1;
   repeated CaptivePortalCert captive_portal_cert = 2;
+  repeated TLSInterceptionEntry tls_interception = 3;
 }
