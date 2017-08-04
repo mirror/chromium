@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "268a519b_4f58d641",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-04T13:32:03Z",
+      "side": 1,
+      "message": "Yes... but if we use the same method everywhere, it\u0027s easier to go through all of the call sites and change them to what the replacement is going to be (which might e.g. use a constant instead of the number 26).",
+      "parentUuid": "da0df154_3f443900",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 39
+      },
+      "revId": "3b5ce6b4cb21e28f8e78ec7262136eca21f5e9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72cb17cd_85ed21b3",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 3
