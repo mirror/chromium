@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0261670f_f21ab4e0",
+        "filename": "chrome/browser/policy/test/policy_testserver.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T12:37:48Z",
+      "side": 1,
+      "message": "nit: Please remove the extra empty line.",
+      "revId": "5b07f84004da239a517234000be10c6afe9ea1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd27c976_62c985de",
+        "filename": "chrome/browser/policy/test/policy_testserver.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T12:37:48Z",
+      "side": 1,
+      "message": "nit: The new three methods are named too generic. Remember that they all are the specialized versions of \"SetProtobufMessageField\", and the naming should reflect this (e.g., if trying to make them not too long, \"SetProtoRepeatedField\", \"SetProtoMessageField\", \"SetProtoRawField\", \"SetProtoField\").\nAlternatively, make the new functions as nested functions of the old method \"SetProtobufMessageField\".",
+      "range": {
+        "startLine": 695,
+        "startChar": 6,
+        "endLine": 695,
+        "endChar": 22
+      },
+      "revId": "5b07f84004da239a517234000be10c6afe9ea1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24abb39a_93036477",
+        "filename": "chrome/browser/policy/test/policy_testserver.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T12:37:48Z",
+      "side": 1,
+      "message": "Object methods should be called with \"self.\". Not specifying this should result in an exception - did you try running the current version?",
+      "range": {
+        "startLine": 753,
+        "startChar": 6,
+        "endLine": 753,
+        "endChar": 22
+      },
+      "revId": "5b07f84004da239a517234000be10c6afe9ea1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
