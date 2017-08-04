@@ -474,7 +474,7 @@ TEST_F('OutputE2ETest', 'ListBox', function() {
     var el = root.firstChild.firstChild.firstChild;
     var range = cursors.Range.fromNode(el);
     var o = new Output().withSpeechAndBraille(range, null, 'navigate');
-    checkSpeechOutput('1|List item| 1 of 2 |List box|with 2 items',
+    checkSpeechOutput('1|List item| 1 of 2 |List box|with 2 items|Multi select',
         [
           {value: 'name', start: 0, end: 1},
           {value: new Output.EarconAction('LIST_ITEM'), start: 0,end: 1},
@@ -482,9 +482,9 @@ TEST_F('OutputE2ETest', 'ListBox', function() {
         ],
         o);
     checkBrailleOutput(
-        '1 lstitm 1/2 lstbx +2',
+        '1 lstitm 1/2 lstbx +2 multsel',
         [{value: new Output.NodeSpan(el), start: 0, end: 12},
-         {value: new Output.NodeSpan(el.parent), start: 13, end: 21}],
+         {value: new Output.NodeSpan(el.parent), start: 13, end: 29}],
         o);
   });
 });
