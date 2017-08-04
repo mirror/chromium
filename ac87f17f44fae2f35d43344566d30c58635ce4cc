@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "933c1292_63fbb390",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-04T18:12:34Z",
+      "side": 1,
+      "message": "rename this?",
+      "range": {
+        "startLine": 138,
+        "startChar": 34,
+        "endLine": 138,
+        "endChar": 43
+      },
+      "revId": "ac87f17f44fae2f35d43344566d30c58635ce4cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67eb520e_1d4ca6f8",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder_unittest.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-04T18:12:34Z",
+      "side": 1,
+      "message": "Could we have a test for paths such as /images/..., or are those not supported?",
+      "revId": "ac87f17f44fae2f35d43344566d30c58635ce4cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
