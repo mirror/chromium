@@ -16,6 +16,24 @@
       "revId": "4b2c4a8aeadc63db289e07625d178bd983df28dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "387b382c_06b9e3da",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-04T21:19:56Z",
+      "side": 1,
+      "message": "Thought since I once (unsuccessfully) removed it, better to take care of it to the end. And yeah, shameless stealing TODOs could be a thing :)",
+      "parentUuid": "ee6b4ca7_398b2de3",
+      "revId": "4b2c4a8aeadc63db289e07625d178bd983df28dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
