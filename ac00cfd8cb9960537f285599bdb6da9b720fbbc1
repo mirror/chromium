@@ -22,6 +22,30 @@
       "revId": "ac00cfd8cb9960537f285599bdb6da9b720fbbc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d2b7ab5_c89fd846",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-04T22:51:14Z",
+      "side": 1,
+      "message": "I have added the test for safe_browsing_enabled but not for extended_reporting because there\u0027s complicated logic behind that state.\n\nAs for the whitelist state etc, those will be logged under a separate message (PasswordReuseLookup) and when the PasswordReuseLookup message is logged, the PasswordReuseDetected message isn\u0027t logged.\nThey could have been oneof-s but we decided against it:\ngo/gaia-at-risk-flagging-in-chrome?disco\u003dAAAABOShK7s (it is one of the resolved comments).",
+      "parentUuid": "fecf5f51_54eab5ef",
+      "range": {
+        "startLine": 686,
+        "startChar": 40,
+        "endLine": 686,
+        "endChar": 76
+      },
+      "revId": "ac00cfd8cb9960537f285599bdb6da9b720fbbc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
