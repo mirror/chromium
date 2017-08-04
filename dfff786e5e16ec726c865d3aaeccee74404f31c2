@@ -302,6 +302,24 @@
     },
     {
       "key": {
+        "uuid": "e94bf887_62b5542c",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPICustom.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-04T09:09:46Z",
+      "side": 1,
+      "message": "Done. I\u0027ve kept the name of the class as \"CSSPropertyAPI\" otherwise we\u0027d see it at callsites, but I changed the name of the file to CSSPropertyAPIBaseCustom.cpp.",
+      "parentUuid": "8479c6c1_605b8ebe",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8daec253_26811615",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPICustomHelper.h",
         "patchSetId": 18
