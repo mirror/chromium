@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "179a1c9f_e4399545",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetectorTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-04T20:11:55Z",
+      "side": 1,
+      "message": "I was aiming for consistency with LayerTreeImpl::ClearSwapPromises() which is what calls DidSwap() and triggers ReportSwapTime. Open to change though, thoughts?",
+      "parentUuid": "b68045ef_f816e31b",
+      "range": {
+        "startLine": 77,
+        "startChar": 33,
+        "endLine": 77,
+        "endChar": 34
+      },
+      "revId": "f3af499ae9f7a2c5304578bfb7d8b139b2f251c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d9205c1_8c8c8bf7",
         "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetectorTest.cpp",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-04T17:32:57Z",
       "side": 1,
       "message": "why are there 2 outstanding?",
+      "range": {
+        "startLine": 388,
+        "startChar": 54,
+        "endLine": 388,
+        "endChar": 55
+      },
+      "revId": "f3af499ae9f7a2c5304578bfb7d8b139b2f251c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b86cd4d_c8269d58",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetectorTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-04T20:11:55Z",
+      "side": 1,
+      "message": "SimulateLayoutAndPaint(1) sets the provisional FMP timestamp, and SimulateLayoutAndPaint(10) is significant enough a new provisional timestamp (similar to other tests). Both will queue a swap promise, but ClearProvisionalFirstMeaningfulPaintSwapPromise() has not been called yet, so there are 2 outstanding.\n\nI added EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U) after SimulateLayoutAndPaint(1) to help clarify this.",
+      "parentUuid": "2d9205c1_8c8c8bf7",
       "range": {
         "startLine": 388,
         "startChar": 54,
