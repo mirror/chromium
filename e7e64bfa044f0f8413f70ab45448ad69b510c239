@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "178c8ce0_9ce5b3c2",
+        "filename": "chrome/test/data/webui/settings/certificate_manager_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T16:15:53Z",
+      "side": 1,
+      "message": "Unfortunately this component requires a bit more work to test without context, specifically WRT strings. I\u0027ll add a note to this comment.",
+      "parentUuid": "53d70a50_ff3aa9a7",
+      "revId": "e7e64bfa044f0f8413f70ab45448ad69b510c239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "650d718a_6bd4f2b6",
         "filename": "ui/webui/resources/shared_components/README.md",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "733b6b47_f210a9fe",
+        "filename": "ui/webui/resources/shared_components/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T16:15:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "650d718a_6bd4f2b6",
+      "revId": "e7e64bfa044f0f8413f70ab45448ad69b510c239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f6e1eef_af6a47aa",
         "filename": "ui/webui/resources/webui_resources.grd",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "e7e64bfa044f0f8413f70ab45448ad69b510c239",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e692e69c_40867358",
+        "filename": "ui/webui/resources/webui_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T16:15:53Z",
+      "side": 1,
+      "message": "Oops, thanks. Done.",
+      "parentUuid": "7f6e1eef_af6a47aa",
+      "revId": "e7e64bfa044f0f8413f70ab45448ad69b510c239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
