@@ -34,6 +34,24 @@
       "revId": "ed3273db251d805944a604dea8f80713a484bbcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6e36cd_fcd9e7d2",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-04T23:10:27Z",
+      "side": 1,
+      "message": "You should be able to test that fairly easily. I don\u0027t think that will happen though, in that case we would return X frames of silence which will then hit the write() block. Crashes also close down all audio streams:\n\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/media/audio_renderer_host.cc?l\u003d86",
+      "parentUuid": "e0c1680a_a355ccc2",
+      "revId": "ed3273db251d805944a604dea8f80713a484bbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
