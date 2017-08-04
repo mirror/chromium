@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "336eb63f_3147710f",
+        "filename": "components/cronet/android/java/src/org/chromium/net/urlconnection/CronetHttpURLConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-04T17:58:05Z",
+      "side": 1,
+      "message": "Ah sorry, I didn\u0027t see this. Done.",
+      "parentUuid": "1c6758a1_92dd5050",
+      "revId": "053a4789b65f7fb16efcfbce0ee942bd3ad32347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06886989_c19e01d4",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/urlconnection/CronetHttpURLConnectionTest.java",
         "patchSetId": 4
