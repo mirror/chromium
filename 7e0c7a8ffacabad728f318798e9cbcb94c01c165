@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65a4381e_4ca90649",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-04T12:44:41Z",
+      "side": 1,
+      "message": "Does the test still pass if you put grey_interactable() and grey_sufficientlyVisible() back, in addition to this new matcher?\n\nThat way the hack would simply be adding one new matcher, which is easier to explain now and remove later.",
+      "revId": "7e0c7a8ffacabad728f318798e9cbcb94c01c165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
