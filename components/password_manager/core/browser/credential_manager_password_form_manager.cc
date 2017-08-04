@@ -27,7 +27,7 @@ CredentialManagerPasswordFormManager::CredentialManagerPasswordFormManager(
     CredentialManagerPasswordFormManagerDelegate* delegate,
     std::unique_ptr<FormSaver> form_saver,
     std::unique_ptr<FormFetcher> form_fetcher)
-    : PasswordFormManager(driver->GetPasswordManager(),
+    : PasswordFormManager(client->GetPasswordManager(),
                           client,
                           driver,
                           observed_form,
