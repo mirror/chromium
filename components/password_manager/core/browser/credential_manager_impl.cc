@@ -1,114 +1,35 @@
-// Copyright 2014 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+#include "components/password_manager/core/browser/credential_manager_impl.h"
 
-#include "components/password_manager/content/browser/credential_manager_impl.h"
-
-#include <utility>
-
-#include "base/bind.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/user_metrics.h"
-#include "base/strings/string16.h"
-#include "base/strings/utf_string_conversions.h"
-#include "components/autofill/core/common/password_form.h"
-#include "components/password_manager/content/browser/content_password_manager_driver.h"
-#include "components/password_manager/content/browser/content_password_manager_driver_factory.h"
-#include "components/password_manager/core/browser/android_affiliation/affiliated_match_helper.h"
 #include "components/password_manager/core/browser/credential_manager_logger.h"
 #include "components/password_manager/core/browser/form_fetcher_impl.h"
 #include "components/password_manager/core/browser/form_saver.h"
-#include "components/password_manager/core/browser/password_manager_client.h"
-#include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/password_manager_util.h"
-#include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
-#include "content/public/browser/web_contents.h"
 
 namespace password_manager {
 
 namespace {
 
-void RunMojoGetCallback(mojom::CredentialManager::GetCallback callback,
-                        const CredentialInfo& info) {
-  std::move(callback).Run(mojom::CredentialManagerError::SUCCESS, info);
+void RunGetCallback(GetCallback callback, const CredentialInfo& info) {
+  std::move(callback).Run(CredentialManagerError::SUCCESS, info);
 }
 
 }  // namespace
 
-// CredentialManagerImpl -------------------------------------------------
-
-CredentialManagerImpl::CredentialManagerImpl(content::WebContents* web_contents,
-                                             PasswordManagerClient* client)
-    : WebContentsObserver(web_contents),
-      client_(client),
-      binding_(this),
-      weak_factory_(this) {
-  DCHECK(web_contents);
+CredentialManagerImpl::CredentialManagerImpl(
+    CredentialManagerImplDelegate* delegate,
+    PasswordManagerClient* client)
+    : delegate_(delegate), client_(client) {
   auto_signin_enabled_.Init(prefs::kCredentialsEnableAutosignin,
                             client_->GetPrefs());
+  DCHECK(delegate_);
 }
 
 CredentialManagerImpl::~CredentialManagerImpl() {}
-
-void CredentialManagerImpl::BindRequest(
-    mojom::CredentialManagerAssociatedRequest request) {
-  DCHECK(!binding_.is_bound());
-  binding_.Bind(std::move(request));
-
-  // The browser side will close the message pipe on DidFinishNavigation before
-  // the renderer side would be destroyed, and the renderer never explicitly
-  // closes the pipe. So a connection error really means an error here, in which
-  // case the renderer will try to reconnect when the next call to the API is
-  // made. Make sure this implementation will no longer be bound to a broken
-  // pipe once that happens, so the DCHECK above will succeed.
-  binding_.set_connection_error_handler(base::Bind(
-      &CredentialManagerImpl::DisconnectBinding, base::Unretained(this)));
-}
-
-bool CredentialManagerImpl::HasBinding() const {
-  return binding_.is_bound();
-}
-
-void CredentialManagerImpl::DisconnectBinding() {
-  binding_.Close();
-}
-
-void CredentialManagerImpl::Store(const CredentialInfo& credential,
-                                  StoreCallback callback) {
-  DCHECK_NE(CredentialType::CREDENTIAL_TYPE_EMPTY, credential.type);
-
-  if (password_manager_util::IsLoggingActive(client_)) {
-    CredentialManagerLogger(client_->GetLogManager())
-        .LogStoreCredential(web_contents()->GetLastCommittedURL(),
-                            credential.type);
-  }
-
-  // Send acknowledge response back.
-  std::move(callback).Run();
-
-  if (!client_->IsSavingAndFillingEnabledForCurrentPage() ||
-      !client_->OnCredentialManagerUsed())
-    return;
-
-  client_->NotifyStorePasswordCalled();
-
-  GURL origin = web_contents()->GetLastCommittedURL().GetOrigin();
-  std::unique_ptr<autofill::PasswordForm> form(
-      CreatePasswordFormFromCredentialInfo(credential, origin));
-
-  std::unique_ptr<autofill::PasswordForm> observed_form =
-      CreateObservedPasswordFormFromOrigin(origin);
-  // Create a custom form fetcher without HTTP->HTTPS migration, as well as
-  // without fetching of suppressed HTTPS credentials on HTTP origins as the API
-  // is only available on HTTPS origins.
-  auto form_fetcher = base::MakeUnique<FormFetcherImpl>(
-      PasswordStore::FormDigest(*observed_form), client_, false, false);
-  form_manager_ = base::MakeUnique<CredentialManagerPasswordFormManager>(
-      client_, GetDriver(), *observed_form, std::move(form), this, nullptr,
-      std::move(form_fetcher));
-  form_manager_->Init(nullptr);
-}
 
 void CredentialManagerImpl::OnProvisionalSaveComplete() {
   DCHECK(form_manager_);
@@ -148,11 +69,46 @@ void CredentialManagerImpl::OnProvisionalSaveComplete() {
   client_->PromptUserToSaveOrUpdatePassword(std::move(form_manager_), false);
 }
 
+void CredentialManagerImpl::Store(const CredentialInfo& credential,
+                                  StoreCallback callback) {
+  DCHECK_NE(CredentialType::CREDENTIAL_TYPE_EMPTY, credential.type);
+
+  if (password_manager_util::IsLoggingActive(client_)) {
+    CredentialManagerLogger(client_->GetLogManager())
+        .LogStoreCredential(delegate_->GetLastCommittedURL(), credential.type);
+  }
+
+  // Send acknowledge response back.
+  std::move(callback).Run();
+
+  if (!client_->IsSavingAndFillingEnabledForCurrentPage() ||
+      !client_->OnCredentialManagerUsed())
+    return;
+
+  client_->NotifyStorePasswordCalled();
+
+  GURL origin = delegate_->GetOrigin();
+  std::unique_ptr<autofill::PasswordForm> form(
+      CreatePasswordFormFromCredentialInfo(credential, origin));
+
+  std::unique_ptr<autofill::PasswordForm> observed_form =
+      CreateObservedPasswordFormFromOrigin(origin);
+  // Create a custom form fetcher without HTTP->HTTPS migration, as well as
+  // without fetching of suppressed HTTPS credentials on HTTP origins as the API
+  // is only available on HTTPS origins.
+  auto form_fetcher = base::MakeUnique<FormFetcherImpl>(
+      PasswordStore::FormDigest(*observed_form), client_, false, false);
+  form_manager_ = base::MakeUnique<CredentialManagerPasswordFormManager>(
+      client_, nullptr, *observed_form, std::move(form), this, nullptr,
+      std::move(form_fetcher));
+  form_manager_->Init(nullptr);
+}
+
 void CredentialManagerImpl::PreventSilentAccess(
     PreventSilentAccessCallback callback) {
   if (password_manager_util::IsLoggingActive(client_)) {
     CredentialManagerLogger(client_->GetLogManager())
-        .LogPreventSilentAccess(web_contents()->GetLastCommittedURL());
+        .LogPreventSilentAccess(delegate_->GetLastCommittedURL());
   }
   // Send acknowledge response back.
   std::move(callback).Run();
@@ -178,15 +134,14 @@ void CredentialManagerImpl::Get(CredentialMediationRequirement mediation,
   PasswordStore* store = GetPasswordStore();
   if (password_manager_util::IsLoggingActive(client_)) {
     CredentialManagerLogger(client_->GetLogManager())
-        .LogRequestCredential(web_contents()->GetLastCommittedURL(), mediation,
+        .LogRequestCredential(delegate_->GetLastCommittedURL(), mediation,
                               federations);
   }
   if (pending_request_ || !store) {
     // Callback error.
     std::move(callback).Run(
-        pending_request_
-            ? mojom::CredentialManagerError::PENDINGREQUEST
-            : mojom::CredentialManagerError::PASSWORDSTOREUNAVAILABLE,
+        pending_request_ ? CredentialManagerError::PENDINGREQUEST
+                         : CredentialManagerError::PASSWORDSTOREUNAVAILABLE,
         base::nullopt);
     LogCredentialManagerGetResult(metrics_util::CREDENTIAL_MANAGER_GET_REJECTED,
                                   mediation);
@@ -197,8 +152,7 @@ void CredentialManagerImpl::Get(CredentialMediationRequirement mediation,
   // page is being prerendered.
   if (!client_->IsFillingEnabledForCurrentPage() ||
       !client_->OnCredentialManagerUsed()) {
-    std::move(callback).Run(mojom::CredentialManagerError::SUCCESS,
-                            CredentialInfo());
+    std::move(callback).Run(CredentialManagerError::SUCCESS, CredentialInfo());
     LogCredentialManagerGetResult(metrics_util::CREDENTIAL_MANAGER_GET_NONE,
                                   mediation);
     return;
@@ -207,15 +161,14 @@ void CredentialManagerImpl::Get(CredentialMediationRequirement mediation,
   if (mediation == CredentialMediationRequirement::kSilent &&
       !IsZeroClickAllowed()) {
     // Callback with empty credential info.
-    std::move(callback).Run(mojom::CredentialManagerError::SUCCESS,
-                            CredentialInfo());
+    std::move(callback).Run(CredentialManagerError::SUCCESS, CredentialInfo());
     LogCredentialManagerGetResult(
         metrics_util::CREDENTIAL_MANAGER_GET_NONE_ZERO_CLICK_OFF, mediation);
     return;
   }
 
   pending_request_.reset(new CredentialManagerPendingRequestTask(
-      this, base::Bind(&RunMojoGetCallback, base::Passed(&callback)), mediation,
+      this, base::Bind(&RunGetCallback, base::Passed(&callback)), mediation,
       include_passwords, federations));
   // This will result in a callback to
   // PendingRequestTask::OnGetPasswordStoreResults().
@@ -223,21 +176,29 @@ void CredentialManagerImpl::Get(CredentialMediationRequirement mediation,
                                 pending_request_.get());
 }
 
+PasswordManagerClient* CredentialManagerImpl::client() const {
+  return client_;
+}
+
+PasswordStore* CredentialManagerImpl::GetPasswordStore() {
+  return client_ ? client_->GetPasswordStore() : nullptr;
+}
+
+void CredentialManagerImpl::DoneRequiringUserMediation() {
+  DCHECK(pending_require_user_mediation_);
+  pending_require_user_mediation_.reset();
+}
+
 bool CredentialManagerImpl::IsZeroClickAllowed() const {
   return *auto_signin_enabled_ && !client_->IsIncognito();
 }
 
-GURL CredentialManagerImpl::GetOrigin() const {
-  return web_contents()->GetLastCommittedURL().GetOrigin();
+GURL CredentialManagerImpl::GetLastCommittedURL() const {
+  return delegate_->GetLastCommittedURL();
 }
 
-base::WeakPtr<PasswordManagerDriver> CredentialManagerImpl::GetDriver() {
-  ContentPasswordManagerDriverFactory* driver_factory =
-      ContentPasswordManagerDriverFactory::FromWebContents(web_contents());
-  DCHECK(driver_factory);
-  PasswordManagerDriver* driver =
-      driver_factory->GetDriverForFrame(web_contents()->GetMainFrame());
-  return driver->AsWeakPtr();
+GURL CredentialManagerImpl::GetOrigin() const {
+  return delegate_->GetOrigin();
 }
 
 void CredentialManagerImpl::SendCredential(
@@ -248,7 +209,7 @@ void CredentialManagerImpl::SendCredential(
 
   if (password_manager_util::IsLoggingActive(client_)) {
     CredentialManagerLogger(client_->GetLogManager())
-        .LogSendCredential(web_contents()->GetLastCommittedURL(), info.type);
+        .LogSendCredential(GetLastCommittedURL(), info.type);
   }
   send_callback.Run(info);
   pending_request_.reset();
@@ -285,24 +246,11 @@ void CredentialManagerImpl::SendPasswordForm(
   SendCredential(send_callback, info);
 }
 
-PasswordManagerClient* CredentialManagerImpl::client() const {
-  return client_;
-}
-
-PasswordStore* CredentialManagerImpl::GetPasswordStore() {
-  return client_ ? client_->GetPasswordStore() : nullptr;
-}
-
-void CredentialManagerImpl::DoneRequiringUserMediation() {
-  DCHECK(pending_require_user_mediation_);
-  pending_require_user_mediation_.reset();
-}
-
 PasswordStore::FormDigest CredentialManagerImpl::GetSynthesizedFormForOrigin()
     const {
   PasswordStore::FormDigest digest = {
       autofill::PasswordForm::SCHEME_HTML, std::string(),
-      web_contents()->GetLastCommittedURL().GetOrigin()};
+      delegate_->GetLastCommittedURL().GetOrigin()};
   digest.signon_realm = digest.origin.spec();
   return digest;
 }
