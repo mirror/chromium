@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf00e1cb_f885104f",
+        "filename": "ui/app_list/views/app_list_page.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T22:19:50Z",
+      "side": 1,
+      "message": "Document the return value. Maybe rename GetDraggingLayout? Or do the implementations have side effects?",
+      "revId": "16548d29014862548661527cb953fe1e61e4d9eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
