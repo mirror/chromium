@@ -24,5 +24,6 @@ Local Modifications:
    additions.
  - google.patch contains changes from the upstream version, mostly related to
    the build.
+ - inffast.patch contains optimizations to inffast.? for 64 bit architectures.
  - Intel SIMD optimisations from https://github.com/jtkukunas/zlib/ have been
    integrated. These changes are reflected in simd.patch.

@@ -1042,7 +1042,8 @@ int flush;
         case LEN_:
             state->mode = LEN;
         case LEN:
-            if (have >= 6 && left >= 258) {
+            if (have >= ZLIB_INTERNAL_INFLATE_FAST_MIN_HAVE &&
+                left >= ZLIB_INTERNAL_INFLATE_FAST_MIN_LEFT) {
                 RESTORE();
                 inflate_fast(strm, out);
                 LOAD();
