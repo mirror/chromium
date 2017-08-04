@@ -196,7 +196,8 @@ void RegisterRemoteSuggestionsProvider(ContentSuggestionsService* service,
       base::MakeUnique<RemoteSuggestionsDatabase>(database_dir, task_runner),
       base::MakeUnique<RemoteSuggestionsStatusService>(signin_manager, prefs,
                                                        pref_name),
-      /*prefetched_pages_tracker=*/nullptr);
+      /*prefetched_pages_tracker=*/nullptr,
+      /*breaking_news_raw_data_provider*/ nullptr);
 
   service->remote_suggestions_scheduler()->SetProvider(provider.get());
   service->set_remote_suggestions_provider(provider.get());
