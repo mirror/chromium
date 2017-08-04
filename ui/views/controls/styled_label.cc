@@ -211,6 +211,9 @@ gfx::Insets StyledLabel::GetInsets() const {
 }
 
 gfx::Size StyledLabel::CalculatePreferredSize() const {
+  int w = GetLocalBounds().width();
+  if (w != 0 && calculated_size_ == gfx::Size())
+    return const_cast<StyledLabel*>(this)->CalculateAndDoLayout(w, true);
   return calculated_size_;
 }
 
