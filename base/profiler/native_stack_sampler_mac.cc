@@ -145,6 +145,11 @@ bool WalkStackFromContext(unw_context_t* unwind_context,
     // If this stack frame has a frame pointer, stepping the cursor will involve
     // indexing memory access off of that pointer. In that case, sanity-check
     // the frame pointer register to ensure it's within bounds.
+    //
+    // Additionally, the stack frame might be in a prologue or epilogue,
+    // which can cause a crash when the unwinder attempts to access non-volatile
+    // registers that have not yet been pushed, or have already been popped from
+    // the stack. Check that their expected locations are in bounds.
     unw_proc_info_t proc_info;
     unw_get_proc_info(&unwind_cursor, &proc_info);
     if ((proc_info.format & UNWIND_X86_64_MODE_MASK) ==
@@ -152,8 +157,13 @@ bool WalkStackFromContext(unw_context_t* unwind_context,
       unw_word_t rsp, rbp;
       unw_get_reg(&unwind_cursor, UNW_X86_64_RSP, &rsp);
       unw_get_reg(&unwind_cursor, UNW_X86_64_RBP, &rbp);
-      if (rbp < rsp || rbp > stack_top)
+      // Inline of |EXTRACT_BITS| from libunwind's CompactUnwinder.hpp
+      uint32_t offset =
+          ((proc_info.format >> __builtin_ctz(UNWIND_X86_64_RBP_FRAME_OFFSET)) &
+           (((1 << __builtin_popcount(UNWIND_X86_64_RBP_FRAME_OFFSET))) - 1));
+      if ((rbp - offset * 8) < rsp || rbp > stack_top) {
         return false;
+      }
     }
 
     step_result = unw_step(&unwind_cursor);
