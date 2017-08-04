@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c720dc53_773d7c98",
+        "filename": "net/base/hex_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-08-04T14:28:43Z",
+      "side": 1,
+      "message": ":D:\n\nThanks for adding the tests!",
+      "parentUuid": "6560d0ab_2bd10677",
+      "range": {
+        "startLine": 36,
+        "startChar": 45,
+        "endLine": 36,
+        "endChar": 49
+      },
+      "revId": "38de3d92db4615c37ee479810fd9713639ed1209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6e5aaab_badf6718",
         "filename": "net/quic/platform/impl/quic_text_utils_impl.h",
         "patchSetId": 12
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Unfortunately it is, otherwise HexDump resolves to QuicTextUtilsImpl::HexDump(), which is this very static method, leading to infinite recursion, which is conveniently caught at compile time by -Winfinite-recursion.",
       "parentUuid": "c6e5aaab_badf6718",
+      "range": {
+        "startLine": 114,
+        "startChar": 11,
+        "endLine": 114,
+        "endChar": 16
+      },
+      "revId": "38de3d92db4615c37ee479810fd9713639ed1209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3a798f8_6c582812",
+        "filename": "net/quic/platform/impl/quic_text_utils_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-08-04T14:28:43Z",
+      "side": 1,
+      "message": "Triple snap. Good catch human-side and compiler-side!",
+      "parentUuid": "8713b0d7_485d8cca",
       "range": {
         "startLine": 114,
         "startChar": 11,
