@@ -610,6 +610,7 @@ public class CronetUrlRequestContextTest extends CronetTestBase {
         urlRequestBuilder.build().start();
         callback.blockForDone();
         assertTrue(thrown.get() instanceof RuntimeException);
+        cronetEngine.shutdown();
     }
 
     @SmallTest
@@ -935,6 +936,7 @@ public class CronetUrlRequestContextTest extends CronetTestBase {
         checkRequestCaching(cronetEngine, url, false);
         checkRequestCaching(cronetEngine, url, false);
         checkRequestCaching(cronetEngine, url, false);
+        cronetEngine.shutdown();
     }
 
     @SmallTest
@@ -947,6 +949,7 @@ public class CronetUrlRequestContextTest extends CronetTestBase {
         checkRequestCaching(cronetEngine, url, true);
         NativeTestServer.shutdownNativeTestServer();
         checkRequestCaching(cronetEngine, url, true);
+        cronetEngine.shutdown();
     }
 
     @SmallTest
@@ -959,6 +962,7 @@ public class CronetUrlRequestContextTest extends CronetTestBase {
         checkRequestCaching(cronetEngine, url, true);
         NativeTestServer.shutdownNativeTestServer();
         checkRequestCaching(cronetEngine, url, true);
+        cronetEngine.shutdown();
     }
 
     @SmallTest
@@ -979,6 +983,7 @@ public class CronetUrlRequestContextTest extends CronetTestBase {
         checkRequestCaching(cronetEngine, url, false);
         checkRequestCaching(cronetEngine, url, false);
         checkRequestCaching(cronetEngine, url, false);
+        cronetEngine.shutdown();
     }
 
     @SmallTest
@@ -1010,6 +1015,7 @@ public class CronetUrlRequestContextTest extends CronetTestBase {
         assertNotNull(callback.mError);
         assertContains("Exception in CronetUrlRequest: net::ERR_CONNECTION_REFUSED",
                 callback.mError.getMessage());
+        cronetEngine.shutdown();
     }
 
     @SmallTest
@@ -1027,6 +1033,7 @@ public class CronetUrlRequestContextTest extends CronetTestBase {
         cronetEngine.shutdown();
         cronetEngine = enableDiskCache(new CronetEngine.Builder(getContext())).build();
         checkRequestCaching(cronetEngine, url, true);
+        cronetEngine.shutdown();
     }
 
     @SmallTest
@@ -1040,6 +1047,7 @@ public class CronetUrlRequestContextTest extends CronetTestBase {
         urlRequestBuilder.build().start();
         callback.blockForDone();
         assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        cronetEngine.shutdown();
     }
 
     @SmallTest
@@ -1064,6 +1072,7 @@ public class CronetUrlRequestContextTest extends CronetTestBase {
         // Because mUrl is http, getCertVerifierData() will return empty data.
         String data = cronetEngine.getCertVerifierData(100);
         assertTrue(data.isEmpty());
+        cronetEngine.shutdown();
     }
 
     @SmallTest
@@ -1083,6 +1092,7 @@ public class CronetUrlRequestContextTest extends CronetTestBase {
         }
         assertEquals(200, statusCodes[0]);
         assertEquals(404, statusCodes[1]);
+        cronetEngine.shutdown();
     }
 
     @SmallTest
