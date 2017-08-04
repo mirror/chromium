@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a440b98_b7e90218",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-04T12:07:55Z",
+      "side": 1,
+      "message": "What\u0027s the point of this separate variable?",
+      "range": {
+        "startLine": 454,
+        "startChar": 7,
+        "endLine": 454,
+        "endChar": 36
+      },
+      "revId": "7b653b27b3d817215c5fa26a64de8cc3fc286053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf0afd0_23b447b3",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-04T12:07:55Z",
+      "side": 1,
+      "message": "Document ownership and lifetime requirements:\n\n* Doesn\u0027t take ownership\n* Object must outlive |this|\n\nRight?\n\nI\u0027m not sure if the latter holds true: the service owns the provider, and the provider owns the handler, so when the service gets deleted, it\u0027ll delete the provider and the handler before it finishes deleting itself.\n\nIt might be simpler to add an accessor RemoteSuggestionsProvider::breaking_news_gcm_app_handler() instead, and access it through ContentSuggestionsService::remote_suggestions_provider_for_debugging() (this is a debugging feature after all, isn\u0027t it?)",
+      "revId": "7b653b27b3d817215c5fa26a64de8cc3fc286053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
