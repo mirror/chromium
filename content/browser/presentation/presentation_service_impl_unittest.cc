@@ -397,11 +397,7 @@ TEST_F(PresentationServiceImplTest, ThisRenderFrameDeleted) {
   ListenForScreenAvailabilityAndWait(presentation_url1_, true);
 
   ExpectReset();
-
-  // Since the frame matched the service, |service_impl_| will be deleted.
-  PresentationServiceImpl* service = service_impl_.release();
-  EXPECT_CALL(mock_delegate_, RemoveObserver(_, _)).Times(1);
-  service->RenderFrameDeleted(main_rfh());
+  service_impl_->RenderFrameDeleted(main_rfh());
 }
 
 TEST_F(PresentationServiceImplTest, OtherRenderFrameDeleted) {
