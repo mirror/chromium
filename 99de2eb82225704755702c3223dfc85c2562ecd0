@@ -34,6 +34,24 @@
       "revId": "99de2eb82225704755702c3223dfc85c2562ecd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de5781f_9018e8cd",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-04T10:51:32Z",
+      "side": 1,
+      "message": "There are two questions in here:\nThe first was a remark that if the path changes to lib/clang/7.0.0, this will break. I guess hopefully we\u0027ll have some notice when that will happen?\n\nThe second was just to confirm that lib is the only directory needed: for the Blink rename tool, I recall needing the include dir as well on OS X.",
+      "parentUuid": "3e5311bf_cdd90277",
+      "revId": "99de2eb82225704755702c3223dfc85c2562ecd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
