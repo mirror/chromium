@@ -4,12 +4,15 @@
 
 #import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
 
+#include "components/strings/grit/components_strings.h"
+#include "ios/chrome/browser/ui/authentication/signin_confirmation_view_controller.h"
 #import "ios/chrome/browser/ui/settings/accounts_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/privacy_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/settings_collection_view_controller.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
+#include "ios/chrome/grit/ios_strings.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
 #include "ios/chrome/test/app/navigation_test_util.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
@@ -22,6 +25,7 @@
 #endif
 
 using chrome_test_util::ButtonWithAccessibilityLabel;
+using chrome_test_util::ButtonWithAccessibilityLabelId;
 using chrome_test_util::ClearBrowsingDataCollectionView;
 using chrome_test_util::SettingsMenuButton;
 using testing::WaitUntilConditionOrTimeout;
@@ -158,6 +162,40 @@ id<GREYAction> ScrollDown() {
   GREYAssert(testing::WaitUntilConditionOrTimeout(
                  kWaitForToolbarAnimationTimeout, condition),
              errorMessage);
+}
+
++ (void)openSigninFromSettings {
+  [ChromeEarlGreyUI openSettingsMenu];
+  [ChromeEarlGreyUI tapSettingsMenuButton:chrome_test_util::SignInMenuButton()];
+}
+
++ (void)signinToIdentityByEmail:(NSString*)userEmail {
+  // Sign in to |userEmail|.
+  [[EarlGrey selectElementWithMatcher:ButtonWithAccessibilityLabel(userEmail)]
+      performAction:grey_tap()];
+  [[EarlGrey selectElementWithMatcher:
+                 ButtonWithAccessibilityLabelId(
+                     IDS_IOS_ACCOUNT_CONSISTENCY_SETUP_SIGNIN_BUTTON)]
+      performAction:grey_tap()];
+}
+
++ (void)confirmSigninConfirmationDialog {
+  // Confirm sign in. "More" button is shown on short devices (e.g. iPhone 5s,
+  // iPhone SE), so needs to scroll first to dismiss the "More" button before
+  // taping on "OK".
+  // Cannot directly scroll on |kSignInConfirmationCollectionViewId| because it
+  // is a MDC collection view, not a UICollectionView, so itself is not
+  // scrollable.
+  id<GREYMatcher> signinUICollectionViewMatcher = grey_allOf(
+      grey_ancestor(grey_accessibilityID(kSigninConfirmationCollectionViewId)),
+      grey_kindOfClass([UICollectionView class]), nil);
+  [[EarlGrey selectElementWithMatcher:signinUICollectionViewMatcher]
+      performAction:grey_scrollToContentEdge(kGREYContentEdgeBottom)];
+
+  [[EarlGrey selectElementWithMatcher:
+                 chrome_test_util::ButtonWithAccessibilityLabelId(
+                     IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON)]
+      performAction:grey_tap()];
 }
 
 @end
