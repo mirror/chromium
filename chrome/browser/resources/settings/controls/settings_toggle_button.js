@@ -16,11 +16,40 @@ Polymer({
       type: Boolean,
       reflectToAttribute: true,
     },
+
+    /**
+     * Which element will trigger state changes. Defaults to |this|.
+     * @type {HTMLElement}
+     */
+    actionTarget: {
+      type: Object,
+    },
+  },
+
+  observers: [
+    'onDisableOrPrefChange_(disabled, pref.*, actionTarget)',
+  ],
+
+  /** @override */
+  attached: function() {
+    if (!this.actionTarget) {
+      this.actionTarget = this;
+    }
+    this.listen(this.actionTarget, 'tap', 'onLabelWrapperTap_');
   },
 
   /** @override */
   focus: function() {
     this.$.control.focus();
+  },
+
+  /** @private */
+  onDisableOrPrefChange_: function() {
+    if (this.controlDisabled_()) {
+      this.actionTarget.removeAttribute('actionable');
+    } else {
+      this.actionTarget.setAttribute('actionable', '');
+    }
   },
 
   /** @private */
