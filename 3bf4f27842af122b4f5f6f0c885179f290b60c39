@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "594c3003_ed554986",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-04T13:59:26Z",
+      "side": 1,
+      "message": "Does this really deserve to be a function? It is only used once from this file.",
+      "range": {
+        "startLine": 54,
+        "startChar": 18,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "3bf4f27842af122b4f5f6f0c885179f290b60c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df88cea0_bdaddf93",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-04T13:59:26Z",
+      "side": 1,
+      "message": "Let\u0027s avoid crashes in production if we pass the wrong value to this function (see explination here https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#CHECK_DCHECK_and-NOTREACHED and https://chromium.googlesource.com/chromium/src/+show/master/styleguide/java/java.md#101).\nSo please change this to\nassert false;\nreturn false;",
+      "range": {
+        "startLine": 76,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "revId": "3bf4f27842af122b4f5f6f0c885179f290b60c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ada2dbd_34516196",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-04T13:59:26Z",
+      "side": 1,
+      "message": "This switch code is copy-pasted. Please extract it to a helper function like\nString GetAccessPointPreferenceKey(@AccountSigninActivity.AccessPoint int accessPoint) and use it here and above.",
+      "range": {
+        "startLine": 103,
+        "startChar": 17,
+        "endLine": 103,
+        "endChar": 34
+      },
+      "revId": "3bf4f27842af122b4f5f6f0c885179f290b60c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416f9a32_b80ce132",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-04T13:59:26Z",
+      "side": 1,
+      "message": "Ditto (use assert).",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 21
+      },
+      "revId": "3bf4f27842af122b4f5f6f0c885179f290b60c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "288aba16_607d751c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-04T13:59:26Z",
+      "side": 1,
+      "message": "All the case statements do the same thing. How about just using a local final variable to store the description string and call \"view.getDescription().setText(descriptionString)\" after the switch statement.",
+      "range": {
+        "startLine": 229,
+        "startChar": 21,
+        "endLine": 229,
+        "endChar": 35
+      },
+      "revId": "3bf4f27842af122b4f5f6f0c885179f290b60c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad61f4f6_b499edfc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-04T13:59:26Z",
+      "side": 1,
+      "message": "Ditto (use assert)",
+      "range": {
+        "startLine": 242,
+        "startChar": 26,
+        "endLine": 242,
+        "endChar": 42
+      },
+      "revId": "3bf4f27842af122b4f5f6f0c885179f290b60c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
