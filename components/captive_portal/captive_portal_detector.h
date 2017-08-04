@@ -30,11 +30,12 @@ class CAPTIVE_PORTAL_EXPORT CaptivePortalDetector
   struct Results {
     Results()
         : result(captive_portal::RESULT_NO_RESPONSE),
-          response_code(net::URLFetcher::RESPONSE_CODE_INVALID) {
-    }
+          response_code(net::URLFetcher::RESPONSE_CODE_INVALID),
+          net_error(-1) {}
 
     captive_portal::CaptivePortalResult result;
     int response_code;
+    int net_error;
     base::TimeDelta retry_after_delta;
     GURL landing_url;
   };

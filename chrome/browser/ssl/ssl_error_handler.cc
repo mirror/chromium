@@ -735,6 +735,7 @@ void SSLErrorHandler::Observe(
   timer_.Stop();
   CaptivePortalService::Results* results =
       content::Details<CaptivePortalService::Results>(details).ptr();
+  LOG(ERROR) << ">> NET ERROR FROM PORTAL PING: " << results->net_error;
   if (results->result == captive_portal::RESULT_BEHIND_CAPTIVE_PORTAL)
     ShowCaptivePortalInterstitial(results->landing_url);
   else

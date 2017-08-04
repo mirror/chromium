@@ -95,8 +95,10 @@ void CaptivePortalDetector::GetCaptivePortalResultFromResponse(
   // there may be a networking problem, rather than a captive portal.
   // TODO(mmenke):  Consider special handling for redirects that end up at
   //                errors, especially SSL certificate errors.
-  if (url_fetcher->GetStatus().status() != net::URLRequestStatus::SUCCESS)
+  if (url_fetcher->GetStatus().status() != net::URLRequestStatus::SUCCESS) {
+    results->net_error = url_fetcher->GetStatus().error();
     return;
+  }
 
   // In the case of 503 errors, look for the Retry-After header.
   if (results->response_code == 503) {

@@ -235,7 +235,7 @@ void CaptivePortalService::DetectCaptivePortalInternal() {
     // Count this as a success, so the backoff entry won't apply exponential
     // backoff, but will apply the standard delay.
     backoff_entry_->InformOfRequest(true);
-    OnResult(captive_portal::RESULT_INTERNET_CONNECTED, GURL());
+    OnResult(captive_portal::RESULT_INTERNET_CONNECTED, GURL(), 0);
     return;
   }
 
@@ -330,7 +330,7 @@ void CaptivePortalService::OnPortalDetectionCompleted(
 
   last_check_time_ = now;
 
-  OnResult(result, results.landing_url);
+  OnResult(result, results.landing_url, results.net_error);
 }
 
 void CaptivePortalService::Shutdown() {
@@ -344,7 +344,8 @@ void CaptivePortalService::Shutdown() {
 }
 
 void CaptivePortalService::OnResult(CaptivePortalResult result,
-                                    const GURL& landing_url) {
+                                    const GURL& landing_url,
+                                    int net_error) {
   DCHECK_EQ(STATE_CHECKING_FOR_PORTAL, state_);
   state_ = STATE_IDLE;
 
@@ -352,6 +353,7 @@ void CaptivePortalService::OnResult(CaptivePortalResult result,
   results.previous_result = last_detection_result_;
   results.result = result;
   results.landing_url = landing_url;
+  results.net_error = net_error;
   last_detection_result_ = result;
 
   content::NotificationService::current()->Notify(
