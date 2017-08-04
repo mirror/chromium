@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "e638a862_915cb5c4",
+        "filename": "headless/app/headless_shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-04T23:31:35Z",
+      "side": 1,
+      "message": "This should be omitted.",
+      "revId": "a20cb1bd35c472afa1562695fc223ad73257598f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44a81bf9_fb0487c8",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 1
@@ -30,6 +47,24 @@
       "writtenOn": "2017-08-04T21:14:53Z",
       "side": 1,
       "message": "Network.interceptRequests({pattern}) sounds simpler and allows adding more interception parameters. If patterns are optional, it means it should intercept all in case no pattern is specified.",
+      "revId": "a20cb1bd35c472afa1562695fc223ad73257598f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c78a66a_6861d289",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-04T23:31:35Z",
+      "side": 1,
+      "message": "We could also allow calling this multiple times, adding more patterns, but that requires {start,stop}InterceptingRequests({pattern}). WDYT?",
+      "parentUuid": "44a81bf9_fb0487c8",
       "revId": "a20cb1bd35c472afa1562695fc223ad73257598f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
