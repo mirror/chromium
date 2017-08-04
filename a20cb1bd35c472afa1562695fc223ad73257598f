@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eaa31a0_34a0295b",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-04T21:14:53Z",
+      "side": 1,
+      "message": "Use base::MatchPattern instead.",
+      "revId": "a20cb1bd35c472afa1562695fc223ad73257598f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a81bf9_fb0487c8",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-04T21:14:53Z",
+      "side": 1,
+      "message": "Network.interceptRequests({pattern}) sounds simpler and allows adding more interception parameters. If patterns are optional, it means it should intercept all in case no pattern is specified.",
+      "revId": "a20cb1bd35c472afa1562695fc223ad73257598f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
