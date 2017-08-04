@@ -244,8 +244,9 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
             methodToAppsMapping.get(defaultMethod).add(app);
 
             URI appOrigin = null;
+            URI defaultUriMethod = null;
             if (UriUtils.looksLikeUriMethod(defaultMethod)) {
-                URI defaultUriMethod = UriUtils.parseUriFromString(defaultMethod);
+                defaultUriMethod = UriUtils.parseUriFromString(defaultMethod);
                 if (defaultUriMethod != null) {
                     uriMethods.add(defaultUriMethod);
 
@@ -267,14 +268,18 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
             // can support URI payment methods (e.g., "https://bobpay.com/public-standard").
             Set<String> supportedMethods = getSupportedPaymentMethods(app.activityInfo);
             for (String supportedMethod : supportedMethods) {
+                URI supportedUriMethod = UriUtils.looksLikeUriMethod(supportedMethod)
+                        ? UriUtils.parseUriFromString(supportedMethod)
+                        : null;
+                if (supportedUriMethod != null && supportedUriMethod.equals(defaultUriMethod)) {
+                    continue;
+                }
+
                 if (!methodToAppsMapping.containsKey(supportedMethod)) {
                     methodToAppsMapping.put(supportedMethod, new HashSet<ResolveInfo>());
                 }
                 methodToAppsMapping.get(supportedMethod).add(app);
 
-                if (!UriUtils.looksLikeUriMethod(supportedMethod)) continue;
-
-                URI supportedUriMethod = UriUtils.parseUriFromString(supportedMethod);
                 if (supportedUriMethod == null) continue;
 
                 if (!mMethodToSupportedAppsMapping.containsKey(supportedUriMethod)) {
