@@ -264,9 +264,11 @@ TEST_F(ConditionVariableTest, MAYBE_MultiThreadConsumerTest) {
 
   {
     base::AutoLock auto_lock(*queue.lock());
+    LOG(ERROR) << "test body has lock " << queue.lock();
     while (!queue.EveryIdWasAllocated())
       queue.all_threads_have_ids()->Wait();
   }
+  LOG(ERROR) << "test body released lock " << queue.lock();
 
   // If threads aren't in a wait state, they may start to gobble up tasks in
   // parallel, short-circuiting (breaking) this test.
@@ -718,9 +720,11 @@ void WorkQueue::ThreadMain() {
   {
     base::AutoLock auto_lock(lock_);
     thread_id = GetThreadId();
+    LOG(ERROR) << "ThreadMain " << thread_id << " has lock " << &lock_;
     if (EveryIdWasAllocated())
       all_threads_have_ids()->Signal();  // Tell creator we're ready.
   }
+  LOG(ERROR) << "ThreadMain " << thread_id << " released lock " << &lock_;
 
   Lock private_lock;  // Used to waste time on "our work".
   while (1) {  // This is the main consumer loop.

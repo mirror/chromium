@@ -1073,10 +1073,12 @@ TEST_F(AssociatedInterfaceTest, ThreadSafeAssociatedInterfacePtr) {
                base::PlatformThreadId thread_id, int32_t result) {
               EXPECT_EQ(123, result);
               // Validate the callback is invoked on the calling thread.
+              LOG(ERROR) << "inner: " << pthread_self();
               EXPECT_EQ(thread_id, base::PlatformThread::CurrentId());
               // Notify the run_loop to quit.
               main_task_runner->PostTask(FROM_HERE, quit_closure);
             });
+        LOG(ERROR) << "outer: " << pthread_self();
         (*thread_safe_sender)
             ->Echo(123,
                    base::Bind(done_callback, main_task_runner, quit_closure,
