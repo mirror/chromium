@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "570cc49a_e85c00fa",
+        "filename": "components/google/core/browser/google_url_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-04T01:46:41Z",
+      "side": 1,
+      "message": "Nit: Not instantly obvious which requirements you\u0027re referring to, so I might say \"...suffices as a way of setting the default search engine to not be Google.  But there is no policy that controls navigation error resolution.\"",
+      "revId": "29f662d326ddb1ef34c4dd0283a2974a7cee5975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
