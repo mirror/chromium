@@ -78,6 +78,9 @@ self.onmessage = function(event) {
     case 'evaluatableJavaScriptSubstring':
       FormatterWorker.evaluatableJavaScriptSubstring(params.content);
       break;
+    case 'preprocessTopLevelAwaitExpressions':
+      FormatterWorker.preprocessTopLevelAwaitExpressions(params.content);
+      break;
     case 'parseJSONRelaxed':
       FormatterWorker.parseJSONRelaxed(params.content);
       break;
@@ -133,6 +136,112 @@ FormatterWorker.evaluatableJavaScriptSubstring = function(content) {
     console.error(e);
   }
   postMessage(result);
+};
+
+/**
+ * @param {string} content
+ */
+FormatterWorker.preprocessTopLevelAwaitExpressions = function(content) {
+  var result = '';
+  try {
+    var variableDefinitions = [];
+    var ast = acorn.parse(`(async function(){${content}})()`, {ranges: false, ecmaVersion: 8, preserveParens: true});
+    if (!containsTopLevelAwait(ast.body[0].expression.callee.expression.body)) {
+      postMessage(result);
+      return;
+    }
+    var sourceBody = ast.body[0].expression.callee.expression.body.body;
+    var shouldReturn = sourceBody.peekLast().type !== 'VariableDeclaration';
+    for (var i = 0; i < sourceBody.length; ++i) {
+      var node = sourceBody[i];
+      if (node.type !== 'VariableDeclaration')
+        continue;
+      node.kind = 'var';
+      var definitions = [];
+      var initializations = [];
+      for (var declaration of node.declarations) {
+        if (declaration.init) {
+          initializations.push(
+              {type: 'AssignmentExpression', operator: '=', left: declaration.id, right: declaration.init});
+        }
+        var maybeIds = [declaration.id];
+        do {
+          var maybeId = maybeIds.pop();
+          if (maybeId.type === 'ObjectPattern') {
+            for (var property of maybeId.properties)
+              maybeIds.push(property.value);
+
+          } else if (maybeId.type === 'ArrayPattern') {
+            for (var element of maybeId.elements)
+              maybeIds.push(element);
+
+          } else if (maybeId.type === 'Identifier') {
+            definitions.push({type: 'VariableDeclaration', id: maybeId});
+          }
+        } while (maybeIds.length);
+      }
+
+      node.declarations = definitions;
+      variableDefinitions.push(node);
+
+      if (initializations.length) {
+        sourceBody[i] = {
+          type: 'ExpressionStatement',
+          expression: {type: 'SequenceExpression', expressions: initializations}
+        };
+      } else {
+        sourceBody[i] = {type: 'EmptyStatement'};
+      }
+    }
+    if (shouldReturn)
+      sourceBody[sourceBody.length - 1] = {type: 'ReturnStatement', argument: sourceBody.peekLast()};
+    ast.body = [...variableDefinitions, ast.body[0]];
+
+    var generator = Object.assign({}, astring.baseGenerator, {
+      /**
+       * @param {!ESTree.Node} node
+       * @param {!Object} state
+       * @this {!Object}
+       */
+      ParenthesizedExpression: function(node, state) {
+        state.write('(');
+        this[node.expression.type](node.expression, state);
+        state.write(')');
+      }
+    });
+    result = astring.generate(ast, {generator: generator});
+  } catch (e) {
+    console.error(e);
+  }
+  postMessage(result);
+
+  /**
+   * @param {!ESTree.Node} node
+   * @return {boolean}
+   */
+  function containsTopLevelAwait(node) {
+    var walker = new FormatterWorker.ESTreeWalker(beforeVisit);
+    var contains = false;
+    walker.walk(node);
+    return contains;
+    /**
+     * @param {!ESTree.Node} node
+     */
+    function beforeVisit(node) {
+      if (contains || isFunction(node))
+        return FormatterWorker.ESTreeWalker.SkipSubtree;
+      contains = node.type === 'AwaitExpression';
+    }
+  }
+
+  /**
+   * @param {!ESTree.Node} node
+   * @return {boolean}
+   */
+  function isFunction(node) {
+    return node.type === 'FunctionDeclaration' || node.type === 'FunctionExpression' ||
+        node.type === 'ArrowFunctionExpression';
+  }
 };
 
 /**

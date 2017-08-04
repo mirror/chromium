@@ -11,6 +11,7 @@
         "FormatterWorker.js",
         "acorn/acorn.js",
         "acorn/acorn_loose.js",
+        "astring/astring.js",
         "CSSFormatter.js",
         "AcornTokenizer.js",
         "JavaScriptFormatter.js",
@@ -24,6 +25,7 @@
     "skip_compilation": [
         "acorn/acorn.js",
         "acorn/acorn_loose.js",
+        "astring/astring.js",
         "../cm_web_modes/css.js",
         "../cm_web_modes/xml.js"
     ]

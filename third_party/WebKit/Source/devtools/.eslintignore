@@ -1,5 +1,4 @@
 front_end/.eslintrc.js
-front_end/acorn/*
 front_end/audits2_worker/lighthouse/
 front_end/audits2/lighthouse/
 front_end/cm/*
@@ -8,6 +7,7 @@ front_end/cm_modes/*
 front_end/cm_web_modes/*
 front_end/diff/diff_match_patch.js
 front_end/formatter_worker/acorn/*
+front_end/formatter_worker/astring/*
 front_end/gonzales/gonzales-scss.js
 front_end/terminal/xterm.js/**
 front_end/protocol_externs.js
