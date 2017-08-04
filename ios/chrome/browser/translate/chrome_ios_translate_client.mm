@@ -11,6 +11,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "components/infobars/core/infobar.h"
+#import "components/language/ios/browser/language_detection_controller.h"
 #include "components/metrics/proto/translate_event.pb.h"
 #include "components/prefs/pref_service.h"
 #include "components/sync/driver/sync_driver_switches.h"
@@ -22,14 +23,12 @@
 #include "components/translate/core/browser/translate_manager.h"
 #include "components/translate/core/browser/translate_prefs.h"
 #include "components/translate/core/browser/translate_step.h"
-#include "components/translate/core/common/language_detection_details.h"
 #include "components/translate/core/common/language_detection_logging_helper.h"
 #include "components/translate/core/common/translation_logging_helper.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/infobars/infobar.h"
 #include "ios/chrome/browser/infobars/infobar_controller.h"
 #include "ios/chrome/browser/infobars/infobar_manager_impl.h"
-#include "ios/chrome/browser/language/url_language_histogram_factory.h"
 #include "ios/chrome/browser/pref_names.h"
 #import "ios/chrome/browser/sync/ios_user_event_service_factory.h"
 #import "ios/chrome/browser/translate/after_translate_infobar_controller.h"
@@ -51,7 +50,6 @@
 #endif
 
 DEFINE_WEB_STATE_USER_DATA_KEY(ChromeIOSTranslateClient);
-
 ChromeIOSTranslateClient::ChromeIOSTranslateClient(web::WebState* web_state)
     : web::WebStateObserver(web_state),
       translate_manager_(base::MakeUnique<translate::TranslateManager>(
@@ -62,12 +60,14 @@ ChromeIOSTranslateClient::ChromeIOSTranslateClient(web::WebState* web_state)
           prefs::kAcceptLanguages)),
       translate_driver_(web_state,
                         web_state->GetNavigationManager(),
-                        translate_manager_.get(),
-                        UrlLanguageHistogramFactory::GetForBrowserState(
-                            ios::ChromeBrowserState::FromBrowserState(
-                                web_state->GetBrowserState()))) {}
+                        translate_manager_.get()) {}
 
 ChromeIOSTranslateClient::~ChromeIOSTranslateClient() {
+}
+
+void ChromeIOSTranslateClient::Initialize() {
+  translate_driver_.ObserveLanguageDetection(
+      language::LanguageDetectionController::FromWebState(web_state()));
 }
 
 // static
@@ -161,7 +161,7 @@ void ChromeIOSTranslateClient::ShowTranslateUI(
       target_language, error_type, triggered_from_menu);
 }
 
-translate::TranslateDriver* ChromeIOSTranslateClient::GetTranslateDriver() {
+translate::IOSTranslateDriver* ChromeIOSTranslateClient::GetTranslateDriver() {
   return &translate_driver_;
 }
 

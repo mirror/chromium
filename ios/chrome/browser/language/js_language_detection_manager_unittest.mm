@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "components/translate/ios/browser/js_language_detection_manager.h"
+#import "components/language/ios/browser/js_language_detection_manager.h"
 
 #include <string.h>
 

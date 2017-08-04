@@ -30,6 +30,7 @@ source_set("translate") {
     "//components/infobars/core",
     "//components/keyed_service/core",
     "//components/keyed_service/ios",
+    "//components/language/ios/browser",
     "//components/metrics",
     "//components/metrics/proto",
     "//components/prefs",
@@ -44,7 +45,6 @@ source_set("translate") {
     "//ios/chrome/browser",
     "//ios/chrome/browser/browser_state",
     "//ios/chrome/browser/infobars",
-    "//ios/chrome/browser/language",
     "//ios/chrome/browser/sync",
     "//ios/chrome/browser/ui/infobars",
     "//ios/web",
@@ -60,7 +60,6 @@ source_set("unit_tests") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true
   sources = [
-    "js_language_detection_manager_unittest.mm",
     "translate_service_ios_unittest.cc",
   ]
   deps = [
@@ -95,6 +94,8 @@ source_set("external_url_eg_tests") {
   deps = [
     ":translate",
     "//base",
+    "//components/language/core/browser",
+    "//components/language/ios/browser",
     "//components/strings",
     "//components/translate/core/browser",
     "//components/translate/core/common",

@@ -1,4 +1,4 @@
-# Copyright 2015 The Chromium Authors. All rights reserved.
+# Copyright 2017 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
@@ -7,12 +7,12 @@ import("//ios/web/js_compile.gni")
 source_set("browser") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
-    "ios_translate_driver.h",
-    "ios_translate_driver.mm",
-    "js_translate_manager.h",
-    "js_translate_manager.mm",
-    "translate_controller.h",
-    "translate_controller.mm",
+    "js_language_detection_manager.h",
+    "js_language_detection_manager.mm",
+    "language_detection_controller.h",
+    "language_detection_controller.mm",
+    "string_clipping_util.cc",
+    "string_clipping_util.h",
   ]
 
   deps = [
@@ -20,7 +20,6 @@ source_set("browser") {
     "//base",
     "//components/language/core/browser",
     "//components/prefs",
-    "//components/translate/core/browser",
     "//components/translate/core/common",
     "//components/translate/core/language_detection",
     "//ios/web",
@@ -32,7 +31,7 @@ source_set("browser") {
 js_compile_checked("injected_js") {
   visibility = [ ":browser" ]
   sources = [
-    "resources/translate_ios.js",
+    "resources/language_detection.js",
   ]
 }
 
@@ -40,21 +39,20 @@ source_set("unit_tests") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true
   sources = [
-    "js_translate_manager_unittest.mm",
-    "translate_controller_unittest.mm",
+    "language_detection_controller_unittest.mm",
+    "string_clipping_util_unittest.cc",
   ]
 
   deps = [
     ":browser",
     "//base",
-    "//components/prefs:test_support",
+    "//base/test:test_support",
+    "//components/language/core/browser",
     "//components/resources",
-    "//components/translate/core/browser",
+    "//components/translate/core/common",
     "//ios/web/public/test",
     "//ios/web/public/test/fakes",
     "//testing/gtest",
     "//third_party/ocmock",
-    "//ui/base",
-    "//url",
   ]
 }

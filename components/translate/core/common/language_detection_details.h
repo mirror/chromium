@@ -36,6 +36,7 @@ struct LanguageDetectionDetails {
   // Whether the notranslate is specified in head tag as a meta;
   //   <meta name="google" value="notranslate"> or
   //   <meta name="google" content="notranslate">.
+  // Only populated for Content-based embedders.
   bool has_notranslate;
 
   // The language written in the lang attribute of the html element.

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "components/translate/ios/browser/js_language_detection_manager.h"
+#import "components/language/ios/browser/js_language_detection_manager.h"
 
 #include "base/callback.h"
 #include "base/strings/string_util.h"
@@ -33,7 +33,7 @@ const size_t kMaxIndexChars = 65535;
 }
 
 - (void)retrieveBufferedTextContent:
-        (const language_detection::BufferedTextCallback&)callback {
+    (const language_detection::BufferedTextCallback&)callback {
   DCHECK(!callback.is_null());
   // Copy the completion handler so that the block does not capture a reference.
   __block language_detection::BufferedTextCallback blockCallback = callback;

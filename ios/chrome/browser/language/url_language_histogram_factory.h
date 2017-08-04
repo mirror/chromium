@@ -11,6 +11,10 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/keyed_service/ios/browser_state_keyed_service_factory.h"
 
+namespace web {
+class WebState;
+}
+
 namespace ios {
 class ChromeBrowserState;
 }
@@ -37,5 +41,13 @@ class UrlLanguageHistogramFactory : public BrowserStateKeyedServiceFactory {
 
   DISALLOW_COPY_AND_ASSIGN(UrlLanguageHistogramFactory);
 };
+
+// Adds the URL language histogram as a listener to the language detection
+// controller.
+//
+// Placed here for expediency's sake: there is not (yet) any other iOS-specific
+// code for the URL language histogram. This should be moved into an
+// iOS-specific location if we ever produce such code.
+void InitializeUrlLanguageHistogram(web::WebState* web_state);
 
 #endif  // IOS_CHROME_BROWSER_LANGUAGE_URL_LANGUAGE_HISTOGRAM_FACTORY_H

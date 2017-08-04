@@ -389,8 +389,8 @@ void ChromeTranslateClient::OnLanguageDetermined(
   RecordLanguageDetectionEvent(details);
   // Unless we have no language model (e.g., in incognito), notify the model
   // about detected language of every page visited.
-  if (language_histogram_ && details.is_cld_reliable)
-    language_histogram_->OnPageVisited(details.cld_language);
+  if (language_histogram_)
+    language_histogram_->OnPageVisited(details);
 }
 
 void ChromeTranslateClient::OnPageTranslated(

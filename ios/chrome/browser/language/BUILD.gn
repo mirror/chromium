@@ -5,17 +5,21 @@
 source_set("language") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
-    "url_language_histogram_factory.cc",
     "url_language_histogram_factory.h",
+    "url_language_histogram_factory.mm",
   ]
   deps = [
     "//base",
     "//components/keyed_service/core",
     "//components/keyed_service/ios",
     "//components/language/core/browser",
+    "//components/language/ios/browser",
     "//components/prefs",
+    "//components/translate/core/common",
+    "//components/translate/core/language_detection",
     "//ios/chrome/browser",
     "//ios/chrome/browser/browser_state",
+    "//ios/web",
   ]
 }
 
@@ -23,18 +27,23 @@ source_set("unit_tests") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true
   sources = [
+    "js_language_detection_manager_unittest.mm",
     "url_language_histogram_factory_unittest.cc",
   ]
   deps = [
     ":language",
     "//base",
     "//base/test:test_support",
+    "//components/language/ios/browser",
+    "//components/prefs:test_support",
     "//ios/chrome/browser",
     "//ios/chrome/browser/browser_state:test_support",
     "//ios/chrome/browser/web:test_support",
+    "//ios/chrome/common",
     "//ios/public/provider/chrome/browser:test_support",
     "//ios/web",
     "//ios/web/public/test",
+    "//ios/web/public/test/fakes",
     "//testing/gmock:gmock",
     "//testing/gtest",
   ]

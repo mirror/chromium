@@ -18,6 +18,7 @@
 #include "components/ntp_snippets/ntp_snippets_constants.h"
 #include "components/ntp_snippets/remote/request_params.h"
 #include "components/prefs/testing_pref_service.h"
+#include "components/translate/core/common/language_detection_details.h"
 #include "components/variations/variations_params_manager.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_request_test_util.h"
@@ -80,7 +81,10 @@ class JsonRequestTest : public testing::Test {
     // There must be at least 10 visits before the top languages are defined.
     for (int i = 0; i < 10; i++) {
       for (const std::string& code : codes) {
-        language_histogram->OnPageVisited(code);
+        translate::LanguageDetectionDetails details;
+        details.cld_language = code;
+        details.is_cld_reliable = true;
+        language_histogram->OnLanguageDetected(details);
       }
     }
     return language_histogram;

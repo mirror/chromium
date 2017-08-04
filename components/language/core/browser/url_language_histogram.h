@@ -5,12 +5,15 @@
 #ifndef COMPONENTS_LANGUAGE_CORE_BROWSER_URL_LANGUAGE_HISTOGRAM_H_
 #define COMPONENTS_LANGUAGE_CORE_BROWSER_URL_LANGUAGE_HISTOGRAM_H_
 
+#include <memory>
 #include <string>
 #include <vector>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "components/language/core/browser/language_detector.h"
 
 class PrefRegistrySimple;
 class PrefService;
@@ -22,7 +25,8 @@ namespace language {
 // discounted so that the histogram reflects changes in browsing habits. This
 // histogram does not have to contain all languages that ever appeared in user's
 // browsing, languages with insignificant frequency are removed, eventually.
-class UrlLanguageHistogram : public KeyedService {
+class UrlLanguageHistogram : public KeyedService,
+                             public LanguageDetector::Observer {
  public:
   struct LanguageInfo {
     LanguageInfo() = default;
@@ -54,14 +58,21 @@ class UrlLanguageHistogram : public KeyedService {
   // is not among the top languages kept in the histogram.
   float GetLanguageFrequency(const std::string& language_code) const;
 
-  // Informs the histogram that a page with the given language has been visited.
-  void OnPageVisited(const std::string& language_code);
+  // Informs the histogram that a page with the given language detection details
+  // has been visited.
+  void OnLanguageDetected(
+      const translate::LanguageDetectionDetails& details) override;
 
   // Reflect in the histogram that history from |begin| to |end| gets cleared.
   void ClearHistory(base::Time begin, base::Time end);
 
+  // Adds the histogram to the observer set for the given language detector.
+  void ObserveLanguageDetection(LanguageDetector* language_detector);
+
  private:
   PrefService* pref_service_;
+
+  base::WeakPtrFactory<UrlLanguageHistogram> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(UrlLanguageHistogram);
 };
