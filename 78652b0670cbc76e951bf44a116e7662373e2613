@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "195fc440_186f0a61",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T22:21:00Z",
+      "side": 1,
+      "message": "!Animation",
+      "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0e6cef_69907c16",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T22:21:00Z",
+      "side": 1,
+      "message": "!Promise",
+      "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e1f219_ce46cb3e",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T22:21:00Z",
+      "side": 1,
+      "message": "!Map\u003cstring, function(!Element): !Promise\u003e\n\nElsewhere in this file too.",
+      "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2de9ec1_a1f1cf84",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T22:21:00Z",
+      "side": 1,
+      "message": "Styleguide allows const/let now. Since you are adding a new file, I suggest using them. (We can convert the rest of MD Extensions in bulk in separate CL).",
+      "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d863c5d_a80ebb7a",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T22:21:00Z",
+      "side": 1,
+      "message": "Nit: No need for \u0027return\u0027\n\nviewAnimations.set(\u0027no-animation\u0027, element \u003d\u003e Promise.resolve());",
+      "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72473275_b5579ea7",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T22:21:00Z",
+      "side": 1,
+      "message": "Could you use this alternative syntax:\nelement.animate({opacity: [0, 1]}, {...}):\n\nSee https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Keyframe_Formats",
+      "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d8930d_11e75208",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T22:21:00Z",
+      "side": 1,
+      "message": "Nit: Usually @private is the last one.",
+      "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7f8228_e292c494",
+        "filename": "chrome/test/data/webui/extensions/extension_view_manager_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T22:21:00Z",
+      "side": 1,
+      "message": "Nit (optional):\n\nfunction assertVisible(id, isVisible) {\n  expectTrue(extension_test_util.isVisible(viewManager, \u0027#\u0027 + id, isVisible)); \n}\n\nassertVisible(\u0027viewOne\u0027, false);\nassertVisible(\u0027viewTwo\u0027, false);\nassertVisible(\u0027viewThree\u0027, true);\n...",
+      "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db424990_6b7ed933",
+        "filename": "chrome/test/data/webui/extensions/extension_view_manager_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T22:21:00Z",
+      "side": 1,
+      "message": "Suggestion: A pattern I\u0027ve seen in tests that exercise the sequence of events, is the follows\n\nvar events \u003d [];\n[\n  \u0027view-enter-start\u0027,\n  \u0027view-enter-finish\u0027,\n  \u0027view-exit-start\u0027,\n  \u0027view-exit-finish\u0027,\n].forEach(type \u003d\u003e {\n  viewOne.addEventListeneR(type, e \u003d\u003e events.push(e.type));\n});\n\n...\n// Instead of asserting on individual booleans, assert for the contents of the events array, using assertDeepEquals(), https://cs.chromium.org/chromium/src/chrome/test/data/webui/test_api.js?l\u003d891.",
+      "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
