@@ -6,8 +6,9 @@
 
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
-class CSSParserLocalContext;
 namespace blink {
+
+class CSSParserLocalContext;
 
 const CSSValue* CSSPropertyAPIPage::parseSingleValue(
     CSSParserTokenRange& range,

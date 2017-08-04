@@ -8,8 +8,9 @@
 #include "core/css/CSSValueList.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
-class CSSParserLocalContext;
 namespace blink {
+
+class CSSParserLocalContext;
 
 // none | strict | content | [ layout || style || paint || size ]
 const CSSValue* CSSPropertyAPIContain::parseSingleValue(
