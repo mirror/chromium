@@ -16,6 +16,24 @@
       "revId": "46017602fb49c0d12f90f6f9b4d47687ab9e39ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1211b5_c5c69e49",
+        "filename": "cc/ipc/cc_param_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-04T14:17:59Z",
+      "side": 1,
+      "message": "\u003e need to check value that\u0027s read back is a valid TileMode before casing, and mark success as false if it\u0027s not valid\n\nactually, instead of casting back and forth between int and enum, you can teach ipc to understand the enum type I think, if you declare a IPC_ENUM_TRAITS_MAX_VALUE for TileMode in cc/ipc/cc_param_traits_macros.h\n\nThat should generate the right template specializations for things like Read/WriteParam and GetParamSize.",
+      "parentUuid": "4b188ee7_9b2433b0",
+      "revId": "46017602fb49c0d12f90f6f9b4d47687ab9e39ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
