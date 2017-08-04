@@ -31,6 +31,7 @@ class Image;
 
 namespace base {
 class DictionaryValue;
+class SequencedTaskRunner;
 }
 
 class PrefService;
@@ -257,6 +258,9 @@ class ProfileInfoCache : public ProfileInfoInterface,
   // Determines of the ProfileAvatarDownloader should be created and executed
   // or not. Only set to true for tests.
   bool disable_avatar_download_for_testing_;
+
+  // Task runner for avatar file operation.
+  scoped_refptr<base::SequencedTaskRunner> avatar_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfileInfoCache);
 };
