@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "6f37846a_be1a5e03",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-04T08:12:26Z",
+      "side": 1,
+      "message": "I think this one can go, it should only be needed in the factory.",
+      "range": {
+        "startLine": 14,
+        "startChar": 80,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a002ca_0dce389d",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-04T08:12:26Z",
+      "side": 1,
+      "message": "Not used I think?",
+      "range": {
+        "startLine": 20,
+        "startChar": 50,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4950053e_00d52392",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-04T08:12:26Z",
+      "side": 1,
+      "message": "Hm, I guess to make it non-self-deleting, you\u0027d have to keep a list of pending decode tasks in the LogoDelegate. Not sure how much that would make things better.\nAnyway, this is no regression compared to the previous state, so anything else can be left as a follow-up.\n\nOne step back: I\u0027m not entirely convinced we need the timeout at all. What is it guarding against? I think for the UI it won\u0027t make a difference; no logo either way.",
+      "range": {
+        "startLine": 39,
+        "startChar": 39,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d42ccc17_32274535",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-04T08:12:26Z",
+      "side": 1,
+      "message": "If all this gets moved to components, will we even still need the LogoDelegate thing? Seems like we might as well just pass in the ImageDecoder directly?",
+      "range": {
+        "startLine": 70,
+        "startChar": 69,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f859d79a_cb551b6b",
         "filename": "chrome/browser/android/logo_service.cc",
         "patchSetId": 1
@@ -13,6 +105,47 @@
       "writtenOn": "2017-08-03T17:22:35Z",
       "side": 1,
       "message": "I have no idea why the old code used UIThreadSearchTermsData(profile_) here; its header gives no explanation of why I\u0027d prefer that SearchTermsData to the one that TemplateURLService returns. There are some extra things in its implementation, like a command-line flag and an override for testing, but --google-base-url still works now and for testing TemplateURLService can be injected now.",
+      "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81c355d_4686f5bc",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-04T08:12:26Z",
+      "side": 1,
+      "message": "I expect there probably wasn\u0027t any particular reason; the two should definitely be the same.\nIt\u0027s weird though that the code already used the search_terms_data from TemplateURLService above... oh well. Probably \"historic reasons\".",
+      "parentUuid": "f859d79a_cb551b6b",
+      "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40d34a21_55a4878d",
+        "filename": "chrome/browser/android/logo_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-04T08:12:26Z",
+      "side": 1,
+      "message": "const\u0026 ?",
+      "range": {
+        "startLine": 39,
+        "startChar": 37,
+        "endLine": 39,
+        "endChar": 0
+      },
       "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
