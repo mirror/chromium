@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52f5a429_49d53f76",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-04T13:49:02Z",
+      "side": 1,
+      "message": "The plan was to complete the population and use of hit-test data in follow up CLs for additional review.  You\u0027re right that with Valery\u0027s change this could be implemented no, but would it be ok to implement this along with the other required changes in follow up CLs?",
+      "parentUuid": "25e1f648_7c199a80",
+      "revId": "4f262d4c25b3235d51547b7e836b7c0ffacf33f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24e750d4_944fbb13",
         "filename": "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.cc",
         "patchSetId": 8
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "bfbaa4ad_ca14c92e",
+        "filename": "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-04T13:49:02Z",
+      "side": 1,
+      "message": "I\u0027ve reverted the comment and DCHECK in the next patch.  The original plan had been to add the code that populates and handles the hit-test data in follow-up CLs and I propose that we do that so that we can independently review and verify questions like this. Sound ok?",
+      "parentUuid": "d66cd758_adb6bfe1",
+      "revId": "4f262d4c25b3235d51547b7e836b7c0ffacf33f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b50a1c8_554d6dbc",
         "filename": "services/ui/ws/compositor_frame_sink_client_binding.cc",
         "patchSetId": 8
@@ -68,6 +104,24 @@
       "revId": "4f262d4c25b3235d51547b7e836b7c0ffacf33f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efff228e_7a453571",
+        "filename": "services/ui/ws/compositor_frame_sink_client_binding.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-04T13:49:02Z",
+      "side": 1,
+      "message": "Right!  Good call, thank you. \n\nDone",
+      "parentUuid": "8b50a1c8_554d6dbc",
+      "revId": "4f262d4c25b3235d51547b7e836b7c0ffacf33f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
