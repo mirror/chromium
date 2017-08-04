@@ -11,6 +11,10 @@
 namespace blink {
 
 // A streaming interface to CSSTokenizer that tokenizes on demand.
+// The stream ends at either EOF or the beginning/end of a block.
+// To consume a block, a new stream must be created using the
+// MakeSubStream() method.
+//
 // Methods prefixed with "Unchecked" can only be called after Peek()
 // returns a non-EOF token or after AtEnd() returns false, with no
 // subsequent modifications to the stream such as a consume.
@@ -31,6 +35,8 @@ class CSSParserTokenStream {
     // observers work with streams.
   }
 
+  ~CSSParserTokenStream();
+
   // TODO(shend): Remove this method. We should never convert from a range to a
   // stream. We can remove this once all the functions in CSSParserImpl.h accept
   // streams.
@@ -41,7 +47,8 @@ class CSSParserTokenStream {
   const CSSParserToken& Peek() const {
     if (next_index_ == tokenizer_.tokens_.size()) {
       // Reached end of token buffer, but might not be end of input.
-      if (tokenizer_.TokenizeSingle().IsEOF())
+      const auto token = tokenizer_.TokenizeSingle();
+      if (token.GetBlockType() == CSSParserToken::kBlockEnd || token.IsEOF())
         return g_static_eof_token;
     }
     DCHECK_LT(next_index_, tokenizer_.tokens_.size());
@@ -93,6 +100,17 @@ class CSSParserTokenStream {
     return Iterator(next_index_);
   }
 
+  // Can only be called when the next token is a BlockStart.
+  // The new stream will end at the end of the block.
+  // The original stream cannot be used until the sub-stream is destroyed.
+  CSSParserTokenStream MakeSubStream() {
+    DCHECK(Peek().GetBlockType() == CSSParserToken::kBlockStart);
+    CSSParserTokenStream substream(tokenizer_);
+    substream.next_index_ = next_index_ + 1;
+    substream.is_substream_ = true;
+    return substream;
+  }
+
   void ConsumeWhitespace();
   const CSSParserToken& ConsumeIncludingWhitespace();
   void UncheckedConsumeComponentValue();
@@ -100,6 +118,7 @@ class CSSParserTokenStream {
  private:
   CSSTokenizer& tokenizer_;
   size_t next_index_;  // Index of next token to be consumed.
+  bool is_substream_ = false;
 };
 
 }  // namespace blink
