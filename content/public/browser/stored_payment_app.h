@@ -14,6 +14,14 @@
 #include "url/origin.h"
 
 namespace content {
+// This class represents a related application of the StoredPaymentApp.
+struct CONTENT_EXPORT RelatedApplication {
+  RelatedApplication();
+  ~RelatedApplication();
+
+  std::string platform;
+  std::string id;
+};
 
 // This class represents the stored payment app.
 struct CONTENT_EXPORT StoredPaymentApp {
@@ -34,6 +42,12 @@ struct CONTENT_EXPORT StoredPaymentApp {
 
   // A list of one or more enabled payment methods in this payment app.
   std::vector<std::string> enabled_methods;
+
+  // A flag indicates whether the app prefers the related applications.
+  bool prefer_related_applications;
+
+  // A list of related applications.
+  std::vector<RelatedApplication> related_applications;
 };
 
 }  // namespace content
