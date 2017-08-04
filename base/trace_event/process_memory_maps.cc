@@ -17,25 +17,12 @@ const uint32_t ProcessMemoryMaps::VMRegion::kProtectionFlagsWrite = 2;
 const uint32_t ProcessMemoryMaps::VMRegion::kProtectionFlagsExec = 1;
 const uint32_t ProcessMemoryMaps::VMRegion::kProtectionFlagsMayshare = 128;
 
-ProcessMemoryMaps::VMRegion::VMRegion()
-    : start_address(0),
-      size_in_bytes(0),
-      module_timestamp(0),
-      protection_flags(0),
-      byte_stats_private_dirty_resident(0),
-      byte_stats_private_clean_resident(0),
-      byte_stats_shared_dirty_resident(0),
-      byte_stats_shared_clean_resident(0),
-      byte_stats_swapped(0),
-      byte_stats_proportional_resident(0) {}
-
+ProcessMemoryMaps::VMRegion::VMRegion() = default;
 ProcessMemoryMaps::VMRegion::VMRegion(const VMRegion& other) = default;
 
-ProcessMemoryMaps::ProcessMemoryMaps() {
-}
-
-ProcessMemoryMaps::~ProcessMemoryMaps() {
-}
+ProcessMemoryMaps::ProcessMemoryMaps() = default;
+ProcessMemoryMaps::ProcessMemoryMaps(ProcessMemoryMaps&&) noexcept = default;
+ProcessMemoryMaps::~ProcessMemoryMaps() = default;
 
 void ProcessMemoryMaps::AsValueInto(TracedValue* value) const {
   static const char kHexFmt[] = "%" PRIx64;
