@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6054c457_0fb7a00e",
+        "filename": "services/metrics/ukm_api.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-04T17:00:50Z",
+      "side": 1,
+      "message": "email OF someone",
+      "range": {
+        "startLine": 11,
+        "startChar": 32,
+        "endLine": 11,
+        "endChar": 40
+      },
+      "revId": "b53a8d1028f279188027808ae100a8113ed49465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70293789_9c7d5043",
+        "filename": "services/metrics/ukm_api.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-04T17:00:50Z",
+      "side": 1,
+      "message": "mean, and how  (an \u003d\u003e and; oxford comma)",
+      "range": {
+        "startLine": 11,
+        "startChar": 109,
+        "endLine": 11,
+        "endChar": 122
+      },
+      "revId": "b53a8d1028f279188027808ae100a8113ed49465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d0fdd8_217373fe",
+        "filename": "services/metrics/ukm_api.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-04T17:00:50Z",
+      "side": 1,
+      "message": "metrics \u003d\u003e metric",
+      "range": {
+        "startLine": 11,
+        "startChar": 80,
+        "endLine": 11,
+        "endChar": 88
+      },
+      "revId": "b53a8d1028f279188027808ae100a8113ed49465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9542e7a3_ced2da40",
+        "filename": "services/metrics/ukm_api.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-04T17:00:50Z",
+      "side": 1,
+      "message": "about which you are recording details",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 60
+      },
+      "revId": "b53a8d1028f279188027808ae100a8113ed49465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28bb2b2_e72bf2de",
+        "filename": "services/metrics/ukm_api.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-04T17:00:50Z",
+      "side": 1,
+      "message": ", \u003d\u003e :",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "b53a8d1028f279188027808ae100a8113ed49465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c11419_1326864c",
+        "filename": "services/metrics/ukm_api.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-04T17:00:50Z",
+      "side": 1,
+      "message": "ns?",
+      "range": {
+        "startLine": 25,
+        "startChar": 39,
+        "endLine": 25,
+        "endChar": 50
+      },
+      "revId": "b53a8d1028f279188027808ae100a8113ed49465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4080f62e_d515e698",
+        "filename": "services/metrics/ukm_api.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-04T17:00:50Z",
+      "side": 1,
+      "message": "kg?",
+      "range": {
+        "startLine": 30,
+        "startChar": 42,
+        "endLine": 30,
+        "endChar": 51
+      },
+      "revId": "b53a8d1028f279188027808ae100a8113ed49465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c332946_9a56a8a9",
+        "filename": "services/metrics/ukm_api.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-04T17:00:50Z",
+      "side": 1,
+      "message": "trailing period",
+      "range": {
+        "startLine": 44,
+        "startChar": 37,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "b53a8d1028f279188027808ae100a8113ed49465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d12e5c_6725f7d1",
+        "filename": "services/metrics/ukm_api.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-04T17:00:50Z",
+      "side": 1,
+      "message": "no comma here",
+      "range": {
+        "startLine": 58,
+        "startChar": 45,
+        "endLine": 58,
+        "endChar": 46
+      },
+      "revId": "b53a8d1028f279188027808ae100a8113ed49465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f47f818_a3ca3f6d",
+        "filename": "services/metrics/ukm_api.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-04T17:00:50Z",
+      "side": 1,
+      "message": "no comma here",
+      "range": {
+        "startLine": 60,
+        "startChar": 71,
+        "endLine": 60,
+        "endChar": 72
+      },
+      "revId": "b53a8d1028f279188027808ae100a8113ed49465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287998c9_b0a79764",
+        "filename": "services/metrics/ukm_api.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-04T17:00:50Z",
+      "side": 1,
+      "message": "are generated",
+      "range": {
+        "startLine": 69,
+        "startChar": 40,
+        "endLine": 69,
+        "endChar": 43
+      },
+      "revId": "b53a8d1028f279188027808ae100a8113ed49465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a6cbceb_345b3088",
+        "filename": "services/metrics/ukm_api.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-04T17:00:50Z",
+      "side": 1,
+      "message": "or here",
+      "range": {
+        "startLine": 85,
+        "startChar": 87,
+        "endLine": 85,
+        "endChar": 88
+      },
+      "revId": "b53a8d1028f279188027808ae100a8113ed49465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf6daae_62d6c8ad",
+        "filename": "services/metrics/ukm_api.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-04T17:00:50Z",
+      "side": 1,
+      "message": "no comma here",
+      "range": {
+        "startLine": 85,
+        "startChar": 14,
+        "endLine": 85,
+        "endChar": 15
+      },
+      "revId": "b53a8d1028f279188027808ae100a8113ed49465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
