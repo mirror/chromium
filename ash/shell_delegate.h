@@ -122,8 +122,12 @@ class ASH_EXPORT ShellDelegate {
 
   virtual gfx::Image GetDeprecatedAcceleratorImage() const = 0;
 
+  // Not used in mash because ash::Shell owns the PrefService.
+  // TODO(jamescook): Eliminate this and have chrome call a method to set the
+  // PrefService in ash.
   virtual PrefService* GetActiveUserPrefService() const = 0;
 
+  //DELETE THIS METHOD - it is unused
   virtual PrefService* GetLocalStatePrefService() const = 0;
 
   // If |use_local_state| is true, returns the touchscreen status from local

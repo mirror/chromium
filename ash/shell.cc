@@ -424,16 +424,19 @@ void Shell::UpdateShelfVisibility() {
 
 PrefService* Shell::GetActiveUserPrefService() const {
   if (shell_port_->GetAshConfig() == Config::MASH)
-    return profile_pref_service_.get();
+    return profile_pref_service_mash_.get();
 
   return shell_delegate_->GetActiveUserPrefService();
 }
 
 PrefService* Shell::GetLocalStatePrefService() const {
-  if (shell_port_->GetAshConfig() == Config::MASH)
-    return local_state_.get();
+  if (shell_port_->GetAshConfig() == Config::MASH) {
+    DCHECK(local_state_);
+    return local_state_mash_.get();
+  }
 
-  return shell_delegate_->GetLocalStatePrefService();
+  DCHECK(local_state_);
+  return local_state_;
 }
 
 WebNotificationTray* Shell::GetWebNotificationTray() {
@@ -589,6 +592,15 @@ void Shell::NotifyShelfAutoHideBehaviorChanged(aura::Window* root_window) {
 // static
 void Shell::SetIsBrowserProcessWithMash() {
   g_is_browser_process_with_mash = true;
+}
+
+void Shell::SetLocalStatePrefService(::PrefService* local_state) {
+  DCHECK(GetAshConfig() != Config::MASH);
+  DCHECK(local_state);
+  local_state_ = local_state;
+
+  for (auto& observer : shell_observers_)
+    observer.OnLocalStatePrefServiceInitialized(local_state_);
 }
 
 void Shell::NotifyAppListVisibilityChanged(bool visible,
@@ -839,7 +851,8 @@ Shell::~Shell() {
   // NightLightController depeneds on the PrefService and must be destructed
   // before it. crbug.com/724231.
   night_light_controller_ = nullptr;
-  profile_pref_service_ = nullptr;
+  profile_pref_service_mash_.reset();
+  LOG(ERROR) << "JAMES local state at ash shutdown " << shell_delegate_->GetLocalStatePrefService();
   shell_delegate_.reset();
 
   for (auto& observer : shell_observers_)
@@ -1323,20 +1336,25 @@ void Shell::InitializeShelf() {
 
 void Shell::OnProfilePrefServiceInitialized(
     std::unique_ptr<::PrefService> pref_service) {
+  DCHECK(GetAshConfig() == Config::MASH);
   // |pref_service| can be null if can't connect to Chrome (as happens when
   // running mash outside of chrome --mash and chrome isn't built).
   for (auto& observer : shell_observers_)
     observer.OnActiveUserPrefServiceChanged(pref_service.get());
   // Reset after notifying clients so they can unregister pref observers on the
   // old PrefService.
-  profile_pref_service_ = std::move(pref_service);
+  profile_pref_service_mash_ = std::move(pref_service);
 }
 
 void Shell::OnLocalStatePrefServiceInitialized(
     std::unique_ptr<::PrefService> pref_service) {
+  DCHECK(GetAshConfig() == Config::MASH);
   // |pref_service| is null if can't connect to Chrome (as happens when
   // running mash outside of chrome --mash and chrome isn't built).
-  local_state_ = std::move(pref_service);
+  local_state_mash_ = std::move(pref_service);
+
+  for (auto& observer : shell_observers_)
+    observer.OnLocalStatePrefServiceInitialized(local_state_mash_.get());
 }
 
 }  // namespace ash

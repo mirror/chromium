@@ -553,6 +553,7 @@ PrefService* ChromeShellDelegate::GetActiveUserPrefService() const {
 }
 
 PrefService* ChromeShellDelegate::GetLocalStatePrefService() const {
+  //JAMES delete this
   return g_browser_process->local_state();
 }
 
