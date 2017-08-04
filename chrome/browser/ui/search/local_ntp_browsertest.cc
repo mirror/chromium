@@ -471,3 +471,34 @@ IN_PROC_BROWSER_TEST_F(LocalNTPOneGoogleBarSmokeTest,
       active_tab, "!!window.afterBarRan", &after_bar_ran));
   EXPECT_TRUE(after_bar_ran);
 }
+
+class LocalNTPVoiceSearchSmokeTest : public InProcessBrowserTest {
+ public:
+  LocalNTPVoiceSearchSmokeTest() {}
+
+ protected:
+  void SetUpCommandLine(base::CommandLine* cmdline) override {
+    cmdline->AppendSwitchASCII(switches::kEnableFeatures,
+                               "UseGoogleLocalNtp,VoiceSearchOnLocalNtp");
+  }
+};
+
+IN_PROC_BROWSER_TEST_F(LocalNTPVoiceSearchSmokeTest,
+                       GoogleNTPWithVoiceLoadsWithoutError) {
+  // Open a new blank tab.
+  content::WebContents* active_tab = OpenNewTab(browser(), GURL("about:blank"));
+  ASSERT_FALSE(search::IsInstantNTP(active_tab));
+
+  // Attach a console observer, listening for any message ("*" pattern).
+  content::ConsoleObserverDelegate console_observer(active_tab, "*");
+  active_tab->SetDelegate(&console_observer);
+
+  // Navigate to the NTP.
+  ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
+  ASSERT_TRUE(search::IsInstantNTP(active_tab));
+  ASSERT_EQ(GURL(chrome::kChromeSearchLocalNtpUrl),
+            active_tab->GetController().GetVisibleEntry()->GetURL());
+
+  // We shouldn't have gotten any console error messages.
+  EXPECT_TRUE(console_observer.message().empty()) << console_observer.message();
+}
