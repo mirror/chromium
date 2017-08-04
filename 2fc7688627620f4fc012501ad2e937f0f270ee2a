@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3715ecf2_73aa2a5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-04T01:04:55Z",
+      "side": 1,
+      "message": "Formatting has to be applied manually unfortunately. When you use git commit it has line lengths which indicate your break points (see \"------\" line). Not everyone sticks to this so it\u0027s not a big deal, but it does make reading the commits easier.",
+      "parentUuid": "83f58c89_df9a232b",
+      "revId": "2fc7688627620f4fc012501ad2e937f0f270ee2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "427cac70_728bc2c4",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 6
