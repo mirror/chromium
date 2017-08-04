@@ -8,6 +8,7 @@
 
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "services/ui/common/types.h"
 #include "services/ui/common/util.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
@@ -75,11 +76,11 @@ class CursorTest : public testing::Test {
         display->GetActiveWindowManagerDisplayRoot();
     WindowTree* tree =
         active_display_root->window_manager_state()->window_tree();
-    ClientWindowId child_window_id;
-    if (!NewWindowInTree(tree, &child_window_id))
+    viz::FrameSinkId child_frame_sink_id;
+    if (!NewWindowInTree(tree, &child_frame_sink_id))
       return nullptr;
 
-    ServerWindow* w = tree->GetWindowByClientId(child_window_id);
+    ServerWindow* w = tree->GetWindowByFrameSinkId(child_frame_sink_id);
     w->SetBounds(gfx::Rect(10, 10, 30, 30));
     w->SetClientArea(gfx::Insets(10, 10), std::vector<gfx::Rect>());
     w->SetVisible(true);

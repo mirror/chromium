@@ -14,6 +14,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
@@ -49,9 +50,12 @@ class ServerWindow {
   using Properties = std::map<std::string, std::vector<uint8_t>>;
   using Windows = std::vector<ServerWindow*>;
 
-  ServerWindow(ServerWindowDelegate* delegate, const WindowId& id);
   ServerWindow(ServerWindowDelegate* delegate,
                const WindowId& id,
+               const viz::FrameSinkId& frame_sink_id);
+  ServerWindow(ServerWindowDelegate* delegate,
+               const WindowId& id,
+               const viz::FrameSinkId& frame_sink_id,
                const Properties& properties);
   ~ServerWindow();
 

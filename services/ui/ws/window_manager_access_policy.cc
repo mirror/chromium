@@ -208,12 +208,12 @@ bool WindowManagerAccessPolicy::IsWindowKnown(
 }
 
 bool WindowManagerAccessPolicy::IsValidIdForNewWindow(
-    const ClientWindowId& id) const {
+    const viz::FrameSinkId& id) const {
   // The WindowManager see windows created from other clients. If the WM doesn't
   // use the client id when creating windows the WM could end up with two
   // windows with the same id. Because of this the wm must use the same
   // client id for all windows it creates.
-  return WindowIdFromTransportId(id.id).client_id == client_id_;
+  return base::checked_cast<uint16_t>(id.client_id()) == client_id_;
 }
 
 bool WindowManagerAccessPolicy::WasCreatedByThisClient(

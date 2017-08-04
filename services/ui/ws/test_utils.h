@@ -136,9 +136,9 @@ class WindowTreeTestApi {
   bool ProcessSetDisplayRoot(const display::Display& display_to_create,
                              const mojom::WmViewportMetrics& viewport_metrics,
                              bool is_primary_display,
-                             const ClientWindowId& client_window_id) {
+                             const viz::FrameSinkId& frame_sink_id) {
     return tree_->ProcessSetDisplayRoot(display_to_create, viewport_metrics,
-                                        is_primary_display, client_window_id);
+                                        is_primary_display, frame_sink_id);
   }
 
   bool ProcessSwapDisplayRoots(int64_t display_id1, int64_t display_id2) {
@@ -797,21 +797,22 @@ display::Display MakeDisplay(int origin_x,
 // one root returns null.
 ServerWindow* FirstRoot(WindowTree* tree);
 
-// Returns the ClientWindowId of the first root of |tree|, or an empty
-// ClientWindowId if |tree| has zero or more than one root.
-ClientWindowId FirstRootId(WindowTree* tree);
+// Returns the FrameSinkId of the first root of |tree|, or an empty
+// FrameSinkId if |tree| has zero or more than one root.
+viz::FrameSinkId FirstRootId(WindowTree* tree);
 
-// Returns |tree|s ClientWindowId for |window|.
-ClientWindowId ClientWindowIdForWindow(WindowTree* tree,
-                                       const ServerWindow* window);
+// Returns |tree|s FrameSinkId for |window|.
+viz::FrameSinkId FrameSinkIdForWindow(WindowTree* tree,
+                                      const ServerWindow* window);
 
 // Creates a new visible window as a child of the single root of |tree|.
-// |client_id| is set to the ClientWindowId of the new window.
+// |frame_sink_id| is set to the FrameSinkId of the new window.
 ServerWindow* NewWindowInTree(WindowTree* tree,
-                              ClientWindowId* client_id = nullptr);
-ServerWindow* NewWindowInTreeWithParent(WindowTree* tree,
-                                        ServerWindow* parent,
-                                        ClientWindowId* client_id = nullptr);
+                              viz::FrameSinkId* frame_sink_id = nullptr);
+ServerWindow* NewWindowInTreeWithParent(
+    WindowTree* tree,
+    ServerWindow* parent,
+    viz::FrameSinkId* frame_sink_id = nullptr);
 
 }  // namespace test
 }  // namespace ws

@@ -67,8 +67,8 @@ class TestServerWindowDrawnTrackerObserver
 
 TEST(ServerWindowDrawnTrackerTest, ChangeBecauseOfDeletionAndVisibility) {
   TestServerWindowDelegate server_window_delegate;
-  std::unique_ptr<ServerWindow> window(
-      new ServerWindow(&server_window_delegate, WindowId()));
+  std::unique_ptr<ServerWindow> window(new ServerWindow(
+      &server_window_delegate, WindowId(), viz::FrameSinkId()));
   server_window_delegate.set_root_window(window.get());
   TestServerWindowDrawnTrackerObserver drawn_observer;
   ServerWindowDrawnTracker tracker(window.get(), &drawn_observer);
@@ -107,10 +107,10 @@ TEST(ServerWindowDrawnTrackerTest, ChangeBecauseOfDeletionAndVisibility) {
 
 TEST(ServerWindowDrawnTrackerTest, ChangeBecauseOfRemovingFromRoot) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow root(&server_window_delegate, WindowId());
+  ServerWindow root(&server_window_delegate, WindowId(), viz::FrameSinkId());
   server_window_delegate.set_root_window(&root);
   root.SetVisible(true);
-  ServerWindow child(&server_window_delegate, WindowId());
+  ServerWindow child(&server_window_delegate, WindowId(), viz::FrameSinkId());
   child.SetVisible(true);
   root.Add(&child);
 
@@ -134,14 +134,15 @@ TEST(ServerWindowDrawnTrackerTest, ChangeBecauseOfRemovingFromRoot) {
 
 TEST(ServerWindowDrawnTrackerTest, ChangeBecauseOfRemovingAncestorFromRoot) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow root(&server_window_delegate, WindowId());
+  ServerWindow root(&server_window_delegate, WindowId(), viz::FrameSinkId());
   server_window_delegate.set_root_window(&root);
   root.SetVisible(true);
-  ServerWindow child(&server_window_delegate, WindowId());
+  ServerWindow child(&server_window_delegate, WindowId(), viz::FrameSinkId());
   child.SetVisible(true);
   root.Add(&child);
 
-  ServerWindow child_child(&server_window_delegate, WindowId());
+  ServerWindow child_child(&server_window_delegate, WindowId(),
+                           viz::FrameSinkId());
   child_child.SetVisible(true);
   child.Add(&child_child);
 
@@ -165,10 +166,10 @@ TEST(ServerWindowDrawnTrackerTest, ChangeBecauseOfRemovingAncestorFromRoot) {
 
 TEST(ServerWindowDrawnTrackerTest, VisibilityChangeFromNonParentAncestor) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow root(&server_window_delegate, WindowId());
-  ServerWindow child1(&server_window_delegate, WindowId());
-  ServerWindow child2(&server_window_delegate, WindowId());
-  ServerWindow child3(&server_window_delegate, WindowId());
+  ServerWindow root(&server_window_delegate, WindowId(), viz::FrameSinkId());
+  ServerWindow child1(&server_window_delegate, WindowId(), viz::FrameSinkId());
+  ServerWindow child2(&server_window_delegate, WindowId(), viz::FrameSinkId());
+  ServerWindow child3(&server_window_delegate, WindowId(), viz::FrameSinkId());
   server_window_delegate.set_root_window(&root);
 
   root.Add(&child1);
@@ -206,11 +207,12 @@ TEST(ServerWindowDrawnTrackerTest, VisibilityChangeFromNonParentAncestor) {
 
 TEST(ServerWindowDrawnTrackerTest, TreeHierarchyChangeFromNonParentAncestor) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow root(&server_window_delegate, WindowId());
-  ServerWindow child1(&server_window_delegate, WindowId());
-  ServerWindow child2(&server_window_delegate, WindowId());
-  ServerWindow child11(&server_window_delegate, WindowId());
-  ServerWindow child111(&server_window_delegate, WindowId());
+  ServerWindow root(&server_window_delegate, WindowId(), viz::FrameSinkId());
+  ServerWindow child1(&server_window_delegate, WindowId(), viz::FrameSinkId());
+  ServerWindow child2(&server_window_delegate, WindowId(), viz::FrameSinkId());
+  ServerWindow child11(&server_window_delegate, WindowId(), viz::FrameSinkId());
+  ServerWindow child111(&server_window_delegate, WindowId(),
+                        viz::FrameSinkId());
   server_window_delegate.set_root_window(&root);
 
   root.Add(&child1);

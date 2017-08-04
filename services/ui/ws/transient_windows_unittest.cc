@@ -4,6 +4,7 @@
 
 #include "base/macros.h"
 #include "base/strings/string_number_conversions.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "services/ui/ws/server_window.h"
 #include "services/ui/ws/server_window_observer.h"
 #include "services/ui/ws/test_server_window_delegate.h"
@@ -42,8 +43,9 @@ class TestTransientWindowObserver : public ServerWindowObserver {
 
 ServerWindow* CreateTestWindow(TestServerWindowDelegate* delegate,
                                const WindowId& window_id,
+                               const viz::FrameSinkId& frame_sink_id,
                                ServerWindow* parent) {
-  ServerWindow* window = new ServerWindow(delegate, window_id);
+  ServerWindow* window = new ServerWindow(delegate, window_id, frame_sink_id);
   window->SetVisible(true);
   if (parent)
     parent->Add(window);
@@ -77,15 +79,17 @@ class TransientWindowsTest : public testing::Test {
 TEST_F(TransientWindowsTest, TransientChildren) {
   TestServerWindowDelegate server_window_delegate;
 
-  std::unique_ptr<ServerWindow> parent(
-      CreateTestWindow(&server_window_delegate, WindowId(), nullptr));
+  std::unique_ptr<ServerWindow> parent(CreateTestWindow(
+      &server_window_delegate, WindowId(), viz::FrameSinkId(), nullptr));
   std::unique_ptr<ServerWindow> w1(
-      CreateTestWindow(&server_window_delegate, WindowId(1, 1), parent.get()));
+      CreateTestWindow(&server_window_delegate, WindowId(1, 1),
+                       viz::FrameSinkId(1, 1), parent.get()));
   std::unique_ptr<ServerWindow> w3(
-      CreateTestWindow(&server_window_delegate, WindowId(1, 2), parent.get()));
+      CreateTestWindow(&server_window_delegate, WindowId(1, 2),
+                       viz::FrameSinkId(1, 2), parent.get()));
 
-  ServerWindow* w2 =
-      CreateTestWindow(&server_window_delegate, WindowId(1, 3), parent.get());
+  ServerWindow* w2 = CreateTestWindow(&server_window_delegate, WindowId(1, 3),
+                                      viz::FrameSinkId(1, 3), parent.get());
 
   // w2 is now owned by w1.
   w1->AddTransientWindow(w2);
@@ -105,26 +109,31 @@ TEST_F(TransientWindowsTest, TransientChildren) {
 TEST_F(TransientWindowsTest, TransientChildrenGroupAbove) {
   TestServerWindowDelegate server_window_delegate;
 
-  std::unique_ptr<ServerWindow> parent(
-      CreateTestWindow(&server_window_delegate, WindowId(), nullptr));
+  std::unique_ptr<ServerWindow> parent(CreateTestWindow(
+      &server_window_delegate, WindowId(), viz::FrameSinkId(), nullptr));
   std::unique_ptr<ServerWindow> w1(
-      CreateTestWindow(&server_window_delegate, WindowId(0, 1), parent.get()));
+      CreateTestWindow(&server_window_delegate, WindowId(0, 1),
+                       viz::FrameSinkId(0, 1), parent.get()));
 
-  ServerWindow* w11 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 11), parent.get());
+  ServerWindow* w11 = CreateTestWindow(&server_window_delegate, WindowId(0, 11),
+                                       viz::FrameSinkId(0, 11), parent.get());
   std::unique_ptr<ServerWindow> w2(
-      CreateTestWindow(&server_window_delegate, WindowId(0, 2), parent.get()));
+      CreateTestWindow(&server_window_delegate, WindowId(0, 2),
+                       viz::FrameSinkId(0, 2), parent.get()));
 
-  ServerWindow* w21 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 21), parent.get());
+  ServerWindow* w21 = CreateTestWindow(&server_window_delegate, WindowId(0, 21),
+                                       viz::FrameSinkId(0, 21), parent.get());
   ServerWindow* w211 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 211), parent.get());
+      CreateTestWindow(&server_window_delegate, WindowId(0, 211),
+                       viz::FrameSinkId(0, 211), parent.get());
   ServerWindow* w212 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 212), parent.get());
+      CreateTestWindow(&server_window_delegate, WindowId(0, 212),
+                       viz::FrameSinkId(0, 212), parent.get());
   ServerWindow* w213 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 213), parent.get());
-  ServerWindow* w22 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 22), parent.get());
+      CreateTestWindow(&server_window_delegate, WindowId(0, 213),
+                       viz::FrameSinkId(0, 213), parent.get());
+  ServerWindow* w22 = CreateTestWindow(&server_window_delegate, WindowId(0, 22),
+                                       viz::FrameSinkId(0, 22), parent.get());
   ASSERT_EQ(8u, parent->children().size());
 
   // w11 is now owned by w1.
@@ -193,26 +202,31 @@ TEST_F(TransientWindowsTest, TransientChildrenGroupAbove) {
 TEST_F(TransientWindowsTest, TransienChildGroupBelow) {
   TestServerWindowDelegate server_window_delegate;
 
-  std::unique_ptr<ServerWindow> parent(
-      CreateTestWindow(&server_window_delegate, WindowId(), nullptr));
+  std::unique_ptr<ServerWindow> parent(CreateTestWindow(
+      &server_window_delegate, WindowId(), viz::FrameSinkId(), nullptr));
   std::unique_ptr<ServerWindow> w1(
-      CreateTestWindow(&server_window_delegate, WindowId(0, 1), parent.get()));
+      CreateTestWindow(&server_window_delegate, WindowId(0, 1),
+                       viz::FrameSinkId(0, 1), parent.get()));
 
-  ServerWindow* w11 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 11), parent.get());
+  ServerWindow* w11 = CreateTestWindow(&server_window_delegate, WindowId(0, 11),
+                                       viz::FrameSinkId(0, 11), parent.get());
   std::unique_ptr<ServerWindow> w2(
-      CreateTestWindow(&server_window_delegate, WindowId(0, 2), parent.get()));
+      CreateTestWindow(&server_window_delegate, WindowId(0, 2),
+                       viz::FrameSinkId(0, 2), parent.get()));
 
-  ServerWindow* w21 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 21), parent.get());
+  ServerWindow* w21 = CreateTestWindow(&server_window_delegate, WindowId(0, 21),
+                                       viz::FrameSinkId(0, 21), parent.get());
   ServerWindow* w211 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 211), parent.get());
+      CreateTestWindow(&server_window_delegate, WindowId(0, 211),
+                       viz::FrameSinkId(0, 211), parent.get());
   ServerWindow* w212 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 212), parent.get());
+      CreateTestWindow(&server_window_delegate, WindowId(0, 212),
+                       viz::FrameSinkId(0, 212), parent.get());
   ServerWindow* w213 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 213), parent.get());
-  ServerWindow* w22 =
-      CreateTestWindow(&server_window_delegate, WindowId(0, 22), parent.get());
+      CreateTestWindow(&server_window_delegate, WindowId(0, 213),
+                       viz::FrameSinkId(0, 213), parent.get());
+  ServerWindow* w22 = CreateTestWindow(&server_window_delegate, WindowId(0, 22),
+                                       viz::FrameSinkId(0, 22), parent.get());
   ASSERT_EQ(8u, parent->children().size());
 
   // w11 is now owned by w1.
@@ -279,14 +293,14 @@ TEST_F(TransientWindowsTest, TransienChildGroupBelow) {
 TEST_F(TransientWindowsTest, StackUponCreation) {
   TestServerWindowDelegate delegate;
   std::unique_ptr<ServerWindow> parent(
-      CreateTestWindow(&delegate, WindowId(), nullptr));
-  std::unique_ptr<ServerWindow> window0(
-      CreateTestWindow(&delegate, WindowId(0, 1), parent.get()));
-  std::unique_ptr<ServerWindow> window1(
-      CreateTestWindow(&delegate, WindowId(0, 2), parent.get()));
+      CreateTestWindow(&delegate, WindowId(), viz::FrameSinkId(), nullptr));
+  std::unique_ptr<ServerWindow> window0(CreateTestWindow(
+      &delegate, WindowId(0, 1), viz::FrameSinkId(0, 1), parent.get()));
+  std::unique_ptr<ServerWindow> window1(CreateTestWindow(
+      &delegate, WindowId(0, 2), viz::FrameSinkId(0, 2), parent.get()));
 
-  ServerWindow* window2 =
-      CreateTestWindow(&delegate, WindowId(0, 3), parent.get());
+  ServerWindow* window2 = CreateTestWindow(
+      &delegate, WindowId(0, 3), viz::FrameSinkId(0, 3), parent.get());
   window0->AddTransientWindow(window2);
   EXPECT_EQ("1 3 2", ChildWindowIDsAsString(parent.get()));
 }
@@ -296,10 +310,11 @@ TEST_F(TransientWindowsTest, StackUponCreation) {
 TEST_F(TransientWindowsTest, RestackUponAddOrRemoveTransientWindow) {
   TestServerWindowDelegate delegate;
   std::unique_ptr<ServerWindow> parent(
-      CreateTestWindow(&delegate, WindowId(), nullptr));
+      CreateTestWindow(&delegate, WindowId(), viz::FrameSinkId(), nullptr));
   std::unique_ptr<ServerWindow> windows[4];
   for (int i = 0; i < 4; i++)
-    windows[i].reset(CreateTestWindow(&delegate, WindowId(0, i), parent.get()));
+    windows[i].reset(CreateTestWindow(&delegate, WindowId(0, i),
+                                      viz::FrameSinkId(0, i), parent.get()));
 
   EXPECT_EQ("0 1 2 3", ChildWindowIDsAsString(parent.get()));
 
@@ -320,9 +335,9 @@ TEST_F(TransientWindowsTest, RestackUponAddOrRemoveTransientWindow) {
 TEST_F(TransientWindowsTest, TransientWindowObserverNotified) {
   TestServerWindowDelegate delegate;
   std::unique_ptr<ServerWindow> parent(
-      CreateTestWindow(&delegate, WindowId(), nullptr));
-  std::unique_ptr<ServerWindow> w1(
-      CreateTestWindow(&delegate, WindowId(0, 1), parent.get()));
+      CreateTestWindow(&delegate, WindowId(), viz::FrameSinkId(), nullptr));
+  std::unique_ptr<ServerWindow> w1(CreateTestWindow(
+      &delegate, WindowId(0, 1), viz::FrameSinkId(0, 1), parent.get()));
 
   TestTransientWindowObserver test_observer;
   parent->AddObserver(&test_observer);

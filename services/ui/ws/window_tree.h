@@ -19,6 +19,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "cc/ipc/surface_id.mojom.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
 #include "services/ui/ws/access_policy_delegate.h"
@@ -104,22 +105,22 @@ class WindowTree : public mojom::WindowTree,
   }
   const ServerWindow* GetWindow(const WindowId& id) const;
 
-  // Returns the Window with the specified client id *only* if known to this
+  // Returns the Window with the specified |id| *only* if known to this
   // client, returns null if not known.
-  ServerWindow* GetWindowByClientId(const ClientWindowId& id) {
+  ServerWindow* GetWindowByFrameSinkId(const viz::FrameSinkId& id) {
     return const_cast<ServerWindow*>(
-        const_cast<const WindowTree*>(this)->GetWindowByClientId(id));
+        const_cast<const WindowTree*>(this)->GetWindowByFrameSinkId(id));
   }
-  const ServerWindow* GetWindowByClientId(const ClientWindowId& id) const;
+  const ServerWindow* GetWindowByFrameSinkId(const viz::FrameSinkId& id) const;
 
   bool IsWindowKnown(const ServerWindow* window) const {
     return IsWindowKnown(window, nullptr);
   }
   // Returns whether |window| is known to this tree. If |window| is known and
-  // |client_window_id| is non-null |client_window_id| is set to the
-  // ClientWindowId of the window.
+  // |frame_sink_id| is non-null |frame_sink_id| is set to the
+  // FrameSinkId of the window.
   bool IsWindowKnown(const ServerWindow* window,
-                     ClientWindowId* client_window_id) const;
+                     viz::FrameSinkId* frame_sink_id) const;
 
   // Returns true if |window| is one of this trees roots.
   bool HasRoot(const ServerWindow* window) const;
@@ -170,22 +171,22 @@ class WindowTree : public mojom::WindowTree,
 
   // These functions are synchronous variants of those defined in the mojom. The
   // WindowTree implementations all call into these. See the mojom for details.
-  bool SetCapture(const ClientWindowId& client_window_id);
-  bool ReleaseCapture(const ClientWindowId& client_window_id);
-  bool NewWindow(const ClientWindowId& client_window_id,
+  bool SetCapture(const viz::FrameSinkId& frame_sink_id);
+  bool ReleaseCapture(const viz::FrameSinkId& frame_sink_id);
+  bool NewWindow(const viz::FrameSinkId& frame_sink_id,
                  const std::map<std::string, std::vector<uint8_t>>& properties);
-  bool AddWindow(const ClientWindowId& parent_id,
-                 const ClientWindowId& child_id);
-  bool AddTransientWindow(const ClientWindowId& window_id,
-                          const ClientWindowId& transient_window_id);
-  bool DeleteWindow(const ClientWindowId& window_id);
-  bool SetModalType(const ClientWindowId& window_id, ModalType modal_type);
+  bool AddWindow(const viz::FrameSinkId& parent_id,
+                 const viz::FrameSinkId& child_id);
+  bool AddTransientWindow(const viz::FrameSinkId& window_id,
+                          const viz::FrameSinkId& transient_window_id);
+  bool DeleteWindow(const viz::FrameSinkId& window_id);
+  bool SetModalType(const viz::FrameSinkId& window_id, ModalType modal_type);
   std::vector<const ServerWindow*> GetWindowTree(
-      const ClientWindowId& window_id) const;
-  bool SetWindowVisibility(const ClientWindowId& window_id, bool visible);
-  bool SetWindowOpacity(const ClientWindowId& window_id, float opacity);
-  bool SetFocus(const ClientWindowId& window_id);
-  bool Embed(const ClientWindowId& window_id,
+      const viz::FrameSinkId& window_id) const;
+  bool SetWindowVisibility(const viz::FrameSinkId& window_id, bool visible);
+  bool SetWindowOpacity(const viz::FrameSinkId& window_id, float opacity);
+  bool SetFocus(const viz::FrameSinkId& window_id);
+  bool Embed(const viz::FrameSinkId& window_id,
              mojom::WindowTreeClientPtr window_tree_client,
              uint32_t flags);
 
@@ -200,7 +201,7 @@ class WindowTree : public mojom::WindowTree,
   void OnWindowManagerCreatedTopLevelWindow(uint32_t wm_change_id,
                                             uint32_t client_change_id,
                                             const ServerWindow* window);
-  void AddActivationParent(const ClientWindowId& window_id);
+  void AddActivationParent(const viz::FrameSinkId& window_id);
 
   // Calls through to the client.
   void OnChangeCompleted(uint32_t change_id, bool success);
@@ -296,13 +297,13 @@ class WindowTree : public mojom::WindowTree,
   friend class test::WindowTreeTestApi;
 
   struct WaitingForTopLevelWindowInfo {
-    WaitingForTopLevelWindowInfo(const ClientWindowId& client_window_id,
+    WaitingForTopLevelWindowInfo(const viz::FrameSinkId& frame_sink_id,
                                  uint32_t wm_change_id)
-        : client_window_id(client_window_id), wm_change_id(wm_change_id) {}
+        : frame_sink_id(frame_sink_id), wm_change_id(wm_change_id) {}
     ~WaitingForTopLevelWindowInfo() {}
 
     // Id supplied from the client.
-    ClientWindowId client_window_id;
+    viz::FrameSinkId frame_sink_id;
 
     // Change id we created for the window manager.
     uint32_t wm_change_id;
@@ -321,10 +322,10 @@ class WindowTree : public mojom::WindowTree,
 
   bool ShouldRouteToWindowManager(const ServerWindow* window) const;
 
-  ClientWindowId ClientWindowIdForWindow(const ServerWindow* window) const;
+  viz::FrameSinkId FrameSinkIdForWindow(const ServerWindow* window) const;
 
   // Returns true if |id| is a valid WindowId for a new window.
-  bool IsValidIdForNewWindow(const ClientWindowId& id) const;
+  bool IsValidIdForNewWindow(const viz::FrameSinkId& id) const;
 
   WindowId GenerateNewWindowId();
 
@@ -378,7 +379,7 @@ class WindowTree : public mojom::WindowTree,
   // Deletes all Windows we own.
   void DestroyWindows();
 
-  bool CanEmbed(const ClientWindowId& window_id) const;
+  bool CanEmbed(const viz::FrameSinkId& window_id) const;
   void PrepareForEmbed(ServerWindow* window);
   void RemoveChildrenAsPartOfEmbed(ServerWindow* window);
 
@@ -408,7 +409,7 @@ class WindowTree : public mojom::WindowTree,
       const display::Display& display_to_create,
       const mojom::WmViewportMetrics& transport_viewport_metrics,
       bool is_primary_display,
-      const ClientWindowId& client_window_id);
+      const viz::FrameSinkId& frame_sink_id);
 
   bool ProcessSwapDisplayRoots(int64_t display_id1, int64_t display_id2);
 
@@ -629,11 +630,11 @@ class WindowTree : public mojom::WindowTree,
 
   // The client is allowed to assign ids. These two maps providing the mapping
   // from the ids native to the server (WindowId) to those understood by the
-  // client (ClientWindowId).
-  std::unordered_map<ClientWindowId, WindowId, ClientWindowIdHash>
-      client_id_to_window_id_map_;
-  std::unordered_map<WindowId, ClientWindowId, WindowIdHash>
-      window_id_to_client_id_map_;
+  // client (FrameSinkId).
+  std::unordered_map<viz::FrameSinkId, WindowId, viz::FrameSinkIdHash>
+      frame_sink_id_to_window_id_map_;
+  std::unordered_map<WindowId, viz::FrameSinkId, WindowIdHash>
+      window_id_to_frame_sink_id_map_;
 
   // Id passed to the client and expected to be supplied back to
   // OnWindowInputEventAck() or OnAcceleratorAck().

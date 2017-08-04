@@ -13,6 +13,7 @@
 #include "base/containers/hash_tables.h"
 #include "base/hash.h"
 #include "base/strings/stringprintf.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "services/ui/common/types.h"
 #include "services/ui/common/util.h"
 
@@ -26,15 +27,16 @@ const ClientSpecificId kInvalidClientId = 0;
 // Every window has a unique id associated with it (WindowId). The id is a
 // combination of the id assigned to the client (the high order bits) and
 // a unique id for the window. Each client (WindowTree) refers to the window
-// by an id assigned by the client (ClientWindowId). To facilitate this
-// WindowTree maintains a mapping between WindowId and ClientWindowId.
+// by an id assigned by the client. To facilitate this WindowTree maintains a
+// mapping between WindowId and FrameSinkId (which it transformed from the id
+// assigned by the client).
 //
 // This model works when the client initiates creation of windows, which is
 // the typical use case. Embed roots and the WindowManager are special, they
 // get access to windows created by other clients. These clients see the
 // id assigned on the server. Such clients have to take care that they only
 // create windows using their client id. To do otherwise could result in
-// multiple windows having the same ClientWindowId. WindowTree enforces
+// multiple windows having the same FrameSinkId. WindowTree enforces
 // that embed roots use the client id in creating the window id to avoid
 // possible conflicts.
 struct WindowId {
@@ -61,27 +63,20 @@ struct WindowId {
   ClientSpecificId window_id;
 };
 
-// Used for ids assigned by the client.
-struct ClientWindowId {
-  explicit ClientWindowId(Id id) : id(id) {}
-  ClientWindowId() : id(0u) {}
-
-  bool operator==(const ClientWindowId& other) const { return other.id == id; }
-
-  bool operator!=(const ClientWindowId& other) const {
-    return !(*this == other);
-  }
-
-  bool operator<(const ClientWindowId& other) const { return id < other.id; }
-
-  Id id;
-};
-
 inline WindowId WindowIdFromTransportId(Id id) {
   return WindowId(HiWord(id), LoWord(id));
 }
 inline Id WindowIdToTransportId(const WindowId& id) {
   return (id.client_id << 16) | id.window_id;
+}
+
+inline viz::FrameSinkId FrameSinkIdFromTransportId(Id id) {
+  return viz::FrameSinkId(base::checked_cast<uint32_t>(HiWord(id)),
+                          base::checked_cast<uint32_t>(LoWord(id)));
+}
+inline Id FrameSinkIdToId(const viz::FrameSinkId& id) {
+  return (base::checked_cast<uint16_t>(id.client_id()) << 16) |
+         base::checked_cast<uint16_t>(id.sink_id());
 }
 
 // Returns a WindowId that is reserved to indicate no window. That is, no window
@@ -94,10 +89,6 @@ inline WindowId InvalidWindowId() {
 inline WindowId RootWindowId(uint16_t index) {
   return WindowId(kInvalidClientId, 2 + index);
 }
-
-struct ClientWindowIdHash {
-  size_t operator()(const ClientWindowId& id) const { return id.id; }
-};
 
 struct WindowIdHash {
   size_t operator()(const WindowId& id) const {

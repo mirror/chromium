@@ -66,7 +66,7 @@ class WindowManagerAccessPolicy : public AccessPolicy {
   const ServerWindow* GetWindowForFocusChange(
       const ServerWindow* focused) override;
   bool CanSetWindowManager() const override;
-  bool IsValidIdForNewWindow(const ClientWindowId& id) const override;
+  bool IsValidIdForNewWindow(const viz::FrameSinkId& id) const override;
 
  private:
   bool IsWindowKnown(const ServerWindow* window) const;

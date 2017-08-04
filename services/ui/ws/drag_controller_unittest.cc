@@ -39,8 +39,12 @@ class DragTestWindow : public DragTargetConnection {
     base::Callback<void(uint32_t)> callback;
   };
 
-  DragTestWindow(DragControllerTest* parent, const WindowId& id)
-      : parent_(parent), window_delegate_(), window_(&window_delegate_, id) {
+  DragTestWindow(DragControllerTest* parent,
+                 const WindowId& id,
+                 const viz::FrameSinkId& frame_sink_id)
+      : parent_(parent),
+        window_delegate_(),
+        window_(&window_delegate_, id, frame_sink_id) {
     window_.SetCanAcceptDrops(true);
   }
   ~DragTestWindow() override;
@@ -143,8 +147,9 @@ class DragControllerTest : public testing::Test,
  public:
   std::unique_ptr<DragTestWindow> BuildWindow() {
     WindowId id(1, ++window_id_);
+    viz::FrameSinkId frame_sink_id(1, ++window_id_);
     std::unique_ptr<DragTestWindow> p =
-        base::MakeUnique<DragTestWindow>(this, id);
+        base::MakeUnique<DragTestWindow>(this, id, frame_sink_id);
     server_window_by_id_[id] = p->window();
     connection_by_window_[p->window()] = p.get();
     return p;
@@ -213,8 +218,8 @@ class DragControllerTest : public testing::Test,
     testing::Test::SetUp();
 
     window_delegate_ = base::MakeUnique<TestServerWindowDelegate>();
-    root_window_ =
-        base::MakeUnique<ServerWindow>(window_delegate_.get(), WindowId(1, 2));
+    root_window_ = base::MakeUnique<ServerWindow>(
+        window_delegate_.get(), WindowId(1, 2), viz::FrameSinkId(1, 2));
     window_delegate_->set_root_window(root_window_.get());
     root_window_->SetVisible(true);
   }
