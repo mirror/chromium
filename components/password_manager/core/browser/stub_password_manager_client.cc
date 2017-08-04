@@ -81,6 +81,7 @@ void StubPasswordManagerClient::CheckProtectedPasswordEntry(
     const std::string& password_saved_domain,
     bool password_field_exists) {}
 #endif
+void StubPasswordManagerClient::LogPasswordReuseDetectedEvent() {}
 
 ukm::UkmRecorder* StubPasswordManagerClient::GetUkmRecorder() {
   return ukm::UkmRecorder::Get();

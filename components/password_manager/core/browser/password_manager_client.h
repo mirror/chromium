@@ -217,6 +217,9 @@ class PasswordManagerClient {
       bool password_field_exists) = 0;
 #endif
 
+  // Records a Chrome Sync event that sync password reuse was detected.
+  virtual void LogPasswordReuseDetectedEvent() = 0;
+
   // Gets the UKM service associated with this client (for metrics).
   virtual ukm::UkmRecorder* GetUkmRecorder() = 0;
 

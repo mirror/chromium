@@ -117,6 +117,8 @@ class ChromePasswordManagerClient
                                    bool password_field_exists) override;
 #endif
 
+  void LogPasswordReuseDetectedEvent() override;
+
   ukm::UkmRecorder* GetUkmRecorder() override;
   ukm::SourceId GetUkmSourceId() override;
   password_manager::PasswordManagerMetricsRecorder& GetMetricsRecorder()
