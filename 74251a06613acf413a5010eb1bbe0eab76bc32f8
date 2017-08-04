@@ -16,6 +16,24 @@
       "revId": "74251a06613acf413a5010eb1bbe0eab76bc32f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b4ab39_786f9318",
+        "filename": "net/http/http_server_properties_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-04T18:13:03Z",
+      "side": 0,
+      "message": "Yes this will be broken, because we marked |broken_alternative_service| broken, which means |net_test_task_runner_| will have a task to expire its brokenness.",
+      "parentUuid": "e90fbe4c_324a6edf",
+      "revId": "74251a06613acf413a5010eb1bbe0eab76bc32f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

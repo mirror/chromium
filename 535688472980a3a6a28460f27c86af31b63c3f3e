@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c9a571ff_c85d4f51",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-04T18:13:03Z",
+      "side": 1,
+      "message": "I think I just happened to notice that broken alt svcs weren\u0027t being cleared when I was working on persisting broken alt svcs. I made a note to fix it later, hence this CL.",
+      "parentUuid": "d9e67da7_b53fc11d",
+      "range": {
+        "startLine": 188,
+        "startChar": 39,
+        "endLine": 188,
+        "endChar": 0
+      },
+      "revId": "535688472980a3a6a28460f27c86af31b63c3f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "090163d8_01aa10aa",
         "filename": "net/http/http_server_properties_manager_unittest.cc",
         "patchSetId": 1
@@ -86,6 +110,24 @@
       "revId": "535688472980a3a6a28460f27c86af31b63c3f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207f5f96_b304783a",
+        "filename": "net/http/http_server_properties_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-04T18:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "090163d8_01aa10aa",
+      "revId": "535688472980a3a6a28460f27c86af31b63c3f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
