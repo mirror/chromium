@@ -514,6 +514,15 @@ void ChromeDownloadManagerDelegate::OpenDownload(DownloadItem* download) {
   if (!download->CanOpenDownload())
     return;
 
+#if defined(FULL_SAFE_BROWSING)
+  safe_browsing::DownloadProtectionService* service =
+      GetDownloadProtectionService();
+  if (service) {
+    service->MaybeSendDangerousDownloadOpenedReport(
+        download, false /* show_download_in_folder */);
+  }
+#endif
+
   if (!DownloadItemModel(download).ShouldPreferOpeningInBrowser()) {
     RecordDownloadOpenMethod(DOWNLOAD_OPEN_METHOD_DEFAULT_PLATFORM);
     OpenDownloadUsingPlatformHandler(download);
@@ -551,6 +560,16 @@ void ChromeDownloadManagerDelegate::ShowDownloadInShell(
     DownloadItem* download) {
   if (!download->CanShowInFolder())
     return;
+
+#if defined(FULL_SAFE_BROWSING)
+  safe_browsing::DownloadProtectionService* service =
+      GetDownloadProtectionService();
+  if (service) {
+    service->MaybeSendDangerousDownloadOpenedReport(
+        download, true /* show_download_in_folder */);
+  }
+#endif
+
   base::FilePath platform_path(
       GetPlatformDownloadPath(profile_, download, PLATFORM_CURRENT_PATH));
   DCHECK(!platform_path.empty());
