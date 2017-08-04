@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "776a297c_e12405c9",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-04T01:17:14Z",
+      "side": 1,
+      "message": "It would be great if this function could be declared only in the unittest file since it is only accessed there.",
+      "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca0d01d5_5f167565",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-04T01:17:14Z",
+      "side": 1,
+      "message": "I don\u0027t think this is used anywhere in this file.",
+      "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be6f2a3_d5dd5c01",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-04T01:17:14Z",
+      "side": 1,
+      "message": "This variable can be in-lined.",
+      "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
