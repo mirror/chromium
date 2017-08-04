@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c53caca_705b4c03",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T01:17:34Z",
+      "side": 1,
+      "message": "Maybe add a bit more context, like \"Revert incorrect title reset from r119891\" to make it easier to notice in a list of CL subjects?",
+      "revId": "efee31b827cfcec7546084409f81c8d8270134ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4921dca4_2da84481",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T01:17:34Z",
+      "side": 1,
+      "message": "It would help to say why it\u0027s wrong here (i.e., should be cleared on commit instead, in case the navigation doesn\u0027t complete).\n\nAlso worth mentioning that the CL updates a fragile use of TitleWatcher which was affected by the change.",
+      "revId": "efee31b827cfcec7546084409f81c8d8270134ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
