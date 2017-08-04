@@ -16,6 +16,24 @@
       "revId": "ffe0f076751516203376d94942be516f0ba3fcc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b314045_216829be",
+        "filename": "tools/gn/command_clean.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-04T20:55:24Z",
+      "side": 1,
+      "message": "Good idea, although in real life this ends up copying exactly 3 lines so it won\u0027t matter.",
+      "parentUuid": "641d6aea_52203017",
+      "revId": "ffe0f076751516203376d94942be516f0ba3fcc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
