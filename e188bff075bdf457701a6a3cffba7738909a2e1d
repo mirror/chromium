@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15a34c10_8b6d0c33",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-04T20:48:37Z",
+      "side": 1,
+      "message": "silly nit: We may as well follow our own style guide by using 2 spaces before the comment.",
+      "range": {
+        "startLine": 373,
+        "startChar": 37,
+        "endLine": 373,
+        "endChar": 41
+      },
+      "revId": "e188bff075bdf457701a6a3cffba7738909a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06908e6_40d9bfed",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-04T20:48:37Z",
+      "side": 1,
+      "message": "Filed crbug.com/752636 to convert __proto__ usage to this.",
+      "range": {
+        "startLine": 420,
+        "startChar": 7,
+        "endLine": 420,
+        "endChar": 21
+      },
+      "revId": "e188bff075bdf457701a6a3cffba7738909a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "038b1a33_972afd6c",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-04T20:48:37Z",
+      "side": 1,
+      "message": "This should be grouped with the Symbol type, which is not yet allowed.",
+      "range": {
+        "startLine": 427,
+        "startChar": 0,
+        "endLine": 427,
+        "endChar": 31
+      },
+      "revId": "e188bff075bdf457701a6a3cffba7738909a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
