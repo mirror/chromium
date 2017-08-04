@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38076eba_8c550d31",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T17:10:43Z",
+      "side": 1,
+      "message": "This is still under investigation, right?",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 55
+      },
+      "revId": "5261b9675f8fa15bb0afd4f63f284de30ae7f59b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
