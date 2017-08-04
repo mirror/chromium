@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fecf5f51_54eab5ef",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-08-04T22:42:52Z",
+      "side": 1,
+      "message": "I\u0027d suggest adding tests for the various fields within the event, as well as the different situations that control them (e.g. safebrowsing state, whitelist state, etc.)",
+      "range": {
+        "startLine": 686,
+        "startChar": 40,
+        "endLine": 686,
+        "endChar": 76
+      },
+      "revId": "ac00cfd8cb9960537f285599bdb6da9b720fbbc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
