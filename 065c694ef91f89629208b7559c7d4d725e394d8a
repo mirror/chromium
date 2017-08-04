@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faa72bd7_99a0bef6",
+        "filename": "services/viz/public/cpp/compositing/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-04T20:05:59Z",
+      "side": 1,
+      "message": "Sort",
+      "revId": "065c694ef91f89629208b7559c7d4d725e394d8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
