@@ -175,10 +175,27 @@ void DetectFaultTolerantHeap() {
 }
 
 // Helper function for getting the time date stamp associated with a module in
-// this process.
-uint32_t GetModuleTimeDateStamp(const void* module_load_address) {
-  base::win::PEImage pe_image(module_load_address);
-  return pe_image.GetNTHeaders()->FileHeader.TimeDateStamp;
+// this process. Returns true on success.
+bool GetModuleTimeDateStamp(const base::FilePath& module_path,
+                            const void* module_load_address,
+                            uint32_t* time_date_stamp) {
+  // Increase the ref count of the module to make sure it is not unloaded while
+  // this function is running.
+  //
+  // A race condition can happen where the module is already unloaded as
+  // ::LoadLibrary() is called. In this case, it's important not to cause
+  // another load event because the module watcher will deadlock. This is solved
+  // by using LOAD_LIBRARY_AS_DATAFILE.
+  base::ScopedNativeLibrary module_reference(::LoadLibraryEx(
+      module_path.value().c_str(), nullptr,
+      LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_IMAGE_RESOURCE));
+
+  if (!module_reference.is_valid())
+    return false;
+
+  base::win::PEImage pe_image(module_reference.get());
+  *time_date_stamp = pe_image.GetNTHeaders()->FileHeader.TimeDateStamp;
+  return true;
 }
 
 // Used as the callback for ModuleWatcher events in this process. Dispatches
@@ -193,9 +210,18 @@ void OnModuleEvent(uint32_t process_id,
   switch (event.event_type) {
     case mojom::ModuleEventType::MODULE_ALREADY_LOADED:
     case mojom::ModuleEventType::MODULE_LOADED: {
-      module_database->OnModuleLoad(
-          process_id, creation_time, event.module_path, event.module_size,
-          GetModuleTimeDateStamp(event.module_load_address), load_address);
+      uint32_t time_date_stamp = 0;
+      bool got_time_date_stamp = GetModuleTimeDateStamp(
+          event.module_path, event.module_load_address, &time_date_stamp);
+      UMA_HISTOGRAM_BOOLEAN("ThirdPartyModules.TimeDateStampObtained",
+                            got_time_date_stamp);
+
+      // Drop the load event if it wasn't possible to get the time date stamp.
+      if (got_time_date_stamp) {
+        module_database->OnModuleLoad(process_id, creation_time,
+                                      event.module_path, event.module_size,
+                                      time_date_stamp, load_address);
+      }
       return;
     }
 
