@@ -52,4 +52,38 @@ NetToMojoIOBuffer::NetToMojoIOBuffer(NetToMojoPendingBuffer* pending_buffer,
 
 NetToMojoIOBuffer::~NetToMojoIOBuffer() {}
 
+MojoToNetPendingBuffer::MojoToNetPendingBuffer(
+    mojo::ScopedDataPipeConsumerHandle handle,
+    const void* buffer)
+    : handle_(std::move(handle)), buffer_(buffer) {}
+
+MojoToNetPendingBuffer::~MojoToNetPendingBuffer() {}
+
+// static
+MojoResult MojoToNetPendingBuffer::BeginRead(
+    mojo::ScopedDataPipeConsumerHandle* handle,
+    scoped_refptr<MojoToNetPendingBuffer>* pending,
+    uint32_t* num_bytes) {
+  const void* buffer = NULL;
+  *num_bytes = 0;
+  MojoResult result = BeginReadDataRaw(handle->get(), &buffer, num_bytes,
+                                       MOJO_READ_DATA_FLAG_NONE);
+  if (result == MOJO_RESULT_OK)
+    *pending = new MojoToNetPendingBuffer(std::move(*handle), buffer);
+  return result;
+}
+
+mojo::ScopedDataPipeConsumerHandle MojoToNetPendingBuffer::Complete(
+    uint32_t num_bytes) {
+  EndReadDataRaw(handle_.get(), num_bytes);
+  buffer_ = NULL;
+  return std::move(handle_);
+}
+
+MojoToNetIOBuffer::MojoToNetIOBuffer(MojoToNetPendingBuffer* pending_buffer)
+    : net::WrappedIOBuffer(pending_buffer->buffer()),
+      pending_buffer_(pending_buffer) {}
+
+MojoToNetIOBuffer::~MojoToNetIOBuffer() {}
+
 }  // namespace content
