@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2c359c6d_25770201",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-04T22:18:07Z",
+      "side": 1,
+      "message": "Yes, that happens to be the structure of the data right now, but we don\u0027t have any guarantees around that.  You\u0027re trying to check that the manufacturer name changed.  Can you compare |manufactuer| to the old value |activePrinter.ppdManufacturer|?\n\nLooks like you fixed it.",
+      "parentUuid": "b17f7166_2bb41636",
+      "range": {
+        "startLine": 47,
+        "startChar": 28,
+        "endLine": 47,
+        "endChar": 61
+      },
+      "revId": "4e1613528bbfec271a8d1d8a95a86173a865b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce85b8c3_f097ac17",
         "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
         "patchSetId": 11
@@ -93,6 +117,30 @@
       "revId": "4e1613528bbfec271a8d1d8a95a86173a865b44c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29aba0eb_9e94c903",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-04T22:18:07Z",
+      "side": 1,
+      "message": "Yes.  I think I added the ppdFields at some time.",
+      "parentUuid": "d1cd6a0e_56dfcf55",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 56
+      },
+      "revId": "4e1613528bbfec271a8d1d8a95a86173a865b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
