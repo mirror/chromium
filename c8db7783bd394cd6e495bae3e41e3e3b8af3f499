@@ -16,6 +16,24 @@
       "revId": "c8db7783bd394cd6e495bae3e41e3e3b8af3f499",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34eff33_09fbb833",
+        "filename": "chrome/browser/chromeos/bluetooth/bluetooth_adapter_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-04T21:26:12Z",
+      "side": 1,
+      "message": "After our offline discussion with rkc and jamescook, we decided to do the pref access directly from ash, and the preference becomes ash preference (pref names lives in ash/). In the latest patchset there is also one (and only one) single object that cares about setting bluetooth power.",
+      "parentUuid": "a2dedd99_9c8687f0",
+      "revId": "c8db7783bd394cd6e495bae3e41e3e3b8af3f499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
