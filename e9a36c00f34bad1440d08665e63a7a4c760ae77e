@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0276c334_26e7f797",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-04T21:43:10Z",
+      "side": 1,
+      "message": "@caseq - I had to put these methods back here because the bindings_test_runner module (which has persistence-test.js) depends on these methods.",
+      "revId": "e9a36c00f34bad1440d08665e63a7a4c760ae77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
