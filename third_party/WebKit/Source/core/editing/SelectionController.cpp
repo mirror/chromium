@@ -187,7 +187,7 @@ static PositionInFlatTree ComputeStartFromEndForExtendForward(
 
 static SelectionInFlatTree ExtendSelectionAsDirectional(
     const PositionInFlatTree& position,
-    const VisibleSelectionInFlatTree& selection,
+    const SelectionInFlatTree& selection,
     TextGranularity granularity) {
   DCHECK(!selection.IsNone());
   DCHECK(position.IsNotNull());
@@ -332,7 +332,8 @@ bool SelectionController::HandleSingleClick(
     UpdateSelectionForMouseDownDispatchingSelectStart(
         inner_node,
         frame_->GetEditor().Behavior().ShouldConsiderSelectionAsDirectional()
-            ? ExtendSelectionAsDirectional(pos, selection, granularity)
+            ? ExtendSelectionAsDirectional(pos, selection.AsSelection(),
+                                           granularity)
             : ExtendSelectionAsNonDirectional(pos, selection, granularity),
         granularity, HandleVisibility::kNotVisible);
     return false;
@@ -464,7 +465,8 @@ void SelectionController::UpdateSelectionForMouseDrag(
                                          target_position.DeepEquivalent());
   const SelectionInFlatTree& adjusted_selection =
       should_extend_selection
-          ? ExtendSelectionAsDirectional(adjusted_position, visible_selection,
+          ? ExtendSelectionAsDirectional(adjusted_position,
+                                         visible_selection.AsSelection(),
                                          Selection().Granularity())
           : SelectionInFlatTree::Builder().Collapse(adjusted_position).Build();
 
