@@ -62,6 +62,17 @@
 // GREYAssert is induced.
 + (void)waitForToolbarVisible:(BOOL)isVisible;
 
+// Opens the sign in menu by first opening the settings menu.
++ (void)openSigninFromSettings;
+
+// Signs in the identity for the specific |userEmail|. This must be called from
+// the NTP, and it doesn't dismiss the sign in confirmation page.
++ (void)signinToIdentityByEmail:(NSString*)userEmail;
+
+// Confirms the sign in confirmation page, scrolls first to make the OK button
+// visible on short devices (e.g. iPhone 5s).
++ (void)confirmSigninConfirmationDialog;
+
 @end
 
 #endif  // IOS_CHROME_TEST_EARL_GREY_CHROME_EARL_GREY_UI_H_
