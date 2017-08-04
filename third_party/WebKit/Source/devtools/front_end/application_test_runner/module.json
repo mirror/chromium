@@ -1,0 +1,12 @@
+{
+  "dependencies": [
+    "test_runner",
+    "integration_test_runner"
+  ],
+  "scripts": [
+    "ServiceWorkersTestRunner.js"
+  ],
+  "skip_compilation": [
+    "ServiceWorkersTestRunner.js"
+  ]
+}

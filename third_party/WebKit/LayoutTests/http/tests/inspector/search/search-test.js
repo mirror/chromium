@@ -1,3 +1,6 @@
+// This file is being deprecated and is moving to front_end/sources_test_runner/SearchTestRunner.js
+// Please see crbug.com/667560 for more details
+
 // To ensure that no GC-able resources from other tests upset
 // expectations, perform an initial GC.
 if (window.GCController)
