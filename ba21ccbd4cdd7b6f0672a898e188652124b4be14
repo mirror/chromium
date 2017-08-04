@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9d928d6a_1b6f358d",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-04T23:31:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b7cd5997_9b1f7253",
+      "revId": "ba21ccbd4cdd7b6f0672a898e188652124b4be14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2bdffe1_758d3486",
         "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
         "patchSetId": 5
@@ -48,6 +66,30 @@
       "writtenOn": "2017-08-04T22:48:55Z",
       "side": 1,
       "message": "I wasn\u0027t sure the best way to make this field optional.  Not all printer objects are expected to have it so I made it nullable.",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "ba21ccbd4cdd7b6f0672a898e188652124b4be14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65ff93c_cce61381",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-04T23:31:49Z",
+      "side": 1,
+      "message": "Probably it\u0027s better to be printerUsbInfo: (undefined|!CupsUsbInfo)",
+      "parentUuid": "c2bdffe1_758d3486",
       "range": {
         "startLine": 43,
         "startChar": 5,
