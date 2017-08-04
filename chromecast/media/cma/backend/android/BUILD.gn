@@ -38,7 +38,10 @@ source_set("cast_media_android") {
   ]
 
   if (enable_athings_loopback) {
-    deps += [ "//chromecast/internal/android/prebuilt/things:support_lib" ]
+    deps += [
+      "//chromecast/internal/android/prebuilt/things:support_lib",
+      "//chromecast/internal/base",
+    ]
     sources += [
       "loopback_audio_manager.cc",
       "loopback_audio_manager.h",

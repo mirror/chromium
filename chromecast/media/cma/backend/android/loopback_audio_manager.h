@@ -63,6 +63,7 @@ class LoopbackAudioManager {
   // calls made on this thread are blocking.
   base::Thread feeder_thread_;
   bool loopback_running_;
+  bool loopback_disabled_;
 
   DISALLOW_COPY_AND_ASSIGN(LoopbackAudioManager);
 };

@@ -18,6 +18,7 @@
 #include "chromecast/base/task_runner_impl.h"
 #include "chromecast/internal/android/prebuilt/things/include/pio/i2s_device.h"
 #include "chromecast/internal/android/prebuilt/things/include/pio/peripheral_manager_client.h"
+#include "chromecast/internal/base/chromecast_switches.h"
 #include "chromecast/public/cast_media_shlib.h"
 #include "chromecast/public/media/decoder_config.h"
 
@@ -64,23 +65,29 @@ LoopbackAudioManager::LoopbackAudioManager()
       frame_count_(0),
       feeder_thread_("CMA_Backend_Loopback"),
       loopback_running_(false) {
-  // Open I2S device.
-  APeripheralManagerClient* client = APeripheralManagerClient_new();
-  DCHECK(client);
+  // Avoid firing up loopback thread and requiring loopback configuration args
+  // when AEC is disabled.
+  loopback_disabled_ =
+      GetSwitchValueBoolean(switches::kAudioInputDisableEraser, false);
+  if (!loopback_disabled_) {
+    // Open I2S device.
+    APeripheralManagerClient* client = APeripheralManagerClient_new();
+    DCHECK(client);
 
-  char i2s_name[kMaxI2sNameLen];
-  AI2sEncoding i2s_encoding;
-  GetI2sFlags(i2s_name, &i2s_encoding);
+    char i2s_name[kMaxI2sNameLen];
+    AI2sEncoding i2s_encoding;
+    GetI2sFlags(i2s_name, &i2s_encoding);
 
-  int err = APeripheralManagerClient_openI2sDevice(
-      client, i2s_name, i2s_encoding, i2s_channels_, i2s_rate_,
-      AI2S_FLAG_DIRECTION_IN, &i2s_);
-  DCHECK_EQ(err, 0);
+    int err = APeripheralManagerClient_openI2sDevice(
+        client, i2s_name, i2s_encoding, i2s_channels_, i2s_rate_,
+        AI2S_FLAG_DIRECTION_IN, &i2s_);
+    DCHECK_EQ(err, 0);
 
-  // Spin up loopback thread.
-  base::Thread::Options options;
-  options.priority = base::ThreadPriority::REALTIME_AUDIO;
-  CHECK(feeder_thread_.StartWithOptions(options));
+    // Spin up loopback thread.
+    base::Thread::Options options;
+    options.priority = base::ThreadPriority::REALTIME_AUDIO;
+    CHECK(feeder_thread_.StartWithOptions(options));
+  }
 }
 
 LoopbackAudioManager::~LoopbackAudioManager() {
@@ -239,6 +246,9 @@ void LoopbackAudioManager::RunLoopback() {
 
 void LoopbackAudioManager::AddLoopbackAudioObserver(
     CastMediaShlib::LoopbackAudioObserver* observer) {
+  if (loopback_disabled_) {
+    return;
+  }
   DCHECK(observer);
   RUN_ON_FEEDER_THREAD(AddLoopbackAudioObserver, observer);
 
@@ -252,6 +262,9 @@ void LoopbackAudioManager::AddLoopbackAudioObserver(
 
 void LoopbackAudioManager::RemoveLoopbackAudioObserver(
     CastMediaShlib::LoopbackAudioObserver* observer) {
+  if (loopback_disabled_) {
+    return;
+  }
   DCHECK(observer);
   RUN_ON_FEEDER_THREAD(RemoveLoopbackAudioObserver, observer);
 
