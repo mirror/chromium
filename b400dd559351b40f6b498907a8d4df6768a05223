@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29e3dafd_fbb93bf0",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-04T20:51:54Z",
+      "side": 1,
+      "message": "Why this change to make it a function instead of a constant?",
+      "revId": "b400dd559351b40f6b498907a8d4df6768a05223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997d0671_c1f355a8",
+        "filename": "chrome/browser/extensions/api/image_writer_private/test_utils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-04T20:51:54Z",
+      "side": 1,
+      "message": "Needed?",
+      "revId": "b400dd559351b40f6b498907a8d4df6768a05223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f93ae9_57122283",
+        "filename": "chrome/browser/extensions/api/image_writer_private/unzip_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-04T20:51:54Z",
+      "side": 1,
+      "message": "Can we do this now, rather than having a TODO to file a bug?",
+      "revId": "b400dd559351b40f6b498907a8d4df6768a05223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
