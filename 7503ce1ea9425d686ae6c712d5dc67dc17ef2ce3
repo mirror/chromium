@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe0fc29c_b605e783",
+        "filename": "services/device/battery/battery_status_manager_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-08-04T13:43:39Z",
+      "side": 1,
+      "message": "nit: I think this is more clear and perhaps more future-proof as\n\nif (!system_bus_.get())\n  return;",
+      "range": {
+        "startLine": 389,
+        "startChar": 9,
+        "endLine": 389,
+        "endChar": 16
+      },
+      "revId": "7503ce1ea9425d686ae6c712d5dc67dc17ef2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
