@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04494966_ea8649e6",
+        "filename": "chrome/profiling/memlog_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T17:49:43Z",
+      "side": 1,
+      "message": "file bugs for all TODOs please. Add as blockers to 751302.",
+      "revId": "b92680965fb8a1bf66eb2b91e5148aeba2597ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70392acb_806c1ef0",
+        "filename": "chrome/profiling/memlog_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T17:49:43Z",
+      "side": 1,
+      "message": "handle the success parameter",
+      "revId": "b92680965fb8a1bf66eb2b91e5148aeba2597ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eecaee8_d778eb40",
+        "filename": "chrome/profiling/memlog_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T17:49:43Z",
+      "side": 1,
+      "message": "We could theoretically modify the memory_instrumentation interface to allow us to select a single process...but I guess that would be a lot of plumbing and we might eventually want them all anyways?",
+      "range": {
+        "startLine": 100,
+        "startChar": 32,
+        "endLine": 100,
+        "endChar": 45
+      },
+      "revId": "b92680965fb8a1bf66eb2b91e5148aeba2597ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da2d60f_c26b514e",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T17:49:43Z",
+      "side": 1,
+      "message": "why is this change necessary?",
+      "revId": "b92680965fb8a1bf66eb2b91e5148aeba2597ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
