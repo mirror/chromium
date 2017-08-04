@@ -114,3 +114,5 @@ class LoadingDesktopExpectations(story.expectations.StoryExpectations):
   def SetExpectations(self):
     self.DisableStory(
         'uol.com.br', [story.expectations.ALL_LINUX], 'crbug.com/723783')
+    self.DisableStory(
+        'Orange', [story.expectations.ALL_WIN], 'crbug.com/723783')
