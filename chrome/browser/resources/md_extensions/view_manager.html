@@ -1,3 +1,4 @@
+<link rel="import" href="chrome://resources/html/assert.html">
 <link rel="import" href="chrome://resources/html/polymer.html">
 <link rel="import" href="chrome://resources/html/cr.html">
 
@@ -5,25 +6,19 @@
   <template>
     <style>
       :host ::slotted([slot=view]) {
-        position: absolute;
-        top: 0;
         bottom: 0;
-        left: 0;
-        right: 0;
         display: none;
-        opacity: 0;
-        transition: opacity 300ms;
-      }
-
-      :host ::slotted(.block) {
-        display: block;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
       }
 
       :host ::slotted(.active) {
-        opacity: 1;
+        display: block;
       }
     </style>
     <slot name="view"></slot>
   </template>
-  <script src="chrome://extensions/view-manager.js"></script>
+  <script src="chrome://extensions/view_manager.js"></script>
 </dom-module>

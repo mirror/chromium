@@ -320,8 +320,9 @@ content::WebUIDataSource* CreateMdExtensionsSource() {
   source->AddResourcePath("strings.html", IDR_MD_EXTENSIONS_STRINGS_HTML);
   source->AddResourcePath("toolbar.html", IDR_MD_EXTENSIONS_TOOLBAR_HTML);
   source->AddResourcePath("toolbar.js", IDR_MD_EXTENSIONS_TOOLBAR_JS);
-  source->AddResourcePath("view-manager.html", IDR_MD_EXTENSIONS_VIEW_MANAGER_HTML);
-  source->AddResourcePath("view-manager.js", IDR_MD_EXTENSIONS_VIEW_MANAGER_JS);
+  source->AddResourcePath("view_manager.html",
+                          IDR_MD_EXTENSIONS_VIEW_MANAGER_HTML);
+  source->AddResourcePath("view_manager.js", IDR_MD_EXTENSIONS_VIEW_MANAGER_JS);
   source->SetDefaultResource(IDR_MD_EXTENSIONS_EXTENSIONS_HTML);
 
   return source;

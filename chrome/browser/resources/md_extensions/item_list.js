@@ -31,6 +31,7 @@ cr.define('extensions', function() {
 
     listeners: {
       'list.extension-item-size-changed': 'itemSizeChanged_',
+      'view-enter-start': 'onViewEnterStart_',
     },
 
     /**
@@ -72,6 +73,10 @@ cr.define('extensions', function() {
     shouldShowEmptySearchMessage_: function() {
       return !this.shouldShowEmptyItemsMessage_() &&
           this.shownItems_.length === 0;
+    },
+
+    onViewEnterStart_: function() {
+      this.fire('resize');
     },
   });
 
