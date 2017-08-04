@@ -34,6 +34,24 @@
       "revId": "46017602fb49c0d12f90f6f9b4d47687ab9e39ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad946ab_07ee352f",
+        "filename": "cc/ipc/cc_param_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-04T15:50:55Z",
+      "side": 1,
+      "message": "Done. This is awesome. It simplifies the code a lot. Thank you.",
+      "parentUuid": "0f1211b5_c5c69e49",
+      "revId": "46017602fb49c0d12f90f6f9b4d47687ab9e39ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
