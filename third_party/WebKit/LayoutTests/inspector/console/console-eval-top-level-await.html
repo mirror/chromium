@@ -1,0 +1,38 @@
+<html>
+<head>
+<script src="../../http/tests/inspector/inspector-test.js"></script>
+<script src="../../http/tests/inspector/console-test.js"></script>
+<script>
+
+async function test()
+{
+    await evaluateInConsole("await Promise.resolve(1)");
+    await evaluateInConsole("{a:await Promise.resolve(1)}");
+    await evaluateInConsole("$_");
+    await evaluateInConsole("let {a,b} = await Promise.resolve({a: 1, b:2}), f = 5;");
+    await evaluateInConsole("a");
+    await evaluateInConsole("b");
+    await evaluateInConsole("let c = await Promise.resolve(2)");
+    await evaluateInConsole("c");
+    await evaluateInConsole("let d;");
+    await evaluateInConsole("d");
+    await evaluateInConsole("let [i,{abc:{k}}] = [0,{abc:{k:1}}];");
+    await evaluateInConsole("i");
+    await evaluateInConsole("k");
+    InspectorTest.dumpConsoleMessages();
+    InspectorTest.completeTest();
+    function evaluateInConsole(code) {
+        return new Promise(resolve => InspectorTest.evaluateInConsole(code, resolve));
+    }
+}
+
+</script>
+</head>
+
+<body onload="runTest()">
+<p>
+Tests that evaluation with top-level await may be perfomed in console.
+</p>
+
+</body>
+</html>

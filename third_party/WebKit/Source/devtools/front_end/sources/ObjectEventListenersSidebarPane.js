@@ -72,7 +72,7 @@ Sources.ObjectEventListenersSidebarPane = class extends UI.VBox {
      */
     function windowObjectInContext(fulfill, reject) {
       executionContext.evaluate(
-          'self', Sources.ObjectEventListenersSidebarPane._objectGroupName, false, true, false, false, false,
+          'self', Sources.ObjectEventListenersSidebarPane._objectGroupName, false, true, false, false, false, false,
           mycallback);
       /**
        * @param {?SDK.RemoteObject} object

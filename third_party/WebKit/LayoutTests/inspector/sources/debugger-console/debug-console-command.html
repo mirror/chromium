@@ -68,10 +68,11 @@ var test = function()
         {
             InspectorTest.addResult("Script execution paused.");
             InspectorTest.captureStackTrace(callFrames);
-            InspectorTest.evaluateInConsole("undebug(" + functionName + ")");
-            InspectorTest.addResult("Breakpoint removed.");
-            InspectorTest.assertEquals(reason, SDK.DebuggerModel.BreakReason.DebugCommand);
-            InspectorTest.resumeExecution(didResume);
+            InspectorTest.evaluateInConsole("undebug(" + functionName + ")", () => {
+                InspectorTest.addResult("Breakpoint removed.");
+                InspectorTest.assertEquals(reason, SDK.DebuggerModel.BreakReason.DebugCommand);
+                InspectorTest.resumeExecution(didResume);
+            });
         }
 
         function didResume()

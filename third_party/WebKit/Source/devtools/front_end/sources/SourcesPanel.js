@@ -943,9 +943,12 @@ Sources.SourcesPanel = class extends UI.Panel {
       if (wasThrown || !result || result.type !== 'string') {
         failedToSave(result);
       } else {
+        var executionContext = /** @type {!SDK.ExecutionContext} */ (currentExecutionContext);
+        var text = /** @type {string} */ (result.value);
+        var msg = ConsoleModel.consoleModel.addCommandMessage(executionContext, text);
         ConsoleModel.consoleModel.evaluateCommandInConsole(
-            /** @type {!SDK.ExecutionContext} */ (currentExecutionContext), /** @type {string} */ (result.value),
-            /* useCommandLineAPI */ false);
+            executionContext, msg, text,
+            /* useCommandLineAPI */ false, /* awaitPromise */ false);
       }
     }
 
@@ -1258,8 +1261,11 @@ Sources.SourcesPanel.DebuggingActionDelegate = class {
         if (frame) {
           var text = frame.textEditor.text(frame.textEditor.selection());
           var executionContext = UI.context.flavor(SDK.ExecutionContext);
-          if (executionContext)
-            ConsoleModel.consoleModel.evaluateCommandInConsole(executionContext, text, /* useCommandLineAPI */ true);
+          if (executionContext) {
+            var msg = ConsoleModel.consoleModel.addCommandMessage(executionContext, text);
+            ConsoleModel.consoleModel.evaluateCommandInConsole(
+                executionContext, msg, text, /* useCommandLineAPI */ true, /* awaitPromise */ false);
+          }
         }
         return true;
     }
