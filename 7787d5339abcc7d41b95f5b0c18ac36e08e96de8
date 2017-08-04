@@ -22,6 +22,30 @@
       "revId": "7787d5339abcc7d41b95f5b0c18ac36e08e96de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd406c8_8a518843",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T22:31:47Z",
+      "side": 1,
+      "message": "Sure, I wasn\u0027t thrilled with it either.",
+      "parentUuid": "c0e9a3c5_857b5af5",
+      "range": {
+        "startLine": 199,
+        "startChar": 19,
+        "endLine": 199,
+        "endChar": 24
+      },
+      "revId": "7787d5339abcc7d41b95f5b0c18ac36e08e96de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

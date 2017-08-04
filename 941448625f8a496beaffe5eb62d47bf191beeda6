@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "b1243036_4555aef3",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T22:31:47Z",
+      "side": 1,
+      "message": "Done, though my code is a little more paranoid.",
+      "parentUuid": "88be3b1f_aac69e6f",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30efdf95_6de29f3e",
         "filename": "components/omnibox/browser/autocomplete_match.h",
         "patchSetId": 12
@@ -477,6 +495,24 @@
     },
     {
       "key": {
+        "uuid": "969d17ee_7451d513",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T22:31:47Z",
+      "side": 1,
+      "message": "Ah, missed it, editing 2 files.",
+      "parentUuid": "315907b0_ddece1cc",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17e654db_3772f1da",
         "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
         "patchSetId": 12
@@ -583,6 +619,30 @@
       "side": 1,
       "message": "Why arraysize below?",
       "parentUuid": "89a8cf95_bedb614a",
+      "range": {
+        "startLine": 723,
+        "startChar": 21,
+        "endLine": 723,
+        "endChar": 65
+      },
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47ae5e3f_bf37759f",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T22:31:47Z",
+      "side": 1,
+      "message": "I need the \u0027i\u0027 for match_at().",
+      "parentUuid": "09ba7887_ba1b132b",
       "range": {
         "startLine": 723,
         "startChar": 21,
