@@ -296,6 +296,30 @@
     },
     {
       "key": {
+        "uuid": "427af793_7d00f8c9",
+        "filename": "content/browser/payments/payment_app_info_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-04T16:07:20Z",
+      "side": 1,
+      "message": "changed to base::MakeUnique",
+      "parentUuid": "1bb6bc18_2e5f3332",
+      "range": {
+        "startLine": 41,
+        "startChar": 32,
+        "endLine": 41,
+        "endChar": 48
+      },
+      "revId": "d0b1e0684c0d969bdc8181784c671c162517dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3e4d20c_caf70551",
         "filename": "content/public/browser/stored_payment_app.cc",
         "patchSetId": 10
