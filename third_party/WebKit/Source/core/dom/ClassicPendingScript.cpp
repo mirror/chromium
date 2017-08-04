@@ -18,6 +18,7 @@ namespace blink {
 
 ClassicPendingScript* ClassicPendingScript::Create(ScriptElementBase* element,
                                                    ScriptResource* resource) {
+  CHECK(resource);
   return new ClassicPendingScript(element, resource, TextPosition());
 }
 
@@ -32,10 +33,12 @@ ClassicPendingScript::ClassicPendingScript(
     ScriptResource* resource,
     const TextPosition& starting_position)
     : PendingScript(element, starting_position),
+      is_external_(resource),
       ready_state_(resource ? kWaitingForResource : kReady),
       integrity_failure_(false) {
-  CheckState();
+  CHECK(GetElement());
   SetResource(resource);
+  CheckState();
   MemoryCoordinator::Instance().RegisterClient(this);
 }
 
@@ -45,6 +48,7 @@ NOINLINE void ClassicPendingScript::CheckState() const {
   // TODO(hiroshige): Turn these CHECK()s into DCHECK() before going to beta.
   CHECK(!prefinalizer_called_);
   CHECK(GetElement());
+  CHECK_EQ(is_external_, !!GetResource());
   CHECK(GetResource() || !streamer_);
   CHECK(!streamer_ || streamer_->GetResource() == GetResource());
 }
@@ -166,7 +170,7 @@ ClassicScript* ClassicPendingScript::GetSource(const KURL& document_url,
   DCHECK(IsReady());
 
   error_occurred = ErrorOccurred();
-  if (!GetResource()) {
+  if (!is_external_) {
     return ClassicScript::Create(ScriptSourceCode(
         GetElement()->TextFromChildren(), document_url, StartingPosition()));
   }
@@ -314,7 +318,7 @@ bool ClassicPendingScript::IsCurrentlyStreaming() const {
 }
 
 bool ClassicPendingScript::WasCanceled() const {
-  if (!GetResource())
+  if (!is_external_)
     return false;
   return GetResource()->WasCanceled();
 }
