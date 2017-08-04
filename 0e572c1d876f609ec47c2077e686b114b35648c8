@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9979c9ac_506e98b1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T14:47:44Z",
+      "side": 1,
+      "message": "Since you\u0027ve split the CL in two, I think that now we can come up with clearer CL description. \"Split signin_promo_view into two files\"?",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "0e572c1d876f609ec47c2077e686b114b35648c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c62717_134a69f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T14:47:44Z",
+      "side": 1,
+      "message": "I think \"a couple of changes\" is no longer applicable for this CL.",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "0e572c1d876f609ec47c2077e686b114b35648c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
