@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0dc91bea_7b260279",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-04T15:45:03Z",
+      "side": 1,
+      "message": "IMHO, you should handle this in the NTPTile coder.",
+      "parentUuid": "af2c6c87_b20abd2d",
+      "range": {
+        "startLine": 33,
+        "startChar": 26,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa0599e0_344e71d1",
         "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
         "patchSetId": 2
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "69eccd75_c47df67f",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-04T15:45:03Z",
+      "side": 1,
+      "message": "With the fact that you now store all the tiles to the UserDefault.",
+      "parentUuid": "cd595254_98b41966",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 33
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "819f04c3_aae3176a",
         "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
         "patchSetId": 2
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "It is technically possible, but calls to update a single icon come from the icon having been updated in the favicon fetcher service, it doesn\u0027t re-update icons over and over..",
       "parentUuid": "819f04c3_aae3176a",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 191,
+        "endChar": 24
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3593a7d_d882f728",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-04T15:45:03Z",
+      "side": 1,
+      "message": "If it is technically possible, it will likely happen.\nSpecially because fetching favicons is not a fast operation.\nSo handling this case is probably better.",
+      "parentUuid": "cf89687a_8937a51f",
       "range": {
         "startLine": 191,
         "startChar": 7,
@@ -509,6 +581,30 @@
       "side": 1,
       "message": "Nope. the widgetexpanded height is calculated according to compactHeight.",
       "parentUuid": "678706d9_c5c0d5cf",
+      "range": {
+        "startLine": 138,
+        "startChar": 38,
+        "endLine": 138,
+        "endChar": 58
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3347fe27_3dc115d3",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-04T15:45:03Z",
+      "side": 1,
+      "message": "When I read widgetExpandedHeight, I think it is possible that widgetExpandedHeight \u003d\u003d compactHeight.",
+      "parentUuid": "9b27b0a7_d54144c9",
       "range": {
         "startLine": 138,
         "startChar": 38,
