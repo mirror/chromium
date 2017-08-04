@@ -122,7 +122,7 @@ class MODULES_EXPORT BaseAudioContext
 
   // Document notification
   void ContextDestroyed(ExecutionContext*) final;
-  bool HasPendingActivity() const final;
+  bool HasPendingActivity() const;
 
   // Cannnot be called from the audio thread.
   AudioDestinationNode* destination() const;
@@ -333,6 +333,21 @@ class MODULES_EXPORT BaseAudioContext
   // gesture while the AudioContext requires a user gesture.
   void MaybeRecordStartAttempt();
 
+#if DEBUG_AUDIONODE_REFERENCES
+  void IncNodeCount(AudioHandler::NodeType node_type) {
+    ++node_count_[node_type];
+  }
+
+  void DecNodeCount(AudioHandler::NodeType node_type) {
+    --node_count_[node_type];
+  }
+
+  int GetNodeCount(AudioHandler::NodeType node_type) const {
+    return node_count_[node_type];
+  }
+  void PrintNodeCounts() const;
+#endif
+
  protected:
   explicit BaseAudioContext(Document*);
   BaseAudioContext(Document*,
@@ -509,6 +524,10 @@ class MODULES_EXPORT BaseAudioContext
 
   Optional<AutoplayStatus> autoplay_status_;
   AudioIOPosition output_position_;
+
+#if DEBUG_AUDIONODE_REFERENCES
+  int node_count_[AudioHandler::kNodeTypeEnd];
+#endif
 };
 
 }  // namespace blink

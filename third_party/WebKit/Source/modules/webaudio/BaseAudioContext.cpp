@@ -156,6 +156,10 @@ BaseAudioContext::~BaseAudioContext() {
   DCHECK(!is_resolving_resume_promises_);
   DCHECK(!resume_resolvers_.size());
   DCHECK(!autoplay_status_.has_value());
+#if DEBUG_AUDIONODE_REFERENCES
+  PrintNodeCounts();
+  AudioHandler::PrintNodeCounts();
+#endif
 }
 
 void BaseAudioContext::Initialize() {
@@ -1034,4 +1038,21 @@ SecurityOrigin* BaseAudioContext::GetSecurityOrigin() const {
   return nullptr;
 }
 
+#if DEBUG_AUDIONODE_REFERENCES
+void BaseAudioContext::PrintNodeCounts() const {
+  fprintf(stderr, "\n");
+  fprintf(stderr, "===========================\n");
+  fprintf(stderr, "AudioNode: reference counts for context [%16p]\n", this);
+  fprintf(stderr, "===========================\n");
+
+  int sum = 0;
+  for (unsigned i = 0; i < AudioHandler::kNodeTypeEnd; ++i) {
+    sum += node_count_[i];
+    fprintf(stderr, "%2d: %3d\n", i, node_count_[i]);
+  }
+
+  fprintf(stderr, "Nodes leaked: %d\n", sum);
+  fprintf(stderr, "===========================\n\n\n");
+}
+#endif
 }  // namespace blink
