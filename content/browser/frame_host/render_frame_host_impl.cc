@@ -39,6 +39,7 @@
 #include "content/browser/frame_host/render_frame_host_delegate.h"
 #include "content/browser/frame_host/render_frame_proxy_host.h"
 #include "content/browser/frame_host/render_widget_host_view_child_frame.h"
+#include "content/browser/generic_sensor/sensor_provider_proxy_impl.h"
 #include "content/browser/geolocation/geolocation_service_impl.h"
 #include "content/browser/image_capture/image_capture_impl.h"
 #include "content/browser/installedapp/installed_app_provider_impl_default.h"
@@ -2988,8 +2989,7 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
 
   if (base::FeatureList::IsEnabled(features::kGenericSensor)) {
     registry_->AddInterface(
-        base::Bind(&ForwardRequest<device::mojom::SensorProvider>,
-                   device::mojom::kServiceName));
+        base::Bind(&SensorProviderProxyImpl::Create, base::Unretained(this)));
   }
 
   registry_->AddInterface(
