@@ -13,6 +13,7 @@
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #include "ios/chrome/common/app_group/app_group_constants.h"
 #include "ios/chrome/content_widget_extension/content_widget_view.h"
+#import "ios/chrome/content_widget_extension/most_visited_tile_view.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -27,7 +28,7 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
 const CGFloat widgetCompactHeightIOS9 = 110;
 }  // namespace
 
-@interface ContentWidgetViewController ()
+@interface ContentWidgetViewController ()<ContentWidgetViewTarget>
 @property(nonatomic, strong) NSDictionary<NSURL*, NTPTile*>* sites;
 @property(nonatomic, weak) ContentWidgetView* widgetView;
 @property(nonatomic, readonly) BOOL isCompact;
@@ -36,7 +37,9 @@ const CGFloat widgetCompactHeightIOS9 = 110;
 // occurred.
 - (BOOL)updateWidget;
 // Opens the main application with the given |URL|.
-- (void)openAppWithURL:(NSString*)URL;
+- (void)openAppWithURL:(NSURL*)URL;
+// Expand the widget.
+- (void)setExpanded:(CGSize)maxSize;
 @end
 
 @implementation ContentWidgetViewController
@@ -47,8 +50,9 @@ const CGFloat widgetCompactHeightIOS9 = 110;
 #pragma mark - properties
 
 - (BOOL)isCompact {
-  return [self.extensionContext widgetActiveDisplayMode] ==
-         NCWidgetDisplayModeCompact;
+  return base::ios::IsRunningOnIOS10OrLater() &&
+         [self.extensionContext widgetActiveDisplayMode] ==
+             NCWidgetDisplayModeCompact;
 }
 
 #pragma mark - UIViewController
@@ -57,7 +61,7 @@ const CGFloat widgetCompactHeightIOS9 = 110;
   [super viewDidLoad];
 
   CGFloat height =
-      self.extensionContext
+      self.extensionContext && base::ios::IsRunningOnIOS10OrLater()
           ? [self.extensionContext
                 widgetMaximumSizeForDisplayMode:NCWidgetDisplayModeCompact]
                 .height
@@ -66,23 +70,21 @@ const CGFloat widgetCompactHeightIOS9 = 110;
   // A local variable is necessary here as the property is declared weak and the
   // object would be deallocated before being retained by the addSubview call.
   ContentWidgetView* widgetView =
-      [[ContentWidgetView alloc] initWithCompactHeight:height
-                                      initiallyCompact:self.isCompact];
+      [[ContentWidgetView alloc] initWithActionTarget:self
+                                        compactHeight:height
+                                     initiallyCompact:self.isCompact];
   self.widgetView = widgetView;
   [self.view addSubview:self.widgetView];
 
   if (base::ios::IsRunningOnIOS10OrLater()) {
     self.extensionContext.widgetLargestAvailableDisplayMode =
         NCWidgetDisplayModeExpanded;
+  } else {
+    [self setExpanded:[[UIScreen mainScreen] bounds].size];
   }
 
   self.widgetView.translatesAutoresizingMaskIntoConstraints = NO;
   AddSameConstraints(self.widgetView, self.view);
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-  [self updateWidget];
 }
 
 - (void)widgetPerformUpdateWithCompletionHandler:
@@ -113,8 +115,7 @@ const CGFloat widgetCompactHeightIOS9 = 110;
       self.preferredContentSize = maxSize;
       break;
     case NCWidgetDisplayModeExpanded:
-      self.preferredContentSize =
-          CGSizeMake(maxSize.width, [self.widgetView widgetExpandedHeight]);
+      [self setExpanded:maxSize];
       break;
   }
 }
@@ -130,22 +131,28 @@ const CGFloat widgetCompactHeightIOS9 = 110;
 
 #pragma mark - internal
 
+- (void)setExpanded:(CGSize)maxSize {
+  [self updateWidget];
+  self.preferredContentSize =
+      CGSizeMake(maxSize.width,
+                 MIN([self.widgetView widgetExpandedHeight], maxSize.height));
+}
+
 - (BOOL)updateWidget {
-  NSUserDefaults* sharedDefaults =
-      [[NSUserDefaults alloc] initWithSuiteName:app_group::ApplicationGroup()];
+  NSUserDefaults* sharedDefaults = app_group::GetGroupUserDefaults();
   NSDictionary<NSURL*, NTPTile*>* newSites = [NSKeyedUnarchiver
       unarchiveObjectWithData:[sharedDefaults
                                   objectForKey:app_group::kSuggestedItems]];
-  if (newSites == self.sites) {
+  if ([newSites isEqualToDictionary:self.sites]) {
     return NO;
   }
   self.sites = newSites;
+  [self.widgetView updateSites:self.sites];
   return YES;
 }
 
-- (void)openAppWithURL:(NSString*)URL {
-  NSUserDefaults* sharedDefaults =
-      [[NSUserDefaults alloc] initWithSuiteName:app_group::ApplicationGroup()];
+- (void)openAppWithURL:(NSURL*)URL {
+  NSUserDefaults* sharedDefaults = app_group::GetGroupUserDefaults();
   NSString* defaultsKey =
       base::SysUTF8ToNSString(app_group::kChromeAppGroupCommandPreference);
 
@@ -163,7 +170,7 @@ const CGFloat widgetCompactHeightIOS9 = 110;
     appPrefKey : @"TodayExtension",
     commandPrefKey :
         base::SysUTF8ToNSString(app_group::kChromeAppGroupOpenURLCommand),
-    paramPrefKey : URL,
+    paramPrefKey : URL.absoluteString,
   };
 
   [sharedDefaults setObject:commandDict forKey:defaultsKey];
@@ -183,6 +190,14 @@ const CGFloat widgetCompactHeightIOS9 = 110;
 
   NSURL* openURL = [urlComponents URL];
   [self.extensionContext openURL:openURL completionHandler:nil];
+}
+
+#pragma mark - ContentWidgetViewActionTarget
+
+- (void)openURL:(id)sender {
+  MostVisitedTileView* castSender = (MostVisitedTileView*)sender;
+  DCHECK(castSender);
+  [self openAppWithURL:castSender.URL];
 }
 
 @end
