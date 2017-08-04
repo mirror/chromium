@@ -11,13 +11,11 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/sys_info.h"
 
 namespace base {
 
 ProcessMetrics::ProcessMetrics(ProcessHandle process)
     : process_(process),
-      processor_count_(SysInfo::NumberOfProcessors()),
       last_system_time_(0),
       last_cpu_(0) {}
 
