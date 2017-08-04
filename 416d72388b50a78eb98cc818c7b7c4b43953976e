@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a92bcb26_fd709d7e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-04T15:10:05Z",
+      "side": 1,
+      "message": "Please describe what this part of the patch series actually changes.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "416d72388b50a78eb98cc818c7b7c4b43953976e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec47a55_5ec11fa9",
+        "filename": "content/browser/generic_sensor/sensor_provider_proxy_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-04T15:10:05Z",
+      "side": 1,
+      "message": "I\u0027ve been told to avoid creating many WebContentsObservers as they increase the cost of navigations. Instead follow the pattern of the GeolocationServiceImpl, which is explicitly owned by the RenderFrameHostImpl,\n\nhttps://cs.chromium.org/chromium/src/content/browser/geolocation/geolocation_service_impl.h",
+      "revId": "416d72388b50a78eb98cc818c7b7c4b43953976e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
