@@ -192,6 +192,7 @@
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameFetchContext.h"
 #include "core/loader/FrameLoader.h"
+#include "core/loader/InteractiveDetector.h"
 #include "core/loader/NavigationScheduler.h"
 #include "core/loader/PrerendererClient.h"
 #include "core/loader/appcache/ApplicationCacheHost.h"
@@ -5637,6 +5638,11 @@ void Document::FinishedParsing() {
 
     frame->Loader().FinishedParsing();
 
+    InteractiveDetector* interactive_detector(InteractiveDetector::From(*this));
+    if (interactive_detector) {
+      interactive_detector->OnDomContentLoadedEnd(
+          document_timing_.DomContentLoadedEventEnd());
+    }
     TRACE_EVENT_INSTANT1("devtools.timeline", "MarkDOMContent",
                          TRACE_EVENT_SCOPE_THREAD, "data",
                          InspectorMarkLoadEvent::Data(frame));
