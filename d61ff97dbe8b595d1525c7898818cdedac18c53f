@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecfc4722_9c1c257c",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T16:56:31Z",
+      "side": 1,
+      "message": "optional: initialize observer_ in header?",
+      "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038c824e_5c15dea1",
+        "filename": "ash/highlighter/highlighter_controller_test_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T16:56:31Z",
+      "side": 1,
+      "message": "Q: Does the destructor need to set observer to null?",
+      "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49fbb77a_e16af5e5",
+        "filename": "ash/highlighter/highlighter_result_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T16:56:31Z",
+      "side": 1,
+      "message": "Can this be a OnceClosure? Or can it be called multiple times?",
+      "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8e2281_9346fe0e",
+        "filename": "ash/highlighter/highlighter_result_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T16:56:31Z",
+      "side": 1,
+      "message": "ditto re: OnceClosure",
+      "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00937689_743df249",
+        "filename": "ash/highlighter/highlighter_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T16:56:31Z",
+      "side": 1,
+      "message": "explicit not needed",
+      "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a691e20b_63bb4376",
+        "filename": "ash/highlighter/highlighter_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T16:56:31Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7479c0a6_7e225853",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T16:56:31Z",
+      "side": 1,
+      "message": "nit: this should be highlighter_selection_observer_ -- at first I wasn\u0027t sure where it came from, so I couldn\u0027t reason about memory lifetime.",
+      "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "319a04fa_61f6a73e",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T16:56:31Z",
+      "side": 1,
+      "message": "Does this object need to SetObserver(null), or is HighlighterController destroyed first?",
+      "revId": "d61ff97dbe8b595d1525c7898818cdedac18c53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
