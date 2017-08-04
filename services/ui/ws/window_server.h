@@ -89,6 +89,7 @@ class WindowServer : public ServerWindowDelegate,
   // must be destroyed before WindowServer.
   ServerWindow* CreateServerWindow(
       const WindowId& id,
+      const viz::FrameSinkId& frame_sink_id,
       const std::map<std::string, std::vector<uint8_t>>& properties);
 
   // Returns the id for the next WindowTree.

@@ -19,15 +19,18 @@
 namespace ui {
 namespace ws {
 
-ServerWindow::ServerWindow(ServerWindowDelegate* delegate, const WindowId& id)
-    : ServerWindow(delegate, id, Properties()) {}
+ServerWindow::ServerWindow(ServerWindowDelegate* delegate,
+                           const WindowId& id,
+                           const viz::FrameSinkId& frame_sink_id)
+    : ServerWindow(delegate, id, frame_sink_id, Properties()) {}
 
 ServerWindow::ServerWindow(ServerWindowDelegate* delegate,
                            const WindowId& id,
+                           const viz::FrameSinkId& frame_sink_id,
                            const Properties& properties)
     : delegate_(delegate),
       id_(id),
-      frame_sink_id_(WindowIdToTransportId(id), 0),
+      frame_sink_id_(frame_sink_id),
       parent_(nullptr),
       stacking_target_(nullptr),
       transient_parent_(nullptr),

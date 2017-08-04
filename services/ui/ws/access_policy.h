@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "services/ui/public/interfaces/mus_constants.mojom.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
 #include "services/ui/ws/ids.h"
@@ -83,7 +84,7 @@ class AccessPolicy {
   virtual const ServerWindow* GetWindowForFocusChange(
       const ServerWindow* focused) = 0;
 
-  virtual bool IsValidIdForNewWindow(const ClientWindowId& id) const = 0;
+  virtual bool IsValidIdForNewWindow(const viz::FrameSinkId& id) const = 0;
 };
 
 }  // namespace ws

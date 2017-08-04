@@ -47,17 +47,15 @@ namespace {
 
 const UserId kTestUserId1 = "2";
 
-std::string WindowIdToString(const WindowId& id) {
-  return base::StringPrintf("%d,%d", id.client_id, id.window_id);
+std::string FrameSinkIdToString(const viz::FrameSinkId& id) {
+  return base::StringPrintf("%d,%d",
+                            base::checked_cast<uint16_t>(id.client_id()),
+                            base::checked_cast<uint16_t>(id.sink_id()));
 }
 
-std::string ClientWindowIdToString(const ClientWindowId& id) {
-  return WindowIdToString(WindowIdFromTransportId(id.id));
-}
-
-ClientWindowId BuildClientWindowId(WindowTree* tree,
-                                   ClientSpecificId window_id) {
-  return ClientWindowId(WindowIdToTransportId(WindowId(tree->id(), window_id)));
+viz::FrameSinkId BuildFrameSinkId(WindowTree* tree,
+                                  ClientSpecificId window_id) {
+  return viz::FrameSinkId(tree->id(), window_id);
 }
 
 // -----------------------------------------------------------------------------
@@ -226,14 +224,15 @@ void WindowTreeTest::SetupEventTargeting(TestWindowTreeClient** out_client,
 
 // Verifies focus correctly changes on pointer events.
 TEST_F(WindowTreeTest, FocusOnPointer) {
-  const ClientWindowId embed_window_id = BuildClientWindowId(wm_tree(), 1);
+  const viz::FrameSinkId embed_window_id = BuildFrameSinkId(wm_tree(), 1);
   EXPECT_TRUE(
       wm_tree()->NewWindow(embed_window_id, ServerWindow::Properties()));
-  ServerWindow* embed_window = wm_tree()->GetWindowByClientId(embed_window_id);
+  ServerWindow* embed_window =
+      wm_tree()->GetWindowByFrameSinkId(embed_window_id);
   ASSERT_TRUE(embed_window);
   EXPECT_TRUE(wm_tree()->SetWindowVisibility(embed_window_id, true));
   ASSERT_TRUE(FirstRoot(wm_tree()));
-  const ClientWindowId wm_root_id = FirstRootId(wm_tree());
+  const viz::FrameSinkId wm_root_id = FirstRootId(wm_tree());
   EXPECT_TRUE(wm_tree()->AddWindow(wm_root_id, embed_window_id));
   ServerWindow* wm_root = FirstRoot(wm_tree());
   ASSERT_TRUE(wm_root);
@@ -252,11 +251,11 @@ TEST_F(WindowTreeTest, FocusOnPointer) {
 
   embed_window->SetBounds(gfx::Rect(0, 0, 50, 50));
 
-  const ClientWindowId child1_id(BuildClientWindowId(tree1, 1));
+  const viz::FrameSinkId child1_id(BuildFrameSinkId(tree1, 1));
   EXPECT_TRUE(tree1->NewWindow(child1_id, ServerWindow::Properties()));
-  EXPECT_TRUE(tree1->AddWindow(ClientWindowIdForWindow(tree1, embed_window),
-                               child1_id));
-  ServerWindow* child1 = tree1->GetWindowByClientId(child1_id);
+  EXPECT_TRUE(
+      tree1->AddWindow(FrameSinkIdForWindow(tree1, embed_window), child1_id));
+  ServerWindow* child1 = tree1->GetWindowByFrameSinkId(child1_id);
   ASSERT_TRUE(child1);
   child1->SetVisible(true);
   child1->SetBounds(gfx::Rect(20, 20, 20, 20));
@@ -400,10 +399,9 @@ TEST_F(WindowTreeTest, PointerWatcherGetsWindow) {
   // Expect two changes, the first is focus, the second the pointer watcher
   // event.
   ASSERT_EQ(2u, wm_client()->tracker()->changes()->size());
-  EXPECT_EQ(
-      "PointerWatcherEvent event_action=16 window=" +
-          ClientWindowIdToString(ClientWindowIdForWindow(wm_tree(), window)),
-      ChangesToDescription1(*wm_client()->tracker()->changes())[1]);
+  EXPECT_EQ("PointerWatcherEvent event_action=16 window=" +
+                FrameSinkIdToString(FrameSinkIdForWindow(wm_tree(), window)),
+            ChangesToDescription1(*wm_client()->tracker()->changes())[1]);
 }
 
 // Tests that a client using a pointer watcher does not receive events that
@@ -645,7 +643,7 @@ TEST_F(WindowTreeTest, CursorMultipleTrees) {
 }
 
 TEST_F(WindowTreeTest, EventAck) {
-  const ClientWindowId embed_window_id = BuildClientWindowId(wm_tree(), 1);
+  const viz::FrameSinkId embed_window_id = BuildFrameSinkId(wm_tree(), 1);
   EXPECT_TRUE(
       wm_tree()->NewWindow(embed_window_id, ServerWindow::Properties()));
   EXPECT_TRUE(wm_tree()->SetWindowVisibility(embed_window_id, true));
@@ -679,12 +677,13 @@ TEST_F(WindowTreeTest, EventAck) {
 
 // Establish client, call Embed() in WM, make sure to get FrameSinkId.
 TEST_F(WindowTreeTest, Embed) {
-  const ClientWindowId embed_window_id = BuildClientWindowId(wm_tree(), 1);
+  const viz::FrameSinkId embed_window_id = BuildFrameSinkId(wm_tree(), 1);
   EXPECT_TRUE(
       wm_tree()->NewWindow(embed_window_id, ServerWindow::Properties()));
-  ServerWindow* embed_window = wm_tree()->GetWindowByClientId(embed_window_id);
+  ServerWindow* embed_window =
+      wm_tree()->GetWindowByFrameSinkId(embed_window_id);
   ASSERT_TRUE(embed_window);
-  const ClientWindowId wm_root_id = FirstRootId(wm_tree());
+  const viz::FrameSinkId wm_root_id = FirstRootId(wm_tree());
   EXPECT_TRUE(wm_tree()->AddWindow(wm_root_id, embed_window_id));
   ServerWindow* wm_root = FirstRoot(wm_tree());
   ASSERT_TRUE(wm_root);
@@ -697,20 +696,20 @@ TEST_F(WindowTreeTest, Embed) {
   // The window manager should be told about the FrameSinkId of the embedded
   // window.
   EXPECT_EQ(
-      base::StringPrintf(
-          "OnFrameSinkIdAllocated window=%s %s",
-          WindowIdToString(WindowIdFromTransportId(embed_window_id.id)).c_str(),
-          embed_window->frame_sink_id().ToString().c_str()),
+      base::StringPrintf("OnFrameSinkIdAllocated window=%s %s",
+                         FrameSinkIdToString(embed_window_id).c_str(),
+                         embed_window->frame_sink_id().ToString().c_str()),
       SingleChangeToDescription(*wm_client()->tracker()->changes()));
 }
 
 TEST_F(WindowTreeTest, DisallowSetSystemModalForEmbedded) {
-  const ClientWindowId embed_window_id = BuildClientWindowId(wm_tree(), 1);
+  const viz::FrameSinkId embed_window_id = BuildFrameSinkId(wm_tree(), 1);
   EXPECT_TRUE(
       wm_tree()->NewWindow(embed_window_id, ServerWindow::Properties()));
-  ServerWindow* embed_window = wm_tree()->GetWindowByClientId(embed_window_id);
+  ServerWindow* embed_window =
+      wm_tree()->GetWindowByFrameSinkId(embed_window_id);
   ASSERT_TRUE(embed_window);
-  const ClientWindowId wm_root_id = FirstRootId(wm_tree());
+  const viz::FrameSinkId wm_root_id = FirstRootId(wm_tree());
   EXPECT_TRUE(wm_tree()->AddWindow(wm_root_id, embed_window_id));
   ServerWindow* wm_root = FirstRoot(wm_tree());
   ASSERT_TRUE(wm_root);
@@ -721,16 +720,16 @@ TEST_F(WindowTreeTest, DisallowSetSystemModalForEmbedded) {
       wm_tree()->Embed(embed_window_id, std::move(client), embed_flags));
   ASSERT_TRUE(last_tree());
   EXPECT_FALSE(last_tree()->SetModalType(
-      ClientWindowIdForWindow(last_tree(), embed_window), MODAL_TYPE_SYSTEM));
+      FrameSinkIdForWindow(last_tree(), embed_window), MODAL_TYPE_SYSTEM));
 }
 
 TEST_F(WindowTreeTest, ModalTypeSystemToModalTypeNone) {
-  const ClientWindowId test_window_id = BuildClientWindowId(wm_tree(), 21);
+  const viz::FrameSinkId test_window_id = BuildFrameSinkId(wm_tree(), 21);
   EXPECT_TRUE(wm_tree()->NewWindow(test_window_id, ServerWindow::Properties()));
-  ServerWindow* test_window = wm_tree()->GetWindowByClientId(test_window_id);
+  ServerWindow* test_window = wm_tree()->GetWindowByFrameSinkId(test_window_id);
   ASSERT_TRUE(test_window);
   test_window->SetVisible(true);
-  const ClientWindowId wm_root_id = FirstRootId(wm_tree());
+  const viz::FrameSinkId wm_root_id = FirstRootId(wm_tree());
   EXPECT_TRUE(wm_tree()->AddWindow(wm_root_id, test_window_id));
   EXPECT_TRUE(wm_tree()->SetModalType(test_window_id, MODAL_TYPE_SYSTEM));
   WindowManagerState* wms =
@@ -746,12 +745,12 @@ TEST_F(WindowTreeTest, ModalTypeSystemToModalTypeNone) {
 }
 
 TEST_F(WindowTreeTest, ModalTypeSystemUnparentedThenParented) {
-  const ClientWindowId test_window_id = BuildClientWindowId(wm_tree(), 21);
+  const viz::FrameSinkId test_window_id = BuildFrameSinkId(wm_tree(), 21);
   EXPECT_TRUE(wm_tree()->NewWindow(test_window_id, ServerWindow::Properties()));
-  ServerWindow* test_window = wm_tree()->GetWindowByClientId(test_window_id);
+  ServerWindow* test_window = wm_tree()->GetWindowByFrameSinkId(test_window_id);
   ASSERT_TRUE(test_window);
   test_window->SetVisible(true);
-  const ClientWindowId wm_root_id = FirstRootId(wm_tree());
+  const viz::FrameSinkId wm_root_id = FirstRootId(wm_tree());
   EXPECT_TRUE(wm_tree()->SetModalType(test_window_id, MODAL_TYPE_SYSTEM));
   WindowManagerState* wms =
       display()->GetActiveWindowManagerDisplayRoot()->window_manager_state();
@@ -783,9 +782,10 @@ TEST_F(WindowTreeTest, NewTopLevelWindow) {
   std::unordered_map<std::string, std::vector<uint8_t>> properties;
   const uint32_t initial_change_id = 17;
   // Explicitly use an id that does not contain the client id.
-  const ClientWindowId embed_window_id2_in_child(45 << 16 | 27);
+  const viz::FrameSinkId embed_window_id2_in_child(45, 27);
   static_cast<mojom::WindowTree*>(child_tree)
-      ->NewTopLevelWindow(initial_change_id, embed_window_id2_in_child.id,
+      ->NewTopLevelWindow(initial_change_id,
+                          FrameSinkIdToId(embed_window_id2_in_child),
                           properties);
 
   // The binding should be paused until the wm acks the change.
@@ -794,7 +794,7 @@ TEST_F(WindowTreeTest, NewTopLevelWindow) {
   EXPECT_TRUE(child_binding->is_paused());
 
   // Create the window for |embed_window_id2_in_child|.
-  const ClientWindowId embed_window_id2 = BuildClientWindowId(wm_tree(), 2);
+  const viz::FrameSinkId embed_window_id2 = BuildFrameSinkId(wm_tree(), 2);
   EXPECT_TRUE(
       wm_tree()->NewWindow(embed_window_id2, ServerWindow::Properties()));
   EXPECT_TRUE(wm_tree()->SetWindowVisibility(embed_window_id2, true));
@@ -803,42 +803,40 @@ TEST_F(WindowTreeTest, NewTopLevelWindow) {
   // Ack the change, which should resume the binding.
   child_binding->client()->tracker()->changes()->clear();
   static_cast<mojom::WindowManagerClient*>(wm_tree())
-      ->OnWmCreatedTopLevelWindow(wm_change_id, embed_window_id2.id);
+      ->OnWmCreatedTopLevelWindow(wm_change_id,
+                                  FrameSinkIdToId(embed_window_id2));
 
-  ServerWindow* embed_window = wm_tree()->GetWindowByClientId(embed_window_id2);
+  ServerWindow* embed_window =
+      wm_tree()->GetWindowByFrameSinkId(embed_window_id2);
   ASSERT_TRUE(embed_window);
   ASSERT_EQ(1u, wm_client()->tracker()->changes()->size())
       << SingleChangeToDescription(*wm_client()->tracker()->changes());
-  // The window manager should be told about the FrameSinkId of the embedded
-  // window.
-  EXPECT_EQ(base::StringPrintf(
-                "OnFrameSinkIdAllocated window=%s %s",
-                WindowIdToString(WindowIdFromTransportId(embed_window_id2.id))
-                    .c_str(),
-                embed_window->frame_sink_id().ToString().c_str()),
-            SingleChangeToDescription(*wm_client()->tracker()->changes()));
+  // The window manager should be told about the FrameSinkId of the
+  // embedded window.
+  EXPECT_EQ(
+      base::StringPrintf("OnFrameSinkIdAllocated window=%s %s",
+                         FrameSinkIdToString(embed_window_id2).c_str(),
+                         embed_window->frame_sink_id().ToString().c_str()),
+      SingleChangeToDescription(*wm_client()->tracker()->changes()));
   EXPECT_FALSE(child_binding->is_paused());
   // TODO(fsamuel): Currently the FrameSinkId maps directly to the server's
   // window ID. This is likely bad from a security perspective and should be
   // fixed.
-  EXPECT_EQ(
-      base::StringPrintf("TopLevelCreated id=17 window_id=%s drawn=true",
-                         WindowIdToString(WindowIdFromTransportId(
-                                              embed_window_id2_in_child.id))
-                             .c_str()),
-      SingleChangeToDescription(
-          *child_binding->client()->tracker()->changes()));
+  EXPECT_EQ(base::StringPrintf(
+                "TopLevelCreated id=17 window_id=%s drawn=true",
+                FrameSinkIdToString(embed_window_id2_in_child).c_str()),
+            SingleChangeToDescription(
+                *child_binding->client()->tracker()->changes()));
   child_binding->client()->tracker()->changes()->clear();
 
   // Change the visibility of the window from the owner and make sure the
   // client sees the right id.
   EXPECT_TRUE(embed_window->visible());
   ASSERT_TRUE(wm_tree()->SetWindowVisibility(
-      ClientWindowIdForWindow(wm_tree(), embed_window), false));
+      FrameSinkIdForWindow(wm_tree(), embed_window), false));
   EXPECT_FALSE(embed_window->visible());
   EXPECT_EQ("VisibilityChanged window=" +
-                WindowIdToString(
-                    WindowIdFromTransportId(embed_window_id2_in_child.id)) +
+                FrameSinkIdToString(embed_window_id2_in_child) +
                 " visible=false",
             SingleChangeToDescription(
                 *child_binding->client()->tracker()->changes()));
@@ -855,7 +853,7 @@ TEST_F(WindowTreeTest, ExplicitSetCapture) {
   ServerWindow* window = nullptr;
   EXPECT_NO_FATAL_FAILURE(SetupEventTargeting(&embed_client, &tree, &window));
   const ServerWindow* root_window = *tree->roots().begin();
-  tree->AddWindow(FirstRootId(tree), ClientWindowIdForWindow(tree, window));
+  tree->AddWindow(FirstRootId(tree), FrameSinkIdForWindow(tree, window));
   window->SetBounds(gfx::Rect(0, 0, 100, 100));
   ASSERT_TRUE(tree->GetDisplay(window));
 
@@ -882,13 +880,13 @@ TEST_F(WindowTreeTest, CaptureWindowMustBeVisible) {
   WindowTree* tree = nullptr;
   ServerWindow* window = nullptr;
   EXPECT_NO_FATAL_FAILURE(SetupEventTargeting(&embed_client, &tree, &window));
-  tree->AddWindow(FirstRootId(tree), ClientWindowIdForWindow(tree, window));
+  tree->AddWindow(FirstRootId(tree), FrameSinkIdForWindow(tree, window));
   window->SetBounds(gfx::Rect(0, 0, 100, 100));
   ASSERT_TRUE(tree->GetDisplay(window));
 
   DispatchEventWithoutAck(CreatePointerDownEvent(10, 10));
   window->SetVisible(false);
-  EXPECT_FALSE(tree->SetCapture(ClientWindowIdForWindow(tree, window)));
+  EXPECT_FALSE(tree->SetCapture(FrameSinkIdForWindow(tree, window)));
   EXPECT_NE(window, GetCaptureWindow(tree->GetDisplay(window)));
 }
 
@@ -902,23 +900,23 @@ TEST_F(WindowTreeTest, ShowModalWindowWithDescendantCapture) {
 
   w1->SetBounds(gfx::Rect(10, 10, 30, 30));
   const ServerWindow* root_window = *tree->roots().begin();
-  ClientWindowId root_window_id = ClientWindowIdForWindow(tree, root_window);
-  ClientWindowId w1_id = ClientWindowIdForWindow(tree, w1);
+  viz::FrameSinkId root_window_id = FrameSinkIdForWindow(tree, root_window);
+  viz::FrameSinkId w1_id = FrameSinkIdForWindow(tree, w1);
   Display* display = tree->GetDisplay(w1);
 
   // Create |w11| as a child of |w1| and make it visible.
-  ClientWindowId w11_id = BuildClientWindowId(tree, 11);
+  viz::FrameSinkId w11_id = BuildFrameSinkId(tree, 11);
   ASSERT_TRUE(tree->NewWindow(w11_id, ServerWindow::Properties()));
-  ServerWindow* w11 = tree->GetWindowByClientId(w11_id);
+  ServerWindow* w11 = tree->GetWindowByFrameSinkId(w11_id);
   w11->SetBounds(gfx::Rect(10, 10, 10, 10));
   ASSERT_TRUE(tree->AddWindow(w1_id, w11_id));
   ASSERT_TRUE(tree->SetWindowVisibility(w11_id, true));
 
   // Create |w2| as a child of |root_window| and modal to |w1| and leave it
   // hidden.
-  ClientWindowId w2_id = BuildClientWindowId(tree, 2);
+  viz::FrameSinkId w2_id = BuildFrameSinkId(tree, 2);
   ASSERT_TRUE(tree->NewWindow(w2_id, ServerWindow::Properties()));
-  ServerWindow* w2 = tree->GetWindowByClientId(w2_id);
+  ServerWindow* w2 = tree->GetWindowByFrameSinkId(w2_id);
   w2->SetBounds(gfx::Rect(50, 10, 10, 10));
   ASSERT_TRUE(tree->AddWindow(root_window_id, w2_id));
   ASSERT_TRUE(tree->AddTransientWindow(w1_id, w2_id));
@@ -946,22 +944,22 @@ TEST_F(WindowTreeTest, VisibleWindowToModalWithDescendantCapture) {
 
   w1->SetBounds(gfx::Rect(10, 10, 30, 30));
   const ServerWindow* root_window = *tree->roots().begin();
-  ClientWindowId root_window_id = ClientWindowIdForWindow(tree, root_window);
-  ClientWindowId w1_id = ClientWindowIdForWindow(tree, w1);
+  viz::FrameSinkId root_window_id = FrameSinkIdForWindow(tree, root_window);
+  viz::FrameSinkId w1_id = FrameSinkIdForWindow(tree, w1);
   Display* display = tree->GetDisplay(w1);
 
   // Create |w11| as a child of |w1| and make it visible.
-  ClientWindowId w11_id = BuildClientWindowId(tree, 11);
+  viz::FrameSinkId w11_id = BuildFrameSinkId(tree, 11);
   ASSERT_TRUE(tree->NewWindow(w11_id, ServerWindow::Properties()));
-  ServerWindow* w11 = tree->GetWindowByClientId(w11_id);
+  ServerWindow* w11 = tree->GetWindowByFrameSinkId(w11_id);
   w11->SetBounds(gfx::Rect(10, 10, 10, 10));
   ASSERT_TRUE(tree->AddWindow(w1_id, w11_id));
   ASSERT_TRUE(tree->SetWindowVisibility(w11_id, true));
 
   // Create |w2| as a child of |root_window| and make it visible.
-  ClientWindowId w2_id = BuildClientWindowId(tree, 2);
+  viz::FrameSinkId w2_id = BuildFrameSinkId(tree, 2);
   ASSERT_TRUE(tree->NewWindow(w2_id, ServerWindow::Properties()));
-  ServerWindow* w2 = tree->GetWindowByClientId(w2_id);
+  ServerWindow* w2 = tree->GetWindowByFrameSinkId(w2_id);
   w2->SetBounds(gfx::Rect(50, 10, 10, 10));
   ASSERT_TRUE(tree->AddWindow(root_window_id, w2_id));
   ASSERT_TRUE(tree->SetWindowVisibility(w2_id, true));
@@ -989,24 +987,24 @@ TEST_F(WindowTreeTest, ShowModalWindowWithNonDescendantCapture) {
 
   w1->SetBounds(gfx::Rect(10, 10, 30, 30));
   const ServerWindow* root_window = *tree->roots().begin();
-  ClientWindowId root_window_id = ClientWindowIdForWindow(tree, root_window);
-  ClientWindowId w1_id = ClientWindowIdForWindow(tree, w1);
+  viz::FrameSinkId root_window_id = FrameSinkIdForWindow(tree, root_window);
+  viz::FrameSinkId w1_id = FrameSinkIdForWindow(tree, w1);
   Display* display = tree->GetDisplay(w1);
 
   // Create |w2| as a child of |root_window| and modal to |w1| and leave it
   // hidden.
-  ClientWindowId w2_id = BuildClientWindowId(tree, 2);
+  viz::FrameSinkId w2_id = BuildFrameSinkId(tree, 2);
   ASSERT_TRUE(tree->NewWindow(w2_id, ServerWindow::Properties()));
-  ServerWindow* w2 = tree->GetWindowByClientId(w2_id);
+  ServerWindow* w2 = tree->GetWindowByFrameSinkId(w2_id);
   w2->SetBounds(gfx::Rect(50, 10, 10, 10));
   ASSERT_TRUE(tree->AddWindow(root_window_id, w2_id));
   ASSERT_TRUE(tree->AddTransientWindow(w1_id, w2_id));
   ASSERT_TRUE(tree->SetModalType(w2_id, MODAL_TYPE_WINDOW));
 
   // Create |w3| as a child of |root_window| and make it visible.
-  ClientWindowId w3_id = BuildClientWindowId(tree, 3);
+  viz::FrameSinkId w3_id = BuildFrameSinkId(tree, 3);
   ASSERT_TRUE(tree->NewWindow(w3_id, ServerWindow::Properties()));
-  ServerWindow* w3 = tree->GetWindowByClientId(w3_id);
+  ServerWindow* w3 = tree->GetWindowByFrameSinkId(w3_id);
   w3->SetBounds(gfx::Rect(70, 10, 10, 10));
   ASSERT_TRUE(tree->AddWindow(root_window_id, w3_id));
   ASSERT_TRUE(tree->SetWindowVisibility(w3_id, true));
@@ -1033,21 +1031,21 @@ TEST_F(WindowTreeTest, VisibleWindowToModalWithNonDescendantCapture) {
 
   w1->SetBounds(gfx::Rect(10, 10, 30, 30));
   const ServerWindow* root_window = *tree->roots().begin();
-  ClientWindowId root_window_id = ClientWindowIdForWindow(tree, root_window);
-  ClientWindowId w1_id = ClientWindowIdForWindow(tree, w1);
+  viz::FrameSinkId root_window_id = FrameSinkIdForWindow(tree, root_window);
+  viz::FrameSinkId w1_id = FrameSinkIdForWindow(tree, w1);
   Display* display = tree->GetDisplay(w1);
 
   // Create |w2| and |w3| as children of |root_window| and make them visible.
-  ClientWindowId w2_id = BuildClientWindowId(tree, 2);
+  viz::FrameSinkId w2_id = BuildFrameSinkId(tree, 2);
   ASSERT_TRUE(tree->NewWindow(w2_id, ServerWindow::Properties()));
-  ServerWindow* w2 = tree->GetWindowByClientId(w2_id);
+  ServerWindow* w2 = tree->GetWindowByFrameSinkId(w2_id);
   w2->SetBounds(gfx::Rect(50, 10, 10, 10));
   ASSERT_TRUE(tree->AddWindow(root_window_id, w2_id));
   ASSERT_TRUE(tree->SetWindowVisibility(w2_id, true));
 
-  ClientWindowId w3_id = BuildClientWindowId(tree, 3);
+  viz::FrameSinkId w3_id = BuildFrameSinkId(tree, 3);
   ASSERT_TRUE(tree->NewWindow(w3_id, ServerWindow::Properties()));
-  ServerWindow* w3 = tree->GetWindowByClientId(w3_id);
+  ServerWindow* w3 = tree->GetWindowByFrameSinkId(w3_id);
   w3->SetBounds(gfx::Rect(70, 10, 10, 10));
   ASSERT_TRUE(tree->AddWindow(root_window_id, w3_id));
   ASSERT_TRUE(tree->SetWindowVisibility(w3_id, true));
@@ -1074,15 +1072,15 @@ TEST_F(WindowTreeTest, ShowSystemModalWindowWithCapture) {
 
   w1->SetBounds(gfx::Rect(10, 10, 10, 10));
   const ServerWindow* root_window = *tree->roots().begin();
-  ClientWindowId root_window_id = ClientWindowIdForWindow(tree, root_window);
-  ClientWindowId w1_id = ClientWindowIdForWindow(tree, w1);
+  viz::FrameSinkId root_window_id = FrameSinkIdForWindow(tree, root_window);
+  viz::FrameSinkId w1_id = FrameSinkIdForWindow(tree, w1);
   Display* display = tree->GetDisplay(w1);
 
   // Create a system modal window |w2| as a child of |root_window| and leave it
   // hidden.
-  ClientWindowId w2_id = BuildClientWindowId(tree, 2);
+  viz::FrameSinkId w2_id = BuildFrameSinkId(tree, 2);
   ASSERT_TRUE(tree->NewWindow(w2_id, ServerWindow::Properties()));
-  ServerWindow* w2 = tree->GetWindowByClientId(w2_id);
+  ServerWindow* w2 = tree->GetWindowByFrameSinkId(w2_id);
   w2->SetBounds(gfx::Rect(30, 10, 10, 10));
   ASSERT_TRUE(tree->AddWindow(root_window_id, w2_id));
   ASSERT_TRUE(tree->SetModalType(w2_id, MODAL_TYPE_SYSTEM));
@@ -1108,14 +1106,14 @@ TEST_F(WindowTreeTest, VisibleWindowToSystemModalWithCapture) {
 
   w1->SetBounds(gfx::Rect(10, 10, 10, 10));
   const ServerWindow* root_window = *tree->roots().begin();
-  ClientWindowId root_window_id = ClientWindowIdForWindow(tree, root_window);
-  ClientWindowId w1_id = ClientWindowIdForWindow(tree, w1);
+  viz::FrameSinkId root_window_id = FrameSinkIdForWindow(tree, root_window);
+  viz::FrameSinkId w1_id = FrameSinkIdForWindow(tree, w1);
   Display* display = tree->GetDisplay(w1);
 
   // Create |w2| as a child of |root_window| and make it visible.
-  ClientWindowId w2_id = BuildClientWindowId(tree, 2);
+  viz::FrameSinkId w2_id = BuildFrameSinkId(tree, 2);
   ASSERT_TRUE(tree->NewWindow(w2_id, ServerWindow::Properties()));
-  ServerWindow* w2 = tree->GetWindowByClientId(w2_id);
+  ServerWindow* w2 = tree->GetWindowByFrameSinkId(w2_id);
   w2->SetBounds(gfx::Rect(30, 10, 10, 10));
   ASSERT_TRUE(tree->AddWindow(root_window_id, w2_id));
   ASSERT_TRUE(tree->SetWindowVisibility(w2_id, true));
@@ -1141,21 +1139,21 @@ TEST_F(WindowTreeTest, MoveCaptureWindowToModalParent) {
 
   w1->SetBounds(gfx::Rect(10, 10, 30, 30));
   ServerWindow* root_window = FirstRoot(tree);
-  ClientWindowId root_window_id = ClientWindowIdForWindow(tree, root_window);
-  ClientWindowId w1_id = ClientWindowIdForWindow(tree, w1);
+  viz::FrameSinkId root_window_id = FrameSinkIdForWindow(tree, root_window);
+  viz::FrameSinkId w1_id = FrameSinkIdForWindow(tree, w1);
   Display* display = tree->GetDisplay(w1);
 
   // Create |w2| and |w3| as children of |root_window| and make them visible.
-  ClientWindowId w2_id = BuildClientWindowId(tree, 2);
+  viz::FrameSinkId w2_id = BuildFrameSinkId(tree, 2);
   ASSERT_TRUE(tree->NewWindow(w2_id, ServerWindow::Properties()));
-  ServerWindow* w2 = tree->GetWindowByClientId(w2_id);
+  ServerWindow* w2 = tree->GetWindowByFrameSinkId(w2_id);
   w2->SetBounds(gfx::Rect(50, 10, 10, 10));
   ASSERT_TRUE(tree->AddWindow(root_window_id, w2_id));
   ASSERT_TRUE(tree->SetWindowVisibility(w2_id, true));
 
-  ClientWindowId w3_id = BuildClientWindowId(tree, 3);
+  viz::FrameSinkId w3_id = BuildFrameSinkId(tree, 3);
   ASSERT_TRUE(tree->NewWindow(w3_id, ServerWindow::Properties()));
-  ServerWindow* w3 = tree->GetWindowByClientId(w3_id);
+  ServerWindow* w3 = tree->GetWindowByFrameSinkId(w3_id);
   w3->SetBounds(gfx::Rect(70, 10, 10, 10));
   ASSERT_TRUE(tree->AddWindow(root_window_id, w3_id));
   ASSERT_TRUE(tree->SetWindowVisibility(w3_id, true));
@@ -1185,13 +1183,13 @@ TEST_F(WindowTreeTest, SetOpacity) {
 
   const float new_opacity = 0.5f;
   EXPECT_NE(new_opacity, window->opacity());
-  ASSERT_TRUE(tree->SetWindowOpacity(ClientWindowIdForWindow(tree, window),
-                                     new_opacity));
+  ASSERT_TRUE(
+      tree->SetWindowOpacity(FrameSinkIdForWindow(tree, window), new_opacity));
   EXPECT_EQ(new_opacity, window->opacity());
 
   // Re-applying the same opacity will succeed.
-  EXPECT_TRUE(tree->SetWindowOpacity(ClientWindowIdForWindow(tree, window),
-                                     new_opacity));
+  EXPECT_TRUE(
+      tree->SetWindowOpacity(FrameSinkIdForWindow(tree, window), new_opacity));
 }
 
 // Tests that opacity requests for unknown windows are rejected.
@@ -1203,12 +1201,14 @@ TEST_F(WindowTreeTest, SetOpacityFailsOnUnknownWindow) {
 
   TestServerWindowDelegate delegate;
   WindowId window_id(42, 1337);
-  ServerWindow unknown_window(&delegate, window_id);
+  viz::FrameSinkId frame_sink_id(42, 1337);
+  ServerWindow unknown_window(&delegate, window_id, frame_sink_id);
   const float new_opacity = 0.5f;
   ASSERT_NE(new_opacity, unknown_window.opacity());
 
   EXPECT_FALSE(tree->SetWindowOpacity(
-      ClientWindowId(WindowIdToTransportId(window_id)), new_opacity));
+      FrameSinkIdFromTransportId(WindowIdToTransportId(window_id)),
+      new_opacity));
   EXPECT_NE(new_opacity, unknown_window.opacity());
 }
 
@@ -1220,7 +1220,7 @@ TEST_F(WindowTreeTest, SetCaptureTargetsRightConnection) {
   WindowTree* embed_tree = window_server()->GetTreeWithRoot(window);
   ASSERT_NE(owning_tree, embed_tree);
   ASSERT_TRUE(
-      owning_tree->SetCapture(ClientWindowIdForWindow(owning_tree, window)));
+      owning_tree->SetCapture(FrameSinkIdForWindow(owning_tree, window)));
   DispatchEventWithoutAck(CreateMouseMoveEvent(21, 22));
   WindowManagerStateTestApi wm_state_test_api(
       display()->GetActiveWindowManagerDisplayRoot()->window_manager_state());
@@ -1228,8 +1228,7 @@ TEST_F(WindowTreeTest, SetCaptureTargetsRightConnection) {
   AckPreviousEvent();
 
   // Set capture from the embedded client and make sure it gets the event.
-  ASSERT_TRUE(
-      embed_tree->SetCapture(ClientWindowIdForWindow(embed_tree, window)));
+  ASSERT_TRUE(embed_tree->SetCapture(FrameSinkIdForWindow(embed_tree, window)));
   DispatchEventWithoutAck(CreateMouseMoveEvent(22, 23));
   EXPECT_EQ(embed_tree, wm_state_test_api.tree_awaiting_input_ack());
 }
@@ -1247,9 +1246,10 @@ TEST_F(WindowTreeTest, ValidMoveLoopWithWM) {
   std::unordered_map<std::string, std::vector<uint8_t>> properties;
   const uint32_t initial_change_id = 17;
   // Explicitly use an id that does not contain the client id.
-  const ClientWindowId embed_window_id2_in_child(45 << 16 | 27);
+  const viz::FrameSinkId embed_window_id2_in_child(45, 27);
   static_cast<mojom::WindowTree*>(child_tree)
-      ->NewTopLevelWindow(initial_change_id, embed_window_id2_in_child.id,
+      ->NewTopLevelWindow(initial_change_id,
+                          FrameSinkIdToId(embed_window_id2_in_child),
                           properties);
 
   // The binding should be paused until the wm acks the change.
@@ -1258,7 +1258,7 @@ TEST_F(WindowTreeTest, ValidMoveLoopWithWM) {
   EXPECT_TRUE(child_binding->is_paused());
 
   // Create the window for |embed_window_id2_in_child|.
-  const ClientWindowId embed_window_id2 = BuildClientWindowId(wm_tree(), 2);
+  const viz::FrameSinkId embed_window_id2 = BuildFrameSinkId(wm_tree(), 2);
   EXPECT_TRUE(
       wm_tree()->NewWindow(embed_window_id2, ServerWindow::Properties()));
   EXPECT_TRUE(wm_tree()->SetWindowVisibility(embed_window_id2, true));
@@ -1267,13 +1267,14 @@ TEST_F(WindowTreeTest, ValidMoveLoopWithWM) {
   // Ack the change, which should resume the binding.
   child_binding->client()->tracker()->changes()->clear();
   static_cast<mojom::WindowManagerClient*>(wm_tree())
-      ->OnWmCreatedTopLevelWindow(wm_change_id, embed_window_id2.id);
+      ->OnWmCreatedTopLevelWindow(wm_change_id,
+                                  FrameSinkIdToId(embed_window_id2));
   EXPECT_FALSE(child_binding->is_paused());
 
   // The child_tree is the one that has to make this call; the
   const uint32_t change_id = 7;
   static_cast<mojom::WindowTree*>(child_tree)
-      ->PerformWindowMove(change_id, embed_window_id2_in_child.id,
+      ->PerformWindowMove(change_id, FrameSinkIdToId(embed_window_id2_in_child),
                           mojom::MoveLoopSource::MOUSE, gfx::Point(0, 0));
 
   EXPECT_TRUE(wm_internal.on_perform_move_loop_called());
@@ -1292,9 +1293,10 @@ TEST_F(WindowTreeTest, MoveLoopAckOKByWM) {
   std::unordered_map<std::string, std::vector<uint8_t>> properties;
   const uint32_t initial_change_id = 17;
   // Explicitly use an id that does not contain the client id.
-  const ClientWindowId embed_window_id2_in_child(45 << 16 | 27);
+  const viz::FrameSinkId embed_window_id2_in_child(45, 27);
   static_cast<mojom::WindowTree*>(child_tree)
-      ->NewTopLevelWindow(initial_change_id, embed_window_id2_in_child.id,
+      ->NewTopLevelWindow(initial_change_id,
+                          FrameSinkIdToId(embed_window_id2_in_child),
                           properties);
 
   // The binding should be paused until the wm acks the change.
@@ -1303,7 +1305,7 @@ TEST_F(WindowTreeTest, MoveLoopAckOKByWM) {
   EXPECT_TRUE(child_binding->is_paused());
 
   // Create the window for |embed_window_id2_in_child|.
-  const ClientWindowId embed_window_id2 = BuildClientWindowId(wm_tree(), 2);
+  const viz::FrameSinkId embed_window_id2 = BuildFrameSinkId(wm_tree(), 2);
   EXPECT_TRUE(
       wm_tree()->NewWindow(embed_window_id2, ServerWindow::Properties()));
   EXPECT_TRUE(wm_tree()->SetWindowVisibility(embed_window_id2, true));
@@ -1312,14 +1314,15 @@ TEST_F(WindowTreeTest, MoveLoopAckOKByWM) {
   // Ack the change, which should resume the binding.
   child_binding->client()->tracker()->changes()->clear();
   static_cast<mojom::WindowManagerClient*>(wm_tree())
-      ->OnWmCreatedTopLevelWindow(wm_change_id, embed_window_id2.id);
+      ->OnWmCreatedTopLevelWindow(wm_change_id,
+                                  FrameSinkIdToId(embed_window_id2));
   EXPECT_FALSE(child_binding->is_paused());
 
   // The child_tree is the one that has to make this call; the
   const uint32_t change_id = 7;
   child_binding->client()->tracker()->changes()->clear();
   static_cast<mojom::WindowTree*>(child_tree)
-      ->PerformWindowMove(change_id, embed_window_id2_in_child.id,
+      ->PerformWindowMove(change_id, FrameSinkIdToId(embed_window_id2_in_child),
                           mojom::MoveLoopSource::MOUSE, gfx::Point(0, 0));
 
   // There should be three changes, the first two relating to capture changing,
@@ -1347,9 +1350,10 @@ TEST_F(WindowTreeTest, WindowManagerCantMoveLoop) {
   std::unordered_map<std::string, std::vector<uint8_t>> properties;
   const uint32_t initial_change_id = 17;
   // Explicitly use an id that does not contain the client id.
-  const ClientWindowId embed_window_id2_in_child(45 << 16 | 27);
+  const viz::FrameSinkId embed_window_id2_in_child(45, 27);
   static_cast<mojom::WindowTree*>(child_tree)
-      ->NewTopLevelWindow(initial_change_id, embed_window_id2_in_child.id,
+      ->NewTopLevelWindow(initial_change_id,
+                          FrameSinkIdToId(embed_window_id2_in_child),
                           properties);
 
   // The binding should be paused until the wm acks the change.
@@ -1358,7 +1362,7 @@ TEST_F(WindowTreeTest, WindowManagerCantMoveLoop) {
   EXPECT_TRUE(child_binding->is_paused());
 
   // Create the window for |embed_window_id2_in_child|.
-  const ClientWindowId embed_window_id2 = BuildClientWindowId(wm_tree(), 2);
+  const viz::FrameSinkId embed_window_id2 = BuildFrameSinkId(wm_tree(), 2);
   EXPECT_TRUE(
       wm_tree()->NewWindow(embed_window_id2, ServerWindow::Properties()));
   EXPECT_TRUE(wm_tree()->SetWindowVisibility(embed_window_id2, true));
@@ -1367,14 +1371,15 @@ TEST_F(WindowTreeTest, WindowManagerCantMoveLoop) {
   // Ack the change, which should resume the binding.
   child_binding->client()->tracker()->changes()->clear();
   static_cast<mojom::WindowManagerClient*>(wm_tree())
-      ->OnWmCreatedTopLevelWindow(wm_change_id, embed_window_id2.id);
+      ->OnWmCreatedTopLevelWindow(wm_change_id,
+                                  FrameSinkIdToId(embed_window_id2));
   EXPECT_FALSE(child_binding->is_paused());
 
   // Making this call from the wm_tree() must be invalid.
   const uint32_t change_id = 7;
   static_cast<mojom::WindowTree*>(wm_tree())->PerformWindowMove(
-      change_id, embed_window_id2.id, mojom::MoveLoopSource::MOUSE,
-      gfx::Point(0, 0));
+      change_id, FrameSinkIdToId(embed_window_id2),
+      mojom::MoveLoopSource::MOUSE, gfx::Point(0, 0));
 
   EXPECT_FALSE(wm_internal.on_perform_move_loop_called());
 }
@@ -1392,9 +1397,10 @@ TEST_F(WindowTreeTest, RevertWindowBoundsOnMoveLoopFailure) {
   std::unordered_map<std::string, std::vector<uint8_t>> properties;
   const uint32_t initial_change_id = 17;
   // Explicitly use an id that does not contain the client id.
-  const ClientWindowId embed_window_id2_in_child(45 << 16 | 27);
+  const viz::FrameSinkId embed_window_id2_in_child(45, 27);
   static_cast<mojom::WindowTree*>(child_tree)
-      ->NewTopLevelWindow(initial_change_id, embed_window_id2_in_child.id,
+      ->NewTopLevelWindow(initial_change_id,
+                          FrameSinkIdToId(embed_window_id2_in_child),
                           properties);
 
   // The binding should be paused until the wm acks the change.
@@ -1403,7 +1409,7 @@ TEST_F(WindowTreeTest, RevertWindowBoundsOnMoveLoopFailure) {
   EXPECT_TRUE(child_binding->is_paused());
 
   // Create the window for |embed_window_id2_in_child|.
-  const ClientWindowId embed_window_id2 = BuildClientWindowId(wm_tree(), 2);
+  const viz::FrameSinkId embed_window_id2 = BuildFrameSinkId(wm_tree(), 2);
   EXPECT_TRUE(
       wm_tree()->NewWindow(embed_window_id2, ServerWindow::Properties()));
   EXPECT_TRUE(wm_tree()->SetWindowVisibility(embed_window_id2, true));
@@ -1412,17 +1418,18 @@ TEST_F(WindowTreeTest, RevertWindowBoundsOnMoveLoopFailure) {
   // Ack the change, which should resume the binding.
   child_binding->client()->tracker()->changes()->clear();
   static_cast<mojom::WindowManagerClient*>(wm_tree())
-      ->OnWmCreatedTopLevelWindow(wm_change_id, embed_window_id2.id);
+      ->OnWmCreatedTopLevelWindow(wm_change_id,
+                                  FrameSinkIdToId(embed_window_id2));
   EXPECT_FALSE(child_binding->is_paused());
 
   // The child_tree is the one that has to make this call; the
   const uint32_t change_id = 7;
   static_cast<mojom::WindowTree*>(child_tree)
-      ->PerformWindowMove(change_id, embed_window_id2_in_child.id,
+      ->PerformWindowMove(change_id, FrameSinkIdToId(embed_window_id2_in_child),
                           mojom::MoveLoopSource::MOUSE, gfx::Point(0, 0));
 
   ServerWindow* server_window =
-      wm_tree()->GetWindowByClientId(embed_window_id2);
+      wm_tree()->GetWindowByFrameSinkId(embed_window_id2);
   gfx::Rect old_bounds = server_window->bounds();
   server_window->SetBounds(gfx::Rect(10, 10, 20, 20));
 
@@ -1464,7 +1471,7 @@ TEST_F(WindowTreeTest, SetCanAcceptEvents) {
   EXPECT_EQ(mojom::EventTargetingPolicy::TARGET_AND_DESCENDANTS,
             window->event_targeting_policy());
   WindowTreeTestApi(tree).SetEventTargetingPolicy(
-      ClientWindowIdForWindow(tree, window).id,
+      FrameSinkIdToId(FrameSinkIdForWindow(tree, window)),
       mojom::EventTargetingPolicy::NONE);
   EXPECT_EQ(mojom::EventTargetingPolicy::NONE,
             window->event_targeting_policy());
@@ -1480,8 +1487,8 @@ TEST_F(WindowTreeTest, CaptureNotifiesWm) {
   WindowTree* embed_tree = window_server()->GetTreeWithRoot(window);
   ASSERT_NE(owning_tree, embed_tree);
 
-  const ClientWindowId embed_child_window_id =
-      BuildClientWindowId(embed_tree, 2);
+  const viz::FrameSinkId embed_child_window_id =
+      BuildFrameSinkId(embed_tree, 2);
   ASSERT_TRUE(
       embed_tree->NewWindow(embed_child_window_id, ServerWindow::Properties()));
   EXPECT_TRUE(embed_tree->SetWindowVisibility(embed_child_window_id, true));
@@ -1506,7 +1513,7 @@ TEST_F(WindowTreeTest, CaptureNotifiesWm) {
 
   // Set capture from server and ensure embedded tree notified.
   EXPECT_TRUE(owning_tree->ReleaseCapture(
-      ClientWindowIdForWindow(owning_tree, FirstRoot(embed_tree))));
+      FrameSinkIdForWindow(owning_tree, FirstRoot(embed_tree))));
   EXPECT_TRUE(wm_client()->tracker()->changes()->empty());
   ASSERT_TRUE(!embed_client->tracker()->changes()->empty());
   EXPECT_EQ("OnCaptureChanged new_window=null old_window=1,1",
@@ -1524,13 +1531,14 @@ TEST_F(WindowTreeTest, SetModalTypeForwardedToWindowManager) {
   std::unordered_map<std::string, std::vector<uint8_t>> properties;
   const uint32_t initial_change_id = 17;
   // Explicitly use an id that does not contain the client id.
-  const ClientWindowId embed_window_id2_in_child(45 << 16 | 27);
+  const viz::FrameSinkId embed_window_id2_in_child(45, 27);
   static_cast<mojom::WindowTree*>(child_tree)
-      ->NewTopLevelWindow(initial_change_id, embed_window_id2_in_child.id,
+      ->NewTopLevelWindow(initial_change_id,
+                          FrameSinkIdToId(embed_window_id2_in_child),
                           properties);
 
   // Create the window for |embed_window_id2_in_child|.
-  const ClientWindowId embed_window_id2 = BuildClientWindowId(wm_tree(), 2);
+  const viz::FrameSinkId embed_window_id2 = BuildFrameSinkId(wm_tree(), 2);
   EXPECT_TRUE(
       wm_tree()->NewWindow(embed_window_id2, ServerWindow::Properties()));
   EXPECT_TRUE(wm_tree()->SetWindowVisibility(embed_window_id2, true));
@@ -1538,7 +1546,7 @@ TEST_F(WindowTreeTest, SetModalTypeForwardedToWindowManager) {
 
   // Ack the change, which should resume the binding.
   static_cast<mojom::WindowManagerClient*>(wm_tree())
-      ->OnWmCreatedTopLevelWindow(0u, embed_window_id2.id);
+      ->OnWmCreatedTopLevelWindow(0u, FrameSinkIdToId(embed_window_id2));
 
   // Change modal type to MODAL_TYPE_SYSTEM and check that it is forwarded to
   // the window manager.
@@ -1547,14 +1555,15 @@ TEST_F(WindowTreeTest, SetModalTypeForwardedToWindowManager) {
 }
 
 TEST_F(WindowTreeTest, TestWindowManagerSettingCursorLocation) {
-  const ClientWindowId embed_window_id = BuildClientWindowId(wm_tree(), 1);
+  const viz::FrameSinkId embed_window_id = BuildFrameSinkId(wm_tree(), 1);
   EXPECT_TRUE(
       wm_tree()->NewWindow(embed_window_id, ServerWindow::Properties()));
-  ServerWindow* embed_window = wm_tree()->GetWindowByClientId(embed_window_id);
+  ServerWindow* embed_window =
+      wm_tree()->GetWindowByFrameSinkId(embed_window_id);
   ASSERT_TRUE(embed_window);
   EXPECT_TRUE(wm_tree()->SetWindowVisibility(embed_window_id, true));
   ASSERT_TRUE(FirstRoot(wm_tree()));
-  const ClientWindowId wm_root_id = FirstRootId(wm_tree());
+  const viz::FrameSinkId wm_root_id = FirstRootId(wm_tree());
   EXPECT_TRUE(wm_tree()->AddWindow(wm_root_id, embed_window_id));
   ServerWindow* wm_root = FirstRoot(wm_tree());
   ASSERT_TRUE(wm_root);
@@ -1605,7 +1614,7 @@ TEST_F(WindowTreeShutdownTest, DontSendMessagesDuringShutdown) {
         ws_test_helper.window_server_delegate()->last_binding();
     ASSERT_TRUE(test_binding);
     WindowTree* tree = test_binding->tree();
-    const ClientWindowId window_id = BuildClientWindowId(tree, 2);
+    const viz::FrameSinkId window_id = BuildFrameSinkId(tree, 2);
     ASSERT_TRUE(tree->NewWindow(window_id, ServerWindow::Properties()));
 
     // Release the client so that it survices shutdown.
@@ -1663,11 +1672,11 @@ TEST_F(WindowTreeManualDisplayTest, ClientCreatesDisplayRoot) {
   EXPECT_EQ(0, test_window_manager->display_added_count());
 
   // Create a window for the windowmanager and set it as the root.
-  ClientWindowId display_root_id = BuildClientWindowId(window_manager_tree, 10);
+  viz::FrameSinkId display_root_id = BuildFrameSinkId(window_manager_tree, 10);
   ASSERT_TRUE(window_manager_tree->NewWindow(display_root_id,
                                              ServerWindow::Properties()));
   ServerWindow* display_root =
-      window_manager_tree->GetWindowByClientId(display_root_id);
+      window_manager_tree->GetWindowByFrameSinkId(display_root_id);
   ASSERT_TRUE(display_root);
   display::Display display1 = MakeDisplay(0, 0, 1024, 768, 1.0f);
   display1.set_id(101);
@@ -1713,11 +1722,11 @@ TEST_F(WindowTreeManualDisplayTest, MoveDisplayRootToNewDisplay) {
   EXPECT_EQ(0, test_window_manager->display_added_count());
 
   // Create a window for the windowmanager and set it as the root.
-  ClientWindowId display_root_id = BuildClientWindowId(window_manager_tree, 10);
+  viz::FrameSinkId display_root_id = BuildFrameSinkId(window_manager_tree, 10);
   ASSERT_TRUE(window_manager_tree->NewWindow(display_root_id,
                                              ServerWindow::Properties()));
   ServerWindow* display_root =
-      window_manager_tree->GetWindowByClientId(display_root_id);
+      window_manager_tree->GetWindowByFrameSinkId(display_root_id);
   ASSERT_TRUE(display_root);
   display::Display display1 = MakeDisplay(0, 0, 1024, 768, 1.0f);
   constexpr int64_t display1_id = 101;
@@ -1803,11 +1812,11 @@ TEST_F(WindowTreeManualDisplayTest,
   EXPECT_TRUE(display_manager_observer.GetAndClearObserverCalls().empty());
 
   // Create a window for the windowmanager and set it as the root.
-  ClientWindowId display_root_id = BuildClientWindowId(window_manager_tree, 10);
+  viz::FrameSinkId display_root_id = BuildFrameSinkId(window_manager_tree, 10);
   ASSERT_TRUE(window_manager_tree->NewWindow(display_root_id,
                                              ServerWindow::Properties()));
   ServerWindow* display_root =
-      window_manager_tree->GetWindowByClientId(display_root_id);
+      window_manager_tree->GetWindowByFrameSinkId(display_root_id);
   ASSERT_TRUE(display_root);
   RunUntilIdle();
   EXPECT_TRUE(display_manager_observer.GetAndClearObserverCalls().empty());
@@ -1851,12 +1860,11 @@ TEST_F(WindowTreeManualDisplayTest,
       static_cast<TestPlatformDisplay*>(platform_display1)->cursor_scale());
 
   // Create a window for the windowmanager and set it as the root.
-  ClientWindowId display_root_id2 =
-      BuildClientWindowId(window_manager_tree, 11);
+  viz::FrameSinkId display_root_id2 = BuildFrameSinkId(window_manager_tree, 11);
   ASSERT_TRUE(window_manager_tree->NewWindow(display_root_id2,
                                              ServerWindow::Properties()));
   ServerWindow* display_root2 =
-      window_manager_tree->GetWindowByClientId(display_root_id);
+      window_manager_tree->GetWindowByFrameSinkId(display_root_id);
   ASSERT_TRUE(display_root2);
   RunUntilIdle();
   EXPECT_TRUE(display_manager_observer.GetAndClearObserverCalls().empty());
@@ -1946,20 +1954,18 @@ TEST_F(WindowTreeManualDisplayTest, SwapDisplayRoots) {
       mojom::FrameDecorationValues::New());
 
   // Add two windows for the two displays.
-  ClientWindowId display_root_id1 =
-      BuildClientWindowId(window_manager_tree, 10);
+  viz::FrameSinkId display_root_id1 = BuildFrameSinkId(window_manager_tree, 10);
   ASSERT_TRUE(window_manager_tree->NewWindow(display_root_id1,
                                              ServerWindow::Properties()));
   ServerWindow* display_root1 =
-      window_manager_tree->GetWindowByClientId(display_root_id1);
+      window_manager_tree->GetWindowByFrameSinkId(display_root_id1);
   ASSERT_TRUE(display_root1);
 
-  ClientWindowId display_root_id2 =
-      BuildClientWindowId(window_manager_tree, 20);
+  viz::FrameSinkId display_root_id2 = BuildFrameSinkId(window_manager_tree, 20);
   ASSERT_TRUE(window_manager_tree->NewWindow(display_root_id2,
                                              ServerWindow::Properties()));
   ServerWindow* display_root2 =
-      window_manager_tree->GetWindowByClientId(display_root_id2);
+      window_manager_tree->GetWindowByFrameSinkId(display_root_id2);
   ASSERT_TRUE(display_root2);
   EXPECT_NE(display_root1, display_root2);
 

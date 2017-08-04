@@ -38,10 +38,10 @@ namespace {
 const UserId kTestId1 = "2";
 const UserId kTestId2 = "21";
 
-ClientWindowId ClientWindowIdForFirstRoot(WindowTree* tree) {
+viz::FrameSinkId FrameSinkIdForFirstRoot(WindowTree* tree) {
   if (tree->roots().empty())
-    return ClientWindowId();
-  return ClientWindowIdForWindow(tree, *tree->roots().begin());
+    return viz::FrameSinkId();
+  return FrameSinkIdForWindow(tree, *tree->roots().begin());
 }
 
 WindowManagerState* GetWindowManagerStateForUser(Display* display,
@@ -312,18 +312,18 @@ TEST_F(DisplayTest, SetCaptureFromWindowManager) {
 
   // Create a child of the root that we can set capture on.
   WindowTree* tree = wms_for_id2->window_tree();
-  ClientWindowId child_window_id;
-  ASSERT_TRUE(NewWindowInTree(tree, &child_window_id));
+  viz::FrameSinkId frame_sink_id;
+  ASSERT_TRUE(NewWindowInTree(tree, &frame_sink_id));
 
   WindowTreeTestApi(tree).EnableCapture();
 
   // SetCapture() should fail for user id2 as it is inactive.
-  EXPECT_FALSE(tree->SetCapture(child_window_id));
+  EXPECT_FALSE(tree->SetCapture(frame_sink_id));
 
   // Make the second user active and verify capture works.
   window_server()->user_id_tracker()->SetActiveUserId(kTestId2);
   EXPECT_TRUE(wms_for_id2->IsActive());
-  EXPECT_TRUE(tree->SetCapture(child_window_id));
+  EXPECT_TRUE(tree->SetCapture(frame_sink_id));
 }
 
 TEST_F(DisplayTest, FocusFailsForInactiveUser) {
@@ -339,10 +339,10 @@ TEST_F(DisplayTest, FocusFailsForInactiveUser) {
   WindowManagerState* wms_for_id2 =
       GetWindowManagerStateForUser(display, kTestId2);
   wms_for_id2->window_tree()->AddActivationParent(
-      ClientWindowIdForFirstRoot(wms_for_id2->window_tree()));
+      FrameSinkIdForFirstRoot(wms_for_id2->window_tree()));
   ASSERT_TRUE(wms_for_id2);
   EXPECT_FALSE(wms_for_id2->IsActive());
-  ClientWindowId child2_id;
+  viz::FrameSinkId child2_id;
   NewWindowInTree(wms_for_id2->window_tree(), &child2_id);
 
   // Focus should fail for windows in inactive window managers.
@@ -353,8 +353,8 @@ TEST_F(DisplayTest, FocusFailsForInactiveUser) {
       GetWindowManagerStateForUser(display, kTestId1);
   ASSERT_TRUE(wms_for_id1);
   wms_for_id1->window_tree()->AddActivationParent(
-      ClientWindowIdForFirstRoot(wms_for_id1->window_tree()));
-  ClientWindowId child1_id;
+      FrameSinkIdForFirstRoot(wms_for_id1->window_tree()));
+  viz::FrameSinkId child1_id;
   NewWindowInTree(wms_for_id1->window_tree(), &child1_id);
   EXPECT_TRUE(wms_for_id1->IsActive());
   EXPECT_TRUE(wms_for_id1->window_tree()->SetFocus(child1_id));
@@ -405,8 +405,8 @@ TEST_F(DisplayTest, DestroyingDisplayDoesntDelete) {
   ASSERT_TRUE(secondary_root);
   ServerWindowDestructionObserver observer(secondary_root,
                                            &secondary_root_destroyed);
-  ClientWindowId secondary_root_id =
-      ClientWindowIdForWindow(tree, secondary_root);
+  viz::FrameSinkId secondary_root_id =
+      FrameSinkIdForWindow(tree, secondary_root);
   TestWindowTreeClient* tree_client =
       static_cast<TestWindowTreeClient*>(tree->client());
   tree_client->tracker()->changes()->clear();
@@ -421,7 +421,7 @@ TEST_F(DisplayTest, DestroyingDisplayDoesntDelete) {
   EXPECT_EQ(secondary_display_id, test_window_manager->display_removed_id());
   EXPECT_FALSE(secondary_root_destroyed);
   // The window should still be valid on the server side.
-  ASSERT_TRUE(tree->GetWindowByClientId(secondary_root_id));
+  ASSERT_TRUE(tree->GetWindowByFrameSinkId(secondary_root_id));
   // No changes.
   ASSERT_EQ(0u, tree_client->tracker()->changes()->size());
 

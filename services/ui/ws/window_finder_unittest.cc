@@ -4,6 +4,7 @@
 
 #include "services/ui/ws/window_finder.h"
 
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "services/ui/ws/server_window.h"
 #include "services/ui/ws/server_window_compositor_frame_sink_manager.h"
 #include "services/ui/ws/test_server_window_delegate.h"
@@ -15,19 +16,19 @@ namespace ws {
 
 TEST(WindowFinderTest, FindDeepestVisibleWindow) {
   TestServerWindowDelegate window_delegate;
-  ServerWindow root(&window_delegate, WindowId(1, 2));
+  ServerWindow root(&window_delegate, WindowId(1, 2), viz::FrameSinkId(1, 2));
   root.set_event_targeting_policy(
       mojom::EventTargetingPolicy::DESCENDANTS_ONLY);
   window_delegate.set_root_window(&root);
   root.SetVisible(true);
   root.SetBounds(gfx::Rect(0, 0, 100, 100), base::nullopt);
 
-  ServerWindow child1(&window_delegate, WindowId(1, 3));
+  ServerWindow child1(&window_delegate, WindowId(1, 3), viz::FrameSinkId(1, 3));
   root.Add(&child1);
   child1.SetVisible(true);
   child1.SetBounds(gfx::Rect(10, 10, 20, 20), base::nullopt);
 
-  ServerWindow child2(&window_delegate, WindowId(1, 4));
+  ServerWindow child2(&window_delegate, WindowId(1, 4), viz::FrameSinkId(1, 4));
   root.Add(&child2);
   child2.SetVisible(true);
   child2.SetBounds(gfx::Rect(15, 15, 20, 20), base::nullopt);
@@ -60,12 +61,12 @@ TEST(WindowFinderTest, FindDeepestVisibleWindow) {
 
 TEST(WindowFinderTest, FindDeepestVisibleWindowNonClientArea) {
   TestServerWindowDelegate window_delegate;
-  ServerWindow root(&window_delegate, WindowId(1, 2));
+  ServerWindow root(&window_delegate, WindowId(1, 2), viz::FrameSinkId(1, 2));
   window_delegate.set_root_window(&root);
   root.SetVisible(true);
   root.SetBounds(gfx::Rect(0, 0, 100, 100), base::nullopt);
 
-  ServerWindow child1(&window_delegate, WindowId(1, 3));
+  ServerWindow child1(&window_delegate, WindowId(1, 3), viz::FrameSinkId(1, 3));
   root.Add(&child1);
   child1.SetVisible(true);
   child1.SetBounds(gfx::Rect(10, 10, 20, 20), base::nullopt);
@@ -111,12 +112,13 @@ TEST(WindowFinderTest, FindDeepestVisibleWindowNonClientArea) {
 
 TEST(WindowFinderTest, FindDeepestVisibleWindowHitTestMask) {
   TestServerWindowDelegate window_delegate;
-  ServerWindow root(&window_delegate, WindowId(1, 2));
+  ServerWindow root(&window_delegate, WindowId(1, 2), viz::FrameSinkId(1, 2));
   window_delegate.set_root_window(&root);
   root.SetVisible(true);
   root.SetBounds(gfx::Rect(0, 0, 100, 100), base::nullopt);
 
-  ServerWindow child_with_mask(&window_delegate, WindowId(1, 4));
+  ServerWindow child_with_mask(&window_delegate, WindowId(1, 4),
+                               viz::FrameSinkId(1, 4));
   root.Add(&child_with_mask);
   child_with_mask.SetVisible(true);
   child_with_mask.SetBounds(gfx::Rect(10, 10, 20, 20), base::nullopt);
@@ -135,19 +137,19 @@ TEST(WindowFinderTest, FindDeepestVisibleWindowHitTestMask) {
 
 TEST(WindowFinderTest, FindDeepestVisibleWindowOverNonTarget) {
   TestServerWindowDelegate window_delegate;
-  ServerWindow root(&window_delegate, WindowId(1, 2));
+  ServerWindow root(&window_delegate, WindowId(1, 2), viz::FrameSinkId(1, 2));
   window_delegate.set_root_window(&root);
   root.SetVisible(true);
   root.SetBounds(gfx::Rect(0, 0, 100, 100), base::nullopt);
 
   // Create two windows, |child1| and |child2|. The two overlap but |child2| is
   // not a valid event target.
-  ServerWindow child1(&window_delegate, WindowId(1, 3));
+  ServerWindow child1(&window_delegate, WindowId(1, 3), viz::FrameSinkId(1, 3));
   root.Add(&child1);
   child1.SetVisible(true);
   child1.SetBounds(gfx::Rect(10, 10, 20, 20), base::nullopt);
 
-  ServerWindow child2(&window_delegate, WindowId(1, 4));
+  ServerWindow child2(&window_delegate, WindowId(1, 4), viz::FrameSinkId(1, 4));
   root.Add(&child2);
   child2.set_event_targeting_policy(mojom::EventTargetingPolicy::NONE);
   child2.SetVisible(true);
@@ -162,7 +164,7 @@ TEST(WindowFinderTest, FindDeepestVisibleWindowOverNonTarget) {
 
 TEST(WindowFinderTest, NonClientPreferredOverChild) {
   TestServerWindowDelegate window_delegate;
-  ServerWindow root(&window_delegate, WindowId(1, 2));
+  ServerWindow root(&window_delegate, WindowId(1, 2), viz::FrameSinkId(1, 2));
   window_delegate.set_root_window(&root);
   root.SetVisible(true);
   root.SetBounds(gfx::Rect(0, 0, 100, 100), base::nullopt);
@@ -170,13 +172,14 @@ TEST(WindowFinderTest, NonClientPreferredOverChild) {
   // Create two windows, |child| and |child_child|; |child| is a child of the
   // root and |child_child| and child of |child|. All share the same size with
   // |child| having a non-client area.
-  ServerWindow child(&window_delegate, WindowId(1, 3));
+  ServerWindow child(&window_delegate, WindowId(1, 3), viz::FrameSinkId(1, 3));
   root.Add(&child);
   child.SetVisible(true);
   child.SetBounds(gfx::Rect(0, 0, 100, 100), base::nullopt);
   child.SetClientArea(gfx::Insets(2, 3, 4, 5), std::vector<gfx::Rect>());
 
-  ServerWindow child_child(&window_delegate, WindowId(1, 4));
+  ServerWindow child_child(&window_delegate, WindowId(1, 4),
+                           viz::FrameSinkId(1, 4));
   child.Add(&child_child);
   child_child.SetVisible(true);
   child_child.SetBounds(gfx::Rect(0, 0, 100, 100), base::nullopt);
@@ -189,13 +192,13 @@ TEST(WindowFinderTest, NonClientPreferredOverChild) {
 
 TEST(WindowFinderTest, FindDeepestVisibleWindowWithTransform) {
   TestServerWindowDelegate window_delegate;
-  ServerWindow root(&window_delegate, WindowId(1, 2));
+  ServerWindow root(&window_delegate, WindowId(1, 2), viz::FrameSinkId(1, 2));
   root.set_event_targeting_policy(
       mojom::EventTargetingPolicy::DESCENDANTS_ONLY);
   window_delegate.set_root_window(&root);
   root.SetVisible(true);
   root.SetBounds(gfx::Rect(0, 0, 100, 100), base::nullopt);
-  ServerWindow child(&window_delegate, WindowId(1, 3));
+  ServerWindow child(&window_delegate, WindowId(1, 3), viz::FrameSinkId(1, 3));
   root.Add(&child);
   child.SetVisible(true);
   child.SetBounds(gfx::Rect(10, 10, 20, 20), base::nullopt);

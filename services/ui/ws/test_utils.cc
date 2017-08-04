@@ -32,14 +32,13 @@ namespace ws {
 namespace test {
 namespace {
 
-ClientWindowId NextUnusedClientWindowId(WindowTree* tree) {
-  ClientWindowId client_id;
+viz::FrameSinkId NextUnusedFrameSinkId(WindowTree* tree) {
+  viz::FrameSinkId frame_sink_id;
   for (ClientSpecificId id = 1;; ++id) {
     // Used the id of the client in the upper bits to simplify things.
-    const ClientWindowId client_id =
-        ClientWindowId(WindowIdToTransportId(WindowId(tree->id(), id)));
-    if (!tree->GetWindowByClientId(client_id))
-      return client_id;
+    const viz::FrameSinkId frame_sink_id(tree->id(), id);
+    if (!tree->GetWindowByFrameSinkId(frame_sink_id))
+      return frame_sink_id;
   }
 }
 
@@ -582,8 +581,8 @@ ServerWindow* WindowEventTargetingHelper::CreatePrimaryTree(
     const gfx::Rect& root_window_bounds,
     const gfx::Rect& window_bounds) {
   WindowTree* wm_tree = window_server()->GetTreeWithId(1);
-  const ClientWindowId embed_window_id(WindowIdToTransportId(
-      WindowId(wm_tree->id(), next_primary_tree_window_id_++)));
+  const viz::FrameSinkId embed_window_id(wm_tree->id(),
+                                         next_primary_tree_window_id_++);
   EXPECT_TRUE(wm_tree->NewWindow(embed_window_id, ServerWindow::Properties()));
   EXPECT_TRUE(wm_tree->SetWindowVisibility(embed_window_id, true));
   EXPECT_TRUE(wm_tree->AddWindow(FirstRootId(wm_tree), embed_window_id));
@@ -593,7 +592,7 @@ ServerWindow* WindowEventTargetingHelper::CreatePrimaryTree(
       mojo::MakeRequest(&client));
   const uint32_t embed_flags = 0;
   wm_tree->Embed(embed_window_id, std::move(client), embed_flags);
-  ServerWindow* embed_window = wm_tree->GetWindowByClientId(embed_window_id);
+  ServerWindow* embed_window = wm_tree->GetWindowByFrameSinkId(embed_window_id);
   embed_window->set_event_targeting_policy(
       mojom::EventTargetingPolicy::DESCENDANTS_ONLY);
   WindowTree* tree1 = window_server()->GetTreeWithRoot(embed_window);
@@ -614,13 +613,12 @@ void WindowEventTargetingHelper::CreateSecondaryTree(
     ServerWindow** window) {
   WindowTree* tree1 = window_server()->GetTreeWithRoot(embed_window);
   ASSERT_TRUE(tree1 != nullptr);
-  const ClientWindowId child1_id(
-      WindowIdToTransportId(WindowId(tree1->id(), 1)));
+  const viz::FrameSinkId child1_id(tree1->id(), 1);
   ASSERT_TRUE(tree1->NewWindow(child1_id, ServerWindow::Properties()));
-  ServerWindow* child1 = tree1->GetWindowByClientId(child1_id);
+  ServerWindow* child1 = tree1->GetWindowByFrameSinkId(child1_id);
   ASSERT_TRUE(child1);
-  EXPECT_TRUE(tree1->AddWindow(ClientWindowIdForWindow(tree1, embed_window),
-                               child1_id));
+  EXPECT_TRUE(
+      tree1->AddWindow(FrameSinkIdForWindow(tree1, embed_window), child1_id));
   tree1->GetDisplay(embed_window)->AddActivationParent(embed_window);
 
   child1->SetVisible(true);
@@ -755,42 +753,43 @@ ServerWindow* FirstRoot(WindowTree* tree) {
              : nullptr;
 }
 
-ClientWindowId FirstRootId(WindowTree* tree) {
+viz::FrameSinkId FirstRootId(WindowTree* tree) {
   ServerWindow* first_root = FirstRoot(tree);
-  return first_root ? ClientWindowIdForWindow(tree, first_root)
-                    : ClientWindowId();
+  return first_root ? FrameSinkIdForWindow(tree, first_root)
+                    : viz::FrameSinkId();
 }
 
-ClientWindowId ClientWindowIdForWindow(WindowTree* tree,
-                                       const ServerWindow* window) {
-  ClientWindowId client_window_id;
+viz::FrameSinkId FrameSinkIdForWindow(WindowTree* tree,
+                                      const ServerWindow* window) {
+  viz::FrameSinkId frame_sink_id;
   // If window isn't known we'll return 0, which should then error out.
-  tree->IsWindowKnown(window, &client_window_id);
-  return client_window_id;
+  tree->IsWindowKnown(window, &frame_sink_id);
+  return frame_sink_id;
 }
 
-ServerWindow* NewWindowInTree(WindowTree* tree, ClientWindowId* client_id) {
-  return NewWindowInTreeWithParent(tree, FirstRoot(tree), client_id);
+ServerWindow* NewWindowInTree(WindowTree* tree,
+                              viz::FrameSinkId* frame_sink_id) {
+  return NewWindowInTreeWithParent(tree, FirstRoot(tree), frame_sink_id);
 }
 
 ServerWindow* NewWindowInTreeWithParent(WindowTree* tree,
                                         ServerWindow* parent,
-                                        ClientWindowId* client_id) {
+                                        viz::FrameSinkId* frame_sink_id) {
   if (!parent)
     return nullptr;
-  ClientWindowId parent_client_id;
-  if (!tree->IsWindowKnown(parent, &parent_client_id))
+  viz::FrameSinkId parent_frame_sink_id;
+  if (!tree->IsWindowKnown(parent, &parent_frame_sink_id))
     return nullptr;
-  ClientWindowId client_window_id = NextUnusedClientWindowId(tree);
-  if (!tree->NewWindow(client_window_id, ServerWindow::Properties()))
+  viz::FrameSinkId client_frame_sink_id = NextUnusedFrameSinkId(tree);
+  if (!tree->NewWindow(client_frame_sink_id, ServerWindow::Properties()))
     return nullptr;
-  if (!tree->SetWindowVisibility(client_window_id, true))
+  if (!tree->SetWindowVisibility(client_frame_sink_id, true))
     return nullptr;
-  if (!tree->AddWindow(parent_client_id, client_window_id))
+  if (!tree->AddWindow(parent_frame_sink_id, client_frame_sink_id))
     return nullptr;
-  if (client_id)
-    *client_id = client_window_id;
-  return tree->GetWindowByClientId(client_window_id);
+  if (frame_sink_id)
+    *frame_sink_id = client_frame_sink_id;
+  return tree->GetWindowByFrameSinkId(client_frame_sink_id);
 }
 
 }  // namespace test

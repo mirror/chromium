@@ -84,13 +84,14 @@ class TestFocusControllerObserver : public FocusControllerObserver,
 
 TEST(FocusControllerTest, Basic) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow root(&server_window_delegate, WindowId());
+  ServerWindow root(&server_window_delegate, WindowId(), viz::FrameSinkId());
   server_window_delegate.set_root_window(&root);
   root.SetVisible(true);
-  ServerWindow child(&server_window_delegate, WindowId());
+  ServerWindow child(&server_window_delegate, WindowId(), viz::FrameSinkId());
   child.SetVisible(true);
   root.Add(&child);
-  ServerWindow child_child(&server_window_delegate, WindowId());
+  ServerWindow child_child(&server_window_delegate, WindowId(),
+                           viz::FrameSinkId());
   child_child.SetVisible(true);
   child.Add(&child_child);
 
@@ -145,14 +146,15 @@ TEST(FocusControllerTest, Basic) {
 // Tests that focus shifts correctly if the focused window is destroyed.
 TEST(FocusControllerTest, FocusShiftsOnDestroy) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow parent(&server_window_delegate, WindowId());
+  ServerWindow parent(&server_window_delegate, WindowId(), viz::FrameSinkId());
   server_window_delegate.set_root_window(&parent);
   parent.SetVisible(true);
-  ServerWindow child_first(&server_window_delegate, WindowId());
+  ServerWindow child_first(&server_window_delegate, WindowId(),
+                           viz::FrameSinkId());
   child_first.SetVisible(true);
   parent.Add(&child_first);
-  std::unique_ptr<ServerWindow> child_second(
-      new ServerWindow(&server_window_delegate, WindowId()));
+  std::unique_ptr<ServerWindow> child_second(new ServerWindow(
+      &server_window_delegate, WindowId(), viz::FrameSinkId()));
   child_second->SetVisible(true);
   parent.Add(child_second.get());
   std::vector<uint8_t> dummy;
@@ -181,13 +183,16 @@ TEST(FocusControllerTest, FocusShiftsOnDestroy) {
 
 TEST(FocusControllerTest, ActivationSkipsOverHiddenWindow) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow parent(&server_window_delegate, WindowId());
+  ServerWindow parent(&server_window_delegate, WindowId(), viz::FrameSinkId());
   server_window_delegate.set_root_window(&parent);
   parent.SetVisible(true);
 
-  ServerWindow child_first(&server_window_delegate, WindowId());
-  ServerWindow child_second(&server_window_delegate, WindowId());
-  ServerWindow child_third(&server_window_delegate, WindowId());
+  ServerWindow child_first(&server_window_delegate, WindowId(),
+                           viz::FrameSinkId());
+  ServerWindow child_second(&server_window_delegate, WindowId(),
+                            viz::FrameSinkId());
+  ServerWindow child_third(&server_window_delegate, WindowId(),
+                           viz::FrameSinkId());
 
   parent.Add(&child_first);
   parent.Add(&child_second);
@@ -234,12 +239,12 @@ TEST(FocusControllerTest, ActivationSkipsOverHiddenWindow) {
 
 TEST(FocusControllerTest, ActivationSkipsOverHiddenContainers) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow parent(&server_window_delegate, WindowId());
+  ServerWindow parent(&server_window_delegate, WindowId(), viz::FrameSinkId());
   server_window_delegate.set_root_window(&parent);
   parent.SetVisible(true);
 
-  ServerWindow child1(&server_window_delegate, WindowId());
-  ServerWindow child2(&server_window_delegate, WindowId());
+  ServerWindow child1(&server_window_delegate, WindowId(), viz::FrameSinkId());
+  ServerWindow child2(&server_window_delegate, WindowId(), viz::FrameSinkId());
 
   parent.Add(&child1);
   parent.Add(&child2);
@@ -247,10 +252,10 @@ TEST(FocusControllerTest, ActivationSkipsOverHiddenContainers) {
   child1.SetVisible(true);
   child2.SetVisible(true);
 
-  ServerWindow child11(&server_window_delegate, WindowId());
-  ServerWindow child12(&server_window_delegate, WindowId());
-  ServerWindow child21(&server_window_delegate, WindowId());
-  ServerWindow child22(&server_window_delegate, WindowId());
+  ServerWindow child11(&server_window_delegate, WindowId(), viz::FrameSinkId());
+  ServerWindow child12(&server_window_delegate, WindowId(), viz::FrameSinkId());
+  ServerWindow child21(&server_window_delegate, WindowId(), viz::FrameSinkId());
+  ServerWindow child22(&server_window_delegate, WindowId(), viz::FrameSinkId());
 
   child1.Add(&child11);
   child1.Add(&child12);
@@ -278,12 +283,14 @@ TEST(FocusControllerTest, ActivationSkipsOverHiddenContainers) {
 
 TEST(FocusControllerTest, NonFocusableWindowNotActivated) {
   TestServerWindowDelegate server_window_delegate;
-  ServerWindow parent(&server_window_delegate, WindowId());
+  ServerWindow parent(&server_window_delegate, WindowId(), viz::FrameSinkId());
   server_window_delegate.set_root_window(&parent);
   parent.SetVisible(true);
 
-  ServerWindow child_first(&server_window_delegate, WindowId());
-  ServerWindow child_second(&server_window_delegate, WindowId());
+  ServerWindow child_first(&server_window_delegate, WindowId(),
+                           viz::FrameSinkId());
+  ServerWindow child_second(&server_window_delegate, WindowId(),
+                            viz::FrameSinkId());
   parent.Add(&child_first);
   parent.Add(&child_second);
   child_first.SetVisible(true);
@@ -337,12 +344,12 @@ class TestServerWindowDelegate2 : public ServerWindowDelegate {
 
 TEST(FocusControllerTest, ActiveWindowMovesToDifferentDisplay) {
   TestServerWindowDelegate2 server_window_delegate;
-  ServerWindow root1(&server_window_delegate, WindowId());
+  ServerWindow root1(&server_window_delegate, WindowId(), viz::FrameSinkId());
   root1.SetVisible(true);
-  ServerWindow root2(&server_window_delegate, WindowId());
+  ServerWindow root2(&server_window_delegate, WindowId(), viz::FrameSinkId());
   root2.SetVisible(true);
 
-  ServerWindow child(&server_window_delegate, WindowId());
+  ServerWindow child(&server_window_delegate, WindowId(), viz::FrameSinkId());
   root1.Add(&child);
   child.SetVisible(true);
 

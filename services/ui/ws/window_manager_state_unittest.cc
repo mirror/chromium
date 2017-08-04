@@ -76,7 +76,7 @@ class WindowManagerStateTest : public testing::Test {
   }
 
   void EmbedAt(WindowTree* tree,
-               const ClientWindowId& embed_window_id,
+               const viz::FrameSinkId& embed_window_id,
                uint32_t embed_flags,
                WindowTree** embed_tree,
                TestWindowTreeClient** embed_client_proxy) {
@@ -242,10 +242,10 @@ TEST_F(WindowManagerStateTest, PostTargetAccelerator) {
 // is done.
 TEST_F(WindowManagerStateTest, PreTargetConsumed) {
   // Set up two trees with focus on a child in the second.
-  const ClientWindowId child_window_id(11);
+  const viz::FrameSinkId child_window_id(0, 11);
   window_tree()->NewWindow(child_window_id, ServerWindow::Properties());
   ServerWindow* child_window =
-      window_tree()->GetWindowByClientId(child_window_id);
+      window_tree()->GetWindowByFrameSinkId(child_window_id);
   window_tree()->AddWindow(FirstRootId(window_tree()), child_window_id);
   child_window->SetVisible(true);
   SetCanFocusUp(child_window);
@@ -298,10 +298,10 @@ TEST_F(WindowManagerStateTest, PreTargetConsumed) {
 
 TEST_F(WindowManagerStateTest, AckWithProperties) {
   // Set up two trees with focus on a child in the second.
-  const ClientWindowId child_window_id(11);
+  const viz::FrameSinkId child_window_id(0, 11);
   window_tree()->NewWindow(child_window_id, ServerWindow::Properties());
   ServerWindow* child_window =
-      window_tree()->GetWindowByClientId(child_window_id);
+      window_tree()->GetWindowByFrameSinkId(child_window_id);
   window_tree()->AddWindow(FirstRootId(window_tree()), child_window_id);
   child_window->SetVisible(true);
   SetCanFocusUp(child_window);
@@ -541,14 +541,12 @@ TEST_F(WindowManagerStateTest, AckTimeout) {
 TEST_F(WindowManagerStateTest, InterceptingEmbedderReceivesEvents) {
   WindowTree* embedder_tree = tree();
   ServerWindow* embedder_root = window();
-  const ClientWindowId embed_window_id(
-      WindowIdToTransportId(WindowId(embedder_tree->id(), 12)));
+  const viz::FrameSinkId embed_window_id(embedder_tree->id(), 12);
   embedder_tree->NewWindow(embed_window_id, ServerWindow::Properties());
   ServerWindow* embedder_window =
-      embedder_tree->GetWindowByClientId(embed_window_id);
-  ASSERT_TRUE(embedder_tree->AddWindow(
-      ClientWindowId(WindowIdToTransportId(embedder_root->id())),
-      embed_window_id));
+      embedder_tree->GetWindowByFrameSinkId(embed_window_id);
+  ASSERT_TRUE(embedder_tree->AddWindow(embedder_root->frame_sink_id(),
+                                       embed_window_id));
 
   TestWindowTreeClient* embedder_client = wm_client();
 
@@ -603,11 +601,11 @@ TEST_F(WindowManagerStateTest, InterceptingEmbedderReceivesEvents) {
     embedder_client->tracker()->changes()->clear();
 
     // Embed another tree in the embedded tree.
-    const ClientWindowId nested_embed_window_id(
-        WindowIdToTransportId(WindowId(embed_tree->id(), 23)));
+    const viz::FrameSinkId nested_embed_window_id(embed_tree->id(), 23);
     embed_tree->NewWindow(nested_embed_window_id, ServerWindow::Properties());
-    const ClientWindowId embed_root_id(
-        WindowIdToTransportId((*embed_tree->roots().begin())->id()));
+    const viz::FrameSinkId embed_root_id(
+        (*embed_tree->roots().begin())->id().client_id,
+        (*embed_tree->roots().begin())->id().window_id);
     ASSERT_TRUE(embed_tree->AddWindow(embed_root_id, nested_embed_window_id));
 
     WindowTree* nested_embed_tree = nullptr;
@@ -621,7 +619,7 @@ TEST_F(WindowManagerStateTest, InterceptingEmbedderReceivesEvents) {
     // Send an event to the nested embed window. The event should still reach
     // the outermost embedder.
     ServerWindow* nested_embed_window =
-        embed_tree->GetWindowByClientId(nested_embed_window_id);
+        embed_tree->GetWindowByFrameSinkId(nested_embed_window_id);
     DCHECK(nested_embed_window->parent());
     mouse = ui::MouseEvent(ui::ET_MOUSE_MOVED, gfx::Point(), gfx::Point(),
                            base::TimeTicks(), 0, 0);
@@ -689,7 +687,7 @@ TEST(WindowManagerStateShutdownTest, DestroyTreeBeforeDisplay) {
   WindowTree* tree =
       window_manager_display_root->window_manager_state()->window_tree();
   ASSERT_EQ(1u, tree->roots().size());
-  ClientWindowId root_client_id;
+  viz::FrameSinkId root_client_id;
   ASSERT_TRUE(tree->IsWindowKnown(*(tree->roots().begin()), &root_client_id));
   EXPECT_TRUE(tree->DeleteWindow(root_client_id));
   window_server->DestroyTree(tree);
@@ -697,10 +695,10 @@ TEST(WindowManagerStateShutdownTest, DestroyTreeBeforeDisplay) {
 
 TEST_F(WindowManagerStateTest, CursorResetOverNoTarget) {
   ASSERT_EQ(1u, window_server()->display_manager()->displays().size());
-  const ClientWindowId child_window_id(11);
+  const viz::FrameSinkId child_window_id(0, 11);
   window_tree()->NewWindow(child_window_id, ServerWindow::Properties());
   ServerWindow* child_window =
-      window_tree()->GetWindowByClientId(child_window_id);
+      window_tree()->GetWindowByFrameSinkId(child_window_id);
   window_tree()->AddWindow(FirstRootId(window_tree()), child_window_id);
   child_window->SetVisible(true);
   child_window->SetBounds(gfx::Rect(0, 0, 20, 20));
@@ -720,10 +718,10 @@ TEST_F(WindowManagerStateTest, CursorResetOverNoTarget) {
 
 TEST_F(WindowManagerStateTestAsync, CursorResetOverNoTargetAsync) {
   ASSERT_EQ(1u, window_server()->display_manager()->displays().size());
-  const ClientWindowId child_window_id(11);
+  const viz::FrameSinkId child_window_id(0, 11);
   window_tree()->NewWindow(child_window_id, ServerWindow::Properties());
   ServerWindow* child_window =
-      window_tree()->GetWindowByClientId(child_window_id);
+      window_tree()->GetWindowByFrameSinkId(child_window_id);
   window_tree()->AddWindow(FirstRootId(window_tree()), child_window_id);
   // Setup steps already do hit-test for mouse cursor update so this should go
   // to the queue in EventDispatcher.

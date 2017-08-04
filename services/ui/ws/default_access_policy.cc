@@ -229,7 +229,7 @@ bool DefaultAccessPolicy::WasCreatedByThisClient(
 }
 
 bool DefaultAccessPolicy::IsValidIdForNewWindow(
-    const ClientWindowId& id) const {
+    const viz::FrameSinkId& id) const {
   // Clients using DefaultAccessPolicy only see windows they have created (for
   // the embed point they choose the id), so it's ok for clients to use whatever
   // id they want.
