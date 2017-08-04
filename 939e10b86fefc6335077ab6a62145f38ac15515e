@@ -104,6 +104,23 @@
     },
     {
       "key": {
+        "uuid": "ef47ca51_545c6d3e",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T23:28:40Z",
+      "side": 1,
+      "message": "Like we talked about, I think we can call wather_.Watch() here once but not arm it until later.",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75932e6b_56f12271",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 13
@@ -144,6 +161,23 @@
     },
     {
       "key": {
+        "uuid": "1fe12b15_24e622ff",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T23:28:40Z",
+      "side": 1,
+      "message": "Regarding the lifetime things.\n\nif (pending_read_) {\n  // Take the handle back from a previous read that has been completed.\n  DCHECH(pending_read_-\u003eIsComplete());\n  handle_ \u003d pending_read_-\u003eTakeHandle(); \n  pending_read_ \u003d nullptr;\n}",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "655b60d6_610560fd",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 13
@@ -172,6 +206,40 @@
       "writtenOn": "2017-08-04T21:48:20Z",
       "side": 1,
       "message": "This is a bizarre return value to indicate the pipe has been drained and no more is expected? What is the case about?",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502714f5_3b88bc9d",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T23:28:40Z",
+      "side": 1,
+      "message": "After understand how pending_read_ is used to wrap up an IOBuffer, I\u0027d vote to put the body of OnDataAvailable in here which does that wrapping.",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ead6825_6be08f87",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T23:28:40Z",
+      "side": 1,
+      "message": "Wait, I don\u0027t think we can call pendng_read_-\u003eComplete(len) until *after* the fetcher is done with the io buffer.\n\n  fetcher_-\u003eOnReadCompleted(buffer_.get(), len);\n\nUntil the data has been written out to disk by the appcache_witer, that buffer has got do stay valid. See comments in the adapter.h file about how I think that can be arranged. The IOBuffer\u0027s lifetime is what matters.",
       "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +291,63 @@
       "writtenOn": "2017-08-04T21:48:20Z",
       "side": 1,
       "message": "yup, i\u0027d vote to PostTask(OnReadComleted) here, but we\u0027ll need to bind a weak this ptr",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7226a1_f5b4a46f",
+        "filename": "content/common/net_adapters.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T23:28:40Z",
+      "side": 1,
+      "message": "Seems like the dtor should call Complete(length) to let the mojo system that we no longer need access to data our buffer_ pts at, but we also need to return ownership of the handle_ back to the Request object.\n\nSee comments in the .h file",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b544a44_2f163fc8",
+        "filename": "content/common/net_adapters.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T23:28:40Z",
+      "side": 1,
+      "message": "\"Returns ownership\" might be a little more clear.",
+      "range": {
+        "startLine": 90,
+        "startChar": 58,
+        "endLine": 90,
+        "endChar": 68
+      },
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c89475_0719347c",
+        "filename": "content/common/net_adapters.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T23:28:40Z",
+      "side": 1,
+      "message": "maybe call this CompleteRead() for symmetry\n\nI think this method should be split into two.\n  void CompleteRead(num_bytes);\n  ScopedDataPipeConsumerHandle ReleaseHandle();\n\nMojoToNetIOBuffer would call ComleteRead in its dtor.\n\nUpdateURLLoaderRequest::StartReading() would call ReleaseHandle() to start a subsequent read operation.",
       "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
