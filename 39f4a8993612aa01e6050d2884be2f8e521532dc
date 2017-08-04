@@ -51,6 +51,24 @@
       "revId": "39f4a8993612aa01e6050d2884be2f8e521532dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07f93b2_2db6de9e",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T20:50:57Z",
+      "side": 1,
+      "message": "blergh. I can\u0027t think of a good way to do this. I think the problem is we\u0027re trying to overload the existing interface to do two different things, which just won\u0027t work. I think we\u0027ll need to make a new interface method that does *what we want*TM.",
+      "parentUuid": "c4941370_8bfed48b",
+      "revId": "39f4a8993612aa01e6050d2884be2f8e521532dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
