@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4efff06_11dc1d94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-04T11:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f27fcced_19f5d154",
+      "revId": "7440f9642f4405a4d72ef64d827486ed9917d587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f60c542c_2ad2b132",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T10:39:06Z",
       "side": 1,
       "message": "Just to make sure I understand, the O(N^2) was about inserting new tree-scopes into the document-ordered set of boundary-crossing scopes and not about rule matching?",
+      "revId": "7440f9642f4405a4d72ef64d827486ed9917d587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1335845f_8e9d0525",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-04T11:12:42Z",
+      "side": 1,
+      "message": "You are right.  I corrected the in-line source comment and commit message.",
+      "parentUuid": "f60c542c_2ad2b132",
       "revId": "7440f9642f4405a4d72ef64d827486ed9917d587",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "7440f9642f4405a4d72ef64d827486ed9917d587",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29588552_75d8d01b",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/v0/slotted-pseudo-element-in-v0v1-mixed.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-04T11:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1d81f7_22bebc12",
+      "revId": "7440f9642f4405a4d72ef64d827486ed9917d587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
