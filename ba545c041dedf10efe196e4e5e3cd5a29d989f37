@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8cdd393_55172e1a",
+        "filename": "media/capture/video/chromeos/camera_device_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-04T09:00:17Z",
+      "side": 1,
+      "message": "set device_context_ just in case.",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 20
+      },
+      "revId": "ba545c041dedf10efe196e4e5e3cd5a29d989f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ebcafbd_ff64afda",
+        "filename": "media/capture/video/chromeos/video_capture_device_arc_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-04T09:00:17Z",
+      "side": 1,
+      "message": "GetSuspendReadinessCallback and the callback need to be called on UI thread.",
+      "revId": "ba545c041dedf10efe196e4e5e3cd5a29d989f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b251b8b_13ecf7d5",
+        "filename": "media/capture/video/chromeos/video_capture_device_arc_chromeos.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-04T09:00:17Z",
+      "side": 1,
+      "message": "style guide recommends not to use default parameter",
+      "revId": "ba545c041dedf10efe196e4e5e3cd5a29d989f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
