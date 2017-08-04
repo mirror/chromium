@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27c3122a_4a651e4f",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-04T19:29:08Z",
+      "side": 1,
+      "message": "I did this initially, but I thought pushing the start and end offsets into a vector, and then referring to offsets.front() and offsets.back() as start and end respectively, was more confusing than doing it the \"manual\" way.\n\nIt was only readable if I did something like auto* match_start \u003d \u0026(offsets.front());, which kind of defeated the purpose.\n\nIf you strongly disagree, feel free to speak up and i can do it the other way.",
+      "parentUuid": "c5438540_4f111b42",
+      "revId": "b0d59e09ea2751db10313ebe91af70cd4e2225fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4deadc35_e4332366",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9e4ebcbf_af437d50",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-04T19:29:08Z",
+      "side": 1,
+      "message": "Done. Thanks! I believe that if autocomplete_offset_valid is npos, match_end is always npos, but the it\u0027s not always true the other way around. (Eliding here is more aggressive than above).\n\nThat being said, I think it\u0027s just an irrelevant intellectual curiosity. Thanks for pointing out this error - this code is tricky. ;)",
+      "parentUuid": "4deadc35_e4332366",
+      "revId": "b0d59e09ea2751db10313ebe91af70cd4e2225fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1867f906_153bce1d",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "b0d59e09ea2751db10313ebe91af70cd4e2225fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527f9368_88ef47b8",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-04T19:29:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1867f906_153bce1d",
+      "revId": "b0d59e09ea2751db10313ebe91af70cd4e2225fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
