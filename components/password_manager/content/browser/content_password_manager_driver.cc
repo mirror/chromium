@@ -292,6 +292,14 @@ void ContentPasswordManagerDriver::ShowNotSecureWarning(
   password_autofill_manager_.OnShowNotSecureWarning(
       text_direction, TransformToRootCoordinates(bounds));
 }
+void ContentPasswordManagerDriver::ShowManualFallbackSuggestion(
+    base::i18n::TextDirection text_direction,
+    const gfx::RectF& bounds,
+    bool should_show_not_secure_warning) {
+  password_autofill_manager_.OnShowManualFallbackSuggestion(
+      text_direction, TransformToRootCoordinates(bounds),
+      should_show_not_secure_warning);
+}
 
 void ContentPasswordManagerDriver::RecordSavePasswordProgress(
     const std::string& log) {

@@ -107,6 +107,16 @@ interface PasswordManagerDriver {
   ShowNotSecureWarning(mojo.common.mojom.TextDirection text_direction,
                        gfx.mojom.RectF bounds);
 
+
+  // Instructs the browser to show a suggestion, which will redirect the user to
+  // the list of all saved passwords. The popup will use |text_direction| for
+  // displaying text. The popup uses |should_show_not_secure_warning| in order
+  // to determine whenever additionally "Form not secure" warning should be
+  // shown.
+  ShowManualFallbackSuggestion(mojo.common.mojom.TextDirection text_direction,
+                           gfx.mojom.RectF bounds,
+                           bool should_show_not_secure_warning);
+
   // Instructs the browser to presave the form with generated password.
   PresaveGeneratedPassword(PasswordForm password_form);
 

@@ -103,6 +103,10 @@ class ContentPasswordManagerDriver
                                const gfx::RectF& bounds) override;
   void ShowNotSecureWarning(base::i18n::TextDirection text_direction,
                             const gfx::RectF& bounds) override;
+  void ShowManualFallbackSuggestion(
+      base::i18n::TextDirection text_direction,
+      const gfx::RectF& bounds,
+      bool should_show_not_secure_warning) override;
   void RecordSavePasswordProgress(const std::string& log) override;
   void UserModifiedPasswordField() override;
   void SaveGenerationFieldDetectedByClassifier(
