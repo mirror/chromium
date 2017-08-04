@@ -281,6 +281,10 @@ class CONTENT_EXPORT RenderWidgetHostDelegate {
   // Returns true if there is context menu shown on page.
   virtual bool IsShowingContextMenuOnPage() const;
 
+  // Informs the delegate that the occlusion state of its RenderWidgetHost has
+  // changed.
+  virtual void OnOcclusionStateChanged(bool occluded);
+
  protected:
   virtual ~RenderWidgetHostDelegate() {}
 };
