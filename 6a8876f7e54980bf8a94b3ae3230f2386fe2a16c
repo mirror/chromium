@@ -34,6 +34,24 @@
       "revId": "6a8876f7e54980bf8a94b3ae3230f2386fe2a16c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85bd7360_46b1a8ed",
+        "filename": "ash/shell/app_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-04T17:52:31Z",
+      "side": 1,
+      "message": "Changed the interface to pass out parameter.",
+      "parentUuid": "a34cf0ae_78e98788",
+      "revId": "6a8876f7e54980bf8a94b3ae3230f2386fe2a16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
