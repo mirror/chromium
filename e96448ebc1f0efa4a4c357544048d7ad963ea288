@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8369529d_61e65190",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-04T07:10:06Z",
+      "side": 1,
+      "message": ".nit should be above FindNextLayoutOpportunity, can be fixed in a follow up.",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 36
+      },
+      "revId": "e96448ebc1f0efa4a4c357544048d7ad963ea288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
