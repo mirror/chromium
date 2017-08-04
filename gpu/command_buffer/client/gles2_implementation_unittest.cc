@@ -150,6 +150,7 @@ class MockTransferBuffer : public TransferBufferInterface {
   void FreePendingToken(void* p, unsigned int /* token */) override;
   unsigned int GetSize() const override;
   unsigned int GetFreeSize() const override;
+  void Shrink(void* pointer, unsigned int requested_size) override;
 
   size_t MaxTransferBufferSize() {
     return size_ - result_size_;
@@ -333,6 +334,8 @@ unsigned int MockTransferBuffer::GetSize() const {
 unsigned int MockTransferBuffer::GetFreeSize() const {
   return 0;
 }
+
+void MockTransferBuffer::Shrink(void* pointer, unsigned int requested_size) {}
 
 // API wrapper for Buffers.
 class GenBuffersAPI {
