@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b0da55b_9a0c5608",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T00:36:13Z",
+      "side": 1,
+      "message": "this line is no longer accurate.",
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db0cb03_76eecda9",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T00:36:13Z",
+      "side": 1,
+      "message": "If another Feature then adds itself as an observer, dont\u0027 we need to re-add the duration tracker?",
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
