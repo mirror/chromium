@@ -16,6 +16,24 @@
       "revId": "15476f1d6ebed5f1d5143172f0187f681040bc23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b520847_e40a4a68",
+        "filename": "ash/system/palette/palette_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-04T15:59:41Z",
+      "side": 1,
+      "message": "having the --force-enable-stylus-tools switch should override has_seen_stylus_ introduced in the other CL. I think, HasStylusInput would return true if a device supports a stylus but maybe it hasn\u0027t been bought?",
+      "parentUuid": "13f1ccad_204c243e",
+      "revId": "15476f1d6ebed5f1d5143172f0187f681040bc23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
