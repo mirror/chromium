@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf6a4535_af0a5598",
+        "filename": "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-04T19:03:21Z",
+      "side": 1,
+      "message": "nit: Should be consistent with the one above.",
+      "range": {
+        "startLine": 60,
+        "startChar": 25,
+        "endLine": 60,
+        "endChar": 34
+      },
+      "revId": "bbcc0c66a9db1fee4926356e435c8d07f0a617ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
