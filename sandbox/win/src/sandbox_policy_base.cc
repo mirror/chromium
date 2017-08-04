@@ -568,11 +568,19 @@ bool PolicyBase::OnJobEmpty(HANDLE job) {
   return true;
 }
 
-void PolicyBase::SetDisconnectCsrss() {
-  if (base::win::GetVersion() >= base::win::VERSION_WIN8) {
+ResultCode PolicyBase::SetDisconnectCsrss() {
+  // Only support on non-WOW64 platforms.
+  if (base::win::GetVersion() >= base::win::VERSION_WIN10) {
+#if !defined(_WIN64)
+    if (base::win::OSInfo::GetInstance()->wow64_status() ==
+        base::win::OSInfo::WOW64_ENABLED) {
+      return SBOX_ALL_OK;
+    }
+#endif  // !defined(_WIN64)
     is_csrss_connected_ = false;
-    AddKernelObjectToClose(L"ALPC Port", NULL);
+    return AddKernelObjectToClose(L"ALPC Port", NULL);
   }
+  return SBOX_ALL_OK;
 }
 
 EvalResult PolicyBase::EvalPolicy(int service,
