@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "64d90b74_ac872914",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-04T20:47:11Z",
+      "side": 1,
+      "message": "\"Disable the story at the lowest scope possible\" doesn\u0027t really make sense, because a story is a scope. Trying to come up with something better to say, though, I can totally commiserate that this is a hard concept to get across concisely.\n\nMaybe \"disable the narrowest testing unit that will make the benchmark pass again.\"?",
+      "range": {
+        "startLine": 340,
+        "startChar": 25,
+        "endLine": 340,
+        "endChar": 30
+      },
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0edfab7_9487c5c3",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-04T20:47:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure I completely grok the sentence starting at \"If it is a single...\"\n\nI think you\u0027re trying to give examples, which is good, but in the second half of the sentence, you kind of stop short of giving a real example by saying \"disable where necessary\", and what \"where necessary\" means is exactly what you\u0027re trying to explain here, so the logic is circular.\n\nI think some real examples might be good, like:\n\n\"\"\"\n..., disable the narrowest testing unit that will make the benchmark pass again.\n\nFor example:\n\n- If a single story is failing on a single platform, disable only that story on only that platform.\n- If multiple stories are failing across all platforms, disable those stories on all platforms.\n- If all stories are failing on a single platform, disable all stories on that platform.\n\nYou can do all of these with [StoryExp...\n\"\"\"",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 342,
+        "endChar": 60
+      },
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ca0117_b5a57445",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-04T20:47:11Z",
+      "side": 1,
+      "message": "s/benchmarks/benchmark\u0027s",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9641566_057e092c",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-04T20:47:11Z",
+      "side": 1,
+      "message": "(same as Ned\u0027s comment below)",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f2001f3_a6a0b14a",
         "filename": "docs/speed/perf_bot_sheriffing.md",
         "patchSetId": 1
@@ -47,6 +127,74 @@
       "writtenOn": "2017-08-04T19:54:52Z",
       "side": 1,
       "message": "needs: add \"Get Name(): return \"bar.benchmark_baz\" here",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba15ef9_cfdfb8d6",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-04T20:47:11Z",
+      "side": 1,
+      "message": "One thing that\u0027s not clear to me: if the same story is failing for different reasons (and therefore has different bug IDs), should we have multiple DisableStory lines?",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b422420_1a7d31ed",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-04T20:47:11Z",
+      "side": 1,
+      "message": "s/test/story, given that we\u0027re talking about stories here",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e39eaac_dfac17d0",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-04T20:47:11Z",
+      "side": 1,
+      "message": "Maybe \"If a particular story isn\u0027t applicable to a given platform, it should be disabled using...\"",
+      "revId": "105caadd06befed5fe797325f214a7403040f4fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547816c6_0e1ded1f",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-04T20:47:11Z",
+      "side": 1,
+      "message": "I\u0027d say that the link below elides the need for this list",
       "revId": "105caadd06befed5fe797325f214a7403040f4fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
