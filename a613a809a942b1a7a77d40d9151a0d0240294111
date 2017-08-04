@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a78a1f39_077af8d3",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-04T22:19:31Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "a613a809a942b1a7a77d40d9151a0d0240294111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26605457_32f2b69c",
+        "filename": "chrome/browser/ui/ash/app_list/app_list_presenter_delegate_mus.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-04T22:19:31Z",
+      "side": 1,
+      "message": "nit: bug is preferable.",
+      "range": {
+        "startLine": 109,
+        "startChar": 10,
+        "endLine": 109,
+        "endChar": 18
+      },
+      "revId": "a613a809a942b1a7a77d40d9151a0d0240294111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ece8b5f_46e4cd81",
+        "filename": "chrome/browser/ui/ash/app_list/app_list_presenter_delegate_mus.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-04T22:19:31Z",
+      "side": 1,
+      "message": "nit: this probably may be inlined at L112",
+      "range": {
+        "startLine": 111,
+        "startChar": 3,
+        "endLine": 111,
+        "endChar": 43
+      },
+      "revId": "a613a809a942b1a7a77d40d9151a0d0240294111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
