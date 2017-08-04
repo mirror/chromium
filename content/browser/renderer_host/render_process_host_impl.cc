@@ -898,6 +898,22 @@ class SiteProcessCountTracker : public base::SupportsUserData::Data,
   CountPerProcessPerSiteMap map_;
 };
 
+bool ShouldUseSiteProcessCountTracker(BrowserContext* browser_context,
+                                      RenderProcessHost* render_process_host,
+                                      const GURL& site_url) {
+  if (site_url.is_empty())
+    return false;
+
+  // TODO(alexmos): Sites should be tracked separately for each
+  // StoragePartition.  For now, track them only in the default one.
+  StoragePartition* default_partition =
+      BrowserContext::GetDefaultStoragePartition(browser_context);
+  if (!render_process_host->InSameStoragePartition(default_partition))
+    return false;
+
+  return true;
+}
+
 const void* const kUnmatchedServiceWorkerProcessTrackerKey =
     "UnmatchedServiceWorkerProcessTrackerKey";
 
@@ -2251,7 +2267,8 @@ void RenderProcessHostImpl::AddFrameWithSite(
     BrowserContext* browser_context,
     RenderProcessHost* render_process_host,
     const GURL& site_url) {
-  if (site_url.is_empty())
+  if (!ShouldUseSiteProcessCountTracker(browser_context, render_process_host,
+                                        site_url))
     return;
 
   SiteProcessCountTracker* tracker = static_cast<SiteProcessCountTracker*>(
@@ -2269,7 +2286,8 @@ void RenderProcessHostImpl::RemoveFrameWithSite(
     BrowserContext* browser_context,
     RenderProcessHost* render_process_host,
     const GURL& site_url) {
-  if (site_url.is_empty())
+  if (!ShouldUseSiteProcessCountTracker(browser_context, render_process_host,
+                                        site_url))
     return;
 
   SiteProcessCountTracker* tracker = static_cast<SiteProcessCountTracker*>(
@@ -2287,7 +2305,8 @@ void RenderProcessHostImpl::AddExpectedNavigationToSite(
     BrowserContext* browser_context,
     RenderProcessHost* render_process_host,
     const GURL& site_url) {
-  if (site_url.is_empty())
+  if (!ShouldUseSiteProcessCountTracker(browser_context, render_process_host,
+                                        site_url))
     return;
 
   SiteProcessCountTracker* tracker = static_cast<SiteProcessCountTracker*>(
@@ -2305,7 +2324,8 @@ void RenderProcessHostImpl::RemoveExpectedNavigationToSite(
     BrowserContext* browser_context,
     RenderProcessHost* render_process_host,
     const GURL& site_url) {
-  if (site_url.is_empty())
+  if (!ShouldUseSiteProcessCountTracker(browser_context, render_process_host,
+                                        site_url))
     return;
 
   SiteProcessCountTracker* tracker = static_cast<SiteProcessCountTracker*>(
