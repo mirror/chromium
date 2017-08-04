@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b86bee9_66c554d9",
+        "filename": "cc/paint/paint_image_generator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-04T01:24:56Z",
+      "side": 1,
+      "message": "Inline this?",
+      "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479c7d91_3608a6db",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-04T01:24:56Z",
+      "side": 1,
+      "message": "If we\u0027re going to remove any use of SkImageGenerator, isn\u0027t it weird to defer to \nits comments?",
+      "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b20313_930928c2",
+        "filename": "cc/paint/skia_paint_image_generator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-04T01:24:56Z",
+      "side": 1,
+      "message": "Nit: s/be/by/\n\ns/blink/Blink/",
+      "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399db1fe_05b9532d",
+        "filename": "cc/tiles/image_decode_cache.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-04T01:24:56Z",
+      "side": 1,
+      "message": "Nit: s/its/it\u0027s/",
+      "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905a4320_d047052c",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-04T01:24:56Z",
+      "side": 1,
+      "message": "This seems odd. Generating |image_id| with sk_image_unique_id_ as an input,\nthen possibly setting it on line 343. Could you explain some more?",
+      "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f44c7fd_bf306148",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImageTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-04T01:24:56Z",
+      "side": 1,
+      "message": "Why does this ensure it?",
+      "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94e17dea_762941ed",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-04T01:24:56Z",
+      "side": 0,
+      "message": "Was this just unused code?",
+      "revId": "897b28a31e3ee3730ceec688f53b6d1b5c7e0222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
