@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "318ac290_d12ab8d1",
+        "filename": "ui/display/manager/chromeos/display_configurator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T19:40:13Z",
+      "side": 1,
+      "message": "nit: s/to/will/",
+      "range": {
+        "startLine": 385,
+        "startChar": 27,
+        "endLine": 385,
+        "endChar": 29
+      },
+      "revId": "8f5ac2105897445c153d4cfd8296eeb0072f2bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
