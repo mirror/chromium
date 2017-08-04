@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c6a3564_9f6af9be",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-04T08:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f37846a_be1a5e03",
+      "range": {
+        "startLine": 14,
+        "startChar": 80,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85a002ca_0dce389d",
         "filename": "chrome/browser/android/logo_service.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317b4b40_9d6e5b8e",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-04T08:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85a002ca_0dce389d",
+      "range": {
+        "startLine": 20,
+        "startChar": 50,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "24437186_d71ebda2",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-04T08:40:25Z",
+      "side": 1,
+      "message": "\u003e Hm, I guess to make it non-self-deleting, you\u0027d have to keep a list of pending decode tasks in the LogoDelegate. Not sure how much that would make things better.\n\u003e Anyway, this is no regression compared to the previous state, so anything else can be left as a follow-up.\n\u003e \n\u003e One step back: I\u0027m not entirely convinced we need the timeout at all. What is it guarding against? I think for the UI it won\u0027t make a difference; no logo either way.\n\nThe implication in the old comment was essentially \"bugs in the image decoder\". I don\u0027t know if it\u0027s really important to handle that here.\n\nAlternately, if it\u0027s really important to set a timeout on image decoding, it ought to be a feature of the image decoder.",
+      "parentUuid": "4950053e_00d52392",
+      "range": {
+        "startLine": 39,
+        "startChar": 39,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d42ccc17_32274535",
         "filename": "chrome/browser/android/logo_service.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-04T08:12:26Z",
       "side": 1,
       "message": "If all this gets moved to components, will we even still need the LogoDelegate thing? Seems like we might as well just pass in the ImageDecoder directly?",
+      "range": {
+        "startLine": 70,
+        "startChar": 69,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da48bd7_46d6a751",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-04T08:40:25Z",
+      "side": 1,
+      "message": "If iOS uses LogoService, then we don\u0027t need LogoDelegate, or LogoTracker either (other than maybe as an implementation detail for LogoService)",
+      "parentUuid": "d42ccc17_32274535",
       "range": {
         "startLine": 70,
         "startChar": 69,
@@ -149,6 +245,30 @@
       "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f00d3a24_0acf72f8",
+        "filename": "chrome/browser/android/logo_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-04T08:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40d34a21_55a4878d",
+      "range": {
+        "startLine": 39,
+        "startChar": 37,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
