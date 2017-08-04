@@ -557,9 +557,10 @@ zcr_remote_surface_v1_add_listener(struct zcr_remote_surface_v1 *zcr_remote_surf
 #define ZCR_REMOTE_SURFACE_V1_SET_SYSTEMUI_VISIBILITY 19
 #define ZCR_REMOTE_SURFACE_V1_SET_ALWAYS_ON_TOP 20
 #define ZCR_REMOTE_SURFACE_V1_UNSET_ALWAYS_ON_TOP 21
-#define ZCR_REMOTE_SURFACE_V1_ACK_CONFIGURE 22
-#define ZCR_REMOTE_SURFACE_V1_MOVE 23
-#define ZCR_REMOTE_SURFACE_V1_SET_ORIENTATION 24
+#define ZCR_REMOTE_SURFACE_V1_SET_WINDOW_FLAGS 22
+#define ZCR_REMOTE_SURFACE_V1_ACK_CONFIGURE 23
+#define ZCR_REMOTE_SURFACE_V1_MOVE 24
+#define ZCR_REMOTE_SURFACE_V1_SET_ORIENTATION 25
 
 /**
  * @ingroup iface_zcr_remote_surface_v1
@@ -662,6 +663,10 @@ zcr_remote_surface_v1_add_listener(struct zcr_remote_surface_v1 *zcr_remote_surf
  * @ingroup iface_zcr_remote_surface_v1
  */
 #define ZCR_REMOTE_SURFACE_V1_UNSET_ALWAYS_ON_TOP_SINCE_VERSION 4
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ */
+#define ZCR_REMOTE_SURFACE_V1_SET_WINDOW_FLAGS_SINCE_VERSION 4
 /**
  * @ingroup iface_zcr_remote_surface_v1
  */
@@ -1048,6 +1053,21 @@ zcr_remote_surface_v1_unset_always_on_top(struct zcr_remote_surface_v1 *zcr_remo
 {
 	wl_proxy_marshal((struct wl_proxy *) zcr_remote_surface_v1,
 			 ZCR_REMOTE_SURFACE_V1_UNSET_ALWAYS_ON_TOP);
+}
+
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ *
+ * Request that send flags as hint to the compositor.
+ *
+ * Each field of the flags is just a hint and the compositor is free
+ * to ignore it.
+ */
+static inline void zcr_remote_surface_v1_set_window_flags(
+    struct zcr_remote_surface_v1* zcr_remote_surface_v1,
+    uint32_t flags) {
+  wl_proxy_marshal((struct wl_proxy*)zcr_remote_surface_v1,
+                   ZCR_REMOTE_SURFACE_V1_SET_WINDOW_FLAGS, flags);
 }
 
 /**

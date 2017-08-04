@@ -56,6 +56,11 @@ bool WindowSelectorController::ToggleOverview() {
         std::remove_if(windows.begin(), windows.end(),
                        std::not1(std::ptr_fun(&WindowSelector::IsSelectable)));
     windows.resize(end - windows.begin());
+    end = std::remove_if(windows.begin(), windows.end(),
+                         [](aura::Window* window) {
+                           return window->ShouldSkipWindowSelector();
+                         });
+    windows.resize(end - windows.begin());
 
     if (!Shell::Get()->IsSplitViewModeActive()) {
       // Don't enter overview with no window if the split view mode is inactive.

@@ -2196,6 +2196,12 @@ void remote_surface_unset_always_on_top(wl_client* client,
   GetUserDataAs<ShellSurface>(resource)->SetAlwaysOnTop(false);
 }
 
+void remote_surface_set_window_flags(wl_client* client,
+                                     wl_resource* resource,
+                                     uint32_t window_flags) {
+  GetUserDataAs<ShellSurface>(resource)->SetWindowFlags(window_flags);
+}
+
 void remote_surface_ack_configure(wl_client* client,
                                   wl_resource* resource,
                                   uint32_t serial) {
@@ -2229,6 +2235,7 @@ const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_set_systemui_visibility,
     remote_surface_set_always_on_top,
     remote_surface_unset_always_on_top,
+    remote_surface_set_window_flags,
     remote_surface_ack_configure,
     remote_surface_move,
     remote_surface_set_orientation};

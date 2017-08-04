@@ -278,6 +278,9 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // Returns true if the Window can receive events.
   bool CanReceiveEvents() const;
 
+  // Returns true is this window should not be seen in window selector.
+  bool ShouldSkipWindowSelector() const;
+
   // Does a capture on the window. This does nothing if the window isn't showing
   // (VISIBILITY_SHOWN) or isn't contained in a valid window hierarchy.
   void SetCapture();
