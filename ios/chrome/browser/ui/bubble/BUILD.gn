@@ -12,6 +12,8 @@ source_set("bubble") {
     "bubble_view_anchor_point_provider.h",
     "bubble_view_controller.h",
     "bubble_view_controller.mm",
+    "bubble_view_controller_presenter.h",
+    "bubble_view_controller_presenter.mm",
   ]
   deps = [
     "//base",
