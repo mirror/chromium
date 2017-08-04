@@ -16,6 +16,24 @@
       "revId": "c458d3b44c96c058b992e99f0d11e6448902764c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626ddb4f_3c522a20",
+        "filename": "ui/login/account_picker/md_screen_account_picker.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T23:07:42Z",
+      "side": 1,
+      "message": "maybePreselectPod does not seem to work :/",
+      "parentUuid": "4858a0d2_b02f070c",
+      "revId": "c458d3b44c96c058b992e99f0d11e6448902764c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
