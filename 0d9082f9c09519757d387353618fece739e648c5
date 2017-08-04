@@ -428,6 +428,30 @@
     },
     {
       "key": {
+        "uuid": "b4dc6587_74ad8a3f",
+        "filename": "chrome/test/base/test_chrome_content_browser_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-04T19:41:44Z",
+      "side": 1,
+      "message": "I know, but I decided having two workarounds (One here and one in ProfileNetworkContextService) was a bit much.  But when I removed the other part of the workaround, it reveals yet more unit tests where TestChromeContentBrowserClient would be needed, if I went with this approach.  Since TestingProfile was the root cause of the problem, decided that was the best place to fix things, and fixing things that way required fewer intrusive changes to test, too.",
+      "parentUuid": "8130052c_bda271c2",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "935fbad4_d8a0e875",
         "filename": "chrome/test/base/test_chrome_content_browser_client.h",
         "patchSetId": 8
