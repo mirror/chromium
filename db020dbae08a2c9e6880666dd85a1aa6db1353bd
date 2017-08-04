@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6db08506_312ffb53",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-04T20:58:17Z",
+      "side": 1,
+      "message": "Added observer and value.",
+      "parentUuid": "79684668_b6e543d8",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 6
+      },
+      "revId": "db020dbae08a2c9e6880666dd85a1aa6db1353bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da31fcb1_6e5d121d",
         "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "db020dbae08a2c9e6880666dd85a1aa6db1353bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05812af0_68dd4e4e",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-04T20:58:17Z",
+      "side": 1,
+      "message": "Now handled by value function and observer in properties.",
+      "parentUuid": "da31fcb1_6e5d121d",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 5
+      },
+      "revId": "db020dbae08a2c9e6880666dd85a1aa6db1353bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
