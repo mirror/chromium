@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e494488_d5827722",
+        "filename": "third_party/WebKit/Source/core/dom/ExecutionContext.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-04T05:14:13Z",
+      "side": 1,
+      "message": "I\u0027d prefer not introducing this helper method to avoid mis-use. Given that the usage should be limited to the binding code to handle constructors, you can inline the logic there.",
+      "revId": "5745f6a9101de4c77301e768662cbcc432ea24be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
