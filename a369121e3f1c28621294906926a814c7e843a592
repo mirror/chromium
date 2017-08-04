@@ -46,6 +46,30 @@
       "revId": "a369121e3f1c28621294906926a814c7e843a592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ffe3e81_3a4703c4",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T21:43:46Z",
+      "side": 1,
+      "message": "Mention that to get the custom positioning behavior, the caller will need to pass in null for the anchor_view.\n\nThe goal of these comments is to document the intended behavior and how to use the call. For example if the caller passes in both a view and an anchor rect, the anchor rect is ignored, which could be surprising and forces the caller to dig into the code.",
+      "parentUuid": "26ac82c9_59e81688",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 46
+      },
+      "revId": "a369121e3f1c28621294906926a814c7e843a592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
