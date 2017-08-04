@@ -41,6 +41,11 @@ class GURL;
 - (ProceduralBlock)completionBlockForTriggeringAction:
     (NTPTabOpeningPostOpeningAction)action;
 
+// Returns whether the user should stay on the current visible tab rather than
+// moving to a new tab based on the startup information.
+- (BOOL)shouldStayOnTabWithStartupInformation:
+    (id<StartupInformation>)startupInformation;
+
 @end
 
 #endif  // IOS_CHROME_APP_APPLICATION_DELEGATE_TAB_OPENING_H_
