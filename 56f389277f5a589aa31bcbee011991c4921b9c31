@@ -22,6 +22,30 @@
       "revId": "56f389277f5a589aa31bcbee011991c4921b9c31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01eb0129_ad6fb2b5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/breadcrumbs.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-04T01:54:45Z",
+      "side": 1,
+      "message": "Thanks. Deleted.",
+      "parentUuid": "49c03c91_e8c67788",
+      "range": {
+        "startLine": 11,
+        "startChar": 16,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "56f389277f5a589aa31bcbee011991c4921b9c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
