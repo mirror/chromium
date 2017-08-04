@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e33ee99_b78b0c16",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-04T22:36:11Z",
+      "side": 1,
+      "message": "nit: I wonder if we could get OS_WIN to use the same logic as Linux (i.e. override ShouldForceSoftwareCompositing rather than passing the parameter via a win prop), since it seems more consistent.\n\nMaybe as a follow-up?",
+      "revId": "e435c2b5fc1261f7cf393a16b21d6d3543698f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
