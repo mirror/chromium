@@ -16,9 +16,15 @@
 #include "chrome/profiling/backtrace_storage.h"
 
 namespace base {
+
 class SequencedTaskRunner;
 class SingleThreadTaskRunner;
-}
+
+namespace trace_event {
+class ProcessMemoryMaps;
+}  // namespace trace_event
+
+}  // namespace base
 
 namespace profiling {
 
@@ -35,8 +41,12 @@ class MemlogConnectionManager {
                           BacktraceStorage* backtrace_storage);
   ~MemlogConnectionManager();
 
-  // Dumps the memory log for the given process into |output_file|.
-  void DumpProcess(int32_t sender_id, base::File output_file);
+  // Dumps the memory log for the given process into |output_file|.  This must
+  // be provided the memory map for the given process since that is not tracked
+  // as part of the normal allocation process.
+  void DumpProcess(int32_t sender_id,
+                   const base::trace_event::ProcessMemoryMaps& maps,
+                   base::File output_file);
 
   void OnNewConnection(base::ScopedPlatformFile file, int sender_id);
 

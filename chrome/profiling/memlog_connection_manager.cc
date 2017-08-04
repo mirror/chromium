@@ -8,6 +8,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread.h"
+#include "base/trace_event/process_memory_maps.h"
 #include "chrome/profiling/allocation_tracker.h"
 #include "chrome/profiling/json_exporter.h"
 #include "chrome/profiling/memlog_receiver_pipe.h"
@@ -92,8 +93,10 @@ void MemlogConnectionManager::OnConnectionCompleteThunk(
                                  base::Unretained(this), sender_id));
 }
 
-void MemlogConnectionManager::DumpProcess(int32_t sender_id,
-                                          base::File output_file) {
+void MemlogConnectionManager::DumpProcess(
+    int32_t sender_id,
+    const base::trace_event::ProcessMemoryMaps& maps,
+    base::File output_file) {
   base::AutoLock l(connections_lock_);
 
   if (connections_.empty()) {
@@ -117,7 +120,7 @@ void MemlogConnectionManager::DumpProcess(int32_t sender_id,
 
   std::ostringstream oss;
   ExportAllocationEventSetToJSON(sender_id, connection->tracker.live_allocs(),
-                                 oss);
+                                 maps, oss);
   std::string reply = oss.str();
   output_file.WriteAtCurrentPos(reply.c_str(), reply.size());
 }

@@ -4,11 +4,47 @@
 
 #include "chrome/profiling/memlog_impl.h"
 
+#include "base/trace_event/memory_dump_request_args.h"
+#include "base/trace_event/process_memory_maps.h"
 #include "chrome/profiling/memlog_receiver_pipe.h"
 #include "content/public/child/child_thread.h"
+#include "content/public/common/service_names.mojom.h"
 #include "mojo/public/cpp/system/platform_handle.h"
+#include "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h"
+
+using base::trace_event::ProcessMemoryMaps;
 
 namespace profiling {
+
+namespace {
+
+void ProcessMemoryMapFromMojo(
+    const std::vector<memory_instrumentation::mojom::VmRegionPtr>& regions,
+    ProcessMemoryMaps* maps) {
+  ProcessMemoryMaps::VMRegion vm;
+  for (const auto& region : regions) {
+    vm.start_address = region->start_address;
+    vm.size_in_bytes = region->size_in_bytes;
+    vm.module_timestamp = region->module_timestamp;
+    vm.protection_flags = region->protection_flags;
+    vm.mapped_file = region->mapped_file;
+    vm.byte_stats_private_dirty_resident =
+        region->byte_stats_private_dirty_resident;
+    vm.byte_stats_private_clean_resident =
+        region->byte_stats_private_clean_resident;
+    vm.byte_stats_shared_dirty_resident =
+        region->byte_stats_shared_dirty_resident;
+    vm.byte_stats_shared_clean_resident =
+        region->byte_stats_shared_clean_resident;
+    vm.byte_stats_swapped = region->byte_stats_swapped;
+    vm.byte_stats_proportional_resident =
+        region->byte_stats_proportional_resident;
+
+    maps->AddVMRegion(vm);
+  }
+}
+
+}  // namespace
 
 MemlogImpl::MemlogImpl()
     : io_runner_(content::ChildThread::Get()->GetIOTaskRunner()),
@@ -42,10 +78,42 @@ void MemlogImpl::DumpProcess(int32_t sender_id,
     return;
   }
   base::File file(platform_file);
+
+  // Need a memory map to make sense of the dump. The dump will be triggered
+  // in the memory map global dump callback.
+  // TODO(brettw) unretained is not safe.
+  // TODO(brettw) this should be a OnceCallback to avoid base::Passed.
+  memory_instrumentation::MemoryInstrumentation::GetInstance()
+      ->RequestGlobalDump(
+          base::trace_event::MemoryDumpLevelOfDetail::DETAILED,
+          base::Bind(&MemlogImpl::OnGlobalDumpComplete, base::Unretained(this),
+                     sender_id, base::Passed(std::move(file))));
+}
+
+void MemlogImpl::OnGlobalDumpComplete(
+    int32_t sender_id,
+    base::File file,
+    bool success,
+    memory_instrumentation::mojom::GlobalMemoryDumpPtr dump) {
+  // Find the process's memory dump we want.
+  memory_instrumentation::mojom::ProcessMemoryDump* process_dump = nullptr;
+  for (const auto& proc : dump->process_dumps) {
+    if (proc->pid == static_cast<base::ProcessId>(sender_id)) {
+      process_dump = &*proc;
+      break;
+    }
+  }
+  if (!process_dump) {
+    LOG(ERROR) << "Don't have a memory dump for PID " << sender_id;
+    return;
+  }
+
+  ProcessMemoryMaps maps;
+  ProcessMemoryMapFromMojo(process_dump->os_dump->memory_maps, &maps);
   io_runner_->PostTask(
       FROM_HERE, base::BindOnce(&MemlogConnectionManager::DumpProcess,
                                 base::Unretained(connection_manager_.get()),
-                                sender_id, std::move(file)));
+                                sender_id, std::move(maps), std::move(file)));
 }
 
 }  // namespace profiling
