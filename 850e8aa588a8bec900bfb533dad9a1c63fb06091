@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6af739a7_c66fc98e",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-04T11:02:20Z",
+      "side": 0,
+      "message": "Those lines are being removed by crrev.com/c/601355",
+      "range": {
+        "startLine": 193,
+        "startChar": 1,
+        "endLine": 195,
+        "endChar": 69
+      },
+      "revId": "850e8aa588a8bec900bfb533dad9a1c63fb06091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deabe904_b7cb338b",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-04T11:02:20Z",
+      "side": 0,
+      "message": "ditto",
+      "range": {
+        "startLine": 237,
+        "startChar": 1,
+        "endLine": 239,
+        "endChar": 63
+      },
+      "revId": "850e8aa588a8bec900bfb533dad9a1c63fb06091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

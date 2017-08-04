@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "313d1dc6_801a94c2",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-04T11:02:20Z",
+      "side": 1,
+      "message": "My patch has been reverted. kSigninPromoSecondaryButtonId doesn\u0027t exist anymore in the top of tree.",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 61
+      },
+      "revId": "f3b1078c85d3f9bafa2a5e5ec0202467ef508c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
