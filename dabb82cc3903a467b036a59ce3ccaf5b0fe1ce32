@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52b223f7_9489b69c",
+        "filename": "mojo/public/tools/fuzzers/mojo_fuzzer_message_dump.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-04T22:55:09Z",
+      "side": 1,
+      "message": "I don\u0027t think you need remove_reference for all of these.\n\nAlso, you can just do:\n\ndecltype(fuzz::mojom::FuzzStruct::fuzz_primitive_array) primitive_array;\n\nInstead of going through FuzzStructPtr which looks a little strange.",
+      "range": {
+        "startLine": 110,
+        "startChar": 6,
+        "endLine": 110,
+        "endChar": 56
+      },
+      "revId": "dabb82cc3903a467b036a59ce3ccaf5b0fe1ce32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
