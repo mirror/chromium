@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34e64a82_bd8cc7df",
+        "filename": "chrome/browser/crash_upload_list/crash_upload_list_crashpad.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-04T12:45:35Z",
+      "side": 1,
+      "message": "nit:\n  reports-\u003eassign(reports_pointer, reports_pointer + report_count);",
+      "revId": "f98e6f5eb0324cef46b85def21368dcb8790ea35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0597aa_3c593bcf",
+        "filename": "chrome/browser/crash_upload_list/crash_upload_list_crashpad.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-04T12:45:35Z",
+      "side": 1,
+      "message": "i was just about to comment on this being std::string, but see you already have in the .h. :-)",
+      "range": {
+        "startLine": 30,
+        "startChar": 31,
+        "endLine": 30,
+        "endChar": 39
+      },
+      "revId": "f98e6f5eb0324cef46b85def21368dcb8790ea35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51e57f7_113dd1ee",
+        "filename": "components/crash/content/app/crashpad.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-04T12:45:35Z",
+      "side": 1,
+      "message": "nit: blank line before this",
+      "revId": "f98e6f5eb0324cef46b85def21368dcb8790ea35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
