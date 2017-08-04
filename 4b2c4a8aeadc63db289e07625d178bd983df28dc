@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee6b4ca7_398b2de3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-04T20:51:21Z",
+      "side": 1,
+      "message": "Heh, people don\u0027t often change the name in TODO(...) :-)",
+      "revId": "4b2c4a8aeadc63db289e07625d178bd983df28dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
