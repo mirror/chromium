@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f27fcced_19f5d154",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-04T10:39:06Z",
+      "side": 1,
+      "message": "\"TreeBoundaryCrossing\"",
+      "revId": "7440f9642f4405a4d72ef64d827486ed9917d587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f60c542c_2ad2b132",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-04T10:39:06Z",
+      "side": 1,
+      "message": "Just to make sure I understand, the O(N^2) was about inserting new tree-scopes into the document-ordered set of boundary-crossing scopes and not about rule matching?",
+      "revId": "7440f9642f4405a4d72ef64d827486ed9917d587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a1d81f7_22bebc12",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/v0/slotted-pseudo-element-in-v0v1-mixed.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-04T10:39:06Z",
+      "side": 1,
+      "message": "These tabs should be spaces?",
+      "revId": "7440f9642f4405a4d72ef64d827486ed9917d587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
