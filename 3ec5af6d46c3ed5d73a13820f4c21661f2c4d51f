@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5dad44d4_9ff8b881",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-04T21:24:52Z",
+      "side": 1,
+      "message": "nit: GetWallpaperDarkenColor and update the comment above to avoid the term \"overlay\" in favor of \"darken\" everywhere",
+      "revId": "3ec5af6d46c3ed5d73a13820f4c21661f2c4d51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcca7444_738e50cf",
         "filename": "ash/wallpaper/wallpaper_view.cc",
         "patchSetId": 4
