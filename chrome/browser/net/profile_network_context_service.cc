@@ -20,7 +20,6 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/network_service_instance.h"
-#include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/service_names.mojom.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
@@ -80,40 +79,45 @@ ProfileNetworkContextService::ProfileNetworkContextService(Profile* profile)
 
 ProfileNetworkContextService::~ProfileNetworkContextService() {}
 
-void ProfileNetworkContextService::SetUpProfileIODataMainContext(
-    content::mojom::NetworkContextRequest* network_context_request,
-    content::mojom::NetworkContextParamsPtr* network_context_params) {
-  DCHECK(!profile_io_data_main_network_context_);
-  *network_context_request =
-      mojo::MakeRequest(&profile_io_data_main_network_context_);
-  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
-    *network_context_params = CreateMainNetworkContextParams(profile_);
-  } else {
-    // Just use default if network service is enabled, to avoid the legacy
-    // in-process URLRequestContext from fighting with the NetworkService over
-    // ownership of on-disk files.
-    *network_context_params = content::mojom::NetworkContextParams::New();
-  }
-}
-
-content::mojom::NetworkContext* ProfileNetworkContextService::MainContext() {
-  // ProfileIOData must be initialized before this call.
-  DCHECK(profile_io_data_main_network_context_);
-  if (!base::FeatureList::IsEnabled(features::kNetworkService))
-    return profile_io_data_main_network_context_.get();
-
-  return content::BrowserContext::GetDefaultStoragePartition(profile_)
-      ->GetNetworkContext();
-}
-
 content::mojom::NetworkContextPtr
 ProfileNetworkContextService::CreateMainNetworkContext() {
-  DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
+  DCHECK(!profile_io_data_main_network_context_);
+
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+    profile_io_data_context_request_ =
+        mojo::MakeRequest(&profile_io_data_main_network_context_);
+    return std::move(profile_io_data_main_network_context_);
+  }
 
   content::mojom::NetworkContextPtr network_context;
   content::GetNetworkService()->CreateNetworkContext(
       MakeRequest(&network_context), CreateMainNetworkContextParams(profile_));
   return network_context;
+}
+
+void ProfileNetworkContextService::SetUpProfileIODataMainContext(
+    content::mojom::NetworkContextRequest* network_context_request,
+    content::mojom::NetworkContextParamsPtr* network_context_params) {
+  DCHECK(network_context_request);
+  DCHECK(network_context_params);
+
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+    // This should already have been initialized in CreateMainNetworkContext(),
+    // when the network service is disabled.
+    DCHECK(profile_io_data_context_request_.is_pending());
+    *network_context_request = std::move(profile_io_data_context_request_);
+    *network_context_params = CreateMainNetworkContextParams(profile_);
+    return;
+  }
+
+  DCHECK(!profile_io_data_context_request_.is_pending());
+  *network_context_request =
+      mojo::MakeRequest(&profile_io_data_main_network_context_);
+
+  // Just use default if network service is enabled, to avoid the legacy
+  // in-process URLRequestContext from fighting with the NetworkService over
+  // ownership of on-disk files.
+  *network_context_params = content::mojom::NetworkContextParams::New();
 }
 
 void ProfileNetworkContextService::RegisterProfilePrefs(
