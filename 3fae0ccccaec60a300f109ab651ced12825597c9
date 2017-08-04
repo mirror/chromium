@@ -22,6 +22,30 @@
       "revId": "3fae0ccccaec60a300f109ab651ced12825597c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deba33ed_92e38f3a",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-04T20:56:19Z",
+      "side": 1,
+      "message": "I\u0027m a little confused still, if the spec says only the first expect-ct header should be processed, and marking it non-coalescing does that, what is the todo referring to?",
+      "parentUuid": "c26ceb29_df537ebf",
+      "range": {
+        "startLine": 879,
+        "startChar": 20,
+        "endLine": 879,
+        "endChar": 0
+      },
+      "revId": "3fae0ccccaec60a300f109ab651ced12825597c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
