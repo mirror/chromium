@@ -954,7 +954,8 @@ Extensions.ExtensionServer = class extends Common.Object {
         return this._status.E_FAILED(frame.url + ' has no execution context');
     }
 
-    context.evaluate(expression, 'extension', exposeCommandLineAPI, true, returnByValue, false, false, onEvaluate);
+    context.evaluate(
+        expression, 'extension', exposeCommandLineAPI, true, returnByValue, false, false, false, onEvaluate);
 
     /**
      * @param {?SDK.RemoteObject} result

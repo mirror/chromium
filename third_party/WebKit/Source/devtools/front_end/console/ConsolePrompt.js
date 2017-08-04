@@ -200,10 +200,45 @@ Console.ConsolePrompt = class extends UI.Widget {
     this.setText('');
     var currentExecutionContext = UI.context.flavor(SDK.ExecutionContext);
     if (currentExecutionContext) {
-      ConsoleModel.consoleModel.evaluateCommandInConsole(currentExecutionContext, text, useCommandLineAPI);
-      if (Console.ConsolePanel.instance().isShowing())
-        Host.userMetrics.actionTaken(Host.UserMetrics.Action.CommandEvaluatedInConsolePanel);
+      var msg = ConsoleModel.consoleModel.addCommandMessage(currentExecutionContext, text);
+      var preparedText = SDK.RuntimeModel.wrapObjectLiteralExpressionIfNeeded(text, true);
+      var preparedCommandPromise;
+      var wrapWithAsyncFunction = this._shouldTryRunAsAsync(preparedText);
+      if (wrapWithAsyncFunction) {
+        preparedCommandPromise = Formatter.formatterWorkerPool()
+                                     .preprocessTopLevelAwaitExpressions(preparedText)
+                                     .then(result => result || text);
+      } else {
+        preparedCommandPromise = Promise.resolve(preparedText);
+      }
+      preparedCommandPromise.then(code => {
+        ConsoleModel.consoleModel.evaluateCommandInConsole(
+            /** @type {!SDK.ExecutionContext} */ (currentExecutionContext), msg, code, useCommandLineAPI,
+            wrapWithAsyncFunction, text);
+        if (Console.ConsolePanel.instance().isShowing())
+          Host.userMetrics.actionTaken(Host.UserMetrics.Action.CommandEvaluatedInConsolePanel);
+      });
     }
+  }
+
+  /**
+   * @param {string} code
+   * @return {boolean}
+   */
+  _shouldTryRunAsAsync(code) {
+    // Code for sure doesn't contain any top-level await keyword.
+    if (code.indexOf('await ') === -1)
+      return false;
+    try {
+      // Code can be compiled as non-async function.
+      Function(code);
+      return false;
+    } catch (e) {
+      // Code contains not-related to await keyword syntax errors.
+      if (e.message !== 'Unexpected identifier' && e.message !== 'await is only valid in async function')
+        return false;
+    }
+    return true;
   }
 
   _enterProcessedForTest() {
