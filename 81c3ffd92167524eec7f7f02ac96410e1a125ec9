@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ba2692c_c11f64ce",
+        "filename": "tools/clang/traffic_annotation_extractor/tests/test-original.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-04T10:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "490d07da_bf2ad993",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 16
+      },
+      "revId": "81c3ffd92167524eec7f7f02ac96410e1a125ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4831acca_20f8c731",
         "filename": "tools/clang/traffic_annotation_extractor/tests/test-original.cc",
         "patchSetId": 2
@@ -80,6 +104,30 @@
       "revId": "81c3ffd92167524eec7f7f02ac96410e1a125ec9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7cdc64b_c2c24b8f",
+        "filename": "tools/clang/traffic_annotation_extractor/traffic_annotation_extractor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-04T10:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b253e4f5_901f2cc0",
+      "range": {
+        "startLine": 224,
+        "startChar": 4,
+        "endLine": 224,
+        "endChar": 47
+      },
+      "revId": "81c3ffd92167524eec7f7f02ac96410e1a125ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
