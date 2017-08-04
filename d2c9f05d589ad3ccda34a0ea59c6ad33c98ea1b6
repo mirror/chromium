@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a540ab1e_55d89cc1",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-04T00:46:41Z",
+      "side": 1,
+      "message": "Yes that\u0027s possible, I added a comment and a new DCHECK to explain how that\u0027s handled safely.",
+      "parentUuid": "99b334e5_eee62717",
+      "revId": "d2c9f05d589ad3ccda34a0ea59c6ad33c98ea1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a773ba3_e3f6e004",
         "filename": "media/gpu/android/media_codec_video_decoder.h",
         "patchSetId": 7
