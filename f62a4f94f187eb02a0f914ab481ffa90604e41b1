@@ -209,6 +209,24 @@
       "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61d3f102_e6e5d2d4",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImageTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-04T22:47:16Z",
+      "side": 1,
+      "message": "What I meant was: why does image_-\u003eFrameAtIndex(index) ensure anything? Should it be\nrenamed to EnsureFrameAtIndex also?",
+      "parentUuid": "91c55c60_4f247740",
+      "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
