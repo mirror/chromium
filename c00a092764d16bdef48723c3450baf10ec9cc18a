@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cac0a607_c503d047",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-04T05:18:08Z",
+      "side": 1,
+      "message": "ooooh this is exciting! can probs delete this method entirely now since it\u0027s private. could you add a todo on this method to delete it and replace it with calls to ParseLonghandViaAPI? which... could actually be renamed to just ParseLonghand after that",
+      "revId": "c00a092764d16bdef48723c3450baf10ec9cc18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811d5bb7_61bf9a37",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPICustom.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-04T05:18:08Z",
+      "side": 1,
+      "message": "could you please add a comment here that says this is legacy parsing code?",
+      "revId": "c00a092764d16bdef48723c3450baf10ec9cc18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6309fe1f_efd2bbf5",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPICustom.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-04T05:18:08Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "c00a092764d16bdef48723c3450baf10ec9cc18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
