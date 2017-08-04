@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b5cabcb_57ee3be7",
+        "filename": "components/password_manager/core/browser/password_reuse_detection_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-04T20:55:16Z",
+      "side": 1,
+      "message": "Shall we move this under #if defined(SAFE_BROWSING_DB_LOCAL)?\nOr are we planing to log events for CLANK too?",
+      "revId": "caa6a4a5ac8ba236bbcfde96326770ecaaddc5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
