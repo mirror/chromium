@@ -202,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "cd25f2c0_e3b87be3",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-04T17:45:12Z",
+      "side": 1,
+      "message": "The issue I had with putting this in ~Thread() is that by the time ~Thread() gets called, |Thread::outer_| has been set to null, so I wouldn\u0027t be able to access |outer_-\u003ejoin_called_for_testing_| and |outer_-\u003eshould_exit_| within ~Thread.",
+      "parentUuid": "d0eef604_f1322c41",
+      "range": {
+        "startLine": 247,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 42
+      },
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4829f623_130ec978",
         "filename": "base/task_scheduler/scheduler_worker.cc",
         "patchSetId": 22

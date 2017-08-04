@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9134facd_22349259",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-04T17:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b8828ee_40008efc",
+      "revId": "052e05e6a03b09c1b58492149ce0ac134171a82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe1d169b_d3bd4591",
         "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
         "patchSetId": 27
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f22ac9ae_3317cf51",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-04T17:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe1d169b_d3bd4591",
+      "revId": "052e05e6a03b09c1b58492149ce0ac134171a82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ef937b8_80e34b9e",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 27
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-04T16:03:18Z",
       "side": 1,
       "message": "It\u0027s true that it can return nullptr twice in a row, but not without having been popped from the idle stack, no? i.e., it can be woken up to do work and then find no work because it was processed by another thread before, but it\u0027s still no longer on idle stack?\n\nYou also mentioned spurious wakes up but that\u0027s a problem with ConditionVariables, not with WaitableEvent::TimedWait() (e.g. see https://cs.chromium.org/chromium/src/base/synchronization/waitable_event_win.cc?rcl\u003dbbdda25082ad81b0ed6d70a8c2cd15033df8979c\u0026l\u003d87).",
+      "revId": "052e05e6a03b09c1b58492149ce0ac134171a82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "499da69c_805aad0f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-04T17:45:12Z",
+      "side": 1,
+      "message": "It\u0027s true the worker would no longer be on the idle stack if it were woken up by WakeUpOneWorker(). (I actually didn\u0027t think of this case until I asked Francois about your comment - I\u0027ll add some text about this in the comment)\n\nBut, if the worker got woken up due to the sleep timeout expiring, it would still be on the idle stack. When it calls GetWork() and if CanCleanup() returns false, then it\u0027ll try to add to idle stack while already being on it.",
+      "parentUuid": "7ef937b8_80e34b9e",
       "revId": "052e05e6a03b09c1b58492149ce0ac134171a82e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
