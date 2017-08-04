@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5584e72_b9d7b800",
+        "filename": "BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-04T00:25:52Z",
+      "side": 1,
+      "message": "I think you ended up landing this erroneously :)\n\nninja: Entering directory `out/Debug\u0027\n[1/1] Regenerating ninja files\nfoobar",
+      "revId": "322a546987240f49b57e4408edb0c987d62ba968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
