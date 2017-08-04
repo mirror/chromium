@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3875828_2e5ebcdc",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioBuffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-04T16:19:21Z",
+      "side": 1,
+      "message": "Suggestion: kUninitialize?",
+      "range": {
+        "startLine": 54,
+        "startChar": 47,
+        "endLine": 54,
+        "endChar": 62
+      },
+      "revId": "7fa38df962fe73bc2d86b1b4790cb0cb440acb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
