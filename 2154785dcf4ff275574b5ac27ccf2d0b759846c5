@@ -94,6 +94,30 @@
       "revId": "2154785dcf4ff275574b5ac27ccf2d0b759846c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c885a3a_49ecf26c",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-04T22:12:40Z",
+      "side": 1,
+      "message": "I saw this code and my suggestion above was also based on this.\nI think you may do all required staff by analyzing only has_answer_card\nIIUC your code has_answer_card is only set when all required headers are parsed.\n\nSo based on this your code here should look:\n\nL133\nif (!has_answer_card) {\n  ...\n}\nL137\nDCHECK(!result_title.empty());\nDCHECK(!issued_query.empty())",
+      "parentUuid": "09f60b20_28ada535",
+      "range": {
+        "startLine": 133,
+        "startChar": 52,
+        "endLine": 133,
+        "endChar": 72
+      },
+      "revId": "2154785dcf4ff275574b5ac27ccf2d0b759846c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
