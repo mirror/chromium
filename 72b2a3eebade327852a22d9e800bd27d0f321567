@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb325a4b_99e07e45",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T15:37:00Z",
+      "side": 1,
+      "message": "If we don\u0027t return here the function will end up calling continueUserActivityURL on line 149 which will either return NO or present a new tab. I will add a comment.",
+      "parentUuid": "1736d06f_7ac5100f",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95659fa2_63439ce6",
         "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T13:11:31Z",
       "side": 1,
       "message": "Something about this flow feels wrong to me.  I\u0027ll think about how to best describe my concerns.",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "250ec30f_075ded36",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T15:37:00Z",
+      "side": 1,
+      "message": "Ack. \n\nTo also explain a little more of my thought process I was hoping to make the least intrusive change as I could while also putting my changes in the appropriate context. For example AppStartupParameters is specifically for parameters received from outside apps at startup so I figured that I would need to put any flags and extra parameters there. This function seemed to be about evaluating launch parameters when deciding to open a tab, which is why I thought this logic might make sense to live here. However the problem I ran into is that UserActivityHandler and URLOpener always attempt to open a new tab when we handle startup information so I thought it might be beneficial to introduce a new tab opener function that lets us know if we should stay on the tab based on startup information.",
+      "parentUuid": "95659fa2_63439ce6",
       "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0e965f6d_b5f26bf0",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2379,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T15:37:00Z",
+      "side": 1,
+      "message": "That\u0027s a good point. Would you recommend changing the name of the function or removing from it into its own separate function the logic to invoke PaymentRequest?",
+      "parentUuid": "28ef6094_ebddaf5f",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4697a9d5_9211f630",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-04T13:11:31Z",
       "side": 1,
       "message": "It looks like this app can only handle a single in-flight request at a time.  Is that an intentional limitation?  If so, we should document that in the header somewhere.\n\nRight now it looks like weird things will happen if the app somehow triggers more than one request at a time.  Should there be DCHECKs to try and catch that?",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ca9b28_45fc318a",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T15:37:00Z",
+      "side": 1,
+      "message": "Yes that is an intentional limitation. And agreed on both points, I have added an early return in the LaunchIOSPaymentInstrument function if the delegate or payment request ID are non-null or non-empty respectively. Does that work?",
+      "parentUuid": "4697a9d5_9211f630",
       "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "25b0e913_0882f2da",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T15:37:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98dda2de_41d5ce06",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1521c43c_38e9e4d2",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-04T13:11:31Z",
       "side": 1,
       "message": "Why does this need to be exposed publicly?",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c68f87b_acf6e1b2",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T15:37:00Z",
+      "side": 1,
+      "message": "This is used in main_controller.mm in the shouldStayOnTabWithStartupInformation function. We check to see that the launcher\u0027s payment request ID is equal to the payment request ID sent from the calling app.",
+      "parentUuid": "1521c43c_38e9e4d2",
       "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "557d56d3_dd5bd395",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T15:37:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac437da3_9f752123",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1d77b1a_f41ffbc5",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
         "patchSetId": 5
@@ -132,6 +258,24 @@
       "writtenOn": "2017-08-04T13:11:31Z",
       "side": 1,
       "message": "Holding a raw pointer here seems scary -- what guarantees can we make about the lifetime of this delegate?  What happens if the user switches back to Chrome and closes the tab that initiated the payment request?  Would that destroy |delegate_| and leave a dangling pointer?\n\nIs there any way to tell this IOSPaymentInstrumentLauncher to forget about an in-flight request?  I don\u0027t see any APIs for that on this class -- should that exist?",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d360462_dcc0d482",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T15:37:00Z",
+      "side": 1,
+      "message": "As I mentioned in the last comment I added an if statement to the beginning of the LaunchIOSPaymentInstrument function that checks to see if current delegate is null and the payment request ID is empty, if so we cancel the request by returning. I can also add a similar check to ReceiveResponseFromIOSPaymentInstrument such that if the delegate is null we cancel the request to receive the response. On your point about raw pointers that\u0027s a good point. If the user closes the tab that will cancel the current PaymentRequest which owns the PaymentInstrument delegate used here meaning this pointer would have garbage value. I don\u0027t know if owning the delegate instead would make more sense, but perhaps my suggestion from earlier could work? Making sure the delegate is non-null before making the call to ReceieveResponseFromIOSPaymentInstrument. In fact we could make this check in main_controller.mm when we call shouldStayOnTab and if the delegate is null we can return NO. What do you think?",
+      "parentUuid": "b1d77b1a_f41ffbc5",
       "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
