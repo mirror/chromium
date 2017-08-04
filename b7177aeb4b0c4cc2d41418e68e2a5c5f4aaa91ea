@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "f1c963af_b5ee6aae",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-04T10:12:33Z",
+      "side": 1,
+      "message": "UI stuff like this tends to be quite annoying to test. You can look at local_ntp_uitest.cc for some examples, but I\u0027m not sure it\u0027s worth the effort here.\nAt the least, we should add a \"smoke test\" that verifies the page loads without errors (with or without voice search). Examples for that are in local_ntp_browsertest.cc. Doesn\u0027t need to be in this CL though.",
+      "parentUuid": "513478bd_3058adc9",
+      "revId": "b7177aeb4b0c4cc2d41418e68e2a5c5f4aaa91ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7174287_16a22dd1",
         "filename": "chrome/browser/resources/local_ntp/voice.css",
         "patchSetId": 3
