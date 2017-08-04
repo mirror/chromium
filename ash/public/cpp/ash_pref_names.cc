@@ -49,6 +49,13 @@ const char kLogoutDialogDurationMs[] = "logout_dialog_duration_ms";
 // A dictionary pref that maps wallpaper file paths to their prominent colors.
 const char kWallpaperColors[] = "ash.wallpaper.prominent_colors";
 
+// Boolean pref indicating whether a user has enabled the bluetooth adapter.
+const char kBluetoothAdapterEnabled[] = "settings.bluetooth.adapter_enabled";
+
+// Boolean pref indicating system-wide setting for bluetooth adapter power.
+const char kSystemBluetoothAdapterEnabled[] =
+    "settings.bluetooth.system.adapter_enabled";
+
 }  // namespace prefs
 
 }  // namespace ash

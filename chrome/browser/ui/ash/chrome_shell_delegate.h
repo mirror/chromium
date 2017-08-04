@@ -11,6 +11,7 @@
 #include "ash/shell_delegate.h"
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "components/user_manager/user_manager.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 
@@ -73,6 +74,8 @@ class ChromeShellDelegate : public ash::ShellDelegate,
 
  private:
   void PlatformInit();
+
+  PrefService* GetPrefServiceByUser(const user_manager::User* const user) const;
 
   content::NotificationRegistrar registrar_;
 

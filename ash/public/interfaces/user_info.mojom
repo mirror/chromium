@@ -44,4 +44,5 @@ struct UserInfo {
   string display_name;
   string display_email;
   gfx.mojom.ImageSkia avatar;
+  bool is_new_profile;
 };

@@ -12,6 +12,7 @@
 #include "ash/ash_view_ids.h"
 #include "ash/metrics/user_metrics_recorder.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/bluetooth/tray_bluetooth_helper.h"
@@ -540,8 +541,11 @@ TrayBluetooth::~TrayBluetooth() {
 
 views::View* TrayBluetooth::CreateDefaultView(LoginStatus status) {
   CHECK(default_ == nullptr);
+  SessionController* session_controller = Shell::Get()->session_controller();
   default_ = new tray::BluetoothDefaultView(this);
-  default_->SetEnabled(status != LoginStatus::LOCKED);
+  default_->SetEnabled(status != LoginStatus::LOCKED &&
+                       (!session_controller->IsActiveUserSessionStarted() ||
+                        session_controller->IsUserPrimary()));
   default_->Update();
   return default_;
 }
