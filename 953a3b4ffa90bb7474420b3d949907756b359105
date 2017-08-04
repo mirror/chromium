@@ -70,6 +70,30 @@
       "revId": "953a3b4ffa90bb7474420b3d949907756b359105",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba347d4_dc80039a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-transforms.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-04T15:10:27Z",
+      "side": 1,
+      "message": "Mostly done, but perspective is causing problems with pixel-blending (as was rotate, I had to switch from Z to X axis for that.). Suggestions welcome, but #testing says there is no general solution in WPT yet for allowing fuzzy edges.",
+      "parentUuid": "7aff3783_f8011b9d",
+      "range": {
+        "startLine": 95,
+        "startChar": 43,
+        "endLine": 95,
+        "endChar": 48
+      },
+      "revId": "953a3b4ffa90bb7474420b3d949907756b359105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
