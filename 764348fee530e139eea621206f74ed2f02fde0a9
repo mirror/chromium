@@ -141,6 +141,24 @@
       "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0450542_07a68f0b",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-04T05:31:42Z",
+      "side": 1,
+      "message": "I don\u0027t think that didCommitNavigation: is called for client side redirects, but please don\u0027t quote me on that.",
+      "parentUuid": "068f4b9f_14697297",
+      "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
