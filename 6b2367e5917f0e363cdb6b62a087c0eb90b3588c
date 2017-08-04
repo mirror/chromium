@@ -22,6 +22,30 @@
       "revId": "6b2367e5917f0e363cdb6b62a087c0eb90b3588c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8fb537_58e4ca60",
+        "filename": "ios/chrome/browser/experimental_flags.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-04T10:06:14Z",
+      "side": 0,
+      "message": "There is a Finch config PasswordGenerationIOS.json for generation on IOS.\n\nCorrectly do I understand that we will be able to use Finch configs together with Features?",
+      "parentUuid": "1eda09fd_694e8145",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 63
+      },
+      "revId": "6b2367e5917f0e363cdb6b62a087c0eb90b3588c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

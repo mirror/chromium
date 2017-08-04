@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6625e942_0d92398a",
+        "filename": "ios/chrome/browser/experimental_flags.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-04T10:06:14Z",
+      "side": 1,
+      "message": "Could you please change return value to false, now generation is not ready for IOS.",
+      "range": {
+        "startLine": 149,
+        "startChar": 8,
+        "endLine": 149,
+        "endChar": 13
+      },
+      "revId": "1365499ed083893c0e299ff42457dae8a3033d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
