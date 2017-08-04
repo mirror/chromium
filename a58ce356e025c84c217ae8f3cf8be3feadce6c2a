@@ -34,6 +34,24 @@
       "revId": "a58ce356e025c84c217ae8f3cf8be3feadce6c2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9435f5bf_62a488b8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node_offset_mapping_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-04T22:16:06Z",
+      "side": 1,
+      "message": "Oh, I wasn\u0027t aware they were already covered, thank you, really lgtm!!",
+      "parentUuid": "82afb20e_b9df2e30",
+      "revId": "a58ce356e025c84c217ae8f3cf8be3feadce6c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
