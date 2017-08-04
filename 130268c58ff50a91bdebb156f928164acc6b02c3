@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "4a4d1317_c8937d6a",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-04T19:29:33Z",
+      "side": 1,
+      "message": "There\u0027s no need to call this function explicitly - it\u0027s already called in WeakPtrFactory\u0027s destructor.",
+      "parentUuid": "a7394378_3acddaf7",
+      "range": {
+        "startLine": 533,
+        "startChar": 20,
+        "endLine": 533,
+        "endChar": 59
+      },
+      "revId": "130268c58ff50a91bdebb156f928164acc6b02c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fdad700_bc67329a",
         "filename": "components/cryptauth/secure_channel.cc",
         "patchSetId": 2
@@ -178,6 +202,30 @@
       "writtenOn": "2017-08-04T19:04:19Z",
       "side": 1,
       "message": "Please add a \"invalidate weak pointers\" method call to the destructor of SecureChannel, as is done in ~BluetoothLowEnergyWeaveClientConnection().",
+      "range": {
+        "startLine": 180,
+        "startChar": 6,
+        "endLine": 180,
+        "endChar": 15
+      },
+      "revId": "130268c58ff50a91bdebb156f928164acc6b02c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf58851_ba5bd028",
+        "filename": "components/cryptauth/secure_channel.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-04T19:29:33Z",
+      "side": 1,
+      "message": "There\u0027s no need to call this function explicitly - it\u0027s already called in WeakPtrFactory\u0027s destructor.",
+      "parentUuid": "7fdad700_bc67329a",
       "range": {
         "startLine": 180,
         "startChar": 6,
