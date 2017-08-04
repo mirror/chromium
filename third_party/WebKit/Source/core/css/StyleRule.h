@@ -75,15 +75,10 @@ class CORE_EXPORT StyleRuleBase
   DEFINE_INLINE_TRACE_AFTER_DISPATCH() {}
   void FinalizeGarbageCollectedObject();
 
-  // ~StyleRuleBase should be public, because non-public ~StyleRuleBase
-  // causes C2248 error : 'blink::StyleRuleBase::~StyleRuleBase' : cannot
-  // access protected member declared in class 'blink::StyleRuleBase' when
-  // compiling 'source\wtf\refcounted.h' by using msvc.
-  ~StyleRuleBase() {}
-
  protected:
   StyleRuleBase(RuleType type) : type_(type) {}
   StyleRuleBase(const StyleRuleBase& rule) : type_(rule.type_) {}
+  ~StyleRuleBase() {}
 
  private:
   CSSRule* CreateCSSOMWrapper(CSSStyleSheet* parent_sheet,
