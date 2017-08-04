@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a1e4b73_aa0c6eca",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-04T14:22:52Z",
+      "side": 1,
+      "message": "It\u0027d be nice to check in some way that voice search is actually enabled, e.g. you could check that the microphone icon is not hidden. Otherwise, there could be a typo in the commandline switch and we\u0027d never know :)",
+      "range": {
+        "startLine": 503,
+        "startChar": 80,
+        "endLine": 503,
+        "endChar": 0
+      },
+      "revId": "6a7c7586a12b8a92588783fe82d26a6c0988967f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
