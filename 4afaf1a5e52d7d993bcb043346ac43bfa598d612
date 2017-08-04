@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a693d57_3d3ebf87",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1207134
+      },
+      "writtenOn": "2017-08-04T20:32:18Z",
+      "side": 1,
+      "message": "this probably would cause a DCHECK failure on shutdown (since it\u0027s called from the destructor)...?",
+      "range": {
+        "startLine": 212,
+        "startChar": 2,
+        "endLine": 212,
+        "endChar": 28
+      },
+      "revId": "4afaf1a5e52d7d993bcb043346ac43bfa598d612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
