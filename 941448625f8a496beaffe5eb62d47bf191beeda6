@@ -1,0 +1,255 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dbef7d0_adce02dd",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T18:44:26Z",
+      "side": 1,
+      "message": "I find I have trouble reading this, where the logic we care about (offset \u003c\u003d size) is mixed in with the loop indexing.\n\nWhat would you think of something like the following:\n\n    size_t i \u003d 0;\n    for (auto class : contents_class) {\n      if (class.offset \u003e common_prefix.size())\n        break;\n      ++i;\n    }\n\nI know I\u0027m kind of micromanaging here, so I\u0027m open to other suggestions. But a loop with an empty body is always going to throw me for a loop and I think make any reader have to stop and think about what\u0027s going on.",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbcb74b_ec3bca96",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T18:44:26Z",
+      "side": 1,
+      "message": "I don\u0027t understand how this is possible. Do you have an example that would help me see the case this covers?",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30efdf95_6de29f3e",
+        "filename": "components/omnibox/browser/autocomplete_match.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T18:44:26Z",
+      "side": 1,
+      "message": "s/but if prefix/but the prefix/",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e59a875_2a2c3c7a",
+        "filename": "components/omnibox/browser/autocomplete_match.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T18:44:26Z",
+      "side": 1,
+      "message": "One or two words here could be joined to the previous line.",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fecebda_791f1ed8",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T18:44:26Z",
+      "side": 1,
+      "message": "For consistency, use ACMatchClassifications instead of vector\u003cACMatchClassification\u003e. I don\u0027t personally like the alias but it\u0027s used in every existing line of code that refers to this.",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d7c7b19_8f580a4b",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T18:44:26Z",
+      "side": 1,
+      "message": "ACMatchClassifications",
+      "range": {
+        "startLine": 131,
+        "startChar": 9,
+        "endLine": 131,
+        "endChar": 37
+      },
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4388ee5_bb2f8a93",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T18:44:26Z",
+      "side": 1,
+      "message": "Use \"cases\" for consistency with the other code in this file.",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 13
+      },
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911efceb_013bc839",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T18:44:26Z",
+      "side": 1,
+      "message": "How about a case where before is just (0, NONE)?",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cbef540_ceb705e9",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T18:44:26Z",
+      "side": 1,
+      "message": "Use arraysize(cases). Or even better, a new-style for loop if that works.",
+      "range": {
+        "startLine": 171,
+        "startChar": 21,
+        "endLine": 171,
+        "endChar": 65
+      },
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf893d9_710933f1",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T18:44:26Z",
+      "side": 1,
+      "message": "Since there\u0027s only one case, no need for an array here.",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3db1ccf_99a54beb",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T18:44:26Z",
+      "side": 1,
+      "message": "Check match.contents as well.",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e654db_3772f1da",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T18:44:26Z",
+      "side": 1,
+      "message": "Ditto re: ACMatchClassifications",
+      "range": {
+        "startLine": 679,
+        "startChar": 32,
+        "endLine": 679,
+        "endChar": 66
+      },
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a8c3af_c46c5cc4",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T18:44:26Z",
+      "side": 1,
+      "message": "arraysize or new-style for loop here and below.",
+      "range": {
+        "startLine": 723,
+        "startChar": 21,
+        "endLine": 723,
+        "endChar": 65
+      },
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
