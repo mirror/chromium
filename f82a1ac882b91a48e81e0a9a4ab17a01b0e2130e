@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81191cc6_9846e79d",
+        "filename": "services/viz/public/cpp/compositing/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-04T18:52:26Z",
+      "side": 1,
+      "message": "As just discussed offline, plans indicate that there are no plans to move this in the future.",
+      "parentUuid": "3dd27882_ef077db9",
+      "revId": "f82a1ac882b91a48e81e0a9a4ab17a01b0e2130e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "895f53fa_f38b8a4a",
         "filename": "services/viz/public/cpp/compositing/returned_resource_struct_traits.h",
         "patchSetId": 2
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "24eda0af_4f121a83",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-04T18:52:26Z",
+      "side": 1,
+      "message": "Good call, thank you.\n\nDone",
+      "parentUuid": "76481810_961d7f31",
+      "range": {
+        "startLine": 34,
+        "startChar": 1,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "f82a1ac882b91a48e81e0a9a4ab17a01b0e2130e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "058b56a3_f739518b",
         "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
         "patchSetId": 2
@@ -73,6 +115,24 @@
       "revId": "f82a1ac882b91a48e81e0a9a4ab17a01b0e2130e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbebe6d7_08d514c7",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-04T18:52:26Z",
+      "side": 1,
+      "message": "Another good call, thanks again.\n\nDone",
+      "parentUuid": "058b56a3_f739518b",
+      "revId": "f82a1ac882b91a48e81e0a9a4ab17a01b0e2130e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
