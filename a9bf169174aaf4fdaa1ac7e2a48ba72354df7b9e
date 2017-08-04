@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6c5aec04_d83b70f8",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-04T22:52:39Z",
+      "side": 1,
+      "message": "This is subtle. Is there a test that exercises this code path? If not, can you write one?",
+      "range": {
+        "startLine": 968,
+        "startChar": 14,
+        "endLine": 968,
+        "endChar": 33
+      },
+      "revId": "a9bf169174aaf4fdaa1ac7e2a48ba72354df7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f00f5a2c_ab05572a",
         "filename": "content/browser/web_contents/web_contents_impl.h",
         "patchSetId": 2
