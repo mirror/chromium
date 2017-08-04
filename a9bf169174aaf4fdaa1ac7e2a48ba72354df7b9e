@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12844ea7_9d672d35",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-04T23:49:55Z",
+      "side": 1,
+      "message": "yes, it happens whenever a tab is added.",
+      "parentUuid": "6c5aec04_d83b70f8",
+      "range": {
+        "startLine": 968,
+        "startChar": 14,
+        "endLine": 968,
+        "endChar": 33
+      },
+      "revId": "a9bf169174aaf4fdaa1ac7e2a48ba72354df7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f00f5a2c_ab05572a",
         "filename": "content/browser/web_contents/web_contents_impl.h",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "a9bf169174aaf4fdaa1ac7e2a48ba72354df7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61b7a16_2b6570b7",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-04T23:49:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f00f5a2c_ab05572a",
+      "revId": "a9bf169174aaf4fdaa1ac7e2a48ba72354df7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
