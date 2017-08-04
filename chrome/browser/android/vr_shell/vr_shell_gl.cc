@@ -567,8 +567,8 @@ void VrShellGl::HandleWebVrCompatibilityClick() {
     touch_pending_ = false;
     auto gesture = base::MakeUnique<blink::WebGestureEvent>(
         blink::WebInputEvent::kGestureTapDown,
-        blink::WebInputEvent::kNoModifiers, NowSeconds());
-    gesture->source_device = blink::kWebGestureDeviceTouchpad;
+        blink::WebInputEvent::kNoModifiers, NowSeconds(),
+        blink::kWebGestureDeviceTouchpad);
     gesture->x = 0;
     gesture->y = 0;
     SendGestureToContent(std::move(gesture));

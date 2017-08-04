@@ -757,9 +757,14 @@ void ContentViewCore::SendOrientationChangeEvent(
 WebGestureEvent ContentViewCore::MakeGestureEvent(WebInputEvent::Type type,
                                                   int64_t time_ms,
                                                   float x,
-                                                  float y) const {
-  return WebGestureEventBuilder::Build(type, time_ms / 1000.0, x / dpi_scale(),
-                                       y / dpi_scale());
+                                                  float y,
+                                                  bool from_gamepad) const {
+  blink::WebGestureDevice source_device = blink::kWebGestureDeviceTouchscreen;
+  if (from_gamepad)
+    source_device = blink::kWebGestureDeviceSyntheticAutoscroll;
+
+  return WebGestureEventBuilder::Build(type, source_device, time_ms / 1000.0,
+                                       x / dpi_scale(), y / dpi_scale());
 }
 
 void ContentViewCore::SendGestureEvent(const blink::WebGestureEvent& event) {
@@ -777,14 +782,11 @@ void ContentViewCore::ScrollBegin(JNIEnv* env,
                                   jfloat hinty,
                                   jboolean target_viewport,
                                   jboolean from_gamepad) {
-  WebGestureEvent event =
-      MakeGestureEvent(WebInputEvent::kGestureScrollBegin, time_ms, x, y);
+  WebGestureEvent event = MakeGestureEvent(WebInputEvent::kGestureScrollBegin,
+                                           time_ms, x, y, from_gamepad);
   event.data.scroll_begin.delta_x_hint = hintx / dpi_scale();
   event.data.scroll_begin.delta_y_hint = hinty / dpi_scale();
   event.data.scroll_begin.target_viewport = target_viewport;
-
-  if (from_gamepad)
-    event.source_device = blink::kWebGestureDeviceSyntheticAutoscroll;
 
   SendGestureEvent(event);
 }
@@ -793,7 +795,7 @@ void ContentViewCore::ScrollEnd(JNIEnv* env,
                                 const JavaParamRef<jobject>& obj,
                                 jlong time_ms) {
   WebGestureEvent event =
-      MakeGestureEvent(WebInputEvent::kGestureScrollEnd, time_ms, 0, 0);
+      MakeGestureEvent(WebInputEvent::kGestureScrollEnd, time_ms, 0, 0, false);
   SendGestureEvent(event);
 }
 
@@ -804,8 +806,8 @@ void ContentViewCore::ScrollBy(JNIEnv* env,
                                jfloat y,
                                jfloat dx,
                                jfloat dy) {
-  WebGestureEvent event =
-      MakeGestureEvent(WebInputEvent::kGestureScrollUpdate, time_ms, x, y);
+  WebGestureEvent event = MakeGestureEvent(WebInputEvent::kGestureScrollUpdate,
+                                           time_ms, x, y, false);
   event.data.scroll_update.delta_x = -dx / dpi_scale();
   event.data.scroll_update.delta_y = -dy / dpi_scale();
 
@@ -821,14 +823,11 @@ void ContentViewCore::FlingStart(JNIEnv* env,
                                  jfloat vy,
                                  jboolean target_viewport,
                                  jboolean from_gamepad) {
-  WebGestureEvent event =
-      MakeGestureEvent(WebInputEvent::kGestureFlingStart, time_ms, x, y);
+  WebGestureEvent event = MakeGestureEvent(WebInputEvent::kGestureFlingStart,
+                                           time_ms, x, y, from_gamepad);
   event.data.fling_start.velocity_x = vx / dpi_scale();
   event.data.fling_start.velocity_y = vy / dpi_scale();
   event.data.fling_start.target_viewport = target_viewport;
-
-  if (from_gamepad)
-    event.source_device = blink::kWebGestureDeviceSyntheticAutoscroll;
 
   SendGestureEvent(event);
 }
@@ -837,14 +836,12 @@ void ContentViewCore::FlingCancel(JNIEnv* env,
                                   const JavaParamRef<jobject>& obj,
                                   jlong time_ms,
                                   jboolean from_gamepad) {
-  WebGestureEvent event =
-      MakeGestureEvent(WebInputEvent::kGestureFlingCancel, time_ms, 0, 0);
+  WebGestureEvent event = MakeGestureEvent(WebInputEvent::kGestureFlingCancel,
+                                           time_ms, 0, 0, from_gamepad);
   event.data.fling_cancel.prevent_boosting = true;
 
-  if (from_gamepad) {
+  if (from_gamepad)
     event.data.fling_cancel.target_viewport = true;
-    event.source_device = blink::kWebGestureDeviceSyntheticAutoscroll;
-  }
 
   SendGestureEvent(event);
 }
@@ -855,7 +852,7 @@ void ContentViewCore::DoubleTap(JNIEnv* env,
                                 jfloat x,
                                 jfloat y) {
   WebGestureEvent event =
-      MakeGestureEvent(WebInputEvent::kGestureDoubleTap, time_ms, x, y);
+      MakeGestureEvent(WebInputEvent::kGestureDoubleTap, time_ms, x, y, false);
   // Set the tap count to 1 even for DoubleTap, in order to be consistent with
   // double tap behavior on a mobile viewport. See crbug.com/234986 for context.
   event.data.tap.tap_count = 1;
@@ -884,7 +881,7 @@ void ContentViewCore::PinchBegin(JNIEnv* env,
                                  jfloat x,
                                  jfloat y) {
   WebGestureEvent event =
-      MakeGestureEvent(WebInputEvent::kGesturePinchBegin, time_ms, x, y);
+      MakeGestureEvent(WebInputEvent::kGesturePinchBegin, time_ms, x, y, false);
   SendGestureEvent(event);
 }
 
@@ -892,7 +889,7 @@ void ContentViewCore::PinchEnd(JNIEnv* env,
                                const JavaParamRef<jobject>& obj,
                                jlong time_ms) {
   WebGestureEvent event =
-      MakeGestureEvent(WebInputEvent::kGesturePinchEnd, time_ms, 0, 0);
+      MakeGestureEvent(WebInputEvent::kGesturePinchEnd, time_ms, 0, 0, false);
   SendGestureEvent(event);
 }
 
@@ -903,7 +900,7 @@ void ContentViewCore::PinchBy(JNIEnv* env,
                               jfloat anchor_y,
                               jfloat delta) {
   WebGestureEvent event = MakeGestureEvent(WebInputEvent::kGesturePinchUpdate,
-                                           time_ms, anchor_x, anchor_y);
+                                           time_ms, anchor_x, anchor_y, false);
   event.data.pinch_update.scale = delta;
 
   SendGestureEvent(event);
