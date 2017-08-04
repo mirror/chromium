@@ -173,7 +173,9 @@ MainWindowComponent.prototype.onDoubleClick_ = function(event) {
   }
 
   var entry = selection.entries[0];
+
   if (entry.isDirectory) {
+    console.log("double clicked, changing directory entry: " + (new Date).getTime());
     this.directoryModel_.changeDirectoryEntry(
         /** @type {!DirectoryEntry} */ (entry));
   } else {

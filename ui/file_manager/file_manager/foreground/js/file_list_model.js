@@ -77,7 +77,9 @@ FileListModel.prototype = {
  */
 FileListModel.prototype.sort = function(field, direction) {
   this.isDescendingOrder_ = direction === 'desc';
+  console.log("preparing sort");
   cr.ui.ArrayDataModel.prototype.sort.call(this, field, direction);
+  console.log("done sort");
 };
 
 /**

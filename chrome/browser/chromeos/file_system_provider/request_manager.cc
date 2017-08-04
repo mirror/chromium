@@ -84,8 +84,9 @@ int RequestManager::CreateRequest(RequestType type,
     return 0;
   }
 
-  for (auto& observer : observers_)
+  for (auto& observer : observers_) {
     observer.OnRequestExecuted(request_id);
+  }
 
   return request_id;
 }

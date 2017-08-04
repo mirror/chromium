@@ -9,6 +9,7 @@
 
 #include "base/files/file.h"
 #include "base/macros.h"
+#include "chrome/browser/chromeos/file_system_provider/operations/Timer.h"
 #include "chrome/browser/chromeos/file_system_provider/operations/operation.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
 #include "chrome/browser/chromeos/file_system_provider/request_value.h"
@@ -48,8 +49,8 @@ class ReadDirectory : public Operation {
  private:
   base::FilePath directory_path_;
   const storage::AsyncFileUtil::ReadDirectoryCallback callback_;
-
   DISALLOW_COPY_AND_ASSIGN(ReadDirectory);
+  Timer timer;
 };
 
 }  // namespace operations

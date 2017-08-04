@@ -4,6 +4,7 @@
 
 #include "chrome/browser/chromeos/file_system_provider/operations/abort.h"
 
+#include <iostream>
 #include <string>
 
 #include "chrome/common/extensions/api/file_system_provider.h"
@@ -33,6 +34,7 @@ bool Abort::Execute(int request_id) {
   options.request_id = request_id;
   options.operation_request_id = operation_request_id_;
 
+  LOG(WARNING) << "*** ABORTING";
   return SendEvent(
       request_id, extensions::events::FILE_SYSTEM_PROVIDER_ON_ABORT_REQUESTED,
       extensions::api::file_system_provider::OnAbortRequested::kEventName,

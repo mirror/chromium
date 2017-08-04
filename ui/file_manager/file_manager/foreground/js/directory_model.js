@@ -494,8 +494,10 @@ DirectoryModel.prototype.rescan = function(refresh) {
  */
 DirectoryModel.prototype.clearAndScan_ = function(newDirContents,
                                                   callback) {
-  if (this.currentDirContents_.isScanning())
+  if (this.currentDirContents_.isScanning()) {
+    console.log("cancelling scan");
     this.currentDirContents_.cancelScan();
+  }
   this.currentDirContents_ = newDirContents;
   this.clearRescanTimeout_();
 
@@ -954,10 +956,12 @@ DirectoryModel.prototype.changeDirectoryEntry = function(
 
           var previousDirEntry =
               this.currentDirContents_.getDirectoryEntry();
+
           this.clearAndScan_(
                newDirectoryContents,
                function(result) {
                  // Calls the callback of the method when successful.
+                 console.log("scan completed: " + (new Date).getTime());
                  if (result && opt_callback)
                    opt_callback();
 
@@ -983,6 +987,7 @@ DirectoryModel.prototype.changeDirectoryEntry = function(
           if (event.volumeChanged) {
             this.onVolumeChanged_(assert(currentVolumeInfo));
           }
+
         }.bind(this));
   }.bind(this, this.changeDirectorySequence_));
 };

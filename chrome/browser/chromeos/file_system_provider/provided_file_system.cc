@@ -240,11 +240,15 @@ AbortCallback ProvidedFileSystem::ExecuteAction(
 AbortCallback ProvidedFileSystem::ReadDirectory(
     const base::FilePath& directory_path,
     const storage::AsyncFileUtil::ReadDirectoryCallback& callback) {
+  LOG(WARNING)
+      << "Creating read directory from provided_file_system, passing callback";
   const int request_id = request_manager_->CreateRequest(
       READ_DIRECTORY,
       std::unique_ptr<RequestManager::HandlerInterface>(
           new operations::ReadDirectory(event_router_, file_system_info_,
                                         directory_path, callback)));
+
+  LOG(WARNING) << "getting request id";
   if (!request_id) {
     callback.Run(base::File::FILE_ERROR_SECURITY,
                  storage::AsyncFileUtil::EntryList(),
