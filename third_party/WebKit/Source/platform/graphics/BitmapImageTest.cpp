@@ -77,9 +77,7 @@ class BitmapImageTest : public ::testing::Test {
   // Accessors to BitmapImage's protected methods.
   void DestroyDecodedData() { image_->DestroyDecodedData(); }
   size_t FrameCount() { return image_->FrameCount(); }
-  sk_sp<SkImage> FrameAtIndex(size_t index) {
-    return image_->FrameAtIndex(index);
-  }
+  void EnsureFrameAtIndex(size_t index) { image_->FrameAtIndex(index); }
   void SetCurrentFrame(size_t frame) { image_->current_frame_ = frame; }
   size_t FrameDecodedSize(size_t frame) {
     return image_->frames_[frame].frame_bytes_;
@@ -98,7 +96,7 @@ class BitmapImageTest : public ::testing::Test {
     size_t frame_count = image_->FrameCount();
     if (load_all_frames) {
       for (size_t i = 0; i < frame_count; ++i)
-        FrameAtIndex(i);
+        EnsureFrameAtIndex(i);
     }
   }
 
@@ -238,7 +236,7 @@ TEST_F(BitmapImageTest, icoHasWrongFrameDimensions) {
 TEST_F(BitmapImageTest, correctDecodedDataSize) {
   // Requesting any one frame shouldn't result in decoding any other frames.
   LoadImage("/LayoutTests/images/resources/anim_none.gif", false);
-  FrameAtIndex(1);
+  EnsureFrameAtIndex(1);
   int frame_size =
       static_cast<int>(image_->Size().Area() * sizeof(ImageFrame::PixelData));
   EXPECT_EQ(frame_size, LastDecodedSizeChange());
