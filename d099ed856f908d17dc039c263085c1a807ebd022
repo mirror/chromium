@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a87fa72f_9c47583b",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-04T05:22:47Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0ab58437_7243565f",
+      "revId": "d099ed856f908d17dc039c263085c1a807ebd022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a75b40dd_84d18694",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T00:42:35Z",
       "side": 1,
       "message": "do you anticipate this use case of adding a start only value to a range list to occur again? if so i would change the CombineToRangeListOrNull method to support it by making the second argument optional",
+      "revId": "d099ed856f908d17dc039c263085c1a807ebd022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25454004_5861c364",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-04T05:22:47Z",
+      "side": 1,
+      "message": "No, I see this only used for style in this context.",
+      "parentUuid": "a75b40dd_84d18694",
       "revId": "d099ed856f908d17dc039c263085c1a807ebd022",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
