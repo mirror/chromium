@@ -22,6 +22,30 @@
       "revId": "8894f20211a0b49da7c5144381b60ec8bf164355",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0475c3_cfd0a017",
+        "filename": "chrome/browser/policy/test/policy_testserver.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-04T13:35:37Z",
+      "side": 1,
+      "message": "No, the problem is that |sub_value| is a dict. \nAnd dict contains dicts inside.",
+      "parentUuid": "891556b8_6c858453",
+      "range": {
+        "startLine": 726,
+        "startChar": 13,
+        "endLine": 726,
+        "endChar": 40
+      },
+      "revId": "8894f20211a0b49da7c5144381b60ec8bf164355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

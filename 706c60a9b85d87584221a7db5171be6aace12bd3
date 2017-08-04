@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "e185e42f_4cfbd598",
+        "filename": "chrome/browser/policy/test/policy_testserver.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-04T13:35:37Z",
+      "side": 1,
+      "message": "Oh, no. I checked it and remember.\n|sub_value| is json array, |sub_field| is proto\nand we need to check if proto name contains in json arrary.\n(i.e. |sub_value| \u003d {u\u0027start\u0027: {u\u0027weekday\u0027: {u\u0027day\u0027: 4}, u\u0027time\u0027: {u\u0027hours\u0027: 12, u\u0027minutes\u0027: 30}}, u\u0027end\u0027: {u\u0027weekday\u0027: {u\u0027day\u0027: 5}, u\u0027time\u0027: {u\u0027hours\u0027: 17, u\u0027minutes\u0027: 20}}}, \n|[sub_field.name]| \u003d [\u0027start\u0027, \u0027end\u0027])",
+      "parentUuid": "b6c3b84c_1b69c99c",
+      "range": {
+        "startLine": 738,
+        "startChar": 8,
+        "endLine": 740,
+        "endChar": 42
+      },
+      "revId": "706c60a9b85d87584221a7db5171be6aace12bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c2d7160_bcc0e482",
         "filename": "chrome/browser/policy/test/policy_testserver.py",
         "patchSetId": 7
