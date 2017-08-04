@@ -46,6 +46,30 @@
       "revId": "d95e237179403366c5e3816c880b91a2d2758a7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dd4f502_1240553e",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/BidirectionalStreamTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-04T12:06:41Z",
+      "side": 1,
+      "message": "Ah I see we want to stop the auto-advance of the writes but not the auto-advance of the reads, but there is only one variable controlling both.",
+      "parentUuid": "0669ee3f_0134a601",
+      "range": {
+        "startLine": 377,
+        "startChar": 34,
+        "endLine": 377,
+        "endChar": 0
+      },
+      "revId": "d95e237179403366c5e3816c880b91a2d2758a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
