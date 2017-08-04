@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26dd524d_da5a9ee1",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-04T13:50:43Z",
+      "side": 1,
+      "message": "Hm... could you put this into a static method that creates a new handler and returns the callback? Then the client would be completely isolated from the lifetime of the handler.",
+      "range": {
+        "startLine": 82,
+        "startChar": 32,
+        "endLine": 84,
+        "endChar": 51
+      },
+      "revId": "bc3bbd4675bcc58db250014812e3ab7d9bfb6d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
