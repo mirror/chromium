@@ -11,8 +11,8 @@ import "mojo/common/file.mojom";
 // compile-time flag. https://crbug.com/751759.
 interface Memlog {
   // Adds a new platform-specific pipe to read memlog trace data from.
-  // In normal usage, each child process launch will have a corresponding call
-  // to this.
+  // In normal usage, each child process will be given the other end of this
+  // pipe.
   AddSender(handle sender_pipe, int32 sender_id);
 
   // Dumps the memory log of the process with the given |sender_id| into
