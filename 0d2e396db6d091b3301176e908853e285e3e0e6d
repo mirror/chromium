@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20dbff85_c76a796e",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-04T17:42:14Z",
+      "side": 1,
+      "message": "Add a comment above justifying this",
+      "revId": "0d2e396db6d091b3301176e908853e285e3e0e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
