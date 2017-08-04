@@ -163,7 +163,7 @@ Elements.EventListenersWidget = class extends UI.ThrottledWidget {
         context = executionContexts[0];
       }
       context.evaluate(
-          'self', Elements.EventListenersWidget._objectGroupName, false, true, false, false, false, fulfill);
+          'self', Elements.EventListenersWidget._objectGroupName, false, true, false, false, false, false, fulfill);
     }
   }
 
