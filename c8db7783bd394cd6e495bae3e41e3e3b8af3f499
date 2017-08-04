@@ -34,6 +34,24 @@
       "revId": "c8db7783bd394cd6e495bae3e41e3e3b8af3f499",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04520a3_a244bed9",
+        "filename": "chrome/browser/chromeos/bluetooth/bluetooth_adapter_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-04T21:27:43Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "a34eff33_09fbb833",
+      "revId": "c8db7783bd394cd6e495bae3e41e3e3b8af3f499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
