@@ -332,7 +332,8 @@
     "matches": [
       "chrome://network/*",
       "chrome://oobe/*",
-      "chrome://settings/*"
+      "chrome://settings/*",
+      "chrome://proxy-settings/*"
     ]
   }],
   "power": {
