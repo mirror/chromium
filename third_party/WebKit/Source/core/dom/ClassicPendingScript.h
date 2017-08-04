@@ -61,6 +61,8 @@ class CORE_EXPORT ClassicPendingScript final
 
   void Prefinalize();
 
+  const ScriptResourceData* ResourceData() const { return resource_data_; }
+
  private:
   // See AdvanceReadyState implementation for valid state transitions.
   enum ReadyState {
@@ -108,6 +110,8 @@ class CORE_EXPORT ClassicPendingScript final
   // doesn't break assumptions.
   // TODO(hiroshige): Check the state in more general way.
   bool prefinalizer_called_ = false;
+
+  Member<const ScriptResourceData> resource_data_;
 };
 
 }  // namespace blink

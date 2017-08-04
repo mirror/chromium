@@ -37,7 +37,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/inspector/ThreadDebugger.h"
-#include "core/loader/resource/ScriptResource.h"
+#include "core/loader/resource/ScriptResourceData.h"
 #include "core/probe/CoreProbes.h"
 #include "platform/Histogram.h"
 #include "platform/ScriptForbiddenScope.h"
@@ -393,7 +393,7 @@ static CompileFn SelectCompileFunction(
 
 // Select a compile function for a streaming compile.
 CompileFn SelectCompileFunction(V8CacheOptions cache_options,
-                                ScriptResource* resource,
+                                const ScriptResourceData* resource,
                                 ScriptStreamer* streamer) {
   // We don't stream scripts which don't have a Resource.
   DCHECK(resource);
@@ -451,7 +451,7 @@ v8::MaybeLocal<v8::Script> V8ScriptRunner::CompileScript(
     const String& file_name,
     const String& source_map_url,
     const TextPosition& script_start_position,
-    ScriptResource* resource,
+    const ScriptResourceData* resource,
     ScriptStreamer* streamer,
     CachedMetadataHandler* cache_handler,
     AccessControlStatus access_control_status,

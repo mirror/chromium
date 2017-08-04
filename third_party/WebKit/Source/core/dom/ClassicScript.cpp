@@ -17,7 +17,7 @@ namespace blink {
 namespace {
 
 void LogScriptMIMEType(LocalFrame* frame,
-                       ScriptResource* resource,
+                       const ScriptResourceData* resource,
                        const String& mime_type,
                        const SecurityOrigin* security_origin) {
   if (MIMETypeRegistry::IsSupportedJavaScriptMIMEType(mime_type))
@@ -53,21 +53,22 @@ DEFINE_TRACE(ClassicScript) {
 bool ClassicScript::CheckMIMETypeBeforeRunScript(
     Document* context_document,
     const SecurityOrigin* security_origin) const {
-  ScriptResource* resource = GetScriptSourceCode().GetResource();
+  const ScriptResourceData* resource = GetScriptSourceCode().GetResource();
   CHECK(resource);
 
-  if (!ScriptResource::MimeTypeAllowedByNosniff(resource->GetResponse())) {
+  if (!ScriptResourceData::MimeTypeAllowedByNosniff(resource->GetResponse())) {
     context_document->AddConsoleMessage(ConsoleMessage::Create(
         kSecurityMessageSource, kErrorMessageLevel,
         "Refused to execute script from '" + resource->Url().ElidedString() +
-            "' because its MIME type ('" + resource->HttpContentType() +
+            "' because its MIME type ('" +
+            resource->GetResponse().HttpContentType() +
             "') is not executable, and "
             "strict MIME type checking is "
             "enabled."));
     return false;
   }
 
-  String mime_type = resource->HttpContentType();
+  String mime_type = resource->GetResponse().HttpContentType();
   LocalFrame* frame = context_document->GetFrame();
   if (mime_type.StartsWith("image/") || mime_type == "text/csv" ||
       mime_type.StartsWith("audio/") || mime_type.StartsWith("video/")) {

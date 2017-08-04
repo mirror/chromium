@@ -27,8 +27,8 @@
 #define ScriptResource_h
 
 #include "core/CoreExport.h"
+#include "core/loader/resource/ScriptResourceData.h"
 #include "core/loader/resource/TextResource.h"
-#include "platform/loader/fetch/AccessControlStatus.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceClient.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
@@ -70,21 +70,20 @@ class CORE_EXPORT ScriptResource final : public TextResource {
 
   ~ScriptResource() override;
 
-  void DidAddClient(ResourceClient*) override;
+  DECLARE_VIRTUAL_TRACE();
+
+  const ScriptResourceData* ResourceData();
+
   void AppendData(const char*, size_t) override;
+
+ private:
+  void DidAddClient(ResourceClient*) override;
 
   void OnMemoryDump(WebMemoryDumpLevelOfDetail,
                     WebProcessMemoryDump*) const override;
 
   void DestroyDecodedDataForFailedRevalidation() override;
 
-  const String& SourceText();
-
-  static bool MimeTypeAllowedByNosniff(const ResourceResponse&);
-
-  AccessControlStatus CalculateAccessControlStatus() const;
-
- private:
   class ScriptResourceFactory : public ResourceFactory {
    public:
     ScriptResourceFactory()
@@ -103,7 +102,7 @@ class CORE_EXPORT ScriptResource final : public TextResource {
                  const ResourceLoaderOptions&,
                  const TextResourceDecoderOptions&);
 
-  AtomicString source_text_;
+  Member<ScriptResourceData> script_data_;
 };
 
 DEFINE_RESOURCE_TYPE_CASTS(Script);

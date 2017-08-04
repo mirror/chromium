@@ -32,7 +32,7 @@
 #include "core/html/parser/TextResourceDecoder.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/WorkerThreadableLoader.h"
-#include "core/loader/resource/ScriptResource.h"
+#include "core/loader/resource/ScriptResourceData.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/HTTPNames.h"
@@ -141,7 +141,7 @@ void WorkerScriptLoader::DidReceiveResponse(
     NotifyError();
     return;
   }
-  if (!ScriptResource::MimeTypeAllowedByNosniff(response)) {
+  if (!ScriptResourceData::MimeTypeAllowedByNosniff(response)) {
     execution_context_->AddConsoleMessage(ConsoleMessage::Create(
         kSecurityMessageSource, kErrorMessageLevel,
         "Refused to execute script from '" + url_.ElidedString() +

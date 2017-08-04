@@ -67,18 +67,23 @@ class V8ScriptRunnerTest : public ::testing::Test {
                 .IsEmpty();
   }
 
-  void SetEmptyResource() {
-    resource_ = ScriptResource::CreateForTest(NullURL(), UTF8Encoding());
-  }
+  void SetEmptyResource() { SetResourceInternal(NullURL()); }
 
-  void SetResource() {
-    resource_ = ScriptResource::CreateForTest(Url(), UTF8Encoding());
+  void SetResource() { SetResourceInternal(Url()); }
+
+  void SetResourceInternal(const KURL& url) {
+    ScriptResource* resource =
+        ScriptResource::CreateForTest(url, UTF8Encoding());
+    // This is not a complete Resource (e.g. lacks ResourceResponse)
+    // but is sufficient for testing here.
+    resource->Finish();
+    resource_ = resource->ResourceData();
   }
 
   CachedMetadataHandler* CacheHandler() { return resource_->CacheHandler(); }
 
  protected:
-  Persistent<ScriptResource> resource_;
+  Persistent<const ScriptResourceData> resource_;
 
   static int counter_;
 };
