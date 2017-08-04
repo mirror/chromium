@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e47f24b9_8b33b164",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_conditional_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-04T08:39:54Z",
+      "side": 1,
+      "message": "I\u0027m interpreting it as:\n    ImplementingInterface implements ImplementedInterface;\nso, s/implement_interface/implemented_interface/ would reduce ambiguity, I think.  But open to other naming or I\u0027m okay with as is.\n\n(I personally think the names of |left_interface| and |right_interface| don\u0027t make much sense here.  Should be implementing_interface and implemented_interface.)",
+      "range": {
+        "startLine": 103,
+        "startChar": 12,
+        "endLine": 103,
+        "endChar": 31
+      },
+      "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f476a578_c6442970",
+        "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-04T08:39:54Z",
+      "side": 1,
+      "message": "nit: 80 columns?",
+      "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15e78be_748ded87",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/SensorsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-04T08:39:54Z",
+      "side": 1,
+      "message": "nit: 80 columns?",
+      "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c519ede3_3e11af82",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/SensorsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-04T08:39:54Z",
+      "side": 1,
+      "message": "nit: 80 columns?",
+      "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
