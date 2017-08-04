@@ -566,6 +566,10 @@ bool Window::CanReceiveEvents() const {
   return parent_ && IsVisible() && parent_->CanReceiveEvents();
 }
 
+bool Window::ShouldSkipWindowSelector() const {
+  return GetProperty(client::kSkipWindowSelectorKey);
+}
+
 void Window::SetCapture() {
   if (!IsVisible())
     return;

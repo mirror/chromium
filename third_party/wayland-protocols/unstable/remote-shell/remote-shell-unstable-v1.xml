@@ -476,6 +476,16 @@
       </description>
     </request>
 
+    <request name="set_window_flags" since="4">
+      <description summary="send window flags to server">
+        Request that send flags as hint to the compositor.
+
+        Each field of the flags is just a hint and the compositor is free
+        to ignore it.
+      </description>
+      <arg name="flags" type="uint"/>
+    </request>
+
     <!-- Version 5 additions -->
 
     <event name="configure" since="5">
