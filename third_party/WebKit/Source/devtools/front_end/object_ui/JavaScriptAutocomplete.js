@@ -70,7 +70,7 @@ ObjectUI.JavaScriptAutocomplete._mapCompletions = function(text, query) {
   var clippedExpression = ObjectUI.JavaScriptAutocomplete._clipExpression(text.substring(0, mapMatch.index));
   var fulfill;
   var promise = new Promise(x => fulfill = x);
-  executionContext.evaluate(clippedExpression, 'completion', true, true, false, false, false, evaluated);
+  executionContext.evaluate(clippedExpression, 'completion', true, true, false, false, false, false, evaluated);
   return promise;
 
   /**
@@ -190,7 +190,7 @@ ObjectUI.JavaScriptAutocomplete.completionsForExpression = function(expressionSt
   if (!expressionString && selectedFrame)
     variableNamesInScopes(selectedFrame, receivedPropertyNames);
   else
-    executionContext.evaluate(expressionString, 'completion', true, true, false, false, false, evaluated);
+    executionContext.evaluate(expressionString, 'completion', true, true, false, false, false, false, evaluated);
 
   return promise;
   /**
@@ -283,7 +283,7 @@ ObjectUI.JavaScriptAutocomplete.completionsForExpression = function(expressionSt
             getCompletions, [SDK.RemoteObject.toCallArgument(object.subtype)], receivedPropertyNames);
       } else if (object.type === 'string' || object.type === 'number' || object.type === 'boolean') {
         executionContext.evaluate(
-            '(' + getCompletions + ')("' + result.type + '")', 'completion', false, true, true, false, false,
+            '(' + getCompletions + ')("' + result.type + '")', 'completion', false, true, true, false, false, false,
             receivedPropertyNamesFromEval);
       }
     }

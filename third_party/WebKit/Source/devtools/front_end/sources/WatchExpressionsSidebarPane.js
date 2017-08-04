@@ -249,7 +249,7 @@ Sources.WatchExpression = class extends Common.Object {
     var currentExecutionContext = UI.context.flavor(SDK.ExecutionContext);
     if (currentExecutionContext && this._expression) {
       currentExecutionContext.evaluate(
-          this._expression, Sources.WatchExpression._watchObjectGroupId, false, true, false, false, false,
+          this._expression, Sources.WatchExpression._watchObjectGroupId, false, true, false, false, false, false,
           this._createWatchExpression.bind(this));
     }
   }

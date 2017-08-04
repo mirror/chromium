@@ -253,6 +253,7 @@ all_devtools_files = [
   "front_end/formatter_worker/RelaxedJSONParser.js",
   "front_end/formatter_worker/acorn/acorn.js",
   "front_end/formatter_worker/acorn/acorn_loose.js",
+  "front_end/formatter_worker/astring/astring.js",
   "front_end/formatter_worker/module.json",
   "front_end/gonzales/gonzales-scss.js",
   "front_end/gonzales/module.json",
