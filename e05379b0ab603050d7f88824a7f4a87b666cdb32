@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dc86838_617acf6b",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T22:47:43Z",
+      "side": 1,
+      "message": "nit: maybe do this before adding listener to the API",
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b11454_b72e66e0",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T22:47:43Z",
+      "side": 1,
+      "message": "nit: move the comment before this.networkProperties \u003d {",
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b18748da_4628f7f6",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T22:47:43Z",
+      "side": 1,
+      "message": "should we close the dialog/show an error if the network is not around any more",
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1d69d2_f7703897",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T22:47:43Z",
+      "side": 1,
+      "message": "nit:\n[\u0027Type\u0027, \u0027IPAddress\u0027, \u0027RoutingPrefix\u0027, \u0027Gateway\u0027].forEach(function(key) {\n  if (key in value)\n    onc.StaticIPConfig[key] \u003d value[key];\n});",
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637932e5_30accefd",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T22:47:43Z",
+      "side": 1,
+      "message": "return fields.some(function(field) {\n  value \u003d this.get(field, this.networkProperties);\n  return value !\u003d\u003d undefined \u0026\u0026 value !\u003d\u003d \u0027\u0027;\n})",
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
