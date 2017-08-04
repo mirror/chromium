@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71f98092_04c8f491",
+        "filename": "media/renderers/skcanvas_video_renderer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-04T00:40:38Z",
+      "side": 1,
+      "message": "Please also update skcanvas_video_renderer.h; it currently says that |copy_mode| affects cropping, which hasn\u0027t been true for a while.",
+      "range": {
+        "startLine": 799,
+        "startChar": 28,
+        "endLine": 799,
+        "endChar": 66
+      },
+      "revId": "8bc2e504188c787329d9982f6d80ce3ff790cc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
