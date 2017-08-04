@@ -1,0 +1,318 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1df70962_d266ea16",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "For the sake of bikeshedding, I think we should standardize on using SSL instead of TLS everywhere. I also find the name a bit vague and confusing. In the code we\u0027ll be referring to a custom TLSInterception interstitial, which sounds exactly the same as an SSL interstitial :)\n\nHow about a name like MITMSoftware instead? This name also covers things like Superfish.",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 28
+      },
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e558efa0_c17d7284",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "CHECK(error_assistant_proto_); instead of log.\n\n(Or maybe we should convert the CHECK to a DCHECK and do an early return. It doesn\u0027t make much sense to crash the whole browser because of this)",
+      "range": {
+        "startLine": 407,
+        "startChar": 67,
+        "endLine": 407,
+        "endChar": 0
+      },
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6015d4c_4ae38b15",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "Reference instead of copy, common_name outlives this method. Or just inline this:\n\nif (std::regex_match(ssl_info.cert-\u003eissuer().common_name, regex))",
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5116eac_cd7f6cf1",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "What happens if there is no issuer? Will this crash?",
+      "range": {
+        "startLine": 418,
+        "startChar": 47,
+        "endLine": 418,
+        "endChar": 0
+      },
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0af45f_444ffdf6",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "Remove the log",
+      "range": {
+        "startLine": 710,
+        "startChar": 44,
+        "endLine": 710,
+        "endChar": 0
+      },
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678699c0_3ad6340f",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "You can make this a static method by passing cert_error explicitly. Or at least it should be a const method.",
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3490309a_06011d47",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "const string\u0026",
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c59318a_283b88a8",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "nit: certs_found -\u003e certs",
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff0ee4a7_70ce2ba1",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "const string\u0026",
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95cc06b_3f55f010",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "You might want to move this away so that you can use this method in tests with the feature disabled.",
+      "range": {
+        "startLine": 461,
+        "startChar": 51,
+        "endLine": 461,
+        "endChar": 0
+      },
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2722f0b6_1a502b95",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "nit: Blank line before this one",
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5ca847_636dff36",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "nit: That\u0027s a long name :) The reason we had the captive portal cert tests as a separate class was so that it would be possible to filter the tests by name:\n\n--gtest_filter\u003dSSLErrorHandlerCaptivePortalCertListTest.*\n\nPerhaps you can reword this so that filtering is still possible.\nE.g. SSLErrorAssistantTest.CaptivePortal_FeatureDisabled_NoInterstitial",
+      "range": {
+        "startLine": 1023,
+        "startChar": 7,
+        "endLine": 1023,
+        "endChar": 57
+      },
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d6c78a_cd69ed66",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "Same naming suggestion here. Something like:\nSSLErrorAssistantTest.TLSInterception_MatchingCert_ShowInterstitial",
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc64dd0_f9aa7cbe",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure what the implications are for re-using an error handler, so I\u0027d suggest splitting this into two tests. That way, it\u0027s a bit easier to reason about the histogram values too.",
+      "range": {
+        "startLine": 1132,
+        "startChar": 27,
+        "endLine": 1132,
+        "endChar": 0
+      },
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e67b64ae_592aafba",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "OnMiscellaneousCertificate -\u003e OnNonMatchingCert",
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c19c90e_9e3b9bd1",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T20:01:41Z",
+      "side": 1,
+      "message": "You could consider refactoring this into a separate TestNoContentFilterInterstitial() method since the rest of the tests all look for similar histogram values.",
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
