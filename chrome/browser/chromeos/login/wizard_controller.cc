@@ -12,6 +12,9 @@
 #include <utility>
 #include <vector>
 
+#include "ash/public/cpp/shell_window_ids.h"
+#include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
@@ -101,6 +104,7 @@
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_types.h"
+#include "ui/aura/window.h"
 #include "ui/base/accelerators/accelerator.h"
 
 using content::BrowserThread;
@@ -267,6 +271,7 @@ WizardController::WizardController(LoginDisplayHost* host, OobeUI* oobe_ui)
     accessibility_subscription_ = accessibility_manager->RegisterCallback(
         base::Bind(&WizardController::OnAccessibilityStatusChanged,
                    base::Unretained(this)));
+    ash::ShellPort::Get()->AddLockStateObserver(this);
   } else {
     NOTIMPLEMENTED();
   }
@@ -284,6 +289,12 @@ WizardController::~WizardController() {
     default_controller_ = nullptr;
   } else {
     NOTREACHED() << "More than one controller are alive.";
+  }
+
+  if (!ash_util::IsRunningInMash()) {
+    ash::ShellPort::Get()->RemoveLockStateObserver(this);
+  } else {
+    NOTIMPLEMENTED();
   }
 }
 
@@ -443,6 +454,30 @@ BaseScreen* WizardController::CreateScreen(OobeScreen screen) {
   }
 
   return nullptr;
+}
+
+void WizardController::OnLockStateEvent(
+    ash::LockStateObserver::EventType event) {
+  if (event == EVENT_PRELOCK_ANIMATION_STARTED ||
+      event == EVENT_LOCK_ANIMATION_STARTED) {
+    if (current_screen_)
+      current_screen_->Hide();
+  }
+  if (event == EVENT_PRELOCK_ANIMATION_CANCELLED ||
+      event == EVENT_UNLOCK_ANIMATION_FINISHED) {
+    if (current_screen_)
+      current_screen_->Show();
+
+    if (!ash_util::IsRunningInMash()) {
+      // Lock container will be transparent after unlock animation
+      aura::Window* lock_container = ash::Shell::GetContainer(
+          ash::Shell::GetPrimaryRootWindow(),
+          ash::kShellWindowId_LockScreenContainersContainer);
+      lock_container->layer()->SetOpacity(1.0);
+    } else {
+      NOTIMPLEMENTED();
+    }
+  }
 }
 
 void WizardController::ShowNetworkScreen() {
