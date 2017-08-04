@@ -961,6 +961,18 @@ int LayoutTableSection::CalcRowLogicalHeight() {
   return row_pos_[grid_.size()];
 }
 
+void LayoutTableSection::UpdateCellsInCollapsedColumns() {
+  for (unsigned r = 0; r < grid_.size(); r++) {
+    for (auto& grid_cell : grid_[r].grid_cells) {
+      for (auto* cell : grid_cell.Cells()) {
+        if (cell->IsCellColumnCollapsed()) {
+          cell->SetLogicalWidth(LayoutUnit(0));
+        }
+      }
+    }
+  }
+}
+
 void LayoutTableSection::UpdateLayout() {
   DCHECK(NeedsLayout());
   LayoutAnalyzer::Scope analyzer(*this);
