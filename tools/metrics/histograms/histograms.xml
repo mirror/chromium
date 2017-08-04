@@ -91270,6 +91270,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Experimental" label="Experimental"/>
   <suffix name="ReadingList" label="Reading List entries"/>
   <suffix name="BreakingNews" label="Breaking News entries"/>
+  <suffix name="Contextual" label="Contextual suggestions"/>
   <affected-histogram
       name="NewTabPage.ContentSuggestions.CountOnNtpOpenedIfVisible"/>
   <affected-histogram name="NewTabPage.ContentSuggestions.DismissedUnvisited"/>
