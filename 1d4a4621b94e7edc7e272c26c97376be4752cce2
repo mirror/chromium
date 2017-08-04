@@ -22,6 +22,30 @@
       "revId": "1d4a4621b94e7edc7e272c26c97376be4752cce2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f96280_e775a928",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-04T19:34:11Z",
+      "side": 1,
+      "message": "Okay, I\u0027ve changed the behaviour to match. The logic here has moved down into vr_shell_delegate.cc, which knows which RenderFrameHost has requested presentation, and can then walk its tree to check for insecure contexts up the chain.",
+      "parentUuid": "e06315f7_dab5824a",
+      "range": {
+        "startLine": 808,
+        "startChar": 32,
+        "endLine": 808,
+        "endChar": 46
+      },
+      "revId": "1d4a4621b94e7edc7e272c26c97376be4752cce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
