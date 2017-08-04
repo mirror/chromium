@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf948cbc_d4dad3cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-04T15:07:02Z",
+      "side": 0,
+      "message": "nit: I like this blank line, can we add it back?",
+      "revId": "151d23f1f23af1a426020f9a906afcc5677a476e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
