@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "75c3a608_587fea6b",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontCache.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-04T22:42:40Z",
+      "side": 1,
+      "message": "I like OffscreenFontSelector design much better, thank you for trying to make this cleaner.\n\nMaybe then this should belong to FontSelector static member, since this is called only from its subclasses?",
+      "revId": "b427d1469a2927974a8cc30138582ed42ec62680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "671af6df_c7b36c08",
         "filename": "third_party/WebKit/Source/platform/fonts/FontCache.h",
         "patchSetId": 10
@@ -64,6 +81,24 @@
       "writtenOn": "2017-08-03T21:18:32Z",
       "side": 1,
       "message": "Comments about these, please.\n\nAlso, you might consider making MakeIsolated return a new GenericFontFamilySettings, rather than separately copying all the maps and then immediately dropping them. If so, \"IsolatedCopy\" or similar might be a suitable name for such a const member function.",
+      "revId": "b427d1469a2927974a8cc30138582ed42ec62680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74791d18_d03fede5",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-04T22:42:40Z",
+      "side": 1,
+      "message": "Agreed, unless I misunderstood something. The MakeIsolated/MakeAtomic pattern isn\u0027t easy to understand what they do, and Jeremy\u0027s suggestion makes this easier to understand.",
+      "parentUuid": "0423d285_399d5b93",
       "revId": "b427d1469a2927974a8cc30138582ed42ec62680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
