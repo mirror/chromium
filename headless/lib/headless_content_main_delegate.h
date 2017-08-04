@@ -52,8 +52,11 @@ class HEADLESS_EXPORT HeadlessContentMainDelegate
   friend class HeadlessBrowserTest;
 
   void InitLogging(const base::CommandLine& command_line);
-  void InitCrashReporter(const base::CommandLine& command_line);
   static void InitializeResourceBundle();
+
+#if !defined(OS_FUCHSIA)
+  void InitCrashReporter(const base::CommandLine& command_line);
+#endif
 
   static HeadlessContentMainDelegate* GetInstance();
 

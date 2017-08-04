@@ -230,7 +230,8 @@
 namespace content {
 namespace {
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
+#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
+    !defined(OS_FUCHSIA)
 void SetupSandbox(const base::CommandLine& parsed_command_line) {
   TRACE_EVENT0("startup", "SetupSandbox");
   // RenderSandboxHostLinux needs to be initialized even if the sandbox and
@@ -442,9 +443,11 @@ GetDefaultTaskSchedulerInitParams() {
 #endif
 }
 
+#if !defined(OS_FUCHSIA)
 // Time between updating and recording swap rates.
 constexpr base::TimeDelta kSwapMetricsInterval =
     base::TimeDelta::FromSeconds(60);
+#endif
 
 }  // namespace
 
@@ -539,7 +542,8 @@ void BrowserMainLoop::Init() {
 void BrowserMainLoop::EarlyInitialization() {
   TRACE_EVENT0("startup", "BrowserMainLoop::EarlyInitialization");
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
+#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
+    !defined(OS_FUCHSIA)
   // No thread should be created before this call, as SetupSandbox()
   // will end-up using fork().
   SetupSandbox(parsed_command_line_);
@@ -1636,6 +1640,7 @@ void BrowserMainLoop::InitializeMemoryManagementComponent() {
   if (base::FeatureList::IsEnabled(features::kMemoryCoordinator))
     MemoryCoordinatorImpl::GetInstance()->Start();
 
+#if !defined(OS_FUCHSIA)
   std::unique_ptr<SwapMetricsDriver::Delegate> delegate(
       base::WrapUnique<SwapMetricsDriver::Delegate>(
           new SwapMetricsDelegateUma()));
@@ -1643,6 +1648,7 @@ void BrowserMainLoop::InitializeMemoryManagementComponent() {
       SwapMetricsDriver::Create(std::move(delegate), kSwapMetricsInterval);
   if (swap_metrics_driver_)
     swap_metrics_driver_->Start();
+#endif  // !defined(OS_FUCHSIA)
 }
 
 bool BrowserMainLoop::InitializeToolkit() {
