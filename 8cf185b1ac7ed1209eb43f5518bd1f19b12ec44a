@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87b2a482_2e143be8",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 2102,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T17:32:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f0069d6_de0f77bb",
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22465615_74ff1057",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument.mm",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6cd2931_83edd8d6",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T17:32:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22465615_74ff1057",
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "cefa89c3_38cdc135",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T17:32:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5d9c87d_cab1ff2d",
+      "range": {
+        "startLine": 114,
+        "startChar": 64,
+        "endLine": 114,
+        "endChar": 72
+      },
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c5683fe_627b66b5",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
         "patchSetId": 12
@@ -73,6 +133,24 @@
       "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da401af_1b53b57f",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T17:32:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c5683fe_627b66b5",
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "8c31122c_4e84a084",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T17:32:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39e270a3_9cc3cb5f",
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93d3aa80_67e50f26",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
         "patchSetId": 12
@@ -104,6 +200,30 @@
       "writtenOn": "2017-08-04T14:45:23Z",
       "side": 1,
       "message": "Do you see this pattern elsewhere in code? Could you check if a function in gurl.h could help?",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 43
+      },
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee8d75b_8bf04df1",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T17:32:46Z",
+      "side": 1,
+      "message": "Originally when I had looked into GURL I incorrectly assumed that the Resolve function wouldn\u0027t work on a URL such as https://rsolomakhin.github.io/alicepay/moes-app.json and that I would have to remove the filename in order for resolve to work but after testing it now I realize Resolve does this work for us so I do not need this code at all. Instead I can just pass in the web app manifest URL and it will resolve correctly with the given icon string.",
+      "parentUuid": "93d3aa80_67e50f26",
       "range": {
         "startLine": 140,
         "startChar": 4,
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "038cacd2_21da095d",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T17:32:46Z",
+      "side": 1,
+      "message": "Yes he did, just added the limit.",
+      "parentUuid": "a519ca2e_91bebc1c",
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86f01bc6_4f2bf942",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
         "patchSetId": 12
@@ -144,6 +282,30 @@
       "writtenOn": "2017-08-04T14:45:23Z",
       "side": 1,
       "message": "please make it a kConstant. do we intend to support bigger/smaller? If so, TODO with a crbug.com plz :)",
+      "range": {
+        "startLine": 263,
+        "startChar": 69,
+        "endLine": 263,
+        "endChar": 75
+      },
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28c903b7_7748dfc2",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T17:32:46Z",
+      "side": 1,
+      "message": "Good question, 32x32 has been looking a little small from what I was testing, but that\u0027s the same height as the autofill payment instrument icons. Moe and I were thinking maybe a bigger icon could work. I think a range of acceptable icons could be good but I will leave this as 32x32 for now and file a bug!",
+      "parentUuid": "86f01bc6_4f2bf942",
       "range": {
         "startLine": 263,
         "startChar": 69,
@@ -176,6 +338,30 @@
       "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5067b68a_439ad540",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-04T17:32:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f510004a_fa43085c",
+      "range": {
+        "startLine": 300,
+        "startChar": 20,
+        "endLine": 300,
+        "endChar": 28
+      },
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
