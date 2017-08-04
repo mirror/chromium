@@ -347,4 +347,8 @@ gfx::Rect NativeThemeAura::GetNinePatchAperture(Part part) const {
       kOverlayScrollbarCenterPatchSize, kOverlayScrollbarCenterPatchSize);
 }
 
+void NativeThemeAura::SetUseOverlayScrollbar(bool yes) {
+  use_overlay_scrollbars_ = yes;
+}
+
 }  // namespace ui

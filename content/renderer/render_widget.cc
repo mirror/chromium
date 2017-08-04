@@ -114,6 +114,8 @@
 
 #if defined(USE_AURA)
 #include "content/renderer/mus/renderer_window_tree_client.h"
+#include "ui/native_theme/native_theme_aura.h"
+#include "ui/native_theme/native_theme_features.h"
 #endif
 
 #if defined(OS_MACOSX)
@@ -389,6 +391,15 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
   if (!swapped_out)
     RenderProcess::current()->AddRefProcess();
   DCHECK(RenderThread::Get());
+#if defined(USE_AURA)
+  if (popup_type == blink::kWebPopupTypePage) {
+    use_overlay_scrollbar_ = ui::IsOverlayScrollbarEnabled();
+    blink::WebRuntimeFeatures::EnableOverlayScrollbars(false);
+    ui::NativeThemeAura* theme =
+        (ui::NativeThemeAura*)ui::NativeThemeAura::GetInstanceForWeb();
+    theme->SetUseOverlayScrollbar(false);
+  }
+#endif
 
   // In tests there may not be a RenderThreadImpl.
   if (RenderThreadImpl::current()) {
@@ -404,6 +415,17 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
 
 RenderWidget::~RenderWidget() {
   DCHECK(!webwidget_internal_) << "Leaking our WebWidget!";
+
+#if defined(USE_AURA)
+  if (use_overlay_scrollbar_.has_value()) {
+    bool overlay_scrollbar_enabled = use_overlay_scrollbar_.value();
+    blink::WebRuntimeFeatures::EnableOverlayScrollbars(
+        overlay_scrollbar_enabled);
+    ui::NativeThemeAura* theme =
+        (ui::NativeThemeAura*)ui::NativeThemeAura::GetInstanceForWeb();
+    theme->SetUseOverlayScrollbar(overlay_scrollbar_enabled);
+  }
+#endif
 
   if (input_event_queue_)
     input_event_queue_->ClearClient();

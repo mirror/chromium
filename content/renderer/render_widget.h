@@ -21,6 +21,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "cc/input/touch_action.h"
@@ -906,6 +907,8 @@ class CONTENT_EXPORT RenderWidget
   viz::LocalSurfaceId local_surface_id_;
 
   scoped_refptr<MainThreadEventQueue> input_event_queue_;
+
+  base::Optional<bool> use_overlay_scrollbar_;
 
   mojo::Binding<mojom::Widget> widget_binding_;
 

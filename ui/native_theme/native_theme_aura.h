@@ -12,6 +12,9 @@ namespace ui {
 
 // Aura implementation of native theme support.
 class NATIVE_THEME_EXPORT NativeThemeAura : public NativeThemeBase {
+ public:
+  void SetUseOverlayScrollbar(bool yes);
+
  protected:
   friend class NativeTheme;
   friend class NativeThemeAuraTest;
