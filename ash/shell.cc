@@ -1285,6 +1285,8 @@ void Shell::OnSessionStateChanged(session_manager::SessionState state) {
       CreateKeyboard();
     }
   }
+
+  shell_port_->UpdateSystemModalAndBlockingContainers();
 }
 
 void Shell::OnLoginStatusChanged(LoginStatus login_status) {
