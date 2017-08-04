@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2301e068_71c69b1b",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-04T22:12:33Z",
+      "side": 1,
+      "message": "If there is a need to have this call here as opposed to below, we should have a comment explaining that.",
+      "range": {
+        "startLine": 899,
+        "startChar": 14,
+        "endLine": 899,
+        "endChar": 22
+      },
+      "revId": "183499dbcb4ff2c4c45bdc169bee50c8ef4b918b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6f41c5_6f896423",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-04T22:12:33Z",
+      "side": 1,
+      "message": "Can we avoid this and use PIDs?",
+      "revId": "183499dbcb4ff2c4c45bdc169bee50c8ef4b918b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
