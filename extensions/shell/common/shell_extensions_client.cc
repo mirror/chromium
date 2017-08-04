@@ -79,7 +79,10 @@ ShellExtensionsClient::ShellExtensionsClient()
 ShellExtensionsClient::~ShellExtensionsClient() {
 }
 
-void ShellExtensionsClient::Initialize() {
+void ShellExtensionsClient::InitializeWebStoreUrls(
+    base::CommandLine* command_line) {}
+
+void ShellExtensionsClient::InitializeGlobalState() {
   RegisterCommonManifestHandlers();
   ManifestHandler::FinalizeRegistration();
   // TODO(jamescook): Do we need to whitelist any extensions?
@@ -94,7 +97,7 @@ ShellExtensionsClient::GetPermissionMessageProvider() const {
   return g_permission_message_provider.Get();
 }
 
-const std::string ShellExtensionsClient::GetProductName() {
+const std::string ShellExtensionsClient::GetProductName() const {
   return "app_shell";
 }
 

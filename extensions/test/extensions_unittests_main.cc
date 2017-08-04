@@ -52,8 +52,6 @@ class ExtensionsTestSuite : public content::ContentTestSuiteBase {
   void Initialize() override;
   void Shutdown() override;
 
-  std::unique_ptr<extensions::TestExtensionsClient> client_;
-
   DISALLOW_COPY_AND_ASSIGN(ExtensionsTestSuite);
 };
 
@@ -83,13 +81,12 @@ void ExtensionsTestSuite::Initialize() {
       extensions_shell_and_test_pak_path.AppendASCII(
           "extensions_shell_and_test.pak"));
 
-  client_.reset(new extensions::TestExtensionsClient());
-  extensions::ExtensionsClient::Set(client_.get());
+  extensions::ExtensionsClient::Set(
+      base::MakeUnique<extensions::TestExtensionsClient>());
 }
 
 void ExtensionsTestSuite::Shutdown() {
   extensions::ExtensionsClient::Set(NULL);
-  client_.reset();
 
   ui::ResourceBundle::CleanupSharedInstance();
   content::ContentTestSuiteBase::Shutdown();

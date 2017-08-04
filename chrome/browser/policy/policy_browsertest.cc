@@ -173,6 +173,7 @@
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
+#include "extensions/common/extensions_client.h"
 #include "extensions/common/features/feature_channel.h"
 #include "extensions/common/manifest_handlers/shared_module_info.h"
 #include "extensions/common/switches.h"
@@ -1546,6 +1547,8 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, ExtensionInstallBlacklistSharedModules) {
       URLRequestMockHTTPJob::GetMockUrl(update_xml_path.MaybeAsASCII()));
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
       switches::kAppsGalleryUpdateURL, update_xml_url.spec());
+  extensions::ExtensionsClient::Get()->InitializeWebStoreUrls(
+      base::CommandLine::ForCurrentProcess());
   ui_test_utils::NavigateToURL(browser(), update_xml_url);
 
   // Blacklist "*" but force-install the importer extension. The shared module
