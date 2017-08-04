@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c8ca4c41_fd3902d1",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-04T18:10:52Z",
+      "side": 1,
+      "message": "That\u0027s awesome! I didn\u0027t know that. There were a lot of false positives but I ended up excluding the third party directory by running:\n\ngit grep -l \u0027ContentFilter\u0027 -- \u0027:(exclude)third_party/*\u0027 | xargs sed -i \u0027s/ContentFilter/TLSInterception/g\u0027\n\nAfterwards I went through and looked at the files that had changed, and if they weren\u0027t relevant to my CL I checked them back out.",
+      "parentUuid": "b5faca1d_da979f68",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "219af117ccaf8ebc8868d916d997f6615a4a0ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c54a782_c5619dae",
         "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
         "patchSetId": 4
