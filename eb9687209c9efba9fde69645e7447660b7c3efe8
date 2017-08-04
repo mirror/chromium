@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "d0eef604_f1322c41",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-04T16:03:18Z",
+      "side": 1,
+      "message": "Hmmm ok, then shouldn\u0027t ~Thread() handle that?",
+      "parentUuid": "127067df_ea8daffb",
+      "range": {
+        "startLine": 247,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 42
+      },
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4829f623_130ec978",
         "filename": "base/task_scheduler/scheduler_worker.cc",
         "patchSetId": 22
