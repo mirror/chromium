@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "906cd301_697aee6f",
+        "filename": "chrome/android/java/res/xml/notifications_preferences.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-04T13:25:14Z",
+      "side": 1,
+      "message": "I believe they just need to be unique in whatever is loaded. This file is loaded by NotificationsPreferences directly (it isn\u0027t included in another xml file or anything), so it just needs to be unique in the file (I think).",
+      "parentUuid": "7ca84375_684d2add",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "3b5ce6b4cb21e28f8e78ec7262136eca21f5e9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e77353c_0e52f0fa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d92adec2_be9fbdb9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-04T13:25:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e77353c_0e52f0fa",
+      "range": {
+        "startLine": 7,
+        "startChar": 42,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "3b5ce6b4cb21e28f8e78ec7262136eca21f5e9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "034c102d_b52e1b0d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-28T15:25:31Z",
       "side": 1,
       "message": "Why don\u0027t you use BuildInfo.isAtLeastO() again?",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 39
+      },
+      "revId": "3b5ce6b4cb21e28f8e78ec7262136eca21f5e9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0df154_3f443900",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-04T13:25:14Z",
+      "side": 1,
+      "message": "I\u0027m assuming that that method will be removed soon - it only existed because the method of determining if you are on O wasn\u0027t standard until recently.",
+      "parentUuid": "034c102d_b52e1b0d",
       "range": {
         "startLine": 158,
         "startChar": 12,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "850fc8a6_571e8840",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-04T13:25:14Z",
+      "side": 1,
+      "message": "No, I don\u0027t think so.",
+      "parentUuid": "72cb17cd_85ed21b3",
+      "revId": "3b5ce6b4cb21e28f8e78ec7262136eca21f5e9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98e9ecb6_798d260e",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/NotificationsPreferencesTest.java",
         "patchSetId": 3
@@ -108,6 +198,30 @@
       "revId": "3b5ce6b4cb21e28f8e78ec7262136eca21f5e9b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3e6434_5d665dc6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/NotificationsPreferencesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-04T13:25:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98e9ecb6_798d260e",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 44
+      },
+      "revId": "3b5ce6b4cb21e28f8e78ec7262136eca21f5e9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
