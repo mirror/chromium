@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53d70a50_ff3aa9a7",
+        "filename": "chrome/test/data/webui/settings/certificate_manager_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T00:53:04Z",
+      "side": 1,
+      "message": "This element is no longer under settings/, but the tests still are. That is a bit odd. Should we also move the test files in a shared folder? Would that just be a lot of overhead?",
+      "revId": "e7e64bfa044f0f8413f70ab45448ad69b510c239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650d718a_6bd4f2b6",
+        "filename": "ui/webui/resources/shared_components/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T00:53:04Z",
+      "side": 1,
+      "message": "This is no longer accurate. This folder contains both CrOS and non CrOS components.",
+      "revId": "e7e64bfa044f0f8413f70ab45448ad69b510c239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6e1eef_af6a47aa",
+        "filename": "ui/webui/resources/webui_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T00:53:04Z",
+      "side": 1,
+      "message": "Are we accidentally including shared_components_resources.grdp to android builds?",
+      "revId": "e7e64bfa044f0f8413f70ab45448ad69b510c239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
