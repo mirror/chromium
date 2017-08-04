@@ -418,5 +418,49 @@ TEST(VideoLayerImplTest, NativeARGBFrameGeneratesTextureQuad) {
   EXPECT_EQ(texture_draw_quad->resource_size_in_pixels(), resource_size);
 }
 
+TEST(VideoLayerImplTest, NativeNV12FrameGeneratesTextureQuad) {
+  gfx::Size layer_size(1000, 1000);
+  gfx::Size viewport_size(1000, 1000);
+
+  LayerTestCommon::LayerImplTest impl;
+  DebugSetImplThreadAndMainThreadBlocked(impl.task_runner_provider());
+
+  gpu::MailboxHolder mailbox_holders[media::VideoFrame::kMaxPlanes];
+  mailbox_holders[0].texture_target = GL_TEXTURE_EXTERNAL_OES;
+  mailbox_holders[0].mailbox.name[0] = 1;
+
+  gfx::Size resource_size = gfx::Size(10, 10);
+  scoped_refptr<media::VideoFrame> video_frame =
+      media::VideoFrame::WrapNativeTextures(
+          media::PIXEL_FORMAT_ARGB, mailbox_holders, base::Bind(EmptyCallback),
+          resource_size, gfx::Rect(10, 10), resource_size, base::TimeDelta());
+  ASSERT_TRUE(video_frame);
+  video_frame->metadata()->SetBoolean(media::VideoFrameMetadata::ALLOW_OVERLAY,
+                                      true);
+  FakeVideoFrameProvider provider;
+  provider.set_frame(video_frame);
+
+  VideoLayerImpl* video_layer_impl =
+      impl.AddChildToRoot<VideoLayerImpl>(&provider, media::VIDEO_ROTATION_0);
+  video_layer_impl->SetBounds(layer_size);
+  video_layer_impl->SetDrawsContent(true);
+  impl.host_impl()->active_tree()->BuildLayerListAndPropertyTreesForTesting();
+
+  gfx::Rect occluded;
+  impl.AppendQuadsWithOcclusion(video_layer_impl, occluded);
+
+  EXPECT_EQ(1u, impl.quad_list().size());
+  const DrawQuad* draw_quad = impl.quad_list().ElementAt(0);
+  ASSERT_EQ(DrawQuad::TEXTURE_CONTENT, draw_quad->material);
+
+  const TextureDrawQuad* texture_draw_quad =
+      TextureDrawQuad::MaterialCast(draw_quad);
+  EXPECT_EQ(texture_draw_quad->resource_size_in_pixels(), resource_size);
+  EXPECT_EQ(impl.resource_provider()->GetBufferFormat(
+                texture_draw_quad->resource_id()),
+            gfx::BufferFormat::YUV_420_BIPLANAR);
+  EXPECT_EQ(texture_draw_quad->resource_size_in_pixels(), resource_size);
+}
+
 }  // namespace
 }  // namespace cc
