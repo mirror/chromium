@@ -68,6 +68,46 @@
       "revId": "08508fa84f6de1ab455c7701f8ea8834ac0b79bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "542a8852_928b0c8b",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-04T23:44:53Z",
+      "side": 1,
+      "message": "nits: name this merged_event_boundaries instead",
+      "revId": "08508fa84f6de1ab455c7701f8ea8834ac0b79bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18338760_0d3b16a7",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-04T23:44:53Z",
+      "side": 1,
+      "message": "for b in merged_event_boundaries",
+      "range": {
+        "startLine": 193,
+        "startChar": 38,
+        "endLine": 193,
+        "endChar": 0
+      },
+      "revId": "08508fa84f6de1ab455c7701f8ea8834ac0b79bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
