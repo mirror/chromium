@@ -1,0 +1,29 @@
+<link rel="import" href="chrome://resources/html/polymer.html">
+<link rel="import" href="chrome://resources/html/cr.html">
+
+<dom-module id="extensions-view-manager">
+  <template>
+    <style>
+      :host ::slotted([slot=view]) {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: none;
+        opacity: 0;
+        transition: opacity 300ms;
+      }
+
+      :host ::slotted(.block) {
+        display: block;
+      }
+
+      :host ::slotted(.active) {
+        opacity: 1;
+      }
+    </style>
+    <slot name="view"></slot>
+  </template>
+  <script src="chrome://extensions/view-manager.js"></script>
+</dom-module>

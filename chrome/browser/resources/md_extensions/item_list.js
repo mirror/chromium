@@ -6,7 +6,7 @@ cr.define('extensions', function() {
   var ItemList = Polymer({
     is: 'extensions-item-list',
 
-    behaviors: [Polymer.NeonAnimatableBehavior, Polymer.IronResizableBehavior],
+    behaviors: [Polymer.IronResizableBehavior],
 
     properties: {
       /** @type {Array<!chrome.developerPrivate.ExtensionInfo>} */
@@ -31,21 +31,6 @@ cr.define('extensions', function() {
 
     listeners: {
       'list.extension-item-size-changed': 'itemSizeChanged_',
-    },
-
-    ready: function() {
-      /** @type {extensions.AnimationHelper} */
-      this.animationHelper = new extensions.AnimationHelper(this, this.$.list);
-      this.animationHelper.setEntryAnimations([extensions.Animation.FADE_IN]);
-      this.animationHelper.setExitAnimations([extensions.Animation.HERO]);
-    },
-
-    /**
-     * Called when a subpage for a given item is about to be shown.
-     * @param {string} id
-     */
-    willShowItemSubpage: function(id) {
-      this.sharedElements = {hero: this.$$('#' + id)};
     },
 
     /**
