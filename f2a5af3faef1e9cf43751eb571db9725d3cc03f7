@@ -813,6 +813,30 @@
     },
     {
       "key": {
+        "uuid": "f3da3113_8f61c2d2",
+        "filename": "ios/chrome/browser/ssl/ios_captive_portal_blocking_page.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-04T04:03:17Z",
+      "side": 1,
+      "message": "\u003e Sure. This is model layer code. It should be provided with a delegate to which it will indicate that some UI will be presented, and it shouldn\u0027t know, care, or (especially) determine what that UI is or how it\u0027s determined.\n\nSorry, that should be:\n\n\".. shouldn\u0027t know, care, or (especially) determine what that UI is or how it\u0027s displayed.\"",
+      "parentUuid": "0cc04f43_c94e64fc",
+      "range": {
+        "startLine": 122,
+        "startChar": 22,
+        "endLine": 122,
+        "endChar": 41
+      },
+      "revId": "f2a5af3faef1e9cf43751eb571db9725d3cc03f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d20b6fa1_04296075",
         "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.h",
         "patchSetId": 1
