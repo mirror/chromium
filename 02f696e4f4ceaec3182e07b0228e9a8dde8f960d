@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91c754f2_bf9e85f2",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-04T03:11:30Z",
+      "side": 1,
+      "message": "may have been created",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1369a9_d06c86bc",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-04T03:11:30Z",
+      "side": 1,
+      "message": "This is a bit unclear, mostly because \"assume\" might mean mean \"claim\" or \"presume\". My most likely guess: each IndexedDBBackingStore owns a IndexedDBPreCloseTaskQueue. Did I get it right?",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92c1336_ffcdad45",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-04T03:11:30Z",
+      "side": 1,
+      "message": "Task -\u003e The task?\n\nChrome is closing -\u003e the browser process is shutting down? (or something like that)",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6aeafa5_94f3af31",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-04T03:11:30Z",
+      "side": 1,
+      "message": "\"Task\" -\u003e \"The task\" or \"The PreCloseTask instance\". (also, is this true? if the task is running on another thread, destroying its context synchronously here doesn\u0027t seem right)",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab29287_5850f02e",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-04T03:11:30Z",
+      "side": 1,
+      "message": "IIRC, if you leave out the default: branch, you\u0027ll get a compiler warning for unhandled values. Given our test coverage, that seems more useful than the runtime warning here.\n\nThis applies to all other default: NOTREACHED() pieces of code below.",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe05420_f081310f",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-04T03:11:30Z",
+      "side": 1,
+      "message": "Would it make sense to have a single string up to here, and fork it into uma_count_label and uma_size_label here?",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "351d6854_ab486c0b",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-04T03:11:30Z",
+      "side": 1,
+      "message": "If you extract all the string logic up to here in 1 or 2 separate (static) methods, you can unit-test it easily. You\u0027d need separate logic (like the one below) for populating WebCore.IndexedDB.TombstoneSweeper.SweepError.",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fda4f76_7dbe15d6",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-04T03:11:30Z",
+      "side": 1,
+      "message": "Stuff I\u0027ve recently learned regarding debugging:\n\n1) chrome://histograms/ -- open in a tab, run your code (i.e. open some IndexedDB page in a separate tab), then refresh the histograms tab; look for your histograms\n\n2) You can run some unit tests with --enable-logging --v\u003d1, and you get a histogram at the end.\n\nExample: out/Default/components_unittests --gtest_filter\u003dLoginDatabaseTest.* --enable-logging --v\u003d1",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbeb222_7aa24914",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-04T03:11:30Z",
+      "side": 1,
+      "message": "So what ended up happening with the document? It\u0027s still not publicly accessible.",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18ee045_461865ac",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-04T03:11:30Z",
+      "side": 1,
+      "message": "Feels odd to have this method in between type declarations.",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501420d8_f6f03b47",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-04T03:11:30Z",
+      "side": 1,
+      "message": "Any chance you could converge on sweeping? If you prefer crawling, that\u0027s fine too. Let\u0027s just not end up with both names for the same concept.",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba181c0_776668d1",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-04T03:11:30Z",
+      "side": 1,
+      "message": "\"Expects one and only one optional argument to be populated.\" -\u003e \"Exactly one optional argument must be populated\".\n\nAlso, this seems less important than what the method does. I think that should go first.",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df5289e_88cbd493",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-04T03:11:30Z",
+      "side": 1,
+      "message": "\"Returns true if\" makes this a bit easier to read. I assume the method returns (i.e., doesn\u0027t exit the process/thread) either way?",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2100c308_78c52f79",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-04T03:11:30Z",
+      "side": 1,
+      "message": "I think this should be stated at the API boundary. (method comments)",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
