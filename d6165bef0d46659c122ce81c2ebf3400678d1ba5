@@ -22,6 +22,30 @@
       "revId": "d6165bef0d46659c122ce81c2ebf3400678d1ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0462583_a8348351",
+        "filename": "media/filters/decrypting_demuxer_stream_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-04T04:30:04Z",
+      "side": 1,
+      "message": "Good catch. Done",
+      "parentUuid": "680b8e5f_2e8c2ff8",
+      "range": {
+        "startLine": 230,
+        "startChar": 9,
+        "endLine": 230,
+        "endChar": 14
+      },
+      "revId": "d6165bef0d46659c122ce81c2ebf3400678d1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
