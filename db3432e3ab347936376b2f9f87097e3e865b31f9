@@ -81,6 +81,24 @@
       "revId": "db3432e3ab347936376b2f9f87097e3e865b31f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6151ead1_70d7b624",
+        "filename": "components/ui_devtools/views/ui_element.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-04T02:42:18Z",
+      "side": 1,
+      "message": "Ah right. So GetBackingElement() wouldn\u0027t be a const method, but the input paramater to GetBackingElement() would be a const-pointer.",
+      "parentUuid": "46f29d46_61ccae8b",
+      "revId": "db3432e3ab347936376b2f9f87097e3e865b31f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
