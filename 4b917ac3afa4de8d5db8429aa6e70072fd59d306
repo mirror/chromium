@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87466151_3ea46773",
+        "filename": "extensions/common/api/declarative_net_request/DEPS",
+        "patchSetId": 13
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T23:24:58Z",
+      "side": 1,
+      "message": "As I mentioned offline yesterday, I\u0027m not super thrilled about extension/common depending on this.\n\nCan you run DEPS and BUILD.gn by Devlin quickly (in parallel)",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 32
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acca7fb3_9ac40ea3",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T23:24:58Z",
+      "side": 1,
+      "message": "Aliasing namespaces to a completely different name hurts readability IMO, how about\nnamespace flat \u003d ::url_pattern_index::flat;\nnamespace declarative_net_request \u003d ::extensions::api::declarative_net_request;\n\nWould that work?\nI see you can\u0027t use declarative_net_request here, but you can put it at top level and refer to it using ::declarative_net_request.",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff3e481_1a050182",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T23:24:58Z",
+      "side": 1,
+      "message": "So Parse() is supposed to be called exactly once per UrlFilterParser instance, right?\n\nInstead of DCHECKing to ensure that, it would be better to make UrlFilterParser abstract and provide only public method static UrlFilterParser::Parse and don\u0027t allow instance creation of this class.\n\nIt\u0027s easier to reason about the state machine for this class this way.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4a0717_08a4bf5b",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T23:24:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure I follow this, why tolowercase after sort+unique? That will break unique-ness. Also, did you consider making IndexedRule::domains a std::set? Manually keeping vector fields sorted is a bit painful and prone to future error.",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 54
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "988eb988_4f1c7499",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T23:24:58Z",
+      "side": 1,
+      "message": "I think this is better suited as a static method inside IndexedRule",
+      "range": {
+        "startLine": 241,
+        "startChar": 12,
+        "endLine": 241,
+        "endChar": 29
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29697638_7a16f1c9",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T23:24:58Z",
+      "side": 1,
+      "message": "It\u0027s probably a good idea to not use using for these two. I\u0027ve almost never seen this in our codebase.",
+      "range": {
+        "startLine": 26,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 22
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61b1973_98104d5e",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T23:24:58Z",
+      "side": 1,
+      "message": "nit: ++i",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "840314e2_b61a60fd",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T23:24:58Z",
+      "side": 1,
+      "message": "This definitely looks odd, you\u0027re using move constructor to construct the unique ptr.\nI\u0027d have imagined CreateGenericParsedRule returning std::unique\u003cRule\u003e and you\u0027d just assign it to |rule| here.",
+      "range": {
+        "startLine": 48,
+        "startChar": 15,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
