@@ -19,6 +19,7 @@
 #include "media/blink/multibuffer_reader.h"
 #include "media/blink/resource_multibuffer_data_provider.h"
 #include "media/blink/test_response_generator.h"
+#include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/web/WebFrameClient.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -1344,10 +1345,10 @@ TEST_F(MultibufferDataSourceTest, Http_RetryThenRedirect) {
   run_loop.Run();
 
   // Server responds with a redirect.
-  blink::WebURLRequest request((GURL(kHttpDifferentPathUrl)));
+  blink::WebURL url{GURL(kHttpDifferentPathUrl)};
   blink::WebURLResponse response((GURL(kHttpUrl)));
   response.SetHTTPStatusCode(307);
-  data_provider()->WillFollowRedirect(request, response);
+  data_provider()->WillFollowRedirect(url, response);
   Respond(response_generator_->Generate206(kDataSize));
   ReceiveData(kDataSize);
   EXPECT_CALL(host_, AddBufferedByteRange(0, kDataSize * 3));
@@ -1360,10 +1361,10 @@ TEST_F(MultibufferDataSourceTest, Http_NotStreamingAfterRedirect) {
   Initialize(kHttpUrl, true);
 
   // Server responds with a redirect.
-  blink::WebURLRequest request((GURL(kHttpDifferentPathUrl)));
+  blink::WebURL url{GURL(kHttpDifferentPathUrl)};
   blink::WebURLResponse response((GURL(kHttpUrl)));
   response.SetHTTPStatusCode(307);
-  data_provider()->WillFollowRedirect(request, response);
+  data_provider()->WillFollowRedirect(url, response);
 
   EXPECT_CALL(host_, SetTotalBytes(response_generator_->content_length()));
   Respond(response_generator_->Generate206(0));
@@ -1382,10 +1383,10 @@ TEST_F(MultibufferDataSourceTest, Http_RangeNotSatisfiableAfterRedirect) {
   Initialize(kHttpUrl, true);
 
   // Server responds with a redirect.
-  blink::WebURLRequest request((GURL(kHttpDifferentPathUrl)));
+  blink::WebURL url{GURL(kHttpDifferentPathUrl)};
   blink::WebURLResponse response((GURL(kHttpUrl)));
   response.SetHTTPStatusCode(307);
-  data_provider()->WillFollowRedirect(request, response);
+  data_provider()->WillFollowRedirect(url, response);
 
   EXPECT_CALL(host_, AddBufferedByteRange(0, kDataSize));
   Respond(response_generator_->GenerateResponse(416));
@@ -1396,10 +1397,10 @@ TEST_F(MultibufferDataSourceTest, Http_404AfterRedirect) {
   Initialize(kHttpUrl, false);
 
   // Server responds with a redirect.
-  blink::WebURLRequest request((GURL(kHttpDifferentPathUrl)));
+  blink::WebURL url{GURL(kHttpDifferentPathUrl)};
   blink::WebURLResponse response((GURL(kHttpUrl)));
   response.SetHTTPStatusCode(307);
-  data_provider()->WillFollowRedirect(request, response);
+  data_provider()->WillFollowRedirect(url, response);
 
   Respond(response_generator_->Generate404());
   Stop();
