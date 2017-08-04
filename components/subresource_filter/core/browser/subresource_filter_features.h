@@ -104,6 +104,9 @@ struct Configuration {
   // Do not forget updating operator==, operator<<, and any other necessary
   // methods when adding new fields here!
 
+  static Configuration ParseConfigurationForTesting(
+      std::map<std::string, std::string>* params);
+
   Configuration();
   Configuration(ActivationLevel activation_level,
                 ActivationScope activation_scope,
@@ -117,6 +120,7 @@ struct Configuration {
   bool operator==(const Configuration& rhs) const;
   bool operator!=(const Configuration& rhs) const;
 
+  bool IsInvalid() const;
   std::unique_ptr<base::trace_event::TracedValue> ToTracedValue() const;
 
   // Factory methods for preset configurations.
