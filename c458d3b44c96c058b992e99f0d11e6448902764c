@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4858a0d2_b02f070c",
+        "filename": "ui/login/account_picker/md_screen_account_picker.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-04T21:51:39Z",
+      "side": 1,
+      "message": "Can you try $(\u0027pod-row\u0027).maybePreselectPod()? If this can make pod (including the input) focused then I think we\u0027ll use this.",
+      "revId": "c458d3b44c96c058b992e99f0d11e6448902764c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
