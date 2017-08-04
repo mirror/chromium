@@ -391,19 +391,18 @@ bool HttpUtil::IsNonCoalescingHeader(std::string::const_iterator name_begin,
   // NOTE: "set-cookie2" headers do not support expires attributes, so we don't
   // have to list them here.
   const char* const kNonCoalescingHeaders[] = {
-    "date",
-    "expires",
-    "last-modified",
-    "location",  // See bug 1050541 for details
-    "retry-after",
-    "set-cookie",
-    // The format of auth-challenges mixes both space separated tokens and
-    // comma separated properties, so coalescing on comma won't work.
-    "www-authenticate",
-    "proxy-authenticate",
-    // STS specifies that UAs must not process any STS headers after the first
-    // one.
-    "strict-transport-security"
+      "date", "expires", "last-modified",
+      "location",  // See bug 1050541 for details
+      "retry-after", "set-cookie",
+      // The format of auth-challenges mixes both space separated tokens and
+      // comma separated properties, so coalescing on comma won't work.
+      "www-authenticate", "proxy-authenticate",
+      // STS specifies that UAs must not process any STS headers after the first
+      // one.
+      "strict-transport-security",
+      // Expect-CT uses a comma-separated directive list and specifies that the
+      // UAs must not process subsequent headers.
+      "expect-ct",
   };
 
   for (const char* header : kNonCoalescingHeaders) {
