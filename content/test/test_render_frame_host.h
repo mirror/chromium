@@ -57,7 +57,6 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
   void InitializeRenderFrameIfNeeded() override;
   TestRenderFrameHost* AppendChild(const std::string& frame_name) override;
   void Detach() override;
-  void SimulateNavigationStart(const GURL& url) override;
   void SimulateRedirect(const GURL& new_url) override;
   void SimulateNavigationCommit(const GURL& url) override;
   void SimulateNavigationError(const GURL& url, int error_code) override;
@@ -81,6 +80,11 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
   void SimulateFeaturePolicyHeader(
       blink::WebFeaturePolicyFeature feature,
       const std::vector<url::Origin>& whitelist) override;
+
+  // Simulates a renderer-initiated navigation to |url| starting in the
+  // RenderFrameHost.
+  // DEPRECATED: use NavigationSimulator instead.
+  void SimulateNavigationStart(const GURL& url);
 
   void SendNavigateWithReplacement(int nav_entry_id,
                                    bool did_create_new_entry,
@@ -140,6 +144,10 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
 
   // Creates a WebBluetooth Service with a dummy InterfaceRequest.
   WebBluetoothServiceImpl* CreateWebBluetoothServiceForTesting();
+
+  bool last_commit_was_error_page() const {
+    return last_commit_was_error_page_;
+  }
 
  private:
   void SendNavigateWithParameters(int nav_entry_id,
