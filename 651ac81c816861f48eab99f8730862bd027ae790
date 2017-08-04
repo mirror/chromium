@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9746ae58_fba77495",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-04T17:10:16Z",
+      "side": 0,
+      "message": "Is this related or should it maybe go in a separate change?",
+      "revId": "651ac81c816861f48eab99f8730862bd027ae790",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

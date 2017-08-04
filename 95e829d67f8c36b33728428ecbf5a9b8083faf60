@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad839184_33580ecf",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-04T17:10:16Z",
+      "side": 1,
+      "message": "Does \"in line\" and \"contextual\" mean basically the same thing here?\nYou used \"contextual\" in the change description and I think that\nmight be more clear than \"in line\", which reminds me of\ninline text boxes.\n\nAlso, do you have any other uses in mind for this predicate other\nthan tables? If not I wonder if the predicate should just be\nisTableCellLikeRole or something like that for now, in the spirit\nof YAGNI and generalizing later if needed.",
+      "revId": "95e829d67f8c36b33728428ecbf5a9b8083faf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a44205_0f82548a",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-04T17:10:16Z",
+      "side": 1,
+      "message": "Consider adding $state to the output when entering a cell for speech\nor removing it from braille output, so braille and speech don\u0027t\noutput different information. Everything else looks symmetrical,\njust in a different order which is what I\u0027d expect.",
+      "revId": "95e829d67f8c36b33728428ecbf5a9b8083faf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58b62f32_580a14c1",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-04T17:10:16Z",
+      "side": 1,
+      "message": "Would it make sense to use @table_summary or something\nsimilar? Also consider $node(tableHeader).",
+      "revId": "95e829d67f8c36b33728428ecbf5a9b8083faf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88a3542_2cedb6ea",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-04T17:10:16Z",
+      "side": 1,
+      "message": "Maybe \"contextual information\"",
+      "revId": "95e829d67f8c36b33728428ecbf5a9b8083faf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25cf7ff5_b4c1fa90",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-04T17:10:16Z",
+      "side": 1,
+      "message": "I assume that what this is trying to do is output the\nwhole row?\n\nDo you want to make sure that the parent role is indeed\na row and skip the rest if not?\n\nOr maybe make that part of the predicate, don\u0027t match the\ncell roles if it\u0027s not actually part of a real grid or table.",
+      "revId": "95e829d67f8c36b33728428ecbf5a9b8083faf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4348be76_26f48200",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-04T17:10:16Z",
+      "side": 1,
+      "message": "I assume that what this is trying to do is output the\nwhole row?\n\nDo you want to make sure that the parent role is indeed\na row and skip the rest if not?\n\nOr maybe make that part of the predicate, don\u0027t match the\ncell roles if it\u0027s not actually part of a real grid or table.",
+      "revId": "95e829d67f8c36b33728428ecbf5a9b8083faf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
