@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab66ddbb_f87a8b4e",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-04T08:01:41Z",
+      "side": 1,
+      "message": "nit: \"const std::vector\u003cstd::string\u003e\u0026 mime_types\"",
+      "revId": "26d741fb202ec3cfc669092224f712918952ba61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e88adb1c_9a585373",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-04T08:01:41Z",
+      "side": 1,
+      "message": "is this just for testing or something that will be used? It\u0027s preferred to create test for real use cases.",
+      "revId": "26d741fb202ec3cfc669092224f712918952ba61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc102bdd_29e5d8ef",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-04T08:01:41Z",
+      "side": 1,
+      "message": "is this just for testing? dnd_action_for_testing in that case but be nice to avoid completely if possible",
+      "revId": "26d741fb202ec3cfc669092224f712918952ba61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df41233d_41e4142b",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-04T08:01:41Z",
+      "side": 1,
+      "message": "const or will this be changing past ctor?",
+      "revId": "26d741fb202ec3cfc669092224f712918952ba61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a533c139_f384a11d",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-04T08:01:41Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "26d741fb202ec3cfc669092224f712918952ba61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4aa4dc_75453c88",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-04T08:01:41Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "26d741fb202ec3cfc669092224f712918952ba61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e117dd7_bcc50c74",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2845,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-04T08:01:41Z",
+      "side": 1,
+      "message": "why \"class DataOffer\" and not just DataOffer?",
+      "revId": "26d741fb202ec3cfc669092224f712918952ba61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
