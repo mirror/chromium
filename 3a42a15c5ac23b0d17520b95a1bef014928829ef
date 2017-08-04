@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "abd575ba_bfc92605",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-04T20:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e26229e7_91a3c3ce",
+      "range": {
+        "startLine": 966,
+        "startChar": 41,
+        "endLine": 966,
+        "endChar": 45
+      },
+      "revId": "3a42a15c5ac23b0d17520b95a1bef014928829ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "374f0970_92754663",
         "filename": "chrome/browser/ui/views/frame/browser_view_browsertest.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-04T17:03:09Z",
       "side": 1,
       "message": "Is it possible that this could wait too long in some cases and cause the next two lines to have flaky failures?  We\u0027ve seen that often in content_browsertests.  \n\nIf it helps, you can use a TestNavigationManager to deterministically delay the response (but I\u0027m not sure if it can control the interval between title set and load stop).",
+      "revId": "3a42a15c5ac23b0d17520b95a1bef014928829ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491f8314_28e832d9",
+        "filename": "chrome/browser/ui/views/frame/browser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-04T20:11:57Z",
+      "side": 1,
+      "message": "I can\u0027t guarantee it\u0027s not possible but I haven\u0027t seen it happen and at least in theory it seems hard to imagine that you could finish loading /before/ the title was set (for cases like this where there\u0027s a \u003ctitle\u003e element).",
+      "parentUuid": "374f0970_92754663",
       "revId": "3a42a15c5ac23b0d17520b95a1bef014928829ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
