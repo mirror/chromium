@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5ee0cd1d_a3ecf035",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-04T00:00:39Z",
+      "side": 1,
+      "message": "The advantage of making ToggleAppList (and ShowAppList) take the enum is that anyone that wants to call these functions is now forced to ensure they call the right value. That would be especially important if a new UI surface was added and just called one of these directly. So, ya, I think making the functions take the source improves long term maintainability.",
+      "parentUuid": "407e237d_e35d08d8",
+      "range": {
+        "startLine": 452,
+        "startChar": 6,
+        "endLine": 452,
+        "endChar": 26
+      },
+      "revId": "c57950329ef6755c1e188f8d4e2bc8c61d39426d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26e226db_6d735b0c",
         "filename": "ui/app_list/app_list_constants.h",
         "patchSetId": 10
