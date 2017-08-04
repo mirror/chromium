@@ -663,6 +663,9 @@ class ASH_EXPORT Shell : public SessionObserver,
   // the profile is available.
   void InitializeShelf();
 
+  // Registers preferences owned by other services (e.g. chrome). Used in mash.
+  static void RegisterForeignPrefs(PrefRegistrySimple* registry);
+
   // Callbacks for prefs::ConnectToPrefService.
   void OnProfilePrefServiceInitialized(
       std::unique_ptr<::PrefService> pref_service);

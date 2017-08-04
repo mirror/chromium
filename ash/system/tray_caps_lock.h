@@ -10,6 +10,8 @@
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/events/event_handler.h"
 
+class PrefRegistrySimple;
+
 namespace views {
 class View;
 }
@@ -17,22 +19,26 @@ class View;
 namespace ash {
 class CapsLockDefaultView;
 
+// Shows an icon in the status area and an item in the system tray menu when
+// the caps lock key is on.
 class TrayCapsLock : public TrayImageItem,
                      public chromeos::input_method::ImeKeyboard::Observer {
  public:
   explicit TrayCapsLock(SystemTray* system_tray);
   ~TrayCapsLock() override;
 
- private:
+  static void RegisterForeignPrefs(PrefRegistrySimple* registry);
+
   // Overridden from chromeos::input_method::ImeKeyboard::Observer:
   void OnCapsLockChanged(bool enabled) override;
-  void OnLayoutChanging(const std::string& layout_name) override {}
+  void OnLayoutChanging(const std::string& layout_name) override;
 
   // Overridden from TrayImageItem.
   bool GetInitialVisibility() override;
   views::View* CreateDefaultView(LoginStatus status) override;
   void OnDefaultViewDestroyed() override;
 
+ private:
   CapsLockDefaultView* default_;
 
   bool caps_lock_enabled_;
