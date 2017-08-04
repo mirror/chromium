@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "6ffbafc0_8f814917",
+        "filename": "base/strings/string_number_conversions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-04T01:38:46Z",
+      "side": 1,
+      "message": "I think that HexDump and HexDecode should stay in QuicTextUtilsTest, because those tests are shared, so they guarantee that the underlying implementations are identical across codebases.",
+      "parentUuid": "52358266_2df6cc6c",
+      "range": {
+        "startLine": 486,
+        "startChar": 42,
+        "endLine": 486,
+        "endChar": 43
+      },
+      "revId": "ba6124ed93383371275f83e165c0e1d510f7c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9601e5b_4a283543",
         "filename": "net/spdy/PRESUBMIT.py",
         "patchSetId": 2

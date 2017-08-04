@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6560d0ab_2bd10677",
+        "filename": "net/base/hex_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-04T01:38:46Z",
+      "side": 1,
+      "message": "Good catch!  Yes, because some Chromium platforms have signed chars, which are causing a lot of headache everywhere.  It seems like %f casts a signed char with negative value to an unsigned int32, which is bad.  I\u0027m adding a test to catch this.  While at it, also updating the tests to test for 0x20 and 0x7f not being printable.",
+      "parentUuid": "84f534fb_3c0ea315",
+      "range": {
+        "startLine": 36,
+        "startChar": 45,
+        "endLine": 36,
+        "endChar": 49
+      },
+      "revId": "38de3d92db4615c37ee479810fd9713639ed1209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6e5aaab_badf6718",
         "filename": "net/quic/platform/impl/quic_text_utils_impl.h",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-03T18:58:34Z",
       "side": 1,
       "message": "nit: net:: not needed.",
+      "range": {
+        "startLine": 114,
+        "startChar": 11,
+        "endLine": 114,
+        "endChar": 16
+      },
+      "revId": "38de3d92db4615c37ee479810fd9713639ed1209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8713b0d7_485d8cca",
+        "filename": "net/quic/platform/impl/quic_text_utils_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-04T01:38:46Z",
+      "side": 1,
+      "message": "Unfortunately it is, otherwise HexDump resolves to QuicTextUtilsImpl::HexDump(), which is this very static method, leading to infinite recursion, which is conveniently caught at compile time by -Winfinite-recursion.",
+      "parentUuid": "c6e5aaab_badf6718",
       "range": {
         "startLine": 114,
         "startChar": 11,
