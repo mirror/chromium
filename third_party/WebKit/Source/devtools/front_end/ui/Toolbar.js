@@ -576,13 +576,20 @@ UI.ToolbarInput = class extends UI.ToolbarItem {
    * @param {number=} growFactor
    * @param {number=} shrinkFactor
    * @param {boolean=} isSearchField
+   * @param {boolean=} growOnFocus
    */
-  constructor(placeholder, growFactor, shrinkFactor, isSearchField) {
+  constructor(placeholder, growFactor, shrinkFactor, isSearchField, growOnFocus) {
     super(createElementWithClass('div', 'toolbar-input'));
 
     this.input = this.element.createChild('input');
-    this.input.addEventListener('focus', () => this.element.classList.add('focused'));
-    this.input.addEventListener('blur', () => this.element.classList.remove('focused'));
+    this.input.addEventListener('focus', () => {
+      this.element.classList.add('focused');
+      this.dispatchEventToListeners(UI.ToolbarInput.Event.Focused);
+    });
+    this.input.addEventListener('blur', () => {
+      this.element.classList.remove('focused');
+      this.dispatchEventToListeners(UI.ToolbarInput.Event.Blurred);
+    });
     this.input.addEventListener('input', () => this._onChangeCallback(), false);
     this._isSearchField = !!isSearchField;
     if (growFactor)
@@ -591,6 +598,8 @@ UI.ToolbarInput = class extends UI.ToolbarItem {
       this.element.style.flexShrink = shrinkFactor;
     if (placeholder)
       this.input.setAttribute('placeholder', placeholder);
+    if (growOnFocus)
+      this.element.classList.add('toolbar-input-grow-on-focus');
 
     if (isSearchField)
       this._setupSearchControls();
@@ -659,6 +668,8 @@ UI.ToolbarInput = class extends UI.ToolbarItem {
 };
 
 UI.ToolbarInput.Event = {
+  Blurred: Symbol('Blurred'),
+  Focused: Symbol('Focused'),
   TextChanged: Symbol('TextChanged')
 };
 
