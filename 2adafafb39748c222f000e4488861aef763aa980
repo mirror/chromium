@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4fd065b_12fabc49",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-04T22:33:59Z",
+      "side": 1,
+      "message": "NOTREACHED?",
+      "range": {
+        "startLine": 325,
+        "startChar": 2,
+        "endLine": 325,
+        "endChar": 8
+      },
+      "revId": "2adafafb39748c222f000e4488861aef763aa980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
