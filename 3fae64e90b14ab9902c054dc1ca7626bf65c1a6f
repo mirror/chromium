@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "439efcb3_6ba71d04",
+        "filename": "net/cert/x509_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-04T20:58:14Z",
+      "side": 1,
+      "message": "This is a decent amount of code, and code that will likely be duplicated into WebRTC if the PKI library doesn\u0027t get moved into BoringSSL and pick up APIs for this sort of thing by the time we get there. Thoughts on how this should get organized?",
+      "revId": "3fae64e90b14ab9902c054dc1ca7626bf65c1a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
