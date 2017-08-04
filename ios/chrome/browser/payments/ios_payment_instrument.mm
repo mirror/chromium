@@ -21,6 +21,7 @@ const char kAlicepayPaymentMethodIdentifier[] =
 
 // Scheme names for iOS payment apps.
 const char kBobpaySchemeName[] = "bobpay://";
+const char kAlicepaySchemeName[] = "bobpay://";
 
 const std::map<std::string, std::string>& GetMethodNameToSchemeName() {
   static const std::map<std::string, std::string> kMethodToScheme =

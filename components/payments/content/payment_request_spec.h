@@ -17,7 +17,6 @@
 #include "components/payments/core/currency_formatter.h"
 #include "components/payments/core/payment_options_provider.h"
 #include "third_party/WebKit/public/platform/modules/payments/payment_request.mojom.h"
-#include "url/gurl.h"
 
 namespace payments {
 
@@ -90,7 +89,7 @@ class PaymentRequestSpec : public PaymentOptionsProvider {
       const {
     return supported_card_types_set_;
   }
-  const std::vector<GURL>& url_payment_method_identifiers() const {
+  const std::vector<std::string>& url_payment_method_identifiers() const {
     return url_payment_method_identifiers_;
   }
   // Returns whether the |method_name| was specified as supported through the
@@ -189,7 +188,7 @@ class PaymentRequestSpec : public PaymentOptionsProvider {
   // merchant. This encompasses one of the two types of payment method
   // identifers, the other being standardized payment method identifiers i.e.,
   // basic-card.
-  std::vector<GURL> url_payment_method_identifiers_;
+  std::vector<std::string> url_payment_method_identifiers_;
 
   // A mapping of the payment method names to the corresponding JSON-stringified
   // payment method specific data.

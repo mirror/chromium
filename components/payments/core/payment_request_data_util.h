@@ -11,7 +11,6 @@
 
 #include "base/strings/string16.h"
 #include "components/autofill/core/browser/credit_card.h"
-#include "url/gurl.h"
 
 namespace autofill {
 class AutofillProfile;
@@ -56,7 +55,7 @@ void ParseSupportedMethods(
     const std::vector<PaymentMethodData>& method_data,
     std::vector<std::string>* out_supported_networks,
     std::set<std::string>* out_basic_card_supported_networks,
-    std::vector<GURL>* out_url_payment_method_identifiers);
+    std::vector<std::string>* out_url_payment_method_identifiers);
 
 // Parses the supported card types (e.g., credit, debit, prepaid) from
 // supportedTypes. |out_supported_card_types_set| is expected to be empty. It

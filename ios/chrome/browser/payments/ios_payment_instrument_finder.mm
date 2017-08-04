@@ -271,6 +271,10 @@ bool IOSPaymentInstrumentFinder::GetPaymentAppDetailsFromWebAppManifest(
       continue;
 
     std::string icon_sizes;
+    if (!icon->GetString(kIconsSizes, &icon_sizes) || icon_sizes != "32x32")
+      continue;
+
+    std::string icon_sizes;
     // TODO(crbug.com/752546): Determine acceptable sizes for payment app icon.
     if (!icon->GetString(kIconsSizes, &icon_sizes) ||
         icon_sizes != kIconSizes32)
