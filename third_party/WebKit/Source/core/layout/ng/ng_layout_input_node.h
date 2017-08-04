@@ -43,7 +43,11 @@ class CORE_EXPORT NGLayoutInputNode {
   bool IsOutOfFlowPositioned() const;
   bool IsReplaced() const;
 
+  bool IsBody() const;
+  bool IsTableCell() const;
+
   bool CreatesNewFormattingContext() const;
+  bool InQuirksMode() const;
 
   // Performs layout on this input node, will return the layout result.
   RefPtr<NGLayoutResult> Layout(NGConstraintSpace*, NGBreakToken*);
