@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea929c6a_3f574ef0",
+        "filename": "components/safe_browsing/web_ui/webui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-04T15:31:13Z",
+      "side": 1,
+      "message": "Please be consistent. The name of the directory is \u0027web_ui\u0027, and the name of this file is \u0027webui\u0027. A quick count of files show we have about equal parts web_ui and webui. Pick one and stick with it. If you prefer web_ui, the macro should be WEB_UI. For example, assuming you went with the directory/file name you have now the macro should be  COMPONENTS_SAFE_BROWSING_WEB_UI_WEBUI_H_ (which makes the inconsistency more obvious).",
+      "range": {
+        "startLine": 5,
+        "startChar": 33,
+        "endLine": 5,
+        "endChar": 37
+      },
+      "revId": "475db47201e1761a95a1a9b8cc627f2f738aab87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1a3a69_b471758a",
+        "filename": "components/safe_browsing/web_ui/webui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-04T15:31:13Z",
+      "side": 1,
+      "message": "Also, if you are going to rename the file, then the class should be renamed as well. (generally file names match the important class in the file).",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 21
+      },
+      "revId": "475db47201e1761a95a1a9b8cc627f2f738aab87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
