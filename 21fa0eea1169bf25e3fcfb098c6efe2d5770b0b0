@@ -1,0 +1,215 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "289add66_6a52b43a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T20:24:35Z",
+      "side": 1,
+      "message": "Can we mention something about the types of cases that won\u0027t restore correctly, since that was the tradeoff we made?  Would be good to give a sense that it won\u0027t be too bad (compared to a clean reset of how unique names work), and worth the reduced complexity.",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1697d746_6a30aac0",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T20:24:35Z",
+      "side": 1,
+      "message": "How did we pick 80?  Worth noting somewhere, maybe here.\n\n(I\u0027m guessing it\u0027s because that\u0027s the length of the resulting hash?  We don\u0027t want to make anything longer by hashing it, and we may as well not have any names longer than that...?)",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea79a32_09b3bd95",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T20:24:35Z",
+      "side": 1,
+      "message": "Can you document this a bit, saying what |replacements| is a map between and what the algorithm is doing at a high level?  (Either the .h file or here.)",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081f19f8_19aa3ce1",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T20:24:35Z",
+      "side": 1,
+      "message": "I\u0027m trying to understand why this is correct.  Names with framepaths can have long names within them, but replacements seems empty at first until we hit the case below with a non-framepath name.  If replacements is empty, we just return the legacy name in this first part.\n\nIt seems like the invariant is that you can\u0027t hit a name with a framepath containing a long name unless you first see that long name outside a framepath?  That would make sense to me; let\u0027s add it as a comment here if so.",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35f7c99_09f77c45",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T20:24:35Z",
+      "side": 1,
+      "message": "This sounds arbitrary (making me wonder why we couldn\u0027t use a delimiter that won\u0027t appear in unique names).  Is it actually because the \u0027/\u0027s appears in the frame path and are part of the string matching above?  If so, wouldn\u0027t that make frame paths ambiguous in the first place?\n\n(e.g., /name1/name2/name3/ could be 3 different frames or it could be a frame named \"name1/name2\" and another named \"name3\", etc.)\n\nIf that\u0027s true, does that have any consequence on restoring frames today (before this CL)?",
+      "range": {
+        "startLine": 219,
+        "startChar": 7,
+        "endLine": 219,
+        "endChar": 46
+      },
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96be21e_ba23e8da",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T20:24:35Z",
+      "side": 1,
+      "message": "nit: semicolon",
+      "range": {
+        "startLine": 222,
+        "startChar": 61,
+        "endLine": 222,
+        "endChar": 62
+      },
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74cf541d_6fb973f4",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T20:24:35Z",
+      "side": 1,
+      "message": "Maybe it\u0027s worth giving an example of a case where this fails, to help reason about how often this will happen.",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370cd5e3_f9aea351",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T20:24:35Z",
+      "side": 1,
+      "message": "Typo",
+      "range": {
+        "startLine": 337,
+        "startChar": 26,
+        "endLine": 337,
+        "endChar": 37
+      },
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e83a52_a6fdb051",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T20:24:35Z",
+      "side": 1,
+      "message": "Wouldn\u0027t you need just_fits_name to be in the frame tree as well as too_long_name2 to be able to test that substring matches don\u0027t cause a problem?  (I\u0027m not sure how this part of the test differs from lines 328-335, since they both test an isolated name that is over the limit.)",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab224b2a_8b21e9e2",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T20:24:35Z",
+      "side": 1,
+      "message": "nit: handle",
+      "range": {
+        "startLine": 365,
+        "startChar": 50,
+        "endLine": 365,
+        "endChar": 58
+      },
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2666f0_73f2ad03",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T20:24:35Z",
+      "side": 1,
+      "message": "Maybe find a way to imply that this comment covers the next 3 frames (e.g., by mentioning frame_0_1_1_0_0?).  I was confused by trying to match up the description with lines 368-375, instead of 368-402.",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
