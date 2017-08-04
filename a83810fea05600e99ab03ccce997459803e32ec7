@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be367a8b_51cc8ba9",
+        "filename": "components/offline_pages/core/renovations/page_renovation_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-04T19:27:14Z",
+      "side": 1,
+      "message": "Yep, I can change it to that.",
+      "parentUuid": "c73ca8fa_9f699fff",
+      "range": {
+        "startLine": 72,
+        "startChar": 37,
+        "endLine": 72,
+        "endChar": 51
+      },
+      "revId": "a83810fea05600e99ab03ccce997459803e32ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d601ba3_9e3f69c0",
         "filename": "components/resources/offline_pages_resources.grdp",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-04T19:12:03Z",
       "side": 1,
       "message": "2 thoughts on the structure here:\n1. Does it make sense to keep all renovations in a single file? (short term it may)\n2. If answer to above is NO, would it make sense to have JS files in their own renovations/ directory?",
+      "range": {
+        "startLine": 3,
+        "startChar": 84,
+        "endLine": 3,
+        "endChar": 95
+      },
+      "revId": "a83810fea05600e99ab03ccce997459803e32ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76249cde_0897b9d5",
+        "filename": "components/resources/offline_pages_resources.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-04T19:27:14Z",
+      "side": 1,
+      "message": "I decided to keep them in a single file to avoid creating too many resources. I did so because I noticed most components have a small number of resources defined here.\n\nKeeping them in a single file should be fine IMO unless we reach a point with many renovation scripts defined.",
+      "parentUuid": "4d601ba3_9e3f69c0",
       "range": {
         "startLine": 3,
         "startChar": 84,
