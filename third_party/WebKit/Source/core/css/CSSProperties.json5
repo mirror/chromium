@@ -3751,6 +3751,7 @@
       name: "background",
       longhands: ["background-image", "background-position-x", "background-position-y", "background-size", "background-repeat-x", "background-repeat-y", "background-attachment", "background-origin", "background-clip", "background-color"],
       api_class: true,
+      api_methods: ["parseShorthand"],
     },
     {
       name: "background-position",
@@ -3762,6 +3763,7 @@
       name: "background-repeat",
       longhands: ["background-repeat-x", "background-repeat-y"],
       api_class: true,
+      api_methods: ["parseShorthand"],
     },
     {
       name: "border",
@@ -4100,6 +4102,7 @@
       name: "-webkit-mask",
       longhands: ["-webkit-mask-image", "-webkit-mask-position-x", "-webkit-mask-position-y", "-webkit-mask-size", "-webkit-mask-repeat-x", "-webkit-mask-repeat-y", "-webkit-mask-origin", "-webkit-mask-clip"],
       api_class: true,
+      api_methods: ["parseShorthand"],
     },
     {
       name: "-webkit-mask-box-image",
@@ -4117,6 +4120,7 @@
       name: "-webkit-mask-repeat",
       longhands: ["-webkit-mask-repeat-x", "-webkit-mask-repeat-y"],
       api_class: true,
+      api_methods: ["parseShorthand"],
     },
     {
       name: "-webkit-text-emphasis",
