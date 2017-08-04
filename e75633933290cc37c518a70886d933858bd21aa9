@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d446736_ddbd3491",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T16:00:00Z",
+      "side": 1,
+      "message": "Did you try running chrome --mash?\n\nI think this call will crash unless it is wrapped. Ditto the one in the destructor.",
+      "revId": "e75633933290cc37c518a70886d933858bd21aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
