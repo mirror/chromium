@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc450e79_6ac48a8e",
+        "filename": "remoting/ios/facade/host_list_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-04T22:55:07Z",
+      "side": 1,
+      "message": "I don\u0027t think we should cancel the request if it is the same user. Can you add checking to make sure only requests from a new user get canceled? Perhaps the class could event on user switch and cancel pending requests that way?",
+      "revId": "2d65f45d5a9984f8d4d996cef65db8335b81a267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
