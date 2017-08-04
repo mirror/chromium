@@ -1,0 +1,12 @@
+{
+  "dependencies": [
+    "test_runner",
+    "integration_test_runner"
+  ],
+  "scripts": [
+    "TimelineTestRunner.js"
+  ],
+  "skip_compilation": [
+    "TimelineTestRunner.js"
+  ]
+}

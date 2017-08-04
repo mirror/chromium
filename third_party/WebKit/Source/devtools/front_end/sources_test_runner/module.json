@@ -1,11 +1,14 @@
 {
   "dependencies": [
     "test_runner",
-    "integration_test_runner",
-    "sources",
-    "workspace"
+    "integration_test_runner"
   ],
   "scripts": [
+    "SearchTestRunner.js",
+    "SourcesTestRunner.js"
+  ],
+  "skip_compilation": [
+    "SearchTestRunner.js",
     "SourcesTestRunner.js"
   ]
 }

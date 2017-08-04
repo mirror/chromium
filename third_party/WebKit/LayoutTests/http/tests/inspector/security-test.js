@@ -1,3 +1,6 @@
+// This file is being deprecated and is moving to front_end/security_test_runner/SecurityTestRunner.js
+// Please see crbug.com/667560 for more details
+
 var initialize_SecurityTest = function() {
 
 InspectorTest.preloadPanel("security");

@@ -1,0 +1,12 @@
+{
+  "dependencies": [
+    "test_runner",
+    "integration_test_runner"
+  ],
+  "scripts": [
+    "PersistenceTestRunner.js"
+  ],
+  "skip_compilation": [
+    "PersistenceTestRunner.js"
+  ]
+}

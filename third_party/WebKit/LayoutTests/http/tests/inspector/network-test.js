@@ -1,3 +1,6 @@
+// This file is being deprecated and is moving to front_end/network_test_runner/NetworkTestRunner.js
+// Please see crbug.com/667560 for more details
+
 // This goes before everything else to keep console message line number invariant.
 var lastXHRIndex = 0;
 function xhrLoadedCallback()

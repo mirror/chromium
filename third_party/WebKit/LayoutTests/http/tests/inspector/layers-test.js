@@ -1,3 +1,6 @@
+// This file is being deprecated and is moving to front_end/layers_test_runner/LayersTestRunner.js
+// Please see crbug.com/667560 for more details
+
 function initialize_LayerTreeTests()
 {
     InspectorTest.layerTreeModel = function()

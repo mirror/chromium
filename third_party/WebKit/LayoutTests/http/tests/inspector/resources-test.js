@@ -1,3 +1,6 @@
+// This file is being deprecated and is moving to front_end/application_test_runner/ResourcesTestRunner.js
+// Please see crbug.com/667560 for more details
+
 var initialize_ResourceTest = function() {
 
 InspectorTest.preloadPanel("sources");
