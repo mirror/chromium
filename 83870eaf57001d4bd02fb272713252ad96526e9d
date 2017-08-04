@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e28f24bd_c55acc0f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsolePrompt.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-04T17:27:59Z",
+      "side": 1,
+      "message": "Function(\"var a \u003d await\\nPromise.resolve()\") doesn\u0027t throw :(\nSo I simplified this check to simple indexOf(\u0027await\u0027) and inlined it.",
+      "parentUuid": "7eaedd2f_55d86337",
+      "revId": "83870eaf57001d4bd02fb272713252ad96526e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "770b7ec3_67d83bd1",
         "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T05:06:41Z",
       "side": 1,
       "message": "it\u0027s not enough to iterate only the top-level nodes of the ast tree, consider the following example:\n\na \u003d foo(bar(baz(await koo())));\n\nyou can use the ESTreeWalker to handle this as well",
+      "revId": "83870eaf57001d4bd02fb272713252ad96526e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad237a3_7b7dd43b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-04T17:27:59Z",
+      "side": 1,
+      "message": "I believe it\u0027s enough. Your example works fine - I added it as a test.\nGoal of this logic is extracting all top level variable declarations to place outside of async function wrapper to make them accessible for future console evaluation. So I think that it should be enough. It\u0027s not about rewriting awaits.\nIdea:\n1. wrap whole script with (async function() { ... })()\n2. extract all scope variable definitions and place them before (async function() {...})()\n3. if variable declaration contains initialization as well then we just preserve this initialization in place without variable declaration.",
+      "parentUuid": "770b7ec3_67d83bd1",
       "revId": "83870eaf57001d4bd02fb272713252ad96526e9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "ef1bbc16_3cfc8fea",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-04T17:27:59Z",
+      "side": 1,
+      "message": "I tried to use ESTreeWalker but code looks simpler to me when I explicitly describe walk order with if .. else if .. I can use pop instead of shift.",
+      "parentUuid": "73e77d8b_99a2b227",
+      "range": {
+        "startLine": 166,
+        "startChar": 14,
+        "endLine": 166,
+        "endChar": 22
+      },
+      "revId": "83870eaf57001d4bd02fb272713252ad96526e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "001b603d_724f611b",
         "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "83870eaf57001d4bd02fb272713252ad96526e9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18c0b55_b73ebd70",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-04T17:27:59Z",
+      "side": 1,
+      "message": "I prefer to return empty string on error. Caller in any case has original content and can use result || content.\nAnd I need this information on ConsolePrompt side to make decision about awaitPromise flag.",
+      "parentUuid": "001b603d_724f611b",
+      "revId": "83870eaf57001d4bd02fb272713252ad96526e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
