@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "093d7b7a_014ecec6",
+        "filename": "cc/input/layer_selection_bound.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T00:10:51Z",
+      "side": 1,
+      "message": "Could you update the comment to mention that it is occluded within the layer\u0027s painted content?",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 57
+      },
+      "revId": "ac6c66e1f32d8ca1ae90d0bc9f76d3d0f4587c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0687808b_dc56c40c",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2015,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T00:10:51Z",
+      "side": 1,
+      "message": "A comment to explain this logic would be great.\n\"If the handles are occluded within the layer\u0027s contents, they will remain invisible on the impl thread.\"\n\nAnd unit-test in SelectionBoundsPassedToCompositorFrameMetadata?",
+      "range": {
+        "startLine": 2015,
+        "startChar": 6,
+        "endLine": 2015,
+        "endChar": 24
+      },
+      "revId": "ac6c66e1f32d8ca1ae90d0bc9f76d3d0f4587c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
