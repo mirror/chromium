@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e9573bc_a4f32919",
+        "filename": "base/process/launch.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-04T23:18:45Z",
+      "side": 1,
+      "message": "Current design of LaunchOptions/LaunchProcess makes this whole thing pretty ugly, and prevents expressing the ownership semantics via C++ object ownership.\n\nI\u0027d like to give LaunchProcess an overhaul, perhaps by turning it into a one-shot ProcessLauncher helper with a variety of setters for the different properties.\n\nWDYT?",
+      "revId": "f1ce386c23409d0418fe743a4b12a94475c10fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
