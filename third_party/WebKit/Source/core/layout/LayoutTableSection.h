@@ -280,6 +280,9 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
   // Check whether row or row group has visibility:collapse.
   bool RowHasVisibilityCollapse(unsigned row) const;
 
+  // Set cells in collapsed columns to zero width.
+  void UpdateCellsInCollapsedColumns();
+
  protected:
   void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
   bool NodeAtPoint(HitTestResult&,

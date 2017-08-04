@@ -688,6 +688,31 @@ void LayoutTable::UpdateLayout() {
       }
     }
 
+    // Change lay out according to any collapsed columns
+    Vector<int> col_collapsed_width_;
+    col_collapsed_width_.resize(NumEffectiveColumns());
+
+    for (size_t i = 0; i < NumEffectiveColumns(); ++i) {
+      LayoutTableCol* col =
+          ColElementAtAbsoluteColumn(EffectiveColumnToAbsoluteColumn(i))
+              .InnermostColOrColGroup();
+
+      if (col && col->Style()->Visibility() == EVisibility::kCollapse) {
+        col_collapsed_width_[i] =
+            EffectiveColumnPositions()[i + 1] - EffectiveColumnPositions()[i];
+      } else {
+        col_collapsed_width_[i] = 0;
+      }
+    }
+    int total_collapsed_width = 0;
+    for (size_t i = 0; i < NumEffectiveColumns(); ++i) {
+      total_collapsed_width += col_collapsed_width_[i];
+      SetEffectiveColumnPosition(
+          i + 1, EffectiveColumnPositions()[i + 1] - total_collapsed_width);
+    }
+
+    SetLogicalWidth(LogicalWidth() - total_collapsed_width);
+
     // Lay out table footer.
     if (LayoutTableSection* section = Footer()) {
       LayoutSection(*section, layouter, section_logical_left,
@@ -715,6 +740,7 @@ void LayoutTable::UpdateLayout() {
          section = SectionBelow(section)) {
       section->SetLogicalTop(logical_offset);
       section->LayoutRows();
+      section->UpdateCellsInCollapsedColumns();
       logical_offset += section->LogicalHeight();
     }
 
