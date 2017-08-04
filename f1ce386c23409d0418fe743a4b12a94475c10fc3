@@ -16,6 +16,47 @@
       "revId": "f1ce386c23409d0418fe743a4b12a94475c10fc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fca9cba_c8dcf48d",
+        "filename": "base/process/launch.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-04T23:23:31Z",
+      "side": 1,
+      "message": "Why couldn\u0027t HandlesToTransferVector contain ScopedMxHandles?\n\nI think I\u0027d probably just leave it as-is, but /shrug. On launch fail you\u0027d have to send them back to the owner because they weren\u0027t transferred to the child, which seems like it\u0027d be a bit awkward. (?)",
+      "parentUuid": "0e9573bc_a4f32919",
+      "revId": "f1ce386c23409d0418fe743a4b12a94475c10fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6228a1c4_26e69697",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-04T23:23:31Z",
+      "side": 1,
+      "message": "Hmm, PA_USER0 sort of looks internal-ish from the processargs.h header. +jamesr to make sure we\u0027re on the right side of history by using this.",
+      "range": {
+        "startLine": 138,
+        "startChar": 32,
+        "endLine": 138,
+        "endChar": 40
+      },
+      "revId": "f1ce386c23409d0418fe743a4b12a94475c10fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
