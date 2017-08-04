@@ -12,6 +12,7 @@
 #include "base/callback_helpers.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
+#include "base/sequence_checker.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/task_scheduler/post_task.h"
@@ -1062,28 +1063,30 @@ TEST_F(AssociatedInterfaceTest, ThreadSafeAssociatedInterfacePtr) {
   // Test the thread safe pointer can be used from another thread.
   base::RunLoop run_loop;
 
+  SEQUENCE_CHECKER(sequence_checker);
   auto run_method = base::Bind(
       [](const scoped_refptr<base::TaskRunner>& main_task_runner,
          const base::Closure& quit_closure,
          const scoped_refptr<ThreadSafeIntegerSenderAssociatedPtr>&
-             thread_safe_sender) {
+             thread_safe_sender,
+         base::SequenceChecker* sequence_checker) {
         auto done_callback = base::Bind(
             [](const scoped_refptr<base::TaskRunner>& main_task_runner,
                const base::Closure& quit_closure,
-               base::PlatformThreadId thread_id, int32_t result) {
+               base::SequenceChecker* sequence_checker, int32_t result) {
               EXPECT_EQ(123, result);
-              // Validate the callback is invoked on the calling thread.
-              EXPECT_EQ(thread_id, base::PlatformThread::CurrentId());
+              // Validate the callback is invoked on the correct sequence.
+              EXPECT_TRUE(sequence_checker->CalledOnValidSequence());
               // Notify the run_loop to quit.
               main_task_runner->PostTask(FROM_HERE, quit_closure);
             });
+        DETACH_FROM_SEQUENCE(*sequence_checker);
         (*thread_safe_sender)
-            ->Echo(123,
-                   base::Bind(done_callback, main_task_runner, quit_closure,
-                              base::PlatformThread::CurrentId()));
+            ->Echo(123, base::Bind(done_callback, main_task_runner,
+                                   quit_closure, sequence_checker));
       },
       base::SequencedTaskRunnerHandle::Get(), run_loop.QuitClosure(),
-      thread_safe_sender);
+      thread_safe_sender, &sequence_checker);
   base::CreateSequencedTaskRunnerWithTraits({})->PostTask(FROM_HERE,
                                                           run_method);
 
