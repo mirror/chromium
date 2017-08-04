@@ -19,6 +19,7 @@
 #include "chrome/browser/translate/chrome_translate_client.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_bar_controller.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.h"
+#include "chrome/browser/ui/cocoa/separate_fullscreen_window.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_controller.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_window_controller.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
@@ -513,7 +514,16 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 //     -- The corresponding URL will be the url of the web page.
 
 // Methods having to do with fullscreen mode.
-@interface BrowserWindowController(Fullscreen)
+@interface BrowserWindowController (
+    Fullscreen)<SeparateFullscreenWindowDelegate>
+
+// Creates a SeparateFullscreenWindow with the RenderWidgetHostViewCocoa of the
+// WebContents.
+- (NSWindow*)createSeparateWindowForTab:(content::WebContents*)separatedTab;
+
+// Get the NSWindow of the active WebContents used to display Content
+// Fullscreen.
+- (NSWindow*)getActiveWebContentsSeparateWindow;
 
 // Enters Browser AppKit Fullscreen.
 - (void)enterBrowserFullscreen;

@@ -169,6 +169,10 @@ ui::AcceleratorProvider* ExclusiveAccessController::GetAcceleratorProvider() {
 }
 
 gfx::NativeView ExclusiveAccessController::GetBubbleParentView() const {
+  // If in content fullscreen the bubble must be displayed on the separate
+  // fullscreen window.
+  if ([controller_ getActiveWebContentsSeparateWindow])
+    return [[controller_ getActiveWebContentsSeparateWindow] contentView];
   return [[controller_ window] contentView];
 }
 
@@ -181,6 +185,11 @@ gfx::Point ExclusiveAccessController::GetCursorPointInParent() const {
 }
 
 gfx::Rect ExclusiveAccessController::GetClientAreaBoundsInScreen() const {
+  // If in content fullscreen the bubble must adjust its position to the
+  // separate fullscreen window's position on the screen.
+  if ([controller_ getActiveWebContentsSeparateWindow])
+    return gfx::ScreenRectFromNSRect(
+        [[controller_ getActiveWebContentsSeparateWindow] frame]);
   return gfx::ScreenRectFromNSRect([[controller_ window] frame]);
 }
 

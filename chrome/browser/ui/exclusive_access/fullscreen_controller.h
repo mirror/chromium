@@ -53,6 +53,10 @@ class FullscreenController : public ExclusiveAccessControllerBase {
   explicit FullscreenController(ExclusiveAccessManager* manager);
   ~FullscreenController() override;
 
+#if defined(OS_MACOSX)
+  content::WebContents* exclusive_access_tab() const override;
+#endif
+
   // Browser/User Fullscreen ///////////////////////////////////////////////////
 
   // Returns true if the window is currently fullscreen and was initially
