@@ -98,7 +98,8 @@ class CORE_EXPORT CompositeEditCommand : public EditCommand {
   void ApplyCommandToComposite(EditCommand*, EditingState*);
   void ApplyCommandToComposite(CompositeEditCommand*,
                                const VisibleSelection&,
-                               EditingState*);
+                               EditingState*,
+                               bool);
   void ApplyStyle(const EditingStyle*, EditingState*);
   void ApplyStyle(const EditingStyle*,
                   const Position& start,

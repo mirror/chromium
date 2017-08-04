@@ -49,7 +49,9 @@ EphemeralRange CurrentWordIfTypingInPartialWord(const Element& editable) {
     return EphemeralRange();
   if (!last_command->EndingSelection().IsValidFor(*frame.GetDocument()))
     return EphemeralRange();
-  if (last_command->EndingSelection().AsSelection() != selection)
+  if (last_command->EndingSelection().AsSelection() != selection &&
+      last_command->EndingSelection().IsDirectional() !=
+          frame.Selection().IsDirectional())
     return EphemeralRange();
   return AdjacentWordIfExists(selection.Base());
 }

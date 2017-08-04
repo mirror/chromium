@@ -34,6 +34,7 @@ class CORE_EXPORT SetSelectionData final {
   bool ShouldCloseTyping() const { return should_close_typing_; }
   bool ShouldClearTypingStyle() const { return should_clear_typing_style_; }
   bool ShouldShowHandle() const { return should_show_handle_; }
+  bool IsDirectional() const { return is_directional_; }
 
  private:
   CursorAlignOnScroll cursor_align_on_scroll_ = CursorAlignOnScroll::kIfNeeded;
@@ -44,6 +45,7 @@ class CORE_EXPORT SetSelectionData final {
   bool should_close_typing_ = false;
   bool should_clear_typing_style_ = false;
   bool should_show_handle_ = false;
+  bool is_directional_ = false;
 };
 
 // This class is used for building |SelectionData| object.
@@ -64,6 +66,7 @@ class CORE_EXPORT SetSelectionData::Builder final {
   Builder& SetShouldCloseTyping(bool);
   Builder& SetShouldClearTypingStyle(bool);
   Builder& SetShouldShowHandle(bool);
+  Builder& SetIsDirectional(bool);
 
  private:
   SetSelectionData data_;
