@@ -1,3 +1,5 @@
 include_rules = [
   "+ui/gfx/mojo",
+  "+cc",
+  "+ui/gfx/geometry/mojo",
 ]
