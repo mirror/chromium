@@ -639,6 +639,8 @@ Document::Document(const DocumentInit& initializer,
   InitDNSPrefetch();
 
   InstanceCounters::IncrementCounter(InstanceCounters::kDocumentCounter);
+  probe::adjustPerfMetric(ContextDocument(), PerformanceMonitor::kDocumentCount,
+                          1);
 
   lifecycle_.AdvanceTo(DocumentLifecycle::kInactive);
 
@@ -665,6 +667,8 @@ Document::~Document() {
   // cleared during detach.
   DCHECK(!ax_object_cache_);
   InstanceCounters::DecrementCounter(InstanceCounters::kDocumentCounter);
+  probe::adjustPerfMetric(ContextDocument(), PerformanceMonitor::kDocumentCount,
+                          -1);
 }
 
 SelectorQueryCache& Document::GetSelectorQueryCache() {

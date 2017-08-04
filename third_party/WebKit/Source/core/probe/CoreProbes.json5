@@ -147,6 +147,7 @@
       class: "PerformanceMonitor",
       include_path: "core/frame",
       probes: [
+        "adjustPerfMetric",
         "CallFunction",
         "documentWriteFetchScript",
         "ExecuteScript",
