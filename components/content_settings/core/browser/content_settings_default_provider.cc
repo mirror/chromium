@@ -384,6 +384,14 @@ void DefaultProvider::DiscardObsoletePreferences() {
   prefs_->ClearPref(kObsoleteMouseLockDefaultPref);
 #endif  // !defined(OS_ANDROID)
 #endif  // !defined(OS_IOS)
+
+  // ALLOW-by-default is an obsolete pref value for plugins (Flash). Erase that
+  // pref and fall back to the default behavior - but preserve other values.
+  const std::string& plugins_pref = GetPrefName(CONTENT_SETTINGS_TYPE_PLUGINS);
+  if (IntToContentSetting(prefs_->GetInteger(plugins_pref)) ==
+      ContentSetting::CONTENT_SETTING_ALLOW) {
+    prefs_->ClearPref(plugins_pref);
+  }
 }
 
 }  // namespace content_settings
