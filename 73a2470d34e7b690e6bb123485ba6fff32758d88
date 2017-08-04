@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e0e708b_ef0a4155",
+        "filename": "content/common/dom_storage/dom_storage_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-04T23:20:56Z",
+      "side": 1,
+      "message": "I always thought i couldn\u0027t do this when initializing a const member. This just works, fixed.",
+      "parentUuid": "a1b5d87c_28f50c1b",
+      "range": {
+        "startLine": 26,
+        "startChar": 15,
+        "endLine": 26,
+        "endChar": 28
+      },
+      "revId": "73a2470d34e7b690e6bb123485ba6fff32758d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0effebed_7ea2ea29",
         "filename": "content/common/dom_storage/dom_storage_map.cc",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "73a2470d34e7b690e6bb123485ba6fff32758d88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b201332_54af0649",
+        "filename": "content/common/dom_storage/dom_storage_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-04T23:20:56Z",
+      "side": 1,
+      "message": "um either new_value or value_size would work. since the new value is the value\u0027s size. used new_value to be consistent below.",
+      "parentUuid": "0effebed_7ea2ea29",
+      "revId": "73a2470d34e7b690e6bb123485ba6fff32758d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "cdf2c5a1_bcb6fb60",
+        "filename": "content/common/dom_storage/dom_storage_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-04T23:20:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61ae4920_cd523b12",
+      "range": {
+        "startLine": 86,
+        "startChar": 35,
+        "endLine": 86,
+        "endChar": 41
+      },
+      "revId": "73a2470d34e7b690e6bb123485ba6fff32758d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e696521_41f959cc",
         "filename": "content/common/dom_storage/dom_storage_map.cc",
         "patchSetId": 6
@@ -79,6 +145,24 @@
       "revId": "73a2470d34e7b690e6bb123485ba6fff32758d88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570d4a4f_33e0eec3",
+        "filename": "content/common/dom_storage/dom_storage_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-04T23:20:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e696521_41f959cc",
+      "revId": "73a2470d34e7b690e6bb123485ba6fff32758d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "3492ba87_332ecae6",
+        "filename": "content/common/dom_storage/dom_storage_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-04T23:20:56Z",
+      "side": 1,
+      "message": "I noticed SessionStorageDatabase::ReadMap() takes |only_keys| argument. If we could pipe it here, then we could just do a swap here instead of copy.\nBut, it has other disadvantages like extract values cannot be done. I haven\u0027t thought about it enough, so added a todo. Maybe it is not worth it at all.",
+      "parentUuid": "4738fe43_22eb99b9",
+      "revId": "73a2470d34e7b690e6bb123485ba6fff32758d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb446a0a_8c79738b",
         "filename": "content/common/dom_storage/dom_storage_map.h",
         "patchSetId": 6
@@ -113,6 +215,24 @@
       "revId": "73a2470d34e7b690e6bb123485ba6fff32758d88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18bff102_ba6a0c15",
+        "filename": "content/common/dom_storage/dom_storage_map.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-04T23:20:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb446a0a_8c79738b",
+      "revId": "73a2470d34e7b690e6bb123485ba6fff32758d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
