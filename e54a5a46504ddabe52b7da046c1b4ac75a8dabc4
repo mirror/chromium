@@ -474,6 +474,30 @@
     },
     {
       "key": {
+        "uuid": "b5134e34_1aaa8c45",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-04T10:37:25Z",
+      "side": 1,
+      "message": "I mean, either side can filter right? Why is it worse to do so on the ARC++ side? We\u0027ll need to have some ARC++ code on both sides of this either way, right?\n\nSecurity wise, not passing something at all over IPC is easier than to understand / more efficient than passing something and relying on it being used correctly: in particular, we do try to avoid passing paths over IPC unless strictly necessary (see https://www.chromium.org/Home/chromium-security/education/security-tips-for-ipc#TOC-Keep-it-simple. and related). And it seems like this field already isn\u0027t universal anyway, so it seems not having this detail exposed would make things simpler overall.",
+      "parentUuid": "95365ac4_f32dcc01",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa255e1d_75dd3ab0",
         "filename": "components/arc/common/file_system.mojom",
         "patchSetId": 4
