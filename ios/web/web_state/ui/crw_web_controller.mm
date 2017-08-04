@@ -1525,9 +1525,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // Typically on PAGE_TRANSITION_CLIENT_REDIRECT.
     [[self sessionController] updatePendingItem:requestURL];
   } else {
-    // If this is a reload then there no need to create a new pending item,
-    // instead update the pending item to the last committed item.
-    if (PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_RELOAD)) {
+    // If this is a reload of non native item then there no need to create a new
+    // pending item, instead update the pending item to the last committed item.
+    GURL lastCommittedURL = self.webState->GetLastCommittedURL();
+    if (PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_RELOAD) &&
+        ![self shouldLoadURLInNativeView:lastCommittedURL]) {
       self.sessionController.pendingItemIndex =
           self.sessionController.lastCommittedItemIndex;
     } else {
@@ -1995,10 +1997,12 @@ registerLoadRequestForURL:(const GURL&)requestURL
         web::GetWebClient()->IsAppSpecificURL(currentNavigationURL);
 
     // Since this is implicit reload, no new pending item should be created, set
-    // the pending item index to the last committed item.
-    self.sessionController.pendingItemIndex =
-        self.sessionController.lastCommittedItemIndex;
-
+    // the pending item index to the last committed item if it's not native.
+    GURL lastCommittedURL = self.webState->GetLastCommittedURL();
+    if (![self shouldLoadURLInNativeView:lastCommittedURL]) {
+      self.sessionController.pendingItemIndex =
+          self.sessionController.lastCommittedItemIndex;
+    }
     // Don't immediately load the web page if in overlay mode. Always load if
     // native.
     if (isChromeScheme || !_overlayPreviewMode) {
@@ -2040,10 +2044,13 @@ registerLoadRequestForURL:(const GURL&)requestURL
   _lastUserInteraction.reset();
   base::RecordAction(UserMetricsAction("Reload"));
   GURL url = self.currentNavItem->GetURL();
-  // Reloading shouldn't create create a new pending item, instead set the
-  // pending item index to the last committed item.
-  self.sessionController.pendingItemIndex =
-      self.sessionController.lastCommittedItemIndex;
+  // Reloading shouldn't create a new pending item if the last committed
+  // item is not native, instead set the pending item index to
+  // the last committed item.
+  if (![self shouldLoadURLInNativeView:self.webState->GetLastCommittedURL()]) {
+    self.sessionController.pendingItemIndex =
+        self.sessionController.lastCommittedItemIndex;
+  }
   if ([self shouldLoadURLInNativeView:url]) {
     std::unique_ptr<web::NavigationContextImpl> navigationContext = [self
         registerLoadRequestForURL:url

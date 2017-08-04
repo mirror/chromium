@@ -200,7 +200,7 @@ ACTION_P3(VerifyNewNativePageFinishedContext, web_state, url, context) {
 // Verifies correctness of |NavigationContext| (|arg0|) for reload navigation
 // passed to |DidStartNavigation|. Stores |NavigationContext| in |context|
 // pointer.
-ACTION_P3(VerifyReloadStartedContext, web_state, url, context) {
+ACTION_P4(VerifyReloadStartedContext, web_state, url, context, is_native) {
   *context = arg0;
   ASSERT_TRUE(*context);
   EXPECT_EQ(web_state, (*context)->GetWebState());
@@ -211,8 +211,13 @@ ACTION_P3(VerifyReloadStartedContext, web_state, url, context) {
   EXPECT_FALSE((*context)->IsSameDocument());
   EXPECT_FALSE((*context)->GetError());
   EXPECT_FALSE((*context)->GetResponseHeaders());
-  EXPECT_EQ(web_state->GetNavigationManager()->GetPendingItem(),
-            web_state->GetNavigationManager()->GetLastCommittedItem());
+  if (is_native) {
+    // For native view reloads, no pending item should exist.
+    EXPECT_FALSE(web_state->GetNavigationManager()->GetPendingItem());
+  } else {
+    EXPECT_EQ(web_state->GetNavigationManager()->GetPendingItem(),
+              web_state->GetNavigationManager()->GetLastCommittedItem());
+  }
 }
 
 // Verifies correctness of |NavigationContext| (|arg0|) for reload navigation
@@ -306,7 +311,7 @@ TEST_F(NavigationCallbacksTest, WebPageReloadNavigation) {
 
   // Reload web page.
   EXPECT_CALL(*observer_, DidStartNavigation(_))
-      .WillOnce(VerifyReloadStartedContext(web_state(), url, &context));
+      .WillOnce(VerifyReloadStartedContext(web_state(), url, &context, false));
   EXPECT_CALL(*observer_, DidStartLoading());
   EXPECT_CALL(*observer_, DidFinishNavigation(_))
       .WillOnce(VerifyReloadFinishedContext(web_state(), url, &context,
@@ -469,7 +474,7 @@ TEST_F(NavigationCallbacksTest, NativeContentReload) {
 
   // Reload native content.
   EXPECT_CALL(*observer_, DidStartNavigation(_))
-      .WillOnce(VerifyReloadStartedContext(web_state(), url, &context));
+      .WillOnce(VerifyReloadStartedContext(web_state(), url, &context, true));
   EXPECT_CALL(*observer_, DidStartLoading());
   EXPECT_CALL(*observer_, DidFinishNavigation(_))
       .WillOnce(VerifyReloadFinishedContext(web_state(), url, &context,
