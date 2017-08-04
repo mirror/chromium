@@ -46,6 +46,30 @@
       "revId": "6b2367e5917f0e363cdb6b62a087c0eb90b3588c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32564071_b8d78f69",
+        "filename": "ios/chrome/browser/experimental_flags.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-04T13:52:27Z",
+      "side": 0,
+      "message": "Yes, base::Feature is designed from the ground up to be used with finch.",
+      "parentUuid": "8a8fb537_58e4ca60",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 63
+      },
+      "revId": "6b2367e5917f0e363cdb6b62a087c0eb90b3588c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

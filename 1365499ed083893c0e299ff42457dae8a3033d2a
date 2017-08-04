@@ -22,6 +22,30 @@
       "revId": "1365499ed083893c0e299ff42457dae8a3033d2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7bfab13_4667f283",
+        "filename": "ios/chrome/browser/experimental_flags.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-04T13:52:27Z",
+      "side": 1,
+      "message": "Mmm, I missed that there was an finch config to turn this off, sorry. It seems fairly dangerous to do it this way, if the feature is not ready, the feature should be turned off, and a finch config used to turn it on.",
+      "parentUuid": "6625e942_0d92398a",
+      "range": {
+        "startLine": 149,
+        "startChar": 8,
+        "endLine": 149,
+        "endChar": 13
+      },
+      "revId": "1365499ed083893c0e299ff42457dae8a3033d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
