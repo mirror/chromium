@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14ecd034_022809ad",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-04T21:00:50Z",
+      "side": 1,
+      "message": "Can you please wait until OnStartComplete to BindPIDReceiver?\n\nIt would be nice if we could specify a consistent ordering of these messages in the mojom. This would allow that.",
+      "revId": "c6086ded36670f6cf884a35fceba666bccf94557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
