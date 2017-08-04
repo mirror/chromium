@@ -813,6 +813,9 @@ const char kEnableContextualSearch[] = "enable-contextual-search";
 // unresponsive web content.
 const char kEnableHungRendererInfoBar[] = "enable-hung-renderer-infobar";
 
+// Enables the new install UI for WebAPKs.
+const char kEnableWebApkNewInstallUI[] = "enable-webapk-new-install-ui";
+
 // Forces the update menu badge to show.
 const char kForceShowUpdateMenuBadge[] = "force-show-update-menu-badge";
 
