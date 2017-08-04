@@ -253,7 +253,7 @@ filelist.handlePointerDownUp = function(e, index) {
         sm.anchorIndex = index;
       }
     } else if (e.shiftKey && anchorIndex != -1 && anchorIndex != index) {
-      // Shift is done in mousedown.
+      // Shift is done in pointerdown.
       if (isDown) {
         sm.unselectAll();
         sm.leadIndex = index;
