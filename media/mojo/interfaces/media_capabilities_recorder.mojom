@@ -1,0 +1,21 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module media.mojom;
+
+import "media/mojo/interfaces/media_types.mojom";
+import "ui/gfx/geometry/mojo/geometry.mojom";
+
+
+interface MediaCapabilitiesRecorder {
+  // Will finalize any ongoing record and begin a new record with the given
+  // properties.
+  StartNewRecord(VideoCodecProfile profile, gfx.mojom.Size video_size,
+                 int32 frames_per_sec);
+
+  UpdateRecord(int32 frames_decoded, int32 frames_dropped);
+
+  // Finalize ongoing record. Called when the media element is destroyed.
+  FinalizeRecord();
+};
