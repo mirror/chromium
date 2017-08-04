@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "da2c6f9f_714f25c4",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-04T16:44:25Z",
+      "side": 1,
+      "message": "Audio thread is mostly control only, so blocks of a few milliseconds are fine. I don\u0027t understand why you wouldn\u0027t have accurate Initialize() parameters, though... that\u0027s required to setup the shared memory and other things, so they must be accurate?",
+      "parentUuid": "8756a96b_e8f45324",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6918eddc_3c0515f7",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 2
