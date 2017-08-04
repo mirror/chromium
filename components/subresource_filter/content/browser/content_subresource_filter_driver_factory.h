@@ -48,7 +48,7 @@ class ContentSubresourceFilterDriverFactory
   void NotifyPageActivationComputed(
       content::NavigationHandle* navigation_handle,
       ActivationDecision activation_decision,
-      Configuration::ActivationOptions matched_options);
+      const Configuration& matched_configuration);
 
   // Returns the |ActivationDecision| for the current main frame document. Do
   // not rely on this API, it is only temporary.
@@ -64,7 +64,7 @@ class ContentSubresourceFilterDriverFactory
   // |should_suppress_notifications| on ActivationState.
   const Configuration::ActivationOptions&
   GetActivationOptionsForLastCommittedPageLoad() const {
-    return activation_options_;
+    return activation_options();
   }
 
   // ContentSubresourceFilterThrottleManager::Delegate:
@@ -81,6 +81,10 @@ class ContentSubresourceFilterDriverFactory
  private:
   friend class ContentSubresourceFilterDriverFactoryTest;
   friend class safe_browsing::SafeBrowsingServiceTest;
+
+  const Configuration::ActivationOptions& activation_options() const {
+    return matched_configuration_.activation_options;
+  }
 
   // content::WebContentsObserver:
   void DidStartNavigation(
@@ -111,7 +115,7 @@ class ContentSubresourceFilterDriverFactory
   // and the new value not assigned until a subsequent navigation successfully
   // reaches the WillProcessResponse stage (or successfully finishes if
   // throttles are not invoked).
-  Configuration::ActivationOptions activation_options_;
+  Configuration matched_configuration_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentSubresourceFilterDriverFactory);
 };
