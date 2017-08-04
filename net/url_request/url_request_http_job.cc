@@ -873,6 +873,10 @@ void URLRequestHttpJob::ProcessExpectCTHeader() {
   }
 
   // Only process the first Expect-CT header value.
+  //
+  // TODO(estark): this matches STS and PKP, but Expect-CT has a different
+  // syntax/spec and this code should be enumerating all the header values, not
+  // just the first.
   HttpResponseHeaders* headers = GetResponseHeaders();
   std::string value;
   if (headers->EnumerateHeader(nullptr, "Expect-CT", &value)) {
