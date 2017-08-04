@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4803d728_6b40685b",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-04T01:02:55Z",
+      "side": 1,
+      "message": "Its not comprehensive--after discussion w/ Hector and Tommy, I decided to list only the rules/attributes of the auditOptions that were actively being used. With this CL, and the ability to disable a specific rule by not calling TEST_F for that test, the only attribute of auditOptions in use is the runOnly (hence patch #3)",
+      "parentUuid": "d42fb667_72e78cd3",
+      "range": {
+        "startLine": 12,
+        "startChar": 8,
+        "endLine": 12,
+        "endChar": 22
+      },
+      "revId": "b868c66277225747ed144ca290577a1c04880d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b533f5fd_2005cc32",
         "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b868c66277225747ed144ca290577a1c04880d8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceb583ed_08750eb0",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-04T01:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b533f5fd_2005cc32",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 8
+      },
+      "revId": "b868c66277225747ed144ca290577a1c04880d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e386b5bb_06a7e2c5",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-04T01:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "665c18c4_c4780997",
+      "range": {
+        "startLine": 25,
+        "startChar": 27,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "b868c66277225747ed144ca290577a1c04880d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab2705d4_89288673",
         "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "21d30022_3535a57f",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-04T01:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab2705d4_89288673",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 8
+      },
+      "revId": "b868c66277225747ed144ca290577a1c04880d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55fefda9_8360765e",
         "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-03T23:14:25Z",
       "side": 1,
       "message": "Given we have axe in scope here, why not just run the code you mention in the comment rather than have a static list, which may get out of date?\n\nIf there is a reason, perhaps add it to the comment :)",
+      "range": {
+        "startLine": 43,
+        "startChar": 18,
+        "endLine": 43,
+        "endChar": 25
+      },
+      "revId": "b868c66277225747ed144ca290577a1c04880d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af19422_13d8b325",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-04T01:02:55Z",
+      "side": 1,
+      "message": "Added comment!",
+      "parentUuid": "55fefda9_8360765e",
       "range": {
         "startLine": 43,
         "startChar": 18,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "a8b3139e_ce95cc72",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-04T01:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e91cf99_bff4fe57",
+      "range": {
+        "startLine": 137,
+        "startChar": 35,
+        "endLine": 137,
+        "endChar": 42
+      },
+      "revId": "b868c66277225747ed144ca290577a1c04880d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3954900d_c428dce8",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 2
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "aad9cfdd_561704c3",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-04T01:02:55Z",
+      "side": 1,
+      "message": "I discussed this with Hector--by putting these attributes on the object, lexical scoping allows the \"this.passwordsSection\" and \"this.passwordManager\" to function as desired.",
+      "parentUuid": "3954900d_c428dce8",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "b868c66277225747ed144ca290577a1c04880d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3ea2b25_4e4e04d1",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 2
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-03T23:14:25Z",
       "side": 1,
       "message": "How does this work? Where is this function called from, how is `this` bound?",
+      "range": {
+        "startLine": 54,
+        "startChar": 24,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "b868c66277225747ed144ca290577a1c04880d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159c1c23_3c797430",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-04T01:02:55Z",
+      "side": 1,
+      "message": "This function is called when the mocha test is run. it will be called inside of a function that calls the .then() method of the Promise returned by this function to run the audit. If I understand correctly, `this` is bound by the lexical scoping of AccessibilityTestDefinition object. Please let me know if I\u0027m mistaken or confusing!",
+      "parentUuid": "a3ea2b25_4e4e04d1",
       "range": {
         "startLine": 54,
         "startChar": 24,
