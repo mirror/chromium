@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "460353be_9d66fd39",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-08-04T19:49:03Z",
+      "side": 1,
+      "message": "event time is microseconds since windows epoch, not linux epoch (e.g. ToInternalValue)",
+      "range": {
+        "startLine": 473,
+        "startChar": 13,
+        "endLine": 473,
+        "endChar": 32
+      },
+      "revId": "d97c57ea6ceeefcf7757c126dd995c3645e9088c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7863f97d_0455acf5",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-08-04T19:49:03Z",
+      "side": 1,
+      "message": "this is also since windows epoch",
+      "range": {
+        "startLine": 475,
+        "startChar": 0,
+        "endLine": 475,
+        "endChar": 61
+      },
+      "revId": "d97c57ea6ceeefcf7757c126dd995c3645e9088c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b49485d_f4c70ff9",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-08-04T19:49:03Z",
+      "side": 1,
+      "message": "shuoldn\u0027t you be breaking after each of these statements?",
+      "range": {
+        "startLine": 488,
+        "startChar": 14,
+        "endLine": 488,
+        "endChar": 52
+      },
+      "revId": "d97c57ea6ceeefcf7757c126dd995c3645e9088c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
