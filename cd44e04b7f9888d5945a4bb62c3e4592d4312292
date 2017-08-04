@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "314f1c29_5a9e5e1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-04T10:20:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5415da66_ac0cbed1",
+      "range": {
+        "startLine": 338,
+        "startChar": 14,
+        "endLine": 338,
+        "endChar": 32
+      },
+      "revId": "cd44e04b7f9888d5945a4bb62c3e4592d4312292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93348775_f9ed4169",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-03T23:57:21Z",
       "side": 1,
       "message": "Do we need a clamp at both ends here, or would Math.min(…, 1.0f) be sufficient? (We could assert that the value is \u003e 0, for clarity.)",
+      "range": {
+        "startLine": 341,
+        "startChar": 33,
+        "endLine": 341,
+        "endChar": 48
+      },
+      "revId": "cd44e04b7f9888d5945a4bb62c3e4592d4312292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e58c8c_2a1b02d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-04T10:20:01Z",
+      "side": 1,
+      "message": "I think this is a leftover from a previous arrangement where it was relevant. Just Math.min is fine now. Done.",
+      "parentUuid": "93348775_f9ed4169",
       "range": {
         "startLine": 341,
         "startChar": 33,
