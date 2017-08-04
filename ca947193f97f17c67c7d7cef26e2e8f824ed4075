@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04a4db16_0831f60c",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:43:23Z",
+      "side": 0,
+      "message": "This CL has nothing to do with changing signin_promo_settings, so I would prefer this to be in https://chromium-review.googlesource.com/c/600219. Also, could you please add tools:text attribute when you remove android:text? This way Android Studio users will be able understand the basic structure of the layout by just looking at the design preview window.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "ca947193f97f17c67c7d7cef26e2e8f824ed4075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

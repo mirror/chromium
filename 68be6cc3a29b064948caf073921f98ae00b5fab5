@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e23aac9b_968785fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:43:23Z",
+      "side": 1,
+      "message": "s/Modfied/Modify (see https://chromium-review.googlesource.com/c/600219/8/%252FCOMMIT_MSG#7).",
+      "revId": "68be6cc3a29b064948caf073921f98ae00b5fab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298e6f1a_0ff4f54f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:43:23Z",
+      "side": 1,
+      "message": "Nit: change the wording here a bit to clarify intent behind this CL. AFAIU, the intent is to extract the children of SigninPromoView into a separate XML to have configurable background/padding/margins for SigninPromoView while reusing the children views layout.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 43
+      },
+      "revId": "68be6cc3a29b064948caf073921f98ae00b5fab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dedfd3f_bf87bf64",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:43:23Z",
+      "side": 1,
+      "message": "Nit: It probably makes sense to rename this file to signin_promo_view_layout or signin_promo_view_impl to make it obvious that it shouldn\u0027t be used on its own.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 38
+      },
+      "revId": "68be6cc3a29b064948caf073921f98ae00b5fab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4790dd4e_b9987e40",
+        "filename": "chrome/android/java/res/layout/signin_promo_view.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:43:23Z",
+      "side": 1,
+      "message": "Nit: please add tools:showIn\u003d\"@layout/signin_promo_view_settings\" here (https://developer.android.com/studio/write/tool-attributes.html#toolsshowin).",
+      "range": {
+        "startLine": 6,
+        "startChar": 65,
+        "endLine": 6,
+        "endChar": 66
+      },
+      "revId": "68be6cc3a29b064948caf073921f98ae00b5fab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c9f8f3_a9487b49",
+        "filename": "chrome/android/java/res/layout/signin_promo_view_settings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:43:23Z",
+      "side": 1,
+      "message": "Hm, the new paddings aren\u0027t the same as the old ones, right? If you want to change paddings in this CL, please add it to CL description and attach before/after screenshots to the bug. I would prefer the changes to the layout (paddings, margins, maxLines, etc.) to be in a separate CL, but it\u0027s not a strong opinion, so it\u0027s up to you.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "68be6cc3a29b064948caf073921f98ae00b5fab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a1480c_c77d4aa6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:43:23Z",
+      "side": 1,
+      "message": "Thanks for fixing this! s/ProfileDataCacheObserver/ProfileDataCache.Observer/",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 47
+      },
+      "revId": "68be6cc3a29b064948caf073921f98ae00b5fab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
