@@ -22,6 +22,30 @@
       "revId": "e96448ebc1f0efa4a4c357544048d7ad963ea288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ac30cc_b0b3c2e4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-04T07:41:53Z",
+      "side": 1,
+      "message": "Done, thank you for pointing this out.",
+      "parentUuid": "8369529d_61e65190",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 36
+      },
+      "revId": "e96448ebc1f0efa4a4c357544048d7ad963ea288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
