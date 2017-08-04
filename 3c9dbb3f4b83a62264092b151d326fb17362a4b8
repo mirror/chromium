@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd0a2b92_4db19d69",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T16:59:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c71f785_88e7787d",
+      "revId": "3c9dbb3f4b83a62264092b151d326fb17362a4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ee417cf_77acde3a",
         "filename": "components/omnibox/browser/autocomplete_controller.h",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-19T18:48:41Z",
       "side": 1,
       "message": "Move this up to right after UpdateMatchDestinationURL so it\u0027s grouped with the other non-accessor methods.\n\nAlso, \"Fix-up\" here reads a little vague to me. How about just saying \"Inline tails suggestion prefixes [...]\" instead?",
+      "revId": "3c9dbb3f4b83a62264092b151d326fb17362a4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a68be4_e88418dd",
+        "filename": "components/omnibox/browser/autocomplete_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T16:59:06Z",
+      "side": 1,
+      "message": "I believe people dislike it when one just repeats the name of the method. I made it a little more descriptive.",
+      "parentUuid": "4ee417cf_77acde3a",
       "revId": "3c9dbb3f4b83a62264092b151d326fb17362a4b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aff42326_5db6ff65",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T16:59:06Z",
+      "side": 1,
+      "message": "No worries. As you mentioned, I was just trying to copy the style, but prefer range style too.",
+      "parentUuid": "83ce292a_3e0db839",
+      "revId": "3c9dbb3f4b83a62264092b151d326fb17362a4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "749caf7e_44a63a0c",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1ebf79ea_6814bc34",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T16:59:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "749caf7e_44a63a0c",
+      "revId": "3c9dbb3f4b83a62264092b151d326fb17362a4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dc038d6_68cdaa87",
         "filename": "components/omnibox/browser/autocomplete_result.h",
         "patchSetId": 10
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-19T18:48:41Z",
       "side": 1,
       "message": "\"Inline\" instead of \"Fix-up\".",
+      "revId": "3c9dbb3f4b83a62264092b151d326fb17362a4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68fd38a_f2dcbd1a",
+        "filename": "components/omnibox/browser/autocomplete_result.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-08-04T16:59:06Z",
+      "side": 1,
+      "message": "Same.",
+      "parentUuid": "9dc038d6_68cdaa87",
       "revId": "3c9dbb3f4b83a62264092b151d326fb17362a4b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
