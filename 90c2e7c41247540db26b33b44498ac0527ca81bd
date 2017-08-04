@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "83d01e80_690311ce",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-04T19:14:01Z",
+      "side": 1,
+      "message": "That\u0027s reasonable. Can we then place a counter. e.g., push an update after N read/writes even if 64KB limit has not been reached. I can do it in a subsequent CL if that makes it easier.",
+      "parentUuid": "d83cffc3_4d19811c",
+      "revId": "90c2e7c41247540db26b33b44498ac0527ca81bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1cba636_882ba3a2",
         "filename": "net/socket/udp_socket_posix.cc",
         "patchSetId": 2
@@ -119,6 +137,30 @@
       "side": 1,
       "message": "see above.",
       "parentUuid": "8dfe61a7_c074ae9b",
+      "range": {
+        "startLine": 656,
+        "startChar": 43,
+        "endLine": 656,
+        "endChar": 61
+      },
+      "revId": "90c2e7c41247540db26b33b44498ac0527ca81bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c167290f_aaf8015b",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-04T19:14:01Z",
+      "side": 1,
+      "message": "I do not understand. This is a bug.",
+      "parentUuid": "4a23dcbf_2fafe771",
       "range": {
         "startLine": 656,
         "startChar": 43,
