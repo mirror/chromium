@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "02e6ed49_0972c42b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-04T10:23:26Z",
+      "side": 1,
+      "message": "Given that I don\u0027t even know how far out the name change is, I\u0027m happy to stick with a boolean and figure out the appropriate change when we get to it.",
+      "parentUuid": "01bcf634_184a3c3a",
+      "revId": "e1018362c2cca1369b693c2752011427ed07dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34ae907e_a2b323f6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
         "patchSetId": 4
