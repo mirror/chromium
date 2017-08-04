@@ -115,6 +115,10 @@ static CGFloat kHostInset = 5.f;
   return self;
 }
 
+- (void)dealloc {
+  [NSNotificationCenter.defaultCenter removeObserver:self];
+}
+
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
@@ -140,6 +144,12 @@ static CGFloat kHostInset = 5.f;
          selector:@selector(hostListStateDidChangeNotification:)
              name:kHostListStateDidChange
            object:nil];
+
+  [NSNotificationCenter.defaultCenter
+      addObserver:self
+         selector:@selector(hostListFetchDidFailedNotification:)
+             name:kHostListFetchDidFail
+           object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -158,6 +168,26 @@ static CGFloat kHostInset = 5.f;
 
 - (void)hostListStateDidChangeNotification:(NSNotification*)notification {
   [self refreshContent];
+}
+
+- (void)hostListFetchDidFailedNotification:(NSNotification*)notification {
+  HostListFetchFailureReason reason = (HostListFetchFailureReason)
+      [notification.userInfo[kHostListFetchFailureReasonKey] integerValue];
+  int messageId;
+  switch (reason) {
+    case HostListFetchFailureReasonNetworkError:
+      messageId = IDS_ERROR_NETWORK_ERROR;
+      break;
+    case HostListFetchFailureReasonAuthError:
+      messageId = IDS_ERROR_OAUTH_TOKEN_INVALID;
+      break;
+    default:
+      NOTREACHED();
+      return;
+  }
+  [MDCSnackbarManager
+      showMessage:[MDCSnackbarMessage
+                      messageWithText:l10n_util::GetNSString(messageId)]];
 }
 
 #pragma mark - HostCollectionViewControllerDelegate
