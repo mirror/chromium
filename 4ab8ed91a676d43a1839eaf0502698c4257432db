@@ -2,6 +2,126 @@
   "comments": [
     {
       "key": {
+        "uuid": "93e5d486_951b8a07",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "we seem to use BODY and TEXT elsewhere. mind using either of those instead of introducing MESSAGE?",
+      "range": {
+        "startLine": 956,
+        "startChar": 60,
+        "endLine": 956,
+        "endChar": 67
+      },
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b98145be_5abc25f0",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "did this text come from UX? other notification bodies appear to have trailing periods; this probably should too.\n\nshould it be \"Please charge the stylus or replace its batteries.\" instead?",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c952f828_f14ff2b9",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "did you mean chrome://settings/stylus here (note extra slashes)?",
+      "range": {
+        "startLine": 51,
+        "startChar": 47,
+        "endLine": 51,
+        "endChar": 69
+      },
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef890bd8_2fa40ad4",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "move this to be a static public member so the test can also use it",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2edc723_d1918dbd",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "\"address\" is a bit vague. mind changing this to bluetooth_address?",
+      "range": {
+        "startLine": 85,
+        "startChar": 39,
+        "endLine": 85,
+        "endChar": 46
+      },
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8f9764_1ce0cf21",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "how about checking the other fields first so you don\u0027t need to do the costlier ExtractBluetoothAddress call for non-stylus devices?\n\n  if (device.is_stylus \u0026\u0026\n      device.name \u003d\u003d model_name \u0026\u0026\n      ExtractBluetoothAddress(device.sys_path.value()) \u003d\u003d address) {\n    return true;\n  }",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "729f6fdf_ec6f0364",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
         "patchSetId": 3
@@ -13,6 +133,160 @@
       "writtenOn": "2017-08-04T20:43:13Z",
       "side": 1,
       "message": "I *think* I should be using MessageCenter here? From what I can see, NotificationUIManager is for profile notifications and MessageCenter is for system notifications, but I\u0027m not so sure.",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac46435_afb90e0a",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "after talking about this with michaelpg@, it sounds like both your new notification and the existing notification should be using MessageCenter -- i don\u0027t see why we care about profiles here.\n\nthis code should probably also live in ash instead of in chrome, but that\u0027s probably out-of-scope for your change.\n\nwould you mind switching the rest of this class to use MessageCenter instead of NotificationUIManager in a followup change?",
+      "parentUuid": "729f6fdf_ec6f0364",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c377003e_4b1565b5",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "can you test that the new notification isn\u0027t shown for non-stylus devices?",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c481269b_e3abfdac",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "see other comment about sharing this constant with the class",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340eb516_fa505746",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "ASSERT_EQ since the next call will crash if this fails. also, put the expected 1u arg first.",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01f773ca_250b1557",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "swap the order of all of these EXPECT_EQ calls to be (expected, actual).\n\nbut as a side question, what\u0027s the reason for testing observer_\u0027s internal state instead of just checking the notification that it displays?",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3165e29c_937107bb",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "can you change this to EXPECT_FALSE or explicitly use \u003d\u003d nullptr in the expression?",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f128cb5_a7cc208a",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "do you actually need to advance the clock within this test? is it used for anything besides avoiding showing two notifications in quick succession?",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2545ff0e_80460fdc",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "!\u003d nullptr",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c095c70c_c61c3a57",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-04T22:28:11Z",
+      "side": 1,
+      "message": "can you test that the old notification isn\u0027t shown for stylus devices?",
       "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
