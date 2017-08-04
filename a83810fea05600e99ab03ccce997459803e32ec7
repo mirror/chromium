@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73ca8fa_9f699fff",
+        "filename": "components/offline_pages/core/renovations/page_renovation_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T19:12:03Z",
+      "side": 1,
+      "message": "Would 0UL work?\n\nCasting 0 to std::size_t would likely be a first of its kind, see:\nhttps://cs.chromium.org/search/?q\u003d%5C(std::size_t%5C)\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "range": {
+        "startLine": 72,
+        "startChar": 37,
+        "endLine": 72,
+        "endChar": 51
+      },
+      "revId": "a83810fea05600e99ab03ccce997459803e32ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d601ba3_9e3f69c0",
+        "filename": "components/resources/offline_pages_resources.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T19:12:03Z",
+      "side": 1,
+      "message": "2 thoughts on the structure here:\n1. Does it make sense to keep all renovations in a single file? (short term it may)\n2. If answer to above is NO, would it make sense to have JS files in their own renovations/ directory?",
+      "range": {
+        "startLine": 3,
+        "startChar": 84,
+        "endLine": 3,
+        "endChar": 95
+      },
+      "revId": "a83810fea05600e99ab03ccce997459803e32ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
