@@ -21,6 +21,7 @@
 #include "components/payments/core/payment_options_provider.h"
 #include "components/payments/core/payment_request_base_delegate.h"
 #include "components/payments/core/payments_profile_comparator.h"
+#import "ios/chrome/browser/payments/ios_payment_instrument_finder.h"
 #import "ios/chrome/browser/payments/payment_response_helper.h"
 #include "ios/web/public/payments/payment_request.h"
 
@@ -46,7 +47,8 @@ class WebState;
 
 // A protocol implementd by any UI classes that the PaymentRequest object
 // needs to communicate with in order to perform certain actions such as
-// initiating UI to request full card details for payment.
+// initiating UI to request full card details for payment or determining when
+// payment methods have been fetched.
 @protocol PaymentRequestUIDelegate<NSObject>
 
 - (void)
@@ -58,6 +60,8 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 - (void)launchAppWithUniversalLink:(std::string)universalLink
                 instrumentDelegate:
                     (payments::PaymentInstrument::Delegate*)instrumentDelegate;
+
+- (void)onPaymentMethodsReady;
 
 @end
 
@@ -190,6 +194,11 @@ class PaymentRequest : public PaymentOptionsProvider,
     return url_payment_method_identifiers_;
   }
 
+  const std::vector<std::string>& unfiltered_url_payment_method_identifiers()
+      const {
+    return unfiltered_url_payment_method_identifiers_;
+  }
+
   const std::map<std::string, std::set<std::string>>& stringified_method_data()
       const {
     return stringified_method_data_;
@@ -260,10 +269,16 @@ class PaymentRequest : public PaymentOptionsProvider,
   // cached profiles ordered by completeness.
   void PopulateAvailableProfiles();
 
-  // Fetches the payment methods for this user that match a supported type
-  // specified in |web_payment_request_| and stores copies of them, owned
-  // by this PaymentRequest, in payment_method_cache_.
-  void PopulatePaymentMethodCache();
+  // Gets the payment methods and card types requested by the merchant and
+  // fetches the payment methods that must be fetched asyncrhonously.
+  void PrepareToPopulatePaymentMethodCache();
+
+  // Fetches the payment methods that can be fetched synchronously and that
+  // also match a supported type specified in |web_payment_request_|. Stores a
+  // copy of each fetched instrument, owned by this PaymentRequest, in
+  // payment_method_cache_.
+  void OnReadyToPopulatePaymentMethodCache(
+      std::vector<std::unique_ptr<IOSPaymentInstrument>> found_instruments);
 
   // Sets the available payment methods as references to the cached payment
   // methods.
@@ -335,6 +350,10 @@ class PaymentRequest : public PaymentOptionsProvider,
   // which encompasses one of the two types of payment method identifiers, the
   // other being standardized payment method identifiers i.e., basic-card.
   std::vector<std::string> url_payment_method_identifiers_;
+
+  // Exposed for testing; this can be used to ensure that parsing the methods
+  // requested by the merchant returns the correct identifiers.
+  std::vector<std::string> unfiltered_url_payment_method_identifiers_;
 
   // A mapping of the payment method names to the corresponding JSON-stringified
   // payment method specific data.
