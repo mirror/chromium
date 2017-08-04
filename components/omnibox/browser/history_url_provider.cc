@@ -1198,18 +1198,25 @@ AutocompleteMatch HistoryURLProvider::HistoryMatchToACMatch(
       (!params.prevent_inline_autocomplete ||
        (inline_autocomplete_offset >= match.fill_into_edit.length()));
 
-  size_t match_start = history_match.input_location;
   const auto format_types = AutocompleteMatch::GetFormatTypes(
       !params.trim_http || history_match.match_in_scheme,
       history_match.match_in_subdomain, history_match.match_after_host);
-  match.contents = url_formatter::FormatUrl(info.url(), format_types,
-                                            net::UnescapeRule::SPACES, nullptr,
-                                            nullptr, &match_start);
-  if ((match_start != base::string16::npos) && autocomplete_offset_valid &&
-      (inline_autocomplete_offset != match_start)) {
-    DCHECK(inline_autocomplete_offset > match_start);
-    AutocompleteMatch::ClassifyLocationInString(match_start,
-        inline_autocomplete_offset - match_start, match.contents.length(),
+  base::OffsetAdjuster::Adjustments adjustments;
+  match.contents = url_formatter::FormatUrlWithAdjustments(
+      info.url(), format_types, net::UnescapeRule::SPACES, nullptr, nullptr,
+      &adjustments);
+
+  // Get the adjusted (for match contents) match start and end offsets.
+  size_t match_start = history_match.input_location;
+  size_t match_end = match_start + params.input.text().length();
+  base::OffsetAdjuster::AdjustOffset(adjustments, &match_start);
+  base::OffsetAdjuster::AdjustOffset(adjustments, &match_end);
+
+  if (match_start != base::string16::npos &&
+      match_end != base::string16::npos && match_end != match_start) {
+    DCHECK_GT(match_end, match_start);
+    AutocompleteMatch::ClassifyLocationInString(
+        match_start, match_end - match_start, match.contents.length(),
         ACMatchClassification::URL, &match.contents_class);
   } else {
     AutocompleteMatch::ClassifyLocationInString(base::string16::npos, 0,
