@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe349d38_0e274385",
+        "filename": "components/cronet/android/java/src/org/chromium/net/urlconnection/CronetHttpURLConnection.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-04T18:54:31Z",
+      "side": 1,
+      "message": "Should we change the wording to mention disconnect() as that is what the user is going to call to hit this?  Perhaps \"HttpURLConnection already disconnected\" or \"disconnect() called\".",
+      "revId": "85ee7616baf778e4cf0d4037c1a914b74fc1b81c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e4d21b_6fa40bfb",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/urlconnection/CronetHttpURLConnectionTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-04T18:54:31Z",
+      "side": 1,
+      "message": "nit: This is such a thin layer of abstraction, I\u0027d vote to just use the ServerSocket directly and get rid of it, but it\u0027s up to you.",
+      "revId": "85ee7616baf778e4cf0d4037c1a914b74fc1b81c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2250d42_813657ae",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/urlconnection/CronetHttpURLConnectionTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-04T18:54:31Z",
+      "side": 1,
+      "message": "I think fail() and the assertEquals() on line 1236 won\u0027t really work.  I think JUnit only catches these things on the main thread.  How about removing the fail() and replace the assertEquals() with some code that stores \"e\", and then retrieve \"e\" after hangingServer.shutdown() and assertEquals() then, on the main thread.  It may be simplest to use a FutureTask\u003cIOException\u003e kinda like this: https://codereview.chromium.org/2872593002/diff/80001/components/cronet/android/test/javatests/src/org/chromium/net/CronetUrlRequestContextTest.java",
+      "revId": "85ee7616baf778e4cf0d4037c1a914b74fc1b81c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
