@@ -160,7 +160,7 @@ void UiRenderer::DrawElements(const gfx::Transform& view_proj_matrix,
 
 void UiRenderer::DrawElement(const gfx::Transform& view_proj_matrix,
                              const UiElement& element) {
-  DCHECK_GE(element.draw_phase(), 0);
+  //  DCHECK_GE(element.draw_phase(), 0);
   gfx::Transform transform = view_proj_matrix * element.world_space_transform();
 
   switch (element.fill()) {

@@ -260,6 +260,7 @@ void UiSceneManager::CreateSystemIndicators() {
 
   std::unique_ptr<LinearLayout> indicator_layout =
       base::MakeUnique<LinearLayout>(LinearLayout::kHorizontal);
+  indicator_layout->set_draw_phase(kPhaseForeground);
   indicator_layout->set_id(AllocateId());
   indicator_layout->set_y_anchoring(YAnchoring::YTOP);
   indicator_layout->SetTranslate(0, kIndicatorVerticalOffset,
@@ -516,6 +517,7 @@ void UiSceneManager::CreateToasts() {
   element->SetSize(kToastWidthDMM, kToastHeightDMM);
   element->SetVisible(false);
   element->set_hit_testable(false);
+  element->animation_player().SetTransitionedProperties({OPACITY, VISIBILITY});
   exclusive_screen_toast_ = element.get();
   scene_->AddUiElement(std::move(element));
 }
