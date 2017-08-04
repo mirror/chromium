@@ -104,7 +104,9 @@ EasyUnlockServiceRegular::~EasyUnlockServiceRegular() {
 }
 
 void EasyUnlockServiceRegular::LoadRemoteDevices() {
-  if (GetCryptAuthDeviceManager()->GetUnlockKeys().empty()) {
+  bool has_unlock_keys = !GetCryptAuthDeviceManager()->GetUnlockKeys().empty();
+  pref_manager_->SetIsEasyUnlockEnabled(has_unlock_keys);
+  if (!has_unlock_keys) {
     SetProximityAuthDevices(GetAccountId(), cryptauth::RemoteDeviceList());
     return;
   }
@@ -507,8 +509,6 @@ void EasyUnlockServiceRegular::SetAutoPairingResult(
 }
 
 void EasyUnlockServiceRegular::InitializeInternal() {
-  proximity_auth::ScreenlockBridge::Get()->AddObserver(this);
-
 #if defined(OS_CHROMEOS)
   // TODO(tengs): Due to badly configured browser_tests, Chrome crashes during
   // shutdown. Revisit this condition after migration is fully completed.
@@ -529,6 +529,8 @@ void EasyUnlockServiceRegular::InitializeInternal() {
     StartPromotionManager();
   }
 #endif
+
+  proximity_auth::ScreenlockBridge::Get()->AddObserver(this);
 }
 
 void EasyUnlockServiceRegular::ShutdownInternal() {
@@ -563,6 +565,18 @@ bool EasyUnlockServiceRegular::IsAllowedInternal() const {
   // TODO(xiyuan): Revisit when non-chromeos platforms are supported.
   return false;
 #endif
+}
+
+bool EasyUnlockServiceRegular::IsEnabled() const {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          proximity_auth::switches::kDisableBluetoothLowEnergyDiscovery)) {
+    // The feature is enabled iff there are any paired devices set by the
+    // component app.
+    const base::ListValue* devices = GetRemoteDevices();
+    return devices && !devices->empty();
+  }
+
+  return pref_manager_->IsEasyUnlockEnabled();
 }
 
 void EasyUnlockServiceRegular::OnWillFinalizeUnlock(bool success) {
@@ -602,8 +616,11 @@ void EasyUnlockServiceRegular::OnSyncFinished(
 
   // Show the appropriate notification if an unlock key is first synced or if it
   // changes an existing key.
-  // Note: We do not show a notification when EasyUnlock is disabled by sync.
-  if (public_keys_after_sync.size() > 0) {
+  // Note: We do not show a notification when EasyUnlock is disabled by sync nor
+  // if EasyUnlock was enabled through the setup app.
+  bool is_setup_fresh =
+      short_lived_user_context_ && short_lived_user_context_->user_context();
+  if (public_keys_after_sync.size() > 0 && !is_setup_fresh) {
     if (public_keys_before_sync.size() == 0) {
       notification_controller_->ShowChromebookAddedNotification();
     } else {
@@ -626,17 +643,19 @@ void EasyUnlockServiceRegular::OnScreenDidLock(
 
 void EasyUnlockServiceRegular::OnScreenDidUnlock(
     proximity_auth::ScreenlockBridge::LockHandler::ScreenType screen_type) {
-  bool is_lock_screen =
-      screen_type == proximity_auth::ScreenlockBridge::LockHandler::LOCK_SCREEN;
-
   if (!will_unlock_using_easy_unlock_ && pref_manager_ &&
-      (is_lock_screen || !base::CommandLine::ForCurrentProcess()->HasSwitch(
-                             proximity_auth::switches::kEnableChromeOSLogin))) {
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          proximity_auth::switches::kEnableForcePasswordReauth)) {
     // If a password was used, then record the current timestamp. This timestamp
     // is used to enforce password reauths after a certain time has elapsed.
+    // Note: This code path is also triggered by the login flow.
     pref_manager_->SetLastPasswordEntryTimestampMs(
         base::Time::Now().ToJavaTime());
   }
+
+  // Do not process events for the login screen.
+  if (screen_type != proximity_auth::ScreenlockBridge::LockHandler::LOCK_SCREEN)
+    return;
 
   // If we tried to load remote devices (e.g. after a sync) while the screen was
   // locked, we can now load the new remote devices.
@@ -658,10 +677,6 @@ void EasyUnlockServiceRegular::OnScreenDidUnlock(
           unlock_keys[0].friendly_device_name());
     }
   }
-
-  // Do not process events for the login screen.
-  if (!is_lock_screen)
-    return;
 
   // Only record metrics for users who have enabled the feature.
   if (IsEnabled()) {
@@ -697,6 +712,8 @@ void EasyUnlockServiceRegular::OnToggleEasyUnlockApiComplete(
       cryptauth::InvocationReason::INVOCATION_REASON_FEATURE_TOGGLED);
   EasyUnlockService::ResetLocalStateForUser(GetAccountId());
   SetRemoteDevices(base::ListValue());
+  SetProximityAuthDevices(GetAccountId(), cryptauth::RemoteDeviceList());
+  pref_manager_->SetIsEasyUnlockEnabled(false);
   SetTurnOffFlowStatus(IDLE);
   ReloadAppAndLockScreen();
 }
