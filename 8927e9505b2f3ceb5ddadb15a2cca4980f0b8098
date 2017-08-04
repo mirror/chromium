@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9692fdc5_1f9bbecd",
+        "filename": "services/device/generic_sensor/absolute_orientation_euler_angles_fusion_algorithm_using_accelerometer_and_magnetometer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-04T14:12:59Z",
+      "side": 1,
+      "message": "I\u0027ve been skimming over the math in these classes because I assume it is being copied from the Android code which has been shipping for a while. Please add some test cases for them in follow-up patches.",
+      "revId": "8927e9505b2f3ceb5ddadb15a2cca4980f0b8098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64e66b1_146ab6e6",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-04T14:12:59Z",
+      "side": 1,
+      "message": "As in the other patch, this comment is more accurate:\n\n// If this PlatformSensorFusion object is successfully initialized,\n// |callback| will be run with a reference to this object.",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 58
+      },
+      "revId": "8927e9505b2f3ceb5ddadb15a2cca4980f0b8098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
