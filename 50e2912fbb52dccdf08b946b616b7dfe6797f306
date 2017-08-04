@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4c220b9_86136686",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-04T00:10:27Z",
+      "side": 1,
+      "message": "For slightly better encapsulation, could you use progress-container div, rather than page div?",
+      "revId": "50e2912fbb52dccdf08b946b616b7dfe6797f306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
