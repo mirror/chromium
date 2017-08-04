@@ -3014,6 +3014,8 @@ split_static_library("browser") {
       "metrics/android_metrics_provider.h",
       "metrics/page_load_metrics_provider.cc",
       "metrics/page_load_metrics_provider.h",
+      "net/android_status_listener.cc",
+      "net/android_status_listener.h",
       "net/spdyproxy/data_reduction_promo_infobar_delegate_android.cc",
       "net/spdyproxy/data_reduction_promo_infobar_delegate_android.h",
       "net/spdyproxy/data_reduction_proxy_settings_android.cc",

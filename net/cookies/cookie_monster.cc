@@ -639,6 +639,14 @@ CookieMonster::AddCallbackForCookie(const GURL& gurl,
       base::Bind(&RunAsync, base::ThreadTaskRunnerHandle::Get(), callback));
 }
 
+void CookieMonster::SetStatusListener(
+    std::unique_ptr<StatusListener> listener) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  status_listener_ = std::move(listener);
+  status_listener_->SetApplicationStoppedCallback(base::Bind(
+      &CookieMonster::FlushStore, base::Unretained(this), base::Closure()));
+}
+
 bool CookieMonster::IsEphemeral() {
   return store_.get() == nullptr;
 }

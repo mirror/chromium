@@ -78,6 +78,10 @@
 #include "chrome/browser/offline_pages/offline_page_request_interceptor.h"
 #endif
 
+#if defined(OS_ANDROID)
+#include "chrome/browser/net/android_status_listener.h"
+#endif
+
 namespace {
 
 // Returns the URLRequestContextBuilder::HttpCacheParams::Type that the disk
@@ -528,6 +532,11 @@ void ProfileImplIOData::InitializeInternal(
 
   cookie_store->SetChannelIDServiceID(channel_id_service->GetUniqueID());
 
+#if defined(OS_ANDROID)
+  cookie_store->SetStatusListener(
+      base::MakeUnique<chrome_browser_net::AndroidStatusListener>());
+#endif
+
   builder->SetCookieAndChannelIdStores(std::move(cookie_store),
                                        std::move(channel_id_service));
 
@@ -591,6 +600,10 @@ void ProfileImplIOData::
   cookie_config.cookieable_schemes.push_back(extensions::kExtensionScheme);
   cookie_config.channel_id_service = extensions_context->channel_id_service();
   extensions_cookie_store_ = content::CreateCookieStore(cookie_config);
+#if defined(OS_ANDROID)
+  extensions_cookie_store_->SetStatusListener(
+      base::MakeUnique<chrome_browser_net::AndroidStatusListener>());
+#endif
   extensions_context->set_cookie_store(extensions_cookie_store_.get());
 }
 
@@ -653,6 +666,10 @@ net::URLRequestContext* ProfileImplIOData::InitializeAppRequestContext(
   cookie_config.background_task_runner = cookie_background_task_runner;
   cookie_store = content::CreateCookieStore(cookie_config);
   cookie_store->SetChannelIDServiceID(channel_id_service->GetUniqueID());
+#if defined(OS_ANDROID)
+  cookie_store->SetStatusListener(
+      base::MakeUnique<chrome_browser_net::AndroidStatusListener>());
+#endif
 
   // Build a new HttpNetworkSession that uses the new ChannelIDService.
   // TODO(mmenke):  It's weird to combine state from

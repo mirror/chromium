@@ -44,6 +44,10 @@
 #include "extensions/common/extension.h"
 #endif
 
+#if defined(OS_ANDROID)
+#include "chrome/browser/net/android_status_listener.h"
+#endif
+
 using content::BrowserThread;
 
 OffTheRecordProfileIOData::Handle::Handle(Profile* profile)
@@ -208,6 +212,10 @@ void OffTheRecordProfileIOData::InitializeInternal(
           base::FilePath(), CookieStoreConfig::EPHEMERAL_SESSION_COOKIES, NULL,
           profile_params->cookie_monster_delegate.get())));
   cookie_store->SetChannelIDServiceID(channel_id_service->GetUniqueID());
+#if defined(OS_ANDROID)
+  cookie_store->SetStatusListener(
+      base::MakeUnique<chrome_browser_net::AndroidStatusListener>());
+#endif
 
   builder->SetCookieAndChannelIdStores(std::move(cookie_store),
                                        std::move(channel_id_service));
@@ -240,6 +248,10 @@ void OffTheRecordProfileIOData::
   // Enable cookies for chrome-extension URLs.
   cookie_config.cookieable_schemes.push_back(extensions::kExtensionScheme);
   extensions_cookie_store_ = content::CreateCookieStore(cookie_config);
+#if defined(OS_ANDROID)
+  extensions_cookie_store_->SetStatusListener(
+      base::MakeUnique<chrome_browser_net::AndroidStatusListener>());
+#endif
   extensions_context->set_cookie_store(extensions_cookie_store_.get());
 }
 
@@ -263,6 +275,10 @@ net::URLRequestContext* OffTheRecordProfileIOData::InitializeAppRequestContext(
   std::unique_ptr<net::ChannelIDService> channel_id_service(
       new net::ChannelIDService(new net::DefaultChannelIDStore(nullptr)));
   cookie_store->SetChannelIDServiceID(channel_id_service->GetUniqueID());
+#if defined(OS_ANDROID)
+  cookie_store->SetStatusListener(
+      base::MakeUnique<chrome_browser_net::AndroidStatusListener>());
+#endif
   context->SetCookieStore(std::move(cookie_store));
 
   // Build a new HttpNetworkSession that uses the new ChannelIDService.

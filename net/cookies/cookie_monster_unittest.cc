@@ -35,6 +35,7 @@
 #include "net/cookies/cookie_store_unittest.h"
 #include "net/cookies/cookie_util.h"
 #include "net/cookies/parsed_cookie.h"
+#include "net/extras/status_listener.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/default_channel_id_store.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -2579,6 +2580,38 @@ TEST_F(CookieMonsterTest, SetBeforeFlushCallbackIsCalled) {
 
   std::unique_ptr<CookieMonster> cm(
       new CookieMonster(store.get(), nullptr, channel_id_service.get()));
+}
+
+namespace {
+
+class TestStatusListener : public StatusListener {
+ public:
+  void SetApplicationStoppedCallback(base::RepeatingClosure callback) override {
+    callback_ = callback;
+  }
+
+  void Stop() { callback_.Run(); }
+
+ private:
+  base::RepeatingClosure callback_;
+};
+
+}  // namespace
+
+TEST_F(CookieMonsterTest, StatusListenerCallsFlushStore) {
+  scoped_refptr<FlushablePersistentStore> store(new FlushablePersistentStore());
+  std::unique_ptr<CookieMonster> cm(new CookieMonster(store.get(), nullptr));
+  GetAllCookies(cm.get());  // Force init.
+
+  std::unique_ptr<TestStatusListener> l(new TestStatusListener());
+  TestStatusListener* listener = l.get();
+  cm->SetStatusListener(std::move(l));
+
+  // Test that when a CookieMonster has a StatusListener set, and the
+  // StatusListener signals a change to the Stopped state, that
+  // CookieMonster::FlushStore is called.
+  listener->Stop();
+  EXPECT_EQ(1, store->flush_count());
 }
 
 TEST_F(CookieMonsterTest, SetAllCookies) {
