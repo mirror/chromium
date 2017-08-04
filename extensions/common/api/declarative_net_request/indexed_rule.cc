@@ -241,6 +241,8 @@ std::vector<std::string> CanonicalizeDomains(
 
 IndexedRule::IndexedRule() = default;
 IndexedRule::~IndexedRule() = default;
+IndexedRule::IndexedRule(IndexedRule&&) = default;
+IndexedRule& IndexedRule::operator=(IndexedRule&&) = default;
 
 ParseResult CreateIndexedRule(std::unique_ptr<dnr_api::Rule> parsed_rule,
                               IndexedRule* indexed_rule) {
