@@ -843,6 +843,11 @@ bool DesktopWindowTreeHostWin::HandleMouseEvent(const ui::MouseEvent& event) {
   return event.handled();
 }
 
+bool DesktopWindowTreeHostWin::HandlePointerEvent(ui::PointerEvent* event) {
+  SendEventToSink(const_cast<ui::PointerEvent*>(&event));
+  return event.handled();
+}
+
 void DesktopWindowTreeHostWin::HandleKeyEvent(ui::KeyEvent* event) {
   SendEventToSink(event);
 }
