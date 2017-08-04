@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "56e5afbb_a6070917",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-04T20:40:49Z",
+      "side": 1,
+      "message": "Done, but ToInternalValue has been deprecated.\nI also added comments on go/event-log-client-integration-steps about this.",
+      "parentUuid": "460353be_9d66fd39",
+      "range": {
+        "startLine": 473,
+        "startChar": 13,
+        "endLine": 473,
+        "endChar": 32
+      },
+      "revId": "d97c57ea6ceeefcf7757c126dd995c3645e9088c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7863f97d_0455acf5",
         "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "842df904_80fe0c3d",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-04T20:40:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7863f97d_0455acf5",
+      "range": {
+        "startLine": 475,
+        "startChar": 0,
+        "endLine": 475,
+        "endChar": 61
+      },
+      "revId": "d97c57ea6ceeefcf7757c126dd995c3645e9088c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b49485d_f4c70ff9",
         "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "d97c57ea6ceeefcf7757c126dd995c3645e9088c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1391e33c_b9b15fd4",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-04T20:40:49Z",
+      "side": 1,
+      "message": "D\u0027oh! Good catch. Done.",
+      "parentUuid": "6b49485d_f4c70ff9",
+      "range": {
+        "startLine": 488,
+        "startChar": 14,
+        "endLine": 488,
+        "endChar": 52
+      },
+      "revId": "d97c57ea6ceeefcf7757c126dd995c3645e9088c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
