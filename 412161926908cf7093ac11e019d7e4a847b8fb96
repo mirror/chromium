@@ -541,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "3d121d84_a093f2e9",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-04T22:07:30Z",
+      "side": 1,
+      "message": "I had a longish discussion with dcheng@ about how we want to structure document scoped interfaces in general and a chat with creis@ about initial empty document. The agreement is that we don\u0027t really want to have a separate method for the initial empty document. All such state should be created as part of creating a new window (CreateNewWindow) or creating a new child frame (FrameHostMsg_CreateChildFrame()). \n\ndcheng@ and I went on a long tangent too on whether we need to mojo-ify FrameHostMsg_CreateChildFrame as well, but the agreement is that for the time being we are better off not going that far. He tells me there is a way to send the InterfaceProvider request over legacy IPC and then we can tack it on the PostTask parameters to pass it over to the UI thread. We want to keep it on IO thread for perf reasons, so we can unblock the renderer to create the iframe as quickly as we can. It is possible to also do with a separate Mojo interface just for that, but that seemed more of a hack to dcheng@ than passing the provider request over legacy IPC.\n\nAlso, my initial comment starting today was to split the CL into the two major parts it has - mojo-ifying DidCommitProvisionalLoad and changing the InterfaceProvider on each change of document. Separate CLs will be much easier to review and reason about, but will also be easier to bisect if we hit bugs down the road.",
+      "parentUuid": "8b9bc4c1_daa27bf6",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "233719e0_3538667d",
         "filename": "content/common/frame.mojom",
         "patchSetId": 33
