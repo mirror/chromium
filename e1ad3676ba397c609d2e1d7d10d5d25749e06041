@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23b6f8ed_91bac0c2",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-04T02:40:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef2b03f4_867d9a90",
+      "range": {
+        "startLine": 132,
+        "startChar": 10,
+        "endLine": 132,
+        "endChar": 20
+      },
+      "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9144959_20d0e396",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-02T01:36:53Z",
       "side": 1,
       "message": "[TBD]\nI think instead of doing the threading in Java you should handle it in the C++\nclass and change this class to expose only a WriteAudio() call that can be\ncalled from C++.\n\nWe have a class FakeAudioWorker (it\u0027s named poorly, sorry) which can handle\ncallback scheduling for you. Essentially you\u0027d just construct a FakeAudioWorker\nand give it your stream information (sample rate, buffer size, etc) and it\u0027ll\npoll at the correct period on existing threads; no need for the sleep business.",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8756a96b_e8f45324",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-04T02:40:15Z",
+      "side": 1,
+      "message": "Unfortunately, we don\u0027t have correct AudioParameters during initialization.\nAlso, there are two potential long blocking calls, AudioSyncReader::Read() and AudioTrack.write(). Not sure it\u0027s a good idea to block audio manager thread.\nInstead, I moved most logics to Java so that we can have better test coverage.",
+      "parentUuid": "d9144959_20d0e396",
       "range": {
         "startLine": 43,
         "startChar": 10,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9759e913_f6e55294",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-04T02:40:15Z",
+      "side": 1,
+      "message": "Add checks and messages for bitstream formats in audio_track_output_stream.cc.",
+      "parentUuid": "6918eddc_3c0515f7",
+      "range": {
+        "startLine": 198,
+        "startChar": 9,
+        "endLine": 198,
+        "endChar": 18
+      },
+      "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58d44eca_9ee13ea9",
         "filename": "media/base/audio_buffer_queue.cc",
         "patchSetId": 2
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "72dbeb67_dc675c69",
+        "filename": "media/base/audio_buffer_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-04T02:40:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58d44eca_9ee13ea9",
+      "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a52c73a0_afcf7123",
         "filename": "media/renderers/audio_renderer_impl.cc",
         "patchSetId": 2
@@ -99,6 +189,24 @@
       "writtenOn": "2017-08-02T01:36:53Z",
       "side": 1,
       "message": "[TBD]\nWe already do this in PipelineImpl.",
+      "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44ae8b8_fbeedf0b",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-04T02:40:15Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "a52c73a0_afcf7123",
       "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
