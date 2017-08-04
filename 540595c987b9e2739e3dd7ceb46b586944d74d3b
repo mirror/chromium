@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "62f6364b_aef0ae01",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPIFiles.h.tmpl",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-04T05:02:54Z",
+      "side": 0,
+      "message": "That\u0027s a good point about the grouped properties, I didn\u0027t think of that. Regarding the status comment, it makes me uncomfortable to remove it in this patch on a promise that it will be re-added in a later patch. But given that the current state of the comment is actually wrong when it comes to grouped properties, I\u0027m ok with removing it here. Perhaps add a todo though to the readme file to include ribbon status?",
+      "parentUuid": "cfbe3299_7feb520f",
+      "revId": "540595c987b9e2739e3dd7ceb46b586944d74d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b5a0925_86161571",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.h",
         "patchSetId": 18
