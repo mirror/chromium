@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1736d06f_7ac5100f",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-04T13:11:31Z",
+      "side": 1,
+      "message": "Why do we return early here?  This seems like it could use an explanatory comment.",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95659fa2_63439ce6",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-04T13:11:31Z",
+      "side": 1,
+      "message": "Something about this flow feels wrong to me.  I\u0027ll think about how to best describe my concerns.",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ef6094_ebddaf5f",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2379,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-04T13:11:31Z",
+      "side": 1,
+      "message": "It was a little surprising to see the payment request flow invoked from a method named \"shouldStayOnTab\".  I did not expect this method to have such significant side effects, based on its name.",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4697a9d5_9211f630",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-04T13:11:31Z",
+      "side": 1,
+      "message": "It looks like this app can only handle a single in-flight request at a time.  Is that an intentional limitation?  If so, we should document that in the header somewhere.\n\nRight now it looks like weird things will happen if the app somehow triggers more than one request at a time.  Should there be DCHECKs to try and catch that?",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98dda2de_41d5ce06",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-04T13:11:31Z",
+      "side": 1,
+      "message": "Use \"browser state\" instead of \"browser context\", because that\u0027s what we have on iOS.",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1521c43c_38e9e4d2",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-04T13:11:31Z",
+      "side": 1,
+      "message": "Why does this need to be exposed publicly?",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac437da3_9f752123",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-04T13:11:31Z",
+      "side": 1,
+      "message": "C++ method names should start with a capital letter.  Also below.",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d77b1a_f41ffbc5",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-04T13:11:31Z",
+      "side": 1,
+      "message": "Holding a raw pointer here seems scary -- what guarantees can we make about the lifetime of this delegate?  What happens if the user switches back to Chrome and closes the tab that initiated the payment request?  Would that destroy |delegate_| and leave a dangling pointer?\n\nIs there any way to tell this IOSPaymentInstrumentLauncher to forget about an in-flight request?  I don\u0027t see any APIs for that on this class -- should that exist?",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
