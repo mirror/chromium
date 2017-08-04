@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "629c3f2a_e7da3aec",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestCanMakePaymentMetricsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-04T20:19:22Z",
+      "side": 1,
+      "message": "nit: // Make sure no canMakePayment events were logged. ?",
+      "range": {
+        "startLine": 299,
+        "startChar": 25,
+        "endLine": 299,
+        "endChar": 39
+      },
+      "revId": "80d14e4704726e42c259972a9b4968f9bab56cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c17d9f_c6825e65",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestCanMakePaymentMetricsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-04T20:19:22Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 337,
+        "startChar": 15,
+        "endLine": 337,
+        "endChar": 16
+      },
+      "revId": "80d14e4704726e42c259972a9b4968f9bab56cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
