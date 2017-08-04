@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.bookmarks;
 
+import android.accounts.Account;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -18,18 +19,28 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkItem;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkModelObserver;
 import org.chromium.chrome.browser.bookmarks.BookmarkPromoHeader.PromoHeaderShowingChangeListener;
+import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.signin.ProfileDataCache;
+import org.chromium.chrome.browser.signin.SigninAccessPoint;
+import org.chromium.chrome.browser.signin.SigninAndSyncView;
+import org.chromium.chrome.browser.signin.SigninPromoController;
+import org.chromium.chrome.browser.signin.SigninPromoView;
 import org.chromium.chrome.browser.widget.displaystyle.MarginResizer;
 import org.chromium.chrome.browser.widget.selection.SelectableListLayout;
 import org.chromium.components.bookmarks.BookmarkId;
+import org.chromium.components.signin.AccountManagerFacade;
+import org.chromium.components.signin.AccountsChangeObserver;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * BaseAdapter for {@link RecyclerView}. It manages bookmarks to list there.
  */
-class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements
-        BookmarkUIObserver, PromoHeaderShowingChangeListener {
+class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements BookmarkUIObserver, PromoHeaderShowingChangeListener, ProfileDataCache.Observer,
+                   AccountsChangeObserver {
     private static final int PROMO_HEADER_VIEW = 0;
     private static final int FOLDER_VIEW = 1;
     private static final int BOOKMARK_VIEW = 2;
@@ -51,6 +62,8 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Context mContext;
     private BookmarkPromoHeader mPromoHeaderManager;
     private String mSearchText;
+    private SigninPromoController mSigninPromoController;
+    private ProfileDataCache mProfileDataCache;
 
     private BookmarkModelObserver mBookmarkModelObserver = new BookmarkModelObserver() {
         @Override
@@ -202,12 +215,14 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         switch (viewType) {
             case PROMO_HEADER_VIEW:
                 ViewHolder promoView = mPromoHeaderManager.createHolder(parent);
-                MarginResizer.createAndAttach(promoView.itemView,
-                        mDelegate.getSelectableListLayout().getUiConfig(),
-                        parent.getResources().getDimensionPixelSize(
-                                R.dimen.signin_and_sync_view_padding),
-                        SelectableListLayout.getDefaultListItemLateralShadowSizePx(
-                                parent.getResources()));
+                if (promoView.itemView instanceof SigninAndSyncView) {
+                    MarginResizer.createAndAttach(promoView.itemView,
+                            mDelegate.getSelectableListLayout().getUiConfig(),
+                            parent.getResources().getDimensionPixelSize(
+                                    R.dimen.signin_and_sync_view_padding),
+                            SelectableListLayout.getDefaultListItemLateralShadowSizePx(
+                                    parent.getResources()));
+                }
                 return promoView;
             case FOLDER_VIEW:
                 BookmarkFolderRow folder = (BookmarkFolderRow) LayoutInflater.from(
@@ -233,9 +248,11 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         BookmarkId id = getItem(position);
-
         switch (getItemViewType(position)) {
             case PROMO_HEADER_VIEW:
+                if (holder.itemView instanceof SigninPromoView) {
+                    setupSigninPromo((SigninPromoView) holder.itemView);
+                }
                 break;
             case FOLDER_VIEW:
                 ((BookmarkRow) holder.itemView).setBookmarkId(id);
@@ -253,7 +270,7 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     // PromoHeaderShowingChangeListener implementation.
 
     @Override
-    public void onPromoHeaderShowingChanged(boolean isShowing) {
+    public void onPromoHeaderShowingChanged() {
         assert mDelegate != null;
         if (mDelegate.getCurrentState() != BookmarkUIState.STATE_FOLDER) {
             return;
@@ -269,7 +286,20 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         mDelegate = delegate;
         mDelegate.addUIObserver(this);
         mDelegate.getModel().addObserver(mBookmarkModelObserver);
-        mPromoHeaderManager = new BookmarkPromoHeader(mContext, this);
+
+        if (SigninPromoController.arePromosEnabled()) {
+            int imageSize =
+                    mContext.getResources().getDimensionPixelSize(R.dimen.user_picture_size);
+            mProfileDataCache =
+                    new ProfileDataCache(mContext, Profile.getLastUsedProfile(), imageSize);
+            mProfileDataCache.addObserver(this);
+            mSigninPromoController = new SigninPromoController(
+                    mProfileDataCache, SigninAccessPoint.BOOKMARK_MANAGER);
+
+            AccountManagerFacade.get().addObserver(this);
+        }
+
+        mPromoHeaderManager = new BookmarkPromoHeader(mContext, this, mSigninPromoController);
         populateTopLevelFoldersList();
     }
 
@@ -278,8 +308,12 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         mDelegate.removeUIObserver(this);
         mDelegate.getModel().removeObserver(mBookmarkModelObserver);
         mDelegate = null;
-
         mPromoHeaderManager.destroy();
+
+        if (SigninPromoController.arePromosEnabled()) {
+            AccountManagerFacade.get().removeObserver(this);
+            mProfileDataCache.removeObserver(this);
+        }
     }
 
     @Override
@@ -303,6 +337,20 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onSelectionStateChange(List<BookmarkId> selectedBookmarks) {}
+
+    // ProfileDataCacheObserver implementations.
+
+    @Override
+    public void onProfileDataUpdated(String accountId) {
+        notifyDataSetChanged();
+    }
+
+    // AccountsChangeObserver implementation.
+
+    @Override
+    public void onAccountsChanged() {
+        notifyDataSetChanged();
+    }
 
     /**
      * Synchronously searches for the given query.
@@ -366,6 +414,26 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             BookmarkId parent = mDelegate.getModel().getBookmarkById(bookmarkId).getParentId();
             if (parent.equals(rootFolder)) mTopLevelFolders.add(bookmarkId);
         }
+    }
+
+    private void setupSigninPromo(SigninPromoView view) {
+        Account[] accounts = AccountManagerFacade.get().tryGetGoogleAccounts();
+        String defaultAccountName = accounts.length == 0 ? null : accounts[0].name;
+
+        if (defaultAccountName != null) {
+            mProfileDataCache.update(Collections.singletonList(defaultAccountName));
+        }
+
+        mSigninPromoController.setAccountName(defaultAccountName);
+
+        SigninPromoController.OnDismissListener listener =
+                new SigninPromoController.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        mPromoHeaderManager.setSigninPromoDeclined();
+                    }
+                };
+        mSigninPromoController.setupSigninPromoView(mContext, view, listener);
     }
 
     @VisibleForTesting
