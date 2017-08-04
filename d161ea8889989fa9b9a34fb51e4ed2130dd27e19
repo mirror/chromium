@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df6c763c_fc49c034",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-04T01:43:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "032395fd_d5f2bb18",
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89f5fdfb_b438db5a",
         "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "a111f419_f28ff708",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-04T01:43:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89f5fdfb_b438db5a",
+      "range": {
+        "startLine": 436,
+        "startChar": 30,
+        "endLine": 436,
+        "endChar": 38
+      },
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aab0bd13_eb5ea622",
         "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
         "patchSetId": 1
@@ -62,6 +104,30 @@
       "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c22ded_7d5460b3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-04T01:43:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aab0bd13_eb5ea622",
+      "range": {
+        "startLine": 469,
+        "startChar": 24,
+        "endLine": 469,
+        "endChar": 34
+      },
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +165,24 @@
     },
     {
       "key": {
+        "uuid": "52e7a797_2e5fe6dd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-04T01:43:27Z",
+      "side": 1,
+      "message": "It turns them either into * (Any) or ? (Unknown). So it by default does what it does now.",
+      "parentUuid": "5781a84e_36e1f5e4",
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22732b87_e3fd3557",
         "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
         "patchSetId": 1
@@ -116,6 +200,24 @@
     },
     {
       "key": {
+        "uuid": "e50a20af_9b78b8f3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-04T01:43:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22732b87_e3fd3557",
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef744b76_8ad5b0e7",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/BlockedURLsPane.js",
         "patchSetId": 1
@@ -127,6 +229,30 @@
       "writtenOn": "2017-08-02T21:25:45Z",
       "side": 1,
       "message": "No need for ! I think.",
+      "range": {
+        "startLine": 28,
+        "startChar": 30,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2bd54e4_187bbd08",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/BlockedURLsPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-04T01:43:27Z",
+      "side": 1,
+      "message": "Sadly it is still required. Closure complains if I remove it.",
+      "parentUuid": "ef744b76_8ad5b0e7",
       "range": {
         "startLine": 28,
         "startChar": 30,
@@ -162,6 +288,30 @@
     },
     {
       "key": {
+        "uuid": "8e49ee31_fc7f578b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/BlockedURLsPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-04T01:43:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f917565d_f196d224",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c119b90_d5b2bdbf",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/BlockedURLsPane.js",
         "patchSetId": 1
@@ -176,6 +326,24 @@
       "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0242bc30_f2805d2e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/BlockedURLsPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-04T01:43:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c119b90_d5b2bdbf",
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +370,30 @@
     },
     {
       "key": {
+        "uuid": "c0118993_7385f08f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/BlockedURLsPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-04T01:43:27Z",
+      "side": 1,
+      "message": "I changes this because it seemed strange that _createEditor was doing it. It made more sense to me to have beginEdit assign it instead.",
+      "parentUuid": "f89d82d9_b60e0fe7",
+      "range": {
+        "startLine": 126,
+        "startChar": 11,
+        "endLine": 126,
+        "endChar": 17
+      },
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a89ceaa_64cc6fb4",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/ListWidget.js",
         "patchSetId": 1
@@ -216,6 +408,24 @@
       "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6c34d4_8fc848c5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ListWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-04T01:43:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a89ceaa_64cc6fb4",
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
