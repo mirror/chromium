@@ -34,7 +34,14 @@ public class SigninPromoController {
         void onDismiss();
     }
 
-    private static final String SIGNIN_PROMO_IMPRESSIONS_COUNT = "signin_promo_impressions_count";
+    private static final String SIGNIN_PROMO_IMPRESSIONS_COUNT_BOOKMARKS =
+            "signin_promo_impressions_count_bookmarks";
+    private static final String SIGNIN_PROMO_IMPRESSIONS_COUNT_NTP_CONTENT_SUGGESTIONS =
+            "signin_promo_impressions_count_ntp_content_suggestions";
+    private static final String SIGNIN_PROMO_IMPRESSIONS_COUNT_RECENT_TABS =
+            "signin_promo_impressions_count_recent_tabs";
+    private static final String SIGNIN_PROMO_IMPRESSIONS_COUNT_SETTINGS =
+            "signin_promo_impressions_count_settings";
     private static final int MAX_IMPRESSIONS = 20;
 
     private String mAccountName;
@@ -42,16 +49,35 @@ public class SigninPromoController {
     private final @AccountSigninActivity.AccessPoint int mAccessPoint;
 
     /**
+     * Checks whether the signin promos are enabled or not.
+     */
+    public static boolean arePromosEnabled() {
+        return ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_SIGNIN_PROMOS);
+    }
+
+    /**
      * Determines whether the promo should be shown to the user or not.
+     * @param accessPoint The access point where the promo will be shown.
      * @return true if the promo is to be shown and false otherwise.
      */
-    public static boolean shouldShowPromo() {
-        if (!ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_SIGNIN_PROMOS)) {
+    public static boolean shouldShowPromo(@AccountSigninActivity.AccessPoint int accessPoint) {
+        if (!arePromosEnabled()) {
             return false;
         }
 
-        int numImpressions =
-                ContextUtils.getAppSharedPreferences().getInt(SIGNIN_PROMO_IMPRESSIONS_COUNT, 0);
+        String key;
+        switch (accessPoint) {
+            case SigninAccessPoint.BOOKMARK_MANAGER:
+                key = SIGNIN_PROMO_IMPRESSIONS_COUNT_BOOKMARKS;
+                break;
+            case SigninAccessPoint.SETTINGS:
+                key = SIGNIN_PROMO_IMPRESSIONS_COUNT_SETTINGS;
+                break;
+            default:
+                throw new RuntimeException("Unexpected value for access point: " + accessPoint);
+        }
+
+        int numImpressions = ContextUtils.getAppSharedPreferences().getInt(key, 0);
         return numImpressions < MAX_IMPRESSIONS;
     }
 
@@ -71,8 +97,27 @@ public class SigninPromoController {
      */
     public void recordSigninPromoImpression() {
         SharedPreferences preferences = ContextUtils.getAppSharedPreferences();
-        int numImpressions = preferences.getInt(SIGNIN_PROMO_IMPRESSIONS_COUNT, 0);
-        preferences.edit().putInt(SIGNIN_PROMO_IMPRESSIONS_COUNT, numImpressions + 1).apply();
+
+        String key;
+        switch (mAccessPoint) {
+            case SigninAccessPoint.BOOKMARK_MANAGER:
+                key = SIGNIN_PROMO_IMPRESSIONS_COUNT_BOOKMARKS;
+                break;
+            case SigninAccessPoint.NTP_CONTENT_SUGGESTIONS:
+                key = SIGNIN_PROMO_IMPRESSIONS_COUNT_NTP_CONTENT_SUGGESTIONS;
+                break;
+            case SigninAccessPoint.RECENT_TABS:
+                key = SIGNIN_PROMO_IMPRESSIONS_COUNT_RECENT_TABS;
+                break;
+            case SigninAccessPoint.SETTINGS:
+                key = SIGNIN_PROMO_IMPRESSIONS_COUNT_SETTINGS;
+                break;
+            default:
+                throw new RuntimeException("Unexpected value for access point: " + mAccessPoint);
+        }
+
+        int numImpressions = preferences.getInt(key, 0);
+        preferences.edit().putInt(key, numImpressions + 1).apply();
 
         recordSigninImpressionUserAction();
         if (mAccountName == null) {
@@ -91,6 +136,8 @@ public class SigninPromoController {
      */
     public void setupSigninPromoView(Context context, SigninPromoView view,
             @Nullable final OnDismissListener onDismissListener) {
+        setText(view);
+
         if (mAccountName == null) {
             setupColdState(context, view);
         } else {
@@ -176,6 +223,26 @@ public class SigninPromoController {
         }
     }
 
+    private void setText(SigninPromoView view) {
+        switch (mAccessPoint) {
+            case SigninAccessPoint.BOOKMARK_MANAGER:
+                view.getDescription().setText(R.string.bookmark_sign_in_promo_description);
+                break;
+            case SigninAccessPoint.NTP_CONTENT_SUGGESTIONS:
+                view.getDescription().setText(
+                        R.string.ntp_content_suggestions_sign_in_promo_description);
+                break;
+            case SigninAccessPoint.RECENT_TABS:
+                view.getDescription().setText(R.string.recent_tabs_sign_in_promo_description);
+                break;
+            case SigninAccessPoint.SETTINGS:
+                view.getDescription().setText(R.string.settings_sign_in_promo_description);
+                break;
+            default:
+                throw new RuntimeException("Unexpected value for access point: " + mAccessPoint);
+        }
+    }
+
     private void setupColdState(final Context context, SigninPromoView view) {
         view.getImage().setImageResource(R.drawable.chrome_sync_logo);
         setImageSize(context, view, R.dimen.signin_promo_cold_state_image_size);
@@ -184,8 +251,7 @@ public class SigninPromoController {
         view.getSigninButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AccountSigninActivity.startAccountSigninActivity(context, mAccessPoint);
-                // TODO(iuliah): change to new account activity when available.
+                AccountSigninActivity.startFromAddAccountPage(context, mAccessPoint);
             }
         });
 
