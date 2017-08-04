@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9130e8ae_24881dfe",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 6931,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-04T19:19:50Z",
+      "side": 1,
+      "message": "Oops. Deleted.",
+      "parentUuid": "a6ae7b7d_69db9c3b",
+      "range": {
+        "startLine": 6931,
+        "startChar": 20,
+        "endLine": 6931,
+        "endChar": 41
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06c4f228_340565e9",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-03T15:45:20Z",
       "side": 1,
       "message": "Clarify why this is needed.",
+      "range": {
+        "startLine": 996,
+        "startChar": 4,
+        "endLine": 996,
+        "endChar": 41
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650ebfb0_8b8dc1bb",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-04T19:19:50Z",
+      "side": 1,
+      "message": "Looks like I totally forgot to set Navigation Start here. Updated code doesn\u0027t look as odd.",
+      "parentUuid": "06c4f228_340565e9",
       "range": {
         "startLine": 996,
         "startChar": 4,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "de535e48_954daebe",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-04T19:19:50Z",
+      "side": 1,
+      "message": "The list of timers are here:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/TaskRunnerHelper.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d122\n\nThere are a whole bunch of timers that have spec defined behaviors for specific tasks, MiscPlatfromAPI timer for timers that isn\u0027t defined in a spec yet but probably will be, kUnspecedLoading timer but that sounds like it\u0027s meant to be used with more loading related behavior and I don\u0027t know if we want to couple TTI detection timer with that, and Unthrottled timer which sounds like a bad idea because TTI detection is definitely not highest priority thing. That leaves us with Unspeced.",
+      "parentUuid": "fc5dc28a_36635ebb",
+      "range": {
+        "startLine": 40,
+        "startChar": 42,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f80978e0_4784d147",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 2
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "8aec5f06_64bff28b",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-04T19:19:50Z",
+      "side": 1,
+      "message": "Resolved the TODO.",
+      "parentUuid": "f80978e0_4784d147",
+      "range": {
+        "startLine": 44,
+        "startChar": 51,
+        "endLine": 44,
+        "endChar": 73
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63166332_8f68c72a",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
         "patchSetId": 2
@@ -128,6 +224,30 @@
       "writtenOn": "2017-08-03T15:45:20Z",
       "side": 1,
       "message": "Can\u0027t we read the time the timer is going to fire at from the timer?",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 43
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e84688_aa824d5e",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-04T19:19:50Z",
+      "side": 1,
+      "message": "Discussed offline - this will involve two calls to MonotonicallyIncreasingTime because the timer class does not currently expose the next fire timer; it only exposes the delta from current time. We may fix this in a later CL.",
+      "parentUuid": "63166332_8f68c72a",
       "range": {
         "startLine": 76,
         "startChar": 24,
@@ -232,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "d2bf56fa_8798ca12",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-04T19:19:50Z",
+      "side": 1,
+      "message": "I made the NetworkActivityChecker class non garbage collected, and used a WeakPersistent. The compiler won\u0027t let me store a raw pointer to Document.",
+      "parentUuid": "0fe334ab_d52455ab",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 10
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1a1ec25_04cd32f4",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
         "patchSetId": 2
@@ -243,6 +387,30 @@
       "writtenOn": "2017-08-03T15:45:20Z",
       "side": 1,
       "message": "Should this be private?",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 40
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "559b063e_4b227f7a",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-04T19:19:50Z",
+      "side": 1,
+      "message": "That does sound better. Done.",
+      "parentUuid": "e1a1ec25_04cd32f4",
       "range": {
         "startLine": 50,
         "startChar": 7,
@@ -278,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "7b9c56e4_f51468da",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-04T19:19:50Z",
+      "side": 1,
+      "message": "The getter makes it really nice to write tests, and it really doesn\u0027t hurt to have this method in case some code wants to query later what TTCI for the current docuement is. I think the generic observer mechanism should probably reside in GRC, and OnConsistentlyInteractiveDetected should only inform GRC and not arbitrary observers.",
+      "parentUuid": "ebbc414b_a495faee",
+      "range": {
+        "startLine": 53,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 39
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30b6cb35_25a9a921",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
         "patchSetId": 2
@@ -301,6 +493,30 @@
     },
     {
       "key": {
+        "uuid": "47e9ff88_9853f45e",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-04T19:19:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30b6cb35_25a9a921",
+      "range": {
+        "startLine": 71,
+        "startChar": 9,
+        "endLine": 71,
+        "endChar": 18
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e188459d_89073d29",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
         "patchSetId": 2
@@ -312,6 +528,30 @@
       "writtenOn": "2017-08-03T15:45:20Z",
       "side": 1,
       "message": "candidate already implies \"maybe\".\n\nI\u0027m not sure what the right name is here, perhaps we should chat about it.",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 14
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d275e2fd_99e9cbbd",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-04T19:19:50Z",
+      "side": 1,
+      "message": "Refactored code so I can call this main_thread_quiet_window_start_",
+      "parentUuid": "e188459d_89073d29",
       "range": {
         "startLine": 74,
         "startChar": 9,
@@ -347,6 +587,30 @@
     },
     {
       "key": {
+        "uuid": "25c1f3b4_b133ba85",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-04T19:19:50Z",
+      "side": 1,
+      "message": "That sounds better. Done.",
+      "parentUuid": "9de0a6f5_c759dfd3",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 31
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bd860f2_d56fdbe3",
         "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
         "patchSetId": 2
@@ -358,6 +622,30 @@
       "writtenOn": "2017-08-03T15:45:20Z",
       "side": 1,
       "message": "Where are these coming form?",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 28
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b92af4_d21c24dd",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-04T19:19:50Z",
+      "side": 1,
+      "message": "Ah I accidentally copied two extra lines from a probe class. Deleted.",
+      "parentUuid": "6bd860f2_d56fdbe3",
       "range": {
         "startLine": 85,
         "startChar": 0,
