@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e36fa7a2_6dc08f88",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-04T18:30:08Z",
+      "side": 1,
+      "message": "nit: remove newline",
+      "revId": "9761168aea7ba44693d1cbc4ce413274d183596b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8782b727_3ac1df51",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-04T18:30:08Z",
+      "side": 1,
+      "message": "nit: remove newline",
+      "revId": "9761168aea7ba44693d1cbc4ce413274d183596b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ac6f9f_369acd59",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-04T18:30:08Z",
+      "side": 1,
+      "message": "nit: remove newline",
+      "revId": "9761168aea7ba44693d1cbc4ce413274d183596b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
