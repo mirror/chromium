@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd185491_1ee5910c",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-04T04:54:38Z",
+      "side": 1,
+      "message": "nit: \"// Overridden from WMHelper::DragDropObserver:\"",
+      "revId": "9f88db4ec5bd7ec3a0bafed309567d1e80e22492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
