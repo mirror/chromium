@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.suggestions;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -86,7 +85,7 @@ public class TileGridLayout extends FrameLayout {
      * @param tile The tile that holds the data to populate the tile view.
      */
     public void updateIconView(Tile tile) {
-        TileView tileView = getTileView(tile.getUrl());
+        TileView tileView = getTileView(tile.getData());
         if (tileView != null) tileView.renderIcon(tile);
     }
 
@@ -95,7 +94,7 @@ public class TileGridLayout extends FrameLayout {
      * @param tile The tile that holds the data to populate the tile view.
      */
     public void updateOfflineBadge(Tile tile) {
-        TileView tileView = getTileView(tile.getUrl());
+        TileView tileView = getTileView(tile.getData());
         if (tileView != null) tileView.renderOfflineBadge(tile);
     }
 
@@ -199,13 +198,13 @@ public class TileGridLayout extends FrameLayout {
         return orderedChildren;
     }
 
-    /** @return A tile view associated to the provided URL, or {@code null} if none is found. */
+    /** @return A tile view associated to the provided data, or {@code null} if none is found. */
     @VisibleForTesting
-    TileView getTileView(String url) {
+    TileView getTileView(SiteSuggestion suggestion) {
         int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
             TileView tileView = (TileView) getChildAt(i);
-            if (TextUtils.equals(url, tileView.getUrl())) return tileView;
+            if (suggestion.equals(tileView.getData())) return tileView;
         }
         return null;
     }
