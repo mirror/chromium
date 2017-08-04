@@ -22,6 +22,30 @@
       "revId": "7fa38df962fe73bc2d86b1b4790cb0cb440acb4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df11a1ad_ba55291a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioBuffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-04T16:24:30Z",
+      "side": 1,
+      "message": "WTF::ArrayBufferContents::InitializationPolicy uses kDontInitialize so I was following that naming.",
+      "parentUuid": "e3875828_2e5ebcdc",
+      "range": {
+        "startLine": 54,
+        "startChar": 47,
+        "endLine": 54,
+        "endChar": 62
+      },
+      "revId": "7fa38df962fe73bc2d86b1b4790cb0cb440acb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
