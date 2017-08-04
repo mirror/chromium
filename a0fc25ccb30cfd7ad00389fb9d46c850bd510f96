@@ -361,6 +361,24 @@
       "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef0437a_15dde92d",
+        "filename": "components/feature_engagement/public/event_constants.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T17:22:59Z",
+      "side": 1,
+      "message": "If it breaks continuity of data, the same should be preserved.",
+      "parentUuid": "fd082e8e_74ec8072",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
