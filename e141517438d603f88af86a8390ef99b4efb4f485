@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0032c03b_f9486a57",
+        "filename": "chrome/browser/vr/elements/grid.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-04T16:01:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32b4f7be_68e03af0",
+      "revId": "e141517438d603f88af86a8390ef99b4efb4f485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eb982fe_b5fe46a6",
         "filename": "chrome/browser/vr/elements/rect.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T15:07:51Z",
       "side": 1,
       "message": "General thought:  Why set these here instead of when starting animation?  During the animation, either way, it\u0027s a bit of a lie.  Seems better to return the future value than the original value, doesn\u0027t it?",
+      "revId": "e141517438d603f88af86a8390ef99b4efb4f485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dac323b_b1d072af",
+        "filename": "chrome/browser/vr/elements/rect.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-04T16:01:46Z",
+      "side": 1,
+      "message": "Some code wants to know what the actual value is, and some wants to know the target.\n\nIn our code, the target opacity is mostly relevant to the animation player (to figure out where we\u0027re transitioning to). The rendering code, of course, wants the actual value.\n\nIn a previous life, I\u0027d added accessors for target value on ui::Layers (https://cs.chromium.org/chromium/src/ui/compositor/layer.cc?rcl\u003d9d7eafafe79091499d715b3e2162e9773ec90a09\u0026l\u003d539), but I\u0027m hoping to avoid this unless it\u0027s really needed.",
+      "parentUuid": "5eb982fe_b5fe46a6",
       "revId": "e141517438d603f88af86a8390ef99b4efb4f485",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "e141517438d603f88af86a8390ef99b4efb4f485",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6666dd49_8013b2f1",
+        "filename": "chrome/browser/vr/elements/rect.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-04T16:01:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38ed32d0_93c2a3dd",
+      "revId": "e141517438d603f88af86a8390ef99b4efb4f485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
