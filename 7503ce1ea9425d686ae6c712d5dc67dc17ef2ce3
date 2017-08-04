@@ -22,6 +22,30 @@
       "revId": "7503ce1ea9425d686ae6c712d5dc67dc17ef2ce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f937a97_1529f758",
+        "filename": "services/device/battery/battery_status_manager_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-04T17:32:59Z",
+      "side": 1,
+      "message": "Works for me.",
+      "parentUuid": "fe0fc29c_b605e783",
+      "range": {
+        "startLine": 389,
+        "startChar": 9,
+        "endLine": 389,
+        "endChar": 16
+      },
+      "revId": "7503ce1ea9425d686ae6c712d5dc67dc17ef2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
