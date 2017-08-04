@@ -233,6 +233,30 @@
     },
     {
       "key": {
+        "uuid": "884c55f1_79b8c083",
+        "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-04T16:22:10Z",
+      "side": 1,
+      "message": "Per IM chat with clamy@, we think that the best option here is to have a public blink platform enum in header-only file (public/platform/scheduler/renderer_process_type.h) and use it in content/ and chrome/ layers for plumbing.",
+      "parentUuid": "cac150b8_e69bede0",
+      "range": {
+        "startLine": 204,
+        "startChar": 15,
+        "endLine": 204,
+        "endChar": 37
+      },
+      "revId": "ff4e2e98aba258a2bbbf1d22f6b90a6b5655ae03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6611ed42_cf3589b8",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
