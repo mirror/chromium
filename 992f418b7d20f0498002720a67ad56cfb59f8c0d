@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3bb6260c_72aaa587",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-04T22:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10ee58a9_88ac34f6",
+      "revId": "992f418b7d20f0498002720a67ad56cfb59f8c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "940326b4_20c666f3",
         "filename": "cc/paint/paint_image.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T22:13:33Z",
       "side": 1,
       "message": "Why these changes?",
+      "revId": "992f418b7d20f0498002720a67ad56cfb59f8c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431d1b08_900f6445",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-04T22:36:54Z",
+      "side": 1,
+      "message": "This is to mimic the default parameters to the constructor. The intent is that you should be able to do \n\nPaintImageBuilder().set_id(...).set_image(...); and have that be a static complete image (since that\u0027s typically what we want and what you would get with PaintImage(id, image) before this patch.\n\nAlso, there are no uses of UNKNOWN anymore. It was only used in one of the cases that I fixed up in this patch.",
+      "parentUuid": "940326b4_20c666f3",
       "revId": "992f418b7d20f0498002720a67ad56cfb59f8c0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
