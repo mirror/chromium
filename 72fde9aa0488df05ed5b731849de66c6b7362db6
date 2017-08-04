@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "b829b487_f03035b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-04T17:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "055cc557_8f719c0f",
+      "range": {
+        "startLine": 13,
+        "startChar": 14,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e652a196_0c836af6",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
         "patchSetId": 12
@@ -88,6 +112,54 @@
     },
     {
       "key": {
+        "uuid": "e2e6f16c_8f714fe4",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-04T17:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e652a196_0c836af6",
+      "range": {
+        "startLine": 12,
+        "startChar": 65,
+        "endLine": 12,
+        "endChar": 73
+      },
+      "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cebcbf33_548a6c31",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-04T17:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a09babf1_707cee32",
+      "range": {
+        "startLine": 12,
+        "startChar": 49,
+        "endLine": 12,
+        "endChar": 55
+      },
+      "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "776a297c_e12405c9",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
         "patchSetId": 12
@@ -102,6 +174,24 @@
       "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53bd1ddd_639cc3c3",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-04T17:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "776a297c_e12405c9",
+      "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +218,30 @@
     },
     {
       "key": {
+        "uuid": "505026d4_d9d157f7",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-04T17:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "897faf89_ac2d6873",
+      "range": {
+        "startLine": 47,
+        "startChar": 62,
+        "endLine": 47,
+        "endChar": 75
+      },
+      "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca0d01d5_5f167565",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
         "patchSetId": 12
@@ -145,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "7fa022e4_c9402233",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-04T17:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca0d01d5_5f167565",
+      "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51bc722b_a8bb25c4",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
         "patchSetId": 12
@@ -159,6 +291,24 @@
       "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2565ca53_2ff6f2cf",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-04T17:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51bc722b_a8bb25c4",
+      "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "1c866a4b_8825c13c",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-04T17:25:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3d1f86d2_939f9b78",
+      "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ea30b54_b8265613",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
         "patchSetId": 12
@@ -210,6 +378,24 @@
       "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03dd42d8_3b08435d",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-04T17:25:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4ea30b54_b8265613",
+      "revId": "72fde9aa0488df05ed5b731849de66c6b7362db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
