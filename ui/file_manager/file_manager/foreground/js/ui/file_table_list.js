@@ -197,7 +197,8 @@ filelist.updateListItemExternalProps = function(li, externalProps) {
 };
 
 /**
- * Handles mouseup/mousedown events on file list to change the selection state.
+ * Handles pointerup/pointerdown events on file list to change the selection
+ * state.
  *
  * Basically the content of this function is identical to
  * cr.ui.ListSelectionController's handlePointerDownUp(), but following
@@ -217,7 +218,7 @@ filelist.handlePointerDownUp = function(e, index) {
   var sm = /** @type {!FileListSelectionModel|!FileListSingleSelectionModel} */
            (this.selectionModel);
   var anchorIndex = sm.anchorIndex;
-  var isDown = (e.type == 'mousedown');
+  var isDown = (e.type == 'pointerdown');
 
   var isTargetCheckmark = e.target.classList.contains('detail-checkmark') ||
                           e.target.classList.contains('checkmark');
@@ -253,7 +254,7 @@ filelist.handlePointerDownUp = function(e, index) {
         sm.anchorIndex = index;
       }
     } else if (e.shiftKey && anchorIndex != -1 && anchorIndex != index) {
-      // Shift is done in mousedown.
+      // Shift is done in pointerdown.
       if (isDown) {
         sm.unselectAll();
         sm.leadIndex = index;

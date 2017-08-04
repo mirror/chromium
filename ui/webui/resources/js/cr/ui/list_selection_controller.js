@@ -111,7 +111,7 @@ cr.define('cr.ui', function() {
     },
 
     /**
-     * Called by the view when the user does a mousedown or mouseup on the
+     * Called by the view when the user does a pointerdown or pointerup on the
      * list.
      * @param {!Event} e The browser mouse event.
      * @param {number} index The index that was under the mouse pointer, -1 if
@@ -120,7 +120,7 @@ cr.define('cr.ui', function() {
     handlePointerDownUp: function(e, index) {
       var sm = this.selectionModel;
       var anchorIndex = sm.anchorIndex;
-      var isDown = (e.type == 'mousedown');
+      var isDown = (e.type == 'pointerdown');
 
       sm.beginChange();
 
@@ -139,7 +139,8 @@ cr.define('cr.ui', function() {
       } else {
         if (sm.multiple &&
             (cr.isMac ? e.metaKey : (e.ctrlKey && !e.shiftKey))) {
-          // Selection is handled at mouseUp on windows/linux, mouseDown on mac.
+          // Selection is handled at pointerup on windows/linux, pointerdown on
+          // mac.
           if (cr.isMac ? isDown : !isDown) {
             // Toggle the current one and make it anchor index.
             sm.setIndexSelected(index, !sm.getIndexSelected(index));
@@ -147,7 +148,7 @@ cr.define('cr.ui', function() {
             sm.anchorIndex = index;
           }
         } else if (e.shiftKey && anchorIndex != -1 && anchorIndex != index) {
-          // Shift is done in mousedown.
+          // Shift is done in pointerdown.
           if (isDown) {
             sm.unselectAll();
             sm.leadIndex = index;
@@ -160,7 +161,7 @@ cr.define('cr.ui', function() {
           // Right click for a context menu needs to not clear the selection.
           var isRightClick = e.button == 2;
 
-          // If the index is selected this is handled in mouseup.
+          // If the index is selected this is handled in poitnerup.
           var indexSelected = sm.getIndexSelected(index);
           if ((indexSelected && !isDown || !indexSelected && isDown) &&
               !(indexSelected && isRightClick)) {
@@ -170,6 +171,20 @@ cr.define('cr.ui', function() {
       }
 
       sm.endChange();
+    },
+
+    /**
+     * Called by the view when it receives either a touchstart, touchmove,
+     * touchend, or touchcancel event.
+     * Inherited classes may override this function to handle touch events
+     * separately from mouse events, instead of waiting for emulated mouse
+     * events sent after the touch events.
+     * @param {Event} e The event.
+     * @param {number} index The index that was under the touched point, -1 if
+     *     none.
+     */
+    handleTouchEvents: function(e, index) {
+      // Do nothing.
     },
 
     /**
