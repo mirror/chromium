@@ -97,10 +97,11 @@ void ModuleScriptFetcher::NotifyFinished(Resource* resource) {
     return;
   }
 
+  const ScriptResourceData* resource_data = GetResource()->ResourceData();
   ModuleScriptCreationParams params(
-      script_resource->GetResponse().Url(), script_resource->SourceText(),
-      script_resource->GetResourceRequest().GetFetchCredentialsMode(),
-      script_resource->CalculateAccessControlStatus());
+      resource_data->GetResponse().Url(), resource_data->SourceText(),
+      resource_data->GetFetchCredentialsMode(),
+      resource_data->CalculateAccessControlStatus());
   Finalize(params);
 }
 

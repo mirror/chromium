@@ -42,7 +42,6 @@
 #include "core/html/parser/HTMLParserScriptRunnerHost.h"
 #include "core/html/parser/NestingLevelIncrementer.h"
 #include "core/inspector/ConsoleMessage.h"
-#include "core/loader/resource/ScriptResource.h"
 #include "platform/Histogram.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/bindings/Microtask.h"

@@ -36,8 +36,6 @@
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceClientWalker.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
-#include "platform/loader/fetch/TextResourceDecoderOptions.h"
-#include "platform/network/mime/MIMETypeRegistry.h"
 
 namespace blink {
 
@@ -78,46 +76,38 @@ void ScriptResource::OnMemoryDump(WebMemoryDumpLevelOfDetail level_of_detail,
   Resource::OnMemoryDump(level_of_detail, memory_dump);
   const String name = GetMemoryDumpName() + "/decoded_script";
   auto dump = memory_dump->CreateMemoryAllocatorDump(name);
-  dump->AddScalar("size", "bytes", source_text_.CharactersSizeInBytes());
+  dump->AddScalar("size", "bytes", DecodedSize());
   memory_dump->AddSuballocation(
       dump->Guid(), String(WTF::Partitions::kAllocatedObjectPoolName));
 }
 
-const String& ScriptResource::SourceText() {
+const ScriptResourceData* ScriptResource::ResourceData() {
   DCHECK(IsLoaded());
+  if (script_data_)
+    return script_data_;
 
-  if (source_text_.IsNull() && Data()) {
+  AtomicString atomic_source_text;
+  if (Data()) {
     String source_text = DecodedText();
     ClearData();
     SetDecodedSize(source_text.CharactersSizeInBytes());
-    source_text_ = AtomicString(source_text);
+    atomic_source_text = AtomicString(source_text);
   }
 
-  return source_text_;
+  script_data_ = new ScriptResourceData(
+      Url(), ResourceRequest().GetFetchCredentialsMode(), GetResponse(),
+      ErrorOccurred(), atomic_source_text, CacheHandler(), GetCORSStatus());
+
+  return script_data_;
 }
 
 void ScriptResource::DestroyDecodedDataForFailedRevalidation() {
-  source_text_ = AtomicString();
+  script_data_ = nullptr;
 }
 
-// static
-bool ScriptResource::MimeTypeAllowedByNosniff(
-    const ResourceResponse& response) {
-  return ParseContentTypeOptionsHeader(
-             response.HttpHeaderField(HTTPNames::X_Content_Type_Options)) !=
-             kContentTypeOptionsNosniff ||
-         MIMETypeRegistry::IsSupportedJavaScriptMIMEType(
-             response.HttpContentType());
-}
-
-AccessControlStatus ScriptResource::CalculateAccessControlStatus() const {
-  if (GetCORSStatus() == CORSStatus::kServiceWorkerOpaque)
-    return kOpaqueResource;
-
-  if (IsSameOriginOrCORSSuccessful())
-    return kSharableCrossOrigin;
-
-  return kNotSharableCrossOrigin;
+DEFINE_TRACE(ScriptResource) {
+  visitor->Trace(script_data_);
+  TextResource::Trace(visitor);
 }
 
 }  // namespace blink

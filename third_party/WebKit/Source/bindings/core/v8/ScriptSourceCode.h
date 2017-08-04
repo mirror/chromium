@@ -33,7 +33,7 @@
 
 #include "bindings/core/v8/ScriptStreamer.h"
 #include "core/CoreExport.h"
-#include "core/loader/resource/ScriptResource.h"
+#include "core/loader/resource/ScriptResourceData.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/text/TextPosition.h"
@@ -48,12 +48,12 @@ class CORE_EXPORT ScriptSourceCode final {
   ScriptSourceCode();
   // We lose the encoding information from ScriptResource.
   // Not sure if that matters.
-  explicit ScriptSourceCode(ScriptResource*);
+  explicit ScriptSourceCode(const ScriptResourceData*);
   ScriptSourceCode(
       const String&,
       const KURL& = KURL(),
       const TextPosition& start_position = TextPosition::MinimumPosition());
-  ScriptSourceCode(ScriptStreamer*, ScriptResource*);
+  ScriptSourceCode(ScriptStreamer*, const ScriptResourceData*);
 
   ~ScriptSourceCode();
   DECLARE_TRACE();
@@ -63,7 +63,7 @@ class CORE_EXPORT ScriptSourceCode final {
   bool IsNull() const { return source_.IsNull(); }
 
   const String& Source() const { return source_; }
-  ScriptResource* GetResource() const { return resource_; }
+  const ScriptResourceData* GetResource() const { return resource_; }
   const KURL& Url() const;
   int StartLine() const { return start_position_.line_.OneBasedInt(); }
   const TextPosition& StartPosition() const { return start_position_; }
@@ -75,7 +75,7 @@ class CORE_EXPORT ScriptSourceCode final {
   void TreatNullSourceAsEmpty();
 
   String source_;
-  Member<ScriptResource> resource_;
+  Member<const ScriptResourceData> resource_;
   Member<ScriptStreamer> streamer_;
   mutable KURL url_;
   TextPosition start_position_;

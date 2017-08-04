@@ -4,6 +4,8 @@
 
 #include "bindings/core/v8/ScriptSourceCode.h"
 
+#include "platform/HTTPNames.h"
+
 namespace blink {
 
 ScriptSourceCode::ScriptSourceCode()
@@ -18,11 +20,11 @@ ScriptSourceCode::ScriptSourceCode(const String& source,
     url_.RemoveFragmentIdentifier();
 }
 
-ScriptSourceCode::ScriptSourceCode(ScriptResource* resource)
+ScriptSourceCode::ScriptSourceCode(const ScriptResourceData* resource)
     : ScriptSourceCode(nullptr, resource) {}
 
 ScriptSourceCode::ScriptSourceCode(ScriptStreamer* streamer,
-                                   ScriptResource* resource)
+                                   const ScriptResourceData* resource)
     : source_(resource->SourceText()),
       resource_(resource),
       streamer_(streamer),

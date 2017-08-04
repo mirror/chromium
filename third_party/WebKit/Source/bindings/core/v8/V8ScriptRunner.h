@@ -42,7 +42,7 @@
 namespace blink {
 
 class CachedMetadataHandler;
-class ScriptResource;
+class ScriptResourceData;
 class ScriptSourceCode;
 class ExecutionContext;
 class ScriptStreamer;
@@ -74,7 +74,7 @@ class CORE_EXPORT V8ScriptRunner final {
                                                   const String& file_name,
                                                   const String& source_map_url,
                                                   const TextPosition&,
-                                                  ScriptResource*,
+                                                  const ScriptResourceData*,
                                                   ScriptStreamer*,
                                                   CachedMetadataHandler*,
                                                   AccessControlStatus,

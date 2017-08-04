@@ -142,6 +142,9 @@ void ClassicPendingScript::NotifyFinished(Resource* resource) {
                            ResourceIntegrityDisposition::kPassed;
     }
   }
+  DCHECK(!resource_data_);
+  resource_data_ = GetResource()->ResourceData();
+  DCHECK(resource_data_);
 
   // We are now waiting for script streaming to finish.
   // If there is no script streamer, this step completes immediately.
@@ -159,6 +162,7 @@ void ClassicPendingScript::NotifyAppendData(ScriptResource* resource) {
 
 DEFINE_TRACE(ClassicPendingScript) {
   visitor->Trace(streamer_);
+  visitor->Trace(resource_data_);
   ResourceOwner<ScriptResource>::Trace(visitor);
   MemoryCoordinatorClient::Trace(visitor);
   PendingScript::Trace(visitor);
@@ -175,11 +179,11 @@ ClassicScript* ClassicPendingScript::GetSource(const KURL& document_url,
         GetElement()->TextFromChildren(), document_url, StartingPosition()));
   }
 
-  DCHECK(GetResource()->IsLoaded());
+  CHECK(ResourceData());
   bool streamer_ready = (ready_state_ == kReady) && streamer_ &&
                         !streamer_->StreamingSuppressed();
   return ClassicScript::Create(
-      ScriptSourceCode(streamer_ready ? streamer_ : nullptr, GetResource()));
+      ScriptSourceCode(streamer_ready ? streamer_ : nullptr, ResourceData()));
 }
 
 void ClassicPendingScript::SetStreamer(ScriptStreamer* streamer) {
@@ -324,6 +328,13 @@ bool ClassicPendingScript::WasCanceled() const {
 }
 
 KURL ClassicPendingScript::UrlForClassicScript() const {
+  if (ResourceData()) {
+    // When this is called after loading finished.
+    return ResourceData()->Url();
+  }
+
+  // When this is called before loading finished.
+  CHECK(GetResource());
   return GetResource()->Url();
 }
 
