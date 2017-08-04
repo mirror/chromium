@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e0d15c5_f961c37c",
+        "filename": "components/payments/content/payment_request_spec.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-08-04T19:51:19Z",
+      "side": 1,
+      "message": "I initially thought it\u0027d be more complex. Inlined it.",
+      "parentUuid": "5c1cc13b_d6ef7fcf",
+      "revId": "a128d4f8dbb7855e7c41282291dbf6bdcdd21e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5528575f_80ea5fae",
         "filename": "components/payments/core/payment_instrument.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "a128d4f8dbb7855e7c41282291dbf6bdcdd21e18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5f09c4_aac00d24",
+        "filename": "components/payments/core/payment_instrument.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-08-04T19:51:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5528575f_80ea5fae",
+      "revId": "a128d4f8dbb7855e7c41282291dbf6bdcdd21e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
