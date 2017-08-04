@@ -9,11 +9,19 @@
 
 #include "chrome/profiling/allocation_event.h"
 
+namespace base {
+namespace trace_event {
+class ProcessMemoryMaps;
+}  // namespace trace_event
+}  // namespace base
+
 namespace profiling {
 
-void ExportAllocationEventSetToJSON(int pid,
-                                    const AllocationEventSet& set,
-                                    std::ostream& out);
+void ExportAllocationEventSetToJSON(
+    int pid,
+    const AllocationEventSet& set,
+    const base::trace_event::ProcessMemoryMaps& maps,
+    std::ostream& out);
 
 }  // namespace profiling
 
