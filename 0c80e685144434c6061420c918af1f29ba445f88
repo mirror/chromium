@@ -1,0 +1,537 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "490482e4_04a2865b",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d528a02b_412a9f2a",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "It looks like you\u0027re not using many of these includes.",
+      "range": {
+        "startLine": 16,
+        "startChar": 55,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439b051c_f1816ecf",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a52ae66_8761f77c",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "Do you actually need this loop? It looks more like something that should be an invariant -- registering the same Task twice is likely to cause trouble in the TaskManagerImpl, so I\u0027d be surprised if it\u0027s happening today.",
+      "range": {
+        "startLine": 32,
+        "startChar": 14,
+        "endLine": 32,
+        "endChar": 16
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ad8afa_ae41e2e1",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "As it happens, you are not the first person to need a helper function to remove an element from a vector :)\n\nI think this is just base::Erase from base/stl_util.h\n\nIf you want to pretend that C++ is a functional language, there is also base::EraseIf: (example usage with capture here: https://cs.chromium.org/chromium/src/cc/animation/animation_player.cc?type\u003dcs\u0026q\u003dbase::EraseIf\u0026sq\u003dpackage:chromium\u0026l\u003d1110)",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c39ce4_5fb45390",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "\"i\" here is an \"unsigned long\", which is one of the built-in integer types we actually avoid in Google/Chromium C++ code, since it\u0027s not specified how many bits wide it is -- see https://google.github.io/styleguide/cppguide.html#Integer_Types",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea05e30_9435519a",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "Whenever possible, a loop variable should be declared inside the for ( ; ; ) construct:\n\n  for (int i \u003d 0; ...)\n\nHere you actually use |i| after the loop body, but since you\u0027re in a function anyway, I think it would be better to just do the erase() in the middle of the loop, and return instead of breaking.",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde8f9ab_3a3d7bfd",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "This might be cleaner if you pass in a base::ProcessId instead of a Task.",
+      "range": {
+        "startLine": 54,
+        "startChar": 35,
+        "endLine": 54,
+        "endChar": 39
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ffba385_003f0bb9",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "When you don\u0027t need to modify the container, you could also write this as a ranged for loop:\nfor (Task* candidate : *which_vector) {\n  if (candidate-\u003eprocess_id() \u003d\u003d task-\u003eprocess_id())\n    return candidate;\n}",
+      "range": {
+        "startLine": 60,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9291392_36485767",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "Add empty lines before each function and before/after the \"namespace {\" and \"} // namespace\" lines.",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 15
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07843622_8a4ab6b6",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "What if we get here and |task_of_url_request| not in |shown_tasks_|?\n\nThis would probably indicate a bug in the underlying task provider, but I think it would be bad to ever return a Task to our caller that (in its view) doesn\u0027t actually exist.",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0ed61a_8a499c87",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "Do you actually use these maps?",
+      "range": {
+        "startLine": 98,
+        "startChar": 9,
+        "endLine": 98,
+        "endChar": 22
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2e35df_7368eb58",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "When is this freed?",
+      "range": {
+        "startLine": 100,
+        "startChar": 22,
+        "endLine": 100,
+        "endChar": 42
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816f4416_c89cc385",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "We probably will want a weak_ptr_factory_ if we add PostDelayedTasks in a later CL. However, it doesn\u0027t look like we need one currently.",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672e6389_25aa67fa",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "Would ShowTask/HideTask be better names than CreateTask/DeleteTask?\n\n(asking because it seems like that would match shown_tasks_)",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f20c51a_100cf516",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "When does this happen?",
+      "range": {
+        "startLine": 119,
+        "startChar": 6,
+        "endLine": 119,
+        "endChar": 23
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3928e46c_e62b67b6",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "I know the sugestion of using the vector pointer as the ID, came from me originally, but I\u0027m think maybe a \"bool is_primary\" might make this easier to read.",
+      "range": {
+        "startLine": 152,
+        "startChar": 65,
+        "endLine": 152,
+        "endChar": 77
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db7c35e_91a4dde8",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "This logic is worth documenting:\n  // When the primary subprovider removes its last Task for a given PID,\n  // check to see if the secondary provider has a task for that PID\n  // that should now be shown.",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62492933_c5d2e49c",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "Don\u0027t you need to forward this (I guess iff it\u0027s in shown_tasks_)? Is this a TODO?",
+      "range": {
+        "startLine": 180,
+        "startChar": 15,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1be8da_e164b7b1",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "Indeed, it looks like RPHTPObserver and WCTPObserver behave identically. So you don\u0027t need two types.",
+      "range": {
+        "startLine": 206,
+        "startChar": 22,
+        "endLine": 206,
+        "endChar": 35
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71824d61_9d6484b1",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "Pro tip: a class comment can often be a useful basis for a CL comment, and vice-versa.",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a81046f_5d9821a8",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "What if this took the sub-task providers as parameters?\n\nLike:\n\n(std::unique_ptr\u003cTaskProvider\u003e primary_subprovider,\n std::unique_ptr\u003cTaskProvider\u003e secondary_subprovider)\n\nThat way, this class could be applied to any pair of task providers. \n\n^^^ note: this is dependency injection. So, it should also make unittests possible -- just provide a dummy [sub] TaskProvider in your unittest.cc file (one that you can spin up at will).",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2388a0dd_37d0d5cd",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "Would it be possible to simplify this so that we only need one TaskProviderObserver subclass, and just create two instances of it?\n\nI might call the type SubProviderObserver or UnderlyingProviderObserver something like that.",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e767555_33b92e00",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "In the Google C++ style guide, there is general guidance about names. One of the rules is to avoid ambiguous abbreviations, both in type names and in member names.\n\nhttps://google.github.io/styleguide/cppguide.html#Naming\n\nThe following names, then, are unclear what they are just from looking at them:\n\nrphtptasks_, wctptasks_, rphtpobserver_, WCTPObserver, etc.",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 31
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391bfb90_340b42cc",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-04T22:24:21Z",
+      "side": 1,
+      "message": "Unsure of where this suggestion will lead, but here goes:\n\nWhat if this Observer class actually contained/owned all the per-subprovider members?\n\nI.e., What if this actually owned (via unique_ptr) its corresponding TaskProvider?",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
