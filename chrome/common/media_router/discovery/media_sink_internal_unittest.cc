@@ -26,11 +26,13 @@ media_router::DialSinkExtraData CreateDialSinkExtraData(
 
 media_router::CastSinkExtraData CreateCastSinkExtraData(
     const std::string& model_name,
-    const std::string& ip_address,
+    const std::string& str_ip_address,
     uint8_t capabilities,
     int cast_channel_id) {
   media_router::CastSinkExtraData cast_extra_data;
-  EXPECT_TRUE(cast_extra_data.ip_address.AssignFromIPLiteral(ip_address));
+  net::IPAddress ip_address;
+  EXPECT_TRUE(ip_address.AssignFromIPLiteral(str_ip_address));
+  cast_extra_data.ip_endpoint = net::IPEndPoint(ip_address, 1234);
   cast_extra_data.model_name = model_name;
   cast_extra_data.capabilities = 2;
   cast_extra_data.cast_channel_id = 3;
