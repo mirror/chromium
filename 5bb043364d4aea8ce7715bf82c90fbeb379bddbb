@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2bcf4869_9b1c2efd",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-04T08:14:06Z",
+      "side": 1,
+      "message": "Fixed here and the other places I\u0027ve used it :)",
+      "parentUuid": "98fa6e44_5583d29d",
+      "revId": "5bb043364d4aea8ce7715bf82c90fbeb379bddbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5ef981a_c34e9c9c",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T00:21:44Z",
       "side": 1,
       "message": "\"IDS_SETTINGS_\" is fairly standard prefix for strings used in settings. Is it reasonable to do that here? Also, it\u0027s nicer if the string label and the IDS_ label are more similar.",
+      "revId": "5bb043364d4aea8ce7715bf82c90fbeb379bddbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d023952_dce9007f",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1904,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-04T08:14:06Z",
+      "side": 1,
+      "message": "As I said in the other comment, I wanted to eventually take the strings out of page_info_strings.grdp and move them somewhere more generic. I\u0027ll rename their IDS_ at the same time, but they probably still won\u0027t have the IDS_SETTINGS prefix. Is that OK? Do you think the strings should be duplicated instead since they\u0027re used in two different places?",
+      "parentUuid": "b5ef981a_c34e9c9c",
       "revId": "5bb043364d4aea8ce7715bf82c90fbeb379bddbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

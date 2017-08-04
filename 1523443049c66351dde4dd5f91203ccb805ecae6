@@ -16,6 +16,24 @@
       "revId": "1523443049c66351dde4dd5f91203ccb805ecae6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d30a2a_a2e7823b",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-04T08:14:06Z",
+      "side": 0,
+      "message": "Ah, I ended up deleting this from here because there are similar strings in the Page Info bubble that I wanted to eventually take out and put in a more generic place where it makes sense for both Page Info and Site Settings to access them. See https://cs.chromium.org/chromium/src/components/page_info_strings.grdp?rcl\u003de4f716e3304c35549bd6dffd65b242a223e65b4b\u0026l\u003d218 for the string descriptions.",
+      "parentUuid": "fcd1c6dc_741ff07a",
+      "revId": "1523443049c66351dde4dd5f91203ccb805ecae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
