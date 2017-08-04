@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "025e2cb6_ab21bf0f",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-04T19:22:50Z",
+      "side": 1,
+      "message": "This needs to eventually move into PerformanceMonitor, how do we deal with two sets of enum literals?",
+      "revId": "a83c8ca6bd5512f75076f3313e62b8ad02c46853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a3f9ca_2c3c22d4",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-04T19:22:50Z",
+      "side": 1,
+      "message": "Performance monitor does not use probes, it is always there. Should be\n\nPerformanceMonitor::IncrementCounter(this, PerformanceMonitor::kDocumentCount);",
+      "revId": "a83c8ca6bd5512f75076f3313e62b8ad02c46853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676fd041_d01cd3d5",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-04T19:22:50Z",
+      "side": 1,
+      "message": "Pass inspected_frames_.Get() instead for consistency.",
+      "revId": "a83c8ca6bd5512f75076f3313e62b8ad02c46853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e0d226_ab8a7998",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-04T19:22:50Z",
+      "side": 1,
+      "message": "We are always collecting all the metrics, why enabling a subset?",
+      "revId": "a83c8ca6bd5512f75076f3313e62b8ad02c46853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54613a73_7e964562",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-04T19:22:50Z",
+      "side": 1,
+      "message": "When is this triggered?",
+      "revId": "a83c8ca6bd5512f75076f3313e62b8ad02c46853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

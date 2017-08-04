@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe2a9d41_54b35595",
+        "filename": "third_party/WebKit/Source/platform/InstanceCounters.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-04T19:22:50Z",
+      "side": 1,
+      "message": "drop this branch",
+      "revId": "4492306fc83b7fc9622af982ce9dbaf64f41d93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
