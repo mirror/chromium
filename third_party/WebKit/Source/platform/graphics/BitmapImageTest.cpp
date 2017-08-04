@@ -77,9 +77,7 @@ class BitmapImageTest : public ::testing::Test {
   // Accessors to BitmapImage's protected methods.
   void DestroyDecodedData() { image_->DestroyDecodedData(); }
   size_t FrameCount() { return image_->FrameCount(); }
-  sk_sp<SkImage> FrameAtIndex(size_t index) {
-    return image_->FrameAtIndex(index);
-  }
+  void FrameAtIndex(size_t index) { image_->FrameAtIndex(index); }
   void SetCurrentFrame(size_t frame) { image_->current_frame_ = frame; }
   size_t FrameDecodedSize(size_t frame) {
     return image_->frames_[frame].frame_bytes_;
