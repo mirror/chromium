@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "55659c2b_7c8f8438",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-04T08:35:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "31e8e228_65ff3953",
+      "range": {
+        "startLine": 164,
+        "startChar": 18,
+        "endLine": 164,
+        "endChar": 33
+      },
+      "revId": "b92f6a543efa9cbbe276bf922a8eb724e33dfc88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "919a7723_cc62064e",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
         "patchSetId": 1

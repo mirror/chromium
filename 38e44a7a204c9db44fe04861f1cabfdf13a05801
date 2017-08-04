@@ -22,6 +22,30 @@
       "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37f69c5_802fe74d",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-04T08:35:55Z",
+      "side": 1,
+      "message": "sites.objectEnumerator is not in position order. I do hide unused tiles at the end of this function.",
+      "parentUuid": "afae7c69_de910f53",
+      "range": {
+        "startLine": 156,
+        "startChar": 6,
+        "endLine": 156,
+        "endChar": 14
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
