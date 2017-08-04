@@ -691,6 +691,9 @@ For information about privacy, please see the Google Privacy Policy (http://goo.
 • Improved responsiveness of click-drag operations.
 • Improved several UI animation effects.
         </message>
+        <message name="IDS_MOBILE_NETWORK_WARNING" desc="Message shown in an alert dialog that warns the user that they are trying to connect to a device over mobile network.">
+          Data charges may apply when connecting to a device over mobile network. Do you want to continue?
+        </message>
       </if>  <!-- is_android or is_ios -->
 
       <if expr="is_ios">
