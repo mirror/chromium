@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26982074_8fa88a22",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-04T06:56:17Z",
+      "side": 1,
+      "message": "For example, https://chromium.googlesource.com/chromium/src/+blame/891cdcc6b3c69700611dc1da347e8082ff39c787/content/browser/service_worker/service_worker_dispatcher_host.cc#436",
+      "parentUuid": "080d558a_78f0f8f5",
+      "revId": "f110c3831b8524b60e4c980cacf9858e88625c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87e9d688_ea8810e6",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 3
