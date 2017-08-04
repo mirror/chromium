@@ -77,7 +77,7 @@ class MockFaviconService : public FaviconService {
                    base::CancelableTaskTracker* tracker));
   MOCK_METHOD6(UpdateFaviconMappingsAndFetch,
                base::CancelableTaskTracker::TaskId(
-                   const GURL& page_url,
+                   const std::vector<GURL>& page_urls,
                    const GURL& icon_url,
                    favicon_base::IconType icon_type,
                    int desired_size_in_dip,

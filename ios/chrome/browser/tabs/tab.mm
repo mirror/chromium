@@ -634,7 +634,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   favicon::FaviconDriver* faviconDriver =
       favicon::WebFaviconDriver::FromWebState(self.webState);
   if (faviconDriver)
-    faviconDriver->FetchFavicon(url);
+    faviconDriver->OnPageNavigation(url, /*is_same_document=*/false);
 }
 
 - (void)setFavicon:(const gfx::Image*)image {
@@ -1126,7 +1126,8 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     // Fetch the favicon for the new URL.
     auto* faviconDriver = favicon::WebFaviconDriver::FromWebState(webState);
     if (faviconDriver)
-      faviconDriver->FetchFavicon(navigation->GetUrl());
+      faviconDriver->OnPageNavigation(navigation->GetUrl(),
+                                      /*is_same_document=*/true);
   }
 
   if (!navigation->GetError()) {
@@ -1415,7 +1416,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   favicon::FaviconDriver* faviconDriver =
       favicon::WebFaviconDriver::FromWebState(webState);
   if (faviconDriver)
-    faviconDriver->FetchFavicon(lastCommittedURL);
+    faviconDriver->OnPageNavigation(lastCommittedURL, details.is_in_page);
   [_parentTabModel notifyTabChanged:self];
   if (_parentTabModel) {
     [[NSNotificationCenter defaultCenter]
