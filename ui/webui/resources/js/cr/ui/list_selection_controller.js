@@ -160,7 +160,7 @@ cr.define('cr.ui', function() {
           // Right click for a context menu needs to not clear the selection.
           var isRightClick = e.button == 2;
 
-          // If the index is selected this is handled in mouseup.
+          // If the index is selected this is handled in poitnerup.
           var indexSelected = sm.getIndexSelected(index);
           if ((indexSelected && !isDown || !indexSelected && isDown) &&
               !(indexSelected && isRightClick)) {
@@ -170,6 +170,20 @@ cr.define('cr.ui', function() {
       }
 
       sm.endChange();
+    },
+
+    /**
+     * Called by the view when it receives either a touchstart, touchmove,
+     * touchend, or touchcancel event.
+     * Inherited classes may override this function to handle touch events
+     * separately from mouse events, instead of waiting for emulated mouse
+     * events sent after the touch events.
+     * @param {Event} e The event.
+     * @param {number} index The index that was under the touched point, -1 if
+     *     none.
+     */
+    handleTouchEvents: function(e, index) {
+      // Do nothing.
     },
 
     /**
