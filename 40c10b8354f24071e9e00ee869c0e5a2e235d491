@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcb948e1_656efb59",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T21:41:18Z",
+      "side": 1,
+      "message": "can we make a function [or an inline one] to do this encoding? I would like to see encoding/decoding be well-defined functions with tests.",
+      "revId": "40c10b8354f24071e9e00ee869c0e5a2e235d491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6297df9_ed3ade75",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T21:41:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure I follow this marking/unmarking logic. :(",
+      "revId": "40c10b8354f24071e9e00ee869c0e5a2e235d491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a297b9f_7d5859cc",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T21:41:18Z",
+      "side": 1,
+      "message": "chromium style typically prefers constructors in cc file.",
+      "revId": "40c10b8354f24071e9e00ee869c0e5a2e235d491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
