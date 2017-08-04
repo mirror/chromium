@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1da0e7ad_a7aaad2b",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-04T22:48:40Z",
+      "side": 1,
+      "message": "nit: can we put this whole block into a common function with 2 params?",
+      "revId": "2e2c28e68649aaddced5bfcd90f63a08f0cb049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
