@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "ui/gfx/native_widget_types.h"
+#include "ui/base/cursor/cursor_type.h"
 #include "ui/ozone/ozone_base_export.h"
 
 namespace gfx {
