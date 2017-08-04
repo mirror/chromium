@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "eb99056c_1a9cd42d",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-04T03:51:28Z",
+      "side": 1,
+      "message": "nit: GetWallpaperOverlayColor",
+      "revId": "669484557a5830460c7b8a48bf823d38139d5263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dc18891_69554a0f",
         "filename": "ash/wallpaper/wallpaper_view.cc",
         "patchSetId": 3
@@ -102,6 +119,24 @@
       "side": 1,
       "message": "I wonder if it\u0027s cheaper to draw the entire screen in software and blend each pixel or whether it\u0027s cheaper to add another SOLID_COLOR layer on top and let the GPU composite things. reveman@ might know.\n\nIf the wallpaper widget\u0027s layer contains the pixels of the wallpaper image then I suspect you won\u0027t be able to set it to SOLID_COLOR, or maybe it will get switched back.",
       "parentUuid": "e982fdd0_eb97e080",
+      "revId": "669484557a5830460c7b8a48bf823d38139d5263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f52a3b3_4453b4b1",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-04T03:51:28Z",
+      "side": 1,
+      "message": "This way of dimming the wallpaper is likely causing 2x overdraw in skia\u0027s rasterizer (sw rasterizer in this case as this is ChromeOS UI). Let\u0027s avoid that.\n\nYou should be able to apply the color adjustment as part of the DrawImageInt call to avoid this. Pass a SkPaint that is set up correctly to the call. I think SkPaint.setColorFilter would be one way of doing this but there might be something simpler and more efficient. +reed, junov for advice.",
+      "parentUuid": "55c19d80_04073ce0",
       "revId": "669484557a5830460c7b8a48bf823d38139d5263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
