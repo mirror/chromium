@@ -233,6 +233,15 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
       BreakToken() ? LayoutUnit() : border_scrollbar_padding_.block_start;
 
   NGMarginStrut input_margin_strut = ConstraintSpace().MarginStrut();
+
+  // QUIRKS MODE!
+  if (node_.InQuirksMode() && (node_.IsBody() || node_.IsTableCell())) {
+    LayoutUnit initial_margin = input_margin_strut.Sum();
+    input_margin_strut = NGMarginStrut();
+    input_margin_strut.initial_margin = initial_margin;
+    input_margin_strut.seen_only_quirky_margins = true;
+  }
+
   LayoutUnit input_bfc_block_offset =
       ConstraintSpace().BfcOffset().block_offset;
 
@@ -610,7 +619,7 @@ NGInflowChildData NGBlockLayoutAlgorithm::ComputeChildData(
   // Non empty border/padding, and new FC use cases are handled inside of the
   // child's layout
   NGMarginStrut margin_strut = previous_inflow_position.margin_strut;
-  margin_strut.Append(margins.block_start);
+  margin_strut.Append(margins.block_start, child.Style().HasMarginBeforeQuirk() || child.Style().MarginBefore().IsZero());
 
   NGLogicalOffset child_bfc_offset = {
       ConstraintSpace().BfcOffset().inline_offset +
@@ -670,7 +679,7 @@ NGPreviousInflowPosition NGBlockLayoutAlgorithm::ComputeInflowPosition(
   }
 
   NGMarginStrut margin_strut = layout_result.EndMarginStrut();
-  margin_strut.Append(child_data.margins.block_end);
+  margin_strut.Append(child_data.margins.block_end, child.Style().HasMarginAfterQuirk() || child.Style().MarginAfter().IsZero());
 
   return {child_end_bfc_block_offset, logical_block_offset, margin_strut};
 }
@@ -717,7 +726,7 @@ bool NGBlockLayoutAlgorithm::PositionNewFc(
   //    child's BFC offset then merge fragment's margins with the current
   //    MarginStrut.
   if (opportunity.offset.block_offset == child_bfc_offset_estimate)
-    margin_strut.Append(child_data.margins.block_start);
+    margin_strut.Append(child_data.margins.block_start, child.Style().HasMarginBeforeQuirk() || child.Style().MarginBefore().IsZero());
   child_bfc_offset_estimate += margin_strut.Sum();
 
   // 4. The child's BFC block offset is known here.
