@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b17f7166_2bb41636",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-04T22:06:02Z",
+      "side": 1,
+      "message": "Since we\u0027re in selectedManufacturerChanged_() function, manufacturer is guaranteed to be equal to activePrinter.ppdManufactuerer. I checked all the drop down list, it seems the ppdModel always starts with ppdManufacturer and that\u0027s why I put the if-clause here. I can remove it if it\u0027s not all the case.",
+      "parentUuid": "52355416_ca06d745",
+      "range": {
+        "startLine": 47,
+        "startChar": 28,
+        "endLine": 47,
+        "endChar": 61
+      },
+      "revId": "4e1613528bbfec271a8d1d8a95a86173a865b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce85b8c3_f097ac17",
         "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-04T21:31:33Z",
       "side": 1,
       "message": "Clearing this here is problematic since this is supposed to contain the value detected during setup.  It doesn\u0027t necessarily match the PPD information.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 56
+      },
+      "revId": "4e1613528bbfec271a8d1d8a95a86173a865b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1cd6a0e_56dfcf55",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_set_manufacturer_model_behavior.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-04T22:06:02Z",
+      "side": 1,
+      "message": "Removed it. It was here before \"ppdProvider::ReverseLookup\" is in place. I kinda forgot why I put it here. I guess printerMakeAndModel might interfere the value of ppdManufacuter/ppdModel.",
+      "parentUuid": "ce85b8c3_f097ac17",
       "range": {
         "startLine": 51,
         "startChar": 0,
