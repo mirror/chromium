@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1095371e_da3fe1b7",
+        "filename": "cc/paint/skia_paint_image_generator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T23:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ca42976_d74e40af",
+      "range": {
+        "startLine": 27,
+        "startChar": 1,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "b65736c7ac3fb21407f2c901957f9326978aae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e80103aa_5de28ae0",
         "filename": "cc/tiles/image_decode_cache.h",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-04T23:00:10Z",
       "side": 1,
       "message": "This comment should be in the implementation of the Gpu/Sw decode not here, since I think it\u0027s not obvious that it does or doesn\u0027t do that already.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 16
+      },
+      "revId": "b65736c7ac3fb21407f2c901957f9326978aae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af30a1c_4e3ccc42",
+        "filename": "cc/tiles/image_decode_cache.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T23:43:19Z",
+      "side": 1,
+      "message": "I put it here because I figured it applies to both caches. The comment says *should* with a TODO, that makes it clearer it doesn\u0027t do so currently, right?",
+      "parentUuid": "e80103aa_5de28ae0",
       "range": {
         "startLine": 105,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "694e70bf_b3816389",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T23:43:19Z",
+      "side": 1,
+      "message": "frame used to be SkImage, now its generator. I would prefer to just let it be for now since in the follow up changes I want to move the frame index to PaintImage and not lock it when creating the generator (to ask the generator to decode any frame). In which case this would probably just be cached_generator_, and we shouldn\u0027t need to create a new generator for every frame.\n\nThe only reason I changed the name of this function was because it was called DecodeAndCacheFrame to make it obvious that all images here are lazy generated and the function doesn\u0027t actually do a decode.",
+      "parentUuid": "ed4d451c_b5f9b085",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 15
+      },
+      "revId": "b65736c7ac3fb21407f2c901957f9326978aae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9687db8_31e5ca4a",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 14
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "71a40652_10fed00c",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T23:43:19Z",
+      "side": 1,
+      "message": "In the current code, yes.",
+      "parentUuid": "e9687db8_31e5ca4a",
+      "range": {
+        "startLine": 299,
+        "startChar": 40,
+        "endLine": 299,
+        "endChar": 52
+      },
+      "revId": "b65736c7ac3fb21407f2c901957f9326978aae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6d89a8b_d81e7862",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 14
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-04T23:00:10Z",
       "side": 1,
       "message": "I know this is already here, but against \n\nCurrentFrame and FrameAtIndex _sounds_ like it would return the same type of object. One returns a size_t, one a generator :(",
+      "range": {
+        "startLine": 325,
+        "startChar": 17,
+        "endLine": 325,
+        "endChar": 29
+      },
+      "revId": "b65736c7ac3fb21407f2c901957f9326978aae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16dd6ada_51f78263",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T23:43:19Z",
+      "side": 1,
+      "message": "I don\u0027t know why we have an accessor for a private variable. Removed and the variable renamed to |current_frame_index_|.",
+      "parentUuid": "b6d89a8b_d81e7862",
       "range": {
         "startLine": 325,
         "startChar": 17,

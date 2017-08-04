@@ -227,6 +227,24 @@
       "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e2882f9_e39602af",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImageTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T23:43:19Z",
+      "side": 1,
+      "message": "The call can fail so Ensure wouldn\u0027t be correct. I just named it that here because the test was asserting that the frame at that index is created. Restored it back to FrameAtIndex since that\u0027s clearer.",
+      "parentUuid": "61d3f102_e6e5d2d4",
+      "revId": "f62a4f94f187eb02a0f914ab481ffa90604e41b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
