@@ -116,6 +116,30 @@
       "revId": "992f418b7d20f0498002720a67ad56cfb59f8c0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c234d6_ced4813f",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T22:46:54Z",
+      "side": 1,
+      "message": "\u003e Hmm.. I think that\u0027s reasonable. But why would you go through PaintImageBuilder for that functionality? If you already have a PaintImage you should be able to subset it already?\n\u003e \n\u003e Either that or do\n\u003e PaintImageBuilder(existing_image.MakeSubset(...)).set_whatever(...).TakePaintImage()?\n\nI meant like if you did not want more Clone like methods on PaintImage, but I guess this is different.\n\n\u003e \n\u003e Either way works for me, but I would prefer to add the enum in the patch that would actually use it.\n\nSounds good.",
+      "parentUuid": "91e91a5a_a8430ef5",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 56
+      },
+      "revId": "992f418b7d20f0498002720a67ad56cfb59f8c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
