@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8b63bc4_6ce79374",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-04T16:14:17Z",
+      "side": 1,
+      "message": "We decided to wrap this with |...|. Also I have a feeling that this comment can be put into two lines. No?",
+      "range": {
+        "startLine": 721,
+        "startChar": 5,
+        "endLine": 721,
+        "endChar": 30
+      },
+      "revId": "2a8ee91a3318ccf2cfb1f4a9a56e97dd8ec3bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a977b64_6fe7180e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-04T16:14:17Z",
+      "side": 1,
+      "message": "Is this autolock? What\u0027s the scope of this lock?",
+      "range": {
+        "startLine": 723,
+        "startChar": 14,
+        "endLine": 723,
+        "endChar": 52
+      },
+      "revId": "2a8ee91a3318ccf2cfb1f4a9a56e97dd8ec3bd91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
