@@ -91,6 +91,7 @@ class VrGLThread : public base::Thread,
 
  protected:
   void Init() override;
+  void Run(base::RunLoop* run_loop) override;
   void CleanUp() override;
 
  private:

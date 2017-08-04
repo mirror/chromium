@@ -208,8 +208,6 @@ class VrShell : public device::GvrDelegate,
 
   // device::GvrDelegate implementation.
   void SetWebVRSecureOrigin(bool secure_origin) override;
-  void UpdateVSyncInterval(base::TimeTicks vsync_timebase,
-                           base::TimeDelta vsync_interval) override;
   void CreateVRDisplayInfo(
       const base::Callback<void(device::mojom::VRDisplayInfoPtr)>& callback,
       uint32_t device_id) override;
