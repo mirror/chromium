@@ -68,6 +68,30 @@
       "revId": "3bb8f58315907d0ea9d57d9399c021ab13387fc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f839d3f8_12b23853",
+        "filename": "media/renderers/skcanvas_video_renderer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1165541
+      },
+      "writtenOn": "2017-08-04T00:04:39Z",
+      "side": 1,
+      "message": "Sanders, line 98 and line 99 is not the main change that I want to do in this CL. I changed it is because I thought it\u0027s a little weird that it needs to plus one to calculate uv_tex_size. I thought maybe we can directly use visible_rect to avoid it. If you think it may bring potential bug, I have recovered it to original state. Since it\u0027s not related with the bug that I want to fix in this CL (see my commit message), we can leave it unchanged. Sorry to misunderstand that you agree with this change. Are you ok with other changes in this file?",
+      "parentUuid": "69d98caf_8d3d2756",
+      "range": {
+        "startLine": 158,
+        "startChar": 53,
+        "endLine": 158,
+        "endChar": 61
+      },
+      "revId": "3bb8f58315907d0ea9d57d9399c021ab13387fc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
