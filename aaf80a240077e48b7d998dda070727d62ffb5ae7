@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2473894_c6eb26dd",
+        "filename": "chrome/browser/extensions/menu_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T16:19:03Z",
+      "side": 1,
+      "message": "nit: replace these two lines with normal_item1-\u003eset_type(..NORMAL);",
+      "range": {
+        "startLine": 772,
+        "startChar": 12,
+        "endLine": 772,
+        "endChar": 28
+      },
+      "revId": "aaf80a240077e48b7d998dda070727d62ffb5ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
