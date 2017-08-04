@@ -24,7 +24,7 @@ class PaintRenderingContext2DTest : public ::testing::Test {
 void PaintRenderingContext2DTest::SetUp() {
   ctx_ = PaintRenderingContext2D::Create(
       ImageBuffer::Create(IntSize(kWidth, kHeight)), false /* hasAlpha */,
-      kZoom);
+      kZoom, 1 /* device pixel ratio */);
 }
 
 void TrySettingStrokeStyle(PaintRenderingContext2D* ctx,

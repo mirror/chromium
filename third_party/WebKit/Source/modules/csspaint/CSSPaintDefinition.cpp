@@ -70,7 +70,8 @@ CSSPaintDefinition::~CSSPaintDefinition() {}
 PassRefPtr<Image> CSSPaintDefinition::Paint(
     const ImageResourceObserver& client,
     const IntSize& size,
-    const CSSStyleValueVector* paint_arguments) {
+    const CSSStyleValueVector* paint_arguments,
+    const double device_pixel_ratio) {
   DCHECK(paint_arguments);
 
   // TODO: Break dependency on LayoutObject. Passing the Node should work.
@@ -97,7 +98,7 @@ PassRefPtr<Image> CSSPaintDefinition::Paint(
       ImageBuffer::Create(WTF::WrapUnique(new RecordingImageBufferSurface(
           size, RecordingImageBufferSurface::kDisallowFallback,
           has_alpha_ ? kNonOpaque : kOpaque))),
-      has_alpha_, zoom);
+      has_alpha_, zoom, device_pixel_ratio);
   PaintSize* paint_size = PaintSize::Create(specified_size);
   StylePropertyMapReadonly* style_map =
       FilteredComputedStylePropertyMap::Create(
