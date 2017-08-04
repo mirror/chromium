@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "460517bf_47ed3520",
+        "filename": "chrome/browser/resources/md_extensions/view-manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-04T21:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfde581b_cbd1f287",
+      "revId": "120295a7380952473a34c43fd6ed8aaae8654362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b5eef3c_de05ee72",
         "filename": "chrome/browser/resources/md_extensions/view-manager.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "120295a7380952473a34c43fd6ed8aaae8654362",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100cbbd6_99874ec0",
+        "filename": "chrome/browser/resources/md_extensions/view-manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-04T21:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b5eef3c_de05ee72",
+      "revId": "120295a7380952473a34c43fd6ed8aaae8654362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5faf50be_c8863e50",
+        "filename": "chrome/browser/resources/md_extensions/view-manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-04T21:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83d25891_c822705a",
+      "revId": "120295a7380952473a34c43fd6ed8aaae8654362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33651c40_7691007c",
         "filename": "chrome/browser/resources/md_extensions/view-manager.js",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "120295a7380952473a34c43fd6ed8aaae8654362",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c68c24_c559ea84",
+        "filename": "chrome/browser/resources/md_extensions/view-manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-04T21:22:04Z",
+      "side": 1,
+      "message": "discussed offline, keeping exit_ and enter_ as dumb helpers that\u0027ll just animate any elements passed in.",
+      "parentUuid": "33651c40_7691007c",
+      "revId": "120295a7380952473a34c43fd6ed8aaae8654362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
