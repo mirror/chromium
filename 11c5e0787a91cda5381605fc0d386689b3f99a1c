@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68b2101c_d29e72c6",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-04T09:52:03Z",
+      "side": 1,
+      "message": "Are (or IsGCMPushFeatureEnabled)",
+      "range": {
+        "startLine": 341,
+        "startChar": 5,
+        "endLine": 341,
+        "endChar": 7
+      },
+      "revId": "11c5e0787a91cda5381605fc0d386689b3f99a1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85700db8_73ec4064",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-04T09:52:03Z",
+      "side": 1,
+      "message": "In that case, shouldn\u0027t we return nullptr here, instead of creating the manager? If we don\u0027t have official keys, we probably don\u0027t have an official OAuth2 client ID either, do we?",
+      "revId": "11c5e0787a91cda5381605fc0d386689b3f99a1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
