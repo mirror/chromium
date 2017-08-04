@@ -49,6 +49,7 @@ import android.webkit.ValueCallback;
 import org.chromium.android_webview.permission.AwGeolocationCallback;
 import org.chromium.android_webview.permission.AwPermissionRequest;
 import org.chromium.android_webview.renderer_priority.RendererPriority;
+import org.chromium.base.CommandLine;
 import org.chromium.base.LocaleUtils;
 import org.chromium.base.Log;
 import org.chromium.base.ObserverList;
@@ -65,6 +66,7 @@ import org.chromium.content.browser.AppWebMessagePort;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.ContentViewStatics;
 import org.chromium.content.browser.SmartClipProvider;
+import org.chromium.content.common.ContentSwitches;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.JavaScriptCallback;
 import org.chromium.content_public.browser.LoadUrlParams;
@@ -1676,7 +1678,10 @@ public class AwContents implements SmartClipProvider {
             requestVisitedHistoryFromClient();
         }
 
-        if (params.getLoadUrlType() == LoadURLType.DATA && params.getBaseUrl() != null) {
+        final boolean enableBrowserSideNavigation =
+                CommandLine.getInstance().hasSwitch(ContentSwitches.ENABLE_BROWSER_SIDE_NAVIGATION);
+        if (!enableBrowserSideNavigation && params.getLoadUrlType() == LoadURLType.DATA
+                && params.getBaseUrl() != null) {
             // Data loads with a base url will be resolved in Blink, and not cause an onPageStarted
             // event to be sent. Sending the callback directly from here.
             mContentsClient.getCallbackHelper().postOnPageStarted(params.getBaseUrl());
