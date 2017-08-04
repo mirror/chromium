@@ -26,9 +26,9 @@
 namespace app_list {
 namespace test {
 
-class KeyPressCounterView : public views::View {
+class KeyPressCounterView : public ContentsView {
  public:
-  KeyPressCounterView() : count_(0) {}
+  KeyPressCounterView() : ContentsView(nullptr, nullptr), count_(0) {}
   ~KeyPressCounterView() override {}
 
   int GetCountAndReset() {

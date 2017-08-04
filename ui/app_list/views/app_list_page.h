@@ -36,6 +36,13 @@ class APP_LIST_EXPORT AppListPage : public views::View {
   // Returns where this page should move to when the given state is active.
   virtual gfx::Rect GetPageBoundsForState(AppListModel::State state) const = 0;
 
+  // Layouts and updates opacity of the page during dragging.
+  virtual gfx::Rect LayoutAndUpdateOpacityDuringDragging(
+      AppListModel::State state,
+      int app_list_y_position_in_screen,
+      int work_area_bottom,
+      bool is_end_gesture) const;
+
   // Returns where the search box should be when this page is shown. Is at the
   // top of the app list by default, in the contents view's coordinate space.
   virtual gfx::Rect GetSearchBoxBounds() const;
