@@ -34,6 +34,24 @@
       "revId": "f8fa3764bf595e9b3a2b44b8fd9d1d4a64f6e208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd9a8ba_cdd937c2",
+        "filename": "gpu/command_buffer/client/ring_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-04T23:22:44Z",
+      "side": 1,
+      "message": "I think DCHECK would be nice, because if the assumption was wrong for any reason, we\u0027d have a full RingBuffer, which would force a round-trip for the next allocation even for a trivial use. We\u0027d want to defend against that. I guess I was thinking, if returning a result, the caller could do the DCHECK instead. But maybe DCHECK here probably makes more sense, since there\u0027s no reason to call this except on the latest block (and that\u0027s in a way enforced by the usage pattern of calling it from ScopedTransferBufferPtr).",
+      "parentUuid": "e013b886_6d90027e",
+      "revId": "f8fa3764bf595e9b3a2b44b8fd9d1d4a64f6e208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
