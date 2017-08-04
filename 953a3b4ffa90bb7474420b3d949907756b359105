@@ -166,6 +166,30 @@
       "revId": "953a3b4ffa90bb7474420b3d949907756b359105",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f673a4e9_7366e36c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-transforms.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-04T16:14:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00768030_d2bfde40",
+      "range": {
+        "startLine": 95,
+        "startChar": 43,
+        "endLine": 95,
+        "endChar": 48
+      },
+      "revId": "953a3b4ffa90bb7474420b3d949907756b359105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
