@@ -22,6 +22,30 @@
       "revId": "992f418b7d20f0498002720a67ad56cfb59f8c0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e91a5a_a8430ef5",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-04T21:49:49Z",
+      "side": 1,
+      "message": "Hmm.. I think that\u0027s reasonable. But why would you go through PaintImageBuilder for that functionality? If you already have a PaintImage you should be able to subset it already?\n\nEither that or do\nPaintImageBuilder(existing_image.MakeSubset(...)).set_whatever(...).TakePaintImage()?\n\nEither way works for me, but I would prefer to add the enum in the patch that would actually use it.",
+      "parentUuid": "c5723902_178d550d",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 56
+      },
+      "revId": "992f418b7d20f0498002720a67ad56cfb59f8c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

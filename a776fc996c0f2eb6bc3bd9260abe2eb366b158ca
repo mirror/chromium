@@ -22,6 +22,30 @@
       "revId": "a776fc996c0f2eb6bc3bd9260abe2eb366b158ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674f86da_c762a048",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageBuffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-04T21:49:49Z",
+      "side": 0,
+      "message": "It was pretty complicated, I considered wrapping this in more PaintImages and extracting more SkImages out of it...",
+      "parentUuid": "b19dc7b6_a34a183b",
+      "range": {
+        "startLine": 515,
+        "startChar": 2,
+        "endLine": 515,
+        "endChar": 58
+      },
+      "revId": "a776fc996c0f2eb6bc3bd9260abe2eb366b158ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
