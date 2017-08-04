@@ -265,6 +265,9 @@ void SecurityInfoForRequest(
       (visible_security_state.is_incognito &&
        security_info->security_level == HTTP_SHOW_WARNING &&
        security_state::IsHttpWarningForIncognitoEnabled());
+
+  security_info->insecure_input_events =
+      visible_security_state.insecure_input_events;
 }
 
 }  // namespace
@@ -311,7 +314,8 @@ SecurityInfo::SecurityInfo()
       displayed_credit_card_field_on_http(false),
       contained_mixed_form(false),
       cert_missing_subject_alt_name(false),
-      incognito_downgraded_security_level(false) {}
+      incognito_downgraded_security_level(false),
+      insecure_input_events() {}
 
 SecurityInfo::~SecurityInfo() {}
 
@@ -344,7 +348,8 @@ VisibleSecurityState::VisibleSecurityState()
       pkp_bypassed(false),
       displayed_password_field_on_http(false),
       displayed_credit_card_field_on_http(false),
-      is_incognito(false) {}
+      is_incognito(false),
+      insecure_input_events() {}
 
 VisibleSecurityState::~VisibleSecurityState() {}
 
@@ -367,7 +372,8 @@ bool VisibleSecurityState::operator==(const VisibleSecurityState& other) const {
           displayed_credit_card_field_on_http ==
               other.displayed_credit_card_field_on_http &&
           contained_mixed_form == other.contained_mixed_form &&
-          is_incognito == other.is_incognito);
+          is_incognito == other.is_incognito &&
+          insecure_input_events == other.insecure_input_events);
 }
 
 }  // namespace security_state

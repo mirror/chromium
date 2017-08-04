@@ -1,6 +1,8 @@
 // Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+#include <memory>
+#include <utility>
 
 #include "core/html/forms/PasswordInputType.h"
 
@@ -50,6 +52,8 @@ class MockInsecureInputService : public mojom::blink::InsecureInputService {
   void AllPasswordFieldsInInsecureContextInvisible() override {
     ++num_password_fields_invisible_calls_;
   }
+
+  void FieldEditedInInsecureContext() override {}
 
   mojo::BindingSet<InsecureInputService> binding_set_;
 
