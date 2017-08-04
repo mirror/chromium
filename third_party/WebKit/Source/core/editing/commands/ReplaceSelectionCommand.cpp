@@ -1084,10 +1084,15 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
       if (IsEndOfParagraph(start_after_delete) &&
           !IsStartOfParagraph(start_after_delete) &&
           !IsEndOfEditableOrNonEditableContent(start_after_delete)) {
-        SetEndingSelection(
+        // TODO(editing-dev): The use of
+        // updateStyleAndLayoutIgnorePendingStylesheets
+        // needs to be audited.  See http://crbug.com/590369 for more details.
+        GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+        SetEndingSelection(SelectionForUndoStep::From(
             SelectionInDOMTree::Builder()
                 .Collapse(NextPositionOf(start_after_delete).DeepEquivalent())
-                .Build());
+                .Build(),
+            false));
       } else {
         InsertParagraphSeparator(editing_state);
       }
@@ -1101,9 +1106,15 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
           NextPositionOf(visible_start, kCannotCrossEditingBoundary);
       if (IsEndOfParagraph(visible_start) &&
           !IsStartOfParagraph(visible_start) && next.IsNotNull()) {
-        SetEndingSelection(SelectionInDOMTree::Builder()
-                               .Collapse(next.DeepEquivalent())
-                               .Build());
+        // TODO(editing-dev): The use of
+        // updateStyleAndLayoutIgnorePendingStylesheets
+        // needs to be audited.  See http://crbug.com/590369 for more details.
+        GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+        SetEndingSelection(
+            SelectionForUndoStep::From(SelectionInDOMTree::Builder()
+                                           .Collapse(next.DeepEquivalent())
+                                           .Build(),
+                                       false));
       } else {
         InsertParagraphSeparator(editing_state);
         if (editing_state->IsAborted())
@@ -1132,12 +1143,13 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
       if (editing_state->IsAborted())
         return;
       GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-      SetEndingSelection(
+      SetEndingSelection(SelectionForUndoStep::From(
           SelectionInDOMTree::Builder()
               .Collapse(
                   PreviousPositionOf(EndingVisibleSelection().VisibleStart())
                       .DeepEquivalent())
-              .Build());
+              .Build(),
+          false));
     }
   }
 
@@ -1524,18 +1536,23 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
           if (editing_state->IsAborted())
             return;
         }
-        SetEndingSelection(SelectionInDOMTree::Builder()
-                               .Collapse(Position::AfterNode(
-                                   *inserted_nodes.LastLeafInserted()))
-                               .Build());
+        GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+        SetEndingSelection(SelectionForUndoStep::From(
+            SelectionInDOMTree::Builder()
+                .Collapse(
+                    Position::AfterNode(*inserted_nodes.LastLeafInserted()))
+                .Build(),
+            false));
         // Select up to the paragraph separator that was added.
         last_position_to_select =
             EndingVisibleSelection().VisibleStart().DeepEquivalent();
       } else if (!IsStartOfParagraph(end_of_inserted_content)) {
-        SetEndingSelection(
+        GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+        SetEndingSelection(SelectionForUndoStep::From(
             SelectionInDOMTree::Builder()
                 .Collapse(end_of_inserted_content.DeepEquivalent())
-                .Build());
+                .Build(),
+            false));
         Element* enclosing_block_element = EnclosingBlock(
             end_of_inserted_content.DeepEquivalent().AnchorNode());
         if (IsListItem(enclosing_block_element)) {
@@ -1544,10 +1561,12 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
                           editing_state);
           if (editing_state->IsAborted())
             return;
-          SetEndingSelection(
+          GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+          SetEndingSelection(SelectionForUndoStep::From(
               SelectionInDOMTree::Builder()
                   .Collapse(Position::FirstPositionInNode(*new_list_item))
-                  .Build());
+                  .Build(),
+              false));
         } else {
           // Use a default paragraph element (a plain div) for the empty
           // paragraph, using the last paragraph block's style seems to annoy
@@ -1761,19 +1780,16 @@ void ReplaceSelectionCommand::CompleteHTMLReplacement(
   if (select_replacement_) {
     SetEndingSelection(SelectionInDOMTree::Builder()
                            .SetBaseAndExtentDeprecated(start, end)
-                           .SetIsDirectional(EndingSelection().IsDirectional())
                            .Build());
     return;
   }
 
   if (end.IsNotNull()) {
-    SetEndingSelection(SelectionInDOMTree::Builder()
-                           .Collapse(end)
-                           .SetIsDirectional(EndingSelection().IsDirectional())
-                           .Build());
+    SetEndingSelection(SelectionInDOMTree::Builder().Collapse(end).Build());
     return;
   }
-  SetEndingSelection(SelectionInDOMTree());
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+  SetEndingSelection(SelectionForUndoStep::From(SelectionInDOMTree(), false));
 }
 
 void ReplaceSelectionCommand::MergeTextNodesAroundPosition(
@@ -1992,10 +2008,11 @@ bool ReplaceSelectionCommand::PerformTrivialReplace(
   start_of_inserted_range_ = start;
   end_of_inserted_range_ = end;
 
-  SetEndingSelection(
+  SetEndingSelection(SelectionForUndoStep::From(
       SelectionInDOMTree::Builder()
           .SetBaseAndExtentDeprecated(select_replacement_ ? start : end, end)
-          .Build());
+          .Build(),
+      false));
 
   return true;
 }

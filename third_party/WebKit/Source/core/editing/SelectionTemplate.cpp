@@ -15,7 +15,6 @@ SelectionTemplate<Strategy>::SelectionTemplate(const SelectionTemplate& other)
       extent_(other.extent_),
       affinity_(other.affinity_),
       direction_(other.direction_),
-      is_directional_(other.is_directional_)
 #if DCHECK_IS_ON()
       ,
       dom_tree_version_(other.dom_tree_version_)
@@ -38,8 +37,7 @@ bool SelectionTemplate<Strategy>::operator==(
     return false;
   DCHECK_EQ(base_.GetDocument(), other.GetDocument()) << *this << ' ' << other;
   return base_ == other.base_ && extent_ == other.extent_ &&
-         affinity_ == other.affinity_ &&
-         is_directional_ == other.is_directional_;
+         affinity_ == other.affinity_;
 }
 
 template <typename Strategy>
@@ -301,13 +299,6 @@ SelectionTemplate<Strategy>::Builder::SetBaseAndExtentDeprecated(
   if (extent.IsNotNull())
     return Collapse(extent);
   return SetBaseAndExtent(EphemeralRangeTemplate<Strategy>());
-}
-
-template <typename Strategy>
-typename SelectionTemplate<Strategy>::Builder&
-SelectionTemplate<Strategy>::Builder::SetIsDirectional(bool is_directional) {
-  selection_.is_directional_ = is_directional;
-  return *this;
 }
 
 template class CORE_TEMPLATE_EXPORT SelectionTemplate<EditingStrategy>;

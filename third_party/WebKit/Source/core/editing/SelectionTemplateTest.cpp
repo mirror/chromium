@@ -16,7 +16,6 @@ TEST_F(SelectionTest, defaultConstructor) {
 
   EXPECT_EQ(TextAffinity::kDownstream, selection.Affinity());
   EXPECT_TRUE(selection.IsBaseFirst());
-  EXPECT_FALSE(selection.IsDirectional());
   EXPECT_TRUE(selection.IsNone());
   EXPECT_EQ(Position(), selection.Base());
   EXPECT_EQ(Position(), selection.Extent());
@@ -52,7 +51,6 @@ TEST_F(SelectionTest, caret) {
 
   EXPECT_EQ(TextAffinity::kDownstream, selection.Affinity());
   EXPECT_TRUE(selection.IsBaseFirst());
-  EXPECT_FALSE(selection.IsDirectional());
   EXPECT_FALSE(selection.IsNone());
   EXPECT_EQ(position, selection.Base());
   EXPECT_EQ(position, selection.Extent());
@@ -71,7 +69,6 @@ TEST_F(SelectionTest, range) {
 
   EXPECT_EQ(TextAffinity::kDownstream, selection.Affinity());
   EXPECT_TRUE(selection.IsBaseFirst());
-  EXPECT_FALSE(selection.IsDirectional());
   EXPECT_FALSE(selection.IsNone());
   EXPECT_EQ(base, selection.Base());
   EXPECT_EQ(extent, selection.Extent());

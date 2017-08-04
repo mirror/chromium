@@ -110,13 +110,15 @@ class CORE_EXPORT SelectionController final
   void SetNonDirectionalSelectionIfNeeded(const SelectionInFlatTree&,
                                           TextGranularity,
                                           EndPointsAdjustmentMode,
-                                          HandleVisibility);
+                                          HandleVisibility,
+                                          bool directional = false);
   void SetCaretAtHitTestResult(const HitTestResult&);
   bool UpdateSelectionForMouseDownDispatchingSelectStart(
       Node*,
       const SelectionInFlatTree&,
       TextGranularity,
-      HandleVisibility);
+      HandleVisibility,
+      bool directional = false);
 
   FrameSelection& Selection() const;
 

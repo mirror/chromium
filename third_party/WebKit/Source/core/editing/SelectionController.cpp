@@ -82,7 +82,6 @@ SelectionInDOMTree ConvertToSelectionInDOMTree(
       .SetAffinity(selection_in_flat_tree.Affinity())
       .SetBaseAndExtent(ToPositionInDOMTree(selection_in_flat_tree.Base()),
                         ToPositionInDOMTree(selection_in_flat_tree.Extent()))
-      .SetIsDirectional(selection_in_flat_tree.IsDirectional())
       .Build();
 }
 
@@ -306,7 +305,8 @@ bool SelectionController::HandleSingleClick(
         const bool did_select =
             UpdateSelectionForMouseDownDispatchingSelectStart(
                 inner_node, selection.AsSelection(),
-                TextGranularity::kCharacter, HandleVisibility::kVisible);
+                TextGranularity::kCharacter, HandleVisibility::kVisible,
+                this->Selection().IsDirectional());
         if (did_select) {
           frame_->GetEventHandler().ShowNonLocatedContextMenu(nullptr,
                                                               kMenuSourceTouch);
@@ -326,7 +326,7 @@ bool SelectionController::HandleSingleClick(
     if (pos.IsNull()) {
       UpdateSelectionForMouseDownDispatchingSelectStart(
           inner_node, selection.AsSelection(), granularity,
-          HandleVisibility::kNotVisible);
+          HandleVisibility::kNotVisible, this->Selection().IsDirectional());
       return false;
     }
     UpdateSelectionForMouseDownDispatchingSelectStart(
@@ -341,7 +341,7 @@ bool SelectionController::HandleSingleClick(
   if (selection_state_ == SelectionState::kExtendedSelection) {
     UpdateSelectionForMouseDownDispatchingSelectStart(
         inner_node, selection.AsSelection(), TextGranularity::kCharacter,
-        HandleVisibility::kNotVisible);
+        HandleVisibility::kNotVisible, this->Selection().IsDirectional());
     return false;
   }
 
@@ -470,14 +470,15 @@ void SelectionController::UpdateSelectionForMouseDrag(
 
   SetNonDirectionalSelectionIfNeeded(
       adjusted_selection, Selection().Granularity(),
-      kAdjustEndpointsAtBidiBoundary, HandleVisibility::kNotVisible);
+      kAdjustEndpointsAtBidiBoundary, HandleVisibility::kNotVisible, false);
 }
 
 bool SelectionController::UpdateSelectionForMouseDownDispatchingSelectStart(
     Node* target_node,
     const SelectionInFlatTree& selection,
     TextGranularity granularity,
-    HandleVisibility handle_visibility) {
+    HandleVisibility handle_visibility,
+    bool directional) {
   if (target_node && target_node->GetLayoutObject() &&
       !target_node->GetLayoutObject()->IsSelectable())
     return false;
@@ -499,15 +500,17 @@ bool SelectionController::UpdateSelectionForMouseDownDispatchingSelectStart(
 
   if (visible_selection.IsRange()) {
     selection_state_ = SelectionState::kExtendedSelection;
-    SetNonDirectionalSelectionIfNeeded(
-        selection, granularity, kDoNotAdjustEndpoints, handle_visibility);
+    SetNonDirectionalSelectionIfNeeded(selection, granularity,
+                                       kDoNotAdjustEndpoints, handle_visibility,
+                                       directional);
 
     return true;
   }
 
   selection_state_ = SelectionState::kPlacedCaret;
   SetNonDirectionalSelectionIfNeeded(selection, TextGranularity::kCharacter,
-                                     kDoNotAdjustEndpoints, handle_visibility);
+                                     kDoNotAdjustEndpoints, handle_visibility,
+                                     directional);
   return true;
 }
 
@@ -760,7 +763,8 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
     const SelectionInFlatTree& passed_selection,
     TextGranularity granularity,
     EndPointsAdjustmentMode endpoints_adjustment_mode,
-    HandleVisibility handle_visibility) {
+    HandleVisibility handle_visibility,
+    bool directional) {
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited.  See http://crbug.com/590369 for more details.
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
@@ -810,7 +814,8 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
       handle_visibility == HandleVisibility::kVisible;
   if (Selection().ComputeVisibleSelectionInFlatTree() ==
           CreateVisibleSelection(selection_in_flat_tree) &&
-      Selection().IsHandleVisible() == should_show_handle)
+      Selection().IsHandleVisible() == should_show_handle &&
+      Selection().IsDirectional() == directional)
     return;
   Selection().SetSelection(
       ConvertToSelectionInDOMTree(selection_in_flat_tree),
@@ -820,6 +825,7 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
           .SetCursorAlignOnScroll(CursorAlignOnScroll::kIfNeeded)
           .SetGranularity(granularity)
           .SetShouldShowHandle(should_show_handle)
+          .SetIsDirectional(directional)
           .Build());
 }
 
