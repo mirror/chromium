@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5723902_178d550d",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-04T21:19:24Z",
+      "side": 1,
+      "message": "So in one of my follow up changes I wanted to add a MakeSubset method to provide the SkImage-\u003emakeSubset functionality. It would take a copy of the original image (content included) and just add a subset rect. Something similar will need to happen for the color space.\n\nDo you think we could do something like add a flag to this (retain_content bool or enum)?",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 56
+      },
+      "revId": "992f418b7d20f0498002720a67ad56cfb59f8c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
