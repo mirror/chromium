@@ -73,8 +73,6 @@
         }
         // Escape null characters, otherwise diff will think the file is binary.
         text = text.replace(/\0/g, '\\0');
-        // Escape carriage returns as they break rietveld's difftools.
-        text = text.replace(/\r/g, '\\r');
         // Replace machine-dependent path with "...".
         if (localPathRegExp)
             text = text.replace(localPathRegExp, '...');
