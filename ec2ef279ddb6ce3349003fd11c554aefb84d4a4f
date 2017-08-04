@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e03f9ef4_46c28b4a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T21:28:52Z",
+      "side": 1,
+      "message": "I\u0027m editing comment here. I don\u0027t think it\u0027s necessary to define range at all, but I\u0027m defining \"view\" in encoded_view.h.\nIf you\u0027re curious, a range is a concept that is kind of implicit in current c++ standard (ex, Range-based for loop executes on a range without defining it...)\nHere\u0027s a proposal for a more formal definition \nhttp://en.cppreference.com/w/cpp/experimental/ranges/range/Range",
+      "parentUuid": "a73ed61c_bedebfc5",
+      "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9ea4e28_4fe5d050",
         "filename": "chrome/installer/zucchini/encoded_view.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T19:18:57Z",
       "side": 1,
       "message": "What is a typetag? I looked at the definition \nhttps://cs.chromium.org/chromium/src/chrome/installer/zucchini/image_utils.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d32\n\nand still don\u0027t know what\u0027s going on.",
+      "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac00585d_72a5a4ca",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T21:28:52Z",
+      "side": 1,
+      "message": "Minor edit in comment. See README.md for definition of **Type of reference**. TypeTag is used to identify a reference type.\nSometimes, TypeTag will also be used to identify raw data (no reference type), taking the value kNoTypeTag.",
+      "parentUuid": "d9ea4e28_4fe5d050",
       "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "db683d52_633abac6",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T21:28:52Z",
+      "side": 1,
+      "message": "The first byte of every reference is encoded differently. I made the comment clearer.",
+      "parentUuid": "c3608812_d9ffacc6",
+      "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9da08a23_8b595ddf",
         "filename": "chrome/installer/zucchini/encoded_view.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-04T19:18:57Z",
       "side": 1,
       "message": "Should this be called kDummyRank?",
+      "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86333b8_babeea4e",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T21:28:52Z",
+      "side": 1,
+      "message": "It\u0027s not exactly dummy, we just reserved an arbitrary value for this case (256). I edited comment.",
+      "parentUuid": "9da08a23_8b595ddf",
       "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c2843db5_f75a3265",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T21:28:52Z",
+      "side": 1,
+      "message": "I\u0027m adding definition of **Encoded Image** in README, which implies a projection function.",
+      "parentUuid": "5227b9ce_98752e01",
+      "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84aa8cbd_21d0a162",
         "filename": "chrome/installer/zucchini/encoded_view.h",
         "patchSetId": 4
@@ -98,6 +188,47 @@
       "writtenOn": "2017-08-04T19:18:57Z",
       "side": 1,
       "message": "Add a comment about lifetime semantics: ImageIndex must outlive this class.",
+      "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3edd29f_c5c9750b",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T21:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84aa8cbd_21d0a162",
+      "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72bf94b3_7f76ae60",
+        "filename": "chrome/installer/zucchini/encoded_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T21:28:52Z",
+      "side": 1,
+      "message": "Very annoying formatting, but this is the result of cl format..",
+      "range": {
+        "startLine": 162,
+        "startChar": 14,
+        "endLine": 162,
+        "endChar": 17
+      },
       "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
