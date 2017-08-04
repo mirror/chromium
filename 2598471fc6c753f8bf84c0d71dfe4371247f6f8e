@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0d09bfe_72f59ebd",
+        "filename": "third_party/WebKit/Source/core/exported/WebSettingsImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-08-04T04:14:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f2a9999_83b72f37",
+      "revId": "2598471fc6c753f8bf84c0d71dfe4371247f6f8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e0ecaf2_e10a863b",
         "filename": "third_party/WebKit/Source/core/frame/Settings.cpp",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2ee12bce_f2903915",
+        "filename": "third_party/WebKit/Source/core/frame/Settings.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-08-04T04:14:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e0ecaf2_e10a863b",
+      "revId": "2598471fc6c753f8bf84c0d71dfe4371247f6f8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "690a535f_47097b44",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-04T04:03:37Z",
       "side": 1,
       "message": "I\u0027d move these to DocumentLoader.cpp.",
+      "revId": "2598471fc6c753f8bf84c0d71dfe4371247f6f8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0711622c_f814a09e",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1783,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-08-04T04:14:31Z",
+      "side": 1,
+      "message": "All of them? Or just those above?",
+      "parentUuid": "690a535f_47097b44",
       "revId": "2598471fc6c753f8bf84c0d71dfe4371247f6f8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
