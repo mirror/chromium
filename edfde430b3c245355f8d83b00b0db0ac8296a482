@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "10e507ca_a99440a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-04T14:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d156c7a7_4f3c79e3",
+      "revId": "edfde430b3c245355f8d83b00b0db0ac8296a482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4c5b517_d609aa84",
         "filename": "net/http/http_auth_handler_ntlm.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-02T19:18:50Z",
       "side": 1,
       "message": "Here we are depending on a symbol that\u0027s only included if NTLM_PORTABLE is defined. This won\u0027t compile on Windows, and we shouldn\u0027t try to fix it by including ntlm_client.h all the time.\n\nBy the power of type aliasing, we can introduce a HttpAuthHandlerNTLM::Buffer type that\u0027s aliased to ntlm::Buffer when NTLM_PORTABLE is defined, and to std::string when not. This way we can have zero-overhead plumbing to either the portable NTLM implementation or the Windows SSPI one.\n\nOh and you\u0027ll also need to modify the SSPI implementation to work with the modified GetNextToken API.",
+      "revId": "edfde430b3c245355f8d83b00b0db0ac8296a482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4943c5b_f6362e44",
+        "filename": "net/http/http_auth_handler_ntlm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-04T14:13:18Z",
+      "side": 1,
+      "message": "This only gets called by the portable implementation. I just didn\u0027t realize the declaration wasn\u0027t also guarded. On windows GenerateAuthTokenImpl calls auth_sspi_.GenerateAuthToken instead and http_auth_handler_ntlm_win doesn\u0027t even have an implementation of GetNextToken.\n\nSo I put the declaration inside the NTLM_PORTABLE guard instead.",
+      "parentUuid": "d4c5b517_d609aa84",
       "revId": "edfde430b3c245355f8d83b00b0db0ac8296a482",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
