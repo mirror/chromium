@@ -65,6 +65,23 @@
     },
     {
       "key": {
+        "uuid": "dac1a94d_7537a762",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-04T08:01:03Z",
+      "side": 1,
+      "message": "Wait... I think this should be just NOTREACHED given that FileSystem is not supported in SW (I believe... is that right)?",
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "525981e8_d9751a2e",
         "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
         "patchSetId": 7
@@ -116,6 +133,40 @@
       "writtenOn": "2017-08-04T07:47:24Z",
       "side": 1,
       "message": "ditto.",
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f98abfd_05bca8d1",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-04T08:01:03Z",
+      "side": 1,
+      "message": "Can\u0027t we just reuse SharedWorkerContentSettingsProxy (with different naming)?",
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8a9e5f_557f49b5",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-04T08:01:03Z",
+      "side": 1,
+      "message": "This could just return false?",
       "revId": "217268ade545b9724650745ba47bce3042634abd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
