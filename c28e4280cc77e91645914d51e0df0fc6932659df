@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89390b33_51c82f27",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-04T00:45:59Z",
+      "side": 1,
+      "message": "nit: pls remove trailing space.",
+      "revId": "c28e4280cc77e91645914d51e0df0fc6932659df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9284059d_6fd6e188",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-04T00:45:59Z",
+      "side": 1,
+      "message": "Please update the name of var, as well as doc.",
+      "revId": "c28e4280cc77e91645914d51e0df0fc6932659df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d4aa9b_9b899426",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-04T00:45:59Z",
+      "side": 1,
+      "message": "(optional): For consistency I\u0027d recommend,\n\nvar doc \u003d ...;\nvar page \u003d doc.getElementById(pageDivId);\nvar progressBarNodeList \u003d page.querySelectorAll(\u0027.progress-container\u0027);\nfor (var i \u003d 0; i \u003c progressBarNodeList.length; ++i) {\n  ... new ProgressBarAnimation(progressBarNodeList[i]);\n}\n\nOr, if you\u0027d assume progress-container is at most one per page,\n\nvar doc \u003d ...;\nvar page \u003d doc.getElementById(pageDivId);\nactiveProgressAnimation \u003d new ProgressBarAnimation(page.querySelector(\u0027.progress-container\u0027));\nactiveProgressAnimation.start();\n\nIn either case, you can remove id in html.",
+      "revId": "c28e4280cc77e91645914d51e0df0fc6932659df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
