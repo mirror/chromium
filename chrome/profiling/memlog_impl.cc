@@ -4,9 +4,12 @@
 
 #include "chrome/profiling/memlog_impl.h"
 
+#include "base/trace_event/memory_dump_request_args.h"
 #include "chrome/profiling/memlog_receiver_pipe.h"
 #include "content/public/child/child_thread.h"
+#include "content/public/common/service_names.mojom.h"
 #include "mojo/public/cpp/system/platform_handle.h"
+#include "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h"
 
 namespace profiling {
 
@@ -14,7 +17,8 @@ MemlogImpl::MemlogImpl()
     : io_runner_(content::ChildThread::Get()->GetIOTaskRunner()),
       connection_manager_(
           new MemlogConnectionManager(io_runner_, &backtrace_storage_),
-          DeleteOnRunner(FROM_HERE, io_runner_.get())) {}
+          DeleteOnRunner(FROM_HERE, io_runner_.get())),
+      weak_factory_(this) {}
 
 MemlogImpl::~MemlogImpl() {}
 
@@ -42,10 +46,48 @@ void MemlogImpl::DumpProcess(int32_t sender_id,
     return;
   }
   base::File file(platform_file);
+
+  // Need a memory map to make sense of the dump. The dump will be triggered
+  // in the memory map global dump callback.
+  // TODO(brettw) this should be a OnceCallback to avoid base::Passed.
+  memory_instrumentation::MemoryInstrumentation::GetInstance()
+      ->RequestGlobalDump(base::trace_event::MemoryDumpLevelOfDetail::DETAILED,
+                          base::Bind(&MemlogImpl::OnGlobalDumpComplete,
+                                     weak_factory_.GetWeakPtr(), sender_id,
+                                     base::Passed(std::move(file))));
+}
+
+void MemlogImpl::OnGlobalDumpComplete(
+    int32_t sender_id,
+    base::File file,
+    bool success,
+    memory_instrumentation::mojom::GlobalMemoryDumpPtr dump) {
+  if (!success) {
+    LOG(ERROR) << "Global dump failed";
+    return;
+  }
+
+  // Find the process's memory dump we want.
+  // TODO(bug 752621) we should be asking and getting the memory map of only
+  // the process we want rather than querying all processes and filtering.
+  memory_instrumentation::mojom::ProcessMemoryDump* process_dump = nullptr;
+  for (const auto& proc : dump->process_dumps) {
+    if (proc->pid == static_cast<base::ProcessId>(sender_id)) {
+      process_dump = &*proc;
+      break;
+    }
+  }
+  if (!process_dump) {
+    LOG(ERROR) << "Don't have a memory dump for PID " << sender_id;
+    return;
+  }
+
   io_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&MemlogConnectionManager::DumpProcess,
-                                base::Unretained(connection_manager_.get()),
-                                sender_id, std::move(file)));
+      FROM_HERE,
+      base::BindOnce(&MemlogConnectionManager::DumpProcess,
+                     base::Unretained(connection_manager_.get()), sender_id,
+                     std::move(process_dump->os_dump->memory_maps),
+                     std::move(file)));
 }
 
 }  // namespace profiling

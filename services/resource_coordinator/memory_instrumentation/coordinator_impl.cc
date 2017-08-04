@@ -74,6 +74,10 @@ memory_instrumentation::mojom::OSMemDumpPtr CreatePublicOSDump(
 
   os_dump->resident_set_kb = internal_os_dump.resident_set_kb;
   os_dump->private_footprint_kb = CalculatePrivateFootprintKb(internal_os_dump);
+
+  for (const auto& map : internal_os_dump.memory_maps)
+    os_dump->memory_maps.emplace_back(map.Clone());
+
   return os_dump;
 }
 
@@ -478,17 +482,8 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
   }
 
   mojom::GlobalMemoryDumpPtr global_dump(mojom::GlobalMemoryDump::New());
-  for (auto& pair : finalized_pmds) {
-    // It's possible that the renderer has died but we still have an os_dump,
-    // because those were computed from the browser proces before the renderer
-    // died. We should skip these.
-    // TODO(hjd): We should have a better way to tell if a chrome_dump is
-    // filled.
-    mojom::ProcessMemoryDumpPtr& pmd = pair.second;
-    if (!pmd || !pmd->chrome_dump->malloc_total_kb)
-      continue;
-    global_dump->process_dumps.push_back(std::move(pmd));
-  }
+  for (auto& pair : finalized_pmds)
+    global_dump->process_dumps.push_back(std::move(pair.second));
 
   const auto& callback = request->callback;
   const bool global_success = request->failed_memory_dump_count == 0;

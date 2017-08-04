@@ -92,8 +92,10 @@ void MemlogConnectionManager::OnConnectionCompleteThunk(
                                  base::Unretained(this), sender_id));
 }
 
-void MemlogConnectionManager::DumpProcess(int32_t sender_id,
-                                          base::File output_file) {
+void MemlogConnectionManager::DumpProcess(
+    int32_t sender_id,
+    const std::vector<memory_instrumentation::mojom::VmRegionPtr>& maps,
+    base::File output_file) {
   base::AutoLock l(connections_lock_);
 
   if (connections_.empty()) {
@@ -117,7 +119,7 @@ void MemlogConnectionManager::DumpProcess(int32_t sender_id,
 
   std::ostringstream oss;
   ExportAllocationEventSetToJSON(sender_id, connection->tracker.live_allocs(),
-                                 oss);
+                                 maps, oss);
   std::string reply = oss.str();
   output_file.WriteAtCurrentPos(reply.c_str(), reply.size());
 }
