@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b9f545c_21d019eb",
+        "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-04T21:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76a498f1_d9d8d502",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e976c8ad_8738286f",
         "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c173340e_4e9bba6d",
+        "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-04T21:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e976c8ad_8738286f",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2371de8b_0135a883",
         "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-03T01:55:15Z",
       "side": 1,
       "message": "I don\u0027t think invoking the super constructor explicitly should be necessary?",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4005d3f_afe73b92",
+        "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-04T21:33:17Z",
+      "side": 1,
+      "message": "agreed, I guess I didn\u0027t read the code I was restoring too thoroughly. This \"trampoline\" doesn\u0027t seem like a necessary pattern so I\u0027ve switched to an observer interface.",
+      "parentUuid": "2371de8b_0135a883",
       "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "cbd8d713_ff9bf1ec",
+        "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-04T21:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b4b2a9a_68821f85",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ee3a99e_328bb47c",
         "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.h",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a2cf9e_eedbacbc",
+        "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-04T21:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee3a99e_328bb47c",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d493d12a_0cc73aad",
+        "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-04T21:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d994f78d_544bf8d4",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1feca991_51ad2511",
         "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.h",
         "patchSetId": 4
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "4b2eb312_3e7076ab",
+        "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-04T21:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1feca991_51ad2511",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5572f136_f1961448",
         "filename": "chrome/browser/ui/webui/ntp/app_launcher_handler.cc",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe385c5_64e08a6c",
+        "filename": "chrome/browser/ui/webui/ntp/app_launcher_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-04T21:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5572f136_f1961448",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
