@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9ca9441_ffe3cbdf",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T17:11:41Z",
+      "side": 1,
+      "message": "nit: if (keyIdsToRemove.includes(keyId))",
+      "revId": "d623a1ea49e967de4e605940f7f939baae3ea76e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

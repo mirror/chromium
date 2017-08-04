@@ -246,6 +246,24 @@
       "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e83df08f_adbf119b",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T17:11:41Z",
+      "side": 1,
+      "message": "You can use \u0027includes\u0027 (see suggestion above).",
+      "parentUuid": "bd98f556_0cdee94b",
+      "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
