@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4ae133c3_5b741e11",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T22:00:32Z",
+      "side": 1,
+      "message": "That helps, thanks.",
+      "parentUuid": "2e8c9e42_822971ba",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bbcb74b_ec3bca96",
         "filename": "components/omnibox/browser/autocomplete_match.cc",
         "patchSetId": 12
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "It\u0027s the case on line 155, \"// should have only DIM when done\". Since we\u0027re mashing a tail suggestion prefix with a completely different match\u0027s contents, I don\u0027t see that it\u0027s impossible, and it\u0027s trivial insurance.",
       "parentUuid": "2bbcb74b_ec3bca96",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88be3b1f_aac69e6f",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T22:00:32Z",
+      "side": 1,
+      "message": "Ah, I see. I think \"pointless\" undersells this. Having a classification that\u0027s effectively outside the range that makes sense is potentially misleading and I could imagine even create a bug.\n\nSince this case is exactly [prefix \u003d\u003d contents] can you make the comment something like:\n\n// If |common_prefix| and |contents| are equal, we\u0027ll end up with a\n// classification that\u0027s outside the range of the string. Remove it here.",
+      "parentUuid": "aefabd7f_c4b9ccf4",
       "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -423,6 +459,24 @@
     },
     {
       "key": {
+        "uuid": "315907b0_ddece1cc",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T22:00:32Z",
+      "side": 1,
+      "message": "I don\u0027t see this in the latest patch set. (I see |after_contents| but no EXPECT call.)",
+      "parentUuid": "a71ae3b7_83585f58",
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17e654db_3772f1da",
         "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
         "patchSetId": 12
@@ -505,6 +559,30 @@
       "side": 1,
       "message": "Range style here, and arraysize below.",
       "parentUuid": "33a8c3af_c46c5cc4",
+      "range": {
+        "startLine": 723,
+        "startChar": 21,
+        "endLine": 723,
+        "endChar": 65
+      },
+      "revId": "941448625f8a496beaffe5eb62d47bf191beeda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09ba7887_ba1b132b",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-04T22:00:32Z",
+      "side": 1,
+      "message": "Why arraysize below?",
+      "parentUuid": "89a8cf95_bedb614a",
       "range": {
         "startLine": 723,
         "startChar": 21,
