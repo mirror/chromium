@@ -29,6 +29,8 @@
 
 #include "core/dom/Document.h"
 
+#include <memory>
+
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/HTMLScriptElementOrSVGScriptElement.h"
@@ -259,8 +261,6 @@
 #include "public/platform/modules/insecure_input/insecure_input_service.mojom-blink.h"
 #include "public/platform/site_engagement.mojom-blink.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
-
-#include <memory>
 
 #ifndef NDEBUG
 using WeakDocumentSet =
@@ -597,6 +597,7 @@ Document::Document(const DocumentInit& initializer,
       node_count_(0),
       would_load_reason_(WouldLoadReason::kInvalid),
       password_count_(0),
+      logged_field_edit_(false),
       engagement_level_(mojom::blink::EngagementLevel::NONE) {
   if (frame_) {
     DCHECK(frame_->GetPage());
@@ -4772,6 +4773,28 @@ void Document::SendSensitiveInputVisibilityInternal() {
   insecure_input_service_ptr->AllPasswordFieldsInInsecureContextInvisible();
 }
 
+void Document::SendFieldEdited() {
+  if (sensitive_input_edited_task_.IsActive())
+    return;
+
+  sensitive_input_edited_task_ =
+      TaskRunnerHelper::Get(TaskType::kUserInteraction, this)
+          ->PostCancellableTask(BLINK_FROM_HERE,
+                                WTF::Bind(&Document::SendFieldEditedInternal,
+                                          WrapWeakPersistent(this)));
+}
+
+void Document::SendFieldEditedInternal() {
+  if (!GetFrame())
+    return;
+
+  mojom::blink::InsecureInputServicePtr insecure_input_service_ptr;
+  GetFrame()->GetInterfaceProvider().GetInterface(
+      mojo::MakeRequest(&insecure_input_service_ptr));
+
+  insecure_input_service_ptr->FieldEditedInInsecureContext();
+}
+
 void Document::RegisterEventFactory(
     std::unique_ptr<EventFactoryBase> event_factory) {
   DCHECK(!EventFactories().Contains(event_factory.get()));
@@ -6850,6 +6873,20 @@ void Document::DecrementPasswordCount() {
   if (IsSecureContext() || password_count_ > 0)
     return;
   SendSensitiveInputVisibility();
+}
+
+void Document::LogFieldEdited() {
+  if (IsSecureContext() || logged_field_edit_) {
+    // The browser process only cares about editing fields on pages where the
+    // top-level URL is not secure. Secure contexts must have a top-level URL
+    // that is secure, so there is no need to send notifications for editing
+    // in secure contexts.
+    //
+    // Also, only send a message on the first edit; the browser process doesn't
+    // care about the presence of additional edits.
+    return;
+  }
+  SendFieldEdited();
 }
 
 CoreProbeSink* Document::GetProbeSink() {

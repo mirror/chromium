@@ -8,6 +8,8 @@
 
 #include "chrome/browser/ssl/insecure_sensitive_input_driver_factory.h"
 #include "chrome/browser/ssl/visible_password_observer.h"
+#include "components/security_state/content/ssl_status_input_event_data.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 
@@ -38,4 +40,28 @@ void InsecureSensitiveInputDriver::
   VisiblePasswordObserver* observer = VisiblePasswordObserver::FromWebContents(
       content::WebContents::FromRenderFrameHost(render_frame_host_));
   observer->RenderFrameHasNoVisiblePasswordFields(render_frame_host_);
+}
+
+void InsecureSensitiveInputDriver::FieldEditedInInsecureContext() {
+  content::WebContents* web_contents =
+      content::WebContents::FromRenderFrameHost(render_frame_host_);
+  content::NavigationEntry* entry =
+      web_contents->GetController().GetLastCommittedEntry();
+  security_state::SSLStatus& ssl = entry->GetSSL();
+
+  // We aren't guaranteed to always have a navigation entry.
+  if (!entry)
+    return;
+
+  security_state::SSLStatusInputEventData* input_events =
+      static_cast<security_state::SSLStatusInputEventData*>(
+          ssl.user_data.get());
+  if (!input_events) {
+    ssl.user_data = base::MakeUnique<security_state::SSLStatusInputEventData>();
+    input_events = static_cast<security_state::SSLStatusInputEventData*>(
+        ssl.user_data.get());
+  }
+
+  input_events->set_insecure_field_edited(true);
+  web_contents->DidChangeVisibleSecurityState();
 }
