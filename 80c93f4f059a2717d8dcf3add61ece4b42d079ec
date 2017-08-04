@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59c3318b_ebc11abb",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-04T15:15:44Z",
+      "side": 1,
+      "message": "rm \"other\" (it\u0027s referring to nothing in this context which is cross-platform)",
+      "range": {
+        "startLine": 353,
+        "startChar": 24,
+        "endLine": 353,
+        "endChar": 29
+      },
+      "revId": "80c93f4f059a2717d8dcf3add61ece4b42d079ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b8f392_4ed1d50d",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-04T15:15:44Z",
+      "side": 1,
+      "message": "What I don\u0027t understand is why this isn\u0027t true when not nested? Why is the native pump calling back to us in the non-nested case but not in the nested case? Luck?",
+      "range": {
+        "startLine": 354,
+        "startChar": 20,
+        "endLine": 354,
+        "endChar": 31
+      },
+      "revId": "80c93f4f059a2717d8dcf3add61ece4b42d079ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
