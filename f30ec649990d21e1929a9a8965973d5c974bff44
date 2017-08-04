@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7ee50d4_6df68035",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-04T20:37:01Z",
+      "side": 1,
+      "message": "This is not a merge, so this documentation need to be updated",
+      "revId": "f30ec649990d21e1929a9a8965973d5c974bff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a5f952c_0656fdf5",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-04T20:37:01Z",
+      "side": 1,
+      "message": "I suggest using python namedtuple here for readability https://docs.python.org/2/library/collections.html#collections.namedtuple \n\nLater you can refer to data in \"sorted_events_boundaries\" as sorted_events_boundaries[i].type, sorted_events_boundaries[i].wall_time vs sorted_events_boundaries[i].thread_time",
+      "range": {
+        "startLine": 126,
+        "startChar": 67,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "f30ec649990d21e1929a9a8965973d5c974bff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30f52d0_a209f1be",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-04T20:37:01Z",
+      "side": 1,
+      "message": "this flattened_events doesn\u0027t store events, so I think the name is a misnomer here. Maybe call this sorted_events_boundaries?",
+      "revId": "f30ec649990d21e1929a9a8965973d5c974bff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c3ed85_8f39aee8",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-04T20:37:01Z",
+      "side": 1,
+      "message": "To make the code clearer, I would separate this \u0026 the logic above the create sorted_events_boundaries to a sub routine that just takes in event_name, model \u0026 return the list of these merged bounds.\n\nSo s.t like: \ndef CreateMergedEventsBoundary():\n   ...\n\nGiven the merged bounds list, The rest of the code here is roughly from line 161 -\u003e 180",
+      "revId": "f30ec649990d21e1929a9a8965973d5c974bff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f060a8b_048ed174",
+        "filename": "tools/perf/benchmarks/blink_perf_unittest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-04T20:37:01Z",
+      "side": 1,
+      "message": "Can you add drawing describe how the model would look like?",
+      "revId": "f30ec649990d21e1929a9a8965973d5c974bff44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
