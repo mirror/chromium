@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e9fb6cd_c8d5ea53",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-04T20:51:42Z",
+      "side": 1,
+      "message": "This needs to be updated?",
+      "revId": "81bc99ad1cd524822f06c7ffd09cd047644a8428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca29d143_693a5903",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-04T20:51:42Z",
+      "side": 1,
+      "message": "Are you sure we want to set these flags on a TouchEvent? Because I don\u0027t think we ever do that right now, and I am not sure how well various parts of the code (the gesture-recognizer, for example) will cope with it.",
+      "revId": "81bc99ad1cd524822f06c7ffd09cd047644a8428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb371f4e_5d754adc",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2783,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-04T20:51:42Z",
+      "side": 1,
+      "message": "You could call GetTouchEventFlags() for |flags| here, right? Maybe rename the function to something else? (e.g. GetFlagsFromPointerEvent()?)",
+      "revId": "81bc99ad1cd524822f06c7ffd09cd047644a8428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
