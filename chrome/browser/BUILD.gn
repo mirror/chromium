@@ -1317,6 +1317,8 @@ split_static_library("browser") {
     "ssl/chrome_ssl_host_state_delegate_factory.h",
     "ssl/common_name_mismatch_handler.cc",
     "ssl/common_name_mismatch_handler.h",
+    "ssl/content_filter_blocking_page.cc",
+    "ssl/content_filter_blocking_page.h",
     "ssl/insecure_sensitive_input_driver.cc",
     "ssl/insecure_sensitive_input_driver.h",
     "ssl/insecure_sensitive_input_driver_factory.cc",
