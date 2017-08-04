@@ -1,0 +1,46 @@
+Tests that evaluation with top-level await may be perfomed in console.
+
+await Promise.resolve(1)
+1
+{a:await Promise.resolve(1)}
+{a: 1}
+$_
+{a: 1}
+let {a,b} = await Promise.resolve({a: 1, b:2}), f = 5;
+undefined
+a
+1
+b
+2
+let c = await Promise.resolve(2)
+undefined
+c
+2
+let d;
+undefined
+d
+undefined
+let [i,{abc:{k}}] = [0,{abc:{k:1}}];
+undefined
+i
+0
+k
+1
+var l = await Promise.resolve(2);
+undefined
+l
+2
+foo(await koo());
+4
+$_
+4
+const m = foo(await koo());
+undefined
+m
+4
+const n = foo(await
+koo());
+undefined
+n
+4
+
