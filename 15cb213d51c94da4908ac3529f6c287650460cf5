@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96831de4_7fa1e1a7",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-04T21:38:10Z",
+      "side": 1,
+      "message": "Merge these two if-clause to ShouldHideTitleBars()?",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77f783b_ff9356b8",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-04T21:38:10Z",
+      "side": 1,
+      "message": "Just curious: I never used it before. How to enable a feature? Why don\u0027t introduce a flag in chrome://flags?",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210d064b_771014bf",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-04T21:38:10Z",
+      "side": 1,
+      "message": "Why this change? It seems that it changed existing behavior if the feature is enabled (title bar is hidden).",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d484eb3d_05be918c",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-04T21:38:10Z",
+      "side": 1,
+      "message": "Why this change?",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477b1336_133c4d6c",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-04T21:38:10Z",
+      "side": 1,
+      "message": "I think you should integrate these to line 205 UpdateWindow() function and modify GetMaximizedOrCenteredWindowType() since there is no maximized mode any more.",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c9d687_e32df10d",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-04T21:38:10Z",
+      "side": 1,
+      "message": "ditto. I think you should integrate these to line 305 UpdateWindow() function. Also modify GetMaximizedOrCenteredWindowType().",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3c89a2_1a1691e6",
+        "filename": "components/exo/wm_helper_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-04T21:38:10Z",
+      "side": 1,
+      "message": "Why the changes in this file? It doesn\u0027t look right to me. Won\u0027t you break something if you enable the feature?",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
