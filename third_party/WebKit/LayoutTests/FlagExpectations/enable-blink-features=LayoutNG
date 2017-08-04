@@ -17670,3 +17670,9 @@ crbug.com/591099 webmidi/requestmidiaccess.html [ Failure ]
 crbug.com/591099 webmidi/send-messages.html [ Failure ]
 crbug.com/591099 webmidi/send-system-messages.html [ Failure ]
 crbug.com/591099 xmlviewer/extensions-api.html [ Failure ]
+
+# We currently write back whitespace-collapsed strings to LayoutText, causing
+# the following failures. Once we can paint inlines directly from fragment tree,
+# we can stop the writeback.
+crbug.com/714962 editing/pasteboard/19644-1.html [ Failure ]
+crbug.com/714962 editing/pasteboard/19644-2.html [ Failure ]
