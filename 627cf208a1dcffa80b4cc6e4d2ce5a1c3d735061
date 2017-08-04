@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82366f47_8e52801b",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-08-04T21:49:51Z",
+      "side": 1,
+      "message": "It\u0027s not whether RBP has been pushed or not, it\u0027s the actual registers. This can happen anywhere in the prologue (and maybe epilogue), but the first case happened on \"push rbp\" so it took awhile to figure that out.",
+      "parentUuid": "9f742873_62ab4e67",
+      "range": {
+        "startLine": 150,
+        "startChar": 49,
+        "endLine": 152,
+        "endChar": 16
+      },
+      "revId": "627cf208a1dcffa80b4cc6e4d2ce5a1c3d735061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d3fc6fb_cc189d58",
         "filename": "base/profiler/native_stack_sampler_mac.cc",
         "patchSetId": 1
