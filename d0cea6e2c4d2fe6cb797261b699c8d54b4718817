@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c2e9816_49394031",
+        "filename": "ui/views/style/typography_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-04T01:57:13Z",
+      "side": 1,
+      "message": "Nit: Maybe explicitly add: \"Trying to use MEDIUM there will give a bold font, which will look worse with the surrounding NORMAL text than just using NORMAL.\"",
+      "revId": "d0cea6e2c4d2fe6cb797261b699c8d54b4718817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28193bc2_d15152e9",
+        "filename": "ui/views/style/typography_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-04T01:57:13Z",
+      "side": 1,
+      "message": "Nit: Maybe say something here like: \"NORMAL may already be of at least MEDIUM weight.  Not only is it OK to return NORMAL here, it may be necessary; in some Windows configurations, NORMAL results in a BOLD-weight font but MEDIUM does not, so trying to return MEDIUM would actually make the font lighter-weight than the surrounding text.\"",
+      "revId": "d0cea6e2c4d2fe6cb797261b699c8d54b4718817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
