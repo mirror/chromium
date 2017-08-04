@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b2baef6_59efe980",
+        "filename": "base/values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-04T02:43:57Z",
+      "side": 1,
+      "message": "Once I realized this whole method is basically just a call to operator[] + an assignment I couldn\u0027t believe I didn\u0027t realize this before. If I remember correctly, you expressed a concern regarding operator[] before, since this is likely hard to optimize for the compiler.\n\nAlternatively, we could add C++17\u0027s insert_or_assign to base::flat_map (http://en.cppreference.com/w/cpp/container/map/insert_or_assign), and use that here instead. This would get rid of the default construction + assignment for new elements, and simply use the move constructor.\n\nI was a bit hesitant to implement insert_or_assign until now, since it is very template heavy for not that much gain. But maybe it is worth it here?",
+      "revId": "0ec627e9bddba9f4090e8829bb4ec05f45f7bf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9beafeae_0e631534",
+        "filename": "base/values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-04T02:43:57Z",
+      "side": 1,
+      "message": "If we decide to implement insert_or_assign (see comment above), we could implement try_emplace (http://en.cppreference.com/w/cpp/container/map/try_emplace) at the same time and use it here.\n\nCompared to the regular emplace, try_emplace\u0027s name arguably describes better what it does. Also, while not applicable here, since it splits key and value params in the parameter list, it is easier to use for values that have multiple argument constructors (e.g. it removes the need for std::piecewise_construct in this case). Furthermore, it avoids moving out of passed rvalues when the insertion does not happen.",
+      "range": {
+        "startLine": 326,
+        "startChar": 20,
+        "endLine": 326,
+        "endChar": 27
+      },
+      "revId": "0ec627e9bddba9f4090e8829bb4ec05f45f7bf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
