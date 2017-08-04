@@ -763,6 +763,8 @@ DirectoryContents.prototype.onScanError_ = function() {
  * @private
  */
 DirectoryContents.prototype.onNewEntries_ = function(refresh, entries) {
+  console.log("(T4) directory_content#onNewEntries: " + entries.length + " new entries: " + (new Date).getTime());
+  console.log(this.processNewEntriesQueue_.toString());
   if (this.scanCancelled_)
     return;
 
@@ -781,7 +783,6 @@ DirectoryContents.prototype.onNewEntries_ = function(refresh, entries) {
 
   // Enlarge the cache size into the new filelist size.
   var newListSize = this.fileList_.length + entriesFiltered.length;
-
   this.processNewEntriesQueue_.run(function(callbackOuter) {
     var finish = function() {
       if (!this.scanCancelled_) {

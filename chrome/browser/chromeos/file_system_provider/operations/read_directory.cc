@@ -6,12 +6,16 @@
 
 #include <stddef.h>
 
+#include <iostream>
 #include <string>
 #include <utility>
 
 #include "chrome/browser/chromeos/file_system_provider/operations/get_metadata.h"
 #include "chrome/common/extensions/api/file_system_provider.h"
 #include "chrome/common/extensions/api/file_system_provider_internal.h"
+
+#include <chrono>
+using namespace std::chrono;
 
 namespace chromeos {
 namespace file_system_provider {
@@ -74,7 +78,10 @@ bool ReadDirectory::Execute(int request_id) {
   // Request only is_directory and name metadata fields.
   options.is_directory = true;
   options.name = true;
-
+  int64_t ms = duration_cast< milliseconds >(
+      system_clock::now().time_since_epoch()
+  ).count();
+  LOG(WARNING) << "(T1) read_directory#Execute: " + std::to_string(ms);
   return SendEvent(
       request_id,
       extensions::events::FILE_SYSTEM_PROVIDER_ON_READ_DIRECTORY_REQUESTED,
@@ -91,6 +98,11 @@ void ReadDirectory::OnSuccess(int /* request_id */,
   const bool convert_result =
       ConvertRequestValueToEntryList(std::move(result), &entry_list);
 
+    int64_t ms = duration_cast< milliseconds >(
+        system_clock::now().time_since_epoch()
+    ).count();
+    LOG(WARNING) << "(T3) read_directory#OnSuccess: " + std::to_string(ms);
+    std::to_string(ms);
   if (!convert_result) {
     LOG(ERROR)
         << "Failed to parse a response for the read directory operation.";
