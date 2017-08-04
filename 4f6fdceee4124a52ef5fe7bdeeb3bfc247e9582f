@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90a6036d_d91ee8c7",
+        "filename": "chrome/renderer/resources/extensions/platform_keys/subtle_crypto.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-04T23:58:33Z",
+      "side": 1,
+      "message": "This one\u0027s a bit interesting.\n\nConceptually, this really should be clearing the error if it didn\u0027t care about it, but it\u0027s strange that it passes with JS-based bindings but not native bindings.  The reason it does is because the rejection from the promise (which runs a callback in the test that asserts there\u0027s no last error) is run asynchronously (as all promise resolves/rejects are), and so immediately after this callback is invoked, the lastError is cleared.  However, when run from native bindings, this callback here is invoked *and* the callback in the test (the rejection) is run before control returns to the C++ code.\n\nI\u0027m not sure if this is a big deal or not, or if we need to do more than just this here.  Any thoughts?  jbroman@, do you know why control stays in JS so long?",
+      "revId": "4f6fdceee4124a52ef5fe7bdeeb3bfc247e9582f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
