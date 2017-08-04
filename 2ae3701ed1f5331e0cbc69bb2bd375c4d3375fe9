@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e22fe49_82d68f2a",
+        "filename": "native_client_sdk/src/libraries/error_handling/error_handling.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002666
+      },
+      "writtenOn": "2017-08-04T16:36:53Z",
+      "side": 0,
+      "message": "Why remove this blank line?",
+      "revId": "2ae3701ed1f5331e0cbc69bb2bd375c4d3375fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
