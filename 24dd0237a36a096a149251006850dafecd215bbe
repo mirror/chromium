@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25924cb1_8d22456a",
+        "filename": "tools/perf/scripts_smoke_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-04T16:33:58Z",
+      "side": 1,
+      "message": "this raise here won\u0027t be reach. You can add e into the self.fail() message",
+      "revId": "24dd0237a36a096a149251006850dafecd215bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
