@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26bdbafd_317737e0",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-04T10:14:08Z",
+      "side": 1,
+      "message": "I guess we\u0027re going to have trouble when this number changes.\n\n(Also, you\u0027ve confirmed that we don\u0027t need to tell clang where libc++ is? I thought those were in /include/, and I seem to recall this giving the blink rename tool some issues)",
+      "revId": "99de2eb82225704755702c3223dfc85c2562ecd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
