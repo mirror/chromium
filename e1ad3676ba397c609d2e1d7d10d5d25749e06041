@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "ba865cda_b85951b9",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-04T17:50:54Z",
+      "side": 1,
+      "message": "The AudioParameters is initialized in AudioRendererImpl::Initialize()[1]. If we want accurate PCM frame count per compressed audio buffer, we have to somehow peek the audio bitstream (how?) and parse the header[2] ahead of time.\nThe workaround I am using is to ensure shared memory and audio bus being large enough to accommodate kMaxFramesPerCompressedAudioBuffer, 4k, frames. The real data size and frame count for bitstream formats will be carried in extra fields in AudioBus[3].\n\n[1] https://chromium-review.googlesource.com/c/596720/5/media/renderers/audio_renderer_impl.cc#419\n[2] https://cs.chromium.org/chromium/src/media/formats/ac3/ac3_util.h?l\u003d24\n[3] https://chromium-review.googlesource.com/c/596720/5/media/base/audio_bus.h#226",
+      "parentUuid": "da2c6f9f_714f25c4",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6918eddc_3c0515f7",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 2
