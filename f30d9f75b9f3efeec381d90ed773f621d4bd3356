@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c66dae2e_af1fcbd5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-04T19:20:17Z",
+      "side": 1,
+      "message": "LOL!",
+      "parentUuid": "fd9be9b1_d24c6a28",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 12
+      },
+      "revId": "f30d9f75b9f3efeec381d90ed773f621d4bd3356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2c61599_fa5432ae",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "f30d9f75b9f3efeec381d90ed773f621d4bd3356",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4efb51f2_623c6100",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-04T19:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2c61599_fa5432ae",
+      "range": {
+        "startLine": 412,
+        "startChar": 40,
+        "endLine": 412,
+        "endChar": 42
+      },
+      "revId": "f30d9f75b9f3efeec381d90ed773f621d4bd3356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
