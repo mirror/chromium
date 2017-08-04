@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "10ee58a9_88ac34f6",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-04T22:13:33Z",
+      "side": 1,
+      "message": "\"it can only be constructed using a PaintImageBuffer, or copied/moved into\nusing operator\u003d\"",
+      "revId": "992f418b7d20f0498002720a67ad56cfb59f8c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940326b4_20c666f3",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-04T22:13:33Z",
+      "side": 1,
+      "message": "Why these changes?",
+      "revId": "992f418b7d20f0498002720a67ad56cfb59f8c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5723902_178d550d",
         "filename": "cc/paint/paint_image_builder.h",
         "patchSetId": 4
