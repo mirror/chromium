@@ -8,9 +8,9 @@
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/properties/CSSPropertyAnimationNameUtils.h"
 
-class CSSParserContext;
-
 namespace blink {
+
+class CSSParserContext;
 
 const CSSValue* CSSPropertyAPIAnimationName::parseSingleValue(
     CSSParserTokenRange& range,

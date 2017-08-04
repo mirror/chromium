@@ -7,8 +7,9 @@
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/parser/FontVariantLigaturesParser.h"
 
-class CSSParserLocalContext;
 namespace blink {
+
+class CSSParserLocalContext;
 
 const CSSValue* CSSPropertyAPIFontVariantLigatures::parseSingleValue(
     CSSParserTokenRange& range,

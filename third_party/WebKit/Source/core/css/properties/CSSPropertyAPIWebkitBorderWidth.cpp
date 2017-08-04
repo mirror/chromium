@@ -8,8 +8,9 @@
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/properties/CSSPropertyWebkitBorderWidthUtils.h"
 
-class CSSParserLocalContext;
 namespace blink {
+
+class CSSParserLocalContext;
 
 const CSSValue* CSSPropertyAPIWebkitBorderWidth::parseSingleValue(
     CSSParserTokenRange& range,

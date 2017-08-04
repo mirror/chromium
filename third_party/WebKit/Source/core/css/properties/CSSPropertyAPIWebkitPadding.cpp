@@ -8,8 +8,9 @@
 #include "core/css/parser/CSSParserTokenRange.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
-class CSSParserLocalContext;
 namespace blink {
+
+class CSSParserLocalContext;
 
 const CSSValue* CSSPropertyAPIWebkitPadding::parseSingleValue(
     CSSParserTokenRange& range,

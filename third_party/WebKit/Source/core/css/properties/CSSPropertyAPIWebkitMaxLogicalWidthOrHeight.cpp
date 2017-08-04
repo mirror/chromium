@@ -6,8 +6,9 @@
 
 #include "core/css/properties/CSSPropertyLengthUtils.h"
 
-class CSSParserLocalContext;
 namespace blink {
+
+class CSSParserLocalContext;
 
 const CSSValue* CSSPropertyAPIWebkitMaxLogicalWidthOrHeight::parseSingleValue(
     CSSParserTokenRange& range,

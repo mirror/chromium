@@ -8,8 +8,9 @@
 #include "core/css/CSSValueList.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
-class CSSParserLocalContext;
 namespace blink {
+
+class CSSParserLocalContext;
 
 const CSSValue* CSSPropertyAPIWebkitTextEmphasisStyle::parseSingleValue(
     CSSParserTokenRange& range,
