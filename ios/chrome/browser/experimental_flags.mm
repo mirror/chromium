@@ -38,8 +38,6 @@ NSString* const kEnableViewCopyPasswords = @"EnableViewCopyPasswords";
 NSString* const kFirstRunForceEnabled = @"FirstRunForceEnabled";
 NSString* const kForceResetContextualSearch = @"ForceResetContextualSearch";
 NSString* const kGaiaEnvironment = @"GAIAEnvironment";
-NSString* const kHeuristicsForPasswordGeneration =
-    @"HeuristicsForPasswordGeneration";
 NSString* const kMDMIntegrationDisabled = @"MDMIntegrationDisabled";
 NSString* const kOriginServerHost = @"AlternateOriginServerHost";
 NSString* const kSafariVCSignInDisabled = @"SafariVCSignInDisabled";
@@ -146,16 +144,9 @@ bool IsPageIconForDowngradedHTTPSEnabled() {
 }
 
 bool IsPasswordGenerationEnabled() {
-  // This call activates the field trial, if needed, so it must come before any
-  // early returns.
-  std::string group_name =
-      base::FieldTrialList::FindFullName("PasswordGeneration");
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kEnableIOSPasswordGeneration))
-    return true;
-  if (command_line->HasSwitch(switches::kDisableIOSPasswordGeneration))
-    return false;
-  return group_name != "Disabled";
+  // TODO(crbug.com/752077): Remove this function and its associated code.
+  // Either by replacing it with a base::Feature or by removing all its uses.
+  return false;
 }
 
 bool IsPhysicalWebEnabled() {
@@ -205,13 +196,9 @@ bool IsViewCopyPasswordsEnabled() {
 }
 
 bool UseOnlyLocalHeuristicsForPasswordGeneration() {
-  if ([[NSUserDefaults standardUserDefaults]
-          boolForKey:kHeuristicsForPasswordGeneration]) {
-    return true;
-  }
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  return command_line->HasSwitch(
-      autofill::switches::kLocalHeuristicsOnlyForPasswordGeneration);
+  // TODO(crbug.com/752077): Remove this function and its associated code.
+  // Either by replacing it with a base::Feature or by removing all its uses.
+  return false;
 }
 
 bool IsSuggestionsUIEnabled() {
