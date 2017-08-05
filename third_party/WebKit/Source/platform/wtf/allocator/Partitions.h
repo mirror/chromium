@@ -32,6 +32,7 @@
 #define Partitions_h
 
 #include <string.h>
+#include "base/allocator/partition_allocator/page_allocator.h"
 #include "base/allocator/partition_allocator/partition_alloc.h"
 #include "base/allocator/partition_allocator/spin_lock.h"
 #include "base/numerics/checked_math.h"
@@ -136,6 +137,9 @@ class WTF_EXPORT Partitions {
 
   static void HandleOutOfMemory();
 
+  static void ReserveMemory(size_t n, size_t alignment);
+  static void ReleaseReservation();
+
  private:
   static base::subtle::SpinLock initialization_lock_;
   static bool initialized_;
@@ -146,6 +150,10 @@ class WTF_EXPORT Partitions {
   static base::PartitionAllocatorGeneric buffer_allocator_;
   static base::SizeSpecificPartitionAllocator<1024> layout_allocator_;
   static ReportPartitionAllocSizeFunction report_size_function_;
+
+  static base::subtle::SpinLock reservation_lock_;
+  static void* reservation_address_;
+  static size_t reservation_size_;
 };
 
 using base::kGenericMaxDirectMapped;
