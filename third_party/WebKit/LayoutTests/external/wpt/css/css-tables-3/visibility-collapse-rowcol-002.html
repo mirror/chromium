@@ -1,0 +1,75 @@
+<!doctype html>
+<meta charset="utf-8">
+<script src='/resources/testharness.js'></script>
+<script src='/resources/testharnessreport.js'></script>
+<link rel='stylesheet' href='support/base.css' />
+<link rel="author" title="Joy Yu" href="mailto:joysyu@mit.edu">
+<link rel="help" href="https://drafts.csswg.org/css-tables-3/#computing-the-table-height">
+<link rel="help" href="https://drafts.csswg.org/css-tables-3/#computing-the-table-width">
+<main>
+    <h1>Visibility collapse</h1>
+    <a href="https://drafts.csswg.org/css-tables-3/#computing-the-table-height">Spec</a>
+    <p>
+    Setting row and spanning column to visibility:collapse changes height and width.
+    </p>
+ <table id="one">
+   <col style="background-color: pink;">
+   <col style="background-color: green;">
+   <col span="2" style="background-color: purple;">
+  <tr>
+    <td>Month</td>
+    <td>Savings</td>
+    <td id="collapsedColumn1">Savings for holiday!</td>
+    <td id="collapsedColumn2">Oh Lord Jesus</td>
+  </tr>
+  <tr>
+    <td rowspan="2" colspan="3">$50</td>
+    <td>Amen</td>
+  </tr>
+  <tr id="collapsedRow">
+    <td>hmm</td>
+  </tr>
+</table>
+    The spanning column is collapsed and spanning row's overflow is clipped.
+ <table id="two">
+   <col style="background-color: pink;">
+   <col style="background-color: green;">
+   <col span="2" style="background-color: purple; visibility: collapse;">
+  <tr>
+    <td>Month</td>
+    <td>Savings</td>
+    <td>Savings for holiday!</td>
+    <td>Oh Lord Jesus</td>
+  </tr>
+  <tr>
+    <td rowspan="2" colspan="3">$50</td>
+    <td>Amen</td>
+  </tr>
+  <tr style="visibility: collapse;">
+    <td>hmm</td>
+  </tr>
+</table>
+</main>
+
+<script>
+    borderWidth = 2;
+    tests = [
+        [
+            document.getElementById('two').offsetWidth,
+            document.getElementById('one').offsetWidth - document.getElementById('collapsedColumn1').offsetWidth - document.getElementById('collapsedColumn2').offsetWidth - borderWidth * 2,
+            "spanning row visibility:collapse doesn't change table width"
+        ],
+        [
+            document.getElementById('two').offsetHeight,
+            document.getElementById('one').offsetHeight - document.getElementById('collapsedRow').offsetHeight - borderWidth,
+            "spanning row visibility:collapse doesn't change height in this case"
+        ]];
+    for (i = 0; i< tests.length; i++) {
+        test(function()
+            {
+                assert_equals.apply(this, tests[i]);
+            },
+            tests[i][2]);
+    };
+</script>
+</html>
