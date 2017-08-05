@@ -205,6 +205,11 @@ void NetworkMetricsProvider::ProvideSystemProfileMetrics(
       wifi_phy_layer_protocol_is_ambiguous_);
   network->set_wifi_phy_layer_protocol(GetWifiPHYLayerProtocol());
 
+  DCHECK_NE(net::EFFECTIVE_CONNECTION_TYPE_OFFLINE,
+            min_effective_connection_type_);
+  DCHECK_NE(net::EFFECTIVE_CONNECTION_TYPE_OFFLINE,
+            max_effective_connection_type_);
+
   network->set_min_effective_connection_type(
       ConvertEffectiveConnectionType(min_effective_connection_type_));
   network->set_max_effective_connection_type(
@@ -428,10 +433,8 @@ void NetworkMetricsProvider::LogAggregatedMetrics() {
 void NetworkMetricsProvider::OnEffectiveConnectionTypeChanged(
     net::EffectiveConnectionType type) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  effective_connection_type_ = type;
-
-  if (effective_connection_type_ == net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN ||
-      effective_connection_type_ == net::EFFECTIVE_CONNECTION_TYPE_OFFLINE) {
+  if (type == net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN ||
+      type == net::EFFECTIVE_CONNECTION_TYPE_OFFLINE) {
     // The effective connection type may be reported as Unknown if there is a
     // change in the connection type. Disregard it since network requests can't
     // be send during the changes in connection type. Similarly, disregard
@@ -439,6 +442,8 @@ void NetworkMetricsProvider::OnEffectiveConnectionTypeChanged(
     // type for a short period when there is a change in the connection type.
     return;
   }
+
+  effective_connection_type_ = type;
 
   if (min_effective_connection_type_ ==
           net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN &&
