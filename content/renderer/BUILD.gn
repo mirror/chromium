@@ -968,13 +968,6 @@ target(link_target_type, "renderer") {
     deps += [ "//printing" ]
   }
 
-  if (enable_mojo_media) {
-    sources += [
-      "media/media_interface_provider.cc",
-      "media/media_interface_provider.h",
-    ]
-  }
-
   if (is_linux || is_android) {
     deps += [ "//sandbox:sandbox_features" ]
   }

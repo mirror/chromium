@@ -45,10 +45,6 @@
 #include "media/base/media.h"
 #endif
 
-#if BUILDFLAG(ENABLE_MOJO_MEDIA)
-#include "content/renderer/media/media_interface_provider.h"
-#endif
-
 #if BUILDFLAG(ENABLE_MOJO_CDM)
 #include "media/mojo/clients/mojo_cdm_factory.h"  // nogncheck
 #endif
@@ -334,7 +330,7 @@ MediaFactory::CreateRendererFactorySelector(
         base::MakeUnique<media::MojoRendererFactory>(
             base::Bind(&RenderThreadImpl::GetGpuFactories,
                        base::Unretained(render_thread)),
-            GetMediaInterfaceProvider()));
+            GetMediaInterfaceFactory()));
 
     factory_selector->SetBaseFactoryType(
         media::RendererFactorySelector::FactoryType::MOJO);
@@ -436,7 +432,7 @@ media::DecoderFactory* MediaFactory::GetDecoderFactory() {
 #if BUILDFLAG(ENABLE_MOJO_AUDIO_DECODER) || BUILDFLAG(ENABLE_MOJO_VIDEO_DECODER)
   if (!decoder_factory_) {
     decoder_factory_.reset(
-        new media::MojoDecoderFactory(GetMediaInterfaceProvider()));
+        new media::MojoDecoderFactory(GetMediaInterfaceFactory()));
   }
 #endif
   return decoder_factory_.get();
@@ -472,13 +468,13 @@ media::CdmFactory* MediaFactory::GetCdmFactory() {
       BUILDFLAG(ENABLE_MOJO_CDM),
       "Mojo CDM should always be enabled when library CDM is enabled");
   if (base::FeatureList::IsEnabled(media::kMojoCdm)) {
-    cdm_factory_.reset(new media::MojoCdmFactory(GetMediaInterfaceProvider()));
+    cdm_factory_.reset(new media::MojoCdmFactory(GetMediaInterfaceFactory()));
   } else {
     cdm_factory_.reset(new RenderCdmFactory(
         base::Bind(&PepperCdmWrapperImpl::Create, web_frame)));
   }
 #elif BUILDFLAG(ENABLE_MOJO_CDM)
-  cdm_factory_.reset(new media::MojoCdmFactory(GetMediaInterfaceProvider()));
+  cdm_factory_.reset(new media::MojoCdmFactory(GetMediaInterfaceFactory()));
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
@@ -491,15 +487,20 @@ media::CdmFactory* MediaFactory::GetCdmFactory() {
 }
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
-service_manager::mojom::InterfaceProvider*
-MediaFactory::GetMediaInterfaceProvider() {
-  if (!media_interface_provider_) {
-    DCHECK(remote_interfaces_);
-    media_interface_provider_.reset(
-        new MediaInterfaceProvider(remote_interfaces_));
+media::mojom::InterfaceFactory* MediaFactory::GetMediaInterfaceFactory() {
+  DVLOG(1) << __func__;
+
+  if (!media_interface_factory_) {
+    remote_interfaces_->GetInterface(&media_interface_factory_);
+    media_interface_factory_.set_connection_error_handler(
+        base::Bind(&MediaFactory::OnConnectionError, base::Unretained(this)));
   }
 
-  return media_interface_provider_.get();
+  return media_interface_factory_.get();
+}
+
+void MediaFactory::OnConnectionError() {
+  LOG(ERROR) << __func__;
 }
 #endif  // BUILDFLAG(ENABLE_MOJO_MEDIA)
 
