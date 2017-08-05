@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d63dc0ee_f8ea4b85",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-05T03:08:27Z",
+      "side": 1,
+      "message": "what about this? we want GBM_BO_USE_TEXTURING here, right?\n\ncan you move this variable up to l.260 and \"flags \u0026\u003d ~GBM_BO_USE_SCANOUT\" if import with scanout failed?",
+      "revId": "a12eb9a3d9a53b54c4f395453663f99e06727292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
