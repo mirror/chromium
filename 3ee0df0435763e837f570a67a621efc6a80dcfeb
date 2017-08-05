@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26202d0a_49ba700c",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-05T00:37:54Z",
+      "side": 1,
+      "message": "For future CLs, it\u0027s often helpful for reviewers to split a rebase from the other work if possible. e.g. Rebase \u0026 upload a patchset that\u0027s just titled \"rebase\". Make changes, then upload another patchset with the actual changes. Or the reverse (changes as a standalone patch then rebase). This makes it easier to compare changes between patchsets in Gerrit.",
+      "range": {
+        "startLine": 311,
+        "startChar": 4,
+        "endLine": 313,
+        "endChar": 60
+      },
+      "revId": "3ee0df0435763e837f570a67a621efc6a80dcfeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

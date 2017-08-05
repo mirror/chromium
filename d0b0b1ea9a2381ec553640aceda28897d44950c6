@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "60c581db_e728e893",
+        "filename": "chrome/android/java/res/layout/fre_data_reduction_proxy.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-05T00:37:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "894c005f_db77cf3a",
+      "range": {
+        "startLine": 76,
+        "startChar": 50,
+        "endLine": 76,
+        "endChar": 64
+      },
+      "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24688af9_a019dc72",
         "filename": "chrome/android/java/res/layout/fre_data_reduction_proxy.xml",
         "patchSetId": 4
@@ -237,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "87830445_a7345f1d",
+        "filename": "chrome/android/java/res/layout/lightweight_fre_tos.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-05T00:37:54Z",
+      "side": 1,
+      "message": "Thank you!",
+      "parentUuid": "3257d765_e1ade011",
+      "range": {
+        "startLine": 39,
+        "startChar": 37,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e96597c_1cc53acc",
         "filename": "chrome/android/java/res/values-v17/styles.xml",
         "patchSetId": 4
@@ -281,6 +329,30 @@
       "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f20ac6_e228222b",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-05T00:37:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e35c2558_7319f330",
+      "range": {
+        "startLine": 464,
+        "startChar": 40,
+        "endLine": 464,
+        "endChar": 43
+      },
+      "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -331,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "e665b61f_e7e0188e",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-05T00:37:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8f135d44_efdabfa4",
+      "range": {
+        "startLine": 477,
+        "startChar": 40,
+        "endLine": 477,
+        "endChar": 43
+      },
+      "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72051c46_ec312043",
         "filename": "ui/android/java/res/values-v17/styles.xml",
         "patchSetId": 4
@@ -366,6 +462,30 @@
       "side": 1,
       "message": "Sure:) What is the usual way to explain this? Should we send out emails, put up some docs, or something else?",
       "parentUuid": "72051c46_ec312043",
+      "range": {
+        "startLine": 49,
+        "startChar": 71,
+        "endLine": 49,
+        "endChar": 75
+      },
+      "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e340482_cd9a2004",
+        "filename": "ui/android/java/res/values-v17/styles.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-05T00:37:54Z",
+      "side": 1,
+      "message": "I was thinking we would just add a code comment for now. e.g.\n\n\u003c!-- All Chromium text should use one of the pre-defined black, white, or blue text styles below. --\u003e\n\n\u003c!-- Black Text Styles --\u003e\n\n\n\nI\u0027m also okay with leaving this out for now and adding code comments where there is a corresponding bug or readme or something like that to go with it. We should wait on sending out an email until we have the enforcement of no new colors/text styles implemented.",
+      "parentUuid": "8ddeb0e2_40c36f53",
       "range": {
         "startLine": 49,
         "startChar": 71,
