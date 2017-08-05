@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c754120_b54facce",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestCanMakePaymentMetricsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-05T01:48:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "629c3f2a_e7da3aec",
+      "range": {
+        "startLine": 299,
+        "startChar": 25,
+        "endLine": 299,
+        "endChar": 39
+      },
+      "revId": "80d14e4704726e42c259972a9b4968f9bab56cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5c17d9f_c6825e65",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestCanMakePaymentMetricsTest.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "80d14e4704726e42c259972a9b4968f9bab56cdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e6f594_b3c56eb6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestCanMakePaymentMetricsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-05T01:48:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5c17d9f_c6825e65",
+      "range": {
+        "startLine": 337,
+        "startChar": 15,
+        "endLine": 337,
+        "endChar": 16
+      },
+      "revId": "80d14e4704726e42c259972a9b4968f9bab56cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
