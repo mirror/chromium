@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "c11697c2_8efbe42f",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T02:13:54Z",
+      "side": 1,
+      "message": "nit: no parens necessary",
+      "range": {
+        "startLine": 390,
+        "startChar": 6,
+        "endLine": 390,
+        "endChar": 20
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6875c703_f2f7cc50",
+        "filename": "components/security_state/content/content_utils_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T02:13:54Z",
+      "side": 1,
+      "message": "ASSERT -\u003e EXPECT (and below)",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 14
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af51f1e7_64bb18c0",
+        "filename": "components/security_state/content/ssl_status_input_event_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T02:13:54Z",
+      "side": 1,
+      "message": "can this return a pointer (data_.get()) instead of copying? Then you can skip the setter too, callers can just get the InsecureInputEventData* and change the fields themselves.",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0822a283_47ad77df",
+        "filename": "components/security_state/content/ssl_status_input_event_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T02:13:54Z",
+      "side": 1,
+      "message": "SSLStatus::UserData",
+      "range": {
+        "startLine": 29,
+        "startChar": 5,
+        "endLine": 29,
+        "endChar": 14
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dedf762_2936660f",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 5
