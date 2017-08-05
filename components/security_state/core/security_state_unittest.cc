@@ -12,6 +12,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_command_line.h"
+#include "components/security_state/core/insecure_input_event_data.h"
 #include "components/security_state/core/switches.h"
 #include "net/cert/x509_certificate.h"
 #include "net/ssl/ssl_cipher_suite_names.h"
@@ -53,7 +54,8 @@ class TestSecurityStateHelper {
         malicious_content_status_(MALICIOUS_CONTENT_STATUS_NONE),
         displayed_password_field_on_http_(false),
         displayed_credit_card_field_on_http_(false),
-        is_incognito_(false) {}
+        is_incognito_(false),
+        insecure_input_events_() {}
   virtual ~TestSecurityStateHelper() {}
 
   void SetCertificate(scoped_refptr<net::X509Certificate> cert) {
@@ -91,6 +93,10 @@ class TestSecurityStateHelper {
   }
   void set_is_incognito(bool is_incognito) { is_incognito_ = is_incognito; }
 
+  void set_insecure_field_edit(bool insecure_field_edit) {
+    insecure_input_events_.insecure_field_edited = insecure_field_edit;
+  }
+
   void SetUrl(const GURL& url) { url_ = url; }
 
   std::unique_ptr<VisibleSecurityState> GetVisibleSecurityState() const {
@@ -109,6 +115,7 @@ class TestSecurityStateHelper {
     state->displayed_credit_card_field_on_http =
         displayed_credit_card_field_on_http_;
     state->is_incognito = is_incognito_;
+    state->insecure_input_events = insecure_input_events_;
     return state;
   }
 
@@ -131,6 +138,7 @@ class TestSecurityStateHelper {
   bool displayed_password_field_on_http_;
   bool displayed_credit_card_field_on_http_;
   bool is_incognito_;
+  InsecureInputEventData insecure_input_events_;
 };
 
 }  // namespace
@@ -507,6 +515,23 @@ TEST(SecurityStateTest, MixedForm) {
   EXPECT_EQ(CONTENT_STATUS_RAN,
             mixed_form_and_active_security_info.mixed_content_status);
   EXPECT_EQ(DANGEROUS, mixed_form_and_active_security_info.security_level);
+}
+
+// Tests that a field edit is reflected in the SecurityInfo.
+TEST(SecurityStateTest, FieldEdit) {
+  TestSecurityStateHelper helper;
+
+  SecurityInfo no_field_edit_security_info;
+  helper.GetSecurityInfo(&no_field_edit_security_info);
+  EXPECT_FALSE(
+      no_field_edit_security_info.insecure_input_events.insecure_field_edited);
+
+  helper.set_insecure_field_edit(true);
+
+  SecurityInfo insecure_field_edit_security_info;
+  helper.GetSecurityInfo(&insecure_field_edit_security_info);
+  EXPECT_TRUE(insecure_field_edit_security_info.insecure_input_events
+                  .insecure_field_edited);
 }
 
 }  // namespace security_state
