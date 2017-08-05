@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de01c206_0ceb0aaf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-05T20:42:00Z",
+      "side": 1,
+      "message": "FeatureTracker was not a thing before this CL. Maybe you could just describe what the end result of this CL is in this description, instead of the changes throughout the patch sets?\n\nI think it\u0027s helpful to focus on what this new functionality provides of functionality to IPH features needing to track session time.",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 94
+      },
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e689ca3_d8cc6773",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-05T20:42:00Z",
+      "side": 1,
+      "message": "Could you add a comment explaining the requirement for the subclass factory to:\n\n  DependsOn(SessionDurationUpdaterFactory::GetInstance())\n\n?",
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0078b62_f684fc50",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-05T20:42:00Z",
+      "side": 1,
+      "message": "() const;",
+      "range": {
+        "startLine": 38,
+        "startChar": 36,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b91dcc_bfd2f499",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-05T20:42:00Z",
+      "side": 1,
+      "message": "Any reason why this has been split out from the other method from FeatureTracker?",
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed4b118_881e0c29",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-05T20:42:00Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this DependsOn(SessionDurationUpdaterFactory::GetInstance())?",
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1273d2e0_fd7596ea",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-05T20:42:00Z",
+      "side": 1,
+      "message": "\"it should remove itself\"?",
+      "range": {
+        "startLine": 25,
+        "startChar": 47,
+        "endLine": 25,
+        "endChar": 64
+      },
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "537c9edd_467f7255",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-05T20:42:00Z",
+      "side": 1,
+      "message": "Since you added support for later adding a new observer after everyone else has left, maybe comment that doing so might have missed some time updates during the time where there was no observers?",
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ccd58f_205efd4e",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-05T20:42:00Z",
+      "side": 1,
+      "message": "\u003d default?",
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "071afbdf_947b97ec",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-05T20:42:00Z",
+      "side": 1,
+      "message": "I would assume everyone is supposed to implement this, so |\u003d 0|?",
+      "range": {
+        "startLine": 38,
+        "startChar": 68,
+        "endLine": 38,
+        "endChar": 70
+      },
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b83964bc_34b9f224",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-05T20:42:00Z",
+      "side": 1,
+      "message": "Nit: Empty newline, since this is not part of the API above",
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
