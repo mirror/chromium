@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5dac919c_cf7515c6",
+        "filename": "content/browser/appcache/appcache_update_request_base.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08c0b5e5_012b12a8",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd2f8422_34ac77bb",
         "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "116aea2a_b30b393e",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd2f8422_34ac77bb",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57116608_047435ea",
         "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
         "patchSetId": 13
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-04T21:48:20Z",
       "side": 1,
       "message": "is the test for net_error \u003c 0 needed or wanted? what does a positive error code mean and wouldn\u0027t it still mean the result_ should be some sort of error instead of OK?",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "222030be_6fe4f612",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "I don\u0027t think there are positive net_errors. https://cs.chromium.org/chromium/src/net/base/net_error_list.h?type\u003dcs\u0026sq\u003dpackage:chromium\n\nIn any case I see your point. Removed this check.",
+      "parentUuid": "57116608_047435ea",
       "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "339a3747_ac9ef8af",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1565430b_c555fcbe",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bf6b2bb_d44675e1",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 13
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-04T21:48:20Z",
       "side": 1,
       "message": "What about handle_watcher_ and handle_, we don\u0027t want any reads to complete after we\u0027ve canceled. Could also clear out potentially bulky data members like the headers and the io buffer",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc7a407_8d4e66e5",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Thanks. Done",
+      "parentUuid": "5bf6b2bb_d44675e1",
       "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "ced30520_5ab662dd",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3042284_3fdbeca7",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef47ca51_545c6d3e",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 13
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "31c1c304_13c122ba",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef47ca51_545c6d3e",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75932e6b_56f12271",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 13
@@ -132,6 +258,30 @@
       "writtenOn": "2017-08-04T21:48:20Z",
       "side": 1,
       "message": "I think there are some code paths where this flag is not reset. WOuld it make sense to reset this flag inside of StartReading() when BeginRead() does not return SHOULD_WAIT?",
+      "range": {
+        "startLine": 183,
+        "startChar": 20,
+        "endLine": 183,
+        "endChar": 25
+      },
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9bf3c0_04996513",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Thanks. Moved to StartReading() after the busy check",
+      "parentUuid": "75932e6b_56f12271",
       "range": {
         "startLine": 183,
         "startChar": 20,
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "5db8ea01_24ea715b",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Thanks. Changed to a DCHECK.",
+      "parentUuid": "1c0b69c6_311379ab",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fe12b15_24e622ff",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 13
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "3104b10e_3dcaf2fc",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fe12b15_24e622ff",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "655b60d6_610560fd",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 13
@@ -189,6 +375,24 @@
       "writtenOn": "2017-08-04T21:48:20Z",
       "side": 1,
       "message": "What does this return value mean? If we get this return value, how does progress continue so we get to read completion?",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2249fa_43bb0323",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "I don\u0027t know actually. The comments say that this happens when the resource is accessed across multiple threads. Safe to remove I think. I added this check based on this code.\nhttps://cs.chromium.org/chromium/src/content/child/url_response_body_consumer.cc?type\u003dcs\u0026q\u003dUrlResponseBody\u0026sq\u003dpackage:chromium\u0026l\u003d124",
+      "parentUuid": "655b60d6_610560fd",
       "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "cb076429_335f97f1",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Noted. Other places use this value to determine that end of data has been reached.\nhttps://cs.chromium.org/chromium/src/content/child/url_response_body_consumer.cc?type\u003dcs\u0026q\u003dUrlResponseBody\u0026sq\u003dpackage:chromium\u0026l\u003d124",
+      "parentUuid": "90250bd1_3392fcca",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "502714f5_3b88bc9d",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 13
@@ -229,6 +451,24 @@
     },
     {
       "key": {
+        "uuid": "334a3431_a069dceb",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "502714f5_3b88bc9d",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ead6825_6be08f87",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 13
@@ -240,6 +480,24 @@
       "writtenOn": "2017-08-04T23:28:40Z",
       "side": 1,
       "message": "Wait, I don\u0027t think we can call pendng_read_-\u003eComplete(len) until *after* the fetcher is done with the io buffer.\n\n  fetcher_-\u003eOnReadCompleted(buffer_.get(), len);\n\nUntil the data has been written out to disk by the appcache_witer, that buffer has got do stay valid. See comments in the adapter.h file about how I think that can be arranged. The IOBuffer\u0027s lifetime is what matters.",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7f9430_a5c63835",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Thanks. Made changes as per discussion.",
+      "parentUuid": "0ead6825_6be08f87",
       "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -263,6 +521,24 @@
     },
     {
       "key": {
+        "uuid": "48c94f00_76ded85d",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3136790_0368228a",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fd35ca0_e24d8578",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.h",
         "patchSetId": 13
@@ -277,6 +553,24 @@
       "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0995e9_e9995840",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fd35ca0_e24d8578",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -297,6 +591,24 @@
     },
     {
       "key": {
+        "uuid": "01536e59_07b2ad35",
+        "filename": "content/browser/appcache/appcache_update_url_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca923e5f_939421b9",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad7226a1_f5b4a46f",
         "filename": "content/common/net_adapters.cc",
         "patchSetId": 13
@@ -308,6 +620,24 @@
       "writtenOn": "2017-08-04T23:28:40Z",
       "side": 1,
       "message": "Seems like the dtor should call Complete(length) to let the mojo system that we no longer need access to data our buffer_ pts at, but we also need to return ownership of the handle_ back to the Request object.\n\nSee comments in the .h file",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f4f3f1_a7dcb4ab",
+        "filename": "content/common/net_adapters.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Thanks. Changed the class to take in bytes_to_be_copied as an argument. We complete accordingly\nin the destructor",
+      "parentUuid": "ad7226a1_f5b4a46f",
       "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -337,6 +667,30 @@
     },
     {
       "key": {
+        "uuid": "13bdf45c_cef1700f",
+        "filename": "content/common/net_adapters.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Changed to void now",
+      "parentUuid": "7b544a44_2f163fc8",
+      "range": {
+        "startLine": 90,
+        "startChar": 58,
+        "endLine": 90,
+        "endChar": 68
+      },
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79c89475_0719347c",
         "filename": "content/common/net_adapters.h",
         "patchSetId": 13
@@ -351,6 +705,24 @@
       "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f6fb9b_73790ebf",
+        "filename": "content/common/net_adapters.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T00:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79c89475_0719347c",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
