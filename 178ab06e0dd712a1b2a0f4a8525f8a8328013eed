@@ -1,0 +1,359 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f0b6d79_009c9f49",
+        "filename": "chrome/browser/profiling_host/chrome_browser_main_extra_parts_profiling.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "nit: Just call cmdline.HasSwitch(switches::kMemlog) inside the if and\nand don\u0027t bother with the extra variable.",
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad5556d4_bfe8ff7e",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "What\u0027s the lifetime of PPH? Do we know the IO thread is shutdown before PPH is deleted?",
+      "range": {
+        "startLine": 49,
+        "startChar": 37,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f988b419_145554e5",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "Add comment explaining this is where we send the command to the child to profile.\n\nGiven the similarity of names, it\u0027s too easy to think of this as MemlogPtr.",
+      "range": {
+        "startLine": 56,
+        "startChar": 20,
+        "endLine": 56,
+        "endChar": 35
+      },
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d75297_e7391195",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "Overall, we should document the PPH lifetime somewhere.",
+      "range": {
+        "startLine": 71,
+        "startChar": 50,
+        "endLine": 71,
+        "endChar": 51
+      },
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb813192_c0e57f33",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "You can do this before the thread bounce...",
+      "range": {
+        "startLine": 75,
+        "startChar": 6,
+        "endLine": 75,
+        "endChar": 10
+      },
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d9394ee_cdc534d7",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "omg. This needs to be framed for the most complicated way we could possibly express in the type system the need to send 2 ints.",
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7afce573_6f716f5e",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "This should have a thread DCHECK() as the MakeConnector() implicit is bound to a thread I think.",
+      "range": {
+        "startLine": 105,
+        "startChar": 39,
+        "endLine": 105,
+        "endChar": 49
+      },
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acae3657_ac6a1fd5",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "Call StartProfilingForClient?",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 6
+      },
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083ca5d5_0cc3b4cc",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "When is memlog_cilent_ bound?",
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97bd9d5_05be7dc1",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "f -\u003e file! No single letter variable names!",
+      "range": {
+        "startLine": 161,
+        "startChar": 15,
+        "endLine": 161,
+        "endChar": 26
+      },
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1eb581_cc447999",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "sh -\u003e handle\n\nNo super-short unxhkr varnames.",
+      "range": {
+        "startLine": 172,
+        "startChar": 20,
+        "endLine": 172,
+        "endChar": 21
+      },
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9376013_7bb21370",
+        "filename": "chrome/common/chrome_content_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "Can you add a bug to track this?",
+      "range": {
+        "startLine": 721,
+        "startChar": 13,
+        "endLine": 721,
+        "endChar": 22
+      },
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551ba8db_a57b541e",
+        "filename": "chrome/common/chrome_switches.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "I think kProfiling is also dead now...",
+      "range": {
+        "startLine": 345,
+        "startChar": 18,
+        "endLine": 345,
+        "endChar": 28
+      },
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "241c9cfe_5a201730",
+        "filename": "chrome/common/profiling/memlog.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "nit: both interfaces take a pid.  Make the ordering the same (first on both?)? (yeah, my fault that they\u0027re different.)",
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6f04b5_70b079c9",
+        "filename": "chrome/common/profiling/memlog_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "newline.",
+      "range": {
+        "startLine": 18,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa3d5753_3e015c88",
+        "filename": "chrome/common/profiling/memlog_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "nit: newline to separate constructor/destructor block.",
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8061f87f_06562009",
+        "filename": "chrome/common/profiling/memlog_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-05T04:47:48Z",
+      "side": 1,
+      "message": "nit: Move startProfiling first and separate from the others as a block.\nAdd comment above saying \"// mojom::MemlogClient overrides\" or similar.",
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
