@@ -22,6 +22,30 @@
       "revId": "e4f5c9916b3891ebb41ae28b7cc3ea6af7474045",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5e0692_7ff9c3f8",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-05T03:42:28Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9cdab297_f4e48b68",
+      "range": {
+        "startLine": 288,
+        "startChar": 14,
+        "endLine": 288,
+        "endChar": 36
+      },
+      "revId": "e4f5c9916b3891ebb41ae28b7cc3ea6af7474045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
