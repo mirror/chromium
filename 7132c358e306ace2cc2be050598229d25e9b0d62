@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "3127a3ec_c3818827",
+        "filename": "components/security_state/content/ssl_status_input_event_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T05:35:58Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s cheating; it\u0027s a common pattern to return a pointer to a private data member. ex: https://cs.chromium.org/chromium/src/content/browser/web_contents/web_contents_impl.cc?sq\u003dpackage:chromium\u0026l\u003d915, https://cs.chromium.org/chromium/src/content/browser/frame_host/navigation_entry_impl.cc?dr\u003dCSs\u0026l\u003d494, https://cs.chromium.org/chromium/src/content/browser/frame_host/navigation_controller_impl.cc?dr\u003dC\u0026l\u003d1890",
+      "parentUuid": "3f3a005c_d73584aa",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0822a283_47ad77df",
         "filename": "components/security_state/content/ssl_status_input_event_data.h",
         "patchSetId": 5

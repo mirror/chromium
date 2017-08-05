@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65df91e5_2fdbdc48",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T05:35:58Z",
+      "side": 1,
+      "message": "content::SSLStatus?",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 16
+      },
+      "revId": "f75bfd57bd36c729a852b39607d3f0d1e52fe32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1484dabb_2376b2fb",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T05:35:58Z",
+      "side": 1,
+      "message": "nit: instead of copying in an empty class in the null case, could do:\nif (input_events) {\n  state-\u003einsecure_input_events \u003d *input_events-\u003einput_events();\n}",
+      "revId": "f75bfd57bd36c729a852b39607d3f0d1e52fe32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc624d82_a680a0e8",
+        "filename": "components/security_state/content/content_utils_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T05:35:58Z",
+      "side": 1,
+      "message": "nit: no parens",
+      "range": {
+        "startLine": 106,
+        "startChar": 34,
+        "endLine": 106,
+        "endChar": 59
+      },
+      "revId": "f75bfd57bd36c729a852b39607d3f0d1e52fe32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c31b8c_9178431c",
+        "filename": "components/security_state/core/insecure_input_event_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T05:35:58Z",
+      "side": 1,
+      "message": "nit: can you add a comment describing this class?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 6
+      },
+      "revId": "f75bfd57bd36c729a852b39607d3f0d1e52fe32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b911cfe1_808d0b22",
+        "filename": "components/security_state/core/insecure_input_event_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T05:35:58Z",
+      "side": 1,
+      "message": "nit: this should be above the data member (https://google.github.io/styleguide/cppguide.html#Declaration_Order)",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "f75bfd57bd36c729a852b39607d3f0d1e52fe32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73eaac9_35122e2e",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T05:35:58Z",
+      "side": 1,
+      "message": "shouldn\u0027t be needed, default constructor should get called automatically",
+      "range": {
+        "startLine": 318,
+        "startChar": 6,
+        "endLine": 318,
+        "endChar": 29
+      },
+      "revId": "f75bfd57bd36c729a852b39607d3f0d1e52fe32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d988b9_c557fad2",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T05:35:58Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 352,
+        "startChar": 6,
+        "endLine": 352,
+        "endChar": 30
+      },
+      "revId": "f75bfd57bd36c729a852b39607d3f0d1e52fe32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f44926ed_d43f4894",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T05:35:58Z",
+      "side": 1,
+      "message": "Hmm I think this operator is actually maybe dead code...",
+      "range": {
+        "startLine": 356,
+        "startChar": 27,
+        "endLine": 356,
+        "endChar": 37
+      },
+      "revId": "f75bfd57bd36c729a852b39607d3f0d1e52fe32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae818a0_0c3e3e58",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T05:35:58Z",
+      "side": 1,
+      "message": "unnecessary; default constructor should get called automatically",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "f75bfd57bd36c729a852b39607d3f0d1e52fe32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51618a30_129ef528",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 4776,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T05:35:58Z",
+      "side": 1,
+      "message": "nit: maybe call this SendDidEditFieldInInsecureContext to document that it should only be called for editing fields in insecure contexts",
+      "range": {
+        "startLine": 4776,
+        "startChar": 15,
+        "endLine": 4776,
+        "endChar": 31
+      },
+      "revId": "f75bfd57bd36c729a852b39607d3f0d1e52fe32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb4b3c78_84dbbb95",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 6867,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T05:35:58Z",
+      "side": 1,
+      "message": "same nit here",
+      "range": {
+        "startLine": 6867,
+        "startChar": 15,
+        "endLine": 6867,
+        "endChar": 41
+      },
+      "revId": "f75bfd57bd36c729a852b39607d3f0d1e52fe32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
