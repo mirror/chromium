@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b7c2a6a_f9c2deac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-05T19:42:07Z",
+      "side": 1,
+      "message": "Let\u0027s split this into a separate patch and promisify!",
+      "revId": "7728674078495ac837bd24359a01ab3415b40502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "720bd4a1_bc29b2f9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-05T19:42:07Z",
+      "side": 1,
+      "message": "Can we have a unit test for this function?",
+      "revId": "7728674078495ac837bd24359a01ab3415b40502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97cb3689_86cfa7da",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-05T19:42:07Z",
+      "side": 1,
+      "message": "Should also skip classes.",
+      "range": {
+        "startLine": 195,
+        "startChar": 22,
+        "endLine": 195,
+        "endChar": 32
+      },
+      "revId": "7728674078495ac837bd24359a01ab3415b40502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
