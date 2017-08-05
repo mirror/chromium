@@ -113,6 +113,9 @@ class CupsPrintersHandler : public ::settings::SettingsPageUIHandler,
   void HandleStartDiscovery(const base::ListValue* args);
   void HandleStopDiscovery(const base::ListValue* args);
 
+  // Logs printer set ups that are abandoned.
+  void HandleSetUpCancel(const base::ListValue* args);
+
   // PrinterDetector::Observer implementations:
   void OnPrintersFound(
       const std::vector<PrinterDetector::DetectedPrinter>& printers) override;
