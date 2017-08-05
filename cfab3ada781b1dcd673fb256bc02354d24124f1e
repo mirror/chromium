@@ -16,6 +16,24 @@
       "revId": "cfab3ada781b1dcd673fb256bc02354d24124f1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279a0fb6_225dcc54",
+        "filename": "mojo/common/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-05T00:32:49Z",
+      "side": 0,
+      "message": "Once upon a time, Mojo had their own implementation of a Message Pump.\nhttps://chromium.googlesource.com/chromium/src/+/3fee57b39da2e99e44d65021263d057a7b239683\n\nThis was removed here:\nhttps://chromium.googlesource.com/chromium/src/+/97b8da7538d304ae218e6d2b68d4a9a07158183a\n\nBut the dependency stuck around.",
+      "parentUuid": "a5612deb_e85f7eb0",
+      "revId": "cfab3ada781b1dcd673fb256bc02354d24124f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
