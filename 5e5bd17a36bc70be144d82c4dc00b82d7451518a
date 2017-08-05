@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d84277e8_ce54a6b5",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-05T00:04:05Z",
+      "side": 1,
+      "message": "Should we tie this constant to the bubble alignment offset? What happens if the offset constant is changed, but this one is not.",
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bce9997_8e3686ff",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-05T00:04:05Z",
+      "side": 1,
+      "message": "Should we tie this to the rounded corner radius constant?",
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ec675c_a0056e19",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-05T00:04:05Z",
+      "side": 1,
+      "message": "Since these views will not be added to subviews in init, let\u0027s make them strong.",
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f231fb7f_f86a9f8c",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-05T00:04:05Z",
+      "side": 1,
+      "message": "A few issues with constructor:\n\nIt can be dangerous to call instance methods in init. The reason is that subclasses will not be initialized yet, but they can override the instance method. \n\nAlso, just generally, I think we need to more so differentiate the private set up methods for the views from the properties. Otherwise, it looks like the property accessor is being called inside the constructor. \n\nSo, there are a few things to fix this:\nDo a lazy load in property accessor. Basically, override property accessor. In the override, check if instance variable is set up. If yes, do set up. Then (for both yes and no case), return the instance variable. This way, the view is not set up until it is needed. This could work well for the arrow and the background.\n\nFor the label, make labelWithText a class method, and still call it from init and set up the instance variable. That way, you have access to text parameter.\n\nSet up constraints by overriding UIView\u0027s updateConstraints method. Use a boolean to ensure this is done only once.\n\nIn UIView\u0027s willMoveToSuperview, add the view properties (including the label) to list of subviews. Ensure this only happens once using a boolean.",
+      "range": {
+        "startLine": 87,
+        "startChar": 26,
+        "endLine": 87,
+        "endChar": 35
+      },
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676611ea_1926ca25",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-05T00:04:05Z",
+      "side": 1,
+      "message": "This constraint says equal to, not greater than?",
+      "range": {
+        "startLine": 190,
+        "startChar": 42,
+        "endLine": 190,
+        "endChar": 47
+      },
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a212f55d_1f8fc4c2",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-05T00:04:05Z",
+      "side": 1,
+      "message": "This is equal to, not greater than.",
+      "range": {
+        "startLine": 199,
+        "startChar": 42,
+        "endLine": 199,
+        "endChar": 48
+      },
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfb2219_08837f55",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-05T00:04:05Z",
+      "side": 1,
+      "message": "All of these constraints can be of the form:\nself.arrow.centerXAnchor constraintEqualToAnchor: someAnchor constant:someConstant\nThe last one is uses trailingAnchor as the receiver, but it could use centerXAnchor as receiver.\n\nThe middle one could be in this form by setting constant to 0. \n\nMight be simpler to make one call to create the constraint at the end, but use the switch statement to specify which variables should be the receiver and the parameters.",
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11cd91ed_b4fb05ed",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-05T00:04:05Z",
+      "side": 1,
+      "message": "Please add comment.",
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
