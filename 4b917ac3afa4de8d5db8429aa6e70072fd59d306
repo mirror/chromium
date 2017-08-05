@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34901eee_6d9eca64",
+        "filename": "extensions/common/api/declarative_net_request/DEPS",
+        "patchSetId": 13
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-05T01:02:25Z",
+      "side": 1,
+      "message": "Sure, will do.",
+      "parentUuid": "87466151_3ea46773",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 32
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acca7fb3_9ac40ea3",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-04T23:24:58Z",
       "side": 1,
       "message": "Aliasing namespaces to a completely different name hurts readability IMO, how about\nnamespace flat \u003d ::url_pattern_index::flat;\nnamespace declarative_net_request \u003d ::extensions::api::declarative_net_request;\n\nWould that work?\nI see you can\u0027t use declarative_net_request here, but you can put it at top level and refer to it using ::declarative_net_request.",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772979b8_d83cc090",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-05T01:02:25Z",
+      "side": 1,
+      "message": "The generated flatbuffer extension schema (which\u0027ll be introduced in https://chromium-review.googlesource.com/c/595223) will live in extensions::declarative_net_request::flat. Hence I think flat_rule is more appropriate here. \n\nAlso, I think to avoid confusion between extensions::declarative_net_request and extensions::api::declarative_net_request, something other than declarative_net_request is better. (Open to considering something other than dnr_api).\n\nAlso, I didn\u0027t get your suggestion about putting declarative_net_request at the top level. We shouldn\u0027t be polluting the global namespace right?",
+      "parentUuid": "acca7fb3_9ac40ea3",
       "range": {
         "startLine": 22,
         "startChar": 10,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ebd2c537_6208a274",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-05T01:02:25Z",
+      "side": 1,
+      "message": "Good point. \nDid you mean something like this?",
+      "parentUuid": "3ff3e481_1a050182",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c4a0717_08a4bf5b",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce0b278_3e5d5dc2",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-05T01:02:25Z",
+      "side": 1,
+      "message": "Good catch. Actually Pavel pointed out in a subsequent CL that the domains need to be sorted in a different manner. I had sent https://chromium-review.googlesource.com/c/601438 for it as a follow-up to this. Added TODO(s) in this CL for it.",
+      "parentUuid": "9c4a0717_08a4bf5b",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 54
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f0c72d04_e5d36249",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-05T01:02:25Z",
+      "side": 1,
+      "message": "Done. Although I think generally namespace scoped free functions should be preferred over static functions. Static functions get access to the private state of the class. Here it\u0027s a struct, so probably a static function is better.",
+      "parentUuid": "988eb988_4f1c7499",
+      "range": {
+        "startLine": 241,
+        "startChar": 12,
+        "endLine": 241,
+        "endChar": 29
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29697638_7a16f1c9",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule_unittest.cc",
         "patchSetId": 13
@@ -137,6 +257,30 @@
       "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab074f6_c447fa05",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-05T01:02:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29697638_7a16f1c9",
+      "range": {
+        "startLine": 26,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 22
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "585d48e8_40e04076",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-05T01:02:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f61b1973_98104d5e",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "840314e2_b61a60fd",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule_unittest.cc",
         "patchSetId": 13
@@ -183,6 +351,30 @@
       "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d1f610_d4b9060c",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-05T01:02:25Z",
+      "side": 1,
+      "message": "Agreed! Changed to CreateGenericParsedRule returning a unique_ptr.",
+      "parentUuid": "840314e2_b61a60fd",
+      "range": {
+        "startLine": 48,
+        "startChar": 15,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

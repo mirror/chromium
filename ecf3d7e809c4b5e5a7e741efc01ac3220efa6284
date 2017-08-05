@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac04e6c2_fce3466e",
+        "filename": "extensions/common/api/declarative_net_request/constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-05T01:02:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06ae07e1_820ee189",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 61
+      },
+      "revId": "ecf3d7e809c4b5e5a7e741efc01ac3220efa6284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7927226_820ec609",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule.h",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-04T23:24:58Z",
       "side": 1,
       "message": "Is it necessary to use these global scope before url_pattern_index?",
+      "range": {
+        "startLine": 38,
+        "startChar": 22,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "ecf3d7e809c4b5e5a7e741efc01ac3220efa6284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ea3f80_8e01e4f5",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-05T01:02:25Z",
+      "side": 1,
+      "message": "Not necessary, but it\u0027s better to be more explicit I guess, see https://g3doc.corp.google.com/devtools/library_club/g3doc/totw/31.md?cl\u003dhead. I am not sure if there\u0027s a preference in Chromium one way or the other.",
+      "parentUuid": "f7927226_820ec609",
       "range": {
         "startLine": 38,
         "startChar": 22,
