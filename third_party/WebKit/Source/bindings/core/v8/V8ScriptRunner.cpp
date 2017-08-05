@@ -233,7 +233,8 @@ enum CacheTagKind {
 
 static const int kCacheTagKindSize = 2;
 
-uint32_t CacheTag(CacheTagKind kind, CachedMetadataHandler* cache_handler) {
+uint32_t CacheTag(CacheTagKind kind,
+                  const CachedMetadataHandler* cache_handler) {
   static_assert((1 << kCacheTagKindSize) >= kCacheTagLast,
                 "CacheTagLast must be large enough");
 
@@ -732,7 +733,8 @@ uint32_t V8ScriptRunner::TagForParserCache(
   return CacheTag(kCacheTagParser, cache_handler);
 }
 
-uint32_t V8ScriptRunner::TagForCodeCache(CachedMetadataHandler* cache_handler) {
+uint32_t V8ScriptRunner::TagForCodeCache(
+    const CachedMetadataHandler* cache_handler) {
   return CacheTag(kCacheTagCode, cache_handler);
 }
 

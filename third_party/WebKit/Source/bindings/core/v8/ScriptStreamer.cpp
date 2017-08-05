@@ -214,9 +214,10 @@ class SourceStream : public v8::ScriptCompiler::ExternalSourceStream {
     data_queue_.Finish();
   }
 
-  void DidReceiveData(ScriptStreamer* streamer) {
+  void DidReceiveData(ScriptStreamer* streamer,
+                      RefPtr<const SharedBuffer> shared_buffer) {
     DCHECK(IsMainThread());
-    PrepareDataOnMainThread(streamer);
+    PrepareDataOnMainThread(streamer, std::move(shared_buffer));
   }
 
   void Cancel() {
@@ -234,7 +235,8 @@ class SourceStream : public v8::ScriptCompiler::ExternalSourceStream {
   }
 
  private:
-  void PrepareDataOnMainThread(ScriptStreamer* streamer) {
+  void PrepareDataOnMainThread(ScriptStreamer* streamer,
+                               RefPtr<const SharedBuffer> shared_buffer) {
     DCHECK(IsMainThread());
 
     if (cancelled_) {
@@ -242,22 +244,7 @@ class SourceStream : public v8::ScriptCompiler::ExternalSourceStream {
       return;
     }
 
-    // The Resource must still be alive; otherwise we should've cancelled
-    // the streaming (if we have cancelled, the background thread is not
-    // waiting).
-    DCHECK(streamer->GetResource());
-
-    if (!streamer->GetResource()
-             ->GetResponse()
-             .CacheStorageCacheName()
-             .IsNull()) {
-      streamer->SuppressStreaming();
-      Cancel();
-      return;
-    }
-
-    CachedMetadataHandler* cache_handler =
-        streamer->GetResource()->CacheHandler();
+    const CachedMetadataHandler* cache_handler = streamer->CacheHandler();
     RefPtr<CachedMetadata> code_cache(
         cache_handler ? cache_handler->GetCachedMetadata(
                             V8ScriptRunner::TagForCodeCache(cache_handler))
@@ -273,7 +260,7 @@ class SourceStream : public v8::ScriptCompiler::ExternalSourceStream {
 
     if (!resource_buffer_) {
       // We don't have a buffer yet. Try to get it from the resource.
-      resource_buffer_ = streamer->GetResource()->ResourceBuffer();
+      resource_buffer_ = std::move(shared_buffer);
     }
 
     FetchDataFromResourceBuffer();
@@ -354,6 +341,11 @@ void ScriptStreamer::StartStreamingLoadedScript(
     RecordNotStreamingReasonHistogram(script_type, kNotHTTP);
     return;
   }
+
+  if (!resource->GetResponse().CacheStorageCacheName().IsNull()) {
+    return;
+  }
+
   if (resource->IsCacheValidator()) {
     RecordNotStreamingReasonHistogram(script_type, kReload);
     // This happens e.g., during reloads. We're actually not going to load
@@ -384,10 +376,10 @@ void ScriptStreamer::StartStreamingLoadedScript(
   // notificatations for incoming data. So we will just emulate those right
   // here.
   DCHECK(resource->IsLoaded());
-  streamer->NotifyAppendData(resource);
+  streamer->NotifyAppendData(resource->ResourceBuffer(), resource->Encoding());
   if (!streamer->StreamingSuppressed()) {
     script->SetStreamer(streamer);
-    streamer->NotifyFinished(resource);
+    streamer->NotifyFinished();
   }
 }
 
@@ -445,7 +437,6 @@ void ScriptStreamer::Cancel() {
   // the control the next time. It can also be that V8 has already completed
   // its operations and streamingComplete will be called soon.
   detached_ = true;
-  resource_ = 0;
   if (stream_)
     stream_->Cancel();
 }
@@ -458,17 +449,17 @@ void ScriptStreamer::SuppressStreaming() {
   streaming_suppressed_ = true;
 }
 
-void ScriptStreamer::NotifyAppendData(ScriptResource* resource) {
+void ScriptStreamer::NotifyAppendData(RefPtr<const SharedBuffer> shared_buffer,
+                                      const WTF::TextEncoding& encoding) {
   DCHECK(IsMainThread());
-  CHECK_EQ(resource_, resource);
   if (streaming_suppressed_)
     return;
   if (!have_enough_data_for_streaming_) {
     // Even if the first data chunk is small, the script can still be big
     // enough - wait until the next data chunk comes before deciding whether
     // to start the streaming.
-    DCHECK(resource->ResourceBuffer());
-    if (resource->ResourceBuffer()->size() < small_script_threshold_)
+    DCHECK(shared_buffer);
+    if (shared_buffer->size() < small_script_threshold_)
       return;
     have_enough_data_for_streaming_ = true;
 
@@ -477,16 +468,14 @@ void ScriptStreamer::NotifyAppendData(ScriptResource* resource) {
       // understanding of the data encoding.
       constexpr size_t kMaximumLengthOfBOM = 4;
       char maybe_bom[kMaximumLengthOfBOM] = {};
-      if (!resource->ResourceBuffer()->GetBytes(maybe_bom,
-                                                kMaximumLengthOfBOM)) {
+      if (!shared_buffer->GetBytes(maybe_bom, kMaximumLengthOfBOM)) {
         NOTREACHED();
         return;
       }
 
       std::unique_ptr<TextResourceDecoder> decoder(
           TextResourceDecoder::Create(TextResourceDecoderOptions(
-              TextResourceDecoderOptions::kPlainTextContent,
-              WTF::TextEncoding(resource->Encoding()))));
+              TextResourceDecoderOptions::kPlainTextContent, encoding)));
       decoder->CheckForBOM(maybe_bom, kMaximumLengthOfBOM);
 
       // The encoding may change when we see the BOM. Check for BOM now
@@ -550,12 +539,11 @@ void ScriptStreamer::NotifyAppendData(ScriptResource* resource) {
     RecordStartedStreamingHistogram(script_type_, 1);
   }
   if (stream_)
-    stream_->DidReceiveData(this);
+    stream_->DidReceiveData(this, std::move(shared_buffer));
 }
 
-void ScriptStreamer::NotifyFinished(Resource* resource) {
+void ScriptStreamer::NotifyFinished() {
   DCHECK(IsMainThread());
-  CHECK_EQ(resource_, resource);
   // A special case: empty and small scripts. We didn't receive enough data to
   // start the streaming before this notification. In that case, there won't
   // be a "parsing complete" notification either, and we should not wait for
@@ -579,7 +567,6 @@ ScriptStreamer::ScriptStreamer(
     v8::ScriptCompiler::CompileOptions compile_options,
     RefPtr<WebTaskRunner> loading_task_runner)
     : pending_script_(script),
-      resource_(script->GetResource()),
       detached_(false),
       stream_(0),
       loading_finished_(false),
@@ -589,8 +576,9 @@ ScriptStreamer::ScriptStreamer(
       compile_options_(compile_options),
       script_state_(script_state),
       script_type_(script_type),
-      script_url_string_(resource_->Url().Copy().GetString()),
-      script_resource_identifier_(resource_->Identifier()),
+      script_url_string_(script->GetResource()->Url().Copy().GetString()),
+      script_resource_identifier_(script->GetResource()->Identifier()),
+      cache_handler_(script->GetResource()->CacheHandler()),
       // Unfortunately there's no dummy encoding value in the enum; let's use
       // one we don't stream.
       encoding_(v8::ScriptCompiler::StreamedSource::TWO_BYTE),
@@ -600,7 +588,7 @@ ScriptStreamer::~ScriptStreamer() {}
 
 DEFINE_TRACE(ScriptStreamer) {
   visitor->Trace(pending_script_);
-  visitor->Trace(resource_);
+  visitor->Trace(cache_handler_);
 }
 
 void ScriptStreamer::StreamingComplete() {
@@ -649,6 +637,11 @@ bool ScriptStreamer::StartStreamingInternal(
     RecordNotStreamingReasonHistogram(script_type, kAlreadyLoaded);
     return false;
   }
+
+  if (!resource->GetResponse().CacheStorageCacheName().IsNull()) {
+    return false;
+  }
+
   if (!resource->Url().ProtocolIsInHTTPFamily()) {
     RecordNotStreamingReasonHistogram(script_type, kNotHTTP);
     return false;
