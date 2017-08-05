@@ -12,7 +12,29 @@ namespace {
 // The minimal margin (in pixels) around the app list when in centered mode.
 const int kMinimalCenteredAppListMargin = 10;
 
+// Duration for show/hide animation in milliseconds.
+static constexpr base::TimeDelta kAnimationDurationMs =
+    base::TimeDelta::FromMilliseconds(200);
+
+// Duration for hide animation for the fullscreen app list.
+static constexpr base::TimeDelta kAnimationDurationFullscreenMs =
+    base::TimeDelta::FromMilliseconds(300);
+
+// Duration for hide animation for fullscreen app list while in side shelf.
+static constexpr base::TimeDelta kAnimationDurationSideShelfFullscreenMs =
+    base::TimeDelta::FromMilliseconds(150);
+
 }  // namespace
+
+base::TimeDelta AppListPresenterDelegate::animation_duration() {
+  return kAnimationDurationMs;
+}
+
+base::TimeDelta AppListPresenterDelegate::animation_duration_fullscreen(
+    bool is_side_shelf) {
+  return is_side_shelf ? kAnimationDurationSideShelfFullscreenMs
+                       : kAnimationDurationFullscreenMs;
+}
 
 int AppListPresenterDelegate::GetMinimumBoundsHeightForAppList(
     const app_list::AppListView* app_list) {
