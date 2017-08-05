@@ -78,6 +78,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 @synthesize pageHost = _pageHost;
 @synthesize connectionSecure = _connectionSecure;
 @synthesize pending = _pending;
+@synthesize cancellable = _cancellable;
 @synthesize delegate = _delegate;
 @synthesize dataSource = _dataSource;
 
@@ -172,7 +173,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
   if (_pending) {
     [_payButton setEnabled:NO];
-    [_cancelButton setEnabled:NO];
+    [_cancelButton setEnabled:_cancellable];
 
     StatusItem* statusItem = [[StatusItem alloc] initWithType:ItemTypeSpinner];
     statusItem.text = l10n_util::GetNSString(IDS_PAYMENTS_PROCESSING_MESSAGE);
