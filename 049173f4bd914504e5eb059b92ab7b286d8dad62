@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a005214_9bc40829",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-05T01:27:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dace841_445ffe81",
+      "revId": "049173f4bd914504e5eb059b92ab7b286d8dad62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9abc2d7c_83b1109d",
         "filename": "media/base/audio_latency.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-05T00:04:17Z",
       "side": 1,
       "message": "Comment says Linux + Mac, and you\u0027re adding Fuchsia - is Fuchsia also going to support arbitrary sizes, or do we just not have anything to output to yet?\n\nIf the latter then I suggest a separate section w/ the same actual code, but a TODO comment.",
+      "revId": "049173f4bd914504e5eb059b92ab7b286d8dad62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd04c4e2_babefeef",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-05T01:27:41Z",
+      "side": 1,
+      "message": "The API is not fully designed yet, but most likely it will support arbitrary buffer size. Updated the comment",
+      "parentUuid": "9abc2d7c_83b1109d",
       "revId": "049173f4bd914504e5eb059b92ab7b286d8dad62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
