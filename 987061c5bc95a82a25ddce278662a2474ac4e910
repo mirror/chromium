@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95622f99_85de0644",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-05T01:29:13Z",
+      "side": 1,
+      "message": "How is this different from VisibleContentRect(kExcludeScrollbars).Width()?",
+      "range": {
+        "startLine": 982,
+        "startChar": 29,
+        "endLine": 982,
+        "endChar": 70
+      },
+      "revId": "987061c5bc95a82a25ddce278662a2474ac4e910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
