@@ -70,7 +70,7 @@ Console.ConsoleView = class extends UI.VBox {
     toolbar.appendSeparator();
     toolbar.appendToolbarItem(this._consoleContextSelector.toolbarItem());
     toolbar.appendSeparator();
-    toolbar.appendToolbarItem(this._filter._textFilterUI);
+    toolbar.appendGrowingToolbarInput(this._filter._textFilterUI);
     toolbar.appendToolbarItem(this._filter._levelMenuButton);
     toolbar.appendToolbarItem(this._filter._levelMenuButtonArrow);
     toolbar.appendToolbarItem(this._progressToolbarItem);
@@ -387,10 +387,12 @@ Console.ConsoleView = class extends UI.VBox {
   }
 
   _updateFilterStatus() {
-    this._filterStatusText.setText(Common.UIString(
-        this._hiddenByFilterCount === 1 ? '1 item hidden by filters' :
-                                          this._hiddenByFilterCount + ' items hidden by filters'));
-    this._filterStatusText.setVisible(!!this._hiddenByFilterCount);
+    if (this._hiddenByFilterCount === 0)
+      this._filterStatusText.setText('');
+    else if (this._hiddenByFilterCount === 1)
+      this._filterStatusText.setText(Common.UIString('1 item hidden'));
+    else
+      this._filterStatusText.setText(Common.UIString('%s items hidden', this._hiddenByFilterCount));
   }
 
   /**

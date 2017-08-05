@@ -253,6 +253,34 @@ UI.Toolbar = class {
     this._hideSeparatorDupes();
   }
 
+  /**
+   * @param {!UI.ToolbarInput} toolbarInput
+   */
+  appendGrowingToolbarInput(toolbarInput) {
+    this.appendToolbarItem(toolbarInput);
+    toolbarInput.element.classList.add('toolbar-input-grow-on-focus');
+    toolbarInput.input.addEventListener('focus', () => {
+      showOtherItemsInSection.call(this, false);
+    });
+    toolbarInput.input.addEventListener('blur', () => {
+      showOtherItemsInSection.call(this, true);
+    });
+
+    /**
+     * @param {boolean} visible
+     * @this {!UI.Toolbar}
+     */
+    function showOtherItemsInSection(visible) {
+      var index = this._items.indexOf(toolbarInput);
+      if (index === -1)
+        return;
+      for (var i = index - 1; i >= 0 && !(this._items[i] instanceof UI.ToolbarSeparator); i--)
+        this._items[i].setVisible(visible);
+      for (var i = index + 1; i < this._items.length && !(this._items[i] instanceof UI.ToolbarSeparator); i++)
+        this._items[i].setVisible(visible);
+    }
+  }
+
   appendSeparator() {
     this.appendToolbarItem(new UI.ToolbarSeparator());
   }
