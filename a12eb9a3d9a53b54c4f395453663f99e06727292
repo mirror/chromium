@@ -16,6 +16,24 @@
       "revId": "a12eb9a3d9a53b54c4f395453663f99e06727292",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96db6dc9_37f3f9be",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-05T03:25:32Z",
+      "side": 1,
+      "message": "Tnx for noticing it. I completely missed it, I didn\u0027t look past the diff.",
+      "parentUuid": "d63dc0ee_f8ea4b85",
+      "revId": "a12eb9a3d9a53b54c4f395453663f99e06727292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
