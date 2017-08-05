@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c16ae585_aabae2cb",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1794,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-05T00:00:56Z",
+      "side": 0,
+      "message": "Maybe it happened before, but this can\u0027t happen now. Added a DCHECK().",
+      "range": {
+        "startLine": 1794,
+        "startChar": 50,
+        "endLine": 1794,
+        "endChar": 73
+      },
+      "revId": "229abc568cd5293a8e4e66e04423b6a175918e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e634fc6_1842ff2a",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1796,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-05T00:00:56Z",
+      "side": 0,
+      "message": "After some refactoring, this is identical to line 1775. Since neither |area| or |target| changes, this is redundant.",
+      "revId": "229abc568cd5293a8e4e66e04423b6a175918e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
