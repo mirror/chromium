@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cd5ff11_a72cc05b",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-05T00:18:24Z",
+      "side": 1,
+      "message": "tom mentioned that some styluses may not appear as bluetooth devices. i\u0027m concerned about assumptions that the existing code may be making. for example, when does DeviceRemoved get called?",
+      "revId": "c7daa88edb97a93349bb2791fdf933ca63a37989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
