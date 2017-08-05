@@ -22,6 +22,30 @@
       "revId": "811a8552db4d273521a237c133c0666d8e3050a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de87e242_8a50f7b5",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_content_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-05T09:14:11Z",
+      "side": 1,
+      "message": "Will fix this in a follow-up CL.\nThere are ~250 const uses in the 3 main test files for the constraints algorithms.",
+      "parentUuid": "c2c231f9_101a673c",
+      "range": {
+        "startLine": 1267,
+        "startChar": 4,
+        "endLine": 1267,
+        "endChar": 9
+      },
+      "revId": "811a8552db4d273521a237c133c0666d8e3050a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
