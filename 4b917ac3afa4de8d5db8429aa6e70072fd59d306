@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2c933359_498a5c26",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-05T03:23:54Z",
+      "side": 1,
+      "message": "1) For flat collision\nusing namespace flat \u003d extensions::declarative_net_request::flat\nand you refer to url_pattern index\u0027s one as \"url_pattern_index::flat\" always in the code (and not alias it)\nWould that work?\n\n2) Not sure about top level question. Do you mean whether we can have\nextensions::declarative_net_request namespace? I think that\u0027s fine. If you meant sth else then let me know.\n\n3) One alternative to dnr_api is to\nnamespace api \u003d \"extensions::api\" and refer to stuffs inside the namespace as:\napi::declarative_net_request::RESOURCE_TYPE_NONE\nIt\u0027s clearer that way.",
+      "parentUuid": "772979b8_d83cc090",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ff3e481_1a050182",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
         "patchSetId": 13
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Good point. \nDid you mean something like this?",
       "parentUuid": "3ff3e481_1a050182",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f3ce71_cf78b70a",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-05T03:23:54Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "ebd2c537_6208a274",
       "range": {
         "startLine": 43,
         "startChar": 0,
