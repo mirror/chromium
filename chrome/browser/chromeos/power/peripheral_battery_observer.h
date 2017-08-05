@@ -49,6 +49,9 @@ class PeripheralBatteryObserver : public PowerManagerClient::Observer,
   FRIEND_TEST_ALL_PREFIXES(PeripheralBatteryObserverTest, Basic);
   FRIEND_TEST_ALL_PREFIXES(PeripheralBatteryObserverTest, InvalidBatteryInfo);
   FRIEND_TEST_ALL_PREFIXES(PeripheralBatteryObserverTest, DeviceRemove);
+  FRIEND_TEST_ALL_PREFIXES(PeripheralBatteryObserverTest, StylusNotification);
+
+  static const char kStylusNotificationId[];
 
   struct BatteryInfo {
     BatteryInfo() : level(-1) {}
