@@ -64,7 +64,7 @@ run_and_ignore_error() {
     if [ "$(whoami)" = "root" ]; then
       "$USER_SESSION_PATH" start "$user"
     else
-      sudo -u "$user" --login --background "$HOST_PATH" --start
+      "$USER_SESSION_PATH" start
     fi
   else
     sudo -u "$user" "$HOST_PATH" "$action"
