@@ -7,6 +7,8 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "ui/base/material_design/material_design_controller.h"
+#include "ui/gfx/font_list.h"
+#include "ui/views/style/typography.h"
 #include "ui/views/views_delegate.h"
 
 namespace views {
@@ -29,6 +31,15 @@ LayoutProvider::~LayoutProvider() {
 // static
 LayoutProvider* LayoutProvider::Get() {
   return g_layout_delegate;
+}
+
+// static
+int LayoutProvider::GetControlHeightForFont(int context,
+                                            int style,
+                                            const gfx::FontList& font) {
+  return std::max(views::style::GetLineHeight(context, style),
+                  font.GetHeight()) +
+         Get()->GetDistanceMetric(DISTANCE_CONTROL_TOTAL_VERTICAL_TEXT_PADDING);
 }
 
 gfx::Insets LayoutProvider::GetInsetsMetric(int metric) const {
@@ -76,6 +87,8 @@ int LayoutProvider::GetDistanceMetric(int metric) const {
       return 0;
     case DistanceMetric::DISTANCE_CLOSE_BUTTON_MARGIN:
       return 7;
+    case DistanceMetric::DISTANCE_CONTROL_TOTAL_VERTICAL_TEXT_PADDING:
+      return 6;
     case DistanceMetric::DISTANCE_RELATED_BUTTON_HORIZONTAL:
       return 6;
     case DistanceMetric::DISTANCE_RELATED_CONTROL_HORIZONTAL:
@@ -83,11 +96,15 @@ int LayoutProvider::GetDistanceMetric(int metric) const {
     case DistanceMetric::DISTANCE_BUBBLE_BUTTON_TOP_MARGIN:
     case DistanceMetric::DISTANCE_RELATED_CONTROL_VERTICAL:
       return 8;
-    case DISTANCE_DIALOG_BUTTON_BOTTOM_MARGIN:
+    case DistanceMetric::DISTANCE_DIALOG_BUTTON_BOTTOM_MARGIN:
       return 20;
     case DistanceMetric::DISTANCE_DIALOG_BUTTON_MINIMUM_WIDTH:
       return 75;
-    case DISTANCE_UNRELATED_CONTROL_VERTICAL:
+    case DistanceMetric::DISTANCE_RELATED_LABEL_HORIZONTAL:
+      return 10;
+    case DistanceMetric::DISTANCE_TABLE_CELL_HORIZONTAL_MARGIN:
+      return 10;
+    case DistanceMetric::DISTANCE_UNRELATED_CONTROL_VERTICAL:
       return 20;
   }
   NOTREACHED();
