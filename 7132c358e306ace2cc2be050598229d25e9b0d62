@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0b0f6c6_8c2fdd89",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-05T05:10:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c11697c2_8efbe42f",
+      "range": {
+        "startLine": 390,
+        "startChar": 6,
+        "endLine": 390,
+        "endChar": 20
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6875c703_f2f7cc50",
         "filename": "components/security_state/content/content_utils_browsertest.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0d46fbd6_4c412202",
+        "filename": "components/security_state/content/content_utils_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-05T05:10:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6875c703_f2f7cc50",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 14
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af51f1e7_64bb18c0",
         "filename": "components/security_state/content/ssl_status_input_event_data.cc",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-05T02:13:54Z",
       "side": 1,
       "message": "can this return a pointer (data_.get()) instead of copying? Then you can skip the setter too, callers can just get the InsecureInputEventData* and change the fields themselves.",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3a005c_d73584aa",
+        "filename": "components/security_state/content/ssl_status_input_event_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-05T05:10:30Z",
+      "side": 1,
+      "message": "I can return a pointer; at the moment, I can\u0027t think of why it wouldn\u0027t make sense to just make data a public field. The style guide seems to prohibit public fields https://google.github.io/styleguide/cppguide.html#Access_Control but returning a raw pointer to a private field feels like cheating.",
+      "parentUuid": "af51f1e7_64bb18c0",
       "range": {
         "startLine": 26,
         "startChar": 9,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3ae1fc8f_1f2e808c",
+        "filename": "components/security_state/content/ssl_status_input_event_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-05T05:10:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0822a283_47ad77df",
+      "range": {
+        "startLine": 29,
+        "startChar": 5,
+        "endLine": 29,
+        "endChar": 14
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dedf762_2936660f",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c43abc9_f5cdfc8a",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 4787,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-05T05:10:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dedf762_2936660f",
+      "range": {
+        "startLine": 4787,
+        "startChar": 15,
+        "endLine": 4787,
+        "endChar": 38
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "474880b7_39d9f3a0",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 6878,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-05T05:10:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b091c65_4ece2113",
+      "range": {
+        "startLine": 6878,
+        "startChar": 15,
+        "endLine": 6878,
+        "endChar": 29
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46e593a3_4499208d",
         "filename": "third_party/WebKit/public/platform/modules/insecure_input/insecure_input_service.mojom",
         "patchSetId": 5
@@ -160,6 +304,30 @@
       "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e78e7e7_4dd67cb3",
+        "filename": "third_party/WebKit/public/platform/modules/insecure_input/insecure_input_service.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-05T05:10:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46e593a3_4499208d",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
