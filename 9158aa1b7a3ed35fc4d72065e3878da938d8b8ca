@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bba415bd_841a3cee",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-05T01:14:21Z",
+      "side": 1,
+      "message": "Consolidated with RegisterProfilePrefs(). Lemme know if that\u0027s better.",
+      "parentUuid": "6f7f1af6_a82f68d0",
+      "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84b378b1_c9382442",
         "filename": "ash/system/tray_caps_lock.cc",
         "patchSetId": 1
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5e94d351_15d637b5",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-05T01:14:21Z",
+      "side": 1,
+      "message": "According to the docs at https://cs.chromium.org/chromium/src/services/preferences/README.md all prefs have to be owned by one service and flagged as public if other services should be allowed to access them. In practice, that\u0027s true for this pref.\n\nI think the fact that chrome can access ash-owned prefs (like the night light ones) is a bug, possibly caused by the fact that the mojo pref service impl lives in chrome.\n\nI updated the comments here and in shell.cc",
+      "parentUuid": "39cbc313_1da6b980",
+      "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "250cae42_de3b7820",
         "filename": "ash/system/tray_caps_lock.h",
         "patchSetId": 1
@@ -85,6 +121,24 @@
       "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a895b76_0f254a0e",
+        "filename": "ash/system/tray_caps_lock.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-05T01:14:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "250cae42_de3b7820",
+      "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
