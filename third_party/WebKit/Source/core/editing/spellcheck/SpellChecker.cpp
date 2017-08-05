@@ -1063,7 +1063,8 @@ void SpellChecker::SpellCheckOldSelection(
     return;
 
   TRACE_EVENT0("blink", "SpellChecker::spellCheckOldSelection");
-
+  // Fixme: Tanvir Comparision operator for visible selection, isdirectional
+  // needs to be checked ?
   VisiblePosition old_start = CreateVisiblePosition(old_selection_start);
   VisibleSelection old_adjacent_words =
       CreateVisibleSelection(SelectWord(old_start));

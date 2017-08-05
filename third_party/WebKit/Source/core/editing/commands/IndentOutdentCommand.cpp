@@ -360,17 +360,24 @@ void IndentOutdentCommand::OutdentRegion(
     PositionWithAffinity end_of_next_paragraph =
         EndOfParagraph(NextPositionOf(end_of_current_paragraph))
             .ToPositionWithAffinity();
+    // TODO(editing-dev): The use of
+    // updateStyleAndLayoutIgnorePendingStylesheets
+    // needs to be audited.  See http://crbug.com/590369 for more details.
+    GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
     if (end_of_current_paragraph.DeepEquivalent() ==
         end_of_last_paragraph.DeepEquivalent()) {
       SelectionInDOMTree::Builder builder;
       if (original_selection_end.IsNotNull())
         builder.Collapse(original_selection_end);
-      SetEndingSelection(builder.Build());
+
+      SetEndingSelection(SelectionForUndoStep::From(builder.Build(), false));
     } else {
-      SetEndingSelection(
+      SetEndingSelection(SelectionForUndoStep::From(
           SelectionInDOMTree::Builder()
               .Collapse(end_of_current_paragraph.DeepEquivalent())
-              .Build());
+              .Build(),
+          false));
     }
 
     OutdentParagraph(editing_state);

@@ -360,6 +360,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   SpellChecker& GetSpellChecker() const;
 
   bool HandleEditingKeyboardEvent(KeyboardEvent*);
+  bool is_directional_ = false;
 };
 
 inline void Editor::SetStartNewKillRingSequence(bool flag) {

@@ -109,7 +109,6 @@ VisibleSelection ComputeSelectionForInsertion(
   const VisibleSelection& selection =
       CreateVisibleSelection(SelectionInDOMTree::Builder()
                                  .SetBaseAndExtent(range_for_insertion)
-                                 .SetIsDirectional(is_directional)
                                  .Build());
   return selection;
 }

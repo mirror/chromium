@@ -145,7 +145,7 @@ class CORE_EXPORT FrameSelection final
   void DidChangeFocus();
 
   const SelectionInDOMTree& GetSelectionInDOMTree() const;
-  bool IsDirectional() const { return GetSelectionInDOMTree().IsDirectional(); }
+  bool IsDirectional() const { return is_directional_; }
 
   void DocumentAttached(Document*);
 
@@ -273,7 +273,7 @@ class CORE_EXPORT FrameSelection final
 
   bool focused_ : 1;
   bool is_handle_visible_ = false;
-
+  bool is_directional_ = false;
   // Controls text granularity used to adjust the selection's extent in
   // moveRangeSelectionExtent.
   std::unique_ptr<GranularityStrategy> granularity_strategy_;
