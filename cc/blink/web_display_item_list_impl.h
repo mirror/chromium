@@ -5,6 +5,7 @@
 #ifndef CC_BLINK_WEB_DISPLAY_ITEM_LIST_IMPL_H_
 #define CC_BLINK_WEB_DISPLAY_ITEM_LIST_IMPL_H_
 
+#include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "cc/blink/cc_blink_export.h"
@@ -33,7 +34,7 @@ class PaintOpBuffer;
 namespace cc_blink {
 
 class CC_BLINK_EXPORT WebDisplayItemListImpl
-    : public blink::WebDisplayItemList {
+    : public NON_EXPORTED_BASE(blink::WebDisplayItemList) {
  public:
   WebDisplayItemListImpl();
   explicit WebDisplayItemListImpl(cc::DisplayItemList* display_list);
