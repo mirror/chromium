@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "92679c33_44dc966c",
+        "filename": "base/process/launch.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-05T01:12:45Z",
+      "side": 1,
+      "message": "LaunchOptions is passed to LaunchProcess as a const\u0026, so if we do successfully launch the child process, and it consumes those handles, then we can\u0027t modify the vector to avoid it from double-closing the handles.",
+      "parentUuid": "1fca9cba_c8dcf48d",
+      "revId": "f1ce386c23409d0418fe743a4b12a94475c10fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6228a1c4_26e69697",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 1
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "Is this codepath only ever used to launch programs built inside the chromium tree?  Tricky bit about this namespace is it can be used for different things by different kinds of programs that just have to know what each other mean (unlike, say, the FD table which most unix-like things will understand).  So long as it\u0027s internal I think it\u0027s OK - I don\u0027t think we have any plans to change the macro names here or anything.\n\nAlso be sure to be careful about the range on the id field - the value here is computed with C and macros so it won\u0027t do any sanity checking.",
       "parentUuid": "6228a1c4_26e69697",
+      "range": {
+        "startLine": 138,
+        "startChar": 32,
+        "endLine": 138,
+        "endChar": 40
+      },
+      "revId": "f1ce386c23409d0418fe743a4b12a94475c10fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b52e4de_78b6497e",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-05T01:12:45Z",
+      "side": 1,
+      "message": "In general there needs to be a convention agreed between the parent and child processes for the inherited/transferred handle namespace; I went with PA_USER0 here on the assumption that we only ever launch with native platform handles when we\u0027re creating child Chrome processes (stdio etc are still handled via fd remapping).\n\nTo make this general we\u0027ll need to have the caller provide the full \"type\" field for the handle, so that we can e.g. use PA_USER0/1/2 etc as necessary for the target app.\n\nI\u0027ve made the caller-supplied id a unit32_t for now, but perhaps an MxHandleInfo type to encapsulate it would be safer.",
+      "parentUuid": "32fea413_74ae1628",
       "range": {
         "startLine": 138,
         "startChar": 32,
