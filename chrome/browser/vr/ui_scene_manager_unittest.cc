@@ -21,7 +21,6 @@ namespace vr {
 
 using TargetProperty::BOUNDS;
 using TargetProperty::TRANSFORM;
-using TargetProperty::VISIBILITY;
 using TargetProperty::OPACITY;
 
 namespace {
@@ -106,21 +105,29 @@ TEST_F(UiSceneManagerTest, ToastStateTransitions) {
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
   manager_->SetFullscreen(true);
+  EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
+  AnimateBy(MsToDelta(1000));
   EXPECT_TRUE(IsVisible(kExclusiveScreenToast));
 
   manager_->SetWebVrMode(true, true);
+  AnimateBy(MsToDelta(1000));
   EXPECT_TRUE(IsVisible(kExclusiveScreenToast));
 
   manager_->SetWebVrMode(false, false);
+  EXPECT_TRUE(IsVisible(kExclusiveScreenToast));
+  AnimateBy(MsToDelta(1000));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
   manager_->SetFullscreen(false);
+  AnimateBy(MsToDelta(1000));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
   manager_->SetWebVrMode(true, false);
+  AnimateBy(MsToDelta(1000));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
   manager_->SetWebVrMode(false, true);
+  AnimateBy(MsToDelta(1000));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 }
 
@@ -131,16 +138,23 @@ TEST_F(UiSceneManagerTest, ToastTransience) {
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
   manager_->SetFullscreen(true);
+  EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
+  AnimateBy(MsToDelta(1000));
   EXPECT_TRUE(IsVisible(kExclusiveScreenToast));
   task_runner_->FastForwardUntilNoTasksRemain();
+  AnimateBy(MsToDelta(1000));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
   manager_->SetWebVrMode(true, true);
+  EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
+  AnimateBy(MsToDelta(1000));
   EXPECT_TRUE(IsVisible(kExclusiveScreenToast));
   task_runner_->FastForwardUntilNoTasksRemain();
+  AnimateBy(MsToDelta(1000));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
   manager_->SetWebVrMode(false, false);
+  AnimateBy(MsToDelta(1000));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 }
 
@@ -229,10 +243,10 @@ TEST_F(UiSceneManagerTest, WebVrAutopresentedInsecureOrigin) {
   task_runner_->FastForwardUntilNoTasksRemain();
   UiElement* transient_url_bar =
       scene_->GetUiElementByDebugId(kTransientUrlBar);
-  EXPECT_TRUE(IsAnimating(transient_url_bar, {OPACITY, VISIBILITY}));
+  EXPECT_TRUE(IsAnimating(transient_url_bar, {OPACITY}));
   // Finish the transition.
   AnimateBy(MsToDelta(1000));
-  EXPECT_FALSE(IsAnimating(transient_url_bar, {OPACITY, VISIBILITY}));
+  EXPECT_FALSE(IsAnimating(transient_url_bar, {OPACITY}));
   VerifyElementsVisible("End state", std::set<UiElementDebugId>{
                                          kWebVrPermanentHttpSecurityWarning});
 }
@@ -258,10 +272,10 @@ TEST_F(UiSceneManagerTest, WebVrAutopresented) {
   task_runner_->FastForwardUntilNoTasksRemain();
   UiElement* transient_url_bar =
       scene_->GetUiElementByDebugId(kTransientUrlBar);
-  EXPECT_TRUE(IsAnimating(transient_url_bar, {OPACITY, VISIBILITY}));
+  EXPECT_TRUE(IsAnimating(transient_url_bar, {OPACITY}));
   // Finish the transition.
   AnimateBy(MsToDelta(1000));
-  EXPECT_FALSE(IsAnimating(transient_url_bar, {OPACITY, VISIBILITY}));
+  EXPECT_FALSE(IsAnimating(transient_url_bar, {OPACITY}));
   EXPECT_FALSE(IsVisible(kTransientUrlBar));
 }
 
@@ -284,6 +298,7 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
   // In fullscreen mode, content elements should be visible, control elements
   // should be hidden.
   manager_->SetFullscreen(true);
+  AnimateBy(MsToDelta(50));
   VerifyElementsVisible("In fullscreen", visible_in_fullscreen);
   // Make sure background has changed for fullscreen.
   EXPECT_NE(initial_background, GetBackgroundColor());
@@ -297,12 +312,12 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
 
   // Everything should return to original state after leaving fullscreen.
   manager_->SetFullscreen(false);
-  VerifyElementsVisible("Restore initial", kElementsVisibleInBrowsing);
-  EXPECT_EQ(initial_background, GetBackgroundColor());
   // Should have started transition.
   EXPECT_TRUE(IsAnimating(content_quad, {TRANSFORM, BOUNDS}));
   // Finish the transition.
   AnimateBy(MsToDelta(1000));
+  VerifyElementsVisible("Restore initial", kElementsVisibleInBrowsing);
+  EXPECT_EQ(initial_background, GetBackgroundColor());
   EXPECT_FALSE(IsAnimating(content_quad, {TRANSFORM, BOUNDS}));
   EXPECT_EQ(initial_content_size, content_quad->size());
   EXPECT_EQ(initial_position, content_quad->LocalTransform());

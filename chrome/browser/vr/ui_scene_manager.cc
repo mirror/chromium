@@ -295,8 +295,7 @@ void UiSceneManager::CreateContentQuad(ContentInputDelegate* delegate) {
   main_content->SetTranslate(0, kContentVerticalOffset, -kContentDistance);
   main_content->SetVisible(false);
   main_content->set_corner_radius(kContentCornerRadius);
-  main_content->animation_player().SetTransitionedProperties(
-      {TRANSFORM, BOUNDS});
+  main_content->SetTransitionedProperties({TRANSFORM, BOUNDS});
   main_content_ = main_content.get();
   content_elements_.push_back(main_content.get());
   scene_->AddUiElement(std::move(main_content));
@@ -516,6 +515,7 @@ void UiSceneManager::CreateToasts() {
   element->SetSize(kToastWidthDMM, kToastHeightDMM);
   element->SetVisible(false);
   element->set_hit_testable(false);
+  element->SetTransitionedProperties({OPACITY});
   exclusive_screen_toast_ = element.get();
   scene_->AddUiElement(std::move(element));
 }

@@ -38,12 +38,12 @@ void UiScene::RemoveUiElement(int element_id) {
 void UiScene::AddAnimation(int element_id,
                            std::unique_ptr<cc::Animation> animation) {
   UiElement* element = GetUiElementById(element_id);
-  element->animation_player().AddAnimation(std::move(animation));
+  element->AddAnimation(std::move(animation));
 }
 
 void UiScene::RemoveAnimation(int element_id, int animation_id) {
   UiElement* element = GetUiElementById(element_id);
-  element->animation_player().RemoveAnimation(animation_id);
+  element->RemoveAnimation(animation_id);
 }
 
 void UiScene::OnBeginFrame(const base::TimeTicks& current_time) {
