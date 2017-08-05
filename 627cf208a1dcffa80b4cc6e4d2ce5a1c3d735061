@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "988da8d5_e3b9b4a3",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-08-05T02:55:33Z",
+      "side": 1,
+      "message": "Ah, I understand. So rsp has not yet been decremented so that it points below the locations on the stack for the registers that the unwinder wants to dereference. Since we copy the stack from rsp up, those locations are before the start of the stack buffer. Could you expand the comment a bit with this information?\n\nI think the case I mentioned (where the frame offset is inconsistent with rbp) could still happen if execution stopped before the \u0027push rbp\u0027 or after the \u0027leave\u0027 instruction, assuming unw_get_proc_info returns the executing function\u0027s unwind info for those code addresses. If this caused rbp - frame offset to go below rsp it seems like it could cause the same issue, but also would be caught by the check below.",
+      "parentUuid": "82366f47_8e52801b",
+      "range": {
+        "startLine": 150,
+        "startChar": 49,
+        "endLine": 152,
+        "endChar": 16
+      },
+      "revId": "627cf208a1dcffa80b4cc6e4d2ce5a1c3d735061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d3fc6fb_cc189d58",
         "filename": "base/profiler/native_stack_sampler_mac.cc",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "627cf208a1dcffa80b4cc6e4d2ce5a1c3d735061",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40dd5df_55a2d56d",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-08-05T02:55:33Z",
+      "side": 1,
+      "message": "Either way is reasonable. I think there\u0027s some value in using the same operations as done by libunwind.",
+      "parentUuid": "c375f659_2b81eefa",
+      "range": {
+        "startLine": 162,
+        "startChar": 10,
+        "endLine": 163,
+        "endChar": 77
+      },
+      "revId": "627cf208a1dcffa80b4cc6e4d2ce5a1c3d735061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
