@@ -292,9 +292,7 @@ double ProcessMetrics::GetCPUUsage() {
     // not yet received the notification.
     return 0;
   }
-  int64_t system_time =
-      (FileTimeToUTC(kernel_time) + FileTimeToUTC(user_time)) /
-      processor_count_;
+  int64_t system_time = FileTimeToUTC(kernel_time) + FileTimeToUTC(user_time);
   TimeTicks time = TimeTicks::Now();
 
   if (last_system_time_ == 0) {
@@ -322,8 +320,7 @@ bool ProcessMetrics::GetIOCounters(IoCounters* io_counters) const {
   return GetProcessIoCounters(process_.Get(), io_counters) != FALSE;
 }
 
-ProcessMetrics::ProcessMetrics(ProcessHandle process)
-    : processor_count_(SysInfo::NumberOfProcessors()), last_system_time_(0) {
+ProcessMetrics::ProcessMetrics(ProcessHandle process) : last_system_time_(0) {
   if (process) {
     HANDLE duplicate_handle;
     BOOL result = ::DuplicateHandle(::GetCurrentProcess(), process,
