@@ -125,7 +125,7 @@ class CORE_EXPORT V8ScriptRunner final {
                                        const TextPosition&);
 
   static uint32_t TagForParserCache(CachedMetadataHandler*);
-  static uint32_t TagForCodeCache(CachedMetadataHandler*);
+  static uint32_t TagForCodeCache(const CachedMetadataHandler*);
   static void SetCacheTimeStamp(CachedMetadataHandler*);
 
   // Utilities for calling functions added to the V8 extras binding object.
