@@ -1738,21 +1738,8 @@ PDFiumPage::Area PDFiumEngine::GetCharIndex(const pp::Point& point,
 }
 
 bool PDFiumEngine::OnMouseDown(const pp::MouseInputEvent& event) {
-  if (event.GetButton() == PP_INPUTEVENT_MOUSEBUTTON_RIGHT) {
-    if (selection_.empty())
-      return false;
-    std::vector<pp::Rect> selection_rect_vector;
-    GetAllScreenRectsUnion(&selection_, GetVisibleRect().point(),
-                           &selection_rect_vector);
-    pp::Point point = event.GetPosition();
-    for (const auto& rect : selection_rect_vector) {
-      if (rect.Contains(point.x(), point.y()))
-        return false;
-    }
-    SelectionChangeInvalidator selection_invalidator(this);
-    selection_.clear();
-    return true;
-  }
+  if (event.GetButton() == PP_INPUTEVENT_MOUSEBUTTON_RIGHT)
+    return OnRightMouseDown(event);
 
   if (event.GetButton() != PP_INPUTEVENT_MOUSEBUTTON_LEFT &&
       event.GetButton() != PP_INPUTEVENT_MOUSEBUTTON_MIDDLE) {
@@ -1869,6 +1856,25 @@ void PDFiumEngine::OnMultipleClick(int click_count,
 
   selection_.push_back(PDFiumRange(pages_[page_index].get(), start_index,
                                    end_index - start_index));
+}
+
+bool PDFiumEngine::OnRightMouseDown(const pp::MouseInputEvent& event) {
+  DCHECK_EQ(PP_INPUTEVENT_MOUSEBUTTON_RIGHT, event.GetButton());
+
+  if (selection_.empty())
+    return false;
+
+  std::vector<pp::Rect> selection_rect_vector;
+  GetAllScreenRectsUnion(&selection_, GetVisibleRect().point(),
+                         &selection_rect_vector);
+  pp::Point point = event.GetPosition();
+  for (const auto& rect : selection_rect_vector) {
+    if (rect.Contains(point.x(), point.y()))
+      return false;
+  }
+  SelectionChangeInvalidator selection_invalidator(this);
+  selection_.clear();
+  return true;
 }
 
 bool PDFiumEngine::OnMouseUp(const pp::MouseInputEvent& event) {
