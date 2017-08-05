@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70dba63b_d3162bfe",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 71437,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-05T00:19:20Z",
+      "side": 1,
+      "message": "I\u0027m uncertain of the value of this histogram, since we never expect things longer than 80 characters in this bucket. But I did use it to calculate the overall savings.",
+      "revId": "aca83ccdf60622209a5e8459ff9d918f32091f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
