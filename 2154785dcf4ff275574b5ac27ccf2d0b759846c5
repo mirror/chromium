@@ -118,6 +118,30 @@
       "revId": "2154785dcf4ff275574b5ac27ccf2d0b759846c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b2a2d4_e4d34d3b",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-05T00:26:17Z",
+      "side": 1,
+      "message": "The motivation for these additional checks was that I can\u0027t find guarantees that when headers-\u003eGetNormalizedHeader returns true, the header is non-empty.\n\nSo, it looks like has_answer_card may be true, and still some of headers may be empty. I think it won\u0027t hurt to filter out responses with such headers, as an additional check against misbehaving server.",
+      "parentUuid": "0c885a3a_49ecf26c",
+      "range": {
+        "startLine": 133,
+        "startChar": 52,
+        "endLine": 133,
+        "endChar": 72
+      },
+      "revId": "2154785dcf4ff275574b5ac27ccf2d0b759846c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
