@@ -135,10 +135,13 @@ void LayoutListMarker::Paint(const PaintInfo& paint_info,
   ListMarkerPainter(*this).Paint(paint_info, paint_offset);
 }
 
-void LayoutListMarker::UpdateLayout() {
-  DCHECK(NeedsLayout());
-  LayoutAnalyzer::Scope analyzer(*this);
+void LayoutListMarker::SetLocationAndUpdateOverflowControlsIfNeeded(
+    const LayoutPoint& location) {
+  LayoutBox::SetLocationAndUpdateOverflowControlsIfNeeded(location);
+  UpdateLineOffset();
+}
 
+void LayoutListMarker::UpdateLineOffset() {
   LayoutUnit block_offset = LogicalTop();
   for (LayoutBox* o = ParentBox(); o && o != ListItem(); o = o->ParentBox()) {
     block_offset += o->LogicalTop();
@@ -150,6 +153,13 @@ void LayoutListMarker::UpdateLayout() {
     line_offset_ = ListItem()->LogicalRightOffsetForLine(
         block_offset, kDoNotIndentText, LayoutUnit());
   }
+}
+
+void LayoutListMarker::UpdateLayout() {
+  DCHECK(NeedsLayout());
+  LayoutAnalyzer::Scope analyzer(*this);
+
+  UpdateLineOffset();
   if (IsImage()) {
     UpdateMarginsAndContent();
     LayoutSize image_size(ImageBulletSize());
