@@ -4,6 +4,8 @@
 
 #include "content/browser/frame_host/frame_tree_node.h"
 
+#include <math.h>
+
 #include <queue>
 #include <utility>
 
@@ -13,6 +15,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/stl_util.h"
+#include "base/strings/string_util.h"
 #include "content/browser/frame_host/frame_tree.h"
 #include "content/browser/frame_host/navigation_request.h"
 #include "content/browser/frame_host/navigator.h"
@@ -42,8 +45,37 @@ const double kLoadingProgressNotStarted = 0.0;
 const double kLoadingProgressMinimum = 0.1;
 const double kLoadingProgressDone = 1.0;
 
-void RecordUniqueNameLength(size_t length) {
-  UMA_HISTOGRAM_COUNTS("SessionRestore.FrameUniqueNameLength", length);
+void RecordUniqueNameSize(FrameTreeNode* node) {
+  const auto& unique_name = node->current_replication_state().unique_name;
+
+  // Don't record numbers for the root node, which always has an empty unique
+  // name.
+  if (!node->parent()) {
+    DCHECK(unique_name.empty());
+    return;
+  }
+
+  UMA_HISTOGRAM_COUNTS(
+      "SessionRestore.FrameUniqueNameOriginalRequestedNameSize",
+      node->current_replication_state().name.size());
+  // If the name is a frame path, attempt to normalize based on the number of
+  // frames in the frame path.
+  if (base::StartsWith(unique_name, "<!--framePath //",
+                       base::CompareCase::SENSITIVE)) {
+    size_t depth = 1;
+    while (node->parent()) {
+      ++depth;
+      node = node->parent();
+    }
+    UMA_HISTOGRAM_COUNTS(
+        "SessionRestore.FrameUniqueNameWithFramePathSizePerComponent",
+        round(unique_name.size() / static_cast<float>(depth)));
+    UMA_HISTOGRAM_COUNTS("SessionRestore.FrameUniqueNameWithFramePathSize",
+                         unique_name.size());
+  } else {
+    UMA_HISTOGRAM_COUNTS("SessionRestore.FrameUniqueNameFromRequestedNameSize",
+                         unique_name.size());
+  }
 }
 
 }  // namespace
@@ -124,7 +156,7 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
           std::make_pair(frame_tree_node_id_, this));
   CHECK(result.second);
 
-  RecordUniqueNameLength(unique_name.size());
+  RecordUniqueNameSize(this);
 
   // Note: this should always be done last in the constructor.
   blame_context_.Initialize();
@@ -286,7 +318,7 @@ void FrameTreeNode::SetFrameName(const std::string& name,
     DCHECK(unique_name.empty());
   }
 
-  RecordUniqueNameLength(unique_name.size());
+  RecordUniqueNameSize(this);
   render_manager_.OnDidUpdateName(name, unique_name);
   replication_state_.name = name;
   replication_state_.unique_name = unique_name;
