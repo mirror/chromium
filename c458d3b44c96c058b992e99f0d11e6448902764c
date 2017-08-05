@@ -70,6 +70,24 @@
       "revId": "c458d3b44c96c058b992e99f0d11e6448902764c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2929d13_9aa54950",
+        "filename": "ui/login/account_picker/md_screen_account_picker.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-05T10:03:06Z",
+      "side": 1,
+      "message": "I think the issue is maybePreselectPod is no-op if the preselected pod is already the selected pod (which might be the case here; the pod row is still around while an app window is active, it\u0027s just hidden behind the app window).",
+      "parentUuid": "01685231_c0711bc4",
+      "revId": "c458d3b44c96c058b992e99f0d11e6448902764c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
