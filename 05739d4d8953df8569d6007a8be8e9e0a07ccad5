@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0178158_a6e5a4ae",
+        "filename": "chrome/browser/ui/webui/chromeos/certificate_manager_dialog_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-05T03:23:58Z",
+      "side": 1,
+      "message": "nit: sentence-case \u0026 period",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 31
+      },
+      "revId": "05739d4d8953df8569d6007a8be8e9e0a07ccad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc58078_0639d72b",
+        "filename": "chrome/browser/ui/webui/chromeos/certificate_manager_dialog_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-05T03:23:58Z",
+      "side": 1,
+      "message": "Not necessary -- this is overridden by this class (hard-coded to \"text/html\"). And the previous line shows we always return the HTML here.\n\nEven if I tried to visit \"chrome://certificate-manager/narwhal.jpg\" the normal page would load. (And that\u0027s a weird case but we\u0027d still want to do the $i18n template replacement, just like we do when you load \"chrome://md-settings/doggo.jpg\".)",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 25
+      },
+      "revId": "05739d4d8953df8569d6007a8be8e9e0a07ccad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
