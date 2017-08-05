@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "454c4b75_73fd0483",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-05T00:14:25Z",
+      "side": 1,
+      "message": "We may want to skip this check and add sinks whenever we find them. If so, we may be able to remove |services_pending_resolution_|.\n\nDerek, could you please confirm?",
+      "range": {
+        "startLine": 217,
+        "startChar": 27,
+        "endLine": 217,
+        "endChar": 55
+      },
+      "revId": "06e908c427e6477ff19a91c95a28cd9c16daf9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
