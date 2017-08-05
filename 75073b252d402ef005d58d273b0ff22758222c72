@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a7e4394_ec0dc6b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-05T02:16:11Z",
+      "side": 1,
+      "message": "Probably not needed since it\u0027s not directly related to the bug.",
+      "revId": "75073b252d402ef005d58d273b0ff22758222c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
