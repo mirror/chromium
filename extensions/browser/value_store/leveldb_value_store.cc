@@ -35,9 +35,11 @@ const char kCannotSerialize[] = "Cannot serialize value to JSON";
 
 }  // namespace
 
-LeveldbValueStore::LeveldbValueStore(const std::string& uma_client_name,
-                                     const base::FilePath& db_path)
-    : LazyLevelDb(uma_client_name, db_path) {
+LeveldbValueStore::LeveldbValueStore(
+    const std::string& uma_client_name,
+    const base::FilePath& db_path,
+    const scoped_refptr<base::SequencedTaskRunner>& task_runner)
+    : LazyLevelDb(uma_client_name, db_path, task_runner) {
   base::trace_event::MemoryDumpManager::GetInstance()
       ->RegisterDumpProviderWithSequencedTaskRunner(
           this, "LeveldbValueStore", base::SequencedTaskRunnerHandle::Get(),

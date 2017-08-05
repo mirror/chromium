@@ -62,9 +62,11 @@ leveldb::Status DeleteValue(leveldb::DB* db, const std::string& key) {
 
 }  // namespace
 
-LazyLevelDb::LazyLevelDb(const std::string& uma_client_name,
-                         const base::FilePath& path)
-    : db_path_(path) {
+LazyLevelDb::LazyLevelDb(
+    const std::string& uma_client_name,
+    const base::FilePath& path,
+    const scoped_refptr<base::SequencedTaskRunner>& task_runner)
+    : db_path_(path), task_runner_(task_runner) {
   open_options_.create_if_missing = true;
   open_options_.paranoid_checks = true;
   open_options_.reuse_logs = leveldb_env::kDefaultLogReuseOptionValue;
@@ -94,6 +96,7 @@ LazyLevelDb::~LazyLevelDb() {
 ValueStore::Status LazyLevelDb::Read(const std::string& key,
                                      std::unique_ptr<base::Value>* value) {
   base::ThreadRestrictions::AssertIOAllowed();
+  CHECK(task_runner_->RunsTasksInCurrentSequence());
   DCHECK(value);
 
   std::string value_as_json;
@@ -120,6 +123,7 @@ ValueStore::Status LazyLevelDb::Read(const std::string& key,
 
 ValueStore::Status LazyLevelDb::Delete(const std::string& key) {
   base::ThreadRestrictions::AssertIOAllowed();
+  CHECK(task_runner_->RunsTasksInCurrentSequence());
 
   ValueStore::Status status = EnsureDbIsOpen();
   if (!status.ok())
@@ -156,6 +160,7 @@ ValueStore::BackingStoreRestoreStatus LazyLevelDb::LogRestoreStatus(
 ValueStore::BackingStoreRestoreStatus LazyLevelDb::FixCorruption(
     const std::string* key) {
   base::ThreadRestrictions::AssertIOAllowed();
+  CHECK(task_runner_->RunsTasksInCurrentSequence());
   leveldb::Status s;
   if (key && db_) {
     s = DeleteValue(db_.get(), *key);
@@ -221,6 +226,7 @@ ValueStore::BackingStoreRestoreStatus LazyLevelDb::FixCorruption(
 
 ValueStore::Status LazyLevelDb::EnsureDbIsOpen() {
   base::ThreadRestrictions::AssertIOAllowed();
+  CHECK(task_runner_->RunsTasksInCurrentSequence());
 
   if (db_)
     return ValueStore::Status();
@@ -264,6 +270,7 @@ ValueStore::Status LazyLevelDb::ToValueStoreError(
 
 bool LazyLevelDb::DeleteDbFile() {
   base::ThreadRestrictions::AssertIOAllowed();
+  CHECK(task_runner_->RunsTasksInCurrentSequence());
   db_.reset();  // release any lock on the directory
   if (!base::DeleteFile(db_path_, true /* recursive */)) {
     LOG(WARNING) << "Failed to delete leveldb database at " << db_path_.value();
