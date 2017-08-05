@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bf64ee3_dde02e5e",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-05T01:36:44Z",
+      "side": 1,
+      "message": "nit: {} is not needed",
+      "range": {
+        "startLine": 201,
+        "startChar": 38,
+        "endLine": 201,
+        "endChar": 40
+      },
+      "revId": "4127b5a01d8456bcddef800c19298cbd52587941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
