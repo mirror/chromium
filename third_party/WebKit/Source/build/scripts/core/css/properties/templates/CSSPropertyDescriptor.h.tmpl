@@ -25,6 +25,8 @@ struct CSSPropertyDescriptor {
   {{all_api_methods[api_method_name].return_type}} (*{{api_method_name}}){{all_api_methods[api_method_name].parameters}};
   {% endfor %}
 
+  bool (*IsInterpolableProperty)();
+
   // Returns the corresponding CSSPropertyDescriptor for a given CSSPropertyID.
   // Use this function to access the API for a property. Returns a descriptor
   // with isValid set to false if no descriptor exists for this ID.

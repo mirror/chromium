@@ -34,6 +34,7 @@
 #include "core/animation/animatable/AnimatableDouble.h"
 #include "core/animation/animatable/AnimatableFilterOperations.h"
 #include "core/animation/animatable/AnimatableTransform.h"
+#include "core/css/properties/CSSPropertyDescriptor.h"
 #include "core/style/ComputedStyle.h"
 
 namespace blink {
@@ -54,7 +55,11 @@ static RefPtr<AnimatableValue> CreateFromTransformProperties(
 RefPtr<AnimatableValue> CSSAnimatableValueFactory::Create(
     CSSPropertyID property,
     const ComputedStyle& style) {
-  DCHECK(CSSPropertyMetadata::IsInterpolableProperty(property));
+  CSSPropertyDescriptor css_property_descriptor =
+      CSSPropertyDescriptor::Get(property);
+  if (!css_property_descriptor.IsInterpolableProperty)
+    NOTREACHED() << getPropertyName(property);
+  DCHECK(css_property_descriptor.IsInterpolableProperty());
   DCHECK(CompositorAnimations::IsCompositableProperty(property));
   switch (property) {
     case CSSPropertyOpacity:

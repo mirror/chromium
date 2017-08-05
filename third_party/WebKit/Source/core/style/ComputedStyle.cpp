@@ -32,6 +32,7 @@
 #include "core/css/CSSPaintValue.h"
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/css/CSSPropertyEquality.h"
+#include "core/css/properties/CSSPropertyDescriptor.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/layout/TextAutosizer.h"
@@ -628,7 +629,11 @@ bool ComputedStyle::DiffNeedsPaintInvalidationObjectForPaintImage(
   for (CSSPropertyID property_id : *value->NativeInvalidationProperties()) {
     // TODO(ikilpatrick): remove IsInterpolableProperty check once
     // CSSPropertyEquality::PropertiesEqual correctly handles all properties.
-    if (!CSSPropertyMetadata::IsInterpolableProperty(property_id) ||
+    CSSPropertyDescriptor css_property_descriptor =
+        CSSPropertyDescriptor::Get(property_id);
+    if (!css_property_descriptor.IsInterpolableProperty)
+      NOTREACHED() << getPropertyName(property_id);
+    if (!css_property_descriptor.IsInterpolableProperty() ||
         !CSSPropertyEquality::PropertiesEqual(PropertyHandle(property_id),
                                               *this, other))
       return true;
