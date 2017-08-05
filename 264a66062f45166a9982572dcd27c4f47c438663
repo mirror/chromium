@@ -70,6 +70,30 @@
       "revId": "264a66062f45166a9982572dcd27c4f47c438663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32cbdfc7_fbdff872",
+        "filename": "ui/app_list/presenter/app_list_presenter_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-05T01:22:01Z",
+      "side": 1,
+      "message": "Moved into getters.",
+      "parentUuid": "bacdd2b9_1779eab3",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 34
+      },
+      "revId": "264a66062f45166a9982572dcd27c4f47c438663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
