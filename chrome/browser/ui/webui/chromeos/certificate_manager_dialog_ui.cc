@@ -5,6 +5,8 @@
 #include "chrome/browser/ui/webui/chromeos/certificate_manager_dialog_ui.h"
 
 #include <memory>
+#include <string>
+#include <utility>
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -60,6 +62,7 @@ class CertificateManagerDialogHTMLSource : public content::URLDataSource {
 
  private:
   std::unique_ptr<base::DictionaryValue> localized_strings_;
+  ui::TemplateReplacements replacements_;
 
   DISALLOW_COPY_AND_ASSIGN(CertificateManagerDialogHTMLSource);
 };
@@ -80,6 +83,8 @@ void CertificateManagerDialogHTMLSource::StartDataRequest(
   scoped_refptr<base::RefCountedMemory> response_bytes;
   const std::string& app_locale = g_browser_process->GetApplicationLocale();
   webui::SetLoadTimeDataDefaults(app_locale, localized_strings_.get());
+  ui::TemplateReplacementsFromDictionaryValue(*localized_strings_,
+                                              &replacements_);
 
   if (path == kLocalizedStringsFile) {
     // Return dynamically-generated strings from memory.
@@ -90,6 +95,15 @@ void CertificateManagerDialogHTMLSource::StartDataRequest(
     // Return (and cache) the main options html page as the default.
     response_bytes = ui::ResourceBundle::GetSharedInstance().
         LoadDataResourceBytes(IDR_CERT_MANAGER_DIALOG_HTML);
+  }
+
+  // pre-process i18n strings
+  if (GetMimeType(path) == "text/html") {
+    std::string replaced = ui::ReplaceTemplateExpressions(
+        base::StringPiece(response_bytes->front_as<char>(),
+                          response_bytes->size()),
+        replacements_);
+    response_bytes = base::RefCountedString::TakeString(&replaced);
   }
 
   callback.Run(response_bytes.get());
