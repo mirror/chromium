@@ -52,6 +52,24 @@
       "revId": "ed3273db251d805944a604dea8f80713a484bbcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d734b3d_bcefab6c",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-05T07:18:07Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "1f6e36cd_fcd9e7d2",
+      "revId": "ed3273db251d805944a604dea8f80713a484bbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
