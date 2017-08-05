@@ -319,7 +319,7 @@ scoped_refptr<MediaRouteController> MediaRouterMojoImpl::GetRouteController(
       mojo::MakeRequest(&mojo_media_controller);
   scoped_refptr<MediaRouteController> route_controller =
       new MediaRouteController(route_id, std::move(mojo_media_controller),
-                               this);
+                               context_);
 
   DoCreateMediaRouteController(route_id,
                                std::move(mojo_media_controller_request),
@@ -647,6 +647,7 @@ void MediaRouterMojoImpl::DoCreateMediaRouteController(
   if (!mojo_media_controller_request.is_pending() || !mojo_observer.is_bound())
     return;
 
+  LOG(ERROR) << "CreateMRP";
   media_route_provider_->CreateMediaRouteController(
       route_id, std::move(mojo_media_controller_request),
       std::move(mojo_observer),
