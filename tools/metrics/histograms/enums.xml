@@ -13204,6 +13204,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1183" label="LOCKSCREENDATA_SETCONTENT"/>
   <int value="1184" label="LOCKSCREENDATA_DELETE"/>
   <int value="1185" label="BLUETOOTHLOWENERGY_RESETADVERTISING"/>
+  <int value="1186" label="FILEMANAGERPRIVATE_RENAMEVOLUME"/>
 </enum>
 
 <enum name="ExtensionIconState">
