@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ff17914_086c506e",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-05T06:10:08Z",
+      "side": 1,
+      "message": "// static",
+      "revId": "4d08699c87f443eda522a2e0a709ad8c5484376c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88cc4ae4_f8a43335",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-05T06:10:08Z",
+      "side": 1,
+      "message": "// An adaptor that uses ImageIndex to make image data appear as a vector of encoded data under a higher level of abstraction than raw bytes. In particular:\n// - First byte of each reference becomes an encoding of its type and Label.\n// - Subsequent bytes of each reference becomes |kReferencePaddingProjection|.\n// - Non-reference raw bytes remain as raw bytes.\n// Iterator access is also provided.\n\nI\u0027m not sure what\u0027s meant by data copy/move/assignment; this is read-only??",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 56
+      },
+      "revId": "4d08699c87f443eda522a2e0a709ad8c5484376c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f832959c_3045264f",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-05T06:10:08Z",
+      "side": 1,
+      "message": "results",
+      "range": {
+        "startLine": 26,
+        "startChar": 47,
+        "endLine": 26,
+        "endChar": 53
+      },
+      "revId": "4d08699c87f443eda522a2e0a709ad8c5484376c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80473d2e_934d9a79",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-05T06:10:08Z",
+      "side": 1,
+      "message": "i.e.,",
+      "range": {
+        "startLine": 125,
+        "startChar": 48,
+        "endLine": 125,
+        "endChar": 55
+      },
+      "revId": "4d08699c87f443eda522a2e0a709ad8c5484376c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
