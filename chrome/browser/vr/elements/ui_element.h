@@ -15,6 +15,7 @@
 #include "chrome/browser/vr/animation_player.h"
 #include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/ui_element_debug_id.h"
+#include "chrome/browser/vr/target_property.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/quaternion.h"
@@ -79,9 +80,6 @@ class UiElement : public cc::AnimationTarget {
 
   void Animate(const base::TimeTicks& time);
 
-  // Indicates whether the element should be visually rendered.
-  bool IsVisible() const;
-
   // Indicates whether the element should be tested for cursor input.
   bool IsHitTestable() const;
 
@@ -119,9 +117,15 @@ class UiElement : public cc::AnimationTarget {
   int id() const { return id_; }
   void set_id(int id) { id_ = id; }
 
-  // If true, this object will be visible.
-  bool visible() const { return visible_; }
+  // If true, this object will be visible. NB: this is sugar for setting opacity
+  // which is the property that actually drives visibility.
+  bool IsVisible() const;
   void SetVisible(bool visible);
+
+  bool requires_layout() const { return requires_layout_; }
+  void set_requires_layout(bool requires_layout) {
+    requires_layout_ = requires_layout;
+  }
 
   // If false, the reticle will not hit the element, even if visible.
   bool hit_testable() const { return hit_testable_; }
@@ -147,7 +151,7 @@ class UiElement : public cc::AnimationTarget {
 
   // The size of the object.  This does not affect children.
   gfx::SizeF size() const { return size_; }
-  void SetSize(float width, float hight);
+  void SetSize(float width, float height);
 
   // It is assumed that operations is of size 4 with a component for layout
   // translation, translation, rotation and scale, in that order (see
@@ -162,7 +166,10 @@ class UiElement : public cc::AnimationTarget {
   void SetRotate(float x, float y, float z, float radians);
   void SetScale(float x, float y, float z);
 
-  AnimationPlayer& animation_player() { return animation_player_; }
+  // SetVisible(true) is an alias for SetOpacity(opacity_when_visible_).
+  void set_opacity_when_visible(float opacity) {
+    opacity_when_visible_ = opacity;
+  }
 
   // The opacity of the object (between 0.0 and 1.0).
   float opacity() const { return opacity_; }
@@ -278,9 +285,12 @@ class UiElement : public cc::AnimationTarget {
   void NotifyClientSizeAnimated(const gfx::SizeF& size,
                                 int transform_property_id,
                                 cc::Animation* animation) override;
-  void NotifyClientBooleanAnimated(bool visible,
-                                   int transform_property_id,
-                                   cc::Animation* animation) override;
+
+  void SetTransitionedProperties(const std::set<int>& properties);
+
+  void AddAnimation(std::unique_ptr<cc::Animation> animation);
+  void RemoveAnimation(int animation_id);
+  bool IsAnimatingProperty(TargetProperty property) const;
 
   // Handles positioning adjustments for children. This will be overridden by
   // UiElements providing custom layout modes. See the documentation of the
@@ -298,9 +308,6 @@ class UiElement : public cc::AnimationTarget {
  private:
   // Valid IDs are non-negative.
   int id_ = -1;
-
-  // If true, this object will be visible.
-  bool visible_ = false;
 
   // If false, the reticle will not hit the element, even if visible.
   bool hit_testable_ = true;
@@ -322,7 +329,11 @@ class UiElement : public cc::AnimationTarget {
   gfx::SizeF size_ = {1.0f, 1.0f};
 
   // The opacity of the object (between 0.0 and 1.0).
-  float opacity_ = 1.0f;
+  float opacity_ = 0.0f;
+  float opacity_when_visible_ = 1.0f;
+
+  // This signals to the parent that this element should be considered
+  bool requires_layout_ = true;
 
   float corner_radius_ = 0.0f;
 
