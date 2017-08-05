@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c417221_ba4d2c9c",
+        "filename": "base/memory/discardable_shared_memory_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-05T04:21:53Z",
+      "side": 1,
+      "message": "Out of curiosity, does the rest of this test have any meaning if we\u0027re not on Android?",
+      "revId": "e4ce55274917b8602a2743907d7f43773636c41c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
