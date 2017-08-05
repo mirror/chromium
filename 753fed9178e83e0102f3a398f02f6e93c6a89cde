@@ -22,6 +22,47 @@
       "revId": "753fed9178e83e0102f3a398f02f6e93c6a89cde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e94377_a2db3b32",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-05T06:49:36Z",
+      "side": 1,
+      "message": "Makes sense.\n\nDo you think this will affect performance? If you suspect it, you can run blink_perf.bindings and dromaeo locally.",
+      "parentUuid": "9ddf9c71_bb28b386",
+      "range": {
+        "startLine": 30,
+        "startChar": 28,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "753fed9178e83e0102f3a398f02f6e93c6a89cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45106b5_7ba3b5c8",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-05T06:49:36Z",
+      "side": 1,
+      "message": "Don\u0027t we need to add a write barrier here as well?",
+      "revId": "753fed9178e83e0102f3a398f02f6e93c6a89cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
