@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f556607_122027ce",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-05T00:37:48Z",
+      "side": 1,
+      "message": "Otherwise .cc file needs some storage specifier (similar to fwd decl) something something, which I don\u0027t understand clearly.\ne.g.\nhttps://cs.chromium.org/chromium/src/device/usb/usb_service.cc?rcl\u003dae0bafee53c4b0e4e8e79e3c2c3cdbc0168d2843\u0026l\u003d47",
+      "parentUuid": "29e3dafd_fbb93bf0",
+      "revId": "b400dd559351b40f6b498907a8d4df6768a05223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "997d0671_c1f355a8",
         "filename": "chrome/browser/extensions/api/image_writer_private/test_utils.h",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "348fb72f_d4cbe7d9",
+        "filename": "chrome/browser/extensions/api/image_writer_private/test_utils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-05T00:37:48Z",
+      "side": 1,
+      "message": "No, fixed.",
+      "parentUuid": "997d0671_c1f355a8",
+      "revId": "b400dd559351b40f6b498907a8d4df6768a05223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81f93ae9_57122283",
         "filename": "chrome/browser/extensions/api/image_writer_private/unzip_helper.h",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-04T20:51:54Z",
       "side": 1,
       "message": "Can we do this now, rather than having a TODO to file a bug?",
+      "revId": "b400dd559351b40f6b498907a8d4df6768a05223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb81bef7_7ed742ac",
+        "filename": "chrome/browser/extensions/api/image_writer_private/unzip_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-05T00:37:48Z",
+      "side": 1,
+      "message": "Yes of course, that was my plan.",
+      "parentUuid": "81f93ae9_57122283",
       "revId": "b400dd559351b40f6b498907a8d4df6768a05223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
