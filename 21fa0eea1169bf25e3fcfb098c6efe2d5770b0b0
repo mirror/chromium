@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1054406f_4c78a42f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-05T01:14:01Z",
+      "side": 1,
+      "message": "OK, noted the case of malicious names that intentionally collide.\n\n(Not sure if there are other cases you\u0027re thinking of)",
+      "parentUuid": "289add66_6a52b43a",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1697d746_6a30aac0",
         "filename": "content/common/unique_name_helper.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T20:24:35Z",
       "side": 1,
       "message": "How did we pick 80?  Worth noting somewhere, maybe here.\n\n(I\u0027m guessing it\u0027s because that\u0027s the length of the resulting hash?  We don\u0027t want to make anything longer by hashing it, and we may as well not have any names longer than that...?)",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5301f8_1e5b5f52",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-05T01:14:01Z",
+      "side": 1,
+      "message": "It was pretty arbitrary to be honest: I picked it before checking the length of the resulting hash. The fact that the resulting hash is exactly 80 characters was pretty coincidental. Basically I looked at the histograms and tried to pick what I thought was a reasonable point: about 80% of names are shorter than this, and I had a hard time thinking of reasons why a much longer browsing context name would be valuable.",
+      "parentUuid": "1697d746_6a30aac0",
       "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "802ef305_58079846",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-05T01:14:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eea79a32_09b3bd95",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "081f19f8_19aa3ce1",
         "filename": "content/common/unique_name_helper.cc",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "dce5d1db_b805c80c",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-05T01:14:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "081f19f8_19aa3ce1",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e35f7c99_09f77c45",
         "filename": "content/common/unique_name_helper.cc",
         "patchSetId": 9
@@ -81,6 +153,30 @@
       "writtenOn": "2017-08-04T20:24:35Z",
       "side": 1,
       "message": "This sounds arbitrary (making me wonder why we couldn\u0027t use a delimiter that won\u0027t appear in unique names).  Is it actually because the \u0027/\u0027s appears in the frame path and are part of the string matching above?  If so, wouldn\u0027t that make frame paths ambiguous in the first place?\n\n(e.g., /name1/name2/name3/ could be 3 different frames or it could be a frame named \"name1/name2\" and another named \"name3\", etc.)\n\nIf that\u0027s true, does that have any consequence on restoring frames today (before this CL)?",
+      "range": {
+        "startLine": 219,
+        "startChar": 7,
+        "endLine": 219,
+        "endChar": 46
+      },
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3732b32a_f4a00249",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-05T01:14:01Z",
+      "side": 1,
+      "message": "Well, we do need to use the delimiter that frame paths use. If we don\u0027t, then we won\u0027t match at all.\n\nI overhauled this comment; hopefully, it\u0027s clearer now.",
+      "parentUuid": "e35f7c99_09f77c45",
       "range": {
         "startLine": 219,
         "startChar": 7,
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "81145ed8_b47cdf02",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-05T01:14:01Z",
+      "side": 1,
+      "message": "Stylistically, I believe a colon is acceptable as well \u003dP\n\nBut I don\u0027t feel strongly, so done.",
+      "parentUuid": "b96be21e_ba23e8da",
+      "range": {
+        "startLine": 222,
+        "startChar": 61,
+        "endLine": 222,
+        "endChar": 62
+      },
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74cf541d_6fb973f4",
         "filename": "content/common/unique_name_helper.cc",
         "patchSetId": 9
@@ -130,6 +250,24 @@
       "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1bdcf8_26b3e4d1",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-05T01:14:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74cf541d_6fb973f4",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "ef32e391_46c48364",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-05T01:14:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "370cd5e3_f9aea351",
+      "range": {
+        "startLine": 337,
+        "startChar": 26,
+        "endLine": 337,
+        "endChar": 37
+      },
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72e83a52_a6fdb051",
         "filename": "content/common/unique_name_helper_unittest.cc",
         "patchSetId": 9
@@ -167,6 +329,24 @@
       "writtenOn": "2017-08-04T20:24:35Z",
       "side": 1,
       "message": "Wouldn\u0027t you need just_fits_name to be in the frame tree as well as too_long_name2 to be able to test that substring matches don\u0027t cause a problem?  (I\u0027m not sure how this part of the test differs from lines 328-335, since they both test an isolated name that is over the limit.)",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99418bff_493844ca",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-05T01:14:01Z",
+      "side": 1,
+      "message": "This is testing that the previously generated replacement for string(kMaxSize + 1, \u0027a\u0027) doesn\u0027t incorrectly match against string(kMaxSize + 10, \u0027a\u0027).\n\njust_fits_name is shorter than either of these, and has no replacement, so it won\u0027t cause this conflict.",
+      "parentUuid": "72e83a52_a6fdb051",
       "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -196,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "da9aa2e3_e4dcd7f4",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-05T01:14:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab224b2a_8b21e9e2",
+      "range": {
+        "startLine": 365,
+        "startChar": 50,
+        "endLine": 365,
+        "endChar": 58
+      },
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb2666f0_73f2ad03",
         "filename": "content/common/unique_name_helper_unittest.cc",
         "patchSetId": 9
@@ -210,6 +414,24 @@
       "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7010129a_97c8bff2",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-05T01:14:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb2666f0_73f2ad03",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
