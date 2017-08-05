@@ -46,6 +46,30 @@
       "revId": "3fae0ccccaec60a300f109ab651ced12825597c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206ac1a2_4350b167",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-05T02:00:34Z",
+      "side": 1,
+      "message": "Oops, sorry, I originally thought we weren\u0027t supposed to process subsequent headers and made a comment saying that in http_utils.cc, but then I realized that we *are* supposed to process all headers (the spec differs from HSTS in that respect) and I forgot to go back and update the comment I had made in http_utils.cc.\n\nJust to clarify, the main bug is that without marking as non-coalescing, EnumerateHeader() returns just the first name\u003dvalue directive; marking it as non-coalescing causes EnumerateHeader() to return the full header value. The second bug, which I was planning to fix in the TODO, is that we should process multiple header values, coalescing them with commas, if there are multiple header values.\n\nHowever, I now realize that marking the header as non-coalescing is probably not actually the right way to do this and is just a short-term hack to fix bug #1, and doesn\u0027t create a path to fixing bug #2. Instead, I changed this code to use GetNormalizedHeader(), which concatenates all the values with comma separators. That way we get process the same value here whether the server sent:\n\nExpect-CT: max-age\u003d100\nExpect-CT: enforce\n\nor\n\nExpect-CT: max-age\u003d100, enforce\n\nwhich is good because the spec intended to treat those the same. That fixes bug #1 and bug #2 simultaneously, without needing to mark the header as non-coalescing. And I added a test for bug #2 as well.",
+      "parentUuid": "deba33ed_92e38f3a",
+      "range": {
+        "startLine": 879,
+        "startChar": 20,
+        "endLine": 879,
+        "endChar": 0
+      },
+      "revId": "3fae0ccccaec60a300f109ab651ced12825597c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
