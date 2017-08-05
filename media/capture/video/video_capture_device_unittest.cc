@@ -44,6 +44,8 @@
 #endif
 
 #if defined(OS_CHROMEOS)
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/fake_power_manager_client.h"
 #include "media/capture/video/chromeos/video_capture_device_arc_chromeos.h"
 #include "media/capture/video/chromeos/video_capture_device_factory_chromeos.h"
 #include "mojo/edk/embedder/embedder.h"
@@ -267,10 +269,18 @@ class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
             base::Bind(&VideoCaptureDeviceTest::OnFrameCaptured,
                        base::Unretained(this)))),
         image_capture_client_(new MockImageCaptureClient()),
+#if defined(OS_CHROMEOS)
+        dbus_setter_(chromeos::DBusThreadManager::GetSetterForTesting()),
+#endif
         video_capture_device_factory_(VideoCaptureDeviceFactory::CreateFactory(
-            base::ThreadTaskRunnerHandle::Get())) {}
+            base::ThreadTaskRunnerHandle::Get())) {
+  }
 
   void SetUp() override {
+#if defined(OS_CHROMEOS)
+    dbus_setter_->SetPowerManagerClient(
+        base::MakeUnique<chromeos::FakePowerManagerClient>());
+#endif
 #if defined(OS_ANDROID)
     VideoCaptureDeviceAndroid::RegisterVideoCaptureDevice(
         base::android::AttachCurrentThread());
@@ -375,6 +385,9 @@ class VideoCaptureDeviceTest : public testing::TestWithParam<gfx::Size> {
   std::unique_ptr<MockVideoCaptureClient> video_capture_client_;
   const scoped_refptr<MockImageCaptureClient> image_capture_client_;
   VideoCaptureFormat last_format_;
+#if defined(OS_CHROMEOS)
+  std::unique_ptr<chromeos::DBusThreadManagerSetter> dbus_setter_;
+#endif
   const std::unique_ptr<VideoCaptureDeviceFactory>
       video_capture_device_factory_;
 };
