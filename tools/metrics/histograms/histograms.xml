@@ -71434,13 +71434,47 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="SessionRestore.FrameUniqueNameFromRequestedNameSize"
+    units="bytes">
+  <owner>dcheng@chromium.org</owner>
+  <summary>
+    Records the size of a unique name derived from the browsing context name.
+  </summary>
+</histogram>
+
 <histogram name="SessionRestore.FrameUniqueNameLength" units="bytes">
   <owner>dcheng@chromium.org</owner>
   <summary>
-    Records the length of unique names for web frames that are saved as part of
-    session restore data. It is logged each time the unique name changes, which
-    typically happens when a web frame is first created or its name is changed
-    by mutating window.name.
+    Deprecated 2017-08 due to unique name generation change. Please use
+    SessionRestore.FrameUniqueNameFromRequestedNameSize and
+    SessionRestore.FrameUniqueNameWithFramePathSize instead.
+  </summary>
+</histogram>
+
+<histogram name="SessionRestore.FrameUniqueNameOriginalRequestedNameSize"
+    units="bytes">
+  <owner>dcheng@chromium.org</owner>
+  <summary>
+    Records the size of the browsing context name (based on the iframe name
+    attribute or window.name) when generating the unique name.
+  </summary>
+</histogram>
+
+<histogram name="SessionRestore.FrameUniqueNameWithFramePathSize" units="bytes">
+  <owner>dcheng@chromium.org</owner>
+  <summary>
+    Records the size of a unique name when falling back to the frame path
+    algorithm. The fallback path is used when the browsing context name is empty
+    or non-unique.
+  </summary>
+</histogram>
+
+<histogram name="SessionRestore.FrameUniqueNameWithFramePathSizePerComponent"
+    units="bytes">
+  <owner>dcheng@chromium.org</owner>
+  <summary>
+    Records the size of a unique name with a frame path divided by the depth of
+    the frame. Used to normalize lengths for deeper nodes in a frame tree.
   </summary>
 </histogram>
 
