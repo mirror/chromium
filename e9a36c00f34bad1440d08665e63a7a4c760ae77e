@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8441c6b9_ec4b059e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/application_test_runner/ResourceTreeTestRunner.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-05T00:37:30Z",
+      "side": 1,
+      "message": "But... then our namespace poisoner gets confused. Granted, we\u0027re not closure compiling any of these auto-migrated helpers, but I\u0027d like to get us there.\n\nI think if we want them to have their own namespace, they should be in their own modules like we do for non-test modules.",
+      "parentUuid": "34877a72_d4731adb",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "e9a36c00f34bad1440d08665e63a7a4c760ae77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd602340_46663e39",
         "filename": "third_party/WebKit/Source/devtools/front_end/application_test_runner/ResourceTreeTestRunner.js",
         "patchSetId": 7
@@ -53,6 +77,30 @@
       "writtenOn": "2017-08-04T23:40:31Z",
       "side": 1,
       "message": "These look fun :)",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 15
+      },
+      "revId": "e9a36c00f34bad1440d08665e63a7a4c760ae77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a17abba_7235cf9a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/application_test_runner/module.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-05T00:37:30Z",
+      "side": 1,
+      "message": "Whoops :)",
+      "parentUuid": "fb664f24_f77ba8ff",
       "range": {
         "startLine": 2,
         "startChar": 3,
