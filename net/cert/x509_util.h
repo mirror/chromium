@@ -23,6 +23,7 @@ class RSAPrivateKey;
 
 namespace net {
 
+struct ParseCertificateOptions;
 class X509Certificate;
 
 namespace x509_util {
@@ -102,6 +103,9 @@ NET_EXPORT bssl::UniquePtr<CRYPTO_BUFFER> CreateCryptoBuffer(
 // char* due to StringPiece implicit ctor.
 NET_EXPORT bssl::UniquePtr<CRYPTO_BUFFER> CreateCryptoBuffer(
     const char* invalid_data);
+
+// XXX comment
+ParseCertificateOptions DefaultParseCertificateOptions();
 
 } // namespace x509_util
 
