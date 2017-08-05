@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7109c4c5_30a19b95",
+        "filename": "content/public/browser/render_widget_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-05T08:21:55Z",
+      "side": 1,
+      "message": "I think we can make this better in a follow-up by introducing InputEventSender instead which will push an input event and receive an ACK for it, instead of broadcasting events/acks. Not sure that\u0027s possible, but I may look into it.",
+      "revId": "8e011366cee7fe888d21201be747144446a31c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
