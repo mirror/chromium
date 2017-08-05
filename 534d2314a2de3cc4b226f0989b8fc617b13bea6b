@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03d65d26_3163b4a7",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2840,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-05T03:51:21Z",
+      "side": 1,
+      "message": "Are you sure we can\u0027t use BGR? on non ozone devices?",
+      "revId": "534d2314a2de3cc4b226f0989b8fc617b13bea6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
