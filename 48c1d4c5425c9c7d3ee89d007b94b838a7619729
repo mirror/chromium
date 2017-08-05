@@ -16,6 +16,24 @@
       "revId": "48c1d4c5425c9c7d3ee89d007b94b838a7619729",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304e1798_e68be933",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-writing-modes-3/wm-propagation-body-scroll-offset-vertical-lr.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-05T01:08:43Z",
+      "side": 1,
+      "message": "Oh I understand this test better, so we need this, at least for vertical-lr. Never mind the nit above.",
+      "parentUuid": "ebf5f7fa_ca3c2985",
+      "revId": "48c1d4c5425c9c7d3ee89d007b94b838a7619729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
