@@ -23,8 +23,7 @@ HandleWin::HandleWin(const HANDLE& handle, Permissions permissions)
 // static
 void ParamTraits<HandleWin>::Write(base::Pickle* m, const param_type& p) {
   scoped_refptr<IPC::internal::HandleAttachmentWin> attachment(
-      new IPC::internal::HandleAttachmentWin(p.get_handle(),
-                                             p.get_permissions()));
+      new IPC::internal::HandleAttachmentWin(p.get_handle()));
   if (!m->WriteAttachment(std::move(attachment)))
     NOTREACHED();
 }
@@ -42,8 +41,7 @@ bool ParamTraits<HandleWin>::Read(const base::Pickle* m,
     return false;
   IPC::internal::HandleAttachmentWin* handle_attachment =
       static_cast<IPC::internal::HandleAttachmentWin*>(attachment);
-  r->set_handle(handle_attachment->get_handle());
-  handle_attachment->reset_handle_ownership();
+  r->set_handle(handle_attachment->Take());
   return true;
 }
 
