@@ -12,7 +12,6 @@ enum TargetProperty {
   LAYOUT_OFFSET,
   OPACITY,
   BOUNDS,
-  VISIBILITY,
   BACKGROUND_COLOR,
 };
 

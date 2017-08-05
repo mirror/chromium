@@ -10,16 +10,13 @@
 
 namespace vr {
 
-using TargetProperty::OPACITY;
-using TargetProperty::VISIBILITY;
-
 TransientUrlBar::TransientUrlBar(
     int preferred_width,
     const base::TimeDelta& timeout,
     const base::Callback<void(UiUnsupportedMode)>& failure_callback)
     : TexturedElement(preferred_width),
       texture_(base::MakeUnique<UrlBarTexture>(true, failure_callback)),
-      transience_(this, 1.0f, timeout) {}
+      transience_(this, timeout) {}
 
 TransientUrlBar::~TransientUrlBar() = default;
 
@@ -30,9 +27,9 @@ UiTexture* TransientUrlBar::GetTexture() const {
 void TransientUrlBar::SetEnabled(bool enabled) {
   transience_.SetEnabled(enabled);
   if (enabled)
-    animation_player().SetTransitionedProperties({OPACITY, VISIBILITY});
+    SetTransitionedProperties({OPACITY});
   else
-    animation_player().SetTransitionedProperties({});
+    SetTransitionedProperties({});
 }
 
 void TransientUrlBar::SetToolbarState(const ToolbarState& state) {

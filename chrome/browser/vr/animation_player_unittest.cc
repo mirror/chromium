@@ -540,68 +540,6 @@ TEST(AnimationPlayerTest, ReversedBackgroundColorTransitions) {
   EXPECT_EQ(from, target.background_color());
 }
 
-TEST(AnimationPlayerTest, VisibilityTransitions) {
-  TestAnimationTarget target;
-  AnimationPlayer player;
-  player.set_target(&target);
-  Transition transition;
-  transition.target_properties = {TargetProperty::VISIBILITY};
-  transition.duration = MicrosecondsToDelta(10000);
-  player.set_transition(transition);
-  base::TimeTicks start_time = MicrosecondsToTicks(1000000);
-  player.Tick(start_time);
-
-  bool from = true;
-  bool to = false;
-
-  player.TransitionBooleanTo(start_time, TargetProperty::VISIBILITY, from, to);
-
-  EXPECT_EQ(from, target.visible());
-  player.Tick(start_time);
-
-  player.Tick(start_time + MicrosecondsToDelta(5000));
-  EXPECT_EQ(from, target.visible());
-
-  player.Tick(start_time + MicrosecondsToDelta(10000));
-  EXPECT_EQ(to, target.visible());
-}
-
-TEST(AnimationPlayerTest, ReversedVisibilityTransitions) {
-  TestAnimationTarget target;
-  AnimationPlayer player;
-  player.set_target(&target);
-  Transition transition;
-  transition.target_properties = {TargetProperty::VISIBILITY};
-  transition.duration = MicrosecondsToDelta(10000);
-  player.set_transition(transition);
-  base::TimeTicks start_time = MicrosecondsToTicks(1000000);
-  player.Tick(start_time);
-
-  bool from = true;
-  bool to = false;
-
-  player.TransitionBooleanTo(start_time, TargetProperty::VISIBILITY, from, to);
-
-  EXPECT_EQ(from, target.visible());
-  player.Tick(start_time);
-
-  EXPECT_EQ(from, target.visible());
-  player.Tick(start_time);
-
-  player.Tick(start_time + MicrosecondsToDelta(1000));
-  bool value_before_reversing = target.visible();
-  EXPECT_EQ(from, value_before_reversing);
-
-  player.TransitionBooleanTo(start_time + MicrosecondsToDelta(1000),
-                             TargetProperty::VISIBILITY, target.visible(),
-                             from);
-  player.Tick(start_time + MicrosecondsToDelta(1000));
-  EXPECT_EQ(value_before_reversing, target.visible());
-
-  player.Tick(start_time + MicrosecondsToDelta(2000));
-  EXPECT_EQ(from, target.visible());
-}
-
 TEST(AnimationPlayerTest, DoubleReversedTransitions) {
   TestAnimationTarget target;
   AnimationPlayer player;

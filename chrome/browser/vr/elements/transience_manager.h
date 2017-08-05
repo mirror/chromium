@@ -16,7 +16,6 @@ namespace vr {
 class TransienceManager {
  public:
   TransienceManager(UiElement* element,
-                    float opacity_when_enabled,
                     const base::TimeDelta& timeout);
   virtual ~TransienceManager() = default;
 
@@ -31,7 +30,6 @@ class TransienceManager {
   void Hide();
 
   UiElement* element_;
-  float opacity_when_enabled_;
   base::TimeDelta timeout_;
   bool enabled_ = false;
   base::OneShotTimer visibility_timer_;

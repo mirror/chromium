@@ -7,10 +7,8 @@
 namespace vr {
 
 TransienceManager::TransienceManager(UiElement* element,
-                                     float opacity_when_enabled,
                                      const base::TimeDelta& timeout)
     : element_(element),
-      opacity_when_enabled_(opacity_when_enabled),
       timeout_(timeout) {
   element_->SetVisible(false);
 }
@@ -54,12 +52,10 @@ void TransienceManager::OnTimeout() {
 
 void TransienceManager::Show() {
   element_->SetVisible(true);
-  element_->SetOpacity(opacity_when_enabled_);
 }
 
 void TransienceManager::Hide() {
   element_->SetVisible(false);
-  element_->SetOpacity(0);
 }
 
 }  // namespace vr

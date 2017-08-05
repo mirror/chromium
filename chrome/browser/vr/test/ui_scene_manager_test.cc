@@ -33,7 +33,7 @@ void UiSceneManagerTest::MakeAutoPresentedManager() {
 
 bool UiSceneManagerTest::IsVisible(UiElementDebugId debug_id) const {
   UiElement* element = scene_->GetUiElementByDebugId(debug_id);
-  return element ? element->visible() : false;
+  return element ? element->IsVisible() : false;
 }
 
 void UiSceneManagerTest::VerifyElementsVisible(
@@ -44,7 +44,7 @@ void UiSceneManagerTest::VerifyElementsVisible(
     SCOPED_TRACE(element->debug_id());
     bool should_be_visible =
         debug_ids.find(element->debug_id()) != debug_ids.end();
-    EXPECT_EQ(should_be_visible, element->visible());
+    EXPECT_EQ(should_be_visible, element->IsVisible());
   }
 }
 
@@ -53,7 +53,7 @@ bool UiSceneManagerTest::VerifyVisibility(
     bool visible) const {
   for (const auto& element : scene_->GetUiElements()) {
     if (debug_ids.find(element->debug_id()) != debug_ids.end() &&
-        element->visible() != visible) {
+        element->IsVisible() != visible) {
       return false;
     }
   }
@@ -70,10 +70,11 @@ void UiSceneManagerTest::AnimateBy(base::TimeDelta delta) {
   scene_->OnBeginFrame(current_time_);
 }
 
-bool UiSceneManagerTest::IsAnimating(UiElement* element,
-                                     const std::vector<int>& properties) const {
+bool UiSceneManagerTest::IsAnimating(
+    UiElement* element,
+    const std::vector<TargetProperty>& properties) const {
   for (auto property : properties) {
-    if (!element->animation_player().IsAnimatingProperty(property))
+    if (!element->IsAnimatingProperty(property))
       return false;
   }
   return true;

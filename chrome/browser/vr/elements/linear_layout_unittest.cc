@@ -41,7 +41,7 @@ TEST(LinearLayout, HorizontalLayout) {
   EXPECT_FLOAT_EQ(0.0f, position_b.y());
   EXPECT_FLOAT_EQ(0.0f, position_b.z());
 
-  rect_a.SetVisible(false);
+  rect_a.set_requires_layout(false);
   layout.LayOutChildren();
   // The invisible child should not be accounted for in the layout.
   EXPECT_TRUE(rect_b.LocalTransform().IsIdentity());
@@ -80,7 +80,7 @@ TEST(LinearLayout, VerticalLayout) {
   EXPECT_FLOAT_EQ(10.0f, position_b.y());
   EXPECT_FLOAT_EQ(0.0f, position_b.z());
 
-  rect_a.SetVisible(false);
+  rect_a.set_requires_layout(false);
   layout.LayOutChildren();
   // The invisible child should not be accounted for in the layout.
   EXPECT_TRUE(rect_b.LocalTransform().IsIdentity());
