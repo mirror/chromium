@@ -22,6 +22,30 @@
       "revId": "987061c5bc95a82a25ddce278662a2474ac4e910",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85219e8_af2737e8",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-08-05T23:51:47Z",
+      "side": 1,
+      "message": "VisibleContentRect(kExcludeScrollbars) does not subtract the size of CSS overlay scrollbars.  That\u0027s what you want for things like clipping, but it\u0027s not what you want for determining orthogonal overflow (that\u0027s the whole point of CSS overlay scrollbars).",
+      "parentUuid": "95622f99_85de0644",
+      "range": {
+        "startLine": 982,
+        "startChar": 29,
+        "endLine": 982,
+        "endChar": 70
+      },
+      "revId": "987061c5bc95a82a25ddce278662a2474ac4e910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
