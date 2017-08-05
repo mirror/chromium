@@ -78,6 +78,9 @@ self.onmessage = function(event) {
     case 'evaluatableJavaScriptSubstring':
       FormatterWorker.evaluatableJavaScriptSubstring(params.content);
       break;
+    case 'preprocessTopLevelAwaitExpressions':
+      FormatterWorker.preprocessTopLevelAwaitExpressions(params.content);
+      break;
     case 'parseJSONRelaxed':
       FormatterWorker.parseJSONRelaxed(params.content);
       break;
@@ -133,6 +136,76 @@ FormatterWorker.evaluatableJavaScriptSubstring = function(content) {
     console.error(e);
   }
   postMessage(result);
+};
+
+/**
+ * @param {string} content
+ */
+FormatterWorker.preprocessTopLevelAwaitExpressions = function(content) {
+  var result = '';
+  var variableDefinitions = [];
+  var ast = acorn.parse(`(async function(){${content}})()`, {ranges: false, ecmaVersion: 8});
+  var sourceBlockStatement = ast.body[0].expression.callee.body;
+  if (!containsTopLevelAwait(sourceBlockStatement)) {
+    postMessage(result);
+    return;
+  }
+  var sourceBody = sourceBlockStatement.body;
+  var shouldReturn =
+      sourceBody.peekLast().type.endsWith('Expression') || sourceBody.peekLast().type === 'ExpressionStatement';
+  for (var i = 0; i < sourceBody.length; ++i) {
+    var node = sourceBody[i];
+    if (node.type !== 'VariableDeclaration')
+      continue;
+    var initializations = [];
+    for (var declaration of node.declarations) {
+      if (declaration.init) {
+        initializations.push(
+            {type: 'AssignmentExpression', operator: '=', left: declaration.id, right: declaration.init});
+      }
+    }
+    if (initializations.length) {
+      sourceBody[i] = {
+        type: 'ExpressionStatement',
+        expression: {type: 'SequenceExpression', expressions: initializations}
+      };
+    } else {
+      sourceBody[i] = {type: 'EmptyStatement'};
+    }
+  }
+  if (shouldReturn)
+    sourceBody[sourceBody.length - 1] = {type: 'ReturnStatement', argument: sourceBody.peekLast()};
+  ast.body = [...variableDefinitions, ast.body[0]];
+  result = astring.generate(ast);
+  postMessage(result);
+
+  /**
+   * @param {!ESTree.Node} node
+   * @return {boolean}
+   */
+  function containsTopLevelAwait(node) {
+    var walker = new FormatterWorker.ESTreeWalker(beforeVisit);
+    var contains = false;
+    walker.walk(node);
+    return contains;
+    /**
+     * @param {!ESTree.Node} node
+     */
+    function beforeVisit(node) {
+      if (contains || isFunction(node))
+        return FormatterWorker.ESTreeWalker.SkipSubtree;
+      contains = node.type === 'AwaitExpression';
+    }
+  }
+
+  /**
+   * @param {!ESTree.Node} node
+   * @return {boolean}
+   */
+  function isFunction(node) {
+    return node.type === 'FunctionDeclaration' || node.type === 'FunctionExpression' ||
+        node.type === 'ArrowFunctionExpression';
+  }
 };
 
 /**

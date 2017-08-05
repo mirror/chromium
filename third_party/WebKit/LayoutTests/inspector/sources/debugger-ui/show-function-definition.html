@@ -18,7 +18,7 @@ function test()
         function testRevealFunctionDefinition(next)
         {
             InspectorTest.addSniffer(panel, "showUISourceCode", showUISourceCodeHook);
-            UI.context.flavor(SDK.ExecutionContext).evaluate("jumpToMe", "", false, true, false, false, false, didGetFunction);
+            UI.context.flavor(SDK.ExecutionContext).evaluate("jumpToMe", "", false, true, false, false, false, false, didGetFunction);
 
             function didGetFunction(funcObject, exceptionDetails)
             {
@@ -40,7 +40,8 @@ function test()
         function testDumpFunctionDefinition(next)
         {
             InspectorTest.addSniffer(ObjectUI.ObjectPropertiesSection, "formatObjectAsFunction", onConsoleMessagesReceived);
-            ConsoleModel.consoleModel.evaluateCommandInConsole(UI.context.flavor(SDK.ExecutionContext), "jumpToMe");
+            var consoleView = Console.ConsoleView.instance();
+            consoleView._prompt._appendCommand("jumpToMe", true);
 
             function onConsoleMessagesReceived()
             {

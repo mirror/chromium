@@ -196,14 +196,25 @@ Console.ConsolePrompt = class extends UI.Widget {
    * @param {string} text
    * @param {boolean} useCommandLineAPI
    */
-  _appendCommand(text, useCommandLineAPI) {
+  async _appendCommand(text, useCommandLineAPI) {
     this.setText('');
     var currentExecutionContext = UI.context.flavor(SDK.ExecutionContext);
-    if (currentExecutionContext) {
-      ConsoleModel.consoleModel.evaluateCommandInConsole(currentExecutionContext, text, useCommandLineAPI);
-      if (Console.ConsolePanel.instance().isShowing())
-        Host.userMetrics.actionTaken(Host.UserMetrics.Action.CommandEvaluatedInConsolePanel);
+    if (!currentExecutionContext)
+      return;
+    currentExecutionContext = /** @type {!SDK.ExecutionContext} */ (currentExecutionContext);
+    var msg = ConsoleModel.consoleModel.addCommandMessage(currentExecutionContext, text);
+    var preprocessed = false;
+    var wrappedText = SDK.RuntimeModel.wrapObjectLiteralExpressionIfNeeded(text);
+    if (wrappedText.indexOf('await') !== -1) {
+      var preprocessedText = await Formatter.formatterWorkerPool().preprocessTopLevelAwaitExpressions(wrappedText);
+      preprocessed = !!preprocessedText;
+      wrappedText = preprocessedText || wrappedText;
     }
+    ConsoleModel.consoleModel.evaluateCommandInConsole(
+        /** @type {!SDK.ExecutionContext} */ (currentExecutionContext), msg, wrappedText, useCommandLineAPI,
+        /* awaitPromise */ preprocessed);
+    if (Console.ConsolePanel.instance().isShowing())
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.CommandEvaluatedInConsolePanel);
   }
 
   _enterProcessedForTest() {
