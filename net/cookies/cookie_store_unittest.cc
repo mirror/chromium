@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "net/cookies/cookie_store.h"
+#include "net/cookies/cookie_store_unittest.h"
 
 #include <memory>
 #include <vector>
@@ -10,6 +10,7 @@
 #include "base/time/time.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_options.h"
+#include "net/cookies/cookie_store.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -37,6 +38,10 @@ void MatchCookieLineToVector(
 }
 
 } // namespace
+
+MockCookieStoreObserver::MockCookieStoreObserver() {}
+
+MockCookieStoreObserver::~MockCookieStoreObserver() {}
 
 TEST(CookieStoreBaseTest, BuildCookieLine) {
   std::vector<std::unique_ptr<CanonicalCookie>> cookies;
