@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "535617be_cbfb89a5",
+        "filename": "net/cert/x509_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-05T01:19:04Z",
+      "side": 1,
+      "message": "Yeah, I don\u0027t think we\u0027ve planned anything regarding encoding.\nThere is one place I\u0027m aware of we do encoding, but it\u0027s more of an internal detail. In net/cert/internal/verify_name_match.cc Name normalization code is a more general implementation of Name encoding that could theoretically be split out for re-use in cert generation.\n\nMoving the time encoding out so it can be unittested seems reasonable.  I guess we\u0027d want to avoid unnecessary string copies, so taking a CBB output seems fine.",
+      "parentUuid": "fe69ec46_d51c8d1d",
+      "revId": "3fae64e90b14ab9902c054dc1ca7626bf65c1a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "574e002d_b8142cb6",
         "filename": "net/cert/x509_util.cc",
         "patchSetId": 1
