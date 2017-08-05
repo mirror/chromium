@@ -57,6 +57,30 @@
       "revId": "f1ce386c23409d0418fe743a4b12a94475c10fc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32fea413_74ae1628",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-08-05T00:13:55Z",
+      "side": 1,
+      "message": "Is this codepath only ever used to launch programs built inside the chromium tree?  Tricky bit about this namespace is it can be used for different things by different kinds of programs that just have to know what each other mean (unlike, say, the FD table which most unix-like things will understand).  So long as it\u0027s internal I think it\u0027s OK - I don\u0027t think we have any plans to change the macro names here or anything.\n\nAlso be sure to be careful about the range on the id field - the value here is computed with C and macros so it won\u0027t do any sanity checking.",
+      "parentUuid": "6228a1c4_26e69697",
+      "range": {
+        "startLine": 138,
+        "startChar": 32,
+        "endLine": 138,
+        "endChar": 40
+      },
+      "revId": "f1ce386c23409d0418fe743a4b12a94475c10fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
