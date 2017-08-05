@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "712dc261_11b02449",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-05T00:49:24Z",
+      "side": 1,
+      "message": "That bug is about wallpaper. Can you either find the right bug or file a new one?",
+      "revId": "bd1160564bacaa7330ca09ce7265b31a736f9525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639efaca_75880ede",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-05T00:49:24Z",
+      "side": 1,
+      "message": "optional: line wrapping might be better if you cached a PaletteToolManager* manager local var.",
+      "revId": "bd1160564bacaa7330ca09ce7265b31a736f9525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09463943_ab17654e",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-05T00:49:24Z",
+      "side": 1,
+      "message": "I think this would be clearer if it called RequestLockScreen(), which I think is synchronous in tests.",
+      "revId": "bd1160564bacaa7330ca09ce7265b31a736f9525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5199153e_b3b08bfa",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-05T00:49:24Z",
+      "side": 1,
+      "message": "ditto UnlockScreen()",
+      "revId": "bd1160564bacaa7330ca09ce7265b31a736f9525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
