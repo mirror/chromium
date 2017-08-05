@@ -88,6 +88,7 @@
 #include "ash/system/tray/system_tray_controller.h"
 #include "ash/system/tray/system_tray_delegate.h"
 #include "ash/system/tray/system_tray_notifier.h"
+#include "ash/system/tray_caps_lock.h"
 #include "ash/touch/ash_touch_transform_controller.h"
 #include "ash/tray_action/tray_action.h"
 #include "ash/utility/screenshot_controller.h"
@@ -336,6 +337,11 @@ void Shell::RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
 
 // static
 void Shell::RegisterProfilePrefs(PrefRegistrySimple* registry) {
+  if (GetAshConfig() == Config::MASH) {
+    // Request access to prefs owned by chrome.
+    // See ///services/preferences/README.md
+    TrayCapsLock::RegisterForeignPrefs(registry);
+  }
   LogoutButtonTray::RegisterProfilePrefs(registry);
   NightLightController::RegisterProfilePrefs(registry);
 }
