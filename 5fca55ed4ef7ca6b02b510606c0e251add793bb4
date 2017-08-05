@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "921c46be_2c91bd47",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-05T06:33:52Z",
+      "side": 1,
+      "message": "Okay I looked further into this, and I\u0027m actually not sure this can have no issuer. I\u0027m having a hard time writing this check. I\u0027m going to leave this comment open so I remember to ask for help on Monday.",
+      "parentUuid": "5a523618_29d06c78",
+      "range": {
+        "startLine": 418,
+        "startChar": 47,
+        "endLine": 418,
+        "endChar": 0
+      },
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da0af45f_444ffdf6",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 12
@@ -257,6 +281,24 @@
       "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31fe5300_e28652e1",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-05T06:33:52Z",
+      "side": 1,
+      "message": "Reopening this comment so I remember to ask for help.",
+      "parentUuid": "4a1efd1c_bd451a1c",
+      "revId": "5fca55ed4ef7ca6b02b510606c0e251add793bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
