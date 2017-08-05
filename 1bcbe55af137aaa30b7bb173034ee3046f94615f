@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5aa202d_4d677c53",
+        "filename": "content/browser/appcache/appcache_update_request_base.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T05:15:34Z",
+      "side": 1,
+      "message": "Previously we were posting the Read() task from the fetcher. Now that is not needed. We can remove this now. Done",
+      "parentUuid": "f7c7c900_5615d7ee",
+      "revId": "1bcbe55af137aaa30b7bb173034ee3046f94615f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44b0ebcf_211528a8",
         "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "1bcbe55af137aaa30b7bb173034ee3046f94615f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8cb6e8c_77ce0a03",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T05:15:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44b0ebcf_211528a8",
+      "revId": "1bcbe55af137aaa30b7bb173034ee3046f94615f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9970d953_fdc72a74",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T05:15:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e00ce0ef_d56c40d9",
+      "revId": "1bcbe55af137aaa30b7bb173034ee3046f94615f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2950b9b_7560378e",
         "filename": "content/common/net_adapters.cc",
         "patchSetId": 18
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-05T01:26:16Z",
       "side": 1,
       "message": "~NetToMojoPendingBuffer makes sure to call EndWriteData() in all cases, do we need that here too?\n\nif (!IsComplete() \u0026\u0026 handle_.is_valid())\n    handle_-\u003eEndReadData(0);",
+      "revId": "1bcbe55af137aaa30b7bb173034ee3046f94615f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d599b10_82726342",
+        "filename": "content/common/net_adapters.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T05:15:34Z",
+      "side": 1,
+      "message": "I don\u0027t think so. The pipe will be closed anyways in the dtor.",
+      "parentUuid": "c2950b9b_7560378e",
       "revId": "1bcbe55af137aaa30b7bb173034ee3046f94615f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "1bcbe55af137aaa30b7bb173034ee3046f94615f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c8d194_cdb2f8b3",
+        "filename": "content/common/net_adapters.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-05T05:15:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58d4745a_7faf1606",
+      "revId": "1bcbe55af137aaa30b7bb173034ee3046f94615f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
