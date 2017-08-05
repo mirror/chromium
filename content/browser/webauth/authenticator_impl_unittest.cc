@@ -17,6 +17,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/platform/modules/webauth/web_crypto_algorithm.mojom.h"
 
 namespace content {
 
@@ -31,6 +32,8 @@ using webauth::mojom::PublicKeyCredentialEntityPtr;
 using webauth::mojom::PublicKeyCredentialInfoPtr;
 using webauth::mojom::PublicKeyCredentialParameters;
 using webauth::mojom::PublicKeyCredentialParametersPtr;
+using webauth::mojom::WebCryptoAlgorithm;
+using webauth::mojom::WebCryptoAlgorithmPtr;
 
 const char* kOrigin1 = "https://google.com";
 
@@ -55,11 +58,21 @@ PublicKeyCredentialEntityPtr GetTestPublicKeyCredentialUserEntity() {
 }
 
 // Test values
+WebCryptoAlgorithmPtr GetTestNormalizedAlgorithm() {
+  auto algorithm = WebCryptoAlgorithm::New();
+  algorithm->id = webauth::mojom::WebCryptoAlgorithmId::ECDSA;
+  algorithm->param = webauth::mojom::WebCryptoAlgorithmParams::New(
+      webauth::mojom::WebCryptoNamedCurve::P256);
+  return algorithm;
+}
+
+// Test values
 std::vector<PublicKeyCredentialParametersPtr>
 GetTestPublicKeyCredentialParameters() {
   std::vector<PublicKeyCredentialParametersPtr> parameters;
   auto fake_parameter = PublicKeyCredentialParameters::New();
   fake_parameter->type = webauth::mojom::PublicKeyCredentialType::PUBLIC_KEY;
+  fake_parameter->normalized_algorithm = GetTestNormalizedAlgorithm();
   parameters.push_back(std::move(fake_parameter));
   return parameters;
 }

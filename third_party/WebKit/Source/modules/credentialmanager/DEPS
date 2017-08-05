@@ -1,5 +1,6 @@
 include_rules = [
     "-modules",
+    "+modules/crypto",
     "+modules/ModulesExport.h",
     "+modules/credentialmanager",
     "+modules/public",

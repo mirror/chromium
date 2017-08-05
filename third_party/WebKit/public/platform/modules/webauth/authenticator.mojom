@@ -7,6 +7,7 @@ module webauth.mojom;
 
 import "mojo/common/time.mojom";
 import "url/mojo/url.mojom";
+import "web_crypto_algorithm.mojom";
 
 // This file describes the communication between the WebAuthentication renderer
 // implementation and browser-side implementations to create public key
@@ -79,7 +80,7 @@ struct PublicKeyCredentialEntity {
 // Parameters that are used to generate an appropriate public key credential.
 struct PublicKeyCredentialParameters {
   PublicKeyCredentialType type;
-  // TODO(kpaulhamus): add AlgorithmIdentifier algorithm;
+  WebCryptoAlgorithm normalized_algorithm;
 };
 
 // Parameters passed into calls to MakeCredential.

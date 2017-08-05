@@ -14,7 +14,11 @@
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "modules/credentialmanager/AuthenticatorAttestationResponse.h"
 #include "modules/credentialmanager/MakeCredentialOptions.h"
+#include "modules/crypto/NormalizeAlgorithm.h"
 #include "public/platform/InterfaceProvider.h"
+#include "public/platform/WebCryptoAlgorithm.h"
+#include "public/platform/WebCryptoAlgorithmParams.h"
+#include "public/platform/modules/webauth/web_crypto_algorithm.mojom-blink.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
@@ -34,6 +38,12 @@ using webauth::mojom::blink::PublicKeyCredentialEntityPtr;
 using webauth::mojom::blink::PublicKeyCredentialParametersPtr;
 using webauth::mojom::blink::PublicKeyCredentialType;
 using webauth::mojom::blink::AuthenticatorTransport;
+using webauth::mojom::blink::WebCryptoAlgorithm;
+using webauth::mojom::blink::WebCryptoAlgorithmId;
+using webauth::mojom::blink::WebCryptoAlgorithmParams;
+using webauth::mojom::blink::WebCryptoAlgorithmParamsPtr;
+using webauth::mojom::blink::WebCryptoAlgorithmPtr;
+using webauth::mojom::blink::WebCryptoNamedCurve;
 
 // TODO(kpaulhamus): Make this a TypeConverter
 Vector<uint8_t> ConvertBufferSource(const blink::BufferSource& buffer) {
@@ -71,6 +81,51 @@ AuthenticatorTransport ConvertTransport(const String& transport) {
   return AuthenticatorTransport::USB;
 }
 
+WebCryptoAlgorithmId ConvertWebCryptoAlgorithmId(
+    const blink::WebCryptoAlgorithmId id) {
+  // Currently only supporting P256, for U2F_V2.
+  if (id == blink::kWebCryptoAlgorithmIdEcdsa)
+    return WebCryptoAlgorithmId::ECDSA;
+  NOTREACHED();
+  return WebCryptoAlgorithmId::NONE;
+}
+
+WebCryptoNamedCurve ConvertWebCryptoNamedCurve(
+    const blink::WebCryptoNamedCurve curve) {
+  // Currently only supporting P256, for U2F_V2.
+  if (curve == blink::kWebCryptoNamedCurveP256)
+    return WebCryptoNamedCurve::P256;
+  NOTREACHED();
+  return WebCryptoNamedCurve::NONE;
+}
+
+WebCryptoAlgorithmParamsPtr ConvertWebCryptoEcKeyGenParams(
+    const blink::WebCryptoEcKeyGenParams* params) {
+  // |params| is a WebCryptoEcKeyGenParams
+  auto new_param = WebCryptoAlgorithmParams::New();
+  new_param->named_curve = ConvertWebCryptoNamedCurve(params->NamedCurve());
+  return new_param;
+}
+
+WebCryptoAlgorithmPtr ConvertNormalizedAlgorithm(
+    const blink::WebCryptoAlgorithm normalized_algorithm) {
+  auto algorithm = WebCryptoAlgorithm::New();
+  algorithm->id = ConvertWebCryptoAlgorithmId(normalized_algorithm.Id());
+  const blink::WebCryptoAlgorithmInfo* algorithm_info =
+      blink::WebCryptoAlgorithm::LookupAlgorithmInfo(normalized_algorithm.Id());
+
+  blink::WebCryptoAlgorithmParamsType params_type = static_cast<
+      blink::WebCryptoAlgorithmParamsType>(
+      algorithm_info
+          ->operation_to_params_type[blink::kWebCryptoOperationGenerateKey]);
+  // Currently only supporting ECDSA for U2F_V2.
+  if (params_type == blink::kWebCryptoAlgorithmParamsTypeEcKeyGenParams) {
+    algorithm->param =
+        ConvertWebCryptoEcKeyGenParams(normalized_algorithm.EcKeyGenParams());
+  }
+  return algorithm;
+}
+
 // TODO(kpaulhamus): Make this a TypeConverter
 PublicKeyCredentialEntityPtr ConvertPublicKeyCredentialUserEntity(
     const blink::PublicKeyCredentialUserEntity& user) {
@@ -102,7 +157,18 @@ PublicKeyCredentialParametersPtr ConvertPublicKeyCredentialParameters(
   auto mojo_parameter =
       webauth::mojom::blink::PublicKeyCredentialParameters::New();
   mojo_parameter->type = ConvertPublicKeyCredentialType(parameter.type());
-  // TODO(kpaulhamus): add AlgorithmIdentifier
+
+  // Normalizes AlgorithmIdentifier per step 9 of
+  // https://www.w3.org/TR/2017/WD-webauthn-20170505/#createCredential
+  blink::WebCryptoAlgorithm normalized_algorithm;
+  blink::AlgorithmError error;
+  if (!NormalizeAlgorithm(parameter.algorithm(),
+                          blink::kWebCryptoOperationGenerateKey,
+                          normalized_algorithm, &error)) {
+    return nullptr;
+  }
+  mojo_parameter->normalized_algorithm =
+      ConvertNormalizedAlgorithm(normalized_algorithm);
   return mojo_parameter;
 }
 
