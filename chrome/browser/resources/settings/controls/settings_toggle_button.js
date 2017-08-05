@@ -16,11 +16,46 @@ Polymer({
       type: Boolean,
       reflectToAttribute: true,
     },
+
+    /**
+     * Which element will trigger state changes. Defaults to |this|.
+     * @type {HTMLElement}
+     */
+    actionTarget: {
+      observer: 'onActionTargetChange_',
+      type: Object,
+      value: function() {
+        return this;
+      },
+    },
   },
+
+  observers: [
+    'onDisableOrPrefChange_(disabled, pref.*, actionTarget)',
+  ],
 
   /** @override */
   focus: function() {
     this.$.control.focus();
+  },
+
+  /** @private */
+  onActionTargetChange_: function(current, prior) {
+    if (prior) {
+      this.unlisten(prior, 'tap', 'onLabelWrapperTap_');
+    }
+    if (current) {
+      this.listen(current, 'tap', 'onLabelWrapperTap_');
+    }
+  },
+
+  /** @private */
+  onDisableOrPrefChange_: function() {
+    if (this.controlDisabled_()) {
+      this.actionTarget.removeAttribute('actionable');
+    } else {
+      this.actionTarget.setAttribute('actionable', '');
+    }
   },
 
   /** @private */
@@ -29,6 +64,7 @@ Polymer({
       return;
 
     this.checked = !this.checked;
+    this.fire('change');
     this.notifyChangedByUserInteraction();
   },
 
