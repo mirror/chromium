@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48dc09b2_4c7a58fc",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-05T20:49:32Z",
+      "side": 1,
+      "message": "Why can\u0027t this function just be used directly?",
+      "range": {
+        "startLine": 121,
+        "startChar": 7,
+        "endLine": 121,
+        "endChar": 40
+      },
+      "revId": "bc33774851548f60bde9a09bc73ff34fe692f17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e97d4c7_de8c1bb7",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-05T20:49:32Z",
+      "side": 1,
+      "message": "nit: For parallelism, change \"If the\" to \"The\"",
+      "range": {
+        "startLine": 160,
+        "startChar": 9,
+        "endLine": 160,
+        "endChar": 10
+      },
+      "revId": "bc33774851548f60bde9a09bc73ff34fe692f17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d50494_ef4a9e61",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-05T20:49:32Z",
+      "side": 1,
+      "message": "nit: I think this line should end with \";\"",
+      "range": {
+        "startLine": 174,
+        "startChar": 66,
+        "endLine": 174,
+        "endChar": 67
+      },
+      "revId": "bc33774851548f60bde9a09bc73ff34fe692f17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efaea22e_fb871cd6",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-05T20:49:32Z",
+      "side": 1,
+      "message": "nit: \"maximum\" -\u003e \"the maximum\"",
+      "range": {
+        "startLine": 177,
+        "startChar": 54,
+        "endLine": 177,
+        "endChar": 61
+      },
+      "revId": "bc33774851548f60bde9a09bc73ff34fe692f17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbeaa988_2f18cbfa",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-05T20:49:32Z",
+      "side": 1,
+      "message": "nit: \"\u003e150\" -\u003e \"\u003e 150\"\nnit: \"\u003c\u003d200\" -\u003e \"\u003c\u003d 200\"",
+      "range": {
+        "startLine": 178,
+        "startChar": 63,
+        "endLine": 178,
+        "endChar": 64
+      },
+      "revId": "bc33774851548f60bde9a09bc73ff34fe692f17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
