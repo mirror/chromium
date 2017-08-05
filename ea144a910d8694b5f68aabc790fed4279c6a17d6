@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99ab85c0_bacd07a9",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-05T11:30:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6acb35fa_e31a5250",
+      "range": {
+        "startLine": 21,
+        "startChar": 44,
+        "endLine": 22,
+        "endChar": 65
+      },
+      "revId": "ea144a910d8694b5f68aabc790fed4279c6a17d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37864b07_f91480b6",
         "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "47a46a6d_ae13152c",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-05T11:30:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37864b07_f91480b6",
+      "range": {
+        "startLine": 80,
+        "startChar": 38,
+        "endLine": 80,
+        "endChar": 62
+      },
+      "revId": "ea144a910d8694b5f68aabc790fed4279c6a17d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d373f594_93710514",
         "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "ea144a910d8694b5f68aabc790fed4279c6a17d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2061eed2_364f638e",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-05T11:30:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d373f594_93710514",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 28
+      },
+      "revId": "ea144a910d8694b5f68aabc790fed4279c6a17d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
