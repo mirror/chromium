@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ddb31c5_cb87bb74",
+        "filename": "chrome/installer/zucchini/rel32_finder_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-05T05:08:19Z",
+      "side": 1,
+      "message": "Abs32GapFinderTest",
+      "revId": "5ce67565d7c0d044a945b3dd747088c9c814d789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67041d1a_1abc7e23",
+        "filename": "chrome/installer/zucchini/rel32_finder_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-05T05:08:19Z",
+      "side": 1,
+      "message": "NIT: Move before the previous check.",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 9
+      },
+      "revId": "5ce67565d7c0d044a945b3dd747088c9c814d789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76caca09_5fa0149d",
+        "filename": "chrome/installer/zucchini/rel32_finder_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-05T05:08:19Z",
+      "side": 1,
+      "message": "TODO(huangs): Test that integrates Abs32GapFinder and Rel32Finder.",
+      "revId": "5ce67565d7c0d044a945b3dd747088c9c814d789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
