@@ -38,6 +38,10 @@ void MatchCookieLineToVector(
 
 } // namespace
 
+MockCookieStoreObserver::MockCookieStoreObserver() {}
+
+MockCookieStoreObserver::~MockCookieStoreObserver() {}
+
 TEST(CookieStoreBaseTest, BuildCookieLine) {
   std::vector<std::unique_ptr<CanonicalCookie>> cookies;
   GURL url("https://example.com/");
