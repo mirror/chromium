@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11403622_222d81c0",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-05T05:25:45Z",
+      "side": 1,
+      "message": "Nit: I tend to prefer this sort of thing:\n\nvoid OmniboxResultView::SetHovered(bool hovered) {\n  if (hovered_ !\u003d hovered) {\n    hovered_ \u003d hovered;\n    ...\n  }\n}\n\nNot only is this shorter, it feels safer, because I can\u0027t forget to update something about layout/painting/whatever in one function when I update the other later.\n\n(I used |hovered_| for the member name here because I\u0027m not a big fan of \"is_\" and the like on members; that\u0027s kind of a Blink-not-Chromium thing.)",
+      "revId": "0140d0a3a0649a7fe909b6fcf61333bac0c09dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51dda8e_37881ac7",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-05T05:25:45Z",
+      "side": 1,
+      "message": "Nit: override on both of these",
+      "revId": "0140d0a3a0649a7fe909b6fcf61333bac0c09dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973ca190_e5dda46a",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-05T05:25:45Z",
+      "side": 1,
+      "message": "Nit: No newline here?",
+      "revId": "0140d0a3a0649a7fe909b6fcf61333bac0c09dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23db306_76179e16",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-05T05:25:45Z",
+      "side": 1,
+      "message": "Nit: exiting",
+      "revId": "0140d0a3a0649a7fe909b6fcf61333bac0c09dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
