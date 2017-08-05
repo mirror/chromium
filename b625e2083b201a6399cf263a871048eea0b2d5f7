@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ca2c893_5aaeebc2",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-05T21:57:27Z",
+      "side": 1,
+      "message": "Can we add DCHECKs here to ensure that |direction_| is correct?",
+      "revId": "b625e2083b201a6399cf263a871048eea0b2d5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65e6ee2_94708a17",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-05T21:57:27Z",
+      "side": 1,
+      "message": "We should reset |direction_| only when the selection is range. Maybe we should wrap it into a |ClearCachedDirection()| function, which can also be used by SelectionEditor.\n\nNote that |IsBaseFirst()| computes |direction_| by comparing base and extent without any checking, which asserts if the selection is null. So we shouldn\u0027t reset |direction_| for null selection.",
+      "revId": "b625e2083b201a6399cf263a871048eea0b2d5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bdbf918_5716d12f",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-05T21:57:27Z",
+      "side": 1,
+      "message": "Please change the class name back to Resetter.",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 33
+      },
+      "revId": "b625e2083b201a6399cf263a871048eea0b2d5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
