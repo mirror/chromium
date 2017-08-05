@@ -668,6 +668,9 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForHardwarePlanes(
     if (mailbox_holder.mailbox.IsZero())
       break;
 
+    LOG(ERROR) << "OVErlay candiadte: "
+               << video_frame->metadata()->IsTrue(
+                      media::VideoFrameMetadata::ALLOW_OVERLAY);
     if (video_frame->metadata()->IsTrue(
             media::VideoFrameMetadata::COPY_REQUIRED)) {
       CopyPlaneTexture(video_frame.get(), resource_color_space, mailbox_holder,
