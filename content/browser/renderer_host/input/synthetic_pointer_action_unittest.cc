@@ -32,6 +32,7 @@ WebTouchPoint::State ToWebTouchPointState(
       return WebTouchPoint::kStateReleased;
     case SyntheticPointerActionParams::PointerActionType::IDLE:
       return WebTouchPoint::kStateStationary;
+    case SyntheticPointerActionParams::PointerActionType::LEAVE:
     case SyntheticPointerActionParams::PointerActionType::NOT_INITIALIZED:
       NOTREACHED()
           << "Invalid SyntheticPointerActionParams::PointerActionType.";
@@ -50,6 +51,8 @@ WebInputEvent::Type ToWebMouseEventType(
       return WebInputEvent::kMouseMove;
     case SyntheticPointerActionParams::PointerActionType::RELEASE:
       return WebInputEvent::kMouseUp;
+    case SyntheticPointerActionParams::PointerActionType::LEAVE:
+      return WebInputEvent::kMouseLeave;
     case SyntheticPointerActionParams::PointerActionType::IDLE:
     case SyntheticPointerActionParams::PointerActionType::NOT_INITIALIZED:
       NOTREACHED()
@@ -206,7 +209,7 @@ class MockSyntheticPointerMouseActionTarget
                                          << click_count << ".";
     }
 
-    if (click_count_ == 1) {
+    if (button_ != WebMouseEvent::Button::kNoButton) {
       DCHECK_GT(buttons.size(), 0U);
       SyntheticPointerActionParams::Button button = buttons[buttons.size() - 1];
       if (button_ !=
@@ -215,14 +218,6 @@ class MockSyntheticPointerMouseActionTarget
                << "Pointer button was " << static_cast<int>(button_)
                << ", expected " << static_cast<int>(button) << ".";
       }
-    }
-
-    if (click_count_ == 0 && button_ != WebMouseEvent::Button::kNoButton) {
-      DCHECK_EQ(buttons.size(), 0U);
-      return testing::AssertionFailure()
-             << "Pointer button was " << static_cast<int>(button_)
-             << ", expected "
-             << static_cast<int>(WebMouseEvent::Button::kNoButton) << ".";
     }
 
     int modifiers = 0;
@@ -550,7 +545,7 @@ TEST_F(SyntheticPointerActionTest, PointerMouseAction) {
   EXPECT_EQ(3, num_success_);
   EXPECT_EQ(0, num_failure_);
   EXPECT_TRUE(pointer_mouse_target->SyntheticMouseActionDispatchedCorrectly(
-      param3, 1, buttons));
+      param3, 0, buttons));
 
   ForwardSyntheticPointerAction();
   EXPECT_EQ(4, num_success_);
@@ -679,14 +674,19 @@ TEST_F(SyntheticPointerActionTest, PointerPenAction) {
   SyntheticPointerActionParams param3 = SyntheticPointerActionParams(
       SyntheticPointerActionParams::PointerActionType::RELEASE);
   params_.PushPointerActionParams(param3);
+
+  // Send a pen leave.
+  SyntheticPointerActionParams param4 = SyntheticPointerActionParams(
+      SyntheticPointerActionParams::PointerActionType::LEAVE);
+  params_.PushPointerActionParams(param4);
   pointer_action_.reset(new SyntheticPointerAction(params_));
 
   ForwardSyntheticPointerAction();
   MockSyntheticPointerPenActionTarget* pointer_pen_target =
       static_cast<MockSyntheticPointerPenActionTarget*>(target_.get());
+  std::vector<SyntheticPointerActionParams::Button> buttons;
   EXPECT_EQ(1, num_success_);
   EXPECT_EQ(0, num_failure_);
-  std::vector<SyntheticPointerActionParams::Button> buttons;
   EXPECT_TRUE(pointer_pen_target->SyntheticMouseActionDispatchedCorrectly(
       param1, 0, buttons, SyntheticGestureParams::PEN_INPUT));
 
@@ -702,6 +702,13 @@ TEST_F(SyntheticPointerActionTest, PointerPenAction) {
   EXPECT_EQ(0, num_failure_);
   EXPECT_TRUE(pointer_pen_target->SyntheticMouseActionDispatchedCorrectly(
       param3, 1, buttons, SyntheticGestureParams::PEN_INPUT));
+
+  ForwardSyntheticPointerAction();
+  EXPECT_EQ(4, num_success_);
+  EXPECT_EQ(0, num_failure_);
+  buttons.pop_back();
+  EXPECT_TRUE(pointer_pen_target->SyntheticMouseActionDispatchedCorrectly(
+      param4, 0, buttons, SyntheticGestureParams::PEN_INPUT));
 }
 
 TEST_F(SyntheticPointerActionTest, EmptyParams) {
