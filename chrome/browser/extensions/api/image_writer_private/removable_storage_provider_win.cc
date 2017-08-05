@@ -174,8 +174,9 @@ bool AddDeviceInfo(HANDLE interface_enumerator,
 
 }  // namespace
 
-bool RemovableStorageProvider::PopulateDeviceList(
-    scoped_refptr<StorageDeviceList> device_list) {
+// static
+scoped_refptr<StorageDeviceList>
+RemovableStorageProvider::PopulateDeviceList() {
   HDEVINFO interface_enumerator = SetupDiGetClassDevs(
       &DiskClassGuid,
       NULL, // Enumerator.
@@ -192,6 +193,7 @@ bool RemovableStorageProvider::PopulateDeviceList(
   SP_DEVICE_INTERFACE_DATA interface_data;
   interface_data.cbSize = sizeof(SP_INTERFACE_DEVICE_DATA);
 
+  scoped_refptr<StorageDeviceList> device_list(new StorageDeviceList());
   while (SetupDiEnumDeviceInterfaces(
       interface_enumerator,
       NULL,                    // Device Info data.
@@ -211,7 +213,7 @@ bool RemovableStorageProvider::PopulateDeviceList(
   }
 
   SetupDiDestroyDeviceInfoList(interface_enumerator);
-  return true;
+  return device_list;
 }
 
 } // namespace extensions
