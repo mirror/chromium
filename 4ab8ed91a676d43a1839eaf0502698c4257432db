@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c29fb72_fb5e4f21",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "Done. The one I copied (IDS_LOW_DISK_NOTIFICATION_MESSAGE) uses MESSAGE :-P (albeit in chromeos_strings). Should these be in chromeos_strings?",
+      "parentUuid": "93e5d486_951b8a07",
+      "range": {
+        "startLine": 956,
+        "startChar": 60,
+        "endLine": 956,
+        "endChar": 67
+      },
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b98145be_5abc25f0",
         "filename": "ash/ash_strings.grd",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-04T22:28:11Z",
       "side": 1,
       "message": "did this text come from UX? other notification bodies appear to have trailing periods; this probably should too.\n\nshould it be \"Please charge the stylus or replace its batteries.\" instead?",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd29ce1_549e7b30",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "There\u0027s a mock that has that phrase with a comment \"string TBD\". But it makes sense to add a dot. Done.",
+      "parentUuid": "b98145be_5abc25f0",
       "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "8969a06d_2cc4570b",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "Oops, i\u0027m used to it just adding the slashes there for me when i type it. Done.",
+      "parentUuid": "c952f828_f14ff2b9",
+      "range": {
+        "startLine": 51,
+        "startChar": 47,
+        "endLine": 51,
+        "endChar": 69
+      },
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef890bd8_2fa40ad4",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc342ec7_d4a86fa4",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef890bd8_2fa40ad4",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "c178f6e8_34989ea7",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2edc723_d1918dbd",
+      "range": {
+        "startLine": 85,
+        "startChar": 39,
+        "endLine": 85,
+        "endChar": 46
+      },
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca8f9764_1ce0cf21",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
         "patchSetId": 3
@@ -119,6 +227,24 @@
       "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eeced1b_a194161b",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca8f9764_1ce0cf21",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "62a3753d_bb02363d",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "Thanks for confirming! Added a TODO.",
+      "parentUuid": "1ac46435_afb90e0a",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c377003e_4b1565b5",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
         "patchSetId": 3
@@ -171,6 +315,24 @@
       "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535bb6a4_6296d62a",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c377003e_4b1565b5",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "0ff90033_3410f0c9",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c481269b_e3abfdac",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "340eb516_fa505746",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
         "patchSetId": 3
@@ -208,6 +388,24 @@
     },
     {
       "key": {
+        "uuid": "4aecb657_c663bfbb",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "340eb516_fa505746",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01f773ca_250b1557",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
         "patchSetId": 3
@@ -219,6 +417,24 @@
       "writtenOn": "2017-08-04T22:28:11Z",
       "side": 1,
       "message": "swap the order of all of these EXPECT_EQ calls to be (expected, actual).\n\nbut as a side question, what\u0027s the reason for testing observer_\u0027s internal state instead of just checking the notification that it displays?",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e2ff0c_890f9084",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "I think its nice, but I guess thats handled in the first test of this file. Done.",
+      "parentUuid": "01f773ca_250b1557",
       "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -242,6 +458,24 @@
     },
     {
       "key": {
+        "uuid": "7a7d7ead_6ef8fa38",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3165e29c_937107bb",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f128cb5_a7cc208a",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
         "patchSetId": 3
@@ -256,6 +490,24 @@
       "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b859e9a0_1c4152c4",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f128cb5_a7cc208a",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -276,6 +528,24 @@
     },
     {
       "key": {
+        "uuid": "b3ad3124_17e59654",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2545ff0e_80460fdc",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c095c70c_c61c3a57",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
         "patchSetId": 3
@@ -290,6 +560,24 @@
       "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c1ee1f1_0e9a0a5e",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-05T00:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c095c70c_c61c3a57",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
