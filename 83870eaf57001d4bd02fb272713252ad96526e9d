@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "00210c6b_b5b06599",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsolePrompt.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-08-05T00:01:04Z",
+      "side": 1,
+      "message": "Oh, you wont\u0027 get those errors from just compiling. I think that checking if the code can be compiled normally. And safari also appears to fail in that case. I would like to show this to the user somehow with our syntax highlighting. We are currently suffering from the codemirror bug where all `await` are highlighted as keywords, even if they are used as a variable. This patch relies on that, because it changes the meaning of await. Maybe we can fix our syntax highlighting to show when we are going to rewrite your function or not.",
+      "parentUuid": "155879ab_dc5d4b3e",
+      "revId": "83870eaf57001d4bd02fb272713252ad96526e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "770b7ec3_67d83bd1",
         "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
         "patchSetId": 3
