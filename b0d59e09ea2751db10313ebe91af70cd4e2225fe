@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1ca215d8_da9b7e65",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-05T05:07:18Z",
+      "side": 1,
+      "message": "I definitely think that |match_start| and |match_end| are more readable names.\n\nOTOH, the route here results in duplicating the logic of FormatUrlWithOffsets().  I\u0027m even more worried about duplicated logic than I am about suboptimal names.\n\nI would probably do it using FormatUrlWithOffsets() and offsets[0] and offsets[1].  Or I\u0027d go ahead and do const size_t match_start \u003d offsets[0] or whatever.  It\u0027s not shorter than this code, but it does do less actual work, and I think that\u0027s valuable.",
+      "parentUuid": "27c3122a_4a651e4f",
+      "revId": "b0d59e09ea2751db10313ebe91af70cd4e2225fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4deadc35_e4332366",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 1
