@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08fedfec_59fb7a1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-05T14:31:21Z",
+      "side": 1,
+      "message": "I agree this is a good idea.  I added a CHECK for the webview case to SiteInstanceImpl::LockToOriginIfNeeded.\n\nI also expanded LockToOriginIfNeeded to check the following:\n- if there\u0027s no lock already assigned, the process should be unused.  This sanity-checks that the process hasn\u0027t committed other sites before being locked to an origin.  However, due to issue 738634, this might be possible today, so I left this as a DCHECK. (Note to self: I need to actually go and fix that issue, now that the spare RPH CL is in.)\n- if there\u0027s an existing lock, it should match what we\u0027re trying to lock the process to.  If it\u0027s wrong, CHECK(false) as that should never happen.  It appears this is failing a couple of unit tests with --site-per-process; I\u0027ll investigate those.\n\nI think these are pretty risky changes though, and if we do need to merge this, they might be better in a separate followup CL that we won\u0027t need to merge.  WDYT?",
+      "parentUuid": "2e4683a1_7bae2a22",
+      "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c5d2601_598fa2d8",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T22:02:56Z",
       "side": 1,
       "message": "Let\u0027s file a bug for this, CC\u0027ing clamy and falken.",
+      "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9c528e_9295c66d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-05T14:31:21Z",
+      "side": 1,
+      "message": "Done, filed https://crbug.com/752667",
+      "parentUuid": "2c5d2601_598fa2d8",
       "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "50b80321_756790b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-05T14:31:21Z",
+      "side": 1,
+      "message": "Yes, correct - changed to just \"frames\".",
+      "parentUuid": "c8b916ab_d36825a4",
+      "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cc9b99e_be9e55e6",
         "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "408a0a28_ea2846d2",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4253,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-05T14:31:21Z",
+      "side": 1,
+      "message": "This test visits the isolated origin in both a \u003cwebview\u003e\u0027s main frame and subframe, and then in a regular tab\u0027s subframe.  Just to clarify, did you mean to also visit the isolated origin in a regular tab\u0027s main frame while it also exists in a \u003cwebview\u003e?",
+      "parentUuid": "2cc9b99e_be9e55e6",
+      "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7b178aa_da9d155d",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-04T22:02:56Z",
       "side": 1,
       "message": "I\u0027m trying to figure out if there\u0027s a way we could have caught this bug earlier, but I\u0027m having trouble spotting what the expected StoragePartition is.  Maybe we could have something like a check that this final render_process_host has the same StoragePartition as BrowserContext::GetStoragePartition(browser_context, site_instance), since that\u0027s what RPHI::CreateRenderProcessHost seems to be doing in the \"create from scratch\" case?  Not sure if it\u0027s that simple, though.",
+      "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d6d0d8_bf2418e3",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3528,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-05T14:31:21Z",
+      "side": 1,
+      "message": "Done - I\u0027ve added this CHECK, and the trybots seem to be happy.  Like the LockToOrigin sanity checks, we might want to push this into another CL if we need to merge this one.",
+      "parentUuid": "e7b178aa_da9d155d",
       "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
