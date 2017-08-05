@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44134294_c6a3e86c",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-05T02:07:41Z",
+      "side": 1,
+      "message": "@param, @return missing. Let\u0027s mention where do the |type| values come from, and which C++/chrome.developerPrivate API enum should they match.",
+      "revId": "b69f6e67717057985597593766aa56ab2de0fb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0368d6b_aba254f2",
+        "filename": "ui/webui/resources/cr_elements/icons.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-05T02:07:41Z",
+      "side": 1,
+      "message": "Given that we did not end up modifying the shared cr-policy-indicator, shouldn\u0027t this be moved to a more extensions-specific location?",
+      "revId": "b69f6e67717057985597593766aa56ab2de0fb89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
