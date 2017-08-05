@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6f64acd_e5b9df7e",
+        "filename": "chrome/android/java/res/layout/default_search_engine_first_run_fragment.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-05T00:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e10b89b_b7d5fd0d",
+      "range": {
+        "startLine": 46,
+        "startChar": 46,
+        "endLine": 46,
+        "endChar": 64
+      },
+      "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc775f7f_763ca9b7",
         "filename": "chrome/android/java/res/layout/fre_data_reduction_proxy.xml",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-27T02:14:32Z",
       "side": 1,
       "message": "I suspect this should be black alpha 87% (since it\u0027s pure black now)",
+      "range": {
+        "startLine": 76,
+        "startChar": 50,
+        "endLine": 76,
+        "endChar": 64
+      },
+      "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894c005f_db77cf3a",
+        "filename": "chrome/android/java/res/layout/fre_data_reduction_proxy.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-05T00:26:54Z",
+      "side": 1,
+      "message": "Let\u0027s do a follow up or change this in bug 723040.",
+      "parentUuid": "bc775f7f_763ca9b7",
       "range": {
         "startLine": 76,
         "startChar": 50,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ce2d3b76_006aa45c",
+        "filename": "chrome/android/java/res/layout/fre_data_reduction_proxy.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-05T00:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24688af9_a019dc72",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 20
+      },
+      "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d27e151_a0a432ba",
         "filename": "chrome/android/java/res/layout/fre_tosanduma.xml",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac50df63_cd8fa7ff",
+        "filename": "chrome/android/java/res/layout/fre_tosanduma.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-05T00:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d27e151_a0a432ba",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 16
+      },
+      "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3257d765_e1ade011",
+        "filename": "chrome/android/java/res/layout/lightweight_fre_tos.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-05T00:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "045a9ed5_abd28611",
+      "range": {
+        "startLine": 39,
+        "startChar": 37,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e96597c_1cc53acc",
         "filename": "chrome/android/java/res/values-v17/styles.xml",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-27T02:14:32Z",
       "side": 1,
       "message": "Maybe this can be 87% black to?",
+      "range": {
+        "startLine": 464,
+        "startChar": 40,
+        "endLine": 464,
+        "endChar": 43
+      },
+      "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35c2558_7319f330",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-05T00:26:54Z",
+      "side": 1,
+      "message": "Let\u0027s do a follow up or change this in bug 723040.",
+      "parentUuid": "6e96597c_1cc53acc",
       "range": {
         "startLine": 464,
         "startChar": 40,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "8f135d44_efdabfa4",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-05T00:26:54Z",
+      "side": 1,
+      "message": "Let\u0027s do a follow up or change this in bug 723040.",
+      "parentUuid": "1bd8390b_cc475954",
+      "range": {
+        "startLine": 477,
+        "startChar": 40,
+        "endLine": 477,
+        "endChar": 43
+      },
+      "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72051c46_ec312043",
         "filename": "ui/android/java/res/values-v17/styles.xml",
         "patchSetId": 4
@@ -174,6 +342,30 @@
       "writtenOn": "2017-07-27T02:14:32Z",
       "side": 1,
       "message": "Let\u0027s elaborate on the usage of these text styles and explaining that all text should use one of the pre-defined text styles in this file.\n\nnit: ...are all used in ui/android.",
+      "range": {
+        "startLine": 49,
+        "startChar": 71,
+        "endLine": 49,
+        "endChar": 75
+      },
+      "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ddeb0e2_40c36f53",
+        "filename": "ui/android/java/res/values-v17/styles.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-05T00:26:54Z",
+      "side": 1,
+      "message": "Sure:) What is the usual way to explain this? Should we send out emails, put up some docs, or something else?",
+      "parentUuid": "72051c46_ec312043",
       "range": {
         "startLine": 49,
         "startChar": 71,
