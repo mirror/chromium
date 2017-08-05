@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "3756a8fc_aa6a0919",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "IMO having these properties at the definition level makes it more intuitive to write b/c it\u0027s similar to how polymer definitions work. BUT polymer also does a thing where the functions are defined in the `properties` object. I\u0027m ok going either way on this.",
+      "parentUuid": "aad9cfdd_561704c3",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "b868c66277225747ed144ca290577a1c04880d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3ea2b25_4e4e04d1",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 2

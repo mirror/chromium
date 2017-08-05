@@ -1,0 +1,441 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c0f0d58_685ded57",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "AuditOptions -\u003e AxeOptions for specificity?",
+      "range": {
+        "startLine": 18,
+        "startChar": 18,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba65057f_c0a9bf08",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "nit: rename to options or axeOptions since within this context we\u0027re already in the audit",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 17
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8922ca85_0ea04934",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "Promise is optional\nObject\u003cstring, function(): ?Promise\u003e",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 47
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b57e3a_f46a741c",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "These should be defined after the namespace",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708632bc_b30e1c4f",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "Can be:\nAccessibilityTest \u003d AccessibilityTest || () \u003d\u003e {};\n\nThen you can use the same namespace in both files",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec8b7292_07306308",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "Let\u0027s keep this in its own file. This lets us automate creating it later.\nSee comment above on how to keep same name space in both files.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a69216_9a4fb1c6",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "Can we make this private now?",
+      "range": {
+        "startLine": 119,
+        "startChar": 18,
+        "endLine": 119,
+        "endChar": 26
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1264d0_c54c583f",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "Nit, prefer arrow syntax.\n(resolve, reject) \u003d\u003e {",
+      "range": {
+        "startLine": 127,
+        "startChar": 21,
+        "endLine": 127,
+        "endChar": 48
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d53979_02461b36",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "Nit: Only one | around the property",
+      "range": {
+        "startLine": 144,
+        "startChar": 33,
+        "endLine": 144,
+        "endChar": 35
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b00343_a7e1c43a",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "More concise:\n\nDefines a different test for each audit rule, unless overridden by |test.options.runOnly|.",
+      "range": {
+        "startLine": 144,
+        "startChar": 3,
+        "endLine": 144,
+        "endChar": 76
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f3e926_9f70489c",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "\"tests\" seems more concise here\n\nAlso we could drop the \"using Mocha\" and it\u0027s still clear",
+      "range": {
+        "startLine": 152,
+        "startChar": 24,
+        "endLine": 152,
+        "endChar": 40
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e668ff_5aed87b6",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "nit: new line after this comment to separate it from the function call",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 172,
+        "endChar": 77
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e95e80_89f2b890",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "Can this be expressed with less words?",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 47
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e26bfa5_ab3de9cb",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "Nit:\n\ntests.forEach((testDef) \u003d\u003e {\n\nmight be more readable here, but keeping the for loop is fine too since they\u0027re the same",
+      "range": {
+        "startLine": 184,
+        "startChar": 2,
+        "endLine": 184,
+        "endChar": 30
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388a0717_4ed4019b",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "() \u003d\u003e {",
+      "range": {
+        "startLine": 185,
+        "startChar": 24,
+        "endLine": 185,
+        "endChar": 36
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5cee417_58f8359a",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "This can be private",
+      "range": {
+        "startLine": 202,
+        "startChar": 18,
+        "endLine": 202,
+        "endChar": 30
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7179f794_9c904a30",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "let\u0027s return () \u003d\u003e {\nso that |this| stays as expected",
+      "range": {
+        "startLine": 205,
+        "startChar": 8,
+        "endLine": 205,
+        "endChar": 21
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9911c71c_66c4d0af",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "If you rename auditOptions to either options or axeOptions, then this can fit in one line :D\n\n      return promise.then(() \u003d\u003e AccessibilityTest.runAudit(testDef.axeOptions));",
+      "range": {
+        "startLine": 208,
+        "startChar": 6,
+        "endLine": 210,
+        "endChar": 9
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed9f982d_b43d4a5b",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-05T01:03:54Z",
+      "side": 1,
+      "message": "You have code that allows not returning a promise, we should only use them if a test needs to be async. (same below)",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "84ed5ab6b30eccbe7368a03388e0c5dc834f3af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
