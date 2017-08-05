@@ -7,6 +7,8 @@
 
 #include "core/page/Page.h"
 #include "modules/ModulesExport.h"
+#include "modules/credentialmanager/MakeCredentialOptions.h"
+#include "modules/credentialmanager/WebAuthenticationClient.h"
 #include "platform/Supplementable.h"
 #include "public/platform/WebCredentialManagerClient.h"
 #include "public/platform/WebCredentialMediationRequirement.h"
@@ -50,9 +52,14 @@ class MODULES_EXPORT CredentialManagerClient final
                            bool include_passwords,
                            const WebVector<WebURL>& federations,
                            WebCredentialManagerClient::RequestCallbacks*);
+  virtual void DispatchMakeCredential(
+      LocalFrame*,
+      MakeCredentialOptions,
+      WebAuthenticationClient::PublicKeyCreateCallbacks*);
 
  private:
   WebCredentialManagerClient* client_;
+  Member<WebAuthenticationClient> authenticationClient_;
 };
 
 MODULES_EXPORT void ProvideCredentialManagerClientTo(Page&,

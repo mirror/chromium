@@ -14,7 +14,6 @@
 #include "third_party/WebKit/public/platform/WebVector.h"
 
 namespace blink {
-class WebCredential;
 class WebURL;
 }
 
@@ -27,6 +26,13 @@ class MockCredentialManagerClient : public blink::WebCredentialManagerClient {
 
   // We take ownership of the |credential|.
   void SetResponse(blink::WebCredential* credential);
+  void SetWebauthResponse(webauth::mojom::blink::PublicKeyCredentialInfoPtr);
+
+  void SetWebauthResponse(const std::string& id,
+                          const std::string& client_data_json,
+                          const std::string& attestation_object,
+                          const std::string& authenticator_data,
+                          const std::string& signature);
   void SetError(const std::string& error);
 
   // blink::WebCredentialManager:
@@ -38,8 +44,14 @@ class MockCredentialManagerClient : public blink::WebCredentialManagerClient {
                    const blink::WebVector<blink::WebURL>& federations,
                    RequestCallbacks* callbacks) override;
 
+  void DispatchMakeCredential(
+      blink::LocalFrame*,
+      blink::MakeCredentialOptions,
+      blink::WebAuthenticationClient::PublicKeyCreateCallbacks*);
+
  private:
   std::unique_ptr<blink::WebCredential> credential_;
+  webauth::mojom::blink::PublicKeyCredentialInfoPtr publicKeyCredential_;
   blink::WebCredentialManagerError error_;
 
   DISALLOW_COPY_AND_ASSIGN(MockCredentialManagerClient);

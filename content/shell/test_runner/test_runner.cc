@@ -2794,6 +2794,20 @@ void TestRunner::ClearMockCredentialManagerResponse() {
   credential_manager_client_->SetResponse(nullptr);
 }
 
+void TestRunner::SetMockCredentialManagerWebauthResponse(
+    const std::string& id,
+    const std::string& client_data_json,
+    const std::string& attestation_object,
+    const std::string& authenticator_data,
+    const std::string& signature) {
+  credential_manager_client_->SetWebauthResponse(
+      id, client_data_json, attestation_object, authenticator_data, signature);
+}
+
+void TestRunner::ClearMockCredentialManagerWebauthResponse() {
+  credential_manager_client_->SetWebauthResponse(nullptr);
+}
+
 void TestRunner::SetMockCredentialManagerError(const std::string& error) {
   credential_manager_client_->SetError(error);
 }
