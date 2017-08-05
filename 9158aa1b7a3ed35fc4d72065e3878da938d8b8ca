@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6f7f1af6_a82f68d0",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-05T00:31:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure I see the point of splitting these out from RegisterPrefs.",
+      "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84b378b1_c9382442",
         "filename": "ash/system/tray_caps_lock.cc",
         "patchSetId": 1
@@ -13,6 +30,58 @@
       "writtenOn": "2017-08-04T17:59:51Z",
       "side": 1,
       "message": "This is actually how the old code behaved. It did observe the pref in the chrome layer but it never notified TrayCapsLock of changes. I just added the comment to explain why that\u0027s OK.",
+      "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd69630_86eff601",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-05T00:31:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "84b378b1_c9382442",
+      "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39cbc313_1da6b980",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-05T00:31:22Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure I understand what that means. I thought it was okay if Chrome registers the prefs that it owns, and Ash doesn\u0027t need to *also* register the pref in order to access it, but maybe I\u0027m wrong? Can you enlighten me and maybe expand on this comment?",
+      "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "250cae42_de3b7820",
+        "filename": "ash/system/tray_caps_lock.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-05T00:31:22Z",
+      "side": 1,
+      "message": "optional nit:\n// Shows a status area icon and a system tray menu item when caps lock is on.",
       "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
