@@ -140,6 +140,30 @@
       "revId": "e188bff075bdf457701a6a3cffba7738909a2e1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1b9c5f_dd17a722",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-06T02:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b831d0a_1967f028",
+      "range": {
+        "startLine": 427,
+        "startChar": 0,
+        "endLine": 427,
+        "endChar": 31
+      },
+      "revId": "e188bff075bdf457701a6a3cffba7738909a2e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
