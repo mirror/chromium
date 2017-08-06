@@ -101,10 +101,10 @@ base::string16 GetLocalizedTitle(const base::string16& title,
                                         result_title);
     }
     case content::PROCESS_TYPE_RENDERER: {
-      // TODO: (cburn) Start the UI Localization process for this. Currently the
-      // best name for this is "Renderer".
       if (base::CommandLine::ForCurrentProcess()->HasSwitch(
               switches::kTaskManagerShowExtraRenderers)) {
+        // TODO(cburn):  Start the UI Localization process for this. Currently
+        // the best name for this is "Renderer".
         return base::ASCIIToUTF16("Renderer");
       }
     }
