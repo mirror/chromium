@@ -222,6 +222,10 @@ GL_FUNCTIONS = [
                  'extensions': ['GL_ARB_sync'] }],
   'arguments': 'GLsync sync, GLbitfield flags, GLuint64 timeout', },
 { 'return_type': 'void',
+  'versions': [{ 'name': 'glClipControlMESAX',
+                 'extensions': ['GL_MESAX_clip_control'] }],
+  'arguments': 'GLenum origin, GLenum depth', },
+{ 'return_type': 'void',
   'names': ['glColorMask'],
   'arguments':
       'GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha', },
