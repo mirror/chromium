@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4230a7dc_a8f43f60",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-06T17:12:59Z",
+      "side": 1,
+      "message": "This starts to get complicated if the meaning is now part of the camelcase. Should we do also do _SIGN_IN_ when it is a verb?\n\nmarq@ was part of this offline discussion: https://codereview.chromium.org/2786133002#msg9",
+      "parentUuid": "03bcaac1_4180415e",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 25
+      },
+      "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32cf1047_23ec1dad",
         "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
         "patchSetId": 4
