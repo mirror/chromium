@@ -65,6 +65,9 @@ class PPB_Graphics3D_Impl : public ppapi::PPB_Graphics3D_Shared,
   // Returns true if the backing texture is always opaque.
   bool IsOpaque();
 
+  // Returns true if the backing texture contains flipped content.
+  bool IsFlipped();
+
   // Notifications about the view's progress painting.  See PluginInstance.
   // These messages are used to send Flush callbacks to the plugin.
   void ViewInitiatedPaint();
@@ -118,6 +121,7 @@ class PPB_Graphics3D_Impl : public ppapi::PPB_Graphics3D_Shared,
 #endif
 
   bool has_alpha_;
+  bool is_flipped_;
   const bool use_image_chromium_;
   std::unique_ptr<gpu::CommandBufferProxyImpl> command_buffer_;
 

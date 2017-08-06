@@ -2178,6 +2178,7 @@ void PepperPluginInstanceImpl::UpdateLayer(bool force_creation) {
       DCHECK(bound_graphics_3d_.get());
       texture_layer_ = cc::TextureLayer::CreateForMailbox(NULL);
       opaque = bound_graphics_3d_->IsOpaque();
+      texture_layer_->SetFlipped(bound_graphics_3d_->IsFlipped());
 
       PassCommittedTextureToTextureLayer();
     } else {

@@ -427,6 +427,12 @@ MockGLInterface::Mock_glClientWaitSync(GLsync sync,
   return interface_->ClientWaitSync(sync, flags, timeout);
 }
 
+void GL_BINDING_CALL MockGLInterface::Mock_glClipControlMESAX(GLenum origin,
+                                                              GLenum depth) {
+  MakeFunctionUnique("glClipControlMESAX");
+  interface_->ClipControlMESAX(origin, depth);
+}
+
 void GL_BINDING_CALL MockGLInterface::Mock_glColorMask(GLboolean red,
                                                        GLboolean green,
                                                        GLboolean blue,
@@ -4074,6 +4080,8 @@ MockGLInterface::GetGLProcAddress(const char* name) {
     return reinterpret_cast<GLFunctionPointerType>(Mock_glClearStencil);
   if (strcmp(name, "glClientWaitSync") == 0)
     return reinterpret_cast<GLFunctionPointerType>(Mock_glClientWaitSync);
+  if (strcmp(name, "glClipControlMESAX") == 0)
+    return reinterpret_cast<GLFunctionPointerType>(Mock_glClipControlMESAX);
   if (strcmp(name, "glColorMask") == 0)
     return reinterpret_cast<GLFunctionPointerType>(Mock_glColorMask);
   if (strcmp(name, "glCompileShader") == 0)
