@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b68726b_6dc3bbf0",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-06T23:15:25Z",
+      "side": 1,
+      "message": "Are you intending to have a range of 1 to 1 million (with 50 buckets) here?  This doesn\u0027t seem appropriate to me given the changelist description about the motivation.\n\nditto below",
+      "range": {
+        "startLine": 58,
+        "startChar": 23,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "914d6542_703f512d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 71441,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-06T23:15:25Z",
+      "side": 1,
+      "message": "omit \"Records\" (here and below); it\u0027s unnecessary.",
+      "range": {
+        "startLine": 71441,
+        "startChar": 4,
+        "endLine": 71441,
+        "endChar": 11
+      },
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf896cc1_b21dfd1c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 71441,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-06T23:15:25Z",
+      "side": 1,
+      "message": "nit here and below: mention that this isn\u0027t recorded for root nodes, which have an empty unique name.\n\nalso (non-optional): state when this is emitted:\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#State-When-It-Is-Recorded\nditto everywhere below",
+      "range": {
+        "startLine": 71441,
+        "startChar": 77,
+        "endLine": 71441,
+        "endChar": 0
+      },
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41fdcb07_7812c584",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 71447,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-06T23:15:25Z",
+      "side": 1,
+      "message": "Please put the deprecation message in an \u003cobsolete\u003e tag and keep the existing summary tag, following other examples in this file.",
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4c563c_0afc8b7d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 71473,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-06T23:15:25Z",
+      "side": 1,
+      "message": "bytes per depth\n?",
+      "range": {
+        "startLine": 71473,
+        "startChar": 11,
+        "endLine": 71473,
+        "endChar": 16
+      },
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b5e56e_416e32e5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 71476,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-06T23:15:25Z",
+      "side": 1,
+      "message": "Should say something about falling back on the frame path algorithm here.",
+      "range": {
+        "startLine": 71476,
+        "startChar": 79,
+        "endLine": 71476,
+        "endChar": 0
+      },
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d9da97_f5c005e6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 71477,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-06T23:15:25Z",
+      "side": 1,
+      "message": "Is this actually useful?  (You can simply say \"yes\" without a full explanation here.)  My concrete concerns: (i) why does this ratio matter? (ii) won\u0027t the histogram show lots of spikes at, say, 17, 18, 1, 8, and 9.  (My guesses?)  Are you sure you know how you\u0027re going to interpret it?",
+      "range": {
+        "startLine": 71477,
+        "startChar": 74,
+        "endLine": 71477,
+        "endChar": 0
+      },
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
