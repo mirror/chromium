@@ -50,6 +50,8 @@ BackgroundBleedAvoidance BoxDecorationData::DetermineBackgroundBleedAvoidance(
     const Document& document,
     const ComputedStyle& style,
     bool background_should_always_be_clipped) {
+  return kBackgroundBleedClipLayer;
+
   if (!has_background)
     return kBackgroundBleedNone;
 
