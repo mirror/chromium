@@ -53,6 +53,7 @@ function getEmptyPrinter_() {
     printerProtocol: 'ipp',
     printerQueue: '',
     printerStatus: '',
+    printerUsbInfo: null,
   };
 }
 
@@ -355,10 +356,13 @@ Polymer({
         'showDiscoveryDialog_');
   },
 
-  /** @private */
-  addPrinter_: function() {
+  /**
+   * @param {!SetupMethod} setupMethod
+   * @private
+   */
+  addPrinter_: function(setupMethod) {
     settings.CupsPrintersBrowserProxyImpl.getInstance().addCupsPrinter(
-        this.newPrinter);
+        setupMethod, this.newPrinter);
   },
 
   /** @private */
@@ -381,7 +385,7 @@ Polymer({
     // Add the printer if it's configurable. Otherwise, forward to the
     // manufacturer dialog.
     if (this.newPrinter.printerAutoconf) {
-      this.addPrinter_();
+      this.addPrinter_(SetupMethod.AUTOMATIC);
     } else {
       this.switchToManufacturerDialog_();
     }
@@ -404,11 +408,11 @@ Polymer({
     if (this.previousDialog_ == AddPrinterDialogs.DISCOVERY) {
       this.configuringDialogTitle =
           loadTimeData.getString('addPrintersNearbyTitle');
-      this.addPrinter_();
+      this.addPrinter_(SetupMethod.AUTOMATIC);
     } else if (this.previousDialog_ == AddPrinterDialogs.MANUFACTURER) {
       this.configuringDialogTitle =
           loadTimeData.getString('selectManufacturerAndModelTitle');
-      this.addPrinter_();
+      this.addPrinter_(SetupMethod.MANUAL);
     } else if (this.previousDialog_ == AddPrinterDialogs.MANUALLY) {
       this.configuringDialogTitle =
           loadTimeData.getString('addPrintersManuallyTitle');
