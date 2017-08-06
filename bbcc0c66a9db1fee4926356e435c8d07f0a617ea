@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a27c3a90_5fbc9a33",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-06T07:33:20Z",
+      "side": 1,
+      "message": "Are there any disadvantages to doing this, rather than doing what the original test code did (bounce it through a test interface)?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 1
+      },
+      "revId": "bbcc0c66a9db1fee4926356e435c8d07f0a617ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf6a4535_af0a5598",
         "filename": "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom",
         "patchSetId": 4
