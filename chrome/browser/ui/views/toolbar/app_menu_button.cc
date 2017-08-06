@@ -22,6 +22,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/toolbar/app_menu_model.h"
 #include "chrome/browser/ui/views/extensions/browser_action_drag_data.h"
+#include "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_promo.h"
 #include "chrome/browser/ui/views/toolbar/app_menu.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_button.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
@@ -30,11 +31,13 @@
 #include "ui/base/theme_provider.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_palette.h"
+#include "ui/gfx/color_utils.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/views/controls/button/label_button_border.h"
 #include "ui/views/controls/menu/menu_listener.h"
 #include "ui/views/metrics.h"
+#include "ui/views/widget/widget_observer.h"
 
 namespace {
 
@@ -47,7 +50,8 @@ bool AppMenuButton::g_open_app_immediately_for_testing = false;
 
 AppMenuButton::AppMenuButton(ToolbarView* toolbar_view)
     : views::MenuButton(base::string16(), toolbar_view, false),
-      toolbar_view_(toolbar_view) {
+      toolbar_view_(toolbar_view),
+      incognito_window_promo_observer_(this) {
   SetInkDropMode(InkDropMode::ON);
   SetFocusPainter(nullptr);
 
@@ -227,6 +231,26 @@ void AppMenuButton::AnimateIconIfPossible() {
   }
 
   new_icon_->Animate(views::AnimatedIconView::END);
+}
+
+void AppMenuButton::ShowPromo() {
+  // Owned by its native widget. Will be destroyed as its widget is destroyed.
+  IncognitoWindowPromoBubbleView* incognito_window_promo =
+      IncognitoWindowPromoBubbleView::CreateOwned(this);
+  if (!incognito_window_promo_observer_.IsObserving(
+          incognito_window_promo->GetWidget())) {
+    incognito_window_promo_observer_.Add(incognito_window_promo->GetWidget());
+    AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
+    AppMenuButton::SchedulePaint();
+  }
+}
+
+void AppMenuButton::OnWidgetDestroying(views::Widget* widget) {
+  if (incognito_window_promo_observer_.IsObserving(widget)) {
+    incognito_window_promo_observer_.Remove(widget);
+    AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr);
+    AppMenuButton::SchedulePaint();
+  }
 }
 
 const char* AppMenuButton::GetClassName() const {
