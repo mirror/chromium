@@ -548,8 +548,8 @@ class BASE_EXPORT MessageLoopForIO : public MessageLoop {
   typedef MessagePumpForIO::IOHandler IOHandler;
   typedef MessagePumpForIO::IOContext IOContext;
 #elif defined(OS_FUCHSIA)
-  typedef MessagePumpFuchsia::Watcher Watcher;
-  typedef MessagePumpFuchsia::FileDescriptorWatcher FileDescriptorWatcher;
+  typedef MessagePumpFuchsia::FdWatcher Watcher;
+  typedef MessagePumpFuchsia::FdWatchController FileDescriptorWatcher;
 
   enum Mode{WATCH_READ = MessagePumpFuchsia::WATCH_READ,
             WATCH_WRITE = MessagePumpFuchsia::WATCH_WRITE,
