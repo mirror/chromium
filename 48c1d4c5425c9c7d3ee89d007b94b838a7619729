@@ -34,6 +34,24 @@
       "revId": "48c1d4c5425c9c7d3ee89d007b94b838a7619729",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dfb19ed_6addf0dd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-writing-modes-3/wm-propagation-body-scroll-offset-vertical-lr.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-06T17:39:23Z",
+      "side": 1,
+      "message": "Yes, I guess I could\u0027ve dropped it for the other test, but I felt using an explicit writing-mode on the root element would make it clearer.",
+      "parentUuid": "304e1798_e68be933",
+      "revId": "48c1d4c5425c9c7d3ee89d007b94b838a7619729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
