@@ -2768,24 +2768,15 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowHiddenScrollProperties) {
 
   const ObjectPaintProperties* overflow_hidden_scroll_properties =
       overflow_hidden->GetLayoutObject()->FirstFragment()->PaintProperties();
-  // Because the frameView is does not scroll, overflowHidden's scroll should be
-  // under the root.
+
+  // Because the overflow hidden does not scroll and only has a static scroll
+  // offset, there should be a scroll translation node but no scroll node.
   auto* scroll_translation =
       overflow_hidden_scroll_properties->ScrollTranslation();
-  auto* overflow_hidden_scroll_node = scroll_translation->ScrollNode();
-  EXPECT_TRUE(overflow_hidden_scroll_node->Parent()->IsRoot());
   EXPECT_EQ(TransformationMatrix().Translate(0, -37),
             scroll_translation->Matrix());
-  // This should match the overflow's dimensions and should not include the
-  // box's border.
-  EXPECT_EQ(IntSize(5, 3), overflow_hidden_scroll_node->ContainerBounds());
-  // The scrolling content's bounds should include both the overflow's
-  // dimensions (5x3) and the 0x79 "forceScroll" object.
-  EXPECT_EQ(IntSize(5, 79), overflow_hidden_scroll_node->Bounds());
-  // Although overflow: hidden is programmatically scrollable, it is not user
-  // scrollable.
-  EXPECT_FALSE(overflow_hidden_scroll_node->UserScrollableHorizontal());
-  EXPECT_FALSE(overflow_hidden_scroll_node->UserScrollableVertical());
+  EXPECT_EQ(nullptr, scroll_translation->ScrollNode());
+  EXPECT_EQ(nullptr, overflow_hidden_scroll_properties->Scroll());
 }
 
 TEST_P(PaintPropertyTreeBuilderTest, NestedScrollProperties) {
@@ -3394,9 +3385,8 @@ TEST_P(PaintPropertyTreeBuilderTest, ScrollNodeHasCompositorElementId) {
   // stored directly on the ScrollNode.
   EXPECT_EQ(CompositorElementId(),
             properties->ScrollTranslation()->GetCompositorElementId());
-  EXPECT_NE(
-      CompositorElementId(),
-      properties->ScrollTranslation()->ScrollNode()->GetCompositorElementId());
+  EXPECT_NE(CompositorElementId(),
+            properties->Scroll()->GetCompositorElementId());
 }
 
 TEST_P(PaintPropertyTreeBuilderTest, OverflowClipSubpixelPosition) {
