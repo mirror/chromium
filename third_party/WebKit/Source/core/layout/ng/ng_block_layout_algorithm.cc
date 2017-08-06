@@ -233,6 +233,20 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
       BreakToken() ? LayoutUnit() : border_scrollbar_padding_.block_start;
 
   NGMarginStrut input_margin_strut = ConstraintSpace().MarginStrut();
+
+  // If this node is a quirky container, (we are in quirks mode and either a
+  // table cell or body), we set our margin strut to a mode where it only
+  // considers non-quirky margins. E.g.
+  // <body>
+  //   <p></p>
+  //   <div style="margin-top: 10px"></div>
+  //   <h1>Hello</h1>
+  // </body>
+  // In the above example <p>'s & <h1>'s margins are ignored as they are
+  // quirky, and we only consider <div>'s 10px margin.
+  if (node_.IsQuirkyContainer())
+    input_margin_strut.is_quirky_container_start = true;
+
   LayoutUnit input_bfc_block_offset =
       ConstraintSpace().BfcOffset().block_offset;
 
@@ -307,6 +321,8 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
     content_size_ =
         std::max(content_size_, previous_inflow_position.logical_block_offset +
                                     end_margin_strut.Sum());
+    // TODO - end_margin_strut.Sum() here if quirky container, need to do
+    // special things.
     end_margin_strut = NGMarginStrut();
   }
 
@@ -610,7 +626,7 @@ NGInflowChildData NGBlockLayoutAlgorithm::ComputeChildData(
   // Non empty border/padding, and new FC use cases are handled inside of the
   // child's layout
   NGMarginStrut margin_strut = previous_inflow_position.margin_strut;
-  margin_strut.Append(margins.block_start);
+  margin_strut.Append(margins.block_start, child.Style().HasMarginBeforeQuirk());
 
   NGLogicalOffset child_bfc_offset = {
       ConstraintSpace().BfcOffset().inline_offset +
@@ -670,7 +686,7 @@ NGPreviousInflowPosition NGBlockLayoutAlgorithm::ComputeInflowPosition(
   }
 
   NGMarginStrut margin_strut = layout_result.EndMarginStrut();
-  margin_strut.Append(child_data.margins.block_end);
+  margin_strut.Append(child_data.margins.block_end, child.Style().HasMarginAfterQuirk());
 
   return {child_end_bfc_block_offset, logical_block_offset, margin_strut};
 }
@@ -717,7 +733,7 @@ bool NGBlockLayoutAlgorithm::PositionNewFc(
   //    child's BFC offset then merge fragment's margins with the current
   //    MarginStrut.
   if (opportunity.offset.block_offset == child_bfc_offset_estimate)
-    margin_strut.Append(child_data.margins.block_start);
+    margin_strut.Append(child_data.margins.block_start, child.Style().HasMarginBeforeQuirk());
   child_bfc_offset_estimate += margin_strut.Sum();
 
   // 4. The child's BFC block offset is known here.

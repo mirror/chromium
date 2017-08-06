@@ -80,6 +80,10 @@ bool NGLayoutInputNode::IsReplaced() const {
   return box_->IsLayoutReplaced();
 }
 
+bool NGLayoutInputNode::IsQuirkyContainer() const {
+  return box_->GetDocument().InQuirksMode() && (box_->IsBody() || box_->IsTableCell());
+}
+
 bool NGLayoutInputNode::CreatesNewFormattingContext() const {
   return box_->AvoidsFloats();
 }
