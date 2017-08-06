@@ -70,6 +70,30 @@
       "revId": "987061c5bc95a82a25ddce278662a2474ac4e910",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30872700_22526c24",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-08-06T02:35:00Z",
+      "side": 1,
+      "message": "That\u0027s right; we don\u0027t want to subtract overlay scrollbar width when computing overflow.  With overlay scrollbars, it\u0027s ok if some content is hidden.",
+      "parentUuid": "8ebda988_9d39d642",
+      "range": {
+        "startLine": 982,
+        "startChar": 29,
+        "endLine": 982,
+        "endChar": 70
+      },
+      "revId": "987061c5bc95a82a25ddce278662a2474ac4e910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
