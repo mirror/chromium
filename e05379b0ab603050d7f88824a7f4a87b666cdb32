@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "30e1bb85_eff4c042",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-06T22:07:51Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4dc86838_617acf6b",
         "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
         "patchSetId": 6
@@ -36,6 +59,40 @@
     },
     {
       "key": {
+        "uuid": "dc24dd67_96cf82e1",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-06T22:07:51Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f82604_ccc9ab03",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-06T22:07:51Z",
+      "side": 1,
+      "message": "if (!networkIds.includes(this.guid))",
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b18748da_4628f7f6",
         "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
         "patchSetId": 6
@@ -47,6 +104,46 @@
       "writtenOn": "2017-08-04T22:47:43Z",
       "side": 1,
       "message": "should we close the dialog/show an error if the network is not around any more",
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a047f6_20361e94",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-06T22:07:51Z",
+      "side": 1,
+      "message": "s/remoe/remove",
+      "range": {
+        "startLine": 328,
+        "startChar": 32,
+        "endLine": 328,
+        "endChar": 37
+      },
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e4adca3_4473c820",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-06T22:07:51Z",
+      "side": 1,
+      "message": "nit: some whitespace could make this function less dense. Alternatively, maybe a switch statement would be more readable?",
       "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +167,29 @@
     },
     {
       "key": {
+        "uuid": "5468fa18_e407d3b0",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-06T22:07:51Z",
+      "side": 1,
+      "message": "nit: These temporaries don\u0027t seem necessary.",
+      "range": {
+        "startLine": 417,
+        "startChar": 0,
+        "endLine": 418,
+        "endChar": 35
+      },
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "637932e5_30accefd",
         "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
         "patchSetId": 6
@@ -81,6 +201,104 @@
       "writtenOn": "2017-08-04T22:47:43Z",
       "side": 1,
       "message": "return fields.some(function(field) {\n  value \u003d this.get(field, this.networkProperties);\n  return value !\u003d\u003d undefined \u0026\u0026 value !\u003d\u003d \u0027\u0027;\n})",
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9202ea35_be074c4f",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-06T22:07:51Z",
+      "side": 1,
+      "message": "+1, but use an arrow function so |this| is bound.",
+      "parentUuid": "637932e5_30accefd",
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70a5f3b_01c49c9f",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-06T22:07:51Z",
+      "side": 1,
+      "message": "return Object.getOwnPropertyNames(newValue).every(\n    key \u003d\u003e newValue[key] \u003d\u003d curValue[key]);",
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d307b6_c227384a",
+        "filename": "chrome/browser/resources/chromeos/proxy_settings.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-06T22:07:51Z",
+      "side": 1,
+      "message": "Convert these scripts to \u003clink rel\u003d\"import\"\u003es so we don\u0027t run any twice.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 62
+      },
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe1c544_adac0fd6",
+        "filename": "chrome/browser/ui/webui/chromeos/proxy_settings_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-06T22:07:51Z",
+      "side": 1,
+      "message": "s/orverrides/overrides",
+      "range": {
+        "startLine": 25,
+        "startChar": 32,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ba7c79_25d1962e",
+        "filename": "extensions/common/api/_api_features.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-06T22:07:51Z",
+      "side": 1,
+      "message": "alphabetize",
       "revId": "e05379b0ab603050d7f88824a7f4a87b666cdb32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
