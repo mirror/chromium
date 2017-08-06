@@ -82,6 +82,9 @@ class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
   scoped_refptr<ResourceResponse> response_;
   mojo::ScopedDataPipeConsumerHandle consumer_handle_;
 
+  // Total amount of data sent to the renderer so far.
+  uint64_t written_body_length_ = 0;
+
   base::WeakPtrFactory<URLLoaderImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(URLLoaderImpl);
