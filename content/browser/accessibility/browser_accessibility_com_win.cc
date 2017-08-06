@@ -2550,8 +2550,6 @@ void BrowserAccessibilityComWin::UpdateStep3FireEvents(
       parent->owner()->UpdatePlatformAttributes();
     }
   }
-
-  old_win_attributes_.reset(nullptr);
 }
 
 BrowserAccessibilityManager* BrowserAccessibilityComWin::Manager() const {
