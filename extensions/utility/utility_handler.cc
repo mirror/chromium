@@ -6,6 +6,9 @@
 
 #include "base/command_line.h"
 #include "base/files/file_path.h"
+#include "base/location.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "content/public/utility/utility_thread.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension_l10n_util.h"
@@ -27,6 +30,14 @@ namespace extensions {
 
 namespace {
 
+void RunUnzipCallbackOnTaskRunner(
+    const scoped_refptr<base::TaskRunner>& task_runner,
+    mojom::ExtensionUnpacker::UnzipCallback callback,
+    bool success) {
+  task_runner->PostTask(FROM_HERE,
+                        base::BindOnce(std::move(callback), success));
+}
+
 class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
  public:
   ExtensionUnpackerImpl() = default;
@@ -42,13 +53,15 @@ class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
   void Unzip(const base::FilePath& file,
              const base::FilePath& path,
              UnzipCallback callback) override {
-    std::unique_ptr<base::DictionaryValue> manifest;
-    if (UnzipFileManifestIntoPath(file, path, &manifest)) {
-      std::move(callback).Run(
-          UnzipFileIntoPath(file, path, std::move(manifest)));
-    } else {
-      std::move(callback).Run(false);
-    }
+    base::PostTaskWithTraits(
+        FROM_HERE,
+        {base::TaskPriority::USER_VISIBLE, base::MayBlock(),
+         base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
+        base::BindOnce(&ExtensionUnpackerImpl::UnzipOnBackgroundTaskRunner,
+                       file, path,
+                       base::BindOnce(&RunUnzipCallbackOnTaskRunner,
+                                      base::ThreadTaskRunnerHandle::Get(),
+                                      std::move(callback))));
   }
 
   void Unpack(version_info::Channel channel,
@@ -74,6 +87,18 @@ class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
       std::move(callback).Run(base::string16(), unpacker.TakeParsedManifest());
     } else {
       std::move(callback).Run(unpacker.error_message(), nullptr);
+    }
+  }
+
+  static void UnzipOnBackgroundTaskRunner(const base::FilePath& file,
+                                          const base::FilePath& path,
+                                          UnzipCallback callback) {
+    std::unique_ptr<base::DictionaryValue> manifest;
+    if (UnzipFileManifestIntoPath(file, path, &manifest)) {
+      std::move(callback).Run(
+          UnzipFileIntoPath(file, path, std::move(manifest)));
+    } else {
+      std::move(callback).Run(false);
     }
   }
 
