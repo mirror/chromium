@@ -64,6 +64,8 @@ class LayoutListMarker final : public LayoutBox {
 
   LayoutUnit LineOffset() const { return line_offset_; }
 
+  void SetLocationAndUpdateOverflowControlsIfNeeded(const LayoutPoint&) final;
+
  protected:
   void WillBeDestroyed() override;
 
@@ -111,6 +113,8 @@ class LayoutListMarker final : public LayoutBox {
   bool PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const override {
     return false;
   }
+
+  void UpdateLineOffset();
 
   String text_;
   Persistent<StyleImage> image_;
