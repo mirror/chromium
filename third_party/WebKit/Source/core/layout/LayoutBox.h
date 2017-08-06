@@ -353,7 +353,7 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   // because of pixel snapping. This function is used to change location of the
   // LayoutBox outside of LayoutBox::layout(). Will remove when we use
   // LayoutUnits for scrollbars.
-  void SetLocationAndUpdateOverflowControlsIfNeeded(const LayoutPoint&);
+  virtual void SetLocationAndUpdateOverflowControlsIfNeeded(const LayoutPoint&);
 
   void SetSize(const LayoutSize& size) {
     if (size == frame_rect_.Size())
