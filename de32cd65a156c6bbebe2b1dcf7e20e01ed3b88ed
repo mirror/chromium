@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deadae19_f713a2da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppHooks.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-07T23:03:24Z",
+      "side": 1,
+      "message": "I think it\u0027s time to merge this and the callback above into an Offline Pages specific object that we can update at will. WDYT?",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc12328_3ff47ed8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/CctOfflinePageModelObserver.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-07T23:03:24Z",
+      "side": 1,
+      "message": "This is probably better as a design doc question, but won\u0027t consumers want a little info about the page that changed in the intent extras?",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "128d3d94_bbdbe281",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-07T23:03:24Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t reflect the code.",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04026952_c1a6a08a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-07T23:03:24Z",
+      "side": 1,
+      "message": "This code seems redundant because the finally block will run after this block, right?",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea06bf6_7aac8821",
+        "filename": "chrome/browser/offline_pages/android/cct_origin_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-07T23:03:24Z",
+      "side": 1,
+      "message": "nit: base::MakeUnique\u003cCctOriginObserver\u003e()",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf996d4_a4b23ed5",
+        "filename": "chrome/browser/offline_pages/android/cct_origin_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-07T23:03:24Z",
+      "side": 1,
+      "message": "Does it make sense to check for non-empty origin here?",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d5e7bc2_4dd81d3d",
+        "filename": "chrome/browser/offline_pages/android/offline_page_model_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-07T23:03:24Z",
+      "side": 1,
+      "message": "Did you consider alternative ways to do this?  I can see it being useful to only have a factory on supported platforms but there could be quite a bit of duplicated code when we add a second platform.\n\nMost viable alternate off the top of my head is to declare an AddPlatformObservers(OfflinePageModelImpl*) method that is only implemented on android and calls into CctOriginObserver.",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
