@@ -403,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "5ab85e43_9b828e81",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-07T06:36:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3a7f4b42_b21cf9cc",
+      "range": {
+        "startLine": 126,
+        "startChar": 45,
+        "endLine": 126,
+        "endChar": 61
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a56a4a7_106a20ad",
         "filename": "chrome/test/data/extensions/bookmark_apps/url_handlers/in_scope/index.html",
         "patchSetId": 4
