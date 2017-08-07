@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a78b59e3_8f1459fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-07T21:31:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5958c8f_b0215c13",
+      "range": {
+        "startLine": 12,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2c88a06_ca6a3ce0",
         "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fa251a73_a62408a9",
+        "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-07T21:31:00Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f2c88a06_ca6a3ce0",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 58
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2264b8b6_743fdf73",
         "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.cc",
         "patchSetId": 6
@@ -62,6 +110,24 @@
       "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93bf2fd6_e50c3abe",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-07T21:31:00Z",
+      "side": 1,
+      "message": "Moved profile to OS_CHROMEOS. signin_manager_factory.h was premature, the rest are strictly IWYU.",
+      "parentUuid": "2264b8b6_743fdf73",
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "5ccff1b6_80084660",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-07T21:31:00Z",
+      "side": 1,
+      "message": "\u003e I think those two lines belong to feedback_private_api.cc?\n\nWhat makes feedback_private_api.cc a better choice? IMO, the fact that the feedback component extension in Chrome uses keys normally used in WebUI is an implementation detail of Chrome.\n\n\u003e This function should probably just return the strings without any side effects.\n\nwebui::SetLoadTimeDataDefaults is a static function that only modifies the given dictionary, which was created by this function.\n\n\u003e \n\u003e You don\u0027t need g_browser_process if you kept using: \n\u003e   const std::string\u0026 app_locale \u003d\n\u003e       ExtensionsBrowserClient::Get()-\u003eGetApplicationLocale();\n\nI\u0027d prefer to avoid dependencies back into ExtensionsBrowserClient when we\u0027re already in //chrome. ExtensionsBrowserClient::GetApplicationLocale should only be necessary if something in //extensions uses it (ie, if we were to remove all uses in //extensions, we\u0027d want to remove the function).",
+      "parentUuid": "0f2c9665_b09efbbe",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 57
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6c31e3e_b3453b30",
         "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
         "patchSetId": 6
@@ -102,6 +192,24 @@
       "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200b552b_655e5d9e",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-07T21:31:00Z",
+      "side": 1,
+      "message": "No, removed.",
+      "parentUuid": "e6c31e3e_b3453b30",
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "b217563a_8fba0c64",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-07T21:31:00Z",
+      "side": 1,
+      "message": "Done in .cc.",
+      "parentUuid": "9d155bc8_836bd2f0",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 44
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "217bb0a4_1272cf14",
         "filename": "chrome/browser/extensions/api/feedback_private/feedback_private_api.cc",
         "patchSetId": 6
@@ -163,6 +295,30 @@
       "writtenOn": "2017-08-07T20:19:21Z",
       "side": 1,
       "message": "Left over from debugging?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 25
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e6deb9_48ae43cd",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-07T21:31:00Z",
+      "side": 1,
+      "message": "No, this provides the DCHECK macro.",
+      "parentUuid": "217bb0a4_1272cf14",
       "range": {
         "startLine": 12,
         "startChar": 0,
@@ -198,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "5f4e7149_271772ae",
+        "filename": "extensions/browser/api/feedback_private/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-07T21:31:00Z",
+      "side": 1,
+      "message": "No: nothing in //extensions should be used as a dep if enable_extensions \u003d\u003d false. This is in most extensions BUILD.gn files without customtizing the target name (the assert will print the filename). See:\n\n$ git grep \u0027Cannot depend on extensions \u0027 -- \u0027extensions/**/BUILD.gn\u0027",
+      "parentUuid": "969018b3_cffef5a0",
+      "range": {
+        "startLine": 8,
+        "startChar": 25,
+        "endLine": 8,
+        "endChar": 35
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19b7e426_4115d952",
         "filename": "extensions/browser/api/feedback_private/feedback_private_delegate.h",
         "patchSetId": 6
@@ -218,6 +398,30 @@
       "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481b6850_932caec1",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-07T21:31:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19b7e426_4115d952",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
