@@ -449,6 +449,15 @@ void NetworkMetricsProvider::OnEffectiveConnectionTypeChanged(
     return;
   }
 
+  if (min_effective_connection_type_ ==
+          net::EFFECTIVE_CONNECTION_TYPE_OFFLINE &&
+      max_effective_connection_type_ ==
+          net::EFFECTIVE_CONNECTION_TYPE_OFFLINE) {
+    min_effective_connection_type_ = type;
+    max_effective_connection_type_ = type;
+    return;
+  }
+
   min_effective_connection_type_ =
       std::min(min_effective_connection_type_, effective_connection_type_);
   max_effective_connection_type_ =
