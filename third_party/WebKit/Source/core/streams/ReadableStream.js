@@ -98,6 +98,10 @@
   const errCannotPipeLockedStream = 'Cannot pipe a locked stream';
   const errCannotPipeToALockedStream = 'Cannot pipe to a locked stream';
   const errDestinationStreamClosed = 'Destination stream closed';
+  const errPipeThroughUndefinedWritable =
+        'Cannot pass undefined writable to pipeThrough';
+  const errPipeThroughUndefinedReadable =
+        'Cannot pass undefined readable to pipeThrough';
 
   class ReadableStream {
     constructor() {
@@ -178,6 +182,12 @@
     }
 
     pipeThrough({writable, readable}, options) {
+      if (writable === undefined) {
+        throw new TypeError(errPipeThroughUndefinedWritable);
+      }
+      if (readable === undefined) {
+        throw new TypeError(errPipeThroughUndefinedReadable);
+      }
       const promise = this.pipeTo(writable, options);
       if (v8.isPromise(promise)) {
         markPromiseAsHandled(promise);
