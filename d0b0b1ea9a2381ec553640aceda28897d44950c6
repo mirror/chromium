@@ -495,6 +495,30 @@
       "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a22bd67_92298b83",
+        "filename": "ui/android/java/res/values-v17/styles.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-07T16:20:16Z",
+      "side": 1,
+      "message": "Sounds good! let\u0027s add this later when we have some readme written.",
+      "parentUuid": "5e340482_cd9a2004",
+      "range": {
+        "startLine": 49,
+        "startChar": 71,
+        "endLine": 49,
+        "endChar": 75
+      },
+      "revId": "d0b0b1ea9a2381ec553640aceda28897d44950c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
