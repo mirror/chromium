@@ -57,6 +57,7 @@ class DialogOverlayImpl : public ContentViewCoreObserver,
   void RenderFrameDeleted(RenderFrameHost* render_frame_host) override;
   void RenderFrameHostChanged(RenderFrameHost* old_host,
                               RenderFrameHost* new_host) override;
+  void PersistentVideoRequested(bool want_persistent_video) override;
 
   // Unregister for tokens if we're registered, and clear |cvc_|.
   void UnregisterForTokensIfNeeded();

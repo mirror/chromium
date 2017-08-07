@@ -115,7 +115,7 @@ void MediaWebContentsObserver::WasHidden() {
   }
 }
 
-void MediaWebContentsObserver::RequestPersistentVideo(bool value) {
+void MediaWebContentsObserver::PersistentVideoRequested(bool value) {
   if (!fullscreen_player_)
     return;
 
