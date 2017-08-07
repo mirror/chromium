@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.SystemClock;
 import android.support.annotation.WorkerThread;
 import android.view.View;
@@ -402,6 +403,13 @@ public class ProcessInitializationHandler {
                 BackgroundTaskSchedulerFactory.getScheduler().checkForOSUpgrade(application);
             }
         });
+
+        deferredStartupHandler.addDeferredTask(new Runnable() {
+            @Override
+            public void run() {
+                logEGLShaderCacheSizeHistogram();
+            }
+        });
     }
 
     private void initChannelsAsync() {
@@ -642,5 +650,48 @@ public class ProcessInitializationHandler {
             boolean match = systemLocale.getLanguage().equalsIgnoreCase(keyboardLanguage);
             RecordHistogram.recordBooleanHistogram("InputMethod.MatchesSystemLanguage", match);
         }
+    }
+
+    /**
+     * Logs a histogram with the size of the Android EGL shader cache.
+     */
+    private static void logEGLShaderCacheSizeHistogram() {
+        Context cacheContext;
+        // On Android N+ this cache is stored in the protected storage context.
+        if (Build.VERSION.SDK_INT >= 24) {
+            cacheContext =
+                    ContextUtils.getApplicationContext().createDeviceProtectedStorageContext();
+        } else {
+            cacheContext = ContextUtils.getApplicationContext();
+        }
+        // Make cacheContext final to pass to the AsyncTask.
+        final Context finalCacheContext = cacheContext;
+
+        // Must log async, as we're doing a file access.
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... unused) {
+                File codeCacheDir = finalCacheContext.getCodeCacheDir();
+                if (codeCacheDir == null) {
+                    return null;
+                }
+                // This filename is defined in core/java/android/view/HardwareRenderer.java in
+                // Android's platform/frameworks/base since ICS.
+                File cacheFile = new File(codeCacheDir, "com.android.opengl.shaders_cache");
+                if (!cacheFile.exists()) {
+                    return null;
+                }
+                long fileLength = cacheFile.length();
+                // fileLength should be at most ~2MB, so just ignore any values that would
+                // overflow our int cast below.
+                if (fileLength < 0 || fileLength > Integer.MAX_VALUE) {
+                    return null;
+                }
+                String histogramName = "Memory.Experimental.Browser.EGLShaderCacheSize.Android";
+                RecordHistogram.recordMemoryKBHistogram(histogramName, (int) fileLength);
+                return null;
+            }
+        }
+                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }
