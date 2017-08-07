@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "85819434_458abdc0",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-07T18:15:56Z",
+      "side": 1,
+      "message": "Does this include the handshake or is it only request/responses?",
+      "range": {
+        "startLine": 161,
+        "startChar": 72,
+        "endLine": 161,
+        "endChar": 73
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9ffba0_b6534e35",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-07T18:15:56Z",
+      "side": 1,
+      "message": "This should probably be named error(), per the style guide.",
+      "range": {
+        "startLine": 164,
+        "startChar": 43,
+        "endLine": 164,
+        "endChar": 0
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c978e9b8_b437b1c4",
+        "filename": "net/quic/core/quic_connection.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-07T18:15:56Z",
+      "side": 1,
+      "message": "Since GetStats is already a public method of QuicConnection, I think you can implement this logic up in QuicChromiumClientSession without needing to make any changes to shared code.",
+      "range": {
+        "startLine": 701,
+        "startChar": 62,
+        "endLine": 701,
+        "endChar": 0
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5edbdf94_88d05995",
         "filename": "net/quic/core/quic_proxy_client_socket.cc",
         "patchSetId": 3
@@ -64,6 +133,52 @@
         "startChar": 31,
         "endLine": 315,
         "endChar": 67
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4f5064_a76e1f23",
+        "filename": "net/quic/core/quic_proxy_client_socket.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-07T18:15:56Z",
+      "side": 1,
+      "message": "Since this class in chromium specific, it should live in net/quic/chromium/ not net/quic/core/.\n\nI\u0027ll wait to review this more until it moves, otherwise it\u0027ll be hard to follow the conversation...",
+      "range": {
+        "startLine": 13,
+        "startChar": 59,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59fed4c5_e34eace7",
+        "filename": "net/quic/core/quic_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-07T18:15:56Z",
+      "side": 1,
+      "message": "Since this is shared code, you\u0027ll probably want to add this to the internal repo first. (And you\u0027ll want to add a simple unit test to avoid it getting removed by the dead-code tool)",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 3
       },
       "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
