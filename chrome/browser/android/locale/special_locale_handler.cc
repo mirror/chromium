@@ -74,8 +74,9 @@ jboolean SpecialLocaleHandler::LoadTemplateUrls(
     // Otherwise, matching based on keyword is sufficient and preferred as
     // some logically distinct search engines share the same prepopulate ID and
     // only differ on keyword.
-    bool exists = template_url_service_->GetTemplateURLForKeyword(
-                      data_url->keyword()) != nullptr;
+    TemplateURL* existing_url =
+        template_url_service_->GetTemplateURLForKeyword(data_url->keyword());
+    bool exists = existing_url != nullptr;
     if (!exists &&
         data_url->prepopulate_id == TemplateURLPrepopulateData::google.id) {
       auto existing_urls = template_url_service_->GetTemplateURLs();
@@ -88,15 +89,30 @@ jboolean SpecialLocaleHandler::LoadTemplateUrls(
         }
       }
     }
-    if (exists)
-      continue;
 
-    data_url.get()->safe_for_autoreplace = true;
+    if (exists) {
+      // If the existing URL is not marked as prepopulated, then remove it and
+      // add the more robust one below.
+      if (!template_url_service_->IsPrepopulatedOrCreatedByPolicy(
+              existing_url)) {
+        template_url_service_->Remove(existing_url);
+      } else {
+        continue;
+      }
+    }
+
+    data_url.get()->safe_for_autoreplace = !exists;
     std::unique_ptr<TemplateURL> turl(
         new TemplateURL(*data_url, TemplateURL::LOCAL));
     TemplateURL* added_turl = template_url_service_->Add(std::move(turl));
     if (added_turl) {
-      prepopulate_ids_.push_back(added_turl->prepopulate_id());
+      if (!exists) {
+        DCHECK(added_turl) << "Removed URL for: " << turl->url()
+                           << "but failed to added it back.";
+        return false;
+      } else {
+        prepopulate_ids_.push_back(added_turl->prepopulate_id());
+      }
     }
   }
   return true;
