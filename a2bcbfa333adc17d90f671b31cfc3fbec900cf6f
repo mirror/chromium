@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "351af8f0_3725f8fe",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T22:20:40Z",
+      "side": 1,
+      "message": "Let\u0027s just make sure we understand the long term plan, and also if there\u0027s a way we can avoid getting into this kind of last-minute scenario in the future (maybe there isn\u0027t).",
+      "parentUuid": "c53b70a5_d36abf59",
+      "revId": "a2bcbfa333adc17d90f671b31cfc3fbec900cf6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb217439_5c0a7c67",
         "filename": "chrome/browser/android/locale/special_locale_handler.cc",
         "patchSetId": 3
