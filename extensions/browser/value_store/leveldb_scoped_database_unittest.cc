@@ -12,6 +12,7 @@
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ref_counted.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/values.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -28,8 +29,8 @@ class LeveldbScopedDatabaseUnitTest : public testing::Test {
  protected:
   void SetUp() override {
     ASSERT_TRUE(database_dir_.CreateUniqueTempDir());
-    db_ =
-        new LeveldbScopedDatabase(kTestUMAClientName, database_dir_.GetPath());
+    db_ = new LeveldbScopedDatabase(kTestUMAClientName, database_dir_.GetPath(),
+                                    base::SequencedTaskRunnerHandle::Get());
   }
 
   void TearDown() override {

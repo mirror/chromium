@@ -51,8 +51,9 @@ class MutablePolicyValueStore : public PolicyValueStore {
       : PolicyValueStore(
             kTestExtensionId,
             make_scoped_refptr(new SettingsObserverList()),
-            base::MakeUnique<LeveldbValueStore>(kDatabaseUMAClientName, path)) {
-  }
+            base::MakeUnique<LeveldbValueStore>(kDatabaseUMAClientName,
+                                                path,
+                                                GetBackendTaskRunner())) {}
   ~MutablePolicyValueStore() override {}
 
   WriteResult Set(WriteOptions options,
@@ -103,7 +104,8 @@ class PolicyValueStoreTest : public testing::Test {
     store_.reset(new PolicyValueStore(
         kTestExtensionId, observers_,
         base::MakeUnique<LeveldbValueStore>(kDatabaseUMAClientName,
-                                            scoped_temp_dir_.GetPath())));
+                                            scoped_temp_dir_.GetPath(),
+                                            GetBackendTaskRunner())));
   }
 
   void TearDown() override {
@@ -126,6 +128,19 @@ class PolicyValueStoreTest : public testing::Test {
     store_->SetCurrentPolicy(*policies);
   }
 
+  template <typename Func>
+  static void RunFunc(Func func) {
+    func();
+  }
+
+  template <typename Func>
+  void PostOnBackendSequenceAndWait(const tracked_objects::Location& from_here,
+                                    Func func) {
+    GetBackendTaskRunner()->PostTask(
+        from_here, base::Bind(&PolicyValueStoreTest::RunFunc<Func>, func));
+    content::RunAllBlockingPoolTasksUntilIdle();
+  }
+
   base::ScopedTempDir scoped_temp_dir_;
   content::TestBrowserThreadBundle test_browser_thread_bundle_;
   std::unique_ptr<PolicyValueStore> store_;
@@ -144,13 +159,15 @@ TEST_F(PolicyValueStoreTest, DontProvideRecommendedPolicies) {
                base::MakeUnique<base::Value>(456), nullptr);
   SetCurrentPolicy(policies);
 
-  ValueStore::ReadResult result = store_->Get();
-  ASSERT_TRUE(result->status().ok());
-  EXPECT_EQ(1u, result->settings().size());
-  base::Value* value = NULL;
-  EXPECT_FALSE(result->settings().Get("may", &value));
-  EXPECT_TRUE(result->settings().Get("must", &value));
-  EXPECT_EQ(expected, *value);
+  PostOnBackendSequenceAndWait(FROM_HERE, [&, this]() {
+    ValueStore::ReadResult result = store_->Get();
+    ASSERT_TRUE(result->status().ok());
+    EXPECT_EQ(1u, result->settings().size());
+    base::Value* value = NULL;
+    EXPECT_FALSE(result->settings().Get("may", &value));
+    EXPECT_TRUE(result->settings().Get("must", &value));
+    EXPECT_EQ(expected, *value);
+  });
 }
 
 TEST_F(PolicyValueStoreTest, ReadOnly) {

@@ -10,7 +10,9 @@
 
 #include "base/files/file_path.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_base.h"
+#include "base/sequenced_task_runner.h"
 #include "extensions/browser/value_store/value_store.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 
@@ -38,7 +40,9 @@ class LazyLevelDb {
   ValueStore::Status Delete(const std::string& key);
 
  protected:
-  LazyLevelDb(const std::string& uma_client_name, const base::FilePath& path);
+  LazyLevelDb(const std::string& uma_client_name,
+              const base::FilePath& path,
+              const scoped_refptr<base::SequencedTaskRunner>& task_runner);
   ~LazyLevelDb();
 
   // Closes, if necessary, and deletes the database directory.
@@ -92,6 +96,8 @@ class LazyLevelDb {
   base::HistogramBase* open_histogram_ = nullptr;
   base::HistogramBase* db_restore_histogram_ = nullptr;
   base::HistogramBase* value_restore_histogram_ = nullptr;
+
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(LazyLevelDb);
 };

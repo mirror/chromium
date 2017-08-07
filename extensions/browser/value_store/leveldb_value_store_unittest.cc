@@ -11,6 +11,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/values.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "extensions/browser/value_store/leveldb_value_store.h"
@@ -23,7 +24,8 @@ namespace {
 const char kDatabaseUMAClientName[] = "Test";
 
 ValueStore* Param(const base::FilePath& file_path) {
-  return new LeveldbValueStore(kDatabaseUMAClientName, file_path);
+  return new LeveldbValueStore(kDatabaseUMAClientName, file_path,
+                               base::SequencedTaskRunnerHandle::Get());
 }
 
 }  // namespace
@@ -55,8 +57,8 @@ class LeveldbValueStoreUnitTest : public testing::Test {
   void CloseStore() { store_.reset(); }
 
   void CreateStore() {
-    store_.reset(
-        new LeveldbValueStore(kDatabaseUMAClientName, database_path()));
+    store_.reset(new LeveldbValueStore(kDatabaseUMAClientName, database_path(),
+                                       base::SequencedTaskRunnerHandle::Get()));
   }
 
   LeveldbValueStore* store() { return store_.get(); }

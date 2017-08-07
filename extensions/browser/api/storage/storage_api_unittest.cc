@@ -12,9 +12,11 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/stringprintf.h"
 #include "content/public/test/test_browser_context.h"
+#include "content/public/test/test_utils.h"
 #include "extensions/browser/api/extensions_api_client.h"
 #include "extensions/browser/api/storage/settings_storage_quota_enforcer.h"
 #include "extensions/browser/api/storage/settings_test_util.h"
+#include "extensions/browser/api/storage/backend_task_runner.h"
 #include "extensions/browser/api/storage/storage_frontend.h"
 #include "extensions/browser/api_unittest.h"
 #include "extensions/browser/event_router.h"
@@ -81,6 +83,20 @@ class StorageApiUnittest : public ApiUnitTest {
     return testing::AssertionSuccess();
   }
 
+  template <typename Func>
+  static void RunFunc(Func func) {
+    func();
+  }
+
+  template <typename Func>
+  void PostOnBackendSequenceAndWait(const tracked_objects::Location& from_here,
+    Func func) {
+    GetBackendTaskRunner()->PostTask(
+      from_here, base::Bind(
+        &StorageApiUnittest::RunFunc<Func>, func));
+    content::RunAllBlockingPoolTasksUntilIdle();
+  }
+
   ExtensionsAPIClient extensions_api_client_;
 };
 
@@ -116,10 +132,13 @@ TEST_F(StorageApiUnittest, RestoreCorruptedStorage) {
       static_cast<SettingsStorageQuotaEnforcer*>(store);
   LeveldbValueStore* leveldb_store =
       static_cast<LeveldbValueStore*>(quota_store->get_delegate_for_test());
-  leveldb::WriteBatch batch;
-  batch.Put(kKey, "[{(.*+\"\'\\");
-  EXPECT_TRUE(leveldb_store->WriteToDbForTest(&batch));
-  EXPECT_TRUE(leveldb_store->Get(kKey)->status().IsCorrupted());
+
+  PostOnBackendSequenceAndWait(FROM_HERE, [&, this]() {
+    leveldb::WriteBatch batch;
+    batch.Put(kKey, "[{(.*+\"\'\\");
+    EXPECT_TRUE(leveldb_store->WriteToDbForTest(&batch));
+    EXPECT_TRUE(leveldb_store->Get(kKey)->status().IsCorrupted());
+  });
 
   // Running another set should end up working (even though it will restore the
   // store behind the scenes).

@@ -15,6 +15,7 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
 #include "extensions/browser/api/extensions_api_client.h"
+#include "extensions/browser/api/storage/backend_task_runner.h"
 #include "extensions/browser/api/storage/settings_namespace.h"
 #include "extensions/browser/api/storage/settings_test_util.h"
 #include "extensions/browser/extensions_test.h"
@@ -62,6 +63,20 @@ class ExtensionSettingsFrontendTest : public ExtensionsTest {
         StorageFrontend::CreateForTesting(storage_factory_, browser_context());
   }
 
+  template <typename Func>
+  static void RunFunc(Func func) {
+    func();
+  }
+
+  template <typename Func>
+  void PostOnBackendSequenceAndWait(const tracked_objects::Location& from_here,
+    Func func) {
+    GetBackendTaskRunner()->PostTask(
+      from_here, base::Bind(
+          &ExtensionSettingsFrontendTest::RunFunc<Func>, func));
+    content::RunAllBlockingPoolTasksUntilIdle();
+  }
+
   base::ScopedTempDir temp_dir_;
   std::unique_ptr<StorageFrontend> frontend_;
   scoped_refptr<ValueStoreFactoryImpl> storage_factory_;
@@ -95,26 +110,26 @@ TEST_F(ExtensionSettingsFrontendTest, SettingsPreservedAcrossReconstruction) {
 
   // The correctness of Get/Set/Remove/Clear is tested elsewhere so no need to
   // be too rigorous.
-  {
+  PostOnBackendSequenceAndWait(FROM_HERE, [&, this]() {
     base::Value bar("bar");
     ValueStore::WriteResult result = storage->Set(DEFAULTS, "foo", bar);
     ASSERT_TRUE(result->status().ok());
-  }
+  });
 
-  {
+  PostOnBackendSequenceAndWait(FROM_HERE, [&, this]() {
     ValueStore::ReadResult result = storage->Get();
     ASSERT_TRUE(result->status().ok());
     EXPECT_FALSE(result->settings().empty());
-  }
+  });
 
   ResetFrontend();
   storage = util::GetStorage(extension, settings::LOCAL, frontend_.get());
 
-  {
+  PostOnBackendSequenceAndWait(FROM_HERE, [&, this]() {
     ValueStore::ReadResult result = storage->Get();
     ASSERT_TRUE(result->status().ok());
     EXPECT_FALSE(result->settings().empty());
-  }
+  });
 }
 
 TEST_F(ExtensionSettingsFrontendTest, SettingsClearedOnUninstall) {
@@ -125,11 +140,11 @@ TEST_F(ExtensionSettingsFrontendTest, SettingsClearedOnUninstall) {
   ValueStore* storage =
       util::GetStorage(extension, settings::LOCAL, frontend_.get());
 
-  {
+  PostOnBackendSequenceAndWait(FROM_HERE, [&, this]() {
     base::Value bar("bar");
     ValueStore::WriteResult result = storage->Set(DEFAULTS, "foo", bar);
     ASSERT_TRUE(result->status().ok());
-  }
+  });
 
   // This would be triggered by extension uninstall via a DataDeleter.
   frontend_->DeleteStorageSoon(id);
@@ -137,11 +152,12 @@ TEST_F(ExtensionSettingsFrontendTest, SettingsClearedOnUninstall) {
 
   // The storage area may no longer be valid post-uninstall, so re-request.
   storage = util::GetStorage(extension, settings::LOCAL, frontend_.get());
-  {
+
+  PostOnBackendSequenceAndWait(FROM_HERE, [&, this]() {
     ValueStore::ReadResult result = storage->Get();
     ASSERT_TRUE(result->status().ok());
     EXPECT_TRUE(result->settings().empty());
-  }
+  });
 }
 
 TEST_F(ExtensionSettingsFrontendTest, LeveldbDatabaseDeletedFromDiskOnClear) {
@@ -152,20 +168,20 @@ TEST_F(ExtensionSettingsFrontendTest, LeveldbDatabaseDeletedFromDiskOnClear) {
   ValueStore* storage =
       util::GetStorage(extension, settings::LOCAL, frontend_.get());
 
-  {
+  PostOnBackendSequenceAndWait(FROM_HERE, [&, this]() {
     base::Value bar("bar");
     ValueStore::WriteResult result = storage->Set(DEFAULTS, "foo", bar);
     ASSERT_TRUE(result->status().ok());
     EXPECT_TRUE(base::PathExists(temp_dir_.GetPath()));
-  }
+  });
 
   // Should need to both clear the database and delete the frontend for the
   // leveldb database to be deleted from disk.
-  {
+  PostOnBackendSequenceAndWait(FROM_HERE, [&, this]() {
     ValueStore::WriteResult result = storage->Clear();
     ASSERT_TRUE(result->status().ok());
     EXPECT_TRUE(base::PathExists(temp_dir_.GetPath()));
-  }
+  });
 
   frontend_.reset();
   content::RunAllBlockingPoolTasksUntilIdle();
