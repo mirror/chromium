@@ -1,0 +1,361 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6206c165_63c1dc93",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "So, painting is dealt with. But what about hit-testing and other tree read operations?",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a06c5c6_365019c3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "Do you need anything from here? Otherwise, fewer dependencies are better. :)",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3611c7e2_332f47ef",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "Ah.. so \u003cmain\u003e is styled via base.css - but do you need that element?",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e987b8_16f214f5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "I\u0027m guessing that all columns in this table get the same width, since the only thing that differs, is numbers (which typically have the same widths with most fonts). Could you consider making it a bit more evil, by adding some text that makes the column widths non-uniform?\n\nYou could also consider using DIVs with fixed size, instead of text. That way you won\u0027t even need this reference table. You can just hard-code the expectations instead.",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f94a030_09777f8e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "Is it about *border-spacing*? Maybe explicitly set it on the tables. This number 4 kind of popped up from nowhere. :)",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197d6a27_0958270c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-rowcol-002.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "Hmm, but to test clipping, I suppose you need to write a different type of test, one that compares screenshots?",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281be6e1_2aed60cf",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "Would it make sense to break out all this new code into a new private method?",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205ca473_2906a7e2",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "I think we need to check both the outermost and the innermost, if both exist.",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b767d294_75c317ef",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "Looks like there\u0027s some duplicated code here, because we loop through the columns twice. Would it make sense to loop through it only once, and lazily call col_collapsed_width.resize() when encountering the first collapsed column? Then again, do we really need that vector at all? I mean, we already have the column widths calculated somewhere, right?",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d3569a_0e248c42",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "Just wondering: would it make sense to set the correct collapsed logical widths on all cells right away during table cell layout instead? Or is the reason for doing it here so that when \"visibility\" changes to/from \"collapse\" on a column, you don\u0027t have to mark all affected cells for layout?",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c1ad15_fc404868",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "I\u0027m not sure, but wouldn\u0027t it be better to perform this check on the paint side, i.e. in TableCellPainter?",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31800d80_cff12978",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "I don\u0027t think this should be inlined.",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1303409d_cfe76eb0",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "Declaration can be moved to where you set it below.",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c13c9e_a258cd5f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "Might just return false right away if this one is false, to reduce indentation.",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b585d19a_6a3b8b20",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "Don\u0027t you have to check both the innermost and the outermost (i.e. both the col and the colgroup, if both exist)?\n\nAnd what about colspanned cells?",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184b2d9b_e56d22e5",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "col_collapsed_width should be a const reference, since no copy is needed.",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bcf42b7_eb32d4fd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "Please remove the \"0\" argument, to get less code. Passing an argument involves saturated arithmetic.",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94be36da_6f6faae3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "But wouldn\u0027t it be possible to use this code path in all cases, also when colspan \u003d\u003d 1?",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b41b0d5_ddb13693",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "Curly braces not needed for one-liners.",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86f1df9_a4ef7e67",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1295,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "DCHECK that we don\u0027t end up with a negative value here?",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad8744a_4637f5da",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T11:41:51Z",
+      "side": 1,
+      "message": "I think the word \"cell\" (and possibly also \"logical width\") should be part of the method name, considering what it actually does.",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
