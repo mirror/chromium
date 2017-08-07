@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7888a4a_b1b9b89c",
+        "filename": "media/gpu/avda_codec_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-07T20:23:26Z",
+      "side": 1,
+      "message": "NIT: Can you invert the comment? E.g.\"We have to restart them / cancel any pending stop requests before we can post\". It took me a few reads to realize that restarting/cancelling was a pre-condition to us posting, and not an unavoidable by-product of the action of posting.",
+      "range": {
+        "startLine": 236,
+        "startChar": 18,
+        "endLine": 237,
+        "endChar": 70
+      },
+      "revId": "d0de637bcbf977aa670a273605b748c38fd8b5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
