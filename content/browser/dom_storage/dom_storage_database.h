@@ -75,6 +75,7 @@ class CONTENT_EXPORT DOMStorageDatabase {
   FRIEND_TEST_ALL_PREFIXES(DOMStorageDatabaseTest,
                            TestCanOpenFileThatIsNotADatabase);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, BackingDatabaseOpened);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, EnableDisableCachingWithBacking);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, CommitTasks);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, PurgeMemory);
 
