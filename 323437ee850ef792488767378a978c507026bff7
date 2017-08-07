@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d546d121_94e604f3",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-07T21:41:13Z",
+      "side": 1,
+      "message": "I made some change to security_state_tab_helper.cc, such that if password protection service is not available, it won\u0027t return MALICIOUS_CONTENT_STATUS_PASSWORD_REUSE.\n\nAnd show_change_password_button_ will be implicitly gated by password_protection_service_.",
+      "parentUuid": "cbd7f740_0798185f",
+      "revId": "323437ee850ef792488767378a978c507026bff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed6b6a9f_59af966d",
         "filename": "chrome/browser/ui/page_info/page_info.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7e24ee3b_7abcb4c1",
+        "filename": "chrome/browser/ui/page_info/page_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-07T21:41:13Z",
+      "side": 1,
+      "message": "Oops. Comment fixed.",
+      "parentUuid": "ed6b6a9f_59af966d",
+      "revId": "323437ee850ef792488767378a978c507026bff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27904c33_d62cb2ed",
         "filename": "chrome/browser/ui/page_info/page_info.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "323437ee850ef792488767378a978c507026bff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ed8469_761e9de9",
+        "filename": "chrome/browser/ui/page_info/page_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-07T21:41:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27904c33_d62cb2ed",
+      "revId": "323437ee850ef792488767378a978c507026bff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +139,24 @@
       "revId": "323437ee850ef792488767378a978c507026bff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f4b41a_8dad5fb5",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-07T21:41:13Z",
+      "side": 1,
+      "message": "In theory, this shouldn\u0027t happen. since GetSiteIdentityByMaliciousContentStatus() in page_info.cc file should only set SiteIdentityStatus to SITE_IDENTITY_STATUS_PASSWORD_REUSE if SAFE_BROWSING_DB_LOCAL is defined. \n\nBut in case of some weird corner cases, when SAFE_BROWSING_DB_LOCAL is not defined here, it should be treated as default case (falling through).",
+      "parentUuid": "d7fb8beb_3659d36f",
+      "revId": "323437ee850ef792488767378a978c507026bff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
