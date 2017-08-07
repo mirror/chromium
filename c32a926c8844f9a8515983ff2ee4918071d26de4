@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2889b76f_fff1f398",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-07T21:19:45Z",
+      "side": 1,
+      "message": "nit: Make OnTouchDragTimer take the two locations and use base::Bind to bind them when starting the timer. So that we can avoid adding |tap_down_location_| and |tap_down_root_location_| member.\n\ni.e.\nvoid AppListItemView::OnTouchDragTimer(\n    const gfx::Point\u0026 tap_down_location,\n    const gfx::Point\u0026 tap_down_root_location) {\n...\n}\n\ntouch_drag_timer_.Start(\n    FROM_HERE,\n    base::TimeDelta::FromMilliseconds(...),\n    base::Bind(\u0026AppListItemView::OnTouchDragTimer,\n               base::Unretained(this),\n               event-\u003elocation(), event-\u003eroot_location()));",
+      "revId": "c32a926c8844f9a8515983ff2ee4918071d26de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
