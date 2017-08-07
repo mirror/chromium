@@ -28,6 +28,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/NavigatorID.h"
 #include "core/frame/Settings.h"
+#include "core/inspector/DevToolsEmulator.h"
 #include "core/loader/CookieJar.h"
 #include "core/loader/FrameLoader.h"
 #include "core/page/ChromeClient.h"
@@ -52,6 +53,16 @@ String Navigator::vendor() const {
 
 String Navigator::vendorSub() const {
   return "";
+}
+
+String Navigator::platform() const {
+  if (GetFrame() && GetFrame()->GetPage()) {
+    DevToolsEmulator* devtools_emulator =
+        GetFrame()->GetPage()->GetChromeClient().GetDevToolsEmulator();
+    if (devtools_emulator && devtools_emulator->NavigatorPlatform())
+      return *devtools_emulator->NavigatorPlatform();
+  }
+  return NavigatorID::platform();
 }
 
 String Navigator::userAgent() const {

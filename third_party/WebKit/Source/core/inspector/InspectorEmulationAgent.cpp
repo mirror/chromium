@@ -142,6 +142,11 @@ Response InspectorEmulationAgent::setVirtualTimePolicy(const String& policy,
   return Response::OK();
 }
 
+Response InspectorEmulationAgent::setNavigatorPlatform(const String& platform) {
+  GetWebViewBase()->GetDevToolsEmulator()->SetNavigatorPlatform(platform);
+  return Response::OK();
+}
+
 void InspectorEmulationAgent::VirtualTimeBudgetExpired() {
   web_local_frame_->View()->Scheduler()->SetVirtualTimePolicy(
       WebViewScheduler::VirtualTimePolicy::PAUSE);

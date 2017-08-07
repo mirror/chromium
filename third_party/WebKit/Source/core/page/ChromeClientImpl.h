@@ -234,6 +234,8 @@ class CORE_EXPORT ChromeClientImpl final : public ChromeClient {
                      const PaintImage&,
                      WTF::Function<void(bool)> callback) override;
 
+  DevToolsEmulator* GetDevToolsEmulator() override;
+
  private:
   explicit ChromeClientImpl(WebViewBase*);
 

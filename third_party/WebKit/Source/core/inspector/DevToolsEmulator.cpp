@@ -473,6 +473,14 @@ WTF::Optional<IntRect> DevToolsEmulator::VisibleContentRectForPainting() const {
                 viewport_size.Width(), viewport_size.Height()));
 }
 
+void DevToolsEmulator::SetNavigatorPlatform(const String& navigator_platform) {
+  navigator_platform_ = navigator_platform;
+}
+
+WTF::Optional<String> DevToolsEmulator::NavigatorPlatform() const {
+  return navigator_platform_;
+}
+
 void DevToolsEmulator::SetTouchEventEmulationEnabled(bool enabled) {
   if (touch_event_emulation_enabled_ == enabled)
     return;

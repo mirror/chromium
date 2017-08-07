@@ -1117,4 +1117,8 @@ WebAutofillClient* ChromeClientImpl::AutofillClientFromFrame(
   return WebLocalFrameImpl::FromFrame(frame)->AutofillClient();
 }
 
+DevToolsEmulator* ChromeClientImpl::GetDevToolsEmulator() {
+  return web_view_->GetDevToolsEmulator();
+}
+
 }  // namespace blink
