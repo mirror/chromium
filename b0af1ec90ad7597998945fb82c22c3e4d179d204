@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "47be0967_42a9f72e",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-07T23:49:56Z",
+      "side": 1,
+      "message": "In that case - you can revert to creating a copy later. For now tracking fewer variables makes for an easier review.",
+      "parentUuid": "93f5f23e_6e0a782b",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "530f51dd_d4c8df93",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "the rules are slightly different for each group. Because for rare inherited I dont put extrafield out of rare-inherited.",
       "parentUuid": "530f51dd_d4c8df93",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756bcfab_3dbfa237",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-07T23:49:56Z",
+      "side": 1,
+      "message": "Is it possible to pull that code out? And then have just that different for the two different code paths?",
+      "parentUuid": "dd2cfab0_a7cf22a3",
       "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "45743ff8_8abe7620",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-07T23:49:56Z",
+      "side": 1,
+      "message": "Comment above what these numbers mean",
+      "parentUuid": "7add06bc_513bf266",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "382bbf18_2aad24a3",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 2
@@ -136,6 +190,24 @@
       "side": 1,
       "message": "same as the previous line",
       "parentUuid": "382bbf18_2aad24a3",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe30f312_37111dd0",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-07T23:49:56Z",
+      "side": 1,
+      "message": "Ditto",
+      "parentUuid": "9ed4292a_97b271a5",
       "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -174,6 +246,24 @@
       "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27687338_d009afae",
+        "filename": "third_party/WebKit/Source/core/css/CSSPropertiesRanking.json5",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-07T23:49:56Z",
+      "side": 1,
+      "message": "Happy to accept this since this will be reverted - but do think through a plan of action.",
+      "parentUuid": "dc9d2b36_76e65daa",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
