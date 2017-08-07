@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a30728b6_82a322ce",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-07T17:05:20Z",
+      "side": 1,
+      "message": "I tried to find the CSS transition that the current Doodle code uses, but failed. Do you know?\n\n(it\u0027s also not strictly related to this CL, so I can remove it)",
+      "revId": "6dd5bd5538eaf8a07c9e034648c850df5aa631e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
