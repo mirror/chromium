@@ -258,7 +258,7 @@ public class ArticleSnippetsTest {
         int fullCategory = 0;
         @CategoryInt
         int minimalCategory = 1;
-        SnippetArticle shortSnippet = new SnippetArticle(fullCategory, "id1", "Snippet",
+        SnippetArticle shortSnippet = new SnippetArticle(fullCategory, "id1", "Different Snippet",
                 "Publisher", "Preview Text", "www.google.com",
                 1466614774, // Publish timestamp
                 10f, // Score
