@@ -8,7 +8,6 @@
 #include <memory>
 
 #include "ash/ash_export.h"
-#include "ash/display/window_tree_host_manager.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/shelf/shelf_layout_manager_observer.h"
 #include "ash/shelf/shelf_locking_manager.h"
@@ -41,8 +40,7 @@ class ShelfObserver;
 // Controller for the shelf state. One per display, because each display might
 // have different shelf alignment, autohide, etc. Exists for the lifetime of the
 // root window controller.
-class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver,
-                         public WindowTreeHostManager::Observer {
+class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
  public:
   Shelf();
   ~Shelf() override;
@@ -50,10 +48,6 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver,
   // Returns the shelf for the display that |window| is on. Note that the shelf
   // widget may not exist, or the shelf may not be visible.
   static Shelf* ForWindow(aura::Window* window);
-
-  // Returns if shelf alignment options are enabled, and the user is able to
-  // adjust the alignment (eg. not allowed in guest and supervised user modes).
-  static bool CanChangeShelfAlignment();
 
   void CreateShelfWidget(aura::Window* root);
   void ShutdownShelfWidget();
@@ -64,9 +58,6 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver,
   }
 
   ShelfWidget* shelf_widget() { return shelf_widget_.get(); }
-
-  // TODO(jamescook): Eliminate this method.
-  void NotifyShelfInitialized();
 
   // Returns the window showing the shelf.
   aura::Window* GetWindow();
@@ -147,13 +138,6 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver,
   void OnAutoHideStateChanged(ShelfAutoHideState new_state) override;
   void OnBackgroundUpdated(ShelfBackgroundType background_type,
                            AnimationChangeType change_type) override;
-
-  // WindowTreeHostManager::Observer:
-  void OnWindowTreeHostReusedForDisplay(
-      AshWindowTreeHost* window_tree_host,
-      const display::Display& display) override;
-  void OnWindowTreeHostsSwappedDisplays(AshWindowTreeHost* host1,
-                                        AshWindowTreeHost* host2) override;
 
  private:
   class AutoHideEventHandler;

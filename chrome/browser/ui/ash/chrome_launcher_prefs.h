@@ -10,16 +10,10 @@
 #include <vector>
 
 #include "ash/public/cpp/shelf_types.h"
-#include "base/macros.h"
-#include "components/sync_preferences/pref_service_syncable_observer.h"
 
 class LauncherControllerHelper;
 class PrefService;
 class Profile;
-
-namespace sync_preferences {
-class PrefServiceSyncable;
-}
 
 namespace user_prefs {
 class PrefRegistrySyncable;
@@ -35,31 +29,8 @@ extern const char kPinnedAppsPrefPinnedByPolicy[];
 // This is NOT a valid extension identifier so pre-M31 versions ignore it.
 extern const char kPinnedAppsPlaceholder[];
 
-// Values used for prefs::kShelfAutoHideBehavior.
-extern const char kShelfAutoHideBehaviorAlways[];
-extern const char kShelfAutoHideBehaviorNever[];
-
-// Values used for prefs::kShelfAlignment.
-extern const char kShelfAlignmentBottom[];
-extern const char kShelfAlignmentLeft[];
-extern const char kShelfAlignmentRight[];
-
 void RegisterChromeLauncherUserPrefs(
     user_prefs::PrefRegistrySyncable* registry);
-
-// Get or set the shelf auto hide behavior preference for a particular display.
-ash::ShelfAutoHideBehavior GetShelfAutoHideBehaviorPref(PrefService* prefs,
-                                                        int64_t display_id);
-void SetShelfAutoHideBehaviorPref(PrefService* prefs,
-                                  int64_t display_id,
-                                  ash::ShelfAutoHideBehavior behavior);
-
-// Get or set the shelf alignment preference for a particular display.
-ash::ShelfAlignment GetShelfAlignmentPref(PrefService* prefs,
-                                          int64_t display_id);
-void SetShelfAlignmentPref(PrefService* prefs,
-                           int64_t display_id,
-                           ash::ShelfAlignment alignment);
 
 // Get the list of pinned apps from preferences.
 std::vector<ash::ShelfID> GetPinnedAppsFromPrefs(
@@ -79,30 +50,5 @@ void SetPinPosition(Profile* profile,
                     const ash::ShelfID& shelf_id,
                     const ash::ShelfID& shelf_id_before,
                     const std::vector<ash::ShelfID>& shelf_ids_after);
-
-// Used to propagate remote preferences to local during the first run.
-class ChromeLauncherPrefsObserver
-    : public sync_preferences::PrefServiceSyncableObserver {
- public:
-  // Creates and returns an instance of ChromeLauncherPrefsObserver if the
-  // profile prefs do not contain all the necessary local settings for the
-  // shelf. If the local settings are present, returns null.
-  static std::unique_ptr<ChromeLauncherPrefsObserver> CreateIfNecessary(
-      Profile* profile);
-
-  ~ChromeLauncherPrefsObserver() override;
-
- private:
-  explicit ChromeLauncherPrefsObserver(
-      sync_preferences::PrefServiceSyncable* prefs);
-
-  // sync_preferences::PrefServiceSyncableObserver:
-  void OnIsSyncingChanged() override;
-
-  // Profile prefs. Not owned.
-  sync_preferences::PrefServiceSyncable* prefs_;
-
-  DISALLOW_COPY_AND_ASSIGN(ChromeLauncherPrefsObserver);
-};
 
 #endif  // CHROME_BROWSER_UI_ASH_CHROME_LAUNCHER_PREFS_H_
