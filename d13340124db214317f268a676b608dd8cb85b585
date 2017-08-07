@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cde7510_c916e8c7",
+        "filename": "components/nacl/browser/pnacl_translation_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-07T18:26:05Z",
+      "side": 1,
+      "message": "LGTM if this object doesn\u0027t need synchronization with other objects previously on BrowserThread::CACHE",
+      "revId": "d13340124db214317f268a676b608dd8cb85b585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
