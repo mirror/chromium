@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62072bec_aed4c35a",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-07T19:24:36Z",
+      "side": 1,
+      "message": "Maybe I shouldn\u0027t\u0027ve put this in the same CL, but I was feeling bad about the redundant visiblesslstate change notifications right below the code I touched. WDYT?",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 216,
+        "endChar": 25
+      },
+      "revId": "f23210df1c0ef0f402dc0bb2d60f99a03b633490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
