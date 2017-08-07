@@ -14,6 +14,9 @@ namespace storage {
 // bytes are consumed.
 class MockBytesProvider : public mojom::BytesProvider {
  public:
+  static mojom::BytesProviderPtr Create(std::vector<uint8_t> data);
+  static mojom::BytesProviderPtr Create(const std::string& data);
+
   explicit MockBytesProvider(
       std::vector<uint8_t> data,
       size_t* reply_request_count = nullptr,

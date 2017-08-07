@@ -32,16 +32,20 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/cache_storage_usage_info.h"
 #include "content/public/browser/storage_partition.h"
+#include "content/public/common/content_features.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_utils.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_job_factory_impl.h"
 #include "storage/browser/blob/blob_data_builder.h"
 #include "storage/browser/blob/blob_data_handle.h"
+#include "storage/browser/blob/blob_registry_impl.h"
 #include "storage/browser/blob/blob_storage_context.h"
 #include "storage/browser/blob/blob_url_request_job_factory.h"
 #include "storage/browser/quota/quota_manager_proxy.h"
+#include "storage/browser/test/mock_bytes_provider.h"
 #include "storage/browser/test/mock_quota_manager_proxy.h"
 #include "storage/browser/test/mock_special_storage_policy.h"
 #include "storage/common/blob_storage/blob_handle.h"
@@ -78,6 +82,17 @@ void CopyCacheStorageIndex(CacheStorageIndex* dest,
   for (const auto& cache_metadata : src.ordered_cache_metadata())
     dest->Insert(cache_metadata);
 }
+
+class MockBlobRegistryDelegate : public storage::BlobRegistryImpl::Delegate {
+ public:
+  MockBlobRegistryDelegate() {}
+  ~MockBlobRegistryDelegate() override {}
+
+  bool CanReadFile(const base::FilePath& file) override { return true; }
+  bool CanReadFileSystemFile(const storage::FileSystemURL& url) override {
+    return true;
+  }
+};
 
 }  // anonymous namespace
 
@@ -174,6 +189,10 @@ class CacheStorageManagerTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
 
     blob_storage_context_ = blob_storage_context->context();
+    blob_registry_impl_ = base::MakeUnique<storage::BlobRegistryImpl>(
+        blob_storage_context_, nullptr);
+    blob_registry_impl_->Bind(MakeRequest(&blob_registry_),
+                              base::MakeUnique<MockBlobRegistryDelegate>());
 
     url_request_job_factory_.reset(new net::URLRequestJobFactoryImpl);
     url_request_job_factory_->SetProtocolHandler(
@@ -226,6 +245,14 @@ class CacheStorageManagerTest : public testing::Test {
   void DestroyStorageManager() {
     if (quota_manager_proxy_)
       quota_manager_proxy_->SimulateQuotaManagerDestroyed();
+
+    callback_cache_handle_ = nullptr;
+    callback_bool_ = false;
+    callback_cache_handle_response_ = nullptr;
+    callback_data_handle_ = nullptr;
+    callback_cache_index_ = CacheStorageIndex();
+    callback_all_origins_usage_.clear();
+
     base::RunLoop().RunUntilIdle();
     quota_manager_proxy_ = nullptr;
 
@@ -234,13 +261,6 @@ class CacheStorageManagerTest : public testing::Test {
 
     quota_policy_ = nullptr;
     mock_quota_manager_ = nullptr;
-
-    callback_cache_handle_ = nullptr;
-    callback_bool_ = false;
-    callback_cache_handle_response_ = nullptr;
-    callback_data_handle_ = nullptr;
-    callback_cache_index_ = CacheStorageIndex();
-    callback_all_origins_usage_.clear();
 
     cache_manager_ = nullptr;
   }
@@ -367,20 +387,30 @@ class CacheStorageManagerTest : public testing::Test {
                               int status_code,
                               const ServiceWorkerHeaderMap& response_headers =
                                   ServiceWorkerHeaderMap()) {
-    std::unique_ptr<storage::BlobDataBuilder> blob_data(
-        new storage::BlobDataBuilder(base::GenerateGUID()));
-    blob_data->AppendData(request.url.spec());
+    std::vector<storage::mojom::DataElementPtr> blob_elements;
+    blob_elements.push_back(storage::mojom::DataElement::NewBytes(
+        storage::mojom::DataElementBytes::New(
+            request.url.spec().size(),
+            std::vector<uint8_t>(request.url.spec().begin(),
+                                 request.url.spec().end()),
+            storage::MockBytesProvider::Create(request.url.spec()))));
+    std::string blob_uuid = base::GenerateGUID();
+    storage::mojom::BlobPtr blob;
+    blob_registry_->Register(MakeRequest(&blob), blob_uuid, "", "",
+                             std::move(blob_elements));
+    auto blob_handle =
+        base::MakeRefCounted<storage::BlobHandle>(std::move(blob));
 
-    std::unique_ptr<storage::BlobDataHandle> blob_handle =
-        blob_storage_context_->AddFinishedBlob(blob_data.get());
     std::unique_ptr<std::vector<GURL>> url_list =
         base::MakeUnique<std::vector<GURL>>();
     url_list->push_back(request.url);
     ServiceWorkerResponse response(
         std::move(url_list), status_code, "OK",
         blink::mojom::FetchResponseType::kDefault,
-        base::MakeUnique<ServiceWorkerHeaderMap>(response_headers),
-        blob_handle->uuid(), request.url.spec().size(), nullptr /* blob */,
+        base::MakeUnique<ServiceWorkerHeaderMap>(response_headers), blob_uuid,
+        request.url.spec().size(),
+        base::FeatureList::IsEnabled(features::kMojoBlobs) ? blob_handle
+                                                           : nullptr,
         blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
         false /* is_in_cache_storage */,
         std::string() /* cache_storage_cache_name */,
@@ -477,6 +507,8 @@ class CacheStorageManagerTest : public testing::Test {
   TestBrowserContext browser_context_;
   std::unique_ptr<net::URLRequestJobFactoryImpl> url_request_job_factory_;
   storage::BlobStorageContext* blob_storage_context_;
+  std::unique_ptr<storage::BlobRegistryImpl> blob_registry_impl_;
+  storage::mojom::BlobRegistryPtr blob_registry_;
 
   scoped_refptr<MockSpecialStoragePolicy> quota_policy_;
   scoped_refptr<MockQuotaManager> mock_quota_manager_;

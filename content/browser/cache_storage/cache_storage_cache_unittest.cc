@@ -26,6 +26,7 @@
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/storage_partition.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/referrer.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -36,6 +37,7 @@
 #include "storage/browser/blob/blob_data_builder.h"
 #include "storage/browser/blob/blob_data_handle.h"
 #include "storage/browser/blob/blob_data_snapshot.h"
+#include "storage/browser/blob/blob_registry_impl.h"
 #include "storage/browser/blob/blob_storage_context.h"
 #include "storage/browser/blob/blob_url_request_job_factory.h"
 #include "storage/browser/quota/quota_manager_proxy.h"
@@ -270,6 +272,17 @@ ServiceWorkerResponse SetCacheName(const ServiceWorkerResponse& original) {
   return result;
 }
 
+class MockBlobRegistryDelegate : public storage::BlobRegistryImpl::Delegate {
+ public:
+  MockBlobRegistryDelegate() {}
+  ~MockBlobRegistryDelegate() override {}
+
+  bool CanReadFile(const base::FilePath& file) override { return true; }
+  bool CanReadFileSystemFile(const storage::FileSystemURL& url) override {
+    return true;
+  }
+};
+
 }  // namespace
 
 // A CacheStorageCache that can optionally delay during backend creation.
@@ -292,6 +305,8 @@ class TestCacheStorageCache : public CacheStorageCache {
                           blob_context,
                           0 /* cache_size */),
         delay_backend_creation_(false) {}
+
+  ~TestCacheStorageCache() override { base::RunLoop().RunUntilIdle(); }
 
   void CreateBackend(ErrorCallback callback) override {
     backend_creation_callback_ = std::move(callback);
@@ -344,6 +359,10 @@ class CacheStorageCacheTest : public testing::Test {
     // Wait for chrome_blob_storage_context to finish initializing.
     base::RunLoop().RunUntilIdle();
     blob_storage_context_ = blob_storage_context->context();
+    blob_registry_impl_ = base::MakeUnique<storage::BlobRegistryImpl>(
+        blob_storage_context_, nullptr);
+    blob_registry_impl_->Bind(MakeRequest(&blob_registry_),
+                              base::MakeUnique<MockBlobRegistryDelegate>());
 
     const bool is_incognito = MemoryOnly();
     base::FilePath temp_dir_path;
@@ -436,16 +455,22 @@ class CacheStorageCacheTest : public testing::Test {
             ServiceWorkerHeaderList>() /* cors_exposed_header_names */);
   }
 
-  static ServiceWorkerResponse CreateResponse(
+  ServiceWorkerResponse CreateResponse(
       const std::string& url,
       std::unique_ptr<ServiceWorkerHeaderMap> headers,
       const std::string& blob_uuid,
       uint64_t blob_size,
       std::unique_ptr<ServiceWorkerHeaderList> cors_exposed_header_names) {
+    scoped_refptr<storage::BlobHandle> blob;
+    if (base::FeatureList::IsEnabled(features::kMojoBlobs)) {
+      storage::mojom::BlobPtr blob_ptr;
+      blob_registry_->GetBlobFromUUID(MakeRequest(&blob_ptr), blob_uuid);
+      blob = base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
+    }
     return ServiceWorkerResponse(
         base::MakeUnique<std::vector<GURL>>(1, GURL(url)), 200, "OK",
         blink::mojom::FetchResponseType::kDefault, std::move(headers),
-        blob_uuid, blob_size, nullptr /* blob */,
+        blob_uuid, blob_size, blob,
         blink::kWebServiceWorkerResponseErrorUnknown, base::Time::Now(),
         false /* is_in_cache_storage */,
         std::string() /* cache_storage_cache_name */,
@@ -703,6 +728,8 @@ class CacheStorageCacheTest : public testing::Test {
   scoped_refptr<MockQuotaManager> mock_quota_manager_;
   scoped_refptr<MockQuotaManagerProxy> quota_manager_proxy_;
   storage::BlobStorageContext* blob_storage_context_;
+  std::unique_ptr<storage::BlobRegistryImpl> blob_registry_impl_;
+  storage::mojom::BlobRegistryPtr blob_registry_;
 
   std::unique_ptr<TestCacheStorageCache> cache_;
 
