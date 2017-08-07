@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16e21909_feb93221",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T21:40:29Z",
+      "side": 1,
+      "message": "Can we fix that?",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "fd60bc54cd43d2ef127a325c8398f5ad07944dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b204e18_92bdaf6f",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T21:40:29Z",
+      "side": 1,
+      "message": "Can you put a comment that talks a bit about what this is for? aka it is the interface Blink uses to talk directly to RFH.\n\nAlso, do we expect to have multiple RenderFrame objects binding to one RenderFrameHost? I\u0027d expect not, as we want to keep it 1:1. If that\u0027s true, can\u0027t we use just a mojo::Binding instead of a mojo::BindingSet?",
+      "revId": "fd60bc54cd43d2ef127a325c8398f5ad07944dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b498891_ee2d4df5",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T21:40:29Z",
+      "side": 1,
+      "message": "Order alphabetically.",
+      "revId": "fd60bc54cd43d2ef127a325c8398f5ad07944dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d99ffb_0dd745cc",
+        "filename": "third_party/WebKit/public/platform/frame_broker.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T21:40:29Z",
+      "side": 1,
+      "message": "minor nit: I\u0027m not the biggest fan of the \"broker\" suffix, but I have no better suggestion, so I\u0027m fine with it.",
+      "range": {
+        "startLine": 9,
+        "startChar": 15,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "fd60bc54cd43d2ef127a325c8398f5ad07944dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
