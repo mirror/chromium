@@ -169,7 +169,7 @@ namespace feedbackPrivate {
     // Gets localized translated strings for feedback. It returns the
     // strings as a dictionary mapping from string identifier to the
     // translated string to use in the feedback app UI.
-    static void getStrings(FeedbackFlow flow, GetStringsCallback callback);
+    static void getStrings(GetStringsCallback callback);
 
     // Logs whether the user accepted a prompt to try the Software Removal
     // Tool.
