@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75f68c7e_4c06b195",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_memory.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-07T17:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5197cd0_bad7b679",
+      "revId": "ef00bee3fd41ea2bb114d651b0e7fa32483521ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5255a90c_69cb7e19",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "88465e1d_a10ccbe2",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-07T17:51:21Z",
+      "side": 1,
+      "message": "Done, although less applicable since the extra wait was removed. I\u0027ve stripped \".html\" from the name, though. It\u0027ll still look a bit awkward with the GET parameters appended to it, although having them somewhere in the name is necessary since they have a significant effect on what the page actually does.",
+      "parentUuid": "5255a90c_69cb7e19",
+      "revId": "ef00bee3fd41ea2bb114d651b0e7fa32483521ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e20a65f2_6f2003bb",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "ef00bee3fd41ea2bb114d651b0e7fa32483521ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6388f81_d0910790",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-07T17:51:21Z",
+      "side": 1,
+      "message": "Removed. Didn\u0027t know that MeasureMemory included waits already.",
+      "parentUuid": "e20a65f2_6f2003bb",
+      "revId": "ef00bee3fd41ea2bb114d651b0e7fa32483521ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

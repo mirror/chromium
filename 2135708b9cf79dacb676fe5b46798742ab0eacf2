@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "aae98d48_34745e23",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_memory.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-07T17:51:21Z",
+      "side": 1,
+      "message": "Done. I just added a public class for use in the new benchmark and left everything else as-is. I can go back and combine it and _MemoryInfra/switch other benchmarks to use it instead of _MemoryInfra in this CL if you\u0027d like.\n\nAlso, since it\u0027s public, it\u0027s being treated as an actual benchmark to be run, hence the Disabled and Owner decorators. Not sure if there\u0027s a better way to get around that.",
+      "parentUuid": "d2cb9f43_11347a7d",
+      "range": {
+        "startLine": 14,
+        "startChar": 36,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "2135708b9cf79dacb676fe5b46798742ab0eacf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e174c09d_823cc9b3",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_memory.py",
         "patchSetId": 4
