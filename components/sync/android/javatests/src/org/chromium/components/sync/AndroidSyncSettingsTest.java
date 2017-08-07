@@ -20,7 +20,6 @@ import org.chromium.base.Callback;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.CallbackHelper;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.components.signin.AccountManagerFacade;
 import org.chromium.components.signin.ChromeSigninController;
@@ -322,7 +321,6 @@ public class AndroidSyncSettingsTest {
     @Test
     @SmallTest
     @Feature({"Sync"})
-    @DisabledTest(message = "crbug.com/737862")
     public void testSyncSettingsCaching() throws InterruptedException {
         // Turn on syncability.
         mSyncContentResolverDelegate.setMasterSyncAutomatically(true);
