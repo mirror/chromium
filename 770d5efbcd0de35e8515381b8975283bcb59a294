@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69702b32_4aac6210",
+        "filename": "chrome/browser/android/tab_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-07T21:46:29Z",
+      "side": 1,
+      "message": "Can you remind me why can\u0027t we query this from the WebContents again?  IIUC we always have a WebContents even if we\u0027re showing a NativePage.  Thanks!",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 27
+      },
+      "revId": "770d5efbcd0de35e8515381b8975283bcb59a294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
