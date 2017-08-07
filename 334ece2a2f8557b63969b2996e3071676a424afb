@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79b78770_8589fb01",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-07T08:40:48Z",
+      "side": 1,
+      "message": "Most calls to MakeSuggestionsProviderWithoutInitialization() are followed by a call to WaitForSuggestionsProviderInitialization(), which is the point of MakeSuggestionsProvider(). Some of them even pass (false, false), which completely duplicates it. Could you add args to MSP() and use it, except in the tests that actually need extra initialization-related code?\n\nIt might be easier to add an enum {NO_MOCKS, BREAKING_NEWS_MOCK, PREFETCHED_PAGES_MOCK, ALL_MOCKS} to avoid the long comments. ALL_MOCKS might not even be necessary; I didn\u0027t see any (true, true) calls.",
+      "revId": "334ece2a2f8557b63969b2996e3071676a424afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590015c3_543428ca",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-07T08:40:48Z",
+      "side": 1,
+      "message": "I wouldn\u0027t DCHECK() in a test--this should never happen, but the test is here to verify it. I think you can EXPECT_FALSE() here, but CHECK() is fine too.",
+      "range": {
+        "startLine": 469,
+        "startChar": 4,
+        "endLine": 469,
+        "endChar": 10
+      },
+      "revId": "334ece2a2f8557b63969b2996e3071676a424afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

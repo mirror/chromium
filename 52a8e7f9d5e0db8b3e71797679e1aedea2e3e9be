@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ca586b3_824bd3ae",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2792,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-07T08:40:48Z",
+      "side": 0,
+      "message": "Can this method go away now, then? snippets-internals doesn\u0027t use it anymore, does it?",
+      "range": {
+        "startLine": 2792,
+        "startChar": 12,
+        "endLine": 2792,
+        "endChar": 55
+      },
+      "revId": "52a8e7f9d5e0db8b3e71797679e1aedea2e3e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
