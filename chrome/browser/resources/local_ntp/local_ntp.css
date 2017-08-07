@@ -29,19 +29,29 @@ body.hide-fakebox-logo #fakebox {
 }
 
 #logo {
-  background-image: url(../../../../ui/webui/resources/images/google_logo.svg);
-  background-repeat: no-repeat;
-  height: 92px;
+  height: 249px;
   margin-bottom: 24px;
-  margin-top: 157px;
-  width: 272px;
+  position: relative;
+  /* #logo width is set dynamically from JS. */
+  width: 300px;
 }
 
 .non-google-page #logo {
   display: none;
 }
 
-body.alternate-logo #logo {
+#logo-default {
+  background-image: url(../../../../ui/webui/resources/images/google_logo.svg);
+  background-repeat: no-repeat;
+  bottom: 0;
+  height: 92px;
+  left: calc(50% - 272px/2);
+  position: absolute;
+  transition: opacity 200ms;
+  width: 272px;
+}
+
+body.alternate-logo #logo-default {
   -webkit-mask-image:
       url(../../../../ui/webui/resources/images/google_logo.svg);
   -webkit-mask-repeat: no-repeat;
