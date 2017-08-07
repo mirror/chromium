@@ -4,12 +4,15 @@
 
 #include "ash/system/bluetooth/tray_bluetooth_helper.h"
 
+#include "ash/public/cpp/ash_pref_names.h"
+#include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/system/tray/system_tray_controller.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/metrics/user_metrics.h"
+#include "components/prefs/pref_service.h"
 #include "device/bluetooth/bluetooth_adapter.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
 #include "device/bluetooth/bluetooth_device.h"
@@ -117,11 +120,6 @@ void TrayBluetoothHelper::ConnectToBluetoothDevice(const std::string& address) {
   Shell::Get()->system_tray_controller()->ShowBluetoothPairingDialog(
       device->GetAddress(), device->GetNameForDisplay(), device->IsPaired(),
       device->IsConnected());
-}
-
-void TrayBluetoothHelper::ToggleBluetoothEnabled() {
-  adapter_->SetPowered(!adapter_->IsPowered(), base::Bind(&base::DoNothing),
-                       base::Bind(&base::DoNothing));
 }
 
 bool TrayBluetoothHelper::GetBluetoothAvailable() {
