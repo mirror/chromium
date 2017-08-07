@@ -14,7 +14,7 @@ var ROOT_PATH = '../../../../../';
 GEN_INCLUDE([
   ROOT_PATH + 'chrome/test/data/webui/polymer_browser_test_base.js',
   ROOT_PATH + 'chrome/test/data/webui/settings/accessibility_audit_rules.js',
-  ROOT_PATH + 'chrome/test/data/webui/settings/accessibility_audit.js',
+  ROOT_PATH + 'chrome/test/data/webui/settings/accessibility_test.js',
   ROOT_PATH + 'third_party/axe-core/axe.js',
 ]);
 
@@ -47,11 +47,9 @@ SettingsAccessibilityTest.prototype = {
   },
 };
 
-// TODO(quacht): Enable the audit rules failed in a separate CL after
-// resolving the violation or after adding the violation exception framework.
-// http://crbug.com/748608
-// http://crbug.com/748632
-var rulesToSkip = ['aria-valid-attr', 'color-contrast', 'region', 'skip-link'];
+// Skip rules typically not run by the aXe audit by default. 'region' times out
+// and 'skip-link' is not needed since we use headings markup.
+var rulesToSkip = ['region', 'skip-link'];
 
 // Define a unit test for every audit rule.
 AccessibilityTest.ruleIds.forEach(function(ruleId) {

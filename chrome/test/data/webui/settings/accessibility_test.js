@@ -34,6 +34,19 @@ AccessibilityTest.AxeOptions;
 AccessibilityTest.Definition;
 
 /**
+ * @param {string} auditRuleId aXe-core audit rule ID of the rule to except
+ * @param {!function(axe.NodeResult)} selector Function that returns true for
+ *    elements to exclude from violations reported by the audit.
+ * @constructor
+ */
+AccessibilityTest.Exception = function(auditRuleId, selector) {
+  return {
+    auditRuleId: auditRuleId,
+    selector: selector
+  }
+};
+
+/**
  * Run aXe-core accessibility audit, print console-friendly representation
  * of violations to console, and fail the test.
  * @param {AccessibilityTest.AxeOptions} options Dictionary disabling specific
@@ -41,27 +54,66 @@ AccessibilityTest.Definition;
  * @return {Promise} A promise that will be resolved with the accessibility
  *    audit is complete.
  */
-AccessibilityTest.runAudit_ = function(options) {
+AccessibilityTest.runAudit_ = function(options, exceptions) {
   // Ignore iron-iconset-svg elements that have duplicate ids and result in
   // false postives from the audit.
   var context = {exclude: ['iron-iconset-svg']};
   options = options || {};
+  // Run the audit with element references included in the results.
+  options.elementRef = true;
+  exceptions = exceptions || [];
 
   return new Promise((resolve, reject) => {
     axe.run(context, options, (err, results) => {
       if (err)
         reject(err);
 
-      var violationCount = results.violations.length;
+      var filteredViolations =
+          AccessibilityTest.pruneExceptions_(results.violations, exceptions);
+
+      var violationCount = filteredViolations.length;
       if (violationCount) {
-        // Pretty print out the violations detected by the audit.
-        console.log(JSON.stringify(results.violations, null, 4));
+        AccessibilityTest.printViolations(filteredViolations);
         reject('Found ' + violationCount + ' accessibility violations.');
       } else {
         resolve();
       }
     });
   });
+};
+
+/**
+ * Define a different test for each audit rule, unless overridden by
+ * |test.options.runOnly|.
+ * Get list of audit violations that excludes given exceptions.
+ * @param {!Array<axe.Result>} violations List of accessibility violations.
+ * @param {!Array<AccessibilityTest.Exception>} exceptions List of exceptions
+ *    to prune from the results.
+ * @return {!Array<axe.Result>} List of violations that do not
+ *    match those described by exceptions.
+ */
+AccessibilityTest.pruneExceptions_ = function(violations, exceptions) {
+  // Create a dictionary to map violation types to their objects
+  var violationMap = {};
+  for (i = 0; i < violations.length; i++) {
+    violationMap[violations[i].id] = violations[i];
+  }
+
+  // Check for and remove any nodes specified as exceptions.
+  for (let exception of exceptions) {
+    if (exception.auditRuleId in violationMap) {
+      var violation = violationMap[exception.auditRuleId];
+      var filteredNodes = violation.nodes.filter(
+          (node) => !exception.selector(node));
+      // Abandon the violation if all of its nodes are exceptions.
+      if (filteredNodes.length > 0) {
+        violation.nodes = filteredNodes;
+        violationMap[exception.auditRuleId].nodes = filteredNodes;
+      } else
+        delete violationMap[exception.auditRuleId];
+    }
+  }
+  return Object.values(violationMap);
 };
 
 /**
@@ -125,9 +177,26 @@ AccessibilityTest.getMochaTest_ = function(testMember, testDef) {
     var promise = testDef.tests[testMember].call(testDef);
     if (promise) {
       return promise.then(
-          () => AccessibilityTest.runAudit_(testDef.axeOptions));
+          () => AccessibilityTest.runAudit_(
+              testDef.axeOptions, testDef.exceptions));
     } else {
-      return AccessibilityTest.runAudit_(testDef.axeOptions);
+      return AccessibilityTest.runAudit_(
+            testDef.axeOptions, testDef.exceptions);
     }
   };
+};
+
+/**
+ * Pretty-print violations to the console.
+ * @param {!Array<axe.Result>} List of violations to display
+ */
+AccessibilityTest.printViolations = function(violations) {
+  // Elements have circular references and must be removed before printing.
+  for (let violation of violations) {
+    for (let node of violation.nodes) {
+      delete node['element'];
+    }
+  }
+
+  console.log(JSON.stringify(violations, null, 4));
 };
