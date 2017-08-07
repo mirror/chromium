@@ -8,6 +8,187 @@
 
 'use strict';
 
+function webSafeBase64ToNormal(s) {
+  return s.replace(/-/g, '+').replace(/_/g, '/');
+}
+
+function decodeWebSafeBase64ToArray(s) {
+  var bytes = atob(webSafeBase64ToNormal(s));
+  var buffer = new ArrayBuffer(bytes.length);
+  var ret = new Uint8Array(buffer);
+  for (var i = 0; i < bytes.length; i++) {
+    ret[i] = bytes.charCodeAt(i);
+  }
+  return ret;
+}
+
+function stripLeadingZeros(bytes) {
+  while (bytes.length > 1 && bytes[0] == 0) {
+    bytes = bytes.slice(1);
+  }
+  return bytes;
+}
+
+// rawSignatureToASN1 converts a P-256 signature from WebCrypto (which is a
+// pair of 32-byte, big-endian values concatenated) into an ASN.1 signature
+// structure.
+function rawSignatureToASN1(raw) {
+  var r = stripLeadingZeros(raw.slice(0, 32));
+  var s = stripLeadingZeros(raw.slice(32, 64));
+  var rLength = r.length;
+  if (r[0] >= 0x80) {
+    rLength += 1;
+  }
+  var sLength = s.length;
+  if (s[0] >= 0x80) {
+    sLength += 1;
+  }
+  var asn1Len = 2 + 2 + rLength + 2 + sLength;
+  var buffer = new ArrayBuffer(asn1Len);
+  var ret = new Uint8Array(buffer);
+  ret[0] = 0x30;  // SEQUENCE
+  ret[1] = asn1Len - 2;
+  ret[2] = 2;  // INTEGER
+  ret[3] = rLength;
+  var offset = 4;
+  if (r[0] >= 0x80) {
+    offset++;
+  }
+  ret.set(r, offset);
+  offset += r.length;
+  ret[offset] = 2;  // INTEGER
+  offset++;
+  ret[offset] = sLength;
+  offset++;
+  if (s[0] >= 0x80) {
+    offset++;
+  }
+  ret.set(s, offset);
+  return ret;
+}
+
+var genericCertPrivateKey = null;
+
+// genericCertPrivateKeyPKCS8 is a the PKCS#8 encoding of the private key
+// corresponding to the public key in |genericCertDER|.
+var genericCertPrivateKeyPKCS8 = new Uint8Array([
+  48,  129, 135, 2,   1,   0,   48,  19,  6,   7,   42,  134, 72,  206,
+  61,  2,   1,   6,   8,   42,  134, 72,  206, 61,  3,   1,   7,   4,
+  109, 48,  107, 2,   1,   1,   4,   32,  153, 15,  218, 61,  2,   63,
+  189, 178, 33,  37,  223, 200, 190, 170, 33,  40,  41,  221, 90,  111,
+  235, 38,  190, 142, 50,  55,  141, 200, 87,  215, 221, 38,  161, 68,
+  3,   66,  0,   4,   252, 7,   103, 37,  92,  180, 190, 191, 252, 126,
+  175, 64,  32,  28,  143, 166, 13,  160, 111, 143, 241, 58,  166, 236,
+  160, 49,  224, 141, 145, 19,  105, 54,  96,  114, 19,  120, 113, 149,
+  63,  247, 17,  87,  193, 94,  133, 26,  173, 122, 243, 208, 60,  204,
+  96,  227, 11,  238, 15,  137, 193, 124, 113, 221, 0,   210
+]);
+
+// genericCertDER is a DER-encoded, X.509 certificate for a generic U2F device.
+var genericCertDER = new Uint8Array([
+  48,  130, 1,   74,  48,  129, 240, 160, 3,   2,   1,   2,   2,   16,  111,
+  68,  171, 21,  139, 234, 191, 255, 213, 36,  235, 44,  105, 108, 216, 173,
+  48,  10,  6,   8,   42,  134, 72,  206, 61,  4,   3,   2,   48,  29,  49,
+  27,  48,  25,  6,   3,   85,  4,   3,   19,  18,  71,  101, 110, 101, 114,
+  105, 99,  32,  85,  50,  70,  32,  68,  101, 118, 105, 99,  101, 48,  32,
+  23,  13,  49,  55,  48,  49,  48,  49,  48,  48,  48,  48,  48,  48,  90,
+  24,  15,  50,  48,  57,  57,  48,  49,  48,  49,  48,  48,  48,  48,  48,
+  48,  90,  48,  29,  49,  27,  48,  25,  6,   3,   85,  4,   3,   19,  18,
+  71,  101, 110, 101, 114, 105, 99,  32,  85,  50,  70,  32,  68,  101, 118,
+  105, 99,  101, 48,  89,  48,  19,  6,   7,   42,  134, 72,  206, 61,  2,
+  1,   6,   8,   42,  134, 72,  206, 61,  3,   1,   7,   3,   66,  0,   4,
+  252, 7,   103, 37,  92,  180, 190, 191, 252, 126, 175, 64,  32,  28,  143,
+  166, 13,  160, 111, 143, 241, 58,  166, 236, 160, 49,  224, 141, 145, 19,
+  105, 54,  96,  114, 19,  120, 113, 149, 63,  247, 17,  87,  193, 94,  133,
+  26,  173, 122, 243, 208, 60,  204, 96,  227, 11,  238, 15,  137, 193, 124,
+  113, 221, 0,   210, 163, 16,  48,  14,  48,  12,  6,   3,   85,  29,  19,
+  1,   1,   255, 4,   2,   48,  0,   48,  10,  6,   8,   42,  134, 72,  206,
+  61,  4,   3,   2,   3,   73,  0,   48,  70,  2,   33,  0,   162, 255, 217,
+  128, 66,  27,  224, 171, 168, 76,  20,  143, 216, 57,  185, 99,  178, 118,
+  171, 232, 176, 85,  149, 23,  90,  127, 221, 71,  228, 197, 126, 220, 2,
+  33,  0,   186, 228, 21,  71,  93,  127, 203, 197, 129, 209, 182, 130, 40,
+  9,   179, 225, 172, 111, 24,  237, 147, 118, 146, 119, 215, 181, 229, 249,
+  227, 48,  13,  142
+]);
+
+async function replaceCertificateAndSignature(
+    registrationDataBase64, clientDataBase64, appId) {
+  var original = decodeWebSafeBase64ToArray(registrationDataBase64);
+  // See "FIDO U2F Raw Message Formats" for the format of a registration
+  // response message. In summary it looks like:
+  //   uint8_t magic;
+  //   uint8_t publicKey[65];
+  //   uint8_t keyHandleLen;
+  //   uint8_t keyHandle[keyHandleLen];
+  //   uint8_t certificate[];
+  //   uint8_t signature[];
+  if (original.length < 67) {
+    throw 'replaceCertificate: response too short: ' + original.length +
+        ' bytes';
+  }
+  var publicKey = original.slice(1, 66);
+  var keyHandleLen = original[66];
+  var keyHandle = original.slice(67, 67 + keyHandleLen);
+  var certificateOffset = 66 + 1 + keyHandleLen;
+  var prefix = original.slice(0, certificateOffset);
+  // The signed message looks like:
+  //   uint8_t version;
+  //   uint8_t appIdHash[32];
+  //   uint8_t challengeHash[32];
+  //   uint8_t keyHandle[];
+  //   uint8_t publicKey[65];
+  var signedMsgLen = 1 + 32 + 32 + keyHandleLen + 65;
+  var signedMsgBuf = new ArrayBuffer(signedMsgLen);
+  var signedMsg = new Uint8Array(signedMsgBuf);
+  var clientData = JSON.parse(atob(webSafeBase64ToNormal(clientDataBase64)));
+  var encoder = new TextEncoder('utf-8');
+  var appIdHash, challengeHash;
+  [appIdHash, challengeHash] = await Promise.all([
+    crypto.subtle.digest('SHA-256', encoder.encode(appId)),
+    crypto.subtle.digest(
+        'SHA-256', decodeWebSafeBase64ToArray(clientDataBase64)),
+  ]);
+  signedMsg.set(new Uint8Array(appIdHash), 1);
+  signedMsg.set(new Uint8Array(challengeHash), 33);
+  signedMsg.set(keyHandle, 65);
+  signedMsg.set(publicKey, 65 + keyHandleLen);
+  var privateKey;
+  if (genericCertPrivateKey == null) {
+    privateKey = await crypto.subtle.importKey(
+        'pkcs8', genericCertPrivateKeyPKCS8,
+        {name: 'ECDSA', namedCurve: 'P-256'}, false, ['sign']);
+    genericCertPrivateKey = privateKey;
+  } else {
+    privateKey = genericCertPrivateKey;
+  }
+  var signatureBuf = await crypto.subtle.sign(
+      {name: 'ECDSA', hash: {name: 'SHA-256'}}, privateKey, signedMsg);
+  var rawSignature = new Uint8Array(signatureBuf);
+  var signature = rawSignatureToASN1(rawSignature);
+  var resultBuf =
+      new ArrayBuffer(prefix.length + genericCertDER.length + signature.length);
+  var result = new Uint8Array(resultBuf);
+  result.set(prefix);
+  result.set(genericCertDER, prefix.length);
+  result.set(signature, prefix.length + genericCertDER.length);
+  return B64_encode(result);
+}
+
+async function maybeReplaceCertificateAndSignature(
+    registrationDataBase64, clientDataBase64, appId) {
+  var permittedPromise = new Promise(function(resolve, reject) {
+    chrome.cryptotokenPrivate.canAppIdGetAttestation(appId, resolve);
+  })
+
+      if (await permittedPromise) {
+    return registrationDataBase64;
+  }
+  else {
+    return replaceCertificateAndSignature(
+        registrationDataBase64, clientDataBase64, appId);
+  }
+}
+
 /**
  * Handles a U2F enroll request.
  * @param {MessageSender} messageSender The message sender.
@@ -34,10 +215,19 @@ function handleU2fEnrollRequest(messageSender, request, sendResponse) {
       sendErrorResponse({errorCode: ErrorCodes.OTHER_ERROR});
       return;
     }
-    var responseData =
-        makeEnrollResponseData(enrollChallenge, u2fVersion, info, clientData);
-    var response = makeU2fSuccessResponse(request, responseData);
-    sendResponseOnce(sentResponse, closeable, response, sendResponse);
+
+    var appId = request['appId'];
+    if (enrollChallenge.hasOwnProperty('appId')) {
+      appId = enrollChallenge['appId'];
+    }
+
+    maybeReplaceCertificateAndSignature(info, clientData, appId)
+        .then((info) => {
+          var responseData = makeEnrollResponseData(
+              enrollChallenge, u2fVersion, info, clientData);
+          var response = makeU2fSuccessResponse(request, responseData);
+          sendResponseOnce(sentResponse, closeable, response, sendResponse);
+        });
   }
 
   function timeout() {
