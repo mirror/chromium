@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2068db82_a9f46d45",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-07T19:17:56Z",
+      "side": 1,
+      "message": "i have a preference for avoiding holding on to the raw ptr if at all possible. could we maybe use the return value of the call to insert() instead?\n\nauto it \u003d provisional_loads_.insert(...);\nDCHECK(it.second) \u003c\u003c \"provisional_loads_ already contains NavigationHandle.\"\nfor (auto\u0026 observer : testing_observers_)\n  observer.OnTrackerCreated(it.first);",
+      "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e08d94_823ab76c",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-07T19:17:56Z",
+      "side": 1,
+      "message": "it looks like the code to handle null is only needed for tests - is that right?\n\ni\u0027d like to avoid adding any logic to production code that\u0027s really only needed to accomodate tests. could we instead require tests to provide a non-null instance, and perhaps assert that it\u0027s non-null here?\n\ni\u0027d also be fine with having ExtraRequestCompleteInfo contain a std::unique_ptr\u003cLoadTimingInfo\u003e and just std::move()\u0027ing the value like we do for data_reduction_proxy_data.",
+      "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315bd62a_6f5707ad",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-07T19:17:56Z",
+      "side": 1,
+      "message": "this is a nice extension of capabilities for waiting, thanks! I prefer to add this to the existing PageLoadMetricsWaiter class so implementers have have to work with a single waiter. Was your concern with the main vs sub frame issue? We can figure that out by doing:\n\n// It is safe for us to use UnsafeFindFrameByFrameTreeNodeId here since we only want to know if a given frame is a main frame, not get the actual RFH.\nbool is_main_frame \u003d \ncontent::WebContents::FromFrameTreeNodeId(extra_request_complete_info.frame_tree_node_id)-\u003eUnsafeFindFrameByFrameTreeNodeId(extra_request_complete_info.frame_tree_node_id)-\u003eGetParent() \u003d\u003d nullptr;\n\nWe could then make the PageLoadMetricsWaiter\u0027s PageLoadMetricsObserver implement OnLoadedResource, forward that to PageLoadMetricsWaiter, and add a new TimingField enum entry LOAD_TIMING_INFO which has its bit cleared in the OnLoadedResource method.",
+      "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d8d521_d9cc7844",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-07T19:17:56Z",
+      "side": 1,
+      "message": "let\u0027s use /page_load_metrics/404.html here instead, which should produce the same result, but has more deterministic behavior since the http response headers are specified in the config file for that response.",
+      "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
