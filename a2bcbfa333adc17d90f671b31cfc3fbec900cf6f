@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "6daecce3_05842726",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-07T22:26:54Z",
+      "side": 1,
+      "message": "The only option I see at this point would be to expose Update that allows updating the prepopulate id w/o remove and add.\n\nThe gotcha there is when the existing one doesn\u0027t actually conceptually match the prepopulated one.  That is something that I\u0027m not sure how we should handle it.  I don\u0027t know the template url logic well enough to know whether mutating one or the other to avoid conflicts is OK (and which one should be mutated).\n\nAs search engines are not historically synced nor can you manually add them on mobile, so the points you raised likely don\u0027t exist on mobile and probably shouldn\u0027t affect this.",
+      "parentUuid": "351af8f0_3725f8fe",
+      "revId": "a2bcbfa333adc17d90f671b31cfc3fbec900cf6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb217439_5c0a7c67",
         "filename": "chrome/browser/android/locale/special_locale_handler.cc",
         "patchSetId": 3
