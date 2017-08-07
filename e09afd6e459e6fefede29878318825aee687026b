@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b62cb4d_07868742",
+        "filename": "media/capture/video/chromeos/video_capture_device_arc_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-07T16:40:33Z",
+      "side": 1,
+      "message": "Are the newly added code paths already covered by existing tests?\nIf not, we should add tests to cover them.",
+      "revId": "e09afd6e459e6fefede29878318825aee687026b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
