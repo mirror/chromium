@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e92e526_37e28772",
+        "filename": "content/browser/browser_child_process_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-07T17:15:23Z",
+      "side": 1,
+      "message": "Go to 256KiB if needed.  The memory isn\u0027t realized until it\u0027s used.",
+      "range": {
+        "startLine": 473,
+        "startChar": 20,
+        "endLine": 473,
+        "endChar": 23
+      },
+      "revId": "084c92e1555aaa46ec408eac3c72582ebc008894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
