@@ -106,6 +106,24 @@
       "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a758dd_7e1934ee",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-07T20:04:35Z",
+      "side": 1,
+      "message": "The reason I mentioned this to Sasha was that I thought our backend parsing code added SANs to the common name field, so we wouldn\u0027t be able to tell if issuer.common_name contains SAN or not. \n\nBut it seems that\u0027s not what the parsing code is doing, and issuer.common_name only has issuer\u0027s common names and there is no SANs involved.",
+      "parentUuid": "060bdc5d_46f1f513",
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
