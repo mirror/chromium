@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "b280c6ad_b16cbb85",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-07T22:29:00Z",
+      "side": 1,
+      "message": "Minor nits: Skip the spaces in the class names (e.g., FallbackTaskProvider, RenderProcessHost).  Same below.\n\nAlso, we tend to use present tense (Create) in CL descriptions since this is the CL that\u0027s going to make it happen.  (Past tense would describe the state before the CL, in case we\u0027re describing a bug.)",
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1c4466_d0c9baf8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-07T22:29:00Z",
+      "side": 1,
+      "message": "nit: There\u0027s some missing context here for people unfamiliar with the task manager: that having no WebContents associated with it implies that there\u0027s no row for it already.  Let\u0027s close the loop, with something like:\n\n\"when there is a RenderProcessHost that is live but has no row already (i.e., has no WebContents associated with it).\"",
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c650535_dda0f93f",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 7
@@ -157,6 +191,52 @@
     },
     {
       "key": {
+        "uuid": "160f465a_155a7f40",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-07T22:29:00Z",
+      "side": 1,
+      "message": "Will we show it if it\u0027s redundant?  (I\u0027m ok either way, but let\u0027s clarify.)\n\nAlso, is this still behind a flag?  Let\u0027s mention it if so.",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 42
+      },
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56cfad3_0d310a3f",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-07T22:29:00Z",
+      "side": 1,
+      "message": "nit: New sentence or semicolon.",
+      "range": {
+        "startLine": 18,
+        "startChar": 18,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a50336fa_4d70ce25",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
         "patchSetId": 7
@@ -174,6 +254,97 @@
         "endLine": 34,
         "endChar": 45
       },
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be7bef95_d13e3720",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-07T22:29:00Z",
+      "side": 1,
+      "message": "Can you add a comment explaining what these are?  I\u0027m not sure what primary and secondary concepts are here, or why a Task instance is being called a subprovider.\n\n(Maybe this comment should go on the constructor?)",
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3be7a5b_ce3c9314",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-07T22:29:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand what this means.  This class is a TaskProvider itself, not a task manager implementation.  Can you update the comment to say why it needs its own list of TaskProviders?",
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4890f1df_92f1a399",
+        "filename": "chrome/browser/task_manager/providers/render_process_host_task_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-07T22:29:00Z",
+      "side": 1,
+      "message": "I think we may still want to update this comment from my questions in https://codereview.chromium.org/2988453002/diff/140001/chrome/browser/task_manager/providers/render_process_host_task_provider.h#newcode25.",
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163722aa_7a2d0b2a",
+        "filename": "chrome/browser/task_manager/providers/render_process_host_task_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-07T22:29:00Z",
+      "side": 1,
+      "message": "nit: Lowercase i as well (to match the name on line 53).",
+      "range": {
+        "startLine": 51,
+        "startChar": 44,
+        "endLine": 51,
+        "endChar": 66
+      },
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff30f86_d609d6bf",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-07T22:29:00Z",
+      "side": 1,
+      "message": "This might be unnecessary churn?",
       "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
