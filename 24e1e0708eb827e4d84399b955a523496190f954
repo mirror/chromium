@@ -22,6 +22,30 @@
       "revId": "24e1e0708eb827e4d84399b955a523496190f954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d1263d_cff4b0ee",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-07T22:17:16Z",
+      "side": 1,
+      "message": "Both yes and no :)\n\nThe yes is when the actual toggle was tapped, and the browser test made sure that happened as expected.\n\nThe no is when the label of the toggle was tapped. The browser wasn\u0027t testing it and it was broken (we just didn\u0027t know it). It didn\u0027t fire a change, but did change the value. afaik, this didn\u0027t cause any harm in our use of toggles, but was incorrect for a polymer control (which again, afaik fires a change on change).\n\nIf I have it right now, a change will be fired when the state change regardless of what is tapped (err, as long as it\u0027s the action-target -- which is the intent of the action-target). I.e. the intent is that there is a 1:1 relationship between what is: tapped that causes a state change, fires a change event.\n\nThough you\u0027re reminding me that I didn\u0027t mention this in the CL description and I should. I\u0027ll change the CL description to mention this.",
+      "parentUuid": "7d016b52_a392507a",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 24
+      },
+      "revId": "24e1e0708eb827e4d84399b955a523496190f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
