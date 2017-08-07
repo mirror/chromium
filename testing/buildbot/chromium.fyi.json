@@ -10473,8 +10473,7 @@
   "Fuchsia": {
     "additional_compile_targets": [
       "gl_unittests",
-      "media_unittests",
-      "net_unittests"
+      "media_unittests"
     ],
     "gtest_tests": [
       {
@@ -10536,6 +10535,16 @@
           "can_use_on_swarming_builders": false
         },
         "test": "mojo_system_unittests"
+      },
+      {
+        "args": [
+          "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.net_unittests.filter",
+          "--test-launcher-batch-limit=200"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": false
+        },
+        "test": "net_unittests"
       },
       {
         "swarming": {
@@ -10557,8 +10566,7 @@
   "Fuchsia (dbg)": {
     "additional_compile_targets": [
       "gl_unittests",
-      "media_unittests",
-      "net_unittests"
+      "media_unittests"
     ],
     "gtest_tests": [
       {
@@ -10620,6 +10628,16 @@
           "can_use_on_swarming_builders": false
         },
         "test": "mojo_system_unittests"
+      },
+      {
+        "args": [
+          "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.net_unittests.filter",
+          "--test-launcher-batch-limit=200"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": false
+        },
+        "test": "net_unittests"
       },
       {
         "swarming": {
