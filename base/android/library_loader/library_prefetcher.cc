@@ -13,9 +13,14 @@
 #include <utility>
 #include <vector>
 
+#include "base/files/file.h"
+#include "base/files/file_path.h"
+#include "base/format_macros.h"
+#include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "build/build_config.h"
 
 namespace base {
@@ -25,13 +30,19 @@ namespace {
 
 // Android defines the background priority to this value since at least 2009
 // (see Process.java).
-const int kBackgroundPriority = 10;
+constexpr int kBackgroundPriority = 10;
 // Valid for all the Android architectures.
-const size_t kPageSize = 4096;
+constexpr size_t kPageSize = 4096;
+constexpr size_t kPageMask = kPageSize - 1;
 const char* kLibchromeSuffix = "libchrome.so";
 // "base.apk" is a suffix because the library may be loaded directly from the
 // APK.
 const char* kSuffixesToMatch[] = {kLibchromeSuffix, "base.apk"};
+
+// Used to speed up |CollectResidency()|, as parsing /proc/self/smaps can be
+// slow.
+base::LazyInstance<std::vector<NativeLibraryPrefetcher::AddressRange>>::Leaky
+    g_ranges;
 
 bool IsReadableAndPrivate(const base::debug::MappedMemoryRegion& region) {
   return region.permissions & base::debug::MappedMemoryRegion::READ &&
@@ -60,10 +71,9 @@ __attribute__((no_sanitize_address))
 #endif
 bool Prefetch(const std::vector<std::pair<uintptr_t, uintptr_t>>& ranges) {
   for (const auto& range : ranges) {
-    const uintptr_t page_mask = kPageSize - 1;
     // If start or end is not page-aligned, parsing went wrong. It is better to
     // exit with an error.
-    if ((range.first & page_mask) || (range.second & page_mask)) {
+    if ((range.first & kPageMask) || (range.second & kPageMask)) {
       return false;  // CHECK() is not allowed here.
     }
     unsigned char* start_ptr = reinterpret_cast<unsigned char*>(range.first);
@@ -169,10 +179,9 @@ int NativeLibraryPrefetcher::PercentageOfResidentCode(
     const std::vector<AddressRange>& ranges) {
   size_t total_pages = 0;
   size_t resident_pages = 0;
-  const uintptr_t page_mask = kPageSize - 1;
 
   for (const auto& range : ranges) {
-    if (range.first & page_mask || range.second & page_mask)
+    if (range.first & kPageMask || range.second & kPageMask)
       return -1;
     size_t length = range.second - range.first;
     size_t pages = length / kPageSize;
@@ -198,6 +207,53 @@ int NativeLibraryPrefetcher::PercentageOfResidentNativeLibraryCode() {
   if (!FindRanges(&ranges))
     return -1;
   return PercentageOfResidentCode(ranges);
+}
+
+// static
+bool NativeLibraryPrefetcher::CollectResidency(const base::FilePath& filename) {
+  // Read the ranges only once.
+  if (g_ranges.Get().empty()) {
+    if (!FindRanges(&g_ranges.Get())) {
+      LOG(ERROR) << "Unable to find the ranges";
+      return false;
+    }
+  }
+
+  base::File file(filename,
+                  base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+  if (!file.IsValid()) {
+    LOG(ERROR) << "File is not valid " << filename;
+    return false;
+  }
+
+  for (const auto& range : g_ranges.Get()) {
+    if (range.first & kPageMask || range.second & kPageMask) {
+      LOG(ERROR) << "Invalid range";
+      return false;
+    }
+    size_t length = range.second - range.first;
+    size_t pages = length / kPageSize;
+    std::vector<unsigned char> is_page_resident(pages);
+    int err = mincore(reinterpret_cast<void*>(range.first), length,
+                      &is_page_resident[0]);
+    if (err) {
+      LOG(ERROR) << "mincore() failed, err = " << err;
+      return false;
+    }
+
+    // File format:
+    // [start address] 000111101111\n
+    // Where each 0 or 1 is a single page, and reflects mincore()'s result.
+    std::string start_address = base::StringPrintf("%" PRIuS " ", range.first);
+    file.WriteAtCurrentPos(start_address.c_str(), start_address.size());
+
+    std::string mincore_result(pages + 1, ' ');
+    mincore_result[mincore_result.size() - 1] = '\n';
+    for (size_t i = 0; i < pages; ++i)
+      mincore_result[i] = is_page_resident[i] ? '1' : '0';
+    file.WriteAtCurrentPos(mincore_result.c_str(), mincore_result.size());
+  }
+  return true;
 }
 
 }  // namespace android

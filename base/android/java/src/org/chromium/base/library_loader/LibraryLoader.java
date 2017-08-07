@@ -7,6 +7,7 @@ package org.chromium.base.library_loader;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.os.SystemClock;
 
@@ -228,6 +229,40 @@ public class LibraryLoader {
         }
     }
 
+    /**
+     * Repeatedly reports the native library page residency to files.
+     *
+     * Starts a new thread to collect the residency at (relatively) fixed intervals, and writes the
+     * results to /sdcard/residency-CURRENT_TIME_MILLIS.csv.
+     *
+     * @param count Number of data points.
+     * @param internvalMs Interval in ms.
+     * @return true.
+     */
+    private static boolean logResidency(final int count, final int intervalMs) {
+        final String externalDirectory = Environment.getExternalStorageDirectory().toString();
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                for (int i = 0; i < count; i++) {
+                    TraceEvent.begin("CollectResidency");
+                    long now = System.currentTimeMillis();
+                    String path = externalDirectory + "/residency-" + now + ".csv";
+                    boolean ok = nativeCollectResidency(path);
+                    if (!ok) Log.w(TAG, "Failed to log residency.");
+                    TraceEvent.end("CollectResidency");
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        // Ok.
+                    }
+                }
+            }
+        };
+        t.start();
+        return true;
+    }
+
     /** Prefetches the native libraries in a background thread.
      *
      * Launches an AsyncTask that, through a short-lived forked process, reads a
@@ -238,6 +273,7 @@ public class LibraryLoader {
      * detrimental to the startup time.
      */
     public void asyncPrefetchLibrariesToMemory() {
+        if (logResidency(30, 100)) return;
         if (isNotPrefetchingLibraries()) return;
 
         final boolean coldStart = mPrefetchLibraryHasBeenCalled.compareAndSet(false, true);
@@ -546,4 +582,6 @@ public class LibraryLoader {
     // Returns the percentage of the native library code page that are currently reseident in
     // memory.
     private static native int nativePercentageOfResidentNativeLibraryCode();
+
+    private static native boolean nativeCollectResidency(String filename);
 }
