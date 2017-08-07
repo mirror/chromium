@@ -22,7 +22,7 @@
 // options displayed by the alert.
 + (AlertCoordinator*)
 alertCoordinatorForSuggestionItem:(ContentSuggestionsItem*)item
-                 onViewController:(UIViewController*)viewController
+                 onViewController:(UICollectionViewController*)viewController
                           atPoint:(CGPoint)touchLocation
                       atIndexPath:(NSIndexPath*)indexPath
                   readLaterAction:(BOOL)readLaterAction
@@ -32,7 +32,7 @@ alertCoordinatorForSuggestionItem:(ContentSuggestionsItem*)item
 // Same as above but for a MostVisited item.
 + (AlertCoordinator*)
 alertCoordinatorForMostVisitedItem:(ContentSuggestionsMostVisitedItem*)item
-                  onViewController:(UIViewController*)viewController
+                  onViewController:(UICollectionViewController*)viewController
                            atPoint:(CGPoint)touchLocation
                        atIndexPath:(NSIndexPath*)indexPath
                     commandHandler:
