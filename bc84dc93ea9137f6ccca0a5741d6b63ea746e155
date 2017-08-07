@@ -16,6 +16,24 @@
       "revId": "bc84dc93ea9137f6ccca0a5741d6b63ea746e155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ecc23a6_bc6ff72d",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-08-07T23:27:12Z",
+      "side": 1,
+      "message": "I tested both top and bottom controls. It seems both cases work fine.\n\nIf there is potential of buggy behavior because of this, how must I change this code? Just move this code before line 211 (i.e., the normal root layer scroll)?",
+      "parentUuid": "0d18dc26_87cc81d9",
+      "revId": "bc84dc93ea9137f6ccca0a5741d6b63ea746e155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
