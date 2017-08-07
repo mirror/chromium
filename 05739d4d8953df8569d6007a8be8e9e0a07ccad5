@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d537418_0699c7a4",
+        "filename": "chrome/browser/ui/webui/chromeos/certificate_manager_dialog_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-07T19:27:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0178158_a6e5a4ae",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 31
+      },
+      "revId": "05739d4d8953df8569d6007a8be8e9e0a07ccad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bc58078_0639d72b",
         "filename": "chrome/browser/ui/webui/chromeos/certificate_manager_dialog_ui.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "05739d4d8953df8569d6007a8be8e9e0a07ccad5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8005a324_92408791",
+        "filename": "chrome/browser/ui/webui/chromeos/certificate_manager_dialog_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-07T19:27:30Z",
+      "side": 1,
+      "message": "Okay, done; but does that really happen or is that theoretical? Would it be considered not-a-bug if someone went to chrome://certificate-manager/narwhal.jpg and pointed out the untranslated tags? (I\u0027m asking out of curiosity, I\u0027ve already made the change).\n\nDone",
+      "parentUuid": "4bc58078_0639d72b",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 25
+      },
+      "revId": "05739d4d8953df8569d6007a8be8e9e0a07ccad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
