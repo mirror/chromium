@@ -35,7 +35,7 @@
 #include "base/threading/thread_local.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
-#include "base/trace_event/trace_event.h"
+//#include "base/trace_event/trace_event.h"
 #include "base/tracked_objects.h"
 #include "base/tracking_info.h"
 #include "build/build_config.h"
@@ -47,7 +47,7 @@
 #endif
 
 #if !defined(OS_NACL)
-#include "base/metrics/histogram_macros.h"
+//#include "base/metrics/histogram_macros.h"
 #endif
 
 namespace base {
@@ -123,10 +123,10 @@ struct SequencedTaskLessThan {
 // Create a process-wide unique ID to represent this task in trace events. This
 // will be mangled with a Process ID hash to reduce the likelyhood of colliding
 // with MessageLoop pointers on other processes.
-uint64_t GetTaskTraceID(const SequencedTask& task, void* pool) {
-  return (static_cast<uint64_t>(task.trace_id) << 32) |
-         static_cast<uint64_t>(reinterpret_cast<intptr_t>(pool));
-}
+//uint64_t GetTaskTraceID(const SequencedTask& task, void* pool) {
+  //return (static_cast<uint64_t>(task.trace_id) << 32) |
+         //static_cast<uint64_t>(reinterpret_cast<intptr_t>(pool));
+//}
 
 // SequencedWorkerPoolTaskRunner ---------------------------------------------
 // A TaskRunner which posts tasks to a SequencedWorkerPool with a
@@ -742,10 +742,10 @@ bool SequencedWorkerPool::Inner::PostTask(
     // The trace_id is used for identifying the task in about:tracing.
     sequenced.trace_id = trace_id_++;
 
-    TRACE_EVENT_WITH_FLOW0(TRACE_DISABLED_BY_DEFAULT("toplevel.flow"),
-        "SequencedWorkerPool::Inner::PostTask",
-        TRACE_ID_MANGLE(GetTaskTraceID(sequenced, static_cast<void*>(this))),
-        TRACE_EVENT_FLAG_FLOW_OUT);
+    //TRACE_EVENT_WITH_FLOW0(TRACE_DISABLED_BY_DEFAULT("toplevel.flow"),
+        //"SequencedWorkerPool::Inner::PostTask",
+        //TRACE_ID_MANGLE(GetTaskTraceID(sequenced, static_cast<void*>(this))),
+        //TRACE_EVENT_FLAG_FLOW_OUT);
 
     sequenced.sequence_task_number = LockedGetNextSequenceTaskNumber();
 
@@ -952,7 +952,7 @@ void SequencedWorkerPool::Inner::Shutdown(
     testing_observer_->WillWaitForShutdown();
 
 #if !defined(OS_NACL)
-  TimeTicks shutdown_wait_begin = TimeTicks::Now();
+  //TimeTicks shutdown_wait_begin = TimeTicks::Now();
 #endif
 
   {
@@ -962,8 +962,8 @@ void SequencedWorkerPool::Inner::Shutdown(
       can_shutdown_cv_.Wait();
   }
 #if !defined(OS_NACL)
-  UMA_HISTOGRAM_TIMES("SequencedWorkerPool.ShutdownDelayTime",
-                      TimeTicks::Now() - shutdown_wait_begin);
+  //UMA_HISTOGRAM_TIMES("SequencedWorkerPool.ShutdownDelayTime",
+                      //TimeTicks::Now() - shutdown_wait_begin);
 #endif
 }
 
@@ -996,11 +996,11 @@ void SequencedWorkerPool::Inner::ThreadLoop(Worker* this_worker) {
       GetWorkStatus status =
           GetWork(&task, &wait_time, &delete_these_outside_lock);
       if (status == GET_WORK_FOUND) {
-        TRACE_TASK_EXECUTION("SequencedWorkerPool::Inner::ThreadLoop", task);
-        TRACE_EVENT_WITH_FLOW0(TRACE_DISABLED_BY_DEFAULT("toplevel.flow"),
-            "SequencedWorkerPool::Inner::PostTask",
-            TRACE_ID_MANGLE(GetTaskTraceID(task, static_cast<void*>(this))),
-            TRACE_EVENT_FLAG_FLOW_IN);
+        //TRACE_TASK_EXECUTION("SequencedWorkerPool::Inner::ThreadLoop", task);
+        //TRACE_EVENT_WITH_FLOW0(TRACE_DISABLED_BY_DEFAULT("toplevel.flow"),
+            //"SequencedWorkerPool::Inner::PostTask",
+            //TRACE_ID_MANGLE(GetTaskTraceID(task, static_cast<void*>(this))),
+            //TRACE_EVENT_FLAG_FLOW_IN);
         int new_thread_id = WillRunWorkerTask(task);
         {
           AutoUnlock unlock(lock_);
@@ -1018,13 +1018,13 @@ void SequencedWorkerPool::Inner::ThreadLoop(Worker* this_worker) {
           this_worker->set_running_task_info(
               SequenceToken(task.sequence_token_id), task.shutdown_behavior);
 
-          tracked_objects::TaskStopwatch stopwatch;
-          stopwatch.Start();
+          //tracked_objects::TaskStopwatch stopwatch;
+          //stopwatch.Start();
           std::move(task.task).Run();
-          stopwatch.Stop();
+          //stopwatch.Stop();
 
-          tracked_objects::ThreadData::TallyRunOnNamedThreadIfTracking(
-              task, stopwatch);
+          //tracked_objects::ThreadData::TallyRunOnNamedThreadIfTracking(
+              //task, stopwatch);
 
           // Make sure our task is erased outside the lock for the
           // same reason we do this with delete_these_oustide_lock.

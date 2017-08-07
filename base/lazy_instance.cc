@@ -46,8 +46,8 @@ void CompleteLazyInstance(subtle::AtomicWord* state,
   subtle::Release_Store(state, new_instance);
 
   // Make sure that the lazily instantiated object will get destroyed at exit.
-  if (destructor)
-    AtExitManager::RegisterCallback(destructor, destructor_arg);
+  //if (destructor)
+    //AtExitManager::RegisterCallback(destructor, destructor_arg);
 }
 
 }  // namespace internal

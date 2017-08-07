@@ -64,15 +64,15 @@ void* ThreadFunc(void* params) {
 #endif
   }
 
-  ThreadIdNameManager::GetInstance()->RegisterThread(
-      PlatformThread::CurrentHandle().platform_handle(),
-      PlatformThread::CurrentId());
+  //ThreadIdNameManager::GetInstance()->RegisterThread(
+      //PlatformThread::CurrentHandle().platform_handle(),
+      //PlatformThread::CurrentId());
 
   delegate->ThreadMain();
 
-  ThreadIdNameManager::GetInstance()->RemoveName(
-      PlatformThread::CurrentHandle().platform_handle(),
-      PlatformThread::CurrentId());
+  //ThreadIdNameManager::GetInstance()->RemoveName(
+      //PlatformThread::CurrentHandle().platform_handle(),
+      //PlatformThread::CurrentId());
 
   base::TerminateOnThread();
   return NULL;
@@ -183,7 +183,7 @@ void PlatformThread::Sleep(TimeDelta duration) {
 
 // static
 const char* PlatformThread::GetName() {
-  return ThreadIdNameManager::GetInstance()->GetName(CurrentId());
+  return ""; //ThreadIdNameManager::GetInstance()->GetName(CurrentId());
 }
 
 // static

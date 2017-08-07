@@ -33,7 +33,7 @@ class PostTaskAndReplyRelay {
                         OnceClosure reply)
       : sequence_checker_(),
         from_here_(from_here),
-        origin_task_runner_(SequencedTaskRunnerHandle::Get()),
+        //origin_task_runner_(SequencedTaskRunnerHandle::Get()),
         reply_(std::move(reply)),
         task_(std::move(task)) {}
 
@@ -43,9 +43,9 @@ class PostTaskAndReplyRelay {
 
   void RunTaskAndPostReply() {
     std::move(task_).Run();
-    origin_task_runner_->PostTask(
-        from_here_, BindOnce(&PostTaskAndReplyRelay::RunReplyAndSelfDestruct,
-                             base::Unretained(this)));
+    //origin_task_runner_->PostTask(
+        //from_here_, BindOnce(&PostTaskAndReplyRelay::RunReplyAndSelfDestruct,
+                             //base::Unretained(this)));
   }
 
  private:
@@ -65,7 +65,7 @@ class PostTaskAndReplyRelay {
 
   const SequenceChecker sequence_checker_;
   const tracked_objects::Location from_here_;
-  const scoped_refptr<SequencedTaskRunner> origin_task_runner_;
+  //const scoped_refptr<SequencedTaskRunner> origin_task_runner_;
   OnceClosure reply_;
   OnceClosure task_;
 };

@@ -84,8 +84,8 @@ class WorkerThread : public PlatformThread::Delegate {
 
 void WorkerThread::ThreadMain() {
   g_worker_pool_running_on_this_thread.Get().Set(true);
-  const std::string name = base::StringPrintf("%s/%d", name_prefix_.c_str(),
-                                              PlatformThread::CurrentId());
+  const std::string name = "mythread"; //base::StringPrintf("%s/%d", name_prefix_.c_str(),
+                                        //      PlatformThread::CurrentId());
   // Note |name.c_str()| must remain valid for for the whole life of the thread.
   PlatformThread::SetName(name);
 
@@ -95,13 +95,13 @@ void WorkerThread::ThreadMain() {
       break;
     TRACE_TASK_EXECUTION("WorkerThread::ThreadMain::Run", pending_task);
 
-    tracked_objects::TaskStopwatch stopwatch;
-    stopwatch.Start();
+    //tracked_objects::TaskStopwatch stopwatch;
+    //stopwatch.Start();
     std::move(pending_task.task).Run();
-    stopwatch.Stop();
+    //stopwatch.Stop();
 
-    tracked_objects::ThreadData::TallyRunOnWorkerThreadIfTracking(
-        pending_task.birth_tally, pending_task.time_posted, stopwatch);
+    //tracked_objects::ThreadData::TallyRunOnWorkerThreadIfTracking(
+        //pending_task.birth_tally, pending_task.time_posted, stopwatch);
   }
 
   // The WorkerThread is non-joinable, so it deletes itself.

@@ -84,8 +84,7 @@ namespace logging {
 
 namespace {
 
-VlogInfo* g_vlog_info = nullptr;
-VlogInfo* g_vlog_info_prev = nullptr;
+//VlogInfo* g_vlog_info_prev = nullptr;
 
 const char* const log_severity_names[] = {"INFO", "WARNING", "ERROR", "FATAL"};
 static_assert(LOG_NUM_SEVERITIES == arraysize(log_severity_names),
@@ -367,22 +366,22 @@ bool BaseInitLoggingImpl(const LoggingSettings& settings) {
   // Can log only to the system debug log.
   CHECK_EQ(settings.logging_dest & ~LOG_TO_SYSTEM_DEBUG_LOG, 0);
 #endif
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  // Don't bother initializing |g_vlog_info| unless we use one of the
-  // vlog switches.
-  if (command_line->HasSwitch(switches::kV) ||
-      command_line->HasSwitch(switches::kVModule)) {
-    // NOTE: If |g_vlog_info| has already been initialized, it might be in use
-    // by another thread. Don't delete the old VLogInfo, just create a second
-    // one. We keep track of both to avoid memory leak warnings.
-    CHECK(!g_vlog_info_prev);
-    g_vlog_info_prev = g_vlog_info;
+  //base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  //// Don't bother initializing |g_vlog_info| unless we use one of the
+  //// vlog switches.
+  //if (command_line->HasSwitch(switches::kV) ||
+  //    command_line->HasSwitch(switches::kVModule)) {
+  //  // NOTE: If |g_vlog_info| has already been initialized, it might be in use
+  //  // by another thread. Don't delete the old VLogInfo, just create a second
+  //  // one. We keep track of both to avoid memory leak warnings.
+  //  CHECK(!g_vlog_info_prev);
+  //  g_vlog_info_prev = g_vlog_info;
 
-    g_vlog_info =
-        new VlogInfo(command_line->GetSwitchValueASCII(switches::kV),
-                     command_line->GetSwitchValueASCII(switches::kVModule),
-                     &g_min_log_level);
-  }
+  //  g_vlog_info =
+  //      new VlogInfo(command_line->GetSwitchValueASCII(switches::kV),
+  //                   command_line->GetSwitchValueASCII(switches::kVModule),
+  //                   &g_min_log_level);
+  //}
 
   g_logging_destination = settings.logging_dest;
 
@@ -435,10 +434,7 @@ int GetVlogLevelHelper(const char* file, size_t N) {
   DCHECK_GT(N, 0U);
   // Note: |g_vlog_info| may change on a different thread during startup
   // (but will always be valid or nullptr).
-  VlogInfo* vlog_info = g_vlog_info;
-  return vlog_info ?
-      vlog_info->GetVlogLevel(base::StringPiece(file, N - 1)) :
-      GetVlogVerbosity();
+  return GetVlogVerbosity();
 }
 
 void SetLogItems(bool enable_process_id, bool enable_thread_id,
@@ -548,12 +544,12 @@ LogMessage::~LogMessage() {
   size_t stack_start = stream_.tellp();
 #if !defined(OFFICIAL_BUILD) && !defined(OS_NACL) && !defined(__UCLIBC__) && \
     !defined(OS_AIX)
-  if (severity_ == LOG_FATAL && !base::debug::BeingDebugged()) {
+  //if (severity_ == LOG_FATAL && !base::debug::BeingDebugged()) {
     // Include a stack trace on a fatal, unless a debugger is attached.
-    base::debug::StackTrace trace;
-    stream_ << std::endl;  // Newline to separate from log message.
-    trace.OutputToStream(&stream_);
-  }
+    //base::debug::StackTrace trace;
+    //stream_ << std::endl;  // Newline to separate from log message.
+    //trace.OutputToStream(&stream_);
+  //}
 #endif
   stream_ << std::endl;
   std::string str_newline(stream_.str());
@@ -615,12 +611,12 @@ LogMessage::~LogMessage() {
       //
       // The ASL facility is set to the main bundle ID if available. Otherwise,
       // "com.apple.console" is used.
-      CFBundleRef main_bundle = CFBundleGetMainBundle();
-      CFStringRef main_bundle_id_cf =
-          main_bundle ? CFBundleGetIdentifier(main_bundle) : nullptr;
+      //CFBundleRef main_bundle = CFBundleGetMainBundle();
+      //CFStringRef main_bundle_id_cf =
+          //main_bundle ? CFBundleGetIdentifier(main_bundle) : nullptr;
       std::string asl_facility =
-          main_bundle_id_cf ? base::SysCFStringRefToUTF8(main_bundle_id_cf)
-                            : std::string("com.apple.console");
+          //main_bundle_id_cf ? base::SysCFStringRefToUTF8(main_bundle_id_cf) :
+                             std::string("com.apple.console");
 
       class ASLClient {
        public:
@@ -744,16 +740,11 @@ LogMessage::~LogMessage() {
 
   if (severity_ == LOG_FATAL) {
     // Write the log message to the global activity tracker, if running.
-    base::debug::GlobalActivityTracker* tracker =
-        base::debug::GlobalActivityTracker::Get();
-    if (tracker)
-      tracker->RecordLogMessage(str_newline);
+    //base::debug::GlobalActivityTracker* tracker =
+        //base::debug::GlobalActivityTracker::Get();
+    //if (tracker)
+      //tracker->RecordLogMessage(str_newline);
 
-    // Ensure the first characters of the string are on the stack so they
-    // are contained in minidumps for diagnostic purposes.
-    char str_stack[1024];
-    str_newline.copy(str_stack, arraysize(str_stack));
-    base::debug::Alias(str_stack);
 
     if (!(log_assert_handler_stack == nullptr) &&
         !log_assert_handler_stack.Get().empty()) {
@@ -774,11 +765,11 @@ LogMessage::~LogMessage() {
       // information, and displaying message boxes when the application is
       // hosed can cause additional problems.
 #ifndef NDEBUG
-      if (!base::debug::BeingDebugged()) {
+      //if (!base::debug::BeingDebugged()) {
         // Displaying a dialog is unnecessary when debugging and can complicate
         // debugging.
-        DisplayDebugMessageInDialog(stream_.str());
-      }
+        //DisplayDebugMessageInDialog(stream_.str());
+      //}
 #endif
       // Crash the process to generate a dump.
       base::debug::BreakDebugger();
@@ -879,7 +870,7 @@ BASE_EXPORT std::string SystemErrorCodeToString(SystemErrorCode error_code) {
 }
 #elif defined(OS_POSIX)
 BASE_EXPORT std::string SystemErrorCodeToString(SystemErrorCode error_code) {
-  return base::safe_strerror(error_code);
+  return ""; //base::safe_strerror(error_code);
 }
 #else
 #error Not implemented
@@ -976,6 +967,6 @@ BASE_EXPORT void LogErrorNotReached(const char* file, int line) {
 
 }  // namespace logging
 
-std::ostream& std::operator<<(std::ostream& out, const wchar_t* wstr) {
-  return out << (wstr ? base::WideToUTF8(wstr) : std::string());
-}
+//std::ostream& std::operator<<(std::ostream& out, const wchar_t* wstr) {
+  //return out << (wstr ? base::WideToUTF8(wstr) : std::string());
+//}

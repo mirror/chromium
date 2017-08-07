@@ -296,7 +296,7 @@ void Thread::ThreadMain() {
 
   // Complete the initialization of our Thread object.
   PlatformThread::SetName(name_.c_str());
-  ANNOTATE_THREAD_NAME(name_.c_str());  // Tell the name to race detector.
+  //ANNOTATE_THREAD_NAME(name_.c_str());  // Tell the name to race detector.
 
   // Lazily initialize the |message_loop| so that it can run on this thread.
   DCHECK(message_loop_);
@@ -306,12 +306,12 @@ void Thread::ThreadMain() {
 
 #if defined(OS_POSIX) && !defined(OS_NACL)
   // Allow threads running a MessageLoopForIO to use FileDescriptorWatcher API.
-  std::unique_ptr<FileDescriptorWatcher> file_descriptor_watcher;
-  if (MessageLoopForIO::IsCurrent()) {
-    DCHECK_EQ(message_loop_, MessageLoopForIO::current());
-    file_descriptor_watcher.reset(
-        new FileDescriptorWatcher(MessageLoopForIO::current()));
-  }
+  //std::unique_ptr<FileDescriptorWatcher> file_descriptor_watcher;
+  //if (MessageLoopForIO::IsCurrent()) {
+    //DCHECK_EQ(message_loop_, MessageLoopForIO::current());
+    //file_descriptor_watcher.reset(
+        //new FileDescriptorWatcher(MessageLoopForIO::current()));
+  //}
 #endif
 
 #if defined(OS_WIN)
