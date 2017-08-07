@@ -46,6 +46,30 @@
       "revId": "dac798e2d25c2af87f28d837093504449b84b24c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e601ed09_68d821f3",
+        "filename": "remoting/host/installer/mac/PrivilegedHelperTools/org.chromium.chromoting.me2me.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-07T21:57:37Z",
+      "side": 0,
+      "message": "Makes sense; thanks.",
+      "parentUuid": "2f48135b_5f489eb8",
+      "range": {
+        "startLine": 151,
+        "startChar": 45,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "dac798e2d25c2af87f28d837093504449b84b24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
