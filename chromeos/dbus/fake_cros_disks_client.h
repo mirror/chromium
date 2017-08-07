@@ -68,7 +68,9 @@ class CHROMEOS_EXPORT FakeCrosDisksClient : public CrosDisksClient {
                                MountType mount_type,
                                const std::string& mount_path);
   bool SendFormatCompletedEvent(FormatError error_code,
-                                const std::string& device_path);
+                                const std::string& device_path,
+                                const std::string& label,
+                                const std::string& disk_file_system_type);
 
   // Returns how many times Unmount() was called.
   int unmount_call_count() const {
