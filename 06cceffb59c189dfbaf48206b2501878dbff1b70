@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94604ead_8f7cf83d",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-07T15:45:33Z",
+      "side": 1,
+      "message": "Should it be ON_CALL().WillByDefault()?\nMaybe MockPasswordManagerClient should be a NiceMock?",
+      "range": {
+        "startLine": 162,
+        "startChar": 4,
+        "endLine": 162,
+        "endChar": 15
+      },
+      "revId": "06cceffb59c189dfbaf48206b2501878dbff1b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
