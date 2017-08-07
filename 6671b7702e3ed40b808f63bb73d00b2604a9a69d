@@ -22,6 +22,30 @@
       "revId": "6671b7702e3ed40b808f63bb73d00b2604a9a69d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e770785b_d138a20f",
+        "filename": "testing/scripts/run_telemetry_benchmark_as_googletest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116849
+      },
+      "writtenOn": "2017-08-07T19:30:46Z",
+      "side": 1,
+      "message": "Discussed offline; Ashley is going to move enabled/disabled checking to the JSON test results output of Telemetry.",
+      "parentUuid": "58b49fbb_187a9a5d",
+      "range": {
+        "startLine": 90,
+        "startChar": 40,
+        "endLine": 90,
+        "endChar": 52
+      },
+      "revId": "6671b7702e3ed40b808f63bb73d00b2604a9a69d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
