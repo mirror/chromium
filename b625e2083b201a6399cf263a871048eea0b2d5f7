@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2bb171cd_78055968",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-07T19:51:43Z",
+      "side": 1,
+      "message": "Hmm... This is a serious concern.\n\nThe resetter may introduce a dangerous pattern that:\n\nSelectionInDOMTree selection.\n\n// |selection| may get reset in DoSomeWork()\nDoSomeWork(selection);\n\n// Calling DoSomeOtherWork() assuming non-null |selection|, since |DoSomeWork()| takes |selection| as a |const SelectionInDOMTree\u0026|\nDoSomeOtherWork(selection);\n\nFor |UpdateSelectionForMouseDownDispatchingSelectStart|, it\u0027s fine because no call site has further use of |selection| after calling this function. But still, we need to consider the risk of introducing the dangerous pattern.",
+      "parentUuid": "708d9655_99f89208",
+      "revId": "b625e2083b201a6399cf263a871048eea0b2d5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ca2c893_5aaeebc2",
         "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.cpp",
         "patchSetId": 5
