@@ -40,7 +40,7 @@ import org.chromium.testing.local.LocalRobolectricTestRunner;
 public class AutocompleteEditTextTest {
     private static final String TAG = "cr_AutocompleteTest";
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     @Rule
     public Features.Processor mProcessor = new Features.Processor();
