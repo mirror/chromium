@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55cc0432_f1e7aedc",
+        "filename": "components/ntp_snippets_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T15:00:42Z",
+      "side": 1,
+      "message": "There seems to be a use_titlecase var in grd files, see e.g.:\nhttps://cs.chromium.org/chromium/src/chrome/app/chromium_strings.grd?rcl\u003dc8bb0188f69127148bca00d77a87a62929de2bc6\u0026l\u003d310\n\nCan we use that here? That would feel a bit cleaner to me than android/ios.",
+      "range": {
+        "startLine": 24,
+        "startChar": 20,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "46f151fcbffe9e9fe4818c6ffe081d92b417715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f35a0e_c6512af3",
+        "filename": "components/ntp_snippets_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T15:00:42Z",
+      "side": 1,
+      "message": "Are any of the other local section titles relevant on iOS?",
+      "revId": "46f151fcbffe9e9fe4818c6ffe081d92b417715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
