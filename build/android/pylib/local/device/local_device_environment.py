@@ -4,7 +4,7 @@
 
 import datetime
 import functools
-import logging
+from pylib import logging
 import os
 import shutil
 import tempfile

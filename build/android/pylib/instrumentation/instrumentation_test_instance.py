@@ -3,7 +3,7 @@
 # found in the LICENSE file.
 
 import copy
-import logging
+from pylib import logging
 import os
 import pickle
 import re

@@ -4,7 +4,7 @@
 # found in the LICENSE file.
 
 import functools
-import logging
+from pylib import logging
 import os
 import unittest
 

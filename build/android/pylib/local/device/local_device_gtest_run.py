@@ -4,7 +4,7 @@
 
 import collections
 import itertools
-import logging
+from pylib import logging
 import os
 import posixpath
 import time

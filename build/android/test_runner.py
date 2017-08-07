@@ -9,6 +9,7 @@
 import argparse
 import collections
 import contextlib
+import json
 import itertools
 import logging
 import os
@@ -41,7 +42,6 @@ from pylib.base import test_run_factory
 from pylib.results import json_results
 from pylib.results import report_results
 from pylib.utils import logdog_helper
-from pylib.utils import logging_utils
 
 from py_utils import contextlib_ext
 
@@ -172,7 +172,6 @@ def AddCommonOptions(parser):
       '--gs-results-bucket',
       help='Google Storage bucket to upload results to.')
 
-
   parser.add_argument(
       '--output-directory',
       dest='output_directory', type=os.path.realpath,
@@ -194,12 +193,6 @@ def AddCommonOptions(parser):
 def ProcessCommonOptions(args):
   """Processes and handles all common options."""
   run_tests_helper.SetLogLevel(args.verbose_count, add_handler=False)
-  if args.verbose_count > 0:
-    handler = logging_utils.ColorStreamHandler()
-  else:
-    handler = logging.StreamHandler(sys.stdout)
-  handler.setFormatter(run_tests_helper.CustomFormatter())
-  logging.getLogger().addHandler(handler)
 
   constants.SetBuildType(args.build_type)
   if args.output_directory:
@@ -837,7 +830,7 @@ def RunTestsInPlatformMode(args):
         continue
 
       all_raw_results.append(raw_results)
-
+      print all_raw_results
       iteration_results = base_test_result.TestRunResults()
       for r in reversed(raw_results):
         iteration_results.AddTestRunResults(r)
@@ -876,10 +869,23 @@ def RunTestsInPlatformMode(args):
         else:
           all_pass += 1
 
+
       logging.critical('%s of %s tests passed in all %s runs',
                        str(all_pass),
                        str(tot_tests),
                        str(iteration_count))
+
+    test_info = {}
+    if os.path.exists(env.TestInfoCachePath()):
+      with open(env.TestInfoCachePath(), 'r') as f:
+        test_info = json.load(f)
+    for results in all_raw_results:
+      for result in results:
+        for r in result.GetAll():
+          if r.GetDuration():
+            test_info[str(r)] = {'duration_ms': r.GetDuration()}
+    with open(env.TestInfoCachePath(), 'w') as f:
+      json.dump(test_info, f)
 
   if args.command == 'perf' and (args.steps or args.single_step):
     return 0

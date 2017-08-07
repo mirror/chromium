@@ -3,7 +3,7 @@
 # found in the LICENSE file.
 
 import contextlib
-import logging
+from pylib import logging
 import os
 import posixpath
 import re
@@ -549,6 +549,12 @@ class LocalDeviceInstrumentationTestRun(
 
     if self._env.concurrent_adb:
       post_test_step_thread_group.JoinAll()
+
+    if result.GetType() == base_test_result.ResultType.PASS:
+      logging.test_pass('%s %s', result.GetType(), test_display_name)
+    else:
+      logging.test_fail('%s %s', result.GetType(), test_display_name)
+
     return results, None
 
   def _SaveScreenshot(self, device, screenshot_host_dir, screenshot_device_file,

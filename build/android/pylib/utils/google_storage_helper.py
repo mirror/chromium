@@ -10,7 +10,7 @@ to Google Storage directly using this module.
 """
 
 import hashlib
-import logging
+from pylib import logging
 import os
 import sys
 import time

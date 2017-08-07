@@ -12,7 +12,6 @@ Tests run the script with various inputs and check the status of the filesystem
 '''
 
 import contextlib
-import logging
 import os
 import shutil
 import sys
@@ -22,6 +21,7 @@ import zipfile
 
 sys.path.append(os.path.join(os.path.dirname(__file__), os.pardir))
 from play_services import update
+from pylib import logging
 import devil_chromium  # pylint: disable=import-error,unused-import
 from devil.utils import cmd_helper
 

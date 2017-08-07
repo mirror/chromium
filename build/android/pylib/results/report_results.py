@@ -4,7 +4,7 @@
 
 """Module containing utility functions for reporting results."""
 
-import logging
+from pylib import logging
 import os
 import re
 
@@ -95,12 +95,14 @@ def LogFull(results, test_type, test_package, annotation=None,
     logging.critical('*' * 80)
     for line in results.GetLogs().splitlines():
       logging.critical(line)
-  logging.critical('*' * 80)
-  logging.critical('Summary')
-  logging.critical('*' * 80)
+  logging_func = (logging.test_pass if results.DidRunPass()
+                  else logging.test_fail)
+  logging_func('*' * 80)
+  logging_func('Summary')
+  logging_func('*' * 80)
   for line in results.GetGtestForm().splitlines():
-    logging.critical(line)
-  logging.critical('*' * 80)
+    logging_func(line)
+  logging_func('*' * 80)
 
   if os.environ.get('BUILDBOT_BUILDERNAME'):
     # It is possible to have multiple buildbot steps for the same
