@@ -5,6 +5,7 @@
 #include "content/browser/devtools/service_worker_devtools_agent_host.h"
 
 #include "base/strings/stringprintf.h"
+#include "build/build_config.h"
 #include "content/browser/devtools/protocol/network_handler.h"
 #include "content/browser/devtools/service_worker_devtools_manager.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
@@ -68,8 +69,14 @@ std::string ServiceWorkerDevToolsAgentHost::GetType() {
 
 std::string ServiceWorkerDevToolsAgentHost::GetTitle() {
   if (RenderProcessHost* host = RenderProcessHost::FromID(worker_id().first)) {
-    return base::StringPrintf("Worker pid:%d",
-                              base::GetProcId(host->GetHandle()));
+    return base::StringPrintf(
+        "Worker pid:"
+#if defined(OS_FUCHSIA)
+        "%lu",
+#else
+        "%d",
+#endif
+        base::GetProcId(host->GetHandle()));
   }
   return "";
 }
