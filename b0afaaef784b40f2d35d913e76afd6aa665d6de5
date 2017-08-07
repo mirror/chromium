@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "776f0fc2_d5aa6b99",
+        "filename": "chrome/browser/chromeos/policy/remote_commands/screenshot_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-07T16:32:06Z",
+      "side": 1,
+      "message": "Nuke any includes that are no longer needed.",
+      "revId": "b0afaaef784b40f2d35d913e76afd6aa665d6de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897cb439_f7a945a6",
+        "filename": "ui/snapshot/screenshot_grabber.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-07T16:32:06Z",
+      "side": 1,
+      "message": "I think you should add USER_VISIBLE too (as ChromeScreenshotGrabber() previously had).",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 30
+      },
+      "revId": "b0afaaef784b40f2d35d913e76afd6aa665d6de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d7f8c9b_c5412e07",
+        "filename": "ui/snapshot/snapshot.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-07T16:32:06Z",
+      "side": 1,
+      "message": "USER_VISIBLE too?",
+      "range": {
+        "startLine": 42,
+        "startChar": 27,
+        "endLine": 42,
+        "endChar": 46
+      },
+      "revId": "b0afaaef784b40f2d35d913e76afd6aa665d6de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad334e1b_ebcb619d",
+        "filename": "ui/snapshot/snapshot_async.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-07T16:32:06Z",
+      "side": 1,
+      "message": "USER_VISIBLE?",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 41
+      },
+      "revId": "b0afaaef784b40f2d35d913e76afd6aa665d6de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
