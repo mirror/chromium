@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9c40382_c46e5370",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T21:44:33Z",
+      "side": 1,
+      "message": "The thing I\u0027m worried about here is removing a !safe_for_autoreplace URL.  That would be a true-manual-addition type thing and I kinda wouldn\u0027t want to blow that away.  Maybe in that case it\u0027s OK not to touch this or update its timestamp, and have it get filtered out, because the user has explicitly looked at this engine in the search engine edit dialog before, and if they wanted it as default, they could have done so then?\n\nI suspect this would be rare; most !prepopulated entries would still be safe_for_autoreplace due to auto-addition on visits.",
+      "revId": "a2bcbfa333adc17d90f671b31cfc3fbec900cf6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33cb2ddb_47b308d1",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T21:44:33Z",
+      "side": 1,
+      "message": "This conditional seems incorrect.\n\nFirst, the DCHECK can never fail, because we\u0027re inside a conditional for (added_turl).  Second, I don\u0027t think you meant to return false if we succeeded in adding the URL.  And it doesn\u0027t make sense to handle DCHECK failure anyway (per our style guide).\n\nSo I think probably leaving the old code as is was is more what you want?",
+      "revId": "a2bcbfa333adc17d90f671b31cfc3fbec900cf6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
