@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e45241c_347bb30d",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-08-07T18:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32311a63_2d080d6a",
+      "revId": "1f90bba5d4acd2b40af6d902de45435dd8c0c384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3622fb73_31002aed",
         "filename": "build/android/pylib/android/logcat_symbolizer.py",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4ff7e0b0_c4a3bb4f",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-08-07T18:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3622fb73_31002aed",
+      "revId": "1f90bba5d4acd2b40af6d902de45435dd8c0c384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a81eb3c9_877f3d3a",
         "filename": "build/android/pylib/android/logcat_symbolizer.py",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "1f90bba5d4acd2b40af6d902de45435dd8c0c384",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4823d26c_8c04c3c3",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-08-07T18:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a81eb3c9_877f3d3a",
+      "revId": "1f90bba5d4acd2b40af6d902de45435dd8c0c384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
