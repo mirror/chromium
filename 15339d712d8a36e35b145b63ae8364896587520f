@@ -22,6 +22,30 @@
       "revId": "15339d712d8a36e35b145b63ae8364896587520f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454b9e09_30ec6943",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-07T18:53:47Z",
+      "side": 1,
+      "message": "It overrides MediaSinkServiceBase::RecordDeviceCounts() and is called from MediaSinkServiceBase::OnFetchCompleted(). We extract MediaSinkServiceBase class because Dial and Cast discovery share some common logic...\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/media/router/discovery/media_sink_service_base.cc?rcl\u003d761258229d296808a404cc3cc0bc80c1fab28629\u0026l\u003d41",
+      "parentUuid": "54e12bba_90b8b98e",
+      "range": {
+        "startLine": 43,
+        "startChar": 53,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "15339d712d8a36e35b145b63ae8364896587520f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
