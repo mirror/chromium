@@ -16,6 +16,24 @@
       "revId": "8ea554f1b66f1822241de64e883a2f03aad1e05f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1105f5f9_049c0ccc",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-07T20:42:59Z",
+      "side": 1,
+      "message": "Thx for the drive-by Marijn. I\u0027ve added a comment here with a TODO - let me know if you disagree with my proposed solution for assuring default value equivalency.",
+      "parentUuid": "52f99ca7_5105eef1",
+      "revId": "8ea554f1b66f1822241de64e883a2f03aad1e05f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
