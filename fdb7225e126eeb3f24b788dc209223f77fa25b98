@@ -22,6 +22,30 @@
       "revId": "fdb7225e126eeb3f24b788dc209223f77fa25b98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c25579_43c2fc8d",
+        "filename": "chrome/browser/ui/browser_live_tab_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-07T21:40:28Z",
+      "side": 1,
+      "message": "Done. I add /* session_restored_initiated */.",
+      "parentUuid": "3a8f956f_fb49bbfd",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 11
+      },
+      "revId": "fdb7225e126eeb3f24b788dc209223f77fa25b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
