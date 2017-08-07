@@ -355,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "92386df4_3ac05935",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-07T23:28:55Z",
+      "side": 1,
+      "message": "Got it, thanks for the discussion.",
+      "parentUuid": "3756a8fc_aa6a0919",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "b868c66277225747ed144ca290577a1c04880d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3ea2b25_4e4e04d1",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 2
@@ -390,6 +414,30 @@
       "side": 1,
       "message": "This function is called when the mocha test is run. it will be called inside of a function that calls the .then() method of the Promise returned by this function to run the audit. If I understand correctly, `this` is bound by the lexical scoping of AccessibilityTestDefinition object. Please let me know if I\u0027m mistaken or confusing!",
       "parentUuid": "a3ea2b25_4e4e04d1",
+      "range": {
+        "startLine": 54,
+        "startChar": 24,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "b868c66277225747ed144ca290577a1c04880d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f6e956_4809f58e",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-07T23:28:55Z",
+      "side": 1,
+      "message": "Thanks for the explanation :)",
+      "parentUuid": "159c1c23_3c797430",
       "range": {
         "startLine": 54,
         "startChar": 24,
