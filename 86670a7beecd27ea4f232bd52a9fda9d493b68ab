@@ -22,6 +22,30 @@
       "revId": "86670a7beecd27ea4f232bd52a9fda9d493b68ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "effcbebc_b5bee214",
+        "filename": "extensions/common/extensions_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2017-08-07T06:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e23b58de_5a00b968",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 17
+      },
+      "revId": "86670a7beecd27ea4f232bd52a9fda9d493b68ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
