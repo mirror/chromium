@@ -46,7 +46,7 @@
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/InputMethodController.h"
 #include "core/editing/RenderedPosition.h"
-#include "core/editing/SetSelectionData.h"
+#include "core/editing/SetSelectionOptions.h"
 #include "core/editing/VisibleUnits.h"
 #include "core/editing/commands/ApplyStyleCommand.h"
 #include "core/editing/commands/DeleteSelectionCommand.h"
@@ -945,7 +945,7 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
 
   // Don't clear the typing style with this selection change. We do those things
   // elsewhere if necessary.
-  ChangeSelectionAfterCommand(new_selection, SetSelectionData());
+  ChangeSelectionAfterCommand(new_selection, SetSelectionOptions());
 
   if (!cmd->PreservesTypingStyle())
     ClearTypingStyle();
@@ -985,7 +985,7 @@ void Editor::UnappliedEditing(UndoStep* cmd) {
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->StartingSelection(), GetFrame().GetDocument());
   ChangeSelectionAfterCommand(new_selection,
-                              SetSelectionData::Builder()
+                              SetSelectionOptions::Builder()
                                   .SetShouldCloseTyping(true)
                                   .SetShouldClearTypingStyle(true)
                                   .Build());
@@ -1008,7 +1008,7 @@ void Editor::ReappliedEditing(UndoStep* cmd) {
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->EndingSelection(), GetFrame().GetDocument());
   ChangeSelectionAfterCommand(new_selection,
-                              SetSelectionData::Builder()
+                              SetSelectionOptions::Builder()
                                   .SetShouldCloseTyping(true)
                                   .SetShouldClearTypingStyle(true)
                                   .Build());
@@ -1485,7 +1485,7 @@ void Editor::AddToKillRing(const EphemeralRange& range) {
 
 void Editor::ChangeSelectionAfterCommand(
     const SelectionInDOMTree& new_selection,
-    const SetSelectionData& options) {
+    const SetSelectionOptions& options) {
   if (new_selection.IsNone())
     return;
 
@@ -1495,7 +1495,7 @@ void Editor::ChangeSelectionAfterCommand(
       new_selection == GetFrame().Selection().GetSelectionInDOMTree();
   GetFrame().Selection().SetSelection(
       new_selection,
-      SetSelectionData::Builder(options)
+      SetSelectionOptions::Builder(options)
           .SetShouldShowHandle(GetFrame().Selection().IsHandleVisible())
           .Build());
 
