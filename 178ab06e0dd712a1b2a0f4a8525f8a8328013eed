@@ -111,6 +111,23 @@
     },
     {
       "key": {
+        "uuid": "f625b2fc_ed841226",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:16:26Z",
+      "side": 1,
+      "message": "maybe use content::BindInterface() here too? It seems nicer than having to write this out manually.",
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d9394ee_cdc534d7",
         "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
         "patchSetId": 13
@@ -237,6 +254,63 @@
     },
     {
       "key": {
+        "uuid": "4f05fb99_b1965035",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:16:26Z",
+      "side": 1,
+      "message": "Typemap? \u003d)\n\n(This should address awong\u0027s comments about the rather verbose way of sending a pid that\u0027s currently needed by adding a bunch of lines of boilerplate outside this file ;-)",
+      "range": {
+        "startLine": 173,
+        "startChar": 23,
+        "endLine": 173,
+        "endChar": 59
+      },
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bfdaf1d_09d99233",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:16:26Z",
+      "side": 1,
+      "message": "Nit: I\u0027m assuming this comes from BrowserChildProcessObserver, so maybe note as such.",
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ea0693_8118d210",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:16:26Z",
+      "side": 1,
+      "message": "And this comes from NotificationObserver (which I thought we\u0027ve been trying to remove... oh well)",
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9376013_7bb21370",
         "filename": "chrome/common/chrome_content_client.cc",
         "patchSetId": 13
@@ -323,6 +397,46 @@
     },
     {
       "key": {
+        "uuid": "9773fc3f_bd9d62ee",
+        "filename": "chrome/common/profiling/memlog_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:16:26Z",
+      "side": 1,
+      "message": "Similarly to the BindingSet question, do we expect to get multiple StartProfiling calls? I guess if profiling was stopped and restarted?",
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef09881_38de0d0d",
+        "filename": "chrome/common/profiling/memlog_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:16:26Z",
+      "side": 1,
+      "message": "Nit: sizeof(header)",
+      "range": {
+        "startLine": 52,
+        "startChar": 44,
+        "endLine": 52,
+        "endChar": 56
+      },
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa3d5753_3e015c88",
         "filename": "chrome/common/profiling/memlog_client.h",
         "patchSetId": 13
@@ -351,6 +465,40 @@
       "writtenOn": "2017-08-05T04:47:48Z",
       "side": 1,
       "message": "nit: Move startProfiling first and separate from the others as a block.\nAdd comment above saying \"// mojom::MemlogClient overrides\" or similar.",
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3b82d5_f26ad20b",
+        "filename": "chrome/common/profiling/memlog_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:16:26Z",
+      "side": 1,
+      "message": "Does this need to be a binding set? (See my comment below)\n\nMy theory is \"yes, because we expect to be able to call StartProfiling multiple times\".",
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e580dda_4ec243a5",
+        "filename": "chrome/profiling/memlog_connection_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:16:26Z",
+      "side": 1,
+      "message": "Not introduced in this CL, but I wonder if flat map is OK here... I guess the process limit is low enough that this will never exceed 100 items, and so is always reasonably fast enough?",
       "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
