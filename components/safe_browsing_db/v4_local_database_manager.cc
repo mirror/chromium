@@ -186,13 +186,20 @@ scoped_refptr<V4LocalDatabaseManager> V4LocalDatabaseManager::Create(
 }
 
 void V4LocalDatabaseManager::CollectDatabaseManagerInfo(
-    DatabaseManagerInfo* database_manager_info) const {
-  v4_update_protocol_manager_->CollectUpdateInfo(
-      database_manager_info->mutable_update_info());
-
-  // Update the protobuf with the information from V4Database.
-  v4_database_->CollectDatabaseInfo(
-      database_manager_info->mutable_database_info());
+    DatabaseManagerInfo* database_manager_info,
+    FullHashCacheInfo* full_hash_cache_info) const {
+  if (v4_update_protocol_manager_) {
+    v4_update_protocol_manager_->CollectUpdateInfo(
+        database_manager_info->mutable_update_info());
+  }
+  if (v4_database_) {
+    v4_database_->CollectDatabaseInfo(
+        database_manager_info->mutable_database_info());
+  }
+  if (v4_get_hash_protocol_manager_) {
+    v4_get_hash_protocol_manager_->CollectFullHashCacheInfo(
+        full_hash_cache_info);
+  }
 }
 
 V4LocalDatabaseManager::V4LocalDatabaseManager(
