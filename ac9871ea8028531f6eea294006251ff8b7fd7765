@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d06c657b_476aa3ab",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-08-07T22:07:35Z",
+      "side": 1,
+      "message": "Maybe change \"interval\" to \"threshold\", as interval implies a recurring event.",
+      "range": {
+        "startLine": 387,
+        "startChar": 42,
+        "endLine": 387,
+        "endChar": 66
+      },
+      "revId": "ac9871ea8028531f6eea294006251ff8b7fd7765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdce59fc_ae5b5dbd",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3583,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-08-07T22:07:35Z",
+      "side": 1,
+      "message": "There\u0027s a mix of the test calling SetCriticalBeginMainFrameToActivatgeIsFast explicitly vs. having it be updated by the BeginFrame. Can you write it so that this one is also implicit, the way you do on line 3604?",
+      "revId": "ac9871ea8028531f6eea294006251ff8b7fd7765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
