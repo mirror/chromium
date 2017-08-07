@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4159c18_31fb59b3",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-07T04:29:26Z",
+      "side": 1,
+      "message": "Can you factor out animation set up part into a separated method?",
+      "range": {
+        "startLine": 418,
+        "startChar": 0,
+        "endLine": 432,
+        "endChar": 51
+      },
+      "revId": "5faa657e948c24d42cac53c5cd98c9056e863144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9ae979_7832aa3e",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-07T04:29:26Z",
+      "side": 1,
+      "message": "Can you move this to outside of if? The state can be changed before setting up animation.",
+      "range": {
+        "startLine": 434,
+        "startChar": 0,
+        "endLine": 436,
+        "endChar": 53
+      },
+      "revId": "5faa657e948c24d42cac53c5cd98c9056e863144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d920ad_8c11dd6f",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-07T04:29:26Z",
+      "side": 1,
+      "message": "This can be merged to the above call.",
+      "range": {
+        "startLine": 441,
+        "startChar": 8,
+        "endLine": 441,
+        "endChar": 53
+      },
+      "revId": "5faa657e948c24d42cac53c5cd98c9056e863144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c0ba4c_1b99f82a",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-07T04:29:26Z",
+      "side": 1,
+      "message": "This isn\u0027t needed because the state is changed to HIDDEN in HideAnimationFinished()",
+      "range": {
+        "startLine": 450,
+        "startChar": 8,
+        "endLine": 450,
+        "endChar": 53
+      },
+      "revId": "5faa657e948c24d42cac53c5cd98c9056e863144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
