@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "5f28e9a4_27179d2a",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-07T18:54:00Z",
+      "side": 1,
+      "message": "Just wanted to double check and make sure this is intended for use only when enable_plugins is true. This feels useful on Android, but maybe I wasn\u0027t paying attention and missed something?",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfe1808_d42f63a0",
+        "filename": "chrome/browser/plugins/chrome_plugin_service_filter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-07T18:54:00Z",
+      "side": 1,
+      "message": "Put this up around line 42 with the other static declarations.",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7baa52_4890a441",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-07T18:54:00Z",
+      "side": 1,
+      "message": "This\n  is\n     really\n  hard to\n      read\n\nHow about creating some variables and pass those into IsPluginAvailable() instead?",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab57949b_cb2bea4a",
         "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
         "patchSetId": 9
@@ -53,6 +104,155 @@
       "writtenOn": "2017-08-07T18:28:05Z",
       "side": 1,
       "message": "thestig: Can you think of any security issues with this? It seems okay to me, (loading this data url in an iframe)... but i\u0027m not sure.",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db471c27_6e52ead5",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-07T18:54:00Z",
+      "side": 1,
+      "message": "Ask a security reviewer?",
+      "parentUuid": "cf3488bb_d9524162",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f602c6d_ce2087dd",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-07T18:54:00Z",
+      "side": 1,
+      "message": "OnceClosure",
+      "range": {
+        "startLine": 21,
+        "startChar": 39,
+        "endLine": 21,
+        "endChar": 46
+      },
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b418cff5_beb39434",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-07T18:54:00Z",
+      "side": 1,
+      "message": "What\u0027s the lifetime of the plugin pref that this is being set for? Does setting this mean the next test case will use this setting as well?",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb73dca5_e26d1437",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-07T18:54:00Z",
+      "side": 1,
+      "message": "Isn\u0027t this going to get destroyed at the end of SetUp(), before the body of the test actually has a chance to run?",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d9f036_a24c998a",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-07T18:54:00Z",
+      "side": 1,
+      "message": "BindOnce",
+      "range": {
+        "startLine": 55,
+        "startChar": 14,
+        "endLine": 55,
+        "endChar": 18
+      },
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40d746d_38c8e7b4",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-07T18:54:00Z",
+      "side": 1,
+      "message": "This should be an ASSERT_NE, otherwise dereferencing |throttle| on the next line will crash the entire unit test.",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6a6454_0a50a244",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-07T18:54:00Z",
+      "side": 1,
+      "message": "Whereas there is less (or no?) harm if this is EXPECT_EQ().",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30db418d_b2a92642",
+        "filename": "chrome/browser/printing/print_preview_dialog_controller_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-07T18:54:00Z",
+      "side": 1,
+      "message": "No longer needed. Remove related headers when removing code if it\u0027s the last/only user.",
       "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
