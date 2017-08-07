@@ -4,8 +4,14 @@
 
 #include "extensions/utility/utility_handler.h"
 
+#include <memory>
+#include <string>
+#include <utility>
+
 #include "base/command_line.h"
 #include "base/files/file_path.h"
+#include "base/location.h"
+#include "base/task_scheduler/post_task.h"
 #include "content/public/utility/utility_thread.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension_l10n_util.h"
@@ -27,6 +33,13 @@ namespace extensions {
 
 namespace {
 
+void WrapUnpackCallback(
+    mojom::ExtensionUnpacker::UnpackCallback callback,
+    std::unique_ptr<base::string16> error,
+    std::unique_ptr<base::DictionaryValue> parsed_manifest) {
+  std::move(callback).Run(*error, std::move(parsed_manifest));
+}
+
 class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
  public:
   ExtensionUnpackerImpl() = default;
@@ -42,13 +55,19 @@ class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
   void Unzip(const base::FilePath& file,
              const base::FilePath& path,
              UnzipCallback callback) override {
-    std::unique_ptr<base::DictionaryValue> manifest;
-    if (UnzipFileManifestIntoPath(file, path, &manifest)) {
-      std::move(callback).Run(
-          UnzipFileIntoPath(file, path, std::move(manifest)));
-    } else {
-      std::move(callback).Run(false);
-    }
+    // Move unzip operation to background thread to avoid blocking the main
+    // utility thread for extended amont of time. For example, this prevents
+    // extension unzipping block receipt of the connection complete
+    // notification for the utility process channel to the browser process,
+    // which could cause the utility process to terminate itself due to browser
+    // process being considered unreachable.
+    base::PostTaskWithTraitsAndReplyWithResult(
+        FROM_HERE,
+        {base::TaskPriority::USER_VISIBLE, base::MayBlock(),
+         base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
+        base::BindOnce(&ExtensionUnpackerImpl::UnzipOnBackgroundTaskRunner,
+                       file, path),
+        std::move(callback));
   }
 
   void Unpack(version_info::Channel channel,
@@ -68,13 +87,48 @@ class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
     SetCurrentChannel(channel);
     SetCurrentFeatureSessionType(type);
 
+    std::unique_ptr<base::string16> error = base::MakeUnique<base::string16>();
+    base::string16* error_ptr = error.get();
+
+    // Move unpack operation to background thread to prevent it from blocking
+    // the utility process thread for extended amount of time.
+    base::PostTaskWithTraitsAndReplyWithResult(
+        FROM_HERE,
+        {base::TaskPriority::USER_VISIBLE, base::MayBlock(),
+         base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
+        base::BindOnce(&ExtensionUnpackerImpl::UnpackOnBackgroundTaskRunner,
+                       path, extension_id, location, creation_flags, error_ptr),
+        base::BindOnce(&WrapUnpackCallback, std::move(callback),
+                       std::move(error)));
+  }
+
+  // Unzips the extension from |file| to |path|.
+  // Returns whether the unzip operation succeeded.
+  static bool UnzipOnBackgroundTaskRunner(const base::FilePath& file,
+                                          const base::FilePath& path) {
+    std::unique_ptr<base::DictionaryValue> manifest;
+    if (!UnzipFileManifestIntoPath(file, path, &manifest))
+      return false;
+
+    return UnzipFileIntoPath(file, path, std::move(manifest));
+  }
+
+  // Unpacks the extension on background task runner.
+  // On success, returns the parsed extension manifest. On failure returns null
+  // and sets |error| to the encountered error description.
+  static std::unique_ptr<base::DictionaryValue> UnpackOnBackgroundTaskRunner(
+      const base::FilePath& path,
+      const std::string& extension_id,
+      Manifest::Location location,
+      int32_t creation_flags,
+      base::string16* error) {
     Unpacker unpacker(path.DirName(), path, extension_id, location,
                       creation_flags);
-    if (unpacker.Run()) {
-      std::move(callback).Run(base::string16(), unpacker.TakeParsedManifest());
-    } else {
-      std::move(callback).Run(unpacker.error_message(), nullptr);
-    }
+    if (unpacker.Run())
+      return unpacker.TakeParsedManifest();
+
+    *error = unpacker.error_message();
+    return nullptr;
   }
 
   static bool UnzipFileManifestIntoPath(
