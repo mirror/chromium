@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f9ca3c4_fba5f994",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-07T19:39:40Z",
+      "side": 1,
+      "message": "Why isn\u0027t this the case?  I had assumed the issue was MockREsourceLoader wasn\u0027t calling what it normally does at the end due to the cancellation, but that would mean we\u0027d have to call OnResponseCompleted with an error status, not CancelWithError on test_handler_.  What\u0027s going on here?",
+      "range": {
+        "startLine": 328,
+        "startChar": 28,
+        "endLine": 328,
+        "endChar": 0
+      },
+      "revId": "05628c17415c8e01352e65aefb1ee634a0134bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
