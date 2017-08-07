@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83a01edb_52f01ea3",
+        "filename": "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-07T14:45:52Z",
+      "side": 1,
+      "message": "Don\u0027t need semicolon",
+      "revId": "26fc9dc8c8b464181c6c3fab2e821d3b1651d88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
