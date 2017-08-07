@@ -43,6 +43,9 @@ class CORE_EXPORT NGLayoutInputNode {
   bool IsOutOfFlowPositioned() const;
   bool IsReplaced() const;
 
+  // TODO comments!
+  bool IsQuirkyContainer() const;
+
   bool CreatesNewFormattingContext() const;
 
   // Performs layout on this input node, will return the layout result.
