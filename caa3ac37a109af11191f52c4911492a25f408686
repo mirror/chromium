@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca96cf08_f9db40d2",
+        "filename": "ash/system/palette/palette_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-07T21:51:14Z",
+      "side": 1,
+      "message": "nit: should this be at the top of the function?",
+      "revId": "caa3ac37a109af11191f52c4911492a25f408686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4839aa6_686c3d58",
+        "filename": "ash/system/palette/palette_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-07T21:51:14Z",
+      "side": 1,
+      "message": "nit: How about SetHasStylusInputForTesting(), since what this does is cause HasStylusInput() to return true?",
+      "revId": "caa3ac37a109af11191f52c4911492a25f408686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
