@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "dbf7c666_14a42a75",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-07T22:13:07Z",
+      "side": 1,
+      "message": "The reason I chose a binding set was due to issues around re-using a RFH for multiple RFs.\n\nYou can see the old code here, let me know if you\u0027d prefer this type of solution:\nhttps://chromium-review.googlesource.com/c/553178/5/content/browser/frame_host/render_frame_host_impl.cc",
+      "parentUuid": "6b204e18_92bdaf6f",
+      "revId": "fd60bc54cd43d2ef127a325c8398f5ad07944dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b498891_ee2d4df5",
         "filename": "content/public/app/mojo/content_browser_manifest.json",
         "patchSetId": 7
