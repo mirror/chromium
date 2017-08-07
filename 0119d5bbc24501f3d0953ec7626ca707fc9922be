@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f341cce_14b339c9",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-07T14:34:27Z",
+      "side": 1,
+      "message": "We\u0027ll eventually want to wrap this in a check against the experimental web platform features flag. Something like:\n\n```\nif (base::CommandLine::ForCurrentProcess()-\u003eHasSwitch(\n        switches::kEnableExperimentalWebPlatformFeatures)) {\n  AddThrottle(...);\n}\n```\n\nOr put the check in `OriginManifestNavigationThrottle::CreateThrottleForNavigation`. Either way is fine with me.",
+      "revId": "0119d5bbc24501f3d0953ec7626ca707fc9922be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a900491d_2401f87b",
+        "filename": "content/browser/frame_host/origin_manifest_navigation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-07T14:34:27Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is going to be the correct instance in all cases that we care about, but it seems like it should work (and I don\u0027t think we have a mechanism to get the instance that would be associated with the page we\u0027re loading, as it\u0027s not created yet).",
+      "revId": "0119d5bbc24501f3d0953ec7626ca707fc9922be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0151faf_bf9ade88",
+        "filename": "content/browser/frame_host/origin_manifest_navigation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-07T14:34:27Z",
+      "side": 1,
+      "message": "clamy@, et al: Does this look like a reasonable approach? The goal is to be able to block the navigation while we request a different resource, process the response, and do some munging on the response headers/state/etc.",
+      "revId": "0119d5bbc24501f3d0953ec7626ca707fc9922be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
