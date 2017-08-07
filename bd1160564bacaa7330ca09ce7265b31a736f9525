@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b9073b01_c2a8e196",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-07T18:34:20Z",
+      "side": 1,
+      "message": "This didn\u0027t work in mash. Device manager is not set here but it contains a input manager which is already set in mash. I think the best way is to just ignore device and input manager for tests.",
+      "range": {
+        "startLine": 53,
+        "startChar": 36,
+        "endLine": 53,
+        "endChar": 42
+      },
+      "revId": "bd1160564bacaa7330ca09ce7265b31a736f9525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "712dc261_11b02449",
         "filename": "ash/system/palette/palette_tray_unittest.cc",
         "patchSetId": 2
@@ -16,6 +39,24 @@
       "revId": "bd1160564bacaa7330ca09ce7265b31a736f9525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df82e90c_2f6270ee",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-07T18:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "712dc261_11b02449",
+      "revId": "bd1160564bacaa7330ca09ce7265b31a736f9525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -36,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "cb1c6956_7816453e",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-07T18:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "639efaca_75880ede",
+      "revId": "bd1160564bacaa7330ca09ce7265b31a736f9525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09463943_ab17654e",
         "filename": "ash/system/palette/palette_tray_unittest.cc",
         "patchSetId": 2
@@ -53,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "ab82a8d3_b1c237e9",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-07T18:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09463943_ab17654e",
+      "revId": "bd1160564bacaa7330ca09ce7265b31a736f9525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5199153e_b3b08bfa",
         "filename": "ash/system/palette/palette_tray_unittest.cc",
         "patchSetId": 2
@@ -67,6 +144,24 @@
       "revId": "bd1160564bacaa7330ca09ce7265b31a736f9525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "797b8b6e_f93c0a4c",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-07T18:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5199153e_b3b08bfa",
+      "revId": "bd1160564bacaa7330ca09ce7265b31a736f9525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
