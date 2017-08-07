@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "123dbbef_a838c9aa",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-07T18:27:45Z",
+      "side": 1,
+      "message": "The remove-erase idiom usually passes .end() as the second argument to erase().",
+      "range": {
+        "startLine": 165,
+        "startChar": 59,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "06e908c427e6477ff19a91c95a28cd9c16daf9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "454c4b75_73fd0483",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 4
@@ -18,6 +41,70 @@
         "startChar": 27,
         "endLine": 217,
         "endChar": 55
+      },
+      "revId": "06e908c427e6477ff19a91c95a28cd9c16daf9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c31ab3e_25c89376",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-07T18:27:45Z",
+      "side": 1,
+      "message": "I don\u0027t think this check is strictly needed for a sink to be added. Although it would seem like an error if the service isn\u0027t in services_pending_resolution_. It seems it\u0027s still needed for OnNetworksChanged though.",
+      "parentUuid": "454c4b75_73fd0483",
+      "range": {
+        "startLine": 217,
+        "startChar": 27,
+        "endLine": 217,
+        "endChar": 55
+      },
+      "revId": "06e908c427e6477ff19a91c95a28cd9c16daf9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7a572c_93fa264e",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-07T18:27:45Z",
+      "side": 1,
+      "message": "What if we already have an entry for |last_network_id|?",
+      "revId": "06e908c427e6477ff19a91c95a28cd9c16daf9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9851162_2b546c5a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-07T18:27:45Z",
+      "side": 1,
+      "message": "Do we need to update service_cache_ here the cache will be updated with current_services_ in OnNetworksChanged?",
+      "range": {
+        "startLine": 308,
+        "startChar": 62,
+        "endLine": 308,
+        "endChar": 0
       },
       "revId": "06e908c427e6477ff19a91c95a28cd9c16daf9bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
