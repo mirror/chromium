@@ -6,6 +6,7 @@ package org.chromium.content.browser.test;
 
 import org.chromium.base.test.BaseChromiumInstrumentationTestRunner;
 import org.chromium.base.test.BaseTestResult;
+import org.chromium.ui.test.util.UiRestrictionSkipCheck;
 
 /**
  * An instrumentation test runner similar to BaseInstrumentationTestRunner but which also registers
@@ -15,6 +16,7 @@ public class ContentInstrumentationTestRunner extends BaseChromiumInstrumentatio
     @Override
     protected void addTestHooks(BaseTestResult result) {
         super.addTestHooks(result);
+        result.addSkipCheck(new UiRestrictionSkipCheck(getTargetContext()));
         result.addPreTestHook(new ChildProcessAllocatorSettingsHook());
     }
 }
