@@ -627,7 +627,11 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback,
             String[] displayNames = new String[uris.length];
             try {
                 for (int i = 0; i < uris.length; i++) {
-                    mFilePaths[i] = uris[i].toString();
+                    if (ContentResolver.SCHEME_FILE.equals(uris[i].getScheme())) {
+                        mFilePaths[i] = uris[i].getSchemeSpecificPart();
+                    } else {
+                        mFilePaths[i] = uris[i].toString();
+                    }
                     displayNames[i] = ContentUriUtils.getDisplayName(
                             uris[i], mContext, MediaStore.MediaColumns.DISPLAY_NAME);
                 }
