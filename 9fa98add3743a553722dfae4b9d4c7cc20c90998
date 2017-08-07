@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "35aa4989_83ec4f15",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/Tile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-07T13:02:39Z",
+      "side": 1,
+      "message": "I think this is fine with me.",
+      "parentUuid": "3004067f_9b803078",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "9fa98add3743a553722dfae4b9d4c7cc20c90998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b725d9c5_b2795b81",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 5
@@ -129,6 +153,30 @@
       "side": 1,
       "message": "I didn\u0027t go too much into details about it, just wanted to make sure I kept existing code consistent, by wrapping the onSiteSuggestionsAvailable call as the previous FakeMostVisitedSites was doing.\n\nSo I think what happens is that we call notifyTileSuggestionsAvailable or similar calls on the test thread, but because it might end up doing view manipulation (when in instrumentation tests) it crashes.\n\nAnother alternative might be to add a notifyTileSuggestionsAvailableOnUIThread(), wdyt?",
       "parentUuid": "68fe1b72_3656a05c",
+      "range": {
+        "startLine": 37,
+        "startChar": 56,
+        "endLine": 37,
+        "endChar": 96
+      },
+      "revId": "9fa98add3743a553722dfae4b9d4c7cc20c90998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1c28a6_b1f0d374",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/FakeMostVisitedSites.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-07T13:02:39Z",
+      "side": 1,
+      "message": "\u003e I didn\u0027t go too much into details about it, just wanted to make sure I kept existing code consistent, by wrapping the onSiteSuggestionsAvailable call as the previous FakeMostVisitedSites was doing.\n\u003e \n\u003e So I think what happens is that we call notifyTileSuggestionsAvailable or similar calls on the test thread, but because it might end up doing view manipulation (when in instrumentation tests) it crashes.\n\nRight. I just think it\u0027s easier to make the contract of the class be that it\u0027s only used on the UI thread and then make that work.\n\n\u003e Another alternative might be to add a notifyTileSuggestionsAvailableOnUIThread(), wdyt?\n\nYes, that would be a good convenience method (although I would actually name it ...OnBackgroundThread, because the prefix usually refers to the thread it\u0027s called on, not the thread it jumps to).",
+      "parentUuid": "61e3bdda_16e99db1",
       "range": {
         "startLine": 37,
         "startChar": 56,
