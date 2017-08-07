@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3a513c1_6b500c94",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollAnimatorCompositorCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-07T23:10:42Z",
+      "side": 1,
+      "message": "This is a little confusing to me. What is the !LayerForScrolling part for? Could this be just DCHECK(element_id || !SPV2) or is the LayerForScrolling part important?",
+      "revId": "80269eea18cadaf2404320122fb2eb9c682652d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
