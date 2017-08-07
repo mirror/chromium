@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dafbfba_535812ba",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache-invalidation-by-header.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-07T08:02:48Z",
+      "side": 1,
+      "message": "We removed file operations and are now using \"token\" instead.",
+      "range": {
+        "startLine": 18,
+        "startChar": 48,
+        "endLine": 18,
+        "endChar": 52
+      },
+      "revId": "082d202968b0daa69b9e80f8772db24199de0e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
