@@ -48,6 +48,7 @@
 using autofill::PasswordForm;
 using autofill::PasswordFormFillData;
 using testing::Return;
+using testing::_;
 
 namespace {
 
@@ -242,7 +243,7 @@ class PasswordControllerTest : public web::WebTestWithWebState {
   // PasswordController for testing.
   PasswordController* passwordController_;
 
-  scoped_refptr<password_manager::PasswordStore> store_;
+  scoped_refptr<password_manager::MockPasswordStore> store_;
 };
 
 struct PasswordFormTestData {
@@ -1364,4 +1365,51 @@ TEST_F(PasswordControllerTest, HTTPSPassword) {
       web_state()->GetNavigationManager()->GetLastCommittedItem()->GetSSL();
   EXPECT_FALSE(ssl_status.content_status &
                web::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
+}
+
+// Checks that when the user set a focus on a field of a password form which was
+// not sent to the store then the request the the store is sent.
+TEST_F(PasswordControllerTest, SendingToStoreDynamicallyAddedFormsOnFocus) {
+  LoadHtml(kHtmlWithoutPasswordForm);
+
+  // Add a password form dynamically.
+  NSString* kAddFormDynamicallyScript =
+      @"var dynamicForm = document.createElement('form');"
+       "dynamicForm.setAttribute('name', 'dynamic_form');"
+       "var inputUsername = document.createElement('input');"
+       "inputUsername.setAttribute('type', 'text');"
+       "inputUsername.setAttribute('id', 'username');"
+       "var inputPassword = document.createElement('input');"
+       "inputPassword.setAttribute('type', 'password');"
+       "inputPassword.setAttribute('id', 'password');"
+       "var submitButton = document.createElement('input');"
+       "submitButton.setAttribute('type', 'submit');"
+       "submitButton.setAttribute('value', 'Submit');"
+       "dynamicForm.appendChild(inputUsername);"
+       "dynamicForm.appendChild(inputPassword);"
+       "dynamicForm.appendChild(submitButton);"
+       "document.body.appendChild(dynamicForm);";
+  ExecuteJavaScript(kAddFormDynamicallyScript);
+
+  // Sets |get_logins_called| to true on GetLogins() call.
+  bool get_logins_called = false;
+  bool* p_get_logins_called = &get_logins_called;
+  ON_CALL(*store_, GetLogins(_, _))
+      .WillByDefault(testing::Invoke(
+          [&get_logins_called](
+              const password_manager::PasswordStore::FormDigest&,
+              password_manager::PasswordStoreConsumer*) {
+            get_logins_called = true;
+          }));
+  EXPECT_CALL(*store_, GetLogins(_, _));
+
+  // Sets a focus on a username field.
+  NSString* kSetUsernameInFocusScript =
+      @"document.getElementById('username').focus();";
+  ExecuteJavaScript(kSetUsernameInFocusScript);
+
+  // Wait until GetLogins is called.
+  base::test::ios::WaitUntilCondition(^bool() {
+    return *p_get_logins_called;
+  });
 }
