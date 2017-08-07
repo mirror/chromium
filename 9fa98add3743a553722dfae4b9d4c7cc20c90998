@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c4ddba07_090f9dde",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-07T15:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b725d9c5_b2795b81",
+      "range": {
+        "startLine": 174,
+        "startChar": 48,
+        "endLine": 174,
+        "endChar": 55
+      },
+      "revId": "9fa98add3743a553722dfae4b9d4c7cc20c90998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f5bce38_b6feb95b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 5
@@ -115,6 +139,30 @@
       "revId": "9fa98add3743a553722dfae4b9d4c7cc20c90998",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10155405_871f00ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-07T15:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f5bce38_b6feb95b",
+      "range": {
+        "startLine": 327,
+        "startChar": 11,
+        "endLine": 327,
+        "endChar": 28
+      },
+      "revId": "9fa98add3743a553722dfae4b9d4c7cc20c90998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +234,30 @@
       "revId": "9fa98add3743a553722dfae4b9d4c7cc20c90998",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66356a55_0b7003fd",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/FakeMostVisitedSites.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-07T15:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d1c28a6_b1f0d374",
+      "range": {
+        "startLine": 37,
+        "startChar": 56,
+        "endLine": 37,
+        "endChar": 96
+      },
+      "revId": "9fa98add3743a553722dfae4b9d4c7cc20c90998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
