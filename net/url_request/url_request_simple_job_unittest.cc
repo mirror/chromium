@@ -52,8 +52,7 @@ class MockSimpleJob : public URLRequestSimpleJob {
   // URLRequestSimpleJob implementation:
   int GetData(std::string* mime_type,
               std::string* charset,
-              std::string* data,
-              const CompletionCallback& callback) const override {
+              std::string* data) const override {
     mime_type->assign("text/plain");
     charset->assign("US-ASCII");
     data->assign(data_);

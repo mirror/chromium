@@ -33,8 +33,7 @@ class STORAGE_EXPORT ViewBlobInternalsJob
   void Start() override;
   int GetData(std::string* mime_type,
               std::string* charset,
-              std::string* data,
-              const net::CompletionCallback& callback) const override;
+              std::string* data) const override;
   bool IsRedirectResponse(GURL* location, int* http_status_code) override;
   void Kill() override;
 

@@ -480,8 +480,7 @@ class URLRequestBigJob : public net::URLRequestSimpleJob {
   // URLRequestSimpleJob implementation:
   int GetData(std::string* mime_type,
               std::string* charset,
-              std::string* data,
-              const net::CompletionCallback& callback) const override {
+              std::string* data) const override {
     *mime_type = "text/plain";
     *charset = "UTF-8";
 

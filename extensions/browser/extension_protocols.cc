@@ -92,8 +92,7 @@ class GeneratedBackgroundPageJob : public net::URLRequestSimpleJob {
   // Overridden from URLRequestSimpleJob:
   int GetData(std::string* mime_type,
               std::string* charset,
-              std::string* data,
-              const net::CompletionCallback& callback) const override {
+              std::string* data) const override {
     *mime_type = "text/html";
     *charset = "utf-8";
 

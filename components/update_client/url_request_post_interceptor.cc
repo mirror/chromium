@@ -44,8 +44,7 @@ class URLRequestMockJob : public net::URLRequestSimpleJob {
 
   int GetData(std::string* mime_type,
               std::string* charset,
-              std::string* data,
-              const net::CompletionCallback& callback) const override {
+              std::string* data) const override {
     mime_type->assign("text/plain");
     charset->assign("US-ASCII");
     data->assign(response_body_);

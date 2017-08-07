@@ -50,8 +50,7 @@ URLRequestDataJob::URLRequestDataJob(
 
 int URLRequestDataJob::GetData(std::string* mime_type,
                                std::string* charset,
-                               std::string* data,
-                               const CompletionCallback& callback) const {
+                               std::string* data) const {
   // Check if data URL is valid. If not, don't bother to try to extract data.
   // Otherwise, parse the data from the data URL.
   const GURL& url = request_->url();

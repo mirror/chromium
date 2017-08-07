@@ -50,8 +50,7 @@ class NET_EXPORT URLRequestSimpleJob : public URLRangeRequestJob {
   //    is finished.
   virtual int GetData(std::string* mime_type,
                       std::string* charset,
-                      std::string* data,
-                      const CompletionCallback& callback) const;
+                      std::string* data) const;
 
   // Similar to GetData(), except |*data| can share ownership of the bytes
   // instead of copying them into a std::string.
