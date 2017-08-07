@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30e97c6e_bf8118bd",
+        "filename": "remoting/host/file_transfer_message_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-07T16:22:38Z",
+      "side": 1,
+      "message": "IIRC you were planning on having this class tie its lifetime to the MessagePipe, in that case have you considered deriving from protocol::NamedMessagePipeHandler ?  That base class will handle lifetime management for you (you just implement the event handlers in your derived class).",
+      "range": {
+        "startLine": 12,
+        "startChar": 42,
+        "endLine": 12,
+        "endChar": 77
+      },
+      "revId": "f0892a3d0126deff5d33aeb43e1a86a0748e1292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47dc8305_59e12fd2",
+        "filename": "remoting/host/file_transfer_message_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-07T16:22:38Z",
+      "side": 1,
+      "message": "single param c\u0027tors should be marked explicit.",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "f0892a3d0126deff5d33aeb43e1a86a0748e1292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a688a03d_7769f90e",
+        "filename": "remoting/host/file_transfer_message_handler_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-07T16:22:38Z",
+      "side": 1,
+      "message": "nit: You may want to mention that the lifetime of this instance is tied to the lifetime of |pipe|.  Once |pipe| is closed, this instance will be cleaned up.",
+      "range": {
+        "startLine": 19,
+        "startChar": 32,
+        "endLine": 19,
+        "endChar": 57
+      },
+      "revId": "f0892a3d0126deff5d33aeb43e1a86a0748e1292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
