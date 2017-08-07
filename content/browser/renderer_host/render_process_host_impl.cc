@@ -3505,6 +3505,10 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
     UnmatchedServiceWorkerProcessTracker::Register(
         browser_context, render_process_host, site_url);
   }
+
+  CHECK(render_process_host->InSameStoragePartition(
+      BrowserContext::GetStoragePartition(browser_context, site_instance)));
+
   return render_process_host;
 }
 

@@ -504,6 +504,7 @@ void SiteInstanceImpl::LockToOriginIfNeeded() {
   // We can get here either when we commit a URL into a SiteInstance that does
   // not yet have a site, or when we create a process for a SiteInstance with a
   // preassigned site.
+  bool was_unused = process_->IsUnused();
   process_->SetIsUsed();
 
   // TODO(nick): When all sites are isolated, this operation provides strong
@@ -513,7 +514,34 @@ void SiteInstanceImpl::LockToOriginIfNeeded() {
   if (ShouldLockToOrigin(GetBrowserContext(), site_)) {
     ChildProcessSecurityPolicyImpl* policy =
         ChildProcessSecurityPolicyImpl::GetInstance();
-    policy->LockToOrigin(process_->GetID(), site_);
+
+    // Sanity check that this won't try to assign an origin lock to a <webview>
+    // process, which can't be locked.
+    CHECK(!process_->IsForGuestsOnly());
+
+    auto lock_state = policy->CheckOriginLock(process_->GetID(), site_);
+    switch (lock_state) {
+      case ChildProcessSecurityPolicyImpl::CheckOriginLockResult::NO_LOCK: {
+        // TODO(alexmos): Turn this into a CHECK once https://crbug.com/738634
+        // is fixed.
+        DCHECK(was_unused);
+        policy->LockToOrigin(process_->GetID(), site_);
+        break;
+      }
+      case ChildProcessSecurityPolicyImpl::CheckOriginLockResult::
+          HAS_WRONG_LOCK:
+        // We should never attempt to reassign a different origin lock to a
+        // process.
+        CHECK(false);
+        break;
+      case ChildProcessSecurityPolicyImpl::CheckOriginLockResult::
+          HAS_EQUAL_LOCK:
+        // Process already has the right origin lock assigned.  This case will
+        // happen for commits to |site_| after the first one.
+        break;
+      default:
+        NOTREACHED();
+    }
   }
 }
 
