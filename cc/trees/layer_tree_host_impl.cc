@@ -3384,8 +3384,8 @@ void LayerTreeHostImpl::ApplyScroll(ScrollNode* scroll_node,
 
   if (scrolls_main_viewport_scroll_layer || scrolls_inner_viewport) {
     Viewport::ScrollResult result = viewport()->ScrollBy(
-        delta, viewport_point, scroll_state->is_direct_manipulation(),
-        !wheel_scrolling_, scrolls_main_viewport_scroll_layer);
+        delta, viewport_point, scroll_state->is_direct_manipulation(), true,
+        scrolls_main_viewport_scroll_layer);
 
     applied_delta = result.consumed_delta;
     delta_applied_to_content = result.content_scrolled_delta;

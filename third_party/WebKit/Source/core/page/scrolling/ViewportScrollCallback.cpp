@@ -35,8 +35,6 @@ DEFINE_TRACE(ViewportScrollCallback) {
 bool ViewportScrollCallback::ShouldScrollBrowserControls(
     const ScrollOffset& delta,
     ScrollGranularity granularity) const {
-  if (granularity != kScrollByPixel && granularity != kScrollByPrecisePixel)
-    return false;
 
   if (!root_frame_viewport_)
     return false;
