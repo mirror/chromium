@@ -18,12 +18,14 @@ import org.junit.runner.Description;
 import org.chromium.base.CommandLine;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.ui.UiUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -38,11 +40,14 @@ import java.util.concurrent.Callable;
  * @RunWith(ChromeJUnit4ClassRunner.class)
  * @CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE})
  * public class MyTest {
+ *     // Provide RenderTestRule with the path from src/ to the golden directory.
  *     @Rule
  *     public RenderTestRule mRenderTestRule =
  *             new RenderTestRule("chrome/test/data/android/render_tests");
  *
  *     @Test
+ *     // The test must have the feature "RenderTest" for the bots to display renders.
+ *     @Feature({"RenderTest"})
  *     public void testViewAppearance() {
  *         // Setup the UI.
  *         ...
@@ -83,6 +88,8 @@ public class RenderTestRule extends TestWatcher {
     private String mTestClassName;
     private List<String> mMismatchIds = new LinkedList<>();
     private List<String> mGoldenMissingIds = new LinkedList<>();
+    private boolean mHasRenderTestFeature;
+
     /** Parameterized tests have a prefix inserted at the front of the test description. */
     private String mVariantPrefix;
 
@@ -110,6 +117,12 @@ public class RenderTestRule extends TestWatcher {
 
         mMismatchIds.clear();
         mGoldenMissingIds.clear();
+
+        mHasRenderTestFeature = false;
+        Feature features = desc.getAnnotation(Feature.class);
+        if (features != null && Arrays.asList(features.value()).contains("RenderTest")) {
+            mHasRenderTestFeature = true;
+        }
     }
 
     /**
@@ -121,6 +134,11 @@ public class RenderTestRule extends TestWatcher {
      * @throws IOException if the rendered image cannot be saved to the device.
      */
     public void render(final View view, String id) throws IOException {
+        assert mHasRenderTestFeature
+            : "You created a Render Test (by calling RenderTestRule.render) but didn't add "
+              + "\"RenderTest\" as a feature. You must do this in order for the bots to pick it up "
+              + "and display the results.";
+
         Bitmap testBitmap = ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Bitmap>() {
             @Override
             public Bitmap call() throws Exception {
