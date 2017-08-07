@@ -19,6 +19,7 @@
 #include "remoting/host/client_session_control.h"
 #include "remoting/host/desktop_session.h"
 #include "remoting/host/desktop_session_proxy.h"
+#include "remoting/host/file_proxy_wrapper_linux.h"
 #include "remoting/host/input_injector.h"
 #include "remoting/host/screen_controls.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_capturer.h"
@@ -62,6 +63,13 @@ IpcDesktopEnvironment::CreateMouseCursorMonitor() {
 std::unique_ptr<webrtc::DesktopCapturer>
 IpcDesktopEnvironment::CreateVideoCapturer() {
   return desktop_session_proxy_->CreateVideoCapturer();
+}
+
+std::unique_ptr<FileProxyWrapper>
+IpcDesktopEnvironment::CreateFileProxyWrapper() {
+  // TODO(jarhar): Implement FileProxyWrapper for Windows.
+  NOTIMPLEMENTED();
+  return nullptr;
 }
 
 std::string IpcDesktopEnvironment::GetCapabilities() const {
