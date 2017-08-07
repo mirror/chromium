@@ -22,6 +22,30 @@
       "revId": "a91dcfc1a8a759f32ecea707c7e6c8b5bf4e75e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcd7d3f_bd6c35a9",
+        "filename": "chrome/installer/mini_installer/mini_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-07T09:26:51Z",
+      "side": 1,
+      "message": "we never write the path with quotes. i suppose someone else could. i\u0027ve added some code to strip quotes if present.",
+      "parentUuid": "c30073be_f342d691",
+      "range": {
+        "startLine": 372,
+        "startChar": 20,
+        "endLine": 372,
+        "endChar": 26
+      },
+      "revId": "a91dcfc1a8a759f32ecea707c7e6c8b5bf4e75e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
