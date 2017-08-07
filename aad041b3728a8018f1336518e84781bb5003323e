@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "797da3dd_be142bf5",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-07T07:38:52Z",
+      "side": 1,
+      "message": "Nit: \"will return\". Also, wrapping (can fit on one less line).",
+      "revId": "aad041b3728a8018f1336518e84781bb5003323e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a50dc2_7b443aa0",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-07T07:38:52Z",
+      "side": 1,
+      "message": "Nit: s/Finds/Creates/",
+      "revId": "aad041b3728a8018f1336518e84781bb5003323e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
