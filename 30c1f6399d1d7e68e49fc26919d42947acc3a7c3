@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee20a405_11f5dce3",
+        "filename": "chromeos/dbus/cros_disks_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-07T02:26:54Z",
+      "side": 1,
+      "message": "ReadDiskEntryFromDbus is renamed to ReadFormatEntryFromDbus in up coming patch/CL.",
+      "revId": "30c1f6399d1d7e68e49fc26919d42947acc3a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fa8812e_3cc1f471",
+        "filename": "chromeos/dbus/cros_disks_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-07T02:26:54Z",
+      "side": 1,
+      "message": "Struct DiskEntry is renamed into FormatEntry in up coming patch/Cl.",
+      "revId": "30c1f6399d1d7e68e49fc26919d42947acc3a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
