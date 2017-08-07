@@ -70,6 +70,30 @@
       "revId": "79ffa4ee640bb2256df7e9c9503c1fb0117eec27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bbd8ac8_4ec44620",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-08-07T21:56:34Z",
+      "side": 1,
+      "message": "There\u0027s a trade off.\n\nWhen commit to activate is say ~14ms, we can still composite at 60fps if we composite just before the next BeginFrame. But then the main thread can run at 60fps too, rather than at \u003c 60fps if the regular deadline is used.\n\nSo compositing is still \"smooth\" from an FPS perspective. It just might have an extra frame of latency to let the main thread hit 60fps too.",
+      "parentUuid": "dafe1bde_4ac6ac0b",
+      "range": {
+        "startLine": 384,
+        "startChar": 34,
+        "endLine": 384,
+        "endChar": 54
+      },
+      "revId": "79ffa4ee640bb2256df7e9c9503c1fb0117eec27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
