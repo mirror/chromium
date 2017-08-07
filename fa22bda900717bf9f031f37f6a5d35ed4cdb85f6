@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5be0d454_2232c697",
+        "filename": "chromeos/dbus/cros_disks_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-07T13:31:23Z",
+      "side": 1,
+      "message": "Do we need to include error_code to here?\nEspecially because the struct name says \"entry\", it looks like more natural to me \"error code\" + \"data entry\" are separated.",
+      "range": {
+        "startLine": 236,
+        "startChar": 2,
+        "endLine": 236,
+        "endChar": 26
+      },
+      "revId": "fa22bda900717bf9f031f37f6a5d35ed4cdb85f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
