@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3581891d_2ab5e323",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-07T19:31:59Z",
+      "side": 1,
+      "message": "This formatting is made by git cl format",
+      "revId": "5262140e76c9a7184763c9f291514fe8accabc0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae41fee4_10431f85",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-07T19:31:59Z",
+      "side": 1,
+      "message": "We don\u0027t want the tool bar to be hidden in any case if the fullscreen content feature is turned on.",
+      "revId": "5262140e76c9a7184763c9f291514fe8accabc0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
