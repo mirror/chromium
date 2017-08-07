@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb5726ab_1b6fab91",
+        "filename": "components/ntp_snippets_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-07T14:45:33Z",
+      "side": 1,
+      "message": "Should this be inside \"\u003cif expr\u003d\"is_android or is_ios\"\u003e\"?",
+      "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a45ca10d_dccd2e50",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_footer_item.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-07T14:45:33Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be \"ContentSuggestionsFooterItem* _Nonnull\" as in the prototype used in the initialiser in the header file?",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 34
+      },
+      "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da5824c6_8ab8d2db",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_footer_item.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-07T14:45:33Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 38,
+        "startChar": 39,
+        "endLine": 38,
+        "endChar": 68
+      },
+      "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e311b3_7f1cf9fc",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_footer_item_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-07T14:45:33Z",
+      "side": 1,
+      "message": "optional: TEST are C++ methods, not Objective-C, so this should use C++ naming convention for local variables, i.e. has_been_called, block_cell, block_item, ...",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5815b1fb_770c5bdd",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_footer_item_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-07T14:45:33Z",
+      "side": 1,
+      "message": "ditto, _Nonnull?",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 41
+      },
+      "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be130ff_fcad552e",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-07T14:45:33Z",
+      "side": 1,
+      "message": "ditto, _Nonnull?",
+      "range": {
+        "startLine": 520,
+        "startChar": 23,
+        "endLine": 520,
+        "endChar": 52
+      },
+      "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955b79d5_1f0da3ab",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_data_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-07T14:45:33Z",
+      "side": 1,
+      "message": "nit: add trailing comma to make it easier to add more values to the enum",
+      "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
