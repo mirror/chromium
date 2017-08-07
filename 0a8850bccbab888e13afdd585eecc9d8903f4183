@@ -76,6 +76,23 @@
     },
     {
       "key": {
+        "uuid": "ffd60e15_2fdd6df7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T18:41:26Z",
+      "side": 1,
+      "message": "Could you add some information about the new shared sizes? I don\u0027t think all old caches were the same size.",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf6e9f51_ed3e516b",
         "filename": "components/leveldb/leveldb_database_impl.h",
         "patchSetId": 1
@@ -203,6 +220,24 @@
     },
     {
       "key": {
+        "uuid": "617be5d2_5c6dad16",
+        "filename": "components/leveldb_proto/options.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T18:41:26Z",
+      "side": 1,
+      "message": "Yeah, I agree that it would be clearer to pass this in instead of magically using the default value. It seems like a natural part of the Options struct to require.\n\nI\u0027m of course happy to review any such CL either now or in a follow-up CL.\n\nIf there\u0027s a new CL for this, we should also investigate whether we want to keep Init() and maybe just expose InitWithOptions instead?",
+      "parentUuid": "ddad1e13_db79e568",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e342e74_b925eeb9",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 1
@@ -231,6 +266,23 @@
       "writtenOn": "2017-08-03T23:43:45Z",
       "side": 1,
       "message": "instead of calling?",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b78bde_c12c20be",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T18:41:26Z",
+      "side": 1,
+      "message": "This is now double what it was in //components/leveldb_proto from before. Is that intentional? If so, could you add a message to the CL description that you are doubling the total size? It\u0027s shared though, so not necessarily a negative, I just think it\u0027s worth mentioning.",
       "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
