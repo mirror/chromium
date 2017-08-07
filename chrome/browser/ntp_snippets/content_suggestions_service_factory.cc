@@ -363,14 +363,14 @@ MakeBreakingNewsGCMAppHandlerIfEnabled(Profile* profile) {
       content::BrowserContext::GetDefaultStoragePartition(profile)
           ->GetURLRequestContext();
 
-  std::string api_key;
   // The API is private. If we don't have the official API key, don't even try.
-  if (google_apis::IsGoogleChromeAPIKeyUsed()) {
-    bool is_stable_channel =
-        chrome::GetChannel() == version_info::Channel::STABLE;
-    api_key = is_stable_channel ? google_apis::GetAPIKey()
-                                : google_apis::GetNonStableAPIKey();
+  if (!google_apis::IsGoogleChromeAPIKeyUsed()) {
+    return nullptr;
   }
+  bool is_stable_channel =
+      chrome::GetChannel() == version_info::Channel::STABLE;
+  std::string api_key = is_stable_channel ? google_apis::GetAPIKey()
+                                          : google_apis::GetNonStableAPIKey();
 
   auto subscription_manager = base::MakeUnique<SubscriptionManagerImpl>(
       request_context, pref_service, signin_manager, token_service, api_key,
@@ -421,14 +421,14 @@ void RegisterArticleProviderIfEnabled(ContentSuggestionsService* service,
       base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND,
            base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
-  std::string api_key;
   // The API is private. If we don't have the official API key, don't even try.
-  if (google_apis::IsGoogleChromeAPIKeyUsed()) {
-    bool is_stable_channel =
-        chrome::GetChannel() == version_info::Channel::STABLE;
-    api_key = is_stable_channel ? google_apis::GetAPIKey()
-                                : google_apis::GetNonStableAPIKey();
+  if (!google_apis::IsGoogleChromeAPIKeyUsed()) {
+    return;
   }
+  bool is_stable_channel =
+      chrome::GetChannel() == version_info::Channel::STABLE;
+  std::string api_key = is_stable_channel ? google_apis::GetAPIKey()
+                                          : google_apis::GetNonStableAPIKey();
 
   // Pass the pref name associated to the search suggest toggle, and use it to
   // also guard the remote suggestions feature.
