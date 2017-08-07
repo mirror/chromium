@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a2144c1b_9da14490",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-07T17:19:56Z",
+      "side": 1,
+      "message": "Why not just change GetEffectiveConnectionTypeForName to the signature of your wrapper? Its bool return is only used in DCHECKS afaict.",
+      "parentUuid": "5e0d8cf0_35a99791",
+      "range": {
+        "startLine": 121,
+        "startChar": 7,
+        "endLine": 121,
+        "endChar": 40
+      },
+      "revId": "bc33774851548f60bde9a09bc73ff34fe692f17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e97d4c7_de8c1bb7",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 8
