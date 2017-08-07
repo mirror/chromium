@@ -88,11 +88,11 @@ const CSSValue* CSSPropertyAPI::ParseSingleValue(
     case CSSPropertyWebkitBackgroundClip:
     case CSSPropertyWebkitMaskClip:
       return ConsumeCommaSeparatedList(ConsumePrefixedBackgroundBox, range,
-                                       &context, true /* allow_text_value */);
+                                       true /* allow_text_value */);
     case CSSPropertyWebkitBackgroundOrigin:
     case CSSPropertyWebkitMaskOrigin:
       return ConsumeCommaSeparatedList(ConsumePrefixedBackgroundBox, range,
-                                       &context, false /* allow_text_value */);
+                                       false /* allow_text_value */);
     case CSSPropertyWebkitMaskRepeatX:
     case CSSPropertyWebkitMaskRepeatY:
       return nullptr;

@@ -38,7 +38,6 @@ CSSValue* ConsumeBackgroundSize(CSSParserTokenRange&,
                                 CSSParserMode,
                                 bool use_legacy_parsing);
 CSSValue* ConsumePrefixedBackgroundBox(CSSParserTokenRange&,
-                                       const CSSParserContext*,
                                        bool allow_text_value);
 
 }  // namespace CSSPropertyAPIBaseHelper
