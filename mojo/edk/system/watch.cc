@@ -25,9 +25,6 @@ bool Watch::NotifyState(const HandleSignalsState& state,
                         bool allowed_to_call_callback) {
   AssertWatcherLockAcquired();
 
-  // TODO(crbug.com/740044): Remove this CHECK.
-  CHECK(this);
-
   // NOTE: This method must NEVER call into |dispatcher_| directly, because it
   // may be called while |dispatcher_| holds a lock.
 
@@ -59,9 +56,6 @@ bool Watch::NotifyState(const HandleSignalsState& state,
 }
 
 void Watch::Cancel() {
-  // TODO(crbug.com/740044): Remove this CHECK.
-  CHECK(this);
-
   RequestContext::current()->AddWatchCancelFinalizer(this);
 }
 

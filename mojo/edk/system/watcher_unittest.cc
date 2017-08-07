@@ -12,6 +12,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/rand_util.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/simple_thread.h"
@@ -107,6 +108,11 @@ class ThreadedRunner : public base::SimpleThread {
 
   DISALLOW_COPY_AND_ASSIGN(ThreadedRunner);
 };
+
+void IgnoreNotification(uintptr_t context,
+                        MojoResult result,
+                        MojoHandleSignalsState state,
+                        MojoWatcherNotificationFlags flags) {}
 
 void ExpectNoNotification(uintptr_t context,
                           MojoResult result,
@@ -1720,6 +1726,59 @@ TEST_F(WatcherTest, WatchNotSatisfied) {
   EXPECT_EQ(MOJO_RESULT_OK, MojoClose(w));
   EXPECT_EQ(MOJO_RESULT_OK, MojoClose(b));
   EXPECT_EQ(MOJO_RESULT_OK, MojoClose(a));
+}
+
+TEST_F(WatcherTest, ConcurrencyStressTest) {
+  // Regression test for https://crbug.com/740044. Exercises racy usage of the
+  // watcher API to weed out potential crashes.
+
+  static constexpr size_t kNumWatchers = 1000;
+  static constexpr size_t kNumWatchedHandles = 1000;
+  static constexpr size_t kNumThreads = 10;
+  static constexpr size_t kNumOperationsPerThread = 1000;
+  static_assert(kNumWatchedHandles % 2 == 0, "Invalid number of test handles.");
+
+  MojoHandle watchers[kNumWatchers];
+  MojoHandle watched_handles[kNumWatchedHandles];
+
+  for (size_t i = 0; i < kNumWatchers; ++i)
+    MojoCreateWatcher(&IgnoreNotification, &watchers[i]);
+  for (size_t i = 0; i < kNumWatchedHandles / 2; ++i)
+    CreateMessagePipe(&watched_handles[i * 2], &watched_handles[i * 2 + 1]);
+
+  auto runner_callback = base::Bind(
+      [](MojoHandle* watchers, MojoHandle* watched_handles) {
+        for (size_t i = 0; i < kNumOperationsPerThread; ++i) {
+          switch (base::RandInt(0, 2)) {
+            case 0:
+              MojoClose(watchers[base::RandInt(0, kNumWatchers - 1)]);
+              break;
+            case 1:
+              MojoClose(
+                  watched_handles[base::RandInt(0, kNumWatchedHandles - 1)]);
+              break;
+            case 2: {
+              WatchHelper helper;
+              MojoWatch(
+                  base::RandInt(0, kNumWatchers - 1),
+                  base::RandInt(0, kNumWatchedHandles - 1),
+                  MOJO_HANDLE_SIGNAL_READABLE, MOJO_WATCH_CONDITION_SATISFIED,
+                  helper.CreateContext(base::Bind(
+                      [](MojoResult result, MojoHandleSignalsState state) {})));
+              break;
+            }
+          }
+        }
+      },
+      watchers, watched_handles);
+
+  std::unique_ptr<ThreadedRunner> threads[kNumThreads];
+  for (size_t i = 0; i < kNumThreads; ++i) {
+    threads[i] = base::MakeUnique<ThreadedRunner>(runner_callback);
+    threads[i]->Start();
+  }
+  for (size_t i = 0; i < kNumThreads; ++i)
+    threads[i]->Join();
 }
 
 }  // namespace
