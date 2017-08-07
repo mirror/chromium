@@ -252,8 +252,8 @@ void BreakDebugger() {
   // Linker's ICF feature may merge this function with other functions with the
   // same definition (e.g. any function whose sole job is to call abort()) and
   // it may confuse the crash report processing system. http://crbug.com/508489
-  static int static_variable_to_make_this_function_unique = 0;
-  base::debug::Alias(&static_variable_to_make_this_function_unique);
+  //static int static_variable_to_make_this_function_unique = 0;
+  //base::debug::Alias(&static_variable_to_make_this_function_unique);
 
   DEBUG_BREAK();
 #if defined(OS_ANDROID) && !defined(OFFICIAL_BUILD)

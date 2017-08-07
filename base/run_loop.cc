@@ -106,10 +106,10 @@ void RunLoop::Run() {
 
   // Use task stopwatch to exclude the loop run time from the current task, if
   // any.
-  tracked_objects::TaskStopwatch stopwatch;
-  stopwatch.Start();
+  //tracked_objects::TaskStopwatch stopwatch;
+  //stopwatch.Start();
   delegate_->Run();
-  stopwatch.Stop();
+  //stopwatch.Stop();
 
   // Rebind this RunLoop to the current thread after Run().
   DETACH_FROM_SEQUENCE(sequence_checker_);

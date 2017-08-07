@@ -72,7 +72,7 @@ class SequenceCheckerDoNothing {
   void DetachFromSequence() {}
 };
 
-#if DCHECK_IS_ON()
+#if 0 && DCHECK_IS_ON()
 class SequenceChecker : public SequenceCheckerImpl {
 };
 #else

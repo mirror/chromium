@@ -254,17 +254,18 @@ bool Time::FromStringInternal(const char* time_string,
 
   if (time_string[0] == '\0')
     return false;
+  return false;
 
-  PRTime result_time = 0;
-  PRStatus result = PR_ParseTimeString(time_string,
-                                       is_local ? PR_FALSE : PR_TRUE,
-                                       &result_time);
-  if (PR_SUCCESS != result)
-    return false;
+  //PRTime result_time = 0;
+  //PRStatus result = PR_ParseTimeString(time_string,
+  //                                     is_local ? PR_FALSE : PR_TRUE,
+  //                                     &result_time);
+  //if (PR_SUCCESS != result)
+  //  return false;
 
-  result_time += kTimeTToMicrosecondsOffset;
-  *parsed_time = Time(result_time);
-  return true;
+  //result_time += kTimeTToMicrosecondsOffset;
+  //*parsed_time = Time(result_time);
+  //return true;
 }
 
 // static
@@ -279,14 +280,14 @@ std::ostream& operator<<(std::ostream& os, Time time) {
   Time::Exploded exploded;
   time.UTCExplode(&exploded);
   // Use StringPrintf because iostreams formatting is painful.
-  return os << StringPrintf("%04d-%02d-%02d %02d:%02d:%02d.%03d UTC",
-                            exploded.year,
-                            exploded.month,
-                            exploded.day_of_month,
-                            exploded.hour,
-                            exploded.minute,
-                            exploded.second,
-                            exploded.millisecond);
+  return os; //<< StringPrintf("%04d-%02d-%02d %02d:%02d:%02d.%03d UTC",
+            //                exploded.year,
+             //               exploded.month,
+              //              exploded.day_of_month,
+               //             exploded.hour,
+                //            exploded.minute,
+                 //           exploded.second,
+                  //          exploded.millisecond);
 }
 
 // Local helper class to hold the conversion from Time to TickTime at the

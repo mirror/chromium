@@ -117,7 +117,7 @@ class BASE_EXPORT MessagePumpIOSForIO : public MessagePumpNSRunLoop {
                               CFOptionFlags callback_types,
                               void* context);
 
-  ThreadChecker watch_file_descriptor_caller_checker_;
+  //ThreadChecker watch_file_descriptor_caller_checker_;
 
   base::WeakPtrFactory<MessagePumpIOSForIO> weak_factory_;
 
