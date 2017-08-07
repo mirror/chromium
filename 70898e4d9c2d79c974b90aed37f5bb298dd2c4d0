@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a880cf0_4f71201a",
+        "filename": "content/shell/renderer/layout_test/leak_detector.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-07T14:21:10Z",
+      "side": 1,
+      "message": "nit: drop `explicit`",
+      "revId": "70898e4d9c2d79c974b90aed37f5bb298dd2c4d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e1d798_e890687c",
+        "filename": "third_party/WebKit/Source/controller/leak_detector/WebLeakDetector.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-07T14:21:10Z",
+      "side": 1,
+      "message": "This DCHECK caused crashes in PS11, and since all updated PSes since then have been rebases, I\u0027ve requested another try run.",
+      "revId": "70898e4d9c2d79c974b90aed37f5bb298dd2c4d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
