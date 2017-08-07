@@ -158,28 +158,33 @@ void DocumentMarkerController::AddTextMatchMarker(
 
 void DocumentMarkerController::AddCompositionMarker(
     const EphemeralRange& range,
+    bool use_text_color,
     Color underline_color,
     StyleableMarker::Thickness thickness,
     Color background_color) {
   DCHECK(!document_->NeedsLayoutTreeUpdate());
-  AddMarkerInternal(range, [underline_color, thickness, background_color](
-                               int start_offset, int end_offset) {
-    return new CompositionMarker(start_offset, end_offset, underline_color,
-                                 thickness, background_color);
+  AddMarkerInternal(range, [use_text_color, underline_color, thickness,
+                            background_color](int start_offset,
+                                              int end_offset) {
+    return new CompositionMarker(start_offset, end_offset, use_text_color,
+                                 underline_color, thickness, background_color);
   });
 }
 
 void DocumentMarkerController::AddActiveSuggestionMarker(
     const EphemeralRange& range,
+    bool use_text_color,
     Color underline_color,
     StyleableMarker::Thickness thickness,
     Color background_color) {
   DCHECK(!document_->NeedsLayoutTreeUpdate());
-  AddMarkerInternal(range, [underline_color, thickness, background_color](
-                               int start_offset, int end_offset) {
-    return new ActiveSuggestionMarker(start_offset, end_offset, underline_color,
-                                      thickness, background_color);
-  });
+  AddMarkerInternal(
+      range, [use_text_color, underline_color, thickness, background_color](
+                 int start_offset, int end_offset) {
+        return new ActiveSuggestionMarker(start_offset, end_offset,
+                                          use_text_color, underline_color,
+                                          thickness, background_color);
+      });
 }
 
 void DocumentMarkerController::PrepareForDestruction() {

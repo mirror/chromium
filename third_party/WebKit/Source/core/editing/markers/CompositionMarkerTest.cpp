@@ -12,27 +12,29 @@ class CompositionMarkerTest : public ::testing::Test {};
 
 TEST_F(CompositionMarkerTest, MarkerType) {
   DocumentMarker* marker = new CompositionMarker(
-      0, 1, Color::kTransparent, StyleableMarker::Thickness::kThin,
+      0, 1, false, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kTransparent);
   EXPECT_EQ(DocumentMarker::kComposition, marker->GetType());
 }
 
 TEST_F(CompositionMarkerTest, IsStyleableMarker) {
   DocumentMarker* marker = new CompositionMarker(
-      0, 1, Color::kTransparent, StyleableMarker::Thickness::kThin,
+      0, 1, false, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kTransparent);
   EXPECT_TRUE(IsStyleableMarker(*marker));
 }
 
 TEST_F(CompositionMarkerTest, ConstructorAndGetters) {
-  CompositionMarker* marker = new CompositionMarker(
-      0, 1, Color::kDarkGray, StyleableMarker::Thickness::kThin, Color::kGray);
+  CompositionMarker* marker =
+      new CompositionMarker(0, 1, false, Color::kDarkGray,
+                            StyleableMarker::Thickness::kThin, Color::kGray);
   EXPECT_EQ(Color::kDarkGray, marker->UnderlineColor());
   EXPECT_FALSE(marker->IsThick());
   EXPECT_EQ(Color::kGray, marker->BackgroundColor());
 
-  CompositionMarker* thick_marker = new CompositionMarker(
-      0, 1, Color::kDarkGray, StyleableMarker::Thickness::kThick, Color::kGray);
+  CompositionMarker* thick_marker =
+      new CompositionMarker(0, 1, false, Color::kDarkGray,
+                            StyleableMarker::Thickness::kThick, Color::kGray);
   EXPECT_EQ(true, thick_marker->IsThick());
 }
 

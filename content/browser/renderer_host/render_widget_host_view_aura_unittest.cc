@@ -1626,11 +1626,11 @@ TEST_F(RenderWidgetHostViewAuraTest, SetCompositionText) {
 
   // Focused segment
   composition_text.underlines.push_back(
-      ui::CompositionUnderline(0, 3, 0xff000000, true, 0x78563412));
+      ui::CompositionUnderline(0, 3, false, 0xff000000, true, 0x78563412));
 
   // Non-focused segment, with different background color.
   composition_text.underlines.push_back(
-      ui::CompositionUnderline(3, 4, 0xff000000, false, 0xefcdab90));
+      ui::CompositionUnderline(3, 4, false, 0xff000000, false, 0xefcdab90));
 
   const ui::CompositionUnderlines& underlines = composition_text.underlines;
 
@@ -1682,11 +1682,11 @@ TEST_F(RenderWidgetHostViewAuraTest, FinishCompositionByMouse) {
 
   // Focused segment
   composition_text.underlines.push_back(
-      ui::CompositionUnderline(0, 3, 0xff000000, true, 0x78563412));
+      ui::CompositionUnderline(0, 3, false, 0xff000000, true, 0x78563412));
 
   // Non-focused segment, with different background color.
   composition_text.underlines.push_back(
-      ui::CompositionUnderline(3, 4, 0xff000000, false, 0xefcdab90));
+      ui::CompositionUnderline(3, 4, false, 0xff000000, false, 0xefcdab90));
 
   // Caret is at the end. (This emulates Japanese MSIME 2007 and later)
   composition_text.selection = gfx::Range(4);
