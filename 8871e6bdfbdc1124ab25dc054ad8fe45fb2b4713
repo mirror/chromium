@@ -16,6 +16,24 @@
       "revId": "8871e6bdfbdc1124ab25dc054ad8fe45fb2b4713",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aba725e_a327cbf9",
+        "filename": "content/renderer/accessibility/render_accessibility_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-07T04:12:14Z",
+      "side": 1,
+      "message": "Maybe it\u0027s not clear, but these need to span multiple\niterations of the for loop. Previously we had a tree update\nfor each event. Now they\u0027re all packed into one tree update,\nwhich needs to be declared at the top.",
+      "parentUuid": "56b9c848_1766a7ad",
+      "revId": "8871e6bdfbdc1124ab25dc054ad8fe45fb2b4713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
