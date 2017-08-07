@@ -29,6 +29,8 @@ CONTENT_EXPORT extern const base::Feature kCheckerImaging;
 CONTENT_EXPORT extern const base::Feature kCompositeOpaqueFixedPosition;
 CONTENT_EXPORT extern const base::Feature kCompositeOpaqueScrollers;
 CONTENT_EXPORT extern const base::Feature kCompositorTouchAction;
+CONTENT_EXPORT extern const base::Feature
+    kDisablePreferCompositingToLCDTextOnLowEndAndroid;
 CONTENT_EXPORT extern const base::Feature kExpensiveBackgroundTimerThrottling;
 CONTENT_EXPORT extern const base::Feature kFeaturePolicy;
 CONTENT_EXPORT extern const base::Feature kFetchKeepaliveTimeoutSetting;
@@ -66,6 +68,8 @@ CONTENT_EXPORT extern const base::Feature kRenderingPipelineThrottling;
 CONTENT_EXPORT extern const base::Feature kReportRendererPeakMemoryStats;
 CONTENT_EXPORT extern const base::Feature kResourceLoadScheduler;
 CONTENT_EXPORT extern const base::Feature kScrollAnchoring;
+CONTENT_EXPORT
+extern const base::Feature kSendBeaconThrowForBlobWithNonSimpleType;
 CONTENT_EXPORT extern const base::Feature kServiceWorkerNavigationPreload;
 CONTENT_EXPORT extern const base::Feature kServiceWorkerScriptStreaming;
 CONTENT_EXPORT extern const base::Feature kSharedArrayBuffer;
@@ -92,8 +96,6 @@ CONTENT_EXPORT extern const base::Feature kWebRtcUseEchoCanceller3;
 CONTENT_EXPORT extern const base::Feature kWebRtcUseGpuMemoryBufferVideoFrames;
 CONTENT_EXPORT extern const base::Feature kWebUsb;
 CONTENT_EXPORT extern const base::Feature kWebVRExperimentalRendering;
-CONTENT_EXPORT
-extern const base::Feature kSendBeaconThrowForBlobWithNonSimpleType;
 
 #if defined(OS_ANDROID)
 CONTENT_EXPORT extern const base::Feature kAndroidAutofillAccessibility;
@@ -103,11 +105,9 @@ CONTENT_EXPORT extern const base::Feature kServiceWorkerPaymentApps;
 CONTENT_EXPORT extern const base::Feature kWebNfc;
 #endif  // defined(OS_ANDROID)
 
-CONTENT_EXPORT extern const base::Feature
-    kDisablePreferCompositingToLCDTextOnLowEndAndroid;
-
 #if defined(OS_WIN)
 CONTENT_EXPORT extern const base::Feature kWinSboxDisableExtensionPoints;
+CONTENT_EXPORT extern const base::Feature kWinSboxForceMsSigned;
 #endif  // defined(OS_WIN)
 
 #if defined(OS_MACOSX)
