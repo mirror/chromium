@@ -155,7 +155,7 @@ UIImage* GetFallbackImageWithStringAndColor(NSString* string,
 
   CSSearchableItemAttributeSet* attributeSet =
       [[CSSearchableItemAttributeSet alloc]
-          initWithItemContentType:(NSString*)kUTTypeURL];
+          initWithItemContentType:(NSString*)kUTTypeData];
   [attributeSet setTitle:defaultTitle];
   [attributeSet setDisplayName:defaultTitle];
   [attributeSet setURL:nsURL];
@@ -207,6 +207,18 @@ UIImage* GetFallbackImageWithStringAndColor(NSString* string,
 
   __weak BaseSpotlightManager* weakSelf = self;
   GURL URL = URLToRefresh;
+  //  if (URL.SchemeIsHTTPOrHTTPS()) {
+  //    std::string new_scheme;
+  //    if (URL.SchemeIs("http"))
+  //      new_scheme = "chromium";
+  //    else
+  //      new_scheme = "chromiums";
+  //    url::Component comp;
+  //    comp.len = static_cast<int>(new_scheme.length());
+  //    GURL::Replacements replacement;
+  //    replacement.SetScheme(new_scheme.c_str(), comp);
+  //    URL=URL.ReplaceComponents(replacement);
+  //  }
   void (^faviconBlock)(const favicon_base::LargeIconResult&) = ^(
       const favicon_base::LargeIconResult& result) {
     BaseSpotlightManager* strongSelf = weakSelf;
