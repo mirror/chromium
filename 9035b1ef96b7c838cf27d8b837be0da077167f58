@@ -1,0 +1,262 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "624e5c2d_2ee3275e",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T16:25:56Z",
+      "side": 1,
+      "message": "Parses the accepted payment method types and card networks requested by the merchant and starts creating the native app payment methods asynchronously.",
+      "range": {
+        "startLine": 272,
+        "startChar": 0,
+        "endLine": 273,
+        "endChar": 69
+      },
+      "revId": "9035b1ef96b7c838cf27d8b837be0da077167f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f499d0_0d9915ad",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T16:25:56Z",
+      "side": 1,
+      "message": "I\u0027m very bad at naming, but I think this is very vague name. Whoever reads this code must refer to the comments to know what this method does. Maybe use something like CreateNativeAppPaymentMethods?",
+      "range": {
+        "startLine": 274,
+        "startChar": 7,
+        "endLine": 274,
+        "endChar": 42
+      },
+      "revId": "9035b1ef96b7c838cf27d8b837be0da077167f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd388755_e9dc20b8",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T16:25:56Z",
+      "side": 1,
+      "message": "The comment isn\u0027t very accurate. the native payment methods are passed to this method. Maybe something like:\n// Stores a copy of |native_app_instruments| and autofill payment\n// instruments that match the supported types specified in\n// |web_payment_request_|. Sets |selected_payment_method_| and notifies the\n// UI delegate that the payment methods are ready.",
+      "revId": "9035b1ef96b7c838cf27d8b837be0da077167f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca46222d_a8f8a804",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T16:25:56Z",
+      "side": 1,
+      "message": "Let\u0027s keep calling this PopulatePaymentMethodCache and mention in the comments that this is a callback that is called when the native app payment instruments are ready.",
+      "range": {
+        "startLine": 280,
+        "startChar": 16,
+        "endLine": 280,
+        "endChar": 42
+      },
+      "revId": "9035b1ef96b7c838cf27d8b837be0da077167f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12723488_49bf42cf",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T16:25:56Z",
+      "side": 1,
+      "message": "maybe native_app_instruments?",
+      "range": {
+        "startLine": 281,
+        "startChar": 57,
+        "endLine": 281,
+        "endChar": 74
+      },
+      "revId": "9035b1ef96b7c838cf27d8b837be0da077167f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab76c278_b36aecdc",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T16:25:56Z",
+      "side": 1,
+      "message": "should this be moved to line 417?",
+      "revId": "9035b1ef96b7c838cf27d8b837be0da077167f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46294d35_1456ecf0",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T16:25:56Z",
+      "side": 1,
+      "message": "auto const\u0026",
+      "range": {
+        "startLine": 421,
+        "startChar": 7,
+        "endLine": 421,
+        "endChar": 12
+      },
+      "revId": "9035b1ef96b7c838cf27d8b837be0da077167f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e875d0a_23443568",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T16:25:56Z",
+      "side": 1,
+      "message": "This already takes place in PopulateAvailablePaymentMethods(). Perhaps we can remove a similar call in AddAutofillPaymentInstrument() as well.",
+      "range": {
+        "startLine": 423,
+        "startChar": 4,
+        "endLine": 423,
+        "endChar": 67
+      },
+      "revId": "9035b1ef96b7c838cf27d8b837be0da077167f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8692560a_ad151814",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T16:25:56Z",
+      "side": 1,
+      "message": "I think this makes more sense to be in the view controller in -setCancellable:",
+      "range": {
+        "startLine": 126,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 60
+      },
+      "revId": "9035b1ef96b7c838cf27d8b837be0da077167f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e10421b2_679ec709",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T16:25:56Z",
+      "side": 1,
+      "message": "This should be a property of the payments::PaymentRequest. Perhaps in the form of: payment_instruments_ready",
+      "range": {
+        "startLine": 137,
+        "startChar": 7,
+        "endLine": 137,
+        "endChar": 30
+      },
+      "revId": "9035b1ef96b7c838cf27d8b837be0da077167f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2b2cc9_71023f6e",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T16:25:56Z",
+      "side": 1,
+      "message": "no need for this check. if _paymentRequestCoordinator is nil the next call is a noop.",
+      "range": {
+        "startLine": 750,
+        "startChar": 2,
+        "endLine": 750,
+        "endChar": 33
+      },
+      "revId": "9035b1ef96b7c838cf27d8b837be0da077167f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f95e91a_b31e08c7",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T16:25:56Z",
+      "side": 1,
+      "message": "Should you move this line to a setCancellable setter?",
+      "revId": "9035b1ef96b7c838cf27d8b837be0da077167f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
