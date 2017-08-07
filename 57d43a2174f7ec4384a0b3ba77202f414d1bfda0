@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40a6e5a1_c7bbd9d0",
+        "filename": "chrome/browser/safe_browsing/client_side_detection_host_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-07T17:44:44Z",
+      "side": 1,
+      "message": "Can you file a bug so this doesn\u0027t get lost?",
+      "range": {
+        "startLine": 941,
+        "startChar": 12,
+        "endLine": 941,
+        "endChar": 17
+      },
+      "revId": "57d43a2174f7ec4384a0b3ba77202f414d1bfda0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
