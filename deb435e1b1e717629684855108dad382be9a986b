@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b92c1a37_54d6f075",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 2
+      },
+      "lineNbr": 1557,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-07T22:27:15Z",
+      "side": 1,
+      "message": "The pixel expectation changed when they switched Skia internal precision.\n\nWe are expected to match, but currently this test is composited in SPv2 due to an issue in PAC squashing. crbug.com/696842",
+      "revId": "deb435e1b1e717629684855108dad382be9a986b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
