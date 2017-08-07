@@ -18,6 +18,7 @@ class CORE_EXPORT CompositionMarker final : public StyleableMarker {
  public:
   CompositionMarker(unsigned start_offset,
                     unsigned end_offset,
+                    bool use_text_color,
                     Color underline_color,
                     Thickness,
                     Color background_color);

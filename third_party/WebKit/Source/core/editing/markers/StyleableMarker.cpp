@@ -8,13 +8,19 @@ namespace blink {
 
 StyleableMarker::StyleableMarker(unsigned start_offset,
                                  unsigned end_offset,
+                                 bool use_text_color,
                                  Color underline_color,
                                  Thickness thickness,
                                  Color background_color)
     : DocumentMarker(start_offset, end_offset),
+      use_text_color_(use_text_color),
       underline_color_(underline_color),
       background_color_(background_color),
       thickness_(thickness) {}
+
+bool StyleableMarker::UseTextColor() const {
+  return use_text_color_;
+}
 
 Color StyleableMarker::UnderlineColor() const {
   return underline_color_;
