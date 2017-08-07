@@ -15,15 +15,16 @@
 #include "content/browser/android/app_web_message_port.h"
 #endif
 
+using blink_common::MessagePort;
+
 namespace content {
 namespace {
 
-void PostMessageToFrameInternal(
-    WebContents* web_contents,
-    const base::string16& source_origin,
-    const base::string16& target_origin,
-    const base::string16& data,
-    std::vector<MessagePort> ports) {
+void PostMessageToFrameInternal(WebContents* web_contents,
+                                const base::string16& source_origin,
+                                const base::string16& target_origin,
+                                const base::string16& data,
+                                std::vector<MessagePort> ports) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   FrameMsg_PostMessage_Params params;
