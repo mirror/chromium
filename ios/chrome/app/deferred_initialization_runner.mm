@@ -128,6 +128,11 @@
   }
 }
 
+- (void)enqueueBlock:(ProceduralBlock)block {
+  NSString* name = [[NSUUID UUID] UUIDString];
+  [self enqueueBlockNamed:name block:block];
+}
+
 - (void)scheduleNextBlockWithDelay:(NSTimeInterval)delay {
   DCHECK([NSThread isMainThread]);
   _isBlockScheduled = NO;

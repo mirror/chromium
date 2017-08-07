@@ -22,7 +22,11 @@
 // sequentially with a small delay before the first block and between each
 // successive block. If a block is already registered under |name|, it is
 // replaced with |block| unless it has already been run.
+// If |name| is nil, a unique randomly generated name will be used.
 - (void)enqueueBlockNamed:(NSString*)name block:(ProceduralBlock)block;
+
+// Same as |-enqueueBlockNamed:block:|, with a randomly generated name.
+- (void)enqueueBlock:(ProceduralBlock)block;
 
 // Looks up a previously scheduled block of |name|. If block has not been
 // run yet, run it synchronously now.
