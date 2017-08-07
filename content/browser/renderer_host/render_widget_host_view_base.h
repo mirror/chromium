@@ -21,6 +21,7 @@
 #include "cc/output/compositor_frame.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "content/browser/renderer_host/event_with_latency_info.h"
+#include "content/browser/web_contents_importance.h"
 #include "content/common/content_export.h"
 #include "content/common/input/input_event_ack_state.h"
 #include "content/public/browser/render_widget_host_view.h"
@@ -161,6 +162,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
   //----------------------------------------------------------------------------
   // The following methods can be overridden by derived classes.
+
+  virtual void SetImportance(WebContentsImportance importance);
 
   // Notifies the View that the renderer text selection has changed.
   virtual void SelectionChanged(const base::string16& text,
