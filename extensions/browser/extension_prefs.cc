@@ -1133,6 +1133,14 @@ void ExtensionPrefs::SetExtensionDisabled(const std::string& extension_id,
     observer.OnExtensionStateChanged(extension_id, false);
 }
 
+void ExtensionPrefs::SetExtensionBlockedByPolicy(
+    const std::string& extension_id) {
+  extension_pref_value_map_->SetExtensionState(extension_id, false);
+  UpdateExtensionPref(
+      extension_id, kPrefState,
+      base::MakeUnique<base::Value>(Extension::BLOCKED_BY_POLICY));
+}
+
 void ExtensionPrefs::SetExtensionBlacklistState(const std::string& extension_id,
                                                 BlacklistState state) {
   SetExtensionBlacklisted(extension_id, state == BLACKLISTED_MALWARE);
