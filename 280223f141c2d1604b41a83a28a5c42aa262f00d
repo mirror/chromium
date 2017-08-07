@@ -46,6 +46,30 @@
       "revId": "280223f141c2d1604b41a83a28a5c42aa262f00d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ff304ee_f7876f6d",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-07T18:05:33Z",
+      "side": 1,
+      "message": "For the record, this is only the case on Android these days; on Desktop, the deletion runs in the background. But even there, it is still a user-initiated action and blocks others, which may be more user-visible, due to the fact that BrowsingDataRemover processes deletion requests sequentially.",
+      "parentUuid": "4d53b5f4_3fe00534",
+      "range": {
+        "startLine": 622,
+        "startChar": 40,
+        "endLine": 622,
+        "endChar": 52
+      },
+      "revId": "280223f141c2d1604b41a83a28a5c42aa262f00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
