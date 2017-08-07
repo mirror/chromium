@@ -54,30 +54,6 @@ std::vector<MessagePort> MessagePort::BindHandles(
   return ports;
 }
 
-void MessagePort::PostMessage(const uint8_t* encoded_message,
-                              size_t encoded_message_size,
-                              std::vector<MessagePort> ports) {
-
-  MessagePortMessage msg;
-  msg.encoded_message =
-      mojo::ConstCArray<uint8_t>(encoded_message_size, encoded_message);
-  msg.ports = std::move(ports);
-  PostMessage<mojom::MessagePortMessage>(&msg);
-}
-
-bool MessagePort::GetMessage(std::vector<uint8_t>* encoded_message,
-                             std::vector<MessagePort>* ports) {
-  MessagePortMessage msg;
-  bool success = GetMessage<mojom::MessagePortMessage>(&msg);
-  if (!success)
-    return false;
-
-  *encoded_message = std::move(msg.owned_encoded_message);
-  *ports = std::move(msg.ports);
-
-  return true;
-}
-
 void MessagePort::SetCallback(const base::Closure& callback) {
   state_->StopWatching();
   state_->StartWatching(callback);
