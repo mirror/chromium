@@ -895,7 +895,7 @@ class HeadlessDevToolsNavigationControlTest
     devtools_client_->GetNetwork()
         ->GetExperimental()
         ->SetRequestInterceptionEnabled(
-            headless::network::SetRequestInterceptionEnabledParams::Builder()
+            network::SetRequestInterceptionEnabledParams::Builder()
                 .SetEnabled(true)
                 .Build());
     devtools_client_->GetPage()->Navigate(

@@ -1386,7 +1386,7 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, PageStopLoading) {
   LoadFinishedObserver load_finished_observer(shell()->web_contents());
 
   // The page will try to navigate twice, however since
-  // Network.setRequestInterceptionEnabled is true,
+  // Network.setRequestInterceptionEnabled is catching,
   // it'll wait for confirmation before committing to the navigation.
   GURL test_url = embedded_test_server()->GetURL(
       "/devtools/control_navigations/meta_tag.html");

@@ -75,7 +75,9 @@ class NetworkHandler : public DevToolsDomainHandler,
   Response SetUserAgentOverride(const std::string& user_agent) override;
   Response CanEmulateNetworkConditions(bool* result) override;
 
-  DispatchResponse SetRequestInterceptionEnabled(bool enabled) override;
+  DispatchResponse SetRequestInterceptionEnabled(
+      bool enabled,
+      Maybe<protocol::Array<String>> patterns) override;
   void ContinueInterceptedRequest(
       const std::string& request_id,
       Maybe<std::string> error_reason,
@@ -86,6 +88,10 @@ class NetworkHandler : public DevToolsDomainHandler,
       Maybe<protocol::Network::Headers> headers,
       Maybe<protocol::Network::AuthChallengeResponse> auth_challenge_response,
       std::unique_ptr<ContinueInterceptedRequestCallback> callback) override;
+
+  const base::flat_set<std::string>& requestInterceptionPatternsOnIO() {
+    return request_interception_patterns_;
+  }
 
   void NavigationPreloadRequestSent(int worker_version_id,
                                     const std::string& request_id,
@@ -117,11 +123,15 @@ class NetworkHandler : public DevToolsDomainHandler,
   bool ShouldCancelNavigation(const GlobalRequestID& global_request_id);
 
  private:
+  void SetRequestInterceptionEnabledInternal(
+      bool enabled,
+      std::unique_ptr<protocol::Array<String>> patterns = nullptr);
+
   std::unique_ptr<Network::Frontend> frontend_;
   RenderFrameHostImpl* host_;
   bool enabled_;
-  bool interception_enabled_;
   std::string user_agent_;
+  base::flat_set<std::string> request_interception_patterns_;
   base::flat_map<std::string, GlobalRequestID> navigation_requests_;
   base::flat_set<GlobalRequestID> canceled_navigation_requests_;
   base::WeakPtrFactory<NetworkHandler> weak_factory_;
