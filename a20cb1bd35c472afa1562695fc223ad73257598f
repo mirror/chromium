@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dda2ecb8_d3676ec6",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-07T21:40:10Z",
+      "side": 1,
+      "message": "We currently use a simple wildcard for request blocking patterns. If this code lived in the renderer, I\u0027d be more ok with using a RegEx, but it\u0027s quite possible and easy to write regex\u0027s that is O(n^2) or even worse to the length of the URL.",
+      "parentUuid": "2acfb14d_5fc27608",
+      "revId": "a20cb1bd35c472afa1562695fc223ad73257598f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5b0756a_29a73d85",
         "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2017-08-07T08:44:37Z",
       "side": 1,
       "message": "I got a perf alert on compile size when I originally landed this code.  It turns out flat_map \u0026 flat_set create a lot of template code, I wouldn\u0027t be surprised if this alone generates 20kb.  With that in mind, do we really need the flat_set here?",
+      "range": {
+        "startLine": 170,
+        "startChar": 10,
+        "endLine": 170,
+        "endChar": 18
+      },
+      "revId": "a20cb1bd35c472afa1562695fc223ad73257598f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad73df7f_4149a90a",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-07T21:40:10Z",
+      "side": 1,
+      "message": "I am going to bet that using what flat_set\u003cstd::string\u003e will be better since so many users will likely use it. I\u0027ll run a perfbot and check the binary size on this patch when I get a thumbs up and maybe move to std::vector if needed.\n\nThanks for the heads up!",
+      "parentUuid": "c5b0756a_29a73d85",
       "range": {
         "startLine": 170,
         "startChar": 10,
@@ -74,6 +116,24 @@
       "revId": "a20cb1bd35c472afa1562695fc223ad73257598f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8b6a48_2d7d9f79",
+        "filename": "headless/app/headless_shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-07T21:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e638a862_915cb5c4",
+      "revId": "a20cb1bd35c472afa1562695fc223ad73257598f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +166,24 @@
       "side": 1,
       "message": "We could also allow calling this multiple times, adding more patterns, but that requires {start,stop}InterceptingRequests({pattern}). WDYT?",
       "parentUuid": "44a81bf9_fb0487c8",
+      "revId": "a20cb1bd35c472afa1562695fc223ad73257598f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6e31e6_e4550455",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-07T21:40:10Z",
+      "side": 1,
+      "message": "After an offline discussion with dgozman@ and pfeldman@ separately, we decided (dgozman@ \u0026 I) to add enable flag back in and make it optional. I ended up not renaming it because of this.",
+      "parentUuid": "6c78a66a_6861d289",
       "revId": "a20cb1bd35c472afa1562695fc223ad73257598f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
