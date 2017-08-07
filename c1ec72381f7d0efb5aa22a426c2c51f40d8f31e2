@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db4d143f_822e639f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ProcessInitializationHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-07T23:18:40Z",
+      "side": 1,
+      "message": "Are you sure this is the right histogram function?\n\nThis is commented to take a size in kilobytes, but it looks like you\u0027re passing it a length in bytes.\n\nAlso, please check the range.  It looks like it\u0027s meant to record 1M - 500M.  Is that the right range?\n\nMaybe this all works about because you\u0027re calling it with a byte, not kb, value, and thus it\u0027s actually recording 1K to 500K.  But if you\u0027re exploiting that, you should comment it.",
+      "range": {
+        "startLine": 691,
+        "startChar": 89,
+        "endLine": 691,
+        "endChar": 0
+      },
+      "revId": "c1ec72381f7d0efb5aa22a426c2c51f40d8f31e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e34a21b_3a877a5f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 32635,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-07T23:18:40Z",
+      "side": 1,
+      "message": "This might not be right.  See other comment.",
+      "range": {
+        "startLine": 32635,
+        "startChar": 11,
+        "endLine": 32635,
+        "endChar": 13
+      },
+      "revId": "c1ec72381f7d0efb5aa22a426c2c51f40d8f31e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
