@@ -8,9 +8,8 @@
 // Audience for the ContentSuggestions, getting informations from it.
 @protocol ContentSuggestionsViewControllerAudience
 
-// Notifies the audience that the content suggestions collection has been
-// scrolled.
-- (void)contentSuggestionsDidScroll;
+// Notifies the audience that the content suggestions collection's has changed.
+- (void)contentSuggestionsStateChanged;
 // Notifies the audience that the promo has been shown.
 - (void)promoShown;
 
