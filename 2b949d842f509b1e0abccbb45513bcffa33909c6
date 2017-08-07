@@ -67,6 +67,24 @@
       "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cf0183_8c5c5a9c",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-07T19:25:17Z",
+      "side": 1,
+      "message": "One thing that\u0027s surprising here though, is that if /nonexisting-resource returns a non-200 error code like 404, it should be ignored and never passed through to PLMOs, which means the waiter should hang.\n\nWhich suggests to me that something funny is going on - perhaps /nonexisting-resource returns a 200 response code? Maybe the test server has a default handler that returns a 200.\n\nMaybe you could add some logging code in the observer to see if that\u0027s happening. If so, this may not be testing a failure after all and maybe we should remove this test case.\n\nThe other failure case I was thinking of was when a provisional load fails to commit. In that case, I\u0027d still like observers to see all timing up to the failure point. The closest test we have that you could model after is AbortNewNavigation. I suspect though that we do not log any load timing metrics for aborted navigations yet. So we can defer that if you prefer.",
+      "parentUuid": "16d8d521_d9cc7844",
+      "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
