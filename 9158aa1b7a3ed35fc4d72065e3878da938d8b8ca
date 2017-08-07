@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "68f12b3e_d3a12fbb",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-07T15:56:49Z",
+      "side": 1,
+      "message": "Actually, my earlier CL introduced a startup crash because I had to check GetAshConfig() in RegisterProfilePrefs() to see if I had to register foreign prefs. I put back RegisterForeignPrefs() as a separate function and added some more documentation.",
+      "parentUuid": "7640e803_9aa1179a",
+      "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84b378b1_c9382442",
         "filename": "ash/system/tray_caps_lock.cc",
         "patchSetId": 1
@@ -140,6 +158,24 @@
       "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b7333f_1a08fdb5",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-07T15:56:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e1f693e1_bebeacd9",
+      "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
