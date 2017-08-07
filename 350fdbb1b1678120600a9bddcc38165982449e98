@@ -22,6 +22,30 @@
       "revId": "350fdbb1b1678120600a9bddcc38165982449e98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1858a38a_cfdb9733",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-07T18:12:35Z",
+      "side": 0,
+      "message": "Thanks for bringing this up. This rule no longer fails, but upon greater observation I\u0027m not sure why. When the audit is run, the violating element (w/ id\u003d\"advancedToggle\") is there, however it is not flagged by the audit. I am going to prioritize setting up the rest of the framework over figuring out",
+      "parentUuid": "1333b4f9_13b12574",
+      "range": {
+        "startLine": 94,
+        "startChar": 20,
+        "endLine": 94,
+        "endChar": 35
+      },
+      "revId": "350fdbb1b1678120600a9bddcc38165982449e98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
