@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3bb63735_af73d465",
+        "filename": "components/arc/arc_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1117049
+      },
+      "writtenOn": "2017-08-07T20:11:51Z",
+      "side": 1,
+      "message": "just to confirm, this will disable webstore search for devices that have an Android image installed but it has not been enabled yet.  For instance, this frequently happens while we are testing devices early on before being able to certify them.  So in this case there could be a significant amount of time when this search is disabled and Play store is able to be used.\n\nTo sky@\u0027s comments, it might be better to use !IsArcAvailable, because at least then this only limits the effects of this CL to devices that are actually capable of using ARC *right now*.\n\n\nI think this is what Omri and I had discussed, so I\u0027ll +1 this, but wanted to make it explicit here in case the message was lost.",
+      "revId": "d870c0e98d5d1d0c63a4445b332114d93237ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f949f9e7_f4c92031",
         "filename": "components/arc/arc_util.h",
         "patchSetId": 4
