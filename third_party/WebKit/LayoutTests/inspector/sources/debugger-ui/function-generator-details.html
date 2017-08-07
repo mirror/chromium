@@ -19,7 +19,7 @@ function* gen()
 }
 
 var obj = {
-    generator: function*()
+    generator: function* ()
     {
         yield 11;
         yield 12;
@@ -33,7 +33,7 @@ var iterClosed = forward(gen(), 5);
 
 var iterObjGenerator = forward(obj.generator(), 2);
 
-var anonymousGenIter = (function*() {
+var anonymousGenIter = (function* () {
     yield 21;
     yield 22;
     yield 23;
