@@ -16,6 +16,24 @@
       "revId": "aba447cc117ae5347d724281a664655c43d8e74c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ec48ac_76eb2e17",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-07T17:34:27Z",
+      "side": 1,
+      "message": "Sounds good, I\u0027ll land this first. Besides, it seems that blur should be on all devices except for very slow ones according to UX.",
+      "parentUuid": "1c7188ea_f8c92da6",
+      "revId": "aba447cc117ae5347d724281a664655c43d8e74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
