@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c53b70a5_d36abf59",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-07T22:17:31Z",
+      "side": 1,
+      "message": "Alas, updating isn\u0027t possible, so I\u0027m going to revert back to the timestamp one.  That seems to be the least terrible option at this point.",
+      "parentUuid": "5affa593_e2d4e2cd",
+      "revId": "a2bcbfa333adc17d90f671b31cfc3fbec900cf6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb217439_5c0a7c67",
         "filename": "chrome/browser/android/locale/special_locale_handler.cc",
         "patchSetId": 3
