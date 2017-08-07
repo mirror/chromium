@@ -14,19 +14,34 @@ Support for the SensorTypes defined by the Mojo interface is summarized in this
 table. An empty cell indicates that the sensor type is not supported on that
 platform.
 
-| SensorType                        | Android                   | Linux                                 | macOS                                 | Windows                                   |
-| --------------------------------- | ------------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------------- |
-| AMBIENT_LIGHT                     | TYPE_LIGHT                | in_illuminance                        | AppleLMUController                    | SENSOR_TYPE_AMBIENT_LIGHT                 |
-| PROXIMITY                         |                           |                                       |                                       |                                           |
-| ACCELEROMETER                     | TYPE_ACCELEROMETER        | in_accel                              | SMCMotionSensor                       | SENSOR_TYPE_ACCELEROMETER_3D              |
-| LINEAR_ACCELEROMETER              | TYPE_LINEAR_ACCELEROMETER |                                       |                                       | ACCELEROMETER (*)                         |
-| GYROSCOPE                         | TYPE_GYROSCOPE            | in_anglvel                            |                                       | SENSOR_TYPE_GYROMETER_3D                  |
-| MAGNETOMETER                      | TYPE_MAGNETIC_FIELD       | in_magn                               |                                       | SENSOR_TYPE_COMPASS_3D                    |
-| PRESSURE                          |                           |                                       |                                       |                                           |
-| ABSOLUTE_ORIENTATION_EULER_ANGLES |                           |                                       |                                       | SENSOR_TYPE_INCLINOMETER_3D               |
-| ABSOLUTE_ORIENTATION_QUATERNION   | TYPE_ROTATION_VECTOR      |                                       |                                       | SENSOR_TYPE_AGGREGATED_DEVICE_ORIENTATION |
-| RELATIVE_ORIENTATION_EULER_ANGLES |                           | ACCELEROMETER (*)                     | ACCELEROMETER (*)                     |                                           |
-| RELATIVE_ORIENTATION_QUATERNION   | TYPE_GAME_ROTATION_VECTOR | RELATIVE_ORIENTATION_EULER_ANGLES (*) | RELATIVE_ORIENTATION_EULER_ANGLES (*) |                                           |
+| SensorType                        | Android                                  | Linux                                 | macOS                                 | Windows                                   |
+| ================================= | ======================================== | ===================================== | ===================================== | ========================================= |
+| AMBIENT_LIGHT                     | TYPE_LIGHT                               | in_illuminance                        | AppleLMUController                    | SENSOR_TYPE_AMBIENT_LIGHT                 |
+| --------------------------------- | ---------------------------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------------- |
+| PROXIMITY                         |                                          |                                       |                                       |                                           |
+| --------------------------------- | ---------------------------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------------- |
+| ACCELEROMETER                     | TYPE_ACCELEROMETER                       | in_accel                              | SMCMotionSensor                       | SENSOR_TYPE_ACCELEROMETER_3D              |
+| --------------------------------- | ---------------------------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------------- |
+| LINEAR_ACCELEROMETER              | TYPE_LINEAR_ACCELEROMETER                |                                       |                                       | ACCELEROMETER (*)                         |
+| --------------------------------- | ---------------------------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------------- |
+| GYROSCOPE                         | TYPE_GYROSCOPE                           | in_anglvel                            |                                       | SENSOR_TYPE_GYROMETER_3D                  |
+| --------------------------------- | ---------------------------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------------- |
+| MAGNETOMETER                      | TYPE_MAGNETIC_FIELD                      | in_magn                               |                                       | SENSOR_TYPE_COMPASS_3D                    |
+| --------------------------------- | ---------------------------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------------- |
+| PRESSURE                          |                                          |                                       |                                       |                                           |
+| --------------------------------- | ---------------------------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------------- |
+| ABSOLUTE_ORIENTATION_EULER_ANGLES | A. ABSOLUTE_ORIENTATION_QUATERNION (*)   |                                       |                                       | SENSOR_TYPE_INCLINOMETER_3D               |
+|                                   | B. ACCELEROMETER and MAGNETOMETER (*)    |                                       |                                       |                                           |
+| --------------------------------- | ---------------------------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------------- |
+| ABSOLUTE_ORIENTATION_QUATERNION   | A. TYPE_ROTATION_VECTOR                  |                                       |                                       | SENSOR_TYPE_AGGREGATED_DEVICE_ORIENTATION |
+|                                   | B. ABSOLUTE_ORIENTATION_EULER_ANGLES (*) |                                       |                                       |                                           |
+| --------------------------------- | ---------------------------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------------- |
+| RELATIVE_ORIENTATION_EULER_ANGLES | A. RELATIVE_ORIENTATION_QUATERNION (*)   | ACCELEROMETER (*)                     | ACCELEROMETER (*)                     |                                           |
+|                                   | B. ACCELEROMETER (*)                     |                                       |                                       |                                           |
+| --------------------------------- | ---------------------------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------------- |
+| RELATIVE_ORIENTATION_QUATERNION   | A. TYPE_GAME_ROTATION_VECTOR             | RELATIVE_ORIENTATION_EULER_ANGLES (*) | RELATIVE_ORIENTATION_EULER_ANGLES (*) |                                           |
+|                                   | B. RELATIVE_ORIENTATION_EULER_ANGLES (*) |                                       |                                       |                                           |
+| --------------------------------- | ---------------------------------------- | ------------------------------------- | ------------------------------------- | ----------------------------------------- |
 
 (Note: "*" means the sensor type is provided by sensor fusion.)
 
@@ -34,9 +49,27 @@ platform.
 
 Sensors are implemented by passing through values provided by the
 [Sensor](https://developer.android.com/reference/android/hardware/Sensor.html)
-class. The values in the "Android" column of the table above correspond to the
-integer constants from the android.hardware.Sensor used to provide data for a
-SensorType.
+class. The TYPE_* values in the "Android" column of the table above correspond
+to the integer constants from the android.hardware.Sensor used to provide data
+for a SensorType.
+
+For ABSOLUTE_ORIENTATION_EULER_ANGLES, the following sensor fallback is used:
+  A: ABSOLUTE_ORIENTATION_QUATERNION (if it uses TYPE_ROTATION_VECTOR
+     directly)
+  B: Combination of ACCELEROMETER and MAGNETOMETER
+
+For ABSOLUTE_ORIENTATION_QUATERNION, the following sensor fallback is used:
+  A: Use TYPE_ROTATION_VECTOR directly
+  B: ABSOLUTE_ORIENTATION_EULER_ANGLES
+
+For RELATIVE_ORIENTATION_EULER_ANGLES, the following sensor fallback is used:
+  A: RELATIVE_ORIENTATION_QUATERNION (if it uses TYPE_GAME_ROTATION_VECTOR
+     directly)
+  B: ACCELEROMETER
+
+For RELATIVE_ORIENTATION_QUATERNION, the following sensor fallback is used:
+  A: Use TYPE_GAME_ROTATION_VECTOR directly
+  B: RELATIVE_ORIENTATION_EULER_ANGLES
 
 ### Linux (and Chrome OS)
 
