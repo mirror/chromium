@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "1fe92004_866004d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-07T21:14:08Z",
+      "side": 1,
+      "message": "I think it might be the opposite.  If we post the delay before the library loads, if the library is taking too long we\u0027ll stop the service too early.  If we post the delay after we\u0027ve executed the command, we\u0027re guaranteed to run it.  Android shouldn\u0027t kill the service automatically in under a minute anyway IIUC.",
+      "parentUuid": "f49f5f7e_b5e44e40",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 29
+      },
+      "revId": "6a8c3f757a44939b61429e70a19807cc0bdbc45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "635bd6ff_33ccb01b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
         "patchSetId": 9
