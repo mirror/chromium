@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7b6ee0a_9c4ea737",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-07T07:38:59Z",
+      "side": 1,
+      "message": "I\u0027m confused by this.\n\nAXTextMarkerRangeForLine takes a position that\u0027s somewhere in\na line, and returns a text marker range that covers the whole\nline containing that position.\n\nThe position may be at the beginning or end of the line, but\nwe don\u0027t want to return the previous or the following line,\nwe want to stay within the current line, right?\n\nSo why are you passing StopIfNotAlreadyAtBoundary. That implies\nthat if it IS at the line boundary already (like the first\nposition in the line), then it should not stop, right?\n\nSo either you mean something different by StopIfNotAlreadyAtBoundary\nthan I do, or I\u0027m confused about what AXTextMarkerRangeForLine means\nif you call it on the first position in a line.",
+      "revId": "0d886bd8ade154b27581a80ad78e7f5eaa8716f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
