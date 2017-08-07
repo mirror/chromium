@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32311a63_2d080d6a",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-07T17:41:05Z",
+      "side": 1,
+      "message": "Could be helpful to include simple crash output in the documentation.",
+      "revId": "1f90bba5d4acd2b40af6d902de45435dd8c0c384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3622fb73_31002aed",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-07T17:41:05Z",
+      "side": 1,
+      "message": "Do you want a continue after this line?",
+      "revId": "1f90bba5d4acd2b40af6d902de45435dd8c0c384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81eb3c9_877f3d3a",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-07T17:41:05Z",
+      "side": 1,
+      "message": "This never gets reset to false. Is that an issue?",
+      "revId": "1f90bba5d4acd2b40af6d902de45435dd8c0c384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
