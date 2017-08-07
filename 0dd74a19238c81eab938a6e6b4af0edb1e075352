@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d35a71d_1e225f21",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/GraphicsContext3DUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-07T17:22:30Z",
+      "side": 1,
+      "message": "why do you need this?",
+      "revId": "0dd74a19238c81eab938a6e6b4af0edb1e075352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4235037b_c37d9327",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/GraphicsContext3DUtils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-07T17:22:30Z",
+      "side": 1,
+      "message": "s/internally/?",
+      "range": {
+        "startLine": 21,
+        "startChar": 64,
+        "endLine": 21,
+        "endChar": 74
+      },
+      "revId": "0dd74a19238c81eab938a6e6b4af0edb1e075352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
