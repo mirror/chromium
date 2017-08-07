@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fed68129_9362e4db",
+        "filename": "ui/message_center/notifier_settings.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-07T15:41:14Z",
+      "side": 1,
+      "message": "This rather strongly feels like a programming error to me, something we should DCHECK for.\n\nWhat about updating this comment to s/can be empty/must be set on Chrome OS/ and adding a DCHECK at the place where we actually enforce this?",
+      "revId": "02b9944f688e71d0a71af61b33e58bff5e9c88ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
