@@ -25,11 +25,7 @@ class BroadcastChannelProvider::Connection
              BroadcastChannelProvider* service);
 
   void OnMessage(blink_common::MessagePortMessage message) override;
-  void MessageToClient(const blink_common::MessagePortMessage& message) const {
-    blink_common::MessagePortMessage msg;
-    msg.encoded_message = message.encoded_message;
-    client_->OnMessage(std::move(msg));
-  }
+  void MessageToClient(const blink_common::MessagePortMessage& message) const;
   const url::Origin& origin() const { return origin_; }
   const std::string& name() const { return name_; }
 
@@ -68,6 +64,19 @@ void BroadcastChannelProvider::Connection::OnMessage(
     return;
   }
   service_->ReceivedMessageOnConnection(this, message);
+}
+
+void BroadcastChannelProvider::Connection::MessageToClient(
+    const blink_common::MessagePortMessage& message) const {
+  blink_common::MessagePortMessage msg;
+  msg.encoded_message = message.encoded_message;
+  for (const auto& blob : message.blobs) {
+    storage::mojom::BlobPtr blob_clone;
+    blob->blob->Clone(MakeRequest(&blob_clone));
+    msg.blobs.push_back(storage::mojom::SerializedBlob::New(
+        blob->uuid, blob->content_type, blob->size, std::move(blob_clone)));
+  }
+  client_->OnMessage(std::move(msg));
 }
 
 BroadcastChannelProvider::BroadcastChannelProvider() {}
