@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3adf8a15_df8553b5",
+        "filename": "tools/perf/benchmarks/memory.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-07T20:22:05Z",
+      "side": 1,
+      "message": "Hmhh, this seems wrong to create a new benchmark then disable it just for sharing code. Can you rename class _MemoryInfra --\u003e MemoryInfra instead/",
+      "revId": "f0bb3a5df877f3ce595dc620b5153e52338c6ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cf3079_edf904d3",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_config.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-07T20:22:05Z",
+      "side": 1,
+      "message": "Why do you need to add tools/perf to system path here? The existing code setup should already handle this",
+      "revId": "f0bb3a5df877f3ce595dc620b5153e52338c6ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4748c01_c2ac2925",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-07T20:22:05Z",
+      "side": 1,
+      "message": "Our convention is to use \"os.path.join(os.path.dirname(__file__), \u0027..\u0027, \u0027..\u0027....)",
+      "revId": "f0bb3a5df877f3ce595dc620b5153e52338c6ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

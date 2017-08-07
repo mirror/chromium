@@ -144,6 +144,29 @@
     },
     {
       "key": {
+        "uuid": "137bffed_50869f4e",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-07T20:22:05Z",
+      "side": 1,
+      "message": "nits, we usually do:\nos.path.join(os.path.dirname(__file__), \u0027..\u0027, \u0027..\u0027...)",
+      "range": {
+        "startLine": 8,
+        "startChar": 76,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "2135708b9cf79dacb676fe5b46798742ab0eacf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33aacc92_8ae3bd7a",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
         "patchSetId": 4
