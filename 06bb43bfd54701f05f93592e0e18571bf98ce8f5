@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f6a7dab_49d212d7",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-07T23:38:37Z",
+      "side": 1,
+      "message": "nit: Mixing getters and full-body functions together. Please move getters to L294",
+      "range": {
+        "startLine": 221,
+        "startChar": 19,
+        "endLine": 221,
+        "endChar": 28
+      },
+      "revId": "06bb43bfd54701f05f93592e0e18571bf98ce8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53817153_68fdc5e2",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-07T23:38:37Z",
+      "side": 1,
+      "message": "This can be static. And ideally it should be moved to utility class (not requested for this CL)",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 6
+      },
+      "revId": "06bb43bfd54701f05f93592e0e18571bf98ce8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912a4d29_2d0c4ed1",
+        "filename": "ui/app_list/views/start_page_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-07T23:38:37Z",
+      "side": 1,
+      "message": "nit: It seems it can be const",
+      "range": {
+        "startLine": 309,
+        "startChar": 6,
+        "endLine": 309,
+        "endChar": 20
+      },
+      "revId": "06bb43bfd54701f05f93592e0e18571bf98ce8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d17d89_3189e85a",
+        "filename": "ui/app_list/views/start_page_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-07T23:38:37Z",
+      "side": 1,
+      "message": "nit: If it possible I would move to L559 instead.",
+      "range": {
+        "startLine": 562,
+        "startChar": 2,
+        "endLine": 563,
+        "endChar": 17
+      },
+      "revId": "06bb43bfd54701f05f93592e0e18571bf98ce8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f1f7614_e2228b7f",
+        "filename": "ui/app_list/views/start_page_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-07T23:38:37Z",
+      "side": 1,
+      "message": "nit: Handles",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 81,
+        "endChar": 11
+      },
+      "revId": "06bb43bfd54701f05f93592e0e18571bf98ce8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
