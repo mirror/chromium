@@ -591,14 +591,18 @@ bool NGBlockLayoutAlgorithm::HandleInflow(
   NGLogicalOffset logical_offset =
       CalculateLogicalOffset(child_data.margins, child_bfc_offset);
 
-  // Only modify content_size_ if the fragment is not an empty block. This is
-  // needed to prevent the situation when logical_offset is included in
-  // content_size_ for empty blocks. Example:
-  //   <div style="overflow:hidden">
-  //     <div style="margin-top: 8px"></div>
-  //     <div style="margin-top: 10px"></div>
-  //   </div>
-  if (!IsEmptyBlock(child, *layout_result)) {
+  // Only modify content_size_ if the fragment is non-empty block, or an empty
+  // block was affected by clearance.
+  //
+  // Empty blocks don't immediately contribute to our size, instead we wait to
+  // see what the final margin produced, e.g.
+  // <div style="display: flow-root">
+  //   <div style="margin-top: -8px"></div>
+  //   <div style="margin-top: 10px"></div>
+  // </div>
+  if (!IsEmptyBlock(child, *layout_result) ||
+      empty_block_affected_by_clearance) {
+    DCHECK(container_builder_.BfcOffset());
     content_size_ = std::max(
         content_size_, logical_offset.block_offset + fragment.BlockSize());
   }
