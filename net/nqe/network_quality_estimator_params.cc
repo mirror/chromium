@@ -403,7 +403,12 @@ NetworkQualityEstimatorParams::NetworkQualityEstimatorParams(
       persistent_cache_reading_enabled_(
           GetPersistentCacheReadingEnabled(params_)),
       min_socket_watcher_notification_interval_(
-          GetMinSocketWatcherNotificationInterval(params_)) {
+          GetMinSocketWatcherNotificationInterval(params_)),
+      use_max_http_rtt_transport_rtt_(
+          GetStringValueForVariationParamWithDefaultValue(
+              params_,
+              "use_max_http_rtt_transport_rtt",
+              "false") == "true") {
   DCHECK_LE(0.0, correlation_uma_logging_probability_);
   DCHECK_GE(1.0, correlation_uma_logging_probability_);
 

@@ -1777,6 +1777,54 @@ TEST(NetworkQualityEstimatorTest, MAYBE_TestEffectiveConnectionTypeObserver) {
   EXPECT_EQ(0U, observer_3.effective_connection_types().size());
 }
 
+// Tests that the transport RTT is used for computing the HTTP RTT.
+TEST(NetworkQualityEstimatorTest, TestTransportRttUsedForHttpRttComputation) {
+  const struct {
+    base::TimeDelta http_rtt;
+    base::TimeDelta transport_rtt;
+    std::string use_max_http_rtt_transport_rtt;
+    base::TimeDelta expected_http_rtt;
+    EffectiveConnectionType expected_type;
+  } tests[] = {
+      {
+          base::TimeDelta::FromMilliseconds(100),
+          base::TimeDelta::FromMilliseconds(500), "",
+          base::TimeDelta::FromMilliseconds(100), EFFECTIVE_CONNECTION_TYPE_4G,
+      },
+      {
+          base::TimeDelta::FromMilliseconds(100),
+          base::TimeDelta::FromMilliseconds(500), "1.0",
+          base::TimeDelta::FromMilliseconds(100), EFFECTIVE_CONNECTION_TYPE_4G,
+      },
+      {
+          base::TimeDelta::FromMilliseconds(100),
+          base::TimeDelta::FromMilliseconds(500), "false",
+          base::TimeDelta::FromMilliseconds(100), EFFECTIVE_CONNECTION_TYPE_4G,
+      },
+      {
+          base::TimeDelta::FromMilliseconds(100),
+          base::TimeDelta::FromMilliseconds(500), "true",
+          base::TimeDelta::FromMilliseconds(500), EFFECTIVE_CONNECTION_TYPE_3G,
+      },
+  };
+
+  for (const auto& test : tests) {
+    std::map<std::string, std::string> variation_params;
+    variation_params["use_max_http_rtt_transport_rtt"] =
+        test.use_max_http_rtt_transport_rtt;
+    TestNetworkQualityEstimator estimator(variation_params);
+
+    estimator.set_start_time_null_http_rtt(test.http_rtt);
+    estimator.set_start_time_null_transport_rtt(test.transport_rtt);
+
+    estimator.RunOneRequest();
+    EXPECT_EQ(test.expected_http_rtt, estimator.GetHttpRTT());
+    EXPECT_EQ(test.transport_rtt, estimator.GetTransportRTT());
+    EXPECT_EQ(test.expected_type, estimator.GetEffectiveConnectionType())
+        << test.use_max_http_rtt_transport_rtt;
+  }
+}
+
 // Tests that the network quality is computed at the specified interval, and
 // that the network quality observers are notified of any change.
 TEST(NetworkQualityEstimatorTest, TestRTTAndThroughputEstimatesObserver) {

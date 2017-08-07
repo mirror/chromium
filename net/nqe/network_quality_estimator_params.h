@@ -137,6 +137,12 @@ class NET_EXPORT NetworkQualityEstimatorParams {
     effective_connection_type_algorithm_ = algorithm;
   }
 
+  // Returns true if the HTTP RTT should be set to the maximum of the HTTP RTT
+  // and the transport RTT.
+  bool use_max_http_rtt_transport_rtt() const {
+    return use_max_http_rtt_transport_rtt_;
+  }
+
  private:
   // Map containing all field trial parameters related to
   // NetworkQualityEstimator field trial.
@@ -149,6 +155,7 @@ class NET_EXPORT NetworkQualityEstimatorParams {
   base::Optional<EffectiveConnectionType> forced_effective_connection_type_;
   bool persistent_cache_reading_enabled_;
   const base::TimeDelta min_socket_watcher_notification_interval_;
+  const bool use_max_http_rtt_transport_rtt_;
 
   EffectiveConnectionTypeAlgorithm effective_connection_type_algorithm_;
 
