@@ -37,6 +37,7 @@ class ResourceCoordinatorWebContentsObserver
   void WasHidden() override;
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
+  void TitleWasSet(content::NavigationEntry* entry, bool explicit_set) override;
 
   void EnsureUkmRecorderInterface();
   void MaybeSetUkmRecorderInterface(bool ukm_recorder_already_initialized);
