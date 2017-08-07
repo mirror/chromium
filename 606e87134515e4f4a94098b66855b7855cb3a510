@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fee149b1_a2ea9e8b",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-07T17:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd341cf9_6a321ec5",
+      "range": {
+        "startLine": 93,
+        "startChar": 67,
+        "endLine": 93,
+        "endChar": 74
+      },
+      "revId": "606e87134515e4f4a94098b66855b7855cb3a510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e11ef8c9_796f40e1",
         "filename": "chrome/installer/zucchini/README.md",
         "patchSetId": 7
@@ -81,6 +105,30 @@
         "id": 1001928
       },
       "writtenOn": "2017-08-05T05:08:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e11ef8c9_796f40e1",
+      "range": {
+        "startLine": 108,
+        "startChar": 3,
+        "endLine": 108,
+        "endChar": 70
+      },
+      "revId": "606e87134515e4f4a94098b66855b7855cb3a510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "168f798e_e5804941",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-07T17:08:58Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "e11ef8c9_796f40e1",
@@ -140,6 +188,30 @@
       "revId": "606e87134515e4f4a94098b66855b7855cb3a510",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "848a47e0_b806ed15",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-07T17:08:58Z",
+      "side": 1,
+      "message": "I guess I can have [cursor_, end_) as one member variable |region_|. We still need next_cursor for skipping over references, given we keep 2A.",
+      "parentUuid": "1f2cf7d2_8b5d1f31",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 49
+      },
+      "revId": "606e87134515e4f4a94098b66855b7855cb3a510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

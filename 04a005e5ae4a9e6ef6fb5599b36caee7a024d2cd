@@ -305,6 +305,30 @@
       "revId": "04a005e5ae4a9e6ef6fb5599b36caee7a024d2cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e121b636_9a20ea7c",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-07T17:08:58Z",
+      "side": 1,
+      "message": "I would rather keep 2A for this CL.\nI feel like 1 would ultimately hurt patch size, because we would end up with more false negatives, though it probably is simpler to implement.\n2B seems rather complex, because we would end up with Rel32Finder depending on more stuff (AddressTranslation, target lookup, regions). I would like to avoid this (for now).",
+      "parentUuid": "a49439e1_c0e1b624",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 13
+      },
+      "revId": "04a005e5ae4a9e6ef6fb5599b36caee7a024d2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

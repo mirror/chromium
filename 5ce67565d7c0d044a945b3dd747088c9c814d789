@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c208e594_ef25b304",
+        "filename": "chrome/installer/zucchini/rel32_finder_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-07T17:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ddb31c5_cb87bb74",
+      "revId": "5ce67565d7c0d044a945b3dd747088c9c814d789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67041d1a_1abc7e23",
         "filename": "chrome/installer/zucchini/rel32_finder_unittest.cc",
         "patchSetId": 8
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "8683c239_53b80cdf",
+        "filename": "chrome/installer/zucchini/rel32_finder_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-07T17:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67041d1a_1abc7e23",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 9
+      },
+      "revId": "5ce67565d7c0d044a945b3dd747088c9c814d789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76caca09_5fa0149d",
         "filename": "chrome/installer/zucchini/rel32_finder_unittest.cc",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "5ce67565d7c0d044a945b3dd747088c9c814d789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29774507_c6449659",
+        "filename": "chrome/installer/zucchini/rel32_finder_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-07T17:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76caca09_5fa0149d",
+      "revId": "5ce67565d7c0d044a945b3dd747088c9c814d789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
