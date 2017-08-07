@@ -378,6 +378,30 @@
       "revId": "02a37dccb5cf9305b23354bfb7fb2c1cd7efb695",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "674845b1_9f1fc526",
+        "filename": "components/ntp_tiles/section_type.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-07T17:13:13Z",
+      "side": 1,
+      "message": "I know this pattern from other chromium code I worked with:\nhttps://cs.chromium.org/search/?q\u003dLAST.%3D\n\n(I couldn\u0027t find END or COUNT in a similar fashion)",
+      "parentUuid": "b7d6912b_0b64ece9",
+      "range": {
+        "startLine": 24,
+        "startChar": 15,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "02a37dccb5cf9305b23354bfb7fb2c1cd7efb695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c40f6c1_689cf7eb",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-07T17:13:13Z",
+      "side": 1,
+      "message": "Gone. Correct.",
+      "parentUuid": "05cf53b9_c21b58fc",
+      "revId": "8098e6832815c665452c72ac5b126ba9a9296c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cce3a86_ad9ccc15",
         "filename": "components/ntp_tiles/popular_sites_impl.cc",
         "patchSetId": 9
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4bd62bc3_351b869a",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-07T17:13:13Z",
+      "side": 1,
+      "message": "Correct, changed.",
+      "parentUuid": "6cce3a86_ad9ccc15",
+      "range": {
+        "startLine": 262,
+        "startChar": 61,
+        "endLine": 262,
+        "endChar": 0
+      },
+      "revId": "8098e6832815c665452c72ac5b126ba9a9296c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2983a89_4e94e6aa",
         "filename": "components/ntp_tiles/popular_sites_impl.cc",
         "patchSetId": 9
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-07T05:20:04Z",
       "side": 1,
       "message": "I\u0027m not sure what this constant really is intended for, but I\u0027d say it\u0027s about the version of the JSON file that contains the baked-in ones. Is that really what you want to use here? I think it could default to 5 (which won\u0027t change when we upgrade the baked in JSON to include version 6).",
+      "range": {
+        "startLine": 397,
+        "startChar": 67,
+        "endLine": 397,
+        "endChar": 0
+      },
+      "revId": "8098e6832815c665452c72ac5b126ba9a9296c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eeba0f2_7c7e5f89",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-07T17:13:13Z",
+      "side": 1,
+      "message": "I strongly prefer to keep the default and the baked-in version separate (so we set the new default stepwise). What do you mean it wouldn\u0027t change when we update the baked-in version?\nThis is _mainly_ used to determine which version the baked-in sites use.",
+      "parentUuid": "b2983a89_4e94e6aa",
       "range": {
         "startLine": 397,
         "startChar": 67,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "eea7cd10_0faf2c66",
+        "filename": "components/ntp_tiles/popular_sites_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-07T17:13:13Z",
+      "side": 1,
+      "message": "Gone",
+      "parentUuid": "4e83cf47_adf7bf85",
+      "range": {
+        "startLine": 81,
+        "startChar": 40,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "8098e6832815c665452c72ac5b126ba9a9296c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79b11b06_eb822f04",
         "filename": "components/ntp_tiles/popular_sites_impl.h",
         "patchSetId": 9
@@ -108,6 +198,30 @@
       "revId": "8098e6832815c665452c72ac5b126ba9a9296c22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dd1aab0_bbe56120",
+        "filename": "components/ntp_tiles/popular_sites_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-07T17:13:13Z",
+      "side": 1,
+      "message": "I haven\u0027t read it from prefs so far but it\u0027s the right thing to do.",
+      "parentUuid": "79b11b06_eb822f04",
+      "range": {
+        "startLine": 104,
+        "startChar": 61,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "8098e6832815c665452c72ac5b126ba9a9296c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
