@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "582dff98_36ed1ec0",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-07T22:07:45Z",
+      "side": 1,
+      "message": "Oh right. For flags people have to manually enable it. Are you trying to use the finch experiment to control enabling the feature?",
+      "parentUuid": "44a58dcd_00d77e52",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "210d064b_771014bf",
         "filename": "ash/wm/tablet_mode/tablet_mode_window_manager.cc",
         "patchSetId": 7
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "These are on attach specific, so if we move them we will have to add a is_attach parameter to UpdateWindow. I don\u0027t quite follow the GetMaximizedOrCenteredWindowType comment.",
       "parentUuid": "f4c9d687_e32df10d",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651a52ef_65648eda",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-07T22:07:45Z",
+      "side": 1,
+      "message": "Sorry I didn\u0027t say it clearly. There are two cases here: If we should hide title bar, then show full screen windows (using ToggleFullScreen()), otherwise, show maximized or centered windows (using UpdateWindow()). So either you integrate the logic in UpdateWindow() function, or use a if-clause to separate these two cases so that you won\u0027t full screen a window after you just maximized it.",
+      "parentUuid": "de41ec55_cc539e42",
       "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
