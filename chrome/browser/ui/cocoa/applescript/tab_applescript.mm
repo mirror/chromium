@@ -14,7 +14,6 @@
 #include "chrome/browser/ui/cocoa/applescript/apple_event_util.h"
 #include "chrome/browser/ui/cocoa/applescript/error_applescript.h"
 #include "chrome/browser/ui/cocoa/applescript/metrics_applescript.h"
-#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_isolated_world_ids.h"
 #include "chrome/common/url_constants.h"
 #include "components/sessions/core/session_id.h"
@@ -60,7 +59,7 @@ void ResumeAppleEventAndSendReply(NSAppleEventManagerSuspensionID suspension_id,
 
 @synthesize tempURL = tempURL_;
 
-- (id)init {
+- (instancetype)init {
   if ((self = [super init])) {
     SessionID session;
     SessionID::id_type futureSessionIDOfTab = session.id() + 1;
@@ -77,8 +76,9 @@ void ResumeAppleEventAndSendReply(NSAppleEventManagerSuspensionID suspension_id,
   [super dealloc];
 }
 
-- (id)initWithWebContents:(content::WebContents*)webContents {
-  if (!webContents) {
+- (instancetype)initWithWebContents:(content::WebContents*)webContents
+                            profile:(Profile*)profile {
+  if (!webContents || !profile) {
     [self release];
     return nil;
   }
@@ -88,6 +88,7 @@ void ResumeAppleEventAndSendReply(NSAppleEventManagerSuspensionID suspension_id,
     // the AppleScript runtime calls tabs in AppleScriptWindow and this
     // particular tab is never returned.
     webContents_ = webContents;
+    profile_ = profile;
     SessionTabHelper* session_tab_helper =
         SessionTabHelper::FromWebContents(webContents);
     base::scoped_nsobject<NSNumber> numID(
@@ -128,7 +129,7 @@ void ResumeAppleEventAndSendReply(NSAppleEventManagerSuspensionID suspension_id,
 
 - (void)setURL:(NSString*)aURL {
   GURL url(base::SysNSStringToUTF8(aURL));
-  if (!base::FeatureList::IsEnabled(features::kAppleScriptExecuteJavaScript) &&
+  if (!chrome::mac::IsJavaScriptEnabledForProfile(profile_) &&
       url.SchemeIs(url::kJavaScriptScheme)) {
     AppleScript::SetError(AppleScript::errJavaScriptUnsupported);
     return;
@@ -294,13 +295,14 @@ void ResumeAppleEventAndSendReply(NSAppleEventManagerSuspensionID suspension_id,
 }
 
 - (id)handlesExecuteJavascriptScriptCommand:(NSScriptCommand*)command {
-  if (!base::FeatureList::IsEnabled(features::kAppleScriptExecuteJavaScript)) {
+  AppleScript::LogAppleScriptUMA(
+      AppleScript::AppleScriptCommand::TAB_EXECUTE_JAVASCRIPT);
+
+  if (!chrome::mac::IsJavaScriptEnabledForProfile(profile_)) {
     AppleScript::SetError(AppleScript::errJavaScriptUnsupported);
     return nil;
   }
 
-  AppleScript::LogAppleScriptUMA(
-      AppleScript::AppleScriptCommand::TAB_EXECUTE_JAVASCRIPT);
   content::RenderFrameHost* frame = webContents_->GetMainFrame();
   if (!frame) {
     NOTREACHED();
