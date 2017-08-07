@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "162be6f9_5c3a4a42",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-07T20:38:24Z",
+      "side": 1,
+      "message": "Should we have a test case like this but for helper.set_insecure_field_edit(true)?",
+      "range": {
+        "startLine": 457,
+        "startChar": 4,
+        "endLine": 464,
+        "endChar": 0
+      },
+      "revId": "f23210df1c0ef0f402dc0bb2d60f99a03b633490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3942833d_31176b28",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-07T20:38:24Z",
+      "side": 1,
+      "message": "Can you add a comment to SSLStatus that |user_data| gets cleared when a navigation commits? (Maybe to content_status while you are there too?)",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 213,
+        "endChar": 42
+      },
+      "revId": "f23210df1c0ef0f402dc0bb2d60f99a03b633490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62072bec_aed4c35a",
         "filename": "content/browser/ssl/ssl_manager.cc",
         "patchSetId": 1
@@ -18,6 +64,53 @@
         "startChar": 7,
         "endLine": 216,
         "endChar": 25
+      },
+      "revId": "f23210df1c0ef0f402dc0bb2d60f99a03b633490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a199421_c911ad6d",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-07T20:38:24Z",
+      "side": 1,
+      "message": "Seems fine, but why not return a bool from UpdateEntry? That way the callers who don\u0027t care about (line 272 for example) can just ignore the return value instead of having to pass in nullptr.",
+      "parentUuid": "62072bec_aed4c35a",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 216,
+        "endChar": 25
+      },
+      "revId": "f23210df1c0ef0f402dc0bb2d60f99a03b633490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46dce65b_dfc860ab",
+        "filename": "content/browser/ssl/ssl_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-07T20:38:24Z",
+      "side": 1,
+      "message": "nit: |notification_sent| (but see other comment about returning a bool instead)",
+      "range": {
+        "startLine": 122,
+        "startChar": 59,
+        "endLine": 122,
+        "endChar": 76
       },
       "revId": "f23210df1c0ef0f402dc0bb2d60f99a03b633490",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
