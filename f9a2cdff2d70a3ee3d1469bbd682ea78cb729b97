@@ -22,6 +22,30 @@
       "revId": "f9a2cdff2d70a3ee3d1469bbd682ea78cb729b97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94e7332_8028ef79",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/NotificationsPreferencesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-07T10:37:16Z",
+      "side": 1,
+      "message": "Punting this for now due to the difficulties with the Preference activity fade-in animation.",
+      "parentUuid": "35886f03_2330f8b9",
+      "range": {
+        "startLine": 73,
+        "startChar": 19,
+        "endLine": 73,
+        "endChar": 69
+      },
+      "revId": "f9a2cdff2d70a3ee3d1469bbd682ea78cb729b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
