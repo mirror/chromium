@@ -518,8 +518,7 @@ void ProfileImplIOData::InitializeInternal(
 
   content::CookieStoreConfig cookie_config(
       lazy_params_->cookie_path, lazy_params_->session_cookie_mode,
-      lazy_params_->special_storage_policy.get(),
-      profile_params->cookie_monster_delegate.get());
+      lazy_params_->special_storage_policy.get(), nullptr);
   cookie_config.crypto_delegate = cookie_config::GetCookieCryptoDelegate();
   cookie_config.channel_id_service = channel_id_service.get();
   cookie_config.background_task_runner = cookie_background_task_runner;
@@ -527,6 +526,13 @@ void ProfileImplIOData::InitializeInternal(
       content::CreateCookieStore(cookie_config));
 
   cookie_store->SetChannelIDServiceID(channel_id_service->GetUniqueID());
+  if (profile_params->cookie_notifier.get()) {
+    cookie_store->AddCallbackForAllChanges(
+        base::Bind(&ProfileIOData::CookieNotifier::OnCookieChanged,
+                   // profile_params is guaranteed to outlive this object,
+                   // and hence to outlive |*cookie_store|.
+                   base::Unretained(profile_params->cookie_notifier.get())));
+  }
 
   builder->SetCookieAndChannelIdStores(std::move(cookie_store),
                                        std::move(channel_id_service));

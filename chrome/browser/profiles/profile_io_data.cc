@@ -117,7 +117,7 @@
 #include "third_party/WebKit/public/public_features.h"
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-#include "chrome/browser/extensions/extension_cookie_monster_delegate.h"
+#include "chrome/browser/extensions/extension_cookie_notifier.h"
 #include "extensions/browser/extension_protocols.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/extension_throttle_manager.h"
@@ -411,7 +411,7 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   params->extension_info_map =
       extensions::ExtensionSystem::Get(profile)->info_map();
-  params->cookie_monster_delegate = new ExtensionCookieMonsterDelegate(profile);
+  params->cookie_notifier = base::MakeUnique<ExtensionCookieNotifier>(profile);
 #endif
 
   if (auto* loading_predictor =
