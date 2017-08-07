@@ -22,6 +22,30 @@
       "revId": "ce12ab6b9c608610ec9c59013b21070a11d439ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38be57a_ed8b27d3",
+        "filename": "media/audio/audio_output_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-07T19:10:55Z",
+      "side": 1,
+      "message": "True, it does not pass if the delay is removed though. So I think while not perfect it\u0027s a sufficient test case for this functionality. We could add a set_error_delay_for_testing(), but I feel that is unnecessary.",
+      "parentUuid": "3504d542_514fed58",
+      "range": {
+        "startLine": 331,
+        "startChar": 0,
+        "endLine": 331,
+        "endChar": 58
+      },
+      "revId": "ce12ab6b9c608610ec9c59013b21070a11d439ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
