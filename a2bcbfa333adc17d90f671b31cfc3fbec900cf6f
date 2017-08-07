@@ -37,6 +37,41 @@
     },
     {
       "key": {
+        "uuid": "5affa593_e2d4e2cd",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T22:15:06Z",
+      "side": 1,
+      "message": "I don\u0027t think you can safely remove a non-safe_for_autoreplace engine.  That\u0027s going to mean dataloss.\n\nIn that case we\u0027d probably want to instead modify the existing entry to just add a prepopulate ID.",
+      "parentUuid": "2088e75d_a5b4eda2",
+      "revId": "a2bcbfa333adc17d90f671b31cfc3fbec900cf6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb217439_5c0a7c67",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T22:15:06Z",
+      "side": 1,
+      "message": "I don\u0027t think this is right.  Even if this existed, if the old URL was safe_for_autoreplace, the new one should be too.  Otherwise these won\u0027t get updated correctly.",
+      "revId": "a2bcbfa333adc17d90f671b31cfc3fbec900cf6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33cb2ddb_47b308d1",
         "filename": "chrome/browser/android/locale/special_locale_handler.cc",
         "patchSetId": 3
