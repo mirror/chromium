@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f939aa2e_00ab7e1f",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-08-07T20:46:34Z",
+      "side": 1,
+      "message": "I actually removed that check in the \"Cut\" CL. At first, Dave had asked me to remove all the checks for HasSelection() and CanEditText() from this function since they are checked in PepperWebPluginImpl::ExecuteEditCommand(), but that was problematic because the browser plugin would swallow the edit commands. So I added back the checks necessary to prevent that - in this case, because HasSelection() has been checked, CanEditText() does not need to be because the browser plugin\u0027s ExecuteEditCommand() function is not invoked.",
+      "parentUuid": "0601f928_178facc1",
+      "range": {
+        "startLine": 850,
+        "startChar": 32,
+        "endLine": 850,
+        "endChar": 35
+      },
+      "revId": "45cab56346d2cf187f3ded43d2bfb8908cf3f34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b0dd8f5_bd89a1d8",
         "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "45cab56346d2cf187f3ded43d2bfb8908cf3f34a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cebb2722_7ac47205",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-08-07T20:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b0dd8f5_bd89a1d8",
+      "range": {
+        "startLine": 861,
+        "startChar": 5,
+        "endLine": 861,
+        "endChar": 0
+      },
+      "revId": "45cab56346d2cf187f3ded43d2bfb8908cf3f34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
