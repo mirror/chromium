@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "88300e8e_2c550fce",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMappingTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1939,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-07T19:24:37Z",
+      "side": 1,
+      "message": "IIUC, the only change in the logic in this patch is to allow sticky to go away, but I can test adding it back for completeness. Done.",
+      "parentUuid": "0c017a14_2aa7c07c",
+      "range": {
+        "startLine": 1939,
+        "startChar": 61,
+        "endLine": 1939,
+        "endChar": 68
+      },
+      "revId": "e840e36756f3ca44575e5acf9514e8853681685c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4905641_0bf8fcd7",
         "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMappingTest.cpp",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-06T21:21:41Z",
       "side": 1,
       "message": "Maybe we should check \"ASSERT_TRUE(target_graphics_layer);\" here?",
+      "revId": "e840e36756f3ca44575e5acf9514e8853681685c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4714001f_a0207f90",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMappingTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1970,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-07T19:24:37Z",
+      "side": 1,
+      "message": "Using it will have the same effect as an assert - crash if it is nullptr. Although I have been a bit inconsistent here, I should assume that the target_layer exists too. Done.",
+      "parentUuid": "f4905641_0bf8fcd7",
       "revId": "e840e36756f3ca44575e5acf9514e8853681685c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
