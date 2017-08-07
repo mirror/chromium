@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b5cd377b_3bacc337",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T18:05:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f56f68d_e3c1e3c1",
+      "range": {
+        "startLine": 64,
+        "startChar": 23,
+        "endLine": 64,
+        "endChar": 61
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aa3a235_e57b8021",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53c0916_3e0191e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T18:05:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aa3a235_e57b8021",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 28
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "aaea2c5f_7dc49746",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T18:05:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f971d26f_17a99db6",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2c1577_4413995f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 15
@@ -91,6 +163,30 @@
       "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b35a4c_d74f5867",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T18:05:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2c1577_4413995f",
+      "range": {
+        "startLine": 72,
+        "startChar": 23,
+        "endLine": 72,
+        "endChar": 61
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "bade6d1b_780cdc12",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T18:05:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "912007e4_e250d9b5",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 21
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee553505_30f293b4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 15
@@ -137,6 +257,30 @@
       "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e38efc2_c9871662",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T18:05:33Z",
+      "side": 1,
+      "message": "recordSigninPromoImpression(@AccountSigninActivity.AccessPoint int) is going to use these keys to record the promo impressions, including the one for NTP and Recent Tabs (line 112)",
+      "parentUuid": "ee553505_30f293b4",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 78
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e5483e09_c9a6da07",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T18:05:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fd5686f_6b5b95f1",
+      "range": {
+        "startLine": 94,
+        "startChar": 1,
+        "endLine": 95,
+        "endChar": 20
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2000234_b9d24b4b",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 15
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "79c20644_020a7314",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 2242,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T18:05:33Z",
+      "side": 1,
+      "message": "I tried to provide as much detail as possible.",
+      "parentUuid": "d2000234_b9d24b4b",
+      "range": {
+        "startLine": 2242,
+        "startChar": 69,
+        "endLine": 2242,
+        "endChar": 109
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7105fca9_4b683bb3",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 15
@@ -206,6 +398,30 @@
       "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97721416_04673ccf",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T18:05:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7105fca9_4b683bb3",
+      "range": {
+        "startLine": 2245,
+        "startChar": 66,
+        "endLine": 2245,
+        "endChar": 103
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
