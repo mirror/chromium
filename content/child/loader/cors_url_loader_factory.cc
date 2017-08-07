@@ -51,4 +51,11 @@ void CORSURLLoaderFactory::SyncLoad(int32_t routing_id,
                                     std::move(callback));
 }
 
+void CORSURLLoaderFactory::Clone(mojom::URLLoaderFactoryRequest request) {
+  // Cloning a CORSURLLoaderFactory so that it can be used from a different
+  // thread is not useful because that thread will still be dependent on the
+  // current one to handle requests.
+  NOTREACHED();
+}
+
 }  // namespace content

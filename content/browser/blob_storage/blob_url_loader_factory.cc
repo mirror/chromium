@@ -422,4 +422,8 @@ void BlobURLLoaderFactory::SyncLoad(int32_t routing_id,
   NOTREACHED();
 }
 
+void BlobURLLoaderFactory::Clone(mojom::URLLoaderFactoryRequest request) {
+  loader_factory_bindings_.AddBinding(this, std::move(request));
+}
+
 }  // namespace content

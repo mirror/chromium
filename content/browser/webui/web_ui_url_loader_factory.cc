@@ -274,6 +274,10 @@ class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
     NOTREACHED();
   }
 
+  void Clone(mojom::URLLoaderFactoryRequest request) override {
+    loader_factory_bindings_.AddBinding(this, std::move(request));
+  }
+
   // FrameTreeNode::Observer implementation:
   void OnFrameTreeNodeDestroyed(FrameTreeNode* node) override {
     g_factories.Get().erase(frame_tree_node_id_);

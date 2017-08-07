@@ -37,6 +37,8 @@ class CONTENT_EXPORT CORSURLLoaderFactory : public mojom::URLLoaderFactory {
                 const ResourceRequest& resource_request,
                 SyncLoadCallback callback) override;
 
+  void Clone(mojom::URLLoaderFactoryRequest request) override;
+
  private:
   PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
       network_loader_factory_;

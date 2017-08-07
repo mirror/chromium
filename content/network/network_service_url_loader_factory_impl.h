@@ -37,6 +37,8 @@ class NetworkServiceURLLoaderFactoryImpl : public mojom::URLLoaderFactory {
                 const ResourceRequest& request,
                 SyncLoadCallback callback) override;
 
+  void Clone(mojom::URLLoaderFactoryRequest request) override;
+
  private:
   // Not owned.
   NetworkContext* context_;
