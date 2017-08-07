@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98a16d67_9e79c21c",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T22:27:58Z",
+      "side": 1,
+      "message": "Usually with Add/Remove observer there is a base::ObserverList (so you can add more than one).\n\nIf there is no need for multiple observers, can these methods be renamed SetObserver/ClearObserver to imply there can be only one?",
+      "revId": "584b1ee57f66440b2ab14a153eb14a6ff290cac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc75ce7_8361aeb2",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T22:27:58Z",
+      "side": 1,
+      "message": "nit: s/dial/DIAL/",
+      "revId": "584b1ee57f66440b2ab14a153eb14a6ff290cac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9224433d_22b1db05",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T22:27:58Z",
+      "side": 1,
+      "message": "nit: outlives |this|.",
+      "revId": "584b1ee57f66440b2ab14a153eb14a6ff290cac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf77240_ca13d96a",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T22:27:58Z",
+      "side": 1,
+      "message": "outlives |this|.",
+      "revId": "584b1ee57f66440b2ab14a153eb14a6ff290cac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abff3b6b_bbac1bca",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T22:27:58Z",
+      "side": 1,
+      "message": "nit: Sets",
+      "revId": "584b1ee57f66440b2ab14a153eb14a6ff290cac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9caea1_2fe5315d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T22:27:58Z",
+      "side": 1,
+      "message": "Nit: Called when...",
+      "revId": "584b1ee57f66440b2ab14a153eb14a6ff290cac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

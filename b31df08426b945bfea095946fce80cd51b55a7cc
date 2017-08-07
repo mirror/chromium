@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a9b46362_3da2018d",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T22:27:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8f5fb069_b0157720",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba2fcb35_27c3d183",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
         "patchSetId": 1
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "3b0427c3_32f2bd2e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T22:27:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a9060b0f_31ac2578",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19be5ac0_a0f0c689",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
         "patchSetId": 1
@@ -174,6 +210,24 @@
       "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78cec09d_f6a11672",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T22:27:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fa70c69d_5ee45456",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -282,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "58d44574_5a3e8f43",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T22:27:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "66fb8e98_2172792f",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "801e67f5_1d8e624c",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -314,6 +386,24 @@
       "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18bc0c60_c01f30f4",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T22:27:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f5bceadf_9860fc10",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -422,6 +512,24 @@
     },
     {
       "key": {
+        "uuid": "05c6257e_85306940",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T22:27:58Z",
+      "side": 1,
+      "message": "Right, I think this manifests as a corner case, but is something to watch out for.  I think the DHCP renewal case we have had come up as a bug in the past.  This is something we can test for manually as we roll out the experiment.",
+      "parentUuid": "b1b8fcc9_711660ca",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33861210_75b2b552",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -457,6 +565,24 @@
     },
     {
       "key": {
+        "uuid": "d7470405_723ad72c",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T22:27:58Z",
+      "side": 1,
+      "message": "OK, as long as there aren\u0027t duplicates propagated upwards.",
+      "parentUuid": "8bd6f414_e88ae241",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "018094a0_dce67566",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -486,6 +612,24 @@
       "side": 1,
       "message": "Cast MRP seems open channel without checking either...Shall we check model name \"Eureka Dongle\"?",
       "parentUuid": "018094a0_dce67566",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0f509f_72b1e49b",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T22:27:58Z",
+      "side": 1,
+      "message": "No, checking by model name isn\u0027t reliable (there are many to check).  However we should give up on a given device after some number of attempts.  Will require some thought; fine to add a TODO about this.",
+      "parentUuid": "a2170463_c1087653",
       "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
