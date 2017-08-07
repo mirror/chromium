@@ -19,6 +19,7 @@
 #include "media/audio/win/core_audio_util_win.h"
 #include "media/base/audio_block_fifo.h"
 #include "media/base/audio_bus.h"
+#include "media/base/audio_timestamp_helper.h"
 #include "media/base/channel_layout.h"
 #include "media/base/limits.h"
 
@@ -371,7 +372,6 @@ void WASAPIAudioInputStream::Run() {
 
   DVLOG(1) << "AudioBlockFifo buffer count: " << buffers_required;
 
-  LARGE_INTEGER now_count = {};
   bool recording = true;
   bool error = false;
   double volume = GetVolume();
@@ -423,6 +423,15 @@ void WASAPIAudioInputStream::Run() {
                                    &first_audio_frame_timestamp);
         }
 
+        // Record capture time and adjust for the FIFO before pushing.
+        // first_audio_frame_timestamp will be 0 if we didn't get a timestamp.
+        base::TimeTicks capture_time =
+            (first_audio_frame_timestamp
+                 ? base::TimeTicks::FromQPCValue(first_audio_frame_timestamp)
+                 : base::TimeTicks::Now()) -
+            AudioTimestampHelper::FramesToTime(fifo_->GetAvailableFrames(),
+                                               format_.nSamplesPerSec);
+
         if (num_frames_to_read != 0) {
           if (flags & AUDCLNT_BUFFERFLAGS_SILENT) {
             fifo_->PushSilence(num_frames_to_read);
@@ -435,21 +444,6 @@ void WASAPIAudioInputStream::Run() {
         hr = audio_capture_client_->ReleaseBuffer(num_frames_to_read);
         DLOG_IF(ERROR, FAILED(hr)) << "Failed to release capture buffer";
 
-        // Derive a delay estimate for the captured audio packet.
-        // The value contains two parts (A+B), where A is the delay of the
-        // first audio frame in the packet and B is the extra delay
-        // contained in any stored data. Unit is in audio frames.
-        QueryPerformanceCounter(&now_count);
-        // first_audio_frame_timestamp will be 0 if we didn't get a timestamp.
-        double audio_delay_frames =
-            first_audio_frame_timestamp == 0
-                ? num_frames_to_read
-                : ((perf_count_to_100ns_units_ * now_count.QuadPart -
-                    first_audio_frame_timestamp) /
-                   10000.0) *
-                          ms_to_frame_count_ +
-                      fifo_->GetAvailableFrames() - num_frames_to_read;
-
         // Get a cached AGC volume level which is updated once every second
         // on the audio manager thread. Note that, |volume| is also updated
         // each time SetVolume() is called through IPC by the render-side AGC.
@@ -457,7 +451,6 @@ void WASAPIAudioInputStream::Run() {
 
         // Deliver captured data to the registered consumer using a packet
         // size which was specified at construction.
-        uint32_t delay_frames = static_cast<uint32_t>(audio_delay_frames + 0.5);
         while (fifo_->available_blocks()) {
           if (converter_) {
             if (imperfect_buffer_size_conversion_ &&
@@ -466,18 +459,18 @@ void WASAPIAudioInputStream::Run() {
               // convert or else we'll suffer an underrun.
               break;
             }
-            converter_->ConvertWithDelay(delay_frames, convert_bus_.get());
-            sink_->OnData(this, convert_bus_.get(), delay_frames * frame_size_,
-                          volume);
-          } else {
-            sink_->OnData(this, fifo_->Consume(), delay_frames * frame_size_,
-                          volume);
-          }
+            converter_->Convert(convert_bus_.get());
+            sink_->OnData(this, convert_bus_.get(), capture_time, volume);
 
-          if (delay_frames > packet_size_frames_) {
-            delay_frames -= packet_size_frames_;
+            // Move the capture time forward for each vended block.
+            capture_time += AudioTimestampHelper::FramesToTime(
+                convert_bus_->frames(), format_.nSamplesPerSec);
           } else {
-            delay_frames = 0;
+            sink_->OnData(this, fifo_->Consume(), capture_time, volume);
+
+            // Move the capture time forward for each vended block.
+            capture_time += AudioTimestampHelper::FramesToTime(
+                packet_size_frames_, format_.nSamplesPerSec);
           }
         }
       } break;

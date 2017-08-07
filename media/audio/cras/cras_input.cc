@@ -288,29 +288,18 @@ void CrasInputStream::ReadAudio(size_t frames,
                                 const timespec* sample_ts) {
   DCHECK(callback_);
 
-  timespec latency_ts = {0, 0};
-
-  // Determine latency and pass that on to the sink.  sample_ts is the wall time
-  // indicating when the first sample in the buffer was captured.  Convert that
-  // to latency in bytes.
-  cras_client_calc_capture_latency(sample_ts, &latency_ts);
-  double latency_usec =
-      latency_ts.tv_sec * base::Time::kMicrosecondsPerSecond +
-      latency_ts.tv_nsec / base::Time::kNanosecondsPerMicrosecond;
-  double frames_latency =
-      latency_usec * params_.sample_rate() / base::Time::kMicrosecondsPerSecond;
-  unsigned int bytes_latency =
-      static_cast<unsigned int>(frames_latency * bytes_per_frame_);
-
   // Update the AGC volume level once every second. Note that, |volume| is
   // also updated each time SetVolume() is called through IPC by the
   // render-side AGC.
   double normalized_volume = 0.0;
   GetAgcVolume(&normalized_volume);
 
-  audio_bus_->FromInterleaved(
-      buffer, audio_bus_->frames(), params_.bits_per_sample() / 8);
-  callback_->OnData(this, audio_bus_.get(), bytes_latency, normalized_volume);
+  audio_bus_->FromInterleaved(buffer, audio_bus_->frames(),
+                              params_.bits_per_sample() / 8);
+  callback_->OnData(
+      this, audio_bus_.get(),
+      base::TimeTicks() + base::TimeDelta::FromTimeSpec(*sample_ts),
+      normalized_volume);
 }
 
 void CrasInputStream::NotifyStreamError(int err) {
