@@ -204,6 +204,7 @@ RequestNavigationParams::RequestNavigationParams(
       original_method(original_method),
       can_load_local_resources(can_load_local_resources),
       page_state(page_state),
+      navigation_id(kRendererNavigationId),
       nav_entry_id(nav_entry_id),
       is_history_navigation_in_new_child(is_history_navigation_in_new_child),
       subframe_unique_names(subframe_unique_names),

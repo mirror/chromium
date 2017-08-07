@@ -3170,8 +3170,8 @@ TEST_F(WebContentsImplTestWithSiteIsolation, StartStopEventsBalance) {
     }
     subframe->SendNavigateWithTransition(0, false, initial_url,
                                          ui::PAGE_TRANSITION_AUTO_SUBFRAME);
-    subframe->OnMessageReceived(
-        FrameHostMsg_DidStopLoading(subframe->GetRoutingID()));
+    subframe->OnMessageReceived(FrameHostMsg_DidStopLoading(
+        subframe->GetRoutingID(), kRendererNavigationId));
   }
 
   // Navigate the frame to another URL, which will send again
@@ -3185,8 +3185,8 @@ TEST_F(WebContentsImplTestWithSiteIsolation, StartStopEventsBalance) {
     }
     subframe->SendNavigateWithTransition(10, false, foo_url,
                                          ui::PAGE_TRANSITION_AUTO_SUBFRAME);
-    subframe->OnMessageReceived(
-        FrameHostMsg_DidStopLoading(subframe->GetRoutingID()));
+    subframe->OnMessageReceived(FrameHostMsg_DidStopLoading(
+        subframe->GetRoutingID(), kRendererNavigationId));
   }
 
   // Since the main frame hasn't sent any DidStopLoading messages, it is
@@ -3221,8 +3221,8 @@ TEST_F(WebContentsImplTestWithSiteIsolation, StartStopEventsBalance) {
     subframe->PrepareForCommit();
     contents()->TestDidNavigate(subframe, entry_id, true, bar_url,
                                 ui::PAGE_TRANSITION_MANUAL_SUBFRAME);
-    subframe->OnMessageReceived(
-        FrameHostMsg_DidStopLoading(subframe->GetRoutingID()));
+    subframe->OnMessageReceived(FrameHostMsg_DidStopLoading(
+        subframe->GetRoutingID(), kRendererNavigationId));
   }
 
   // At this point the status should still be loading, since the main frame
@@ -3233,7 +3233,7 @@ TEST_F(WebContentsImplTestWithSiteIsolation, StartStopEventsBalance) {
   // Send the DidStopLoading for the main frame and ensure it isn't loading
   // anymore.
   orig_rfh->OnMessageReceived(
-      FrameHostMsg_DidStopLoading(orig_rfh->GetRoutingID()));
+      FrameHostMsg_DidStopLoading(orig_rfh->GetRoutingID(), kRendererNavigationId));
   EXPECT_FALSE(contents()->IsLoading());
   EXPECT_FALSE(observer.is_loading());
 }
@@ -3334,8 +3334,8 @@ TEST_F(WebContentsImplTest, NoEarlyStop) {
   // RenderFrameHost and the WebContents should still be loading.
   current_rfh->SendNavigateWithModificationCallback(
       0, true, kUrl3, base::Bind(SetAsNonUserGesture));
-  current_rfh->OnMessageReceived(
-      FrameHostMsg_DidStopLoading(current_rfh->GetRoutingID()));
+  current_rfh->OnMessageReceived(FrameHostMsg_DidStopLoading(
+      current_rfh->GetRoutingID(), kRendererNavigationId));
   EXPECT_EQ(contents()->GetPendingMainFrame(), pending_rfh);
   EXPECT_TRUE(contents()->IsLoading());
   // It should commit.
@@ -3355,7 +3355,7 @@ TEST_F(WebContentsImplTest, NoEarlyStop) {
   // Simulate the new current RenderFrameHost DidStopLoading. The WebContents
   // should now have stopped loading.
   new_current_rfh->OnMessageReceived(
-      FrameHostMsg_DidStopLoading(new_current_rfh->GetRoutingID()));
+      FrameHostMsg_DidStopLoading(new_current_rfh->GetRoutingID(),kRendererNavigationId));
   EXPECT_EQ(main_test_rfh(), new_current_rfh);
   EXPECT_FALSE(contents()->IsLoading());
 }

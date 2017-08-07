@@ -119,12 +119,14 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
   // this simulates a BeforeUnload ACK from the renderer.
   // PlzNavigate: this simulates a BeforeUnload ACK from the renderer, and the
   // interaction with the IO thread up until the response is ready to commit.
+  // Returns the id of the navigation request associated with the navigation.
   void PrepareForCommit();
 
   // This method does the same as PrepareForCommit.
   // PlzNavigate: Beyond doing the same as PrepareForCommit, this method will
   // also simulate a server redirect to |redirect_url|. If the URL is empty the
   // redirect step is ignored.
+  // Returns the id of the navigation request associated with the navigation.
   void PrepareForCommitWithServerRedirect(const GURL& redirect_url);
 
   // If we are doing a cross-site navigation, this simulates the current
@@ -132,6 +134,7 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
   // RenderFrameHost is resumed and can navigate.
   // PlzNavigate: This simulates a BeforeUnload ACK from the renderer, and the
   // interaction with the IO thread up until the response is ready to commit.
+  // Returns the id of the navigation request associated with the navigation.
   void PrepareForCommitIfNecessary();
 
   // PlzNavigate
@@ -152,6 +155,9 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
 
   // Computes the page ID for a pending navigation in this RenderFrameHost;
   int32_t ComputeNextPageID();
+
+  // Find the navigation id corresponding to a commit.
+  uint64_t FindNavigationId(const GURL& url);
 
   void SimulateWillStartRequest(ui::PageTransition transition);
 

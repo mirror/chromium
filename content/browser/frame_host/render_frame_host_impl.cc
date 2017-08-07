@@ -545,6 +545,7 @@ RenderFrameHostImpl::~RenderFrameHostImpl() {
   // Destroying navigation handle may call into delegates/observers,
   // so we do it early while |this| object is still in a sane state.
   navigation_handle_.reset();
+  ClearNavigationRequests();
 
   // Release the WebUI instances before all else as the WebUI may accesses the
   // RenderFrameHost during cleanup.
@@ -1559,7 +1560,15 @@ void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
   // Find the appropriate NavigationHandle for this navigation.
   std::unique_ptr<NavigationHandleImpl> navigation_handle =
       TakeNavigationHandleForCommit(validated_params);
-  DCHECK(navigation_handle);
+  if (!navigation_handle) {
+    DCHECK(IsBrowserSideNavigationEnabled());
+    // PlzNavigate: when no handle is found, it means the renderer send an
+    // invalid navigation id for the commit of the navigation. Kill the renderer
+    // in that case.
+    bad_message::ReceivedBadMessage(
+        GetProcess(), bad_message::RFH_INVALID_NAVIGATION_ID);
+    return;
+  }
 
   // Update the site url if the navigation was successful and the page is not an
   // interstitial.
@@ -1653,6 +1662,18 @@ RenderFrameHostImpl::PassNavigationHandleOwnership() {
   if (navigation_handle_)
     navigation_handle_->set_is_transferring(true);
   return std::move(navigation_handle_);
+}
+
+void RenderFrameHostImpl::TakeNavigationRequest(
+    std::unique_ptr<NavigationRequest> navigation_request) {
+  navigation_requests_.insert(
+      std::pair<uint64_t, std::unique_ptr<NavigationRequest>>(
+          navigation_request->request_params().navigation_id,
+          std::move(navigation_request)));
+}
+
+void RenderFrameHostImpl::ClearNavigationRequests() {
+  navigation_requests_.clear();
 }
 
 void RenderFrameHostImpl::SwapOut(
@@ -2594,9 +2615,22 @@ bool RenderFrameHostImpl::GetSuddenTerminationDisablerState(
   return (sudden_termination_disabler_types_enabled_ & disabler_type) != 0;
 }
 
-void RenderFrameHostImpl::OnDidStopLoading() {
+void RenderFrameHostImpl::OnDidStopLoading(uint64_t navigation_id) {
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDidStopLoading",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
+
+  // PlzNavigate
+  if (IsBrowserSideNavigationEnabled()) {
+    // Update the list of NavigationRequests handled by the renderer.
+    EraseNavigationRequestsUpToId(navigation_id,
+                                  false /* only_same_document */);
+
+    // If the renderer still has at least one navigation to commit, don't mark
+    // this RenderFrameHost as having stopped loading until all navigations have
+    // been handled.
+    if (!navigation_requests_.empty())
+      return;
+  }
 
   // This method should never be called when the frame is not loading.
   // Unfortunately, it can happen if a history navigation happens during a
@@ -3528,13 +3562,14 @@ RenderFrameHostImpl::GetFrameResourceCoordinator() {
 
 void RenderFrameHostImpl::ResetLoadingState() {
   if (is_loading()) {
+    navigation_requests_.clear();
     // When pending deletion, just set the loading state to not loading.
     // Otherwise, OnDidStopLoading will take care of that, as well as sending
     // notification to the FrameTreeNode about the change in loading state.
     if (!is_active())
       is_loading_ = false;
     else
-      OnDidStopLoading();
+      OnDidStopLoading(kRendererNavigationId);
   }
 }
 
@@ -4055,17 +4090,17 @@ void RenderFrameHostImpl::GetInterface(
 std::unique_ptr<NavigationHandleImpl>
 RenderFrameHostImpl::TakeNavigationHandleForCommit(
     const FrameHostMsg_DidCommitProvisionalLoad_Params& params) {
-  bool is_browser_initiated = (params.nav_entry_id != 0);
-
   if (params.was_within_same_document) {
     if (IsBrowserSideNavigationEnabled()) {
       // When browser-side navigation is enabled, a NavigationHandle is created
-      // for browser-initiated same-document navigation. Try to take it if it's
-      // still available and matches the current navigation.
-      if (is_browser_initiated && navigation_handle_ &&
-          navigation_handle_->IsSameDocument() &&
-          navigation_handle_->GetURL() == params.url) {
-        return std::move(navigation_handle_);
+      // for browser-initiated same-document navigation. Use it.
+      if (params.navigation_id != kRendererNavigationId) {
+        std::unique_ptr<NavigationRequest> navigation_request =
+            RendererCommittedNavigationRequest(params.navigation_id,
+                                               true /* was_same_document */);
+        if (!navigation_request)
+          return nullptr;
+        return navigation_request->TransferNavigationHandleOwnership();
       }
     } else {
       // When browser-side navigation is disabled, there is never any existing
@@ -4097,6 +4132,17 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
         false,                  // started_from_context_menu
         CSPDisposition::CHECK,  // should_check_main_world_csp
         false);                 // is_form_submission
+  }
+
+  // PlzNavigate
+  // The NavigationHandle should be stored in one of the NavigationRequests.
+  if (IsBrowserSideNavigationEnabled()) {
+    std::unique_ptr<NavigationRequest> navigation_request =
+        RendererCommittedNavigationRequest(params.navigation_id,
+                                           false /* was_same_document */);
+    if (!navigation_request)
+      return nullptr;
+    return navigation_request->TransferNavigationHandleOwnership();
   }
 
   // Determine if the current NavigationHandle can be used.
@@ -4152,6 +4198,43 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
       false,                  // started_from_context_menu
       CSPDisposition::CHECK,  // should_check_main_world_csp
       false);                 // is_form_submission
+}
+
+std::unique_ptr<NavigationRequest>
+RenderFrameHostImpl::RendererCommittedNavigationRequest(
+    uint64_t navigation_id,
+    bool was_same_document) {
+  // Find the matching request.
+  std::unique_ptr<NavigationRequest> request = nullptr;
+  auto search = navigation_requests_.find(navigation_id);
+  if (search != navigation_requests_.end()) {
+    std::swap(request, search->second);
+  }
+
+  // Now that a navigation has committed, clean up previous NavigationRequests.
+  // Note: for a same-document commit, only clean-up same-document navigations
+  // are cross-document navigations are not cancelled by same-document
+  // navigations commits.
+  EraseNavigationRequestsUpToId(navigation_id,was_same_document);
+
+  return request;
+}
+
+void RenderFrameHostImpl::EraseNavigationRequestsUpToId(
+    uint64_t navigation_id,
+    bool only_same_document) {
+  std::vector<uint64_t> ids_to_erase;
+  for (auto& entries : navigation_requests_) {
+    if (entries.first > navigation_id)
+      continue;
+    if (!only_same_document || !entries.second ||
+        entries.second->navigation_handle()->IsSameDocument()) {
+      ids_to_erase.push_back(entries.first);
+    }
+  }
+
+  for (uint64_t id : ids_to_erase)
+    navigation_requests_.erase(id);
 }
 
 void RenderFrameHostImpl::BeforeUnloadTimeout() {

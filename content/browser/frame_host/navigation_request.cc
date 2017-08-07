@@ -57,6 +57,8 @@ namespace content {
 
 namespace {
 
+uint64_t g_next_navigation_id = 0;
+
 // Returns the net load flags to use based on the navigation type.
 // TODO(clamy): Remove the blink code that sets the caching flags when
 // PlzNavigate launches.
@@ -325,6 +327,7 @@ NavigationRequest::NavigationRequest(
       associated_site_instance_type_(AssociatedSiteInstanceType::NONE),
       may_transfer_(may_transfer),
       weak_factory_(this) {
+  request_params_.navigation_id = ++g_next_navigation_id;
   DCHECK(!browser_initiated || (entry != nullptr && frame_entry != nullptr));
   TRACE_EVENT_ASYNC_BEGIN2("navigation", "NavigationRequest", this,
                            "frame_tree_node",
@@ -493,9 +496,9 @@ void NavigationRequest::CreateNavigationHandle() {
   }
 }
 
-void NavigationRequest::TransferNavigationHandleOwnership(
-    RenderFrameHostImpl* render_frame_host) {
-  render_frame_host->SetNavigationHandle(std::move(navigation_handle_));
+std::unique_ptr<NavigationHandleImpl>
+NavigationRequest::TransferNavigationHandleOwnership() {
+  return std::move(navigation_handle_);
 }
 
 void NavigationRequest::OnRequestRedirected(
@@ -745,9 +748,7 @@ void NavigationRequest::OnRequestFailed(bool has_stale_copy_in_cache,
   NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(render_frame_host,
                                                            common_params_.url);
 
-  TransferNavigationHandleOwnership(render_frame_host);
-  render_frame_host->navigation_handle()->ReadyToCommitNavigation(
-      render_frame_host);
+  frame_tree_node_->TransferNavigationRequest(render_frame_host);
   render_frame_host->FailedNavigation(common_params_, begin_params_,
                                       request_params_, has_stale_copy_in_cache,
                                       net_error);
@@ -951,16 +952,13 @@ void NavigationRequest::CommitNavigation() {
          render_frame_host ==
              frame_tree_node_->render_manager()->speculative_frame_host());
 
-  TransferNavigationHandleOwnership(render_frame_host);
-
   DCHECK_EQ(request_params_.has_user_gesture, begin_params_.has_user_gesture);
 
+  frame_tree_node_->TransferNavigationRequest(render_frame_host);
   render_frame_host->CommitNavigation(
       response_.get(), std::move(body_), std::move(handle_), common_params_,
       request_params_, is_view_source_,
       std::move(subresource_loader_factory_info_));
-
-  frame_tree_node_->ResetNavigationRequest(true, true);
 }
 
 NavigationRequest::ContentSecurityPolicyCheckResult

@@ -32,6 +32,12 @@
 namespace content {
 
 // PlzNavigate
+// The value of a navigation ID when the navigation was handled entirely in the
+// renderer (this only happens for same-document renderer-initiated
+// navigations).
+const uint64_t kRendererNavigationId = 0;
+
+// PlzNavigate
 // Helper function to determine if the navigation to |url| should make a request
 // to the network stack. A request should not be sent for JavaScript URLs or
 // about:blank. In these cases, no request needs to be sent.
@@ -308,6 +314,12 @@ struct CONTENT_EXPORT RequestNavigationParams {
 
   // Opaque history state (received by ViewHostMsg_UpdateState).
   PageState page_state;
+
+  // PlzNavigate
+  // A unique id dtermined in the browser process. It should be passed by the
+  // renderer in the DidCommitProvisionalLoad IPC when the navigations commits,
+  // or in the DidStopLoading IPC if it aborted by the renderer before commit.
+  uint64_t navigation_id;
 
   // For browser-initiated navigations, this is the unique id of the
   // NavigationEntry being navigated to. (For renderer-initiated navigations it

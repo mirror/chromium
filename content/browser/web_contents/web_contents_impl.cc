@@ -635,10 +635,12 @@ WebContentsImpl::~WebContentsImpl() {
     root->pending_frame_host()->SetRenderFrameCreated(false);
     root->pending_frame_host()->SetNavigationHandle(
         std::unique_ptr<NavigationHandleImpl>());
+    root->pending_frame_host()->ClearNavigationRequests();
   }
   root->current_frame_host()->SetRenderFrameCreated(false);
   root->current_frame_host()->SetNavigationHandle(
       std::unique_ptr<NavigationHandleImpl>());
+  root->current_frame_host()->ClearNavigationRequests();
 
   // PlzNavigate: clear up state specific to browser-side navigation.
   if (IsBrowserSideNavigationEnabled()) {
@@ -648,6 +650,7 @@ WebContentsImpl::~WebContentsImpl() {
       root->speculative_frame_host()->SetRenderFrameCreated(false);
       root->speculative_frame_host()->SetNavigationHandle(
           std::unique_ptr<NavigationHandleImpl>());
+      root->speculative_frame_host()->ClearNavigationRequests();
     }
   }
 
