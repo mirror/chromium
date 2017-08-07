@@ -232,6 +232,7 @@ void DeliverMessageToScriptContext(const Message& message,
 void DispatchOnDisconnectToScriptContext(const PortId& port_id,
                                          const std::string& error_message,
                                          ScriptContext* script_context) {
+  //LOG(WARNING) << "\n\n\nDispatching On Disconnect: " << port_id.port_number << "\n\n\n";
   MessagingBindings* bindings = g_messaging_map.Get()[script_context];
   DCHECK(bindings);
   ExtensionPort* port = bindings->GetPortWithId(port_id);
@@ -343,6 +344,7 @@ void MessagingBindings::DeliverMessage(
     const PortId& target_port_id,
     const Message& message,
     content::RenderFrame* restrict_to_render_frame) {
+  //LOG(WARNING) << "\n\n\nDelivering message: " << message.data << "\n\n\n";
   context_set.ForEach(
       restrict_to_render_frame,
       base::Bind(&DeliverMessageToScriptContext, message, target_port_id));
@@ -443,6 +445,7 @@ void MessagingBindings::OpenChannelToExtension(
 
   int js_id = GetNextJsId();
   PortId port_id(context_id_, js_id, true);
+  //LOG(WARNING) << "\n\n\nCreated Port with ID: " << js_id << "\n\n\n";
   ports_[js_id] = base::MakeUnique<ExtensionPort>(context(), port_id, js_id);
 
   ExtensionMsg_ExternalConnectionInfo info;

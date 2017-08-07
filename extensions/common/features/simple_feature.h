@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 
+#include "base/strings/stringprintf.h"
 #include "base/callback_forward.h"
 #include "base/gtest_prod_util.h"
 #include "base/lazy_instance.h"
@@ -34,6 +35,8 @@ class FeatureProviderTest;
 class ExtensionAPITest;
 class ManifestUnitTest;
 class SimpleFeatureTest;
+
+void PrintStringByInts(const std::string& str);
 
 class SimpleFeature : public Feature {
  public:

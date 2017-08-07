@@ -191,7 +191,9 @@ class PlatformKeysService::SignTask : public Task {
         callback_(callback),
         key_permissions_(key_permissions),
         service_(service),
-        weak_factory_(this) {}
+        weak_factory_(this) {
+    LOG(WARNING) << "Data: '" << data_ << "', key: '" << public_key_ << "'";
+  }
 
   ~SignTask() override {}
 

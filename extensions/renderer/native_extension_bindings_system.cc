@@ -6,7 +6,9 @@
 
 #include "base/callback.h"
 #include "base/command_line.h"
+#include "base/json/json_writer.h"
 #include "base/memory/ptr_util.h"
+#include "extensions/common/features/simple_feature.h"
 #include "content/public/child/worker_thread.h"
 #include "content/public/common/console_message_level.h"
 #include "content/public/common/content_switches.h"
@@ -15,6 +17,8 @@
 #include "extensions/common/extension_api.h"
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/features/feature_provider.h"
+#include "extensions/common/manifest_constants.h"
+#include "extensions/common/manifest_handlers/externally_connectable.h"
 #include "extensions/renderer/api_activity_logger.h"
 #include "extensions/renderer/bindings/api_binding_bridge.h"
 #include "extensions/renderer/bindings/api_binding_hooks.h"
@@ -241,6 +245,7 @@ v8::Local<v8::Object> CreateRootBinding(v8::Local<v8::Context> context,
                                         ScriptContext* script_context,
                                         const std::string& name,
                                         APIBindingsSystem* bindings_system) {
+  LOG(WARNING) << "Creating root binding: " << name;
   APIBindingHooks* hooks = nullptr;
   v8::Local<v8::Object> binding_object =
       bindings_system->CreateAPIInstance(name, context, &hooks);
@@ -278,6 +283,7 @@ v8::Local<v8::Object> CreateFullBinding(
     APIBindingsSystem* bindings_system,
     const FeatureProvider* api_feature_provider,
     const std::string& root_name) {
+  LOG(WARNING) << "Creating full binding: " << root_name;
   const FeatureMap& features = api_feature_provider->GetAllFeatures();
   auto lower = features.lower_bound(root_name);
   DCHECK(lower != features.end());
@@ -289,11 +295,14 @@ v8::Local<v8::Object> CreateFullBinding(
   // else use an empty object (so we can still instantiate 'app.runtime').
   v8::Local<v8::Object> root_binding;
   if (lower->first == root_name) {
+    LOG(WARNING) << "Checking: " << (lower->first);
     if (script_context->IsAnyFeatureAvailableToContext(
             *lower->second, CheckAliasStatus::NOT_ALLOWED)) {
-      root_binding = CreateRootBinding(context, script_context, root_name,
+      // BUG in AnyFeatureAvailableToContext - children include no-parented children.
+      LOG(WARNING) << "Has access";
+      root_binding = CreateRootBinding(context, script_context, lower->second->source().empty() ? root_name : lower->second->source(),
                                        bindings_system);
-    }
+    } else { LOG(WARNING) << "No access"; }
     ++lower;
   }
 
@@ -346,6 +355,7 @@ v8::Local<v8::Object> CreateFullBinding(
     base::StringPiece binding_name =
         GetFirstDifferentAPIName(iter->first, root_name);
 
+    LOG(WARNING) << "Creating binding: " << binding_name.as_string();
     v8::Local<v8::Object> nested_binding =
         CreateFullBinding(context, script_context, bindings_system,
                           api_feature_provider, binding_name.as_string());
@@ -457,11 +467,13 @@ void NativeExtensionBindingsSystem::UpdateBindingsForContext(
   DCHECK(GetBindingsDataFromContext(v8_context));
 
   auto set_accessor = [chrome, isolate,
-                       v8_context](base::StringPiece accessor_name) {
+                       v8_context](base::StringPiece accessor_name,
+                                   const std::string* source_name) {
     v8::Local<v8::String> api_name =
         gin::StringToSymbol(isolate, accessor_name);
     v8::Maybe<bool> success = chrome->SetAccessor(
-        v8_context, api_name, &BindingAccessor, nullptr, api_name);
+        v8_context, api_name, &BindingAccessor, nullptr,
+        source_name && false ? gin::StringToSymbol(isolate, *source_name) : api_name);
     return success.IsJust() && success.FromJust();
   };
 
@@ -494,14 +506,14 @@ void NativeExtensionBindingsSystem::UpdateBindingsForContext(
     // for when we generate features.
     for (const char* feature_name : kWebAvailableFeatures) {
       if (context->GetAvailability(feature_name).is_available() &&
-          !set_accessor(feature_name)) {
+          !set_accessor(feature_name, nullptr)) {
         LOG(ERROR) << "Failed to create API on Chrome object.";
         return;
       }
     }
 
     // Runtime is special (see IsRuntimeAvailableToContext()).
-    if (IsRuntimeAvailableToContext(context) && !set_accessor("runtime"))
+    if (IsRuntimeAvailableToContext(context) && !set_accessor("runtime", nullptr))
       LOG(ERROR) << "Failed to create API on Chrome object.";
 
     return;
@@ -549,7 +561,7 @@ void NativeExtensionBindingsSystem::UpdateBindingsForContext(
     base::StringPiece accessor_name =
         GetFirstDifferentAPIName(map_entry.first, base::StringPiece());
     last_accessor = accessor_name;
-    if (!set_accessor(accessor_name)) {
+    if (!set_accessor(accessor_name, map_entry.second->source().empty() ? nullptr : &map_entry.second->source())) {
       LOG(ERROR) << "Failed to create API on Chrome object.";
       return;
     }
@@ -583,6 +595,25 @@ void NativeExtensionBindingsSystem::HandleResponse(
   // Some API calls result in failure, but don't set an error. Use a generic and
   // unhelpful error string.
   // TODO(devlin): Track these down and fix them. See crbug.com/648275.
+  LOG(WARNING) << "Handling response for: " << request_id << ", success: " << success << ", error: " << error;
+  std::string args_json;
+  if (base::JSONWriter::WriteWithOptions(response, base::JSONWriter::OPTIONS_OMIT_BINARY_VALUES, &args_json)) {
+    LOG(WARNING) << "Response: " << args_json;
+  } else {
+    LOG(WARNING) << "Unserializable";
+  }
+
+  for (const auto& val : response) {
+    if (val.is_blob()) {
+      const auto& blob = val.GetBlob();
+      std::string s(blob.begin(), blob.end());
+      PrintStringByInts(s);
+    }
+  }
+
+  // Some API calls result in failure, but don't set an error. Use a generic and
+  // unhelpful error string.
+  // TODO(devlin): Track these down and fix them.
   api_system_.CompleteRequest(
       request_id, response,
       !success && error.empty() ? "Unknown error." : error);
@@ -720,7 +751,7 @@ void NativeExtensionBindingsSystem::GetInternalAPI(
   if (!feature ||
       !script_context->IsAnyFeatureAvailableToContext(
           *feature, CheckAliasStatus::NOT_ALLOWED)) {
-    NOTREACHED();
+    NOTREACHED() << api_name;
     return;
   }
 
@@ -769,6 +800,22 @@ void NativeExtensionBindingsSystem::SendRequest(
   params->worker_thread_id = -1;
   params->service_worker_version_id = kInvalidServiceWorkerVersionId;
 
+  LOG(WARNING) << "Sending request: " << params->name << ", " << params->request_id << ", context: " << script_context;
+  std::string args_json;
+  if (base::JSONWriter::WriteWithOptions(params->arguments, base::JSONWriter::OPTIONS_OMIT_BINARY_VALUES, &args_json)) {
+    LOG(WARNING) << "Arguments: " << args_json;
+  } else {
+    LOG(WARNING) << "Unserializable";
+  }
+
+  for (const auto& val : params->arguments) {
+    if (val.is_blob()) {
+      const auto& blob = val.GetBlob();
+      std::string s(blob.begin(), blob.end());
+      PrintStringByInts(s);
+    }
+  }
+
   ipc_message_sender_->SendRequestIPC(script_context, std::move(params),
                                       request->thread);
 }
@@ -779,6 +826,7 @@ void NativeExtensionBindingsSystem::OnEventListenerChanged(
     const base::DictionaryValue* filter,
     bool update_lazy_listeners,
     v8::Local<v8::Context> context) {
+  LOG(WARNING) << "Event listeners changed: " << event_name;
   ScriptContext* script_context = GetScriptContextChecked(context);
   // Note: Check context_type() first to avoid accessing ExtensionFrameHelper on
   // a worker thread.

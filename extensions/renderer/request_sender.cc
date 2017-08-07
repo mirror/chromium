@@ -8,9 +8,11 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/timer/elapsed_timer.h"
 #include "base/values.h"
+#include "base/json/json_writer.h"
 #include "content/public/renderer/render_frame.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension_messages.h"
+#include "extensions/common/features/simple_feature.h"
 #include "extensions/renderer/bindings/api_binding_types.h"
 #include "extensions/renderer/ipc_message_sender.h"
 #include "extensions/renderer/script_context.h"
@@ -107,6 +109,22 @@ bool RequestSender::StartRequest(Source* source,
   params->user_gesture =
       blink::WebUserGestureIndicator::IsProcessingUserGestureThreadSafe();
 
+  LOG(WARNING) << "Sending request: " << params->name << ", " << params->request_id;
+  std::string args_json;
+  if (base::JSONWriter::WriteWithOptions(params->arguments, base::JSONWriter::OPTIONS_OMIT_BINARY_VALUES, &args_json)) {
+    LOG(WARNING) << "Arguments: " << args_json;
+  } else {
+    LOG(WARNING) << "Unserializable";
+  }
+
+  for (const auto& val : params->arguments) {
+    if (val.is_blob()) {
+      const auto& blob = val.GetBlob();
+      std::string s(blob.begin(), blob.end());
+      PrintStringByInts(s);
+    }
+  }
+
   // Set Service Worker specific params to default values.
   params->worker_thread_id = -1;
   params->service_worker_version_id = kInvalidServiceWorkerVersionId;
@@ -127,6 +145,22 @@ void RequestSender::HandleResponse(int request_id,
   if (!request.get()) {
     // This can happen if a context is destroyed while a request is in flight.
     return;
+  }
+
+  LOG(WARNING) << "Handling response for: " << request_id << ", success: " << success << ", error: " << error;
+  std::string args_json;
+  if (base::JSONWriter::WriteWithOptions(response, base::JSONWriter::OPTIONS_OMIT_BINARY_VALUES, &args_json)) {
+    LOG(WARNING) << "Response: " << args_json;
+  } else {
+    LOG(WARNING) << "Unserializable";
+  }
+
+  for (const auto& val : response) {
+    if (val.is_blob()) {
+      const auto& blob = val.GetBlob();
+      std::string s(blob.begin(), blob.end());
+      PrintStringByInts(s);
+    }
   }
 
   // TODO(devlin): Would it be useful to partition this data based on

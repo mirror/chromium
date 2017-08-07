@@ -24,6 +24,7 @@ function handleResponse(requestId, name, success, responseList, error) {
   // it's conceivable that something relies on that.
   var callerChrome = chrome;
 
+  console.warn('Handling response');
   try {
     var request = requests[requestId];
     logging.DCHECK(request != null);
@@ -73,10 +74,12 @@ function handleResponse(requestId, name, success, responseList, error) {
       lastError.reportIfUnchecked(name, callerChrome, request.stack);
     }
   } finally {
+    console.warn('Clearing last error');
     delete requests[requestId];
     lastError.clear(chrome);
     if (callerChrome !== chrome)
       lastError.clear(callerChrome);
+    console.warn('Cleared');
   }
 }
 
