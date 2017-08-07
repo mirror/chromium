@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d39af2f3_721a0644",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-07T21:40:25Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest set_is_incognito(false) to here too. Even though it\u0027s redundant with the above, it makes it easier to read and lessens the chance of someone coming along and adding another test case directly above that sets incognito to true and unwittingly silently breaks this test case.",
+      "range": {
+        "startLine": 475,
+        "startChar": 42,
+        "endLine": 475,
+        "endChar": 0
+      },
+      "revId": "8131f4e1da8dd26c6ecd739ff9f7e65821a61298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
