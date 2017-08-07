@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af94acb1_ba14f082",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-07T18:14:36Z",
+      "side": 1,
+      "message": "fix this to call ViewUtils as well",
+      "range": {
+        "startLine": 1186,
+        "startChar": 41,
+        "endLine": 1186,
+        "endChar": 50
+      },
+      "revId": "28432764b8248b9ebac6deab803ee36caaa164a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee55a97_46773b2f",
+        "filename": "ui/android/java/src/org/chromium/ui/base/ViewUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-07T18:14:36Z",
+      "side": 1,
+      "message": "is this needed? hasFocus doesn\u0027t mention this thing..\n\naccording to the docs, need to check isInTouchMode before using this, so it probably should be:\n\nisInTouchMode() ? isFocusableInTouchMode() : isFocusable()",
+      "range": {
+        "startLine": 31,
+        "startChar": 39,
+        "endLine": 31,
+        "endChar": 61
+      },
+      "revId": "28432764b8248b9ebac6deab803ee36caaa164a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

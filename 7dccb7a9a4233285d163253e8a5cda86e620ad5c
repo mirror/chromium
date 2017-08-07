@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ab45e322_145c4b3f",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-07T18:14:36Z",
+      "side": 1,
+      "message": "\u003e Oh, and onWindowFocusChanged. Not entirely sure how that works with in conjunction with onFocusChanged\n\u003e \n\u003e AFAICT, window focus doesn\u0027t automatically lead to one of its focusable views to get focus. The view will be explicitly notified via its onFocusChanged method when it comes to get it. And https://developer.android.com/reference/android/view/View.html#onWindowFocusChanged(boolean) says the view focus still remains unchanged even when its window loses focus. Which makes me think window and view focus event handling can stay orthogonal, not affecting each other.\n\nYeah I agree. Also looks like window focus is not passed down to RenderViews etc at all, so let\u0027s keep it out for now.",
+      "parentUuid": "dc76a621_f2de4be5",
+      "revId": "7dccb7a9a4233285d163253e8a5cda86e620ad5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b5c1cf0_4384fa8a",
         "filename": "ui/android/java/src/org/chromium/ui/base/ViewAndroidDelegate.java",
         "patchSetId": 2
