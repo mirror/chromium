@@ -96,6 +96,7 @@ class FrameTreeNode;
 class GeolocationServiceImpl;
 class MediaInterfaceProxy;
 class NavigationHandleImpl;
+class NavigationRequest;
 class PermissionServiceContext;
 class RenderFrameHostDelegate;
 class RenderFrameProxyHost;
@@ -347,8 +348,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // Called when a new navigation starts in this RenderFrameHost. Ownership of
   // |navigation_handle| is transferred.
-  // PlzNavigate: called when a navigation is ready to commit in this
-  // RenderFrameHost.
   void SetNavigationHandle(
       std::unique_ptr<NavigationHandleImpl> navigation_handle);
 
@@ -357,6 +356,16 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // from the RenderFrameHost that issued the initial request to the new
   // RenderFrameHost that will issue the transferring request.
   std::unique_ptr<NavigationHandleImpl> PassNavigationHandleOwnership();
+
+  // PlzNavigate
+  // Gives the ownership of a NavigationRequest to this RenderFrameHost.
+  void TakeNavigationRequest(
+      std::unique_ptr<NavigationRequest> navigation_request);
+
+  // PlzNavigate
+  // Clears all stored NavigationRequest. This is called on destruction pf teh
+  // WebContents.
+  void ClearNavigationRequests();
 
   // Tells the renderer that this RenderFrame is being swapped out for one in a
   // different renderer process.  It should run its unload handler and move to
@@ -794,7 +803,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
       bool present,
       blink::WebSuddenTerminationDisablerType disabler_type);
   void OnDidStartLoading(bool to_different_document);
-  void OnDidStopLoading();
+  void OnDidStopLoading(uint64_t navigation_id);
   void OnDidChangeLoadProgress(double load_progress);
   void OnSerializeAsMHTMLResponse(
       int job_id,
@@ -958,6 +967,14 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // just committed.
   std::unique_ptr<NavigationHandleImpl> TakeNavigationHandleForCommit(
       const FrameHostMsg_DidCommitProvisionalLoad_Params& params);
+
+  // Returns the NavigationRequest corresponding to |navigation_id| and erases
+  // all prior NavigationRequests.
+  std::unique_ptr<NavigationRequest> RendererCommittedNavigationRequest(
+      uint64_t navigation_id, bool was_same_document);
+
+  void EraseNavigationRequestsUpToId(uint64_t navigation_id,
+                                     bool only_same_document);
 
   // Called by |beforeunload_timeout_| when the beforeunload timeout fires.
   void BeforeUnloadTimeout();
@@ -1271,6 +1288,11 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   mojom::FrameInputHandlerPtr frame_input_handler_;
   std::unique_ptr<LegacyIPCFrameInputHandler> legacy_frame_input_handler_;
+
+  // PlzNavigate
+  // Holds the NavigationRequests that this RenderFrameHost has been asked to
+  // commit.
+  std::map<uint64_t, std::unique_ptr<NavigationRequest>> navigation_requests_;
 
   // NOTE: This must be the last member.
   base::WeakPtrFactory<RenderFrameHostImpl> weak_ptr_factory_;

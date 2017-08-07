@@ -443,12 +443,13 @@ TEST_F(SafeBrowsingBlockingPageTest, PageWithMalwareResourceDontProceed) {
   Profile* profile = Profile::FromBrowserContext(
       web_contents()->GetBrowserContext());
   SetExtendedReportingPref(profile->GetPrefs(), true);
+  WebContentsTester* web_contents_tester = WebContentsTester::For(web_contents());
 
   // Navigate somewhere.
-  Navigate(kGoogleURL, 0, true);
+  web_contents_tester->NavigateAndCommit(GURL(kGoogleURL));
 
   // Navigate somewhere else.
-  Navigate(kGoodURL, 0, true);
+  web_contents_tester->NavigateAndCommit(GURL(kGoodURL));
 
   // Simulate that page loading a bad-resource triggering an interstitial.
   ShowInterstitial(true, kBadURL);

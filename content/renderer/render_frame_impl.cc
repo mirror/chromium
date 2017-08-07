@@ -4935,6 +4935,7 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
   params.should_replace_current_entry =
       document_loader->ReplacesCurrentHistoryItem();
   params.post_id = -1;
+  params.navigation_id = navigation_state->request_params().navigation_id;
   params.nav_entry_id = navigation_state->request_params().nav_entry_id;
   // We need to track the RenderViewHost routing_id because of downstream
   // dependencies (crbug.com/392171 DownloadRequestHandle, SaveFileManager,
@@ -5172,7 +5173,7 @@ void RenderFrameImpl::DidStopLoading() {
   SendUpdateFaviconURL(icon_types_mask);
 
   render_view_->FrameDidStopLoading(frame_);
-  Send(new FrameHostMsg_DidStopLoading(routing_id_));
+  Send(new FrameHostMsg_DidStopLoading(routing_id_, last_navigation_id_));
 }
 
 void RenderFrameImpl::DidChangeLoadProgress(double load_progress) {
@@ -5218,6 +5219,8 @@ void RenderFrameImpl::OnCommitNavigation(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params) {
   CHECK(IsBrowserSideNavigationEnabled());
+
+  last_navigation_id_ = request_params.navigation_id;
 
   // This will override the url requested by the WebURLLoader, as well as
   // provide it with the response to the request.
@@ -5269,6 +5272,9 @@ void RenderFrameImpl::OnFailedNavigation(
     bool has_stale_copy_in_cache,
     int error_code) {
   DCHECK(IsBrowserSideNavigationEnabled());
+
+  last_navigation_id_ = request_params.navigation_id;
+
   bool is_reload =
       FrameMsg_Navigate_Type::IsReload(common_params.navigation_type);
   RenderFrameImpl::PrepareRenderViewForNavigation(
@@ -5298,8 +5304,7 @@ void RenderFrameImpl::OnFailedNavigation(
   if (!ShouldDisplayErrorPageForFailedLoad(error_code, common_params.url)) {
     // The browser expects this frame to be loading an error page. Inform it
     // that the load stopped.
-    Send(new FrameHostMsg_DidStopLoading(routing_id_));
-    browser_side_navigation_pending_ = false;
+    DroppedBrowserRequestedNavigation();
     return;
   }
 
@@ -5314,7 +5319,7 @@ void RenderFrameImpl::OnFailedNavigation(
       // either, as the frame has already been populated with something
       // unrelated to this navigation failure. In that case, just send a stop
       // IPC to the browser to unwind its state, and leave the frame as-is.
-      Send(new FrameHostMsg_DidStopLoading(routing_id_));
+      DroppedBrowserRequestedNavigation();
     }
     browser_side_navigation_pending_ = false;
     return;
@@ -6273,8 +6278,8 @@ void RenderFrameImpl::NavigateInternal(
     // send a stop message if a history navigation is loading in this frame
     // nonetheless. This behavior will go away with subframe navigation
     // entries.
-    if (frame_ && !frame_->IsLoading() && !has_history_navigation_in_frame)
-      Send(new FrameHostMsg_DidStopLoading(routing_id_));
+    if (frame_ && !has_history_navigation_in_frame)
+      DroppedBrowserRequestedNavigation();
   }
 
   // In case LoadRequest failed before DidCreateDocumentLoader was called.
@@ -6979,6 +6984,13 @@ void RenderFrameImpl::ShowCreatedWindow(bool opened_by_user_gesture,
       GetRoutingID(), render_widget_to_show->routing_id(),
       RenderViewImpl::NavigationPolicyToDisposition(policy), initial_rect,
       opened_by_user_gesture));
+}
+
+void RenderFrameImpl::DroppedBrowserRequestedNavigation() {
+  // If the frame is no longer loading, inform the browser that the load stopped.
+  if (!frame_ || !frame_->IsLoading())
+    Send(new FrameHostMsg_DidStopLoading(routing_id_, last_navigation_id_));
+  pending_navigation_params_.reset();
 }
 
 void RenderFrameImpl::RenderWidgetSetFocus(bool enable) {

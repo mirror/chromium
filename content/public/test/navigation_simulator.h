@@ -227,6 +227,8 @@ class NavigationSimulator : public WebContentsObserver {
   // The NavigationHandle associated with this navigation.
   NavigationHandleImpl* handle_;
 
+  uint64_t navigation_id_;
+
   GURL navigation_url_;
   net::HostPortPair socket_address_;
   Referrer referrer_;

@@ -142,6 +142,7 @@ void NavigationSimulator::Start() {
         render_frame_host_->GetRoutingID(), common_params, begin_params));
     NavigationRequest* request =
         render_frame_host_->frame_tree_node()->navigation_request();
+    navigation_id_ = request->request_params().navigation_id;
 
     // The request failed synchronously.
     if (!request)
@@ -316,6 +317,7 @@ void NavigationSimulator::Commit() {
 
   FrameHostMsg_DidCommitProvisionalLoad_Params params;
   params.nav_entry_id = 0;
+  params.navigation_id = navigation_id_;
   params.url = navigation_url_;
   params.origin = url::Origin(navigation_url_);
   params.transition = transition_;
@@ -383,8 +385,8 @@ void NavigationSimulator::Fail(int error_code) {
         FrameHostMsg_DidFailProvisionalLoadWithError(
             render_frame_host_->GetRoutingID(), error_params));
     if (!should_result_in_error_page) {
-      render_frame_host_->OnMessageReceived(
-          FrameHostMsg_DidStopLoading(render_frame_host_->GetRoutingID()));
+      render_frame_host_->OnMessageReceived(FrameHostMsg_DidStopLoading(
+          render_frame_host_->GetRoutingID(), kRendererNavigationId));
     }
   }
 
@@ -424,6 +426,7 @@ void NavigationSimulator::CommitErrorPage() {
       base::TimeTicks::Now()));
   FrameHostMsg_DidCommitProvisionalLoad_Params params;
   params.nav_entry_id = 0;
+  params.navigation_id = navigation_id_;
   params.did_create_new_entry = !ui::PageTransitionCoreTypeIs(
       transition_, ui::PAGE_TRANSITION_AUTO_SUBFRAME);
   params.url = navigation_url_;
@@ -482,8 +485,8 @@ void NavigationSimulator::CommitSameDocument() {
 
   render_frame_host_->SendNavigateWithParams(&params);
 
-  render_frame_host_->OnMessageReceived(
-      FrameHostMsg_DidStopLoading(render_frame_host_->GetRoutingID()));
+  render_frame_host_->OnMessageReceived(FrameHostMsg_DidStopLoading(
+      render_frame_host_->GetRoutingID(), kRendererNavigationId));
 
   state_ = FINISHED;
 
@@ -687,8 +690,8 @@ void NavigationSimulator::FailFromThrottleCheck(
           render_frame_host_->GetRoutingID(), error_params));
   bool should_result_in_error_page = error_code != net::ERR_ABORTED;
   if (!should_result_in_error_page) {
-    render_frame_host_->OnMessageReceived(
-        FrameHostMsg_DidStopLoading(render_frame_host_->GetRoutingID()));
+    render_frame_host_->OnMessageReceived(FrameHostMsg_DidStopLoading(
+        render_frame_host_->GetRoutingID(), kRendererNavigationId));
     CHECK_EQ(1, num_did_finish_navigation_called_);
   } else {
     CHECK_EQ(0, num_did_finish_navigation_called_);

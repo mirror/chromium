@@ -146,6 +146,7 @@ void TestRenderFrameHost::SimulateNavigationCommit(const GURL& url) {
 
   FrameHostMsg_DidCommitProvisionalLoad_Params params;
   params.nav_entry_id = 0;
+  params.navigation_id = FindNavigationId(url);
   params.url = url;
   params.origin = url::Origin(url);
   if (!GetParent())
@@ -212,30 +213,43 @@ void TestRenderFrameHost::SimulateNavigationError(const GURL& url,
 }
 
 void TestRenderFrameHost::SimulateNavigationErrorPageCommit() {
-  CHECK(navigation_handle());
+  CHECK(navigation_handle() || !navigation_requests_.empty());
   GURL error_url = GURL(kUnreachableWebDataURL);
+  GURL url = navigation_handle() ? navigation_handle()->GetURL() : GURL();
+  uint64_t navigation_id = kRendererNavigationId;
+  if (IsBrowserSideNavigationEnabled()) {
+    // Find the first navigation request that corresponds to a failure.
+    for (auto& requests : navigation_requests_) {
+      if (requests.second->navigation_handle()->GetNetErrorCode() != net::OK) {
+        url = requests.second->navigation_handle()->GetURL();
+        navigation_id = requests.second->request_params().navigation_id;
+        break;
+      }
+    }
+  }
   OnDidStartProvisionalLoad(error_url, std::vector<GURL>(),
                             base::TimeTicks::Now());
   FrameHostMsg_DidCommitProvisionalLoad_Params params;
   params.nav_entry_id = 0;
+  params.navigation_id = navigation_id;
   params.did_create_new_entry = true;
-  params.url = navigation_handle()->GetURL();
+  params.url = url;
   params.transition = GetParent() ? ui::PAGE_TRANSITION_MANUAL_SUBFRAME
                                   : ui::PAGE_TRANSITION_LINK;
   params.was_within_same_document = false;
   params.url_is_unreachable = true;
-  params.page_state = PageState::CreateForTesting(navigation_handle()->GetURL(),
-                                                  false, nullptr, nullptr);
+  params.page_state = PageState::CreateForTesting(url, false, nullptr, nullptr);
   SendNavigateWithParams(&params);
 }
 
 void TestRenderFrameHost::SimulateNavigationStop() {
-  if (is_loading()) {
-    OnDidStopLoading();
-  } else if (IsBrowserSideNavigationEnabled()) {
+  if (IsBrowserSideNavigationEnabled()) {
+    ResetLoadingState();
     // Even if the RenderFrameHost is not loading, there may still be an
     // ongoing navigation in the FrameTreeNode. Cancel this one as well.
     frame_tree_node()->ResetNavigationRequest(false, true);
+  } else if (is_loading()) {
+    OnDidStopLoading(kRendererNavigationId);
   }
 }
 
@@ -339,6 +353,7 @@ void TestRenderFrameHost::SendNavigateWithParameters(
 
   FrameHostMsg_DidCommitProvisionalLoad_Params params;
   params.nav_entry_id = nav_entry_id;
+  params.navigation_id = FindNavigationId(url);
   params.url = url_copy;
   params.transition = transition;
   params.should_update_history = true;
@@ -534,6 +549,14 @@ void TestRenderFrameHost::SimulateWillStartRequest(
   navigation_handle()->CallWillStartRequestForTesting(
       false /* is_post */, Referrer(GURL(), blink::kWebReferrerPolicyDefault),
       true /* user_gesture */, transition, false /* is_external_protocol */);
+}
+
+uint64_t TestRenderFrameHost::FindNavigationId(const GURL& url) {
+  for (auto& request : navigation_requests_) {
+    if (request.second->navigation_handle()->GetURL() == url)
+      return request.second->request_params().navigation_id;
+  }
+  return kRendererNavigationId;
 }
 
 }  // namespace content

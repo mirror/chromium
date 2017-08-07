@@ -318,6 +318,14 @@ IPC_STRUCT_BEGIN_WITH_PARENT(FrameHostMsg_DidCommitProvisionalLoad_Params,
   // identify and discard compositor frames that correspond to now-unloaded
   // web content.
   IPC_STRUCT_MEMBER(uint32_t, content_source_id)
+
+  // PlzNavigate
+  // A unique id identifying this navigation generated in the browser process.
+  // This is used to identify the NavigationRequest corresponding to this
+  // navigation commit. In the case of a same-document renderer-initiated
+  // navigation, which does not have a corresponding NavigationRequest, this
+  // should be kRendererNavigationID.
+  IPC_STRUCT_MEMBER(uint64_t, navigation_id)
 IPC_STRUCT_END()
 
 IPC_STRUCT_BEGIN(FrameMsg_PostMessage_Params)
@@ -404,6 +412,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::RequestNavigationParams)
   IPC_STRUCT_TRAITS_MEMBER(original_method)
   IPC_STRUCT_TRAITS_MEMBER(can_load_local_resources)
   IPC_STRUCT_TRAITS_MEMBER(page_state)
+  IPC_STRUCT_TRAITS_MEMBER(navigation_id)
   IPC_STRUCT_TRAITS_MEMBER(nav_entry_id)
   IPC_STRUCT_TRAITS_MEMBER(is_history_navigation_in_new_child)
   IPC_STRUCT_TRAITS_MEMBER(subframe_unique_names)
@@ -1130,7 +1139,10 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_DidStartLoading,
                     bool /* to_different_document */)
 
 // Sent when the renderer is done loading a page.
-IPC_MESSAGE_ROUTED0(FrameHostMsg_DidStopLoading)
+// PlzNavigate: |last_navigation_id| is the id of the last navigation the
+// RenderFrame was asked to commit.
+IPC_MESSAGE_ROUTED1(FrameHostMsg_DidStopLoading,
+                    uint64_t /* last_navigation_id */)
 
 // Notifies the browser that this frame has new session history information.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_UpdateState, content::PageState /* state */)

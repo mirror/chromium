@@ -146,6 +146,8 @@ void TestWebContents::TestDidNavigateWithSequenceNumber(
       static_cast<TestRenderFrameHost*>(render_frame_host);
   rfh->InitializeRenderFrameIfNeeded();
 
+  DCHECK(rfh->is_loading() || was_within_same_document)
+      << "The RenderFrameHost should be loading if it navigated.";
   if (!rfh->is_loading())
     rfh->SimulateNavigationStart(url);
 

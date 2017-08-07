@@ -1177,6 +1177,14 @@ class CONTENT_EXPORT RenderFrameImpl
   void UpdatePeakMemoryStats();
   void ReportPeakMemoryStats();
 
+  // PlzNavigate
+  // Informs the browser that this RenderFrame stopped trying to commit a
+  // navigation requested by the browser.
+  // TODO(clamy): Eventually, the renderer should not be able to drop committing
+  // a navigation requested by the browser. When that happens, remove this
+  // function.
+  void DroppedBrowserRequestedNavigation();
+
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
   // FrameDetached() is called until destruction (which is asynchronous in the
@@ -1467,6 +1475,10 @@ class CONTENT_EXPORT RenderFrameImpl
   // the browser. This state is allocated in decidePolicyForNavigation() and
   // is used and released in didStartProvisionalLoad().
   std::unique_ptr<PendingNavigationInfo> pending_navigation_info_;
+
+  // PlzNavigate
+  // The id of the last navigation this RenderFrame was asked to commit.
+  uint64_t last_navigation_id_ = 0;
 
   service_manager::BindSourceInfo browser_info_;
 
