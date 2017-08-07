@@ -22,6 +22,30 @@
       "revId": "628b38232e940a9380da8c93a3209b5bb55c0d0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2c17f2_c134af82",
+        "filename": "remoting/ios/facade/host_list_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-07T23:32:21Z",
+      "side": 1,
+      "message": "Added a check before logging the warning. Other logic should (resetting the HostListState and the host list) be the same.",
+      "parentUuid": "bf3a732e_b79fc1cb",
+      "range": {
+        "startLine": 40,
+        "startChar": 35,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "628b38232e940a9380da8c93a3209b5bb55c0d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
