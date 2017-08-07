@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6be2988b_c777b251",
+        "filename": "components/subresource_filter/core/browser/subresource_filter_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-07T14:10:06Z",
+      "side": 1,
+      "message": "Do the following conditions represent the lightspeed experiment? Just for reference: which study/group is lightspeed?",
+      "revId": "ba4d5ffb7e4c7642660029e2efcab69f2267929e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
