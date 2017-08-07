@@ -46,6 +46,10 @@ class ScopedTaskEnvironment::TestTaskTracker
   TestTaskTracker();
 
   void RegisterOnQueueEmptyClosure(OnceClosure queue_empty_closure);
+
+  // Returns true if closure needed reset.
+  bool ResetOnQueueEmptyClosureIfNotNull();
+
   void AssertOnQueueEmptyClosureIsNull();
 
   // Allow running tasks.
@@ -154,6 +158,10 @@ void ScopedTaskEnvironment::RunUntilIdle() {
     run_loop.Run();
     MessageLoop::current()->RemoveTaskObserver(&task_observer);
 
+    // Do not allow external code to exit the loop.
+    if (task_tracker_->ResetOnQueueEmptyClosureIfNotNull())
+      continue;
+
     task_tracker_->AssertOnQueueEmptyClosureIsNull();
 
     // If tasks other than the QuitWhenIdle closure ran on the main thread, they
@@ -185,6 +193,17 @@ void ScopedTaskEnvironment::TestTaskTracker::RegisterOnQueueEmptyClosure(
   AutoLock auto_lock(lock_);
   CHECK(!queue_empty_closure_);
   queue_empty_closure_ = std::move(queue_empty_closure);
+}
+
+bool ScopedTaskEnvironment::TestTaskTracker::
+    ResetOnQueueEmptyClosureIfNotNull() {
+  AutoLock auto_lock(lock_);
+  if (queue_empty_closure_) {
+    queue_empty_closure_ = Closure();
+    return true;
+  }
+
+  return false;
 }
 
 void ScopedTaskEnvironment::TestTaskTracker::AssertOnQueueEmptyClosureIsNull() {
