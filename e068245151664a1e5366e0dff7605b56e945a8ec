@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61bc7d7c_1fd9dd3a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-07T08:14:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1da0c2ae_e0944828",
+      "revId": "e068245151664a1e5366e0dff7605b56e945a8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9305e53_12069f2b",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "e068245151664a1e5366e0dff7605b56e945a8ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9859cdab_c6a42caf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-07T08:14:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9305e53_12069f2b",
+      "revId": "e068245151664a1e5366e0dff7605b56e945a8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "1a8b3089_ec695cb2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-07T08:14:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fe845ed_4b1114d9",
+      "range": {
+        "startLine": 970,
+        "startChar": 29,
+        "endLine": 970,
+        "endChar": 38
+      },
+      "revId": "e068245151664a1e5366e0dff7605b56e945a8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "589cd386_7d588425",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 9
@@ -70,6 +130,24 @@
       "writtenOn": "2017-08-01T00:24:21Z",
       "side": 1,
       "message": "Use classes for this.",
+      "revId": "e068245151664a1e5366e0dff7605b56e945a8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4598c5_49d29b3b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-07T08:14:09Z",
+      "side": 1,
+      "message": "Partly done. There is unfortunately a specificity war for the icons.",
+      "parentUuid": "589cd386_7d588425",
       "revId": "e068245151664a1e5366e0dff7605b56e945a8ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -90,6 +168,24 @@
       "revId": "e068245151664a1e5366e0dff7605b56e945a8ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0dc0fa6_8f95c1e8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-07T08:14:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6713b90a_cb87e8ab",
+      "revId": "e068245151664a1e5366e0dff7605b56e945a8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
