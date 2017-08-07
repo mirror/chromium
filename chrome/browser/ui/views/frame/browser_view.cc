@@ -1349,8 +1349,13 @@ content::KeyboardEventProcessingResult BrowserView::PreHandleKeyboardEvent(
   }
 
   if (id != -1) {
-    // |accelerator| is a non-reserved browser shortcut (e.g. Ctrl+f).
-    return (event.GetType() == blink::WebInputEvent::kRawKeyDown)
+    // "Raw" events don't produce a character and should be treated as
+    // shortcuts, except for backspace, which merely shows some explanatory UI
+    // and should be treated as a normal keypress.
+    bool is_shortcut = (event.GetType() == blink::WebInputEvent::kRawKeyDown) &&
+                       (id != IDC_BACKSPACE_BACK);
+
+    return is_shortcut
                ? content::KeyboardEventProcessingResult::NOT_HANDLED_IS_SHORTCUT
                : content::KeyboardEventProcessingResult::NOT_HANDLED;
   }
