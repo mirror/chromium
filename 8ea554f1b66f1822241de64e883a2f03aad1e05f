@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52f99ca7_5105eef1",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-07T16:53:07Z",
+      "side": 1,
+      "message": "Would it make sense to add a comment here/somewhere to make sure to update the defaults in components/leveldb/public/interfaces/leveldb.mojom as well if you change a default here? Otherwise changes here will never effect the leveldb service as it overwrites (almost) all options with what the mojom struct passed in.",
+      "revId": "8ea554f1b66f1822241de64e883a2f03aad1e05f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
