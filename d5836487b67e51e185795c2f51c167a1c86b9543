@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d1f2a57_8d7cb064",
+        "filename": "mojo/public/tools/fuzzers/mojo_fuzzer_message_dump.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-07T22:24:43Z",
+      "side": 1,
+      "message": "Lets add the new messages that this dumps to the seed corpus in this CL?",
+      "range": {
+        "startLine": 248,
+        "startChar": 8,
+        "endLine": 248,
+        "endChar": 22
+      },
+      "revId": "d5836487b67e51e185795c2f51c167a1c86b9543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
