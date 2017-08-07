@@ -338,6 +338,7 @@ void Shell::RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
 void Shell::RegisterProfilePrefs(PrefRegistrySimple* registry) {
   LogoutButtonTray::RegisterProfilePrefs(registry);
   NightLightController::RegisterProfilePrefs(registry);
+  ShelfController::RegisterProfilePrefs(registry);
 }
 
 views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
@@ -623,7 +624,6 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       media_controller_(base::MakeUnique<MediaController>()),
       new_window_controller_(base::MakeUnique<NewWindowController>()),
       session_controller_(base::MakeUnique<SessionController>()),
-      shelf_controller_(base::MakeUnique<ShelfController>()),
       shell_delegate_(std::move(shell_delegate)),
       shutdown_controller_(base::MakeUnique<ShutdownController>()),
       system_tray_controller_(base::MakeUnique<SystemTrayController>()),
@@ -851,6 +851,8 @@ Shell::~Shell() {
 
 void Shell::Init(const ShellInitParams& init_params) {
   const Config config = shell_port_->GetAshConfig();
+
+  shelf_controller_ = base::MakeUnique<ShelfController>();
 
   if (NightLightController::IsFeatureEnabled())
     night_light_controller_ = base::MakeUnique<NightLightController>();
@@ -1323,13 +1325,13 @@ void Shell::InitializeShelf() {
 
 void Shell::OnProfilePrefServiceInitialized(
     std::unique_ptr<::PrefService> pref_service) {
+  // Delay destroying the old service so clients can unregister pref observers.
+  std::unique_ptr<::PrefService> old_service = std::move(profile_pref_service_);
   // |pref_service| can be null if can't connect to Chrome (as happens when
   // running mash outside of chrome --mash and chrome isn't built).
-  for (auto& observer : shell_observers_)
-    observer.OnActiveUserPrefServiceChanged(pref_service.get());
-  // Reset after notifying clients so they can unregister pref observers on the
-  // old PrefService.
   profile_pref_service_ = std::move(pref_service);
+  for (auto& observer : shell_observers_)
+    observer.OnActiveUserPrefServiceChanged(profile_pref_service_.get());
 }
 
 void Shell::OnLocalStatePrefServiceInitialized(
