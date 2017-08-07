@@ -55,7 +55,7 @@ template <size_t... Ns,
           typename... Args,
           typename... Unwrapped,
           typename... Params>
-struct AssertBindArgsValidity<IndexSequence<Ns...>,
+struct AssertBindArgsValidity<std::index_sequence<Ns...>,
                               TypeList<Args...>,
                               TypeList<Unwrapped...>,
                               TypeList<Params...>>
@@ -140,11 +140,10 @@ BindOnce(Functor&& functor, Args&&... args) {
       internal::MakeUnwrappedTypeList<internal::RepeatMode::Once,
                                       FunctorTraits::is_method, Args&&...>;
   using BoundParamsList = typename Helper::BoundParamsList;
-  static_assert(
-      internal::AssertBindArgsValidity<MakeIndexSequence<Helper::num_bounds>,
-                                       BoundArgsList, UnwrappedArgsList,
-                                       BoundParamsList>::ok,
-      "The bound args need to be convertible to the target params.");
+  static_assert(internal::AssertBindArgsValidity<
+                    std::make_index_sequence<Helper::num_bounds>, BoundArgsList,
+                    UnwrappedArgsList, BoundParamsList>::ok,
+                "The bound args need to be convertible to the target params.");
 
   using BindState = internal::MakeBindStateType<Functor, Args...>;
   using UnboundRunType = MakeUnboundRunType<Functor, Args...>;
@@ -182,11 +181,10 @@ BindRepeating(Functor&& functor, Args&&... args) {
       internal::MakeUnwrappedTypeList<internal::RepeatMode::Repeating,
                                       FunctorTraits::is_method, Args&&...>;
   using BoundParamsList = typename Helper::BoundParamsList;
-  static_assert(
-      internal::AssertBindArgsValidity<MakeIndexSequence<Helper::num_bounds>,
-                                       BoundArgsList, UnwrappedArgsList,
-                                       BoundParamsList>::ok,
-      "The bound args need to be convertible to the target params.");
+  static_assert(internal::AssertBindArgsValidity<
+                    std::make_index_sequence<Helper::num_bounds>, BoundArgsList,
+                    UnwrappedArgsList, BoundParamsList>::ok,
+                "The bound args need to be convertible to the target params.");
 
   using BindState = internal::MakeBindStateType<Functor, Args...>;
   using UnboundRunType = MakeUnboundRunType<Functor, Args...>;

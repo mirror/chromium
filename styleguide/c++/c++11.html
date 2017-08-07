@@ -592,8 +592,6 @@ template &lt;typename T&gt;<br/>void Function(T&amp;&amp; t) { ... }</code></td>
 
 <h2 id="whitelist"><a name="library-whitelist-14"></a>C++14 Allowed Library Features</h2>
 
-<p>Nothing yet. Suggest something!</p>
-<!--
 <p>The following library features are currently allowed.</p>
 
 <table id="whitelist_lib_list" class="unlined striped">
@@ -607,9 +605,16 @@ template &lt;typename T&gt;<br/>void Function(T&amp;&amp; t) { ... }</code></td>
 <th style='width:240px;'>Notes and Discussion Thread</th>
 </tr>
 
+<tr>
+<td><code>std::integer_sequence</code></td>
+<td><code>template &lt;size_t... I&gt;<br>void CallFooImpl(std::index_sequence&lt;I...&gt;) {<br>&nbsp;&nbsp;Foo(I...);<br>}<br><br>template &lt;size_t N&gt;<br>void CallFoo() {<br>&nbsp;&nbsp;CallFooImpl(std::make_index_sequence&lt;N&gt;());<br>}</code></td>
+<td>Template metaprogramming utility for representing a sequence of integers as a type.</td>
+<td><a href="http://en.cppreference.com/w/cpp/utility/integer_sequence">std::integer_sequence</a></td>
+<td>This also includes the alias, <code>std::index_sequence</code>, which is the specialization for <code>size_t</code>.</td>
+</tr>
+
 </tbody>
 </table>
--->
 
 <h2 id="blacklist">C++11 and C++14 Blacklist (Disallowed and Banned Features)</h2>
 
@@ -1182,14 +1187,6 @@ than binary literals.</td>
 <td>Allows <code>std::complex</code> objects to be more easily constructed.</td>
 <td><a href="http://en.cppreference.com/w/cpp/numeric/complex/operator%22%22i">std::literals::complex_literals</a></td>
 <td></td>
-</tr>
-
-<tr>
-<td><code>std::integer_sequence</code></td>
-<td><code>template &lt;size_t... I&gt;<br>void CallFooImpl(std::index_sequence&lt;I...&gt;) {<br>&nbsp;&nbsp;Foo(I...);<br>}<br><br>template &lt;size_t N&gt;<br>void CallFoo() {<br>&nbsp;&nbsp;CallFooImpl(std::make_index_sequence&lt;N&gt;());<br>}</code></td>
-<td>Template metaprogramming utility for representing a sequence of integers as a type.</td>
-<td><a href="http://en.cppreference.com/w/cpp/utility/integer_sequence">std::integer_sequence</a></td>
-<td>This also includes the alias, <code>std::index_sequence</code>, which is the specialization for <code>size_t</code>. Should replace <code>base::IndexSequence</code>.</td>
 </tr>
 
 <tr>

@@ -304,7 +304,7 @@ struct Invoker<StorageType, R(UnboundArgs...)> {
         std::tuple_size<decltype(storage->bound_args_)>::value;
     return RunImpl(std::move(storage->functor_),
                    std::move(storage->bound_args_),
-                   MakeIndexSequence<num_bound_args>(),
+                   std::make_index_sequence<num_bound_args>(),
                    std::forward<UnboundArgs>(unbound_args)...);
   }
 
@@ -315,9 +315,8 @@ struct Invoker<StorageType, R(UnboundArgs...)> {
     const StorageType* storage = static_cast<StorageType*>(base);
     static constexpr size_t num_bound_args =
         std::tuple_size<decltype(storage->bound_args_)>::value;
-    return RunImpl(storage->functor_,
-                   storage->bound_args_,
-                   MakeIndexSequence<num_bound_args>(),
+    return RunImpl(storage->functor_, storage->bound_args_,
+                   std::make_index_sequence<num_bound_args>(),
                    std::forward<UnboundArgs>(unbound_args)...);
   }
 
@@ -325,7 +324,7 @@ struct Invoker<StorageType, R(UnboundArgs...)> {
   template <typename Functor, typename BoundArgsTuple, size_t... indices>
   static inline R RunImpl(Functor&& functor,
                           BoundArgsTuple&& bound,
-                          IndexSequence<indices...>,
+                          std::index_sequence<indices...>,
                           UnboundArgs&&... unbound_args) {
     static constexpr bool is_method = MakeFunctorTraits<Functor>::is_method;
 
@@ -386,7 +385,7 @@ std::enable_if_t<!FunctorTraits<Functor>::is_nullable, bool> IsNull(
 template <typename Functor, typename BoundArgsTuple, size_t... indices>
 bool ApplyCancellationTraitsImpl(const Functor& functor,
                                  const BoundArgsTuple& bound_args,
-                                 IndexSequence<indices...>) {
+                                 std::index_sequence<indices...>) {
   return CallbackCancellationTraits<Functor, BoundArgsTuple>::IsCancelled(
       functor, std::get<indices>(bound_args)...);
 }
@@ -398,8 +397,9 @@ bool ApplyCancellationTraits(const BindStateBase* base) {
   const BindStateType* storage = static_cast<const BindStateType*>(base);
   static constexpr size_t num_bound_args =
       std::tuple_size<decltype(storage->bound_args_)>::value;
-  return ApplyCancellationTraitsImpl(storage->functor_, storage->bound_args_,
-                                     MakeIndexSequence<num_bound_args>());
+  return ApplyCancellationTraitsImpl(
+      storage->functor_, storage->bound_args_,
+      std::make_index_sequence<num_bound_args>());
 };
 
 // Template helpers to detect using Bind() on a base::Callback without any
