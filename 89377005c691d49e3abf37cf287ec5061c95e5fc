@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29dabb53_f7f56be1",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-07T05:08:22Z",
+      "side": 1,
+      "message": "Nit: can you wrap the lines at 80 chars? E.g. you can probably fit \"filename as the\" on the first line.",
+      "revId": "89377005c691d49e3abf37cf287ec5061c95e5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6ba20f_ee30fb09",
+        "filename": "chrome/browser/extensions/bookmark_app_helper_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-07T05:08:22Z",
+      "side": 1,
+      "message": "Can you also check in a different test that apps without manifests don\u0027t have any scope set? I think this kind of behavior should only apply to PWAs.",
+      "revId": "89377005c691d49e3abf37cf287ec5061c95e5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
