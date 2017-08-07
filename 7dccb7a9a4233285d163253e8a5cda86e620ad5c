@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dc76a621_f2de4be5",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-07T06:46:26Z",
+      "side": 1,
+      "message": "Did some cleanup to remove focus-related stuff from CVC (moved them to ViewAndroid). If focusing is successful, onFocusChanged will come down through CVC to call OnFocusInternal() for host_-\u003eGotFocus(). See if this is what you expected to have.\n\n\u003e Need to be careful with the unfocusable container view though, so still need to shortcut that somewhere.\n\nDefined |ViewAndroid.hasFocus()| that checks unfocusable container view for shortcut.\n\nOh, and onWindowFocusChanged. Not entirely sure how that works with in conjunction with onFocusChanged\n\nAFAICT, window focus doesn\u0027t automatically lead to one of its focusable views to get focus. The view will be explicitly notified via its onFocusChanged method when it comes to get it. And https://developer.android.com/reference/android/view/View.html#onWindowFocusChanged(boolean) says the view focus still remains unchanged even when its window loses focus. Which makes me think window and view focus event handling can stay orthogonal, not affecting each other.",
+      "parentUuid": "48fa917f_ce1312ed",
+      "revId": "7dccb7a9a4233285d163253e8a5cda86e620ad5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b5c1cf0_4384fa8a",
         "filename": "ui/android/java/src/org/chromium/ui/base/ViewAndroidDelegate.java",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2017-07-27T19:15:07Z",
       "side": 1,
       "message": "probably move this into ui and match behavior, ie unfocusable view is considered always confused (for whatever reason...): https://cs.chromium.org/chromium/src/content/public/android/java/src/org/chromium/content/browser/ViewUtils.java?rcl\u003d82c59e9ef97067e3db6853ef04509cd70d97ece1\u0026l\u003d19",
+      "revId": "7dccb7a9a4233285d163253e8a5cda86e620ad5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac7ffe3_86f3d443",
+        "filename": "ui/android/java/src/org/chromium/ui/base/ViewAndroidDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-07T06:46:26Z",
+      "side": 1,
+      "message": "Done. Used CVC.requestFocus() as a reference and updated this method.",
+      "parentUuid": "9b5c1cf0_4384fa8a",
       "revId": "7dccb7a9a4233285d163253e8a5cda86e620ad5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -68,6 +104,24 @@
       "revId": "7dccb7a9a4233285d163253e8a5cda86e620ad5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24af0e77_4c0487fc",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-07T06:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccfb0a50_997f0ca1",
+      "revId": "7dccb7a9a4233285d163253e8a5cda86e620ad5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
