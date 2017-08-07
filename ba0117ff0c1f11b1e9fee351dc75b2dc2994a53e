@@ -192,6 +192,24 @@
       "revId": "ba0117ff0c1f11b1e9fee351dc75b2dc2994a53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76259c97_d68b4cb2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-07T21:54:46Z",
+      "side": 1,
+      "message": "Good catch, thanks.",
+      "parentUuid": "1bbb418e_460f1e11",
+      "revId": "ba0117ff0c1f11b1e9fee351dc75b2dc2994a53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
