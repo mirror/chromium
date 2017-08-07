@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da819836_94816045",
+        "filename": "testing/buildbot/filters/fuchsia.media_unittests.filter",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-07T20:40:52Z",
+      "side": 1,
+      "message": "Is there a bug for this? Or are the tests just bad and should generally be deleted?",
+      "range": {
+        "startLine": 6,
+        "startChar": 38,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "2266b34aed67d67cd8460e6a4c1b2ea7682ed13c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
