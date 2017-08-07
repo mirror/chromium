@@ -4658,6 +4658,13 @@ bool WebContentsImpl::HasPersistentVideo() const {
   return has_persistent_video_;
 }
 
+bool WebContentsImpl::IsPersistentVideoAllowed() const {
+  for (auto& observer : observers_)
+    if (!observer.IsPersistentVideoAllowed())
+      return false;
+  return true;
+}
+
 bool WebContentsImpl::HasActiveEffectivelyFullscreenVideo() const {
   return media_web_contents_observer_->HasActiveEffectivelyFullscreenVideo();
 }
@@ -5748,7 +5755,8 @@ void WebContentsImpl::SetHasPersistentVideo(bool has_persistent_video) {
 
   has_persistent_video_ = has_persistent_video;
   NotifyPreferencesChanged();
-  media_web_contents_observer()->RequestPersistentVideo(has_persistent_video);
+  for (auto& observer : observers_)
+    observer.PersistentVideoRequested(has_persistent_video);
 }
 
 void WebContentsImpl::BrowserPluginGuestWillDetach() {

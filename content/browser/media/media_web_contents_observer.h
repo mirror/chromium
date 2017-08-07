@@ -62,7 +62,7 @@ class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver {
   // the effectively fullscreen video code is also here. We need to consider
   // merging the logic of effectively fullscreen, hiding media controls and
   // fullscreening video element to the same place.
-  void RequestPersistentVideo(bool value);
+  void PersistentVideoRequested(bool value) override;
 
   bool has_audio_wake_lock_for_testing() const {
     return has_audio_wake_lock_for_testing_;

@@ -876,6 +876,9 @@ class CONTENT_EXPORT WebContentsImpl
   // Called when the WebContents gains or loses a persistent video.
   void SetHasPersistentVideo(bool has_persistent_video);
 
+  // Called to deterimine if we allow switching into persistent video mode.
+  bool IsPersistentVideoAllowed() const;
+
   // Whether the WebContents has an active player is effectively fullscreen.
   // That means that the video is either fullscreen or it is the content of
   // a fullscreen page (in other words, a fullscreen video with custom

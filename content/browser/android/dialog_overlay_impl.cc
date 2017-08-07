@@ -19,7 +19,8 @@ namespace content {
 static jlong Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   jlong high,
-                  jlong low) {
+                  jlong low,
+                  jboolean is_secure) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   RenderFrameHostImpl* rfhi =
@@ -36,20 +37,28 @@ static jlong Init(JNIEnv* env,
   if (!rfhi->IsCurrent() || web_contents_impl->IsHidden())
     return 0;
 
+  // Dialog-based overlays are not supported for persistent video.
+  if (web_contents_impl->HasPersistentVideo())
+    return 0;
+
   ContentViewCore* cvc = ContentViewCore::FromWebContents(web_contents_impl);
 
   if (!cvc)
     return 0;
 
   return reinterpret_cast<jlong>(
-      new DialogOverlayImpl(obj, rfhi, web_contents_impl, cvc));
+      new DialogOverlayImpl(obj, rfhi, web_contents_impl, cvc, is_secure));
 }
 
 DialogOverlayImpl::DialogOverlayImpl(const JavaParamRef<jobject>& obj,
                                      RenderFrameHostImpl* rfhi,
                                      WebContents* web_contents,
-                                     ContentViewCore* cvc)
-    : WebContentsObserver(web_contents), rfhi_(rfhi), cvc_(cvc) {
+                                     ContentViewCore* cvc,
+                                     bool is_secure)
+    : WebContentsObserver(web_contents),
+      rfhi_(rfhi),
+      cvc_(cvc),
+      is_secure_(is_secure) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(rfhi_);
   DCHECK(cvc_);
@@ -152,6 +161,23 @@ void DialogOverlayImpl::RenderFrameHostChanged(RenderFrameHost* old_host,
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (old_host == rfhi_)
     Stop();
+}
+
+void DialogOverlayImpl::PersistentVideoRequested(bool want_persistent_video) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // If this is a secure overlay, then we might want to avoid doing this, since
+  // L1 content won't fall back to SurfaceTexture.  However, since AOPI stops
+  // PIP for L1 content, hopefully this doesn't happen.
+  if (want_persistent_video)
+    Stop();
+}
+
+bool DialogOverlayImpl::IsPersistentVideoAllowed() {
+  // Allow switching to persistent video mode as long as this isn't a secure
+  // surface.  For non-secure surfaces, we'll cancel the overlay when we enter
+  // persistent video mode, and refuse to provide a new overlay while we're in
+  // it.  TODO(liberato): consider allowing if L3.
+  return !is_secure_;
 }
 
 void DialogOverlayImpl::FrameDeleted(RenderFrameHost* render_frame_host) {

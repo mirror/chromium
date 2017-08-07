@@ -461,6 +461,16 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle* interface_pipe) {}
 
+  // Notifies that persistent video has been requested (or not).  Note that a
+  // request doesn't guarantee that we will enter persistent video mode, so
+  // callbacks with |want_persistent_video| true isn't necessarily matched by
+  // a call with it set to false.
+  virtual void PersistentVideoRequested(bool want_persistent_video) {}
+
+  // Return true if this observer allows entering persistent video.  The default
+  // implementation allows persistent video.
+  virtual bool IsPersistentVideoAllowed();
+
   // IPC::Listener implementation.
   bool OnMessageReceived(const IPC::Message& message) override;
 

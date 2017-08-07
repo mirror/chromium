@@ -203,6 +203,9 @@ class CONTENT_EXPORT WebContentsAndroid
   void SetHasPersistentVideo(JNIEnv* env,
                              const base::android::JavaParamRef<jobject>& obj,
                              jboolean value);
+  jboolean IsPersistentVideoAllowed(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj);
   bool HasActiveEffectivelyFullscreenVideo(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);

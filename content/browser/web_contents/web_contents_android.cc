@@ -652,6 +652,12 @@ void WebContentsAndroid::SetHasPersistentVideo(
   web_contents_->SetHasPersistentVideo(value);
 }
 
+jboolean WebContentsAndroid::IsPersistentVideoAllowed(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj) {
+  return web_contents_->IsPersistentVideoAllowed();
+}
+
 bool WebContentsAndroid::HasActiveEffectivelyFullscreenVideo(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& obj) {

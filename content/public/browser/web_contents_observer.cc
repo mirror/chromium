@@ -72,4 +72,8 @@ void WebContentsObserver::ResetWebContents() {
   web_contents_ = nullptr;
 }
 
+bool WebContentsObserver::IsPersistentVideoAllowed() {
+  return true;
+}
+
 }  // namespace content

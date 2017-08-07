@@ -440,4 +440,9 @@ public interface WebContents extends Parcelable {
      * @param value Whether there is a persistent video associated with this WebContents.
      */
     public void setHasPersistentVideo(boolean value);
+
+    /**
+     * Return true if persistent video is allowed by the WebContents.
+     */
+    public boolean isPersistentVideoAllowed();
 }
