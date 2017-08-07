@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e14672dc_376df3e4",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-07T22:27:14Z",
+      "side": 1,
+      "message": "Looking at https://antoinevastel.github.io/bot%20detection/2017/08/05/detect-chrome-headless.html, should we allow for broader navigation emulation? I.e. specify here more details to emulate under navigator.*?",
+      "revId": "dcb342ccea284dbe47804514190d2baa113690b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
