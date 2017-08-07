@@ -22,6 +22,30 @@
       "revId": "dac798e2d25c2af87f28d837093504449b84b24c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f48135b_5f489eb8",
+        "filename": "remoting/host/installer/mac/PrivilegedHelperTools/org.chromium.chromoting.me2me.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-07T19:58:57Z",
+      "side": 0,
+      "message": "The code that uses it is in the pref-pane that is no longer installed because of this CL. So this CL does remove it, in a sense :)\nA followup CL will completely purge all of the pref-pane code.\nI don\u0027t think there is a serious version problem. The old pref-pane might still be running while this script is updated. If the user tries to do anything with it, it performs a version-check which will detect the mismatched versions, and it puts up an alert which says that the pref-pane needs to be restarted. Pressing OK on this dialog is the only place where it will try to use this deleted command-line option. It will therefore fail to restart the pref-pane, and the user will be left with an open pref-pane with all controls disabled. It will look a bit weird that the pref-pane is still running, but nothing really bad will happen.",
+      "parentUuid": "075949bd_43477f40",
+      "range": {
+        "startLine": 151,
+        "startChar": 45,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "dac798e2d25c2af87f28d837093504449b84b24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
