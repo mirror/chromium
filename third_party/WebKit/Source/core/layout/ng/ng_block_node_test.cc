@@ -73,9 +73,9 @@ TEST_F(NGBlockNodeForTest, ChildFloatBeforeInline) {
   )HTML");
   NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
   NGLayoutInputNode child1 = container.FirstChild();
-  EXPECT_TRUE(child1 && child1.IsBlock());
+  EXPECT_TRUE(child1 && child1.IsInline());
   NGLayoutInputNode child2 = child1.NextSibling();
-  EXPECT_TRUE(child2 && child2.IsBlock());
+  EXPECT_EQ(child2, nullptr);
 }
 
 TEST_F(NGBlockNodeForTest, ChildFloatAfterInline) {
@@ -103,7 +103,7 @@ TEST_F(NGBlockNodeForTest, ChildFloatOnly) {
   )HTML");
   NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
   NGLayoutInputNode child1 = container.FirstChild();
-  EXPECT_TRUE(child1 && child1.IsBlock());
+  EXPECT_TRUE(child1 && child1.IsInline());
   NGLayoutInputNode child2 = child1.NextSibling();
   EXPECT_EQ(child2, nullptr);
 }
@@ -120,7 +120,7 @@ TEST_F(NGBlockNodeForTest, ChildFloatWithSpaces) {
   )HTML");
   NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
   NGLayoutInputNode child1 = container.FirstChild();
-  EXPECT_TRUE(child1 && child1.IsBlock());
+  EXPECT_TRUE(child1 && child1.IsInline());
   NGLayoutInputNode child2 = child1.NextSibling();
   EXPECT_EQ(child2, nullptr);
 }
@@ -135,9 +135,9 @@ TEST_F(NGBlockNodeForTest, ChildOofBeforeInline) {
   )HTML");
   NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
   NGLayoutInputNode child1 = container.FirstChild();
-  EXPECT_TRUE(child1 && child1.IsBlock());
+  EXPECT_TRUE(child1 && child1.IsInline());
   NGLayoutInputNode child2 = child1.NextSibling();
-  EXPECT_TRUE(child2 && child2.IsBlock());
+  EXPECT_EQ(child2, nullptr);
 }
 
 TEST_F(NGBlockNodeForTest, ChildOofAfterInline) {
