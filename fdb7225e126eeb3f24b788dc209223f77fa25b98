@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a8f956f_fb49bbfd",
+        "filename": "chrome/browser/ui/browser_live_tab_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-07T20:54:41Z",
+      "side": 1,
+      "message": "Can you comment what \u0027false\u0027 is referring to? (ie, false /* not in session restore */)\n\nEither that, or use a descriptive enum. (The rest of the bool fields are documented via the variable names that have been chosen, not so for this one.)",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 11
+      },
+      "revId": "fdb7225e126eeb3f24b788dc209223f77fa25b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
