@@ -454,7 +454,8 @@ void LegacyInputRouterImpl::OnInputEventAck(const InputEventAck& ack) {
 
   if (ack.overscroll) {
     DCHECK(ack.type == WebInputEvent::kMouseWheel ||
-           ack.type == WebInputEvent::kGestureScrollUpdate);
+           ack.type == WebInputEvent::kGestureScrollUpdate ||
+           ack.type == WebInputEvent::kKeyDown);
     OnDidOverscroll(*ack.overscroll);
   }
 

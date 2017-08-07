@@ -21,6 +21,8 @@
 #include "core/page/scrolling/OverscrollController.h"
 #include "core/page/scrolling/RootScrollerController.h"
 #include "core/page/scrolling/ScrollState.h"
+#include "core/page/scrolling/ScrollStateCallback.h"
+#include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
@@ -183,6 +185,16 @@ bool ScrollManager::LogicalScroll(ScrollDirection direction,
         cur_box->Scroll(granularity, ToScrollDelta(physical_direction, 1));
 
     if (result.DidScroll()) {
+      if (cur_box->Layer()->IsRootLayer()) {
+        if (Element* elem = frame_->GetDocument()->documentElement()) {
+          ScrollOffset scroll_offset = ToScrollDelta(
+              physical_direction, GetPage()->GetBrowserControls().Height());
+          if (scroll_offset.Height() != 0.0f) {
+            GetPage()->GetBrowserControls().ScrollBegin();
+            GetPage()->GetBrowserControls().ScrollBy(scroll_offset);
+          }
+        }
+      }
       SetFrameWasScrolledByUser();
       return true;
     }
