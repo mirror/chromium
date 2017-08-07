@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bfaa1d6_14a6ab70",
+        "filename": "third_party/WebKit/LayoutTests/inspector/components/throttler.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-07T18:44:38Z",
+      "side": 1,
+      "message": "Here and a bunch of methods below, move \u0027{\u0027 to the new line if you keep the old style.",
+      "revId": "727548cd491f42427ffa0143fac79bae2569bfb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
