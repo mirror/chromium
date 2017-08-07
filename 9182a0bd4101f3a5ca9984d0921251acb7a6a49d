@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "054e0aa1_b21023cc",
+        "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-07T19:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25e2d44b_44c82fd7",
+      "range": {
+        "startLine": 190,
+        "startChar": 19,
+        "endLine": 190,
+        "endChar": 53
+      },
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9428a2f9_e5aafaeb",
         "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
         "patchSetId": 4
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "e9ef385c_bfb0c05d",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-07T19:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9428a2f9_e5aafaeb",
+      "range": {
+        "startLine": 675,
+        "startChar": 7,
+        "endLine": 675,
+        "endChar": 32
+      },
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be5c2302_5e185025",
         "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.mm",
         "patchSetId": 4
@@ -76,6 +124,30 @@
       "writtenOn": "2017-08-07T15:17:06Z",
       "side": 1,
       "message": "are you sure this should be \u0026\u0026? this means that when the experiment is *disabled* the current behavior will change from TOOLBAR_NONE in this case to the other cases below, which seems wrong",
+      "range": {
+        "startLine": 158,
+        "startChar": 34,
+        "endLine": 158,
+        "endChar": 60
+      },
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb36e691_49fd4d93",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-07T19:18:37Z",
+      "side": 1,
+      "message": "This \"if\" is to check if the toolbar should not be displayed as fullscreen content could be displayed (to not obstruct it). With ContentFullscreen, there\u0027s no case in which you should hide the toolbar if you are in content fullscreen (not window fullscreen). So this translates to the toolbar only being able to be hidden when the ContentFullscreen feature is disabled (it will never display fullscreen content as it\u0027s now separate).",
+      "parentUuid": "be5c2302_5e185025",
       "range": {
         "startLine": 158,
         "startChar": 34,
@@ -111,6 +183,64 @@
     },
     {
       "key": {
+        "uuid": "0c24ddba_93231a09",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_controller_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-07T19:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cffa1e50_20dd18ad",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6174e36b_ac97b5e9",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_controller_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-07T19:18:37Z",
+      "side": 1,
+      "message": "The exclusive_access_tab has been changed to virtual so that this method is able to be overwritten by its subclasses. The reason for this is that with ContentFullscreen what we want to return in mouse_lock_controller and fullscreen_controller are different (see override method in fullscreen_controller).",
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f62fa90_3780421c",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_controller_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-07T19:18:37Z",
+      "side": 1,
+      "message": "The tab_with_exclusive_acess_ tab has been changed to protected so that its subclasses are able to access their own (setting it to private doesn\u0027t let subclasses like FullscreenController to access this variable even though they have it).",
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e04fbd53_11d1a1b0",
         "filename": "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h",
         "patchSetId": 4
@@ -131,6 +261,30 @@
       "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e25218c_1151c095",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-07T19:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e04fbd53_11d1a1b0",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +311,30 @@
     },
     {
       "key": {
+        "uuid": "b396ddfa_4270327a",
+        "filename": "content/browser/renderer_host/render_widget_host_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-07T19:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "199d97fc_d57c0194",
+      "range": {
+        "startLine": 286,
+        "startChar": 44,
+        "endLine": 286,
+        "endChar": 52
+      },
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "366817ba_c45d34dc",
         "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
         "patchSetId": 4
@@ -177,6 +355,30 @@
       "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178d147e_d3850c18",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2734,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-07T19:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "366817ba_c45d34dc",
+      "range": {
+        "startLine": 2734,
+        "startChar": 67,
+        "endLine": 2734,
+        "endChar": 76
+      },
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

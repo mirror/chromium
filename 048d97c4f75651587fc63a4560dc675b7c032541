@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "78818846_cd5d2482",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-07T19:18:37Z",
+      "side": 1,
+      "message": "As the line is longer than the character limit, git cl format actually does make this change when I run the command",
+      "parentUuid": "85a7013c_886097d6",
+      "revId": "048d97c4f75651587fc63a4560dc675b7c032541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e134c27c_0359bf4b",
         "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
         "patchSetId": 5
@@ -64,6 +82,24 @@
       "writtenOn": "2017-08-07T15:55:00Z",
       "side": 1,
       "message": "Could you elaborate on this? It feels wrong for the fullscreen window to have the parent BWC as its controller.",
+      "revId": "048d97c4f75651587fc63a4560dc675b7c032541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d3c2bb_8671531b",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-07T19:18:37Z",
+      "side": 1,
+      "message": "It doesn\u0027t set the windowController property, it sets the controller property on SeparateFullscreenWindow (which is not windowController). It is a reference to the BrowserWindowController as we want to be able to get the BWC\u0027s touchbar for the tab we\u0027re currently in fullscreen with when the SeparateFullscreenWindow is focused. This has been now changed to touch_bar_delegate to better describe what is happening here.",
+      "parentUuid": "e134c27c_0359bf4b",
       "revId": "048d97c4f75651587fc63a4560dc675b7c032541",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
