@@ -33,8 +33,6 @@ class ToolbarLayer : public Layer {
                     int toolbar_background_color,
                     bool anonymize,
                     int toolbar_textbox_background_color,
-                    int url_bar_background_resource_id,
-                    float url_bar_alpha,
                     float window_height,
                     float y_offset,
                     bool show_debug,
@@ -62,7 +60,6 @@ class ToolbarLayer : public Layer {
   scoped_refptr<cc::Layer> layer_;
   scoped_refptr<cc::Layer> toolbar_root_;
   scoped_refptr<cc::SolidColorLayer> toolbar_background_layer_;
-  scoped_refptr<cc::NinePatchLayer> url_bar_background_layer_;
   scoped_refptr<cc::UIResourceLayer> bitmap_layer_;
   scoped_refptr<cc::SolidColorLayer> progress_bar_layer_;
   scoped_refptr<cc::SolidColorLayer> progress_bar_background_layer_;
