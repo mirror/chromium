@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20b6fd27_6a26192e",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-07T23:43:55Z",
+      "side": 1,
+      "message": "It looks like .list-frame.without-heading is written out twice.\nMight be a merge whoops?",
+      "revId": "3b0d4025fc0b340acccd5874cd3298cc61e9ba94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
