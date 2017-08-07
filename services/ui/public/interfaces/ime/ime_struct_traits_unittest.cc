@@ -110,9 +110,10 @@ TEST_F(IMEStructTraitsTest, CandidateWindowEntry) {
 TEST_F(IMEStructTraitsTest, CompositionText) {
   CompositionText input;
   input.text = base::UTF8ToUTF16("abcdefghij");
-  input.underlines.push_back(CompositionUnderline(0, 2, SK_ColorGRAY, false));
   input.underlines.push_back(
-      CompositionUnderline(3, 6, SK_ColorRED, true, SK_ColorGREEN));
+      CompositionUnderline(0, 2, false, SK_ColorGRAY, false));
+  input.underlines.push_back(
+      CompositionUnderline(3, 6, false, SK_ColorRED, true, SK_ColorGREEN));
   input.selection = gfx::Range(1, 7);
 
   CompositionText output;

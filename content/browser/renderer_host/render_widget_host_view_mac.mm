@@ -291,14 +291,16 @@ void ExtractUnderlines(NSAttributedString* string,
                                             inRange:NSMakeRange(i, length - i)];
     if (NSNumber *style = [attrs objectForKey:NSUnderlineStyleAttributeName]) {
       blink::WebColor color = SK_ColorBLACK;
+      bool use_text_color = true;
       if (NSColor *colorAttr =
           [attrs objectForKey:NSUnderlineColorAttributeName]) {
         color = WebColorFromNSColor(
             [colorAttr colorUsingColorSpaceName:NSDeviceRGBColorSpace]);
+        use_text_color = false;
       }
-      underlines->push_back(
-          ui::CompositionUnderline(range.location, NSMaxRange(range), color,
-                                   [style intValue] > 1, SK_ColorTRANSPARENT));
+      underlines->push_back(ui::CompositionUnderline(
+          range.location, NSMaxRange(range), use_text_color, color,
+          [style intValue] > 1, SK_ColorTRANSPARENT));
     }
     i = range.location + range.length;
   }
