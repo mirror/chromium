@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "086270e0_34c8cd83",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-07T18:39:59Z",
+      "side": 1,
+      "message": "VideoFrameCompositor keeps a raw ptr to the client.  VFS is setting it to |this|, but never clearing it again.  it might not be as big of a problem as it was multi-threaded (i.e., the cleanup order might be deterministic and correct now), but it still should unset it before destructing.\n\nSVFPC(nullptr) used to be called in VFPCI::Stop.  probably ~VFS is the right place now, but you should double-check the tear-down sequence to be sure.",
+      "parentUuid": "13d36c61_31dd41c0",
+      "revId": "9180d670faff65612381dc4b0e57a9e1bbcb73a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aaf79590_e293e554",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 4
