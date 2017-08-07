@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf479cef_77a183bc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 1638,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-07T20:26:58Z",
+      "side": 1,
+      "message": "AppListShowSource",
+      "range": {
+        "startLine": 1638,
+        "startChar": 22,
+        "endLine": 1638,
+        "endChar": 39
+      },
+      "revId": "f05cd28db53c842009150b7f0d80e567698a4420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85ce3b0_b4d17c3b",
+        "filename": "ui/app_list/app_list_constants.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-07T20:26:58Z",
+      "side": 1,
+      "message": "You have AppList in the other enums, I am inclined to use it here too. I recommend naming this AppListPeekingToFullscreenSource.",
+      "range": {
+        "startLine": 114,
+        "startChar": 5,
+        "endLine": 114,
+        "endChar": 25
+      },
+      "revId": "f05cd28db53c842009150b7f0d80e567698a4420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49ed37d_67f5901a",
+        "filename": "ui/app_list/app_list_constants.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-07T20:26:58Z",
+      "side": 1,
+      "message": "Given your description, shouldn\u0027t this be AppListShowSource?",
+      "range": {
+        "startLine": 122,
+        "startChar": 42,
+        "endLine": 122,
+        "endChar": 47
+      },
+      "revId": "f05cd28db53c842009150b7f0d80e567698a4420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c0932b_adf2e593",
+        "filename": "ui/app_list/app_list_constants.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-07T20:26:58Z",
+      "side": 1,
+      "message": "Sorry for any confusion I introduced. The style guide says the name should CamelCase (AppListShowSource) and the values should be kCamelCase.",
+      "range": {
+        "startLine": 124,
+        "startChar": 5,
+        "endLine": 124,
+        "endChar": 25
+      },
+      "revId": "f05cd28db53c842009150b7f0d80e567698a4420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
