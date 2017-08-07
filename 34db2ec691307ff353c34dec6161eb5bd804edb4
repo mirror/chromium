@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ca01229_5cf559f7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1714,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-07T19:47:55Z",
+      "side": 1,
+      "message": "units\u003d\"bytes\"?",
+      "range": {
+        "startLine": 1714,
+        "startChar": 67,
+        "endLine": 1714,
+        "endChar": 68
+      },
+      "revId": "34db2ec691307ff353c34dec6161eb5bd804edb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59458092_f3205846",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-07T19:47:55Z",
+      "side": 1,
+      "message": "units\u003d\"bytes\"?",
+      "range": {
+        "startLine": 1722,
+        "startChar": 67,
+        "endLine": 1722,
+        "endChar": 68
+      },
+      "revId": "34db2ec691307ff353c34dec6161eb5bd804edb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85064c82_28ffc81d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1748,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-07T19:47:55Z",
+      "side": 1,
+      "message": "base\u003d\"true\"?  Here and on other suffixed histograms, since you are not recording to the base.",
+      "range": {
+        "startLine": 1748,
+        "startChar": 44,
+        "endLine": 1748,
+        "endChar": 45
+      },
+      "revId": "34db2ec691307ff353c34dec6161eb5bd804edb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
