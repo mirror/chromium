@@ -16,6 +16,24 @@
       "revId": "557d654e5c6d6a553f3e47723b729f66d0934658",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40044dc2_c64502dc",
+        "filename": "third_party/WebKit/LayoutTests/resources/testharnessreport.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-07T18:28:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ad5c9cb_129b1156",
+      "revId": "557d654e5c6d6a553f3e47723b729f66d0934658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
