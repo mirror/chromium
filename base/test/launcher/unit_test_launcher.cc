@@ -373,16 +373,20 @@ bool ProcessTestResults(
     fflush(stdout);
 
     // We do not have reliable details about test results (parsing test
-    // stdout is known to be unreliable), apply the executable exit code
-    // to all tests.
-    // TODO(phajdan.jr): Be smarter about this, e.g. retry each test
-    // individually.
-    for (size_t i = 0; i < test_names.size(); i++) {
-      TestResult test_result;
-      test_result.full_name = test_names[i];
-      test_result.status = TestResult::TEST_UNKNOWN;
-      test_launcher->OnTestFinished(test_result);
-      called_any_callback = true;
+    // stdout is known to be unreliable).
+    // If there are more then one test, retry them individually. In other
+    // case report test with TEST_UNKNOWN status.
+    if (test_names.size() > 1) {
+      for (const std::string& test_name : test_names)
+        tests_to_relaunch->push_back(test_name);
+    } else {
+      for (const std::string& test_name : test_names) {
+        TestResult test_result;
+        test_result.full_name = test_name;
+        test_result.status = TestResult::TEST_UNKNOWN;
+        test_launcher->OnTestFinished(test_result);
+        called_any_callback = true;
+      }
     }
   }
 
