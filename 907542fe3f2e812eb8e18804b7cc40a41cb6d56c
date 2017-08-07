@@ -22,6 +22,30 @@
       "revId": "907542fe3f2e812eb8e18804b7cc40a41cb6d56c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbe05fe_d43c45b2",
+        "filename": "remoting/host/file_transfer_message_handler_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-07T18:00:47Z",
+      "side": 1,
+      "message": "This seems like a good idea the more I think about it. I will plan on removing the factory in a future CL.",
+      "parentUuid": "cbfea362_a1937435",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 38
+      },
+      "revId": "907542fe3f2e812eb8e18804b7cc40a41cb6d56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
