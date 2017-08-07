@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c0c304e_67bd955d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/CctOfflinePageModelObserver.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-07T22:39:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e0d4245_d182617b",
+      "revId": "e2907ecaabca5d3f4e86f399e96da4115c25f3ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e38ac4a8_e9620cfa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b65f291a_0f51ea73",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-07T22:39:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e38ac4a8_e9620cfa",
+      "revId": "e2907ecaabca5d3f4e86f399e96da4115c25f3ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5485ebe_e91bff70",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "e2907ecaabca5d3f4e86f399e96da4115c25f3ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d817d4_a5217f1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-07T22:39:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5485ebe_e91bff70",
+      "revId": "e2907ecaabca5d3f4e86f399e96da4115c25f3ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
