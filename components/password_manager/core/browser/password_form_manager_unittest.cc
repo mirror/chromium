@@ -2376,6 +2376,13 @@ TEST_F(PasswordFormManagerTest, TestUpdateUsernameToExisting) {
   PasswordForm expected_pending(credential);
   expected_pending.times_used = 1;
   expected_pending.username_value = saved_match()->username_value;
+  expected_pending.username_edited_in_prompt = true;
+  expected_pending.username_element = saved_match()->username_element;
+
+  // Use |old_primary_key| to save |expected_pending|, before |expected_pending|
+  // form is updated.
+  PasswordForm old_primary_key(expected_pending);
+  old_primary_key.username_element.clear();
 
   // User clicks save, edited username is saved, password updated.
   PasswordForm saved_result;
@@ -2383,7 +2390,7 @@ TEST_F(PasswordFormManagerTest, TestUpdateUsernameToExisting) {
               Update(expected_pending,
                      ElementsAre(Pair(saved_match()->username_value,
                                       Pointee(*saved_match()))),
-                     Pointee(IsEmpty()), nullptr));
+                     Pointee(IsEmpty()), Pointee(old_primary_key)));
   form_manager()->Save();
 }
 
@@ -3138,8 +3145,8 @@ TEST_F(PasswordFormManagerTest, ProbablyAccountCreationUpload) {
                   CheckUploadedAutofillTypesAndSignature(
                       pending_structure.FormSignatureAsStr(), expected_types,
                       false /* expect_generation_vote */,
-                      autofill::AutofillUploadContents::Field::NO_INFORMATION
-                      /* expected_username_vote_type */),
+                      autofill::AutofillUploadContents::Field::
+                          NO_INFORMATION /* expected_username_vote_type */),
                   false, expected_available_field_types, std::string(), true));
 
   form_manager.ProvisionallySave(
