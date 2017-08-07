@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1df96085_bd60239a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2252,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-07T22:04:52Z",
+      "side": 1,
+      "message": "We want it to be associated to frame-level, since there\u0027s frame-level suspension/throttling.\n\nI am also a little bit confused by the code in https://cs.chromium.org/chromium/src/content/renderer/render_frame_impl.cc?l\u003d3891, it seems to me that we already check whether the frame is a main frame, before the IPC even gets sent out to frame host, but we still do a bunch of checking to check whether it comes from main frame.",
+      "parentUuid": "85446770_09594bee",
+      "revId": "311e3bc50eb51827d452da3c49c712c3a0146995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bee5ad5_9348aed5",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
         "patchSetId": 3
