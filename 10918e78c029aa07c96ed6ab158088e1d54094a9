@@ -16,6 +16,24 @@
       "revId": "10918e78c029aa07c96ed6ab158088e1d54094a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a535b29_62ccde31",
+        "filename": "chrome/browser/ui/cocoa/base_bubble_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-07T16:29:10Z",
+      "side": 1,
+      "message": "I don\u0027t know. This is a question for someone reworking bubbles.",
+      "parentUuid": "4a663f48_a5120928",
+      "revId": "10918e78c029aa07c96ed6ab158088e1d54094a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
