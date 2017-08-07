@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbd7f740_0798185f",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-07T20:29:00Z",
+      "side": 1,
+      "message": "Should this be guarded by if(password_protection_service_)?",
+      "revId": "323437ee850ef792488767378a978c507026bff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6b6a9f_59af966d",
+        "filename": "chrome/browser/ui/page_info/page_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-07T20:29:00Z",
+      "side": 1,
+      "message": "Nit: I\u0027m guessing \"revoke\" is an editing error?",
+      "revId": "323437ee850ef792488767378a978c507026bff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27904c33_d62cb2ed",
+        "filename": "chrome/browser/ui/page_info/page_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-07T20:29:00Z",
+      "side": 1,
+      "message": "If I understand correctly, this actually shows two buttons in the UI.\nCould we call it show_change_password_buttons_ or show_password_reuse_prompt_?\n(Same with similarly named fields throughout.)",
+      "revId": "323437ee850ef792488767378a978c507026bff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97bf95c2_ec08d4b1",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-07T20:29:00Z",
+      "side": 1,
+      "message": "If SAFE_BROWSING_DB_LOCAL is not defined, this will fall through to the default case, right?\nCould you either add a comment that this is intended, or modify the code to return something else?\n\nFor example, does this work?\n\n      int summary \u003d IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY_SOFTER;\n#if defined(SAFE_BROWSING_DB_LOCAL)\n      if (safe_browsing::PasswordProtectionService::ShouldShowSofterWarning()) {\n        summary \u003d IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY_SOFTER\n      }\n#endif\n      return CreateSecurityDescription(summary, IDS_PAGE_INFO_CHANGE_PASSWORD_DETAILS);",
+      "revId": "323437ee850ef792488767378a978c507026bff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
