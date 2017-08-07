@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "963cfca3_205da4d7",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-07T22:28:34Z",
+      "side": 1,
+      "message": "We already have a TestPaletteDelegate -- can you either extend that one or subclass it here?",
+      "revId": "9677f0147d32727d677fcc87dd7850e415e7a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12d5690_d31c6f73",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-07T22:28:34Z",
+      "side": 1,
+      "message": "FYI - I have a CL out for review that eliminates this line, https://chromium-review.googlesource.com/c/604478",
+      "revId": "9677f0147d32727d677fcc87dd7850e415e7a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0178936_cf9de104",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-07T22:28:34Z",
+      "side": 1,
+      "message": "Is this needed for this test?",
+      "revId": "9677f0147d32727d677fcc87dd7850e415e7a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b7a4a0_a591ef50",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-07T22:28:34Z",
+      "side": 1,
+      "message": "optional: I wonder if AshTestBase or AshTestHelper could initialize PaletteTray with the shared TestPaletteDelegate. Then this and the PaletteTray test wouldn\u0027t have to duplicate that setup.\n\nI think we do something similar with other test delegates.",
+      "revId": "9677f0147d32727d677fcc87dd7850e415e7a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3ed627_ce62ec3f",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-07T22:28:34Z",
+      "side": 1,
+      "message": "This might not be necessary if my CL lands first. Also, I think that\u0027s the wrong bug number. Sammie might have filed a new one.",
+      "revId": "9677f0147d32727d677fcc87dd7850e415e7a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e692b6fa_a9ca767d",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-07T22:28:34Z",
+      "side": 1,
+      "message": "nit: no trailing _ for local variables",
+      "revId": "9677f0147d32727d677fcc87dd7850e415e7a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6584e08f_d0c91c3e",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-07T22:28:34Z",
+      "side": 1,
+      "message": "super-nit: maybe move this down by line 466? or add a blank line above?",
+      "revId": "9677f0147d32727d677fcc87dd7850e415e7a3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
