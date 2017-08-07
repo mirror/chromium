@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "643f9d52_22cf2142",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-07T23:59:24Z",
+      "side": 1,
+      "message": "If the span is being manipulated by the keyboard, then I think keeping the full text is \"safer\".  If  we store just the length, then the keyboard could have swapped a letter and we\u0027d still be valid.  Or maybe it just changes of the offset but that invalidates it.  I could see the case where we\u0027d want to keep both text and offset and only return it true if both of those still hold.",
+      "parentUuid": "41215399_70bd842e",
+      "revId": "dd2fbc3e26c1ce167694eadb1cc3b82cabe6eea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d2dac1a_4d6ba10e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 1
@@ -30,6 +48,29 @@
       "writtenOn": "2017-08-07T22:14:28Z",
       "side": 1,
       "message": "It looks like this now only useful if -1 and other values of it are not returned (or are the same as the other calculation if returned?).  I\u0027d prefer the control flow makes this more clear:\n\nif (editable.getSpanStart(mSpan) \u003d\u003d -1) return -1;\nreturn editable.length - mSpanStringLength;",
+      "revId": "dd2fbc3e26c1ce167694eadb1cc3b82cabe6eea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab337a0_c00927be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-07T23:59:24Z",
+      "side": 1,
+      "message": "I\u0027m still a bit confused what is happening.  Why is getSpanStart not returning the right thing?  Is it because text is being inserted and the span is being manipulated outside of what we expect?\n\nIf we used a different type of span, i.e. SPAN_EXCLUSIVE_EXCLUSIVE, instead of SPAN_INTERMEDIATE, would that show the same issues?",
+      "range": {
+        "startLine": 327,
+        "startChar": 16,
+        "endLine": 327,
+        "endChar": 27
+      },
       "revId": "dd2fbc3e26c1ce167694eadb1cc3b82cabe6eea5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
