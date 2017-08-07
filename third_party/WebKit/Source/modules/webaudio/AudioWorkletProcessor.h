@@ -26,7 +26,9 @@ class AudioWorkletProcessorDefinition;
 // must be called on the worker thread.
 class MODULES_EXPORT AudioWorkletProcessor
     : public GarbageCollectedFinalized<AudioWorkletProcessor>,
-      public TraceWrapperBase {
+      public ScriptWrappable {
+DEFINE_WRAPPERTYPEINFO();
+
  public:
   static AudioWorkletProcessor* Create(AudioWorkletGlobalScope*,
                                        const String& name);

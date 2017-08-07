@@ -10,12 +10,17 @@
 
 namespace blink {
 
+class AudioWorkletHandler;
 class ExecutionContext;
 class WorkerThread;
 
 class AudioWorkletMessagingProxy final : public ThreadedWorkletMessagingProxy {
  public:
   AudioWorkletMessagingProxy(ExecutionContext*, WorkerClients*);
+
+  void CreateProcessor(AudioWorkletHandler*);
+
+  void CreateProcessorOnWorkerThread(AudioWorkletHandler*, WorkerThread*);
 
  private:
   ~AudioWorkletMessagingProxy() override;
