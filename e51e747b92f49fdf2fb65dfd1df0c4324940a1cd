@@ -141,6 +141,30 @@
       "revId": "e51e747b92f49fdf2fb65dfd1df0c4324940a1cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "732124d4_df4107f9",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T12:23:51Z",
+      "side": 1,
+      "message": "Alright, thanks for checking! That\u0027s clearly somewhat \"suboptimal\", but that\u0027s a problem for another day ;)",
+      "parentUuid": "63c56f2b_2e4a350a",
+      "range": {
+        "startLine": 504,
+        "startChar": 69,
+        "endLine": 504,
+        "endChar": 0
+      },
+      "revId": "e51e747b92f49fdf2fb65dfd1df0c4324940a1cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
