@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3376560f_f3f646e2",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-07T14:32:55Z",
+      "side": 1,
+      "message": "Make a comment about the search of correct username field. \n\nNow it is only about base::TrimString. a) it can be read from the name of function b) it is not precise: we don\u0027t check, but remove spaces.",
+      "range": {
+        "startLine": 469,
+        "startChar": 5,
+        "endLine": 469,
+        "endChar": 54
+      },
+      "revId": "7ad98f2740f6780c53b9e8623e612fb089b7b158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e85c9424_4e829cd9",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-07T14:32:55Z",
+      "side": 1,
+      "message": "Let\u0027s trim other possible username when |other_possible_username| is initialized.",
+      "range": {
+        "startLine": 478,
+        "startChar": 4,
+        "endLine": 479,
+        "endChar": 76
+      },
+      "revId": "7ad98f2740f6780c53b9e8623e612fb089b7b158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a4acc8_af3a0eef",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-07T14:32:55Z",
+      "side": 1,
+      "message": "could |trimmed_username_value| be empty string? I believe we should skip this FOR.",
+      "range": {
+        "startLine": 480,
+        "startChar": 37,
+        "endLine": 480,
+        "endChar": 59
+      },
+      "revId": "7ad98f2740f6780c53b9e8623e612fb089b7b158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085a551c_bf080ee5",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2383,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-07T14:32:55Z",
+      "side": 1,
+      "message": "Could you explain why we need these two lines?",
+      "range": {
+        "startLine": 2382,
+        "startChar": 2,
+        "endLine": 2383,
+        "endChar": 43
+      },
+      "revId": "7ad98f2740f6780c53b9e8623e612fb089b7b158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
