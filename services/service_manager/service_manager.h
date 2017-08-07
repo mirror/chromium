@@ -118,7 +118,7 @@ class ServiceManager {
   // impossible for any call to GetExistingInstance() to return |instance|.
   void EraseInstanceIdentity(Instance* instance);
 
-  void NotifyServiceStarted(const Identity& identity, base::ProcessId pid);
+  void NotifyServiceStarted(const Identity& identity);
   void NotifyServiceFailedToStart(const Identity& identity);
 
   void NotifyServicePIDReceived(const Identity& identity, base::ProcessId pid);

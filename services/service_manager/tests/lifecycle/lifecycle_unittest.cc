@@ -82,15 +82,7 @@ class InstanceState : public mojom::ServiceManagerListener {
     instances_[instance->identity.name()] =
         Instance(instance->identity, instance->pid);
   }
-  void OnServiceStarted(const service_manager::Identity& identity,
-                        uint32_t pid) override {
-    for (auto& instance : instances_) {
-      if (instance.second.identity == identity) {
-        instance.second.pid = pid;
-        break;
-      }
-    }
-  }
+  void OnServiceStarted(const service_manager::Identity& identity) override {}
   void OnServiceFailedToStart(
       const service_manager::Identity& identity) override {
   }

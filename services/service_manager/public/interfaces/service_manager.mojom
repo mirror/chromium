@@ -25,10 +25,8 @@ interface ServiceManagerListener {
   // Service, before a process is created for it.
   OnServiceCreated(RunningServiceInfo service);
 
-  // Called when a pid is available for the service. This could be because the
-  // Service Manager created a process for it, or because an existing one was
-  // assigned to it.
-  OnServiceStarted(Identity identity, uint32 pid);
+  // Called when a service finished starting.
+  OnServiceStarted(Identity identity);
 
   // Called when a pid is available for the service.
   OnServicePIDReceived(Identity identity, uint32 pid);

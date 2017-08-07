@@ -181,6 +181,7 @@ class ServiceManager::Instance
         identity_(identity),
         interface_provider_specs_(interface_provider_specs),
         allow_any_application_(GetConnectionSpec().requires.count("*") == 1),
+        pid_receiver_request_(nullptr),
         pid_receiver_binding_(this),
         control_binding_(this),
         state_(State::IDLE),
@@ -213,6 +214,10 @@ class ServiceManager::Instance
 
   ~Instance() override {
     Stop();
+  }
+
+  void SetPidReceiverRequest(mojom::PIDReceiverRequest request) {
+    pid_receiver_request_ = std::move(request);
   }
 
   bool CallOnBindInterface(std::unique_ptr<ConnectParams>* in_params) {
@@ -280,10 +285,6 @@ class ServiceManager::Instance
     StartWithService(std::move(service));
     return true;
 #endif
-  }
-
-  void BindPIDReceiver(mojom::PIDReceiverRequest request) {
-    pid_receiver_binding_.Bind(std::move(request));
   }
 
   mojom::RunningServiceInfoPtr CreateRunningServiceInfo() const {
@@ -644,7 +645,10 @@ class ServiceManager::Instance
     }
     if (control_request.is_pending())
       control_binding_.Bind(std::move(control_request));
-    service_manager_->NotifyServiceStarted(identity_, pid_);
+    service_manager_->NotifyServiceStarted(identity_);
+
+    if (pid_receiver_request_.is_pending())
+      pid_receiver_binding_.Bind(std::move(pid_receiver_request_));
   }
 
   // mojom::ServiceControl:
@@ -667,6 +671,7 @@ class ServiceManager::Instance
   std::unique_ptr<ServiceProcessLauncher> runner_;
 #endif
   mojom::ServicePtr service_;
+  mojom::PIDReceiverRequest pid_receiver_request_;
   mojo::Binding<mojom::PIDReceiver> pid_receiver_binding_;
   mojo::BindingSet<mojom::Connector> connectors_;
   mojo::BindingSet<mojom::ServiceManager> service_manager_bindings_;
@@ -854,7 +859,7 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
     // This branch should be reachable only via a call to RegisterService() . We
     // start the instance but return early before we connect to it. Clients will
     // call Connect() with the target identity subsequently.
-    instance->BindPIDReceiver(params->TakePIDReceiverRequest());
+    instance->SetPidReceiverRequest(params->TakePIDReceiverRequest());
     instance->StartWithService(params->TakeService());
     return;
   } else {
@@ -1024,12 +1029,10 @@ void ServiceManager::EraseInstanceIdentity(Instance* instance) {
   }
 }
 
-void ServiceManager::NotifyServiceStarted(const Identity& identity,
-                                          base::ProcessId pid) {
-  listeners_.ForAllPtrs(
-      [&identity, pid](mojom::ServiceManagerListener* listener) {
-        listener->OnServiceStarted(identity, pid);
-      });
+void ServiceManager::NotifyServiceStarted(const Identity& identity) {
+  listeners_.ForAllPtrs([&identity](mojom::ServiceManagerListener* listener) {
+    listener->OnServiceStarted(identity);
+  });
 }
 
 void ServiceManager::NotifyServiceFailedToStart(const Identity& identity) {

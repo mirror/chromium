@@ -70,7 +70,7 @@ TEST(ProcessMapTest, TypicalCase) {
   EXPECT_EQ(base::kNullProcessId, process_map.GetProcessId(id1));
 
   process_map.OnServiceCreated(MakeTestServiceInfo(id1, 1 /* pid */));
-  process_map.OnServiceStarted(id1, 1 /* pid */);
+  process_map.OnServiceStarted(id1);
   EXPECT_EQ(base::kNullProcessId, process_map.GetProcessId(id1));
 
   process_map.OnServicePIDReceived(id1, 1 /* pid */);

@@ -45,7 +45,7 @@ class ProcessMap : public service_manager::mojom::ServiceManagerListener {
   // Overridden from service_manager::mojom::ServiceManagerListener.
   void OnInit(std::vector<RunningServiceInfoPtr> instances) override;
   void OnServiceCreated(RunningServiceInfoPtr instance) override;
-  void OnServiceStarted(const Identity&, uint32_t pid) override;
+  void OnServiceStarted(const Identity&) override;
   void OnServiceFailedToStart(const Identity&) override;
   void OnServiceStopped(const Identity&) override;
   void OnServicePIDReceived(const service_manager::Identity& identity,
