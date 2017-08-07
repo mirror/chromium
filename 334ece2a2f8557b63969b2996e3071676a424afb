@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9a4ed106_f9e65a2c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-07T12:59:03Z",
+      "side": 1,
+      "message": "\u003e \u003e It might be easier to add an enum {NO_MOCKS, BREAKING_NEWS_MOCK, PREFETCHED_PAGES_MOCK, ALL_MOCKS} to avoid the long comments. ALL_MOCKS might not even be necessary; I didn\u0027t see any (true, true) calls.\n\u003e \n\u003e I am a bit reluctant to do this, because such constructing is just a temporary solution, because I do not have time to change all tests to support the mock (MockRemoteSuggestionsStatusService case) or write a proper Builder for constructing the provider (PagesTracked and NewsListener).\n\u003e \n\u003e I do not think that neating it up a bit improves the situation enough to be worth it.\n\nI wasn\u0027t talking about changing the tests to support mocks, just dumping the bool arguments. Instead of:\n\n        /*use_mock_prefetched_pages_tracker\u003d*/false,\n        /*use_mock_breaking_news_listener\u003d*/false\n\nit would be easier to read/write:\n\n        NO_MOCKS\n\nOr even really, it might as well be:\n\n        NO_PREFETCHED_PAGES_TRACKER,\n        NO_BREAKING_NEWS_LISTENER\n\nUsing a bool feels like the \"lightweight\" solution, but when you need to prepend /*use_mock_prefetched_pages_tracker\u003d*/ it causes more work than it saves. Your call, anyway.",
+      "parentUuid": "3264a208_d7b923fe",
+      "revId": "334ece2a2f8557b63969b2996e3071676a424afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "590015c3_543428ca",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 2
