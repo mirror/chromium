@@ -145,6 +145,11 @@ TEST(X509UtilTest, CreateSelfSigned) {
       base::Time::Now() + base::TimeDelta::FromDays(1),
       &der_cert));
 
+  for (size_t i = 0; i < der_cert.size(); i++) {
+    printf("%02x", uint8_t(der_cert[i]));
+  }
+  printf("\n");
+
   scoped_refptr<X509Certificate> cert =
       X509Certificate::CreateFromBytes(der_cert.data(), der_cert.size());
   ASSERT_TRUE(cert.get());
