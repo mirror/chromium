@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "989c4fbe_83237645",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1230841
+      },
+      "writtenOn": "2017-08-07T04:20:27Z",
+      "side": 1,
+      "message": "Hmmm. When I uploaded the patch I included a few lines of output, for precisely that purpose, but I don\u0027t see them anywhere. Weird.\n\nI would prefer not to write actual tests for code that won\u0027t be committed and will have a lifetime measured in weeks. Here is some output from a run on my machine:\n\n\u003e\u003e\u003eWO_SVG visible paint (47 of 335 paint calls, 14%) mapped \"16,8 16x20\" to: \"28,392 16x20\" on width 950\n\u003e\u003e\u003eWO_SVG visible paint (48 of 336 paint calls, 14%) mapped \"16,8 16x20\" to: \"28,392 16x20\" on width 950\n\u003e\u003e\u003eWO_SVG visible paint (49 of 337 paint calls, 14%) mapped \"9,9 18x18\" to: \"601,393 18x18\" on width 950\n\u003e\u003e\u003eWO_SVG visible paint (50 of 338 paint calls, 14%) mapped \"9,9 18x18\" to: \"601,393 18x18\" on width 950\n\u003e\u003e\u003eWO_SVG visible paint (51 of 339 paint calls, 15%) mapped \"16,8 16x20\" to: \"28,392 16x20\" on width 950\n\u003e\u003e\u003eWO_SVG visible paint (52 of 340 paint calls, 15%) mapped \"16,8 16x20\" to: \"28,392 16x20\" on width 950\n\nSo the code clearly does what I want it to do. Is this enough?",
+      "parentUuid": "9d034c3d_01e19d82",
+      "revId": "06ce5125319ad51a3525817c8dec688f2fdb5ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a999e07f_ccea15c2",
         "filename": "third_party/WebKit/Source/core/paint/SVGRootPainter.cpp",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "215f3969_f8ebc74e",
+        "filename": "third_party/WebKit/Source/core/paint/SVGRootPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1230841
+      },
+      "writtenOn": "2017-08-07T04:20:27Z",
+      "side": 1,
+      "message": "Hmmm. I\u0027ve taken a look at LocalFrameView. The header file is 1200+ lines, the cpp is 5000+ lines, and none of them call a Paint method that I can find. Tracing through this to find a better base on which to start counting is going to take some effort.\n\nTaking a step back, this brings up an important point about this system. My long-term intention is that clients, i.e. Shane or yourself in this case, will write their own patches, as it simply won\u0027t scale for the Ghostrider team to be involved at that level. For this first one I\u0027m writing the patch in order to manually walk through all the steps identifying pain points and what\u0027s missing for the system, but I chose SVG as the first test case precisely because the patch itself would be simple and the test criteria (on or off screen) would be unambiguous.\n\nI would prefer not to put too much more effort into the patch itself, as I really need to focus on going through the rest of the steps to identify automation points, etc.\n\nSo I really would prefer to either leave this counting as you originally requested and as I\u0027ve written it, or accept actual code from you to refine it into a more accurate investigation.",
+      "parentUuid": "a999e07f_ccea15c2",
+      "revId": "06ce5125319ad51a3525817c8dec688f2fdb5ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63ba209f_69ef0135",
         "filename": "third_party/WebKit/Source/core/paint/SVGRootPainter.cpp",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-03T03:44:40Z",
       "side": 1,
       "message": "MapToVisualRectInAncestorSpace requires a bit of finessing to get it to convert all the way to physical pixels. I wonder if something like the following would be more robust? This relies on IntersectionObserver which is sort of a wrapper around MapToVisualRectInAncestorSpace and is pretty well tested:\n\n#include \"core/layout/IntersectionGeometry.h\"\n...\nIntersectionGeometry geometry(nullptr, *ToElement(layout_svg_root_.GetNode()), Vector\u003cLength\u003e(), true);\ngeometry.ComputeGeometry();\nLOG(INFO) \u003c\u003c \"intersection rect: \" \u003c\u003c geometry.IntersectionIntRect().ToString();\n\nIntersectionObserver is particularly useful for ads so it actually clips to the viewport which is a little different than your heuristic to not include scrolling, but it might be an easier starting point.",
+      "revId": "06ce5125319ad51a3525817c8dec688f2fdb5ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c62874_d8f5a192",
+        "filename": "third_party/WebKit/Source/core/paint/SVGRootPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1230841
+      },
+      "writtenOn": "2017-08-07T04:20:27Z",
+      "side": 1,
+      "message": "I used MapToVisualRectInAncestorSpace because you suggested it in our last email exchange. This code is what you wrote except that I made it compile. Furthermore, in my testing I\u0027ve confirmed that the output is in physical pixels from the edge of the window for my test cases, so I\u0027m not inclined to change it without good reason, particularly if I have to give up the \"below-screen counts as on-screen\" that Shane explicitly requested.\n\nHere again, we can see that it really is best for the client, i.e. you two, to write their own patch, so that all the relevant issues can be taken into account and possibly traded off, according to the needs of the investigation. The easiest starting point for me right now is to leave the code as is, because it\u0027s already working. If it doesn\u0027t actually do what you want, perhaps you and Shane could sort out exactly what it should do and how to do it.",
+      "parentUuid": "63ba209f_69ef0135",
       "revId": "06ce5125319ad51a3525817c8dec688f2fdb5ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
