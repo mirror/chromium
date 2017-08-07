@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "8cad4ca4_5ddd6d57",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-07T17:37:03Z",
+      "side": 1,
+      "message": "This is non-blocking for this CL but should probably be addressed in another CL soon:\n\nI\u0027m sorry I wasn\u0027t super clear on this.\nWhat I meant is that the FullHashCacheManager and Database and UpdateManager are all siblings with similar lifetimes\nso the proto should probably be defined as such.\n\nSo CollectDatabaseManagerInfo should also CollectFullHashCacheInfo, instead of the webui doing it.",
+      "parentUuid": "bfb0e094_8ac0fb0d",
+      "range": {
+        "startLine": 258,
+        "startChar": 28,
+        "endLine": 258,
+        "endChar": 48
+      },
+      "revId": "ac6ea4aaf2772ab291ea54c40c63d33c227a7f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7297c746_c5664bf6",
         "filename": "components/safe_browsing/web_ui/webui.proto",
         "patchSetId": 7
