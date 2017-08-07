@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e33a517e_e641cac0",
+        "filename": "media/midi/chromeos/midi_manager_cros.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-07T08:10:37Z",
+      "side": 1,
+      "message": "Can this be a function in the anonymous namespace?\nThis should not be a permanent interface, but would be used only in this file to initialize mojo connection at the first call.",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04bc64e4_8df89218",
+        "filename": "media/midi/chromeos/midi_manager_cros.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-07T08:10:37Z",
+      "side": 1,
+      "message": "Probably, this method will be changed to return a mojo interface in the near future.\nThe method will initialize the mojo channel in the first call, and just returns an interface from the established channel in later calls.\n\nCan you remove this method for now, and just change the implementation as a function in the anonymous namespace in the cc file? See another comment in the cc file.",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
