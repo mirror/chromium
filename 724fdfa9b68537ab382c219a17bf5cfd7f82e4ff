@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "748b13d5_1e206d32",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-07T23:41:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baaa1dcb_9081a0af",
+      "revId": "724fdfa9b68537ab382c219a17bf5cfd7f82e4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b70356e_c7e89d3e",
         "filename": "chrome/common/media_router/discovery/media_sink_internal_unittest.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e9fbc2c0_a6f7875d",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-07T23:41:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b70356e_c7e89d3e",
+      "revId": "724fdfa9b68537ab382c219a17bf5cfd7f82e4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82c6130b_ccf7aa26",
         "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-07T21:42:57Z",
       "side": 1,
       "message": "Do we still need to import mojo bindings for IPAddress?",
+      "revId": "724fdfa9b68537ab382c219a17bf5cfd7f82e4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b37b1c4_73c6d4d3",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-07T23:41:02Z",
+      "side": 1,
+      "message": "Seems still needed. DialMediaSink still has an IPAddress field.\n\nhttps://cs.chromium.org/chromium/src/chrome/common/media_router/mojo/media_router.mojom?rcl\u003d5e750ad00f21fa2e674c64570e1ebec5a46f6fd9\u0026l\u003d47",
+      "parentUuid": "82c6130b_ccf7aa26",
       "revId": "724fdfa9b68537ab382c219a17bf5cfd7f82e4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
