@@ -1380,13 +1380,14 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, PageStopLoading) {
   Attach();
 
   std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+
   params->SetBoolean("enabled", true);
   SendCommand("Network.setRequestInterceptionEnabled", std::move(params), true);
 
   LoadFinishedObserver load_finished_observer(shell()->web_contents());
 
   // The page will try to navigate twice, however since
-  // Network.setRequestInterceptionEnabled is true,
+  // Network.setRequestInterceptionEnabled is catching,
   // it'll wait for confirmation before committing to the navigation.
   GURL test_url = embedded_test_server()->GetURL(
       "/devtools/control_navigations/meta_tag.html");
@@ -1409,6 +1410,7 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, ControlNavigationsMainFrame) {
   Attach();
 
   std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+
   params->SetBoolean("enabled", true);
   SendCommand("Network.setRequestInterceptionEnabled", std::move(params), true);
 
@@ -1459,6 +1461,7 @@ IN_PROC_BROWSER_TEST_F(IsolatedDevToolsProtocolTest,
   Attach();
 
   std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+
   params->SetBoolean("enabled", true);
   SendCommand("Network.setRequestInterceptionEnabled", std::move(params), true);
 

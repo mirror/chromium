@@ -204,7 +204,7 @@ class FrameIdTest : public HeadlessAsyncDevTooledBrowserTest,
       devtools_client_->GetNetwork()
           ->GetExperimental()
           ->SetRequestInterceptionEnabled(
-              network::SetRequestInterceptionEnabledParams::Builder()
+              headless::network::SetRequestInterceptionEnabledParams::Builder()
                   .SetEnabled(true)
                   .Build());
     }
