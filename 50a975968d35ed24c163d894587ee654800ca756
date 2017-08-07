@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "212b6da7_e1ac3dbf",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_payment_method_identifier_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T17:10:26Z",
+      "side": 1,
+      "message": "No, that\u0027s a mistake. Done.",
+      "parentUuid": "50a68b94_7500dbad",
+      "revId": "50a975968d35ed24c163d894587ee654800ca756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b6e6c3c_973497c2",
         "filename": "ios/chrome/browser/ui/payments/payment_request_payment_method_identifier_egtest.mm",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-01T11:14:33Z",
       "side": 1,
       "message": "This file has a lot of integration tests for this API, I just wanted to see if some of this is (or could be) handled in unit tests, and not need this many integration tests.\n\nThese tests do seem pretty lightweight, so if this is the best way to test it then I think it\u0027s okay.",
+      "revId": "50a975968d35ed24c163d894587ee654800ca756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb24932d_41250d1a",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_payment_method_identifier_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T17:10:26Z",
+      "side": 1,
+      "message": "These tests are mimicking the integration tests done for other platforms (Desktop and Android). Given that the API should behave the same across the platforms, I think it makes sense to test the iOS implementation with the same integration tests as the other ones. I created a new target for these tests (ios_chrome_payments_egtests) in anticipation of having a high number of integration tests.\nThat being said, we should also add a lot more unit tests for the iOS implementation.",
+      "parentUuid": "7b6e6c3c_973497c2",
       "revId": "50a975968d35ed24c163d894587ee654800ca756",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "50a975968d35ed24c163d894587ee654800ca756",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7840b6e5_32775089",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_payment_response_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-07T17:10:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9829b764_991870fd",
+      "range": {
+        "startLine": 132,
+        "startChar": 28,
+        "endLine": 132,
+        "endChar": 29
+      },
+      "revId": "50a975968d35ed24c163d894587ee654800ca756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
