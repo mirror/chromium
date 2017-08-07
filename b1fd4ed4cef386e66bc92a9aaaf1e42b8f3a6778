@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "eb2022e8_07bf7c33",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-07T21:12:34Z",
+      "side": 1,
+      "message": "Linking failed with the previous implementation.  Typically constants are not defined within a class like this, but adjacent and with a descriptive enough name.",
+      "parentUuid": "fc224749_4927737b",
+      "revId": "b1fd4ed4cef386e66bc92a9aaaf1e42b8f3a6778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80e1f970_c8475e4c",
         "filename": "components/offline_pages/core/prefetch/task_test_base.cc",
         "patchSetId": 1
