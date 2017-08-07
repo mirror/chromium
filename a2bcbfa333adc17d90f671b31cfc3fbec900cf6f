@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "5d08fe4a_b4bf0a63",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T22:40:16Z",
+      "side": 1,
+      "message": "Either expose Update(), or maybe we build this \"special locale\" functionality into TemplateUrlService somehow.  Those seem like the right route to me.\n\nIf things don\u0027t conceptually match, then really all the choices here that try to have one entry are wrong.  We\u0027d want two entries.  To determine what to do, we\u0027d need to define \"conceptually match\" better, so we could write code to detect it.\n\nSince engines aren\u0027t currently synced/manually-addable, it seems like the remove-and-add route might just Be OK for now?  We should assume that at some point in the future either of those factors may change though.",
+      "parentUuid": "6daecce3_05842726",
+      "revId": "a2bcbfa333adc17d90f671b31cfc3fbec900cf6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb217439_5c0a7c67",
         "filename": "chrome/browser/android/locale/special_locale_handler.cc",
         "patchSetId": 3
