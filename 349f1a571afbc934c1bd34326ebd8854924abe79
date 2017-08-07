@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "406e6ea7_b14e2e78",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-07T13:31:32Z",
+      "side": 1,
+      "message": "[NSColor colorWithCalibratedWhite:alpha:] I think",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
