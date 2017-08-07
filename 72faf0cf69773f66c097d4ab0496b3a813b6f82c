@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8082b2a_70767a13",
+        "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-07T22:44:51Z",
+      "side": 1,
+      "message": "The old icon was 80x80 in 1x and 160x160x in 2x; where\u0027s the 40dip measurement coming from?  Is there a constant we can use?",
+      "revId": "72faf0cf69773f66c097d4ab0496b3a813b6f82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
