@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "33baf3f8_cac31e73",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-07T04:48:43Z",
+      "side": 1,
+      "message": "Could you check the state is not SHOWN, SHOWING, WILL_HIDE or HIDING?",
+      "revId": "5faa657e948c24d42cac53c5cd98c9056e863144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4159c18_31fb59b3",
         "filename": "ui/keyboard/keyboard_controller.cc",
         "patchSetId": 2
@@ -71,6 +88,23 @@
     },
     {
       "key": {
+        "uuid": "c0c2c092_d4aca83b",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-07T04:48:43Z",
+      "side": 1,
+      "message": "If the state is SHOWING, don\u0027t you have to stop the existing animation?",
+      "revId": "5faa657e948c24d42cac53c5cd98c9056e863144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95c0ba4c_1b99f82a",
         "filename": "ui/keyboard/keyboard_controller.cc",
         "patchSetId": 2
@@ -88,6 +122,74 @@
         "endLine": 450,
         "endChar": 53
       },
+      "revId": "5faa657e948c24d42cac53c5cd98c9056e863144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc44f84b_a7eb6294",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-07T04:48:43Z",
+      "side": 1,
+      "message": "Remove. This state change happens in HideAnimationFinished.",
+      "revId": "5faa657e948c24d42cac53c5cd98c9056e863144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ef4f7e_5596a2f8",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-07T04:48:43Z",
+      "side": 1,
+      "message": "nit: Could you add const to the argument while your are here?",
+      "revId": "5faa657e948c24d42cac53c5cd98c9056e863144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd8f632_4bc6a2df",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-07T04:48:43Z",
+      "side": 1,
+      "message": "const HideReason",
+      "revId": "5faa657e948c24d42cac53c5cd98c9056e863144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0b6400_0704597e",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-07T04:48:43Z",
+      "side": 1,
+      "message": "const HideReason",
       "revId": "5faa657e948c24d42cac53c5cd98c9056e863144",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
