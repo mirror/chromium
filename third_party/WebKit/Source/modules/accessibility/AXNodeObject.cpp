@@ -974,22 +974,21 @@ Element* AXNodeObject::MenuItemElementForMenu() const {
 Element* AXNodeObject::MouseButtonListener() const {
   Node* node = this->GetNode();
   if (!node)
-    return 0;
+    return nullptr;
 
   if (!node->IsElementNode())
     node = node->parentElement();
 
   if (!node)
-    return 0;
+    return nullptr;
 
-  for (Element* element = ToElement(node); element;
-       element = element->parentElement()) {
-    // It's a pretty common practice to put click listeners on the body or
-    // document, but that's almost never what the user wants when clicking on an
-    // accessible element.
-    if (isHTMLBodyElement(element))
-      break;
-
+  // Limit the search to at most three element ancestors.
+  //
+  // It's a pretty common practice to put click listeners on the body or a large
+  // container, but this would make the whole page appear to the screen reader
+  // user as clickable.
+  Element* element = ToElement(node);
+  for (int i = 0; i < 3 && element; ++i, element = element->parentElement()) {
     if (element->HasEventListeners(EventTypeNames::click) ||
         element->HasEventListeners(EventTypeNames::mousedown) ||
         element->HasEventListeners(EventTypeNames::mouseup) ||
@@ -997,7 +996,7 @@ Element* AXNodeObject::MouseButtonListener() const {
       return element;
   }
 
-  return 0;
+  return nullptr;
 }
 
 AccessibilityRole AXNodeObject::RemapAriaRoleDueToParent(
