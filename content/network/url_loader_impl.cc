@@ -323,11 +323,11 @@ void URLLoaderImpl::ReadMore() {
   } else if (url_request_->status().is_success() && bytes_read > 0) {
     DidRead(static_cast<uint32_t>(bytes_read), true);
   } else {
-    NotifyCompleted(net::OK);
     writable_handle_watcher_.Cancel();
-    pending_write_->Complete(pending_write_buffer_offset_);
-    pending_write_ = nullptr;  // This closes the data pipe.
-    DeleteIfNeeded();
+    CompletePendingWrite();
+
+    // This call may delete |this|.
+    NotifyCompleted(url_request_->status().ToNetError());
     return;
   }
 }
@@ -355,9 +355,7 @@ void URLLoaderImpl::DidRead(uint32_t num_bytes, bool completed_synchronously) {
   }
 
   if (complete_read) {
-    response_body_stream_ =
-        pending_write_->Complete(pending_write_buffer_offset_);
-    pending_write_ = nullptr;
+    CompletePendingWrite();
   }
   if (completed_synchronously) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -374,8 +372,10 @@ void URLLoaderImpl::OnReadCompleted(net::URLRequest* url_request,
 
   if (!url_request->status().is_success()) {
     writable_handle_watcher_.Cancel();
-    pending_write_ = nullptr;  // This closes the data pipe.
-    DeleteIfNeeded();
+    // This closes the data pipe.
+    // TODO(mmenke): Should NotifyCompleted close the data pipe itself instead?
+    response_body_stream_.reset();
+    NotifyCompleted(url_request_->status().ToNetError());
     return;
   }
 
@@ -398,6 +398,7 @@ void URLLoaderImpl::NotifyCompleted(int error_code) {
   request_complete_data.encoded_data_length =
       url_request_->GetTotalReceivedBytes();
   request_complete_data.encoded_body_length = url_request_->GetRawBodyBytes();
+  request_complete_data.decoded_body_length = written_body_length_;
 
   url_loader_client_->OnComplete(request_complete_data);
   DeleteIfNeeded();
@@ -446,6 +447,13 @@ void URLLoaderImpl::SendResponseToClient() {
 
   url_loader_client_->OnStartLoadingResponseBody(std::move(consumer_handle_));
   response_ = nullptr;
+}
+
+void URLLoaderImpl::CompletePendingWrite() {
+  response_body_stream_ =
+      pending_write_->Complete(pending_write_buffer_offset_);
+  pending_write_ = nullptr;
+  written_body_length_ += pending_write_buffer_offset_;
 }
 
 }  // namespace content
