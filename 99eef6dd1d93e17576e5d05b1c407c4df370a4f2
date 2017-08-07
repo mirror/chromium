@@ -16,6 +16,24 @@
       "revId": "99eef6dd1d93e17576e5d05b1c407c4df370a4f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0155f39b_7e69d7d3",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-07T22:27:04Z",
+      "side": 1,
+      "message": "Ah yeah, plz add it since you are there.\nthis is to match the sandbox behavior in the service. on linux we expect all os dumps to come from the browser-client. on other platforms we expect them to come from each client.",
+      "parentUuid": "1a6ace65_a19090a6",
+      "revId": "99eef6dd1d93e17576e5d05b1c407c4df370a4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
