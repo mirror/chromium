@@ -149,7 +149,8 @@ ResourcePool::~ResourcePool() {
 
 Resource* ResourcePool::ReuseResource(const gfx::Size& size,
                                       viz::ResourceFormat format,
-                                      const gfx::ColorSpace& color_space) {
+                                      const gfx::ColorSpace& color_space,
+                                      bool use_gpu_memory_buffer) {
   // Finding resources in |unused_resources_| from MRU to LRU direction, touches
   // LRU resources only if needed, which increases possibility of expiring more
   // LRU resources within kResourceExpirationDelayMs.
@@ -166,6 +167,12 @@ Resource* ResourcePool::ReuseResource(const gfx::Size& size,
     if (resource->color_space() != color_space)
       continue;
 
+    bool is_gpu_memory_buffer =
+        resource_provider_->GetResourceType(resource->id()) ==
+        ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER;
+    if (use_gpu_memory_buffer != is_gpu_memory_buffer)
+      continue;
+
     // Transfer resource to |in_use_resources_|.
     in_use_resources_[resource->id()] = std::move(*it);
     unused_resources_.erase(it);
@@ -178,11 +185,12 @@ Resource* ResourcePool::ReuseResource(const gfx::Size& size,
 
 Resource* ResourcePool::CreateResource(const gfx::Size& size,
                                        viz::ResourceFormat format,
-                                       const gfx::ColorSpace& color_space) {
+                                       const gfx::ColorSpace& color_space,
+                                       bool use_gpu_memory_buffer) {
   std::unique_ptr<PoolResource> pool_resource =
       PoolResource::Create(resource_provider_);
 
-  if (use_gpu_memory_buffers_) {
+  if (use_gpu_memory_buffers_ || use_gpu_memory_buffer) {
     pool_resource->AllocateWithGpuMemoryBuffer(size, format, usage_,
                                                color_space);
   } else {
@@ -210,12 +218,14 @@ Resource* ResourcePool::CreateResource(const gfx::Size& size,
 
 Resource* ResourcePool::AcquireResource(const gfx::Size& size,
                                         viz::ResourceFormat format,
-                                        const gfx::ColorSpace& color_space) {
-  Resource* reused_resource = ReuseResource(size, format, color_space);
+                                        const gfx::ColorSpace& color_space,
+                                        bool use_gpu_memory_buffer) {
+  Resource* reused_resource =
+      ReuseResource(size, format, color_space, use_gpu_memory_buffer);
   if (reused_resource)
     return reused_resource;
 
-  return CreateResource(size, format, color_space);
+  return CreateResource(size, format, color_space, use_gpu_memory_buffer);
 }
 
 // Iterate over all three resource lists (unused, in-use, and busy), updating

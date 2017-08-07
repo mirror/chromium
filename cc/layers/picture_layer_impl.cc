@@ -24,6 +24,7 @@
 #include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/picture_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
+#include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/tiles/tile_manager.h"
 #include "cc/tiles/tiling_set_raster_queue_all.h"
@@ -230,6 +231,47 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
         draw_properties()
             .occlusion_in_content_space.GetOcclusionWithGivenDrawTransform(
                 shared_quad_state->quad_to_target_transform);
+  }
+
+  // LJH TODO: need to also check whether the image-on-video-plane feature
+  // is enabled.  AND, need to check if we're the base layer.  (Only want
+  // at most one layer to use this feature.)
+  if (is_directly_composited_image_ &&
+      append_quads_data->num_video_plane_image_quads == 0) {
+    int tile_count = 0;
+    ResourceId resource_id = 0;
+    for (PictureLayerTilingSet::CoverageIterator iter(
+             tilings_.get(), max_contents_scale,
+             shared_quad_state->visible_quad_layer_rect, ideal_contents_scale_);
+         iter; ++iter) {
+      if (*iter && iter->draw_info().IsReadyToDraw()) {
+        ++tile_count;
+        const TileDrawInfo& draw_info = iter->draw_info();
+        resource_id = draw_info.resource_id();
+      }
+    }
+    if (tile_count == 1) {
+      float opacity[] = {1.0f, 1.0f, 1.0f, 1.0f};
+      gfx::Rect quad_rect = gfx::Rect(bounds());
+      TextureDrawQuad* texture_quad =
+          render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
+      texture_quad->SetNew(shared_quad_state, quad_rect,
+                           quad_rect,  // opaque_rect
+                           quad_rect,  // visible_rect
+                           resource_id,
+                           true,                 // premultiplied_alpha
+                           gfx::PointF(0, 0),    // uv_top_left
+                           gfx::PointF(1, 1),    // uv_bottom_right
+                           SK_ColorTRANSPARENT,  // background_color
+                           opacity,
+                           false,   // y_flipped
+                           false,   // nearest_neighbor
+                           false);  // secure_output_only
+      ValidateQuadResources(texture_quad);
+
+      ++append_quads_data->num_video_plane_image_quads;
+      return;
+    }
   }
 
   if (current_draw_mode_ == DRAW_MODE_RESOURCELESS_SOFTWARE) {
@@ -748,12 +790,19 @@ gfx::Rect PictureLayerImpl::GetEnclosingRectInTargetSpace() const {
   return GetScaledEnclosingRectInTargetSpace(MaximumTilingContentsScale());
 }
 
+bool PictureLayerImpl::UseGpuMemoryBuffer() const {
+  // !!!LJH TODO will need to distinguish the one that can actually be overlaid.
+  return is_directly_composited_image_;
+}
+
 gfx::Size PictureLayerImpl::CalculateTileSize(
     const gfx::Size& content_bounds) const {
   int max_texture_size =
       layer_tree_impl()->resource_provider()->max_texture_size();
 
-  if (mask_type_ == Layer::LayerMaskType::SINGLE_TEXTURE_MASK) {
+  if (mask_type_ == Layer::LayerMaskType::SINGLE_TEXTURE_MASK ||
+      is_directly_composited_image_) {  // !!!LJH force single tile for directly
+                                        // composited
     // Masks are not tiled, so if we can't cover the whole mask with one tile,
     // we shouldn't have such a tiling at all.
     DCHECK_LE(content_bounds.width(), max_texture_size);

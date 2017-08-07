@@ -61,7 +61,7 @@ CastWebView::CastWebView(Delegate* delegate,
     : delegate_(delegate),
       browser_context_(browser_context),
       site_instance_(std::move(site_instance)),
-      transparent_(transparent),
+      transparent_(true),  // !!!LJH force allow video plane for now
       web_contents_(CreateWebContents(browser_context_, site_instance_)),
       window_(shell::CastContentWindow::Create(delegate)),
       did_start_navigation_(false),

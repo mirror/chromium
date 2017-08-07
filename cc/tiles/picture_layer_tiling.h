@@ -51,6 +51,9 @@ class CC_EXPORT PictureLayerTilingClient {
   virtual bool HasValidTilePriorities() const = 0;
   virtual bool RequiresHighResToDraw() const = 0;
 
+  // !!!LJH hacking around
+  virtual bool UseGpuMemoryBuffer() const;
+
  protected:
   virtual ~PictureLayerTilingClient() {}
 };

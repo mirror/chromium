@@ -24,6 +24,8 @@ class CC_EXPORT AppendQuadsData {
   int64_t visible_layer_area = 0;
   int64_t approximated_visible_content_area = 0;
 
+  int64_t num_video_plane_image_quads = 0;
+
   // This is total of the following two areas.
   int64_t checkerboarded_visible_content_area = 0;
   // This is the area outside interest rect.

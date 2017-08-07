@@ -29,6 +29,9 @@
 #include "ui/gfx/geometry/size_conversions.h"
 
 namespace cc {
+bool PictureLayerTilingClient::UseGpuMemoryBuffer() const {
+  return false;
+}
 
 PictureLayerTiling::PictureLayerTiling(
     WhichTree tree,
@@ -878,9 +881,12 @@ PrioritizedTile PictureLayerTiling::MakePrioritizedTile(
       (tile_priority.distance_to_visible > max_preraster_distance_ ||
        tile_priority.distance_to_visible >
            0.5f * max_skewport_extent_in_screen_space_);
-  return PrioritizedTile(tile, this, tile_priority, IsTileOccluded(tile),
-                         process_for_images_only,
-                         ShouldDecodeCheckeredImagesForTile(tile));
+
+  bool use_gpu_memory_buffer =
+      (tiles_.size() == 1) && client_->UseGpuMemoryBuffer();
+  return PrioritizedTile(
+      tile, this, tile_priority, IsTileOccluded(tile), process_for_images_only,
+      ShouldDecodeCheckeredImagesForTile(tile), use_gpu_memory_buffer);
 }
 
 std::map<const Tile*, PrioritizedTile>

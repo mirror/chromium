@@ -911,6 +911,8 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
       active_tree()->property_trees()->effect_tree.HasCopyRequests();
   bool have_missing_animated_tiles = false;
 
+  int64_t num_video_quads = 0;
+
   for (EffectTreeLayerListIterator it(active_tree());
        it.state() != EffectTreeLayerListIterator::State::END; ++it) {
     auto target_render_pass_id = it.target_render_surface()->id();
@@ -918,6 +920,7 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
         FindRenderPassById(frame->render_passes, target_render_pass_id);
 
     AppendQuadsData append_quads_data;
+    append_quads_data.num_video_plane_image_quads = num_video_quads;
 
     if (it.state() == EffectTreeLayerListIterator::State::TARGET_SURFACE) {
       RenderSurfaceImpl* render_surface = it.target_render_surface();
@@ -979,6 +982,8 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
         frame->activation_dependencies.end(),
         append_quads_data.activation_dependencies.begin(),
         append_quads_data.activation_dependencies.end());
+
+    num_video_quads = append_quads_data.num_video_plane_image_quads;
   }
 
   // If CommitToActiveTree() is true, then we wait to draw until
