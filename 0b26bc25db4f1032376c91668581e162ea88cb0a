@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "87cfd34f_9eab57b8",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-07T14:47:00Z",
+      "side": 1,
+      "message": "ok thanks.",
+      "parentUuid": "0b2d7417_e214bc75",
+      "range": {
+        "startLine": 94,
+        "startChar": 19,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "0b26bc25db4f1032376c91668581e162ea88cb0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "308408cd_8e2ab097",
         "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
         "patchSetId": 14
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "When only some sensors are active, partial motion data will be sent to the blink side. And if in the future, other sensors are active after the DeviceMotionEventPump::SensorEntry::OnSensorCreated() callback, more motion data will be sent. By doing that, we don\u0027t need to wait until three sensors are all checked, and the DeviceMotionEventPump can be started as soon as there is at least one sensor that can provide data.\n\nI think this behavior follows the DeviceOrientation Event spec, since it is a similar situation that some sensors are not available and device motion spec allows that:\nhttps://cs.chromium.org/chromium/src/device/sensors/android/java/src/org/chromium/device/sensors/DeviceSensors.java?l\u003d188",
       "parentUuid": "308408cd_8e2ab097",
+      "revId": "0b26bc25db4f1032376c91668581e162ea88cb0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184b036e_2ee351dc",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-07T14:47:00Z",
+      "side": 1,
+      "message": "I think we need to fire only when all possible data can be provided (i.e. wait for all available sensors). This is also how it is implemented now. Otherwise it\u0027s hard for the developer to know if the data can be provided at all or may (suddenly) become available in future events.\n\nThat said I think your implementation actually does the right thing due to \"SensorSharedBuffersready()\" and does not start the pump until *all* shared memory buffers have been initialized (or sensors have failed). I could be missing something though.. wdyt?",
+      "parentUuid": "7c6f1214_4d9cf6e5",
       "revId": "0b26bc25db4f1032376c91668581e162ea88cb0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

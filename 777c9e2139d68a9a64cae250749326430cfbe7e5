@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f943504b_a1d956d3",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-07T14:47:00Z",
+      "side": 1,
+      "message": "I guess you mean \"after the SendStartMessage() is called and before the OnSensorCreated callback has been executed\"..?",
+      "range": {
+        "startLine": 234,
+        "startChar": 79,
+        "endLine": 234,
+        "endChar": 0
+      },
+      "revId": "777c9e2139d68a9a64cae250749326430cfbe7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
