@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d18dc26_87cc81d9",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-08-07T21:13:13Z",
+      "side": 1,
+      "message": "When the bar is configured to be at the top, then it should consume the scroll *before* and *instead* of the normal root layer scroll (leaving the remaining delta if any to scroll the root layer).  It looks like your code is only correct for bottom controls.  You can set \"Chrome Home\" to false in chrome://flags (or disable the flag in the code) for testing this case.",
+      "revId": "bc84dc93ea9137f6ccca0a5741d6b63ea746e155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
