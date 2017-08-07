@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1c566c09_d76de39e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T11:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae7c06ea_62a76c6c",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d67267e_5ac97510",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59780fa7_65b3fbd4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T11:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d67267e_5ac97510",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3095de63_9da7a6f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T11:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fb76472_03eab83a",
+      "range": {
+        "startLine": 11,
+        "startChar": 30,
+        "endLine": 11,
+        "endChar": 46
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef849722_99650fb6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d5f5b27_07dd8cc9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T11:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef849722_99650fb6",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d8ebf0ea_27fa4a33",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T11:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb644697_dcfcd559",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 20
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d23c8277_9c96c4a0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621dcdf9_f559295c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T11:59:45Z",
+      "side": 1,
+      "message": "Used asserts instead of throwing exceptions as suggested by msarda@.",
+      "parentUuid": "d23c8277_9c96c4a0",
+      "range": {
+        "startLine": 77,
+        "startChar": 26,
+        "endLine": 77,
+        "endChar": 42
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "245f37d0_74b030fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T11:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fadac966_d3fe118f",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 79
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33c7558b_f51e7237",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 8
@@ -183,6 +351,30 @@
       "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a208db60_e4958414",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T11:59:45Z",
+      "side": 1,
+      "message": "Used asserts instead of throwing exceptions as suggested by msarda@.",
+      "parentUuid": "33c7558b_f51e7237",
+      "range": {
+        "startLine": 116,
+        "startChar": 26,
+        "endLine": 116,
+        "endChar": 42
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "abac7b6b_42949948",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T11:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c71b521_bf149e35",
+      "range": {
+        "startLine": 226,
+        "startChar": 17,
+        "endLine": 226,
+        "endChar": 24
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14ab27fe_b8889492",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 8
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "4afc1ed6_f7d5817b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T11:59:45Z",
+      "side": 1,
+      "message": "Used asserts instead of throwing exceptions as suggested by msarda@.",
+      "parentUuid": "14ab27fe_b8889492",
+      "range": {
+        "startLine": 242,
+        "startChar": 26,
+        "endLine": 242,
+        "endChar": 42
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6414b96a_58239b6b",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 8
@@ -252,6 +492,30 @@
       "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ab8b8c_d43ecfdb",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-07T11:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6414b96a_58239b6b",
+      "range": {
+        "startLine": 1292,
+        "startChar": 21,
+        "endLine": 1292,
+        "endChar": 59
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
