@@ -302,6 +302,15 @@ bool ContextMenuClient::ShowContextMenu(const ContextMenu* default_menu,
           data.selected_text = text;
           data.edit_flags |= WebContextMenuData::kCanCopy;
         }
+        if (plugin->Plugin()->CanEditText()) {
+          data.is_editable = true;
+          if (!data.selected_text.IsEmpty())
+            data.edit_flags |= WebContextMenuData::kCanCut;
+          data.edit_flags |= WebContextMenuData::kCanPaste;
+          // Temporariliy disable SelectAll command until implemented for pepper
+          // plugins.
+          data.edit_flags &= ~WebContextMenuData::kCanSelectAll;
+        }
         data.edit_flags &= ~WebContextMenuData::kCanTranslate;
         data.link_url = plugin->Plugin()->LinkAtPosition(data.mouse_position);
         if (plugin->Plugin()->SupportsPaginatedPrint())
@@ -313,7 +322,10 @@ bool ContextMenuClient::ShowContextMenu(const ContextMenu* default_menu,
         data.media_flags |= WebContextMenuData::kMediaCanSave;
 
         // Add context menu commands that are supported by the plugin.
-        if (plugin->Plugin()->CanRotateView())
+        // Only show rotate view options if focus is not in an editable text
+        // area.
+        if (plugin->Plugin()->CanRotateView() &&
+            !plugin->Plugin()->CanEditText())
           data.media_flags |= WebContextMenuData::kMediaCanRotate;
       }
     }
