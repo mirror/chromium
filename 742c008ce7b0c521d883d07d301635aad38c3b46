@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3946830_77891f14",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-07T04:03:58Z",
+      "side": 1,
+      "message": "This test is kind of silly and is just moved from ServiceWorkerDispatcherTest, which no longer has to do with setting the registration.\n\nIt\u0027s just testing that SWProviderContext owns the unique_ptrs being passed to it.\n\nA maybe better test would be to test that ServiceWorkerNetworkProvider ctor takes ownership of the infos passed in the Mojo interface. But that would require changing the ctor to take a ThreadSafeSender param which seems like more trouble that it\u0027s worth.",
+      "revId": "742c008ce7b0c521d883d07d301635aad38c3b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
