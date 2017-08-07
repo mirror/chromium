@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2dd9deeb_67d06dfd",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd457ed4_8c9c27b7",
+      "range": {
+        "startLine": 690,
+        "startChar": 8,
+        "endLine": 690,
+        "endChar": 34
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b801013_4aa6f37f",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "12d69a1d_95a865ce",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b801013_4aa6f37f",
+      "range": {
+        "startLine": 691,
+        "startChar": 23,
+        "endLine": 691,
+        "endChar": 34
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7469e352_51fada25",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-04T22:18:10Z",
       "side": 1,
       "message": "s/bool/BOOL in Objective-C code.",
+      "range": {
+        "startLine": 1260,
+        "startChar": 29,
+        "endLine": 1260,
+        "endChar": 33
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75cfeb50_cfb3bb9f",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "C++ bool is required for the feature_engagement::Tracker object.",
+      "parentUuid": "7469e352_51fada25",
       "range": {
         "startLine": 1260,
         "startChar": 29,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5ec545bf_5e39c735",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce94d5e0_3ebb2d02",
+      "range": {
+        "startLine": 1261,
+        "startChar": 27,
+        "endLine": 1261,
+        "endChar": 37
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6f02bda_3062a4a2",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152af098_ec9153c0",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6f02bda_3062a4a2",
+      "range": {
+        "startLine": 1267,
+        "startChar": 33,
+        "endLine": 1267,
+        "endChar": 51
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "a65334df_c51374ba",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fa7eac6_87299fe1",
+      "range": {
+        "startLine": 2011,
+        "startChar": 2,
+        "endLine": 2011,
+        "endChar": 4
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "022dc45c_f708c111",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2017-08-04T22:18:10Z",
       "side": 1,
       "message": "Can\u0027t you get the tracker outside of the block and just use it directly in the block? No need for weak/strong then.",
+      "range": {
+        "startLine": 2019,
+        "startChar": 42,
+        "endLine": 2019,
+        "endChar": 60
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2d2d49_7794ca8c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2019,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "How will ownership of that work? The feature_engagement::Tracker object is stored in the ChromeBrowserState as a raw pointer and is cleaned up when the ChromeBrowserState goes through the first phase of its initialization. If the BrowserViewController is deallocated, then weakSelf will be nil and the block will return early. If we store the tracker object, does that run the risk of the ChromeBrowserState being freed thus freeing the feature_engagement::Tracker?",
+      "parentUuid": "022dc45c_f708c111",
       "range": {
         "startLine": 2019,
         "startChar": 42,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "5a2a6ba5_2c84f2d4",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4b7c4c_70728a6a",
+      "range": {
+        "startLine": 18,
+        "startChar": 52,
+        "endLine": 18,
+        "endChar": 79
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b44ec146_9a6b9386",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.h",
         "patchSetId": 3
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "bf0b580d_04385a85",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b44ec146_9a6b9386",
+      "range": {
+        "startLine": 40,
+        "startChar": 45,
+        "endLine": 40,
+        "endChar": 62
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23ffbc56_a5aa038a",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.h",
         "patchSetId": 3
@@ -220,6 +436,30 @@
       "writtenOn": "2017-08-04T22:18:10Z",
       "side": 1,
       "message": "If the dismissal is animated, when is the dismissal callback called?",
+      "range": {
+        "startLine": 54,
+        "startChar": 3,
+        "endLine": 54,
+        "endChar": 6
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f075de4_200fb7de",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Currently, the dismissal callback is called immediately regardless of whether it is animated or not. The BubbleViewController does not expose a way to determine when the animation completes. Would it be better to update -[BubbleViewController dismissAnimated:] to include a callback run on completion (similar to +[UIView animateWithDuration:]) so the presenter\u0027s |dismissalBlock| is guaranteed to run after the animation is complete (if animated).",
+      "parentUuid": "23ffbc56_a5aa038a",
       "range": {
         "startLine": 54,
         "startChar": 3,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "86dd84fe_7be6ef56",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5553378f_fd375a6a",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 13
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5212897_a26444f8",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
         "patchSetId": 3
@@ -275,6 +539,30 @@
       "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a55984d_75287ca1",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5212897_a26444f8",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "9c7b7391_5953f610",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de0ae4d7_65a65e03",
+      "range": {
+        "startLine": 96,
+        "startChar": 9,
+        "endLine": 96,
+        "endChar": 34
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d281e78_0b50217c",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
         "patchSetId": 3
@@ -312,6 +624,30 @@
       "writtenOn": "2017-08-04T22:18:10Z",
       "side": 1,
       "message": "Is there going to be something else added to this method later?",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 23
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176603ec_9673afad",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Yes, soon this method and -tapOutsideBubbleRecognized will track UMA metrics.",
+      "parentUuid": "9d281e78_0b50217c",
       "range": {
         "startLine": 115,
         "startChar": 8,
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "dbb7bdf2_2d69b76f",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "345486a3_17c22760",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 28
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8d75efc_9890f588",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
         "patchSetId": 3
@@ -367,6 +727,30 @@
       "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5e50b2_69ebfd60",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8d75efc_9890f588",
+      "range": {
+        "startLine": 170,
+        "startChar": 32,
+        "endLine": 170,
+        "endChar": 35
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "2e252616_b078180c",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b71d461f_b01c5a3f",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 8
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99da36cb_847309fa",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
         "patchSetId": 3
@@ -413,6 +821,30 @@
       "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c77655_2ef41adc",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99da36cb_847309fa",
+      "range": {
+        "startLine": 199,
+        "startChar": 3,
+        "endLine": 199,
+        "endChar": 16
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "bdea824c_d5737b16",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c99b628_455e0d7b",
+      "range": {
+        "startLine": 204,
+        "startChar": 3,
+        "endLine": 204,
+        "endChar": 7
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41d3e0d3_cfd38cb0",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
         "patchSetId": 3
@@ -459,6 +915,30 @@
       "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b780c1_7fbd8c16",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-07T16:57:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41d3e0d3_cfd38cb0",
+      "range": {
+        "startLine": 210,
+        "startChar": 3,
+        "endLine": 210,
+        "endChar": 12
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
