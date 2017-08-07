@@ -8,10 +8,12 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
+#include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
 #include "remoting/host/audio_capturer.h"
 #include "remoting/host/client_session_control.h"
 #include "remoting/host/desktop_capturer_proxy.h"
+#include "remoting/host/file_proxy_wrapper_linux.h"
 #include "remoting/host/input_injector.h"
 #include "remoting/host/mouse_cursor_monitor_proxy.h"
 #include "remoting/host/screen_controls.h"
@@ -53,6 +55,13 @@ std::unique_ptr<webrtc::MouseCursorMonitor>
 BasicDesktopEnvironment::CreateMouseCursorMonitor() {
   return base::MakeUnique<MouseCursorMonitorProxy>(video_capture_task_runner_,
                                                    desktop_capture_options());
+}
+
+std::unique_ptr<FileProxyWrapper>
+BasicDesktopEnvironment::CreateFileProxyWrapper() {
+  return base::WrapUnique(
+      new FileProxyWrapperLinux(base::CreateSingleThreadTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND})));
 }
 
 std::string BasicDesktopEnvironment::GetCapabilities() const {

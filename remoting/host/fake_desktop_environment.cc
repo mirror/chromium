@@ -96,6 +96,11 @@ FakeDesktopEnvironment::CreateMouseCursorMonitor() {
   return base::MakeUnique<FakeMouseCursorMonitor>();
 }
 
+std::unique_ptr<FileProxyWrapper>
+FakeDesktopEnvironment::CreateFileProxyWrapper() {
+  return nullptr;
+}
+
 std::string FakeDesktopEnvironment::GetCapabilities() const {
   return std::string();
 }

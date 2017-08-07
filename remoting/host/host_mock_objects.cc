@@ -46,6 +46,11 @@ MockDesktopEnvironment::CreateMouseCursorMonitor() {
   return base::WrapUnique(CreateMouseCursorMonitorPtr());
 }
 
+std::unique_ptr<FileProxyWrapper>
+MockDesktopEnvironment::CreateFileProxyWrapper() {
+  return base::WrapUnique(CreateFileProxyWrapperPtr());
+}
+
 MockDesktopEnvironmentFactory::MockDesktopEnvironmentFactory() {}
 
 MockDesktopEnvironmentFactory::~MockDesktopEnvironmentFactory() {}
