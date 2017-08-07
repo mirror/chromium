@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b905b33d_8c987ce3",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-07T19:09:16Z",
+      "side": 1,
+      "message": "nit: reduce this comment to \"This is a struct for accelerator keys.\" as you have the comments below",
+      "revId": "68d785c600baacd9e570dfa30690f5793247b779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b23e3d_d6b86f4f",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-07T19:09:16Z",
+      "side": 1,
+      "message": "nit: s/in chromium side/by the focus manager/",
+      "revId": "68d785c600baacd9e570dfa30690f5793247b779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
