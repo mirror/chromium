@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "602af045_e61208d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-07T18:11:53Z",
+      "side": 1,
+      "message": "Nit: Replace the extra space with a period.",
+      "revId": "2131fe8a0700217bcc6de4abc188f5f3f53dc21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b21548_7b42f755",
+        "filename": "net/http/transport_security_state_static.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 33315,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-07T18:11:53Z",
+      "side": 1,
+      "message": "I\u0027m slowly moving bulk entries out of this section. Could you add it to the bottom of the manual section using the same indentation and line break layout as similar entries?",
+      "revId": "2131fe8a0700217bcc6de4abc188f5f3f53dc21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca38fce5_a6fe6497",
+        "filename": "net/http/transport_security_state_static.pins",
+        "patchSetId": 2
+      },
+      "lineNbr": 1555,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-07T18:11:53Z",
+      "side": 1,
+      "message": "Please add a comment with a (secure) link documenting the source of this intermediate.",
+      "revId": "2131fe8a0700217bcc6de4abc188f5f3f53dc21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ded803_beb5b274",
+        "filename": "net/http/transport_security_state_static.pins",
+        "patchSetId": 2
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-07T18:11:53Z",
+      "side": 1,
+      "message": "Please add a comment with a (secure) link documenting the source of this intermediate.",
+      "revId": "2131fe8a0700217bcc6de4abc188f5f3f53dc21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
