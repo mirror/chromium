@@ -127,7 +127,7 @@ void TrayBubbleView::Delegate::OnMouseEnteredView() {}
 
 void TrayBubbleView::Delegate::OnMouseExitedView() {}
 
-void TrayBubbleView::Delegate::RegisterAccelerators(
+void TrayBubbleView::Delegate::RegisterPriorityAccelerators(
     const std::vector<ui::Accelerator>& accelerators,
     TrayBubbleView* tray_bubble_view) {}
 
@@ -213,7 +213,7 @@ void TrayBubbleView::InitializeAndShowBubble() {
   // events for activating the view or closing it. TrayBubbleView expects that
   // those accelerators are registered at the global level.
   if (delegate_ && !CanActivate()) {
-    delegate_->RegisterAccelerators(
+    delegate_->RegisterPriorityAccelerators(
         {ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE),
          ui::Accelerator(ui::VKEY_TAB, ui::EF_NONE),
          ui::Accelerator(ui::VKEY_TAB, ui::EF_SHIFT_DOWN)},
@@ -391,16 +391,11 @@ bool TrayBubbleView::AcceleratorPressed(const ui::Accelerator& accelerator) {
   if (accelerator == ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE)) {
     CloseBubbleView();
     return true;
-  }
-
-  if (accelerator == ui::Accelerator(ui::VKEY_TAB, ui::EF_NONE) ||
-      accelerator == ui::Accelerator(ui::VKEY_TAB, ui::EF_SHIFT_DOWN)) {
-    ui::KeyEvent key_event(
-        accelerator.key_state() == ui::Accelerator::KeyState::PRESSED
-            ? ui::EventType::ET_KEY_PRESSED
-            : ui::EventType::ET_KEY_RELEASED,
-        accelerator.key_code(), accelerator.modifiers());
-    ActivateAndStartNavigation(key_event);
+  } else if (accelerator == ui::Accelerator(ui::VKEY_TAB, ui::EF_NONE)) {
+    ActivateAndStartNavigation(false /* reverse */);
+    return true;
+  } else if (accelerator == ui::Accelerator(ui::VKEY_TAB, ui::EF_SHIFT_DOWN)) {
+    ActivateAndStartNavigation(true /* reverse */);
     return true;
   }
 
@@ -427,12 +422,12 @@ void TrayBubbleView::CloseBubbleView() {
   delegate_->HideBubble(this);
 }
 
-void TrayBubbleView::ActivateAndStartNavigation(const ui::KeyEvent& key_event) {
+void TrayBubbleView::ActivateAndStartNavigation(bool reverse) {
   // No need to explicitly activate the widget. FocusManager will activate it if
   // necessary.
   set_can_activate(true);
-
-  if (!GetWidget()->GetFocusManager()->OnKeyEvent(key_event) && delegate_) {
+  GetWidget()->GetFocusManager()->AdvanceFocus(reverse);
+  if (delegate_) {
     // No need to handle accelerators by TrayBubbleView after focus has moved to
     // the widget. The focused view will handle focus traversal.
     // FocusManager::OnKeyEvent returns false when it consumes a key event.

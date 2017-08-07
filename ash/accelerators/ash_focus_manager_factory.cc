@@ -30,4 +30,10 @@ bool AshFocusManagerFactory::Delegate::ProcessAccelerator(
   return controller && controller->Process(accelerator);
 }
 
+bool AshFocusManagerFactory::Delegate::HasPriorityHandler(
+    const ui::Accelerator& accelerator) {
+  AcceleratorController* controller = Shell::Get()->accelerator_controller();
+  return controller && controller->HasPriorityHandler(accelerator);
+}
+
 }  // namespace ash

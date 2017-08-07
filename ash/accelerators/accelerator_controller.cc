@@ -754,6 +754,13 @@ void AcceleratorController::Register(
       accelerators, ui::AcceleratorManager::kNormalPriority, target);
 }
 
+void AcceleratorController::RegisterPriorityHandlers(
+    const std::vector<ui::Accelerator>& accelerators,
+    ui::AcceleratorTarget* target) {
+  accelerator_manager_->Register(accelerators,
+                                 ui::AcceleratorManager::kHighPriority, target);
+}
+
 void AcceleratorController::Unregister(const ui::Accelerator& accelerator,
                                        ui::AcceleratorTarget* target) {
   accelerator_manager_->Unregister(accelerator, target);
@@ -761,6 +768,11 @@ void AcceleratorController::Unregister(const ui::Accelerator& accelerator,
 
 void AcceleratorController::UnregisterAll(ui::AcceleratorTarget* target) {
   accelerator_manager_->UnregisterAll(target);
+}
+
+bool AcceleratorController::HasPriorityHandler(
+    const ui::Accelerator& accelerator) {
+  return accelerator_manager_->HasPriorityHandler(accelerator);
 }
 
 bool AcceleratorController::IsActionForAcceleratorEnabled(
