@@ -191,6 +191,9 @@ void ArcImeService::OnWindowFocused(aura::Window* gained_focus,
                                     aura::Window* lost_focus) {
   if (lost_focus == gained_focus)
     return;
+  LOG(ERROR) << lost_focus << " == " << gained_focus;
+  LOG(ERROR) << (lost_focus ? lost_focus->GetName() : "NULL")
+             << " == " << (gained_focus ? gained_focus->GetName() : "NULL");
 
   const bool detach = (lost_focus && focused_arc_window_ == lost_focus);
   const bool attach =

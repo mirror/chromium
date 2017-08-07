@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "ash/test/ash_test_suite.h"
 #include "base/bind.h"
 #include "base/path_service.h"
 #include "base/test/launcher/unit_test_launcher.h"
@@ -14,25 +15,23 @@
 
 namespace {
 
-class UiArcTestSuite : public base::TestSuite {
+class UiArcTestSuite : public ash::AshTestSuite {
  public:
-  UiArcTestSuite(int argc, char** argv) : base::TestSuite(argc, argv) {}
+  UiArcTestSuite(int argc, char** argv) : ash::AshTestSuite(argc, argv) {}
 
  protected:
   void Initialize() override {
-    base::TestSuite::Initialize();
-    gl::GLSurfaceTestSupport::InitializeOneOff();
+    ash::AshTestSuite::Initialize();
 
     // To use resource bundles
-    ui::RegisterPathProvider();
-    base::FilePath ui_test_pak_path;
-    ASSERT_TRUE(PathService::Get(ui::UI_TEST_PAK, &ui_test_pak_path));
-    ui::ResourceBundle::InitSharedInstanceWithPakPath(ui_test_pak_path);
+    // base::FilePath ui_test_pak_path;
+    // ASSERT_TRUE(PathService::Get(ui::UI_TEST_PAK, &ui_test_pak_path));
+    // ui::ResourceBundle::InitSharedInstanceWithPakPath(ui_test_pak_path);
   }
 
   void Shutdown() override {
-    ui::ResourceBundle::CleanupSharedInstance();
-    base::TestSuite::Shutdown();
+    // ui::ResourceBundle::CleanupSharedInstance();
+    ash::AshTestSuite::Shutdown();
   }
 
  private:
