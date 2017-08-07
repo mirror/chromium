@@ -1374,19 +1374,20 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, PageStopLoading) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   // Navigate to about:blank first so we can make sure there is a target page we
-  // can attach to, and have Network.setRequestInterceptionEnabled complete
+  // can attach to, and have Network.setInterceptRequestsEnabled complete
   // before we start the navigations we're interested in.
   NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
   Attach();
 
   std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+
   params->SetBoolean("enabled", true);
-  SendCommand("Network.setRequestInterceptionEnabled", std::move(params), true);
+  SendCommand("Network.setInterceptRequestsEnabled", std::move(params), true);
 
   LoadFinishedObserver load_finished_observer(shell()->web_contents());
 
   // The page will try to navigate twice, however since
-  // Network.setRequestInterceptionEnabled is true,
+  // Network.setInterceptRequestsEnabled is catching,
   // it'll wait for confirmation before committing to the navigation.
   GURL test_url = embedded_test_server()->GetURL(
       "/devtools/control_navigations/meta_tag.html");
@@ -1403,14 +1404,15 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, ControlNavigationsMainFrame) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   // Navigate to about:blank first so we can make sure there is a target page we
-  // can attach to, and have Network.setRequestInterceptionEnabled complete
+  // can attach to, and have Network.setInterceptRequestsEnabled complete
   // before we start the navigations we're interested in.
   NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
   Attach();
 
   std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+
   params->SetBoolean("enabled", true);
-  SendCommand("Network.setRequestInterceptionEnabled", std::move(params), true);
+  SendCommand("Network.setInterceptRequestsEnabled", std::move(params), true);
 
   NavigationFinishedObserver navigation_finished_observer(
       shell()->web_contents());
@@ -1453,14 +1455,15 @@ IN_PROC_BROWSER_TEST_F(IsolatedDevToolsProtocolTest,
   ASSERT_TRUE(embedded_test_server()->Start());
 
   // Navigate to about:blank first so we can make sure there is a target page we
-  // can attach to, and have Network.setRequestInterceptionEnabled complete
+  // can attach to, and have Network.setInterceptRequestsEnabled complete
   // before we start the navigations we're interested in.
   NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
   Attach();
 
   std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+
   params->SetBoolean("enabled", true);
-  SendCommand("Network.setRequestInterceptionEnabled", std::move(params), true);
+  SendCommand("Network.setInterceptRequestsEnabled", std::move(params), true);
 
   NavigationFinishedObserver navigation_finished_observer(
       shell()->web_contents());

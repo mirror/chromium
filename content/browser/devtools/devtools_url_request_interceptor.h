@@ -158,6 +158,8 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
     std::string GetIdForRequest(const net::URLRequest* request,
                                 bool* is_redirect);
 
+    bool HasPatternMatch(const std::string& input);
+
     // Returns a WeakPtr to the DevToolsURLInterceptorRequestJob corresponding
     // to |interception_id|.  Must be called on the IO thread.
     DevToolsURLInterceptorRequestJob* GetJob(

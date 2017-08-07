@@ -894,8 +894,8 @@ class HeadlessDevToolsNavigationControlTest
     devtools_client_->GetNetwork()->Enable();
     devtools_client_->GetNetwork()
         ->GetExperimental()
-        ->SetRequestInterceptionEnabled(
-            headless::network::SetRequestInterceptionEnabledParams::Builder()
+        ->SetInterceptRequestsEnabled(
+            headless::network::SetInterceptRequestsEnabledParams::Builder()
                 .SetEnabled(true)
                 .Build());
     devtools_client_->GetPage()->Navigate(
@@ -1386,8 +1386,8 @@ class FailedUrlRequestTest : public HeadlessAsyncDevTooledBrowserTest,
     devtools_client_->GetNetwork()->Enable();
     devtools_client_->GetNetwork()
         ->GetExperimental()
-        ->SetRequestInterceptionEnabled(
-            network::SetRequestInterceptionEnabledParams::Builder()
+        ->SetInterceptRequestsEnabled(
+            headless::network::SetInterceptRequestsEnabledParams::Builder()
                 .SetEnabled(true)
                 .Build());
 
@@ -1497,8 +1497,8 @@ class DevtoolsInterceptionWithAuthProxyTest
     devtools_client_->GetNetwork()->Enable();
     devtools_client_->GetNetwork()
         ->GetExperimental()
-        ->SetRequestInterceptionEnabled(
-            network::SetRequestInterceptionEnabledParams::Builder()
+        ->SetInterceptRequestsEnabled(
+            headless::network::SetInterceptRequestsEnabledParams::Builder()
                 .SetEnabled(true)
                 .Build());
 

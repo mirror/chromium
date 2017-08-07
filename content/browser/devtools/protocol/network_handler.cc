@@ -510,7 +510,6 @@ NetworkHandler::NetworkHandler()
     : DevToolsDomainHandler(Network::Metainfo::domainName),
       host_(nullptr),
       enabled_(false),
-      interception_enabled_(false),
       weak_factory_(this) {}
 
 NetworkHandler::~NetworkHandler() {
@@ -541,7 +540,7 @@ Response NetworkHandler::Enable(Maybe<int> max_total_size,
 Response NetworkHandler::Disable() {
   enabled_ = false;
   user_agent_ = std::string();
-  SetRequestInterceptionEnabled(false);
+  SetRequestInterceptionEnabledInternal(false);
   return Response::FallThrough();
 }
 
@@ -859,19 +858,35 @@ std::string NetworkHandler::UserAgentOverride() const {
   return enabled_ ? user_agent_ : std::string();
 }
 
-DispatchResponse NetworkHandler::SetRequestInterceptionEnabled(bool enabled) {
-  if (interception_enabled_ == enabled)
-    return Response::OK();  // Nothing to do.
+DispatchResponse NetworkHandler::SetInterceptRequestsEnabled(
+    bool enabled,
+    Maybe<protocol::Array<String>> newPatterns) {
+  SetRequestInterceptionEnabledInternal(
+      enabled, newPatterns.isJust() ? newPatterns.takeJust() : nullptr);
+  return Response::OK();
+}
 
+void NetworkHandler::SetRequestInterceptionEnabledInternal(
+    bool enabled,
+    std::unique_ptr<protocol::Array<String>> patterns) {
+  request_interception_patterns_.clear();
+  if (enabled) {
+    if (patterns) {
+      for (size_t i = 0; i < patterns->length(); i++)
+        request_interception_patterns_.insert(patterns->get(i));
+    } else {
+      request_interception_patterns_.insert("*");
+    }
+  }
   WebContents* web_contents = WebContents::FromRenderFrameHost(host_);
   if (!web_contents)
-    return Response::OK();
+    return;
 
   DevToolsURLRequestInterceptor* devtools_url_request_interceptor =
       DevToolsURLRequestInterceptor::FromBrowserContext(
           web_contents->GetBrowserContext());
   if (!devtools_url_request_interceptor)
-    return Response::OK();
+    return;
 
   if (enabled) {
     devtools_url_request_interceptor->state()->StartInterceptingRequests(
@@ -882,8 +897,7 @@ DispatchResponse NetworkHandler::SetRequestInterceptionEnabled(bool enabled) {
     navigation_requests_.clear();
     canceled_navigation_requests_.clear();
   }
-  interception_enabled_ = enabled;
-  return Response::OK();
+  return;
 }
 
 namespace {
@@ -993,7 +1007,7 @@ std::unique_ptr<Network::Request> NetworkHandler::CreateRequestFromURLRequest(
 
 std::unique_ptr<NavigationThrottle> NetworkHandler::CreateThrottleForNavigation(
     NavigationHandle* navigation_handle) {
-  if (!interception_enabled_)
+  if (!request_interception_patterns_.size())
     return nullptr;
   std::unique_ptr<NavigationThrottle> throttle(new NetworkNavigationThrottle(
       weak_factory_.GetWeakPtr(), navigation_handle));

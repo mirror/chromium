@@ -184,8 +184,8 @@ void HeadlessShell::DevToolsTargetReady() {
     devtools_client_->GetNetwork()->GetExperimental()->AddObserver(this);
     devtools_client_->GetNetwork()
         ->GetExperimental()
-        ->SetRequestInterceptionEnabled(
-            headless::network::SetRequestInterceptionEnabledParams::Builder()
+        ->SetInterceptRequestsEnabled(
+            headless::network::SetInterceptRequestsEnabledParams::Builder()
                 .SetEnabled(true)
                 .Build());
   }
