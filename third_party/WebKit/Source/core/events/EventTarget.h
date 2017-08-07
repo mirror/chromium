@@ -148,6 +148,7 @@ class CORE_EXPORT EventTarget : public GarbageCollectedFinalized<EventTarget>,
                            const EventListener*,
                            EventListenerOptions&);
   virtual void RemoveAllEventListeners();
+  static HeapHashSet<WeakMember<EventTarget>>& All();
 
   DispatchEventResult DispatchEvent(Event*);
 

@@ -39,6 +39,9 @@ class CORE_EXPORT HTMLFrameElementBase : public HTMLFrameOwnerElement {
   int MarginWidth() const final { return margin_width_; }
   int MarginHeight() const final { return margin_height_; }
 
+  static bool IsDisabled();
+  static void SetDisabled(bool disabled);
+
  protected:
   friend class HTMLFrameElementTest;
   friend class HTMLIFrameElementTest;

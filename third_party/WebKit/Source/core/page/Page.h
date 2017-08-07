@@ -233,6 +233,9 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
     return tab_key_cycles_through_elements_;
   }
 
+  // ScopedPageSuspender helpers.
+  void SetPaused(bool);
+
   // Pausing is used to implement the "Optionally, pause while waiting for
   // the user to acknowledge the message" step of simple dialog processing:
   // https://html.spec.whatwg.org/multipage/webappapis.html#simple-dialogs
@@ -311,9 +314,6 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 
   // SettingsDelegate overrides.
   void SettingsChanged(SettingsDelegate::ChangeType) override;
-
-  // ScopedPageSuspender helpers.
-  void SetPaused(bool);
 
   // Notify |plugins_changed_observers_| that plugins have changed.
   void NotifyPluginsChanged() const;

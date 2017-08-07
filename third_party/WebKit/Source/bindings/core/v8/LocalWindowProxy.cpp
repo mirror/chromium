@@ -64,10 +64,10 @@ namespace blink {
 
 void LocalWindowProxy::DisposeContext(Lifecycle next_status,
                                       FrameReuseStatus frame_reuse_status) {
-  DCHECK(next_status == Lifecycle::kGlobalObjectIsDetached ||
-         next_status == Lifecycle::kFrameIsDetached);
+  //DCHECK(next_status == Lifecycle::kGlobalObjectIsDetached ||
+  //       next_status == Lifecycle::kFrameIsDetached);
 
-  if (lifecycle_ != Lifecycle::kContextIsInitialized)
+  if (lifecycle_ == Lifecycle::kContextIsUninitialized)
     return;
 
   ScriptState::Scope scope(script_state_.Get());
@@ -82,6 +82,7 @@ void LocalWindowProxy::DisposeContext(Lifecycle next_status,
     v8::Local<v8::Context> context = script_state_->GetContext();
     // Clean up state on the global proxy, which will be reused.
     if (!global_proxy_.IsEmpty()) {
+      LOG(ERROR) << "Clean up state on the global proxy, which will be reused.";
       CHECK(global_proxy_ == context->Global());
       CHECK_EQ(ToScriptWrappable(context->Global()),
                ToScriptWrappable(

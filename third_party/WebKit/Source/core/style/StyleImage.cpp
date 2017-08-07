@@ -38,4 +38,12 @@ LayoutSize StyleImage::ImageSizeForSVGImage(
   return ApplyZoom(image_size, multiplier);
 }
 
+static bool s_is_disabled = false;
+bool StyleImage::IsDisabled() {
+  return s_is_disabled;
+}
+void StyleImage::SetDisabled(bool disabled) {
+  s_is_disabled = disabled;
+}
+
 }  // namespace blink
