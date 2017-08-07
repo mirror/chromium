@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c517546b_9b9ac794",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-07T05:38:01Z",
+      "side": 0,
+      "message": "Removed this line because |worker_global_scope_| must be accessed only on the worker thread and already be cleared at WillDestroyWorkerGlobalScope().",
+      "revId": "b4462ce07e8bdffcd21c4934123c5d3df1c98482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
