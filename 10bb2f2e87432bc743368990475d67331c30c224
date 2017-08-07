@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "93881790_ec24e521",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-07T11:09:57Z",
+      "side": 1,
+      "message": "\u003e \u003e Please read the description of this function. I believe it is not suitable case for it. Use default constructor instead.\n\u003e \n\u003e My mistake. Done.\n\nI still see base::EmptyString16()",
+      "parentUuid": "4060d7e8_be35b2e2",
+      "range": {
+        "startLine": 409,
+        "startChar": 39,
+        "endLine": 409,
+        "endChar": 58
+      },
+      "revId": "10bb2f2e87432bc743368990475d67331c30c224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "998719ac_ee839a5d",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
         "patchSetId": 7
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "\u003e What if user typed some leading/trailing spaces? Discuss with Irmak.\n\nI think that the best solution is to get rid of the leading/trailing spaces and, in this way, we can send votes in more cases, e.g. \"  username\", \"   username  \".",
       "parentUuid": "998719ac_ee839a5d",
+      "range": {
+        "startLine": 412,
+        "startChar": 60,
+        "endLine": 412,
+        "endChar": 62
+      },
+      "revId": "10bb2f2e87432bc743368990475d67331c30c224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3008930_a0af6b0b",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-07T11:09:57Z",
+      "side": 1,
+      "message": "\u003e \u003e What if user typed some leading/trailing spaces? Discuss with Irmak.\n\u003e \n\u003e I think that the best solution is to get rid of the leading/trailing spaces and, in this way, we can send votes in more cases, e.g. \"  username\", \"   username  \".\n\nOk, let\u0027s trim whitespaces. Consider base::TrimString for that.",
+      "parentUuid": "02a0d88d_6c93d2cb",
       "range": {
         "startLine": 412,
         "startChar": 60,
@@ -190,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "f9bbbd92_8e62e03d",
+        "filename": "components/autofill/core/common/password_form.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-07T11:09:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d021c5c_8b47bbe3",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 38
+      },
+      "revId": "10bb2f2e87432bc743368990475d67331c30c224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f4dc37f_483fbe58",
         "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
         "patchSetId": 7
@@ -225,6 +297,30 @@
       "side": 1,
       "message": "\u003e Where do you variate |username_edited_in_prompt|? Probably it will always be false. So, only else-branch will always be executed. You should set various values to |match.username_edited_in_prompt| and check what vote type our code uploads.\n\u003e \n\u003e You can variate |username_edited_in_prompt| in this test OR keep it unchanged and set |username_edited_in_prompt| to true in another test.\n\u003e This test is already very complicated, so I believe it is better to add it another case. ProbablyAccountCreationUpload is a good candidate.\n\nI decided to not variate here |username_edited_in_prompt| and to let this test the way it is and to variate it in TestUpdateUsernameToExisting.",
       "parentUuid": "8f4dc37f_483fbe58",
+      "range": {
+        "startLine": 485,
+        "startChar": 8,
+        "endLine": 485,
+        "endChar": 39
+      },
+      "revId": "10bb2f2e87432bc743368990475d67331c30c224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d798255_fda48f46",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-07T11:09:57Z",
+      "side": 1,
+      "message": "\u003e \u003e Where do you variate |username_edited_in_prompt|? Probably it will always be false. So, only else-branch will always be executed. You should set various values to |match.username_edited_in_prompt| and check what vote type our code uploads.\n\u003e \u003e \n\u003e \u003e You can variate |username_edited_in_prompt| in this test OR keep it unchanged and set |username_edited_in_prompt| to true in another test.\n\u003e \u003e This test is already very complicated, so I believe it is better to add it another case. ProbablyAccountCreationUpload is a good candidate.\n\u003e \n\u003e I decided to not variate here |username_edited_in_prompt| and to let this test the way it is and to variate it in TestUpdateUsernameToExisting.\n\nAlright. it is up to you where to test new code. But why do you still need the IF that checks |match.username_edited_in_prompt|? There is nothing related to |username_edited_in_prompt|",
+      "parentUuid": "c90e8481_00a4751c",
       "range": {
         "startLine": 485,
         "startChar": 8,

@@ -25,6 +25,99 @@
     },
     {
       "key": {
+        "uuid": "73af97fb_82d2cb5f",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-07T11:09:57Z",
+      "side": 1,
+      "message": "\u003e I will remove this in the next patch set. I forgot to do it in this patch set.\n\nIt is confusing Madalina :) Please always present a clear version of the code to reviewers. Yeah, exceptions happen (say, you discussed an issues offline and agreed to postpone resolving), but it is better to avoid such exception :)",
+      "parentUuid": "1333d71e_66fcd86d",
+      "range": {
+        "startLine": 409,
+        "startChar": 1,
+        "endLine": 418,
+        "endChar": 3
+      },
+      "revId": "e91173828112588f292c22c7b39200b52238100d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "154cd9af_7820057b",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-07T11:09:57Z",
+      "side": 1,
+      "message": "oh, curly brackets are really needed here.",
+      "range": {
+        "startLine": 473,
+        "startChar": 10,
+        "endLine": 473,
+        "endChar": 11
+      },
+      "revId": "e91173828112588f292c22c7b39200b52238100d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b14472e4_a26e166b",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-07T11:09:57Z",
+      "side": 1,
+      "message": "did we trim spaces for |other_possible_usernames|?",
+      "range": {
+        "startLine": 474,
+        "startChar": 29,
+        "endLine": 474,
+        "endChar": 61
+      },
+      "revId": "e91173828112588f292c22c7b39200b52238100d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83177b6a_f8f6ed93",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-07T11:09:57Z",
+      "side": 1,
+      "message": "curly brackets are needed.",
+      "range": {
+        "startLine": 475,
+        "startChar": 30,
+        "endLine": 475,
+        "endChar": 31
+      },
+      "revId": "e91173828112588f292c22c7b39200b52238100d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95d32a76_9f46aabd",
         "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
         "patchSetId": 9
@@ -36,6 +129,30 @@
       "writtenOn": "2017-08-07T10:16:20Z",
       "side": 1,
       "message": "This test is currently failing. Instead of nullptr, I think it\u0027s expecting the address of the old credentials. I\u0027m not sure, though.",
+      "range": {
+        "startLine": 2394,
+        "startChar": 9,
+        "endLine": 2394,
+        "endChar": 45
+      },
+      "revId": "e91173828112588f292c22c7b39200b52238100d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac02025_fcc20e40",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2394,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-07T11:09:57Z",
+      "side": 1,
+      "message": "\u003e This test is currently failing. Instead of nullptr, I think it\u0027s expecting the address of the old credentials. I\u0027m not sure, though.\n\nTest must output some info. Is it possible what the test complains about?",
+      "parentUuid": "95d32a76_9f46aabd",
       "range": {
         "startLine": 2394,
         "startChar": 9,
