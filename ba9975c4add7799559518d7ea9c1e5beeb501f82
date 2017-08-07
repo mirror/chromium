@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4656b385_c90cf510",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T17:13:06Z",
+      "side": 1,
+      "message": "Nit: If you change the dumpTraceOutput() method below to ignore |sEnabled|, how would you feel about moving |sEnabled \u003d false| to be the first statement after the early-out, similarly to how you did it in enable(...)?",
+      "revId": "ba9975c4add7799559518d7ea9c1e5beeb501f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9db5944_870a4924",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T17:13:06Z",
+      "side": 1,
+      "message": "Sorry for being uninformed here, but could you add some short description of where I find this \"TraceEvent dict\"? Is it a Java class? Is it the base::TraceEvent class? Is it some python dictionary?",
+      "range": {
+        "startLine": 127,
+        "startChar": 63,
+        "endLine": 127,
+        "endChar": 78
+      },
+      "revId": "ba9975c4add7799559518d7ea9c1e5beeb501f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d279167_5fb76c4c",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T17:13:06Z",
+      "side": 1,
+      "message": "Nit: add () at the end, and / or use {@link System#currentTimeMillis()}. Since this is not in a JavaDoc section it might be easier to read it without the @link-stuff.",
+      "range": {
+        "startLine": 134,
+        "startChar": 36,
+        "endLine": 134,
+        "endChar": 42
+      },
+      "revId": "ba9975c4add7799559518d7ea9c1e5beeb501f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12a2efb_eeea3d14",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T17:13:06Z",
+      "side": 1,
+      "message": "This is a private static method, and should not be called by anyone else than disable(). Since this does not have the lock, and the check has already been made, maybe just remove this line?",
+      "revId": "ba9975c4add7799559518d7ea9c1e5beeb501f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a16191_3284a88a",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T17:13:06Z",
+      "side": 1,
+      "message": "If you just pass in sTraceStrings here, wouldn\u0027t toString() be called automatically, so you could remove |json|?",
+      "range": {
+        "startLine": 165,
+        "startChar": 29,
+        "endLine": 165,
+        "endChar": 33
+      },
+      "revId": "ba9975c4add7799559518d7ea9c1e5beeb501f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
