@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7432ba4f_3b0ec1eb",
+        "filename": "components/subresource_filter/core/browser/subresource_filter_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-07T17:19:12Z",
+      "side": 1,
+      "message": "Discussed offline, we need this configuration to be valid for should_suppress_notifications.",
+      "parentUuid": "a7c5510a_126960ab",
+      "revId": "ba4d5ffb7e4c7642660029e2efcab69f2267929e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca5d269f_c7f304f6",
         "filename": "components/subresource_filter/core/browser/subresource_filter_features_unittest.cc",
         "patchSetId": 3
@@ -68,6 +86,24 @@
       "revId": "ba4d5ffb7e4c7642660029e2efcab69f2267929e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1682813f_812f765b",
+        "filename": "components/subresource_filter/core/browser/subresource_filter_features_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-07T17:19:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca5d269f_c7f304f6",
+      "revId": "ba4d5ffb7e4c7642660029e2efcab69f2267929e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
