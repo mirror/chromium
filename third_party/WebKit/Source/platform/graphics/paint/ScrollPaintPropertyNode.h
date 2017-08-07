@@ -81,6 +81,9 @@ class PLATFORM_EXPORT ScrollPaintPropertyNode
     user_scrollable_horizontal_ = user_scrollable_horizontal;
     user_scrollable_vertical_ = user_scrollable_vertical;
     main_thread_scrolling_reasons_ = main_thread_scrolling_reasons;
+    DCHECK(!compositor_element_id ||
+           NamespaceFromCompositorElementId(compositor_element_id) ==
+               CompositorElementIdNamespace::kScroll);
     compositor_element_id_ = compositor_element_id;
     scroll_client_ = scroll_client;
     return true;
@@ -171,7 +174,11 @@ class PLATFORM_EXPORT ScrollPaintPropertyNode
         user_scrollable_vertical_(user_scrollable_vertical),
         main_thread_scrolling_reasons_(main_thread_scrolling_reasons),
         compositor_element_id_(compositor_element_id),
-        scroll_client_(scroll_client) {}
+        scroll_client_(scroll_client) {
+    DCHECK(!compositor_element_id ||
+           NamespaceFromCompositorElementId(compositor_element_id) ==
+               CompositorElementIdNamespace::kScroll);
+  }
 
   IntPoint bounds_offset_;
   IntSize container_bounds_;
