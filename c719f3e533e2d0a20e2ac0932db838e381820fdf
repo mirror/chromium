@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4b78d89_d1b1e548",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-07T09:44:51Z",
+      "side": 1,
+      "message": "Do we support this today?",
+      "revId": "c719f3e533e2d0a20e2ac0932db838e381820fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6458215_fd7e4f8f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_base_fragment_builder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-07T09:44:51Z",
+      "side": 1,
+      "message": "do we need any of the setters?",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 53
+      },
+      "revId": "c719f3e533e2d0a20e2ac0932db838e381820fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
