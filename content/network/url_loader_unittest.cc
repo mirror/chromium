@@ -21,6 +21,7 @@
 #include "net/base/io_buffer.h"
 #include "net/base/mime_sniffer.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "net/test/url_request/url_request_failed_job.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_filter.h"
@@ -124,8 +125,12 @@ class URLLoaderImplTest : public testing::Test {
   URLLoaderImplTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::IO),
-        context_(NetworkContext::CreateForTesting()) {}
-  ~URLLoaderImplTest() override {}
+        context_(NetworkContext::CreateForTesting()) {
+    net::URLRequestFailedJob::AddUrlHandler();
+  }
+  ~URLLoaderImplTest() override {
+    net::URLRequestFilter::GetInstance()->ClearHandlers();
+  }
 
   void SetUp() override {
     test_server_.AddDefaultHandlers(
@@ -133,7 +138,10 @@ class URLLoaderImplTest : public testing::Test {
     ASSERT_TRUE(test_server_.Start());
   }
 
-  void Load(const GURL& url) {
+  void Load(const GURL& url) { EXPECT_EQ(net::OK, LoadWithError(url)); }
+
+  int LoadWithError(const GURL& url) {
+    DCHECK(!ran_);
     mojom::URLLoaderPtr loader;
 
     ResourceRequest request =
@@ -149,9 +157,9 @@ class URLLoaderImplTest : public testing::Test {
                               TRAFFIC_ANNOTATION_FOR_TESTS);
 
     client_.RunUntilComplete();
-    EXPECT_EQ(net::OK, client_.completion_status().error_code);
     DCHECK(!ran_);
     ran_ = true;
+    return client_.completion_status().error_code;
   }
 
   void LoadAndCompareFile(const std::string& path) {
@@ -167,6 +175,18 @@ class URLLoaderImplTest : public testing::Test {
 
     Load(test_server()->GetURL(std::string("/") + path));
     EXPECT_EQ(expected, ReadData(expected.size()));
+    // The file isn't compressed, so both encoded and decoded body lengths
+    // should match the body length.
+    EXPECT_EQ(
+        expected.size(),
+        static_cast<size_t>(client()->completion_status().decoded_body_length));
+    EXPECT_EQ(
+        expected.size(),
+        static_cast<size_t>(client()->completion_status().encoded_body_length));
+    // Over the wire length should include headers, so should be longer.
+    // TODO(mmenke): Worth adding better tests for encoded_data_length?
+    EXPECT_LT(client()->completion_status().encoded_body_length,
+              client()->completion_status().encoded_data_length);
   }
 
   void LoadPackets(std::list<std::string> packets) {
@@ -188,7 +208,11 @@ class URLLoaderImplTest : public testing::Test {
       packets.push_back(second);
     LoadPackets(std::move(packets));
     std::string expected = first + second;
-    CHECK_EQ(expected, ReadData(expected.size()));
+    EXPECT_EQ(expected, ReadData(expected.size()));
+    EXPECT_LE(0, client_.completion_status().decoded_body_length);
+    EXPECT_EQ(
+        expected.size(),
+        static_cast<size_t>(client_.completion_status().decoded_body_length));
   }
 
   net::EmbeddedTestServer* test_server() { return &test_server_; }
@@ -280,6 +304,41 @@ TEST_F(URLLoaderImplTest, SSLSentOnlyWhenRequested) {
   GURL url = https_server.GetURL("/simple_page.html");
   Load(url);
   ASSERT_FALSE(!!ssl_info());
+}
+
+// Test decoded_body_length / encoded_body_length when they're different.
+TEST_F(URLLoaderImplTest, GzipTest) {
+  Load(test_server()->GetURL("/gzip-body?Body"));
+  EXPECT_EQ("Body", ReadData(4));
+  // Deflating a 4-byte string should result in a longer string - main thing to
+  // check here, though, is that the two strings are different.
+  EXPECT_LT(client()->completion_status().decoded_body_length,
+            client()->completion_status().encoded_body_length);
+  // Over the wire length should include headers, so should be longer.
+  EXPECT_LT(client()->completion_status().encoded_body_length,
+            client()->completion_status().encoded_data_length);
+}
+
+TEST_F(URLLoaderImplTest, ErrorBeforeHeaders) {
+  EXPECT_EQ(net::ERR_EMPTY_RESPONSE,
+            LoadWithError(test_server()->GetURL("/close-socket")));
+  EXPECT_FALSE(client()->response_body().is_valid());
+}
+
+TEST_F(URLLoaderImplTest, SyncErrorWhileReadingBody) {
+  EXPECT_EQ(
+      net::ERR_FAILED,
+      LoadWithError(net::URLRequestFailedJob::GetMockHttpUrlWithFailurePhase(
+          net::URLRequestFailedJob::READ_SYNC, net::ERR_FAILED)));
+  EXPECT_EQ("", ReadData(0));
+}
+
+TEST_F(URLLoaderImplTest, AsyncErrorWhileReadingBody) {
+  EXPECT_EQ(
+      net::ERR_FAILED,
+      LoadWithError(net::URLRequestFailedJob::GetMockHttpUrlWithFailurePhase(
+          net::URLRequestFailedJob::READ_ASYNC, net::ERR_FAILED)));
+  EXPECT_EQ("", ReadData(0));
 }
 
 TEST_F(URLLoaderImplTest, DestroyContextWithLiveRequest) {
