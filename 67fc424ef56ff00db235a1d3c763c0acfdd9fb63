@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d77b1f4_b4706b63",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "CBOR allows 64-bit integers. Any reason this is limited to 32?",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 35
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2d05c6_911bd277",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "This is guaranteed since size_t is an unsigned type. Did you mean to check that it\u0027s less than, say, std::numeric_limits\u003csize_t\u003e::max()/2, to avoid overflow in the multiplication below?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 18
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18644c50_665f0c03",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "Could you use checked_cast\u003c\u003e for all conversions in this file, from https://cs.chromium.org/chromium/src/v8/src/base/safe_conversions.h?",
+      "range": {
+        "startLine": 75,
+        "startChar": 17,
+        "endLine": 75,
+        "endChar": 26
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "596e9755_a484fcd2",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "Change the \u0027break\u0027s to \u0027return\u0027s, and add a NOTREACHED() here, I think.",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 1
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c1997c_765e00b9",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "Use `constexpr uint8_t`s instead of #defines.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 7
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d80d4b_a4b9f1ca",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "I think you actually support 0, 2, 3, and 5.",
+      "range": {
+        "startLine": 22,
+        "startChar": 41,
+        "endLine": 22,
+        "endChar": 67
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20d2dab_5f20d0d7",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "\u0026",
+      "range": {
+        "startLine": 32,
+        "startChar": 44,
+        "endLine": 32,
+        "endChar": 45
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65135b0a_7e424e0c",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "Consider putting the type enum at the top level instead of nesting it inside CBORWriter. We\u0027ll need it again for the CBORParser. If you do that, it can be an enum class, which lets you avoid repeating MajorType in the constant names.",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618c703a_d63cf8aa",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/cppguide.html#Enumerator_Names (which isn\u0027t overridden by https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md) says to use CamelCase for the type name, and to prefer kEnumValue for the constants.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9283dfc5_32090730",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "I\u0027d name these with the kind of thing held by the type, rather than the type\u0027s number. So, for example, PosInt, NegInt, ByteString, Utf8String, Array, Map, Tag, and Other. Other examples include https://github.com/WICG/webpackage/blob/master/go/webpack/cbor/cbor.go, and agl@ also wrote a draft parser, which uses:\n\nconstexpr uint8_t kMajorUnsigned \u003d 0;\nconstexpr uint8_t kMajorNegative \u003d 1;\nconstexpr uint8_t kMajorByteString \u003d 2;\nconstexpr uint8_t kMajorString \u003d 3;\nconstexpr uint8_t kMajorArray \u003d 4;\nconstexpr uint8_t kMajorMap \u003d 5;\nconstexpr uint8_t kMajorTag \u003d 6;",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 16
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa3a9611_434fb1a9",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "If you make this a base::StringPiece (https://cs.chromium.org/chromium/src/base/strings/string_piece.h), you can avoid the num_bytes field.\n\nOr make it a std::string, define a function to convert from \"19 03 e8\" to \"\\x19\\x03\\xe8\", and you\u0027ll get somewhat more readable test cases.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0155dd9a_f4bc8357",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "I *think* you can define these structs and test arrays inside their test cases instead of at global scope. I could be wrong though.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ebcd71_29b26274",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "Remove the explicit bound here, and use arraysize(kUintTestCases) from https://cs.chromium.org/chromium/src/base/macros.h?l\u003d34\u0026rcl\u003da53b914728394e3d4b91153070ad948791f1fce2 if you need the size.",
+      "range": {
+        "startLine": 23,
+        "startChar": 41,
+        "endLine": 23,
+        "endChar": 58
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d3b0b6f_25f5c6f8",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f190f96e_55e46828",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "Try\n  for (const UintTestCase\u0026 test_cast : kUintTestCases) {\n    use(test_cast)\n    ...\n  }",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 45
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0af5ef8_8e4cde08",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "EXPECT_THAT(cbor_writer_-\u003eSerialize(), testing::ElementsAreArray(test_case.cbor, test_case.num_bytes));\n\nfrom https://github.com/google/googletest/blob/master/googlemock/docs/CheatSheet.md#container-matchers\n\nIf you make .cbor a string or StringPiece, you\u0027ll use ContainerEq().",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 54
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be46d02e_2e6d3297",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-07T17:00:49Z",
+      "side": 1,
+      "message": "Could you add:\n\nTEST_F(CBORWriterTest, TestWriteNestedMapNotEnoughPairs) {\n  cbor_writer_ \u003d new CBORWriter();\n  cbor_writer_-\u003eWriteMap(5);\n  cbor_writer_-\u003eWriteMap(1);\n  cbor_writer_-\u003eWriteString(\"a\");\n  cbor_writer_-\u003eWriteString(\"A\");\n  EXPECT_DCHECK_DEATH(cbor_writer_-\u003eSerialize().data());\n}\n\n?",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 0
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
