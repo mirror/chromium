@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9221d6b6_9f1c2a0c",
+        "filename": "cc/paint/paint_shader.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-07T16:59:12Z",
+      "side": 1,
+      "message": "Could you name these start_degrees/end_degrees so the units are clear?",
+      "revId": "2582898c391544941fadcfacba47868e2461e269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b6e360_728f5113",
+        "filename": "cc/paint/paint_shader.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-07T16:59:12Z",
+      "side": 1,
+      "message": "Can you serialize these values in PaintOpReader/Writer too?",
+      "revId": "2582898c391544941fadcfacba47868e2461e269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
