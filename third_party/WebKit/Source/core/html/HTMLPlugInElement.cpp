@@ -77,6 +77,7 @@ HTMLPlugInElement::HTMLPlugInElement(
     PreferPlugInsForImagesOption prefer_plug_ins_for_images_option)
     : HTMLFrameOwnerElement(tag_name, doc),
       is_delaying_load_event_(false),
+      did_override_url_(false),
       // m_needsPluginUpdate(!createdByParser) allows HTMLObjectElement to delay
       // EmbeddedContentView updates until after all children are parsed. For
       // HTMLEmbedElement this delay is unnecessary, but it is simpler to make
@@ -351,6 +352,18 @@ v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
   // return the cached allocated Bindings::Instance. Not supporting this
   // edge-case is OK.
   v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
+
+  if (auto* content_frame = ContentFrame()) {
+    // For scenarios such as rendering PDF inside the element, a frame might be
+    // used instead which does not have a PluginView. We should get the
+    // required scriptable object from the LocalFrameClient instead.
+    v8::Local<v8::Object> object =
+        frame->Client()->GetV8ScriptableObjectForPluginFrame(isolate,
+                                                             *content_frame);
+    if (!object.IsEmpty())
+      plugin_wrapper_.Reset(isolate, object);
+  }
+
   if (plugin_wrapper_.IsEmpty()) {
     PluginView* plugin;
 
@@ -500,6 +513,9 @@ HTMLPlugInElement::ObjectContentType HTMLPlugInElement::GetObjectContentType() {
     if (mime_type.IsEmpty())
       return ObjectContentType::kFrame;
   }
+
+  if (did_override_url_)
+    return ObjectContentType::kFrame;
 
   // If Chrome is started with the --disable-plugins switch, pluginData is 0.
   PluginData* plugin_data = GetDocument().GetFrame()->GetPluginData();

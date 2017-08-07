@@ -28,6 +28,7 @@
           "chrome::mojom::WebUITester",
           "contextual_search::mojom::OverlayPageNotifierService",
           "dom_distiller::mojom::DistillerPageNotifierService",
+          "extensions::mime_handler_view::MimeHandlerViewManager",
           "spellcheck::mojom::SpellCheckPanel"
         ]
       }

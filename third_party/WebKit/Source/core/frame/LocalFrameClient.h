@@ -336,6 +336,25 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   // returned if the URL is not overriden.
   virtual KURL OverrideFlashEmbedWithHTML(const KURL&) { return KURL(); }
 
+  // OVerwrites the given URL to redirect the navigation to the corresponding
+  // handler for PDF resources.
+  virtual KURL OverridePDFEmbedWithHTML(const KURL&, const String&) {
+    return KURL();
+  }
+
+  // Returns an object used to implement custom javascript API for an <embed> or
+  // <object>. This is an alternative way to provide custom API for an <embed>
+  // or an <object> element other than instantiating a PluginView. This approach
+  // is used by the PDF viewer in providing the custom postMessage API.
+  // |content_frame| is the content frame for an HTMLPluginElement and
+  // |script_request_id| is a unique ID within the process to help identify the
+  // right handlers of the custom API for the current content frame.
+  virtual v8::Local<v8::Object> GetV8ScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      Frame& content_frame) {
+    return v8::Local<v8::Object>();
+  }
+
   virtual BlameContext* GetFrameBlameContext() { return nullptr; }
 
   virtual service_manager::InterfaceProvider* GetInterfaceProvider() {

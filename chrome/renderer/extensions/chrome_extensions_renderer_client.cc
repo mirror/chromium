@@ -9,6 +9,7 @@
 
 #include "base/command_line.h"
 #include "base/lazy_instance.h"
+#include "base/strings/stringprintf.h"
 #include "chrome/common/chrome_isolated_world_ids.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/extension_constants.h"
@@ -21,6 +22,7 @@
 #include "chrome/renderer/extensions/resource_request_policy.h"
 #include "chrome/renderer/media/cast_ipc_dispatcher.h"
 #include "content/public/common/content_constants.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/renderer/render_thread.h"
 #include "extensions/common/constants.h"
@@ -34,11 +36,13 @@
 #include "extensions/renderer/guest_view/extensions_guest_view_container.h"
 #include "extensions/renderer/guest_view/extensions_guest_view_container_dispatcher.h"
 #include "extensions/renderer/guest_view/mime_handler_view/mime_handler_view_container.h"
+#include "extensions/renderer/mime_handler_view/mime_handler_view_manager.h"
 #include "extensions/renderer/script_context.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebPluginParams.h"
+#include "v8/include/v8.h"
 
 using extensions::Extension;
 
@@ -327,4 +331,27 @@ void ChromeExtensionsRendererClient::RunScriptsAtDocumentEnd(
 void ChromeExtensionsRendererClient::RunScriptsAtDocumentIdle(
     content::RenderFrame* render_frame) {
   extension_dispatcher_->RunScriptsAtDocumentIdle(render_frame);
+}
+
+// static
+GURL ChromeExtensionsRendererClient::GetHandlerURLForPdfResource(
+    const GURL& gurl) {
+  if (!base::FeatureList::IsEnabled(
+          features::kPdfExtensionInOutOfProcessFrame)) {
+    return GURL();
+  }
+  return GURL(
+      base::StringPrintf("%s://%s/index.html?%s", extensions::kExtensionScheme,
+                         extension_misc::kPdfExtensionId, gurl.spec().c_str()));
+}
+
+// static
+v8::Local<v8::Object>
+ChromeExtensionsRendererClient::GetV8ScriptableObjectForPluginFrame(
+    v8::Isolate* isolate,
+    blink::WebFrame* web_frame) {
+  return extensions::MimeHandlerViewManager::Get(
+             content::RenderFrame::FromWebFrame(
+                 web_frame->Parent()->ToWebLocalFrame()))
+      ->GetV8ScriptableObjectForPluginFrame(isolate, web_frame);
 }

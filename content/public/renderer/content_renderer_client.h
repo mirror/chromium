@@ -374,6 +374,15 @@ class CONTENT_EXPORT ContentRendererClient {
   // An empty URL is returned if the URL is not overriden.
   virtual GURL OverrideFlashEmbedWithHTML(const GURL& url);
 
+  // Returns a URL to the handler of the PDF resource at the provided |url|.
+  virtual GURL GetHandlerURLForPdfResource(const GURL& url);
+
+  // Returns an object which wraps the custom scripting API for the plugin
+  // element which owns |frame|.
+  virtual v8::Local<v8::Object> GetV8ScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      blink::WebFrame* frame);
+
   // Provides parameters for initializing the global task scheduler. Default
   // params are used if this returns nullptr.
   virtual std::unique_ptr<base::TaskScheduler::InitParams>
