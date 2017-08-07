@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "47ebb3b1_c423a26c",
+        "filename": "remoting/host/file_transfer_message_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-07T17:26:08Z",
+      "side": 1,
+      "message": "I didn\u0027t know that class existed, I will use it. Thanks for the suggestion!",
+      "parentUuid": "30e97c6e_bf8118bd",
+      "range": {
+        "startLine": 12,
+        "startChar": 42,
+        "endLine": 12,
+        "endChar": 77
+      },
+      "revId": "f0892a3d0126deff5d33aeb43e1a86a0748e1292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47dc8305_59e12fd2",
         "filename": "remoting/host/file_transfer_message_handler.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "584a4d25_21b58466",
+        "filename": "remoting/host/file_transfer_message_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-07T17:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47dc8305_59e12fd2",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "f0892a3d0126deff5d33aeb43e1a86a0748e1292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a688a03d_7769f90e",
         "filename": "remoting/host/file_transfer_message_handler_factory.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "f0892a3d0126deff5d33aeb43e1a86a0748e1292",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b913c11b_39a479c5",
+        "filename": "remoting/host/file_transfer_message_handler_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-07T17:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a688a03d_7769f90e",
+      "range": {
+        "startLine": 19,
+        "startChar": 32,
+        "endLine": 19,
+        "endChar": 57
+      },
+      "revId": "f0892a3d0126deff5d33aeb43e1a86a0748e1292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
