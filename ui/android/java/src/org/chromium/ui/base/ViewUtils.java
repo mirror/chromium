@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.content.browser;
+package org.chromium.ui.base;
 
 import android.view.View;
 
@@ -20,5 +20,16 @@ public final class ViewUtils {
         // If the container view is not focusable, we consider it always focused from
         // Chromium's point of view.
         return !view.isFocusable() ? true : view.hasFocus();
+    }
+
+    /**
+     * Requests focus on the given view.
+     *
+     * @param view A {@link View} to request focus on.
+     */
+    public static void requestFocus(View view) {
+        if (view.isFocusable() && view.isFocusableInTouchMode() && !view.isFocused()) {
+            view.requestFocus();
+        }
     }
 }

@@ -887,15 +887,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         return false;
     }
 
-    @SuppressWarnings("unused")
-    @CalledByNative
-    private void requestFocus() {
-        if (mContainerView.isFocusable() && mContainerView.isFocusableInTouchMode()
-                && !mContainerView.isFocused()) {
-            mContainerView.requestFocus();
-        }
-    }
-
     @VisibleForTesting
     public void sendDoubleTapForTest(long timeMs, int x, int y) {
         if (mNativeContentViewCore == 0) return;
@@ -1675,14 +1666,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     private void onRenderProcessChange() {
         // Immediately sync closed caption settings to the new render process.
         mSystemCaptioningBridge.syncToListener(this);
-    }
-
-    /**
-     * @see View#hasFocus()
-     */
-    @CalledByNative
-    private boolean hasFocus() {
-        return ViewUtils.hasFocus(mContainerView);
     }
 
     /**
