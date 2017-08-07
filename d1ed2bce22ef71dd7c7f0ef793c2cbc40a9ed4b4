@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a10609c5_e4dedd70",
+        "filename": "base/task_runner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-07T13:12:05Z",
+      "side": 1,
+      "message": "So as a non-expert, reading this I am not entirely sure what \"dropped\" means here.\n\n(Or for that matter how errors can happen).",
+      "range": {
+        "startLine": 93,
+        "startChar": 15,
+        "endLine": 93,
+        "endChar": 22
+      },
+      "revId": "d1ed2bce22ef71dd7c7f0ef793c2cbc40a9ed4b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
