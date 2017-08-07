@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "258b8c38_cc59721c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-07T10:37:52Z",
+      "side": 1,
+      "message": "Tiny nit: \"means\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 50,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "9fa98add3743a553722dfae4b9d4c7cc20c90998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b725d9c5_b2795b81",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-07T10:37:52Z",
+      "side": 1,
+      "message": "Nit: \"Avoid\" goes with the gerund, i.e. \"keeping\".",
+      "range": {
+        "startLine": 174,
+        "startChar": 48,
+        "endLine": 174,
+        "endChar": 55
+      },
+      "revId": "9fa98add3743a553722dfae4b9d4c7cc20c90998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5bce38_b6feb95b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-07T10:37:52Z",
+      "side": 1,
+      "message": "Nit: Can you unindent this?",
+      "range": {
+        "startLine": 327,
+        "startChar": 11,
+        "endLine": 327,
+        "endChar": 28
+      },
+      "revId": "9fa98add3743a553722dfae4b9d4c7cc20c90998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68fe1b72_3656a05c",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/FakeMostVisitedSites.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-07T10:37:52Z",
+      "side": 1,
+      "message": "When exactly does this happen? Would it be easier to wrap the calls into this class in runOnUiThreadBlocking instead of thread-jumping inside it?",
+      "range": {
+        "startLine": 37,
+        "startChar": 56,
+        "endLine": 37,
+        "endChar": 96
+      },
+      "revId": "9fa98add3743a553722dfae4b9d4c7cc20c90998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
