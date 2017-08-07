@@ -208,6 +208,13 @@ void AcceleratedStaticBitmapImage::EnsureMailbox() {
   if (texture_holder_->IsMailboxTextureHolder())
     return;
 
+  if (!original_skia_image_) {
+    // To ensure that the texture resource stays alive we only really need
+    // to retain the source SkImage until the mailbox is consumed, but this
+    // works too:
+    RetainOriginalSkImageForCopyOnWrite();
+  }
+
   texture_holder_ =
       WTF::WrapUnique(new MailboxTextureHolder(std::move(texture_holder_)));
 }

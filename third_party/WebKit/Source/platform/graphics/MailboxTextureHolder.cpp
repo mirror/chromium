@@ -23,12 +23,6 @@ void ReleaseTexture(
     std::unique_ptr<gpu::Mailbox> mailbox,
     WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider,
     std::unique_ptr<gpu::SyncToken> sync_token) {
-  if (context_provider) {
-    // Avoid leaking mailboxes in cases where the texture gets recycled by skia.
-    context_provider->ContextProvider()
-        ->ContextGL()
-        ->ProduceTextureDirectCHROMIUM(0, GL_TEXTURE_2D, mailbox->name);
-  }
   if (!is_converted_from_skia_texture && texture_id && context_provider) {
     context_provider->ContextProvider()->ContextGL()->WaitSyncTokenCHROMIUM(
         sync_token->GetData());
@@ -66,27 +60,12 @@ MailboxTextureHolder::MailboxTextureHolder(
   DCHECK(image);
   size_ = IntSize(image->width(), image->height());
 
-  if (!ContextProvider())
+  if (!ContextProviderWrapper())
     return;
 
-  gpu::gles2::GLES2Interface* gl = ContextProvider()->ContextGL();
-  GrContext* gr = ContextProvider()->GetGrContext();
-  DCHECK(gl);  // IsValid() check above should guarantee this
-  DCHECK(gr);
-  GLuint texture_id_ =
-      skia::GrBackendObjectToGrGLTextureInfo(image->getTextureHandle(true))
-          ->fID;
-  gl->BindTexture(GL_TEXTURE_2D, texture_id_);
+  ContextProviderWrapper()->Utils()->GetMailboxForSkImage(mailbox_, sync_token_,
+                                                          image);
 
-  gl->GenMailboxCHROMIUM(mailbox_.name);
-  gl->ProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox_.name);
-  const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
-  gl->Flush();
-  gl->GenSyncTokenCHROMIUM(fence_sync, sync_token_.GetData());
-
-  gl->BindTexture(GL_TEXTURE_2D, 0);
-  // We changed bound textures in this function, so reset the GrContext.
-  gr->resetContext(kTextureBinding_GrGLBackendState);
   InitCommon();
 }
 
