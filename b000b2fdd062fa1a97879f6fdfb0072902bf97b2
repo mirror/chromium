@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6bdf6ec_36569d52",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache-invalidation-by-header.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-07T05:57:59Z",
+      "side": 1,
+      "message": "You can use xhr.onload instead of xhr.onreadystatechange + readystatechange check.",
+      "revId": "b000b2fdd062fa1a97879f6fdfb0072902bf97b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd9d896_eb5f7373",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache-invalidation-by-header.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-07T05:57:59Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 29,
+        "startChar": 12,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "b000b2fdd062fa1a97879f6fdfb0072902bf97b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc26ff67_1ee52fc2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache-invalidation-by-header.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-07T05:57:59Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 29,
+        "startChar": 12,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "b000b2fdd062fa1a97879f6fdfb0072902bf97b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3a1465_0030462e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache-invalidation-by-header.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-07T05:57:59Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "b000b2fdd062fa1a97879f6fdfb0072902bf97b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da608f5_6d77390b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-preflight-cache-invalidation.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-07T05:57:59Z",
+      "side": 1,
+      "message": "This is for a failure case, so you don\u0027t need to set these two headers, I think.",
+      "revId": "b000b2fdd062fa1a97879f6fdfb0072902bf97b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18b7102_3898dcf0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-preflight-cache-invalidation.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-07T05:57:59Z",
+      "side": 1,
+      "message": "Should this be \n\nelse:\n  fail(...)\n\n?",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "b000b2fdd062fa1a97879f6fdfb0072902bf97b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
