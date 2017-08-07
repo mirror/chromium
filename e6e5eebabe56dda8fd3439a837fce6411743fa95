@@ -22,6 +22,30 @@
       "revId": "e6e5eebabe56dda8fd3439a837fce6411743fa95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ed063f_9de72dd2",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10191,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-07T15:54:48Z",
+      "side": 1,
+      "message": "Oversight; Scott only recently got the Debug bot to actually build, so I keep forgetting to update it in these files. :-S",
+      "parentUuid": "1bd12da0_0a2b35a2",
+      "range": {
+        "startLine": 10191,
+        "startChar": 15,
+        "endLine": 10191,
+        "endChar": 19
+      },
+      "revId": "e6e5eebabe56dda8fd3439a837fce6411743fa95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
