@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0601f928_178facc1",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-07T20:29:32Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you check web_plugin_-\u003eCanEditText() ?",
+      "range": {
+        "startLine": 850,
+        "startChar": 32,
+        "endLine": 850,
+        "endChar": 35
+      },
+      "revId": "45cab56346d2cf187f3ded43d2bfb8908cf3f34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0dd8f5_bd89a1d8",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-07T20:29:32Z",
+      "side": 1,
+      "message": "Could you make the following \u0027if\u0027 statement an \u0027else if\u0027 since not all code paths above return?",
+      "range": {
+        "startLine": 861,
+        "startChar": 5,
+        "endLine": 861,
+        "endChar": 0
+      },
+      "revId": "45cab56346d2cf187f3ded43d2bfb8908cf3f34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad47c03_fc4866dc",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-07T20:29:32Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 866,
+        "startChar": 41,
+        "endLine": 866,
+        "endChar": 59
+      },
+      "revId": "45cab56346d2cf187f3ded43d2bfb8908cf3f34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
