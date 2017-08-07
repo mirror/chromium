@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f949f9e7_f4c92031",
+        "filename": "components/arc/arc_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-07T18:35:33Z",
+      "side": 1,
+      "message": "Please get a local owner here. My initial reaction is why do we need two variants, but then I\u0027m not familiar with this code.",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 19
+      },
+      "revId": "d870c0e98d5d1d0c63a4445b332114d93237ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
