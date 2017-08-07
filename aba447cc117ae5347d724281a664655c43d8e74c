@@ -70,6 +70,24 @@
       "revId": "aba447cc117ae5347d724281a664655c43d8e74c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79361eb7_b17b5d44",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-07T22:15:59Z",
+      "side": 1,
+      "message": "Ok, in that case please make sure that SetCacheRenderSurface() is used before this is enabled by default. With SetCacheRenderSurface() being used I think it\u0027s fine to have it enabled across all devices.",
+      "parentUuid": "c742862d_3b13a298",
+      "revId": "aba447cc117ae5347d724281a664655c43d8e74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
