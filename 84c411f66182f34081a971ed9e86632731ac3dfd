@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a44df3e8_12fa971a",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-07T22:29:13Z",
+      "side": 1,
+      "message": "optional: I kind of like PaletteTrayTest tests to stick together ie. move line 136 tests above this block.",
+      "revId": "84c411f66182f34081a971ed9e86632731ac3dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
