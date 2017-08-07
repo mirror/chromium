@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "992b3cf4_ec637ce9",
+        "filename": "gpu/ipc/host/shader_disk_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-07T19:02:33Z",
+      "side": 1,
+      "message": "nit: NULL-\u003enullptr",
+      "revId": "5988dafea230971ad17a5c0cabc6c68aa3245ba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
