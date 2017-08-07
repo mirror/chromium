@@ -2,6 +2,308 @@
   "comments": [
     {
       "key": {
+        "uuid": "8d1a0023_c5dd07ce",
+        "filename": "chromeos/dbus/dbus_clients_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "Please provide a fake for use_real_clients\u003d\u003dfalse cases (e.g. when running target_os\u003d\"chromeos\" build on a Linux workstation).",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf9f242_72575423",
+        "filename": "chromeos/dbus/dbus_clients_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "Is this client needed by mash (I guess not, see https://www.chromium.org/developers/mus-ash for details)?\nIf this client is only needed by the browser process, please move this to DBusClientsBrowser.",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6075f8e0_c7622e51",
+        "filename": "chromeos/dbus/midis_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "not needed?",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ce6382_e38703cf",
+        "filename": "chromeos/dbus/midis_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "not needed?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed36133_cc519a48",
+        "filename": "chromeos/dbus/midis_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "not needed?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e97baa0_b540b688",
+        "filename": "chromeos/dbus/midis_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "not needed?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 63
+      },
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c2081a_0ba18a63",
+        "filename": "chromeos/dbus/midis_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "nit: nullptr.",
+      "range": {
+        "startLine": 40,
+        "startChar": 27,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f283ac2_0325f27e",
+        "filename": "chromeos/dbus/midis_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "This comment looks irrelevant.\nPlease remove.",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72cc2a68_2f282c46",
+        "filename": "chromeos/dbus/midis_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "Can\u0027t the service name and the object path be constants rather than arguments?",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3317cae4_ae6b941a",
+        "filename": "chromeos/dbus/midis_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "Probably, to keep this client simple, it\u0027s better to do this socket pair creation at the caller site, and let this function just send the server_fd to the service.",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d2c8a8_ea0d713a",
+        "filename": "chromeos/dbus/midis_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9955ee37_ef0a42ce",
+        "filename": "chromeos/dbus/midis_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "nit: No (c) needed.\n(see https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#File-headers)\n\nThe same goes for the .cc file.",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e08682_869cb8f2",
+        "filename": "chromeos/dbus/midis_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "not used.",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a34ec31_ed1451cb",
+        "filename": "chromeos/dbus/midis_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "object_path.h?",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1720396_087399dc",
+        "filename": "chromeos/dbus/midis_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "nit: \"Sends\" and \"returns\".",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82196dcb_541cba62",
+        "filename": "media/midi/chromeos/midi_manager_cros.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-07T08:36:46Z",
+      "side": 1,
+      "message": "It seems \"gn check\" is failing because of this new include.\nPlease fix the GN file too.",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e33a517e_e641cac0",
         "filename": "media/midi/chromeos/midi_manager_cros.cc",
         "patchSetId": 4
