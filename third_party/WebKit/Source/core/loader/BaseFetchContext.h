@@ -36,13 +36,17 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
       FetchParameters::OriginRestriction,
-      ResourceRequest::RedirectStatus) const override;
+      ResourceRequest::RedirectStatus,
+      SecurityViolationEventDataContainer* violation_data_container =
+          nullptr) const override;
   ResourceRequestBlockedReason CheckCSPForRequest(
       WebURLRequest::RequestContext,
       const KURL&,
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
-      ResourceRequest::RedirectStatus) const override;
+      ResourceRequest::RedirectStatus,
+      SecurityViolationEventDataContainer* violation_data_container =
+          nullptr) const override;
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -98,7 +102,8 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
       FetchParameters::OriginRestriction,
-      ResourceRequest::RedirectStatus) const;
+      ResourceRequest::RedirectStatus,
+      SecurityViolationEventDataContainer* violation_data_container) const;
 
   ResourceRequestBlockedReason CheckCSPForRequestInternal(
       WebURLRequest::RequestContext,
@@ -106,7 +111,8 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
       ResourceRequest::RedirectStatus,
-      ContentSecurityPolicy::CheckHeaderType) const;
+      ContentSecurityPolicy::CheckHeaderType,
+      SecurityViolationEventDataContainer* violation_data_container) const;
 };
 
 }  // namespace blink

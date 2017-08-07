@@ -50,12 +50,14 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequest(
     const ResourceLoaderOptions& options,
     SecurityViolationReportingPolicy reporting_policy,
     FetchParameters::OriginRestriction origin_restriction,
-    ResourceRequest::RedirectStatus redirect_status) const {
-  ResourceRequestBlockedReason blocked_reason =
-      CanRequestInternal(type, resource_request, url, options, reporting_policy,
-                         origin_restriction, redirect_status);
+    ResourceRequest::RedirectStatus redirect_status,
+    SecurityViolationEventDataContainer* violation_data_container) const {
+  ResourceRequestBlockedReason blocked_reason = CanRequestInternal(
+      type, resource_request, url, options, reporting_policy,
+      origin_restriction, redirect_status, violation_data_container);
   if (blocked_reason != ResourceRequestBlockedReason::kNone &&
-      reporting_policy == SecurityViolationReportingPolicy::kReport) {
+      reporting_policy !=
+          SecurityViolationReportingPolicy::kSuppressReporting) {
     DispatchDidBlockRequest(resource_request, options.initiator_info,
                             blocked_reason);
   }
@@ -115,10 +117,12 @@ ResourceRequestBlockedReason BaseFetchContext::CheckCSPForRequest(
     const KURL& url,
     const ResourceLoaderOptions& options,
     SecurityViolationReportingPolicy reporting_policy,
-    ResourceRequest::RedirectStatus redirect_status) const {
+    ResourceRequest::RedirectStatus redirect_status,
+    SecurityViolationEventDataContainer* violation_data_container) const {
   return CheckCSPForRequestInternal(
       request_context, url, options, reporting_policy, redirect_status,
-      ContentSecurityPolicy::CheckHeaderType::kCheckReportOnly);
+      ContentSecurityPolicy::CheckHeaderType::kCheckReportOnly,
+      violation_data_container);
 }
 
 ResourceRequestBlockedReason BaseFetchContext::CheckCSPForRequestInternal(
@@ -127,7 +131,8 @@ ResourceRequestBlockedReason BaseFetchContext::CheckCSPForRequestInternal(
     const ResourceLoaderOptions& options,
     SecurityViolationReportingPolicy reporting_policy,
     ResourceRequest::RedirectStatus redirect_status,
-    ContentSecurityPolicy::CheckHeaderType check_header_type) const {
+    ContentSecurityPolicy::CheckHeaderType check_header_type,
+    SecurityViolationEventDataContainer* violation_data_container) const {
   if (ShouldBypassMainWorldCSP() || options.content_security_policy_option ==
                                         kDoNotCheckContentSecurityPolicy) {
     return ResourceRequestBlockedReason::kNone;
@@ -137,7 +142,8 @@ ResourceRequestBlockedReason BaseFetchContext::CheckCSPForRequestInternal(
   if (csp && !csp->AllowRequest(
                  request_context, url, options.content_security_policy_nonce,
                  options.integrity_metadata, options.parser_disposition,
-                 redirect_status, reporting_policy, check_header_type)) {
+                 redirect_status, reporting_policy, check_header_type,
+                 violation_data_container)) {
     return ResourceRequestBlockedReason::kCSP;
   }
   return ResourceRequestBlockedReason::kNone;
@@ -150,7 +156,8 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
     const ResourceLoaderOptions& options,
     SecurityViolationReportingPolicy reporting_policy,
     FetchParameters::OriginRestriction origin_restriction,
-    ResourceRequest::RedirectStatus redirect_status) const {
+    ResourceRequest::RedirectStatus redirect_status,
+    SecurityViolationEventDataContainer* violation_data_container) const {
   if (IsDetached() && !resource_request.GetKeepalive())
     return ResourceRequestBlockedReason::kOther;
 
@@ -163,7 +170,8 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
 
   if (origin_restriction != FetchParameters::kNoOriginRestriction &&
       security_origin && !security_origin->CanDisplay(url)) {
-    if (reporting_policy == SecurityViolationReportingPolicy::kReport) {
+    if (reporting_policy !=
+        SecurityViolationReportingPolicy::kSuppressReporting) {
       AddErrorConsoleMessage(
           "Not allowed to load local resource: " + url.GetString(), kJSSource);
     }
@@ -214,8 +222,8 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
   // block things we ought to block.
   if (CheckCSPForRequestInternal(
           request_context, url, options, reporting_policy, redirect_status,
-          ContentSecurityPolicy::CheckHeaderType::kCheckEnforce) ==
-      ResourceRequestBlockedReason::kCSP) {
+          ContentSecurityPolicy::CheckHeaderType::kCheckEnforce,
+          violation_data_container) == ResourceRequestBlockedReason::kCSP) {
     return ResourceRequestBlockedReason::kCSP;
   }
 
