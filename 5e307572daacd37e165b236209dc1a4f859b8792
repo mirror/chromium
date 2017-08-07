@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8fe958e2_22bc8293",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-07T19:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe31bdbc_9a24625f",
+      "range": {
+        "startLine": 11,
+        "startChar": 18,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e47f24b9_8b33b164",
         "filename": "third_party/WebKit/Source/bindings/scripts/generate_conditional_features.py",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "41ecec4b_619e755e",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_conditional_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-07T19:46:05Z",
+      "side": 1,
+      "message": "Renamed and commented here. I prefer to not change idl_ready in this patch, since {left,right}_interface are used in other places throughout the code.",
+      "parentUuid": "b84ba2c3_201d32cc",
+      "range": {
+        "startLine": 103,
+        "startChar": 12,
+        "endLine": 103,
+        "endChar": 31
+      },
+      "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f476a578_c6442970",
         "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
         "patchSetId": 1
@@ -83,6 +131,24 @@
       "writtenOn": "2017-08-04T08:39:54Z",
       "side": 1,
       "message": "nit: 80 columns?",
+      "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f9c5b0_72efe11c",
+        "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-07T19:46:05Z",
+      "side": 1,
+      "message": "Well, other comments are over 80, but I changed mine :)",
+      "parentUuid": "f476a578_c6442970",
       "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -106,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "8fa27ab7_0bbc1aaa",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-07T19:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08c1110a_0b7b03a3",
+      "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d15e78be_748ded87",
         "filename": "third_party/WebKit/Source/devtools/front_end/emulation/SensorsView.js",
         "patchSetId": 1
@@ -117,6 +201,24 @@
       "writtenOn": "2017-08-04T08:39:54Z",
       "side": 1,
       "message": "nit: 80 columns?",
+      "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1855b420_3d661970",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/SensorsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-07T19:46:05Z",
+      "side": 1,
+      "message": "DevTools frontend line limit is 120.",
+      "parentUuid": "d15e78be_748ded87",
       "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
