@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e5b5d5b_9a1bcdf5",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-07T06:47:24Z",
+      "side": 1,
+      "message": "Add a new line between 56 and 57, or make this part of the first paragraph.",
+      "revId": "d2794b9a3ffd8df194c1b279d299b463bf5cb708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
