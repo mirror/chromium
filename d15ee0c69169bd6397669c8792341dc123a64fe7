@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a81ac14_621c2d05",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseChromiumAndroidJUnitRunner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T17:52:02Z",
+      "side": 1,
+      "message": "Could you add a group level comment as to what these arguments has to match?",
+      "revId": "d15ee0c69169bd6397669c8792341dc123a64fe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "066b399b_738ca265",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseJUnit4ClassRunner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T17:52:02Z",
+      "side": 1,
+      "message": "This method name is a little bit confusing. Could it be \"shouldListTests\" or \"onlyListTests\" or \"shouldOnlyList\" or \"shouldOnlyListTests\" or something along those lines?",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 140,
+        "endChar": 23
+      },
+      "revId": "d15ee0c69169bd6397669c8792341dc123a64fe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

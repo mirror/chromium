@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63f2fcd6_27c78a54",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseChromiumAndroidJUnitRunner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T17:52:02Z",
+      "side": 1,
+      "message": "Could you add documentation for what this does? I.e. what does it return and why?",
+      "range": {
+        "startLine": 111,
+        "startChar": 19,
+        "endLine": 111,
+        "endChar": 30
+      },
+      "revId": "b3682091c090f6b37503fa275fbad5c485a0e9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
