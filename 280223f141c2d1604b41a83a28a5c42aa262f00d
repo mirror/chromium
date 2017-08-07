@@ -70,6 +70,30 @@
       "revId": "280223f141c2d1604b41a83a28a5c42aa262f00d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6869d18_72ca8965",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-07T18:20:54Z",
+      "side": 1,
+      "message": "Got it, SGTM, thanks!",
+      "parentUuid": "2ff304ee_f7876f6d",
+      "range": {
+        "startLine": 622,
+        "startChar": 40,
+        "endLine": 622,
+        "endChar": 52
+      },
+      "revId": "280223f141c2d1604b41a83a28a5c42aa262f00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
