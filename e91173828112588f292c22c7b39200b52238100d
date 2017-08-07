@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "32b577b5_e10152fa",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-07T14:06:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "73af97fb_82d2cb5f",
+      "range": {
+        "startLine": 409,
+        "startChar": 1,
+        "endLine": 418,
+        "endChar": 3
+      },
+      "revId": "e91173828112588f292c22c7b39200b52238100d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "154cd9af_7820057b",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 9
@@ -60,6 +84,30 @@
       "writtenOn": "2017-08-07T11:09:57Z",
       "side": 1,
       "message": "oh, curly brackets are really needed here.",
+      "range": {
+        "startLine": 473,
+        "startChar": 10,
+        "endLine": 473,
+        "endChar": 11
+      },
+      "revId": "e91173828112588f292c22c7b39200b52238100d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17981b1b_fbfbc452",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-07T14:06:08Z",
+      "side": 1,
+      "message": "\u003e oh, curly brackets are really needed here.\n\nDone.",
+      "parentUuid": "154cd9af_7820057b",
       "range": {
         "startLine": 473,
         "startChar": 10,
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8671c678_95af4b29",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-07T14:06:08Z",
+      "side": 1,
+      "message": "\u003e did we trim spaces for |other_possible_usernames|?\n\nDone.",
+      "parentUuid": "b14472e4_a26e166b",
+      "range": {
+        "startLine": 474,
+        "startChar": 29,
+        "endLine": 474,
+        "endChar": 61
+      },
+      "revId": "e91173828112588f292c22c7b39200b52238100d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83177b6a_f8f6ed93",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 9
@@ -106,6 +178,30 @@
       "writtenOn": "2017-08-07T11:09:57Z",
       "side": 1,
       "message": "curly brackets are needed.",
+      "range": {
+        "startLine": 475,
+        "startChar": 30,
+        "endLine": 475,
+        "endChar": 31
+      },
+      "revId": "e91173828112588f292c22c7b39200b52238100d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d9e725_915158ce",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-07T14:06:08Z",
+      "side": 1,
+      "message": "\u003e curly brackets are needed.\n\nDone.",
+      "parentUuid": "83177b6a_f8f6ed93",
       "range": {
         "startLine": 475,
         "startChar": 30,
@@ -153,6 +249,30 @@
       "side": 1,
       "message": "\u003e This test is currently failing. Instead of nullptr, I think it\u0027s expecting the address of the old credentials. I\u0027m not sure, though.\n\nTest must output some info. Is it possible what the test complains about?",
       "parentUuid": "95d32a76_9f46aabd",
+      "range": {
+        "startLine": 2394,
+        "startChar": 9,
+        "endLine": 2394,
+        "endChar": 45
+      },
+      "revId": "e91173828112588f292c22c7b39200b52238100d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc509a7_ed763a36",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2394,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-07T14:06:08Z",
+      "side": 1,
+      "message": "\u003e \u003e This test is currently failing. Instead of nullptr, I think it\u0027s expecting the address of the old credentials. I\u0027m not sure, though.\n\u003e \n\u003e Test must output some info. Is it possible what the test complains about?\n\nAfter talking with Irmak, I managed to solve the test.",
+      "parentUuid": "eac02025_fcc20e40",
       "range": {
         "startLine": 2394,
         "startChar": 9,
