@@ -63,7 +63,6 @@ class CORE_EXPORT SelectionTemplate final {
         const PositionTemplate<Strategy>& extent);
 
     Builder& SetAffinity(TextAffinity);
-    Builder& SetIsDirectional(bool);
 
    private:
     SelectionTemplate selection_;
@@ -84,7 +83,6 @@ class CORE_EXPORT SelectionTemplate final {
   TextAffinity Affinity() const { return affinity_; }
   bool IsBaseFirst() const;
   bool IsCaret() const;
-  bool IsDirectional() const { return is_directional_; }
   bool IsNone() const { return base_.IsNull(); }
   bool IsRange() const;
 
@@ -121,7 +119,6 @@ class CORE_EXPORT SelectionTemplate final {
   PositionTemplate<Strategy> extent_;
   TextAffinity affinity_ = TextAffinity::kDownstream;
   mutable Direction direction_ = Direction::kForward;
-  bool is_directional_ = false;
 #if DCHECK_IS_ON()
   uint64_t dom_tree_version_;
 #endif

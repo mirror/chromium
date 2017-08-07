@@ -60,6 +60,12 @@ SetSelectionData::Builder& SetSelectionData::Builder::SetShouldShowHandle(
   return *this;
 }
 
+SetSelectionData::Builder& SetSelectionData::Builder::SetIsDirectional(
+    bool new_value) {
+  data_.is_directional_ = new_value;
+  return *this;
+}
+
 SetSelectionData::Builder& SetSelectionData::Builder::SetSetSelectionBy(
     SetSelectionBy new_value) {
   data_.set_selection_by_ = new_value;

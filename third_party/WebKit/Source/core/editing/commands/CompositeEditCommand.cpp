@@ -82,9 +82,13 @@ using namespace HTMLNames;
 
 CompositeEditCommand::CompositeEditCommand(Document& document)
     : EditCommand(document) {
-  SetStartingSelection(document.GetFrame()
-                           ->Selection()
-                           .ComputeVisibleSelectionInDOMTreeDeprecated());
+  bool directional = document.GetFrame()->Selection().IsDirectional();
+  SetStartingSelection(SelectionForUndoStep::From(
+      document.GetFrame()
+          ->Selection()
+          .ComputeVisibleSelectionInDOMTreeDeprecated()
+          .AsSelection(),
+      directional));
   SetEndingSelection(starting_selection_);
 }
 
@@ -209,12 +213,12 @@ void CompositeEditCommand::ApplyCommandToComposite(
 
 void CompositeEditCommand::ApplyCommandToComposite(
     CompositeEditCommand* command,
-    const VisibleSelection& selection,
+    const SelectionForUndoStep& selection,
     EditingState* editing_state) {
   command->SetParent(this);
-  if (selection != command->EndingVisibleSelection()) {
-    command->SetStartingSelection(selection);
-    command->SetEndingVisibleSelection(selection);
+  if (selection != command->EndingSelection()) {
+    command->SetStartingSelection(SelectionForUndoStep(selection));
+    command->SetEndingSelection(StartingSelection());
   }
   command->DoApply(editing_state);
   if (!editing_state->IsAborted())
@@ -1098,8 +1102,12 @@ void CompositeEditCommand::PushAnchorElementDown(Element* anchor_node,
 
   DCHECK(anchor_node->IsLink()) << anchor_node;
 
-  SetEndingSelection(
-      SelectionInDOMTree::Builder().SelectAllChildren(*anchor_node).Build());
+  // TODO(editing-dev): The use of
+  // updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+  SetEndingSelection(SelectionForUndoStep::From(
+      SelectionInDOMTree::Builder().SelectAllChildren(*anchor_node).Build()));
   ApplyStyledElement(anchor_node, editing_state);
   if (editing_state->IsAborted())
     return;
@@ -1295,8 +1303,13 @@ void CompositeEditCommand::MoveParagraphWithClones(
   CloneParagraphUnderNewElement(start, end, outer_node, block_element,
                                 editing_state);
 
-  SetEndingSelection(
-      SelectionInDOMTree::Builder().Collapse(start).Extend(end).Build());
+  // TODO(editing-dev): The use of
+  // updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  SetEndingSelection(SelectionForUndoStep::From(
+      SelectionInDOMTree::Builder().Collapse(start).Extend(end).Build()));
   DeleteSelection(editing_state, false, false, false);
   if (editing_state->IsAborted())
     return;
@@ -1382,7 +1395,6 @@ void CompositeEditCommand::MoveParagraphs(
   int start_index = -1;
   int end_index = -1;
   int destination_index = -1;
-  bool original_is_directional = EndingSelection().IsDirectional();
   if (should_preserve_selection == kPreserveSelection &&
       !EndingSelection().IsNone()) {
     VisiblePosition visible_start = EndingVisibleSelection().VisibleStart();
@@ -1472,7 +1484,8 @@ void CompositeEditCommand::MoveParagraphs(
 
   const SelectionInDOMTree& selection_to_delete =
       SelectionInDOMTree::Builder().Collapse(start).Extend(end).Build();
-  SetEndingSelection(selection_to_delete);
+
+  SetEndingSelection(SelectionForUndoStep::From(selection_to_delete));
   DeleteSelection(editing_state, false, false, false);
   if (editing_state->IsAborted())
     return;
@@ -1520,7 +1533,6 @@ void CompositeEditCommand::MoveParagraphs(
   const SelectionInDOMTree& destination_selection =
       SelectionInDOMTree::Builder()
           .Collapse(destination.ToPositionWithAffinity())
-          .SetIsDirectional(original_is_directional)
           .Build();
   if (EndingSelection().IsNone()) {
     // We abort executing command since |destination| becomes invisible.
@@ -1583,7 +1595,6 @@ void CompositeEditCommand::MoveParagraphs(
   SetEndingSelection(SelectionInDOMTree::Builder()
                          .Collapse(start_range.StartPosition())
                          .Extend(end_range.StartPosition())
-                         .SetIsDirectional(original_is_directional)
                          .Build());
 }
 
@@ -1688,7 +1699,6 @@ bool CompositeEditCommand::BreakOutOfEmptyListItem(
 
   SetEndingSelection(SelectionInDOMTree::Builder()
                          .Collapse(Position::FirstPositionInNode(*new_block))
-                         .SetIsDirectional(EndingSelection().IsDirectional())
                          .Build());
 
   style->PrepareToApplyAt(EndingSelection().Start());
@@ -1750,7 +1760,6 @@ bool CompositeEditCommand::BreakOutOfEmptyMailBlockquotedParagraph(
   }
   SetEndingSelection(SelectionInDOMTree::Builder()
                          .Collapse(at_br.ToPositionWithAffinity())
-                         .SetIsDirectional(EndingSelection().IsDirectional())
                          .Build());
 
   // If this is an empty paragraph there must be a line break here.
@@ -1917,8 +1926,8 @@ void CompositeEditCommand::SetStartingSelection(
 
 void CompositeEditCommand::SetStartingSelection(
     const VisibleSelection& visible_selection) {
-  SetStartingSelection(
-      SelectionForUndoStep::From(visible_selection.AsSelection()));
+  SetStartingSelection(SelectionForUndoStep::From(
+      visible_selection.AsSelection(), StartingSelection().IsDirectional()));
 }
 
 // TODO(yosin): We will make |SelectionInDOMTree| version of
@@ -1937,8 +1946,8 @@ void CompositeEditCommand::SetEndingSelection(
 // |setEndingSelection()| as primary function instead of wrapper.
 void CompositeEditCommand::SetEndingVisibleSelection(
     const VisibleSelection& visible_selection) {
-  SetEndingSelection(
-      SelectionForUndoStep::From(visible_selection.AsSelection()));
+  SetEndingSelection(SelectionForUndoStep::From(
+      visible_selection.AsSelection(), EndingSelection().IsDirectional()));
 }
 
 void CompositeEditCommand::SetEndingSelection(

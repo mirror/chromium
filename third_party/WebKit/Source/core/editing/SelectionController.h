@@ -107,16 +107,17 @@ class CORE_EXPORT SelectionController final
       const MouseEventWithHitTestResults&);
   void SelectClosestWordOrLinkFromMouseEvent(
       const MouseEventWithHitTestResults&);
+
   void SetNonDirectionalSelectionIfNeeded(const SelectionInFlatTree&,
-                                          TextGranularity,
-                                          EndPointsAdjustmentMode,
-                                          HandleVisibility);
+                                          const SetSelectionData&,
+                                          EndPointsAdjustmentMode);
   void SetCaretAtHitTestResult(const HitTestResult&);
   bool UpdateSelectionForMouseDownDispatchingSelectStart(
       Node*,
       const SelectionInFlatTree&,
       TextGranularity,
-      HandleVisibility);
+      HandleVisibility,
+      bool directional = false);
 
   FrameSelection& Selection() const;
 
