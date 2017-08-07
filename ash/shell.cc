@@ -139,6 +139,7 @@
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
+#include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/presenter/app_list.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/env.h"
@@ -481,7 +482,14 @@ void Shell::RemoveShellObserver(ShellObserver* observer) {
   shell_observers_.RemoveObserver(observer);
 }
 
-void Shell::ShowAppList() {
+void Shell::ShowAppList(app_list::kAppListToggleMethod toggle_method) {
+  if (IsAppListVisible()) {
+    UMA_HISTOGRAM_ENUMERATION(app_list::kAppListToggleMethodHistogram,
+                              toggle_method,
+                              app_list::MAX_APP_LIST_TOGGLE_METHOD)  // Newcomer
+    // test this out and make sure it is recording properly after refactor.
+    // Also make sure all call sites are found and recorded.
+  }
   // Show the app list on the default display for new windows.
   app_list_->Show(display::Screen::GetScreen()
                       ->GetDisplayNearestWindow(GetRootWindowForNewWindows())
@@ -499,7 +507,12 @@ void Shell::DismissAppList() {
   app_list_->Dismiss();
 }
 
-void Shell::ToggleAppList() {
+void Shell::ToggleAppList(app_list::kAppListToggleMethod toggle_method) {
+  if (IsAppListVisible()) {
+    UMA_HISTOGRAM_ENUMERATION(app_list::kAppListToggleMethodHistogram,
+                              toggle_method,
+                              app_list::MAX_APP_LIST_TOGGLE_METHOD);
+  }
   // Toggle the app list on the default display for new windows.
   app_list_->ToggleAppList(
       display::Screen::GetScreen()

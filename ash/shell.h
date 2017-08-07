@@ -37,7 +37,7 @@ class UserActivityForwarder;
 class Window;
 class WindowManagerClient;
 class WindowTreeClient;
-}
+}  // namespace aura
 
 namespace chromeos {
 class AudioA11yController;
@@ -45,13 +45,14 @@ class AudioA11yController;
 
 namespace app_list {
 class AppList;
-}
+enum kAppListToggleMethod;
+}  // namespace app_list
 
 namespace display {
 class DisplayChangeObserver;
 class DisplayConfigurator;
 class DisplayManager;
-}
+}  // namespace display
 
 namespace gfx {
 class Insets;
@@ -60,7 +61,7 @@ class Insets;
 namespace ui {
 class UserActivityDetector;
 class UserActivityPowerManagerNotifier;
-}
+}  // namespace ui
 
 namespace views {
 class NonClientFrameView;
@@ -68,7 +69,7 @@ class Widget;
 namespace corewm {
 class TooltipController;
 }
-}
+}  // namespace views
 
 namespace wm {
 class AcceleratorFilter;
@@ -78,7 +79,7 @@ class FocusController;
 class ShadowController;
 class VisibilityController;
 class WindowModalityController;
-}
+}  // namespace wm
 
 namespace ash {
 
@@ -530,7 +531,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   void RemoveShellObserver(ShellObserver* observer);
 
   // Shows the app list on the active root window.
-  void ShowAppList();
+  void ShowAppList(app_list::kAppListToggleMethod toggle_method);
 
   // Updates y position and opacity of app list. |is_end_gesture| means it is
   // the end of the gesture dragging of app list from shelf and should restore
@@ -543,7 +544,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   void DismissAppList();
 
   // Shows the app list if it's not visible. Dismisses it otherwise.
-  void ToggleAppList();
+  void ToggleAppList(app_list::kAppListToggleMethod toggle_method);
 
   // Returns app list actual visibility. This might differ from
   // GetAppListTargetVisibility() when hiding animation is still in flight.
