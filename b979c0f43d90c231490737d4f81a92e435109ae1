@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc951c30_b7a56909",
+        "filename": "content/browser/accessibility/browser_accessibility_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-07T04:30:07Z",
+      "side": 1,
+      "message": "Why not just make BrowserAccessibilityStateImpl the mode observer?\n\nThis way seems overkill because there are thousands of BAWs, and\neach one doesn\u0027t need to observe the same thing.\n\nIf there\u0027s a good reason for BAW to be an observer, maybe\nBrowserAccessibilityManagerWin would be a better fit, there aren\u0027t\nas many of those?",
+      "revId": "b979c0f43d90c231490737d4f81a92e435109ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
