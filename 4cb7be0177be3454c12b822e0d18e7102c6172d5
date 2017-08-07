@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2aaa017_79bbb1b6",
+        "filename": "ui/views/cocoa/native_widget_mac_nswindow.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-07T07:31:28Z",
+      "side": 1,
+      "message": "Nice hack. I\u0027m seeing some similar quirks (repeating properties)\non Windows due to accessibility properties being on both a\nRootView and on its owning aura Window. We may want to try to\nfigure out a better solution across all platforms to avoid any\nduplication.",
+      "revId": "4cb7be0177be3454c12b822e0d18e7102c6172d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37becff_f90c926c",
+        "filename": "ui/views/cocoa/native_widget_mac_nswindow.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-07T07:31:28Z",
+      "side": 1,
+      "message": "Nice hack. I\u0027m seeing some similar quirks (repeating properties)\non Windows due to accessibility properties being on both a\nRootView and on its owning aura Window. We may want to try to\nfigure out a better solution across all platforms to avoid any\nduplication.",
+      "revId": "4cb7be0177be3454c12b822e0d18e7102c6172d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
