@@ -6083,10 +6083,51 @@ class CompositedSelectionBoundsTest : public ParameterizedWebFrameTest {
                   ->Id(),
               select_start->layer_id);
 
-    EXPECT_EQ(start_edge_top_in_layer_x, select_start->edge_top_in_layer.x);
-    EXPECT_EQ(start_edge_top_in_layer_y, select_start->edge_top_in_layer.y);
-    EXPECT_EQ(start_edge_bottom_in_layer_x,
-              select_start->edge_bottom_in_layer.x);
+    bool skip_endpoint_check = false;
+    if (expected_result.Length() >= 15) {
+      // For testcases in which one endpoint might be hidden, we can't
+      // check that the endpoint values are the same as the hit test rectangle.
+      skip_endpoint_check = true;
+      bool start_hidden = expected_result.Get(context, 13)
+                              .ToLocalChecked()
+                              .As<v8::Boolean>()
+                              ->Value();
+      bool end_hidden = expected_result.Get(context, 14)
+                            .ToLocalChecked()
+                            .As<v8::Boolean>()
+                            ->Value();
+
+      EXPECT_EQ(start_hidden, select_start->hidden);
+      EXPECT_EQ(end_hidden, select_end->hidden);
+    }
+
+    if (!skip_endpoint_check) {
+      EXPECT_EQ(start_edge_top_in_layer_x, select_start->edge_top_in_layer.x);
+      EXPECT_EQ(start_edge_top_in_layer_y, select_start->edge_top_in_layer.y);
+      EXPECT_EQ(start_edge_bottom_in_layer_x,
+                select_start->edge_bottom_in_layer.x);
+
+      EXPECT_EQ(end_edge_top_in_layer_x, select_end->edge_top_in_layer.x);
+      EXPECT_EQ(end_edge_top_in_layer_y, select_end->edge_top_in_layer.y);
+      EXPECT_EQ(end_edge_bottom_in_layer_x, select_end->edge_bottom_in_layer.x);
+
+      // Platform differences can introduce small stylistic deviations in
+      // y-axis positioning, the details of which aren't relevant to
+      // selection behavior. However, such deviations from the expected value
+      // should be consistent for the corresponding y coordinates.
+      int y_bottom_epsilon = 0;
+      if (expected_result.Length() >= 13) {
+        y_bottom_epsilon = expected_result.Get(context, 12)
+                               .ToLocalChecked()
+                               .As<v8::Int32>()
+                               ->Value();
+      }
+      int y_bottom_deviation =
+          start_edge_bottom_in_layer_y - select_start->edge_bottom_in_layer.y;
+      EXPECT_GE(y_bottom_epsilon, std::abs(y_bottom_deviation));
+      EXPECT_EQ(y_bottom_deviation, end_edge_bottom_in_layer_y -
+                                        select_end->edge_bottom_in_layer.y);
+    }
 
     blink::Node* layer_owner_node_for_end = V8Node::toImplWithTypeCheck(
         v8::Isolate::GetCurrent(),
@@ -6101,27 +6142,6 @@ class CompositedSelectionBoundsTest : public ParameterizedWebFrameTest {
                   ->PlatformLayer()
                   ->Id(),
               select_end->layer_id);
-
-    EXPECT_EQ(end_edge_top_in_layer_x, select_end->edge_top_in_layer.x);
-    EXPECT_EQ(end_edge_top_in_layer_y, select_end->edge_top_in_layer.y);
-    EXPECT_EQ(end_edge_bottom_in_layer_x, select_end->edge_bottom_in_layer.x);
-
-    // Platform differences can introduce small stylistic deviations in
-    // y-axis positioning, the details of which aren't relevant to
-    // selection behavior. However, such deviations from the expected value
-    // should be consistent for the corresponding y coordinates.
-    int y_bottom_epsilon = 0;
-    if (expected_result.Length() == 13) {
-      y_bottom_epsilon = expected_result.Get(context, 12)
-                             .ToLocalChecked()
-                             .As<v8::Int32>()
-                             ->Value();
-    }
-    int y_bottom_deviation =
-        start_edge_bottom_in_layer_y - select_start->edge_bottom_in_layer.y;
-    EXPECT_GE(y_bottom_epsilon, std::abs(y_bottom_deviation));
-    EXPECT_EQ(y_bottom_deviation,
-              end_edge_bottom_in_layer_y - select_end->edge_bottom_in_layer.y);
   }
 
   void RunTestWithMultipleFiles(const char* test_file, ...) {
@@ -6177,7 +6197,15 @@ TEST_P(CompositedSelectionBoundsTest, Editable) {
 TEST_P(CompositedSelectionBoundsTest, EditableDiv) {
   RunTest("composited_selection_bounds_editable_div.html");
 }
-
+// TODO(chrishtr): constants vary by platform.
+#if defined(OS_LINUX)
+TEST_P(CompositedSelectionBoundsTest, Input) {
+  RunTest("composited_selection_bounds_input.html");
+}
+TEST_P(CompositedSelectionBoundsTest, InputScrolled) {
+  RunTest("composited_selection_bounds_input_scrolled.html");
+}
+#endif
 class DisambiguationPopupTestWebViewClient
     : public FrameTestHelpers::TestWebViewClient {
  public:
