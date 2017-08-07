@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "acfe554c_0859769c",
+        "filename": "sandbox/win/src/win_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-08-07T22:54:03Z",
+      "side": 1,
+      "message": "I was just matching (for consistency) what\u0027s being done elsewhere in this file.  Right above this function, compare is being used.\n\nI\u0027ve just adjusted the whole file to use EqualPath instead of compare!",
+      "parentUuid": "15d2ae53_febc36ee",
+      "revId": "6ccd0b5183cf332431320e727c2e6f3635bc3462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e67b76a_5f92ad88",
         "filename": "sandbox/win/src/win_utils.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "627fe5b5_7b103267",
+        "filename": "sandbox/win/src/win_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-08-07T22:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e67b76a_5f92ad88",
+      "revId": "6ccd0b5183cf332431320e727c2e6f3635bc3462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3723149_60ef5e41",
         "filename": "sandbox/win/src/win_utils.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-04T10:58:22Z",
       "side": 1,
       "message": "I think this could result is incorrect behavior (though a pretty small edge case). Maybe I\u0027m missing it but no where do you verify that the \\Device\\HarddiskVolumeX path in the image path you\u0027re replacing matches the one which corresponds to the drive letter. We should probably only check paths which start with the same \\Device\\HarddiskVolumeX path, and then get long path (as if it\u0027s not on the same volume it couldn\u0027t match anyway).",
+      "revId": "6ccd0b5183cf332431320e727c2e6f3635bc3462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2fb7811_f5158912",
+        "filename": "sandbox/win/src/win_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-08-07T22:54:03Z",
+      "side": 1,
+      "message": "I\u0027ve added a check of harddrivevolumeX before bothering to convertToLong.  (Added EqualPath override.)  Might save a little bit of time in edge cases.\n\nHave a look!",
+      "parentUuid": "b3723149_60ef5e41",
       "revId": "6ccd0b5183cf332431320e727c2e6f3635bc3462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ad7c58ca_51bf20d0",
+        "filename": "sandbox/win/src/win_utils_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-08-07T22:54:03Z",
+      "side": 1,
+      "message": "Bot tests are run from elevated prompt, so yes.  I\u0027ve got another test like this in ProcessMitigations tests.  I added the comment just above this test - as running locally without elevated prompt will fail.",
+      "parentUuid": "8b4abd55_0038defd",
+      "revId": "6ccd0b5183cf332431320e727c2e6f3635bc3462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6210ce3f_608438e6",
         "filename": "sandbox/win/src/win_utils_unittest.cc",
         "patchSetId": 4
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e5aec58d_988bc796",
+        "filename": "sandbox/win/src/win_utils_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-08-07T22:54:03Z",
+      "side": 1,
+      "message": "Done.  For this base function, you\u0027re right.  I always prefer to call Windows APIs directly (A/W), but for this API I agree.  Thanks.",
+      "parentUuid": "6210ce3f_608438e6",
+      "revId": "6ccd0b5183cf332431320e727c2e6f3635bc3462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6591e975_feba0456",
         "filename": "sandbox/win/src/win_utils_unittest.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "6ccd0b5183cf332431320e727c2e6f3635bc3462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddbcb7dc_241e346e",
+        "filename": "sandbox/win/src/win_utils_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-08-07T22:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6591e975_feba0456",
+      "revId": "6ccd0b5183cf332431320e727c2e6f3635bc3462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
