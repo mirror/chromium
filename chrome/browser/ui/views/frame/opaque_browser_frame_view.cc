@@ -38,6 +38,7 @@
 #include "ui/views/window/window_shape.h"
 
 #if defined(OS_LINUX)
+#include "chrome/browser/ui/libgtkui/titlebutton_provider_gtk3.h"
 #include "ui/views/controls/menu/menu_runner.h"
 #endif
 
@@ -461,12 +462,26 @@ views::ImageButton* OpaqueBrowserFrameView::InitWindowCaptionButton(
     ViewID view_id) {
   views::ImageButton* button = new views::ImageButton(this);
   const ui::ThemeProvider* tp = frame()->GetThemeProvider();
+#if defined(OS_LINUX)
+  button->SetImage(views::CustomButton::STATE_NORMAL,
+                   libgtkui::GetTitlebuttonImage(
+                       normal_image_id, views::CustomButton::STATE_NORMAL, 44));
+  button->SetImage(
+      views::CustomButton::STATE_HOVERED,
+      libgtkui::GetTitlebuttonImage(normal_image_id,
+                                    views::CustomButton::STATE_HOVERED, 44));
+  button->SetImage(
+      views::CustomButton::STATE_PRESSED,
+      libgtkui::GetTitlebuttonImage(normal_image_id,
+                                    views::CustomButton::STATE_PRESSED, 44));
+#else
   button->SetImage(views::CustomButton::STATE_NORMAL,
                    tp->GetImageSkiaNamed(normal_image_id));
   button->SetImage(views::CustomButton::STATE_HOVERED,
                    tp->GetImageSkiaNamed(hot_image_id));
   button->SetImage(views::CustomButton::STATE_PRESSED,
                    tp->GetImageSkiaNamed(pushed_image_id));
+#endif
   if (browser_view()->IsBrowserTypeNormal()) {
     button->SetBackgroundImage(
         tp->GetColor(ThemeProperties::COLOR_BUTTON_BACKGROUND),
