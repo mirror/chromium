@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b5c48f83_20c37307",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T21:59:21Z",
+      "side": 1,
+      "message": "Do we need to explicitly wrap these in domAutomationController.send() calls? Most content/ tests don\u0027t, so I wonder if it is just syntax sugar we have in content/ that helps eliminate it.",
+      "range": {
+        "startLine": 482,
+        "startChar": 19,
+        "endLine": 482,
+        "endChar": 47
+      },
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d08f266c_2c63bced",
         "filename": "chrome/browser/chrome_navigation_browsertest.cc",
         "patchSetId": 11
@@ -13,6 +36,41 @@
       "writtenOn": "2017-08-04T23:53:59Z",
       "side": 1,
       "message": "This whole scenario turned out not to be a problem after all -- the Android Webview tests were failing due to URL mismatch in DidFinishLoad and not due to this.  But I had the test already written, so thought I might as well keep it to increase test coverage for it beyond Android Webview  as we keep refactoring error pages.  This logic currently lives in Blink in RenderFrameImpl::RunScriptsAtDocumentReady [1], and ideally the detection should move to the browser process if we still even care about it, but it\u0027s not something I wanted to do in this CL.\n\n[1] https://cs.chromium.org/chromium/src/content/renderer/render_frame_impl.cc?l\u003d3964\u0026rcl\u003dfbc1f06772af27fab08b74064b914cbdc5fc7418",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1477ba8f_27651ae5",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T21:59:21Z",
+      "side": 1,
+      "message": "Thanks for the test. However, it doesn\u0027t seem to check that the content of the error page is indeed there. How does it fail if something doesn\u0027t work correctly?",
+      "parentUuid": "d08f266c_2c63bced",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d3141ce_e599c4d3",
+        "filename": "chrome/test/data/empty_with_404.html.mock-http-headers",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T21:59:21Z",
+      "side": 1,
+      "message": "Should this also include Content-Length: 0?",
       "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +146,24 @@
     },
     {
       "key": {
+        "uuid": "49682e23_2591fdf7",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2289,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T21:59:21Z",
+      "side": 1,
+      "message": "Should we also consider this a bad message and terminate the renderer process?",
+      "parentUuid": "ecefeb96_bb6595e0",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d15e68f_4d6de35f",
         "filename": "content/public/common/url_constants.cc",
         "patchSetId": 11
@@ -117,6 +193,23 @@
       "side": 1,
       "message": "This seems fine to me. We shouldn\u0027t rely on having the same behavior as `data:` here, because `data:`\u0027s fragment navigation behavior is absurd. :)",
       "parentUuid": "5d15e68f_4d6de35f",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42172992_179f95d7",
+        "filename": "content/public/common/url_constants.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T21:59:21Z",
+      "side": 1,
+      "message": "nit: kChromeErrorScheme?",
       "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
