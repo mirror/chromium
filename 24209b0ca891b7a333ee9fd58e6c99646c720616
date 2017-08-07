@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aed988d4_7f5cd72d",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T23:47:41Z",
+      "side": 1,
+      "message": "Nit: Remove",
+      "revId": "24209b0ca891b7a333ee9fd58e6c99646c720616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86771957_e64b8493",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T23:47:41Z",
+      "side": 1,
+      "message": "Nit: Maybe pull out |widget| temp",
+      "revId": "24209b0ca891b7a333ee9fd58e6c99646c720616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1609efb3_6a658e44",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T23:47:41Z",
+      "side": 1,
+      "message": "Nit: Remove",
+      "revId": "24209b0ca891b7a333ee9fd58e6c99646c720616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a74d40e1_a22c8e3b",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T23:47:41Z",
+      "side": 1,
+      "message": "Nit: Make public since superclass version is public",
+      "revId": "24209b0ca891b7a333ee9fd58e6c99646c720616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408b6526_3579ea32",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T23:47:41Z",
+      "side": 1,
+      "message": "Nit: Can init here using {this}",
+      "revId": "24209b0ca891b7a333ee9fd58e6c99646c720616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
