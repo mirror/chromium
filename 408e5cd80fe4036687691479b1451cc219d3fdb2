@@ -46,6 +46,30 @@
       "revId": "408e5cd80fe4036687691479b1451cc219d3fdb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9fe97a4_c60200f9",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-08-07T18:10:45Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "48454772_b7bdd53a",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "408e5cd80fe4036687691479b1451cc219d3fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
