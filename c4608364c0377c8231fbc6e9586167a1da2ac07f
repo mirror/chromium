@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5958c8f_b0215c13",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-07T20:19:21Z",
+      "side": 1,
+      "message": "sans \u0027a\u0027?",
+      "range": {
+        "startLine": 12,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c88a06_ca6a3ce0",
+        "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-07T20:19:21Z",
+      "side": 1,
+      "message": "Nit: Please, add curly braces.",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 58
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f2c9665_b09efbbe",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-07T20:19:21Z",
+      "side": 1,
+      "message": "I think those two lines belong to feedback_private_api.cc? This function should probably just return the strings without any side effects.\n\nYou don\u0027t need g_browser_process if you kept using: \n  const std::string\u0026 app_locale \u003d\n      ExtensionsBrowserClient::Get()-\u003eGetApplicationLocale();",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 57
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de3cc64_50975816",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-07T20:19:21Z",
+      "side": 1,
+      "message": "Does \u003d default; here work?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 44
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "217bb0a4_1272cf14",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-07T20:19:21Z",
+      "side": 1,
+      "message": "Left over from debugging?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 25
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969018b3_cffef5a0",
+        "filename": "extensions/browser/api/feedback_private/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-07T20:19:21Z",
+      "side": 1,
+      "message": "Did you mean to say \"feedback_private\" Since it\u0027s the target being depended on here?",
+      "range": {
+        "startLine": 8,
+        "startChar": 25,
+        "endLine": 8,
+        "endChar": 35
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b7e426_4115d952",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-07T20:19:21Z",
+      "side": 1,
+      "message": "Nit: Please, document |from_crash|.",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
