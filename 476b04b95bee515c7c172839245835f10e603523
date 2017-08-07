@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f42dda1a_927d70d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-07T15:36:58Z",
+      "side": 1,
+      "message": "is this the first example of building json this way in this code? if so, should we consider using a real json builder to avoid potential escaping issues etc? if not, any reason not to use a real json builder?",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3798e50_336ea499",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PageLoadMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-07T15:36:58Z",
+      "side": 1,
+      "message": "are the existing and new ids documented externally for all cct clients to know about and consume? what\u0027s our general contract / guarantee as to long term commitment in providing this info to cct embedders?",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a7159f7_081f58ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PageLoadMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-07T15:36:58Z",
+      "side": 1,
+      "message": "should we note that this is invoked once per page load, at the time the page load is started?",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e3bc22_c90fda96",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-07T15:36:58Z",
+      "side": 1,
+      "message": "Tarun, I don\u0027t know this code well - is it safe for callers to hold on to the pointer returned by UINetworkQualityEstimatorServiceFactory::GetForProfile?",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9870448_10be1b20",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-07T15:36:58Z",
+      "side": 1,
+      "message": "OnLoadedResource is called for every resource loaded by the page. i\u0027d prefer that we only report timing data for the main resource at this time. could we exclude non-main-resources and report only timing info for the main resource?",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
