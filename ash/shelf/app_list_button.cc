@@ -79,17 +79,6 @@ AppListButton::AppListButton(InkDropButtonListener* listener,
   SetSize(gfx::Size(kShelfSize, kShelfSize));
   SetFocusPainter(TrayPopupUtils::CreateFocusPainter());
   set_notify_action(CustomButton::NOTIFY_ON_PRESS);
-
-  if (chromeos::switches::IsVoiceInteractionEnabled()) {
-    voice_interaction_overlay_ = new VoiceInteractionOverlay(this);
-    AddChildView(voice_interaction_overlay_);
-    voice_interaction_overlay_->SetVisible(false);
-    voice_interaction_animation_delay_timer_.reset(new base::OneShotTimer());
-    voice_interaction_animation_hide_delay_timer_.reset(
-        new base::OneShotTimer());
-  } else {
-    voice_interaction_overlay_ = nullptr;
-  }
 }
 
 AppListButton::~AppListButton() {
@@ -114,6 +103,15 @@ void AppListButton::UpdateShelfItemBackground(SkColor color) {
 }
 
 void AppListButton::OnGestureEvent(ui::GestureEvent* event) {
+  if (!voice_interaction_overlay_ &&
+      chromeos::switches::IsVoiceInteractionEnabled()) {
+    voice_interaction_overlay_ = new VoiceInteractionOverlay(this);
+    AddChildView(voice_interaction_overlay_);
+    voice_interaction_overlay_->SetVisible(false);
+    voice_interaction_animation_delay_timer_.reset(new base::OneShotTimer());
+    voice_interaction_animation_hide_delay_timer_.reset(
+        new base::OneShotTimer());
+  }
   last_event_is_back_event_ = IsBackEvent(event->location());
   // Handle gesture events that are on the back button.
   if (last_event_is_back_event_) {
@@ -461,7 +459,8 @@ void AppListButton::OnVoiceInteractionStatusChanged(bool running) {
 
   // Voice interaction window shows up, we start hiding the animation if it is
   // running.
-  if (running && voice_interaction_overlay_->IsBursting()) {
+  if (running && voice_interaction_overlay_ &&
+      voice_interaction_overlay_->IsBursting()) {
     voice_interaction_animation_hide_delay_timer_->Start(
         FROM_HERE,
         base::TimeDelta::FromMilliseconds(
