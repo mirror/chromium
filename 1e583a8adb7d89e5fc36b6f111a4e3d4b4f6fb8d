@@ -22,6 +22,30 @@
       "revId": "1e583a8adb7d89e5fc36b6f111a4e3d4b4f6fb8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe19bb4_f4872a2e",
+        "filename": "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-07T15:02:16Z",
+      "side": 1,
+      "message": "This comment is reflective of what I meant to do, but my mind lost the intention between writing the command and implementing it.",
+      "parentUuid": "ad56eaf0_af540ffb",
+      "range": {
+        "startLine": 142,
+        "startChar": 74,
+        "endLine": 143,
+        "endChar": 54
+      },
+      "revId": "1e583a8adb7d89e5fc36b6f111a4e3d4b4f6fb8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
