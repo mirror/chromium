@@ -16,6 +16,24 @@
       "revId": "747a554490a945414344c9d7bdc3c1742d390983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666a98d7_c7fdeb34",
+        "filename": "net/ntlm/md4.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-07T13:34:05Z",
+      "side": 1,
+      "message": "Oops",
+      "parentUuid": "8d217b7f_265f1827",
+      "revId": "747a554490a945414344c9d7bdc3c1742d390983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
