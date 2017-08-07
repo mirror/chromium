@@ -16,14 +16,16 @@ PrioritizedTile::PrioritizedTile(Tile* tile,
                                  const TilePriority& priority,
                                  bool is_occluded,
                                  bool is_process_for_images_only,
-                                 bool should_decode_checkered_images_for_tile)
+                                 bool should_decode_checkered_images_for_tile,
+                                 bool use_gpu_memory_buffer)
     : tile_(tile),
       source_tiling_(source_tiling),
       priority_(priority),
       is_occluded_(is_occluded),
       is_process_for_images_only_(is_process_for_images_only),
       should_decode_checkered_images_for_tile_(
-          should_decode_checkered_images_for_tile) {}
+          should_decode_checkered_images_for_tile),
+      use_gpu_memory_buffer_(use_gpu_memory_buffer) {}
 
 PrioritizedTile::~PrioritizedTile() = default;
 

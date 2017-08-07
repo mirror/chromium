@@ -1101,9 +1101,9 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
     resource_content_id = tile->invalidated_id();
     DCHECK_EQ(DetermineResourceFormat(tile), resource->format());
   } else {
-    resource = resource_pool_->AcquireResource(tile->desired_texture_size(),
-                                               DetermineResourceFormat(tile),
-                                               color_space);
+    resource = resource_pool_->AcquireResource(
+        tile->desired_texture_size(), DetermineResourceFormat(tile),
+        color_space, prioritized_tile.use_gpu_memory_buffer());
   }
 
   // For LOW_RESOLUTION tiles, we don't draw or predecode images.

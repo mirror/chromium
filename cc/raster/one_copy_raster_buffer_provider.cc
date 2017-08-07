@@ -26,12 +26,67 @@
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "ui/gfx/buffer_format_util.h"
 
+#include "third_party/libyuv/include/libyuv.h"
+
 namespace cc {
 namespace {
 
 // 4MiB is the size of 4 512x512 tiles, which has proven to be a good
 // default batch size for copy operations.
 const int kMaxBytesPerCopyOperation = 1024 * 1024 * 4;
+
+class GpuMemoryBufferRasterBufferImpl : public RasterBuffer {
+ public:
+  GpuMemoryBufferRasterBufferImpl(ResourceProvider* resource_provider,
+                                  const Resource* resource)
+      : lock_(resource_provider, resource->id()), resource_(resource) {}
+
+  // Overridden from RasterBuffer:
+  void Playback(
+      const RasterSource* raster_source,
+      const gfx::Rect& raster_full_rect,
+      const gfx::Rect& raster_dirty_rect,
+      uint64_t new_content_id,
+      const gfx::AxisTransform2d& transform,
+      const RasterSource::PlaybackSettings& playback_settings) override {
+    TRACE_EVENT0("cc", "ZeroCopyRasterBuffer::Playback");
+    gfx::GpuMemoryBuffer* buffer = lock_.GetGpuMemoryBuffer();
+    if (!buffer) {
+      return;
+    }
+
+    DCHECK_EQ(1u, gfx::NumberOfPlanesForBufferFormat(buffer->GetFormat()));
+
+    // !!!LJH TODO raster directly in YUV space instead of this raster to
+    // temp ARGB and convert to YUV in GPU memory buffer.
+    size_t width = raster_source->GetSize().width();
+    size_t height = raster_source->GetSize().height();
+    std::vector<uint8_t> temp_raster_buffer(width * height * 4);
+    RasterBufferProvider::PlaybackToMemory(
+        temp_raster_buffer.data(), resource_->format(),
+        raster_source->GetSize(), buffer->stride(0), raster_source,
+        raster_full_rect, raster_full_rect, transform,
+        lock_.color_space_for_raster(), playback_settings);
+
+    bool rv = buffer->Map();
+    DCHECK(rv);
+    DCHECK(buffer->memory(0));
+
+    libyuv::ARGBToUYVY(temp_raster_buffer.data(),
+                       width * 4,  // src stride
+                       (uint8_t*)buffer->memory(0),
+                       width * 2,  // dst stride
+                       width, height);
+
+    buffer->Unmap();
+  }
+
+ private:
+  ResourceProvider::ScopedWriteLockGpuMemoryBuffer lock_;
+  const Resource* resource_;
+
+  DISALLOW_COPY_AND_ASSIGN(GpuMemoryBufferRasterBufferImpl);
+};
 
 }  // namespace
 
@@ -106,6 +161,11 @@ OneCopyRasterBufferProvider::AcquireBufferForRaster(
     const Resource* resource,
     uint64_t resource_content_id,
     uint64_t previous_content_id) {
+  if (resource_provider_->GetResourceType(resource->id()) ==
+      ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER) {
+    return base::MakeUnique<GpuMemoryBufferRasterBufferImpl>(resource_provider_,
+                                                             resource);
+  }
   // TODO(danakj): If resource_content_id != 0, we only need to copy/upload
   // the dirty rect.
   return base::MakeUnique<RasterBufferImpl>(this, resource_provider_, resource,

@@ -57,7 +57,8 @@ class CC_EXPORT ResourcePool : public base::trace_event::MemoryDumpProvider,
   // Tries to reuse a resource. If none are available, makes a new one.
   Resource* AcquireResource(const gfx::Size& size,
                             viz::ResourceFormat format,
-                            const gfx::ColorSpace& color_space);
+                            const gfx::ColorSpace& color_space,
+                            bool use_gpu_memory_buffer);
 
   // Tries to acquire the resource with |previous_content_id| for us in partial
   // raster. If successful, this function will retun the invalidated rect which
@@ -152,12 +153,14 @@ class CC_EXPORT ResourcePool : public base::trace_event::MemoryDumpProvider,
   // Tries to reuse a resource. Returns |nullptr| if none are available.
   Resource* ReuseResource(const gfx::Size& size,
                           viz::ResourceFormat format,
-                          const gfx::ColorSpace& color_space);
+                          const gfx::ColorSpace& color_space,
+                          bool use_gpu_memory_buffer);
 
   // Creates a new resource without trying to reuse an old one.
   Resource* CreateResource(const gfx::Size& size,
                            viz::ResourceFormat format,
-                           const gfx::ColorSpace& color_space);
+                           const gfx::ColorSpace& color_space,
+                           bool use_gpu_memory_buffer);
 
   void DidFinishUsingResource(std::unique_ptr<PoolResource> resource);
   void DeleteResource(std::unique_ptr<PoolResource> resource);
