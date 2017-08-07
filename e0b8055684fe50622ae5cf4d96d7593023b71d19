@@ -34,6 +34,24 @@
       "revId": "e0b8055684fe50622ae5cf4d96d7593023b71d19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e7c377_79dad955",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-07T21:55:46Z",
+      "side": 1,
+      "message": "lgtm except one corner case (which shouldn\u0027t block this CL).\n\nSince Philip mentioned OverflowClipRect excludes the border. We are curious whether the border should participate in scroll gesture. Turns out our implementation is already inconsistent between main thread \u0026 impl thread hit testing. Main thread hit testing includes the border while impl thread hit testing excludes it. While I personally feel the latter behavior more intuitive, the spec may require the former. We should check the spec and 3rd-party implementation. May need to pass snapped border rect after all.",
+      "parentUuid": "7998d648_41f72789",
+      "revId": "e0b8055684fe50622ae5cf4d96d7593023b71d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
