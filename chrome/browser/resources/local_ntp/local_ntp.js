@@ -417,6 +417,7 @@ function updateContentWidth() {
   // -2 to account for border.
   var fakeboxWidth = (tilesContainerWidth - NTP_DESIGN.tileMargin - 2);
   $(IDS.FAKEBOX).style.width = fakeboxWidth + 'px';
+  $(IDS.LOGO).style.width = fakeboxWidth + 'px';
   return true;
 }
 
