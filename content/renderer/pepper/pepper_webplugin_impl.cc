@@ -310,7 +310,7 @@ bool PepperWebPluginImpl::ExecuteEditCommand(const blink::WebString& name,
     instance_->ReplaceSelection("");
     return true;
   }
-  if (name == "Paste") {
+  if (name == "Paste" || name == "PasteAndMatchStyle") {
     if (!CanEditText())
       return false;
 
