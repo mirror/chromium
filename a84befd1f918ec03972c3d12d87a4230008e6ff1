@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "d304e959_d8869e42",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T18:27:18Z",
+      "side": 1,
+      "message": "It records promo impression count to shared preferences, but I don\u0027t see any code that would read these impression counts. Am I missing something?",
+      "parentUuid": "2e38efc2_c9871662",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 78
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fd5686f_6b5b95f1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 15

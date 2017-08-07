@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c64d387_6e9f2bdd",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 16
+      },
+      "lineNbr": 2242,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T18:27:18Z",
+      "side": 1,
+      "message": "Translators will see the original string, so this part can be safely removed. Could you please describe location where this string is used? Something like \"Description string for \u0027Continue as\u0027 signin promo shown in Recent Tabs screen\" should work.",
+      "range": {
+        "startLine": 2242,
+        "startChar": 151,
+        "endLine": 2242,
+        "endChar": 204
+      },
+      "revId": "712861bcccf71277bfa3240be1f2fab7d0dc7112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff577abc_162e075b",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 16
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T18:27:18Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 2245,
+        "startChar": 148,
+        "endLine": 2245,
+        "endChar": 190
+      },
+      "revId": "712861bcccf71277bfa3240be1f2fab7d0dc7112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
