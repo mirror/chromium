@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "64eaa55b_262f0cac",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-07T14:19:39Z",
+      "side": 1,
+      "message": "Yeah I think this will be needed on a later phase, this is too difficult at the moment i think.",
+      "parentUuid": "a72f664f_45f0217f",
+      "revId": "c719f3e533e2d0a20e2ac0932db838e381820fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6458215_fd7e4f8f",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_base_fragment_builder.h",
         "patchSetId": 11
