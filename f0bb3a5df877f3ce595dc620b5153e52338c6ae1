@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4872081d_8192f350",
+        "filename": "tools/perf/benchmarks/memory.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-07T21:31:59Z",
+      "side": 1,
+      "message": "I agree that it feels wrong to do this, but renaming _MemoryInfra to MemoryInfra won\u0027t fix the problem. The issue is that _MemoryInfra is a subclass of PerfBenchmark, which causes it or its subclasses to get automatically get discovered as a benchmark if they are public. I could have MemoryInfra, but I\u0027d still need to have an owner and disable it.",
+      "parentUuid": "3adf8a15_df8553b5",
+      "revId": "f0bb3a5df877f3ce595dc620b5153e52338c6ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0cf3079_edf904d3",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_config.py",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-07T20:22:05Z",
       "side": 1,
       "message": "Why do you need to add tools/perf to system path here? The existing code setup should already handle this",
+      "revId": "f0bb3a5df877f3ce595dc620b5153e52338c6ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aadd0f54_322fdfd5",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_config.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-07T21:31:59Z",
+      "side": 1,
+      "message": "My guess is that it\u0027s due to us using our own run_benchmark? With this line removed, I get the following:\n\ntools/perf/contrib/vr_benchmarks/run_benchmark vr_memory.webvr_sample_pages\nTraceback (most recent call last):\n  File \"tools/perf/contrib/vr_benchmarks/run_benchmark\", line 9, in \u003cmodule\u003e\n    import vr_config\n  File \"/usr/local/google/code/clankium/src/tools/perf/contrib/vr_benchmarks/vr_config.py\", line 14, in \u003cmodule\u003e\n    from chrome_telemetry_build import chromium_config\nImportError: No module named chrome_telemetry_build\n\nOnce the changes to remove the setup code from run_benchmark are made, we can probably go to using the regular tools/perf/run_benchmark, which should hopefully fix this?",
+      "parentUuid": "a0cf3079_edf904d3",
       "revId": "f0bb3a5df877f3ce595dc620b5153e52338c6ae1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "f0bb3a5df877f3ce595dc620b5153e52338c6ae1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce05e25_5a27681a",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-07T21:31:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4748c01_c2ac2925",
+      "revId": "f0bb3a5df877f3ce595dc620b5153e52338c6ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
