@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7319a8d8_fd7639d8",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-07T21:47:43Z",
+      "side": 1,
+      "message": "nit: 5 -\u003e 5u, here and other similar places",
+      "range": {
+        "startLine": 418,
+        "startChar": 30,
+        "endLine": 418,
+        "endChar": 31
+      },
+      "revId": "0aa19a14a7757e3e6f41ccc4d14d5617a6b54972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e447d9ec_2ec5efe2",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-07T21:47:43Z",
+      "side": 1,
+      "message": "This test looks similar to StartPageTabFocusTest. Can we share the code? e.g.\n\nCreate a helper\n\nvoid TestForwardFocusOnKey(const KeyEvent\u0026 key) {\n}\n\nand make the two test cases call the helper.",
+      "revId": "0aa19a14a7757e3e6f41ccc4d14d5617a6b54972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b205376_6e55980d",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-07T21:47:43Z",
+      "side": 1,
+      "message": "Similarly, combine this with shift-tab test case ?",
+      "revId": "0aa19a14a7757e3e6f41ccc4d14d5617a6b54972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c5e533_c08eac91",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-07T21:47:43Z",
+      "side": 1,
+      "message": "nit: bool -\u003e const bool",
+      "range": {
+        "startLine": 304,
+        "startChar": 2,
+        "endLine": 304,
+        "endChar": 6
+      },
+      "revId": "0aa19a14a7757e3e6f41ccc4d14d5617a6b54972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493d6fb0_2ac6305b",
+        "filename": "ui/app_list/views/start_page_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-07T21:47:43Z",
+      "side": 1,
+      "message": "Should this be \"-forward_dir : forward_dir\" ?",
+      "range": {
+        "startLine": 556,
+        "startChar": 34,
+        "endLine": 556,
+        "endChar": 40
+      },
+      "revId": "0aa19a14a7757e3e6f41ccc4d14d5617a6b54972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
