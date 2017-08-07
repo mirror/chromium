@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9128e203_9bb2cb04",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T08:12:47Z",
+      "side": 1,
+      "message": "optional: Maybe add a comment\n// Make sure the microphone icon is visible.\n?",
+      "range": {
+        "startLine": 502,
+        "startChar": 40,
+        "endLine": 502,
+        "endChar": 0
+      },
+      "revId": "e51e747b92f49fdf2fb65dfd1df0c4324940a1cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa07496_1cc2404a",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T08:12:47Z",
+      "side": 1,
+      "message": "Just to double-check: If the \u0027fakebox-speech\u0027 element didn\u0027t exist at all, this would fail, right? (and not just silently return \"false\")",
+      "range": {
+        "startLine": 504,
+        "startChar": 69,
+        "endLine": 504,
+        "endChar": 0
+      },
+      "revId": "e51e747b92f49fdf2fb65dfd1df0c4324940a1cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
