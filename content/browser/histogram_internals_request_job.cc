@@ -74,11 +74,9 @@ void HistogramInternalsRequestJob::Start() {
                  weak_factory_.GetWeakPtr()));
 }
 
-int HistogramInternalsRequestJob::GetData(
-    std::string* mime_type,
-    std::string* charset,
-    std::string* data,
-    const net::CompletionCallback& callback) const {
+int HistogramInternalsRequestJob::GetData(std::string* mime_type,
+                                          std::string* charset,
+                                          std::string* data) const {
   mime_type->assign("text/html");
   charset->assign("UTF8");
 

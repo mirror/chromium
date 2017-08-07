@@ -34,8 +34,7 @@ class NET_EXPORT URLRequestDataJob : public URLRequestSimpleJob {
   // URLRequestSimpleJob
   int GetData(std::string* mime_type,
               std::string* charset,
-              std::string* data,
-              const CompletionCallback& callback) const override;
+              std::string* data) const override;
 
  private:
   ~URLRequestDataJob() override;

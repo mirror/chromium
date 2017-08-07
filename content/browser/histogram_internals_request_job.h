@@ -23,8 +23,7 @@ class HistogramInternalsRequestJob : public net::URLRequestSimpleJob {
   void Start() override;
   int GetData(std::string* mime_type,
               std::string* charset,
-              std::string* data,
-              const net::CompletionCallback& callback) const override;
+              std::string* data) const override;
 
   // Generates the HTML for chrome://histograms. If |url| has a path, it's used
   // to display a single histogram.

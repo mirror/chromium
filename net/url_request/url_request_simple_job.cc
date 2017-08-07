@@ -84,8 +84,7 @@ int URLRequestSimpleJob::ReadRawData(IOBuffer* buf, int buf_size) {
 
 int URLRequestSimpleJob::GetData(std::string* mime_type,
                                  std::string* charset,
-                                 std::string* data,
-                                 const CompletionCallback& callback) const {
+                                 std::string* data) const {
   NOTREACHED();
   return ERR_UNEXPECTED;
 }
@@ -96,7 +95,7 @@ int URLRequestSimpleJob::GetRefCountedData(
     scoped_refptr<base::RefCountedMemory>* data,
     const CompletionCallback& callback) const {
   scoped_refptr<base::RefCountedString> str_data(new base::RefCountedString());
-  int result = GetData(mime_type, charset, &str_data->data(), callback);
+  int result = GetData(mime_type, charset, &str_data->data());
   *data = str_data;
   return result;
 }
