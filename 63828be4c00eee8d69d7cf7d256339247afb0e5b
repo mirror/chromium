@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c51af9cd_fa665ea6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/usecounter-fetch.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-07T05:42:50Z",
+      "side": 1,
+      "message": "can you add a TODO that this should change to assert_true once kOffMainThread ships",
+      "revId": "63828be4c00eee8d69d7cf7d256339247afb0e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
