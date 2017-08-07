@@ -93,6 +93,30 @@
       "revId": "e51e747b92f49fdf2fb65dfd1df0c4324940a1cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a98d3e3_d961a23f",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T09:47:40Z",
+      "side": 1,
+      "message": "Oh wow, that is weird. So the GetBoolFromJS helper doesn\u0027t handle errors, and waits indefinitely to get the result?\nIf that\u0027s the case then yes, I\u0027d prefer to change it so the test properly fails rather than timing out. Thanks!",
+      "parentUuid": "e2943ba6_a80e6e17",
+      "range": {
+        "startLine": 504,
+        "startChar": 69,
+        "endLine": 504,
+        "endChar": 0
+      },
+      "revId": "e51e747b92f49fdf2fb65dfd1df0c4324940a1cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
