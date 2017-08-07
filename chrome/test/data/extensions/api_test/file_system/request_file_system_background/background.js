@@ -20,4 +20,8 @@ chrome.test.runTests([
               }));
         }));
   },
+  function testVirtualKeyboard() {
+    chrome.test.assertTrue(false);
+    // chrome.test.assertTrue(!!chrome.virtualKeyboard);
+  }
 ]);

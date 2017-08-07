@@ -119,6 +119,13 @@ const char kTestLocalFsKioskApp[] = "bmbpicmpniaclbbpdkfglgipkkebnbjf";
 //         detail/aaedpojejpghjkedenggihopfhfijcko
 const char kTestGetVolumeListKioskApp[] = "aaedpojejpghjkedenggihopfhfijcko";
 
+// An app to test Kiosk virtual keyboard API via the
+// chrome.virtualKeyboard API.
+// Webstore data json is in
+//     chrome/test/data/chromeos/app_mode/webstore/inlineinstall/
+//         detail/fmmbbdiapbcicajbpkpkdbcgidgppada
+const char kTestVirtualKeyboardKioskApp[] = "fmmbbdiapbcicajbpkpkdbcgidgppada";
+
 // Testing apps for testing kiosk multi-app feature. All the crx files are in
 //    chrome/test/data/chromeos/app_mode/webstore/downloads.
 
@@ -1261,6 +1268,17 @@ IN_PROC_BROWSER_TEST_F(KioskTest, NoConsumerAutoLaunchWhenUntrusted) {
 // Verifies available volumes for kiosk apps in kiosk session.
 IN_PROC_BROWSER_TEST_F(KioskTest, GetVolumeList) {
   set_test_app_id(kTestGetVolumeListKioskApp);
+  set_test_app_version("0.1");
+  set_test_crx_file(test_app_id() + ".crx");
+
+  extensions::ResultCatcher catcher;
+  StartAppLaunchFromLoginScreen(SimulateNetworkOnlineClosure());
+  ASSERT_TRUE(catcher.GetNextResult()) << catcher.message();
+}
+
+// Verifies available volumes for kiosk apps in kiosk session.
+IN_PROC_BROWSER_TEST_F(KioskTest, VirtualKeyboard) {
+  set_test_app_id(kTestVirtualKeyboardKioskApp);
   set_test_app_version("0.1");
   set_test_crx_file(test_app_id() + ".crx");
 
