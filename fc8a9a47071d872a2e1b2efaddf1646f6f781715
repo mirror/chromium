@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b69cf52_b74dfa5b",
+        "filename": "content/browser/payments/payment_app_info_fetcher.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T18:36:42Z",
+      "side": 1,
+      "message": "Why do we need to duplicate structs? Wouldn\u0027t this cause more pain for maintaining the code longer term? Is there a reason why the public version can\u0027t work here?",
+      "revId": "fc8a9a47071d872a2e1b2efaddf1646f6f781715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56154b20_378838d7",
+        "filename": "content/public/browser/stored_payment_app.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T18:36:42Z",
+      "side": 1,
+      "message": "nit: Shouldn\u0027t we add something in the name to make it clear it is for payments? Also, the proto uses StoredRelatedApplicationProto as the name, which doesn\u0027t immediately tell me that the two are related.",
+      "revId": "fc8a9a47071d872a2e1b2efaddf1646f6f781715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
