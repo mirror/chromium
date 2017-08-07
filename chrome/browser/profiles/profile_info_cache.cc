@@ -570,8 +570,10 @@ void ProfileInfoCache::SetAvatarIconOfProfileAtIndex(size_t index,
   if (!disable_avatar_download_for_testing_)
     DownloadHighResAvatarIfNeeded(icon_index, profile_path);
 
+  LOG(ERROR) << "SKYM OnProfileAvatarChanged 1 PRE";
   for (auto& observer : observer_list_)
     observer.OnProfileAvatarChanged(profile_path);
+  LOG(ERROR) << "SKYM OnProfileAvatarChanged 1 POST";
 }
 
 void ProfileInfoCache::SetIsOmittedProfileAtIndex(size_t index,
@@ -707,6 +709,7 @@ void ProfileInfoCache::SetGAIAPictureOfProfileAtIndex(size_t index,
   info->SetString(kGAIAPictureFileNameKey, new_file_name);
   SetInfoForProfileAtIndex(index, std::move(info));
 
+  LOG(ERROR) << "SKYM OnProfileAvatarChanged 2";
   for (auto& observer : observer_list_)
     observer.OnProfileAvatarChanged(path);
 }
@@ -719,6 +722,7 @@ void ProfileInfoCache::SetIsUsingGAIAPictureOfProfileAtIndex(size_t index,
   SetInfoForProfileAtIndex(index, std::move(info));
 
   base::FilePath profile_path = GetPathOfProfileAtIndex(index);
+  LOG(ERROR) << "SKYM OnProfileAvatarChanged 3";
   for (auto& observer : observer_list_)
     observer.OnProfileAvatarChanged(profile_path);
 }

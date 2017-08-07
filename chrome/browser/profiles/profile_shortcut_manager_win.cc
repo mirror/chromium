@@ -8,6 +8,7 @@
 #include <stddef.h>
 
 #include <algorithm>
+#include <memory>
 #include <set>
 #include <string>
 #include <vector>
@@ -815,10 +816,13 @@ ProfileShortcutManagerWin::ProfileShortcutManagerWin(ProfileManager* manager)
   registrar_.Add(this, chrome::NOTIFICATION_PROFILE_CREATED,
                  content::NotificationService::AllSources());
 
+  LOG(ERROR) << "SKYM GetProfileAttributesStorage().AddObserver(this);";
   profile_manager_->GetProfileAttributesStorage().AddObserver(this);
 }
 
 ProfileShortcutManagerWin::~ProfileShortcutManagerWin() {
+  LOG(ERROR) << "SKYM ~ProfileShortcutManagerWin() and "
+                "GetProfileAttributesStorage().RemoveObserver(this);";
   profile_manager_->GetProfileAttributesStorage().RemoveObserver(this);
 }
 
@@ -926,6 +930,9 @@ void ProfileShortcutManagerWin::OnProfileNameChanged(
 
 void ProfileShortcutManagerWin::OnProfileAvatarChanged(
     const base::FilePath& profile_path) {
+  LOG(ERROR) << "SKYM "
+                "ProfileShortcutManagerWin::OnProfileAvatarChanged(profile_"
+                "path);";
   CreateOrUpdateProfileIcon(profile_path);
 }
 

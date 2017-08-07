@@ -31,11 +31,14 @@ TestBrowserThreadBundle::TestBrowserThreadBundle(int options)
 TestBrowserThreadBundle::~TestBrowserThreadBundle() {
   CHECK(threads_created_);
 
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() A";
   // To avoid memory leaks, we must ensure that any tasks posted to the blocking
   // pool via PostTaskAndReply are able to reply back to the originating thread.
   // Thus we must flush the blocking pool while the browser threads still exist.
   base::RunLoop().RunUntilIdle();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() B";
   BrowserThreadImpl::FlushThreadPoolHelperForTesting();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() C";
 
   // To ensure a clean teardown, each thread's message loop must be flushed
   // just before the thread is destroyed. But stopping a fake thread does not

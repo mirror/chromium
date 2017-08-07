@@ -9,6 +9,7 @@
 #include <map>
 #include <set>
 #include <string>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/command_line.h"
@@ -375,13 +376,17 @@ ProfileManager::ProfileManager(const base::FilePath& user_data_dir)
       chrome::NOTIFICATION_BROWSER_CLOSE_CANCELLED,
       content::NotificationService::AllSources());
 
-  if (ProfileShortcutManager::IsFeatureEnabled() && !user_data_dir_.empty())
+  if (ProfileShortcutManager::IsFeatureEnabled() && !user_data_dir_.empty()) {
+    LOG(ERROR) << "SKYM ProfileShortcutManager::Create";
     profile_shortcut_manager_.reset(ProfileShortcutManager::Create(
                                     this));
+  }
 }
 
 ProfileManager::~ProfileManager() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  LOG(ERROR) << "SKYM ~ProfileManager, profile_shortcut_manager_ about to be "
+                "destructed.";
 }
 
 #if BUILDFLAG(ENABLE_SESSION_SERVICE)
