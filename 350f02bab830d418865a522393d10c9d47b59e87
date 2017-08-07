@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40d2df41_a982ddd4",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-07T08:48:23Z",
+      "side": 1,
+      "message": "suspicious. Can you check this?",
+      "range": {
+        "startLine": 130,
+        "startChar": 27,
+        "endLine": 130,
+        "endChar": 42
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984cacf1_1b76d226",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-07T08:48:23Z",
+      "side": 1,
+      "message": "This is suspicious. Is path and filename the same thing?",
+      "range": {
+        "startLine": 205,
+        "startChar": 25,
+        "endLine": 205,
+        "endChar": 40
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2d6237_8046a918",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-07T08:48:23Z",
+      "side": 1,
+      "message": "Nit on Objective C patterns:\nTarget is usually not a protocol at all.",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 33
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a39362_55fb557e",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-07T08:48:23Z",
+      "side": 1,
+      "message": "This is an odd naming in objective C convention where the name of methods describes the parameter.\nHere, an objective C developper would assume that sender \u003d\u003d URL.",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 15
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b42e9d36_6e33a76d",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-07T08:48:23Z",
+      "side": 1,
+      "message": "It is possible that sites contains URLs 1,3,5,8, which will lead to very odd display.\nShould that case be handled?",
+      "range": {
+        "startLine": 156,
+        "startChar": 53,
+        "endLine": 156,
+        "endChar": 58
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c718863_bc75b6cc",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-07T08:48:23Z",
+      "side": 1,
+      "message": "No c cast.\nRename castSender.\nThis method tells me that what you really want here is a delegate.",
+      "range": {
+        "startLine": 198,
+        "startChar": 37,
+        "endLine": 198,
+        "endChar": 56
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b155d8ff_d6faa972",
+        "filename": "ios/chrome/content_widget_extension/most_visited_tile_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-07T08:48:23Z",
+      "side": 1,
+      "message": "what would be the use case of a nonnull title and a null URL?",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
