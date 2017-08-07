@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40f57d32_b66f1195",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-07T23:19:57Z",
+      "side": 1,
+      "message": "I would be more specific and just say used to generate rotating BLE advertisement data.",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "2ba6b42c4e388fd1b741f88dc9439349bfca2427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e3e19a_52a7e8dc",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-07T23:19:57Z",
+      "side": 1,
+      "message": "I would just get rid of this field. It\u0027s deprecated, and we probably shouldn\u0027t be introducing it to this new API.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "2ba6b42c4e388fd1b741f88dc9439349bfca2427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53304183_0f37e3e8",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-07T23:19:57Z",
+      "side": 1,
+      "message": "Do we want to instead make this a List\u003cRemoteDeviceCapability\u003e, for which mobile_hotspot_supported is one of the options? Because we also need a field for is_unlock_key as well.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "2ba6b42c4e388fd1b741f88dc9439349bfca2427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb3a7b6_e3460444",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-07T23:19:57Z",
+      "side": 1,
+      "message": "We should have two fields here:\neligible_devices\nineligible_devices\n\nThe ineligible_devices should also have a separate struct:\nIneligibleDevice {\n  string device_id,\n  string reason\n}",
+      "range": {
+        "startLine": 57,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 26
+      },
+      "revId": "2ba6b42c4e388fd1b741f88dc9439349bfca2427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a75bde93_a2249c5e",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-07T23:19:57Z",
+      "side": 1,
+      "message": "Should this be a string? Otherwise, it doesn\u0027t really make sense.",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 12
+      },
+      "revId": "2ba6b42c4e388fd1b741f88dc9439349bfca2427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30981dac_fc556a46",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-07T23:19:57Z",
+      "side": 1,
+      "message": "s/back-end/server",
+      "range": {
+        "startLine": 97,
+        "startChar": 53,
+        "endLine": 97,
+        "endChar": 61
+      },
+      "revId": "2ba6b42c4e388fd1b741f88dc9439349bfca2427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25652426_1a361546",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-07T23:19:57Z",
+      "side": 1,
+      "message": "nit: add a brief comment",
+      "range": {
+        "startLine": 124,
+        "startChar": 2,
+        "endLine": 124,
+        "endChar": 43
+      },
+      "revId": "2ba6b42c4e388fd1b741f88dc9439349bfca2427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
