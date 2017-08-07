@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53c139fe_4feb086d",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-07T19:13:30Z",
+      "side": 1,
+      "message": "What\u0027s the reason for the swap in order? If there\u0027s a good reason it probably should be commented.",
+      "revId": "0b6a4d17073d470626f03c681ca0e5fc49fc365c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c252f8e4_f90d2637",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-07T19:13:30Z",
+      "side": 1,
+      "message": "Nit: missing period at end.",
+      "revId": "0b6a4d17073d470626f03c681ca0e5fc49fc365c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c19f71f_8526f7d0",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-07T19:13:30Z",
+      "side": 1,
+      "message": "It seems odd that excluder returns false if we want to exclude it, it seems it should return true.",
+      "revId": "0b6a4d17073d470626f03c681ca0e5fc49fc365c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
