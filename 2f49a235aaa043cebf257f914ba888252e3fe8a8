@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "42c68088_c02cfaad",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-07T16:13:16Z",
+      "side": 1,
+      "message": "I don\u0027t know, I would ask dtrainor@",
+      "parentUuid": "debaeeef_698aad07",
+      "range": {
+        "startLine": 70,
+        "startChar": 29,
+        "endLine": 70,
+        "endChar": 46
+      },
+      "revId": "2f49a235aaa043cebf257f914ba888252e3fe8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2638fabd_424a712f",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
         "patchSetId": 14
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Our requirement is that the AwVariationsConfigurationService should be notified to return the seed back when the JobService manages to fetch the seed, so the notifier should be sent to the JobService. But as far as I know, putting it in the extra field of an intent is the only way to send it to another service(the JobInfo can only hold limited extra fields not including this), so please let me know if you have other ways to do that.(for I quite agree that the current way is not beautiful).",
       "parentUuid": "2638fabd_424a712f",
+      "range": {
+        "startLine": 171,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 49
+      },
+      "revId": "2f49a235aaa043cebf257f914ba888252e3fe8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c4da329_2087cc4e",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-07T16:13:16Z",
+      "side": 1,
+      "message": "Aha ok, I didn\u0027t realize the JobInfo bundle was limited.",
+      "parentUuid": "ca13a40f_5c8e53d2",
       "range": {
         "startLine": 171,
         "startChar": 8,
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "We want to make sure this service is still alive until the WebView receives the seed. If we unbind the service in the ServiceConnected method, it will die before the job service fetches the seed and be unable to return the seed back to the WebView.",
       "parentUuid": "ddb0e002_4add0738",
+      "range": {
+        "startLine": 298,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 76
+      },
+      "revId": "2f49a235aaa043cebf257f914ba888252e3fe8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "245b4dc7_676f5697",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-07T16:13:16Z",
+      "side": 1,
+      "message": "Just to make sure we\u0027re on the same page: the code in this CL works in the following way (correct me if I\u0027m wrong - I looked at this last week so can\u0027t remember all the details at the moment)\n\n1. At startup WebView asks AwVariationsConfigurationService for a seed.\n2a. If the seed stored in the WebView data directory is new enough the AwVariationsConfigurationService simply returns that seed (over a messenger), and WebView then unbinds from the AwVariationsConfigurationService.\n2b. On the other hand, if no seed has been stored, or the seed is too old, then we need to fetch a new seed: so we start create a Job for a JobService to execute. When the seed has been fetched, we return it to the app. Note: the WebView app stays bound to the AwVariationsConfigurationService until our JobService has fetched the seed and stored it in the WebView data directory.\n\nIf my explanation above is correct, then we keep the AwVariationsConfigurationService alive for the entire duration between the WebView app asking for the seed, up until we fetch a seed from the network. This is not great :/, one of the reasons for using a JobService is to avoid keeping a process alive while waiting for the fetching of the seed - that wait can be very long and we don\u0027t want to keep a separate process alive all that time.\n\nI would actually suggest removing the entire seed-fetch-completed logic from this CL so that AwVariationsConfigurationService is either used to return the seed directly, or to just trigger the JobService to fetch the seed (then without returning it to the app):\n1. WebView starts up and connects to AwVariationsConfigurationService\n2a. If the Finch seed is fresh: return that.\n2b. Else (the seed doesn\u0027t exist or is stale): schedule a job to fetch the seed from the network, then unbind and let the system kill AwVariationsConfigurationService whenever it wants to.\nWDYT?",
+      "parentUuid": "b7af3f21_2c515066",
       "range": {
         "startLine": 298,
         "startChar": 0,
