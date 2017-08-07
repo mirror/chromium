@@ -364,6 +364,19 @@ base::LazyInstance<ChromiumEnv>::Leaky default_env = LAZY_INSTANCE_INITIALIZER;
 
 }  // unnamed namespace
 
+Options::Options() {
+// Currently log reuse is an experimental feature in leveldb. More info at:
+// https://github.com/google/leveldb/commit/251ebf5dc70129ad3
+#if defined(OS_CHROMEOS)
+  // Reusing logs on Chrome OS resulted in an unacceptably high leveldb
+  // corruption rate (at least for Indexed DB). More info at
+  // https://crbug.com/460568
+  reuse_logs = false;
+#else
+  reuse_logs = true;
+#endif
+}
+
 const char* MethodIDToString(MethodID method) {
   switch (method) {
     case kSequentialFileRead:
@@ -552,7 +565,7 @@ bool IndicatesDiskFull(const leveldb::Status& status) {
 // There is no way to know the size of A, so minimizing the size of B will
 // maximize the likelihood of a successful compaction.
 size_t WriteBufferSize(int64_t disk_size) {
-  const leveldb::Options default_options;
+  const leveldb_env::Options default_options;
   const int64_t kMinBufferSize = 1024 * 1024;
   const int64_t kMaxBufferSize = default_options.write_buffer_size;
   const int64_t kDiskMinBuffSize = 10 * 1024 * 1024;
@@ -1291,7 +1304,7 @@ void DBTracker::DatabaseDestroyed(TrackedDBImpl* database) {
   database->RemoveFromList();
 }
 
-leveldb::Status OpenDB(const leveldb::Options& options,
+leveldb::Status OpenDB(const leveldb_env::Options& options,
                        const std::string& name,
                        std::unique_ptr<leveldb::DB>* dbptr) {
   DBTracker::TrackedDB* tracked_db = nullptr;
