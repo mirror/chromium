@@ -22,6 +22,30 @@
       "revId": "52a8e7f9d5e0db8b3e71797679e1aedea2e3e9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be644245_1f13c6c7",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2792,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-07T12:48:38Z",
+      "side": 0,
+      "message": "Yes (but not here). \n\nSnippets-internals CL depends on this CL, so I am removing it there.\nhttps://chromium-review.googlesource.com/c/602035",
+      "parentUuid": "7ca586b3_824bd3ae",
+      "range": {
+        "startLine": 2792,
+        "startChar": 12,
+        "endLine": 2792,
+        "endChar": 55
+      },
+      "revId": "52a8e7f9d5e0db8b3e71797679e1aedea2e3e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

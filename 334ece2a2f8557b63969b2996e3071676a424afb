@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3264a208_d7b923fe",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-07T12:48:38Z",
+      "side": 1,
+      "message": "ACK (will be addressed in a following CL).\n\nI have a dependent CL, which adds a third parameter (MockRemoteSuggestionsStatusService). I would like to do the change there instead of rebasing it.\n\n\u003e Most calls to MakeSuggestionsProviderWithoutInitialization() are followed by a call to WaitForSuggestionsProviderInitialization(),\n\nI am not sure whether it is \"most\", but a large portion.\n\n\u003e It might be easier to add an enum {NO_MOCKS, BREAKING_NEWS_MOCK, PREFETCHED_PAGES_MOCK, ALL_MOCKS} to avoid the long comments. ALL_MOCKS might not even be necessary; I didn\u0027t see any (true, true) calls.\n\nI am a bit reluctant to do this, because such constructing is just a temporary solution, because I do not have time to change all tests to support the mock (MockRemoteSuggestionsStatusService case) or write a proper Builder for constructing the provider (PagesTracked and NewsListener).\n\nI do not think that neating it up a bit improves the situation enough to be worth it.",
+      "parentUuid": "79b78770_8589fb01",
+      "revId": "334ece2a2f8557b63969b2996e3071676a424afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "590015c3_543428ca",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "334ece2a2f8557b63969b2996e3071676a424afb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb6f3c8_1d4a00f7",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-07T12:48:38Z",
+      "side": 1,
+      "message": "Done (EXPECT_FALSE).\n\nI completely agree with you :) just a muscle memory.",
+      "parentUuid": "590015c3_543428ca",
+      "range": {
+        "startLine": 469,
+        "startChar": 4,
+        "endLine": 469,
+        "endChar": 10
+      },
+      "revId": "334ece2a2f8557b63969b2996e3071676a424afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
