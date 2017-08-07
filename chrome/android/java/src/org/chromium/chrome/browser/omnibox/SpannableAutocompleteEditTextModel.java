@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextModelBase {
     private static final String TAG = "cr_SpanAutocomplete";
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     // A pattern that matches strings consisting of English and European character sets, numbers,
     // punctuations, and a white space.
@@ -136,8 +136,8 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
         clearAutocompleteText();
         // Take effect and notify if not already in a batch edit.
         if (mInputConnection != null) {
-            mInputConnection.beginBatchEdit();
-            mInputConnection.endBatchEdit();
+            mInputConnection.onBeginImeCommand();
+            mInputConnection.onEndImeCommand();
         } else {
             mSpanCursorController.removeSpan();
             notifyAutocompleteTextStateChanged();
@@ -150,13 +150,13 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
         if (mInputConnection == null) {
             return mDelegate.super_dispatchKeyEvent(event);
         }
-        mInputConnection.beginBatchEdit();
+        mInputConnection.onBeginImeCommand();
         if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER
                 && event.getAction() == KeyEvent.ACTION_DOWN) {
             mInputConnection.commitAutocomplete();
         }
         boolean retVal = mDelegate.super_dispatchKeyEvent(event);
-        mInputConnection.endBatchEdit();
+        mInputConnection.onEndImeCommand();
         return retVal;
     }
 
@@ -240,8 +240,8 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
         // TODO(changwan): avoid any unnecessary removal and addition of autocomplete text when it
         // is not changed or when it is appended to the existing autocomplete text.
         if (mInputConnection != null) {
-            mInputConnection.beginBatchEdit();
-            mInputConnection.endBatchEdit();
+            mInputConnection.onBeginImeCommand();
+            mInputConnection.onEndImeCommand();
         }
     }
 
@@ -402,7 +402,7 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
             return retVal;
         }
 
-        private boolean onBeginImeCommand() {
+        public boolean onBeginImeCommand() {
             if (DEBUG) Log.i(TAG, "onBeginImeCommand: " + mBatchEditNestCount);
             boolean retVal = incrementBatchEditCount();
             if (mBatchEditNestCount == 1) {
@@ -444,7 +444,7 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
             return retVal;
         }
 
-        private boolean onEndImeCommand() {
+        public boolean onEndImeCommand() {
             if (DEBUG) Log.i(TAG, "onEndImeCommand: " + (mBatchEditNestCount - 1));
             if (mBatchEditNestCount > 1) {
                 String diff = mCurrentState.getBackwardDeletedTextFrom(mPreBatchEditState);
