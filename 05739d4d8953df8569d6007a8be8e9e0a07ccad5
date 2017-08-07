@@ -93,6 +93,30 @@
       "revId": "05739d4d8953df8569d6007a8be8e9e0a07ccad5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5f5f89f_5367755a",
+        "filename": "chrome/browser/ui/webui/chromeos/certificate_manager_dialog_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-07T20:03:58Z",
+      "side": 1,
+      "message": "Like I said, it\u0027s a weird case, so I wouldn\u0027t prioritize a report like that. But some WebUIs use paths and some don\u0027t, so I\u0027d rather err on the side of being liberal in what we accept. Especially since URLs get posted in help forums, so it\u0027s nice that when we overhaul a WebUI a URL like chrome://settings/some-obsolete-path doesn\u0027t become an error.",
+      "parentUuid": "8005a324_92408791",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 25
+      },
+      "revId": "05739d4d8953df8569d6007a8be8e9e0a07ccad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
