@@ -5,6 +5,7 @@
 #include "content/browser/devtools/devtools_url_request_interceptor.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/strings/pattern.h"
 #include "base/strings/stringprintf.h"
 #include "base/supports_user_data.h"
 #include "content/browser/devtools/devtools_agent_host_impl.h"
@@ -123,6 +124,7 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
     MaybeCreateDevToolsURLInterceptorRequestJob(
         net::URLRequest* request,
         net::NetworkDelegate* network_delegate) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   // Bail out if we're not intercepting anything.
   if (intercepted_render_frames_.empty()) {
     DCHECK(intercepted_frame_tree_nodes_.empty());
@@ -160,6 +162,18 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
 
   // We don't want to intercept our own sub requests.
   if (sub_requests_.find(request) != sub_requests_.end())
+    return nullptr;
+
+  bool matchFound = false;
+  auto patterns =
+      intercepted_page->network_handler->requestInterceptionPatternsOnIO();
+  for (const std::string& pattern : patterns) {
+    if (base::MatchPattern(request->url().spec(), pattern)) {
+      matchFound = true;
+      break;
+    }
+  }
+  if (!matchFound)
     return nullptr;
 
   bool is_redirect;
