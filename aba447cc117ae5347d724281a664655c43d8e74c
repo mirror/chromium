@@ -52,6 +52,24 @@
       "revId": "aba447cc117ae5347d724281a664655c43d8e74c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c742862d_3b13a298",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-07T22:03:24Z",
+      "side": 1,
+      "message": "I just synced with zalcorn@ and elizabethchiu@, and they think blur should be enabled on all devices as it\u0027s very critical to login UI, which is separate from the new launcher. For slower devices there will be an alternative if there\u0027s performance issue.",
+      "parentUuid": "076bdb5a_838b91d7",
+      "revId": "aba447cc117ae5347d724281a664655c43d8e74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
