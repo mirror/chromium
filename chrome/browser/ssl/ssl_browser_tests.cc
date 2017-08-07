@@ -612,6 +612,15 @@ class SSLUITest : public InProcessBrowserTest {
   }
 
   // Helper function for testing invalid certificate chain reporting with the
+  // MITM software interstitial.
+  void TestMITMSoftwareReporting(
+      certificate_reporting_test_utils::OptIn opt_in,
+      certificate_reporting_test_utils::ExpectReport expect_report,
+      Browser* browser) {
+    ASSERT_TRUE(https_server_expired_.Start());
+  }
+
+  // Helper function for testing invalid certificate chain reporting with the
   // bad clock interstitial.
   void TestBadClockReporting(
       certificate_reporting_test_utils::OptIn opt_in,
@@ -1266,6 +1275,10 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSErrorCausedByClockUsingNetwork) {
   CheckSecurityState(clock_tab, net::CERT_STATUS_DATE_INVALID,
                      security_state::DANGEROUS,
                      AuthState::SHOWING_INTERSTITIAL);
+}
+
+IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSErrorCausedByMITMSoftware) {
+  ASSERT_TRUE(https_server_expired_.Start());
 }
 
 // Visits a page with https error and then goes back using Browser::GoBack.
@@ -4947,9 +4960,10 @@ IN_PROC_BROWSER_TEST_F(SSLUITestIgnoreLocalhostCertErrors,
   ASSERT_TRUE(content::ExecuteScript(tab, "window.open()"));
 }
 
-// Put captive portal related tests under a different namespace for nicer
-// pattern matching.
+// Put captive portal and MITM software related tests under a different
+// namespace for nicer pattern matching.
 using SSLUICaptivePortalListTest = SSLUITest;
+using SSLUIMITMSoftwareTest = SSLUITest;
 
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
 
@@ -5375,6 +5389,58 @@ IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListTest, PortalChecksDisabled) {
 }
 
 #endif  // BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+
+#if !defined(OS_IOS)
+// Tests that we don't check for a MITM software certificate match when the
+// feature is disabled by Finch. The MITM software list is passed to
+// SSLErrorHandler via a proto.
+IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareTest, Disabled) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  // Use InitFromCommandLine instead of InitAndDisableFeature to avoid making
+  // the feature public in SSLErrorHandler header.
+  scoped_feature_list.InitFromCommandLine(
+      std::string() /* enabled */,
+      "MITMSoftwareInterstitial" /* disabled */);
+
+  ASSERT_TRUE(https_server_mismatched_.Start());
+  base::HistogramTester histograms;
+
+  // Mark the server's cert as a MITM software cert.
+  const std::string cert_issuer =
+      https_server_mismatched_.GetCertificate().get()->issuer().common_name;
+  auto config_proto =
+      base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+  chrome_browser_ssl::MITMSoftware* mitm_software =
+      config_proto->add_mitm_software();
+  mitm_software->set_name("MITM Software 1");
+  mitm_software->set_regex(cert_issuer);
+  SSLErrorHandler::SetErrorAssistantProto(std::move(config_proto));
+
+  // Navigate to an unsafe page on the server. A normal SSL interstitial should
+  // be displayed since the MITMSoftwareInterstitial feature is disabled.
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  SSLInterstitialTimerObserver interstitial_timer_observer(tab);
+  ui_test_utils::NavigateToURL(
+      browser(), https_server_mismatched_.GetURL("/ssl/blank_page.html"));
+  content::WaitForInterstitialAttach(tab);
+
+  InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+  ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
+            interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+  EXPECT_TRUE(interstitial_timer_observer.timer_started());
+
+  // Check that the histogram for the SSL interstitial was recorded.
+  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 2);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::HANDLE_ALL, 1);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_SSL_INTERSTITIAL_OVERRIDABLE, 1);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::CAPTIVE_PORTAL_CERT_FOUND, 0);
+}
+
+#endif  // #if !defined(OS_IOS)
 
 class SuperfishSSLUITest : public CertVerifierBrowserTest {
  public:
