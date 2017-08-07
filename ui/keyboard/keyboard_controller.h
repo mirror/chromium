@@ -111,6 +111,10 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // false while closing the keyboard.
   void HideKeyboard(HideReason reason);
 
+  // Same as HideKeyboard but performs the translation without an animation.
+  // Calls the same animation end handlers.
+  void HideKeyboardSynchronous(HideReason reason);
+
   // Force the keyboard to show up if not showing and lock the keyboard if
   // |lock| is true.
   void ShowKeyboard(bool lock);
@@ -183,6 +187,11 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
 
   // Returns true if keyboard is scheduled to hide.
   bool WillHideKeyboard() const;
+
+  void HideKeyboardInternal(HideReason reason, const bool use_animation);
+
+  // Starts the animation to hide the keyboard.
+  void FireHidingAnimation();
 
   // Called when show and hide animation finished successfully. If the animation
   // is aborted, it won't be called.
