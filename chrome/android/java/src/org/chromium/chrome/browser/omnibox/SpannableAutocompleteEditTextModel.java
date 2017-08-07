@@ -10,6 +10,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.BackgroundColorSpan;
 import android.view.KeyEvent;
+import android.view.accessibility.AccessibilityEvent;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
@@ -30,7 +31,7 @@ import java.util.regex.Pattern;
 public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextModelBase {
     private static final String TAG = "cr_SpanAutocomplete";
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     // A pattern that matches strings consisting of English and European character sets, numbers,
     // punctuations, and a white space.
@@ -110,6 +111,9 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
         }
         if (mBatchEditNestCount > 0) return;
         if (mCurrentState.equals(mPreviouslyNotifiedState)) return;
+        if (!mIgnoreTextChangeFromAutocomplete) {
+            mDelegate.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED);
+        }
         // Nothing has changed except that autocomplete text has been set or modified.
         if (mCurrentState.equalsExceptAutocompleteText(mPreviouslyNotifiedState)
                 && mCurrentState.hasAutocompleteText()) {
@@ -285,6 +289,11 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
         mLastUpdateSelStart = selStart;
         mLastUpdateSelEnd = selEnd;
         mDelegate.onUpdateSelectionForTesting(selStart, selEnd);
+    }
+
+    @Override
+    public boolean shouldIgnoreAccessibilityEvent() {
+        return mBatchEditNestCount > 0;
     }
 
     /**

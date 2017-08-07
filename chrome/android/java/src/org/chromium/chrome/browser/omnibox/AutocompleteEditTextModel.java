@@ -21,7 +21,7 @@ import org.chromium.base.Log;
 public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase {
     private static final String TAG = "cr_AutocompleteModel";
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private final Delegate mDelegate;
     private final AutocompleteSpan mAutocompleteSpan;
@@ -488,5 +488,10 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
         mLastUpdateSelStart = selStart;
         mLastUpdateSelEnd = selEnd;
         mDelegate.onUpdateSelectionForTesting(selStart, selEnd);
+    }
+
+    @Override
+    public boolean shouldIgnoreAccessibilityEvent() {
+        return false;
     }
 }

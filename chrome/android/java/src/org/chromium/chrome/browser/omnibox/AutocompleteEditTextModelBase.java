@@ -38,6 +38,8 @@ public interface AutocompleteEditTextModelBase {
         int getHighlightColor();
         /** @see TextView#setCursorVisible(boolean) */
         void setCursorVisible(boolean visible);
+        /** @see TextView#sendAccessibilityEvent(int) */
+        void sendAccessibilityEvent(int eventType);
 
         /**
          * Call super.dispatchKeyEvent(KeyEvent).
@@ -164,4 +166,9 @@ public interface AutocompleteEditTextModelBase {
     /** @return The current {@link InputConnection} object. */
     @VisibleForTesting
     InputConnection getInputConnection();
+
+    /**
+     * @return Whether accessibility event should be ignored.
+     */
+    boolean shouldIgnoreAccessibilityEvent();
 }

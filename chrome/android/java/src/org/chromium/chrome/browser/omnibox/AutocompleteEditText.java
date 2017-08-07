@@ -31,7 +31,7 @@ public class AutocompleteEditText
         extends VerticallyFixedEditText implements AutocompleteEditTextModelBase.Delegate {
     private static final String TAG = "cr_AutocompleteEdit";
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private final AccessibilityManager mAccessibilityManager;
 
@@ -51,6 +51,11 @@ public class AutocompleteEditText
         super(context, attrs);
         mAccessibilityManager =
                 (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+    }
+
+    @VisibleForTesting
+    public AccessibilityManager getAccessibilityManagerForTesting() {
+        return mAccessibilityManager;
     }
 
     private void ensureModel() {
@@ -208,14 +213,18 @@ public class AutocompleteEditText
 
     @Override
     public void sendAccessibilityEventUnchecked(AccessibilityEvent event) {
-        if (mIgnoreTextChangesForAutocomplete) {
-            if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED
-                    || event.getEventType() == AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED) {
-                if (DEBUG) Log.i(TAG, "Ignoring accessibility event from autocomplete.");
-                return;
-            }
+        if (shouldIgnoreAccessibilityEvent(event)) {
+            if (DEBUG) Log.i(TAG, "Ignoring accessibility event.");
+        } else {
+            if (DEBUG) Log.i(TAG, "sendAccessibilityEventUnchecked");
+            super.sendAccessibilityEventUnchecked(event);
         }
-        super.sendAccessibilityEventUnchecked(event);
+    }
+
+    private boolean shouldIgnoreAccessibilityEvent(AccessibilityEvent event) {
+        return (mIgnoreTextChangesForAutocomplete || (mModel != null && mModel.shouldIgnoreAccessibilityEvent()))
+                && (event.getEventType() == AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED
+                || event.getEventType() == AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED);
     }
 
     @Override
