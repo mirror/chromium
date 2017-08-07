@@ -80,7 +80,7 @@ TEST_F(NGOutOfFlowLayoutPartTest, FixedInsideAbs) {
   EXPECT_EQ(fixed_2->OffsetTop(), LayoutUnit(9));
 };
 
-TEST_F(NGOutOfFlowLayoutPartTest, OrthogonalWritingMode1) {
+TEST_F(NGOutOfFlowLayoutPartTest, DISABLED_OrthogonalWritingMode1) {
   SetBodyInnerHTML(
       R"HTML(
     <style>
@@ -119,7 +119,7 @@ TEST_F(NGOutOfFlowLayoutPartTest, OrthogonalWritingMode1) {
             fragment->Offset());
 };
 
-TEST_F(NGOutOfFlowLayoutPartTest, OrthogonalWritingMode2) {
+TEST_F(NGOutOfFlowLayoutPartTest, DISABLED_OrthogonalWritingMode2) {
   SetBodyInnerHTML(
       R"HTML(
     <style>
