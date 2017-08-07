@@ -22,6 +22,30 @@
       "revId": "777c9e2139d68a9a64cae250749326430cfbe7e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303a3664_3de37029",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-07T17:32:12Z",
+      "side": 1,
+      "message": "Right. I updated the comment to make it more clear. Thanks!\n\nDone.",
+      "parentUuid": "f943504b_a1d956d3",
+      "range": {
+        "startLine": 234,
+        "startChar": 79,
+        "endLine": 234,
+        "endChar": 0
+      },
+      "revId": "777c9e2139d68a9a64cae250749326430cfbe7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

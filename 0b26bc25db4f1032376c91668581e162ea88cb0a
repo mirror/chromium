@@ -123,6 +123,24 @@
       "revId": "0b26bc25db4f1032376c91668581e162ea88cb0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d599f7_9587cbdd",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-07T17:32:12Z",
+      "side": 1,
+      "message": "Thanks for the comment! Right, sorry for the confusion here. I analyzed the code again and FireEvent() will only be called when all possible data can be provided (i.e. wait for all available sensors), because SensorReadingCouldBeRead() will only return true if all sensors are either fully ready (its shared memory buffer is initialized) or failed. If any sensor is in the intermediate state, the SensorReadingCouldBeRead() will return false.",
+      "parentUuid": "184b036e_2ee351dc",
+      "revId": "0b26bc25db4f1032376c91668581e162ea88cb0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
