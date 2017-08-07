@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c59b07b_2fbdc408",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIWidthOrHeight.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-07T06:33:37Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed.. if it is we can fix the header generator.",
+      "revId": "97b02b19c023e039b70fe9bf07555c3ef6a780d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
