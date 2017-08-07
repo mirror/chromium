@@ -3147,5 +3147,37 @@
   },
 
   "SkipMetadataCheck": {
+  },
+
+  "DeviceOffHours": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "DeviceOffHours": {
+        "interval": [
+          {
+            "start" : {
+              "weekday" : 1,
+              "time": 12840000
+            },
+            "end": {
+              "weekday" : 1,
+              "time": 21720000
+            }
+          },
+          {
+            "start" : {
+              "weekday" : 3,
+              "time": 38640000
+            },
+            "end": {
+              "weekday" : 3,
+              "time": 57600000
+            }
+          }
+        ],
+        "timezone" : "GMT",
+        "ignored_policy": ["DeviceAllowNewUsers", "DeviceGuestModeEnabled"]
+      }
+    }
   }
 }
