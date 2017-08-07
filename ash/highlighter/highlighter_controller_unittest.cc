@@ -4,16 +4,75 @@
 
 #include "ash/highlighter/highlighter_controller.h"
 
+#include "ash/ash_switches.h"
 #include "ash/fast_ink/fast_ink_points.h"
 #include "ash/highlighter/highlighter_controller_test_api.h"
+#include "ash/palette_delegate.h"
+#include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/config.h"
 #include "ash/shell.h"
+#include "ash/shell_test_api.h"
+#include "ash/system/palette/palette_ids.h"
+#include "ash/system/palette/palette_tray.h"
+#include "ash/system/palette/palette_utils.h"
+#include "ash/system/status_area_widget.h"
+#include "ash/system/status_area_widget_test_helper.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/ash_test_helper.h"
+#include "ash/test_shell_delegate.h"
+#include "base/command_line.h"
 #include "base/strings/stringprintf.h"
+#include "components/prefs/testing_pref_service.h"
 #include "ui/events/test/event_generator.h"
 
 namespace ash {
 namespace {
+
+class TestPaletteDelegate : public PaletteDelegate {
+ public:
+  TestPaletteDelegate() {}
+  ~TestPaletteDelegate() override {}
+
+  void set_is_metalayer_supported(bool is_metalayer_supported) {
+    is_metalayer_supported_ = is_metalayer_supported;
+    if (!is_metalayer_supported_ && !metalayer_closed_callback_.is_null())
+      base::ResetAndReturn(&metalayer_closed_callback_).Run();
+  }
+
+  void set_controller_test_api(
+      HighlighterControllerTestApi* controller_test_api) {
+    controller_test_api_ = controller_test_api;
+  }
+
+ private:
+  // PaletteDelegate:
+  std::unique_ptr<EnableListenerSubscription> AddPaletteEnableListener(
+      const EnableListener& on_state_changed) override {
+    return nullptr;
+  }
+  void CreateNote() override {}
+  bool HasNoteApp() override { return false; }
+  bool ShouldAutoOpenPalette() override { return false; }
+  bool ShouldShowPalette() override { return false; }
+  void TakeScreenshot() override {}
+  void TakePartialScreenshot(const base::Closure& done) override {}
+  void CancelPartialScreenshot() override {}
+  bool IsMetalayerSupported() override { return is_metalayer_supported_; }
+  void ShowMetalayer(const base::Closure& callback) override {
+    controller_test_api_->SetEnabled(true);
+    metalayer_closed_callback_ = callback;
+  }
+  void HideMetalayer() override {
+    controller_test_api_->SetEnabled(false);
+    metalayer_closed_callback_ = base::Closure();
+  }
+
+  bool is_metalayer_supported_ = false;
+  base::Closure metalayer_closed_callback_;
+  HighlighterControllerTestApi* controller_test_api_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestPaletteDelegate);
+};
 
 class HighlighterControllerTest : public AshTestBase {
  public:
@@ -21,7 +80,31 @@ class HighlighterControllerTest : public AshTestBase {
   ~HighlighterControllerTest() override {}
 
   void SetUp() override {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kAshForceEnableStylusTools);
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kAshEnablePaletteOnAllDisplays);
+
     AshTestBase::SetUp();
+
+    // The below pref_service_ manipulation is required to make the palette tray
+    // visible (see ash::PaletteTrayTest).
+    Shell::RegisterLocalStatePrefs(pref_service_.registry());
+    ash_test_helper()->test_shell_delegate()->set_local_state_pref_service(
+        &pref_service_);
+
+    palette_tray_ =
+        StatusAreaWidgetTestHelper::GetStatusAreaWidget()->palette_tray();
+    palette_test_api_ = base::MakeUnique<PaletteTray::TestApi>(palette_tray_);
+
+    // Set the test palette delegate here, since this requires an instance of
+    // shell to be available.
+    ShellTestApi().SetPaletteDelegate(base::MakeUnique<TestPaletteDelegate>());
+    // Initialize the palette tray again since this test requires information
+    // from the palette delegate. (It was initialized without the delegate in
+    // AshTestBase::SetUp()).
+    palette_tray_->Initialize();
+
     controller_ = base::MakeUnique<HighlighterController>();
   }
 
@@ -33,8 +116,6 @@ class HighlighterControllerTest : public AshTestBase {
   }
 
  protected:
-  std::unique_ptr<HighlighterController> controller_;
-
   void TraceRect(const gfx::Rect& rect) {
     GetEventGenerator().MoveTouch(gfx::Point(rect.x(), rect.y()));
     GetEventGenerator().PressTouch();
@@ -45,7 +126,36 @@ class HighlighterControllerTest : public AshTestBase {
     GetEventGenerator().ReleaseTouch();
   }
 
+  TestPaletteDelegate* test_palette_delegate() {
+    return static_cast<TestPaletteDelegate*>(Shell::Get()->palette_delegate());
+  }
+
+  bool IsToolActive() {
+    return palette_test_api_->GetPaletteToolManager()->IsToolActive(
+        PaletteToolId::METALAYER);
+  }
+
+  void ActivateTool() {
+    palette_test_api_->GetPaletteToolManager()->ActivateTool(
+        PaletteToolId::METALAYER);
+  }
+
+  void DeactivateTool() {
+    palette_test_api_->GetPaletteToolManager()->DeactivateTool(
+        PaletteToolId::METALAYER);
+  }
+
+  gfx::Rect GetPaletteBoundsInScreen() {
+    return palette_tray_->GetBoundsInScreen();
+  }
+
+  std::unique_ptr<HighlighterController> controller_;
+
  private:
+  TestingPrefServiceSimple pref_service_;
+  std::unique_ptr<PaletteTray::TestApi> palette_test_api_;
+  PaletteTray* palette_tray_ = nullptr;  // not owned
+
   DISALLOW_COPY_AND_ASSIGN(HighlighterControllerTest);
 };
 
@@ -291,6 +401,79 @@ TEST_F(HighlighterControllerTest, HighlighterGesturesRotated) {
   TraceRect(trace);
   EXPECT_TRUE(controller_test_api_.handle_selection_called());
   EXPECT_EQ("599,200 300x400", controller_test_api_.selection().ToString());
+}
+
+// Test the interaction between the highlighter and the metalayer palette tool.
+// The two are unaware of each other and need to be connected by some kind
+// of "glue" (provided in this case by TestPaletteDelegate).
+TEST_F(HighlighterControllerTest, HighlighterInvokedViaPalette) {
+  // TODO(crbug.com/751191): Remove the check for Mash.
+  // See palette_tray_unittest.cc for similar checks.
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
+  HighlighterControllerTestApi controller_test_api_(controller_.get());
+  test_palette_delegate()->set_controller_test_api(&controller_test_api_);
+  GetEventGenerator().EnterPenPointerMode();
+
+  test_palette_delegate()->set_is_metalayer_supported(true);
+
+  // Press/drag does not activate the highlighter unless the palette tool is
+  // activated.
+  GetEventGenerator().MoveTouch(gfx::Point(1, 1));
+  GetEventGenerator().PressTouch();
+  EXPECT_FALSE(controller_test_api_.IsShowingHighlighter());
+  GetEventGenerator().MoveTouch(gfx::Point(2, 2));
+  EXPECT_FALSE(controller_test_api_.IsShowingHighlighter());
+  GetEventGenerator().ReleaseTouch();
+
+  // Activate the palette tool, still no highlighter.
+  ActivateTool();
+  EXPECT_FALSE(controller_test_api_.IsShowingHighlighter());
+
+  // Press over a regular (non-palette) location. This should activate the
+  // highlighter.
+  EXPECT_FALSE(palette_utils::PaletteContainsPointInScreen(gfx::Point(1, 1)));
+  GetEventGenerator().MoveTouch(gfx::Point(1, 1));
+  GetEventGenerator().PressTouch();
+  EXPECT_TRUE(controller_test_api_.IsShowingHighlighter());
+  GetEventGenerator().ReleaseTouch();
+
+  // Disable/enable the palette tool to hide the highlighter.
+  DeactivateTool();
+  ActivateTool();
+  EXPECT_FALSE(controller_test_api_.IsShowingHighlighter());
+
+  // Press/drag over the palette button. This should not activate the
+  // highlighter.
+  gfx::Point palette_point = GetPaletteBoundsInScreen().CenterPoint();
+  EXPECT_TRUE(palette_utils::PaletteContainsPointInScreen(palette_point));
+  GetEventGenerator().MoveTouch(palette_point);
+  GetEventGenerator().PressTouch();
+  EXPECT_FALSE(controller_test_api_.IsShowingHighlighter());
+  palette_point += gfx::Vector2d(1, 1);
+  EXPECT_TRUE(palette_utils::PaletteContainsPointInScreen(palette_point));
+  GetEventGenerator().MoveTouch(palette_point);
+  EXPECT_FALSE(controller_test_api_.IsShowingHighlighter());
+  GetEventGenerator().ReleaseTouch();
+
+  // The previous gesture should have disabled the palette tool.
+  EXPECT_FALSE(IsToolActive());
+  ActivateTool();
+
+  // Disabling metalayer support in the delegate should disable the palette
+  // tool.
+  test_palette_delegate()->set_is_metalayer_supported(false);
+  EXPECT_FALSE(IsToolActive());
+
+  // With the metalayer disabled again, press/drag does not activate the
+  // highlighter.
+  GetEventGenerator().MoveTouch(gfx::Point(1, 1));
+  GetEventGenerator().PressTouch();
+  EXPECT_FALSE(controller_test_api_.IsShowingHighlighter());
+  GetEventGenerator().MoveTouch(gfx::Point(2, 2));
+  EXPECT_FALSE(controller_test_api_.IsShowingHighlighter());
+  GetEventGenerator().ReleaseTouch();
 }
 
 }  // namespace ash
