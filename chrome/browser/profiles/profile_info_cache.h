@@ -213,12 +213,14 @@ class ProfileInfoCache : public ProfileInfoInterface,
   const gfx::Image* LoadAvatarPictureFromPath(
       const base::FilePath& profile_path,
       const std::string& key,
-      const base::FilePath& image_path) const;
+      const base::FilePath& image_path,
+      bool is_using_gaia = false) const;
 
   // Called when the picture given by |key| has been loaded from disk and
   // decoded into |image|.
   void OnAvatarPictureLoaded(const base::FilePath& profile_path,
                              const std::string& key,
+                             bool is_using_gaia,
                              gfx::Image** image) const;
   // Called when the picture given by |file_name| has been saved to disk.
   // Used both for the GAIA profile picture and the high res avatar files.

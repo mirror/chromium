@@ -13,6 +13,7 @@
 #include "base/i18n/case_conversion.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/stl_util.h"
 #include "base/strings/string_piece.h"
@@ -386,7 +387,7 @@ const gfx::Image* ProfileInfoCache::GetGAIAPictureOfProfileAtIndex(
     return NULL;
 
   base::FilePath image_path = path.AppendASCII(file_name);
-  return LoadAvatarPictureFromPath(path, key, image_path);
+  return LoadAvatarPictureFromPath(path, key, image_path, true);
 }
 
 bool ProfileInfoCache::IsUsingGAIAPictureOfProfileAtIndex(size_t index) const {
@@ -983,7 +984,8 @@ void ProfileInfoCache::DownloadHighResAvatar(
 const gfx::Image* ProfileInfoCache::LoadAvatarPictureFromPath(
     const base::FilePath& profile_path,
     const std::string& key,
-    const base::FilePath& image_path) const {
+    const base::FilePath& image_path,
+    bool is_using_gaia) const {
   // If the picture is already loaded then use it.
   if (cached_avatar_images_.count(key)) {
     if (cached_avatar_images_[key]->IsEmpty())
@@ -1006,12 +1008,13 @@ const gfx::Image* ProfileInfoCache::LoadAvatarPictureFromPath(
       base::BindOnce(&ReadBitmap, image_path, image),
       base::BindOnce(&ProfileInfoCache::OnAvatarPictureLoaded,
                      const_cast<ProfileInfoCache*>(this)->AsWeakPtr(),
-                     profile_path, key, image));
+                     profile_path, key, is_using_gaia, image));
   return NULL;
 }
 
 void ProfileInfoCache::OnAvatarPictureLoaded(const base::FilePath& profile_path,
                                              const std::string& key,
+                                             bool is_using_gaia,
                                              gfx::Image** image) const {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // TODO(erikchen): Remove ScopedTracker below once http://crbug.com/461175
@@ -1021,6 +1024,9 @@ void ProfileInfoCache::OnAvatarPictureLoaded(const base::FilePath& profile_path,
           "461175 ProfileInfoCache::OnAvatarPictureLoaded::Start"));
 
   cached_avatar_images_loading_[key] = false;
+
+  if (is_using_gaia)
+    UMA_HISTOGRAM_BOOLEAN("Profile.LoadGaiaAvatarSuccess", *image);
 
   if (*image) {
     // TODO(erikchen): Remove ScopedTracker below once http://crbug.com/461175
