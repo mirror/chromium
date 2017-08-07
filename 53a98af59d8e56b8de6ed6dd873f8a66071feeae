@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "beeb76e9_500c66cf",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115990
+      },
+      "writtenOn": "2017-08-07T17:18:38Z",
+      "side": 1,
+      "message": "Thank you thank you thank you for providing a comment that comprehensibly explains what the feature *is*, as opposed to something like \"supports engagement tracking for features\".",
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e689ca3_d8cc6773",
         "filename": "chrome/browser/feature_engagement/feature_tracker.h",
         "patchSetId": 16
@@ -58,6 +75,29 @@
         "startChar": 36,
         "endLine": 38,
         "endChar": 39
+      },
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ca35f9_418fef46",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115990
+      },
+      "writtenOn": "2017-08-07T17:18:38Z",
+      "side": 1,
+      "message": "nit: extra space",
+      "range": {
+        "startLine": 15,
+        "startChar": 54,
+        "endLine": 15,
+        "endChar": 55
       },
       "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -99,6 +139,29 @@
     },
     {
       "key": {
+        "uuid": "42c7faa6_d33a92c0",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115990
+      },
+      "writtenOn": "2017-08-07T17:18:38Z",
+      "side": 1,
+      "message": "nit: extraneous \u0027",
+      "range": {
+        "startLine": 64,
+        "startChar": 15,
+        "endLine": 64,
+        "endChar": 16
+      },
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1273d2e0_fd7596ea",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
         "patchSetId": 16
@@ -133,6 +196,29 @@
       "writtenOn": "2017-08-05T20:42:00Z",
       "side": 1,
       "message": "Since you added support for later adding a new observer after everyone else has left, maybe comment that doing so might have missed some time updates during the time where there was no observers?",
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31e49e4_33f23a4b",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115990
+      },
+      "writtenOn": "2017-08-07T17:18:38Z",
+      "side": 1,
+      "message": "pref_names.cc describes kSessionTimeTotal as \"Stores the total amount of active session time for the user.\" That\u0027s misleading at best. We should either change the behavior so it truly is the total session time (i.e. keep updating it forever), or rename it to be clear (kObservedSessionTime?).\n\nAlso, is this (stopping updates) a new behavior? If so, have you checked to be sure nothing else (other code, UMA, dashboards, ...) is under the wrong impression that it\u0027s actually total session time?",
+      "range": {
+        "startLine": 29,
+        "startChar": 37,
+        "endLine": 29,
+        "endChar": 51
+      },
       "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +276,23 @@
       "writtenOn": "2017-08-05T20:42:00Z",
       "side": 1,
       "message": "Nit: Empty newline, since this is not part of the API above",
+      "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e373fcd9_2e5c8e07",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittests.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115990
+      },
+      "writtenOn": "2017-08-07T17:18:38Z",
+      "side": 1,
+      "message": "Actual tests are a TODO before enabling, I assume? :)",
       "revId": "53a98af59d8e56b8de6ed6dd873f8a66071feeae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
