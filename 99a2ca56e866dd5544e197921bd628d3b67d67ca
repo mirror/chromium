@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3dbcff5_b55c5131",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_footer_item.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-07T09:42:55Z",
+      "side": 1,
+      "message": "this is not the most descriptive name of what this block\u0027s for..",
+      "range": {
+        "startLine": 25,
+        "startChar": 34,
+        "endLine": 25,
+        "endChar": 39
+      },
+      "revId": "99a2ca56e866dd5544e197921bd628d3b67d67ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
