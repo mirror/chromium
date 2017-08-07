@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "2264b8b6_743fdf73",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-07T20:30:44Z",
+      "side": 1,
+      "message": "Can we trim some of these includes?",
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f2c9665_b09efbbe",
         "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.cc",
         "patchSetId": 6
@@ -71,6 +88,23 @@
     },
     {
       "key": {
+        "uuid": "e6c31e3e_b3453b30",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-07T20:30:44Z",
+      "side": 1,
+      "message": "Needed?",
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5de3cc64_50975816",
         "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
         "patchSetId": 6
@@ -82,6 +116,30 @@
       "writtenOn": "2017-08-07T20:19:21Z",
       "side": 1,
       "message": "Does \u003d default; here work?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 44
+      },
+      "revId": "c4608364c0377c8231fbc6e9586167a1da2ac07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d155bc8_836bd2f0",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-07T20:30:44Z",
+      "side": 1,
+      "message": "Note: though it would, we should out-of-line it.",
+      "parentUuid": "5de3cc64_50975816",
       "range": {
         "startLine": 19,
         "startChar": 0,
