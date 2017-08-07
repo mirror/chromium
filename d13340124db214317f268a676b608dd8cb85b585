@@ -16,6 +16,24 @@
       "revId": "d13340124db214317f268a676b608dd8cb85b585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd4a18f_7b05b602",
+        "filename": "components/nacl/browser/pnacl_translation_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-07T18:57:32Z",
+      "side": 1,
+      "message": "The giant prereq this was waiting for (https://chromium-review.googlesource.com/c/587128) is what provides that synchronization inside CreateCacheBackend",
+      "parentUuid": "9cde7510_c916e8c7",
+      "revId": "d13340124db214317f268a676b608dd8cb85b585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
