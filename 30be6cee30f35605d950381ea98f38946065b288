@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "feb77f7f_cbc62e8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/ChromeTabbedActivityVrLaunch.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-07T23:44:37Z",
+      "side": 1,
+      "message": "I will leave it to Ted to comment on policy and what we can tolerate as behavior change on 2D use.\n\nThings that do worry me about this approach:\n\n-Although we are assuming this behavior relates to cold starts on devices we test, in other devices, OEMs may use this feature for other purposes and we might be breaking the 2D flow in unintended ways.\n- More than the initial point, adding this \"getTabbedActivityClassToUseRightNow\" on top of the MultiWindow functionality worries me quite a bit. I would very much expect us to have a trail of getActivity, getClass failure bugs as a result of this in various flows and we may have to use the new convenience calls you are adding in a lot of places.\n\nThat is why I am still liking the idea of adding a VR mode only activity that will be launched for VR only and reparent/merge the tab in use and then not change any 2D related logic.\n\nAll that said, I know Ted has been involved with VR changes already from the start, so if you can find a way to address any worries he has about this, consider me convinced as well.",
+      "parentUuid": "dee895ae_59cdf23e",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "30be6cee30f35605d950381ea98f38946065b288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e90e5fb_8919f10c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/ChromeTabbedActivityVrLaunch.java",
         "patchSetId": 3
