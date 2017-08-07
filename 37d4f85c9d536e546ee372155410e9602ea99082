@@ -22,6 +22,63 @@
       "revId": "37d4f85c9d536e546ee372155410e9602ea99082",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a29c51_35c89d3c",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolverImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-07T03:30:29Z",
+      "side": 1,
+      "message": "https://html.spec.whatwg.org/multipage/webappapis.html#hostresolveimportedmodule(referencingmodule,-specifier) ?",
+      "revId": "37d4f85c9d536e546ee372155410e9602ea99082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70ee420_ed4d7d39",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolverImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-07T03:30:29Z",
+      "side": 1,
+      "message": "Can we move Step 4 comment just before the DCHECK?",
+      "revId": "37d4f85c9d536e546ee372155410e9602ea99082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d8c47d_082f3b6a",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolverImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-07T03:30:29Z",
+      "side": 1,
+      "message": "Same for L75, 76.",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 8
+      },
+      "revId": "37d4f85c9d536e546ee372155410e9602ea99082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
