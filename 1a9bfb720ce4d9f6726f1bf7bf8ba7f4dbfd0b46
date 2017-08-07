@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "160af11d_6ed150b5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/InstalledAppTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-07T22:36:28Z",
+      "side": 1,
+      "message": "Ah we can\u0027t use the return value from this?  Maybe JavaScriptUtils lets us do something cleaner if that doesn\u0027t work?",
+      "range": {
+        "startLine": 106,
+        "startChar": 26,
+        "endLine": 106,
+        "endChar": 55
+      },
+      "revId": "1a9bfb720ce4d9f6726f1bf7bf8ba7f4dbfd0b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
