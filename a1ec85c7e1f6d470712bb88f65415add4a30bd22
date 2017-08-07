@@ -16,6 +16,24 @@
       "revId": "a1ec85c7e1f6d470712bb88f65415add4a30bd22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1af2c9_a6be3992",
+        "filename": "components/metrics/net/network_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-07T17:29:22Z",
+      "side": 1,
+      "message": "I think the device being offline during the complete lifetime of UMA report is an interesting case. However, conceptually, it does not differ much from device going offline for a brief period of time. \n\nIn general, it should not be possible to load requests if the device is offline. So, I am not too worried about that affecting metrics.\n\nIn the worst case, it is possible to exclude such reports by looking at connection_type field which includes the device connection type.",
+      "parentUuid": "09c02312_e2c5cb3f",
+      "revId": "a1ec85c7e1f6d470712bb88f65415add4a30bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
