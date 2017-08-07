@@ -64,6 +64,9 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   const Vector<NGInlineItem>& Items() const { return Data().items_; }
   NGInlineItemRange Items(unsigned start_index, unsigned end_index);
 
+  const Vector<NGInlineItem>* FirstLineItems() const;
+  const Vector<NGInlineItem>& Items(bool is_first_line) const;
+
   void GetLayoutTextOffsets(Vector<unsigned, 32>*);
 
   // Returns the DOM to text content offset mapping of this block. If it is not
@@ -102,6 +105,7 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   void CollectInlines();
   void SegmentText();
   void ShapeText();
+  void ShapeText(const String&, Vector<NGInlineItem>*);
 
   NGInlineNodeData& MutableData() {
     return ToLayoutNGBlockFlow(box_)->GetNGInlineNodeData();
