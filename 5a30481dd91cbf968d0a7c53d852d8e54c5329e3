@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "573e4c42_347a419e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115990
+      },
+      "writtenOn": "2017-08-07T19:18:38Z",
+      "side": 1,
+      "message": "nit: extra n",
+      "range": {
+        "startLine": 13,
+        "startChar": 177,
+        "endLine": 13,
+        "endChar": 178
+      },
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71a180c_63367481",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115990
+      },
+      "writtenOn": "2017-08-07T19:18:38Z",
+      "side": 1,
+      "message": "e\n\nAlso, why is the time reset to 0?",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 14
+      },
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a150aa4_cfa8af5d",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115990
+      },
+      "writtenOn": "2017-08-07T19:18:38Z",
+      "side": 1,
+      "message": "It would be good to explain a little more what this means: that it\u0027s only counting time while some feature is waiting to show a promo, and that it\u0027s reset to zero if a new feature observer is added.",
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c096a6e_a717ac0c",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115990
+      },
+      "writtenOn": "2017-08-07T19:18:38Z",
+      "side": 1,
+      "message": "Will anything need to migrate from the old key if this is changed?",
+      "range": {
+        "startLine": 151,
+        "startChar": 45,
+        "endLine": 151,
+        "endChar": 58
+      },
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
