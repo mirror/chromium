@@ -44,9 +44,13 @@ const char kTitle[] = "title";
 const char kUrl[] = "url";
 const char kLargeIconUrl[] = "large_icon_url";
 const char kFaviconUrl[] = "favicon_url";
+const char kSection[] = "section";
+const char kSites[] = "sites";
 
 using TestPopularSite = std::map<std::string, std::string>;
 using TestPopularSiteVector = std::vector<TestPopularSite>;
+using TestPopularSection = std::pair<int, TestPopularSiteVector>;
+using TestPopularSectionVector = std::vector<TestPopularSection>;
 
 ::testing::Matcher<const base::string16&> Str16Eq(const std::string& s) {
   return ::testing::Eq(base::UTF8ToUTF16(s));
@@ -93,6 +97,30 @@ class PopularSitesTest : public ::testing::Test {
                             const std::string& version) {
     prefs_->SetString(prefs::kPopularSitesOverrideCountry, country);
     prefs_->SetString(prefs::kPopularSitesOverrideVersion, version);
+  }
+
+  std::unique_ptr<base::ListValue> CreateListFromTestSites(
+      const TestPopularSiteVector& sites) {
+    auto sites_value = base::MakeUnique<base::ListValue>();
+    for (const TestPopularSite& site : sites) {
+      auto site_value = base::MakeUnique<base::DictionaryValue>();
+      for (const std::pair<std::string, std::string>& kv : site) {
+        site_value->SetString(kv.first, kv.second);
+      }
+      sites_value->Append(std::move(site_value));
+    }
+    return sites_value;
+  }
+
+  base::ListValue CreateV6JSON(const TestPopularSectionVector& sections) {
+    base::ListValue sections_value;
+    for (const TestPopularSection& section : sections) {
+      auto section_value = base::MakeUnique<base::DictionaryValue>();
+      section_value->SetInteger(kSection, section.first);
+      section_value->SetList(kSites, CreateListFromTestSites(section.second));
+      sections_value.Append(std::move(section_value));
+    }
+    return sections_value;
   }
 
   void RespondWithJSON(const std::string& url,
@@ -209,6 +237,28 @@ TEST_F(PopularSitesTest, ShouldSucceedFetching) {
   EXPECT_THAT(sites[0].large_icon_url,
               URLEq("https://zz.m.wikipedia.org/wikipedia.png"));
   EXPECT_THAT(sites[0].favicon_url, URLEq(""));
+}
+
+TEST_F(PopularSitesTest, ShouldHandleCacheWithTooNewVersion) {
+  prefs_->SetString(
+      "popular_sites_url",
+      "https://www.gstatic.com/chrome/ntp/suggested_sites_ZZ_6.json");
+  prefs_->Set("suggested_sites_json",
+              CreateV6JSON({{0, {kChromium}},
+                            {2, {kYouTube}},
+                            {3, {kWikipedia, kYouTube}},
+                            {5, TestPopularSiteVector{}}}));
+  SetCountryAndVersion("ZZ", "5");
+  RespondWithJSON(
+      "https://www.gstatic.com/chrome/ntp/suggested_sites_ZZ_5.json",
+      {kWikipedia});
+
+  PopularSites::SitesVector sites;
+  EXPECT_THAT(FetchPopularSites(/*force_download=*/false, &sites),
+              Eq(base::Optional<bool>(true)));
+
+  ASSERT_THAT(sites.size(), Eq(1u));
+  EXPECT_THAT(sites[0].url, URLEq("https://zz.m.wikipedia.org/"));
 }
 
 TEST_F(PopularSitesTest, Fallback) {
