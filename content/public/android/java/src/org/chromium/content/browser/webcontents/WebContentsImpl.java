@@ -588,6 +588,11 @@ import java.util.UUID;
     }
 
     @Override
+    public boolean isPersistentVideoAllowed() {
+        return nativeIsPersistentVideoAllowed(mNativeWebContentsAndroid);
+    }
+
+    @Override
     public boolean hasActiveEffectivelyFullscreenVideo() {
         return nativeHasActiveEffectivelyFullscreenVideo(mNativeWebContentsAndroid);
     }
@@ -688,6 +693,7 @@ import java.util.UUID;
     private native void nativeShowContextMenuAtTouchHandle(
             long nativeWebContentsAndroid, int x, int y);
     private native void nativeSetHasPersistentVideo(long nativeWebContentsAndroid, boolean value);
+    private native boolean nativeIsPersistentVideoAllowed(long nativeWebContentsAndroid);
     private native boolean nativeHasActiveEffectivelyFullscreenVideo(long nativeWebContentsAndroid);
     private native List<Rect> nativeGetCurrentlyPlayingVideoSizes(long nativeWebContentsAndroid);
     private native EventForwarder nativeGetOrCreateEventForwarder(long nativeWebContentsAndroid);

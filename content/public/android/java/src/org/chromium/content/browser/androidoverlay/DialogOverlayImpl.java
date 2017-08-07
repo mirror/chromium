@@ -69,7 +69,8 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
 
         // Register to get token updates.  Note that this may not call us back directly, since
         // |mDialogCore| hasn't been initialized yet.
-        mNativeHandle = nativeInit(config.routingToken.high, config.routingToken.low);
+        mNativeHandle =
+                nativeInit(config.routingToken.high, config.routingToken.low, config.secure);
 
         if (mNativeHandle == 0) {
             mClient.onDestroyed();
@@ -287,7 +288,7 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
      * handle that should be provided to nativeDestroy.  This will not call back with a window token
      * immediately.  Call nativeCompleteInit() for the initial token.
      */
-    private native long nativeInit(long high, long low);
+    private native long nativeInit(long high, long low, boolean isSecure);
 
     /**
      * Notify the native side that we are ready for token / dismissed callbacks.  This may result in

@@ -38554,6 +38554,7 @@ would be helpful to identify which type is being sent.
   <int value="6" label="Finishing"/>
   <int value="7" label="No WebContents"/>
   <int value="8" label="No video"/>
+  <int value="9" label="WebContents refused"/>
 </enum>
 
 <enum name="VideoPersistenceControlsType">

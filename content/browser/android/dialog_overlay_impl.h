@@ -27,7 +27,8 @@ class DialogOverlayImpl : public ContentViewCoreObserver,
   DialogOverlayImpl(const base::android::JavaParamRef<jobject>& obj,
                     RenderFrameHostImpl* rfhi,
                     WebContents* web_contents,
-                    ContentViewCore* cvc);
+                    ContentViewCore* cvc,
+                    bool is_secure);
   ~DialogOverlayImpl() override;
 
   // Called when the java side is ready for token / dismissed callbacks.  May
@@ -57,6 +58,7 @@ class DialogOverlayImpl : public ContentViewCoreObserver,
   void RenderFrameDeleted(RenderFrameHost* render_frame_host) override;
   void RenderFrameHostChanged(RenderFrameHost* old_host,
                               RenderFrameHost* new_host) override;
+  bool IsPersistentVideoAllowed() override;
 
   // Unregister for tokens if we're registered, and clear |cvc_|.
   void UnregisterForTokensIfNeeded();
@@ -73,6 +75,9 @@ class DialogOverlayImpl : public ContentViewCoreObserver,
 
   // ContentViewCore instance that we're registered with as an observer.
   ContentViewCore* cvc_;
+
+  // Is this a secure surface?
+  bool is_secure_ = false;
 };
 
 }  // namespace content

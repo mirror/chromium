@@ -4658,6 +4658,13 @@ bool WebContentsImpl::HasPersistentVideo() const {
   return has_persistent_video_;
 }
 
+bool WebContentsImpl::IsPersistentVideoAllowed() const {
+  for (auto& observer : observers_)
+    if (!observer.IsPersistentVideoAllowed())
+      return false;
+  return true;
+}
+
 bool WebContentsImpl::HasActiveEffectivelyFullscreenVideo() const {
   return media_web_contents_observer_->HasActiveEffectivelyFullscreenVideo();
 }
