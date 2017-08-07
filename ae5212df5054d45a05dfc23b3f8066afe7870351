@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2451091f_42088c23",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T23:30:17Z",
+      "side": 1,
+      "message": "In general, we avoid adding public APIs unless they are used outside of content/. In this CL this is the case and the main reason I can see going this route is to build on top of WebContentsObserver. I think the approach is reasonable, but the method seems very specific to be of more general use outside of content. As such, I\u0027d suggest we explore a different way to notify DialogOverlayImpl more directly.",
+      "revId": "ae5212df5054d45a05dfc23b3f8066afe7870351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
