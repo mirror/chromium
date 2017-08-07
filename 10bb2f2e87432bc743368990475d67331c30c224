@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4060d7e8_be35b2e2",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-07T10:16:20Z",
+      "side": 1,
+      "message": "\u003e Please read the description of this function. I believe it is not suitable case for it. Use default constructor instead.\n\nMy mistake. Done.",
+      "parentUuid": "0274b9a0_f2be36b5",
+      "range": {
+        "startLine": 409,
+        "startChar": 39,
+        "endLine": 409,
+        "endChar": 58
+      },
+      "revId": "10bb2f2e87432bc743368990475d67331c30c224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "998719ac_ee839a5d",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-03T06:40:17Z",
       "side": 1,
       "message": "What if user typed some leading/trailing spaces? Discuss with Irmak.",
+      "range": {
+        "startLine": 412,
+        "startChar": 60,
+        "endLine": 412,
+        "endChar": 62
+      },
+      "revId": "10bb2f2e87432bc743368990475d67331c30c224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a0d88d_6c93d2cb",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-07T10:16:20Z",
+      "side": 1,
+      "message": "\u003e What if user typed some leading/trailing spaces? Discuss with Irmak.\n\nI think that the best solution is to get rid of the leading/trailing spaces and, in this way, we can send votes in more cases, e.g. \"  username\", \"   username  \".",
+      "parentUuid": "998719ac_ee839a5d",
       "range": {
         "startLine": 412,
         "startChar": 60,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "319ed2fd_51daa339",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-07T10:16:20Z",
+      "side": 1,
+      "message": "\u003e I believe it is more consistent to set |username_edited_in_prompt| independently of whether we found the matched field name or not (read the description of |username_edited_in_prompt|). But double check how it affects on vote uploading code.\n\nDone.",
+      "parentUuid": "b1aff0e5_522084a2",
+      "range": {
+        "startLine": 416,
+        "startChar": 6,
+        "endLine": 416,
+        "endChar": 57
+      },
+      "revId": "10bb2f2e87432bc743368990475d67331c30c224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dce6bb07_a4c87566",
         "filename": "components/autofill/core/common/password_form.cc",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-03T06:40:17Z",
       "side": 1,
       "message": "Good point. I always forgot about that :) Also update operator\u003d\u003d and PasswordFormToJSON. Check the whole password_form.* if I missed something.",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 38
+      },
+      "revId": "10bb2f2e87432bc743368990475d67331c30c224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d021c5c_8b47bbe3",
+        "filename": "components/autofill/core/common/password_form.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-07T10:16:20Z",
+      "side": 1,
+      "message": "\u003e Good point. I always forgot about that :) Also update operator\u003d\u003d and PasswordFormToJSON. Check the whole password_form.* if I missed something.\n\nDone. I checked the whole file and it seems that nothing is missing.",
+      "parentUuid": "dce6bb07_a4c87566",
       "range": {
         "startLine": 96,
         "startChar": 6,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c90e8481_00a4751c",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-07T10:16:20Z",
+      "side": 1,
+      "message": "\u003e Where do you variate |username_edited_in_prompt|? Probably it will always be false. So, only else-branch will always be executed. You should set various values to |match.username_edited_in_prompt| and check what vote type our code uploads.\n\u003e \n\u003e You can variate |username_edited_in_prompt| in this test OR keep it unchanged and set |username_edited_in_prompt| to true in another test.\n\u003e This test is already very complicated, so I believe it is better to add it another case. ProbablyAccountCreationUpload is a good candidate.\n\nI decided to not variate here |username_edited_in_prompt| and to let this test the way it is and to variate it in TestUpdateUsernameToExisting.",
+      "parentUuid": "8f4dc37f_483fbe58",
+      "range": {
+        "startLine": 485,
+        "startChar": 8,
+        "endLine": 485,
+        "endChar": 39
+      },
+      "revId": "10bb2f2e87432bc743368990475d67331c30c224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acab215b_ce7e434c",
         "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
         "patchSetId": 7
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "1baba2d1_16a3fc35",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2564,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-07T10:16:20Z",
+      "side": 1,
+      "message": "\u003e Remove curly brackets.\n\nDone.",
+      "parentUuid": "acab215b_ce7e434c",
+      "range": {
+        "startLine": 2564,
+        "startChar": 51,
+        "endLine": 2564,
+        "endChar": 52
+      },
+      "revId": "10bb2f2e87432bc743368990475d67331c30c224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7f4494f_aa41db4e",
         "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
         "patchSetId": 7
@@ -151,6 +295,30 @@
       "writtenOn": "2017-08-03T06:40:17Z",
       "side": 1,
       "message": "and again. As I understand, |username_edited_in_prompt| is false by default. You don\u0027t change anywhere. So, this condition will be never true, the branch will be never run.",
+      "range": {
+        "startLine": 3149,
+        "startChar": 6,
+        "endLine": 3149,
+        "endChar": 46
+      },
+      "revId": "10bb2f2e87432bc743368990475d67331c30c224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126e150b_6e4f8145",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3149,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-07T10:16:20Z",
+      "side": 1,
+      "message": "\u003e and again. As I understand, |username_edited_in_prompt| is false by default. You don\u0027t change anywhere. So, this condition will be never true, the branch will be never run.\n\nAck.",
+      "parentUuid": "c7f4494f_aa41db4e",
       "range": {
         "startLine": 3149,
         "startChar": 6,

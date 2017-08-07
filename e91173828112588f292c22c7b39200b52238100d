@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1333d71e_66fcd86d",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-07T10:16:20Z",
+      "side": 1,
+      "message": "I will remove this in the next patch set. I forgot to do it in this patch set.",
+      "range": {
+        "startLine": 409,
+        "startChar": 1,
+        "endLine": 418,
+        "endChar": 3
+      },
+      "revId": "e91173828112588f292c22c7b39200b52238100d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d32a76_9f46aabd",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2394,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-07T10:16:20Z",
+      "side": 1,
+      "message": "This test is currently failing. Instead of nullptr, I think it\u0027s expecting the address of the old credentials. I\u0027m not sure, though.",
+      "range": {
+        "startLine": 2394,
+        "startChar": 9,
+        "endLine": 2394,
+        "endChar": 45
+      },
+      "revId": "e91173828112588f292c22c7b39200b52238100d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
