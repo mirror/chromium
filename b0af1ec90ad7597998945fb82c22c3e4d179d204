@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0667f14e_6baa61e8",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-07T06:46:44Z",
+      "side": 1,
+      "message": "why not just edit the input cumulative_prob?",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530f51dd_d4c8df93",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-07T06:46:44Z",
+      "side": 1,
+      "message": "Why is the function written out twice? Why not instead pass the group name in?",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b6004f3_7dcde518",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-07T06:46:44Z",
+      "side": 1,
+      "message": "what are the numbers mentioned here?",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "382bbf18_2aad24a3",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-07T06:46:44Z",
+      "side": 1,
+      "message": "what are these numbers?",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "241c1d35_90be2b84",
+        "filename": "third_party/WebKit/Source/core/css/CSSPropertiesRanking.json5",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-07T06:46:44Z",
+      "side": 1,
+      "message": "Is this going to be static? What if this ranking changes? Is there a plan to sync this every so often?",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
