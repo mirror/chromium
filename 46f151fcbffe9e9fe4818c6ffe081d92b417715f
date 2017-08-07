@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9eb7db22_89667c56",
+        "filename": "components/ntp_snippets_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-07T15:13:29Z",
+      "side": 1,
+      "message": "Indeed! I did not know about his var, thanks!\nDone.",
+      "parentUuid": "55cc0432_f1e7aedc",
+      "range": {
+        "startLine": 24,
+        "startChar": 20,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "46f151fcbffe9e9fe4818c6ffe081d92b417715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7f35a0e_c6512af3",
         "filename": "components/ntp_snippets_strings.grdp",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "46f151fcbffe9e9fe4818c6ffe081d92b417715f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "373ff0a8_728855d7",
+        "filename": "components/ntp_snippets_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-07T15:13:29Z",
+      "side": 1,
+      "message": "No, iOS only use Reading List and Articles for You.",
+      "parentUuid": "d7f35a0e_c6512af3",
+      "revId": "46f151fcbffe9e9fe4818c6ffe081d92b417715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
