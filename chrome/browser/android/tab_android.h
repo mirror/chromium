@@ -159,6 +159,19 @@ class TabAndroid : public CoreTabHelperDelegate,
   void DestroyWebContents(JNIEnv* env,
                           const base::android::JavaParamRef<jobject>& obj,
                           jboolean delete_native);
+  int GetViewportWidthPix(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jobject>& jweb_contents);
+  int GetViewportHeightPix(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jobject>& jweb_contents);
+  void OnSizeChanged(JNIEnv* env,
+                     const base::android::JavaParamRef<jobject>& obj,
+                     const base::android::JavaParamRef<jobject>& jweb_contents,
+                     int width,
+                     int height);
   void OnPhysicalBackingSizeChanged(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
@@ -213,6 +226,15 @@ class TabAndroid : public CoreTabHelperDelegate,
       jint constraints,
       jint current,
       jboolean animate);
+
+  void SetTopControlsHeight(JNIEnv* env,
+                            const base::android::JavaParamRef<jobject>& obj,
+                            jint top_controls_height,
+                            jboolean shrink_blink_size);
+
+  void SetBottomControlsHeight(JNIEnv* env,
+                               const base::android::JavaParamRef<jobject>& obj,
+                               jint bottom_controls_height);
 
   void LoadOriginalImage(JNIEnv* env,
                          const base::android::JavaParamRef<jobject>& obj);
