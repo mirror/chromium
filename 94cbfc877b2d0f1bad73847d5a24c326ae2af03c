@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac37d6e4_1ec6305b",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-07T18:29:35Z",
+      "side": 1,
+      "message": "Emily, Mustafa and I had been operating off of the assumption that we could check the certificate\u0027s issuer\u0027s common name in order to determine whether or not it was a MITM software certificate. Mustafa mentioned today thought that common names are actually being deprecated in favor of subject alternate names. I put a to-do here so that I could swap out common names for subject alternate names one we review more MITM software certificates and come up with patterns to check against in the subject alternate name field.\n\nWhat is your opinion on this? Do you think subject alternate names are the way to go?",
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
