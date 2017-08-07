@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8752e4f_15097ef1",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-07T18:34:35Z",
+      "side": 1,
+      "message": "profile_manager seems not needed.  Could you take a pass here too to remove all the unnecessary includes?  \n(I\u0027m not sure if there is any good tools to do that\".)",
+      "revId": "84c6984fc310b7d6b974bbf86dc860d3043478e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807fedd8_a4f471e5",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-07T18:34:35Z",
+      "side": 1,
+      "message": "Could you take a pass to remove includes that are not needed anymore? e.g. I don\u0027t see any weak_ptr get used in this file.",
+      "revId": "84c6984fc310b7d6b974bbf86dc860d3043478e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13c6b62a_e0e795ae",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_url_sb_client.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-07T18:34:35Z",
+      "side": 1,
+      "message": "Lots of include in a .h file.... Could you do a cleanup of the includes?",
+      "revId": "84c6984fc310b7d6b974bbf86dc860d3043478e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65b34dc_1c38e997",
+        "filename": "chrome/browser/safe_browsing/download_protection/ppapi_download_request.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-07T18:34:35Z",
+      "side": 1,
+      "message": "Cleanup includes.",
+      "revId": "84c6984fc310b7d6b974bbf86dc860d3043478e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
