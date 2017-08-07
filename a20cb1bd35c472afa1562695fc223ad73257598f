@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "2acfb14d_5fc27608",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-07T08:44:37Z",
+      "side": 1,
+      "message": "Or even a regex? We have the RE2 library in the repository.",
+      "parentUuid": "3eaa31a0_34a0295b",
+      "revId": "a20cb1bd35c472afa1562695fc223ad73257598f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b0756a_29a73d85",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-07T08:44:37Z",
+      "side": 1,
+      "message": "I got a perf alert on compile size when I originally landed this code.  It turns out flat_map \u0026 flat_set create a lot of template code, I wouldn\u0027t be surprised if this alone generates 20kb.  With that in mind, do we really need the flat_set here?",
+      "range": {
+        "startLine": 170,
+        "startChar": 10,
+        "endLine": 170,
+        "endChar": 18
+      },
+      "revId": "a20cb1bd35c472afa1562695fc223ad73257598f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e638a862_915cb5c4",
         "filename": "headless/app/headless_shell.cc",
         "patchSetId": 1
