@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f30281b_eb8d949d",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-07T21:06:25Z",
+      "side": 1,
+      "message": "Windows Epoch is: January 1, 1601\n(whereas UnixEpoch is: January 1, 1970)",
+      "parentUuid": "38e4fec6_ab4d5e85",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 40
+      },
+      "revId": "36878b2c9864647b0269526d900e3d0289a6937b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8719616_90226b52",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-07T19:55:51Z",
       "side": 1,
       "message": "When do we expect profile_ might be null? It\u0027s checked elsewhere, but not here.",
+      "range": {
+        "startLine": 118,
+        "startChar": 37,
+        "endLine": 118,
+        "endChar": 45
+      },
+      "revId": "36878b2c9864647b0269526d900e3d0289a6937b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad87c59_d72fadaa",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-07T21:06:25Z",
+      "side": 1,
+      "message": "I just looked into this.\nWe only instantiate this class if the profile is non-null and destroy it when the profile is destroyed so I can\u0027t see how profile_ can be null. Removing that check.",
+      "parentUuid": "b8719616_90226b52",
       "range": {
         "startLine": 118,
         "startChar": 37,
@@ -68,6 +116,30 @@
       "revId": "36878b2c9864647b0269526d900e3d0289a6937b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3732d2_6057a5c2",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-07T21:06:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "753ae086_7147c362",
+      "range": {
+        "startLine": 234,
+        "startChar": 10,
+        "endLine": 234,
+        "endChar": 30
+      },
+      "revId": "36878b2c9864647b0269526d900e3d0289a6937b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
