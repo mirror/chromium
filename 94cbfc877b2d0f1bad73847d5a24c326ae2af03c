@@ -70,6 +70,24 @@
       "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3837db_9ff5baba",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-07T18:48:14Z",
+      "side": 1,
+      "message": "Oh, or is your point that intermediates and roots don\u0027t have SANs, or at least most don\u0027t based on manual inspection? If so, that makes sense.",
+      "parentUuid": "3c668779_020d1f3f",
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
