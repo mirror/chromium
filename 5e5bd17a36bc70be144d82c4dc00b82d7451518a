@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8832f384_5e7459ab",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-07T18:35:51Z",
+      "side": 1,
+      "message": "Done. Changing one of the two values doesn\u0027t always make it look horrible, but tying to bubble alignment offset ensures that it\u0027s nice.",
+      "parentUuid": "d84277e8_ce54a6b5",
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bce9997_8e3686ff",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ebd01d08_85c3f2c3",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-07T18:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bce9997_8e3686ff",
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41ec675c_a0056e19",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0532fb9_ad418a2d",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-07T18:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41ec675c_a0056e19",
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "3907d15f_0a679239",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-07T18:35:51Z",
+      "side": 1,
+      "message": "Done. I\u0027ve also added a call to |setNeedsUpdateConstraints| at the end of the constructor to ensure that |updateConstraints| gets called, but let me know if there\u0027s a better way to do this.",
+      "parentUuid": "f231fb7f_f86a9f8c",
+      "range": {
+        "startLine": 87,
+        "startChar": 26,
+        "endLine": 87,
+        "endChar": 35
+      },
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "676611ea_1926ca25",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 6
@@ -96,6 +174,30 @@
       "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3645230c_d128b4fb",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-07T18:35:51Z",
+      "side": 1,
+      "message": "Fixed the comment.",
+      "parentUuid": "676611ea_1926ca25",
+      "range": {
+        "startLine": 190,
+        "startChar": 42,
+        "endLine": 190,
+        "endChar": 47
+      },
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "36b446a0_71968100",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-07T18:35:51Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "a212f55d_1f8fc4c2",
+      "range": {
+        "startLine": 199,
+        "startChar": 42,
+        "endLine": 199,
+        "endChar": 48
+      },
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cfb2219_08837f55",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 6
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "cc46cdbb_af0fcda4",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-07T18:35:51Z",
+      "side": 1,
+      "message": "Good idea; this seems more readable. Fixed.",
+      "parentUuid": "2cfb2219_08837f55",
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11cd91ed_b4fb05ed",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_unittest.mm",
         "patchSetId": 6
@@ -153,6 +297,24 @@
       "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "146d6831_f9cacfbf",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-07T18:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11cd91ed_b4fb05ed",
+      "revId": "5e5bd17a36bc70be144d82c4dc00b82d7451518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
