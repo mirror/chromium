@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd82649e_9ab382f2",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "490482e4_04a2865b",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d528a02b_412a9f2a",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8623e722_237ed5fb",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d528a02b_412a9f2a",
+      "range": {
+        "startLine": 16,
+        "startChar": 55,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "439b051c_f1816ecf",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-04T22:24:21Z",
       "side": 1,
       "message": "Why is this needed?",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c5e77b_27fc4539",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "It isnt.",
+      "parentUuid": "439b051c_f1816ecf",
       "range": {
         "startLine": 25,
         "startChar": 6,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6bce1727_c31bbde2",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "I am unsure if I explicitly need to check for this. It as mostly just me worrying that there could be a potential for it being cause in a case I haven\u0027t seen yet.",
+      "parentUuid": "8a52ae66_8761f77c",
+      "range": {
+        "startLine": 32,
+        "startChar": 14,
+        "endLine": 32,
+        "endChar": 16
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8ad8afa_ae41e2e1",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-04T22:24:21Z",
       "side": 1,
       "message": "As it happens, you are not the first person to need a helper function to remove an element from a vector :)\n\nI think this is just base::Erase from base/stl_util.h\n\nIf you want to pretend that C++ is a functional language, there is also base::EraseIf: (example usage with capture here: https://cs.chromium.org/chromium/src/cc/animation/animation_player.cc?type\u003dcs\u0026q\u003dbase::EraseIf\u0026sq\u003dpackage:chromium\u0026l\u003d1110)",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cc84b8_fa00c3ee",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "This was removed and the calls to it were replaced with base::Erase",
+      "parentUuid": "c8ad8afa_ae41e2e1",
       "range": {
         "startLine": 41,
         "startChar": 5,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "7c96bc25_c0b0643a",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f6c39ce4_5fb45390",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bea05e30_9435519a",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 1
@@ -157,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "9552a0c5_7e58cc28",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "That makes sense. I am using the base::Erase in the new patchset.",
+      "parentUuid": "bea05e30_9435519a",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bde8f9ab_3a3d7bfd",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 1
@@ -168,6 +330,30 @@
       "writtenOn": "2017-08-04T22:24:21Z",
       "side": 1,
       "message": "This might be cleaner if you pass in a base::ProcessId instead of a Task.",
+      "range": {
+        "startLine": 54,
+        "startChar": 35,
+        "endLine": 54,
+        "endChar": 39
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c0be8b_dec38bda",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "I agree, that is better.",
+      "parentUuid": "bde8f9ab_3a3d7bfd",
       "range": {
         "startLine": 54,
         "startChar": 35,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "228b94c8_e5a679b9",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "That is a better loop.",
+      "parentUuid": "5ffba385_003f0bb9",
+      "range": {
+        "startLine": 60,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9291392_36485767",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 1
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "c1b4620d_7bf4fc15",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9291392_36485767",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 15
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07843622_8a4ab6b6",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 1
@@ -243,6 +477,24 @@
     },
     {
       "key": {
+        "uuid": "5ac74eeb_aa3b0562",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07843622_8a4ab6b6",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae0ed61a_8a499c87",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 1
@@ -254,6 +506,30 @@
       "writtenOn": "2017-08-04T22:24:21Z",
       "side": 1,
       "message": "Do you actually use these maps?",
+      "range": {
+        "startLine": 98,
+        "startChar": 9,
+        "endLine": 98,
+        "endChar": 22
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4b5568_34554271",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "They have been removed",
+      "parentUuid": "ae0ed61a_8a499c87",
       "range": {
         "startLine": 98,
         "startChar": 9,
@@ -289,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "be321c3f_5e37c04c",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "I have added the the delete to the StopUpdating() function.",
+      "parentUuid": "7e2e35df_7368eb58",
+      "range": {
+        "startLine": 100,
+        "startChar": 22,
+        "endLine": 100,
+        "endChar": 42
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "816f4416_c89cc385",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 1
@@ -303,6 +603,24 @@
       "revId": "0c80e685144434c6061420c918af1f29ba445f88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55006a15_136bb31d",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "Done. Removed for now.",
+      "parentUuid": "816f4416_c89cc385",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -323,6 +641,24 @@
     },
     {
       "key": {
+        "uuid": "05c04491_1fd19bfc",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "This is better naming. Changed to those.",
+      "parentUuid": "672e6389_25aa67fa",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f20c51a_100cf516",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 1
@@ -334,6 +670,30 @@
       "writtenOn": "2017-08-04T22:24:21Z",
       "side": 1,
       "message": "When does this happen?",
+      "range": {
+        "startLine": 119,
+        "startChar": 6,
+        "endLine": 119,
+        "endChar": 23
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7badace_3b3dd9e1",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "It shouldn\u0027t happen I put these in as a check, but it shouldn\u0027t happen.",
+      "parentUuid": "1f20c51a_100cf516",
       "range": {
         "startLine": 119,
         "startChar": 6,
@@ -369,6 +729,30 @@
     },
     {
       "key": {
+        "uuid": "6689ecfb_bd0c5c42",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "I like it and then there is a potential real use of [is_secondary].",
+      "parentUuid": "3928e46c_e62b67b6",
+      "range": {
+        "startLine": 152,
+        "startChar": 65,
+        "endLine": 152,
+        "endChar": 77
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5db7c35e_91a4dde8",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 1
@@ -386,6 +770,24 @@
     },
     {
       "key": {
+        "uuid": "91f8d57d_c0dd2e08",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "Added comments about what the logic was doing.",
+      "parentUuid": "5db7c35e_91a4dde8",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62492933_c5d2e49c",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 1
@@ -397,6 +799,30 @@
       "writtenOn": "2017-08-04T22:24:21Z",
       "side": 1,
       "message": "Don\u0027t you need to forward this (I guess iff it\u0027s in shown_tasks_)? Is this a TODO?",
+      "range": {
+        "startLine": 180,
+        "startChar": 15,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6bd0969_0bf83d48",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "This is a TODO.",
+      "parentUuid": "62492933_c5d2e49c",
       "range": {
         "startLine": 180,
         "startChar": 15,
@@ -432,6 +858,30 @@
     },
     {
       "key": {
+        "uuid": "f42478ed_21f8fc19",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "5c1be8da_e164b7b1",
+      "range": {
+        "startLine": 206,
+        "startChar": 22,
+        "endLine": 206,
+        "endChar": 35
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71824d61_9d6484b1",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
         "patchSetId": 1
@@ -455,6 +905,30 @@
     },
     {
       "key": {
+        "uuid": "9a69d3a0_028d510f",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "71824d61_9d6484b1",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a81046f_5d9821a8",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
         "patchSetId": 1
@@ -466,6 +940,30 @@
       "writtenOn": "2017-08-04T22:24:21Z",
       "side": 1,
       "message": "What if this took the sub-task providers as parameters?\n\nLike:\n\n(std::unique_ptr\u003cTaskProvider\u003e primary_subprovider,\n std::unique_ptr\u003cTaskProvider\u003e secondary_subprovider)\n\nThat way, this class could be applied to any pair of task providers. \n\n^^^ note: this is dependency injection. So, it should also make unittests possible -- just provide a dummy [sub] TaskProvider in your unittest.cc file (one that you can spin up at will).",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a4cd01d_a73fb82c",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "I have added this. I used std::move to call them from the task manager impl because it is my understanding that is the correct way to pass ownership of unique pointers to where they are needed.",
+      "parentUuid": "1a81046f_5d9821a8",
       "range": {
         "startLine": 27,
         "startChar": 2,
@@ -495,6 +993,24 @@
     },
     {
       "key": {
+        "uuid": "56a9625a_60601126",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "It is very possible. When I was first working on this I was unsure if there was some benefit of knowing it was a RenderProcessHostTaskProvider task.",
+      "parentUuid": "2388a0dd_37d0d5cd",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e767555_33b92e00",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
         "patchSetId": 1
@@ -518,6 +1034,30 @@
     },
     {
       "key": {
+        "uuid": "60bed8ea_742f995f",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "I think the names suggested above will fix this.",
+      "parentUuid": "5e767555_33b92e00",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 31
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "391bfb90_340b42cc",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
         "patchSetId": 1
@@ -529,6 +1069,24 @@
       "writtenOn": "2017-08-04T22:24:21Z",
       "side": 1,
       "message": "Unsure of where this suggestion will lead, but here goes:\n\nWhat if this Observer class actually contained/owned all the per-subprovider members?\n\nI.e., What if this actually owned (via unique_ptr) its corresponding TaskProvider?",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "259fac2c_4daeb9f5",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-07T17:07:03Z",
+      "side": 1,
+      "message": "I would like to talk in person for a few more minutes about this to see how the structure of this would shake out. I think its possible but might cause some restructuring I\u0027m not sure how it would look.",
+      "parentUuid": "391bfb90_340b42cc",
       "revId": "0c80e685144434c6061420c918af1f29ba445f88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
