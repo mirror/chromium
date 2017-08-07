@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a5a3572d_547ccd15",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-08-07T17:12:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfd11be9_e8e8378b",
+      "range": {
+        "startLine": 848,
+        "startChar": 15,
+        "endLine": 848,
+        "endChar": 42
+      },
+      "revId": "02fdff9a2ab96fc84af0785ea1818d8d85e9e728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5398ce73_872bd108",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-03T20:35:05Z",
       "side": 1,
       "message": "Why do you release the number here? Is it possible to get a down-\u003eleave-\u003eup?",
+      "range": {
+        "startLine": 2819,
+        "startChar": 11,
+        "endLine": 2819,
+        "endChar": 30
+      },
+      "revId": "02fdff9a2ab96fc84af0785ea1818d8d85e9e728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36196859_48a673b1",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2819,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-08-07T17:12:04Z",
+      "side": 1,
+      "message": "I copy this code from the current function HWNDMessageHandler::HandlePointerEventTypePen,\nhttps://cs.chromium.org/chromium/src/ui/views/win/hwnd_message_handler.cc?dr\u003dCSs\u0026l\u003d2830\nPlease see https://chromium-review.googlesource.com/c/582429",
+      "parentUuid": "5398ce73_872bd108",
       "range": {
         "startLine": 2819,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "35da10e0_2264bd8c",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2868,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-08-07T17:12:04Z",
+      "side": 1,
+      "message": "Please see https://chromium-review.googlesource.com/c/582429",
+      "parentUuid": "12f868f0_1af25458",
+      "range": {
+        "startLine": 2868,
+        "startChar": 7,
+        "endLine": 2868,
+        "endChar": 30
+      },
+      "revId": "02fdff9a2ab96fc84af0785ea1818d8d85e9e728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e802aa5f_19dc1cf0",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-03T20:35:05Z",
       "side": 1,
       "message": "Why is hover true here? Does the leave only happen if the pen isn\u0027t down?",
+      "range": {
+        "startLine": 2869,
+        "startChar": 9,
+        "endLine": 2869,
+        "endChar": 19
+      },
+      "revId": "02fdff9a2ab96fc84af0785ea1818d8d85e9e728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f147fb_b19681a2",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2869,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-08-07T17:12:04Z",
+      "side": 1,
+      "message": "The leave happens when the pen leaves the detection range over the window (hover).",
+      "parentUuid": "e802aa5f_19dc1cf0",
       "range": {
         "startLine": 2869,
         "startChar": 9,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "4f4b6097_767d75f5",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2894,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-08-07T17:12:04Z",
+      "side": 1,
+      "message": "I copied from the original code\nhttps://codesearch.chromium.org/chromium/src/ui/views/win/hwnd_message_handler.cc?q\u003dhwnd_message_handler.cc\u0026dr\u0026l\u003d2912\n\nI thought maybe we only care about the latency of touch events.",
+      "parentUuid": "aed47001_186eece7",
+      "range": {
+        "startLine": 2894,
+        "startChar": 5,
+        "endLine": 2894,
+        "endChar": 25
+      },
+      "revId": "02fdff9a2ab96fc84af0785ea1818d8d85e9e728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b222359e_07b1d145",
         "filename": "ui/views/win/hwnd_message_handler.h",
         "patchSetId": 9
@@ -160,6 +280,30 @@
       "revId": "02fdff9a2ab96fc84af0785ea1818d8d85e9e728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daaa0816_9468ca61",
+        "filename": "ui/views/win/hwnd_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-08-07T17:12:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b222359e_07b1d145",
+      "range": {
+        "startLine": 549,
+        "startChar": 6,
+        "endLine": 549,
+        "endChar": 18
+      },
+      "revId": "02fdff9a2ab96fc84af0785ea1818d8d85e9e728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "311a3074_c22a26e1",
+        "filename": "ui/views/win/hwnd_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-08-07T17:12:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "917ec35b_faaadf07",
+      "range": {
+        "startLine": 550,
+        "startChar": 6,
+        "endLine": 550,
+        "endChar": 14
+      },
+      "revId": "02fdff9a2ab96fc84af0785ea1818d8d85e9e728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fba21a8d_4adf397c",
         "filename": "ui/views/win/hwnd_message_handler.h",
         "patchSetId": 9
@@ -206,6 +374,30 @@
       "revId": "02fdff9a2ab96fc84af0785ea1818d8d85e9e728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0dec84_fc722284",
+        "filename": "ui/views/win/hwnd_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-08-07T17:12:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fba21a8d_4adf397c",
+      "range": {
+        "startLine": 551,
+        "startChar": 7,
+        "endLine": 551,
+        "endChar": 23
+      },
+      "revId": "02fdff9a2ab96fc84af0785ea1818d8d85e9e728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

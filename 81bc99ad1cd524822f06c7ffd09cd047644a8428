@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78bc84f1_df55155e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-08-07T17:12:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e9fb6cd_c8d5ea53",
+      "revId": "81bc99ad1cd524822f06c7ffd09cd047644a8428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca29d143_693a5903",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T20:51:42Z",
       "side": 1,
       "message": "Are you sure we want to set these flags on a TouchEvent? Because I don\u0027t think we ever do that right now, and I am not sure how well various parts of the code (the gesture-recognizer, for example) will cope with it.",
+      "revId": "81bc99ad1cd524822f06c7ffd09cd047644a8428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624f5f2a_6ef35bfb",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-08-07T17:12:04Z",
+      "side": 1,
+      "message": "Because pen has few button types, we need to store this information in flags\nin Touch Events.",
+      "parentUuid": "ca29d143_693a5903",
       "revId": "81bc99ad1cd524822f06c7ffd09cd047644a8428",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "81bc99ad1cd524822f06c7ffd09cd047644a8428",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772af05e_cf9ca38d",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2783,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-08-07T17:12:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb371f4e_5d754adc",
+      "revId": "81bc99ad1cd524822f06c7ffd09cd047644a8428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
