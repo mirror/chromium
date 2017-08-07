@@ -22,6 +22,30 @@
       "revId": "0975011a060c1bd1a29201c647e064e7e30ea805",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481ac124_827f11be",
+        "filename": "remoting/ios/facade/host_list_fetcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-07T20:45:48Z",
+      "side": 1,
+      "message": "Right. I\u0027m sort of assuming the caller will call RetrieveHostList immediately after it calls CancelFetch...\n\nAdded a RESPONSE_CODE_CANCELLED for cancellation.",
+      "parentUuid": "44c71f90_fd5ac1da",
+      "range": {
+        "startLine": 51,
+        "startChar": 72,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "0975011a060c1bd1a29201c647e064e7e30ea805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
