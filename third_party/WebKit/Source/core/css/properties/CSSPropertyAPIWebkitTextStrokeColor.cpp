@@ -9,7 +9,6 @@
 
 namespace blink {
 
-class CSSParserLocalContext;
 
 const CSSValue* CSSPropertyAPIWebkitTextStrokeColor::ParseSingleValue(
     CSSPropertyID,
