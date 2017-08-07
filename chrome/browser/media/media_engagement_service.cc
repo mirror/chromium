@@ -182,6 +182,10 @@ double MediaEngagementService::GetEngagementScore(const GURL& url) const {
   return CreateEngagementScore(url).GetTotalScore();
 }
 
+bool MediaEngagementService::HasHighEngagement(const GURL& url) const {
+  return CreateEngagementScore(url).HasHighScore();
+}
+
 std::map<GURL, double> MediaEngagementService::GetScoreMapForTesting() const {
   std::map<GURL, double> score_map;
   for (const GURL& url : GetEngagementOriginsFromContentSettings(profile_)) {
