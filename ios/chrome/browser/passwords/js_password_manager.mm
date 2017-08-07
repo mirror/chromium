@@ -37,6 +37,7 @@ NSString* JSONEscape(NSString* JSONString) {
 - (void)findPasswordFormsWithCompletionHandler:
     (void (^)(NSString*))completionHandler {
   DCHECK(completionHandler);
+  LOG(ERROR) << "***** jsManager";
   [self evaluateExtraScript:@"__gCrWeb.findPasswordForms()"
           completionHandler:completionHandler];
 }
@@ -99,9 +100,12 @@ NSString* JSONEscape(NSString* JSONString) {
           completionHandler:(void (^)(NSString*))completionHandler {
   DCHECK(completionHandler);
   NSString* JS = [[self injectionContent] stringByAppendingString:script];
-  [self executeJavaScript:JS completionHandler:^(id result, NSError*) {
-    completionHandler(base::mac::ObjCCastStrict<NSString>(result));
-  }];
+  LOG(ERROR) << "***** evaluateExtraScript ";
+  [self executeJavaScript:JS
+        completionHandler:^(id result, NSError* err) {
+          LOG(ERROR) << "***** evaluateExtraScript result " << err;
+          completionHandler(base::mac::ObjCCastStrict<NSString>(result));
+        }];
 }
 
 @end

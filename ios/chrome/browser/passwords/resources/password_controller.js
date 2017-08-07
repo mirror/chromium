@@ -28,7 +28,9 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
    */
   __gCrWeb['findPasswordForms'] = function() {
     var formDataList = [];
+      console.error("-- js findPasswordForms");
     if (hasPasswordField_(window)) {
+        console.error("-- js pw field found");
       __gCrWeb.getPasswordFormDataList(formDataList, window);
     }
     return __gCrWeb.stringify(formDataList);
@@ -226,6 +228,7 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
    */
   __gCrWeb['fillPasswordForm'] = function(formData, username, password,
                                           opt_normalizedOrigin) {
+      debugger;
     return fillPasswordFormWithData_(
         formData, username, password, window, opt_normalizedOrigin);
   };

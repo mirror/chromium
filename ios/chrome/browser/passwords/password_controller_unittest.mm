@@ -48,6 +48,7 @@
 using autofill::PasswordForm;
 using autofill::PasswordFormFillData;
 using testing::Return;
+using testing::_;
 
 namespace {
 
@@ -242,7 +243,7 @@ class PasswordControllerTest : public web::WebTestWithWebState {
   // PasswordController for testing.
   PasswordController* passwordController_;
 
-  scoped_refptr<password_manager::PasswordStore> store_;
+  scoped_refptr<password_manager::MockPasswordStore> store_;
 };
 
 struct PasswordFormTestData {
@@ -1364,4 +1365,59 @@ TEST_F(PasswordControllerTest, HTTPSPassword) {
       web_state()->GetNavigationManager()->GetLastCommittedItem()->GetSSL();
   EXPECT_FALSE(ssl_status.content_status &
                web::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
+}
+
+//
+TEST_F(PasswordControllerTest, FillingDynamicallyAddedFormsOnFocus) {
+  LOG(ERROR) << "**** 0";
+  LoadHtml(kHtmlWithoutPasswordForm);
+  LOG(ERROR) << "**** 1";
+
+  NSString* kAddFormDynamicallyScript =
+      @"var dynamicForm = document.createElement('form');"
+       "dynamicForm.setAttribute('name', 'dynamic_form');"
+       "var inputUsername = document.createElement('input');"
+       "inputUsername.setAttribute('type', 'text');"
+       "inputUsername.setAttribute('id', 'username');"
+       "var inputPassword = document.createElement('input');"
+       "inputPassword.setAttribute('type', 'password');"
+       "inputPassword.setAttribute('id', 'password');"
+       "var submitButton = document.createElement('input');"
+       "submitButton.setAttribute('type', 'submit');"
+       "submitButton.setAttribute('value', 'Submit');"
+       "dynamicForm.appendChild(inputUsername);"
+       "dynamicForm.appendChild(inputPassword);"
+       "dynamicForm.appendChild(submitButton);"
+       "document.body.appendChild(dynamicForm);";
+
+  ExecuteJavaScript(kAddFormDynamicallyScript);
+  WaitForBackgroundTasks();
+  LOG(ERROR) << "**** 2";
+
+  NSString* kSetUsernameInFocusScript =
+      @"document.getElementById('username').focus();";
+
+  /* __block */ bool block_was_called = false;
+  ON_CALL(*store_, GetLogins(_, _))
+      .WillByDefault(testing::Invoke(
+          [&block_was_called](
+              const password_manager::PasswordStore::FormDigest&,
+              password_manager::PasswordStoreConsumer*) {
+            block_was_called = true;
+          }));
+  //   bool* p_block_was_called = &block_was_called;
+  EXPECT_CALL(*store_, GetLogins(_, _));
+
+  ExecuteJavaScript(kSetUsernameInFocusScript); /* ^(id , NSError* ) {
+       LOG(ERROR)<<"***** 6 ";
+       block_was_called = YES;
+   }); */
+  LOG(ERROR) << "**** 3";
+  WaitForBackgroundTasks();
+  LOG(ERROR) << "**** 4";
+
+  base::test::ios::WaitUntilCondition(^bool() {
+    return *p_block_was_called;
+  });
+  LOG(ERROR) << "**** 5";
 }
