@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c19d3b2f_c04f111f",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-07T14:13:31Z",
+      "side": 1,
+      "message": "You should also update these enum names to reflect the rename.",
+      "range": {
+        "startLine": 61,
+        "startChar": 13,
+        "endLine": 61,
+        "endChar": 24
+      },
+      "revId": "e35886ed4566643dcbcdd93ebfd532095cd33b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d6082f_25f0d702",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-07T14:13:31Z",
+      "side": 1,
+      "message": "Same with these names.",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 34
+      },
+      "revId": "e35886ed4566643dcbcdd93ebfd532095cd33b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
