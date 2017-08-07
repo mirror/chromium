@@ -95,7 +95,11 @@ class CrOSComponent {
 
  private:
   FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest,
-                           RegisterComponentSuccess);
+                           RegisterComponentSuccess1);
+  FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest,
+                           RegisterComponentSuccess2);
+  FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest,
+                           RegisterComponentSuccess3);
   FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest, RegisterComponentFail);
   CrOSComponent() {}
   static void RegisterResult(ComponentUpdateService* cus,
