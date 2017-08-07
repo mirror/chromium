@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f82eedb_d52e68e3",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-07T18:41:37Z",
+      "side": 1,
+      "message": "Done: used the suggested base64UrlEncode",
+      "parentUuid": "bace5053_fc7a3b24",
+      "range": {
+        "startLine": 115,
+        "startChar": 51,
+        "endLine": 115,
+        "endChar": 60
+      },
+      "revId": "6acec76c9ecfb6e3984178b613f9e65c3b8d4162",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8abbac43_c7770634",
         "filename": "components/safe_browsing/web_ui/webui.proto",
         "patchSetId": 9
