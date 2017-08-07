@@ -381,6 +381,15 @@ void KeyboardController::RemoveObserver(KeyboardControllerObserver* observer) {
 }
 
 void KeyboardController::HideKeyboard(HideReason reason) {
+  HideKeyboardInternal(reason, true);
+}
+
+void KeyboardController::HideKeyboardSynchronous(HideReason reason) {
+  HideKeyboardInternal(reason, false);
+}
+
+void KeyboardController::HideKeyboardInternal(HideReason reason,
+                                              const bool use_animation) {
   TRACE_EVENT0("vk", "HideKeyboard");
 
   switch (state_) {
@@ -405,29 +414,41 @@ void KeyboardController::HideKeyboard(HideReason reason) {
       NotifyContentsBoundsChanging(gfx::Rect());
 
       set_keyboard_locked(false);
+      if (use_animation) {
+        ui::LayerAnimator* container_animator =
+            container_->layer()->GetAnimator();
 
-      ui::LayerAnimator* container_animator =
-          container_->layer()->GetAnimator();
+        animation_observer_.reset(new CallbackAnimationObserver(
+            container_animator,
+            base::Bind(&KeyboardController::HideAnimationFinished,
+                       base::Unretained(this))));
+        container_animator->AddObserver(animation_observer_.get());
 
-      animation_observer_.reset(new CallbackAnimationObserver(
-          container_animator,
-          base::Bind(&KeyboardController::HideAnimationFinished,
-                     base::Unretained(this))));
-      container_animator->AddObserver(animation_observer_.get());
+        ui::ScopedLayerAnimationSettings settings(container_animator);
+        settings.SetTweenType(gfx::Tween::FAST_OUT_LINEAR_IN);
+        settings.SetTransitionDuration(
+            base::TimeDelta::FromMilliseconds(kAnimationDurationMs));
+        gfx::Transform transform;
+        transform.Translate(0, kAnimationDistance);
 
-      ui::ScopedLayerAnimationSettings settings(container_animator);
-      settings.SetTweenType(gfx::Tween::FAST_OUT_LINEAR_IN);
-      settings.SetTransitionDuration(
-          base::TimeDelta::FromMilliseconds(kAnimationDurationMs));
-      gfx::Transform transform;
-      transform.Translate(0, kAnimationDistance);
+        // Change the state here instead of at the end of the function because
+        // the animation immediately starts in test.
+        ChangeState(KeyboardControllerState::HIDING);
 
-      // Change the state here instead of at the end of the function because
-      // the animation immediately starts in test.
-      ChangeState(KeyboardControllerState::HIDING);
+        container_->SetTransform(transform);
+        container_->layer()->SetOpacity(kAnimationStartOrAfterHideOpacity);
+      } else {
+        ChangeState(KeyboardControllerState::HIDING);
 
-      container_->SetTransform(transform);
-      container_->layer()->SetOpacity(kAnimationStartOrAfterHideOpacity);
+        // Instead of animating, just set the bounds synchronously.
+        const gfx::Rect old_bounds = container_->bounds();
+        const gfx::Rect new_bounds =
+            gfx::Rect(old_bounds.x(), old_bounds.y() + kAnimationDistance,
+                      old_bounds.width(), old_bounds.height());
+        container_->SetBounds(new_bounds);
+        HideAnimationFinished();
+        ChangeState(KeyboardControllerState::HIDDEN);
+      }
       break;
     }
     default:
