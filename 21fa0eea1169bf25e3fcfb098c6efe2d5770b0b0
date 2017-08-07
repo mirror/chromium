@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9792b8e1_299021b7",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-07T17:33:21Z",
+      "side": 1,
+      "message": "Thanks.  Can you put a comment to that effect on the constant?  (Worth mentioning both that 80% of names are shorter than this in practice, and that this won\u0027t ever increase the length of a name since the resulting hashed name is 80 chars.)",
+      "parentUuid": "0b5301f8_1e5b5f52",
+      "revId": "21fa0eea1169bf25e3fcfb098c6efe2d5770b0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eea79a32_09b3bd95",
         "filename": "content/common/unique_name_helper.cc",
         "patchSetId": 9
