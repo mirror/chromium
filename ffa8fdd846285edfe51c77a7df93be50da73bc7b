@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83f4ea5a_b46d1633",
+        "filename": "extensions/utility/utility_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-07T18:35:49Z",
+      "side": 1,
+      "message": "add comments explaining why we need to do this on a background thread?",
+      "revId": "ffa8fdd846285edfe51c77a7df93be50da73bc7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae84b7c6_8ef45e28",
+        "filename": "extensions/utility/utility_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-07T18:35:49Z",
+      "side": 1,
+      "message": "Is this different than PostTaskAndReply?",
+      "revId": "ffa8fdd846285edfe51c77a7df93be50da73bc7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67109022_9cc9a04a",
+        "filename": "extensions/utility/utility_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-07T18:35:49Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ffa8fdd846285edfe51c77a7df93be50da73bc7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
