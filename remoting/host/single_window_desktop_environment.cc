@@ -33,6 +33,7 @@ class SingleWindowDesktopEnvironment : public BasicDesktopEnvironment {
       scoped_refptr<base::SingleThreadTaskRunner> video_capture_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> input_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
       webrtc::DesktopCapturer::SourceId window_id,
       base::WeakPtr<ClientSessionControl> client_session_control,
       const DesktopEnvironmentOptions& options);
@@ -75,6 +76,7 @@ SingleWindowDesktopEnvironment::SingleWindowDesktopEnvironment(
     scoped_refptr<base::SingleThreadTaskRunner> video_capture_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> input_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
     webrtc::WindowId window_id,
     base::WeakPtr<ClientSessionControl> client_session_control,
     const DesktopEnvironmentOptions& options)
@@ -82,6 +84,7 @@ SingleWindowDesktopEnvironment::SingleWindowDesktopEnvironment(
                               video_capture_task_runner,
                               input_task_runner,
                               ui_task_runner,
+                              file_task_runner,
                               options),
       window_id_(window_id) {}
 
@@ -90,11 +93,13 @@ SingleWindowDesktopEnvironmentFactory::SingleWindowDesktopEnvironmentFactory(
     scoped_refptr<base::SingleThreadTaskRunner> video_capture_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> input_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
     webrtc::WindowId window_id)
     : BasicDesktopEnvironmentFactory(caller_task_runner,
                                      video_capture_task_runner,
                                      input_task_runner,
-                                     ui_task_runner),
+                                     ui_task_runner,
+                                     file_task_runner),
       window_id_(window_id) {}
 
 SingleWindowDesktopEnvironmentFactory::
@@ -109,7 +114,8 @@ SingleWindowDesktopEnvironmentFactory::Create(
 
   return base::WrapUnique(new SingleWindowDesktopEnvironment(
       caller_task_runner(), video_capture_task_runner(), input_task_runner(),
-      ui_task_runner(), window_id_, client_session_control, options));
+      ui_task_runner(), file_task_runner(), window_id_, client_session_control,
+      options));
 }
 
 }  // namespace remoting

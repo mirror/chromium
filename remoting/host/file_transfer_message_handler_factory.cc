@@ -8,8 +8,10 @@
 
 namespace remoting {
 
-FileTransferMessageHandlerFactory::FileTransferMessageHandlerFactory() =
-    default;
+FileTransferMessageHandlerFactory::FileTransferMessageHandlerFactory(
+    std::unique_ptr<FileTransferProxyFactory> file_proxy_factory)
+    : file_proxy_factory_(std::move(file_proxy_factory)) {}
+
 FileTransferMessageHandlerFactory::~FileTransferMessageHandlerFactory() =
     default;
 
@@ -19,7 +21,8 @@ void FileTransferMessageHandlerFactory::CreateDataChannelHandler(
   // FileTransferMessageHandler manages its own lifetime and is tied to the
   // lifetime of |pipe|. Once |pipe| is closed, this instance will be cleaned
   // up.
-  new FileTransferMessageHandler(channel_name, std::move(pipe));
+  new FileTransferMessageHandler(channel_name, std::move(pipe),
+                                 file_proxy_factory_->CreateProxy());
 }
 
 }  // namespace remoting
