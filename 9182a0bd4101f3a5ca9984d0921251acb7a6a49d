@@ -16,6 +16,167 @@
       "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e2d44b_44c82fd7",
+        "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-07T15:17:06Z",
+      "side": 1,
+      "message": "multi-line if statements need {} around the body even if they are a single statement",
+      "range": {
+        "startLine": 190,
+        "startChar": 19,
+        "endLine": 190,
+        "endChar": 53
+      },
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9428a2f9_e5aafaeb",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-07T15:17:06Z",
+      "side": 1,
+      "message": "we still need to show this bubble in the fullscreen window, right? to make it clear that this is a fullscreened chrome window \u0026 can be exited",
+      "range": {
+        "startLine": 675,
+        "startChar": 7,
+        "endLine": 675,
+        "endChar": 32
+      },
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5c2302_5e185025",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-07T15:17:06Z",
+      "side": 1,
+      "message": "are you sure this should be \u0026\u0026? this means that when the experiment is *disabled* the current behavior will change from TOOLBAR_NONE in this case to the other cases below, which seems wrong",
+      "range": {
+        "startLine": 158,
+        "startChar": 34,
+        "endLine": 158,
+        "endChar": 60
+      },
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffa1e50_20dd18ad",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_controller_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-07T15:17:06Z",
+      "side": 1,
+      "message": "not used?",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04fbd53_11d1a1b0",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-07T15:17:06Z",
+      "side": 1,
+      "message": "setters that are inline like this are named like set_separate_fullscreen_window()",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199d97fc_d57c0194",
+        "filename": "content/browser/renderer_host/render_widget_host_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-07T15:17:06Z",
+      "side": 1,
+      "message": "the other virtual On*() methods have empty inline bodies - this one should too I think",
+      "range": {
+        "startLine": 286,
+        "startChar": 44,
+        "endLine": 286,
+        "endChar": 52
+      },
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366817ba_c45d34dc",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2734,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-07T15:17:06Z",
+      "side": 1,
+      "message": "why is this change here?",
+      "range": {
+        "startLine": 2734,
+        "startChar": 67,
+        "endLine": 2734,
+        "endChar": 76
+      },
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
