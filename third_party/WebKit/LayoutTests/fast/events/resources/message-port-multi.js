@@ -66,7 +66,7 @@ function testTransfers() {
           testFailed("Sending host object should throw a DataCloneError, got: " + e);
     }
     try {
-        var f1 = function() {}
+        var f1 = function () {}
         channel0.port1.postMessage({id:"function-object", function:f1, port:c4.port1}, [c4.port1]);
         testFailed("Sending Function object should throw");
     } catch(e) {
