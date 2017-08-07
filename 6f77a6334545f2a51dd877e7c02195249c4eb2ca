@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d689fcc1_3335bc36",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T18:14:28Z",
+      "side": 1,
+      "message": "This happens at each NG entry-point, i.e. every NG node that has a legacy parent.\n\nCurrently that\u0027s e.g. the HTML root element (because it\u0027s a LayoutNGBlockFlow child of a legacy LayoutView) or a block inside a table-cell (because it\u0027s a LayoutNGBlockFlow child of a legacy LayoutTableCell).",
+      "parentUuid": "1d6996c4_3e87d49e",
+      "revId": "6f77a6334545f2a51dd877e7c02195249c4eb2ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30a750a0_4542dac4",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.h",
         "patchSetId": 2
