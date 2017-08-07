@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a72f664f_45f0217f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-07T14:12:22Z",
+      "side": 1,
+      "message": "Not in Blink/WebKit, a couple of bugs filed recently crbug.com/707533 and crbug.com/750268, both from standard engineers in other impls.\n\nSo I\u0027m thinking this to be in later phase, after we support existing tests and we have the style expert on board.",
+      "parentUuid": "a4b78d89_d1b1e548",
+      "revId": "c719f3e533e2d0a20e2ac0932db838e381820fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6458215_fd7e4f8f",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_base_fragment_builder.h",
         "patchSetId": 11
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-07T09:44:51Z",
       "side": 1,
       "message": "do we need any of the setters?",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 53
+      },
+      "revId": "c719f3e533e2d0a20e2ac0932db838e381820fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54be0afc_45abbe44",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_base_fragment_builder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-07T14:12:22Z",
+      "side": 1,
+      "message": "Removed unused ones. SetStyle() is used when we re-use TextFragmentBuilder multiple times.",
+      "parentUuid": "c6458215_fd7e4f8f",
       "range": {
         "startLine": 24,
         "startChar": 1,
