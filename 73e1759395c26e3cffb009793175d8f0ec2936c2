@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "535a963e_658b4e3d",
+        "filename": "third_party/WebKit/Source/core/html/HTMLTimeElement.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-07T00:01:23Z",
+      "side": 1,
+      "message": "Please add a test for HTMLConstructor like https://chromium-review.googlesource.com/c/552597 .",
+      "revId": "73e1759395c26e3cffb009793175d8f0ec2936c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f3afbb_2afe1591",
+        "filename": "third_party/WebKit/Source/core/html/HTMLUnknownElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-07T00:01:23Z",
+      "side": 1,
+      "message": "Remove this line.",
+      "revId": "73e1759395c26e3cffb009793175d8f0ec2936c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
