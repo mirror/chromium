@@ -20,15 +20,13 @@ namespace content {
 class ServiceWorkerProviderContext::Delegate {
  public:
   virtual ~Delegate() {}
-  virtual void AssociateRegistration(
+  virtual void SetRegistration(
       std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration,
       std::unique_ptr<ServiceWorkerHandleReference> installing,
       std::unique_ptr<ServiceWorkerHandleReference> waiting,
       std::unique_ptr<ServiceWorkerHandleReference> active) = 0;
-  virtual void GetAssociatedRegistration(
-      ServiceWorkerRegistrationObjectInfo* info,
-      ServiceWorkerVersionAttributes* attrs) = 0;
-  virtual bool HasAssociatedRegistration() = 0;
+  virtual void GetRegistration(ServiceWorkerRegistrationObjectInfo* info,
+                               ServiceWorkerVersionAttributes* attrs) = 0;
   virtual void SetController(
       std::unique_ptr<ServiceWorkerHandleReference> controller) = 0;
   virtual ServiceWorkerHandleReference* controller() = 0;
@@ -42,7 +40,7 @@ class ServiceWorkerProviderContext::ControlleeDelegate
   ControlleeDelegate() {}
   ~ControlleeDelegate() override {}
 
-  void AssociateRegistration(
+  void SetRegistration(
       std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration,
       std::unique_ptr<ServiceWorkerHandleReference> /* installing */,
       std::unique_ptr<ServiceWorkerHandleReference> /* waiting */,
@@ -57,14 +55,8 @@ class ServiceWorkerProviderContext::ControlleeDelegate
     controller_ = std::move(controller);
   }
 
-  bool HasAssociatedRegistration() override {
-    NOTREACHED();
-    return false;
-  }
-
-  void GetAssociatedRegistration(
-      ServiceWorkerRegistrationObjectInfo* /* info */,
-      ServiceWorkerVersionAttributes* /* attrs */) override {
+  void GetRegistration(ServiceWorkerRegistrationObjectInfo* /* info */,
+                       ServiceWorkerVersionAttributes* /* attrs */) override {
     NOTREACHED();
   }
 
@@ -86,7 +78,7 @@ class ServiceWorkerProviderContext::ControllerDelegate
   ControllerDelegate() {}
   ~ControllerDelegate() override {}
 
-  void AssociateRegistration(
+  void SetRegistration(
       std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration,
       std::unique_ptr<ServiceWorkerHandleReference> installing,
       std::unique_ptr<ServiceWorkerHandleReference> waiting,
@@ -103,12 +95,9 @@ class ServiceWorkerProviderContext::ControllerDelegate
     NOTREACHED();
   }
 
-  bool HasAssociatedRegistration() override { return !!registration_; }
-
-  void GetAssociatedRegistration(
-      ServiceWorkerRegistrationObjectInfo* info,
-      ServiceWorkerVersionAttributes* attrs) override {
-    DCHECK(HasAssociatedRegistration());
+  void GetRegistration(ServiceWorkerRegistrationObjectInfo* info,
+                       ServiceWorkerVersionAttributes* attrs) override {
+    DCHECK(registration_);
     *info = registration_->info();
     if (installing_)
       attrs->installing = installing_->info();
@@ -136,10 +125,10 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     int provider_id,
     ServiceWorkerProviderType provider_type,
     mojom::ServiceWorkerProviderAssociatedRequest request,
-    ThreadSafeSender* thread_safe_sender)
+    scoped_refptr<ThreadSafeSender> thread_safe_sender)
     : provider_id_(provider_id),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      thread_safe_sender_(thread_safe_sender),
+      thread_safe_sender_(std::move(thread_safe_sender)),
       binding_(this, std::move(request)) {
   if (provider_type == SERVICE_WORKER_PROVIDER_FOR_CONTROLLER)
     delegate_.reset(new ControllerDelegate);
@@ -160,15 +149,14 @@ ServiceWorkerProviderContext::~ServiceWorkerProviderContext() {
   }
 }
 
-void ServiceWorkerProviderContext::OnAssociateRegistration(
+void ServiceWorkerProviderContext::SetRegistration(
     std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration,
     std::unique_ptr<ServiceWorkerHandleReference> installing,
     std::unique_ptr<ServiceWorkerHandleReference> waiting,
     std::unique_ptr<ServiceWorkerHandleReference> active) {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
-  delegate_->AssociateRegistration(std::move(registration),
-                                   std::move(installing), std::move(waiting),
-                                   std::move(active));
+  delegate_->SetRegistration(std::move(registration), std::move(installing),
+                             std::move(waiting), std::move(active));
 }
 
 void ServiceWorkerProviderContext::OnSetControllerServiceWorker(
@@ -182,15 +170,11 @@ void ServiceWorkerProviderContext::OnSetControllerServiceWorker(
     event_dispatcher_.Bind(std::move(event_dispatcher_ptr_info));
 }
 
-void ServiceWorkerProviderContext::GetAssociatedRegistration(
+void ServiceWorkerProviderContext::GetRegistration(
     ServiceWorkerRegistrationObjectInfo* info,
     ServiceWorkerVersionAttributes* attrs) {
   DCHECK(!main_thread_task_runner_->RunsTasksInCurrentSequence());
-  delegate_->GetAssociatedRegistration(info, attrs);
-}
-
-bool ServiceWorkerProviderContext::HasAssociatedRegistration() {
-  return delegate_->HasAssociatedRegistration();
+  delegate_->GetRegistration(info, attrs);
 }
 
 ServiceWorkerHandleReference* ServiceWorkerProviderContext::controller() {
