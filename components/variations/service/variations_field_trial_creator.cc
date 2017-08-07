@@ -67,7 +67,7 @@ std::string GetHardwareClass() {
 
 // Returns the date that should be used by the VariationsSeedProcessor to do
 // expiry and start date checks.
-base::Time GetReferenceDateForExpiryChecks(PrefService* local_state) {
+base::Time GetReferenceDateForExpiryChecks(SimplePrefService* local_state) {
   const int64_t date_value = local_state->GetInt64(prefs::kVariationsSeedDate);
   const base::Time seed_date = base::Time::FromInternalValue(date_value);
   const base::Time build_time = base::GetBuildTime();
@@ -120,7 +120,7 @@ void RecordCreateTrialsSeedExpiry(VariationsSeedExpiry expiry_check_result) {
 }
 
 VariationsFieldTrialCreator::VariationsFieldTrialCreator(
-    PrefService* local_state,
+    SimplePrefService* local_state,
     VariationsServiceClient* client,
     const UIStringOverrider& ui_string_overrider)
     : client_(client),

@@ -76,6 +76,14 @@ AwMetricsServiceClient* AwMetricsServiceClient::GetInstance() {
   return g_lazy_instance_.Pointer();
 }
 
+// static
+std::string AwMetricsServiceClient::GetClientID() {
+  // Ensure the client id has been cached.
+  AwMetricsServiceClient::GetOrCreateGUID();
+
+  return g_client_id_guid.Get();
+}
+
 void AwMetricsServiceClient::GetOrCreateGUID() {
   // Check for cached GUID
   if (g_client_id_guid.Get().length() == GUID_SIZE)

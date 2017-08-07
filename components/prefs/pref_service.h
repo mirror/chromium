@@ -27,6 +27,7 @@
 #include "base/values.h"
 #include "components/prefs/base_prefs_export.h"
 #include "components/prefs/persistent_pref_store.h"
+#include "components/prefs/simple_pref_service.h"
 
 class PrefNotifier;
 class PrefNotifierImpl;
@@ -55,7 +56,7 @@ class ScopedUserPrefUpdateBase;
 // Settings and storage accessed through this class represent
 // user-selected preferences and information and MUST not be
 // extracted, overwritten or modified except through the defined APIs.
-class COMPONENTS_PREFS_EXPORT PrefService {
+class COMPONENTS_PREFS_EXPORT PrefService : public SimplePrefService {
  public:
   enum PrefInitializationStatus {
     INITIALIZATION_STATUS_WAITING,
@@ -171,7 +172,7 @@ class COMPONENTS_PREFS_EXPORT PrefService {
       base::Callback<void(PersistentPrefStore::PrefReadError)>
           read_error_callback,
       bool async);
-  virtual ~PrefService();
+  ~PrefService() override;
 
   // Lands pending writes to disk. This should only be used if we need to save
   // immediately (basically, during shutdown).
@@ -205,35 +206,35 @@ class COMPONENTS_PREFS_EXPORT PrefService {
   bool GetBoolean(const std::string& path) const;
   int GetInteger(const std::string& path) const;
   double GetDouble(const std::string& path) const;
-  std::string GetString(const std::string& path) const;
+  std::string GetString(const std::string& path) const override;
   base::FilePath GetFilePath(const std::string& path) const;
 
   // Returns the branch if it exists, or the registered default value otherwise.
   // Note that |path| must point to a registered preference. In that case, these
   // functions will never return NULL.
   const base::DictionaryValue* GetDictionary(const std::string& path) const;
-  const base::ListValue* GetList(const std::string& path) const;
+  const base::ListValue* GetList(const std::string& path) const override;
 
   // Removes a user pref and restores the pref to its default value.
-  void ClearPref(const std::string& path);
+  void ClearPref(const std::string& path) override;
 
   // If the path is valid (i.e., registered), update the pref value in the user
   // prefs.
   // To set the value of dictionary or list values in the pref tree use
   // Set(), but to modify the value of a dictionary or list use either
   // ListPrefUpdate or DictionaryPrefUpdate from scoped_user_pref_update.h.
-  void Set(const std::string& path, const base::Value& value);
+  void Set(const std::string& path, const base::Value& value) override;
   void SetBoolean(const std::string& path, bool value);
   void SetInteger(const std::string& path, int value);
   void SetDouble(const std::string& path, double value);
-  void SetString(const std::string& path, const std::string& value);
+  void SetString(const std::string& path, const std::string& value) override;
   void SetFilePath(const std::string& path, const base::FilePath& value);
 
   // Int64 helper methods that actually store the given value as a string.
   // Note that if obtaining the named value via GetDictionary or GetList, the
   // Value type will be Type::STRING.
-  void SetInt64(const std::string& path, int64_t value);
-  int64_t GetInt64(const std::string& path) const;
+  void SetInt64(const std::string& path, int64_t value) override;
+  int64_t GetInt64(const std::string& path) const override;
 
   // As above, but for unsigned values.
   void SetUint64(const std::string& path, uint64_t value);
@@ -257,7 +258,7 @@ class COMPONENTS_PREFS_EXPORT PrefService {
   // NOTE: this is NOT the same as FindPreference. In particular
   // FindPreference returns whether RegisterXXX has been invoked, where as
   // this checks if a value exists for the path.
-  bool HasPrefPath(const std::string& path) const;
+  bool HasPrefPath(const std::string& path) const override;
 
   // Issues a callback for every preference value. The preferences must not be
   // mutated during iteration.

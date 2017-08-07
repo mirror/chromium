@@ -42,6 +42,8 @@ component("prefs") {
     "pref_value_store.h",
     "scoped_user_pref_update.cc",
     "scoped_user_pref_update.h",
+    "simple_pref_service.cc",
+    "simple_pref_service.h",
     "value_map_pref_store.cc",
     "value_map_pref_store.h",
     "writeable_pref_store.cc",

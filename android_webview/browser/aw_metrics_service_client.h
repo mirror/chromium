@@ -44,6 +44,9 @@ class AwMetricsServiceClient : public metrics::MetricsServiceClient,
  public:
   static AwMetricsServiceClient* GetInstance();
 
+  // Allow other classes to access the cached client id
+  static std::string GetClientID();
+
   // Retrieve the client ID or generate one if none exists
   static void GetOrCreateGUID();
 
@@ -74,6 +77,8 @@ class AwMetricsServiceClient : public metrics::MetricsServiceClient,
       const metrics::MetricsLogUploader::UploadCallback& on_upload_complete)
       override;
   base::TimeDelta GetStandardUploadInterval() override;
+
+  PrefService* pref_service() { return pref_service_; }
 
  private:
   AwMetricsServiceClient();
