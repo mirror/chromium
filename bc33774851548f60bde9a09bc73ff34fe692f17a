@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5e0d8cf0_35a99791",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-08-07T16:44:41Z",
+      "side": 1,
+      "message": "|max_effective_connection_type_| is a const member of the experiment class, hence it is easier to use a wrapper that returns the result to initialize it. WDYT?",
+      "parentUuid": "48dc09b2_4c7a58fc",
+      "range": {
+        "startLine": 121,
+        "startChar": 7,
+        "endLine": 121,
+        "endChar": 40
+      },
+      "revId": "bc33774851548f60bde9a09bc73ff34fe692f17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e97d4c7_de8c1bb7",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "bc33774851548f60bde9a09bc73ff34fe692f17a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5982c6da_e07e62fa",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-08-07T16:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e97d4c7_de8c1bb7",
+      "range": {
+        "startLine": 160,
+        "startChar": 9,
+        "endLine": 160,
+        "endChar": 10
+      },
+      "revId": "bc33774851548f60bde9a09bc73ff34fe692f17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d9aa374f_8637060b",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-08-07T16:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1d50494_ef4a9e61",
+      "range": {
+        "startLine": 174,
+        "startChar": 66,
+        "endLine": 174,
+        "endChar": 67
+      },
+      "revId": "bc33774851548f60bde9a09bc73ff34fe692f17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efaea22e_fb871cd6",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1d7190eb_e4d94085",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-08-07T16:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efaea22e_fb871cd6",
+      "range": {
+        "startLine": 177,
+        "startChar": 54,
+        "endLine": 177,
+        "endChar": 61
+      },
+      "revId": "bc33774851548f60bde9a09bc73ff34fe692f17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbeaa988_2f18cbfa",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 8
@@ -114,6 +210,30 @@
       "revId": "bc33774851548f60bde9a09bc73ff34fe692f17a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1139c549_4433f29a",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-08-07T16:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbeaa988_2f18cbfa",
+      "range": {
+        "startLine": 178,
+        "startChar": 63,
+        "endLine": 178,
+        "endChar": 64
+      },
+      "revId": "bc33774851548f60bde9a09bc73ff34fe692f17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
