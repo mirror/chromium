@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "473cc7c9_7c2d3019",
+        "filename": "third_party/WebKit/Source/core/editing/markers/CompositionMarker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T07:15:54Z",
+      "side": 1,
+      "message": "Could you introduce enum class, e.g. CompositionMarkerUnderlineColorType, instead of |bool|?",
+      "revId": "2f23ee461cf71b6fc058f0ed2bc01dddd79783b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
