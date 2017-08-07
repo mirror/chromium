@@ -73,6 +73,12 @@ using testing::ElementToDismissContextMenu;
 
 // Tests context menu on element that has WebkitTouchCallout set to none.
 - (void)testContextMenuWebkitTouchCalloutNone {
+  // TODO(crbug.com/753119): Re-enable this test on iOS 11 iPad once the bug is
+  // fixed.
+  if (base::ios::IsRunningOnIOS11OrLater() && IsIPadIdiom()) {
+    EARL_GREY_TEST_DISABLED(@"Test disabled on iOS 11.");
+  }
+
   // Create map of canned responses and set up the test HTML server.
   std::map<GURL, std::string> responses;
   GURL initialURL =
@@ -105,6 +111,12 @@ using testing::ElementToDismissContextMenu;
 // Tests context menu on element that has WebkitTouchCallout set to none from an
 // ancestor.
 - (void)testContextMenuWebkitTouchCalloutNoneFromAncestor {
+  // TODO(crbug.com/753119): Re-enable this test on iOS 11 iPad once the bug is
+  // fixed.
+  if (base::ios::IsRunningOnIOS11OrLater() && IsIPadIdiom()) {
+    EARL_GREY_TEST_DISABLED(@"Test disabled on iOS 11.");
+  }
+
   // Create map of canned responses and set up the test HTML server.
   std::map<GURL, std::string> responses;
   GURL initialURL =
