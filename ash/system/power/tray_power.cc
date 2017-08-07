@@ -9,6 +9,7 @@
 #include "ash/accessibility_delegate.h"
 #include "ash/ash_switches.h"
 #include "ash/resources/grit/ash_resources.h"
+#include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/date/date_view.h"
 #include "ash/system/devicetype_utils.h"
@@ -221,17 +222,19 @@ bool TrayPower::MaybeShowUsbChargerNotification() {
   // Check for a USB charger being connected.
   if (usb_charger_is_connected && !usb_charger_was_connected_ &&
       !usb_notification_dismissed_) {
-    std::unique_ptr<Notification> notification(new Notification(
-        message_center::NOTIFICATION_TYPE_SIMPLE, kUsbNotificationId,
-        rb.GetLocalizedString(IDS_ASH_STATUS_TRAY_LOW_POWER_CHARGER_TITLE),
-        ash::SubstituteChromeOSDeviceType(
-            IDS_ASH_STATUS_TRAY_LOW_POWER_CHARGER_MESSAGE_SHORT),
-        rb.GetImageNamed(IDR_AURA_NOTIFICATION_LOW_POWER_CHARGER),
-        base::string16(), GURL(),
-        message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                   system_notifier::kNotifierPower),
-        message_center::RichNotificationData(),
-        new UsbNotificationDelegate(this)));
+    std::unique_ptr<Notification> notification =
+        Notification::CreateSystemNotification(
+            message_center::NOTIFICATION_TYPE_SIMPLE, kUsbNotificationId,
+            rb.GetLocalizedString(IDS_ASH_STATUS_TRAY_LOW_POWER_CHARGER_TITLE),
+            ash::SubstituteChromeOSDeviceType(
+                IDS_ASH_STATUS_TRAY_LOW_POWER_CHARGER_MESSAGE_SHORT),
+            gfx::Image(), base::string16(), GURL(),
+            message_center::NotifierId(
+                message_center::NotifierId::SYSTEM_COMPONENT,
+                system_notifier::kNotifierPower),
+            message_center::RichNotificationData(),
+            new UsbNotificationDelegate(this), kNotificationLowPowerBatteryIcon,
+            message_center::SystemNotificationWarningLevel::WARNING);
     message_center_->AddNotification(std::move(notification));
     return true;
   } else if (!usb_charger_is_connected && usb_charger_was_connected_) {
