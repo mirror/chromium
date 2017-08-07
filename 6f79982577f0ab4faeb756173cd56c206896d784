@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2823a0a7_e7587937",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-07T23:55:52Z",
+      "side": 1,
+      "message": "BlinkResourceCoordinatorBase? Why not use resource_coordinator::IsResourceCoordinatorEnabled() directly?",
+      "range": {
+        "startLine": 160,
+        "startChar": 6,
+        "endLine": 160,
+        "endChar": 33
+      },
+      "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8360b1b_d8e3f89d",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-07T23:55:52Z",
+      "side": 1,
+      "message": "inline it at call site?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 1
+      },
+      "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
