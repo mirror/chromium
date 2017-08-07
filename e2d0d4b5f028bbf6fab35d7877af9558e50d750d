@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f7c07ad_20413422",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-07T06:43:04Z",
+      "side": 1,
+      "message": "Is this change truly necessary? What does CustomButton::Layout() do without this change.",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 361,
+        "endChar": 23
+      },
+      "revId": "e2d0d4b5f028bbf6fab35d7877af9558e50d750d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
