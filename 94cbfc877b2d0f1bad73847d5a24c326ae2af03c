@@ -88,6 +88,24 @@
       "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060bdc5d_46f1f513",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-07T19:55:02Z",
+      "side": 1,
+      "message": "\u003e Are only looking at the issuer of the leaf?\n\nYes, that. There is a sufficiently specific value in the common name field of the issuer in the leaf, in every case we have so far (except one for Fortinet): https://docs.google.com/spreadsheets/d/1FFUtSrmHfCNGpAQhoO0TH6xe9_pxL0HY-YhZ2BnYoBI/edit\n\nmeacer@ and I sanity checked against Dremel last week, which backs up the choice of looking just at that field (at least, for this project).",
+      "parentUuid": "dc3837db_9ff5baba",
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
