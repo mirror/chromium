@@ -62,6 +62,7 @@ class ArcVoiceInteractionFrameworkService
   void OnMetalayerClosed() override;
   void SetMetalayerEnabled(bool enabled) override;
   void SetVoiceInteractionRunning(bool running) override;
+  void SetVoiceInteractionReady(bool ready) override;
 
   bool IsMetalayerSupported();
   void ShowMetalayer(const base::Closure& closed);
@@ -116,6 +117,11 @@ class ArcVoiceInteractionFrameworkService
 
   // Whether there is a pending request to start voice interaction.
   bool is_request_pending_ = false;
+
+  // Whether the voice interaction service is ready. There is usually a long
+  // delay after boot before the service is ready. We wait for the container
+  // to tell us if it is ready to quickly serve voice interaction requests.
+  bool is_ready_ = false;
 
   // The time when a user initated an interaction.
   base::TimeTicks user_interaction_start_time_;

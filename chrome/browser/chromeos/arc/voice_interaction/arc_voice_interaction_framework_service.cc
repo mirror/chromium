@@ -285,7 +285,14 @@ void ArcVoiceInteractionFrameworkService::CaptureFullscreen(
 
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionRunning(
     bool running) {
-  ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(running);
+  ash::VoiceInteractionState state = running
+                                         ? ash::VoiceInteractionState::RUNNING
+                                         : ash::VoiceInteractionState::STOPPED;
+  ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(state);
+}
+
+void ArcVoiceInteractionFrameworkService::SetVoiceInteractionReady(bool ready) {
+  is_ready_ = ready;
 }
 
 void ArcVoiceInteractionFrameworkService::OnMetalayerClosed() {
@@ -412,6 +419,12 @@ void ArcVoiceInteractionFrameworkService::StartSessionFromUserInteraction(
         new chromeos::LoginDisplayHostImpl(screen_bounds);
     display_host->StartVoiceInteractionOobe();
     return;
+  }
+
+  if (!is_ready_) {
+    // If the container side is not ready, we will be waiting for a while.
+    ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(
+        ash::VoiceInteractionState::WAITING);
   }
 
   if (!arc_bridge_service_->voice_interaction_framework()->has_instance()) {
