@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf6e107a_9bbaeba3",
+        "filename": "chrome/browser/feature_engagement_tracker/incognito_window/incognito_window_tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T15:38:02Z",
+      "side": 1,
+      "message": "A bit of this tracker can probably re-use other CLs that provide an underlying framework for this, such as https://chromium-review.googlesource.com/c/590569",
+      "revId": "848ba585f2ffe5fd8746b1a5cec462763c5d396b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
