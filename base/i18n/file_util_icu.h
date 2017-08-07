@@ -34,10 +34,15 @@ BASE_I18N_EXPORT bool IsFilenameLegal(const string16& file_name);
 //   refer to devices rather than files (E.g. LPT1), and some filenames could be
 //   interpreted as shell namespace extensions (E.g. Foo.{<GUID>}).
 //
+// On Windows, Chrome OS and Mac, the file system encoding is already known, so
+// |is_utf8| won't be used.
+// On Linux, the file name will be parsed as UTF8 when |is_utf8| is true, or the
+// file name will be parsed as ASCII characters.
 // TODO(asanka): Move full filename sanitization logic here.
 BASE_I18N_EXPORT void ReplaceIllegalCharactersInPath(
     FilePath::StringType* file_name,
-    char replace_char);
+    char replace_char,
+    bool is_utf8);
 
 // Compares two filenames using the current locale information. This can be
 // used to sort directory listings. It behaves like "operator<" for use in
