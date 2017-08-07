@@ -386,7 +386,7 @@ const gfx::Image* ProfileInfoCache::GetGAIAPictureOfProfileAtIndex(
     return NULL;
 
   base::FilePath image_path = path.AppendASCII(file_name);
-  return LoadAvatarPictureFromPath(path, key, image_path);
+  return LoadAvatarPictureFromPath(path, key, image_path, true);
 }
 
 bool ProfileInfoCache::IsUsingGAIAPictureOfProfileAtIndex(size_t index) const {
@@ -1021,6 +1021,8 @@ void ProfileInfoCache::OnAvatarPictureLoaded(const base::FilePath& profile_path,
           "461175 ProfileInfoCache::OnAvatarPictureLoaded::Start"));
 
   cached_avatar_images_loading_[key] = false;
+
+  UMA_HISTOGRAM_BOOLEAN("Profile.LoadAvatarSuccess", *image);
 
   if (*image) {
     // TODO(erikchen): Remove ScopedTracker below once http://crbug.com/461175
