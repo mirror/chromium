@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a3ef7ef_a6be95d9",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-07T16:47:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ff17914_086c506e",
+      "revId": "4d08699c87f443eda522a2e0a709ad8c5484376c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88cc4ae4_f8a43335",
         "filename": "chrome/installer/zucchini/encoded_view.h",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "4d08699c87f443eda522a2e0a709ad8c5484376c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba245295_fae77add",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-07T16:47:54Z",
+      "side": 1,
+      "message": "Adapting on this, with some changes:\n- I\u0027m mentioning Encoded Image, because it is defined in README.md\n- Using Range (offering begin and end iterator) instead of vector, because vector is also a sequence container (with push_back, insert, etc).\nThe object itself has copy/move/assignment, without copying the underlying data.",
+      "parentUuid": "88cc4ae4_f8a43335",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 56
+      },
+      "revId": "4d08699c87f443eda522a2e0a709ad8c5484376c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "d6b51874_f93326ac",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-07T16:47:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f832959c_3045264f",
+      "range": {
+        "startLine": 26,
+        "startChar": 47,
+        "endLine": 26,
+        "endChar": 53
+      },
+      "revId": "4d08699c87f443eda522a2e0a709ad8c5484376c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80473d2e_934d9a79",
         "filename": "chrome/installer/zucchini/encoded_view.h",
         "patchSetId": 7
@@ -85,6 +151,30 @@
       "revId": "4d08699c87f443eda522a2e0a709ad8c5484376c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b85f74_516be379",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-07T16:47:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80473d2e_934d9a79",
+      "range": {
+        "startLine": 125,
+        "startChar": 48,
+        "endLine": 125,
+        "endChar": 55
+      },
+      "revId": "4d08699c87f443eda522a2e0a709ad8c5484376c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
