@@ -217,6 +217,11 @@ gfx::NativeView WebContentsViewMac::GetNativeViewForFocus() const {
       web_contents_->GetFullscreenRenderWidgetHostView();
   if (!rwhv)
     rwhv = web_contents_->GetRenderWidgetHostView();
+  // When the fullscreen content is displayed in the separate fullscreen window,
+  // we don't want the RenderWidgetHostViewCocoa to be focused, as it's no
+  // longer in the FramedBrowserWindow. Use WebContentsViewCocoa instead.
+  if (web_contents_->IsFullscreenForCurrentTab())
+    return cocoa_view_.get();
   return rwhv ? rwhv->GetNativeView() : nil;
 }
 
@@ -690,46 +695,6 @@ void WebContentsViewMac::CloseTab() {
   // Perform manual layout of subviews, e.g., when the window size changes.
   for (NSView* subview in [self subviews])
     [subview setFrame:[self bounds]];
-}
-
-- (void)viewWillMoveToWindow:(NSWindow*)newWindow {
-  NSWindow* oldWindow = [self window];
-
-  NSNotificationCenter* notificationCenter =
-      [NSNotificationCenter defaultCenter];
-
-  // Occlusion is highly undesirable for browser tests, since it will
-  // flakily change test behavior.
-  static bool isDisabled = base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kDisableBackgroundingOccludedWindowsForTesting);
-
-  if (!isDisabled) {
-    if (oldWindow) {
-      [notificationCenter
-          removeObserver:self
-                    name:NSWindowDidChangeOcclusionStateNotification
-                  object:oldWindow];
-    }
-    if (newWindow) {
-      [notificationCenter
-          addObserver:self
-             selector:@selector(windowChangedOcclusionState:)
-                 name:NSWindowDidChangeOcclusionStateNotification
-               object:newWindow];
-    }
-  }
-}
-
-- (void)windowChangedOcclusionState:(NSNotification*)notification {
-  NSWindow* window = [notification object];
-  WebContentsImpl* webContents = [self webContents];
-  if (window && webContents && !webContents->IsBeingDestroyed()) {
-    if ([window occlusionState] & NSWindowOcclusionStateVisible) {
-      webContents->WasUnOccluded();
-    } else {
-      webContents->WasOccluded();
-    }
-  }
 }
 
 - (void)viewDidMoveToWindow {
