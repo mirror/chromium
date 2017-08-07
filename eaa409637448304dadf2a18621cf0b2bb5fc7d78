@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9142b3ec_8d1aba02",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a0e421a_e9885528",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6459e308_d9f6c90b",
         "filename": "ash/public/cpp/ash_pref_names.cc",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb15d50_847b75a2",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6459e308_d9f6c90b",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "89dd29fb_a3722b47",
+        "filename": "ash/public/cpp/ash_pref_names.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46409e99_157bc05a",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f44374d6_dbda41c9",
         "filename": "ash/public/interfaces/user_info.mojom",
         "patchSetId": 18
@@ -67,6 +121,24 @@
       "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a64fe48_b27820c2",
+        "filename": "ash/public/interfaces/user_info.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f44374d6_dbda41c9",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "aca7e838_32b82d94",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab5e5393_5e93a380",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54c9c9d5_98556392",
         "filename": "ash/session/session_controller.h",
         "patchSetId": 18
@@ -118,6 +208,24 @@
       "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c379740_6c6509ae",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done, added more comment to clarify.",
+      "parentUuid": "54c9c9d5_98556392",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "8b6f0e41_f120300e",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4b0effd_c622e18b",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2412fd7e_065b6dc1",
         "filename": "ash/shell.cc",
         "patchSetId": 18
@@ -152,6 +278,24 @@
       "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48eb1213_89acdf08",
+        "filename": "ash/shell.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2412fd7e_065b6dc1",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +322,30 @@
     },
     {
       "key": {
+        "uuid": "10fefd2e_75f4295a",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Added more comments.",
+      "parentUuid": "d2153b83_6f74991c",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 19
+      },
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35f70c67_af8b443c",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
         "patchSetId": 18
@@ -192,6 +360,24 @@
       "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d326d0_51f1537e",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35f70c67_af8b443c",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +398,24 @@
     },
     {
       "key": {
+        "uuid": "08fdcc33_b22fc964",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57bcb7b2_92fe99c4",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88166ba3_a209c88f",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
         "patchSetId": 18
@@ -226,6 +430,24 @@
       "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c46c762_d7635d58",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88166ba3_a209c88f",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -246,6 +468,24 @@
     },
     {
       "key": {
+        "uuid": "d6656767_eb185f65",
+        "filename": "ash/system/bluetooth/tray_bluetooth.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69aff6ab_78c3dd18",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e26419d_1ea697d3",
         "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
         "patchSetId": 18
@@ -260,6 +500,24 @@
       "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d027cfe1_540fcc66",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e26419d_1ea697d3",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -283,6 +541,30 @@
       "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd13039_e17b7a76",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7704b815_42d5ec31",
+      "range": {
+        "startLine": 126,
+        "startChar": 36,
+        "endLine": 126,
+        "endChar": 45
+      },
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -320,6 +602,24 @@
     },
     {
       "key": {
+        "uuid": "61ed45ef_f45fc074",
+        "filename": "chrome/browser/ui/ash/chrome_shell_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Ah, this was needed when I added GetPrimaryUserPrefService.\nForgot to return it back. Reverted now.",
+      "parentUuid": "f84bbfe1_71d6f905",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efad414e_53ab663d",
         "filename": "chrome/browser/ui/ash/session_controller_client.cc",
         "patchSetId": 18
@@ -334,6 +634,24 @@
       "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341a9d03_c78b26d9",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-07T23:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efad414e_53ab663d",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
