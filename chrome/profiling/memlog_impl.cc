@@ -18,7 +18,8 @@ MemlogImpl::MemlogImpl()
 
 MemlogImpl::~MemlogImpl() {}
 
-void MemlogImpl::AddSender(mojo::ScopedHandle sender_pipe, int32_t sender_id) {
+void MemlogImpl::AddSender(mojo::common::mojom::ProcessIdPtr process_id_ptr,
+                           mojo::ScopedHandle sender_pipe) {
   base::PlatformFile platform_file;
   CHECK_EQ(MOJO_RESULT_OK,
            mojo::UnwrapPlatformFile(std::move(sender_pipe), &platform_file));
@@ -26,13 +27,13 @@ void MemlogImpl::AddSender(mojo::ScopedHandle sender_pipe, int32_t sender_id) {
   // MemlogConnectionManager is deleted on the IOThread thus using
   // base::Unretained() is safe here.
   io_runner_->PostTask(
-      FROM_HERE,
-      base::BindOnce(&MemlogConnectionManager::OnNewConnection,
-                     base::Unretained(connection_manager_.get()),
-                     base::ScopedPlatformFile(platform_file), sender_id));
+      FROM_HERE, base::BindOnce(&MemlogConnectionManager::OnNewConnection,
+                                base::Unretained(connection_manager_.get()),
+                                base::ScopedPlatformFile(platform_file),
+                                process_id_ptr->pid));
 }
 
-void MemlogImpl::DumpProcess(int32_t sender_id,
+void MemlogImpl::DumpProcess(mojo::common::mojom::ProcessIdPtr process_id_ptr,
                              mojo::ScopedHandle output_file) {
   base::PlatformFile platform_file;
   MojoResult result =
@@ -45,7 +46,7 @@ void MemlogImpl::DumpProcess(int32_t sender_id,
   io_runner_->PostTask(
       FROM_HERE, base::BindOnce(&MemlogConnectionManager::DumpProcess,
                                 base::Unretained(connection_manager_.get()),
-                                sender_id, std::move(file)));
+                                process_id_ptr->pid, std::move(file)));
 }
 
 }  // namespace profiling
