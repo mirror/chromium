@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2153d5f_099d2738",
+        "filename": "ui/views/controls/table/table_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T23:57:07Z",
+      "side": 1,
+      "message": "Nit: I\u0027d add a comment as to why this is necessary.",
+      "revId": "099d4ba61566f8639ba282a9aa2dae47e559efe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
