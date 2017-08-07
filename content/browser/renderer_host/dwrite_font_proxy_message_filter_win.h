@@ -35,8 +35,7 @@ class CONTENT_EXPORT DWriteFontProxyMessageFilter
 
   // BrowserMessageFilter:
   bool OnMessageReceived(const IPC::Message& message) override;
-  void OverrideThreadForMessage(const IPC::Message& message,
-                                content::BrowserThread::ID* thread) override;
+  base::TaskRunner* OverrideTaskRunnerForMessage(const IPC::Message&) override;
 
   void SetWindowsFontsPathForTesting(base::string16 path);
 
@@ -80,6 +79,8 @@ class CONTENT_EXPORT DWriteFontProxyMessageFilter
   Microsoft::WRL::ComPtr<IDWriteFontFallback> font_fallback_;
   base::string16 windows_fonts_path_;
   CustomFontFileLoadingMode custom_font_file_loading_mode_;
+  scoped_refptr<base::SequencedTaskRunner> sequenced_task_runner_;
+  SEQUENCE_CHECKER(sequence_checker_);
 
   // Temp code to help track down crbug.com/561873
   std::vector<uint32_t> last_resort_fonts_;

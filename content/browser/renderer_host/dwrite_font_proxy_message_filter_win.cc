@@ -19,9 +19,11 @@
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
+#include "base/sequenced_task_runner.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "content/common/dwrite_font_proxy_messages.h"
 #include "ipc/ipc_message_macros.h"
 #include "ui/gfx/win/direct_write.h"
@@ -180,7 +182,11 @@ bool CheckRequiredStylesPresent(IDWriteFontCollection* collection,
 DWriteFontProxyMessageFilter::DWriteFontProxyMessageFilter()
     : BrowserMessageFilter(DWriteFontProxyMsgStart),
       windows_fonts_path_(GetWindowsFontsPath()),
-      custom_font_file_loading_mode_(ENABLE) {}
+      custom_font_file_loading_mode_(ENABLE),
+      sequenced_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
+          {base::TaskPriority::USER_BLOCKING})) {
+  DETACH_FROM_SEQUENCE(sequence_checker_);
+}
 
 DWriteFontProxyMessageFilter::~DWriteFontProxyMessageFilter() = default;
 
@@ -198,11 +204,11 @@ bool DWriteFontProxyMessageFilter::OnMessageReceived(
   return handled;
 }
 
-void DWriteFontProxyMessageFilter::OverrideThreadForMessage(
-    const IPC::Message& message,
-    content::BrowserThread::ID* thread) {
+base::TaskRunner* DWriteFontProxyMessageFilter::OverrideTaskRunnerForMessage(
+    const IPC::Message& message) {
   if (IPC_MESSAGE_CLASS(message) == DWriteFontProxyMsgStart)
-    *thread = BrowserThread::FILE_USER_BLOCKING;
+    return sequenced_task_runner_.get();
+  return nullptr;
 }
 
 void DWriteFontProxyMessageFilter::SetWindowsFontsPathForTesting(
@@ -458,7 +464,7 @@ void DWriteFontProxyMessageFilter::OnMapCharacters(
 }
 
 void DWriteFontProxyMessageFilter::InitializeDirectWrite() {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE_USER_BLOCKING);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (direct_write_initialized_)
     return;
   direct_write_initialized_ = true;
