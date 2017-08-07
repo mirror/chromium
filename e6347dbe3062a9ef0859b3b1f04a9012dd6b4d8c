@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e04678ca_1c5048ed",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T21:37:40Z",
+      "side": 1,
+      "message": "DLOG? Or remove the default case altogether (it appears we\u0027re handling all enum values currently, but having a default handler will prevent the compiler from emitting a warning if a new enumerator is added in the future)",
+      "range": {
+        "startLine": 488,
+        "startChar": 6,
+        "endLine": 488,
+        "endChar": 9
+      },
+      "revId": "e6347dbe3062a9ef0859b3b1f04a9012dd6b4d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383f8ad0_5f0eef50",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T21:37:40Z",
+      "side": 1,
+      "message": "Static cast shouldn\u0027t be needed.",
+      "range": {
+        "startLine": 488,
+        "startChar": 41,
+        "endLine": 488,
+        "endChar": 58
+      },
+      "revId": "e6347dbe3062a9ef0859b3b1f04a9012dd6b4d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba909dd_27cc7147",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T21:37:40Z",
+      "side": 1,
+      "message": "I don\u0027t really understand the logic driving voice interaction overlay. Does this get called periodically, so we will do the rest of this work at some point if it\u0027s ready?\n\n(Oh, maybe we call the other mojo method on completion? I\u0027m honestly not 100% sure how things are hooked up here)",
+      "revId": "e6347dbe3062a9ef0859b3b1f04a9012dd6b4d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f6f5d8_768d018b",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T21:37:40Z",
+      "side": 1,
+      "message": "Not sure what the difference between this and the previous method are. Or maybe they should be the same method, and use an enum?",
+      "revId": "e6347dbe3062a9ef0859b3b1f04a9012dd6b4d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
