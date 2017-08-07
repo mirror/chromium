@@ -85,6 +85,23 @@ bool SelectionTemplate<Strategy>::IsRange() const {
 }
 
 template <typename Strategy>
+bool SelectionTemplate<Strategy>::IsValidFor(const Document& document) const {
+  if (IsNone())
+    return true;
+  if (base_.GetDocument() != document)
+    return false;
+  if (extent_.GetDocument() != document)
+    return false;
+  return !base_.IsOrphan() && !extent_.IsOrphan();
+}
+
+template <typename Strategy>
+void SelectionTemplate<Strategy>::ResetCachedDirection() {
+  DCHECK(!IsNone());
+  direction_ = Direction::kNotComputed;
+}
+
+template <typename Strategy>
 bool SelectionTemplate<Strategy>::AssertValidFor(
     const Document& document) const {
   if (!AssertValid())
@@ -141,17 +158,31 @@ SelectionTemplate<Strategy>::ComputeEndPosition() const {
 }
 
 template <typename Strategy>
-const PositionTemplate<Strategy>&
-SelectionTemplate<Strategy>::ComputeStartPosition() const {
-  return IsBaseFirst() ? base_ : extent_;
+bool SelectionTemplate<Strategy>::IsBaseFirst() const {
+  DCHECK(AssertValid());
+  if (base_ == extent_) {
+    DCHECK_EQ(direction_, Direction::kForward);
+    return true;
+  }
+  if (direction_ == Direction::kForward) {
+    DCHECK_LT(base_, extent_);
+    return true;
+  }
+  if (direction_ == Direction::kBackward) {
+    DCHECK_GT(base_, extent_);
+    return false;
+  }
+  // Note: Since same position can be represented in different anchor type,
+  // e.g. Position(div, 0) and BeforeNode(first-child), we use |<=| to check
+  // forward selection.
+  DCHECK_EQ(direction_, Direction::kNotComputed);
+  direction_ = base_ <= extent_ ? Direction::kForward : Direction::kBackward;
+  return direction_ == Direction::kForward;
 }
 
 template <typename Strategy>
-bool SelectionTemplate<Strategy>::IsBaseFirst() const {
-  DCHECK(AssertValid());
-  if (direction_ == Direction::kNotComputed)
-    direction_ = base_ <= extent_ ? Direction::kForward : Direction::kBackward;
-  return direction_ == Direction::kForward;
+void SelectionTemplate<Strategy>::ResetDirectionCache() const {
+  direction_ = base_ == extent_ ? Direction::kForward : Direction::kNotComputed;
 }
 
 template <typename Strategy>
@@ -308,6 +339,37 @@ typename SelectionTemplate<Strategy>::Builder&
 SelectionTemplate<Strategy>::Builder::SetIsDirectional(bool is_directional) {
   selection_.is_directional_ = is_directional;
   return *this;
+}
+
+// ---
+
+template <typename Strategy>
+SelectionTemplate<Strategy>::InvalidSelectionResetter::InvalidSelectionResetter(
+    const SelectionTemplate<Strategy>& selection)
+    : document_(selection.GetDocument()),
+      selection_(const_cast<SelectionTemplate&>(selection)) {
+  DCHECK(selection_.AssertValid());
+}
+
+template <typename Strategy>
+SelectionTemplate<
+    Strategy>::InvalidSelectionResetter::~InvalidSelectionResetter() {
+  if (selection_.IsNone())
+    return;
+  DCHECK(document_);
+  if (!selection_.IsValidFor(*document_)) {
+    selection_ = SelectionTemplate<Strategy>();
+    return;
+  }
+#if DCHECK_IS_ON()
+  selection_.dom_tree_version_ = document_->DomTreeVersion();
+#endif
+  selection_.ResetDirectionCache();
+}
+
+template <typename Strategy>
+DEFINE_TRACE(SelectionTemplate<Strategy>::InvalidSelectionResetter) {
+  visitor->Trace(document_);
 }
 
 template class CORE_TEMPLATE_EXPORT SelectionTemplate<EditingStrategy>;
