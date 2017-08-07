@@ -281,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "3176c546_74dbd262",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-07T18:51:49Z",
+      "side": 1,
+      "message": "Actually, I think the right check is unremoved_markers.size() !\u003d markers_.size()",
+      "parentUuid": "2a26a37d_3bb59242",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e18b80d5_795d023a",
         "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
         "patchSetId": 2
