@@ -1127,6 +1127,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   [self startFreeMemoryMonitoring];
   [self scheduleAppDistributionPings];
   [self scheduleCheckForFirstPartyApps];
+  [self startDragAndDropMetricsRecording];
 }
 
 - (void)scheduleTasksRequiringBVCWithBrowserState {
