@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5d750e8_a4871b72",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T22:18:28Z",
+      "side": 1,
+      "message": "Do you know this can fail?  What\u0027s a sample reason why it could?  I wouldn\u0027t want us to have error-handling code for a case that can\u0027t occur, as that\u0027s going to mislead future readers.\n\nNit: can combine else and if",
+      "revId": "b7354b688f2dc8fe711e6185644275c4980c442d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07cb3d0_d5d1ee92",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T22:18:28Z",
+      "side": 1,
+      "message": "Hmm, are we going to collect this log and do something with it?  Otherwise Chrome has a \"please try to avoid adding logging\" bias...",
+      "revId": "b7354b688f2dc8fe711e6185644275c4980c442d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

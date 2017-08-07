@@ -34,6 +34,24 @@
       "revId": "e2f44e11407b2ea3cd18220bd1e0a8db67fb2968",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a850cd2_296f4bb2",
+        "filename": "chrome/browser/search_engines/template_url_service_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-07T22:18:28Z",
+      "side": 1,
+      "message": "Hmm.  CHECK in tests will crash the whole test.  I wonder if it\u0027s safe to ASSERT here instead.",
+      "parentUuid": "76cce002_60147f6a",
+      "revId": "e2f44e11407b2ea3cd18220bd1e0a8db67fb2968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
