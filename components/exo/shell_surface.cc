@@ -1786,7 +1786,7 @@ gfx::Point ShellSurface::GetMouseLocation() const {
 void ShellSurface::EnsureCompositorIsLocked() {
   if (!compositor_lock_) {
     ui::Compositor* compositor =
-      widget_->GetNativeWindow()->layer()->GetCompositor();
+        widget_->GetNativeWindow()->layer()->GetCompositor();
     compositor_lock_ = compositor->GetCompositorLock(
         this, base::TimeDelta::FromMilliseconds(kRotationLockTimeoutMs));
   }

@@ -392,14 +392,14 @@ enum zcr_remote_surface_v1_systemui_visibility_state {
  * The orientation of the window.
  */
 enum zcr_remote_surface_v1_orientation {
-	/**
-	 * portrait
-	 */
-	ZCR_REMOTE_SURFACE_V1_ORIENTATION_PORTRAIT = 1,
-	/**
-	 * landscape
-	 */
-	ZCR_REMOTE_SURFACE_V1_ORIENTATION_LANDSCAPE = 2,
+  /**
+   * portrait
+   */
+  ZCR_REMOTE_SURFACE_V1_ORIENTATION_PORTRAIT = 1,
+  /**
+   * landscape
+   */
+  ZCR_REMOTE_SURFACE_V1_ORIENTATION_LANDSCAPE = 2,
 };
 #endif /* ZCR_REMOTE_SURFACE_V1_ORIENTATION_ENUM */
 
@@ -732,15 +732,15 @@ struct zcr_remote_surface_v1_interface {
 	 */
 	void (*move)(struct wl_client *client,
 		     struct wl_resource *resource);
-	/**
-	 * set orientation
-	 *
-	 * Set an orientation for the surface.
-	 * @since 6
-	 */
-	void (*set_orientation)(struct wl_client *client,
-				struct wl_resource *resource,
-				int32_t orientation);
+        /**
+         * set orientation
+         *
+         * Set an orientation for the surface.
+         * @since 6
+         */
+        void (*set_orientation)(struct wl_client* client,
+                                struct wl_resource* resource,
+                                int32_t orientation);
 };
 
 #define ZCR_REMOTE_SURFACE_V1_CLOSE 0

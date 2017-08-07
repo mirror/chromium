@@ -451,14 +451,14 @@ enum zcr_remote_surface_v1_systemui_visibility_state {
  * The orientation of the window.
  */
 enum zcr_remote_surface_v1_orientation {
-	/**
-	 * portrait
-	 */
-	ZCR_REMOTE_SURFACE_V1_ORIENTATION_PORTRAIT = 1,
-	/**
-	 * landscape
-	 */
-	ZCR_REMOTE_SURFACE_V1_ORIENTATION_LANDSCAPE = 2,
+  /**
+   * portrait
+   */
+  ZCR_REMOTE_SURFACE_V1_ORIENTATION_PORTRAIT = 1,
+  /**
+   * landscape
+   */
+  ZCR_REMOTE_SURFACE_V1_ORIENTATION_LANDSCAPE = 2,
 };
 #endif /* ZCR_REMOTE_SURFACE_V1_ORIENTATION_ENUM */
 
@@ -1106,11 +1106,11 @@ zcr_remote_surface_v1_move(struct zcr_remote_surface_v1 *zcr_remote_surface_v1)
  *
  * Set an orientation for the surface.
  */
-static inline void
-zcr_remote_surface_v1_set_orientation(struct zcr_remote_surface_v1 *zcr_remote_surface_v1, int32_t orientation)
-{
-	wl_proxy_marshal((struct wl_proxy *) zcr_remote_surface_v1,
-			 ZCR_REMOTE_SURFACE_V1_SET_ORIENTATION, orientation);
+static inline void zcr_remote_surface_v1_set_orientation(
+    struct zcr_remote_surface_v1* zcr_remote_surface_v1,
+    int32_t orientation) {
+  wl_proxy_marshal((struct wl_proxy*)zcr_remote_surface_v1,
+                   ZCR_REMOTE_SURFACE_V1_SET_ORIENTATION, orientation);
 }
 
 #define ZCR_NOTIFICATION_SURFACE_V1_DESTROY 0
