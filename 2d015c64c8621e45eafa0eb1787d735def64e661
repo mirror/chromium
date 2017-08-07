@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "13460ee2_6e192286",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-07T15:37:07Z",
+      "side": 1,
+      "message": "One Callsite for SelectionForCommand is InsertTextWithoutSendingTextEvent,\nwhich calls InsertText. \nInsertText sets startingSelection and EndingSelection based on this Selection.\nSo using FrameSelection is_directional_ be OK in this case ?",
+      "parentUuid": "fc98c716_a4318eb1",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "772ff10f_6d8729f0",
         "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
         "patchSetId": 4
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "17f27539_c7c13788",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-07T15:37:07Z",
+      "side": 1,
+      "message": "One call site for SelectionForCommand is InsertTextWithoutSendingTextEvent,\nwhich calls InsertText. \nInsertText sets startingSelection and EndingSelection based on this Selection.\nI am not much sure about this so please suggest.",
+      "parentUuid": "b3a18bf1_8bf504e3",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fb01c80_7a8a6db1",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 4
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "6e1619ca_39d777d2",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-07T15:37:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fb01c80_7a8a6db1",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fb2461f_d1c5a982",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 4
@@ -98,6 +152,24 @@
       "writtenOn": "2017-08-07T03:20:37Z",
       "side": 1,
       "message": "nit: s/this-\u003e//",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807194a0_942a2f1d",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-07T15:37:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fb2461f_d1c5a982",
       "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +210,24 @@
     },
     {
       "key": {
+        "uuid": "4ea5574b_dd3c71ef",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-07T15:37:07Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion. \nWhen i was doing this code initially i thought to do this in a seperate CL.",
+      "parentUuid": "776411c8_4a9a4d2e",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5c42f49_aa5cae6a",
         "filename": "third_party/WebKit/Source/core/editing/commands/ApplyBlockElementCommand.cpp",
         "patchSetId": 4
@@ -155,6 +245,24 @@
     },
     {
       "key": {
+        "uuid": "cbd33371_963d8e74",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyBlockElementCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-07T15:37:07Z",
+      "side": 1,
+      "message": "Since most of the call sites for SetEndingSelection() utilise already existing command EndingSelection().IsDirectional(), so i have moved the directional save part to \n to CompositeEditCommand::SetEndingVisibleSelection( const VisibleSelection\u0026).\n\nThe call sites which passes other values , i am using \n CompositeEditCommand::SetEndingSelection(const SelectionForUndoStep\u0026) directly.\nPlease let me know if this looks fine to you ?",
+      "parentUuid": "d5c42f49_aa5cae6a",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ffda304_e116af0e",
         "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
         "patchSetId": 4
@@ -166,6 +274,24 @@
       "writtenOn": "2017-08-07T03:20:37Z",
       "side": 1,
       "message": "It seems we should use SelectionForUndoStep instead of VisbileSelection.",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337cae0a_c111c9a8",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-07T15:37:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ffda304_e116af0e",
       "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +332,24 @@
     },
     {
       "key": {
+        "uuid": "12a48470_ef3b2a25",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertLineBreakCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-07T15:37:07Z",
+      "side": 1,
+      "message": "Done. I have to change the bool parameter to enum, which i plan to do in seperate CL, please suggest.",
+      "parentUuid": "845276bf_c965a950",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5744356_565eee3d",
         "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
         "patchSetId": 4
@@ -217,6 +361,24 @@
       "writtenOn": "2017-08-07T03:20:37Z",
       "side": 1,
       "message": "TextControlElement::Selection() is used only by Editor::SelectionForCommand() whose callers don\u0027t use direction.\nThus, we don\u0027t need to return IsDirection() from this function.",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58908bfd_36fdf17c",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-07T15:37:07Z",
+      "side": 1,
+      "message": "One Callsite for SelectionForCommand is InsertTextWithoutSendingTextEvent,\nwhich calls InsertText. \nInsertText sets startingSelection and EndingSelection based on this Selection.\nSo using FrameSelection is_directional_ be OK in this case ?",
+      "parentUuid": "b5744356_565eee3d",
       "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

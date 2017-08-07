@@ -16,6 +16,24 @@
       "revId": "91d01230acfaf11ce9ef59d1af6e9ce232cc9e01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ae6d8a_b7cdd14b",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertIncrementalTextCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-07T15:37:07Z",
+      "side": 0,
+      "message": "Submitted https://chromium-review.googlesource.com/c/603427",
+      "parentUuid": "d9ef01a9_cd6f29fd",
+      "revId": "91d01230acfaf11ce9ef59d1af6e9ce232cc9e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
