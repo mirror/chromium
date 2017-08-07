@@ -6,6 +6,7 @@
 
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/macros.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/sys_string_conversions.h"
@@ -225,6 +226,9 @@ base::string16 GetSuggestedFilenameImpl(
   // TODO: this function to be updated to match the httpbis recommendations.
   // Talk to abarth for the latest news.
 
+  LOG(ERROR) << "@@@ suggested_name = " << suggested_name;
+  LOG(ERROR) << "@@@ default_name = " << default_name;
+
   // We don't translate this fallback string, "download". If localization is
   // needed, the caller should provide localized fallback in |default_name|.
   static const base::FilePath::CharType kFinalFallbackName[] =
@@ -277,7 +281,8 @@ base::string16 GetSuggestedFilenameImpl(
                      : base::FilePath::StringType(kFinalFallbackName);
     overwrite_extension = false;
   }
-  replace_illegal_characters_function(&result_str, '-');
+  LOG(ERROR) << "@@@ result_str = " << result_str;
+  replace_illegal_characters_function(&result_str, '_', true);
   base::FilePath result(result_str);
   // extension should not appended to filename derived from
   // content-disposition, if it does not have one.
