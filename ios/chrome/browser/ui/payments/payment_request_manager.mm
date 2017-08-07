@@ -737,6 +737,11 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
   // from the Payment Request object.
 }
 
+- (void)onPaymentMethodsReady {
+  [_paymentRequestCoordinator setPending:NO];
+  [_paymentRequestCoordinator setCancellable:YES];
+}
+
 #pragma mark - PaymentRequestCoordinatorDelegate methods
 
 - (void)paymentRequestCoordinatorDidConfirm:
@@ -809,6 +814,7 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 
 - (void)paymentResponseHelperDidReceivePaymentMethodDetails {
   [_paymentRequestCoordinator setPending:YES];
+  [_paymentRequestCoordinator setCancellable:NO];
 }
 
 - (void)paymentResponseHelperDidCompleteWithPaymentResponse:

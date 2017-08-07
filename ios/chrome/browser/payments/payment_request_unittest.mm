@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/autofill_type.h"
@@ -14,6 +15,7 @@
 #include "components/autofill/core/browser/test_personal_data_manager.h"
 #include "components/payments/core/autofill_payment_instrument.h"
 #include "components/payments/core/currency_formatter.h"
+#include "components/payments/core/features.h"
 #include "components/payments/core/payment_method_data.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
@@ -145,6 +147,9 @@ TEST_F(PaymentRequestTest, SupportedMethods) {
   web::PaymentRequest web_payment_request;
   autofill::TestPersonalDataManager personal_data_manager;
 
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndEnableFeature(payments::features::kWebPaymentsNativeApps);
+
   PaymentMethodData method_datum1;
   method_datum1.supported_methods.push_back("visa");
   method_datum1.supported_methods.push_back("mastercard");
@@ -161,9 +166,10 @@ TEST_F(PaymentRequestTest, SupportedMethods) {
   ASSERT_EQ(2U, payment_request.supported_card_networks().size());
   EXPECT_EQ("visa", payment_request.supported_card_networks()[0]);
   EXPECT_EQ("mastercard", payment_request.supported_card_networks()[1]);
-  ASSERT_EQ(1U, payment_request.url_payment_method_identifiers().size());
+  ASSERT_EQ(1U,
+            payment_request.unfiltered_url_payment_method_identifiers().size());
   EXPECT_EQ(GURL("https://bobpay.com"),
-            payment_request.url_payment_method_identifiers()[0]);
+            payment_request.unfiltered_url_payment_method_identifiers()[0]);
 }
 
 // Test that parsing supported methods in different method data entries (with
@@ -171,6 +177,9 @@ TEST_F(PaymentRequestTest, SupportedMethods) {
 TEST_F(PaymentRequestTest, SupportedMethods_MultipleEntries) {
   web::PaymentRequest web_payment_request;
   autofill::TestPersonalDataManager personal_data_manager;
+
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndEnableFeature(payments::features::kWebPaymentsNativeApps);
 
   PaymentMethodData method_datum1;
   method_datum1.supported_methods.push_back("visa");
@@ -194,9 +203,10 @@ TEST_F(PaymentRequestTest, SupportedMethods_MultipleEntries) {
   ASSERT_EQ(2U, payment_request.supported_card_networks().size());
   EXPECT_EQ("visa", payment_request.supported_card_networks()[0]);
   EXPECT_EQ("mastercard", payment_request.supported_card_networks()[1]);
-  ASSERT_EQ(1U, payment_request.url_payment_method_identifiers().size());
+  ASSERT_EQ(1U,
+            payment_request.unfiltered_url_payment_method_identifiers().size());
   EXPECT_EQ(GURL("https://bobpay.com"),
-            payment_request.url_payment_method_identifiers()[0]);
+            payment_request.unfiltered_url_payment_method_identifiers()[0]);
 }
 
 // Test that only specifying basic-card means that all are supported.
