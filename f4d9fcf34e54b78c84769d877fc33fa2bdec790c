@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da0dbfe9_d7b8a311",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-07T13:05:07Z",
+      "side": 1,
+      "message": "If you\u0027re hellbent on re-loading the library if it\u0027s unloaded, this is the way to do it. If you\u0027re content to just probe that it\u0027s still there, and pin it while you\u0027re working with it, GetModuleHandleEx is a better thing to do.\n\nSee https://msdn.microsoft.com/en-us/library/windows/desktop/ms683200(v\u003dvs.85).aspx for the details of the GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS  flag, where you get to pass in an address to the module and get back a module handle with an associated refcount. It should be noted that in this case you may want to validate that the module is still the same one as in your notification.\n\nAlso note that LoadLibrary \u0026 GetModuleHandle are expensive operations, so - as Greg notes - if you\u0027re calling this function from our loader notification hook, well, don\u0027t do that. Instead rename this function to something like Get*FromLockedModule or Get*Unlocked, and write a second function to pin and then call into this one.",
+      "range": {
+        "startLine": 189,
+        "startChar": 8,
+        "endLine": 189,
+        "endChar": 28
+      },
+      "revId": "f4d9fcf34e54b78c84769d877fc33fa2bdec790c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
