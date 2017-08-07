@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "660727e4_d39c42b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-07T18:59:39Z",
+      "side": 1,
+      "message": "Yes, a separate CL for these makes sense.  Thanks for adding them!",
+      "parentUuid": "08fedfec_59fb7a1c",
+      "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c5d2601_598fa2d8",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "Done - I\u0027ve added this CHECK, and the trybots seem to be happy.  Like the LockToOrigin sanity checks, we might want to push this into another CL if we need to merge this one.",
       "parentUuid": "e7b178aa_da9d155d",
+      "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3bd4f3e_4bc45b65",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3528,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-07T18:59:39Z",
+      "side": 1,
+      "message": "Agreed.  Thanks!",
+      "parentUuid": "92d6d0d8_bf2418e3",
       "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
