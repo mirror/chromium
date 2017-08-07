@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "063a34a8_612be674",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-08-07T19:59:01Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "c54245f5_7e400a93",
+      "range": {
+        "startLine": 416,
+        "startChar": 20,
+        "endLine": 416,
+        "endChar": 50
+      },
+      "revId": "f80c9fb811345d9cfb24ddbac4ba2d8969ba10f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8358d518_df3bdaf0",
         "filename": "content/public/common/content_features.h",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-03T20:04:01Z",
       "side": 1,
       "message": "this can be removed?",
+      "range": {
+        "startLine": 110,
+        "startChar": 42,
+        "endLine": 110,
+        "endChar": 72
+      },
+      "revId": "f80c9fb811345d9cfb24ddbac4ba2d8969ba10f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44618062_ec013060",
+        "filename": "content/public/common/content_features.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-08-07T19:59:01Z",
+      "side": 1,
+      "message": "Nope.  This flag is still to be used in chrome_elf for disabling extension points in the browser process.",
+      "parentUuid": "8358d518_df3bdaf0",
       "range": {
         "startLine": 110,
         "startChar": 42,
