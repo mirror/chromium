@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "753e0329_009f6871",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-07T09:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9128e203_9bb2cb04",
+      "range": {
+        "startLine": 502,
+        "startChar": 40,
+        "endLine": 502,
+        "endChar": 0
+      },
+      "revId": "e51e747b92f49fdf2fb65dfd1df0c4324940a1cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2aa07496_1cc2404a",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-07T08:12:47Z",
       "side": 1,
       "message": "Just to double-check: If the \u0027fakebox-speech\u0027 element didn\u0027t exist at all, this would fail, right? (and not just silently return \"false\")",
+      "range": {
+        "startLine": 504,
+        "startChar": 69,
+        "endLine": 504,
+        "endChar": 0
+      },
+      "revId": "e51e747b92f49fdf2fb65dfd1df0c4324940a1cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2943ba6_a80e6e17",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-07T09:25:51Z",
+      "side": 1,
+      "message": "Yes, double checked: the test fails (on a timeout, though). Do we want to add a check for the existence of the element \"is_visible \u003d !!$(\u0027fakebox-speech\u0027) \u0026\u0026 !$(\u0027fakebox-speech\u0027).hidden\" or  leave this as is?",
+      "parentUuid": "2aa07496_1cc2404a",
       "range": {
         "startLine": 504,
         "startChar": 69,
