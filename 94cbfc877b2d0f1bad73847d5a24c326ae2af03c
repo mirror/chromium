@@ -52,6 +52,24 @@
       "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c668779_020d1f3f",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-07T18:44:46Z",
+      "side": 1,
+      "message": "Are only looking at the issuer of the leaf? If so, there\u0027s no SAN in the picture. I thought we were going to look at the issuer of the leaf + subject/issuer of all certificates in the chain.",
+      "parentUuid": "0d9eefe1_4d56a386",
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
