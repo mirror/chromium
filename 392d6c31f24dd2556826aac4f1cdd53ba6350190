@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34094bca_7b69d303",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-07T23:22:24Z",
+      "side": 1,
+      "message": "lgtm.",
+      "revId": "392d6c31f24dd2556826aac4f1cdd53ba6350190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b89b497_137abd30",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-07T23:22:24Z",
+      "side": 1,
+      "message": "Please verify, since there are two wall paper containers, this |container| is the same container you Set the cache true.",
+      "revId": "392d6c31f24dd2556826aac4f1cdd53ba6350190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
