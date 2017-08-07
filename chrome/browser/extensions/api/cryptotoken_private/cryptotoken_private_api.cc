@@ -80,5 +80,27 @@ CryptotokenPrivateCanOriginAssertAppIdFunction::Run() {
   return RespondNow(OneArgument(base::MakeUnique<base::Value>(false)));
 }
 
+CryptotokenPrivateCanAppIdGetAttestationFunction::
+    CryptotokenPrivateCanAppIdGetAttestationFunction()
+    : chrome_details_(this) {
+}
+
+ExtensionFunction::ResponseAction
+CryptotokenPrivateCanAppIdGetAttestationFunction::Run() {
+  std::unique_ptr<cryptotoken_private::CanAppIdGetAttestation::Params> params =
+      cryptotoken_private::CanAppIdGetAttestation::Params::Create(*args_);
+  EXTENSION_FUNCTION_VALIDATE(params);
+
+  const GURL app_id(params->app_id);
+  if (!app_id.is_valid()) {
+    return RespondNow(Error(extensions::ErrorUtils::FormatErrorMessage(
+        "AppId * is not a valid URL", params->app_id)));
+  }
+
+  // For now, attestation is allowed in all cases to match the historical
+  // behaviour.
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(true)));
+}
+
 }  // namespace api
 }  // namespace extensions

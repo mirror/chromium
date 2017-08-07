@@ -31,6 +31,20 @@ class CryptotokenPrivateCanOriginAssertAppIdFunction
     ChromeExtensionFunctionDetails chrome_details_;
 };
 
+class CryptotokenPrivateCanAppIdGetAttestationFunction
+    : public UIThreadExtensionFunction {
+  public:
+    CryptotokenPrivateCanAppIdGetAttestationFunction();
+    DECLARE_EXTENSION_FUNCTION("cryptotokenPrivate.canAppIdGetAttestation",
+                               CRYPTOTOKENPRIVATE_CANAPPIDGETATTESTATION)
+  protected:
+    ~CryptotokenPrivateCanAppIdGetAttestationFunction() override {}
+    ResponseAction Run() override;
+
+  private:
+    ChromeExtensionFunctionDetails chrome_details_;
+};
+
 }  // namespace api
 }  // namespace extensions
 

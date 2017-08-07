@@ -19,5 +19,11 @@ namespace cryptotokenPrivate {
     static void canOriginAssertAppId(DOMString securityOrigin,
                                      DOMString appIdUrl,
                                      AppIdCallback callback);
+
+    // Checks whether the given appId (which has been validated for the origin,
+    // based on |canOriginAssertAppId|) can access real attestation data, or
+    // whether generic attestation data should be substituted.
+    static void canAppIdGetAttestation(DOMString appId,
+                                       AppIdCallback callback);
   };
 };
