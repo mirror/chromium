@@ -70,6 +70,30 @@
       "revId": "dac798e2d25c2af87f28d837093504449b84b24c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65c0c2cc_0ea1f7fc",
+        "filename": "remoting/host/installer/mac/PrivilegedHelperTools/org.chromium.chromoting.me2me.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-07T22:05:04Z",
+      "side": 0,
+      "message": "Actually, the pref-pane won\u0027t be left running; it self-terminates. So the effect would be that the user is presented with an alert that the pref-pane needs to be restarted. They click OK, but the pref-pane disappears and doesn\u0027t come back.\nAlternatively, we could try to make the installer close any open pref-pane (during the preflight script where we actually delete the pref-pane bundle). I\u0027ve read through Apple\u0027s pref-pane developer guide, and done a few Internet searches, but haven\u0027t found any way to do this.\nI don\u0027t think the behavior is bad enough to justify some staged rollout over 2 versions.",
+      "parentUuid": "2f48135b_5f489eb8",
+      "range": {
+        "startLine": 151,
+        "startChar": 45,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "dac798e2d25c2af87f28d837093504449b84b24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
