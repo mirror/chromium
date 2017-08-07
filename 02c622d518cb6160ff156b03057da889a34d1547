@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bbc3288_578c2cee",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-07T12:03:53Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s okay to leave this here as it is. Or should I add PopupblockerTabHelper::Observer::BlockedContentsRemoved? If so, we can\u0027t know |index| and need to recalc index, but maybe more robust. Please give me your opinion.",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
