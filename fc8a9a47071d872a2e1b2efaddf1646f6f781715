@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1150c5ad_996cca95",
+        "filename": "content/browser/payments/payment_app_info_fetcher.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-07T19:59:18Z",
+      "side": 1,
+      "message": "reused StoredRelatedApplication, StoredPaymentApp has a different members.",
+      "parentUuid": "1b69cf52_b74dfa5b",
+      "revId": "fc8a9a47071d872a2e1b2efaddf1646f6f781715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56154b20_378838d7",
         "filename": "content/public/browser/stored_payment_app.h",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "fc8a9a47071d872a2e1b2efaddf1646f6f781715",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0339ee_72dfc0d3",
+        "filename": "content/public/browser/stored_payment_app.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-07T19:59:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56154b20_378838d7",
+      "revId": "fc8a9a47071d872a2e1b2efaddf1646f6f781715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
