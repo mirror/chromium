@@ -238,8 +238,7 @@ TEST_F(DOMStorageContextImplTest, DeleteSessionStorage) {
   dom_namespace = context_->GetStorageNamespace(kSessionStorageNamespaceId);
   area = dom_namespace->OpenStorageArea(kOrigin);
   base::NullableString16 read_value;
-  read_value = area->GetItem(kKey);
-  EXPECT_EQ(kValue, read_value.string());
+  EXPECT_EQ(kKey, area->Key(0).string());
   dom_namespace->CloseStorageArea(area);
 
   SessionStorageUsageInfo info;
@@ -261,8 +260,8 @@ TEST_F(DOMStorageContextImplTest, DeleteSessionStorage) {
                                    kPersistentId);
   dom_namespace = context_->GetStorageNamespace(kSessionStorageNamespaceId);
   area = dom_namespace->OpenStorageArea(kOrigin);
-  read_value = area->GetItem(kKey);
-  EXPECT_TRUE(read_value.is_null());
+
+  EXPECT_EQ(0u, area->Length());
   dom_namespace->CloseStorageArea(area);
   context_->Shutdown();
   context_ = NULL;
@@ -272,7 +271,7 @@ TEST_F(DOMStorageContextImplTest, DeleteSessionStorage) {
 TEST_F(DOMStorageContextImplTest, PurgeMemory) {
   auto* dom_namespace = context_->GetStorageNamespace(kLocalStorageNamespaceId);
   auto* area1 = dom_namespace->OpenStorageArea(kOrigin);
-  area1->InitialImportIfNeeded();
+  area1->DoInitialImport(nullptr);
 
   // PURGE_UNOPENED does not delete the open area.
   context_->PurgeMemory(DOMStorageContextImpl::PURGE_UNOPENED);
@@ -313,6 +312,8 @@ TEST_F(DOMStorageContextImplTest, DeleteSuboriginLocalStorage) {
       context_->GetStorageNamespace(kLocalStorageNamespaceId);
   DOMStorageArea* origin_area = dom_namespace->OpenStorageArea(kOrigin);
   DOMStorageArea* suborigin_area = dom_namespace->OpenStorageArea(kSuborigin);
+  origin_area->SetCacheOnlyKeys(false);
+  suborigin_area->SetCacheOnlyKeys(false);
 
   const base::string16 kOriginKey(ASCIIToUTF16("foo"));
   const base::string16 kOriginValue(ASCIIToUTF16("bar"));
