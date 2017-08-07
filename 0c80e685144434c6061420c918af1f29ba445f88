@@ -976,6 +976,30 @@
     },
     {
       "key": {
+        "uuid": "81fc089e_816927d0",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-07T18:25:44Z",
+      "side": 1,
+      "message": "That\u0027s right.\n\nWith unique_ptr\u003c\u003e, you need to avoid ever constructing two instances of unique_ptr that have the same pointer value. I.e. this is a guaranteed double-free, which is hopefully a crash, but potentially an exploitable security bug:\n\nstd::unique_ptr\u003cint\u003e a \u003d base::MakeUnique\u003cint\u003e();\nstd::unique_ptr\u003cint\u003e b(a.get());  // You are having a bad problem and will not go to space today.\n\nSo, a best practice with unique_ptr\u003c\u003e is to avoid ever touching the bare pointer yourself, by unique_ptr via:\n 1. don\u0027t call new yourself, call base::MakeUnique\u003c\u003e instead, so you start out with a unique_ptr\n 2. When you have a unique ptr in one context, and you need to pass it somewhere else as a function argument, have the receiving function accept a std::unique_ptr\u003c\u003e (by value, NOT a ref to a unique_ptr) call std::move() from the sending function. As they say, \"this kills the crab\" -- there may be a unique_ptr that is left behind in the calling function, but it holds a null value.\n 3. If you\u0027re returning a unique_ptr from a function, just return it (no std::move required). There are implicitly move semantics there.",
+      "parentUuid": "1a4cd01d_a73fb82c",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2388a0dd_37d0d5cd",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
         "patchSetId": 1
@@ -1087,6 +1111,24 @@
       "side": 1,
       "message": "I would like to talk in person for a few more minutes about this to see how the structure of this would shake out. I think its possible but might cause some restructuring I\u0027m not sure how it would look.",
       "parentUuid": "391bfb90_340b42cc",
+      "revId": "0c80e685144434c6061420c918af1f29ba445f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fece1db8_7836883f",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-07T18:25:44Z",
+      "side": 1,
+      "message": "My instincts are that it\u0027s worth doing. Let\u0027s pair up and experiment.",
+      "parentUuid": "259fac2c_4daeb9f5",
       "revId": "0c80e685144434c6061420c918af1f29ba445f88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

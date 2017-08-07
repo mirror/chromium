@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c650535_dda0f93f",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 3311,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-07T18:25:44Z",
+      "side": 1,
+      "message": "The .grd file should change in the same CL where you consume the value. So I recommend moving this out of this CL into a follow-on.\n\nAnyhow some feedback: We\u0027re using this as a title currently, not a prefix -- there\u0027s no $1 placeholder, so there\u0027s no place for us to insert details, so the name RENDERER_PREFIX seems not quite fitting. As currently expressed, the ID ought to be RENDERER_NAME (like PLUGIN_NAME is). Alternatively, if we expect to be able to pull an URL out of the RPH, then let\u0027s leave it as RENDERER_PREFIX but add an argument for the URL.\n\nRegarding the URL, it looks like we do have site info on RenderProcessHost now (see  RenderProcessHostImpl::RegisterProcessHostForSite ), but we would have to add some plumbing to get it out.",
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a6bac7_12316771",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-07T18:25:44Z",
+      "side": 1,
+      "message": "Looks like you can replace this with base::ContainsValue from stl_util.h",
+      "range": {
+        "startLine": 31,
+        "startChar": 24,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78226120_361dc675",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-07T18:25:44Z",
+      "side": 1,
+      "message": "If you clear the secondary subprovider here, you\u0027ll probably crash if StartUpdating is called again (curious what happens if you show/hide/show the TaskManager).\n\nInstead, we should probably just leave the observer instances and subproviders intact.\n\nIn general, StopUpdating ought only unwind actions that are done in StartUpdating. If something is done in the constructor, (like assigning the primary_observer_ and secondary_observer_), it ought to be undone in the destructor.\n\nStartUpdating ought to register the observer.\nStopUpdating ought to clear the observer.\n\nI think it\u0027s your choice whether to allocate the FallbackObserverHelper instances in the ctor or StartUpdating, but whichever approach you choose, you should undo it in the corresponding place.",
+      "range": {
+        "startLine": 94,
+        "startChar": 25,
+        "endLine": 94,
+        "endChar": 30
+      },
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ad85f6_b48a06b7",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-07T18:25:44Z",
+      "side": 1,
+      "message": "Use std::unique_ptr instead of manually calling delete on a bare pointer.\n\nunique_ptr.reset() does the deletion.",
+      "range": {
+        "startLine": 98,
+        "startChar": 9,
+        "endLine": 98,
+        "endChar": 28
+      },
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68794dcd_c98869fc",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-07T18:25:44Z",
+      "side": 1,
+      "message": "comma after \"it\"",
+      "range": {
+        "startLine": 113,
+        "startChar": 74,
+        "endLine": 113,
+        "endChar": 77
+      },
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ac2496_277f7388",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-07T18:25:44Z",
+      "side": 1,
+      "message": "Add a comment after \"shown\"",
+      "range": {
+        "startLine": 121,
+        "startChar": 5,
+        "endLine": 121,
+        "endChar": 11
+      },
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0521ac4e_acdb30d9",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-07T18:25:44Z",
+      "side": 1,
+      "message": "Edited for clarity:\n\n  // When a task from the primary subprovider is removed, see if there\n  // are any other primary task for that process. If not, but there is\n  // a secondary task, show it.",
+      "range": {
+        "startLine": 138,
+        "startChar": 36,
+        "endLine": 138,
+        "endChar": 0
+      },
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50336fa_4d70ce25",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-07T18:25:44Z",
+      "side": 1,
+      "message": "Data members go after methods.  https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "range": {
+        "startLine": 34,
+        "startChar": 26,
+        "endLine": 34,
+        "endChar": 45
+      },
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
