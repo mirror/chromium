@@ -463,6 +463,18 @@ void PasswordFormManager::Update(
 
 void PasswordFormManager::UpdateUsername(const base::string16& new_username) {
   pending_credentials_.username_value = new_username;
+  // Check if user typed some leading/trailing spaces.
+  base::string16 trimmed_username_value;
+  base::TrimString(new_username, base::ASCIIToUTF16(" \t"),
+                   &trimmed_username_value);
+  pending_credentials_.username_edited_in_prompt = true;
+  pending_credentials_.username_element = base::string16();
+  for (size_t i = 0; i < pending_credentials_.other_possible_usernames.size();
+       ++i)
+    if (pending_credentials_.other_possible_usernames[i].first ==
+        trimmed_username_value)
+      pending_credentials_.username_element =
+          pending_credentials_.other_possible_usernames[i].second;
   // Check if the username already exists.
   const PasswordForm* match = FindBestSavedMatch(&pending_credentials_);
   is_new_login_ = !match || match->is_public_suffix_match;
@@ -865,6 +877,11 @@ bool PasswordFormManager::UploadPasswordVote(
       field_types[form_to_upload.username_element] = autofill::USERNAME;
       username_vote_type =
           autofill::AutofillUploadContents::Field::CREDENTIALS_REUSED;
+    }
+    if (form_to_upload.username_edited_in_prompt) {
+      field_types[form_to_upload.username_element] = autofill::USERNAME;
+      username_vote_type =
+          autofill::AutofillUploadContents::Field::USERNAME_EDITED;
     }
   } else {  // User overwrites username.
     field_types[form_to_upload.username_element] = autofill::USERNAME;

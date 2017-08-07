@@ -482,6 +482,12 @@ class PasswordFormManagerTest : public testing::Test {
     autofill::AutofillUploadContents::Field::UsernameVoteType
         expected_username_vote_type =
             autofill::AutofillUploadContents::Field::CREDENTIALS_REUSED;
+    if (match.username_edited_in_prompt) {
+      expected_types[match.username_element] = autofill::USERNAME;
+      expected_available_field_types.insert(autofill::USERNAME);
+      expected_username_vote_type =
+          autofill::AutofillUploadContents::Field::USERNAME_EDITED;
+    }
 
     bool expect_generation_vote = false;
     if (field_type) {
@@ -2376,6 +2382,8 @@ TEST_F(PasswordFormManagerTest, TestUpdateUsernameToExisting) {
   PasswordForm expected_pending(credential);
   expected_pending.times_used = 1;
   expected_pending.username_value = saved_match()->username_value;
+  expected_pending.username_edited_in_prompt = true;
+  expected_pending.username_element = saved_match()->username_element;
 
   // User clicks save, edited username is saved, password updated.
   PasswordForm saved_result;
@@ -2383,7 +2391,7 @@ TEST_F(PasswordFormManagerTest, TestUpdateUsernameToExisting) {
               Update(expected_pending,
                      ElementsAre(Pair(saved_match()->username_value,
                                       Pointee(*saved_match()))),
-                     Pointee(IsEmpty()), nullptr));
+                     Pointee(IsEmpty()), _));
   form_manager()->Save();
 }
 
@@ -3138,8 +3146,8 @@ TEST_F(PasswordFormManagerTest, ProbablyAccountCreationUpload) {
                   CheckUploadedAutofillTypesAndSignature(
                       pending_structure.FormSignatureAsStr(), expected_types,
                       false /* expect_generation_vote */,
-                      autofill::AutofillUploadContents::Field::NO_INFORMATION
-                      /* expected_username_vote_type */),
+                      autofill::AutofillUploadContents::Field::
+                          NO_INFORMATION /* expected_username_vote_type */),
                   false, expected_available_field_types, std::string(), true));
 
   form_manager.ProvisionallySave(
