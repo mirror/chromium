@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4826fbeb_30a0858f",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-07T23:23:08Z",
+      "side": 1,
+      "message": "Thank you for all the comments. I think this is a much bigger problem than what this CL is trying to address. So, in this CL, I will revert all the non-critical changes to avoid adding more inconsistencies, and I will start an email thread to follow up to the naming discussion.",
+      "parentUuid": "c9e7c176_4ece3c16",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 25
+      },
+      "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32cf1047_23ec1dad",
         "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
         "patchSetId": 4
@@ -113,6 +137,48 @@
     },
     {
       "key": {
+        "uuid": "1b0333b1_ffbef69b",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-07T23:23:08Z",
+      "side": 1,
+      "message": "Yes, now I agree it\u0027s unnecessary to have this helper, and we should keep our helpers as simple as possible.",
+      "parentUuid": "32cf1047_23ec1dad",
+      "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ec34ea_4f2c12cb",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-07T23:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28dbad02_4c333937",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 30
+      },
+      "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e0374cd_921effe0",
         "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
         "patchSetId": 4
@@ -136,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "734f13eb_7bf24446",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-07T23:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e0374cd_921effe0",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54ac7ca2_0f624938",
         "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.mm",
         "patchSetId": 4
@@ -153,6 +243,24 @@
     },
     {
       "key": {
+        "uuid": "3c689fa3_91e580d5",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-07T23:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54ac7ca2_0f624938",
+      "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56ffa963_e04e0ad3",
         "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.mm",
         "patchSetId": 4
@@ -167,6 +275,24 @@
       "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4674001_b67d76c0",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-07T23:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56ffa963_e04e0ad3",
+      "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
