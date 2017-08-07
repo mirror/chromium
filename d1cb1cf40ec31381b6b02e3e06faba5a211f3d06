@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2d5c8eb_4b4dd9a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-07T21:59:13Z",
+      "side": 1,
+      "message": "This is already removed from the latest patch.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 57
+      },
+      "revId": "d1cb1cf40ec31381b6b02e3e06faba5a211f3d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1c7e65_c7990b15",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-07T21:59:13Z",
+      "side": 1,
+      "message": "\"SetSuggestion\" seems more straightforward, and avoids the ambiguity of doing the actual replacement in the document.",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "d1cb1cf40ec31381b6b02e3e06faba5a211f3d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "596282b7_597800bc",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-07T21:59:13Z",
+      "side": 1,
+      "message": "Remove this sentence.\n\nIt\u0027s hard to maintain because we might add other overlapping marker types (e.g., if we want to fix crbug.com/752648)",
+      "range": {
+        "startLine": 14,
+        "startChar": 12,
+        "endLine": 15,
+        "endChar": 77
+      },
+      "revId": "d1cb1cf40ec31381b6b02e3e06faba5a211f3d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
