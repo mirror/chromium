@@ -22,28 +22,16 @@ namespace remoting {
 
 namespace {
 
-// TODO(zijiehe): Move these test specific handlers into test binary.
-// This function is for test purpose only. It writes some random texts to both
-// stdout and stderr, and returns a random value 234.
-int EvaluateTest() {
-  std::cout << "In EvaluateTest(): Line 1\n"
-               "In EvaluateTest(): Line 2";
-  std::cerr << "In EvaluateTest(): Error Line 1\n"
-               "In EvaluateTest(): Error Line 2";
-  return 234;
-}
-
-// This function is for test purpose only. It triggers an assertion failure.
-int EvaluateCrash() {
-  NOTREACHED();
-  return 0;
+int EvaluateSuccess() {
+  std::cout << "Success" << std::endl;
+  return kSuccessExitCode;
 }
 
 // This function is for test purpose only. It forwards the evaluation request to
 // a new process and returns what it returns.
 int EvaluateForward() {
   std::string output;
-  int result = EvaluateCapability(kEvaluateTest, &output);
+  int result = EvaluateCapability(kEvaluateSuccess, &output);
   std::cout << output;
   return result;
 }
@@ -55,10 +43,23 @@ int EvaluateForward() {
 // This function tries to use current binary if supported, otherwise it falls
 // back to use the default binary.
 base::FilePath BuildHostBinaryPath() {
-#if defined(OS_LINUX)
   base::FilePath path;
   bool result = base::PathService::Get(base::FILE_EXE, &path);
   DCHECK(result);
+  base::FilePath directory;
+  result = base::PathService::Get(base::DIR_EXE, &directory);
+  DCHECK(result);
+#if defined(OS_WIN)
+  if (path.BaseName().value() == FILE_PATH_LITERAL("remoting_unittests.exe")) {
+    return directory.Append(FILE_PATH_LITERAL("test_evaluate_capability.exe"));
+  }
+#else
+  if (path.BaseName().value() == FILE_PATH_LITERAL("remoting_unittests")) {
+    return directory.Append(FILE_PATH_LITERAL("test_evaluate_capability"));
+  }
+#endif
+
+#if defined(OS_LINUX)
   if (path.BaseName().value() ==
       FILE_PATH_LITERAL("chrome-remote-desktop-host")) {
     return path;
@@ -67,25 +68,15 @@ base::FilePath BuildHostBinaryPath() {
     return path;
   }
 
-  result = base::PathService::Get(base::DIR_EXE, &path);
-  DCHECK(result);
-  return path.Append(FILE_PATH_LITERAL("remoting_me2me_host"));
+  return directory.Append(FILE_PATH_LITERAL("remoting_me2me_host"));
 #elif defined(OS_MACOSX)
-  base::FilePath path;
-  bool result = base::PathService::Get(base::FILE_EXE, &path);
-  DCHECK(result);
   if (path.BaseName().value() == FILE_PATH_LITERAL("remoting_me2me_host")) {
     return path;
   }
 
-  result = base::PathService::Get(base::DIR_EXE, &path);
-  DCHECK(result);
-  return path.Append(FILE_PATH_LITERAL(
+  return directory.Append(FILE_PATH_LITERAL(
       "remoting_me2me_host.app/Contents/MacOS/remoting_me2me_host"));
 #elif defined(OS_WIN)
-  base::FilePath path;
-  bool result = base::PathService::Get(base::FILE_EXE, &path);
-  DCHECK(result);
   if (path.BaseName().value() == FILE_PATH_LITERAL("remoting_console.exe")) {
     return path;
   }
@@ -96,9 +87,7 @@ base::FilePath BuildHostBinaryPath() {
     return path;
   }
 
-  result = base::PathService::Get(base::DIR_EXE, &path);
-  DCHECK(result);
-  return path.Append(FILE_PATH_LITERAL("remoting_host.exe"));
+  return directory.Append(FILE_PATH_LITERAL("remoting_host.exe"));
 #else
   #error "BuildHostBinaryPath is not implemented for current platform."
 #endif
@@ -107,12 +96,8 @@ base::FilePath BuildHostBinaryPath() {
 }  // namespace
 
 int EvaluateCapabilityLocally(const std::string& type) {
-  // TODO(zijiehe): Move these test specific handlers into test binary.
-  if (type == kEvaluateTest) {
-    return EvaluateTest();
-  }
-  if (type == kEvaluateCrash) {
-    return EvaluateCrash();
+  if (type == kEvaluateSuccess) {
+    return EvaluateSuccess();
   }
   if (type == kEvaluateForward) {
     return EvaluateForward();

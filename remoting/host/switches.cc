@@ -24,6 +24,7 @@ const char kEvaluateCapabilitySwitchName[] = "evaluate-type";
 const char kEvaluateTest[] = "test";
 const char kEvaluateCrash[] = "crash";
 const char kEvaluateForward[] = "forward";
+const char kEvaluateSuccess[] = "success";
 
 const char kParentWindowSwitchName[] = "parent-window";
 
