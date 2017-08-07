@@ -1,0 +1,18 @@
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<div id="f"></div>
+<script>
+f2 = function() {
+  f.animate(
+      [{"marginTop":"auto"}],
+      {"duration":2857});
+};
+
+async_test(function(test) {
+  f2();
+  requestAnimationFrame(() => {
+    f2();
+    test.done();
+  });
+}, "Using a neutral key frame doesn't crash.");
+</script>
