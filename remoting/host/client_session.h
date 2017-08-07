@@ -242,7 +242,8 @@ class ClientSession : public protocol::HostStub,
   protocol::DataChannelManager data_channel_manager_;
 
   // Used to handle file transfer data channels.
-  FileTransferMessageHandlerFactory file_transfer_message_handler_factory_;
+  std::unique_ptr<FileTransferMessageHandlerFactory>
+      file_transfer_message_handler_factory_;
 
   // Set to true if the client was authenticated successfully.
   bool is_authenticated_ = false;

@@ -12,6 +12,7 @@
 #include "remoting/host/audio_capturer.h"
 #include "remoting/host/client_session_control.h"
 #include "remoting/host/desktop_capturer_proxy.h"
+#include "remoting/host/file_transfer_proxy_factory_linux.h"
 #include "remoting/host/input_injector.h"
 #include "remoting/host/mouse_cursor_monitor_proxy.h"
 #include "remoting/host/screen_controls.h"
@@ -55,6 +56,12 @@ BasicDesktopEnvironment::CreateMouseCursorMonitor() {
                                                    desktop_capture_options());
 }
 
+std::unique_ptr<FileTransferProxyFactory>
+BasicDesktopEnvironment::CreateFileTransferProxyFactory() {
+  return base::WrapUnique(
+      new FileTransferProxyFactoryLinux(file_task_runner()));
+}
+
 std::string BasicDesktopEnvironment::GetCapabilities() const {
   return std::string();
 }
@@ -81,11 +88,13 @@ BasicDesktopEnvironment::BasicDesktopEnvironment(
     scoped_refptr<base::SingleThreadTaskRunner> video_capture_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> input_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
     const DesktopEnvironmentOptions& options)
     : caller_task_runner_(caller_task_runner),
       video_capture_task_runner_(video_capture_task_runner),
       input_task_runner_(input_task_runner),
       ui_task_runner_(ui_task_runner),
+      file_task_runner_(file_task_runner),
       options_(options) {
   DCHECK(caller_task_runner_->BelongsToCurrentThread());
 #if defined(USE_X11)
@@ -97,11 +106,12 @@ BasicDesktopEnvironmentFactory::BasicDesktopEnvironmentFactory(
     scoped_refptr<base::SingleThreadTaskRunner> caller_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> video_capture_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> input_task_runner,
-    scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> file_task_runner)
     : caller_task_runner_(caller_task_runner),
       video_capture_task_runner_(video_capture_task_runner),
       input_task_runner_(input_task_runner),
-      ui_task_runner_(ui_task_runner) {}
+      file_task_runner_(file_task_runner) {}
 
 BasicDesktopEnvironmentFactory::~BasicDesktopEnvironmentFactory() {}
 

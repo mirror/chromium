@@ -64,6 +64,13 @@ IpcDesktopEnvironment::CreateVideoCapturer() {
   return desktop_session_proxy_->CreateVideoCapturer();
 }
 
+std::unique_ptr<FileTransferProxyFactory>
+IpcDesktopEnvironment::CreateFileTransferProxyFactory() {
+  // TODO(jarhar): Implement FileTransferProxyFactory for Windows.
+  NOTIMPLEMENTED();
+  return nullptr;
+}
+
 std::string IpcDesktopEnvironment::GetCapabilities() const {
   return desktop_session_proxy_->GetCapabilities();
 }

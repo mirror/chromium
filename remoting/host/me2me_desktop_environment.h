@@ -32,6 +32,7 @@ class Me2MeDesktopEnvironment : public BasicDesktopEnvironment {
       scoped_refptr<base::SingleThreadTaskRunner> video_capture_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> input_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
       const DesktopEnvironmentOptions& options);
 
   // Initializes security features of the desktop environment (the curtain mode
@@ -60,7 +61,8 @@ class Me2MeDesktopEnvironmentFactory : public BasicDesktopEnvironmentFactory {
       scoped_refptr<base::SingleThreadTaskRunner> caller_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> video_capture_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> input_task_runner,
-      scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner);
+      scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> file_task_runner);
   ~Me2MeDesktopEnvironmentFactory() override;
 
   // DesktopEnvironmentFactory interface.

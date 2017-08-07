@@ -183,10 +183,14 @@ void ClientSession::SetCapabilities(
       connection_->client_stub(), capabilities_);
 
   if (HasCapability(capabilities_, protocol::kFileTransferCapability)) {
+    file_transfer_message_handler_factory_.reset(
+        new FileTransferMessageHandlerFactory(
+            desktop_environment_->CreateFileTransferProxyFactory()));
     data_channel_manager_.RegisterCreateHandlerCallback(
         kFileTransferDataChannelPrefix,
-        base::Bind(&FileTransferMessageHandlerFactory::CreateDataChannelHandler,
-                   base::Unretained(&file_transfer_message_handler_factory_)));
+        base::Bind(
+            &FileTransferMessageHandlerFactory::CreateDataChannelHandler,
+            base::Unretained(file_transfer_message_handler_factory_.get())));
   }
 
   VLOG(1) << "Client capabilities: " << *client_capabilities_;

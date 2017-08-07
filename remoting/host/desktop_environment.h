@@ -10,9 +10,11 @@
 #include <string>
 
 #include "base/callback_forward.h"
+#include "base/files/file_proxy.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "remoting/host/desktop_environment_options.h"
+#include "remoting/host/file_transfer_proxy_factory.h"
 
 namespace webrtc {
 class DesktopCapturer;
@@ -40,6 +42,8 @@ class DesktopEnvironment {
   virtual std::unique_ptr<webrtc::DesktopCapturer> CreateVideoCapturer() = 0;
   virtual std::unique_ptr<webrtc::MouseCursorMonitor>
   CreateMouseCursorMonitor() = 0;
+  virtual std::unique_ptr<FileTransferProxyFactory>
+  CreateFileTransferProxyFactory() = 0;
 
   // Returns the set of all capabilities supported by |this|.
   virtual std::string GetCapabilities() const = 0;
