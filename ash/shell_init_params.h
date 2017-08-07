@@ -7,6 +7,8 @@
 
 #include "ash/ash_export.h"
 
+class PrefService;
+
 namespace ui {
 class ContextFactory;
 class ContextFactoryPrivate;
@@ -23,6 +25,9 @@ struct ASH_EXPORT ShellInitParams {
   ShellDelegate* delegate = nullptr;
   ui::ContextFactory* context_factory = nullptr;
   ui::ContextFactoryPrivate* context_factory_private = nullptr;
+  //JAMES null in tests?
+  // Not owned.
+  PrefService* local_state = nullptr;
 };
 
 }  // namespace ash

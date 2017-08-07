@@ -284,7 +284,9 @@ void AshTestHelper::CreateMashWindowManager() {
   // additional tray items) that can make for flaky tests.
   const bool init_network_handler = false;
   window_manager_app_->InitWindowManager(
-      window_tree_client_setup_.OwnWindowTreeClient(), init_network_handler);
+      window_tree_client_setup_.OwnWindowTreeClient(),
+      nullptr /* local_state */,
+      init_network_handler);
 
   aura::WindowTreeClient* window_tree_client =
       window_manager_app_->window_manager()->window_tree_client();

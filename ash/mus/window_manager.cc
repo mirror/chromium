@@ -33,6 +33,10 @@
 #include "ash/wm/ash_focus_rules.h"
 #include "ash/wm/window_state.h"
 #include "base/memory/ptr_util.h"
+#include "components/prefs/pref_registry_simple.h"
+#include "components/prefs/pref_service.h"
+#include "services/preferences/public/cpp/pref_service_factory.h"
+#include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/ui/common/accelerator_util.h"
 #include "services/ui/common/types.h"
@@ -109,7 +113,9 @@ WindowManager::~WindowManager() {
 
 void WindowManager::Init(
     std::unique_ptr<aura::WindowTreeClient> window_tree_client,
+    PrefService* local_state,
     std::unique_ptr<ShellDelegate> shell_delegate) {
+  local_state_ = local_state;
   // Only create InputDeviceClient in MASH mode. For MUS mode WindowManager is
   // created by chrome, which creates InputDeviceClient.
   if (config_ == Config::MASH) {
@@ -155,7 +161,10 @@ void WindowManager::SetLostConnectionCallback(base::OnceClosure closure) {
 }
 
 bool WindowManager::WaitForInitialDisplays() {
-  return window_manager_client_->WaitForInitialDisplays();
+  LOG(ERROR) << "JAMES pre-WaitForInitialDisplays";
+  bool ret = window_manager_client_->WaitForInitialDisplays();
+  LOG(ERROR) << "JAMES post-WaitForInitialDisplays";
+  return ret;
 }
 
 bool WindowManager::GetNextAcceleratorNamespaceId(uint16_t* id) {
@@ -182,7 +191,17 @@ display::mojom::DisplayController* WindowManager::GetDisplayController() {
   return display_controller_ ? display_controller_.get() : nullptr;
 }
 
+void WindowManager::OnLocalStatePrefServiceInitialized(
+    std::unique_ptr<::PrefService> local_state) {
+  LOG(ERROR) << "JAMES OnLocalStatePrefServiceInitialized";
+  // |local_state| is null if can't connect to Chrome (as happens when
+  // running mash outside of chrome --mash and chrome isn't built).
+  local_state_mash_ = std::move(local_state);
+  CreateShell();
+}
+
 void WindowManager::CreateShell() {
+  LOG(ERROR) << "JAMES CreateShell config " << int(config_);
   DCHECK(!created_shell_);
   created_shell_ = true;
   ShellInitParams init_params;
@@ -192,7 +211,12 @@ void WindowManager::CreateShell() {
   init_params.delegate = shell_delegate_ ? shell_delegate_.release()
                                          : new ShellDelegateMus(connector_);
   init_params.shell_port = shell_port;
+  init_params.local_state = local_state_mash_.get();
   Shell::CreateInstance(init_params);
+
+  if (show_primary_host_on_connect_)
+    Shell::GetPrimaryRootWindow()->GetHost()->Show();
+  InstallFrameDecorationValues();
 }
 
 void WindowManager::InitCursorOnKeyList() {
@@ -298,10 +322,20 @@ void WindowManager::SetWindowManagerClient(aura::WindowManagerClient* client) {
 }
 
 void WindowManager::OnWmConnected() {
-  CreateShell();
-  if (show_primary_host_on_connect_)
-    Shell::GetPrimaryRootWindow()->GetHost()->Show();
-  InstallFrameDecorationValues();
+  LOG(ERROR) << "JAMES OnWmConnected";
+  auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
+  Shell::RegisterLocalStatePrefs(pref_registry.get());
+  //TODO weak pointer
+  prefs::ConnectToPrefService(
+      connector_, std::move(pref_registry),
+      base::Bind(&WindowManager::OnLocalStatePrefServiceInitialized,
+                 base::Unretained(this)),
+      prefs::mojom::kLocalStateServiceName);
+
+  // CreateShell();
+  // if (show_primary_host_on_connect_)
+  //   Shell::GetPrimaryRootWindow()->GetHost()->Show();
+  // InstallFrameDecorationValues();
 }
 
 void WindowManager::OnWmSetBounds(aura::Window* window,

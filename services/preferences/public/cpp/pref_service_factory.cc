@@ -80,6 +80,7 @@ void OnConnect(
     std::vector<mojom::PrefRegistrationPtr> defaults,
     std::unordered_map<PrefValueStore::PrefStoreType,
                        mojom::PrefStoreConnectionPtr> connections) {
+  LOG(ERROR) << "JAMES OnConnect";
   scoped_refptr<PrefStore> managed_prefs =
       CreatePrefStoreClient(PrefValueStore::MANAGED_STORE, &connections);
   scoped_refptr<PrefStore> supervised_user_prefs = CreatePrefStoreClient(
@@ -132,6 +133,7 @@ void OnConnectError(
     scoped_refptr<RefCountedInterfacePtr<mojom::PrefStoreConnector>>
         connector_ptr,
     ConnectCallback callback) {
+  LOG(ERROR) << "JAMES OnConnectError";
   callback.Run(nullptr);
   connector_ptr->reset();
 }
@@ -149,6 +151,7 @@ void ConnectToPrefService(
   connector_ptr->get().set_connection_error_handler(base::Bind(
       &OnConnectError, connector_ptr, base::Passed(ConnectCallback{callback})));
   auto serialized_pref_registry = SerializePrefRegistry(*pref_registry);
+  LOG(ERROR) << "JAMES connecting";
   connector_ptr->get()->Connect(
       std::move(serialized_pref_registry),
       base::BindOnce(&OnConnect, connector_ptr, std::move(pref_registry),

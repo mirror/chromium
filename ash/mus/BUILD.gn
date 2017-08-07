@@ -73,9 +73,11 @@ source_set("lib") {
   deps = [
     "//chromeos",
     "//chromeos:power_manager_proto",
+    "//components/prefs",
     "//components/user_manager",
     "//components/wallpaper",
     "//device/bluetooth",
+    "//services/preferences/public/cpp",
     "//services/ui/public/cpp/input_devices",
     "//services/ui/public/interfaces/input_devices",
     "//ui/app_list/presenter",

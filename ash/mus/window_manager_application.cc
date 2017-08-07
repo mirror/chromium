@@ -23,8 +23,12 @@
 #include "chromeos/network/network_connect.h"
 #include "chromeos/network/network_handler.h"
 #include "chromeos/system/fake_statistics_provider.h"
+#include "components/prefs/pref_registry_simple.h"
+#include "components/prefs/pref_service.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
 #include "device/bluetooth/dbus/bluez_dbus_manager.h"
+#include "services/preferences/public/cpp/pref_service_factory.h"
+#include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/service_context.h"
 #include "services/ui/common/accelerator_util.h"
@@ -63,8 +67,21 @@ service_manager::Connector* WindowManagerApplication::GetConnector() {
   return context() ? context()->connector() : nullptr;
 }
 
+// void WindowManagerApplication::OnLocalStatePrefServiceInitialized(
+//     std::unique_ptr<aura::WindowTreeClient> window_tree_client,
+//     std::unique_ptr<PrefService> local_state) {
+//   LOG(ERROR) << "JAMES got pref service " << local_state.get();
+//   // |local_state| is null if can't connect to Chrome (as happens when
+//   // running mash outside of chrome --mash and chrome isn't built).
+//   local_state_ = std::move(local_state);
+//   const bool init_network_handler = true;
+//   InitWindowManager(std::move(window_tree_client), local_state_.get(),
+//                     init_network_handler);
+// }
+
 void WindowManagerApplication::InitWindowManager(
     std::unique_ptr<aura::WindowTreeClient> window_tree_client,
+    PrefService* local_state,
     bool init_network_handler) {
   // Tests may have already set the WindowTreeClient.
   if (!aura::Env::GetInstance()->HasWindowTreeClient())
@@ -80,6 +97,7 @@ void WindowManagerApplication::InitWindowManager(
   statistics_provider_->SetMachineStatistic("keyboard_layout", "");
 
   window_manager_->Init(std::move(window_tree_client),
+                        local_state,
                         std::move(shell_delegate_));
 }
 
@@ -147,8 +165,21 @@ void WindowManagerApplication::OnStart() {
   window_tree_client->ConnectAsWindowManager(
       automatically_create_display_roots);
 
+  // LOG(ERROR) << "JAMES connecting to pref service";
+  // // Connect to local state pref service before initializing WindowManager so
+  // // that prefs are available when Shell is initialized.
+  // auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
+  // Shell::RegisterLocalStatePrefs(pref_registry.get());
+  // //TODO weak pointer
+  // prefs::ConnectToPrefService(
+  //     context()->connector(), std::move(pref_registry),
+  //     base::Bind(&WindowManagerApplication::OnLocalStatePrefServiceInitialized,
+  //                base::Unretained(this), base::Passed(&window_tree_client)),
+  //     prefs::mojom::kLocalStateServiceName);
+
+  //JAMES for ash_standalone, maybe use TestPrefService?
   const bool init_network_handler = true;
-  InitWindowManager(std::move(window_tree_client), init_network_handler);
+  InitWindowManager(std::move(window_tree_client), nullptr, init_network_handler);
 }
 
 void WindowManagerApplication::OnBindInterface(

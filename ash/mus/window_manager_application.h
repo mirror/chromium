@@ -19,6 +19,8 @@
 #include "services/service_manager/public/cpp/service.h"
 #include "services/ui/common/types.h"
 
+class PrefService;
+
 namespace aura {
 class WindowTreeClient;
 }
@@ -64,9 +66,15 @@ class WindowManagerApplication : public service_manager::Service {
  private:
   friend class ash::AshTestHelper;
 
+  //JAMES docs
+  void OnLocalStatePrefServiceInitialized(
+      std::unique_ptr<aura::WindowTreeClient> window_tree_client,
+      std::unique_ptr<PrefService> local_state);
+
   // If |init_network_handler| is true, chromeos::NetworkHandler is initialized.
   void InitWindowManager(
       std::unique_ptr<aura::WindowTreeClient> window_tree_client,
+      PrefService* local_state,
       bool init_network_handler);
 
   // Initializes lower-level OS-specific components (e.g. D-Bus services).
@@ -100,6 +108,8 @@ class WindowManagerApplication : public service_manager::Service {
 
   // Whether this class initialized DBusThreadManager and needs to clean it up.
   bool dbus_thread_manager_initialized_ = false;
+
+  std::unique_ptr<PrefService> local_state_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowManagerApplication);
 };

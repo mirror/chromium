@@ -23,6 +23,8 @@
 #include "ui/aura/mus/window_manager_delegate.h"
 #include "ui/aura/mus/window_tree_client_delegate.h"
 
+class PrefService;
+
 namespace display {
 class Display;
 }
@@ -65,7 +67,8 @@ class WindowManager : public aura::WindowManagerDelegate,
   ~WindowManager() override;
 
   void Init(std::unique_ptr<aura::WindowTreeClient> window_tree_client,
-            std::unique_ptr<ash::ShellDelegate> shell_delegate = nullptr);
+            PrefService* local_state,
+            std::unique_ptr<ash::ShellDelegate> shell_delegate);
 
   // Sets the callback that is run once the connection to mus is lost. If not
   // set shutdown occurs when the connection is lost (the Shell is deleted).
@@ -104,7 +107,13 @@ class WindowManager : public aura::WindowManagerDelegate,
  private:
   friend class ash::AshTestHelper;
 
-  // Creates the Shell. This is done after the connection to mus is established.
+  //JAMES docs
+  //JAMES rename to Mash only?
+  void OnLocalStatePrefServiceInitialized(
+      std::unique_ptr<::PrefService> local_state);
+
+  // Creates the Shell. This is done after the connection to mus is established
+  // and the local state pref service is available.
   void CreateShell();
 
   // If Mash, tells the window server about keys we don't want to hide the
@@ -189,6 +198,10 @@ class WindowManager : public aura::WindowManagerDelegate,
   std::unique_ptr<views::PointerWatcherEventRouter>
       pointer_watcher_event_router_;
 
+  // Backed by the mojo pref service.
+  std::unique_ptr<::PrefService> local_state_mash_;
+
+  PrefService* local_state_ = nullptr;
   bool created_shell_ = false;
 
   std::map<uint16_t, AcceleratorHandler*> accelerator_handlers_;

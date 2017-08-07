@@ -55,7 +55,9 @@ void CreateClassicShell() {
   shell_init_params.context_factory = content::GetContextFactory();
   shell_init_params.context_factory_private =
       content::GetContextFactoryPrivate();
+  shell_init_params.local_state = g_browser_process->local_state();
 
+  LOG(ERROR) << "JAMES classic local state " << g_browser_process->local_state();
   ash::Shell::CreateInstance(shell_init_params);
 }
 
@@ -82,7 +84,9 @@ std::unique_ptr<ash::mus::WindowManager> CreateMusShell() {
   window_tree_client->ConnectAsWindowManager(
       automatically_create_display_roots);
   aura::Env::GetInstance()->SetWindowTreeClient(window_tree_client.get());
+  LOG(ERROR) << "JAMES mus local state " << g_browser_process->local_state();
   window_manager->Init(std::move(window_tree_client),
+                       g_browser_process->local_state(),
                        base::MakeUnique<ChromeShellDelegate>());
   CHECK(window_manager->WaitForInitialDisplays());
   return window_manager;
