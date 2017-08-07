@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83ba2f10_cae49cee",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-07T21:18:37Z",
+      "side": 1,
+      "message": "I did that because I thought that the order mattered for making sure the axe object was available (since its referenced by the accessibility_test file). I was wrong though, so I\u0027ve changed this to be alphabetical order. Thanks for the catch!",
+      "parentUuid": "53c139fe_4feb086d",
+      "revId": "0b6a4d17073d470626f03c681ca0e5fc49fc365c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c252f8e4_f90d2637",
         "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "572a668d_5165bf98",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-07T21:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c252f8e4_f90d2637",
+      "revId": "0b6a4d17073d470626f03c681ca0e5fc49fc365c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c19f71f_8526f7d0",
         "filename": "chrome/test/data/webui/settings/accessibility_test.js",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "0b6a4d17073d470626f03c681ca0e5fc49fc365c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cfc1bf6_c815a5e0",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-07T21:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c19f71f_8526f7d0",
+      "revId": "0b6a4d17073d470626f03c681ca0e5fc49fc365c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
