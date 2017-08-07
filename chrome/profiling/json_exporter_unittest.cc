@@ -68,7 +68,7 @@ TEST(ProfilingJsonExporter, Simple) {
   events.insert(AllocationEvent(Address(0x3), 16, bt1));
 
   std::ostringstream stream;
-  ExportAllocationEventSetToJSON(1234, &backtrace_storage, events, stream);
+  ExportAllocationEventSetToJSON(1234, events, stream);
   std::string json = stream.str();
 
   // JSON should parse.
