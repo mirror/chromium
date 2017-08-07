@@ -247,6 +247,46 @@ void CreateAndHandleKeyboardEvent(WebElement* plugin_container_one_element,
       ->HandleEvent(key_event);
 }
 
+void CheckCommandExecuted(WebViewBase* web_view,
+                          TestPluginWithEditableText* test_plugin,
+                          const WebString& command_name) {
+  EXPECT_TRUE(
+      web_view->MainFrame()->ToWebLocalFrame()->ExecuteCommand(command_name));
+  if (command_name == "Copy") {
+    EXPECT_EQ(WebString("x"), Platform::Current()->Clipboard()->ReadPlainText(
+                                  WebClipboard::Buffer()));
+    ClearClipboardBuffer();
+  } else if (command_name == "Cut") {
+    EXPECT_TRUE(test_plugin->IsCutCalled());
+  } else if (command_name == "Paste" || command_name == "PasteAndMatchStyle") {
+    EXPECT_TRUE(test_plugin->IsPasteCalled());
+  } else {
+    return;
+  }
+}
+
+void CheckRightClickContextMenuCommand(WebViewBase* web_view,
+                                       TestPluginWithEditableText* test_plugin,
+                                       const WebString& command_name) {
+  auto event = FrameTestHelpers::CreateMouseEvent(WebMouseEvent::kMouseDown,
+                                                  WebMouseEvent::Button::kRight,
+                                                  WebPoint(30, 30), 0);
+  event.click_count = 1;
+
+  // Make sure the right-click + command works in common scenario.
+  web_view->HandleInputEvent(WebCoalescedInputEvent(event));
+  CheckCommandExecuted(web_view, test_plugin, command_name);
+
+  // Now, let's try a more complex scenario:
+  // 1) open the context menu. This will focus the plugin.
+  web_view->HandleInputEvent(WebCoalescedInputEvent(event));
+  // 2) document blurs the plugin, because it can.
+  web_view->ClearFocusedElement();
+  // 3) Command should still operate on the context node, even though the focus
+  //    had shifted.
+  CheckCommandExecuted(web_view, test_plugin, command_name);
+}
+
 }  // namespace
 
 TEST_F(WebPluginContainerTest, WindowToLocalPointTest) {
@@ -437,31 +477,7 @@ TEST_F(WebPluginContainerTest, CopyFromContextMenu) {
       base_url_ + "plugin_container.html", &plugin_web_frame_client);
   EnablePlugins(web_view, WebSize(300, 300));
 
-  auto event = FrameTestHelpers::CreateMouseEvent(WebMouseEvent::kMouseDown,
-                                                  WebMouseEvent::Button::kRight,
-                                                  WebPoint(30, 30), 0);
-  event.click_count = 1;
-
-  // Make sure the right-click + Copy works in common scenario.
-  web_view->HandleInputEvent(WebCoalescedInputEvent(event));
-  EXPECT_TRUE(web_view->MainFrame()->ToWebLocalFrame()->ExecuteCommand("Copy"));
-  EXPECT_EQ(WebString("x"), Platform::Current()->Clipboard()->ReadPlainText(
-                                WebClipboard::Buffer()));
-
-  ClearClipboardBuffer();
-
-  // Now, let's try a more complex scenario:
-  // 1) open the context menu. This will focus the plugin.
-  web_view->HandleInputEvent(WebCoalescedInputEvent(event));
-  // 2) document blurs the plugin, because it can.
-  web_view->ClearFocusedElement();
-  // 3) Copy should still operate on the context node, even though the focus had
-  //    shifted.
-  EXPECT_TRUE(web_view->MainFrameImpl()->ExecuteCommand("Copy"));
-  EXPECT_EQ(WebString("x"), Platform::Current()->Clipboard()->ReadPlainText(
-                                WebClipboard::Buffer()));
-
-  ClearClipboardBuffer();
+  CheckRightClickContextMenuCommand(web_view, nullptr, "Copy");
 }
 
 // Verifies |Ctrl-C| and |Ctrl-Insert| keyboard events, results in copying to
