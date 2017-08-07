@@ -9,6 +9,8 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.ParcelFileDescriptor;
+import android.util.Base64;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
@@ -18,15 +20,18 @@ import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.components.variations.firstrun.VariationsSeedFetcher;
 import org.chromium.components.variations.firstrun.VariationsSeedFetcher.SeedInfo;
 
+import java.io.BufferedWriter;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.concurrent.locks.Lock;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -44,7 +49,7 @@ public class AwVariationsSeedFetchService extends JobService {
     public static final String SEED_PREF_FILENAME = "variations_seed_pref";
 
     // Synchronization lock to prevent simultaneous local seed file writing.
-    private static final Lock sLock = new ReentrantLock();
+    private static final ReentrantLock sLock = new ReentrantLock();
 
     @Override
     public boolean onStartJob(JobParameters params) {
@@ -83,8 +88,6 @@ public class AwVariationsSeedFetchService extends JobService {
     private static void fetchVariationsSeed() {
         assert !ThreadUtils.runningOnUiThread();
         // TryLock will drop calls from other threads when there is a thread executing the function.
-        // TODO(yiyuny): Add explicitly control to ensure there's only one threading fetching at a
-        // time and that the seed doesn't get fetched too frequently.
         if (sLock.tryLock()) {
             try {
                 SeedInfo seedInfo = VariationsSeedFetcher.get().downloadContent(
@@ -115,12 +118,18 @@ public class AwVariationsSeedFetchService extends JobService {
         public final String country;
         public final String date;
         public final boolean isGzipCompressed;
+        public static final int FIELD_SIZE = 4;
 
         public SeedPreference(SeedInfo seedInfo) {
             signature = seedInfo.signature;
             country = seedInfo.country;
             date = seedInfo.date;
             isGzipCompressed = seedInfo.isGzipCompressed;
+        }
+
+        public ArrayList<String> toArrayList() {
+            return new ArrayList<String>(
+                    Arrays.asList(signature, country, date, Boolean.toString(isGzipCompressed)));
         }
     }
 
@@ -140,13 +149,13 @@ public class AwVariationsSeedFetchService extends JobService {
      */
     @VisibleForTesting
     public static void storeVariationsSeed(SeedInfo seedInfo) {
-        FileOutputStream fosSeedData = null;
+        BufferedWriter bwSeedData = null;
         ObjectOutputStream oosSeedPref = null;
         try {
             File webViewVariationsDir = getOrCreateWebViewVariationsDir();
             File seedDataFile = File.createTempFile(SEED_DATA_FILENAME, null, webViewVariationsDir);
-            fosSeedData = new FileOutputStream(seedDataFile);
-            fosSeedData.write(seedInfo.seedData, 0, seedInfo.seedData.length);
+            bwSeedData = new BufferedWriter(new FileWriter(seedDataFile));
+            bwSeedData.write(Base64.encodeToString(seedInfo.seedData, Base64.NO_WRAP));
             renameTempFile(seedDataFile, new File(webViewVariationsDir, SEED_DATA_FILENAME));
             // Store separately so that reading large seed data (which is expensive) can be
             // prevented when checking the last seed fetch time.
@@ -157,7 +166,7 @@ public class AwVariationsSeedFetchService extends JobService {
         } catch (IOException e) {
             Log.e(TAG, "Failed to write variations seed data or preference to a file." + e);
         } finally {
-            closeStream(fosSeedData);
+            closeStream(bwSeedData);
             closeStream(oosSeedPref);
         }
     }
@@ -168,17 +177,10 @@ public class AwVariationsSeedFetchService extends JobService {
      * @throws IOException if fail to get or create the WebView Variations directory.
      */
     @VisibleForTesting
-    public static byte[] getVariationsSeedData() throws IOException {
-        FileInputStream fisSeedData = null;
-        try {
-            File webViewVariationsDir = getOrCreateWebViewVariationsDir();
-            fisSeedData = new FileInputStream(new File(webViewVariationsDir, SEED_DATA_FILENAME));
-            return VariationsSeedFetcher.convertInputStreamToByteArray(fisSeedData);
-        } finally {
-            if (fisSeedData != null) {
-                fisSeedData.close();
-            }
-        }
+    public static ParcelFileDescriptor getVariationsSeedDataFileDescriptor() throws IOException {
+        File webViewVariationsDir = getOrCreateWebViewVariationsDir();
+        return ParcelFileDescriptor.open(new File(webViewVariationsDir, SEED_DATA_FILENAME),
+                ParcelFileDescriptor.MODE_READ_ONLY);
     }
 
     /**
@@ -204,28 +206,43 @@ public class AwVariationsSeedFetchService extends JobService {
     }
 
     /**
+     * Rename a temp file to a new name.
+     * @params tempFile The temp file.
+     * @params newFile The new file.
+     */
+    @SuppressFBWarnings("RV_RETURN_VALUE_IGNORED_BAD_PRACTICE")
+    // ignoring File.delete() and File.renameTo() return
+    public static void renameTempFile(File tempFile, File newFile) {
+        newFile.delete();
+        tempFile.renameTo(newFile);
+    }
+
+    /**
      * Clear the test data.
      * @throws IOException if fail to get or create the WebView Variations directory.
      */
     @SuppressFBWarnings("RV_RETURN_VALUE_IGNORED_BAD_PRACTICE") // ignoring File.delete() return
     @VisibleForTesting
-    public static void clearDataForTesting() throws IOException {
+    public static void clearDataForTesting() throws Exception {
         File webViewVariationsDir = getOrCreateWebViewVariationsDir();
-        File seedDataFile = new File(webViewVariationsDir, SEED_DATA_FILENAME);
-        File seedPrefFile = new File(webViewVariationsDir, SEED_PREF_FILENAME);
-        seedDataFile.delete();
-        seedPrefFile.delete();
-        webViewVariationsDir.delete();
+        deleteDirectory(webViewVariationsDir);
     }
 
-    @SuppressFBWarnings("RV_RETURN_VALUE_IGNORED_BAD_PRACTICE")
-    // ignoring File.delete() and File.renameTo() return
-    private static void renameTempFile(File tempFile, File newFile) {
-        newFile.delete();
-        tempFile.renameTo(newFile);
+    /**
+     * Delete the directory with the files and directories in it.
+     * @throws Exception if the runtime fails to delete the directory.
+     */
+    public static void deleteDirectory(File dir) throws Exception {
+        if (!dir.exists() || !dir.isDirectory()) return;
+        Process rmrf = Runtime.getRuntime().exec("rm -rf " + dir.getAbsolutePath());
+        rmrf.waitFor();
     }
 
-    private static void closeStream(Closeable stream) {
+    /**
+     * Safely close a stream.
+     * @params stream The stream to be closed.
+     */
+    public static void closeStream(Closeable stream) {
         if (stream != null) {
             try {
                 stream.close();
