@@ -22,6 +22,30 @@
       "revId": "05628c17415c8e01352e65aefb1ee634a0134bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f56655_ae5204a6",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T20:09:11Z",
+      "side": 1,
+      "message": "So when we cancel out of band, it sets our loader state as cancelled etc. BUT the test_handler_ doesn\u0027t receive any signal, and if we are async, it is still \u0027holding\u0027 onto a controller from the OnWillStart call. I can\u0027t call Resume, as this causes errors in the test framework (it thinks we should not be cancelled).\n\nLater we call OnResponseCompleted, and it DCHECKs if someone is holding the controller (using the weak_ptr_factory).\n\nSo I try to call something that frees up the controller, similar to Resume. Does that make sense? It\u0027s the only way I could release the controller from the test_handler_ that didn\u0027t cause errors in the test framework. I could try to change something, or make a method specific for this.\n\nI\u0027m also assuming that for out-of-band cancelled I should not poke the next_handler_.",
+      "parentUuid": "3f9ca3c4_fba5f994",
+      "range": {
+        "startLine": 328,
+        "startChar": 28,
+        "endLine": 328,
+        "endChar": 0
+      },
+      "revId": "05628c17415c8e01352e65aefb1ee634a0134bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
