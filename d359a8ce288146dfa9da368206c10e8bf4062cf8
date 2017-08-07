@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0f31739_0c7637a9",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-08-07T05:44:03Z",
+      "side": 1,
+      "message": "+keishi, I added this comment per discussing offline. PTAL just in case.\n\nIIUC, the known cases are:\n1) A document in an iframe with an input element, causing a autofill bug (crbug.com/734427)\n2) A document opened via window.open\n\nI feel like there are more unknown cases.",
+      "revId": "d359a8ce288146dfa9da368206c10e8bf4062cf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
