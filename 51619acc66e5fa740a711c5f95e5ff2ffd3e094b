@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff109ba2_89aaf8e9",
+        "filename": "chrome/browser/chromeos/fileapi/recent_download_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-07T02:47:02Z",
+      "side": 1,
+      "message": "Going recursively through all files may be very heavy. Could you measure performance with eg. linux kernel unpacked (https://github.com/torvalds/linux/archive/master.zip). I usually use it for testing these kind of things.\n\n\nIf the performance is bad, we could use different strategy. On Chrome OS files go through storage:: APIs, so we could maintain a database of latest accesses without a need for a rescan.",
+      "revId": "51619acc66e5fa740a711c5f95e5ff2ffd3e094b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
