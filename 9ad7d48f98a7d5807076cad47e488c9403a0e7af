@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "021cdc4c_d1d3fea5",
+        "filename": "chrome/browser/ui/blocked_content/app_modal_dialog_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T18:48:03Z",
+      "side": 1,
+      "message": "nit: opener",
+      "range": {
+        "startLine": 22,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "9ad7d48f98a7d5807076cad47e488c9403a0e7af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
