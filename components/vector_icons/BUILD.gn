@@ -38,6 +38,8 @@ aggregate_vector_icons("components_vector_icons") {
     "search.icon",
     "videocam.icon",
     "warning.icon",
+    "notification_captive_portal.1x.icon",
+    "notification_captive_portal.icon",
   ]
 }
 
