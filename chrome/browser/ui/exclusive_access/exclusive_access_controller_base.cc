@@ -31,6 +31,11 @@ GURL ExclusiveAccessControllerBase::GetURLForExclusiveAccessBubble() const {
   return GURL();
 }
 
+content::WebContents* ExclusiveAccessControllerBase::exclusive_access_tab()
+    const {
+  return tab_with_exclusive_access_;
+}
+
 void ExclusiveAccessControllerBase::OnTabDeactivated(
     WebContents* web_contents) {
   if (web_contents == tab_with_exclusive_access_)

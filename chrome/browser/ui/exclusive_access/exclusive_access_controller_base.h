@@ -29,9 +29,7 @@ class ExclusiveAccessControllerBase : public content::NotificationObserver {
   GURL GetExclusiveAccessBubbleURL() const;
   virtual GURL GetURLForExclusiveAccessBubble() const;
 
-  content::WebContents* exclusive_access_tab() const {
-    return tab_with_exclusive_access_;
-  }
+  virtual content::WebContents* exclusive_access_tab() const;
 
   // Functions implemented by derived classes:
 
@@ -75,14 +73,15 @@ class ExclusiveAccessControllerBase : public content::NotificationObserver {
   // this controller.
   virtual void RecordBubbleReshowsHistogram(int bubble_reshow_count) = 0;
 
+ protected:
+  content::WebContents* tab_with_exclusive_access_ = nullptr;
+
  private:
   void UpdateNotificationRegistrations();
 
   ExclusiveAccessManager* const manager_;
 
   content::NotificationRegistrar registrar_;
-
-  content::WebContents* tab_with_exclusive_access_ = nullptr;
 
   // The number of bubble re-shows for the current session (reset upon exiting).
   int bubble_reshow_count_ = 0;
