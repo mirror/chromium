@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a09ad73e_9698f365",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller_audience.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-07T13:00:50Z",
+      "side": 1,
+      "message": "as discussed offline:\ns/contentSuggestionsStateChanged/contentOffsetDidChange/",
+      "range": {
+        "startLine": 12,
+        "startChar": 8,
+        "endLine": 12,
+        "endChar": 38
+      },
+      "revId": "80bd382ab4f0dcecbd48ee850b371f61feb34f2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
