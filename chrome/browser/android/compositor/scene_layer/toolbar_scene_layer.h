@@ -35,8 +35,6 @@ class ToolbarSceneLayer : public SceneLayer {
       const base::android::JavaParamRef<jobject>& jresource_manager,
       jint toolbar_resource_id,
       jint toolbar_background_color,
-      jint url_bar_resource_id,
-      jfloat url_bar_alpha,
       jfloat y_offset,
       jfloat view_height,
       bool visible,

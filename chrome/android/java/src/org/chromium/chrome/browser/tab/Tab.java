@@ -28,7 +28,6 @@ import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.PopupWindow.OnDismissListener;
 
-import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ObserverList;
@@ -496,9 +495,12 @@ public class Tab
         if (mThemedApplicationContext != null) {
             Resources resources = mThemedApplicationContext.getResources();
             mIdealFaviconSize = resources.getDimensionPixelSize(R.dimen.default_favicon_size);
-            mDefaultThemeColor = mIncognito
-                    ? ApiCompatibilityUtils.getColor(resources, R.color.incognito_primary_color)
-                    : ApiCompatibilityUtils.getColor(resources, R.color.default_primary_color);
+
+            boolean useModernDesign = getActivity() != null
+                    && getActivity().getBottomSheet() != null
+                    && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT);
+            mDefaultThemeColor = ColorUtils.getDefaultThemeColor(
+                    context.getResources(), useModernDesign, mIncognito);
             mThemeColor = calculateThemeColor(false);
         } else {
             mIdealFaviconSize = 16;
