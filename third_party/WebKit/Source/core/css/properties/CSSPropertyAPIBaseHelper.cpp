@@ -96,7 +96,7 @@ CSSValue* ConsumeBackgroundSize(CSSParserTokenRange& range,
 
 static CSSValue* ConsumeBackgroundComponent(CSSPropertyID unresolved_property,
                                             CSSParserTokenRange& range,
-                                            const CSSParserContext* context) {
+                                            const CSSParserContext& context) {
   switch (unresolved_property) {
     case CSSPropertyBackgroundClip:
       return CSSPropertyBackgroundUtils::ConsumeBackgroundBox(range);
@@ -118,26 +118,26 @@ static CSSValue* ConsumeBackgroundComponent(CSSPropertyID unresolved_property,
       return ConsumePrefixedBackgroundBox(range, false /* allow_text_value */);
     case CSSPropertyBackgroundImage:
     case CSSPropertyWebkitMaskImage:
-      return ConsumeImageOrNone(range, context);
+      return ConsumeImageOrNone(range, &context);
     case CSSPropertyBackgroundPositionX:
     case CSSPropertyWebkitMaskPositionX:
       return CSSPropertyPositionUtils::ConsumePositionLonghand<CSSValueLeft,
                                                                CSSValueRight>(
-          range, context->Mode());
+          range, context.Mode());
     case CSSPropertyBackgroundPositionY:
     case CSSPropertyWebkitMaskPositionY:
       return CSSPropertyPositionUtils::ConsumePositionLonghand<CSSValueTop,
                                                                CSSValueBottom>(
-          range, context->Mode());
+          range, context.Mode());
     case CSSPropertyBackgroundSize:
     case CSSPropertyWebkitMaskSize:
-      return ConsumeBackgroundSize(range, context->Mode(),
+      return ConsumeBackgroundSize(range, context.Mode(),
                                    false /* use_legacy_parsing */);
     case CSSPropertyAliasWebkitBackgroundSize:
-      return ConsumeBackgroundSize(range, context->Mode(),
+      return ConsumeBackgroundSize(range, context.Mode(),
                                    true /* use_legacy_parsing */);
     case CSSPropertyBackgroundColor:
-      return ConsumeColor(range, context->Mode());
+      return ConsumeColor(range, context.Mode());
     default:
       break;
   };
@@ -274,7 +274,7 @@ bool ConsumeBackgroundShorthand(const StylePropertyShorthand& shorthand,
                    property == CSSPropertyWebkitMaskRepeatY) {
           continue;
         } else {
-          value = ConsumeBackgroundComponent(property, range, &context);
+          value = ConsumeBackgroundComponent(property, range, context);
         }
         if (value) {
           if (property == CSSPropertyBackgroundOrigin ||
