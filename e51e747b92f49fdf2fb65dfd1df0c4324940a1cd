@@ -117,6 +117,30 @@
       "revId": "e51e747b92f49fdf2fb65dfd1df0c4324940a1cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c56f2b_2e4a350a",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-07T12:04:43Z",
+      "side": 1,
+      "message": "As far as I can tell, that is the case.",
+      "parentUuid": "7a98d3e3_d961a23f",
+      "range": {
+        "startLine": 504,
+        "startChar": 69,
+        "endLine": 504,
+        "endChar": 0
+      },
+      "revId": "e51e747b92f49fdf2fb65dfd1df0c4324940a1cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
