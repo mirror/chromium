@@ -601,8 +601,7 @@ int HeadlessShellMain(int argc, const char** argv) {
 #endif  // defined(OS_WIN)
   HeadlessShell shell;
 
-  const base::CommandLine& command_line(
-      *base::CommandLine::ForCurrentProcess());
+  base::CommandLine& command_line(*base::CommandLine::ForCurrentProcess());
   if (!ValidateCommandLine(command_line))
     return EXIT_FAILURE;
 
@@ -699,6 +698,11 @@ int HeadlessShellMain(int argc, const char** argv) {
     if (net::HttpUtil::IsValidHeaderValue(ua))
       builder.SetUserAgent(ua);
   }
+
+#if defined(OS_FUCHSIA)
+  // TODO(fuchsia): Remove this when GPU accelerated compositing is ready.
+  command_line.AppendSwitch("--disable-gpu");
+#endif
 
   return HeadlessBrowserMain(
       builder.Build(),

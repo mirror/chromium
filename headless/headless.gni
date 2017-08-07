@@ -7,5 +7,5 @@ declare_args() {
   headless_use_embedded_resources = false
 
   # Provide bindings for font loading for headless embedders.
-  headless_fontconfig_utils = false
+  headless_fontconfig_utils = !is_fuchsia
 }

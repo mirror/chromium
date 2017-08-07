@@ -16,6 +16,7 @@ component("sensors") {
     "data_fetcher_shared_memory_base.h",
     "data_fetcher_shared_memory_chromeos.cc",
     "data_fetcher_shared_memory_default.cc",
+    "data_fetcher_shared_memory_fuchsia.cc",
     "data_fetcher_shared_memory_mac.cc",
     "data_fetcher_shared_memory_win.cc",
     "device_sensor_export.h",
@@ -67,6 +68,9 @@ component("sensors") {
       "//chromeos",
       "//ui/gfx",
     ]
+  }
+  if (is_fuchsia) {
+    sources -= [ "data_fetcher_shared_memory_default.cc" ]
   }
 }
 

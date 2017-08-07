@@ -87,7 +87,6 @@ target(link_target_type, "renderer_sources") {
     "//ppapi/features",
     "//skia",
     "//third_party/WebKit/public:blink_headers",
-    "//third_party/webrtc_overrides",
     "//third_party/widevine/cdm:headers",
     "//ui/base",
     "//ui/base/ime",
@@ -128,5 +127,12 @@ target(link_target_type, "renderer_sources") {
 
   if (enable_plugins) {
     sources += [ "plugin_instance_throttler.h" ]
+  }
+
+  if (enable_webrtc) {
+    # KM: brettw/GN folks consider additive source lists to be the better
+    # way moving forward (as per miu@); ensure that other GN changes reflect
+    # this philosophy
+    sources += [ "//third_party/webrtc_overrides" ]
   }
 }
