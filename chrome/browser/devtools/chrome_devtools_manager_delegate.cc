@@ -417,6 +417,14 @@ std::string ChromeDevToolsManagerDelegate::GetDiscoveryPageHTML() {
       IDR_DEVTOOLS_DISCOVERY_PAGE_HTML).as_string();
 }
 
+bool ChromeDevToolsManagerDelegate::IsBrowserTargetDiscoverable() {
+#if defined(OS_CHROMEOS)
+  return true;
+#else
+  return false;
+#endif  // defined(OS_CHROMEOS)
+}
+
 std::string ChromeDevToolsManagerDelegate::GetFrontendResource(
     const std::string& path) {
   return content::DevToolsFrontendHost::GetFrontendResource(path).as_string();
