@@ -572,6 +572,9 @@ void GaiaScreenHandler::DoAdAuth(
     const Key& key,
     authpolicy::ErrorType error,
     const authpolicy::ActiveDirectoryAccountInfo& account_info) {
+  if (error != authpolicy::ERROR_NONE)
+    authpolicy_login_helper_->CancelRequestsAndRestart();
+
   switch (error) {
     case authpolicy::ERROR_NONE: {
       DCHECK(account_info.has_account_id() &&
@@ -596,10 +599,11 @@ void GaiaScreenHandler::DoAdAuth(
     case authpolicy::ERROR_BAD_USER_NAME:
       CallJS("invalidateAd", username,
              static_cast<int>(ActiveDirectoryErrorState::BAD_USERNAME));
-      return;
+      break;
     case authpolicy::ERROR_BAD_PASSWORD:
       CallJS("invalidateAd", username,
              static_cast<int>(ActiveDirectoryErrorState::BAD_PASSWORD));
+      break;
     case authpolicy::ERROR_UNKNOWN:
     case authpolicy::ERROR_DBUS_FAILURE:
     case authpolicy::ERROR_CANNOT_RESOLVE_KDC:
