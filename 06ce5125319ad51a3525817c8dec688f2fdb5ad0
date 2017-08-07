@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "65c26317_372af4d9",
+        "filename": "third_party/WebKit/Source/core/paint/SVGRootPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-07T17:46:22Z",
+      "side": 1,
+      "message": "We can discuss this more on VC, but maybe just counting calls to SVGRootPainter would be a good place to start (i.e., don\u0027t worry about mapping rects at all)? That would be an interesting number to prove out Web Observatory without needing to get into the details of the paint system. Folks in the future could extend that patch to do a more thorough analysis.",
+      "parentUuid": "215f3969_f8ebc74e",
+      "revId": "06ce5125319ad51a3525817c8dec688f2fdb5ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63ba209f_69ef0135",
         "filename": "third_party/WebKit/Source/core/paint/SVGRootPainter.cpp",
         "patchSetId": 2
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "I used MapToVisualRectInAncestorSpace because you suggested it in our last email exchange. This code is what you wrote except that I made it compile. Furthermore, in my testing I\u0027ve confirmed that the output is in physical pixels from the edge of the window for my test cases, so I\u0027m not inclined to change it without good reason, particularly if I have to give up the \"below-screen counts as on-screen\" that Shane explicitly requested.\n\nHere again, we can see that it really is best for the client, i.e. you two, to write their own patch, so that all the relevant issues can be taken into account and possibly traded off, according to the needs of the investigation. The easiest starting point for me right now is to leave the code as is, because it\u0027s already working. If it doesn\u0027t actually do what you want, perhaps you and Shane could sort out exactly what it should do and how to do it.",
       "parentUuid": "63ba209f_69ef0135",
+      "revId": "06ce5125319ad51a3525817c8dec688f2fdb5ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852ea13b_46f72c9d",
+        "filename": "third_party/WebKit/Source/core/paint/SVGRootPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-07T17:46:22Z",
+      "side": 1,
+      "message": "I meant to suggest MapToVisualRectInAncestorSpace as a starting point but it still needs to be tested. For example, it will incorrectly say the following svg is off-screen:\n\u003cdiv style\u003d\"position: absolute; top: 100px; left: 500px;\"\u003e\n  \u003csvg width\u003d\"100\" height\u003d\"100\"\u003e\n    \u003crect width\u003d\"100\" height\u003d\"100\" fill\u003d\"blue\"/\u003e\n  \u003c/svg\u003e\n\u003c/div\u003e",
+      "parentUuid": "d7c62874_d8f5a192",
       "revId": "06ce5125319ad51a3525817c8dec688f2fdb5ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
