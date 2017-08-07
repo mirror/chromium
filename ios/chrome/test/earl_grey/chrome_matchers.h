@@ -105,7 +105,7 @@ id<GREYMatcher> SettingsMenuButton();
 id<GREYMatcher> OKButton();
 
 // Returns matcher for the signin button in the settings menu.
-id<GREYMatcher> SignInMenuButton();
+id<GREYMatcher> SigninMenuButton();
 
 // Returns matcher for the button for the currently signed in account in the
 // settings menu.

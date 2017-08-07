@@ -193,7 +193,7 @@ id<GREYMatcher> OKButton() {
   return ButtonWithAccessibilityLabelId(IDS_OK);
 }
 
-id<GREYMatcher> SignInMenuButton() {
+id<GREYMatcher> SigninMenuButton() {
   return grey_accessibilityID(kSettingsSignInCellId);
 }
 
