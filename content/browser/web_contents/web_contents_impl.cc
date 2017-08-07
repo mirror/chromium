@@ -1531,6 +1531,11 @@ void WebContentsImpl::WasHidden() {
   should_normally_be_visible_ = false;
 }
 
+void WebContentsImpl::SetImportance(WebContentsImportance importance) {
+  for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
+    static_cast<RenderWidgetHostViewBase*>(view)->SetImportance(importance);
+}
+
 bool WebContentsImpl::IsVisible() const {
   return should_normally_be_visible_;
 }

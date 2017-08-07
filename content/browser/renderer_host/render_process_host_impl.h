@@ -27,6 +27,7 @@
 #include "content/browser/renderer_host/frame_sink_provider_impl.h"
 #include "content/browser/renderer_host/media/renderer_audio_output_stream_factory_context_impl.h"
 #include "content/browser/renderer_host/offscreen_canvas_provider_impl.h"
+#include "content/browser/web_contents_importance.h"
 #include "content/browser/webrtc/webrtc_eventlog_host.h"
 #include "content/common/associated_interface_registry_impl.h"
 #include "content/common/associated_interfaces.mojom.h"
@@ -237,6 +238,9 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // ChildProcessLauncher::Client implementation.
   void OnProcessLaunched() override;
   void OnProcessLaunchFailed(int error_code) override;
+
+  void UpdateWidgetImportance(WebContentsImportance old_value,
+                              WebContentsImportance new_value);
 
   // Call this function when it is evident that the child process is actively
   // performing some operation, for example if we just received an IPC message.
@@ -579,6 +583,12 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // for multiple widgets, it uses this count to determine when it should be
   // backgrounded.
   int32_t visible_widgets_;
+
+  int32_t widget_importance_counts_[static_cast<size_t>(
+      WebContentsImportance::COUNT)] = {0};
+
+  // Take importance of highest widget present.
+  WebContentsImportance effective_importance_ = WebContentsImportance::NORMAL;
 
   // The set of widgets in this RenderProcessHostImpl.
   std::set<RenderWidgetHostImpl*> widgets_;
