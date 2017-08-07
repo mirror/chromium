@@ -128,6 +128,7 @@ CORE_EXPORT Optional<NGInlineNode> GetNGInlineNodeFor(const Node&, unsigned);
 
 // Short hand of the above function with offset 0.
 CORE_EXPORT Optional<NGInlineNode> GetNGInlineNodeFor(const Node&);
+CORE_EXPORT Optional<NGInlineNode> GetNGInlineNodeFor(const Node&, unsigned);
 
 DEFINE_TYPE_CASTS(NGInlineNode,
                   NGLayoutInputNode,
