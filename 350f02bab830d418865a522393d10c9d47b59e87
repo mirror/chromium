@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "52e88f34_7921876f",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-07T16:14:10Z",
+      "side": 1,
+      "message": "OK, please add this to the comment of the method (DCHECKING it would be hard).",
+      "parentUuid": "3ef92f64_9395ca61",
+      "range": {
+        "startLine": 156,
+        "startChar": 53,
+        "endLine": 156,
+        "endChar": 58
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c718863_bc75b6cc",
         "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
         "patchSetId": 6

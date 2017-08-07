@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2cddb1b_3c9835c4",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-07T16:14:10Z",
+      "side": 1,
+      "message": "delegate",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 13
+      },
+      "revId": "53b390e6f5a6bafeeca59070428eecc895971dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
