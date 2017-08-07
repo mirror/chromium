@@ -330,8 +330,7 @@ component("gfx") {
     sources -= [ "canvas_notimplemented.cc" ]
   }
 
-  # Desktop and Android+VR only.
-  if (use_aura || (!is_ios && !is_android) || (is_android && enable_vr)) {
+  if (!is_ios) {
     sources += [
       "paint_vector_icon.cc",
       "paint_vector_icon.h",
@@ -710,7 +709,7 @@ test("gfx_unittests") {
     ]
   }
 
-  if (!is_android && !is_ios) {
+  if (!is_ios) {
     sources += [
       "paint_vector_icon_unittest.cc",
       "render_text_unittest.cc",
