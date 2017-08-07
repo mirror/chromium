@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9ef01a9_cd6f29fd",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertIncrementalTextCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 0,
+      "message": "There is only one call of this function and it use return value of this\nfunction to SetEndingSelectionWithoutValidate(). Hene, we should pass\nIsDiretional to SetEndingSelectionWithoutValidate().\n\nLet\u0027s change ComputeSelectionForInsertion() to return SelectionInDOM,e.g.\n\nSelectionInDOMDree ComputeSelectionForInsertion(...) { // no is_direcitonal\n  return CreateVS().AsSelection();\n}\n\nThis can be another patch and land now.",
+      "revId": "91d01230acfaf11ce9ef59d1af6e9ce232cc9e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

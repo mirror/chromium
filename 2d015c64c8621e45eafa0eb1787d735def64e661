@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc98c716_a4318eb1",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 1,
+      "message": "Fumm... I\u0027m trying to move Editor::SelectionForCommand() to\nEditorCommand.cpp as static function, because call sites of\nSelectionForCommand() don\u0027t use IsDirectional.",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772ff10f_6d8729f0",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 1,
+      "message": "Note: this is just refactoring.",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe2c939_cf3cdb80",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 1,
+      "message": "IsDirectional is independent from DOM tree, to access it in SelecitonForUndoStep, we don\u0027t need to check validity of\nSelectionForUndoStep.",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a18bf1_8bf504e3",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 1,
+      "message": "Since FrameSelection has is_directional_, we don\u0027t need to have\nEditor::is_directional_",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb01c80_7a8a6db1",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 1,
+      "message": "nit: s/this-\u003e//",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb2461f_d1c5a982",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 1,
+      "message": "nit: s/this-\u003e//",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db82846_41a86251",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 1,
+      "message": "Please avoid bool parameter.\nWe may want to have |enum class SelectionDirectionality|.",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776411c8_4a9a4d2e",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 1,
+      "message": "How about pass SelectionInFlatTree + SetSelectionData instead of\npassing TextGranularity, HandleVisibility and SelectionDirectionality.",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c42f49_aa5cae6a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyBlockElementCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 1,
+      "message": "We should use SelectionForUndoStep to pass IsDirecitonal to save into\nEndingSelection.",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ffda304_e116af0e",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 1,
+      "message": "It seems we should use SelectionForUndoStep instead of VisbileSelection.",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8d6b0c_c5450349",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 1,
+      "message": "Note: Yes, we need to take IsDirectional from SelectionModifier.",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845276bf_c965a950",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertLineBreakCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 1,
+      "message": "I think SelectionForUndoStep::From(const SelectionInDOMTree\u0026) should create\ndirectionless[1] selection. If so, we don\u0027t need to pass |false| here.\nThis can make patch smaller.\n\nNote: We should not use |bool| parameter.\n\n[1] https://www.w3.org/TR/selection-api/ says:\nEach selection has a direction, forwards, backwards, or directionless.",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5744356_565eee3d",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 1,
+      "message": "TextControlElement::Selection() is used only by Editor::SelectionForCommand() whose callers don\u0027t use direction.\nThus, we don\u0027t need to return IsDirection() from this function.",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9791bc_2946962a",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-07T03:20:37Z",
+      "side": 1,
+      "message": "Since |is_directional \u003d\u003d selectionDirection() !\u003d \"none\"|, we don\u0027t need to\nhave |is_direcitonal_| in TextControlElement.",
+      "revId": "2d015c64c8621e45eafa0eb1787d735def64e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
