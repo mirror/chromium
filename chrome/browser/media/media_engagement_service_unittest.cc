@@ -202,6 +202,10 @@ class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
     return service_->GetAllScoreDetails();
   }
 
+  bool HasHighEngagement(const GURL& url) const {
+    return service_->HasHighEngagement(url);
+  }
+
  private:
   base::SimpleTestClock* test_clock_ = nullptr;
 
@@ -486,4 +490,17 @@ TEST_F(MediaEngagementServiceTest, LogScoresOnStartupToHistogram) {
       MediaEngagementService::kHistogramScoreAtStartupName, 50, 1);
   histogram_tester.ExpectBucketCount(
       MediaEngagementService::kHistogramScoreAtStartupName, 83, 1);
+}
+
+TEST_F(MediaEngagementServiceTest, HasHighEngagement) {
+  GURL url1("https://www.google.com");
+  GURL url2("https://www.google.co.uk");
+  GURL url3("https://www.example.com");
+
+  SetScores(url1, 6, 5);
+  SetScores(url2, 6, 3);
+
+  EXPECT_TRUE(HasHighEngagement(url1));
+  EXPECT_FALSE(HasHighEngagement(url2));
+  EXPECT_FALSE(HasHighEngagement(url3));
 }
