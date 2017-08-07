@@ -645,7 +645,8 @@
       "4F25792AF1AA7483936DE29C07806F203C7170A0",  // Stable internal hotrod app
       "BD8781D757D830FC2E85470A1B6E8A718B7EE0D9",  // Beta internal hotrod app
       "4AC2B6C63C6480D150DFDA13E4A5956EB1D0DDBB",  // Alpha internal hotrod app
-      "81986D4F846CEDDDB962643FA501D1780DD441BB"   // Dev internal hotrod app
+      "81986D4F846CEDDDB962643FA501D1780DD441BB",  // Dev internal hotrod app
+      "429CABEC54827324923C2ECDE520DD340316FE88"   // Testing app fmmbbdiapbcicajbpkpkdbcgidgppada
     ]
   },
   "vpnProvider": {
