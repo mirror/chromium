@@ -67,6 +67,24 @@
       "revId": "323437ee850ef792488767378a978c507026bff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fb8beb_3659d36f",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-07T20:33:16Z",
+      "side": 1,
+      "message": "Uh, make that int summary \u003d IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY; for the first line. ;-)",
+      "parentUuid": "97bf95c2_ec08d4b1",
+      "revId": "323437ee850ef792488767378a978c507026bff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
