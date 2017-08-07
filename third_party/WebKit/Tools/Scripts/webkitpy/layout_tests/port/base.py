@@ -390,10 +390,14 @@ class Port(object):
         httpd_path = self.path_to_apache()
         if httpd_path:
             try:
-                env = self.setup_environ_for_server()
-                if self._executive.run_command([httpd_path, '-v'], env=env, return_exit_code=True) != 0:
-                    _log.error('httpd seems broken. Cannot run http tests.')
-                    return False
+                # env = self.setup_environ_for_server()
+                _log.info(self._executive.run_command([httpd_path, '-v'], error_handler=self._executive.ignore_error))
+                exit_code = self._executive.run_command([httpd_path, '-v'], return_exit_code=True)
+                if exit_code != 0:
+                    _log.warning(
+                        'httpd seems broken (with full environment). httpd.exe -v got %d. Trying to run http tests anyway.',
+                        exit_code)
+                    return True
                 return True
             except OSError:
                 pass
