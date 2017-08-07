@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "3707da15_23bbeef1",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-07T13:40:19Z",
+      "side": 1,
+      "message": "SGTM, but I\u0027ll defer to folks who own that code for their opinion. It will be lovely when all the non-PlzNavigate code is ripped out of the codebase to avoid this kind of confusion.",
+      "parentUuid": "12c32a1e_9a3493c5",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19c19ce5_0135a8d3",
         "filename": "content/browser/child_process_security_policy_unittest.cc",
         "patchSetId": 11
@@ -81,6 +99,24 @@
       "writtenOn": "2017-08-04T23:53:59Z",
       "side": 1,
       "message": "Originally, I had this without the trailing slash, which cause issues with fragment navigations on the error page.  This is apparently a thing and exercised by ErrorPageAutoReloadTest.IgnoresSameDocumentNavigation and DNSError_DoReloadAfterSameDocumentNavigation.  Having the trailing slash allows the fragment navigation to happen (apparently due to intricacies deep in the URL parsing code), which I don\u0027t think is that bad if we ever want to add more structure to chrome-error URLs.  It also makes more sense anyway.",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35e7338_43d89a56",
+        "filename": "content/public/common/url_constants.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-07T13:40:19Z",
+      "side": 1,
+      "message": "This seems fine to me. We shouldn\u0027t rely on having the same behavior as `data:` here, because `data:`\u0027s fragment navigation behavior is absurd. :)",
+      "parentUuid": "5d15e68f_4d6de35f",
       "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
