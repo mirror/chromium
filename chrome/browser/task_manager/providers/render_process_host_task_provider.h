@@ -48,7 +48,7 @@ class RenderProcessHostTaskProvider : public TaskProvider,
   // observer of its addition.
   void CreateTask(const int render_process_host_id);
 
-  // Deletes a RenderProcessHostTask whose |render_process_host_ID| is provided
+  // Deletes a RenderProcessHostTask whose |render_process_host_Id| is provided
   // after notifying the observer of its deletion.
   void DeleteTask(const int render_process_host_id);
 
