@@ -61,6 +61,21 @@
 
 #pragma mark - UIResponder
 
+- (BOOL)resignFirstResponder {
+  // This translates the action of resigning first responder when the keyboard
+  // is showing into hiding the soft keyboard while keeping the view first
+  // responder. This is to allow the hide keyboard button on the soft keyboard
+  // to work properly with ClientKeyboard's soft keyboard logic, which calls
+  // resignFirstResponder.
+  // This may cause weird behavior if the superview has multiple responders
+  // (text views).
+  if (self.showsSoftKeyboard) {
+    self.showsSoftKeyboard = NO;
+    return NO;
+  }
+  return [super resignFirstResponder];
+}
+
 - (BOOL)canBecomeFirstResponder {
   return YES;
 }
@@ -89,7 +104,9 @@
 
   if (self.isFirstResponder) {
     // Cause the app to reload inputView.
-    [self resignFirstResponder];
+
+    // [self resignFirstResponder] will reject if the keyboard is being shown.
+    [super resignFirstResponder];
     [self becomeFirstResponder];
   }
 }
