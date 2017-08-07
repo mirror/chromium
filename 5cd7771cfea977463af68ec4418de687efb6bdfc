@@ -16,6 +16,24 @@
       "revId": "5cd7771cfea977463af68ec4418de687efb6bdfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b07e941_089db402",
+        "filename": "components/neterror/resources/neterror.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-08-07T17:33:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb50cfab_fc5af76e",
+      "revId": "5cd7771cfea977463af68ec4418de687efb6bdfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
