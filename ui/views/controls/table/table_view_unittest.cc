@@ -220,6 +220,7 @@ class TableViewTest : public ViewsTestBase {
   }
 
   void TearDown() override {
+    widget_->GetRootView()->GetFocusManager()->ClearFocus();
     widget_.reset();
     ViewsTestBase::TearDown();
   }
