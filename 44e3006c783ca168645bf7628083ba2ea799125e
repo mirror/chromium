@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "57e4e522_842b08ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-07T03:45:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42499274_70759ca0",
+      "range": {
+        "startLine": 9,
+        "startChar": 22,
+        "endLine": 9,
+        "endChar": 35
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c38477d3_96fa6768",
         "filename": "chrome/browser/apps/app_url_redirector.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8a91b208_d3fbee75",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-07T03:45:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c38477d3_96fa6768",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 30
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e77a570_d3bb5f98",
         "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1269c16_5973748b",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-07T03:45:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e77a570_d3bb5f98",
+      "range": {
+        "startLine": 91,
+        "startChar": 24,
+        "endLine": 91,
+        "endChar": 41
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "a4c28b2d_b42afcd5",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-07T03:45:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a36cbf28_836dfb3b",
+      "range": {
+        "startLine": 97,
+        "startChar": 9,
+        "endLine": 97,
+        "endChar": 12
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57ecbfdb_49353257",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-07T03:45:27Z",
+      "side": 1,
+      "message": "Since we got rid of the pages we no longer need to get the element.",
+      "parentUuid": "b630e709_5a7d9db8",
+      "range": {
+        "startLine": 97,
+        "startChar": 29,
+        "endLine": 97,
+        "endChar": 51
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f01f1991_b9ef5321",
         "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72b5e7a_f2d099dd",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-07T03:45:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f01f1991_b9ef5321",
+      "range": {
+        "startLine": 100,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 12
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3862e798_14761d4c",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-07T03:45:27Z",
+      "side": 1,
+      "message": "I think that might make sense to do once we have LinkTarget::BLANK tests. \n\nAlso looking at the spreadsheet, it seems that, besides one instance, clicking a \"_blank\" link and clicking a \"_self\" link have different results. So if we want to parameterize we probably want to abstract the code that checks the result. But then this becomes a bigger refactor :/\n\n// Checks that a new browser window with |expected_app_url| is opened\n// after running |action|.\nvoid TestNewWindowOpened(const GURL\u0026 target_app_url, const base::Closure\u0026 action);\n\n// Checks that no new windows are opened after running |action| and that\n// the existing window navigated to |target_app_url|.\nvoid TestNewWindowNotOpened(const GURL\u0026 target_app_url, const base::Closure\u0026 action);\n\nTEST_P(..., AppUrlTarget) {\n  InstallTestBookmarkApp();\n  NavigateToLaunchingPage();\n  \n  auto* test_function \u003d GetParam() \u003d\u003d LinkTarget::SELF ? \n                               \u0026TestNewWindowNotOpened : \u0026TestNewWindowOpened; \n  const GURL app_url \u003d embedded_test_server()-\u003eGetURL(kAppUrlPath);\n  test_function(app_url,\n                base::Bind(\u0026ClickAndWait,\n                           browser()-\u003etab_strip_model()-\u003eGetActiveWebContents(),\n                           app_url, GetParam()));\n}",
+      "parentUuid": "0a09e571_9427ffae",
+      "range": {
+        "startLine": 126,
+        "startChar": 45,
+        "endLine": 126,
+        "endChar": 61
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a56a4a7_106a20ad",
         "filename": "chrome/test/data/extensions/bookmark_apps/url_handlers/in_scope/index.html",
         "patchSetId": 4
@@ -177,6 +345,24 @@
       "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0075ba47_03fc53dc",
+        "filename": "chrome/test/data/extensions/bookmark_apps/url_handlers/in_scope/index.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-07T03:45:27Z",
+      "side": 1,
+      "message": "No longer applicable since we got rid of all files.",
+      "parentUuid": "8a56a4a7_106a20ad",
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
