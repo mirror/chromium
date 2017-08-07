@@ -133,7 +133,7 @@ public class SignInPreference
         setSummary("");
         setFragment(null);
         setIcon(null);
-        setWidgetLayoutResource(R.layout.signin_promo_view_settings);
+        setWidgetLayoutResource(R.layout.signin_promo_view);
         setViewEnabled(true);
 
         Account[] accounts = AccountManagerFacade.get().tryGetGoogleAccounts();
@@ -226,7 +226,7 @@ public class SignInPreference
         update();
     }
 
-    // ProfileDataCacheObserver implementation.
+    // ProfileDownloader.Observer
 
     @Override
     public void onProfileDataUpdated(String accountId) {
