@@ -34,6 +34,24 @@
       "revId": "aba447cc117ae5347d724281a664655c43d8e74c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076bdb5a_838b91d7",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-07T19:02:54Z",
+      "side": 1,
+      "message": "This needs to be limited to when background blur is enabled: https://cs.chromium.org/chromium/src/ui/app_list/app_list_switches.h?l\u003d28\n\nWhen using SetCacheRenderSurface() we could enable this on all devices but for consistency it might be best to limit it to when background blur is enabled.",
+      "parentUuid": "09ec48ac_76eb2e17",
+      "revId": "aba447cc117ae5347d724281a664655c43d8e74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
