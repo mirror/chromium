@@ -4,7 +4,6 @@
 #include "core/css/properties/CSSPropertyAPIWebkitBoxOrdinalGroup.h"
 
 #include "core/css/parser/CSSPropertyParserHelpers.h"
-class CSSParserLocalContext;
 namespace blink {
 const CSSValue* CSSPropertyAPIWebkitBoxOrdinalGroup::ParseSingleValue(
     CSSParserTokenRange& range,
