@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5841c2c8_5e3ae35b",
+        "filename": "chrome/browser/extensions/api/proxy/proxy_apitest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-07T22:47:25Z",
+      "side": 1,
+      "message": "This fails on master currently.",
+      "range": {
+        "startLine": 170,
+        "startChar": 2,
+        "endLine": 170,
+        "endChar": 18
+      },
+      "revId": "cd89744a17b6287a6d6b6613111e9e7486737c50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
