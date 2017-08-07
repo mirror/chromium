@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_RENDERER_MEDIA_MEDIA_INTERFACE_PROVIDER_H_
-#define CONTENT_RENDERER_MEDIA_MEDIA_INTERFACE_PROVIDER_H_
+#ifndef CONTENT_RENDERER_MEDIA_MEDIA_INTERFACE_FACTORY_H_
+#define CONTENT_RENDERER_MEDIA_MEDIA_INTERFACE_FACTORY_H_
 
 #include "base/callback.h"
 #include "base/macros.h"
@@ -11,7 +11,6 @@
 #include "base/single_thread_task_runner.h"
 #include "content/common/content_export.h"
 #include "media/mojo/interfaces/interface_factory.mojom.h"
-#include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 #include "url/gurl.h"
 
 namespace service_manager {
@@ -20,19 +19,22 @@ class InterfaceProvider;
 
 namespace content {
 
-// MediaInterfaceProvider is an implementation of mojo InterfaceProvider that
+// MediaInterfaceFactory is an implementation of mojo InterfaceProvider that
 // provides media related services and handles disconnection automatically.
 // The GetInterface can be called on any thread.
-class CONTENT_EXPORT MediaInterfaceProvider
-    : public service_manager::mojom::InterfaceProvider {
+class CONTENT_EXPORT MediaInterfaceFactory
+    : public media::mojom::InterfaceFactory {
  public:
-  explicit MediaInterfaceProvider(
+  explicit MediaInterfaceFactory(
       service_manager::InterfaceProvider* remote_interfaces);
-  ~MediaInterfaceProvider() final;
+  ~MediaInterfaceFactory() final;
 
-  // InterfaceProvider implementation.
-  void GetInterface(const std::string& interface_name,
-                    mojo::ScopedMessagePipeHandle pipe) final;
+  // media::mojom::InterfaceFactory implementation.
+  void CreateAudioDecoder(media::mojom::AudioDecoderRequest request) final;
+  void CreateVideoDecoder(media::mojom::VideoDecoderRequest request) final;
+  void CreateRenderer(const std::string& audio_device_id,
+                      media::mojom::RendererRequest request) final;
+  void CreateCdm(media::mojom::ContentDecryptionModuleRequest request) final;
 
  private:
   media::mojom::InterfaceFactory* GetMediaInterfaceFactory();
@@ -42,12 +44,12 @@ class CONTENT_EXPORT MediaInterfaceProvider
   media::mojom::InterfaceFactoryPtr media_interface_factory_;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
-  base::WeakPtr<MediaInterfaceProvider> weak_this_;
-  base::WeakPtrFactory<MediaInterfaceProvider> weak_factory_;
+  base::WeakPtr<MediaInterfaceFactory> weak_this_;
+  base::WeakPtrFactory<MediaInterfaceFactory> weak_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(MediaInterfaceProvider);
+  DISALLOW_COPY_AND_ASSIGN(MediaInterfaceFactory);
 };
 
 }  // namespace content
 
-#endif  // CONTENT_RENDERER_MEDIA_MEDIA_INTERFACE_PROVIDER_H_
+#endif  // CONTENT_RENDERER_MEDIA_MEDIA_INTERFACE_FACTORY_H_
