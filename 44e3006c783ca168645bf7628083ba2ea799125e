@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "8eda0ccc_994c3793",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-07T03:53:38Z",
+      "side": 1,
+      "message": "Nice replacement of those test files with a server!",
+      "parentUuid": "57ecbfdb_49353257",
+      "range": {
+        "startLine": 97,
+        "startChar": 29,
+        "endLine": 97,
+        "endChar": 51
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f01f1991_b9ef5321",
         "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
         "patchSetId": 4
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "I think that might make sense to do once we have LinkTarget::BLANK tests. \n\nAlso looking at the spreadsheet, it seems that, besides one instance, clicking a \"_blank\" link and clicking a \"_self\" link have different results. So if we want to parameterize we probably want to abstract the code that checks the result. But then this becomes a bigger refactor :/\n\n// Checks that a new browser window with |expected_app_url| is opened\n// after running |action|.\nvoid TestNewWindowOpened(const GURL\u0026 target_app_url, const base::Closure\u0026 action);\n\n// Checks that no new windows are opened after running |action| and that\n// the existing window navigated to |target_app_url|.\nvoid TestNewWindowNotOpened(const GURL\u0026 target_app_url, const base::Closure\u0026 action);\n\nTEST_P(..., AppUrlTarget) {\n  InstallTestBookmarkApp();\n  NavigateToLaunchingPage();\n  \n  auto* test_function \u003d GetParam() \u003d\u003d LinkTarget::SELF ? \n                               \u0026TestNewWindowNotOpened : \u0026TestNewWindowOpened; \n  const GURL app_url \u003d embedded_test_server()-\u003eGetURL(kAppUrlPath);\n  test_function(app_url,\n                base::Bind(\u0026ClickAndWait,\n                           browser()-\u003etab_strip_model()-\u003eGetActiveWebContents(),\n                           app_url, GetParam()));\n}",
       "parentUuid": "0a09e571_9427ffae",
+      "range": {
+        "startLine": 126,
+        "startChar": 45,
+        "endLine": 126,
+        "endChar": 61
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696bf7e4_269eb00b",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-07T03:53:38Z",
+      "side": 1,
+      "message": "I agree if the behaviour\u0027s going to be very different in all cases, it\u0027s best to explicitly test each one instead of parameterizing.\n\nBut, do you intend to do that in this CL? If not is there a reason blocking it, or are you just splitting up the work?",
+      "parentUuid": "3862e798_14761d4c",
       "range": {
         "startLine": 126,
         "startChar": 45,
