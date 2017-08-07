@@ -371,6 +371,23 @@
       "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c7c64b_9df5cf35",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-07T19:09:18Z",
+      "side": 1,
+      "message": "How about making this (and the DBTracker implementation) take leveldb_env::Options, so we know all callers went through our constructor?",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
