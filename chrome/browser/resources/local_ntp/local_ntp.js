@@ -583,6 +583,23 @@ function init() {
 
     if (configData.isVoiceSearchEnabled) {
       $(IDS.FAKEBOX_SPEECH).hidden = false;
+      $(IDS.FAKEBOX_SPEECH).title =
+          configData.translatedStrings.fakeboxSpeechTooltip;
+
+      voice.speech.init(configData);
+
+      $(IDS.FAKEBOX_SPEECH).onmouseup = function(event) {
+        // If propagated, closes the overlay (click on the background).
+        event.stopPropagation();
+        voice.speech.toggleStartStop_();
+      };
+      window.addEventListener('keydown', voice.speech.handleKeyDown_);
+
+      if (!searchboxApiHandle.onfocuschange) {
+        searchboxApiHandle.onfocuschange = voice.speech.handleOmniboxFocused_;
+      } else {
+        throw new Error('OnFocusChange handler already set on Omnibox.');
+      }
     }
 
     // Listener for updating the key capture state.
