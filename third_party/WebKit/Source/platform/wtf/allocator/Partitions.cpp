@@ -227,4 +227,29 @@ void Partitions::HandleOutOfMemory() {
   PartitionsOutOfMemoryUsingLessThan16M();
 }
 
+base::subtle::SpinLock Partitions::reservation_lock_;
+void* Partitions::reservation_address_ = nullptr;
+size_t Partitions::reservation_size_ = 0;
+
+void Partitions::ReserveMemory(size_t size, size_t alignment) {
+  base::subtle::SpinLock::Guard guard(reservation_lock_);
+  DCHECK_EQ(nullptr, reservation_address_);
+  void* const hint = nullptr;
+  reservation_address_ =
+      base::AllocPages(hint, size, alignment, base::PageInaccessible);
+  if (reservation_address_) {
+    reservation_size_ = size;
+    base::SetCriticalMemoryPressureCallback(ReleaseReservation);
+  }
+}
+
+void Partitions::ReleaseReservation() {
+  base::subtle::SpinLock::Guard guard(reservation_lock_);
+  if (reservation_address_) {
+    base::FreePages(reservation_address_, reservation_size_);
+    reservation_address_ = nullptr;
+    reservation_size_ = 0;
+  }
+}
+
 }  // namespace WTF

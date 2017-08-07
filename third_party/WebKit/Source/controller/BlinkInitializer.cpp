@@ -29,6 +29,7 @@
  */
 
 #include "bindings/core/v8/V8Initializer.h"
+#include "build/build_config.h"
 #include "core/animation/AnimationClock.h"
 #include "modules/ModulesInitializer.h"
 #include "platform/bindings/Microtask.h"
@@ -37,6 +38,7 @@
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/WTF.h"
+#include "platform/wtf/allocator/Partitions.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
 #include "public/web/WebKit.h"
@@ -67,6 +69,14 @@ static ModulesInitializer& GetModulesInitializer() {
 
 void Initialize(Platform* platform) {
   Platform::Initialize(platform);
+
+#if defined(OS_WIN) && defined(ARCH_CPU_32_BITS)
+
+  const size_t wasm_size = 256 * 1024 * 1024;  // 256 MB
+  const size_t wasm_alignment = 64 << 10;      // 64K (Wasm page size)
+  Partitions::ReserveArrayBufferMemory(wasm_size, wasm_alignment);
+
+#endif  // defined(OS_WIN) && defined(ARCH_CPU_32_BITS)
 
   V8Initializer::InitializeMainThread();
 

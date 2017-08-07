@@ -9,6 +9,7 @@
 #include <atomic>
 
 #include "base/allocator/partition_allocator/address_space_randomization.h"
+#include "base/allocator/partition_allocator/spin_lock.h"
 #include "base/base_export.h"
 #include "base/logging.h"
 #include "build/build_config.h"
@@ -30,23 +31,38 @@
 #define MAP_ANONYMOUS MAP_ANON
 #endif
 
+namespace {
+
 // On POSIX |mmap| uses a nearby address if the hint address is blocked.
 static const bool kHintIsAdvisory = true;
-static std::atomic<int32_t> s_allocPageErrorCode{0};
+static int32_t s_allocPageErrorCode{0};
+
+}  // namespace
 
 #elif defined(OS_WIN)
 
 #include <windows.h>
 
+namespace {
+
 // |VirtualAlloc| will fail if allocation at the hint address is blocked.
 static const bool kHintIsAdvisory = false;
-static std::atomic<int32_t> s_allocPageErrorCode{ERROR_SUCCESS};
+static int32_t s_allocPageErrorCode{ERROR_SUCCESS};
+
+}  // namespace
 
 #else
 #error Unknown OS
 #endif  // defined(OS_POSIX)
 
 namespace base {
+
+namespace {
+
+static subtle::SpinLock s_memoryLock;
+static CriticalMemoryPressureCallback s_criticalMemoryPressureCB = nullptr;
+
+}  // namespace
 
 // This internal function wraps the OS-specific page allocation call:
 // |VirtualAlloc| on Windows, and |mmap| on POSIX.
@@ -58,12 +74,22 @@ static void* SystemAllocPages(
   DCHECK(!(reinterpret_cast<uintptr_t>(hint) &
            kPageAllocationGranularityOffsetMask));
   void* ret;
+  // Retry failed allocations once if the memory pressure callback is set.
+  int retries = 0;
 #if defined(OS_WIN)
   DWORD access_flag =
       page_accessibility == PageAccessible ? PAGE_READWRITE : PAGE_NOACCESS;
-  ret = VirtualAlloc(hint, length, MEM_RESERVE | MEM_COMMIT, access_flag);
-  if (!ret)
-    s_allocPageErrorCode = GetLastError();
+  while (true) {
+    ret = VirtualAlloc(hint, length, MEM_RESERVE | MEM_COMMIT, access_flag);
+    if (ret)
+      break;
+    subtle::SpinLock::Guard guard(s_memoryLock);
+    if ((s_criticalMemoryPressureCB == nullptr) || retries++ == 1) {
+      s_allocPageErrorCode = GetLastError();
+      break;
+    }
+    (*s_criticalMemoryPressureCB)();
+  }
 #else
 
 #if defined(OS_MACOSX)
@@ -73,14 +99,20 @@ static void* SystemAllocPages(
 #else
   int fd = -1;
 #endif
-
   int access_flag = page_accessibility == PageAccessible
                         ? (PROT_READ | PROT_WRITE)
                         : PROT_NONE;
-  ret = mmap(hint, length, access_flag, MAP_ANONYMOUS | MAP_PRIVATE, fd, 0);
-  if (ret == MAP_FAILED) {
-    s_allocPageErrorCode = errno;
-    ret = 0;
+  while (true) {
+    ret = mmap(hint, length, access_flag, MAP_ANONYMOUS | MAP_PRIVATE, fd, 0);
+    if (ret != MAP_FAILED)
+      break;
+    subtle::SpinLock::Guard guard(s_memoryLock);
+    if ((s_criticalMemoryPressureCB == nullptr) || retries++ == 1) {
+      s_allocPageErrorCode = errno;
+      ret = 0;
+      break;
+    }
+    (*s_criticalMemoryPressureCB)();
   }
 #endif
   return ret;
@@ -292,7 +324,21 @@ void DiscardSystemPages(void* address, size_t length) {
 #endif
 }
 
+void SetCriticalMemoryPressureCallback(CriticalMemoryPressureCallback cb) {
+  subtle::SpinLock::Guard guard(s_memoryLock);
+  DCHECK_EQ(nullptr, s_criticalMemoryPressureCB);
+  s_criticalMemoryPressureCB = cb;
+}
+
+void OnCriticalMemoryPressure() {
+  subtle::SpinLock::Guard guard(s_memoryLock);
+  if (s_criticalMemoryPressureCB != nullptr) {
+    (*s_criticalMemoryPressureCB)();
+  }
+}
+
 uint32_t GetAllocPageErrorCode() {
+  subtle::SpinLock::Guard guard(s_memoryLock);
   return s_allocPageErrorCode;
 }
 

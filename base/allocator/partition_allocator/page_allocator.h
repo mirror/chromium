@@ -116,6 +116,16 @@ ALWAYS_INLINE uintptr_t RoundDownToSystemPage(uintptr_t address) {
   return address & kSystemPageBaseMask;
 }
 
+using CriticalMemoryPressureCallback = void (*)();
+
+// Sets the global handler for critical memory pressure. This can only be
+// set once.
+BASE_EXPORT void SetCriticalMemoryPressureCallback(
+    CriticalMemoryPressureCallback cb);
+
+// Calls the global handler for critical memory pressure.
+BASE_EXPORT void OnCriticalMemoryPressure();
+
 // Returns errno (or GetLastError code) when mmap (or VirtualAlloc) fails.
 BASE_EXPORT uint32_t GetAllocPageErrorCode();
 
