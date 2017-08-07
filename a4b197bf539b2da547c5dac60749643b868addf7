@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "68f65092_bd07cf5d",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-07T16:55:23Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr, here and other places",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 5
+      },
+      "revId": "a4b197bf539b2da547c5dac60749643b868addf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a9c6bfd_c8ad98d4",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-07T16:55:23Z",
+      "side": 1,
+      "message": "nit: wrap with {} since it takes more than 1 line",
+      "revId": "a4b197bf539b2da547c5dac60749643b868addf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a842fa72_0cd9b6ee",
         "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
         "patchSetId": 11
@@ -70,6 +110,29 @@
       "revId": "a4b197bf539b2da547c5dac60749643b868addf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55ff0dae_5c073736",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-07T16:55:23Z",
+      "side": 1,
+      "message": "Would this leak since dbus::ObjectProxy::SignalCallback does not take ownership of the pased-in signal ?",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "a4b197bf539b2da547c5dac60749643b868addf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
