@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcdb24ad_d28a7c84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T14:18:02Z",
+      "side": 1,
+      "message": "Nit: this sounds as a lawyer term to me. I would go with something simpler like \"Fix minor issues in\". BTW, I\u0027m not sure that it\u0027s necessary to add screenshots/specs to the description, posting links as a comment in Gerrit would work as well.",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "44428cb48166118d43f382a91a09dcd04673e0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
