@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b3567a75_e703180a",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-07T18:28:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91df2d35_d59dac92",
+      "revId": "233504e23c980b1d56675eccb472766a1835e577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99b707de_c9705662",
         "filename": "build/fuchsia/create_runner_script.py",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "94d91a3c_89d32c59",
+        "filename": "build/fuchsia/create_runner_script.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-07T18:28:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99b707de_c9705662",
+      "range": {
+        "startLine": 98,
+        "startChar": 10,
+        "endLine": 98,
+        "endChar": 18
+      },
+      "revId": "233504e23c980b1d56675eccb472766a1835e577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca8ba5f9_cfe7ed06",
         "filename": "build/fuchsia/exe_runner.py",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-04T23:59:11Z",
       "side": 1,
       "message": "exe or binary",
+      "range": {
+        "startLine": 31,
+        "startChar": 44,
+        "endLine": 31,
+        "endChar": 48
+      },
+      "revId": "233504e23c980b1d56675eccb472766a1835e577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f590e692_54203f1c",
+        "filename": "build/fuchsia/exe_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-07T18:28:32Z",
+      "side": 1,
+      "message": "Why not both? Done",
+      "parentUuid": "ca8ba5f9_cfe7ed06",
       "range": {
         "startLine": 31,
         "startChar": 44,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "86dae862_02fdb3c8",
+        "filename": "build/fuchsia/exe_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-07T18:28:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c7553c5_9e94da0e",
+      "range": {
+        "startLine": 41,
+        "startChar": 11,
+        "endLine": 41,
+        "endChar": 13
+      },
+      "revId": "233504e23c980b1d56675eccb472766a1835e577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b1d1024_c8ead7a8",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 1
@@ -102,6 +192,24 @@
       "revId": "233504e23c980b1d56675eccb472766a1835e577",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2dfd59b_3815265f",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-07T18:28:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b1d1024_c8ead7a8",
+      "revId": "233504e23c980b1d56675eccb472766a1835e577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "6794fa72_5f953007",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-07T18:28:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0673f2c7_9ae6e14c",
+      "range": {
+        "startLine": 102,
+        "startChar": 11,
+        "endLine": 102,
+        "endChar": 13
+      },
+      "revId": "233504e23c980b1d56675eccb472766a1835e577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abe06ebd_1f366da0",
         "filename": "headless/BUILD.gn",
         "patchSetId": 1
@@ -139,6 +271,24 @@
       "writtenOn": "2017-08-04T23:59:11Z",
       "side": 1,
       "message": "Having to add these kinda sucks. I guess executable() isn\u0027t a template though, and Android likely does this, so... oh well.",
+      "revId": "233504e23c980b1d56675eccb472766a1835e577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a27bd03_1ec3f438",
+        "filename": "headless/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-07T18:28:32Z",
+      "side": 1,
+      "message": "Right - there aren\u0027t any pre-existing hooks from an \"executable\" template which I can use.",
+      "parentUuid": "abe06ebd_1f366da0",
       "revId": "233504e23c980b1d56675eccb472766a1835e577",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
