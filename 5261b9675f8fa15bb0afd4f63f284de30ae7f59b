@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36e19f76_2996eac1",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-08-07T18:03:24Z",
+      "side": 1,
+      "message": "After an offline discussion, determined that this is no longer necessary since IPH Demo Mode simply checks that it has never displayed your particular IPH before.",
+      "parentUuid": "74ed0f01_b2a31b50",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 26
+      },
+      "revId": "5261b9675f8fa15bb0afd4f63f284de30ae7f59b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f960f9a_698c3769",
         "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1977d2bc_83b6eca5",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-08-07T18:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f960f9a_698c3769",
+      "range": {
+        "startLine": 65,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 71
+      },
+      "revId": "5261b9675f8fa15bb0afd4f63f284de30ae7f59b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26c0c355_02e100ae",
         "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "5261b9675f8fa15bb0afd4f63f284de30ae7f59b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a989cd2_8b7ebc26",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-08-07T18:03:24Z",
+      "side": 1,
+      "message": "Invoked NewTabTracker::OnSessionTimeMet() directly.",
+      "parentUuid": "26c0c355_02e100ae",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 58
+      },
+      "revId": "5261b9675f8fa15bb0afd4f63f284de30ae7f59b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -115,6 +187,30 @@
       "revId": "5261b9675f8fa15bb0afd4f63f284de30ae7f59b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55cc1ac_bf7baf86",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-08-07T18:03:24Z",
+      "side": 1,
+      "message": "Added a comment for the explanation.",
+      "parentUuid": "9dcd5ff1_d7300fad",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 55
+      },
+      "revId": "5261b9675f8fa15bb0afd4f63f284de30ae7f59b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
