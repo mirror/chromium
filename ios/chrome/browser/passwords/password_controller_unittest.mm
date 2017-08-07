@@ -156,8 +156,10 @@ class PasswordControllerTest : public web::WebTestWithWebState {
 
   void SetUp() override {
     web::WebTestWithWebState::SetUp();
+    MockPasswordManagerClient* weak_client = nullptr;
     passwordController_ =
-        CreatePasswordController(web_state(), store_.get(), nullptr);
+        CreatePasswordController(web_state(), store_.get(), &weak_client);
+    EXPECT_CALL(*weak_client, GetLogManager()).Times(testing::AnyNumber());
     @autoreleasepool {
       // Make sure the temporary array is released after SetUp finishes,
       // otherwise [passwordController_ suggestionProvider] will be retained
