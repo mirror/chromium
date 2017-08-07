@@ -22,6 +22,30 @@
       "revId": "e2d0d4b5f028bbf6fab35d7877af9558e50d750d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d4c748_b612d325",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-07T07:02:11Z",
+      "side": 1,
+      "message": "Done. (sorry it was unnecessary, views::LabelButton is giving GetLocalBounds to InkDropContainerView so I thought it was necessary but it was not true.)",
+      "parentUuid": "0f7c07ad_20413422",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 361,
+        "endChar": 23
+      },
+      "revId": "e2d0d4b5f028bbf6fab35d7877af9558e50d750d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
