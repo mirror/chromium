@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.tab;
 
+import android.graphics.Rect;
 import android.view.ViewGroup;
 
 import org.chromium.ui.base.ViewAndroidDelegate;
@@ -46,5 +47,25 @@ class TabViewAndroidDelegate extends ViewAndroidDelegate {
     @Override
     public ViewGroup getContainerView() {
         return mContainerView;
+    }
+
+    public int getViewWidth() {
+        int width = getContainerView().getWidth();
+        return width != 0 ? width : getEstimatedWidth();
+    }
+
+    public int getViewHeight() {
+        int height = getContainerView().getHeight();
+        return height != 0 ? height : getEstimatedHeight();
+    }
+
+    private int getEstimatedWidth() {
+        Rect bounds = mTab.getEstimatedContentSize();
+        return bounds.right - bounds.left;
+    }
+
+    private int getEstimatedHeight() {
+        Rect bounds = mTab.getEstimatedContentSize();
+        return bounds.bottom - bounds.top;
     }
 }
