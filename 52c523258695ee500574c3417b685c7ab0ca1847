@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8bfc4084_85cc1f36",
+        "filename": "components/ntp_snippets_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-07T15:07:18Z",
+      "side": 1,
+      "message": "This is more related to the \"Articles for you\" string which is not android specific.",
+      "parentUuid": "fb5726ab_1b6fab91",
+      "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a45ca10d_dccd2e50",
         "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_footer_item.mm",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f74dbd5_a74938e1",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_footer_item.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-07T15:07:18Z",
+      "side": 1,
+      "message": "Nullability is not part of the type, and it is not used in this file, so I don\u0027t use it here.",
+      "parentUuid": "a45ca10d_dccd2e50",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 34
+      },
+      "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "44b09bb3_7da73b4e",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_footer_item.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-07T15:07:18Z",
+      "side": 1,
+      "message": "ditto :)",
+      "parentUuid": "da5824c6_8ab8d2db",
+      "range": {
+        "startLine": 38,
+        "startChar": 39,
+        "endLine": 38,
+        "endChar": 68
+      },
+      "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29e311b3_7f1cf9fc",
         "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_footer_item_unittest.mm",
         "patchSetId": 6
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-07T14:45:33Z",
       "side": 1,
       "message": "optional: TEST are C++ methods, not Objective-C, so this should use C++ naming convention for local variables, i.e. has_been_called, block_cell, block_item, ...",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0fbcda73_9176aba4",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_footer_item_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-07T15:07:18Z",
+      "side": 1,
+      "message": "I usually use the style associated with the class under test. So I keep this one.",
+      "parentUuid": "29e311b3_7f1cf9fc",
       "range": {
         "startLine": 44,
         "startChar": 15,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "c05b8011_10159caf",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_footer_item_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-07T15:07:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5815b1fb_770c5bdd",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 41
+      },
+      "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7be130ff_fcad552e",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
         "patchSetId": 6
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "788a4ac0_04894497",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-07T15:07:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7be130ff_fcad552e",
+      "range": {
+        "startLine": 520,
+        "startChar": 23,
+        "endLine": 520,
+        "endChar": 52
+      },
+      "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "955b79d5_1f0da3ab",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_data_source.h",
         "patchSetId": 6
@@ -148,6 +286,24 @@
       "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d238350c_0201c55d",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_data_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-07T15:07:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "955b79d5_1f0da3ab",
+      "revId": "52c523258695ee500574c3417b685c7ab0ca1847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
