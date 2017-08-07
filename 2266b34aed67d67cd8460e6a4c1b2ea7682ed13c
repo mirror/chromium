@@ -22,6 +22,30 @@
       "revId": "2266b34aed67d67cd8460e6a4c1b2ea7682ed13c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24c039f_9d5964d2",
+        "filename": "testing/buildbot/filters/fuchsia.media_unittests.filter",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-07T20:54:44Z",
+      "side": 1,
+      "message": "There are no problems with these tests per-se. It\u0027s just qemu is currently slow in our current setup, so computationally expensive tests are likely to fail. Added a bug link",
+      "parentUuid": "da819836_94816045",
+      "range": {
+        "startLine": 6,
+        "startChar": 38,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "2266b34aed67d67cd8460e6a4c1b2ea7682ed13c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
