@@ -119,11 +119,12 @@ class CONTENT_EXPORT SSLManager {
   // that will be added or removed from the |content_status| field. (Pass 0 to
   // add/remove no content status flags.) |remove_content_status_flags| are
   // removed before |add_content_status_flags| are added. This method will
-  // notify the WebContents of an SSL state change if a change was actually
-  // made.
+  // notify the WebContents of an SSL state change and set notification_sent to
+  // true if a change was actually made.
   void UpdateEntry(NavigationEntryImpl* entry,
                    int add_content_status_flags,
-                   int remove_content_status_flags);
+                   int remove_content_status_flags,
+                   bool* notification_sent);
 
   // Helper function for UpdateEntry().
   void UpdateLastCommittedEntry(int add_content_status_flags,

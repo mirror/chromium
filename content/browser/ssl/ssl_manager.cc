@@ -208,11 +208,20 @@ void SSLManager::DidCommitProvisionalLoad(const LoadCommittedDetails& details) {
     // should reflect the current content, even if the navigation was to an
     // existing entry that already had content status flags set.
     remove_content_status_flags = ~0;
+    // Also clear any UserData from the SSLStatus.
+    if (entry)
+      entry->GetSSL().user_data = nullptr;
   }
-  UpdateEntry(entry, add_content_status_flags, remove_content_status_flags);
-  // Always notify the WebContents that the SSL state changed when a
-  // load is committed, in case the active navigation entry has changed.
-  NotifyDidChangeVisibleSSLState();
+
+  bool notification_sent = false;
+  UpdateEntry(entry, add_content_status_flags, remove_content_status_flags,
+              &notification_sent);
+
+  if (!notification_sent) {
+    // Ensure the WebContents is notified that the SSL state changed when a
+    // load is committed, in case the active navigation entry has changed.
+    NotifyDidChangeVisibleSSLState();
+  }
 }
 
 void SSLManager::DidDisplayMixedContent() {
@@ -260,7 +269,7 @@ void SSLManager::DidRunMixedContent(const GURL& security_origin) {
         security_origin.host(), site_instance->GetProcess()->GetID(),
         SSLHostStateDelegate::MIXED_CONTENT);
   }
-  UpdateEntry(entry, 0, 0);
+  UpdateEntry(entry, 0, 0, nullptr);
   NotifySSLInternalStateChanged(controller_->GetBrowserContext());
 }
 
@@ -278,7 +287,7 @@ void SSLManager::DidRunContentWithCertErrors(const GURL& security_origin) {
         security_origin.host(), site_instance->GetProcess()->GetID(),
         SSLHostStateDelegate::CERT_ERRORS_CONTENT);
   }
-  UpdateEntry(entry, 0, 0);
+  UpdateEntry(entry, 0, 0, nullptr);
   NotifySSLInternalStateChanged(controller_->GetBrowserContext());
 }
 
@@ -410,7 +419,10 @@ void SSLManager::OnCertErrorInternal(std::unique_ptr<SSLErrorHandler> handler,
 
 void SSLManager::UpdateEntry(NavigationEntryImpl* entry,
                              int add_content_status_flags,
-                             int remove_content_status_flags) {
+                             int remove_content_status_flags,
+                             bool* notification_sent) {
+  if (notification_sent)
+    *notification_sent = false;
   // We don't always have a navigation entry to update, for example in the
   // case of the Web Inspector.
   if (!entry)
@@ -446,6 +458,8 @@ void SSLManager::UpdateEntry(NavigationEntryImpl* entry,
   if (entry->GetSSL().initialized != original_ssl_status.initialized ||
       entry->GetSSL().content_status != original_ssl_status.content_status) {
     NotifyDidChangeVisibleSSLState();
+    if (notification_sent)
+      *notification_sent = true;
   }
 }
 
@@ -454,7 +468,8 @@ void SSLManager::UpdateLastCommittedEntry(int add_content_status_flags,
   NavigationEntryImpl* entry = controller_->GetLastCommittedEntry();
   if (!entry)
     return;
-  UpdateEntry(entry, add_content_status_flags, remove_content_status_flags);
+  UpdateEntry(entry, add_content_status_flags, remove_content_status_flags,
+              nullptr);
 }
 
 void SSLManager::NotifyDidChangeVisibleSSLState() {
@@ -470,7 +485,8 @@ void SSLManager::NotifySSLInternalStateChanged(BrowserContext* context) {
 
   for (std::set<SSLManager*>::iterator i = managers->get().begin();
        i != managers->get().end(); ++i) {
-    (*i)->UpdateEntry((*i)->controller()->GetLastCommittedEntry(), 0, 0);
+    (*i)->UpdateEntry((*i)->controller()->GetLastCommittedEntry(), 0, 0,
+                      nullptr);
   }
 }
 
