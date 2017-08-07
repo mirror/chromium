@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f56f68d_e3c1e3c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T17:12:41Z",
+      "side": 1,
+      "message": "Nit: You could shorten this line (and achieve clearer formatting) by extracting ContextUtils.getAppSharedPreferences() into a local variable.",
+      "range": {
+        "startLine": 64,
+        "startChar": 23,
+        "endLine": 64,
+        "endChar": 61
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa3a235_e57b8021",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T17:12:41Z",
+      "side": 1,
+      "message": "Nit: could you please add a short comment explaining that there\u0027s no impression limit for NTP_CONTENT_SUGGESTIONS?",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 28
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f971d26f_17a99db6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T17:12:41Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2c1577_4413995f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T17:12:41Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 72,
+        "startChar": 23,
+        "endLine": 72,
+        "endChar": 61
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912007e4_e250d9b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T17:12:41Z",
+      "side": 1,
+      "message": "I think this should be in \"default\" switch case. We\u0027re not listing all the possible values of this enum, so \"default\" is mandatory: https://google.github.io/styleguide/javaguide.html#s4.8.4-switch.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 21
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee553505_30f293b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T17:12:41Z",
+      "side": 1,
+      "message": "If I understand it correctly, we never read preference for NTP and Recent Tabs? Do we need to write it at all? Am I missing something?",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 78
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd5686f_6b5b95f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T17:12:41Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 94,
+        "startChar": 1,
+        "endLine": 95,
+        "endChar": 20
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2000234_b9d24b4b",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 2242,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T17:12:41Z",
+      "side": 1,
+      "message": "Nit: could you please elaborate this description a bit? I understand that we already had this short description, but this change will probably force translators to translate it again. Just in case: https://www.chromium.org/developers/design-documents/ui-localization#TOC-Writing-good-message-descriptions",
+      "range": {
+        "startLine": 2242,
+        "startChar": 69,
+        "endLine": 2242,
+        "endChar": 109
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7105fca9_4b683bb3",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T17:12:41Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 2245,
+        "startChar": 66,
+        "endLine": 2245,
+        "endChar": 103
+      },
+      "revId": "a84befd1f918ec03972c3d12d87a4230008e6ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
