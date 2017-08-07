@@ -116,6 +116,24 @@
       "revId": "963d0e66024f876ee925c3060cf5d6954d45b193",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9163bdca_428a4d4d",
+        "filename": "extensions/browser/sandboxed_unpacker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-07T18:30:55Z",
+      "side": 1,
+      "message": "The remaining FILE one is from startup_helper.cc I\u0027m assuming, which was assigned to me :). Let me know if you still want me to take of it or if you\u0027re going to do that in the common task runner moving follow-up. Fine by me either way!",
+      "parentUuid": "fcfcf7d1_2404280a",
+      "revId": "963d0e66024f876ee925c3060cf5d6954d45b193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
