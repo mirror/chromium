@@ -22,6 +22,30 @@
       "revId": "d0de637bcbf977aa670a273605b748c38fd8b5e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9361eba0_b5c5a9c4",
+        "filename": "media/gpu/avda_codec_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-07T22:20:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7888a4a_b1b9b89c",
+      "range": {
+        "startLine": 236,
+        "startChar": 18,
+        "endLine": 237,
+        "endChar": 70
+      },
+      "revId": "d0de637bcbf977aa670a273605b748c38fd8b5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
