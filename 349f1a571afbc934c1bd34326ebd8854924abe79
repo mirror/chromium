@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "be619122_64b762ba",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 2018,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T14:38:36Z",
+      "side": 1,
+      "message": "Does this produce the right result when the download shelf is visible?",
+      "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c3e337_89d24641",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 2033,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T14:38:36Z",
+      "side": 1,
+      "message": "You should just use `[[self tabContentArea] bounds]` in initWithFrame:image: instead.",
+      "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34a79a2_71bdd60a",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T14:38:36Z",
+      "side": 1,
+      "message": "These should only be declared here if they\u0027re part of FullscreenPlaceholderView\u0027s public API.  They are never used as properties (`self.textView`, etc.) so you should just declare them as instance variables in the @implementation section:\n\n    @implementation FullscreenPlaceholderView {\n        NSTextField* textView_;\n        CGSize textSize_;\n    }",
+      "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356eb3f6_ec6b507b",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T14:38:36Z",
+      "side": 1,
+      "message": "These methods aren\u0027t part of FullscreenPlaceholderView\u0027s public API (meaning, they\u0027re not intended to be called from other files), so they don\u0027t need to be in the header file. I think you can delete all of them except initWithFrame:image:. (Old versions of Objective-C required you to declare all methods in advance, which is why you may have seen other classes written like that.)",
+      "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abaead2f_744597fc",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T14:38:36Z",
+      "side": 1,
+      "message": "Delete `: NSView`.",
+      "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe362bd_c713c51b",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T14:38:36Z",
+      "side": 1,
+      "message": "You should either use properties (`textView_.wantsLayer \u003d YES`) or (`[textView_ setWantsLayer:YES]`), not a mixture of both.",
+      "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "406e6ea7_b14e2e78",
         "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
         "patchSetId": 6
@@ -19,6 +121,115 @@
         "endLine": 41,
         "endChar": 14
       },
+      "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1911d687_a3b7133b",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T14:38:36Z",
+      "side": 1,
+      "message": "The layer is going to need a CGColor, but, yeah, it\u0027s more normal to create an NSColor and access its CGColor property (which will be autoreleased).",
+      "parentUuid": "406e6ea7_b14e2e78",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89c9bf1_1b25d7bc",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T14:38:36Z",
+      "side": 1,
+      "message": "I think you can just set `textView_.font` instead of creating an attributed string (and set `textView_.stringValue` and `textView_.textColor` once, in init).",
+      "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba5a85b8_2ee6a91f",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T14:38:36Z",
+      "side": 1,
+      "message": "If you\u0027ll be using this to set the frame, you shouldn\u0027t set `textView_.autoresizingMask` (because then AppKit will also try to position `textView_` when you call super).",
+      "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec65851_f27a9cbc",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T14:38:36Z",
+      "side": 1,
+      "message": "Personally, instead of this, I would do something like this (in resizeSubviewsWithOldSize:):\n\n    textView_.font \u003d …;\n    [textView_ sizeToFit];\n    [textView setFrameOrigin:NSMakePoint(\n      NSMidX(self.bounds) - NSMidX(textView_.bounds),\n      NSMidY(self.bounds) - NSMidY(textView_.bounds)\n    )];\n\n…but the result is the same, so NBD.",
+      "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe00289_e637e495",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T14:38:36Z",
+      "side": 1,
+      "message": "Later on, we should find a different way to add padding than spaces at the beginning and end of the string. OK for now.",
+      "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d227e325_57be42bc",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T14:38:36Z",
+      "side": 1,
+      "message": "colorWithCalibratedWhite:alpha:",
       "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
