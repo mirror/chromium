@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7c42d62_fae5dfee",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1117686
+      },
+      "writtenOn": "2017-08-07T09:09:24Z",
+      "side": 1,
+      "message": "To make it consistent, can you please use _ABIO32 and _ABI64 in all the files (instead of _MIPS_SIM_ABI32 and _MIPS_SIM_ABI64)",
+      "range": {
+        "startLine": 32,
+        "startChar": 18,
+        "endLine": 32,
+        "endChar": 33
+      },
+      "revId": "e433a2c904f2a33fc2256dad8cc093c89acb6e5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee7f551_44e87527",
+        "filename": "sandbox/linux/system_headers/linux_signal.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1117686
+      },
+      "writtenOn": "2017-08-07T09:09:24Z",
+      "side": 1,
+      "message": "Should be _ABIO32.",
+      "range": {
+        "startLine": 119,
+        "startChar": 39,
+        "endLine": 119,
+        "endChar": 45
+      },
+      "revId": "e433a2c904f2a33fc2256dad8cc093c89acb6e5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
