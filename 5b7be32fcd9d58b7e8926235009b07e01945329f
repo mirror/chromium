@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c75feae9_a740a9bc",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-07T18:19:40Z",
+      "side": 1,
+      "message": "JFYI, DOMActivate is deprecated and Firefox does not expose the click action for it. Not saying we should remove though.\nSee https://www.w3.org/TR/uievents/#event-type-DOMActivate",
+      "revId": "5b7be32fcd9d58b7e8926235009b07e01945329f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
