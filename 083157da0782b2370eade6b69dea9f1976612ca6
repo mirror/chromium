@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6663346d_0ddf1e42",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:28:06Z",
+      "side": 1,
+      "message": "Not sure if this leads to significant overreporting, but I fixed this.\n\n(I did my comparisons with the original bug, so hopefully the numbers are roughly comparable)",
+      "revId": "083157da0782b2370eade6b69dea9f1976612ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

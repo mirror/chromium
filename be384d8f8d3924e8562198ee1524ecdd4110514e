@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8dedb6be_2f7e57c8",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:28:06Z",
+      "side": 1,
+      "message": "The input name doesn\u0027t have any real limits (other than not crashing the renderer). This is likely to have the same distribution as the current histogram (which does have a few hits in the 1 million+ bucket somehow).\n\nGood point about the other histograms: I\u0027ve updated the size per component and from requested name size histograms to have 50 buckets from 1 to 100, while with frame path size is now 1 to 100k (worst case bounds: 1022 child frames * 81 chars per component).",
+      "parentUuid": "5b68726b_6dc3bbf0",
+      "range": {
+        "startLine": 58,
+        "startChar": 23,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "914d6542_703f512d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 15
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "d2972075_bfb8a26f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 71441,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "914d6542_703f512d",
+      "range": {
+        "startLine": 71441,
+        "startChar": 4,
+        "endLine": 71441,
+        "endChar": 11
+      },
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90c36400_b710e130",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 71441,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf896cc1_b21dfd1c",
+      "range": {
+        "startLine": 71441,
+        "startChar": 77,
+        "endLine": 71441,
+        "endChar": 0
+      },
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41fdcb07_7812c584",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 15
@@ -85,6 +157,24 @@
       "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6309e2c9_3244c4d1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 71447,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41fdcb07_7812c584",
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "dfe1be77_7acd7d80",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 71473,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa4c563c_0afc8b7d",
+      "range": {
+        "startLine": 71473,
+        "startChar": 11,
+        "endLine": 71473,
+        "endChar": 16
+      },
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13b5e56e_416e32e5",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 15
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "05f9941b_026d501d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 71476,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13b5e56e_416e32e5",
+      "range": {
+        "startLine": 71476,
+        "startChar": 79,
+        "endLine": 71476,
+        "endChar": 0
+      },
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30d9da97_f5c005e6",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 15
@@ -145,6 +283,30 @@
       "writtenOn": "2017-08-06T23:15:25Z",
       "side": 1,
       "message": "Is this actually useful?  (You can simply say \"yes\" without a full explanation here.)  My concrete concerns: (i) why does this ratio matter? (ii) won\u0027t the histogram show lots of spikes at, say, 17, 18, 1, 8, and 9.  (My guesses?)  Are you sure you know how you\u0027re going to interpret it?",
+      "range": {
+        "startLine": 71477,
+        "startChar": 74,
+        "endLine": 71477,
+        "endChar": 0
+      },
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "190b3e40_683e321b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 71477,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-07T09:28:06Z",
+      "side": 1,
+      "message": "The honest answer is I\u0027m not sure. What I really wanted was a 2 dimensional UMA (one axis being the depth, the other being the size), but that doesn\u0027t seem practical. So this was a proxy, the idea being that if we still observed really long path names, we could infer if it was because each individual component was long or just because the tree was really deep.",
+      "parentUuid": "30d9da97_f5c005e6",
       "range": {
         "startLine": 71477,
         "startChar": 74,
