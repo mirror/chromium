@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "832ce84f_0484376a",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-08-07T21:14:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df66fb6d_616d6719",
+      "revId": "b6200f51614c4f52c7ff6b10c9bfbaccb1777251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0e5b15f_c4a5ceba",
         "filename": "build/android/pylib/android/logcat_symbolizer.py",
         "patchSetId": 4

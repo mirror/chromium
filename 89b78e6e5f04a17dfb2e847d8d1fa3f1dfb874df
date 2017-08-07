@@ -16,6 +16,24 @@
       "revId": "89b78e6e5f04a17dfb2e847d8d1fa3f1dfb874df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdba3c01_9167bfb4",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-08-07T21:14:40Z",
+      "side": 1,
+      "message": "I changed the boolean variable name into outside_of_crash_log and in_lower_half_crash. Do you think that is clear enough? If not I can keep a state variable as you mentioned.",
+      "parentUuid": "8853c201_0ea362ab",
+      "revId": "89b78e6e5f04a17dfb2e847d8d1fa3f1dfb874df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
