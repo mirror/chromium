@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2a8b42ce_4e1e5695",
+        "filename": "extensions/common/api/declarative_net_request/DEPS",
+        "patchSetId": 13
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-07T22:38:45Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "34901eee_6d9eca64",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 32
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acca7fb3_9ac40ea3",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
         "patchSetId": 13
@@ -108,6 +132,30 @@
       "side": 1,
       "message": "1) For flat collision\nusing namespace flat \u003d extensions::declarative_net_request::flat\nand you refer to url_pattern index\u0027s one as \"url_pattern_index::flat\" always in the code (and not alias it)\nWould that work?\n\n2) Not sure about top level question. Do you mean whether we can have\nextensions::declarative_net_request namespace? I think that\u0027s fine. If you meant sth else then let me know.\n\n3) One alternative to dnr_api is to\nnamespace api \u003d \"extensions::api\" and refer to stuffs inside the namespace as:\napi::declarative_net_request::RESOURCE_TYPE_NONE\nIt\u0027s clearer that way.",
       "parentUuid": "772979b8_d83cc090",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e944fd_17ea3879",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-07T22:38:45Z",
+      "side": 1,
+      "message": "There are 41 usages of flat_rule and 24 usages of dnr_api in this file. Using url_pattern_index::flat and api::declarative_net_request introduces a lot of verbosity.\n\nSince these aliases are not exposed as part of the public API and are an implementation detail, think this should be fine? We already have multiple precedents in extensions code where we alias to a different name (e.g. https://cs.chromium.org/chromium/src/extensions/browser/api/vpn_provider/vpn_service.cc?q\u003dnamespace.*%3D+file:%5Esrc/extensions/+package:%5Echromium$+file:cc\u0026l\u003d42\u0026dr\u003dC and https://cs.chromium.org/chromium/src/extensions/browser/api/web_request/web_request_api.cc?q\u003dnamespace.*%3D+file:%5Esrc/extensions/+package:%5Echromium$+file:cc\u0026dr\u003dC\u0026l\u003d83 etc.)",
+      "parentUuid": "2c933359_498a5c26",
       "range": {
         "startLine": 22,
         "startChar": 10,
@@ -188,6 +236,30 @@
       "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a7c088_9e6e733a",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-07T22:38:45Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "17f3ce71_cf78b70a",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -117,6 +117,30 @@
       "revId": "ecf3d7e809c4b5e5a7e741efc01ac3220efa6284",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fe8931_a37d1c57",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-07T22:38:45Z",
+      "side": 1,
+      "message": "Removed global scope specifier.",
+      "parentUuid": "caab9a3a_52cc3bd5",
+      "range": {
+        "startLine": 38,
+        "startChar": 22,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "ecf3d7e809c4b5e5a7e741efc01ac3220efa6284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

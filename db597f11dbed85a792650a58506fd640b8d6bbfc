@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ecbea88_6c3f69f8",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-07T22:38:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "decec8da_9aac8bf3",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 16
+      },
+      "revId": "db597f11dbed85a792650a58506fd640b8d6bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b30b8c58_d21fec6e",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "db597f11dbed85a792650a58506fd640b8d6bbfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf87a2f5_9dbc57d2",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-07T22:38:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b30b8c58_d21fec6e",
+      "range": {
+        "startLine": 220,
+        "startChar": 8,
+        "endLine": 220,
+        "endChar": 31
+      },
+      "revId": "db597f11dbed85a792650a58506fd640b8d6bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "57e4f25b_0b280556",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-07T22:38:45Z",
+      "side": 1,
+      "message": "Yeah that\u0027s true. However, I wouldn\u0027t want to rely on default values. Code seems cleaner this way.",
+      "parentUuid": "e91bd596_e02a1a05",
+      "range": {
+        "startLine": 307,
+        "startChar": 36,
+        "endLine": 307,
+        "endChar": 42
+      },
+      "revId": "db597f11dbed85a792650a58506fd640b8d6bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a98f1580_d1674c6d",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule_unittest.cc",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "db597f11dbed85a792650a58506fd640b8d6bbfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610e80a9_6b635645",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-07T22:38:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a98f1580_d1674c6d",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 74
+      },
+      "revId": "db597f11dbed85a792650a58506fd640b8d6bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
