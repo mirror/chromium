@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad56eaf0_af540ffb",
+        "filename": "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T02:13:03Z",
+      "side": 1,
+      "message": "Does the code in base_bubble_controller.mm actually do this? I can\u0027t find where the bubble is made key when this is NO and the parent window is already key.",
+      "range": {
+        "startLine": 142,
+        "startChar": 74,
+        "endLine": 143,
+        "endChar": 54
+      },
+      "revId": "1e583a8adb7d89e5fc36b6f111a4e3d4b4f6fb8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
