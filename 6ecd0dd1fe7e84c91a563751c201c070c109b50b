@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca36ce9c_98a01449",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-07T14:46:30Z",
+      "side": 1,
+      "message": "Nit: I\u0027d prefer to decrease number of conditional compilation, for example\n\nif (base::FeatureList::IsEnabled(\n          password_manager::features::kEnableManualFallbacksFilling) \u0026\u0026\n      (options \u0026 autofill::IS_PASSWORD_FIELD)) {\nstd::string all_password_text;\n#if !defined(OS_ANDROID)\n    suggestions.push_back(autofill::Suggestion());\n    suggestions.back().frontend_id \u003d autofill::POPUP_ITEM_ID_SEPARATOR;\n    all_password_text \u003d \"showAllSavedPasswords\";\n#endif\n    autofill::Suggestion all_saved_passwords(\n        l10n_util::GetStringUTF8(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK),\n        std::string(), all_password_text, autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY);",
+      "range": {
+        "startLine": 274,
+        "startChar": 4,
+        "endLine": 274,
+        "endChar": 11
+      },
+      "revId": "6ecd0dd1fe7e84c91a563751c201c070c109b50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
