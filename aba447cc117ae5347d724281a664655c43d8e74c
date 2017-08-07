@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c7188ea_f8c92da6",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-07T16:07:44Z",
+      "side": 1,
+      "message": "We need to add this flag to turn on blur only on EVE, similar to the new launcher code:\n\nhttps://cs.chromium.org/chromium/src/ui/app_list/views/app_list_view.cc?l\u003d349\u0026rcl\u003d049b018b14757fb507f7b8494062178027086893\n\nAlso, we can cache the render surface to make this faster. I can help to add it after you land this code. Something like:\ncontainer-\u003elayer()-\u003eSetCacheRenderSurface(true);\n\nand set container-\u003elayer()-\u003eSetCacheRenderSurface(false); after you login.",
+      "revId": "aba447cc117ae5347d724281a664655c43d8e74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
