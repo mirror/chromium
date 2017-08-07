@@ -34,6 +34,24 @@
       "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9eefe1_4d56a386",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-07T18:41:23Z",
+      "side": 1,
+      "message": "We\u0027re looking at strings like \"ScanCorp Antivirus\", right?\nWhen I checked with Mustafa, and I believe we concluded that these strings were consistently in the common name field of the issuer listed in the leaf.\n\n(The fact that the common name field was abused as a deprecated place to list domain names is incidental.)",
+      "parentUuid": "fb931071_e81e1ba6",
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
