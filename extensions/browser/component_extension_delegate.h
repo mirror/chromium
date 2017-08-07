@@ -6,7 +6,12 @@
 #define EXTENSIONS_BROWSER_COMPONENT_EXTENSION_DELEGATE_H_
 
 namespace base {
+class DictionaryValue;
 class FilePath;
+}
+
+namespace content {
+class BrowserContext;
 }
 
 namespace extensions {
@@ -25,6 +30,12 @@ class ComponentExtensionDelegate {
       const base::FilePath& extension_path,
       const base::FilePath& resource_path,
       int* resource_id) const = 0;
+
+  // Populates |dict| with strings for localizing this extension. Returns false
+  // if the embedder does not provide strings for the extension.
+  virtual bool GetExtensionStrings(content::BrowserContext* browser_context,
+                                   const std::string& extension_id,
+                                   base::DictionaryValue* dict) const = 0;
 };
 
 }  // namespace extensions
