@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bebbba8_7db66d76",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T15:55:00Z",
+      "side": 1,
+      "message": "Except for the first line, this should all be re-wrapped to 72 characters. Your text editor should have a way to do that.",
+      "revId": "048d97c4f75651587fc63a4560dc675b7c032541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a67b783_8f11bad3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T15:55:00Z",
+      "side": 1,
+      "message": "crbug?",
+      "revId": "048d97c4f75651587fc63a4560dc675b7c032541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a7013c_886097d6",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T15:55:00Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right formatting-wise. Could you run `git cl format` before your next upload?",
+      "revId": "048d97c4f75651587fc63a4560dc675b7c032541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e134c27c_0359bf4b",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T15:55:00Z",
+      "side": 1,
+      "message": "Could you elaborate on this? It feels wrong for the fullscreen window to have the parent BWC as its controller.",
+      "revId": "048d97c4f75651587fc63a4560dc675b7c032541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356c5b71_3a4698de",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T15:55:00Z",
+      "side": 1,
+      "message": "Huh, how does this not break tab capture?",
+      "revId": "048d97c4f75651587fc63a4560dc675b7c032541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
