@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
@@ -22,14 +23,14 @@ namespace extensions {
 // global knowledge of features, permissions, and manifest fields.
 class ChromeExtensionsClient : public ExtensionsClient {
  public:
-  ChromeExtensionsClient();
+  explicit ChromeExtensionsClient(base::CommandLine* command_line);
   ~ChromeExtensionsClient() override;
 
-  void Initialize() override;
+  void InitializeWebStoreUrls(base::CommandLine* command_line) override;
 
   const PermissionMessageProvider& GetPermissionMessageProvider()
       const override;
-  const std::string GetProductName() override;
+  const std::string GetProductName() const override;
   std::unique_ptr<FeatureProvider> CreateFeatureProvider(
       const std::string& name) const override;
   std::unique_ptr<JSONFeatureProviderSource> CreateAPIFeatureSource()
@@ -55,10 +56,9 @@ class ChromeExtensionsClient : public ExtensionsClient {
   bool ExtensionAPIEnabledInExtensionServiceWorkers() const override;
   std::string GetUserAgent() const override;
 
-  // Get the LazyInstance for ChromeExtensionsClient.
-  static ChromeExtensionsClient* GetInstance();
-
  private:
+  void InitializeGlobalState() override;
+
   const ChromeAPIPermissions chrome_api_permissions_;
   const ExtensionsAPIPermissions extensions_api_permissions_;
   const ChromePermissionMessageProvider permission_message_provider_;
@@ -70,8 +70,8 @@ class ChromeExtensionsClient : public ExtensionsClient {
   ScriptingWhitelist scripting_whitelist_;
 
   // Mutable to allow caching in a const method.
-  mutable GURL webstore_base_url_;
-  mutable GURL webstore_update_url_;
+  GURL webstore_base_url_;
+  GURL webstore_update_url_;
 
   friend struct base::LazyInstanceTraitsBase<ChromeExtensionsClient>;
 

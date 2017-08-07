@@ -16,6 +16,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "crypto/sha2.h"
+#include "extensions/common/extensions_client.h"
 #include "net/base/url_util.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 
@@ -167,6 +168,7 @@ void FakeCWS::OverrideGalleryCommandlineSwitches() {
   GURL update_url = web_store_url_.Resolve(update_check_end_point_);
   command_line->AppendSwitchASCII(::switches::kAppsGalleryUpdateURL,
                                   update_url.spec());
+  extensions::ExtensionsClient::Get()->InitializeWebStoreUrls(command_line);
 }
 
 bool FakeCWS::GetUpdateCheckContent(const std::vector<std::string>& ids,

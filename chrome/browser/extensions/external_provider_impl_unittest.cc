@@ -29,6 +29,7 @@
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/test/test_utils.h"
+#include "extensions/common/extensions_client.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
 #include "net/test/embedded_test_server/http_response.h"
@@ -109,6 +110,7 @@ class ExternalProviderImplTest : public ExtensionServiceTestBase {
     base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
     cmdline->AppendSwitchASCII(switches::kAppsGalleryUpdateURL,
                                test_server_->GetURL(kManifestPath).spec());
+    extensions::ExtensionsClient::Get()->InitializeWebStoreUrls(cmdline);
   }
 
  private:

@@ -17,6 +17,7 @@ class GURL;
 
 namespace base {
 class FilePath;
+class CommandLine;
 }
 
 namespace extensions {
@@ -36,10 +37,8 @@ class ExtensionsClient {
 
   virtual ~ExtensionsClient() {}
 
-  // Initializes global state. Not done in the constructor because unit tests
-  // can create additional ExtensionsClients because the utility thread runs
-  // in-process.
-  virtual void Initialize() = 0;
+  // Initializes WebStoreURLs. command_line can override default values.
+  virtual void InitializeWebStoreUrls(base::CommandLine* command_line) = 0;
 
   // Returns the global PermissionMessageProvider to use to provide permission
   // warning strings.
@@ -47,7 +46,7 @@ class ExtensionsClient {
       const = 0;
 
   // Returns the application name. For example, "Chromium" or "app_shell".
-  virtual const std::string GetProductName() = 0;
+  virtual const std::string GetProductName() const = 0;
 
   // Create a FeatureProvider for a specific feature type, e.g. "permission".
   virtual std::unique_ptr<FeatureProvider> CreateFeatureProvider(
@@ -135,7 +134,13 @@ class ExtensionsClient {
   static ExtensionsClient* Get();
 
   // Initialize the extensions system with this extensions client.
-  static void Set(ExtensionsClient* client);
+  static void Set(std::unique_ptr<ExtensionsClient> client);
+
+ private:
+  // Initializes global state. Not done in the constructor because unit tests
+  // can create additional ExtensionsClients because the utility thread runs
+  // in-process.
+  virtual void InitializeGlobalState() = 0;
 };
 
 }  // namespace extensions

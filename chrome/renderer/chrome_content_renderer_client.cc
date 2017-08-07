@@ -365,7 +365,8 @@ ChromeContentRendererClient::ChromeContentRendererClient()
     : main_entry_time_(base::TimeTicks::Now()) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   extensions::ExtensionsClient::Set(
-      extensions::ChromeExtensionsClient::GetInstance());
+      base::MakeUnique<extensions::ChromeExtensionsClient>(
+          base::CommandLine::ForCurrentProcess()));
   extensions::ExtensionsRendererClient::Set(
       ChromeExtensionsRendererClient::GetInstance());
 #endif

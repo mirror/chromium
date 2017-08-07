@@ -83,7 +83,6 @@ class ShellBrowserMainParts : public content::BrowserMainParts {
   std::unique_ptr<PrefService> user_pref_service_;
   std::unique_ptr<ShellDeviceClient> device_client_;
   std::unique_ptr<AppWindowClient> app_window_client_;
-  std::unique_ptr<ExtensionsClient> extensions_client_;
   std::unique_ptr<ExtensionsBrowserClient> extensions_browser_client_;
   std::unique_ptr<ShellUpdateQueryParamsDelegate> update_query_params_delegate_;
   std::unique_ptr<ShellOAuth2TokenService> oauth2_token_service_;

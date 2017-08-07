@@ -187,8 +187,8 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
 
   device_client_.reset(new ShellDeviceClient);
 
-  extensions_client_.reset(CreateExtensionsClient());
-  ExtensionsClient::Set(extensions_client_.get());
+  ExtensionsClient::Set(
+      std::unique_ptr<ExtensionsClient>(CreateExtensionsClient()));
 
   extensions_browser_client_.reset(CreateExtensionsBrowserClient(
       browser_context_.get(), user_pref_service_.get()));

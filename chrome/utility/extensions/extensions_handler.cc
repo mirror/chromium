@@ -166,7 +166,9 @@ class WiFiCredentialsGetterImpl
 namespace extensions {
 
 ExtensionsHandler::ExtensionsHandler() {
-  ExtensionsClient::Set(ChromeExtensionsClient::GetInstance());
+  ExtensionsClient::Set(
+      base::MakeUnique<ChromeExtensionsClient>(
+          base::CommandLine::ForCurrentProcess()));
 }
 
 ExtensionsHandler::~ExtensionsHandler() = default;

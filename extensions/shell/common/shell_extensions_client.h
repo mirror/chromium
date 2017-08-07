@@ -20,10 +20,11 @@ class ShellExtensionsClient : public ExtensionsClient {
   ~ShellExtensionsClient() override;
 
   // ExtensionsClient overrides:
-  void Initialize() override;
+  void InitializeWebStoreUrls(base::CommandLine* command_line) override;
+  void InitializeGlobalState() override;
   const PermissionMessageProvider& GetPermissionMessageProvider()
       const override;
-  const std::string GetProductName() override;
+  const std::string GetProductName() const override;
   std::unique_ptr<FeatureProvider> CreateFeatureProvider(
       const std::string& name) const override;
   std::unique_ptr<JSONFeatureProviderSource> CreateAPIFeatureSource()

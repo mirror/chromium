@@ -54,6 +54,7 @@
 #include "extensions/browser/test_management_policy.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension_builder.h"
+#include "extensions/common/extensions_client.h"
 #include "extensions/common/manifest_url_handlers.h"
 #include "extensions/common/permissions/permission_set.h"
 #include "extensions/common/value_builder.h"
@@ -1541,14 +1542,23 @@ TEST_F(ExtensionServiceSyncTest, ProcessSyncDataEnableDisable) {
   }
 }
 
-TEST_F(ExtensionServiceSyncTest, ProcessSyncDataDeferredEnable) {
-  // The permissions_increase test extension has a different update URL.
-  // In order to make it syncable, we have to pretend it syncs from the
-  // webstore.
-  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kAppsGalleryUpdateURL,
-      "http://localhost/autoupdate/updates.xml");
+class ExtensionServiceSyncCustomGalleryTest : public ExtensionServiceSyncTest {
+ public:
+  void SetUp() override {
+    ExtensionServiceSyncTest::SetUp();
 
+    // This is the update URL specified in the permissions test extension.
+    // Setting it here is necessary to make the extension considered syncable.
+    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+        switches::kAppsGalleryUpdateURL,
+        "http://localhost/autoupdate/updates.xml");
+
+    extensions::ExtensionsClient::Get()->InitializeWebStoreUrls(
+        base::CommandLine::ForCurrentProcess());
+  }
+};
+
+TEST_F(ExtensionServiceSyncCustomGalleryTest, ProcessSyncDataDeferredEnable) {
   InitializeEmptyExtensionService();
   extension_sync_service()->MergeDataAndStartSyncing(
       syncer::EXTENSIONS, syncer::SyncDataList(),
@@ -1591,19 +1601,6 @@ TEST_F(ExtensionServiceSyncTest, ProcessSyncDataDeferredEnable) {
   path = base_path.AppendASCII("v3");
   PackCRXAndUpdateExtension(id, path, pem_path, ENABLED);
 }
-
-class ExtensionServiceSyncCustomGalleryTest : public ExtensionServiceSyncTest {
- public:
-  void SetUp() override {
-    ExtensionServiceSyncTest::SetUp();
-
-    // This is the update URL specified in the permissions test extension.
-    // Setting it here is necessary to make the extension considered syncable.
-    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-        switches::kAppsGalleryUpdateURL,
-        "http://localhost/autoupdate/updates.xml");
-  }
-};
 
 TEST_F(ExtensionServiceSyncCustomGalleryTest,
        ProcessSyncDataPermissionApproval) {

@@ -58,7 +58,6 @@ class ShellContentRendererClient : public content::ContentRendererClient {
   virtual ExtensionsClient* CreateExtensionsClient();
 
  private:
-  std::unique_ptr<ExtensionsClient> extensions_client_;
   std::unique_ptr<ShellExtensionsRendererClient> extensions_renderer_client_;
   std::unique_ptr<ExtensionsGuestViewContainerDispatcher>
       guest_view_container_dispatcher_;

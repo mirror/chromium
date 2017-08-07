@@ -32,7 +32,8 @@ void PrintPackExtensionMessage(const std::string& message) {
 }  // namespace
 
 StartupHelper::StartupHelper() : pack_job_succeeded_(false) {
-  ExtensionsClient::Set(ChromeExtensionsClient::GetInstance());
+  ExtensionsClient::Set(base::MakeUnique<ChromeExtensionsClient>(
+      base::CommandLine::ForCurrentProcess()));
 }
 
 void StartupHelper::OnPackSuccess(

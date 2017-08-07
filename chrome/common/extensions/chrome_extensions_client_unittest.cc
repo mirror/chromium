@@ -8,6 +8,7 @@
 #include <set>
 #include <string>
 
+#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "chrome/common/chrome_paths.h"
 #include "extensions/common/extension.h"
@@ -20,12 +21,9 @@ namespace extensions {
 class ChromeExtensionsClientTest : public testing::Test {
  public:
   void SetUp() override {
-    extensions_client_.reset(new ChromeExtensionsClient());
-    ExtensionsClient::Set(extensions_client_.get());
+    ExtensionsClient::Set(base::MakeUnique<ChromeExtensionsClient>(
+        base::CommandLine::ForCurrentProcess()));
   }
-
- private:
-  std::unique_ptr<ChromeExtensionsClient> extensions_client_;
 };
 
 // Test that a browser action extension returns a path to an icon.

@@ -33,6 +33,7 @@
 #include "extensions/browser/extension_dialog_auto_confirm.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/install/extension_install_ui.h"
+#include "extensions/common/extensions_client.h"
 #include "gpu/config/gpu_feature_type.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
@@ -157,6 +158,8 @@ class ExtensionWebstorePrivateApiTest : public ExtensionApiTest {
     GURL crx_url = GetTestServerURL(crx_file);
     base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
         switches::kAppsGalleryUpdateURL, crx_url.spec());
+    ExtensionsClient::Get()->InitializeWebStoreUrls(
+        base::CommandLine::ForCurrentProcess());
 
     GURL page_url = GetTestServerURL(page);
     return RunPageTest(page_url.spec());
