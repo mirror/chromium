@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "79cc9288_9ed17098",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-07T18:31:01Z",
+      "side": 1,
+      "message": "Okay sounds feasible. I think I will first work on removing cache for the case of only one renderer and then get back to dropping it when second renderer closes connection.\nwdyt?\nI added this idea to the doc.",
+      "parentUuid": "0f849a65_a1e4de9b",
+      "revId": "daa613fdc5671552d7b7d5ba9726c73bfbab1761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d35764af_dba458eb",
         "filename": "content/browser/dom_storage/dom_storage_host.cc",
         "patchSetId": 5
