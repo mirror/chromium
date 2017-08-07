@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_BROWSER_COMPONENT_EXTENSION_RESOURCE_MANAGER_H_
-#define EXTENSIONS_BROWSER_COMPONENT_EXTENSION_RESOURCE_MANAGER_H_
+#ifndef EXTENSIONS_BROWSER_COMPONENT_EXTENSION_DELEGATE_H_
+#define EXTENSIONS_BROWSER_COMPONENT_EXTENSION_DELEGATE_H_
 
 namespace base {
 class FilePath;
@@ -11,11 +11,11 @@ class FilePath;
 
 namespace extensions {
 
-// This class manages which extension resources actually come from
-// the resource bundle.
-class ComponentExtensionResourceManager {
+// This class manages interactions with component extensions and checks whether
+// a resource should come from the component extension resource bundle.
+class ComponentExtensionDelegate {
  public:
-  virtual ~ComponentExtensionResourceManager() {}
+  virtual ~ComponentExtensionDelegate() {}
 
   // Checks whether image is a component extension resource. Returns false
   // if a given |resource| does not have a corresponding image in bundled
@@ -29,4 +29,4 @@ class ComponentExtensionResourceManager {
 
 }  // namespace extensions
 
-#endif  // EXTENSIONS_BROWSER_COMPONENT_EXTENSION_RESOURCE_MANAGER_H_
+#endif  // EXTENSIONS_BROWSER_COMPONENT_EXTENSION_DELEGATE_H_

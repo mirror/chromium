@@ -19,7 +19,7 @@
 #include "chrome/browser/extensions/api/preference/chrome_direct_setting.h"
 #include "chrome/browser/extensions/api/preference/preference_api.h"
 #include "chrome/browser/extensions/api/runtime/chrome_runtime_api_delegate.h"
-#include "chrome/browser/extensions/chrome_component_extension_resource_manager.h"
+#include "chrome/browser/extensions/chrome_component_extension_delegate.h"
 #include "chrome/browser/extensions/chrome_extension_api_frame_id_map_helper.h"
 #include "chrome/browser/extensions/chrome_extension_host_delegate.h"
 #include "chrome/browser/extensions/chrome_extension_web_contents_observer.h"
@@ -83,7 +83,8 @@ ChromeExtensionsBrowserClient::ChromeExtensionsBrowserClient() {
   process_manager_delegate_.reset(new ChromeProcessManagerDelegate);
   api_client_.reset(new ChromeExtensionsAPIClient);
   SetCurrentChannel(chrome::GetChannel());
-  resource_manager_.reset(new ChromeComponentExtensionResourceManager());
+  component_extension_delegate_ =
+      base::MakeUnique<ChromeComponentExtensionDelegate>();
 }
 
 ChromeExtensionsBrowserClient::~ChromeExtensionsBrowserClient() {}
@@ -301,9 +302,9 @@ ChromeExtensionsBrowserClient::CreateRuntimeAPIDelegate(
       new ChromeRuntimeAPIDelegate(context));
 }
 
-const ComponentExtensionResourceManager*
-ChromeExtensionsBrowserClient::GetComponentExtensionResourceManager() {
-  return resource_manager_.get();
+const ComponentExtensionDelegate*
+ChromeExtensionsBrowserClient::GetComponentExtensionDelegate() {
+  return component_extension_delegate_.get();
 }
 
 void ChromeExtensionsBrowserClient::BroadcastEventToRenderers(

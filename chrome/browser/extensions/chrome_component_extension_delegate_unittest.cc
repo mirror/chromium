@@ -6,7 +6,7 @@
 #include "base/path_service.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_paths.h"
-#include "extensions/browser/component_extension_resource_manager.h"
+#include "extensions/browser/component_extension_delegate.h"
 #include "extensions/browser/extensions_browser_client.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -23,13 +23,12 @@
 
 namespace extensions {
 
-typedef testing::Test ChromeComponentExtensionResourceManagerTest;
+typedef testing::Test ChromeComponentExtensionDelegateTest;
 
 // Tests IsComponentExtensionResource function.
-TEST_F(ChromeComponentExtensionResourceManagerTest,
-       IsComponentExtensionResource) {
-  const ComponentExtensionResourceManager* resource_manager =
-      ExtensionsBrowserClient::Get()->GetComponentExtensionResourceManager();
+TEST_F(ChromeComponentExtensionDelegateTest, IsComponentExtensionResource) {
+  const ComponentExtensionDelegate* resource_manager =
+      ExtensionsBrowserClient::Get()->GetComponentExtensionDelegate();
   ASSERT_TRUE(resource_manager);
 
   // Get the extension test data path.

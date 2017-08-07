@@ -45,7 +45,7 @@ class UpdateClient;
 
 namespace extensions {
 
-class ComponentExtensionResourceManager;
+class ComponentExtensionDelegate;
 class Extension;
 class ExtensionCache;
 class ExtensionError;
@@ -200,10 +200,9 @@ class ExtensionsBrowserClient {
   virtual std::unique_ptr<RuntimeAPIDelegate> CreateRuntimeAPIDelegate(
       content::BrowserContext* context) const = 0;
 
-  // Returns the manager of resource bundles used in extensions. Returns NULL if
-  // the manager doesn't exist.
-  virtual const ComponentExtensionResourceManager*
-  GetComponentExtensionResourceManager() = 0;
+  // Returns a delegate for embedder-provided component extensions. Returns
+  // null if the embedder provides no component extensions.
+  virtual const ComponentExtensionDelegate* GetComponentExtensionDelegate() = 0;
 
   // Propagate a event to all the renderers in every browser context. The
   // implementation must be safe to call from any thread.

@@ -15,7 +15,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "content/public/browser/browser_thread.h"
-#include "extensions/browser/component_extension_resource_manager.h"
+#include "extensions/browser/component_extension_delegate.h"
 #include "extensions/browser/extensions_browser_client.h"
 #include "extensions/browser/image_loader_factory.h"
 #include "extensions/common/extension.h"
@@ -114,9 +114,9 @@ std::vector<SkBitmap> LoadResourceBitmaps(
 
     int resource_id;
     if (extension->location() == Manifest::COMPONENT) {
-      const extensions::ComponentExtensionResourceManager* manager =
+      const extensions::ComponentExtensionDelegate* manager =
           extensions::ExtensionsBrowserClient::Get()
-              ->GetComponentExtensionResourceManager();
+              ->GetComponentExtensionDelegate();
       if (manager && manager->IsComponentExtensionResource(
               extension->path(), it->resource.relative_path(), &resource_id)) {
         LoadResourceOnUIThread(resource_id, &bitmaps[i]);
