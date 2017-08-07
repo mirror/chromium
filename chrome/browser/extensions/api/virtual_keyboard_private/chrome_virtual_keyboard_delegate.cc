@@ -21,6 +21,8 @@
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/common/url_constants.h"
 #include "components/user_manager/user_manager.h"
+#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h"
+#include "extensions/common/api/virtual_keyboard.h"
 #include "extensions/common/api/virtual_keyboard_private.h"
 #include "media/audio/audio_system.h"
 #include "ui/aura/window_tree_host.h"
@@ -72,8 +74,9 @@ keyboard::KeyboardState getKeyboardStateEnum(
 
 namespace extensions {
 
-ChromeVirtualKeyboardDelegate::ChromeVirtualKeyboardDelegate()
-    : weak_factory_(this) {
+ChromeVirtualKeyboardDelegate::ChromeVirtualKeyboardDelegate(
+    content::BrowserContext* browser_context)
+    : browser_context_(browser_context), weak_factory_(this) {
   weak_this_ = weak_factory_.GetWeakPtr();
 }
 
@@ -85,6 +88,12 @@ void ChromeVirtualKeyboardDelegate::GetKeyboardConfig(
   media::AudioSystem::Get()->HasInputDevices(
       base::BindOnce(&ChromeVirtualKeyboardDelegate::OnHasInputDevices,
                      weak_this_, std::move(on_settings_callback)));
+}
+
+void ChromeVirtualKeyboardDelegate::OnKeyboardConfigChanged() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  GetKeyboardConfig(base::Bind(
+      &ChromeVirtualKeyboardDelegate::OnGetKeyboardConfigToNotify, weak_this_));
 }
 
 bool ChromeVirtualKeyboardDelegate::HideKeyboard() {
@@ -119,17 +128,6 @@ void ChromeVirtualKeyboardDelegate::SetHotrodKeyboard(bool enable) {
   // This reloads virtual keyboard even if it exists. This ensures virtual
   // keyboard gets the correct state of the hotrod keyboard through
   // chrome.virtualKeyboardPrivate.getKeyboardConfig.
-  if (keyboard::IsKeyboardEnabled())
-    ash::Shell::Get()->CreateKeyboard();
-}
-
-void ChromeVirtualKeyboardDelegate::SetKeyboardRestricted(bool restricted) {
-  if (keyboard::GetKeyboardRestricted() == restricted)
-    return;
-
-  keyboard::SetKeyboardRestricted(restricted);
-
-  // Force virtual keyboard reload.
   if (keyboard::IsKeyboardEnabled())
     ash::Shell::Get()->CreateKeyboard();
 }
@@ -200,7 +198,7 @@ bool ChromeVirtualKeyboardDelegate::IsLanguageSettingsEnabled() {
 
 void ChromeVirtualKeyboardDelegate::OnHasInputDevices(
     OnKeyboardSettingsCallback on_settings_callback,
-    bool has_input_devices) {
+    bool has_audio_input_devices) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   std::unique_ptr<base::DictionaryValue> results(new base::DictionaryValue());
   results->SetString("layout", keyboard::GetKeyboardLayout());
@@ -209,18 +207,71 @@ void ChromeVirtualKeyboardDelegate::OnHasInputDevices(
   results->SetBoolean("a11ymode", keyboard::GetAccessibilityKeyboardEnabled());
   results->SetBoolean("hotrodmode", keyboard::GetHotrodKeyboardEnabled());
   std::unique_ptr<base::ListValue> features(new base::ListValue());
+
+  // features->AppendString(GenerateFeatureFlag(
+  //"floatingvirtualkeyboard", keyboard::IsFloatingVirtualKeyboardEnabled()));
+  // features->AppendString(
+  // GenerateFeatureFlag("gesturetyping", keyboard::IsGestureTypingEnabled()));
+  // features->AppendString(GenerateFeatureFlag(
+  // "gestureediting", keyboard::IsGestureEditingEnabled()));
+
+  const keyboard::KeyboardConfig config = keyboard::GetKeyboardConfig();
   features->AppendString(GenerateFeatureFlag(
-      "floatingvirtualkeyboard", keyboard::IsFloatingVirtualKeyboardEnabled()));
+      "voiceinput", has_audio_input_devices && config.voice_input));
   features->AppendString(
-      GenerateFeatureFlag("gesturetyping", keyboard::IsGestureTypingEnabled()));
-  features->AppendString(GenerateFeatureFlag(
-      "gestureediting", keyboard::IsGestureEditingEnabled()));
-  features->AppendString(GenerateFeatureFlag(
-      "voiceinput", has_input_devices && keyboard::IsVoiceInputEnabled()));
-  features->AppendString(GenerateFeatureFlag(
-      "experimental", keyboard::IsExperimentalInputViewEnabled()));
+      GenerateFeatureFlag("autocomplete", config.auto_complete));
+  features->AppendString(
+      GenerateFeatureFlag("autocorrect", config.auto_correct));
+  features->AppendString(GenerateFeatureFlag("spellcheck", config.spell_check));
+  features->AppendString(
+      GenerateFeatureFlag("handwriting", config.handwriting));
+
   results->Set("features", std::move(features));
   std::move(on_settings_callback).Run(std::move(results));
+}
+
+void ChromeVirtualKeyboardDelegate::OnGetKeyboardConfigToNotify(
+    std::unique_ptr<base::DictionaryValue> settings) {
+  EventRouter* router = EventRouter::Get(browser_context_);
+
+  if (!router->HasEventListener(
+          keyboard_api::OnKeyboardConfigChanged::kEventName))
+    return;
+
+  std::unique_ptr<base::ListValue> event_args(new base::ListValue());
+  event_args->Append(std::move(settings));
+
+  auto event = base::MakeUnique<extensions::Event>(
+      extensions::events::VIRTUAL_KEYBOARD_PRIVATE_ON_KEYBOARD_CONFIG_CHANGED,
+      keyboard_api::OnKeyboardConfigChanged::kEventName, std::move(event_args),
+      browser_context_);
+  router->BroadcastEvent(std::move(event));
+}
+
+void ChromeVirtualKeyboardDelegate::RestrictFeatures(
+    const std::unique_ptr<api::virtual_keyboard::RestrictFeatures::Params>&
+        params) {
+  const auto& restrictions = params->restrictions;
+  keyboard::KeyboardConfig config = keyboard::GetKeyboardConfig();
+  if (restrictions.spell_check_enabled)
+    config.spell_check = *restrictions.spell_check_enabled;
+  if (restrictions.auto_complete_enabled)
+    config.auto_complete = *restrictions.auto_complete_enabled;
+  if (restrictions.auto_correct_enabled)
+    config.auto_correct = *restrictions.auto_correct_enabled;
+  if (restrictions.voice_input_enabled)
+    config.voice_input = *restrictions.voice_input_enabled;
+  if (restrictions.handwriting_enabled)
+    config.handwriting = *restrictions.handwriting_enabled;
+
+  if (keyboard::UpdateKeyboardConfig(config)) {
+    // This reloads virtual keyboard even if it exists. This ensures virtual
+    // keyboard gets the correct state through
+    // chrome.virtualKeyboardPrivate.getKeyboardConfig.
+    // TODO(oka): Extension should reload on it's own by receiving event
+    if (keyboard::IsKeyboardEnabled())
+      ash::Shell::Get()->CreateKeyboard();
+  }
 }
 
 }  // namespace extensions
