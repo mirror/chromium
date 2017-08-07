@@ -94,6 +94,30 @@
       "revId": "79ffa4ee640bb2256df7e9c9503c1fb0117eec27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646d042c_9ad7dce6",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-07T23:23:26Z",
+      "side": 1,
+      "message": "That makes sense. I filed a bug for doing this as a follow up change.",
+      "parentUuid": "5bbd8ac8_4ec44620",
+      "range": {
+        "startLine": 384,
+        "startChar": 34,
+        "endLine": 384,
+        "endChar": 54
+      },
+      "revId": "79ffa4ee640bb2256df7e9c9503c1fb0117eec27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
