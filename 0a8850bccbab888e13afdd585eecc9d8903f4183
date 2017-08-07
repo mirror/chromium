@@ -186,6 +186,23 @@
     },
     {
       "key": {
+        "uuid": "ddad1e13_db79e568",
+        "filename": "components/leveldb_proto/options.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-07T13:07:46Z",
+      "side": 1,
+      "message": "There\u0027s three files with calls to this constructor, could you update those instead of using default values?\n\nThe main reason I care about this is that ProtoDatabase::Init() now makes a new assumption: the user (including existing ones) should use the Default cache. This is hidden quite well from readers of that class. For at least one of its users, the budget database, this assumption doesn\u0027t hold.\n\nWe should probably force users of that class to always pass an Options structure, but I could volunteer to do that after this CL.",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e342e74_b925eeb9",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 1
