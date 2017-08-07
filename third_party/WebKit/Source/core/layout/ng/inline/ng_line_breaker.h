@@ -106,7 +106,7 @@ class CORE_EXPORT NGLineBreaker {
   LineBreakState HandleControlItem(const NGInlineItem&, NGInlineItemResult*);
   LineBreakState HandleAtomicInline(const NGInlineItem&,
                                     NGInlineItemResult*,
-                                    const NGLineInfo&);
+                                    const NGLineInfo& line_info);
   LineBreakState HandleFloat(const NGInlineItem&, NGInlineItemResult*);
 
   void HandleOpenTag(const NGInlineItem&, NGInlineItemResult*);
