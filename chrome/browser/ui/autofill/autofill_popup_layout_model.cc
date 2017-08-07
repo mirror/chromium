@@ -121,11 +121,13 @@ int AutofillPopupLayoutModel::GetDesiredPopupWidth() const {
 int AutofillPopupLayoutModel::RowWidthWithoutText(int row,
                                                   bool has_subtext) const {
   std::vector<autofill::Suggestion> suggestions = delegate_->GetSuggestions();
-  bool is_warning_message = (suggestions[row].frontend_id ==
-                             POPUP_ITEM_ID_HTTP_NOT_SECURE_WARNING_MESSAGE);
+  const int frontend_id = suggestions[row].frontend_id;
+  bool is_warning_message =
+      (frontend_id == POPUP_ITEM_ID_HTTP_NOT_SECURE_WARNING_MESSAGE);
   const bool is_row_with_ =
-      (is_warning_message || (suggestions[row].frontend_id ==
-                              POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY));
+      (is_warning_message ||
+       (frontend_id == POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY) ||
+       (frontend_id == POPUP_ITEM_ID_GENERATE_PASSWORD_ENTRY));
 
   int row_size = 2 * (kEndPadding + kPopupBorderThickness);
   if (has_subtext)
@@ -176,6 +178,7 @@ const gfx::FontList& AutofillPopupLayoutModel::GetValueFontListForRow(
     case POPUP_ITEM_ID_TITLE:
     case POPUP_ITEM_ID_PASSWORD_ENTRY:
     case POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY:
+    case POPUP_ITEM_ID_GENERATE_PASSWORD_ENTRY:
       return normal_font_list_;
     case POPUP_ITEM_ID_AUTOCOMPLETE_ENTRY:
     case POPUP_ITEM_ID_DATALIST_ENTRY:
@@ -227,6 +230,11 @@ gfx::ImageSkia AutofillPopupLayoutModel::GetIconImage(size_t index) const {
 
   if (icon_str == base::ASCIIToUTF16("showAllSavedPasswords")) {
     return gfx::CreateVectorIcon(kOpenInNewIcon, kIconSize,
+                                 gfx::kChromeIconGrey);
+  }
+
+  if (icon_str == base::ASCIIToUTF16("generatePassword")) {
+    return gfx::CreateVectorIcon(kAutologinIcon, kIconSize,
                                  gfx::kChromeIconGrey);
   }
 

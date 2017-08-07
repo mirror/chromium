@@ -11,11 +11,13 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/stl_util.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/autofill/content/renderer/form_autofill_util.h"
 #include "components/autofill/content/renderer/form_classifier.h"
 #include "components/autofill/content/renderer/password_autofill_agent.h"
 #include "components/autofill/content/renderer/password_form_conversion_utils.h"
+#include "components/autofill/core/browser/password_generator.h"
 #include "components/autofill/core/common/autofill_switches.h"
 #include "components/autofill/core/common/form_data.h"
 #include "components/autofill/core/common/password_form.h"
@@ -579,7 +581,7 @@ void PasswordGenerationAgent::PasswordNoLongerGenerated() {
     GetPasswordManagerDriver()->PasswordNoLongerGenerated(*presaved_form);
 }
 
-void PasswordGenerationAgent::UserTriggeredGeneratePassword() {
+void PasswordGenerationAgent::SetupUserTriggeredGeneration() {
   if (last_focused_password_element_.IsNull() || !render_frame())
     return;
 
@@ -616,7 +618,31 @@ void PasswordGenerationAgent::UserTriggeredGeneratePassword() {
   generation_form_data_.reset(new AccountCreationFormData(
       make_linked_ptr(password_form.release()), password_elements));
   is_manually_triggered_ = true;
+}
+
+void PasswordGenerationAgent::UserTriggeredGeneratePassword() {
+  SetupUserTriggeredGeneration();
   ShowGenerationPopup();
+}
+
+void PasswordGenerationAgent::UserSelectedGeneratePasswordOption() {
+  SetupUserTriggeredGeneration();
+  autofill::PasswordGenerator pg(last_focused_password_element_.MaxLength());
+  base::string16 password(base::ASCIIToUTF16(pg.Generate()));
+  password_is_generated_ = true;
+  password_edited_ = false;
+
+  last_focused_password_element_.SetAutofillValue(
+      blink::WebString::FromUTF16(password));
+  last_focused_password_element_.SetAutofilled(true);
+  if (!render_frame())
+    return;
+  password_agent_->UpdateStateForTextChange(last_focused_password_element_);
+  render_frame()->GetRenderView()->GetWebView()->AdvanceFocus(false);
+  std::unique_ptr<PasswordForm> presaved_form(CreatePasswordFormToPresave());
+  if (presaved_form) {
+    GetPasswordManagerDriver()->PresaveGeneratedPassword(*presaved_form);
+  }
 }
 
 const mojom::PasswordManagerDriverPtr&
