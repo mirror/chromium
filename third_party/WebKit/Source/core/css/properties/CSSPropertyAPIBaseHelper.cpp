@@ -52,7 +52,6 @@ void AddExpandedPropertyForValue(CSSPropertyID property,
 }  // namespace
 
 CSSValue* ConsumePrefixedBackgroundBox(CSSParserTokenRange& range,
-                                       const CSSParserContext* context,
                                        bool allow_text_value) {
   // The values 'border', 'padding' and 'content' are deprecated and do not
   // apply to the version of the property that has the -webkit- prefix removed.
@@ -113,12 +112,10 @@ static CSSValue* ConsumeBackgroundComponent(CSSPropertyID unresolved_property,
       return CSSPropertyBackgroundUtils::ConsumeMaskSourceType(range);
     case CSSPropertyWebkitBackgroundClip:
     case CSSPropertyWebkitMaskClip:
-      return ConsumePrefixedBackgroundBox(range, context,
-                                          true /* allow_text_value */);
+      return ConsumePrefixedBackgroundBox(range, true /* allow_text_value */);
     case CSSPropertyWebkitBackgroundOrigin:
     case CSSPropertyWebkitMaskOrigin:
-      return ConsumePrefixedBackgroundBox(range, context,
-                                          false /* allow_text_value */);
+      return ConsumePrefixedBackgroundBox(range, false /* allow_text_value */);
     case CSSPropertyBackgroundImage:
     case CSSPropertyWebkitMaskImage:
       return ConsumeImageOrNone(range, context);
