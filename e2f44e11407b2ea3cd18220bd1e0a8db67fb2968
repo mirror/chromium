@@ -16,6 +16,24 @@
       "revId": "e2f44e11407b2ea3cd18220bd1e0a8db67fb2968",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76cce002_60147f6a",
+        "filename": "chrome/browser/search_engines/template_url_service_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-07T21:54:19Z",
+      "side": 1,
+      "message": "It made my test fail in ways that were annoying to track down.  Since this is test only code, might as well make it more predictable (i.e. fail early with a useful message)",
+      "parentUuid": "e065b053_f297c3b7",
+      "revId": "e2f44e11407b2ea3cd18220bd1e0a8db67fb2968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

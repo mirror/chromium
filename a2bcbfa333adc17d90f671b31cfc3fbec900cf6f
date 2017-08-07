@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2088e75d_a5b4eda2",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-07T21:54:19Z",
+      "side": 1,
+      "message": "For this case, we need all of these search engines to be added.  If removing it ever isn\u0027t ok, then we\u0027re in a bad way.  We\u0027d either way to ensure they\u0027re visible by updating the timestamp, or it will crash as we are in an unsupported situation.\n\nAs this is very much a special case, removing it and adding it back is \"OK\".  The other option would be to clear all search engines and force them to be shown for a different locale as if you started fresh.  If this is unlikely, then it is just and edge case of this needing to be supported.",
+      "parentUuid": "c9c40382_c46e5370",
+      "revId": "a2bcbfa333adc17d90f671b31cfc3fbec900cf6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33cb2ddb_47b308d1",
         "filename": "chrome/browser/android/locale/special_locale_handler.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-07T21:44:33Z",
       "side": 1,
       "message": "This conditional seems incorrect.\n\nFirst, the DCHECK can never fail, because we\u0027re inside a conditional for (added_turl).  Second, I don\u0027t think you meant to return false if we succeeded in adding the URL.  And it doesn\u0027t make sense to handle DCHECK failure anyway (per our style guide).\n\nSo I think probably leaving the old code as is was is more what you want?",
+      "revId": "a2bcbfa333adc17d90f671b31cfc3fbec900cf6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57921c9d_b1985219",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-07T21:54:19Z",
+      "side": 1,
+      "message": "You are 100% correct.  This logic should have been in an else, which I updated.",
+      "parentUuid": "33cb2ddb_47b308d1",
       "revId": "a2bcbfa333adc17d90f671b31cfc3fbec900cf6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
