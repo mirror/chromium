@@ -88,14 +88,17 @@ class BASE_EXPORT TaskRunner
   //   TaskRunners, and ultimately move this method down to SequencedTaskRunner.
   virtual bool RunsTasksInCurrentSequence() const = 0;
 
-  // Posts |task| on the current TaskRunner.  On completion, |reply|
-  // is posted to the thread that called PostTaskAndReply().  Both
-  // |task| and |reply| are guaranteed to be deleted on the thread
-  // from which PostTaskAndReply() is invoked.  This allows objects
-  // that must be deleted on the originating thread to be bound into
-  // the |task| and |reply| Closures.  In particular, it can be useful
-  // to use WeakPtr<> in the |reply| Closure so that the reply
-  // operation can be canceled. See the following pseudo-code:
+  // Posts |task| on the current TaskRunner.  On completion, |reply| is posted
+  // to the sequence that called PostTaskAndReply().  On the success case,
+  // |task| is dropped on the target sequence and |reply| is dropped on the
+  // originating sequence immediately after their invocation.  If an error
+  // happened on the onward PostTask, both |task| and |reply| are dropped on the
+  // originating sequence, and on an error on the backward PostTask, |reply| is
+  // leaked rather than being dropped on the wrong sequence.  This allows
+  // objects that must be deleted on the originating sequence to be bound into
+  // the |reply| Closures.  In particular, it can be useful to use WeakPtr<> in
+  // the |reply| Closure so that the reply operation can be canceled. See the
+  // following pseudo-code:
   //
   // class DataBuffer : public RefCountedThreadSafe<DataBuffer> {
   //  public:
@@ -111,8 +114,8 @@ class BASE_EXPORT TaskRunner
   //      scoped_refptr<DataBuffer> buffer = new DataBuffer();
   //      target_thread_.task_runner()->PostTaskAndReply(
   //          FROM_HERE,
-  //          base::Bind(&DataBuffer::AddData, buffer),
-  //          base::Bind(&DataLoader::OnDataReceived, AsWeakPtr(), buffer));
+  //          base::BindOnce(&DataBuffer::AddData, buffer),
+  //          base::BindOnce(&DataLoader::OnDataReceived, AsWeakPtr(), buffer));
   //    }
   //
   //  private:
@@ -125,7 +128,7 @@ class BASE_EXPORT TaskRunner
   // Things to notice:
   //   * Results of |task| are shared with |reply| by binding a shared argument
   //     (a DataBuffer instance).
-  //   * The DataLoader object has no special thread safety.
+  //   * The DataLoader object has no special sequence safety.
   //   * The DataLoader object can be deleted while |task| is still running,
   //     and the reply will cancel itself safely because it is bound to a
   //     WeakPtr<>.
