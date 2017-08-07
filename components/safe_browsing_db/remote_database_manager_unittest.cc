@@ -11,7 +11,7 @@
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
-#include "components/safe_browsing_db/safe_browsing_api_handler.h"
+#include "components/safe_browsing/safe_browsing_api_handler.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
