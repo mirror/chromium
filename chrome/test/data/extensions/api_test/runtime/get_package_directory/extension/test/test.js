@@ -12,8 +12,10 @@ expectedDirectoryEntries = {
 function checkTree(root, expectedEntries) {
   var directoryReader = root.createReader();
   var contents = [];
+  console.warn('Creating reader');
   directoryReader.readEntries(chrome.test.callbackPass(
       function readEntriesCallback(entries) {
+    console.warn('Pass');
     if (entries.length == 0) {
       chrome.test.assertEq(Object.keys(expectedEntries).length, 0);
     } else {
@@ -39,8 +41,10 @@ function checkTree(root, expectedEntries) {
 
 chrome.test.runTests([
   function getPackageDirectoryEntry() {
+    console.warn('start');
     chrome.runtime.getPackageDirectoryEntry(chrome.test.callbackPass(
         function(directoryEntry) {
+      console.warn('\n\nChecking\n\n');
       checkTree(directoryEntry, expectedDirectoryEntries);
     }));
   }

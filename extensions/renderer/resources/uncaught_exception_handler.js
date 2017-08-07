@@ -58,7 +58,7 @@ function formatErrorMessage(message, e, priorStackTrace) {
   if (!priorStackTrace && !stack)
     stack = getStackTrace();
 
-  stack = filterExtensionStackTrace(stack);
+//  stack = filterExtensionStackTrace(stack);
   if (stack)
     message += '\n' + stack;
 

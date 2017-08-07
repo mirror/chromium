@@ -343,6 +343,7 @@ APIBinding::~APIBinding() {}
 
 v8::Local<v8::Object> APIBinding::CreateInstance(
     v8::Local<v8::Context> context) {
+  LOG(WARNING) << "Creating instance: " << api_name_;
   DCHECK(IsContextValid(context));
   v8::Isolate* isolate = context->GetIsolate();
   if (object_template_.IsEmpty())
@@ -359,7 +360,9 @@ v8::Local<v8::Object> APIBinding::CreateInstance(
   // conditionally exposed. Or, we could have multiple templates for different
   // configurations, assuming there are a small number of possibilities.
   for (const auto& key_value : methods_) {
+    LOG(WARNING) << "Checking method: " << key_value.second->full_name;
     if (!access_checker_->HasAccess(context, key_value.second->full_name)) {
+      LOG(WARNING) << "boo, no access";
       v8::Maybe<bool> success = object->Delete(
           context, gin::StringToSymbol(isolate, key_value.first));
       CHECK(success.IsJust());
@@ -465,6 +468,7 @@ void APIBinding::DecorateTemplateWithProperties(
     if (dict->GetString("$ref", &ref)) {
       const base::ListValue* property_values = nullptr;
       CHECK(dict->GetList("value", &property_values));
+      LOG(WARNING) << "Adding custom type: " << iter.key();
       auto property_data = base::MakeUnique<CustomPropertyData>(
           ref, iter.key(), property_values, create_custom_type_);
       object_template->SetLazyDataProperty(

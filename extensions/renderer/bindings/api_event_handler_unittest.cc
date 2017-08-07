@@ -559,6 +559,15 @@ TEST_F(APIEventHandlerTest, TestEventListenersThrowingExceptions) {
   v8::HandleScope handle_scope(isolate());
   v8::Local<v8::Context> context = MainContext();
 
+  v8::Local<v8::Function> handle_exception =
+      FunctionFromString(
+          context,
+          "(function(message, val) {\n"
+          "  this.errorMessage = message;\n"
+          "  this.val = JSON.stringify(val);\n"
+          "  this.didDoStuff = true;\n"
+          "})");
+  exception_handler.SetHandlerForContext(context, handle_exception);
   const char kEventName[] = "alpha";
   v8::Local<v8::Object> event = handler()->CreateEventInstance(
       kEventName, false, true, binding::kNoListenerMax, true, context);
@@ -596,6 +605,11 @@ TEST_F(APIEventHandlerTest, TestEventListenersThrowingExceptions) {
                                                 "didThrow"));
   EXPECT_EQ("[42]", GetStringPropertyFromObject(context->Global(), context,
                                                 "eventArgs"));
+
+  LOG(WARNING) << "Message: " << GetStringPropertyFromObject(context->Global(), context, "errorMessage");
+  LOG(WARNING) << "Val: " << GetStringPropertyFromObject(context->Global(), context, "val");
+  LOG(WARNING) << "Do stuff: " << GetStringPropertyFromObject(context->Global(), context, "didDoStuff");
+
   ASSERT_EQ(1u, logged_errors.size());
   EXPECT_EQ("Error in event handler: Uncaught Error: Event handler error",
             logged_errors[0]);

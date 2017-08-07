@@ -12,6 +12,7 @@
 #include <utility>
 
 #include "base/callback.h"
+#include "base/memory/ptr_util.h"
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -21,6 +22,7 @@
 #include "base/strings/string_piece.h"
 #include "extensions/common/extension_paths.h"
 #include "extensions/common/feature_switch.h"
+#include "extensions/renderer/native_extension_bindings_system.h"
 #include "extensions/renderer/ipc_message_sender.h"
 #include "extensions/renderer/logging_native_handler.h"
 #include "extensions/renderer/native_extension_bindings_system.h"
