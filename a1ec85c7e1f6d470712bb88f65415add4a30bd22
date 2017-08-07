@@ -34,6 +34,24 @@
       "revId": "a1ec85c7e1f6d470712bb88f65415add4a30bd22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81da9a89_555ebdab",
+        "filename": "components/metrics/net/network_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-07T18:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e1af2c9_a6be3992",
+      "revId": "a1ec85c7e1f6d470712bb88f65415add4a30bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
