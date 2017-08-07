@@ -54,10 +54,6 @@ const CSSValue* CSSPropertyAPI::ParseSingleValue(
   // This is the legacy ParseSingleValue code.
   // TODO(bugsnash): Move all of this to individual CSSPropertyAPI subclasses.
   switch (property) {
-    case CSSPropertyMaxWidth:
-    case CSSPropertyMaxHeight:
-      return CSSPropertyLengthUtils::ConsumeMaxWidthOrHeight(
-          range, context, CSSPropertyParserHelpers::UnitlessQuirk::kAllow);
     case CSSPropertyTextDecoration:
       DCHECK(!RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
       return CSSPropertyTextDecorationLineUtils::ConsumeTextDecorationLine(
