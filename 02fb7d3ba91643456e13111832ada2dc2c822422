@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd035470_ee7e4d10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115990
+      },
+      "writtenOn": "2017-08-07T21:59:25Z",
+      "side": 1,
+      "message": "one",
+      "range": {
+        "startLine": 11,
+        "startChar": 86,
+        "endLine": 11,
+        "endChar": 88
+      },
+      "revId": "02fb7d3ba91643456e13111832ada2dc2c822422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe02a5a0_98fda48a",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115990
+      },
+      "writtenOn": "2017-08-07T21:59:25Z",
+      "side": 1,
+      "message": "nit: extra l",
+      "range": {
+        "startLine": 22,
+        "startChar": 56,
+        "endLine": 22,
+        "endChar": 57
+      },
+      "revId": "02fb7d3ba91643456e13111832ada2dc2c822422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
