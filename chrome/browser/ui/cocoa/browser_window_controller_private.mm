@@ -47,6 +47,7 @@
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_view.h"
 #import "chrome/browser/ui/cocoa/toolbar/toolbar_controller.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
+#include "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_switches.h"
 #include "components/prefs/pref_service.h"
@@ -552,6 +553,13 @@ willPositionSheet:(NSWindow*)sheet
   // show the bubble because it will cause visual jank
   // (http://crbug.com/130649). This will be called again as part of
   // |-windowDidEnterFullScreen:|, so arrange to do that work then instead.
+
+  // The fullscreen bubble doesn't need to be shown when the FramedBrowserWindow
+  // enters fullscreen in any case, as we don't want the bubble to pop up again
+  // if fullscreen is showing already in the separate window.
+  if (!FullscreenWithinTabHelper::IsContentFullscreenEnabled())
+    return;
+
   if (enteringAppKitFullscreen_)
     return;
 

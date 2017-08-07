@@ -83,6 +83,7 @@
 #include "chrome/browser/ui/cocoa/translate/translate_bubble_bridge_views.h"
 #import "chrome/browser/ui/cocoa/translate/translate_bubble_controller.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
+#include "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h"
 #include "chrome/browser/ui/location_bar/location_bar.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_delegate.h"
@@ -1947,6 +1948,55 @@ willAnimateFromState:(BookmarkBar::State)oldState
 
 @implementation BrowserWindowController(Fullscreen)
 
+- (NSTouchBar*)touchBarForFullscreenWindow API_AVAILABLE(macos(10.12.2)) {
+  if (@available(macOS 10.12, *))
+    return [[self browserWindowTouchBar] createTabFullscreenTouchBar];
+  return nil;
+}
+
+// Creates a new window with the tab without detaching it from its source
+// window.
+- (NSWindow*)createSeparateWindowForTab:(WebContents*)separatedTab {
+  DCHECK(separatedTab->GetRenderWidgetHostView());
+
+  // RenderWidgetHostViewCocoa from the WebContents's RenderWidgetHostViewMac.
+  NSView* separatedTabView =
+      separatedTab->GetRenderWidgetHostView()->GetNativeView();
+
+  NSWindow* sourceWindow = [separatedTabView window];
+  NSRect windowRect = [sourceWindow frame];
+  SeparateFullscreenWindow* separateWindow = [[SeparateFullscreenWindow alloc]
+      initWithContentRect:[sourceWindow convertRectToScreen:windowRect]
+                styleMask:NSResizableWindowMask
+                  backing:NSBackingStoreBuffered
+                    defer:NO];
+  // Sets the controller of the window for the separateWindow to be able to
+  // access to its BrowserWindowTouchbar's creation methods. We need this
+  // to be able to create the fullscreen touchbar.
+  [separateWindow setController:[sourceWindow windowController]];
+
+  [separateWindow setContentView:separatedTabView];
+  [separateWindow
+      setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+
+  // Make WebContentsViewCocoa the first responder now as
+  // RenderWidgetHostViewCocoa is now in a separate window. This is made to
+  // avoid keyboard input in the main browser window interact with the
+  // fullscreen content.
+  separatedTab->Focus();
+
+  return separateWindow;
+}
+
+- (NSWindow*)getActiveWebContentsSeparateWindow {
+  WebContents* web_contents =
+      browser_->tab_strip_model()->GetActiveWebContents();
+  FullscreenWithinTabHelper* helper =
+      web_contents ? FullscreenWithinTabHelper::FromWebContents(web_contents)
+                   : nullptr;
+  return helper ? helper->separate_fullscreen_window() : nullptr;
+}
+
 - (void)enterBrowserFullscreen {
   [self enterAppKitFullscreen];
 }
@@ -1993,21 +2043,39 @@ willAnimateFromState:(BookmarkBar::State)oldState
 }
 
 - (void)enterWebContentFullscreen {
-  // HTML5 Fullscreen should only use AppKit fullscreen in 10.10+.
-  // However, if the user is using multiple monitors and turned off
-  // "Separate Space in Each Display", use Immersive Fullscreen so
-  // that the other monitors won't blank out.
-  display::Screen* screen = display::Screen::GetScreen();
-  BOOL hasMultipleMonitors = screen && screen->GetNumDisplays() > 1;
-  if (base::mac::IsAtLeastOS10_10() &&
-      !(hasMultipleMonitors && ![NSScreen screensHaveSeparateSpaces])) {
-    [self enterAppKitFullscreen];
-  } else {
-    [self enterImmersiveFullscreen];
-  }
+  WebContents* tab = browser_->tab_strip_model()->GetActiveWebContents();
+  FullscreenWithinTabHelper* helper =
+      tab ? FullscreenWithinTabHelper::FromWebContents(tab) : nullptr;
 
-  if (!exclusiveAccessController_->url().is_empty())
-    [self updateFullscreenExitBubble];
+  if (FullscreenWithinTabHelper::IsContentFullscreenEnabled()) {
+    DCHECK(helper);
+    NSWindow* activeSeparateFullscreenWindow = nullptr;
+    if (!helper->separate_fullscreen_window()) {
+      helper->SetSeparateFullscreenWindow(
+          [self createSeparateWindowForTab:tab]);
+    }
+    DCHECK(helper->separate_fullscreen_window());
+    activeSeparateFullscreenWindow = helper->separate_fullscreen_window();
+
+    [activeSeparateFullscreenWindow makeKeyAndOrderFront:nil];
+    [activeSeparateFullscreenWindow toggleFullScreen:nil];
+  } else {
+    // HTML5 Fullscreen should only use AppKit fullscreen in 10.10+.
+    // However, if the user is using multiple monitors and turned off
+    // "Separate Space in Each Display", use Immersive Fullscreen so
+    // that the other monitors won't blank out.
+    display::Screen* screen = display::Screen::GetScreen();
+    BOOL hasMultipleMonitors = screen && screen->GetNumDisplays() > 1;
+    if (base::mac::IsAtLeastOS10_10() &&
+        !(hasMultipleMonitors && ![NSScreen screensHaveSeparateSpaces])) {
+      [self enterAppKitFullscreen];
+    } else {
+      [self enterImmersiveFullscreen];
+    }
+
+    if (!exclusiveAccessController_->url().is_empty())
+      [self updateFullscreenExitBubble];
+  }
 }
 
 - (void)exitAnyFullscreen {
