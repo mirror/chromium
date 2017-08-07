@@ -330,3 +330,11 @@ ChromePluginServiceFilter::GetProcess(
     return NULL;
   return &it->second;
 }
+
+// static
+bool ChromePluginServiceFilter::GetPdfPluginInfo(content::WebPluginInfo* info) {
+  base::FilePath pdf_plugin_path =
+      base::FilePath::FromUTF8Unsafe(ChromeContentClient::kPDFPluginPath);
+  return content::PluginService::GetInstance()->GetPluginInfoByPath(
+      pdf_plugin_path, info);
+}
