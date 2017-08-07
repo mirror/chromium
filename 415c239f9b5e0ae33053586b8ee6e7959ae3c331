@@ -81,6 +81,30 @@
       "revId": "415c239f9b5e0ae33053586b8ee6e7959ae3c331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9bba8d_9ae98754",
+        "filename": "third_party/WebKit/Source/modules/fetch/FetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-07T10:08:56Z",
+      "side": 1,
+      "message": "It is OK to disable the backpressure control when integrity is specified.",
+      "parentUuid": "17c57d38_29c1e318",
+      "range": {
+        "startLine": 220,
+        "startChar": 71,
+        "endLine": 220,
+        "endChar": 78
+      },
+      "revId": "415c239f9b5e0ae33053586b8ee6e7959ae3c331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
