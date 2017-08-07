@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45bea03a_218e5fef",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-07T18:14:39Z",
+      "side": 1,
+      "message": "Sorry for the drive-by. You should only need to check the is_fullscreen_app_list_enabled switch.",
+      "revId": "53aec973838fef984fc0e43d42035983428bd614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
