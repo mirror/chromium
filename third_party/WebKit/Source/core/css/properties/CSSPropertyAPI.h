@@ -31,6 +31,8 @@ class CSSPropertyAPI {
                               const CSSParserContext&,
                               bool use_legacy_parsing,
                               HeapVector<CSSProperty, 256>&) const;
+
+  static bool IsInterpolableProperty() { return false; }
 };
 
 }  // namespace blink
