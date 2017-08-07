@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "985f2ee2_cea1f051",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-07T17:34:16Z",
+      "side": 1,
+      "message": "Nit: you can merge the two lines above and avoid a) a temporary variable and b) an std::move.",
+      "range": {
+        "startLine": 170,
+        "startChar": 46,
+        "endLine": 170,
+        "endChar": 0
+      },
+      "revId": "e04b57f185228c6269bb861e667ca768322a78aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e061f1d9_24bb4063",
+        "filename": "components/ntp_tiles/popular_sites_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-07T17:34:16Z",
+      "side": 1,
+      "message": "You don\u0027t really need the 5 lines above, do you? Just replace the underscores below with SizeIs.",
+      "range": {
+        "startLine": 561,
+        "startChar": 71,
+        "endLine": 561,
+        "endChar": 0
+      },
+      "revId": "e04b57f185228c6269bb861e667ca768322a78aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
