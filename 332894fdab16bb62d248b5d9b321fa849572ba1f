@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bff0fede_d5efa83d",
+        "filename": "ui/app_list/views/contents_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-07T21:47:13Z",
+      "side": 1,
+      "message": "Do you really need to expose this in *.h?\n\nYou may do it inline or add helper in namespace {}\n\nWDYT?",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 31
+      },
+      "revId": "332894fdab16bb62d248b5d9b321fa849572ba1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
