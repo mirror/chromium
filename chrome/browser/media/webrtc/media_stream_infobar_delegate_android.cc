@@ -71,8 +71,8 @@ MediaStreamInfoBarDelegateAndroid::GetInfoBarType() const {
 }
 
 int MediaStreamInfoBarDelegateAndroid::GetIconId() const {
-  return request_->IsAskingForVideo() ? IDR_INFOBAR_MEDIA_STREAM_CAMERA
-                                      : IDR_INFOBAR_MEDIA_STREAM_MIC;
+  return request_->IsAskingForVideo() ? IDR_ANDROID_INFOBAR_MEDIA_STREAM_CAMERA
+                                      : IDR_ANDROID_INFOBAR_MEDIA_STREAM_MIC;
 }
 
 MediaStreamInfoBarDelegateAndroid::MediaStreamInfoBarDelegateAndroid(

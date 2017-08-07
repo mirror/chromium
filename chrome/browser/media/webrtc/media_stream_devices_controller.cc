@@ -222,8 +222,8 @@ bool MediaStreamDevicesController::Request::IsAskingForVideo() const {
 PermissionRequest::IconId MediaStreamDevicesController::Request::GetIconId()
     const {
 #if defined(OS_ANDROID)
-  return IsAskingForVideo() ? IDR_INFOBAR_MEDIA_STREAM_CAMERA
-                            : IDR_INFOBAR_MEDIA_STREAM_MIC;
+  return IsAskingForVideo() ? IDR_ANDROID_INFOBAR_MEDIA_STREAM_CAMERA
+                            : IDR_ANDROID_INFOBAR_MEDIA_STREAM_MIC;
 #else
   return IsAskingForVideo() ? vector_icons::kVideocamIcon
                             : vector_icons::kMicrophoneIcon;

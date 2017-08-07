@@ -128,7 +128,7 @@ int PermissionPromptAndroid::GetIconId() const {
   if (requests.size() == 1)
     return requests[0]->GetIconId();
   CheckValidRequestGroup(requests);
-  return IDR_INFOBAR_MEDIA_STREAM_CAMERA;
+  return IDR_ANDROID_INFOBAR_MEDIA_STREAM_CAMERA;
 }
 
 base::string16 PermissionPromptAndroid::GetMessageText() const {
