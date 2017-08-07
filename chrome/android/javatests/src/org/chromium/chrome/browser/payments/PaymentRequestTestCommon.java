@@ -996,6 +996,11 @@ final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
         }
 
         @Override
+        public Set<String> getPreferredRelatedApplicationIds() {
+            return null;
+        }
+
+        @Override
         public String getAppIdentifier() {
             return TestPay.this.toString();
         }
