@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "124d3fa3_82914dfa",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-07T17:08:58Z",
+      "side": 1,
+      "message": "I\u0027m hesitant about the way you\u0027re recording this here. There isn\u0027t any control flow change based on this, and since you want to record this event exactly once for a given translate attempt, it seems really unclear that this is safe, and that neither ShowTranslateUI or NotifyTranslateError are going to RecordTranslateEvent in this error scenario, but if there wasn\u0027t an error, they would call RecordTranslateEvent.\n\nAt the very least, I\u0027d suggest slapping in a comment here explaining who is supposed to call RecordTranslateEvent and in what scenario.",
+      "range": {
+        "startLine": 446,
+        "startChar": 37,
+        "endLine": 446,
+        "endChar": 57
+      },
+      "revId": "217821a8ef864274a0a7d64b4958c3395ba85928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
