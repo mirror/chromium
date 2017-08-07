@@ -137,6 +137,13 @@ class NET_EXPORT NetworkQualityEstimatorParams {
     effective_connection_type_algorithm_ = algorithm;
   }
 
+  // Return the multiplier by which the transport RTT should be multiplied. HTTP
+  // RTT is then computed as the max. of the HTTP RTT and the multiplied
+  // transport RTT.
+  double transport_rtt_multiplier_http_rtt_computation() const {
+    return transport_rtt_multiplier_http_rtt_computation_;
+  }
+
  private:
   // Map containing all field trial parameters related to
   // NetworkQualityEstimator field trial.
@@ -149,6 +156,7 @@ class NET_EXPORT NetworkQualityEstimatorParams {
   base::Optional<EffectiveConnectionType> forced_effective_connection_type_;
   bool persistent_cache_reading_enabled_;
   const base::TimeDelta min_socket_watcher_notification_interval_;
+  const double transport_rtt_multiplier_http_rtt_computation_;
 
   EffectiveConnectionTypeAlgorithm effective_connection_type_algorithm_;
 
