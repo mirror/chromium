@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68d45b9c_36415d07",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/paint-footer-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-07T21:36:05Z",
+      "side": 1,
+      "message": "I think we should try to distill this test a little bit, to figure out what\u0027s actually going on. Multicol + table-footer-group should be an impossible combination, but I suspect there\u0027s some magic for the root HTML element, so that display:table-footer-group isn\u0027t applied.\n\nI\u0027ll see what I can do about it tomorrow, unless you beat me to it.",
+      "revId": "f864f25497a56a0369945de63fceb890411b3a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
