@@ -111,8 +111,8 @@ class TestExtensionsBrowserClient : public ExtensionsBrowserClient {
                                    const Extension* extension) const override;
   std::unique_ptr<RuntimeAPIDelegate> CreateRuntimeAPIDelegate(
       content::BrowserContext* context) const override;
-  const ComponentExtensionResourceManager*
-  GetComponentExtensionResourceManager() override;
+  const ComponentExtensionDelegate*
+  GetComponentExtensionDelegate() override;
   void BroadcastEventToRenderers(
       events::HistogramValue histogram_value,
       const std::string& event_name,

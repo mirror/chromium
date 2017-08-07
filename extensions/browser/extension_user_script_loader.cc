@@ -22,7 +22,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_process_host.h"
-#include "extensions/browser/component_extension_resource_manager.h"
+#include "extensions/browser/component_extension_delegate.h"
 #include "extensions/browser/content_verifier.h"
 #include "extensions/browser/extension_file_task_runner.h"
 #include "extensions/browser/extension_registry.h"
@@ -71,7 +71,7 @@ bool LoadScriptContent(const HostID& host_id,
   if (path.empty()) {
     int resource_id = 0;
     if (ExtensionsBrowserClient::Get()
-            ->GetComponentExtensionResourceManager()
+            ->GetComponentExtensionDelegate()
             ->IsComponentExtensionResource(script_file->extension_root(),
                                            script_file->relative_path(),
                                            &resource_id)) {

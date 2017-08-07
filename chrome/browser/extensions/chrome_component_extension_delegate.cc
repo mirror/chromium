@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/extensions/chrome_component_extension_resource_manager.h"
+#include "chrome/browser/extensions/chrome_component_extension_delegate.h"
 
 #include "base/logging.h"
 #include "base/macros.h"
@@ -25,8 +25,8 @@
 
 namespace extensions {
 
-ChromeComponentExtensionResourceManager::
-ChromeComponentExtensionResourceManager() {
+ChromeComponentExtensionDelegate::
+ChromeComponentExtensionDelegate() {
   static const GritResourceMap kExtraComponentExtensionResources[] = {
     {"web_store/webstore_icon_128.png", IDR_WEBSTORE_ICON},
     {"web_store/webstore_icon_16.png", IDR_WEBSTORE_ICON_16},
@@ -69,10 +69,10 @@ ChromeComponentExtensionResourceManager() {
 #endif
 }
 
-ChromeComponentExtensionResourceManager::
-~ChromeComponentExtensionResourceManager() {}
+ChromeComponentExtensionDelegate::
+~ChromeComponentExtensionDelegate() {}
 
-bool ChromeComponentExtensionResourceManager::IsComponentExtensionResource(
+bool ChromeComponentExtensionDelegate::IsComponentExtensionResource(
     const base::FilePath& extension_path,
     const base::FilePath& resource_path,
     int* resource_id) const {
@@ -94,7 +94,7 @@ bool ChromeComponentExtensionResourceManager::IsComponentExtensionResource(
   return entry != path_to_resource_id_.end();
 }
 
-void ChromeComponentExtensionResourceManager::AddComponentResourceEntries(
+void ChromeComponentExtensionDelegate::AddComponentResourceEntries(
     const GritResourceMap* entries,
     size_t size) {
   for (size_t i = 0; i < size; ++i) {

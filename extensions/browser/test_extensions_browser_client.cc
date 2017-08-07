@@ -192,8 +192,8 @@ TestExtensionsBrowserClient::CreateRuntimeAPIDelegate(
   return std::unique_ptr<RuntimeAPIDelegate>(new TestRuntimeAPIDelegate());
 }
 
-const ComponentExtensionResourceManager*
-TestExtensionsBrowserClient::GetComponentExtensionResourceManager() {
+const ComponentExtensionDelegate*
+TestExtensionsBrowserClient::GetComponentExtensionDelegate() {
   return nullptr;
 }
 

@@ -206,9 +206,9 @@ ShellExtensionsBrowserClient::CreateRuntimeAPIDelegate(
   return base::MakeUnique<ShellRuntimeAPIDelegate>();
 }
 
-const ComponentExtensionResourceManager*
-ShellExtensionsBrowserClient::GetComponentExtensionResourceManager() {
-  return NULL;
+const ComponentExtensionDelegate*
+ShellExtensionsBrowserClient::GetComponentExtensionDelegate() {
+  return nullptr;
 }
 
 void ShellExtensionsBrowserClient::BroadcastEventToRenderers(
