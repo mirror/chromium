@@ -47,8 +47,7 @@ void CastMediaSinkServiceImpl::OpenChannels(
   current_service_ip_endpoints_.clear();
 
   for (const auto& cast_sink : cast_sinks) {
-    net::IPEndPoint ip_endpoint(cast_sink.cast_data().ip_address,
-                                cast_sink.cast_data().port);
+    const net::IPEndPoint& ip_endpoint = cast_sink.cast_data().ip_endpoint;
     current_service_ip_endpoints_.insert(ip_endpoint);
     OpenChannel(ip_endpoint, cast_sink);
   }
@@ -62,12 +61,11 @@ void CastMediaSinkServiceImpl::OnError(const cast_channel::CastSocket& socket,
            << " [error_state]: "
            << cast_channel::ChannelErrorToString(error_state);
   net::IPEndPoint ip_endpoint = socket.ip_endpoint();
-  auto sink_it = std::find_if(
-      current_sinks_.begin(), current_sinks_.end(),
-      [&](const MediaSinkInternal& sink) {
-        return sink.cast_data().ip_address == ip_endpoint.address() &&
-               sink.cast_data().port == ip_endpoint.port();
-      });
+  auto sink_it =
+      std::find_if(current_sinks_.begin(), current_sinks_.end(),
+                   [&](const MediaSinkInternal& sink) {
+                     return sink.cast_data().ip_endpoint == ip_endpoint;
+                   });
 
   if (sink_it == current_sinks_.end())
     return;
@@ -100,7 +98,7 @@ void CastMediaSinkServiceImpl::OnChannelOpened(
   DCHECK(socket);
   if (socket->error_state() != cast_channel::ChannelError::NONE) {
     DVLOG(2) << "Fail to open channel "
-             << cast_sink.cast_data().ip_address.ToString()
+             << cast_sink.cast_data().ip_endpoint.ToString()
              << " [name]: " << cast_sink.sink().name();
     return;
   }
