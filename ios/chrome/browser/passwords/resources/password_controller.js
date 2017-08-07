@@ -226,6 +226,7 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
    */
   __gCrWeb['fillPasswordForm'] = function(formData, username, password,
                                           opt_normalizedOrigin) {
+      debugger;
     return fillPasswordFormWithData_(
         formData, username, password, window, opt_normalizedOrigin);
   };

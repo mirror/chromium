@@ -37,6 +37,7 @@ NSString* JSONEscape(NSString* JSONString) {
 - (void)findPasswordFormsWithCompletionHandler:
     (void (^)(NSString*))completionHandler {
   DCHECK(completionHandler);
+    LOG(ERROR)<<"***** jsManager";
   [self evaluateExtraScript:@"__gCrWeb.findPasswordForms()"
           completionHandler:completionHandler];
 }
