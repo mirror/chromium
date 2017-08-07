@@ -5,7 +5,7 @@
   "description": "Trivial hosted app.",
   "app": {
     "urls": [
-      "http://localhost/extensions/hosted_app/main.html"
+      "https://example.com"
     ],
     "launch": {
       "web_url": "http://localhost/extensions/hosted_app/main.html"
