@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "14013939_71891fc0",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2252,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T23:04:58Z",
+      "side": 1,
+      "message": "The browser side needs to guard against misbehaving renderers, so checks are always needed here. The renderer side is to avoid sending extra data in well behaving cases.",
+      "parentUuid": "31dbdb4c_45fc76bb",
+      "revId": "311e3bc50eb51827d452da3c49c712c3a0146995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bee5ad5_9348aed5",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
         "patchSetId": 3

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "011fc0c1_0d590f88",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T23:04:58Z",
+      "side": 1,
+      "message": "nit: It is still missing an empty line below to be consistent with the rest of the interface code.",
+      "revId": "70cdb8e33f5c7aa4adba8e8d3b65ddbe4887d9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
