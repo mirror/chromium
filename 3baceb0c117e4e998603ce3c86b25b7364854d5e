@@ -1307,6 +1307,24 @@
     },
     {
       "key": {
+        "uuid": "7e17237f_67896def",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "That\u0027s a good point, I didn\u0027t think of that. (I\u0027m not completely sure if that\u0027s how things actually work, but it does make sense.)\n\nOverall, I\u0027d be happier if we didn\u0027t have to bake HTML into the strings at all; that just feels messy. It looks like (at least for the strings we have in this CL) that the link part is always a separate sentence at the end (like \"Learn more\"). Is that correct? If so, could we separate the link part from the rest of the string? I.e. have one string that\u0027s the actual message, another string that\u0027s the \"Learn more\" (without the \u003ca\u003e tag), and the link separately. WDYT?",
+      "parentUuid": "124f6323_9528de30",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db4c6773_abd9cf82",
         "filename": "chrome/browser/search/local_ntp_source.cc",
         "patchSetId": 2

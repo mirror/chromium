@@ -1,0 +1,215 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3f37958_5a71894a",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "It\u0027s not the omnibox, but rather the fakebox, or maybe \"searchbox\".\n\noptional:\nif (searchboxApiHandle.onfocuschange)\n  throw new Error(...);\n\nsearchboxApiHandle.onfocuschange \u003d ...\n\n(IMO a bit cleaner to read - get the error handling out of the way first, then go on with the real code path.)",
+      "range": {
+        "startLine": 601,
+        "startChar": 73,
+        "endLine": 601,
+        "endChar": 0
+      },
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4575191f_9081303e",
+        "filename": "chrome/browser/resources/local_ntp/voice.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "Hm, Chrome only seems to know -webkit-font-smoothing, and as far as I can tell, that doesn\u0027t actually do anything. (Tested only on Linux, possibly it does have an effect on Win and/or Mac.)\n\nHave you seen it do anything? I\u0027d also be fine with just removing it; why should this one text element have different AA than everything else on the page...",
+      "range": {
+        "startLine": 238,
+        "startChar": 36,
+        "endLine": 238,
+        "endChar": 0
+      },
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f156e71e_b912f42e",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "nit: s/preffered/preferred/",
+      "range": {
+        "startLine": 21,
+        "startChar": 50,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "270ed790_a2d73b19",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "Can both exist and have different values?!",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9dca6c8_e2ef3269",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "Is this to replace the Google TLD? I don\u0027t think that\u0027ll work; not every language has a Google TLD, and I\u0027m not sure if the language we get is even always in the right format (e.g. it might be en_US or something like that).\nInstead, the URL should probably be based on the Google Base URL, which you can get from template_url_service-\u003esearch_terms_data().GoogleBaseURLValue(). (We also need to check that the links actually exist for all TLDs. They *should*, but who knows.)",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfc55cc4_df2c2a41",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "Ah, so have you verified that this actually still happens?",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "559bcfbe_71d38c17",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "nit: Put the relevant parts of the above comment into the cases where they belong? As it is, I find it somewhat misleading.",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e4d7bde_40aed7e0",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "Indeed, looks like it. I guess things will get corrected in the next handleRecognitionResult_ call, which will get us back into the SPEECH_RECEIVED state? (Of course, better to do it right the first time)",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e43a6d_cb56e6ba",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "Can this happen? We just set it to RESULT_RECEIVED above.",
+      "range": {
+        "startLine": 454,
+        "startChar": 55,
+        "endLine": 454,
+        "endChar": 0
+      },
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "331a678e_856cd339",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "Why?",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18e8810_9875e6d2",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "I think finalResult may not be set yet? And if we do have a finalResult, speechQuery should probably have the same value? (I\u0027m guessing here - whatever\u0027s the case, this is definitely worth a comment :)",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

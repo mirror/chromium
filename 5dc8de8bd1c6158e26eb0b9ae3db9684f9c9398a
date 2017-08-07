@@ -446,6 +446,24 @@
     },
     {
       "key": {
+        "uuid": "f1924e36_57677832",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "Wow, no wonder it\u0027s confusing, that\u0027s quite the diagram. If we can\u0027t get rid of some more of the states to make things simpler, then it\u0027d be awesome to have an ASCII-art version of the diagram at the top of this file, along with a short description of what each state means. (Not in this CL probably.)\n\nI don\u0027t really have an opinion on abort vs cancel, to me they mean pretty much the same thing. Go with whatever you feel fits better :)  More important is IMO to have a comment on what the states mean.",
+      "parentUuid": "d84bd48e_843b05e2",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8431c33_f6e37eba",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 3
@@ -633,6 +651,24 @@
     },
     {
       "key": {
+        "uuid": "60a87b23_4e8aaaa4",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "isUiDefinitelyHidden maybe?\n\nKudos on the state diagram, that\u0027ll help a lot!",
+      "parentUuid": "3f716b7d_81da7731",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40008233_de1415c6",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 3
@@ -665,6 +701,24 @@
       "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad9c02f8_0d4b24e6",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "It\u0027s still there though. Did some of the other changes make it necessary again?",
+      "parentUuid": "0507b06a_3cd003d0",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -773,6 +827,24 @@
     },
     {
       "key": {
+        "uuid": "e2f43140_df4da3b5",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "I think if one of the elements didn\u0027t exist, then this would throw a JS error which the smoke test should catch. Please verify, since the JS test stuff is super non-obvious, but I think we\u0027re fine.",
+      "parentUuid": "5395e5af_11e604c9",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac63a706_4c9e0bb9",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 3
@@ -802,6 +874,24 @@
       "side": 1,
       "message": "Yes, that confused me when I first read this method as well, but it makes sense in general. Renaming variable for now.\n\nThe only place where non-text gets passed as `interimText` is in showError(). Therefore, we could make separate getErrorMessage() and getErrorLink() methods, where getErrorLink() might return null or a link element, based on the error, and we would just append that element as a child in updateText. This would involve splitting up the localized strings as well. WDYT?\n\nMaybe we should also rename updateText() to updateTextArea(), or something similar.",
       "parentUuid": "ac63a706_4c9e0bb9",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adcb0c21_7bf8e465",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-07T10:20:54Z",
+      "side": 1,
+      "message": "\u003e Yes, that confused me when I first read this method as well, but it makes sense in general. Renaming variable for now.\n\u003e \n\u003e The only place where non-text gets passed as `interimText` is in showError(). Therefore, we could make separate getErrorMessage() and getErrorLink() methods, where getErrorLink() might return null or a link element, based on the error, and we would just append that element as a child in updateText. This would involve splitting up the localized strings as well. WDYT?\n\nHah, that\u0027s basically exactly the thing I suggested in another comment :)  Since we both seem to think that\u0027ll be cleaner, yes please!\n\n\u003e Maybe we should also rename updateText() to updateTextArea(), or something similar.\n\nSure, that makes sense!",
+      "parentUuid": "2b935994_71762d2b",
       "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
