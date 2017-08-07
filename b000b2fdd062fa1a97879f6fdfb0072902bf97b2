@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e37e7271_fae7d54f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache-invalidation-by-header.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-07T07:33:58Z",
+      "side": 1,
+      "message": "Thank you! I think I\u0027ve used that in other tests; I can\u0027t believe I didn\u0027t think of that here! I\u0027ll fix that immediately.",
+      "parentUuid": "b6bdf6ec_36569d52",
+      "revId": "b000b2fdd062fa1a97879f6fdfb0072902bf97b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fd9d896_eb5f7373",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache-invalidation-by-header.htm",
         "patchSetId": 2
@@ -65,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "418bc319_633f005d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache-invalidation-by-header.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-07T07:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc26ff67_1ee52fc2",
+      "range": {
+        "startLine": 29,
+        "startChar": 12,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "b000b2fdd062fa1a97879f6fdfb0072902bf97b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c3a1465_0030462e",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache-invalidation-by-header.htm",
         "patchSetId": 2
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "e22fff98_dd8ef3be",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache-invalidation-by-header.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-07T07:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c3a1465_0030462e",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "b000b2fdd062fa1a97879f6fdfb0072902bf97b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6da608f5_6d77390b",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-preflight-cache-invalidation.py",
         "patchSetId": 2
@@ -102,6 +168,24 @@
       "revId": "b000b2fdd062fa1a97879f6fdfb0072902bf97b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9ecd0e_d1d88564",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-preflight-cache-invalidation.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-07T07:33:58Z",
+      "side": 1,
+      "message": "I think you\u0027re right! I\u0027ll take them out, and I\u0027ll test it a little bit to make sure it doesn\u0027t change behavior.",
+      "parentUuid": "6da608f5_6d77390b",
+      "revId": "b000b2fdd062fa1a97879f6fdfb0072902bf97b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +209,30 @@
       "revId": "b000b2fdd062fa1a97879f6fdfb0072902bf97b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dee3ce8_df1fd46f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-preflight-cache-invalidation.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-07T07:33:58Z",
+      "side": 1,
+      "message": "Good point! I\u0027ll try rewriting it a little; please take a look at the next commit and tell me what you think",
+      "parentUuid": "e18b7102_3898dcf0",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "b000b2fdd062fa1a97879f6fdfb0072902bf97b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
