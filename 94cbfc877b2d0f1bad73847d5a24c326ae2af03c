@@ -142,6 +142,24 @@
       "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc498b9e_f32cb5e6",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-07T21:57:07Z",
+      "side": 1,
+      "message": "Just now catching up on this conversation! Lucas is totally right, we\u0027re looking at the common name of the issuer for the leaf certificates, and we chose this field because it was the most consistently used across the different MITM certificates.\n\nThere\u0027s no reason we can\u0027t look at more than one field however! We could do something like:\n\nreturn (organization exists \u0026\u0026 organization matches) || (common name exists \u0026\u0026 common name matches)",
+      "parentUuid": "2fce9124_5a127e62",
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
