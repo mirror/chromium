@@ -132,7 +132,7 @@ class DiskMountManagerImpl : public DiskMountManager {
     MountPointMap::const_iterator mount_point = mount_points_.find(mount_path);
     if (mount_point == mount_points_.end()) {
       LOG(ERROR) << "Mount point with path \"" << mount_path << "\" not found.";
-      OnFormatCompleted(FORMAT_ERROR_UNKNOWN, mount_path);
+      OnFormatCompleted(DiskEntry(FORMAT_ERROR_UNKNOWN, mount_path, "", ""));
       return;
     }
 
@@ -140,13 +140,14 @@ class DiskMountManagerImpl : public DiskMountManager {
     DiskMap::const_iterator disk = disks_.find(device_path);
     if (disk == disks_.end()) {
       LOG(ERROR) << "Device with path \"" << device_path << "\" not found.";
-      OnFormatCompleted(FORMAT_ERROR_UNKNOWN, device_path);
+      OnFormatCompleted(DiskEntry(FORMAT_ERROR_UNKNOWN, device_path, "", ""));
       return;
     }
     if (disk->second->is_read_only()) {
       LOG(ERROR) << "Mount point with path \"" << mount_path
                  << "\" is read-only.";
-      OnFormatCompleted(FORMAT_ERROR_DEVICE_NOT_ALLOWED, mount_path);
+      OnFormatCompleted(
+          DiskEntry(FORMAT_ERROR_DEVICE_NOT_ALLOWED, mount_path, "", ""));
       return;
     }
 
@@ -468,7 +469,7 @@ class DiskMountManagerImpl : public DiskMountManager {
         disks_.find(device_path) != disks_.end()) {
       FormatUnmountedDevice(device_path);
     } else {
-      OnFormatCompleted(FORMAT_ERROR_UNKNOWN, device_path);
+      OnFormatCompleted(DiskEntry(FORMAT_ERROR_UNKNOWN, device_path, "", ""));
     }
   }
 
@@ -479,15 +480,12 @@ class DiskMountManagerImpl : public DiskMountManager {
 
     const char kFormatVFAT[] = "vfat";
     cros_disks_client_->Format(
-        device_path,
-        kFormatVFAT,
+        device_path, kFormatVFAT,
         base::Bind(&DiskMountManagerImpl::OnFormatStarted,
-                   weak_ptr_factory_.GetWeakPtr(),
-                   device_path),
+                   weak_ptr_factory_.GetWeakPtr(), device_path),
         base::Bind(&DiskMountManagerImpl::OnFormatCompleted,
                    weak_ptr_factory_.GetWeakPtr(),
-                   FORMAT_ERROR_UNKNOWN,
-                   device_path));
+                   DiskEntry(FORMAT_ERROR_UNKNOWN, device_path, "", "")));
   }
 
   // Callback for Format.
@@ -496,9 +494,19 @@ class DiskMountManagerImpl : public DiskMountManager {
   }
 
   // Callback to handle FormatCompleted signal and Format method call failure.
-  void OnFormatCompleted(FormatError error_code,
-                         const std::string& device_path) {
-    NotifyFormatStatusUpdate(FORMAT_COMPLETED, error_code, device_path);
+  void OnFormatCompleted(const DiskEntry& entry) {
+    DiskMap::iterator iter = disks_.find(entry.device_path());
+    // disk might have been removed by now?
+    if (iter != disks_.end() && !entry.label().empty() &&
+        !entry.disk_file_system_type().empty()) {
+      Disk* disk = iter->second.get();
+      DCHECK(disk);
+      disk->set_device_label(entry.label());
+      disk->set_disk_file_system_type(entry.disk_file_system_type());
+    }
+
+    NotifyFormatStatusUpdate(FORMAT_COMPLETED, entry.error_code(),
+                             entry.device_path());
   }
 
   // Callback for GetDeviceProperties.
@@ -525,27 +533,17 @@ class DiskMountManagerImpl : public DiskMountManager {
     auto access_mode = access_modes_.find(disk_info.device_path());
     bool write_disabled_by_policy = access_mode != access_modes_.end()
         && access_mode->second == chromeos::MOUNT_ACCESS_MODE_READ_ONLY;
-    Disk* disk = new Disk(disk_info.device_path(),
-                          disk_info.mount_path(),
-                          write_disabled_by_policy,
-                          disk_info.system_path(),
-                          disk_info.file_path(),
-                          disk_info.label(),
-                          disk_info.drive_label(),
-                          disk_info.vendor_id(),
-                          disk_info.vendor_name(),
-                          disk_info.product_id(),
-                          disk_info.product_name(),
-                          disk_info.uuid(),
-                          FindSystemPathPrefix(disk_info.system_path()),
-                          disk_info.device_type(),
-                          disk_info.total_size_in_bytes(),
-                          disk_info.is_drive(),
-                          disk_info.is_read_only(),
-                          disk_info.has_media(),
-                          disk_info.on_boot_device(),
-                          disk_info.on_removable_device(),
-                          disk_info.is_hidden());
+    Disk* disk = new Disk(
+        disk_info.device_path(), disk_info.mount_path(),
+        write_disabled_by_policy, disk_info.system_path(),
+        disk_info.file_path(), disk_info.label(), disk_info.drive_label(),
+        disk_info.vendor_id(), disk_info.vendor_name(), disk_info.product_id(),
+        disk_info.product_name(), disk_info.uuid(),
+        FindSystemPathPrefix(disk_info.system_path()), disk_info.device_type(),
+        disk_info.total_size_in_bytes(), disk_info.is_drive(),
+        disk_info.is_read_only(), disk_info.has_media(),
+        disk_info.on_boot_device(), disk_info.on_removable_device(),
+        disk_info.is_hidden(), disk_info.disk_file_system_type());
     disks_.insert(
         std::make_pair(disk_info.device_path(), base::WrapUnique(disk)));
     NotifyDiskStatusUpdate(is_new ? DISK_ADDED : DISK_CHANGED, disk);
@@ -746,7 +744,8 @@ DiskMountManager::Disk::Disk(const std::string& device_path,
                              bool has_media,
                              bool on_boot_device,
                              bool on_removable_device,
-                             bool is_hidden)
+                             bool is_hidden,
+                             const std::string& disk_file_system_type)
     : device_path_(device_path),
       mount_path_(mount_path),
       write_disabled_by_policy_(write_disabled_by_policy),
@@ -767,7 +766,8 @@ DiskMountManager::Disk::Disk(const std::string& device_path,
       has_media_(has_media),
       on_boot_device_(on_boot_device),
       on_removable_device_(on_removable_device),
-      is_hidden_(is_hidden) {}
+      is_hidden_(is_hidden),
+      disk_file_system_type_(disk_file_system_type) {}
 
 DiskMountManager::Disk::Disk(const Disk& other) = default;
 

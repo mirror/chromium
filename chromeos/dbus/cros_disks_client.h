@@ -183,6 +183,11 @@ class CHROMEOS_EXPORT DiskInfo {
   // Returns file system uuid.
   const std::string& uuid() const { return uuid_; }
 
+  // Returns file system type identifier.
+  const std::string& disk_file_system_type() const {
+    return disk_file_system_type_;
+  }
+
  private:
   void InitializeFromResponse(dbus::Response* response);
 
@@ -206,6 +211,32 @@ class CHROMEOS_EXPORT DiskInfo {
   bool is_read_only_;
   bool is_hidden_;
   std::string uuid_;
+  std::string disk_file_system_type_;
+};
+
+// A struct to represent information about a disk sent from cros-disks.
+struct CHROMEOS_EXPORT DiskEntry {
+ public:
+  DiskEntry();
+  DiskEntry(FormatError error_code,
+            const std::string& device_path,
+            const std::string& label,
+            const std::string& disk_file_system_type);
+  DiskEntry(const DiskEntry& diskEntry);
+  ~DiskEntry();
+
+  FormatError error_code() const { return error_code_; }
+  const std::string& device_path() const { return device_path_; }
+  const std::string& label() const { return label_; }
+  const std::string& disk_file_system_type() const {
+    return disk_file_system_type_;
+  }
+
+ private:
+  FormatError error_code_;
+  std::string device_path_;
+  std::string label_;
+  std::string disk_file_system_type_;
 };
 
 // A struct to represent information about a mount point sent from cros-disks.
@@ -263,9 +294,7 @@ class CHROMEOS_EXPORT CrosDisksClient : public DBusClient {
   // A callback to handle FormatCompleted signal.
   // The first argument is the error code.
   // The second argument is the device path.
-  typedef base::Callback<void(FormatError error_code,
-                              const std::string& device_path)>
-      FormatCompletedHandler;
+  typedef base::Callback<void(const DiskEntry& entry)> FormatCompletedHandler;
 
   // A callback to handle mount events.
   // The first argument is the event type.
