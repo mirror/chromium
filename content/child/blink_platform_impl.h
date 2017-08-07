@@ -109,6 +109,7 @@ class CONTENT_EXPORT BlinkPlatformImpl
   bool AllowScriptExtensionForServiceWorker(
       const blink::WebURL& script_url) override;
   blink::WebCrypto* Crypto() override;
+  std::string GetNavigationServiceName() const override;
   blink::WebNotificationManager* GetNotificationManager() override;
   blink::WebPushProvider* PushProvider() override;
   blink::WebMediaCapabilitiesClient* MediaCapabilitiesClient() override;

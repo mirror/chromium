@@ -15,6 +15,7 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/instrumentation/resource_coordinator/RendererResourceCoordinator.h"
 #include "platform/scheduler/base/real_time_domain.h"
 #include "platform/scheduler/base/task_queue_impl.h"
 #include "platform/scheduler/base/task_queue_selector.h"
@@ -2244,6 +2245,15 @@ void RendererSchedulerImpl::OnQueueingTimeForWindowEstimated(
   TRACE_COUNTER1(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                  "estimated_queueing_time_for_window",
                  queueing_time.InMillisecondsF());
+
+  if (RendererResourceCoordinator::IsEnabled()) {
+    // TODO(oysteine): Move the multiplier used to avoid precision loss
+    // into a shared location.
+    RendererResourceCoordinator::Get().SetProperty(
+        resource_coordinator::mojom::PropertyType::
+            kExpectedTaskQueueingDuration,
+        static_cast<int64_t>(queueing_time.InMillisecondsF() * 1000));
+  }
 }
 
 AutoAdvancingVirtualTimeDomain* RendererSchedulerImpl::GetVirtualTimeDomain() {
