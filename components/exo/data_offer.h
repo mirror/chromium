@@ -7,6 +7,7 @@
 
 #include <cstdint>
 #include <string>
+#include <vector>
 
 #include "base/containers/flat_set.h"
 #include "base/files/scoped_file.h"
@@ -21,7 +22,10 @@ enum class DndAction;
 // Object representing transferred data offered to a client.
 class DataOffer : public ui::PropertyHandler {
  public:
-  explicit DataOffer(DataOfferDelegate* delegate);
+  DataOffer(DataOfferDelegate* delegate,
+            const std::vector<std::string>& mime_types,
+            const base::flat_set<DndAction>& source_actions,
+            DndAction dnd_action);
   ~DataOffer();
 
   // Accepts one of the offered mime types.
@@ -38,8 +42,15 @@ class DataOffer : public ui::PropertyHandler {
   void SetActions(const base::flat_set<DndAction>& dnd_actions,
                   DndAction preferred_action);
 
+  // Sends events to the client to notify the current member values of
+  // DataOffer.
+  void SendEvents();
+
  private:
   DataOfferDelegate* const delegate_;
+  const std::vector<std::string> mime_types_;
+  const base::flat_set<DndAction> source_actions_;
+  const DndAction dnd_action_;
 
   DISALLOW_COPY_AND_ASSIGN(DataOffer);
 };
