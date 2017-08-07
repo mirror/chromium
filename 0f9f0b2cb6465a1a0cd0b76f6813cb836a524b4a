@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7a3c498_ff667971",
+        "filename": "components/download/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-07T21:25:28Z",
+      "side": 1,
+      "message": "Is it worth having this top level target for java if we don\u0027t have it for other cpp?  Should we just let things include internal_java and public_java directly?  I guess it boils down to, do we have a components_java target in components/BUILD.gn?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 1
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48172e10_cdd02f34",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/NetworkStatusListenerAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-07T21:25:28Z",
+      "side": 1,
+      "message": "Just pull this into the constructor and make mNotifier final?",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 27
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831b1e08_8b28445d",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/NetworkStatusListenerAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-07T21:25:28Z",
+      "side": 1,
+      "message": "Pull the static down below the other non-static methods",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 5
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be72c1ca_5ea3dea2",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/NetworkStatusListenerAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-07T21:25:28Z",
+      "side": 1,
+      "message": "Call unregister on mNotifier here?",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532ed859_674b6c91",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/NetworkStatusListenerAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-07T21:25:28Z",
+      "side": 1,
+      "message": "Put all observer methods together and add \"NetworkChangeNotifierAutoDetect.Observer implementation\" comment.",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 71
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd3c5ffb_e2dec4a8",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/NetworkStatusListenerAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-07T21:25:28Z",
+      "side": 1,
+      "message": "New line before the native methods",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 73
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab15a55_9e817f56",
+        "filename": "components/download/internal/android/network_status_listener_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-07T21:25:28Z",
+      "side": 1,
+      "message": "Do we still need this now?",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 39
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd5982c_408ff11c",
+        "filename": "components/download/internal/scheduler/device_status_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-07T21:25:28Z",
+      "side": 1,
+      "message": "Maybe comment that it\u0027s visible for testing?",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 10
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153dea49_c61753bb",
+        "filename": "components/download/internal/scheduler/network_status_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-07T21:25:28Z",
+      "side": 1,
+      "message": "Mention that classes should still call the base class version of the virtual methods?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "0f9f0b2cb6465a1a0cd0b76f6813cb836a524b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
