@@ -22,6 +22,30 @@
       "revId": "85d63dae809d7a9ac53d310f0837b02a1c881185",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa28be88_6888e056",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-07T04:19:51Z",
+      "side": 1,
+      "message": "I checked that the navigation params remained the same before and after the code changed, but I think it makes sense to add the element to be safe.\n\nDone.",
+      "parentUuid": "25ab7689_78863b45",
+      "range": {
+        "startLine": 116,
+        "startChar": 9,
+        "endLine": 116,
+        "endChar": 13
+      },
+      "revId": "85d63dae809d7a9ac53d310f0837b02a1c881185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
