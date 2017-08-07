@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52df9e95_96a77286",
+        "filename": "media/gpu/android_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1590,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-07T18:59:43Z",
+      "side": 1,
+      "message": "I know what is happening here, but is there a clearer way of expressing this condition?",
+      "range": {
+        "startLine": 1589,
+        "startChar": 0,
+        "endLine": 1590,
+        "endChar": 48
+      },
+      "revId": "d0797ae5a283c1b3b6df1be9edca6ba7b461c9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032dbdf6_de5b484b",
+        "filename": "media/gpu/android_video_surface_chooser_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-07T18:59:43Z",
+      "side": 1,
+      "message": "s/fs/fullscreen",
+      "range": {
+        "startLine": 115,
+        "startChar": 25,
+        "endLine": 115,
+        "endChar": 27
+      },
+      "revId": "d0797ae5a283c1b3b6df1be9edca6ba7b461c9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
