@@ -70,6 +70,30 @@
       "revId": "07ad211311d2efe6b9a2d002c1334b7348cca76f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe11b746_2abfd860",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-07T21:10:44Z",
+      "side": 1,
+      "message": "Could we call the same method in DownloadActivity?  What would happen if we got the trim request while the UI was showing (e.g. would it mess up what the users are currently seeing?  I don\u0027t think so, just checking).\n\nMy main concern is that I don\u0027t know what will free cache entries now under memory pressure.  Previously we were relying on GC to do it, but here it looks like we\u0027ll just hit 5mb and stick.",
+      "parentUuid": "71099770_21f2d119",
+      "range": {
+        "startLine": 179,
+        "startChar": 16,
+        "endLine": 179,
+        "endChar": 26
+      },
+      "revId": "07ad211311d2efe6b9a2d002c1334b7348cca76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
