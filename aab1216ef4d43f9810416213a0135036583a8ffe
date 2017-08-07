@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "6cdbf582_90eaf56f",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-07T07:22:33Z",
+      "side": 1,
+      "message": "base::MakeRefCounted\u003c\u003e",
+      "range": {
+        "startLine": 261,
+        "startChar": 13,
+        "endLine": 261,
+        "endChar": 17
+      },
+      "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc482bf4_40bc540e",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-07T07:22:33Z",
+      "side": 1,
+      "message": "I prefer passing an instance as an argument of ctor to calling a global getter in ctor since it\u0027s easier to write tests and understand its dependency. \nIs it possible to move SWDispatcher::GetOrCreateThreadSpecificInstance to outside of SWProviderContext?",
+      "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25fca02a_b5dd444f",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-07T07:22:33Z",
+      "side": 1,
+      "message": "Could |thread_safe_sender_| be removed since it seems to be used only for calling ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance()?",
+      "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b2573d7_d4747f74",
         "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 4
@@ -13,6 +70,58 @@
       "writtenOn": "2017-08-07T04:06:04Z",
       "side": 1,
       "message": "This test is kind of silly and is just moved from ServiceWorkerDispatcherTest, which no longer has to do with setting the registration.\n\nIt\u0027s just testing that SWProviderContext owns the unique_ptrs being passed to it.\n\nA maybe better test would be to test that ServiceWorkerNetworkProvider ctor takes ownership of the infos passed in the Mojo interface. But that would require changing the ctor to take a ThreadSafeSender param which seems like more trouble that it\u0027s worth.",
+      "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f9549c_19381039",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-07T07:22:33Z",
+      "side": 1,
+      "message": "\u003e A maybe better test would be to test that ServiceWorkerNetworkProvider ctor takes ownership of the infos passed in the Mojo interface. But that would require changing the ctor to take a ThreadSafeSender param which seems like more trouble that it\u0027s worth.\n\nI agree with it.",
+      "parentUuid": "7b2573d7_d4747f74",
+      "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e959b7fc_519d4a91",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-07T07:22:33Z",
+      "side": 1,
+      "message": "base::MakeRefCounted\u003c\u003e()",
+      "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd77037f_a05d7653",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-07T07:22:33Z",
+      "side": 1,
+      "message": "IIRC, you can use just nullptr as a null request.",
       "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
