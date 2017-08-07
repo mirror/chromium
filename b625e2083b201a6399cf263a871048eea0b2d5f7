@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "708d9655_99f89208",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-07T04:34:34Z",
+      "side": 1,
+      "message": "Could you just check sanity of |selection| before L497?\nInvalidSelectionNullifier can reset callers |selection| of UpdateSelectionForMouseDownDispatchingSelectStart. Is that right?",
+      "revId": "b625e2083b201a6399cf263a871048eea0b2d5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ca2c893_5aaeebc2",
         "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.cpp",
         "patchSetId": 5
