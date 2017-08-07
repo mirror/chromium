@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "3b59bc01_3fcff62a",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 13
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-07T13:14:15Z",
+      "side": 1,
+      "message": "I\u0027d say it\u0027s not that important here how to transfer the time. My thought for this solution are:\n* server side does nothing with what admin entered on CPanel and transfer as is - hours, minutes and timezone\n* it\u0027s more user-readable, but that\u0027s more not for proto, but for internal policy storing and chrome://policy page\n* it\u0027s similar to internal proto: http://google3/google/type/timeofday.proto?l\u003d15\n\nAgainst:\n* less space to store and transfer one int32 instead of two\n* conversion happened on server side, shouldn\u0027t be any processing on the client\n\nHowever, I don\u0027t have a strong opinion about that as none of the arguments seems too critical for me.",
+      "parentUuid": "1c0c81f5_3db892cf",
+      "range": {
+        "startLine": 816,
+        "startChar": 0,
+        "endLine": 820,
+        "endChar": 1
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ab52f76_6415e232",
         "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
         "patchSetId": 13

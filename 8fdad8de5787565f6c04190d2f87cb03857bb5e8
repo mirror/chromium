@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "7f111d9d_a43eaf06",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-07T13:14:15Z",
+      "side": 1,
+      "message": "As policy is shown to user as is, I thought it\u0027s better to have more user-friendly time representation here and convert to milliseconds later. If, however, we are OK with milliseconds representation on \u0027chrome://policy\u0027 then probably it\u0027s even better to change policy proto to already provide milliseconds from server, i.e.conversion on server side.",
+      "parentUuid": "ac0a92df_aff7e789",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 17
+      },
+      "revId": "8fdad8de5787565f6c04190d2f87cb03857bb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2b1a2b7_2fc8806d",
         "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
         "patchSetId": 4
