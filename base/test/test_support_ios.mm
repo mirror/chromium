@@ -27,6 +27,10 @@
 // window displaying the app name. If a bunch of apps using MainHook are being
 // run in a row, this provides an indication of which one is currently running.
 
+namespace base {
+void do_the_thing();
+}
+
 static base::TestSuite* g_test_suite = NULL;
 static int g_argc;
 static char** g_argv;
@@ -152,9 +156,11 @@ static char** g_argv;
 }
 
 - (void)runTests {
-  coverage_util::ConfigureCoverageReportPath();
+  //coverage_util::ConfigureCoverageReportPath();
 
-  int exitStatus = g_test_suite->Run();
+  //int exitStatus = g_test_suite->Run();
+  int exitStatus = 0;
+  base::do_the_thing();
 
   if ([self shouldRedirectOutputToFile])
     [self writeOutputToNSLog];
