@@ -359,6 +359,47 @@ public class OfflinePageBridgeTest {
                 offlineIdToIgnore, asyncPages.get(0).getOfflineId());
     }
 
+    @Test
+    @SmallTest
+    @RetryOnFailure
+    public void testDownloadPage() throws Exception {
+        final OfflinePageOrigin origin =
+                new OfflinePageOrigin("abc.xyz", new String[] {"deadbeef"});
+        mActivityTestRule.loadUrl(mTestPage);
+        final String originString = origin.encodeAsJsonString();
+        final Semaphore semaphore = new Semaphore(0);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                Assert.assertNotNull(
+                        "Tab is null", mActivityTestRule.getActivity().getActivityTab());
+                Assert.assertEquals("URL does not match requested.", mTestPage,
+                        mActivityTestRule.getActivity().getActivityTab().getUrl());
+                Assert.assertNotNull("WebContents is null",
+                        mActivityTestRule.getActivity().getActivityTab().getWebContents());
+
+                mOfflinePageBridge.addObserver(new OfflinePageModelObserver() {
+                    @Override
+                    public void offlinePageAdded(OfflinePageItem newPage) {
+                        if (newPage.getRequestOrigin().contains(originString)) {
+                            mOfflinePageBridge.removeObserver(this);
+                            semaphore.release();
+                        }
+                    }
+                });
+
+                mOfflinePageBridge.scheduleDownload(
+                        mActivityTestRule.getActivity().getActivityTab().getWebContents(),
+                        "download", mTestPage, 0, origin);
+            }
+        });
+        Assert.assertTrue("Sempaphore acquire failed",
+                semaphore.tryAcquire(TIMEOUT_MS * 12, TimeUnit.MILLISECONDS));
+
+        List<OfflinePageItem> pages = getAllPages();
+        Assert.assertEquals(originString, pages.get(0).getRequestOrigin());
+    }
+
     // Returns offline ID.
     private long savePage(final int expectedResult, final String expectedUrl)
             throws InterruptedException {
