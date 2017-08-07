@@ -88,6 +88,24 @@
       "revId": "aba447cc117ae5347d724281a664655c43d8e74c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654c0276_e2b26071",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-07T23:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79361eb7_b17b5d44",
+      "revId": "aba447cc117ae5347d724281a664655c43d8e74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
