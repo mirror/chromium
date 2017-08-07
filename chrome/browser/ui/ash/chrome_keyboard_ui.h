@@ -28,7 +28,7 @@ class InputMethod;
 class ChromeKeyboardUI : public keyboard::KeyboardUIContent,
                          public content::WebContentsObserver {
  public:
-  explicit ChromeKeyboardUI(content::BrowserContext* context);
+  ChromeKeyboardUI(content::BrowserContext* context);
   ~ChromeKeyboardUI() override;
 
   // keyboard::KeyboardUIContent overrides
