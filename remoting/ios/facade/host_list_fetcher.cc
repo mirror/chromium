@@ -68,6 +68,11 @@ void HostListFetcher::RetrieveHostlist(const std::string& access_token,
   request_->Start();
 }
 
+void HostListFetcher::CancelFetch() {
+  request_.reset();
+  hostlist_callback_.Reset();
+}
+
 bool HostListFetcher::ProcessResponse(
     std::vector<remoting::HostInfo>* hostlist) {
   int response_code = request_->GetResponseCode();

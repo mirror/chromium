@@ -47,6 +47,10 @@ class HostListFetcher : public net::URLFetcherDelegate {
   virtual void RetrieveHostlist(const std::string& access_token,
                                 const HostlistCallback& callback);
 
+  // Cancels the current fetch request and silently drops the host list
+  // callback. Nothing will happen if there is no ongoing fetch request.
+  virtual void CancelFetch();
+
  private:
   // Processes the response from the directory service.
   bool ProcessResponse(std::vector<remoting::HostInfo>* hostlist);
