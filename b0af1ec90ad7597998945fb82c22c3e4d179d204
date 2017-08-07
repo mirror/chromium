@@ -156,6 +156,24 @@
       "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9d2b36_76e65daa",
+        "filename": "third_party/WebKit/Source/core/css/CSSPropertiesRanking.json5",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-07T07:28:25Z",
+      "side": 1,
+      "message": "Yeah, I havent though of how you would update something in css/ do you usually copy paste if there is a newer version? Of course, this list is susceptible to change.",
+      "parentUuid": "241c1d35_90be2b84",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
