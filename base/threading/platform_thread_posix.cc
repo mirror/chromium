@@ -51,28 +51,10 @@ void* ThreadFunc(void* params) {
   {
     std::unique_ptr<ThreadParams> thread_params(
         static_cast<ThreadParams*>(params));
-
     delegate = thread_params->delegate;
-    if (!thread_params->joinable)
-      base::ThreadRestrictions::SetSingletonAllowed(false);
-
-#if !defined(OS_NACL)
-    // Threads on linux/android may inherit their priority from the thread
-    // where they were created. This explicitly sets the priority of all new
-    // threads.
-    PlatformThread::SetCurrentThreadPriority(thread_params->priority);
-#endif
   }
 
-  ThreadIdNameManager::GetInstance()->RegisterThread(
-      PlatformThread::CurrentHandle().platform_handle(),
-      PlatformThread::CurrentId());
-
   delegate->ThreadMain();
-
-  ThreadIdNameManager::GetInstance()->RemoveName(
-      PlatformThread::CurrentHandle().platform_handle(),
-      PlatformThread::CurrentId());
 
   base::TerminateOnThread();
   return NULL;
@@ -168,22 +150,11 @@ void PlatformThread::YieldCurrentThread() {
 
 // static
 void PlatformThread::Sleep(TimeDelta duration) {
-  struct timespec sleep_time, remaining;
-
-  // Break the duration into seconds and nanoseconds.
-  // NOTE: TimeDelta's microseconds are int64s while timespec's
-  // nanoseconds are longs, so this unpacking must prevent overflow.
-  sleep_time.tv_sec = duration.InSeconds();
-  duration -= TimeDelta::FromSeconds(sleep_time.tv_sec);
-  sleep_time.tv_nsec = duration.InMicroseconds() * 1000;  // nanoseconds
-
-  while (nanosleep(&sleep_time, &remaining) == -1 && errno == EINTR)
-    sleep_time = remaining;
 }
 
 // static
 const char* PlatformThread::GetName() {
-  return ThreadIdNameManager::GetInstance()->GetName(CurrentId());
+  return ""; //ThreadIdNameManager::GetInstance()->GetName(CurrentId());
 }
 
 // static
@@ -192,23 +163,6 @@ bool PlatformThread::CreateWithPriority(size_t stack_size, Delegate* delegate,
                                         ThreadPriority priority) {
   return CreateThread(stack_size, true /* joinable thread */, delegate,
                       thread_handle, priority);
-}
-
-// static
-bool PlatformThread::CreateNonJoinable(size_t stack_size, Delegate* delegate) {
-  return CreateNonJoinableWithPriority(stack_size, delegate,
-                                       ThreadPriority::NORMAL);
-}
-
-// static
-bool PlatformThread::CreateNonJoinableWithPriority(size_t stack_size,
-                                                   Delegate* delegate,
-                                                   ThreadPriority priority) {
-  PlatformThreadHandle unused;
-
-  bool result = CreateThread(stack_size, false /* non-joinable thread */,
-                             delegate, &unused, priority);
-  return result;
 }
 
 // static

@@ -61,7 +61,7 @@ default_args = {
 check_targets = [
   #"//apps/*",  # Medium-hard.
   "//ash/*",
-  "//base/*",
+  #"//base/*",
   "//blink/*",
   "//breakpad/*",
   "//build/*",

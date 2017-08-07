@@ -1269,59 +1269,35 @@ class BASE_EXPORT ScopedActivity
 // These "scoped" classes provide easy tracking of various blocking actions.
 
 class BASE_EXPORT ScopedTaskRunActivity
-    : public GlobalActivityTracker::ScopedThreadActivity {
+{
  public:
   ALWAYS_INLINE
   explicit ScopedTaskRunActivity(const base::PendingTask& task)
-      : ScopedTaskRunActivity(::tracked_objects::GetProgramCounter(),
-                              task) {}
-
- private:
-  ScopedTaskRunActivity(const void* program_counter,
-                        const base::PendingTask& task);
-  DISALLOW_COPY_AND_ASSIGN(ScopedTaskRunActivity);
+                              {}
 };
 
-class BASE_EXPORT ScopedLockAcquireActivity
-    : public GlobalActivityTracker::ScopedThreadActivity {
+class BASE_EXPORT ScopedLockAcquireActivity {
  public:
   ALWAYS_INLINE
   explicit ScopedLockAcquireActivity(const base::internal::LockImpl* lock)
-      : ScopedLockAcquireActivity(::tracked_objects::GetProgramCounter(),
-                                  lock) {}
+                                  {}
 
- private:
-  ScopedLockAcquireActivity(const void* program_counter,
-                            const base::internal::LockImpl* lock);
-  DISALLOW_COPY_AND_ASSIGN(ScopedLockAcquireActivity);
 };
 
-class BASE_EXPORT ScopedEventWaitActivity
-    : public GlobalActivityTracker::ScopedThreadActivity {
+class BASE_EXPORT ScopedEventWaitActivity {
  public:
   ALWAYS_INLINE
   explicit ScopedEventWaitActivity(const base::WaitableEvent* event)
-      : ScopedEventWaitActivity(::tracked_objects::GetProgramCounter(),
-                                event) {}
+                                {}
 
- private:
-  ScopedEventWaitActivity(const void* program_counter,
-                          const base::WaitableEvent* event);
-  DISALLOW_COPY_AND_ASSIGN(ScopedEventWaitActivity);
 };
 
 class BASE_EXPORT ScopedThreadJoinActivity
-    : public GlobalActivityTracker::ScopedThreadActivity {
+{
  public:
   ALWAYS_INLINE
   explicit ScopedThreadJoinActivity(const base::PlatformThreadHandle* thread)
-      : ScopedThreadJoinActivity(::tracked_objects::GetProgramCounter(),
-                                 thread) {}
-
- private:
-  ScopedThreadJoinActivity(const void* program_counter,
-                           const base::PlatformThreadHandle* thread);
-  DISALLOW_COPY_AND_ASSIGN(ScopedThreadJoinActivity);
+                                 {}
 };
 
 // Some systems don't have base::Process

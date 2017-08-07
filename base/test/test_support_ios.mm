@@ -10,8 +10,8 @@
 #include "base/mac/scoped_nsobject.h"
 #include "base/message_loop/message_loop.h"
 #include "base/message_loop/message_pump_default.h"
-#include "base/test/test_suite.h"
-#include "testing/coverage_util_ios.h"
+//#include "base/test/test_suite.h"
+#//include "testing/coverage_util_ios.h"
 
 // Springboard will kill any iOS app that fails to check in after launch within
 // a given time. Starting a UIApplication before invoking TestSuite::Run
@@ -27,9 +27,11 @@
 // window displaying the app name. If a bunch of apps using MainHook are being
 // run in a row, this provides an indication of which one is currently running.
 
-static base::TestSuite* g_test_suite = NULL;
-static int g_argc;
-static char** g_argv;
+void do_the_thing();
+
+//static base::TestSuite* g_test_suite = NULL;
+//static int g_argc;
+//static char** g_argv;
 
 @interface UIApplication (Testing)
 - (void)_terminateWithStatus:(int)status;
@@ -47,7 +49,7 @@ static char** g_argv;
 #endif  // TARGET_IPHONE_SIMULATOR
 
 @interface ChromeUnitTestDelegate : NSObject {
-  base::scoped_nsobject<UIWindow> _window;
+  UIWindow* _window;
 }
 - (void)runTests;
 @end
@@ -69,7 +71,7 @@ static char** g_argv;
   CGRect bounds = [[UIScreen mainScreen] bounds];
 
   // Yes, this is leaked, it's just to make what's running visible.
-  _window.reset([[UIWindow alloc] initWithFrame:bounds]);
+  _window = [[UIWindow alloc] initWithFrame:bounds];
   [_window setBackgroundColor:[UIColor whiteColor]];
   [_window makeKeyAndVisible];
 
@@ -99,7 +101,7 @@ static char** g_argv;
 // the device log that is retrieved from the device by the host.
 - (BOOL)shouldRedirectOutputToFile {
 #if !TARGET_IPHONE_SIMULATOR
-  return !base::debug::BeingDebugged();
+  return YES;
 #endif  // TARGET_IPHONE_SIMULATOR
   return NO;
 }
@@ -152,9 +154,11 @@ static char** g_argv;
 }
 
 - (void)runTests {
-  coverage_util::ConfigureCoverageReportPath();
+  //coverage_util::ConfigureCoverageReportPath();
 
-  int exitStatus = g_test_suite->Run();
+  //int exitStatus = g_test_suite->Run();
+  int exitStatus = 0;
+  do_the_thing();
 
   if ([self shouldRedirectOutputToFile])
     [self writeOutputToNSLog];
@@ -164,7 +168,9 @@ static char** g_argv;
   // TODO(crbug.com/137010): Figure out how much time is actually needed, and
   // sleep only to make sure that much time has elapsed since launch.
   [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:2.0]];
-  _window.reset();
+  //_window.reset();
+  [_window release];
+  _window = nil;
 
   // Use the hidden selector to try and cleanly take down the app (otherwise
   // things can think the app crashed even on a zero exit status).
@@ -178,26 +184,26 @@ static char** g_argv;
 
 namespace {
 
-std::unique_ptr<base::MessagePump> CreateMessagePumpForUIForTests() {
+//std::unique_ptr<base::MessagePump> CreateMessagePumpForUIForTests() {
   // A default MessagePump will do quite nicely in tests.
-  return std::unique_ptr<base::MessagePump>(new base::MessagePumpDefault());
-}
+  //return std::unique_ptr<base::MessagePump>(new base::MessagePumpDefault());
+//}
 
 }  // namespace
 
 namespace base {
 
 void InitIOSTestMessageLoop() {
-  MessageLoop::InitMessagePumpForUIFactory(&CreateMessagePumpForUIForTests);
+  //MessageLoop::InitMessagePumpForUIFactory(&CreateMessagePumpForUIForTests);
 }
 
-void InitIOSRunHook(TestSuite* suite, int argc, char* argv[]) {
-  g_test_suite = suite;
-  g_argc = argc;
-  g_argv = argv;
-}
+//void InitIOSRunHook(TestSuite* suite, int argc, char* argv[]) {
+  //g_test_suite = suite;
+  //g_argc = argc;
+  //g_argv = argv;
+//}
 
-void RunTestsFromIOSApp() {
+void RunTestsFromIOSApp(int argc, char* argv[]) {
   // When TestSuite::Run is invoked it calls RunTestsFromIOSApp(). On the first
   // invocation, this method fires up an iOS app via UIApplicationMain. Since
   // UIApplicationMain does not return until the app exits, control does not
@@ -209,9 +215,11 @@ void RunTestsFromIOSApp() {
   static bool ran_hook = false;
   if (!ran_hook) {
     ran_hook = true;
-    mac::ScopedNSAutoreleasePool pool;
-    int exit_status = UIApplicationMain(g_argc, g_argv, nil,
+    int exit_status ;
+    @autoreleasepool {
+      exit_status = UIApplicationMain(argc, argv, nil,
                                         @"ChromeUnitTestDelegate");
+    }
     exit(exit_status);
   }
 }
