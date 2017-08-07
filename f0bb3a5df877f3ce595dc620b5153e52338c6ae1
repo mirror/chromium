@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6418750c_ee1f1c6a",
+        "filename": "tools/perf/benchmarks/memory.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-07T21:36:38Z",
+      "side": 1,
+      "message": "Ah. Then I think it\u0027s best to factor out the code that setup the memory tracing categories \u0026 metrics to separate methods for sharing (see https://cs.chromium.org/chromium/src/tools/perf/benchmarks/loading_metrics_category.py). The good old \"inheritance is for polymorphism, not for code sharing\" :-)",
+      "parentUuid": "4872081d_8192f350",
+      "revId": "f0bb3a5df877f3ce595dc620b5153e52338c6ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0cf3079_edf904d3",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_config.py",
         "patchSetId": 6
