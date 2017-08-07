@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44c71f90_fd5ac1da",
+        "filename": "remoting/ios/facade/host_list_fetcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-07T19:51:33Z",
+      "side": 1,
+      "message": "Is dropping the callback the right approach here? I would prefer calling it with a suitable response code and an empty hostlist, otherwise I feel you\u0027re making assumptions around how the code that called RetrieveHostlist is structured; specifically, you\u0027re assuming that whatever calls CancelFetch will also clean up any resources or UI that would normally have been handled by the callback.\n\nI guess if the previous behaviour was to ignore a request if there is already one in flight, then it\u0027s already the case that the caller can\u0027t rely on the callback being invoked, but that doesn\u0027t feel like a good design IMO.",
+      "range": {
+        "startLine": 51,
+        "startChar": 72,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "0975011a060c1bd1a29201c647e064e7e30ea805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
