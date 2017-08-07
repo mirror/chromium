@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "075949bd_43477f40",
+        "filename": "remoting/host/installer/mac/PrivilegedHelperTools/org.chromium.chromoting.me2me.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-07T17:46:00Z",
+      "side": 0,
+      "message": "You\u0027ve removed the handler for this command-line option, but I don\u0027t see any corresponding removal of the code that uses it. Is that in a separate CL? Are there version-compatibility issues to be careful of?",
+      "range": {
+        "startLine": 151,
+        "startChar": 45,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "dac798e2d25c2af87f28d837093504449b84b24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
