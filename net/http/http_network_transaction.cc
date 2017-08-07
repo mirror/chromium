@@ -88,7 +88,8 @@ HttpNetworkTransaction::HttpNetworkTransaction(RequestPriority priority,
       enable_ip_based_pooling_(true),
       enable_alternative_services_(true),
       websocket_handshake_stream_base_create_helper_(NULL),
-      net_error_details_() {}
+      net_error_details_(),
+      retry_attempts_(0) {}
 
 HttpNetworkTransaction::~HttpNetworkTransaction() {
   if (stream_.get()) {
@@ -1537,8 +1538,14 @@ int HttpNetworkTransaction::HandleIOError(int error) {
     case ERR_QUIC_HANDSHAKE_FAILED:
       net_log_.AddEventWithNetErrorCode(
           NetLogEventType::HTTP_TRANSACTION_RESTART_AFTER_ERROR, error);
-      ResetConnectionAndRequestForResend();
-      error = OK;
+      retry_attempts_++;
+      if (ExceededMaxRetries()) {
+        stream_->Close(true);
+        CacheNetErrorDetailsAndResetStream();
+      } else {
+        ResetConnectionAndRequestForResend();
+        error = OK;
+      }
       break;
     case ERR_QUIC_PROTOCOL_ERROR:
       if (GetResponseHeaders() != nullptr ||
@@ -1547,6 +1554,12 @@ int HttpNetworkTransaction::HandleIOError(int error) {
         // then the request can not be retried. Also, if there was no
         // alternative service used for this request, then there is no
         // alternative service to be disabled.
+        break;
+      }
+      retry_attempts_++;
+      if (ExceededMaxRetries()) {
+        stream_->Close(true);
+        CacheNetErrorDetailsAndResetStream();
         break;
       }
       if (session_->http_server_properties()->IsAlternativeServiceBroken(
@@ -1620,6 +1633,10 @@ bool HttpNetworkTransaction::ShouldResendRequest() const {
   if (connection_is_proven && !has_received_headers)
     return true;
   return false;
+}
+
+bool HttpNetworkTransaction::ExceededMaxRetries() {
+  return (retry_attempts_ >= kMaxRetryAttempts);
 }
 
 void HttpNetworkTransaction::ResetConnectionAndRequestForResend() {
