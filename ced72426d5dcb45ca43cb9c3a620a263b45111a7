@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47e61472_41a4237f",
+        "filename": "content/shell/app/blink_test_platform_support_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-07T12:56:37Z",
+      "side": 1,
+      "message": "The NONCLIENTMETRICS_SIZE_PRE_VISTA define you removed was the only user, so this one can be removed too.",
+      "revId": "ced72426d5dcb45ca43cb9c3a620a263b45111a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
