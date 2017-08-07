@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "e70764df_0474ed3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T19:23:16Z",
+      "side": 1,
+      "message": "Could you format this CL description with at least one paragraph for the answers to each of these questions?\n- What is currently happening? (each feature is required to implement their own time tracking)\n- Why is that bad? (no shared code, bug fixes must happen many places, unnecessary from a performance standpoint, etc.)\n- How does this CL make it better? (refactor, etc...)\n\nAnd then like you already do, include how it will all work out after this CL has been submitted.",
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4047da2e_c51bc7fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T19:23:16Z",
+      "side": 1,
+      "message": "Maybe introduce that FeatureTracker is a KeyedService base class intended to be used by IPH features related to session time?",
+      "range": {
+        "startLine": 12,
+        "startChar": 76,
+        "endLine": 12,
+        "endChar": 90
+      },
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "573e4c42_347a419e",
         "filename": "/COMMIT_MSG",
         "patchSetId": 18
@@ -25,6 +65,183 @@
     },
     {
       "key": {
+        "uuid": "38efd3b0_8f3ef225",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T19:23:16Z",
+      "side": 1,
+      "message": "Nit: Is this an extra space?",
+      "range": {
+        "startLine": 13,
+        "startChar": 281,
+        "endLine": 13,
+        "endChar": 282
+      },
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ba2c9b_9840d7fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T19:23:16Z",
+      "side": 1,
+      "message": "SessionDurationUpdater here and elsewhere in this CL description?",
+      "range": {
+        "startLine": 13,
+        "startChar": 56,
+        "endLine": 13,
+        "endChar": 73
+      },
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a318f7fe_2f2a895d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T19:23:16Z",
+      "side": 1,
+      "message": "inactive",
+      "range": {
+        "startLine": 13,
+        "startChar": 175,
+        "endLine": 13,
+        "endChar": 184
+      },
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78e6ee1_0c391dc8",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T19:23:16Z",
+      "side": 1,
+      "message": "Could you also expand this to explain that this class tracks the time a session has been available, and checks with subclasses whether their session requirement has been met?",
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ce6ad7_4402dcc9",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T19:23:16Z",
+      "side": 1,
+      "message": "Nit: Maybe move this one line down, since the comment above doesn\u0027t really describe this method? Bonus points if you can add a helpful comment to this method and GetSessionTimeRequiredToShowInMinutes() as well :-) The GetSessionTime...() method is already helpful in its own name though.",
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31dc9074_dda052a4",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T19:23:16Z",
+      "side": 1,
+      "message": "This is a private method, and not used in this class. Should it be removed?",
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086d78ba_1a1707da",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T19:23:16Z",
+      "side": 1,
+      "message": "Could this method be private? The other methods listed above are external events, but this ShouldShowPromo I think is only used internally in NewTabTracker?",
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd37b21f_5a861c9d",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T19:23:16Z",
+      "side": 1,
+      "message": "Could this be private and moved next to GetSessionTimeRequiredToShowInMinutes()?",
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1b5953_47302a47",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T19:23:16Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 43,
+        "startChar": 51,
+        "endLine": 43,
+        "endChar": 53
+      },
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b71a180c_63367481",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
         "patchSetId": 18
@@ -41,6 +258,69 @@
         "startChar": 13,
         "endLine": 44,
         "endChar": 14
+      },
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a05b0ea_4fdf48dd",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T19:23:16Z",
+      "side": 1,
+      "message": "observer",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 15
+      },
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77dd272b_96a3d12d",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T19:23:16Z",
+      "side": 1,
+      "message": "The pref is an internal detail, so maybe start off by explaining the class from the outside? I mean, the content is good, it\u0027s just unnecessary to start with introducing the implementation details.\n\nMaybe just \"The SessionDurationUpdater tracks the total amount of observed time across Chrome restarts.\"\n\nBut then you\u0027d probably have to explain what observed means.",
+      "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afef139_4040cc80",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-07T19:23:16Z",
+      "side": 1,
+      "message": "Maybe just have a paragraph that says that the observed time is incremented and persisted at the end of each session. From that point on, you don\u0027t have to mention the kObserveredSessionTime anymore, and can instead just use English prose when referring to it.\n\nI don\u0027t feel strongly though, it was mostly the intro that read a little bit weird.",
+      "range": {
+        "startLine": 23,
+        "startChar": 26,
+        "endLine": 23,
+        "endChar": 46
       },
       "revId": "5a30481dd91cbf968d0a7c53d852d8e54c5329e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
