@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbfea362_a1937435",
+        "filename": "remoting/host/file_transfer_message_handler_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-07T17:51:35Z",
+      "side": 1,
+      "message": "I think we can remove this factory (in a future CL) unless you are planning to use it for unit tests / mocking.  Adding a static Create() method to FileTransferMessageHandler and hiding its c\u0027tor would achieve the same goal and remove two files from the codebase.",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 38
+      },
+      "revId": "907542fe3f2e812eb8e18804b7cc40a41cb6d56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
