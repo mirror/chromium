@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4869343d_fe9a8b62",
+        "filename": "gpu/ipc/host/shader_disk_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-07T18:52:43Z",
+      "side": 1,
+      "message": "Done. I think previously it was ordered wrt to cache_thread_ startup, but that\u0027s gone now.",
+      "parentUuid": "5d6b237c_cad6fb93",
+      "revId": "7c469816b49a8abda980b3fdbe7b6dda40c9a078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2daa7761_e2b3a0c2",
         "filename": "gpu/ipc/host/shader_disk_cache_unittest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-31T15:02:04Z",
       "side": 1,
       "message": "ScopedTaskEnvironment is usually best as the first member of a test fixture (so it comes up before any other member and then outlives them all). If there\u0027s a reason for other members being first (I doubt it because |factory| was heap initialized after the other members -- maybe that\u0027s why it had to?).",
+      "revId": "7c469816b49a8abda980b3fdbe7b6dda40c9a078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669eb2e1_ae2c4c4c",
+        "filename": "gpu/ipc/host/shader_disk_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-07T18:52:43Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2daa7761_e2b3a0c2",
       "revId": "7c469816b49a8abda980b3fdbe7b6dda40c9a078",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

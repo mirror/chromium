@@ -16,6 +16,24 @@
       "revId": "0301db54bc58b9d5968de88a939574b40c6e82a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71785cd4_8b699e7f",
+        "filename": "gpu/ipc/host/shader_disk_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-07T18:52:43Z",
+      "side": 0,
+      "message": "\"Was\", is a very good way of putting it, as it used to be required, but is not required any longer, since underlying cache code no longer needs a TYPE_IO thread injected.",
+      "parentUuid": "897d8c2d_731e7f75",
+      "revId": "0301db54bc58b9d5968de88a939574b40c6e82a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
