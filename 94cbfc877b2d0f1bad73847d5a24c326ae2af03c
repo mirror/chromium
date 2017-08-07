@@ -124,6 +124,24 @@
       "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fce9124_5a127e62",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-07T20:34:01Z",
+      "side": 1,
+      "message": "Ok, in that case leaf common name sgtm. Though, it would be nice to catch the Fortinet cases as well so maybe we should look at the organization name too?",
+      "parentUuid": "060bdc5d_46f1f513",
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
