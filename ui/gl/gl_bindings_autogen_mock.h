@@ -164,6 +164,8 @@ static void GL_BINDING_CALL Mock_glClearStencil(GLint s);
 static GLenum GL_BINDING_CALL Mock_glClientWaitSync(GLsync sync,
                                                     GLbitfield flags,
                                                     GLuint64 timeout);
+static void GL_BINDING_CALL Mock_glClipControlMESAX(GLenum origin,
+                                                    GLenum depth);
 static void GL_BINDING_CALL Mock_glColorMask(GLboolean red,
                                              GLboolean green,
                                              GLboolean blue,

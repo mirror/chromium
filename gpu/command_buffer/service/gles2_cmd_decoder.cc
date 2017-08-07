@@ -871,6 +871,17 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
     return surface_->GetDrawOffset();
   }
 
+  gfx::Rect GetBoundFramebufferWindowCoordinates(const gfx::Rect& rect) const {
+    // If MESAX_clip_control extension is used to flip clip space coordinates
+    // vertically then we need to also flip window space coordinates vertically
+    // as clients expect them to be consistent.
+    if (state_.clip_origin == GL_UPPER_LEFT_MESAX) {
+      return gfx::Rect(rect.x(), offscreen_size_.height() - rect.bottom(),
+                       rect.width(), rect.height());
+    }
+    return rect;
+  }
+
   void MarkDrawBufferAsCleared(GLenum buffer, GLint drawbuffer_i);
 
   // Wrapper for CompressedTexImage{2|3}D commands.
@@ -1885,6 +1896,15 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
 
   // Wrapper for glScissor
   void DoScissor(GLint x, GLint y, GLsizei width, GLsizei height);
+
+  // Wrapper for glReadPixels
+  void DoReadPixels(GLint x,
+                    GLint y,
+                    GLsizei width,
+                    GLsizei height,
+                    GLenum format,
+                    GLenum type,
+                    GLvoid* data);
 
   // Wrapper for glUseProgram
   void DoUseProgram(GLuint program);
@@ -3821,7 +3841,10 @@ Capabilities GLES2DecoderImpl::GetCapabilities() {
   caps.commit_overlay_planes = supports_commit_overlay_planes_;
   caps.surfaceless = surfaceless_;
   bool is_offscreen = !!offscreen_target_frame_buffer_.get();
-  caps.flips_vertically = !is_offscreen && surface_->FlipsVertically();
+  caps.flips_vertically = is_offscreen
+                              ? (should_use_native_gmb_for_backbuffer_ &&
+                                 feature_info_->feature_flags().clip_control)
+                              : surface_->FlipsVertically();
   caps.msaa_is_slow = workarounds().msaa_is_slow;
   caps.avoid_stencil_buffers = workarounds().avoid_stencil_buffers;
   caps.multisample_compatibility =
@@ -5703,6 +5726,35 @@ uint32_t GLES2DecoderImpl::GetAndClearBackbufferClearBitsForTest() {
 
 void GLES2DecoderImpl::OnFboChanged() const {
   state_.fbo_binding_for_scissor_workaround_dirty = true;
+
+  if (feature_info_->feature_flags().clip_control) {
+    // Upper left origin is preferred for default FBO when backed by native
+    // GpuMemoryBuffer as this increases the chance that this buffer can
+    // be used as an HW overlay.
+    GLenum clip_origin =
+        (offscreen_target_frame_buffer_.get() &&
+         should_use_native_gmb_for_backbuffer_ && !GetBoundDrawFramebuffer())
+            ? GL_UPPER_LEFT_MESAX
+            : GL_LOWER_LEFT_MESAX;
+    if (clip_origin != state_.clip_origin) {
+      glClipControlMESAX(clip_origin, GL_NEGATIVE_ONE_TO_ONE_MESAX);
+      state_.clip_origin = clip_origin;
+
+      // Update viewport and scissor state as it might need to change as
+      // as result of the change to clip origin.
+      gfx::Vector2d draw_offset = GetBoundFramebufferDrawOffset();
+      gfx::Rect rect = GetBoundFramebufferWindowCoordinates(
+          gfx::Rect(state_.viewport_x, state_.viewport_y, state_.viewport_width,
+                    state_.viewport_height) +
+          draw_offset);
+      glViewport(rect.x(), rect.y(), rect.width(), rect.height());
+      rect = GetBoundFramebufferWindowCoordinates(
+          gfx::Rect(state_.scissor_x, state_.scissor_y, state_.scissor_width,
+                    state_.scissor_height) +
+          draw_offset);
+      glScissor(rect.x(), rect.y(), rect.width(), rect.height());
+    }
+  }
 }
 
 // Called after the FBO is checked for completeness.
@@ -5712,18 +5764,24 @@ void GLES2DecoderImpl::OnUseFramebuffer() const {
   state_.fbo_binding_for_scissor_workaround_dirty = false;
 
   if (supports_dc_layers_) {
-    gfx::Vector2d draw_offset = GetBoundFramebufferDrawOffset();
-    glViewport(state_.viewport_x + draw_offset.x(),
-               state_.viewport_y + draw_offset.y(), state_.viewport_width,
-               state_.viewport_height);
+    gfx::Vector2d viewport_offset = GetBoundFramebufferDrawOffset();
+    gfx::Rect viewport_rect = GetBoundFramebufferWindowCoordinates(
+        gfx::Rect(state_.viewport_x, state_.viewport_y, state_.viewport_width,
+                  state_.viewport_height) +
+        viewport_offset);
+    glViewport(viewport_rect.x(), viewport_rect.y(), viewport_rect.width(),
+               viewport_rect.height());
   }
 
   if (workarounds().restore_scissor_on_fbo_change || supports_dc_layers_) {
     // The driver forgets the correct scissor when modifying the FBO binding.
     gfx::Vector2d scissor_offset = GetBoundFramebufferDrawOffset();
-    glScissor(state_.scissor_x + scissor_offset.x(),
-              state_.scissor_y + scissor_offset.y(), state_.scissor_width,
-              state_.scissor_height);
+    gfx::Rect scissor_rect = GetBoundFramebufferWindowCoordinates(
+        gfx::Rect(state_.scissor_x, state_.scissor_y, state_.scissor_width,
+                  state_.scissor_height) +
+        scissor_offset);
+    glScissor(scissor_rect.x(), scissor_rect.y(), scissor_rect.width(),
+              scissor_rect.height());
   }
 
   if (workarounds().restore_scissor_on_fbo_change) {
@@ -7733,9 +7791,7 @@ void GLES2DecoderImpl::RestoreClearState() {
   glClearDepth(state_.depth_clear);
   state_.SetDeviceCapabilityState(GL_SCISSOR_TEST,
                                   state_.enable_flags.scissor_test);
-  gfx::Vector2d scissor_offset = GetBoundFramebufferDrawOffset();
-  glScissor(state_.scissor_x + scissor_offset.x(),
-            state_.scissor_y + scissor_offset.y(), state_.scissor_width,
+  DoScissor(state_.scissor_x, state_.scissor_y, state_.scissor_width,
             state_.scissor_height);
 }
 
@@ -11345,7 +11401,10 @@ void GLES2DecoderImpl::DoViewport(GLint x, GLint y, GLsizei width,
   state_.viewport_width = std::min(width, viewport_max_width_);
   state_.viewport_height = std::min(height, viewport_max_height_);
   gfx::Vector2d viewport_offset = GetBoundFramebufferDrawOffset();
-  glViewport(x + viewport_offset.x(), y + viewport_offset.y(), width, height);
+  gfx::Rect viewport_rect = GetBoundFramebufferWindowCoordinates(
+      gfx::Rect(x, y, width, height) + viewport_offset);
+  glViewport(viewport_rect.x(), viewport_rect.y(), viewport_rect.width(),
+             viewport_rect.height());
 }
 
 void GLES2DecoderImpl::DoScissor(GLint x,
@@ -11353,7 +11412,24 @@ void GLES2DecoderImpl::DoScissor(GLint x,
                                  GLsizei width,
                                  GLsizei height) {
   gfx::Vector2d draw_offset = GetBoundFramebufferDrawOffset();
-  glScissor(x + draw_offset.x(), y + draw_offset.y(), width, height);
+  gfx::Rect scissor_rect = GetBoundFramebufferWindowCoordinates(
+      gfx::Rect(x, y, width, height) + draw_offset);
+  glScissor(scissor_rect.x(), scissor_rect.y(), scissor_rect.width(),
+            scissor_rect.height());
+}
+
+void GLES2DecoderImpl::DoReadPixels(GLint x,
+                                    GLint y,
+                                    GLsizei width,
+                                    GLsizei height,
+                                    GLenum format,
+                                    GLenum type,
+                                    GLvoid* data) {
+  gfx::Rect read_pixels_rect =
+      GetBoundFramebufferWindowCoordinates(gfx::Rect(x, y, width, height));
+  glReadPixels(read_pixels_rect.x(), read_pixels_rect.y(),
+               read_pixels_rect.width(), read_pixels_rect.height(), format,
+               type, data);
 }
 
 error::Error GLES2DecoderImpl::HandleVertexAttribDivisorANGLE(
@@ -11761,7 +11837,7 @@ error::Error GLES2DecoderImpl::HandleReadPixels(uint32_t immediate_data_size,
           glPixelStorei(GL_PACK_ROW_LENGTH, width);
           reset_row_length = true;
         }
-        glReadPixels(rect.x(), iy, rect.width(), 1, format, type, pixels);
+        DoReadPixels(rect.x(), iy, rect.width(), 1, format, type, pixels);
         if (reset_row_length) {
           glPixelStorei(GL_PACK_ROW_LENGTH, state_.pack_row_length);
         }
@@ -11787,7 +11863,7 @@ error::Error GLES2DecoderImpl::HandleReadPixels(uint32_t immediate_data_size,
         // No need to worry about ES3 pixel pack parameters, because no
         // PIXEL_PACK_BUFFER is bound, and all these settings haven't been
         // sent to GL.
-        glReadPixels(x, y, width, height, format, type, 0);
+        DoReadPixels(x, y, width, height, format, type, 0);
         pending_readpixel_fences_.push(FenceCallback());
         WaitForReadPixels(base::Bind(
             &GLES2DecoderImpl::FinishReadPixels, weak_ptr_factory_.GetWeakPtr(),
@@ -11813,7 +11889,7 @@ error::Error GLES2DecoderImpl::HandleReadPixels(uint32_t immediate_data_size,
           // Need to set PACK_ALIGNMENT for last row. See comment below.
           if (iy + 1 == max_y && padding > 0)
             glPixelStorei(GL_PACK_ALIGNMENT, 1);
-          glReadPixels(x, iy, width, 1, format, type, pixels);
+          DoReadPixels(x, iy, width, 1, format, type, pixels);
           if (iy + 1 == max_y && padding > 0)
             glPixelStorei(GL_PACK_ALIGNMENT, state_.pack_alignment);
           pixels += padded_row_size;
@@ -11823,16 +11899,16 @@ error::Error GLES2DecoderImpl::HandleReadPixels(uint32_t immediate_data_size,
         // Some drivers (for example, NVidia Linux) incorrectly require the
         // pack buffer to have padding for the last row.
         if (height > 1)
-          glReadPixels(x, y, width, height - 1, format, type, pixels);
+          DoReadPixels(x, y, width, height - 1, format, type, pixels);
         glPixelStorei(GL_PACK_ALIGNMENT, 1);
         pixels += padded_row_size * (height - 1);
-        glReadPixels(x, max_y - 1, width, 1, format, type, pixels);
+        DoReadPixels(x, max_y - 1, width, 1, format, type, pixels);
         glPixelStorei(GL_PACK_ALIGNMENT, state_.pack_alignment);
       } else {
-        glReadPixels(x, y, width, height, format, type, pixels);
+        DoReadPixels(x, y, width, height, format, type, pixels);
       }
     } else {
-      glReadPixels(x, y, width, height, format, type, pixels);
+      DoReadPixels(x, y, width, height, format, type, pixels);
     }
   }
   if (pixels_shm_id != 0) {
@@ -12788,9 +12864,7 @@ bool GLES2DecoderImpl::ClearLevel(Texture* texture,
     glClearDepth(1.0f);
     state_.SetDeviceDepthMask(GL_TRUE);
     state_.SetDeviceCapabilityState(GL_SCISSOR_TEST, true);
-    gfx::Vector2d scissor_offset = GetBoundFramebufferDrawOffset();
-    glScissor(xoffset + scissor_offset.x(), yoffset + scissor_offset.y(), width,
-              height);
+    DoScissor(xoffset, yoffset, width, height);
     glClear(GL_DEPTH_BUFFER_BIT | (have_stencil ? GL_STENCIL_BUFFER_BIT : 0));
 
     RestoreClearState();

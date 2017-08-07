@@ -110,6 +110,7 @@ MOCK_METHOD1(ClearDepthf, void(GLclampf depth));
 MOCK_METHOD1(ClearStencil, void(GLint s));
 MOCK_METHOD3(ClientWaitSync,
              GLenum(GLsync sync, GLbitfield flags, GLuint64 timeout));
+MOCK_METHOD2(ClipControlMESAX, void(GLenum origin, GLenum depth));
 MOCK_METHOD4(
     ColorMask,
     void(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha));

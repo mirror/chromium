@@ -138,6 +138,8 @@ typedef void(GL_BINDING_CALL* glClearStencilProc)(GLint s);
 typedef GLenum(GL_BINDING_CALL* glClientWaitSyncProc)(GLsync sync,
                                                       GLbitfield flags,
                                                       GLuint64 timeout);
+typedef void(GL_BINDING_CALL* glClipControlMESAXProc)(GLenum origin,
+                                                      GLenum depth);
 typedef void(GL_BINDING_CALL* glColorMaskProc)(GLboolean red,
                                                GLboolean green,
                                                GLboolean blue,
@@ -1584,6 +1586,7 @@ struct ExtensionsGL {
   bool b_GL_KHR_blend_equation_advanced;
   bool b_GL_KHR_debug;
   bool b_GL_KHR_robustness;
+  bool b_GL_MESAX_clip_control;
   bool b_GL_NV_blend_equation_advanced;
   bool b_GL_NV_fence;
   bool b_GL_NV_framebuffer_mixed_samples;
@@ -1637,6 +1640,7 @@ struct ProcsGL {
   glClearDepthfProc glClearDepthfFn;
   glClearStencilProc glClearStencilFn;
   glClientWaitSyncProc glClientWaitSyncFn;
+  glClipControlMESAXProc glClipControlMESAXFn;
   glColorMaskProc glColorMaskFn;
   glCompileShaderProc glCompileShaderFn;
   glCompressedCopyTextureCHROMIUMProc glCompressedCopyTextureCHROMIUMFn;
@@ -2129,6 +2133,7 @@ class GL_EXPORT GLApi {
   virtual GLenum glClientWaitSyncFn(GLsync sync,
                                     GLbitfield flags,
                                     GLuint64 timeout) = 0;
+  virtual void glClipControlMESAXFn(GLenum origin, GLenum depth) = 0;
   virtual void glColorMaskFn(GLboolean red,
                              GLboolean green,
                              GLboolean blue,
@@ -3415,6 +3420,7 @@ class GL_EXPORT GLApi {
 #define glClearDepthf ::gl::g_current_gl_context->glClearDepthfFn
 #define glClearStencil ::gl::g_current_gl_context->glClearStencilFn
 #define glClientWaitSync ::gl::g_current_gl_context->glClientWaitSyncFn
+#define glClipControlMESAX ::gl::g_current_gl_context->glClipControlMESAXFn
 #define glColorMask ::gl::g_current_gl_context->glColorMaskFn
 #define glCompileShader ::gl::g_current_gl_context->glCompileShaderFn
 #define glCompressedCopyTextureCHROMIUM \

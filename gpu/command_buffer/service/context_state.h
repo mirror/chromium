@@ -375,6 +375,8 @@ struct GPU_EXPORT ContextState {
 
   mutable bool fbo_binding_for_scissor_workaround_dirty;
 
+  mutable GLenum clip_origin = GL_LOWER_LEFT_MESAX;
+
  private:
   void EnableDisable(GLenum pname, bool enable) const;
 
