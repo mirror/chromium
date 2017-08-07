@@ -295,6 +295,7 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
     private static class SpanCursorController {
         private final Delegate mDelegate;
         private BackgroundColorSpan mSpan;
+        private SpannableString mSpanString;
 
         public SpanCursorController(Delegate delegate) {
             mDelegate = delegate;
@@ -304,11 +305,11 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
             int sel = state.getSelStart();
 
             if (mSpan == null) mSpan = new BackgroundColorSpan(mDelegate.getHighlightColor());
-            SpannableString spanString = new SpannableString(state.getAutocompleteText());
-            spanString.setSpan(
+            mSpanString = new SpannableString(state.getAutocompleteText());
+            mSpanString.setSpan(
                     mSpan, 0, state.getAutocompleteText().length(), Spanned.SPAN_INTERMEDIATE);
             Editable editable = mDelegate.getEditableText();
-            editable.append(spanString);
+            editable.append(mSpanString);
 
             // Keep the original selection before adding spannable string.
             Selection.setSelection(editable, sel, sel);
@@ -318,7 +319,15 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
 
         private int getSpanIndex(Editable editable) {
             if (editable == null || mSpan == null) return -1;
-            return editable.getSpanStart(mSpan); // returns -1 if mSpan is not attached
+            int idx = editable.getSpanStart(mSpan); // returns -1 if mSpan is not attached
+            if (idx == -1) return -1;
+
+            // crbug.com/752628: TextView#dispatchKeyEvent() prepends new text in the span right
+            // behind it. We adjust the index only when it is not -1.
+            if (mSpanString != null) {
+                idx = editable.length() - mSpanString.length();
+            }
+            return idx;
         }
 
         public boolean removeSpan() {
