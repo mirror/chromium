@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/renderer/media/media_interface_provider.h"
+#include "content/renderer/media/media_interface_factory.h"
 
 #include <string>
 
@@ -14,61 +14,87 @@
 
 namespace content {
 
-MediaInterfaceProvider::MediaInterfaceProvider(
+MediaInterfaceFactory::MediaInterfaceFactory(
     service_manager::InterfaceProvider* remote_interfaces)
     : remote_interfaces_(remote_interfaces), weak_factory_(this) {
   task_runner_ = base::ThreadTaskRunnerHandle::Get();
   weak_this_ = weak_factory_.GetWeakPtr();
 }
 
-MediaInterfaceProvider::~MediaInterfaceProvider() {
+MediaInterfaceFactory::~MediaInterfaceFactory() {
   DCHECK(task_runner_->BelongsToCurrentThread());
 }
 
-void MediaInterfaceProvider::GetInterface(const std::string& interface_name,
-                                          mojo::ScopedMessagePipeHandle pipe) {
-  DVLOG(1) << __func__;
+void MediaInterfaceFactory::CreateAudioDecoder(
+    media::mojom::AudioDecoderRequest request) {
   if (!task_runner_->BelongsToCurrentThread()) {
     task_runner_->PostTask(
-        FROM_HERE, base::Bind(&MediaInterfaceProvider::GetInterface, weak_this_,
-                              interface_name, base::Passed(&pipe)));
+        FROM_HERE, base::BindOnce(&MediaInterfaceFactory::CreateAudioDecoder,
+                                  weak_this_, std::move(request)));
     return;
   }
 
-  DCHECK(task_runner_->BelongsToCurrentThread());
+  DVLOG(1) << __func__;
+  GetMediaInterfaceFactory()->CreateAudioDecoder(std::move(request));
+}
 
-  if (interface_name == media::mojom::ContentDecryptionModule::Name_) {
-    GetMediaInterfaceFactory()->CreateCdm(
-        media::mojom::ContentDecryptionModuleRequest(std::move(pipe)));
-  } else if (interface_name == media::mojom::Renderer::Name_) {
-    GetMediaInterfaceFactory()->CreateRenderer(
-        std::string(), media::mojom::RendererRequest(std::move(pipe)));
-  } else if (interface_name == media::mojom::AudioDecoder::Name_) {
-    GetMediaInterfaceFactory()->CreateAudioDecoder(
-        media::mojom::AudioDecoderRequest(std::move(pipe)));
-  } else if (interface_name == media::mojom::VideoDecoder::Name_) {
-    GetMediaInterfaceFactory()->CreateVideoDecoder(
-        media::mojom::VideoDecoderRequest(std::move(pipe)));
-  } else {
-    NOTREACHED();
+void MediaInterfaceFactory::CreateVideoDecoder(
+    media::mojom::VideoDecoderRequest request) {
+  if (!task_runner_->BelongsToCurrentThread()) {
+    task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(&MediaInterfaceFactory::CreateVideoDecoder,
+                                  weak_this_, std::move(request)));
+    return;
   }
+
+  DVLOG(1) << __func__;
+  GetMediaInterfaceFactory()->CreateVideoDecoder(std::move(request));
+}
+
+void MediaInterfaceFactory::CreateRenderer(
+    const std::string& audio_device_id,
+    media::mojom::RendererRequest request) {
+  if (!task_runner_->BelongsToCurrentThread()) {
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&MediaInterfaceFactory::CreateRenderer, weak_this_,
+                       audio_device_id, std::move(request)));
+    return;
+  }
+
+  DVLOG(1) << __func__;
+  GetMediaInterfaceFactory()->CreateRenderer(audio_device_id,
+                                             std::move(request));
+}
+
+void MediaInterfaceFactory::CreateCdm(
+    media::mojom::ContentDecryptionModuleRequest request) {
+  if (!task_runner_->BelongsToCurrentThread()) {
+    task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(&MediaInterfaceFactory::CreateCdm, weak_this_,
+                                  std::move(request)));
+    return;
+  }
+
+  DVLOG(1) << __func__;
+  GetMediaInterfaceFactory()->CreateCdm(std::move(request));
 }
 
 media::mojom::InterfaceFactory*
-MediaInterfaceProvider::GetMediaInterfaceFactory() {
+MediaInterfaceFactory::GetMediaInterfaceFactory() {
   DVLOG(1) << __func__;
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   if (!media_interface_factory_) {
     remote_interfaces_->GetInterface(&media_interface_factory_);
     media_interface_factory_.set_connection_error_handler(base::Bind(
-        &MediaInterfaceProvider::OnConnectionError, base::Unretained(this)));
+        &MediaInterfaceFactory::OnConnectionError, base::Unretained(this)));
   }
 
   return media_interface_factory_.get();
 }
 
-void MediaInterfaceProvider::OnConnectionError() {
+void MediaInterfaceFactory::OnConnectionError() {
   DVLOG(1) << __func__;
   DCHECK(task_runner_->BelongsToCurrentThread());
 
