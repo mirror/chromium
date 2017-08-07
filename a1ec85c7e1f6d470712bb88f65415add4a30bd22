@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09c02312_e2c5cb3f",
+        "filename": "components/metrics/net/network_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-07T17:02:32Z",
+      "side": 1,
+      "message": "I\u0027m not totally sure I agree with this. Suppose the user went from 2g -\u003e offline, for that reporting period, it makes sense to say 2g. If they stayed offline for the entire next reporting period, why would we want to report that as 2g?\n\nWhat about adding offline to the conditional below instead? So if (min \u003d\u003d unknown || min \u003d\u003d offline) \u0026\u0026 (max \u003d\u003d unknown || max \u003d\u003d offline) {min \u003d type; max \u003d type;}",
+      "revId": "a1ec85c7e1f6d470712bb88f65415add4a30bd22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
