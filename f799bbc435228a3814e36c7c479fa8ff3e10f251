@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d10f2b0f_83d4c04c",
+        "filename": "ash/shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-07T14:28:27Z",
+      "side": 1,
+      "message": "nit: ///",
+      "range": {
+        "startLine": 342,
+        "startChar": 12,
+        "endLine": 342,
+        "endChar": 13
+      },
+      "revId": "f799bbc435228a3814e36c7c479fa8ff3e10f251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7640e803_9aa1179a",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-07T14:28:27Z",
+      "side": 1,
+      "message": "Seems reasonable.",
+      "parentUuid": "bba415bd_841a3cee",
+      "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84b378b1_c9382442",
         "filename": "ash/system/tray_caps_lock.cc",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "According to the docs at https://cs.chromium.org/chromium/src/services/preferences/README.md all prefs have to be owned by one service and flagged as public if other services should be allowed to access them. In practice, that\u0027s true for this pref.\n\nI think the fact that chrome can access ash-owned prefs (like the night light ones) is a bug, possibly caused by the fact that the mojo pref service impl lives in chrome.\n\nI updated the comments here and in shell.cc",
       "parentUuid": "39cbc313_1da6b980",
+      "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f693e1_bebeacd9",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-07T14:28:27Z",
+      "side": 1,
+      "message": "Okay, thanks for linking to the doc, that explains RegisterForeignPref (which I previously misread as one of the more typical Register* functions).",
+      "parentUuid": "5e94d351_15d637b5",
       "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
