@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "959de1e5_31f1adaf",
+        "filename": "chrome/common/safe_browsing/zip_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-07T20:21:20Z",
+      "side": 1,
+      "message": "Could you add some code in SandboxedZipAnalyzerTest.ZippedAppWithUnsignedAndSignedExecutable  to check if this histogram is correctly set?  You can use a HistogramTester. Example of using HistogramTester in safe_browsing namespace:\nhttps://cs.chromium.org/chromium/src/chrome/browser/safe_browsing/safe_browsing_navigation_observer_unittest.cc?rcl\u003dd88bcd6606dd94ad2dcc0b56b57366fa5df35e4c\u0026l\u003d229",
+      "revId": "f9b2243e97e863d7ed26b8f78198f854db669908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
