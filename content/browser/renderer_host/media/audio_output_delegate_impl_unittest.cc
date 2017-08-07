@@ -24,6 +24,7 @@
 #include "media/audio/audio_thread_impl.h"
 #include "media/audio/fake_audio_log_factory.h"
 #include "media/audio/fake_audio_manager.h"
+#include "media/base/gmock_callback_support.h"
 #include "media/base/media_switches.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -358,7 +359,6 @@ class AudioOutputDelegateTest : public testing::Test {
     EXPECT_CALL(media_observer_,
                 OnCreatingAudioStream(kRenderProcessId, kRenderFrameId));
     EXPECT_CALL(event_handler_, GotOnStreamCreated());
-    EXPECT_CALL(event_handler_, OnStreamError(kStreamId));
     EXPECT_CALL(mirroring_manager_,
                 AddDiverter(kRenderProcessId, kRenderFrameId, NotNull()));
 
@@ -375,8 +375,17 @@ class AudioOutputDelegateTest : public testing::Test {
 
       delegate.GetControllerForTesting()->OnError();
 
-      SyncWithAllThreads();
+      {
+        // Errors are deferred by AudioOutputController, so wait for the error.
+        base::RunLoop run_loop;
+        EXPECT_CALL(event_handler_, OnStreamError(kStreamId))
+            .WillOnce(media::RunClosure(run_loop.QuitClosure()));
+        base::MessageLoop::ScopedNestableTaskAllower allower(
+            base::MessageLoop::current());
+        run_loop.Run();
+      }
 
+      SyncWithAllThreads();
       EXPECT_CALL(mirroring_manager_, RemoveDiverter(NotNull()));
     }
     SyncWithAllThreads();
