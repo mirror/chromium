@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d3575f98_a310c61b",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-07T22:05:52Z",
+      "side": 1,
+      "message": "nit: const int ...",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 18
+      },
+      "revId": "332894fdab16bb62d248b5d9b321fa849572ba1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bff0fede_d5efa83d",
         "filename": "ui/app_list/views/contents_view.h",
         "patchSetId": 4
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "AppsContainerView also needs to know the height of screen. Should I use separate functions to get display height in two different class?",
       "parentUuid": "bff0fede_d5efa83d",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 31
+      },
+      "revId": "332894fdab16bb62d248b5d9b321fa849572ba1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d376a454_33355bbf",
+        "filename": "ui/app_list/views/contents_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-07T22:05:52Z",
+      "side": 1,
+      "message": "Sorry, missed this. Leave it here then.",
+      "parentUuid": "51c8aabd_033843a5",
       "range": {
         "startLine": 142,
         "startChar": 0,
