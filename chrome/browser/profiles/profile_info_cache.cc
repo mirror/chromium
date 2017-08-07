@@ -13,6 +13,7 @@
 #include "base/i18n/case_conversion.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/stl_util.h"
 #include "base/strings/string_piece.h"
@@ -1021,6 +1022,8 @@ void ProfileInfoCache::OnAvatarPictureLoaded(const base::FilePath& profile_path,
           "461175 ProfileInfoCache::OnAvatarPictureLoaded::Start"));
 
   cached_avatar_images_loading_[key] = false;
+
+  UMA_HISTOGRAM_BOOLEAN("Profile.LoadAvatarSuccess", *image);
 
   if (*image) {
     // TODO(erikchen): Remove ScopedTracker below once http://crbug.com/461175
