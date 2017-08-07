@@ -26,6 +26,9 @@ class ChromeComponentExtensionDelegate : public ComponentExtensionDelegate {
   bool IsComponentExtensionResource(const base::FilePath& extension_path,
                                     const base::FilePath& resource_path,
                                     int* resource_id) const override;
+  bool GetExtensionStrings(content::BrowserContext* browser_context,
+                           const std::string& extension_id,
+                           base::DictionaryValue*) const override;
 
  private:
   void AddComponentResourceEntries(const GritResourceMap* entries, size_t size);

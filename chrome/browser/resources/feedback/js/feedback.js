@@ -392,6 +392,12 @@ function initialize() {
         $('attach-file-note').hidden = true;
       }
 
+      // Use a different title for the sad tab flow before localizing.
+      if (feedbackInfo.flow ==
+          chrome.feedbackPrivate.FeedbackFlow.SAD_TAB_CRASH) {
+        $('page-title').setAttribute('i18n-content', 'page-title-sad-tab');
+      }
+
       // <if expr="chromeos">
       if (feedbackInfo.traceId && ($('performance-info-area'))) {
         $('performance-info-area').hidden = false;
@@ -400,7 +406,7 @@ function initialize() {
         $('performance-info-link').onclick = openSlowTraceWindow;
       }
       // </if>
-      chrome.feedbackPrivate.getStrings(feedbackInfo.flow, function(strings) {
+      chrome.feedbackPrivate.getStrings(function(strings) {
         loadTimeData.data = strings;
         i18nTemplate.process(document, loadTimeData);
 
