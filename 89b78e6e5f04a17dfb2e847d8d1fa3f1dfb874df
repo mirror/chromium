@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8853c201_0ea362ab",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-07T20:31:25Z",
+      "side": 1,
+      "message": "I think this script is good. But there are some things you might want to consider changing if you want. What is kinda confusing are things like the fact that when \"look_for_start_of_crash_log \u003d false\" this means you are inside of a crash, which isnt too obvious esp. if you are just skimming the function.\n\nThere are really 3 states, IN_UPPERHALF_CRASH, IN_LOWERHALF_CRASH, OUT_CRASH\n\n\nI would almost do something like....\n\nclass LogcatState:\n  IN_UPPERHALF_CRASH\n  IN_LOWERHALF_CRASH\n  OUT_CRASH\n\n\ndef is_start_crash():\n # Look for \"Build Fingerprint\"\n\ndef is_backtrace():\n # Look for \"back trace\"\n\ndef is_end_crash():\n # Look for missing \"     #\"\n\nif state \u003d OUT_CRASH:\n  if is_start_crash(), state \u003c- IN_UPPERHALF_CRASH\nelse state \u003d IN_UPPERHALF_CRASH:\n  if is_backtrace(), state \u003c- IN_LOWERHALF_CRASH\nelse state \u003d BACK_TRACE:\n  if is_end_crash(), state \u003c- OUTSIDE and symbolize crash data\n\nif state \u003d OUTSIDE:\n  # write line to logcat file\nif state in (IN_UPPERHALF_CRASH, IN_LOWERHALF_CRASH):\n  # Add crash data to data_to_symbolize\n\n\n\n.... totally up to you though if you think that is clearly.",
+      "revId": "89b78e6e5f04a17dfb2e847d8d1fa3f1dfb874df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "df66fb6d_616d6719",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-07T20:31:25Z",
+      "side": 1,
+      "message": "This is kinda weirdly coupled to...\nhttps://cs.chromium.org/chromium/src/third_party/catapult/devil/devil/android/logcat_monitor.py?q\u003dlogcat_monitor\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d29\n\nDefinitely should make comment that these have to stay in sync.",
+      "parentUuid": "aff5ae35_b3974ec1",
+      "revId": "b6200f51614c4f52c7ff6b10c9bfbaccb1777251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0e5b15f_c4a5ceba",
         "filename": "build/android/pylib/android/logcat_symbolizer.py",
         "patchSetId": 4
