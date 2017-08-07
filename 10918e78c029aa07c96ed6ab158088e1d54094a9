@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a663f48_a5120928",
+        "filename": "chrome/browser/ui/cocoa/base_bubble_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-07T15:35:24Z",
+      "side": 1,
+      "message": "nit/observation: Is `orderFront:` (which would move the bubble above other browser windows) ever the right thing to do? It feels like every codepath should use orderWindow:relativeTo:, and maybe the parent window should be made main in this case… but I\u0027m not sure what `shouldActivateOnOpen_ \u003d YES` and `shouldOpenAsKeyWindow_ \u003d NO` would even mean.",
+      "revId": "10918e78c029aa07c96ed6ab158088e1d54094a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
