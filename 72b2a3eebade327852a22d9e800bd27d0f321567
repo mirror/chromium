@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "f94b7410_b8e5ab19",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2379,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-07T15:17:59Z",
+      "side": 1,
+      "message": "I would rename the function -- I think it\u0027s totally reasonable for a delegate method to try to do something (launch the payment request, in this case) and then return YES or NO depending on whether it succeeded.  If we change the name to describe what the method is actually doing, it won\u0027t be surprising.",
+      "parentUuid": "0e965f6d_b5f26bf0",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4697a9d5_9211f630",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
         "patchSetId": 5
@@ -139,6 +157,24 @@
       "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f96fdcad_db9bb4f3",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-07T15:17:59Z",
+      "side": 1,
+      "message": "Ack, left a comment about making sure that callers can handle the early return.",
+      "parentUuid": "d9ca9b28_45fc318a",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -276,6 +312,24 @@
       "side": 1,
       "message": "As I mentioned in the last comment I added an if statement to the beginning of the LaunchIOSPaymentInstrument function that checks to see if current delegate is null and the payment request ID is empty, if so we cancel the request by returning. I can also add a similar check to ReceiveResponseFromIOSPaymentInstrument such that if the delegate is null we cancel the request to receive the response. On your point about raw pointers that\u0027s a good point. If the user closes the tab that will cancel the current PaymentRequest which owns the PaymentInstrument delegate used here meaning this pointer would have garbage value. I don\u0027t know if owning the delegate instead would make more sense, but perhaps my suggestion from earlier could work? Making sure the delegate is non-null before making the call to ReceieveResponseFromIOSPaymentInstrument. In fact we could make this check in main_controller.mm when we call shouldStayOnTab and if the delegate is null we can return NO. What do you think?",
       "parentUuid": "b1d77b1a_f41ffbc5",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b69e2a_ce8d7182",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-07T15:17:59Z",
+      "side": 1,
+      "message": "How is the current PaymentRequest canceled when a tab is closed?  Can we call back into IOSPaymentInstrumentLauncher at that point and set the delegate to nullptr?  Then your suggestion of checking to make sure the delegate is nonnull sgtm.\n\nOwning the delegate is probably not possible, because it\u0027s a C++ object that\u0027s already owned by something else.",
+      "parentUuid": "3d360462_dcc0d482",
       "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

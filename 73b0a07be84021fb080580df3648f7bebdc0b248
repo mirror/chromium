@@ -114,6 +114,121 @@
       "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455e5e9d_3d823b68",
+        "filename": "ios/chrome/browser/app_startup_parameters.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-07T15:17:59Z",
+      "side": 1,
+      "message": "As a counterpoint, \"launch\" maintains symmetry with all of the other properties above.",
+      "parentUuid": "bac7ef0a_4b3238a2",
+      "range": {
+        "startLine": 47,
+        "startChar": 45,
+        "endLine": 47,
+        "endChar": 65
+      },
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50fa018_67886fb9",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-07T15:17:59Z",
+      "side": 1,
+      "message": "This limitation seems ok for an initial experiment, but I think this is something that will need to be addressed before we can launch this for real.",
+      "range": {
+        "startLine": 27,
+        "startChar": 22,
+        "endLine": 27,
+        "endChar": 74
+      },
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7a4101_42f180d3",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-07T15:17:59Z",
+      "side": 1,
+      "message": "What does \"exit\" mean in this context?",
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a63b76a_6c28bd97",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-07T15:17:59Z",
+      "side": 1,
+      "message": "Please have someone from the payments team look at the files in ios/chrome/browser/payments as well.  I\u0027m not familiar enough with this code to be able to catch logic errors.",
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44f4c3b2_001f5c37",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-07T15:17:59Z",
+      "side": 1,
+      "message": "So this method will return silently if another payment request is in flight.\n\nAre the callers of this method written to handle that properly?  Or will the app be left in a broken state?",
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8b3e25_eb8e3fdd",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-07T15:17:59Z",
+      "side": 1,
+      "message": "Referencing an earlier comment -- if the call to LaunchIOSPaymentInstrument below returns early without doing anything, this ui will get stuck in the pending state forever.  Might be ok for a prototype, since there is still a cancel button.",
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
