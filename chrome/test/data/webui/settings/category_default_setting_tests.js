@@ -139,6 +139,30 @@ suite('CategoryDefaultSetting', function() {
         settings.ContentSetting.IMPORTANT_CONTENT);
   });
 
+  test('test content setting from extension', function() {
+    var prefs = {
+      defaults: {
+        mic: {
+          setting: 'block',
+          source: ContentSettingProvider.EXTENSION,
+        },
+      },
+    };
+    browserProxy.reset();
+    browserProxy.setPrefs(prefs);
+    testElement.category = settings.ContentSettingsTypes.MIC;
+
+    // Test that extension-enforced content settings don't override user-set
+    // content settings.
+    browserProxy.whenCalled('setDefaultValueForContentType').then(function() {
+      assertNotReached();
+    });
+    return browserProxy.whenCalled('getDefaultValueForContentType')
+        .then(function(contentType) {
+          assertEquals(false, testElement.categoryEnabled);
+        })
+  });
+
   function testTristateCategory(
       prefs, category, thirdState, secondaryToggleId) {
     browserProxy.setPrefs(prefs);
