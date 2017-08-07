@@ -755,7 +755,7 @@ std::string TestLaunchProcess(const std::vector<std::string>& args,
   options.wait = true;
   options.environ = env_changes;
   options.clear_environ = clear_environ;
-  options.fds_to_remap.push_back(std::make_pair(fds[1], 1));
+  options.fds_to_remap.push_back({fds[1], 1});
 #if defined(OS_LINUX)
   options.clone_flags = clone_flags;
 #else
@@ -1009,7 +1009,7 @@ TEST_F(ProcessUtilTest, PreExecHook) {
 
   ReadFromPipeDelegate read_from_pipe_delegate(read_fd.get());
   base::LaunchOptions options;
-  options.fds_to_remap.push_back(std::make_pair(read_fd.get(), read_fd.get()));
+  options.fds_to_remap.push_back({read_fd.get(), read_fd.get()});
   options.pre_exec_delegate = &read_from_pipe_delegate;
   base::SpawnChildResult spawn_child =
       SpawnChildWithOptions("SimpleChildProcess", options);
