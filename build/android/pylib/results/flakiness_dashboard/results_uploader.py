@@ -5,7 +5,7 @@
 """Uploads the results to the flakiness dashboard server."""
 # pylint: disable=E1002,R0201
 
-import logging
+from pylib import logging
 import os
 import shutil
 import tempfile

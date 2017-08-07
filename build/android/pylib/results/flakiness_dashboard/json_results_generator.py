@@ -9,7 +9,7 @@
 #
 
 import json
-import logging
+from pylib import logging
 import mimetypes
 import os
 import time

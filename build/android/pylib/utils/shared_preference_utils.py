@@ -5,7 +5,7 @@
 """Utility functions for modifying an app's settings file using JSON."""
 
 import json
-import logging
+from pylib import logging
 
 from devil.android.sdk import shared_prefs
 

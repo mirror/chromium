@@ -3,6 +3,9 @@
 # found in the LICENSE file.
 
 
+from pylib import constants
+import os
+
 class Environment(object):
   """An environment in which tests can be run.
 
@@ -28,6 +31,9 @@ class Environment(object):
   def __enter__(self):
     self.SetUp()
     return self
+
+  def TestInfoCachePath(self):
+    return os.path.join(constants.GetOutDirectory(), 'test_info.json')
 
   def __exit__(self, _exc_type, _exc_val, _exc_tb):
     self.TearDown()

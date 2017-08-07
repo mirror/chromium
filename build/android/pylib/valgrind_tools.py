@@ -5,7 +5,7 @@
 # pylint: disable=R0201
 
 import glob
-import logging
+from pylib import logging
 import os.path
 import subprocess
 import sys

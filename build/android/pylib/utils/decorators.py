@@ -3,7 +3,7 @@
 # found in the LICENSE file.
 
 import functools
-import logging
+from pylib import logging
 
 
 def Memoize(f):

@@ -11,7 +11,7 @@ chrome test server on the host.
 
 import BaseHTTPServer
 import json
-import logging
+from pylib import logging
 import os
 import select
 import struct

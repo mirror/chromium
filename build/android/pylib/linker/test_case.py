@@ -35,7 +35,7 @@
 """
 # pylint: disable=R0201
 
-import logging
+from pylib import logging
 import re
 
 from devil.android import device_errors

@@ -12,7 +12,7 @@ Tests run the script with various inputs and check the status of the filesystem
 '''
 
 import contextlib
-import logging
+from pylib.utils import logging
 import os
 import shutil
 import sys

@@ -4,9 +4,12 @@
 
 import fnmatch
 import imp
-import logging
+import json
+from pylib import logging
+import os
 import posixpath
 import signal
+import time
 import thread
 import threading
 
@@ -72,20 +75,29 @@ class LocalDeviceTestRun(test_run.TestRun):
     super(LocalDeviceTestRun, self).__init__(env, test_instance)
     self._tools = {}
 
+    # Fields used for logging time remaining estimates
+    self._start_tests_remaining = None
+    self._start_time = None
+    self._last_time_log = 0
+    self._log_lock = threading.Lock()
   #override
   def RunTests(self):
     tests = self._GetTests()
-
     exit_now = threading.Event()
 
     @local_device_environment.handle_shard_failures
     def run_tests_on_device(dev, tests, results):
+      if isinstance(tests, test_collection.TestCollection):
+        self._start_tests_remaining = len(tests)
+        self._start_time = time.time()
       for test in tests:
         if exit_now.isSet():
           thread.exit()
 
         result = None
         rerun = None
+        if isinstance(tests, test_collection.TestCollection):
+          self._MaybeLogTimeRemaining(tests)
         try:
           result, rerun = crash_handler.RetryOnSystemCrash(
               lambda d, t=test: self._RunTest(d, t),
@@ -164,6 +176,48 @@ class LocalDeviceTestRun(test_run.TestRun):
       pass
 
     return results
+
+  def _MaybeLogTimeRemaining(self, tc):
+    """Log an estimate for how long remains to run the test suite.
+
+    If this function has not logged an estimate in the previous |LOG_COOLDOWN|
+    then it will log the number of tests remaining to run. This function will
+    also attempt to estimate the time remaining in the test run. It does this
+    by (1) looking to see if runtimes for tests were cached by a previous run,
+    (2) if not, attempt to extrapolate test runtimes from the tests run so far
+    (3) or fall back to a hardcoded fix value.
+
+    Args:
+      tc: Test collection.
+    """
+    LOG_COOLDOWN = 30 # seconds
+    with self._log_lock:
+      if time.time() - self._last_time_log < LOG_COOLDOWN:
+        return
+      self._last_time_log = time.time()
+
+
+    tests_remaining = len(tc)
+    if tests_remaining < self._start_tests_remaining:
+      avg_test_duration = (float(time.time() - self._start_time) /
+                           (tests_remaining - self._start_tests_remaining))
+    else:
+      avg_test_duration = 1000
+
+    test_info = {}
+    if os.path.exists(self._env.TestInfoCachePath()):
+      with open(self._env.TestInfoCachePath(), 'r') as f:
+        test_info = json.load(f)
+
+    def get_test_time_estimate(t):
+      return test_info.get(t, {}).get(
+          'duration_ms', avg_test_duration)
+
+    time_estimate = float(sum(map(get_test_time_estimate,
+        [self._GetUniqueTestName(t) for t in tc.test_names()]))) / 1000 # seconds
+
+    logging.critical('Tests remaining: %d, Time remaining: %f',
+                     tests_remaining, time_estimate / len(self._env.devices))
 
   def _GetTestsToRetry(self, tests, try_results):
 

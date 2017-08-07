@@ -8,7 +8,7 @@
             the android virtual device named 'avd_armeabi' .
 """
 
-import logging
+from pylib import logging
 import os
 import signal
 import subprocess

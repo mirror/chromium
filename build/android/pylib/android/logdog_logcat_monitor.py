@@ -2,7 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import logging
+from pylib import logging
 
 from devil.android import logcat_monitor
 from devil.utils import reraiser_thread

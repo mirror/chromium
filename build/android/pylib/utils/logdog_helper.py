@@ -4,7 +4,7 @@
 
 """Helper functions to upload data to logdog."""
 
-import logging
+from pylib import logging
 import os
 import sys
 

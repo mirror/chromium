@@ -4,7 +4,7 @@
 
 import collections
 import datetime
-import logging
+from pylib import logging
 import multiprocessing
 import os
 import posixpath

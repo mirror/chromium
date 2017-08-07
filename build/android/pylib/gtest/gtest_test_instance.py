@@ -3,7 +3,7 @@
 # found in the LICENSE file.
 
 import HTMLParser
-import logging
+from pylib import logging
 import os
 import re
 import tempfile
