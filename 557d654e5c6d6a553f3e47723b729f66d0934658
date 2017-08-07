@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ad5c9cb_129b1156",
+        "filename": "third_party/WebKit/LayoutTests/resources/testharnessreport.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-07T00:06:07Z",
+      "side": 1,
+      "message": "Pass |tests.length| as a function argument, or replace it with |resultsCounts[0] + resultsCounts[1] + resultsCounts[2] + resultsCounts[3]|.",
+      "revId": "557d654e5c6d6a553f3e47723b729f66d0934658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
