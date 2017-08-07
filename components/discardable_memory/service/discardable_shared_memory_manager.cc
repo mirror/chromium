@@ -229,6 +229,7 @@ DiscardableSharedMemoryManager::DiscardableSharedMemoryManager()
 DiscardableSharedMemoryManager::~DiscardableSharedMemoryManager() {
   base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
       this);
+  base::MemoryCoordinatorClientRegistry::GetInstance()->Unregister(this);
 }
 
 void DiscardableSharedMemoryManager::Bind(
