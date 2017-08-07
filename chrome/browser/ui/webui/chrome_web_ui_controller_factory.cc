@@ -56,6 +56,7 @@
 #include "chrome/browser/ui/webui/signin_internals_ui.h"
 #include "chrome/browser/ui/webui/supervised_user_internals_ui.h"
 #include "chrome/browser/ui/webui/sync_internals_ui.h"
+#include "chrome/browser/ui/webui/sys_internals/sys_internals_ui.h"
 #include "chrome/browser/ui/webui/task_scheduler_internals/task_scheduler_internals_ui.h"
 #include "chrome/browser/ui/webui/translate_internals/translate_internals_ui.h"
 #include "chrome/browser/ui/webui/usb_internals/usb_internals_ui.h"
@@ -380,6 +381,8 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
     return &NewWebUI<SyncInternalsUI>;
   if (url.host_piece() == chrome::kChromeUISyncResourcesHost)
     return &NewWebUI<WebDialogUI>;
+  if (url.host_piece() == chrome::kChromeUISysInternalsHost)
+    return &NewWebUI<SysInternalsUI>;
   if (url.host_piece() == chrome::kChromeUITaskSchedulerInternalsHost)
     return &NewWebUI<TaskSchedulerInternalsUI>;
   if (url.host_piece() == chrome::kChromeUITranslateInternalsHost)

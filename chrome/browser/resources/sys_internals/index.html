@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<!--
+Copyright (c) 2017 The Chromium Authors. All rights reserved.
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file.
+-->
+
+<head>
+  <meta charset="utf-8">
+  <!-- Don't use automatic scaling on mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,
+              maximum-scale=1.0, user-scalable=no">
+  <title>System Internal</title>
+  <link rel="stylesheet" type="text/css" href="index.css">
+  <script src="chrome://resources/js/cr.js"></script>
+  <!-- <script src="chrome://resources/js/load_time_data.js"></script> -->
+  <script src="chrome://resources/js/util.js"></script>
+  <!-- <script src="strings.js"></script> -->
+  <script type="text/javascript" src="index.js"></script>
+</head>
+<body>
+  <!-- <link rel="import" href="chrome://resources/html/polymer.html">
+  <link rel="import" href="chrome://resources/cr_elements/icons.html"> -->
+  <div id="sys-internals-drawer" class="hidden" hidden>
+    <div id="sys-internals-drawer-menu" class="hidden">
+      <a class="sys-internals-drawer-item" href="#CPU">CPU</a>
+      <a class="sys-internals-drawer-item" href="#Memory">Memory</a>
+      <a class="sys-internals-drawer-item" href="#Zram">Zram</a>
+    </div>
+  </div>
+  <div id="sys-internals-nav">
+    <div id="sys-internals-nav-menu-btn">
+      <svg viewBox="0 0 20 20">
+        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+      </svg>
+    </div>
+  </div>
+  <div id="sys-internals-body">
+    <!-- <div id="sys-internals-menu"></div> -->
+    <!-- <div id="sys-internals-chart-menu"></div> -->
+    <div id="sys-internals-chart-root" class="line-chart-root"></div>
+  </div>
+  <!-- <iron-icon icon="cr:cancel"></iron-icon> -->
+
+
+  <!-- <sys-internals-ui></sys-internals-ui> -->
+  <!-- <link rel="import" href="sys_internals_ui/sys_internals_ui.html"> -->
+</body>
+</html>
