@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "2e5b13f3_80d21992",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-07T23:29:41Z",
+      "side": 1,
+      "message": "why do we have to set caching to false here but not also reset blur? when is blur removed from the wallpaper layer and are we making sure that RS caching is also turned off in that case?",
+      "revId": "392d6c31f24dd2556826aac4f1cdd53ba6350190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b89b497_137abd30",
         "filename": "ash/wallpaper/wallpaper_view.cc",
         "patchSetId": 6
