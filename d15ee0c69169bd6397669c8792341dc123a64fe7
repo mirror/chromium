@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "965f4518_6badd7ce",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseChromiumAndroidJUnitRunner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-07T21:07:17Z",
+      "side": 1,
+      "message": "I would add comment as to why. You mentioned in person that you dont due it because it wont list parameterized tests properly.",
+      "revId": "d15ee0c69169bd6397669c8792341dc123a64fe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "066b399b_738ca265",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseJUnit4ClassRunner.java",
         "patchSetId": 2
