@@ -1022,6 +1022,8 @@ void ProfileInfoCache::OnAvatarPictureLoaded(const base::FilePath& profile_path,
 
   cached_avatar_images_loading_[key] = false;
 
+  UMA_HISTOGRAM_BOOLEAN("Profile.LoadAvatarSuccess", *image);
+
   if (*image) {
     // TODO(erikchen): Remove ScopedTracker below once http://crbug.com/461175
     // is fixed.

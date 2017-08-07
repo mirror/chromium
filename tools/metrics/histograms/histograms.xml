@@ -61042,6 +61042,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Profile.LoadAvatarSuccess" enum="BooleanEnabled">
+  <owner>chengx@chromium.org</owner>
+  <summary>Tracks whether an avatar image is loaded successfully</summary>
+</histogram>
+
 <histogram name="Profile.LockedProfilesDuration" units="minutes">
   <owner>mlerman@chromium.org</owner>
   <summary>
