@@ -69,6 +69,30 @@
       "revId": "907542fe3f2e812eb8e18804b7cc40a41cb6d56c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f6fa81_3c8dae04",
+        "filename": "remoting/host/file_transfer_message_handler_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-07T20:08:28Z",
+      "side": 1,
+      "message": "The client creates the channel name from the base string \"filetransfer-\" and appends a number to it. The DataChannelManager will pass the MessagePipe to this factory because this factory is registered with DataChannelManager to all channels that start with \"filetransfer-\"",
+      "parentUuid": "ca57e9a7_67e17ed1",
+      "range": {
+        "startLine": 17,
+        "startChar": 36,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "907542fe3f2e812eb8e18804b7cc40a41cb6d56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
