@@ -269,6 +269,9 @@ KeyboardController::KeyboardController(std::unique_ptr<KeyboardUI> ui,
 
 KeyboardController::~KeyboardController() {
   if (container_) {
+    DCHECK(state_ != SHOWN && state_ != SHOWING && state_ != WILL_HIDE &&
+           state_ != HIDING);
+
     if (container_->GetRootWindow())
       container_->GetRootWindow()->RemoveObserver(this);
     container_->RemoveObserver(this);
@@ -380,7 +383,16 @@ void KeyboardController::RemoveObserver(KeyboardControllerObserver* observer) {
   observer_list_.RemoveObserver(observer);
 }
 
-void KeyboardController::HideKeyboard(HideReason reason) {
+void KeyboardController::HideKeyboard(const HideReason reason) {
+  HideKeyboardInternal(reason, true);
+}
+
+void KeyboardController::HideKeyboardSynchronous(const HideReason reason) {
+  HideKeyboardInternal(reason, false);
+}
+
+void KeyboardController::HideKeyboardInternal(const HideReason reason,
+                                              const bool use_animation) {
   TRACE_EVENT0("vk", "HideKeyboard");
 
   switch (state_) {
@@ -406,33 +418,46 @@ void KeyboardController::HideKeyboard(HideReason reason) {
 
       set_keyboard_locked(false);
 
-      ui::LayerAnimator* container_animator =
-          container_->layer()->GetAnimator();
-
-      animation_observer_.reset(new CallbackAnimationObserver(
-          container_animator,
-          base::Bind(&KeyboardController::HideAnimationFinished,
-                     base::Unretained(this))));
-      container_animator->AddObserver(animation_observer_.get());
-
-      ui::ScopedLayerAnimationSettings settings(container_animator);
-      settings.SetTweenType(gfx::Tween::FAST_OUT_LINEAR_IN);
-      settings.SetTransitionDuration(
-          base::TimeDelta::FromMilliseconds(kAnimationDurationMs));
-      gfx::Transform transform;
-      transform.Translate(0, kAnimationDistance);
-
       // Change the state here instead of at the end of the function because
       // the animation immediately starts in test.
       ChangeState(KeyboardControllerState::HIDING);
+      if (use_animation) {
+        FireHidingAnimation();
+      } else {
+        // Instead of animating, just set the bounds synchronously.
+        const gfx::Rect old_bounds = container_->bounds();
+        const gfx::Rect new_bounds =
+            gfx::Rect(old_bounds.x(), old_bounds.y() + kAnimationDistance,
+                      old_bounds.width(), old_bounds.height());
+        container_->SetBounds(new_bounds);
+        HideAnimationFinished();
 
-      container_->SetTransform(transform);
-      container_->layer()->SetOpacity(kAnimationStartOrAfterHideOpacity);
+        ChangeState(KeyboardControllerState::HIDDEN);
+      }
       break;
     }
     default:
       NOTREACHED();
   }
+}
+
+void KeyboardController::FireHidingAnimation() {
+  ui::LayerAnimator* container_animator = container_->layer()->GetAnimator();
+
+  animation_observer_.reset(new CallbackAnimationObserver(
+      container_animator, base::Bind(&KeyboardController::HideAnimationFinished,
+                                     base::Unretained(this))));
+  container_animator->AddObserver(animation_observer_.get());
+
+  ui::ScopedLayerAnimationSettings settings(container_animator);
+  settings.SetTweenType(gfx::Tween::FAST_OUT_LINEAR_IN);
+  settings.SetTransitionDuration(
+      base::TimeDelta::FromMilliseconds(kAnimationDurationMs));
+  gfx::Transform transform;
+  transform.Translate(0, kAnimationDistance);
+
+  container_->SetTransform(transform);
+  container_->layer()->SetOpacity(kAnimationStartOrAfterHideOpacity);
 }
 
 void KeyboardController::ShowKeyboard(bool lock) {
