@@ -16,6 +16,24 @@
       "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb931071_e81e1ba6",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-07T18:37:36Z",
+      "side": 1,
+      "message": "Hmmm... I think we should look at both common name and SANs. Chrome no longer looks at CNs at all for the purpose of validating certificates, but I think for this feature we should still look at both CNs and SANs, because I bet there are a bunch of old MITMs out there that still use CNs only. There are a few possible situations:\n1.) MITM uses CNs only in its certificates, and the client has the root cert properly installed. This situation would generate an ERR_CERT_COMMON_NAME_INVALID error. I think we should expand this feature to catch this case (e.g. we should look for ERR_CERT_COMMON_NAME_INVALID errors in addition to ERR_CERT_AUTHORITY_INVALID errors to trigger this feature), but that doesn\u0027t have to happen right now.\n2.) MITM uses both CNs and SANs, or only SANs, in its certificates, and the client is missing the root cert. We\u0027d cover these situations by looking at SANs.\n3.) MITM uses CNs only in its certificates, and the client is missing the root cert. To catch this situation and trigger this feature, we\u0027d need to look at CNs.\n\nSo to cover situations #2 and #3, we need to look at both CNs and SANs. And then we can later look at ERR_CERT_COMMON_NAME_INVALID errors as well to catch situation #1.",
+      "parentUuid": "ac37d6e4_1ec6305b",
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
