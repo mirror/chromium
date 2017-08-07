@@ -14,6 +14,7 @@
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "mojo/public/cpp/system/watcher.h"
 #include "third_party/WebKit/common/common_export.h"
+#include "third_party/WebKit/common/message_port/message_port.mojom-shared.h"
 
 namespace blink_common {
 
@@ -66,10 +67,41 @@ class BLINK_COMMON_EXPORT MessagePort {
                    size_t encoded_message_size,
                    std::vector<MessagePort> ports);
 
+  template <typename StructType, typename MessageType>
+  void PostMessage(MessageType* message) {
+    static_assert(std::is_same<typename StructType::DataView,
+                               mojom::MessagePortMessageDataView>::value,
+                  "Message must be a MessagePortMessage");
+    DCHECK(state_->handle().is_valid());
+    mojo::Message mojo_message = StructType::SerializeAsMessage(message);
+
+    // NOTE: It is OK to ignore the return value of mojo::WriteMessageNew here.
+    // HTML MessagePorts have no way of reporting when the peer is gone.
+    mojo::WriteMessageNew(state_->handle().get(),
+                          mojo_message.TakeMojoMessage(),
+                          MOJO_WRITE_MESSAGE_FLAG_NONE);
+  }
+
   // Get the next available encoded message if any. Returns true if a message
   // was read.
   bool GetMessage(std::vector<uint8_t>* encoded_message,
                   std::vector<MessagePort>* ports);
+
+  template <typename StructType, typename MessageType>
+  bool GetMessage(MessageType* message) {
+    static_assert(std::is_same<typename StructType::DataView,
+                               mojom::MessagePortMessageDataView>::value,
+                  "Message must be a MessagePortMessage");
+    DCHECK(state_->handle().is_valid());
+    mojo::ScopedMessageHandle message_handle;
+    MojoResult rv = mojo::ReadMessageNew(
+        state_->handle().get(), &message_handle, MOJO_READ_MESSAGE_FLAG_NONE);
+    if (rv != MOJO_RESULT_OK)
+      return false;
+
+    mojo::Message mojo_message(std::move(message_handle));
+    return StructType::DeserializeFromMessage(std::move(mojo_message), message);
+  }
 
   // This callback will be invoked on a background thread when messages are
   // available to be read via GetMessage. It must not synchronously call back
