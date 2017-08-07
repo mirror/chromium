@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "22f3edc2_81d0b599",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-07T20:16:08Z",
+      "side": 1,
+      "message": "This is fine, but we should add a comment documenting the assumed lifetime.",
+      "parentUuid": "8748c4fc_b7d21025",
+      "revId": "993636c7baf8bfc7bc7abbcbf94ece15d9480a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d09f04d2_9fd593ee",
         "filename": "extensions/shell/browser/shell_desktop_controller_aura_unittest.cc",
         "patchSetId": 4
