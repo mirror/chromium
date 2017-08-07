@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83416a77_3a00b98f",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-07T18:31:04Z",
+      "side": 1,
+      "message": "In your sample crash I dont see \" :\" anywhere?",
+      "revId": "b6200f51614c4f52c7ff6b10c9bfbaccb1777251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e5b15f_c4a5ceba",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-07T18:31:04Z",
+      "side": 1,
+      "message": "nit: you could move the continues out of the if/else. But your call",
+      "revId": "b6200f51614c4f52c7ff6b10c9bfbaccb1777251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d92578a_08b70007",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-07T18:31:04Z",
+      "side": 1,
+      "message": "This logic confused me. So, you do it this way because if you have seen \u0027backtrace:\u0027 then you are ensured that if \u0027    #\u0027 isnt found then it is definitely the end of the crash?\n\nIf this is the case, its fine with me. Just I would add to the comment above describing this.",
+      "revId": "b6200f51614c4f52c7ff6b10c9bfbaccb1777251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d98976_3007d81b",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-07T18:31:04Z",
+      "side": 1,
+      "message": "do you need another \u0027\\n\u0027 at the end?",
+      "range": {
+        "startLine": 75,
+        "startChar": 27,
+        "endLine": 75,
+        "endChar": 28
+      },
+      "revId": "b6200f51614c4f52c7ff6b10c9bfbaccb1777251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f57983_c74d9e8f",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-07T18:31:04Z",
+      "side": 1,
+      "message": "nit: single quotes",
+      "range": {
+        "startLine": 78,
+        "startChar": 16,
+        "endLine": 78,
+        "endChar": 25
+      },
+      "revId": "b6200f51614c4f52c7ff6b10c9bfbaccb1777251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
