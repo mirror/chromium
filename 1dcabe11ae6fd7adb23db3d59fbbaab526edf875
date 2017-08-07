@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44e0ec70_6969346a",
+        "filename": "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-07T13:50:46Z",
+      "side": 1,
+      "message": "Will also need base::MayBlock() trait if this does file I/O",
+      "revId": "1dcabe11ae6fd7adb23db3d59fbbaab526edf875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cce9d10_88ba8e35",
+        "filename": "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-07T13:50:46Z",
+      "side": 1,
+      "message": "Use io_task_runner_-\u003eRunsTasksInCurrentSequence() instead of a custom SequenceChecker.",
+      "revId": "1dcabe11ae6fd7adb23db3d59fbbaab526edf875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4148f016_7e4a1fc2",
+        "filename": "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-07T13:50:46Z",
+      "side": 1,
+      "message": "Include ref_counted.h and fwd-decl SequencedTaskRunner\n\nAlso, prefer a more specific name for the task runner as ultimately everything is a \"task runner\", e.g. io_task_runner_.",
+      "revId": "1dcabe11ae6fd7adb23db3d59fbbaab526edf875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
