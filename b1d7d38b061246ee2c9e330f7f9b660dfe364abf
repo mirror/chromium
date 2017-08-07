@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efa3c0e8_f08b01b0",
+        "filename": "content/browser/download/download_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "\u003d default",
+      "range": {
+        "startLine": 26,
+        "startChar": 58,
+        "endLine": 26,
+        "endChar": 60
+      },
+      "revId": "b1d7d38b061246ee2c9e330f7f9b660dfe364abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
