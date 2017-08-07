@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3870eb30_a023e56c",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-07T20:55:42Z",
+      "side": 1,
+      "message": "RunShellCommand actually takes a surprising amount of time. Would prefer to only run this command when we need to (i.e. tracing is enabled)",
+      "revId": "6d793fddca74569209041f60ccfbe50d3646d60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc781ad_94045cd7",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-07T20:55:42Z",
+      "side": 1,
+      "message": "So, instead of all of the rstrip and merging the json by hand.\n\nHave you just load() the json object and merge the python/java json with append(). Or are the traces too big to do this?\n\nCurrent way is fine, just question/suggestion.",
+      "revId": "6d793fddca74569209041f60ccfbe50d3646d60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d308beb3_f60a5251",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-07T20:55:42Z",
+      "side": 1,
+      "message": "super nit:  if host_contents:\n\nmight be cleaner and I think does the same thing.",
+      "revId": "6d793fddca74569209041f60ccfbe50d3646d60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
