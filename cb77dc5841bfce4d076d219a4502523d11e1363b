@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70432d98_6fdfe0c8",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 12007,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-08-07T21:44:54Z",
+      "side": 1,
+      "message": "How about another expectation for kInputFieldTypePassword as well?",
+      "revId": "cb77dc5841bfce4d076d219a4502523d11e1363b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

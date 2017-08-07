@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e37687c2_d7469c79",
+        "filename": "content/shell/browser/shell_web_contents_view_delegate_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-08-07T21:44:54Z",
+      "side": 1,
+      "message": "This is just Content Shell which is not a user-facing product we ship so I don\u0027t think details like this are very important.  It looks like you\u0027re changing this mostly because source code inspection showed your patch would change this, but I think it\u0027s fine to let it change and not add new code/complexity that doesn\u0027t do anything too useful.",
+      "revId": "ae0ccc4bf9a8a195a6940b8db493575eda16adfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
