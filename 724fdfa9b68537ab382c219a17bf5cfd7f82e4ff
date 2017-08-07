@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baaa1dcb_9081a0af",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T21:42:57Z",
+      "side": 1,
+      "message": "const net::IPEndPoint\u0026\n \n(since .insert will make its own copy)",
+      "revId": "724fdfa9b68537ab382c219a17bf5cfd7f82e4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b70356e_c7e89d3e",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T21:42:57Z",
+      "side": 1,
+      "message": "Super nit: It\u0027s probably okay to leave this as ip_address, and just rename the variable below.",
+      "revId": "724fdfa9b68537ab382c219a17bf5cfd7f82e4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c6130b_ccf7aa26",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-07T21:42:57Z",
+      "side": 1,
+      "message": "Do we still need to import mojo bindings for IPAddress?",
+      "revId": "724fdfa9b68537ab382c219a17bf5cfd7f82e4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
