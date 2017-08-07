@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c9e7c176_4ece3c16",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-07T15:55:42Z",
+      "side": 1,
+      "message": "I think, yes. For most cases of the file names, sign-in is used as a noun (which is a hyphenated word). Methods often (though not always) use it as a verb.\n\nIf I was writing these methods, I would have capitalized \"I\" for this method. I also agree with the discussion about how inconsistent it is, so I wouldn\u0027t block for this.",
+      "parentUuid": "4230a7dc_a8f43f60",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 25
+      },
+      "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32cf1047_23ec1dad",
         "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
         "patchSetId": 4
