@@ -88,6 +88,9 @@ class PepperWebPluginImpl : public blink::WebPlugin {
 
   ~PepperWebPluginImpl() override;
 
+  // Helper for ExecuteEditCommand() methods.
+  bool ExecutePaste();
+
   // Cleared upon successful initialization.
   struct InitData;
   std::unique_ptr<InitData> init_data_;
