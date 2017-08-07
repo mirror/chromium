@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edcf3e58_d4213e59",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-07T21:57:30Z",
+      "side": 1,
+      "message": "Should avoid calling instance methods in init. This line can be moved to willMoveToSuperview.",
+      "revId": "13ebf1f27487a794b5390030578c3035f9ef1760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595b763f_4cc5eb1b",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-07T21:57:30Z",
+      "side": 1,
+      "message": "Should use instance variables, not property setters here.",
+      "revId": "13ebf1f27487a794b5390030578c3035f9ef1760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147f6de8_7dd93f6f",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-07T21:57:30Z",
+      "side": 1,
+      "message": "Do the constraints not work if this is absent? At some point, UIKit should still call updateConstraints when the view is being presented.",
+      "revId": "13ebf1f27487a794b5390030578c3035f9ef1760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15d0d5f_69d91dc0",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-07T21:57:30Z",
+      "side": 1,
+      "message": "Would be good to make a separate pragma for private class methods.",
+      "revId": "13ebf1f27487a794b5390030578c3035f9ef1760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
