@@ -174,6 +174,11 @@ void MediaControlInputElement::RecordCTREvent(CTREvent event) {
   ctr_histogram.Count(static_cast<int>(event));
 }
 
+void MediaControlInputElement::ToggleClass(bool toggle,
+                                           const AtomicString& class_name) {
+  setAttribute("class", toggle ? class_name : "", ASSERT_NO_EXCEPTION);
+}
+
 DEFINE_TRACE(MediaControlInputElement) {
   HTMLInputElement::Trace(visitor);
   MediaControlElementBase::Trace(visitor);
