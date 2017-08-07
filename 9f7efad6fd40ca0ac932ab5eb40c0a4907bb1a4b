@@ -1,0 +1,498 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8c07d15_f54639c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "Please fix up the line breaks here.",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d702bf7_9ef8226f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "Nit: just buildAndScheduleUpdate might be fine here. No need to repeat \"update\".",
+      "range": {
+        "startLine": 177,
+        "startChar": 19,
+        "endLine": 177,
+        "endChar": 54
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0827df8b_19e0eaaa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "Nit: \"updateFilePath\" (no need to leak the proto-ness into here).",
+      "range": {
+        "startLine": 191,
+        "startChar": 21,
+        "endLine": 191,
+        "endChar": 34
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa8ad4a5_120b8de4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "Can this be in WebappDataStorage? Then all the File logic is in there. This could be \"createUpdateRequestFilePath\"",
+      "range": {
+        "startLine": 215,
+        "startChar": 21,
+        "endLine": 215,
+        "endChar": 45
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a7fa0ba_6a5059e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "Can this be a constant somewhere? I\u0027m wary of naming collisions.",
+      "range": {
+        "startLine": 219,
+        "startChar": 49,
+        "endLine": 219,
+        "endChar": 55
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc873f7_b7d2e578",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDataStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "More specific: \"The file path where serialised update data is written before uploading to the WebAPK server\".",
+      "range": {
+        "startLine": 74,
+        "startChar": 19,
+        "endLine": 74,
+        "endChar": 22
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46a0272_b51f8586",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDataStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "Do we need to add a call in WebApkActivity#onDeferredStartup to clear any pending update files? We could end up with a proliferation of them if updates get interrupted a lot.",
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b40bbc_0d1cc4eb",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "If you\u0027re just passing this through as an argument, do you need to #include file_path.h?",
+      "range": {
+        "startLine": 48,
+        "startChar": 49,
+        "endLine": 48,
+        "endChar": 68
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6375c56d_725246ac",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "Nit: |update_request_path| is probably fine because the type is base::FilePath.",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 30
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d86bc4_84f477fc",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "If this is just being dumped to a file now, can we just dump it as bytes instead of in a string? Is there any difference in overhead?",
+      "range": {
+        "startLine": 185,
+        "startChar": 31,
+        "endLine": 185,
+        "endChar": 47
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338e93cd_1003d606",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "I\u0027d prefer ToFile rather than ToDisk since we take a path argument.",
+      "range": {
+        "startLine": 194,
+        "startChar": 5,
+        "endLine": 194,
+        "endChar": 41
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4fb1516_b120a9bb",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "update_request_path",
+      "range": {
+        "startLine": 195,
+        "startChar": 26,
+        "endLine": 195,
+        "endChar": 30
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873fe835_347e2fc8",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "Doesn\u0027t Context.getDir() create the directory if needed?",
+      "range": {
+        "startLine": 217,
+        "startChar": 2,
+        "endLine": 217,
+        "endChar": 6
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "272157ee_ade5d8b7",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "FromDisk is unnecessary",
+      "range": {
+        "startLine": 225,
+        "startChar": 29,
+        "endLine": 225,
+        "endChar": 57
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d07cd7_4f3b7310",
+        "filename": "chrome/browser/android/webapk/webapk_installer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "|update_request_path|",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 30
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1f243e_4689961a",
+        "filename": "chrome/browser/android/webapk/webapk_installer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "|update_request_path| for consistency.",
+      "range": {
+        "startLine": 97,
+        "startChar": 28,
+        "endLine": 97,
+        "endChar": 32
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ddf8f47_2a8769b4",
+        "filename": "chrome/browser/android/webapk/webapk_installer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "|update_request_path|",
+      "range": {
+        "startLine": 139,
+        "startChar": 6,
+        "endLine": 139,
+        "endChar": 30
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2578ba_a4da2409",
+        "filename": "chrome/browser/android/webapk/webapk_update_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "StoreWebApkUpdateRequestToFile?",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 42
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f826dc3f_69fd48a7",
+        "filename": "chrome/browser/android/webapk/webapk_update_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "java_update_request_path",
+      "range": {
+        "startLine": 59,
+        "startChar": 33,
+        "endLine": 59,
+        "endChar": 47
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3755f668_10d08545",
+        "filename": "chrome/browser/android/webapk/webapk_update_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "update_request_path?",
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e68f86_4316bd90",
+        "filename": "chrome/browser/android/webapk/webapk_update_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "UpdateWebApkFromFile perhaps?",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 41
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04792592_d3718da8",
+        "filename": "chrome/browser/android/webapk/webapk_update_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-07T04:46:49Z",
+      "side": 1,
+      "message": "java_update_request_path for consistency",
+      "range": {
+        "startLine": 137,
+        "startChar": 33,
+        "endLine": 137,
+        "endChar": 55
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
