@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11a4314c_67fadf2b",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91c754f2_bf9e85f2",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b1369a9_d06c86bc",
         "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f253147_16fc5fde",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b1369a9_d06c86bc",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f83fbde4_461bc611",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e92c1336_ffcdad45",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6aeafa5_94f3af31",
         "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecd77c8_3e8b73d0",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "It\u0027s called from the same sequenced task runner. Adding comment about how all methods are called on the same sequenced task runner.",
+      "parentUuid": "e6aeafa5_94f3af31",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d0b653f5_ea5344d4",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ab29287_5850f02e",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfe05420_f081310f",
         "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "05b628af_bb0333b8",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfe05420_f081310f",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "351d6854_ab486c0b",
         "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
         "patchSetId": 4
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-04T03:11:30Z",
       "side": 1,
       "message": "If you extract all the string logic up to here in 1 or 2 separate (static) methods, you can unit-test it easily. You\u0027d need separate logic (like the one below) for populating WebCore.IndexedDB.TombstoneSweeper.SweepError.",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d08872f_7641ce5f",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "I\u0027m going to create a mock histograms service and just check the histograms I report, which should handle everything here",
+      "parentUuid": "351d6854_ab486c0b",
       "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "47d3ddbe_070ea564",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "Cool. Thanks :)",
+      "parentUuid": "0fda4f76_7dbe15d6",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bbeb222_7aa24914",
         "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
         "patchSetId": 4
@@ -152,6 +296,24 @@
       "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbad9e6b_7c120889",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "Made it publicly accessible :P",
+      "parentUuid": "1bbeb222_7aa24914",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "adab7dec_2b9d2dff",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d18ee045_461865ac",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "501420d8_f6f03b47",
         "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
         "patchSetId": 4
@@ -186,6 +366,24 @@
       "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69476af6_30bbb0f9",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "I just missed this, changed.",
+      "parentUuid": "501420d8_f6f03b47",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "8dc68715_2210bcb5",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ba181c0_776668d1",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5df5289e_88cbd493",
         "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
         "patchSetId": 4
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "01d34564_32aacb6f",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5df5289e_88cbd493",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2100c308_78c52f79",
         "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
         "patchSetId": 4
@@ -237,6 +471,24 @@
       "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18546c8e_f4f4b62a",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-07T23:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2100c308_78c52f79",
+      "revId": "02f696e4f4ceaec3182e07b0228e9a8dde8f960d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
