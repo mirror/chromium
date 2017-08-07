@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0782564_2a90780f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ProcessInitializationHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-07T17:26:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce0986ce_116b76f8",
+      "range": {
+        "startLine": 661,
+        "startChar": 12,
+        "endLine": 661,
+        "endChar": 34
+      },
+      "revId": "c2caea1241eeaaf5883097e318dcea996ee0b895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caf2bfaa_e56acddf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ProcessInitializationHandler.java",
         "patchSetId": 2
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "524dcb98_62c4daa6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ProcessInitializationHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-07T17:26:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caf2bfaa_e56acddf",
+      "range": {
+        "startLine": 678,
+        "startChar": 16,
+        "endLine": 678,
+        "endChar": 22
+      },
+      "revId": "c2caea1241eeaaf5883097e318dcea996ee0b895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "728277c8_db0e0a48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ProcessInitializationHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-07T17:26:38Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a guarantee of the name not changing - it\u0027s an implementation detail in Android. However, this has been constant since ICS (comment added), and worst case this metric will just fail to log. We\u0027ll probably only need this metric until Android P (when we hope to get an API to disable this cache).",
+      "parentUuid": "b4458e59_551a3d6e",
+      "range": {
+        "startLine": 678,
+        "startChar": 63,
+        "endLine": 678,
+        "endChar": 95
+      },
+      "revId": "c2caea1241eeaaf5883097e318dcea996ee0b895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6a4becf_ca4bddcb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ProcessInitializationHandler.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-05T20:24:15Z",
       "side": 1,
       "message": "I would assume we would only be interested in sizes in the range |0 \u003c\u003d .length() \u003c\u003d Integer.MAX_VALUE|?\n\nShould we bail out early if it\u0027ll be out of bounds of |int| instead of just blindly casting here? In case reading the length for some reason fails, I don\u0027t think it\u0027s helpful data to record anyway.",
+      "range": {
+        "startLine": 683,
+        "startChar": 71,
+        "endLine": 683,
+        "endChar": 77
+      },
+      "revId": "c2caea1241eeaaf5883097e318dcea996ee0b895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d47c5868_aa100120",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ProcessInitializationHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-07T17:26:38Z",
+      "side": 1,
+      "message": "True - the cache should be bounded at ~2MB, so I think we\u0027ll be fine in general, but might as well drop invalid-looking data.",
+      "parentUuid": "b6a4becf_ca4bddcb",
       "range": {
         "startLine": 683,
         "startChar": 71,
