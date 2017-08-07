@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c7631dd_3b014616",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-07T16:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40d2df41_a982ddd4",
+      "range": {
+        "startLine": 130,
+        "startChar": 27,
+        "endLine": 130,
+        "endChar": 42
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "984cacf1_1b76d226",
         "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "350f02bab830d418865a522393d10c9d47b59e87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "515d16ce_43e0bccd",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-07T16:02:39Z",
+      "side": 1,
+      "message": "It\u0027s the filename. I used path to mean subpath. changed.",
+      "parentUuid": "984cacf1_1b76d226",
+      "range": {
+        "startLine": 205,
+        "startChar": 25,
+        "endLine": 205,
+        "endChar": 40
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e7908020_16f80949",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-07T16:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb2d6237_8046a918",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 33
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3a39362_55fb557e",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "350f02bab830d418865a522393d10c9d47b59e87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e509a8_838a2758",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-07T16:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3a39362_55fb557e",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 15
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3ef92f64_9395ca61",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-07T16:02:39Z",
+      "side": 1,
+      "message": "No, it\u0027s not. The sites are at the beginning returned as a list and numbered according to their order in that list.",
+      "parentUuid": "b42e9d36_6e33a76d",
+      "range": {
+        "startLine": 156,
+        "startChar": 53,
+        "endLine": 156,
+        "endChar": 58
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c718863_bc75b6cc",
         "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
         "patchSetId": 6
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "b2b633ef_65f79a9c",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-07T16:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c718863_bc75b6cc",
+      "range": {
+        "startLine": 198,
+        "startChar": 37,
+        "endLine": 198,
+        "endChar": 56
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b155d8ff_d6faa972",
         "filename": "ios/chrome/content_widget_extension/most_visited_tile_view.h",
         "patchSetId": 6
@@ -160,6 +304,30 @@
       "revId": "350f02bab830d418865a522393d10c9d47b59e87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16fe64a_97bf68bc",
+        "filename": "ios/chrome/content_widget_extension/most_visited_tile_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-07T16:02:39Z",
+      "side": 1,
+      "message": "It is not the title that is nonnull, it is the UILabel. There must be a UILabel and a FaviconView; they are updated (see the readonly) but not recreated. This is not the case for the URL.",
+      "parentUuid": "b155d8ff_d6faa972",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "350f02bab830d418865a522393d10c9d47b59e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
