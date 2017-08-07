@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "4b1731e0_e0bba12f",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-07T22:58:48Z",
+      "side": 1,
+      "message": "I\u0027d defer to dcheng@ on that one, as he has more experience with Mojo stuff, however it does seem more intuitive to me to have 1:1 mapping. I find clearing the interfaces on RenderProcessGone normal and actually expected. We need to reset other state when the process is dead, Mojo interfaces don\u0027t need to be any more special IMHO.",
+      "parentUuid": "dbf7c666_14a42a75",
+      "revId": "fd60bc54cd43d2ef127a325c8398f5ad07944dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b498891_ee2d4df5",
         "filename": "content/public/app/mojo/content_browser_manifest.json",
         "patchSetId": 7
