@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3504d542_514fed58",
+        "filename": "media/audio/audio_output_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-07T13:38:41Z",
+      "side": 1,
+      "message": "This test passes even if you remove the InvalidateWeakPtrs call. Looks like the error task is never executed since it is delayed. Not sure how to solve this, maybe the task runner time can be advanced somehow?",
+      "range": {
+        "startLine": 331,
+        "startChar": 0,
+        "endLine": 331,
+        "endChar": 58
+      },
+      "revId": "ce12ab6b9c608610ec9c59013b21070a11d439ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
