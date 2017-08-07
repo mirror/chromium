@@ -16,6 +16,24 @@
       "revId": "b2b078774a21e690b53a8cc6f733e81c74927006",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708e04c8_e3d3c531",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-07T17:45:37Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "8aa9414c_972d6450",
+      "revId": "b2b078774a21e690b53a8cc6f733e81c74927006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
