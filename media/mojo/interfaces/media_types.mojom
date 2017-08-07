@@ -257,8 +257,21 @@ struct SharedBufferVideoFrameData {
 
 // This defines video frame data stored in texture mailboxes.
 struct MailboxVideoFrameData {
+  interface Releaser {
+    // Implements VideoFrame::UpdateReleaseSyncToken().
+    //
+    // This method should only need to be called once, immediately before
+    // destruction, because the renderer should be waiting for intermediate
+    // sync points already.
+    UpdateReleaseSyncToken(gpu.mojom.SyncToken sync_token);
+  };
+
   // Size must be kept in sync with media::VideoFrame::kMaxPlanes.
   array<gpu.mojom.MailboxHolder, 4> mailbox_holder;
+
+  // If this interface is provided, dropping it signals that the mailbox (and
+  // the texture inside it) is no longer needed.
+  Releaser? releaser;
 };
 
 struct PipelineStatistics {
