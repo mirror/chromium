@@ -21,5 +21,10 @@ web::WebState* GetCurrentWebState() {
   return view_controller.webState;
 }
 
+bool IsIPadIdiom() {
+  UIUserInterfaceIdiom idiom = [[UIDevice currentDevice] userInterfaceIdiom];
+  return idiom == UIUserInterfaceIdiomPad;
+}
+
 }  // namespace shell_test_util
 }  // namespace web

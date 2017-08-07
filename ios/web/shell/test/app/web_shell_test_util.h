@@ -13,6 +13,9 @@ namespace shell_test_util {
 // Gets the current WebState for the web shell.
 web::WebState* GetCurrentWebState();
 
+// Returns whether running on an iPad.
+bool IsIPadIdiom();
+
 }  // namespace shell_test_util
 }  // namespace web
 
