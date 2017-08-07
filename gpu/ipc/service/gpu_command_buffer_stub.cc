@@ -51,6 +51,7 @@
 #include "ui/gl/gl_image.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_switches.h"
+#include "ui/gl/gl_workarounds.h"
 #include "ui/gl/init/gl_factory.h"
 
 #if defined(OS_WIN)
@@ -778,6 +779,21 @@ bool GpuCommandBufferStub::Initialize(
   if (!context.get()) {
     DLOG(ERROR) << "Failed to create context.";
     return false;
+  }
+
+  {
+    // Need to set workarounds and disabled extensions here before the first
+    // MakeCurrent() because the RealGLApi is created inside.
+    gl::GLWorkarounds gl_workarounds;
+    gpu::GpuDriverBugWorkarounds workarounds(
+        manager->gpu_feature_info().enabled_gpu_driver_bug_workarounds);
+    if (workarounds.clear_to_zero_or_one_broken) {
+      gl_workarounds.clear_to_zero_or_one_broken = true;
+    }
+    context->SetGLWorkarounds(gl_workarounds);
+
+    context->SetDisabledGLExtensions(
+        manager->gpu_feature_info().disabled_extensions);
   }
 
   if (!context->MakeCurrent(surface_.get())) {
