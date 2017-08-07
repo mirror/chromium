@@ -16,6 +16,24 @@
       "revId": "2d65f45d5a9984f8d4d996cef65db8335b81a267",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ea456c_e5d19cb2",
+        "filename": "remoting/ios/facade/host_list_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-07T19:27:46Z",
+      "side": 1,
+      "message": "That\u0027s a good point. Done.\n\nI\u0027m not sure whether the URLFetcher can handle timeout already, if no we will need to make sure the user can still refresh after waiting for a while. We can do that in a separate CL.",
+      "parentUuid": "dc450e79_6ac48a8e",
+      "revId": "2d65f45d5a9984f8d4d996cef65db8335b81a267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
