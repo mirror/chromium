@@ -122,31 +122,22 @@ bool ChromePasswordProtectionService::IsPingingEnabled(
     return false;
   }
 
-  bool allowed_incognito =
-      base::GetFieldTrialParamByFeatureAsBool(feature, "incognito", false);
-  if (IsIncognito() && !allowed_incognito) {
-    *reason = DISABLED_DUE_TO_INCOGNITO;
-    return false;
+  if (feature.name == kProtectedPasswordEntryPinging.name) {
+    // Protected password entry pinging is enabled for all users.
+    return true;
+  } else {
+    // Password field on focus pinging is enabled for
+    // !incognito && extended_reporting.
+    if (IsIncognito()) {
+      *reason = DISABLED_DUE_TO_INCOGNITO;
+      return false;
+    }
+    if (!IsExtendedReporting()) {
+      *reason = DISABLED_DUE_TO_USER_POPULATION;
+      return false;
+    }
+    return true;
   }
-
-  bool allowed_all_population =
-      base::GetFieldTrialParamByFeatureAsBool(feature, "all_population", false);
-  if (!allowed_all_population) {
-    bool allowed_extended_reporting = base::GetFieldTrialParamByFeatureAsBool(
-        feature, "extended_reporting", false);
-    if (IsExtendedReporting() && allowed_extended_reporting)
-      return true;  // Ping enabled because this user opted in extended
-                    // reporting.
-
-    bool allowed_history_sync =
-        base::GetFieldTrialParamByFeatureAsBool(feature, "history_sync", false);
-    if (IsHistorySyncEnabled() && allowed_history_sync)
-      return true;
-
-    *reason = DISABLED_DUE_TO_USER_POPULATION;
-  }
-
-  return allowed_all_population;
 }
 
 bool ChromePasswordProtectionService::IsHistorySyncEnabled() {
