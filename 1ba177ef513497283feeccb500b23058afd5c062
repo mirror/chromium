@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e6cfd64_66e0af34",
+        "filename": "components/password_manager/content/browser/content_credential_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-07T13:15:01Z",
+      "side": 1,
+      "message": "??",
+      "range": {
+        "startLine": 11,
+        "startChar": 71,
+        "endLine": 11,
+        "endChar": 94
+      },
+      "revId": "1ba177ef513497283feeccb500b23058afd5c062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9536bba2_6ec8aae6",
+        "filename": "components/password_manager/content/browser/content_credential_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-07T13:15:01Z",
+      "side": 1,
+      "message": "used?",
+      "range": {
+        "startLine": 12,
+        "startChar": 51,
+        "endLine": 12,
+        "endChar": 76
+      },
+      "revId": "1ba177ef513497283feeccb500b23058afd5c062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f9ae7f_97732969",
+        "filename": "components/password_manager/content/browser/content_credential_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-07T13:15:01Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 10,
+        "startChar": 33,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "1ba177ef513497283feeccb500b23058afd5c062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30733b49_4dc5c5b9",
+        "filename": "components/password_manager/content/browser/content_credential_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-07T13:15:01Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "1ba177ef513497283feeccb500b23058afd5c062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc601a18_5b892fa1",
+        "filename": "components/password_manager/content/browser/content_credential_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-07T13:15:01Z",
+      "side": 1,
+      "message": "Clean up unused headers.",
+      "range": {
+        "startLine": 32,
+        "startChar": 33,
+        "endLine": 32,
+        "endChar": 45
+      },
+      "revId": "1ba177ef513497283feeccb500b23058afd5c062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66cdf197_088df30c",
+        "filename": "components/password_manager/content/browser/content_credential_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-07T13:15:01Z",
+      "side": 1,
+      "message": "Just declare the instance here.",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 17
+      },
+      "revId": "1ba177ef513497283feeccb500b23058afd5c062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d743c6_e68a3624",
+        "filename": "components/password_manager/content/browser/content_credential_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-07T13:15:01Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 160,
+        "startChar": 15,
+        "endLine": 160,
+        "endChar": 28
+      },
+      "revId": "1ba177ef513497283feeccb500b23058afd5c062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd631fa_d1ec16f6",
+        "filename": "components/password_manager/content/browser/content_credential_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-07T13:15:01Z",
+      "side": 1,
+      "message": "You don\u0027t need this and also the whole testing class.",
+      "range": {
+        "startLine": 174,
+        "startChar": 39,
+        "endLine": 174,
+        "endChar": 46
+      },
+      "revId": "1ba177ef513497283feeccb500b23058afd5c062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3830239_747c806d",
+        "filename": "components/password_manager/content/browser/content_credential_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-07T13:15:01Z",
+      "side": 1,
+      "message": "Drop both.",
+      "range": {
+        "startLine": 236,
+        "startChar": 19,
+        "endLine": 236,
+        "endChar": 33
+      },
+      "revId": "1ba177ef513497283feeccb500b23058afd5c062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297fab06_1a680f61",
+        "filename": "components/password_manager/core/browser/credential_manager_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-07T13:15:01Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 23
+      },
+      "revId": "1ba177ef513497283feeccb500b23058afd5c062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
