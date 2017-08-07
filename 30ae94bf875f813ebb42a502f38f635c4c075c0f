@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06c6cbab_18fe6f16",
+        "filename": "components/safe_browsing_db/v4_get_hash_protocol_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-07T20:53:40Z",
+      "side": 1,
+      "message": "nit: you have this include in both .h and .cc file. If possible, use forward declaration in the .h file instead.",
+      "revId": "30ae94bf875f813ebb42a502f38f635c4c075c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6edeb259_0c0780a0",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-07T20:53:40Z",
+      "side": 1,
+      "message": "Similar here. You only need one include, either in .h or in .cc file.",
+      "revId": "30ae94bf875f813ebb42a502f38f635c4c075c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
