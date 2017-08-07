@@ -26,6 +26,7 @@ static constexpr CSSPropertyDescriptor cssPropertyDescriptors[] = {
       {% for api_method in ordered_api_method_names %}
         nullptr,
       {% endfor %}
+        nullptr, // IsInterpolableProperty - FIXME(rjwright): Remove this after rebase
     },
     // CSSPropertyDescriptors for all valid properties.
     {% for api_class in api_classes %}
@@ -37,6 +38,7 @@ static constexpr CSSPropertyDescriptor cssPropertyDescriptors[] = {
       nullptr,
       {% endif %}
       {% endfor %}
+      {{api_class.classname}}::IsInterpolableProperty,
     },
     {% endfor %}
 };

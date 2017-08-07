@@ -52,6 +52,7 @@
 #include "core/css/CSSValueList.h"
 #include "core/css/PropertyRegistry.h"
 #include "core/css/parser/CSSVariableParser.h"
+#include "core/css/properties/CSSPropertyDescriptor.h"
 #include "core/css/resolver/CSSToStyleMap.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/dom/Element.h"
@@ -861,8 +862,11 @@ void CSSAnimations::CalculateTransitionUpdateForStandardProperty(
     PropertyHandle property = PropertyHandle(longhand_id);
     DCHECK_GE(longhand_id, firstCSSProperty);
 
-    if (!animate_all &&
-        !CSSPropertyMetadata::IsInterpolableProperty(longhand_id)) {
+    CSSPropertyDescriptor css_property_descriptor =
+        CSSPropertyDescriptor::Get(longhand_id);
+    if (!css_property_descriptor.IsInterpolableProperty)
+      NOTREACHED() << getPropertyName(longhand_id);
+    if (!animate_all && !css_property_descriptor.IsInterpolableProperty()) {
       continue;
     }
 
@@ -1207,7 +1211,11 @@ const StylePropertyShorthand& CSSAnimations::PropertiesForTransitionAll() {
           id == CSSPropertyWebkitTransformOriginY ||
           id == CSSPropertyWebkitTransformOriginZ)
         continue;
-      if (CSSPropertyMetadata::IsInterpolableProperty(id))
+      CSSPropertyDescriptor css_property_descriptor =
+          CSSPropertyDescriptor::Get(id);
+      if (!css_property_descriptor.IsInterpolableProperty)
+        NOTREACHED() << getPropertyName(id);
+      if (css_property_descriptor.IsInterpolableProperty())
         properties.push_back(id);
     }
     property_shorthand = StylePropertyShorthand(

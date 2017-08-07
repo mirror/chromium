@@ -42,6 +42,7 @@
 #include "core/css/CSSPropertyMetadata.h"
 #include "core/css/CSSSyntaxDescriptor.h"
 #include "core/css/PropertyRegistry.h"
+#include "core/css/properties/CSSPropertyDescriptor.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {
@@ -316,9 +317,14 @@ const InterpolationTypes& CSSInterpolationTypesMap::Get(
     case CSSPropertyVariable:
       DCHECK_EQ(GetRegistration(registry_.Get(), property), nullptr);
       break;
-    default:
-      DCHECK(!CSSPropertyMetadata::IsInterpolableProperty(css_property));
+    default: {
+      CSSPropertyDescriptor css_property_descriptor =
+          CSSPropertyDescriptor::Get(css_property);
+      if (!css_property_descriptor.IsInterpolableProperty)
+        NOTREACHED() << getPropertyName(css_property);
+      DCHECK(!css_property_descriptor.IsInterpolableProperty());
       break;
+    }
   }
 
   applicable_types->push_back(
