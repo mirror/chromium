@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d2f39dc4_cff9f440",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_misc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-07T02:49:59Z",
+      "side": 1,
+      "message": "Can this be BindOnce?",
+      "range": {
+        "startLine": 756,
+        "startChar": 12,
+        "endLine": 756,
+        "endChar": 16
+      },
+      "revId": "de3975f03ae7834b8ad1d1ded61234b99743f776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab23a688_6b2b9115",
         "filename": "extensions/browser/extension_function_histogram_value.h",
         "patchSetId": 4
