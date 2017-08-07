@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "023a8045_24dbe0b9",
+        "filename": "ui/accessibility/ax_position.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-07T23:30:57Z",
+      "side": 1,
+      "message": "Make this a DCHECK rather than a comment, and same below.\nYou can also add a comment if you want, but I definitely want a\nDCHECK so we don\u0027t accidentally ever call that.",
+      "revId": "91c7dbf9fbe395cb9bdf1e5410b6405f67aeab24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e1151e_35f2a39e",
+        "filename": "ui/accessibility/ax_position.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-07T23:30:57Z",
+      "side": 1,
+      "message": "I don\u0027t understand why you need to set the affinity when\nstopping at the boundary. Why not just return the Clone,\nwhen would that ever be wrong?\n\nI\u0027m unclear about the case where you\u0027re at the end of the\nline before a soft line break, which is the main case\nwhere it\u0027s possible to have upstream affinity. That position\nis the end of the line, but returning the downstream position\nis the start of the next line, which isn\u0027t the same thing.",
+      "revId": "91c7dbf9fbe395cb9bdf1e5410b6405f67aeab24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
