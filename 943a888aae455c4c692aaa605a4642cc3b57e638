@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31df9049_372af692",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_alert_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-07T11:49:58Z",
+      "side": 1,
+      "message": "presented on the collection view.",
+      "range": {
+        "startLine": 19,
+        "startChar": 52,
+        "endLine": 19,
+        "endChar": 66
+      },
+      "revId": "943a888aae455c4c692aaa605a4642cc3b57e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8968fcd_93c3f736",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-07T11:49:58Z",
+      "side": 1,
+      "message": "Should you test that read entries are not displayed?",
+      "range": {
+        "startLine": 127,
+        "startChar": 29,
+        "endLine": 127,
+        "endChar": 41
+      },
+      "revId": "943a888aae455c4c692aaa605a4642cc3b57e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e3397c_fec9ea6b",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-07T11:49:58Z",
+      "side": 1,
+      "message": "name consistency. You test the same thing for Reading List but only emphasize the long press here.",
+      "range": {
+        "startLine": 157,
+        "startChar": 8,
+        "endLine": 157,
+        "endChar": 32
+      },
+      "revId": "943a888aae455c4c692aaa605a4642cc3b57e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
