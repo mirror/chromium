@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "483dd95f_3683f4c6",
+        "filename": "cc/input/layer_selection_bound.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-08-07T21:06:12Z",
+      "side": 1,
+      "message": "I\u0027m not sure any change in CC is really needed.  Why not have Blink simply not send over the LayerSelectionBound object at all in this scenario?  I don\u0027t think CC needs to know about a main-thread-hidden handle at all.",
+      "revId": "c2327689969b2729f17cea46f0bd5040be093934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
