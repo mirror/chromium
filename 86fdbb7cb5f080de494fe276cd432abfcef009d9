@@ -16,6 +16,24 @@
       "revId": "86fdbb7cb5f080de494fe276cd432abfcef009d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be620ffc_e6da7f19",
+        "filename": "ui/gfx/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-07T09:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a93b428b_6f01ef75",
+      "revId": "86fdbb7cb5f080de494fe276cd432abfcef009d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
