@@ -85,10 +85,7 @@ const char kLocalesPath[] = "locales";
 const char kTimeZonesPath[] = "time_zones";
 
 // These are the machine serial number keys that we check in order until we
-// find a non-empty serial number. The VPD spec says the serial number should be
-// in the "serial_number" key for v2+ VPDs. However, legacy devices used a
-// different key to report their serial number, which we fall back to if
-// "serial_number" is not present.
+// find a non-empty serial number.
 //
 // Product_S/N is still special-cased due to inconsistencies with serial
 // numbers on Lumpy devices: On these devices, serial_number is identical to
@@ -100,8 +97,6 @@ const char kTimeZonesPath[] = "time_zones";
 const char* const kMachineInfoSerialNumberKeys[] = {
     "Product_S/N",     // Lumpy/Alex devices
     kSerialNumberKey,  // VPD v2+ devices
-    "Product_SN",      // Mario
-    "sn",              // old ZGB devices (more recent ones use serial_number)
 };
 
 // Gets ListValue from given |dictionary| by given |key| and (unless |result| is
