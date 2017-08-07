@@ -16,6 +16,58 @@
       "revId": "ba4d5ffb7e4c7642660029e2efcab69f2267929e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b69bd1e_ddcfdb11",
+        "filename": "components/subresource_filter/core/browser/subresource_filter_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-07T15:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6be2988b_c777b251",
+      "revId": "ba4d5ffb7e4c7642660029e2efcab69f2267929e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c5510a_126960ab",
+        "filename": "components/subresource_filter/core/browser/subresource_filter_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-07T15:22:34Z",
+      "side": 1,
+      "message": "Can we restrict all_sites with activation ActivationLevel::ENABLED irrespective of activation_options.should_suppress_notifications?",
+      "revId": "ba4d5ffb7e4c7642660029e2efcab69f2267929e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5d269f_c7f304f6",
+        "filename": "components/subresource_filter/core/browser/subresource_filter_features_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-07T15:22:34Z",
+      "side": 1,
+      "message": "Add a subresource_filter list case as well.",
+      "revId": "ba4d5ffb7e4c7642660029e2efcab69f2267929e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
