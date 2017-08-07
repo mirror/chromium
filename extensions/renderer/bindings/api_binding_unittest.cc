@@ -286,7 +286,7 @@ void APIBindingUnittest::RunTest(v8::Local<v8::Context> context,
     EXPECT_EQ(expect_callback, last_request_->has_callback) << script_source;
   } else {
     RunFunctionAndExpectError(func, context, 1, argv, expected_error);
-    EXPECT_FALSE(last_request_);
+    EXPECT_FALSE(last_request_) << script_source;
   }
 
   last_request_.reset();

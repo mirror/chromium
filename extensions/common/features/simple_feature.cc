@@ -196,6 +196,14 @@ bool IsWhitelistedForTest(const std::string& extension_id) {
 
 }  // namespace
 
+void PrintStringByInts(const std::string& str) {
+  std::string output;
+  for (auto iter = str.begin(); iter != str.end(); ++iter) {
+    output = base::StringPrintf("%s, %d", output.c_str(), *iter);
+  }
+  LOG(WARNING) << "String:\n" << output;
+}
+
 SimpleFeature::ScopedThreadUnsafeWhitelistForTest::
     ScopedThreadUnsafeWhitelistForTest(const std::string& id)
     : previous_id_(g_whitelist_info.Get().extension_id) {

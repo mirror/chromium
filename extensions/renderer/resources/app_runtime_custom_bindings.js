@@ -6,10 +6,14 @@
 
 var binding = apiBridge || require('binding').Binding.create('app.runtime');
 
-var AppViewGuestInternal =
-    getInternalApi ?
-        getInternalApi('appViewGuestInternal') :
-        require('binding').Binding.create('appViewGuestInternal').generate();
+var AppViewGuestInternal;
+if (requireNative('v8_context').GetAvailability('appViewGuestInternal').
+        is_available) {
+  AppViewGuestInternal =
+      getInternalApi ?
+          getInternalApi('appViewGuestInternal') :
+          require('binding').Binding.create('appViewGuestInternal').generate();
+}
 var registerArgumentMassager = bindingUtil ?
     $Function.bind(bindingUtil.registerEventArgumentMassager, bindingUtil) :
     require('event_bindings').registerArgumentMassager;
@@ -17,21 +21,23 @@ var fileSystemHelpers = requireNative('file_system_natives');
 var GetIsolatedFileSystem = fileSystemHelpers.GetIsolatedFileSystem;
 var entryIdManager = require('entryIdManager');
 
-registerArgumentMassager('app.runtime.onEmbedRequested',
-                         function(args, dispatch) {
-  var appEmbeddingRequest = args[0];
-  var id = appEmbeddingRequest.guestInstanceId;
-  delete appEmbeddingRequest.guestInstanceId;
-  appEmbeddingRequest.allow = function(url) {
-    AppViewGuestInternal.attachFrame(url, id);
-  };
+if (AppViewGuestInternal) {
+  registerArgumentMassager('app.runtime.onEmbedRequested',
+                           function(args, dispatch) {
+    var appEmbeddingRequest = args[0];
+    var id = appEmbeddingRequest.guestInstanceId;
+    delete appEmbeddingRequest.guestInstanceId;
+    appEmbeddingRequest.allow = function(url) {
+      AppViewGuestInternal.attachFrame(url, id);
+    };
 
-  appEmbeddingRequest.deny = function() {
-    AppViewGuestInternal.denyRequest(id);
-  };
+    appEmbeddingRequest.deny = function() {
+      AppViewGuestInternal.denyRequest(id);
+    };
 
-  dispatch([appEmbeddingRequest]);
-});
+    dispatch([appEmbeddingRequest]);
+  });
+}
 
 registerArgumentMassager('app.runtime.onLaunched', function(args, dispatch) {
   var launchData = args[0];

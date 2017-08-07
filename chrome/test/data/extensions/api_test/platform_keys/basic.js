@@ -443,6 +443,7 @@ function testSignFails(cert) {
             .sign(signParams, privateKey, data.raw_data)
             .then(function(signature) { fail('sign was expected to fail.'); },
                   callbackPass(function(error) {
+                    console.warn('In callback pass');
                     assertTrue(error instanceof Error);
                     assertEq(
                         'The operation failed for an operation-specific reason',

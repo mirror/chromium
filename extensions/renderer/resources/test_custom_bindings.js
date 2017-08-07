@@ -289,7 +289,9 @@ binding.registerCustomHook(function(api) {
     var callbackCompleted = chromeTest.callbackAdded();
 
     return function() {
+      console.warn('In callback pass');
       if (expectedError == null) {
+        console.warn('Assert no last error: ' + chrome.runtime.lastError);
         chromeTest.assertNoLastError();
       } else {
         chromeTest.assertLastError(expectedError);

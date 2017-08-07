@@ -21,6 +21,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "extensions/browser/state_store.h"
+#include "extensions/common/features/simple_feature.h"
 
 namespace chromeos {
 
@@ -109,6 +110,8 @@ KeyPermissions::PermissionsForExtension::~PermissionsForExtension() {
 
 bool KeyPermissions::PermissionsForExtension::CanUseKeyForSigning(
     const std::string& public_key_spki_der) {
+  LOG(WARNING) << "Checking key";
+  extensions::PrintStringByInts(public_key_spki_der);
   std::string public_key_spki_der_b64;
   base::Base64Encode(public_key_spki_der, &public_key_spki_der_b64);
 
@@ -121,14 +124,20 @@ bool KeyPermissions::PermissionsForExtension::CanUseKeyForSigning(
   // That means, once a certificate authority generated a certificate for the
   // key, the generating extension doesn't have access to the key anymore,
   // except if explicitly permitted by the administrator.
-  if (matching_entry->sign_once)
+  if (matching_entry->sign_once) {
+    LOG(WARNING) << "True 1";
     return true;
+  }
 
   // Usage of corporate keys is solely determined by policy. The user must not
   // circumvent this decision.
-  if (key_permissions_->IsCorporateKey(public_key_spki_der_b64))
-    return PolicyAllowsCorporateKeyUsage();
+  if (key_permissions_->IsCorporateKey(public_key_spki_der_b64)) {
+    bool res = PolicyAllowsCorporateKeyUsage();
+    LOG(WARNING) << "Res: " << res;
+    return res;
+  }
 
+  LOG(WARNING) << "Other: " << matching_entry->sign_unlimited;
   // Only permissions for keys that are not designated for corporate usage are
   // determined by user decisions.
   return matching_entry->sign_unlimited;

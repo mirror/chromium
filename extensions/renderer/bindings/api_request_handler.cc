@@ -123,6 +123,7 @@ void APIRequestHandler::CompleteRequest(int request_id,
   if (iter == pending_requests_.end())
     return;
 
+  LOG(WARNING) << "Completing request";
   PendingRequest pending_request = std::move(iter->second);
   pending_requests_.erase(iter);
 
@@ -147,8 +148,10 @@ void APIRequestHandler::CompleteRequest(int request_id,
   v8::TryCatch try_catch(isolate);
   // args.size() is converted to int, but args is controlled by chrome and is
   // never close to std::numeric_limits<int>::max.
+  LOG(WARNING) << "Callback";
   call_js_.Run(pending_request.callback.Get(isolate), context, args.size(),
                args.data());
+  LOG(WARNING) << "Done callback";
   if (try_catch.HasCaught()) {
     v8::Local<v8::Message> v8_message = try_catch.Message();
     base::Optional<std::string> message;
@@ -158,8 +161,10 @@ void APIRequestHandler::CompleteRequest(int request_id,
                                         &try_catch);
   }
 
+  LOG(WARNING) << "Clearing error";
   if (!error.empty())
     last_error_.ClearError(context, true);
+  LOG(WARNING) << "Cleared";
 }
 
 int APIRequestHandler::AddPendingRequest(v8::Local<v8::Context> context,
