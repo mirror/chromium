@@ -67,26 +67,27 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
       int provider_id,
       ServiceWorkerProviderType provider_type,
       mojom::ServiceWorkerProviderAssociatedRequest request,
-      ThreadSafeSender* thread_safe_sender);
+      scoped_refptr<ThreadSafeSender> thread_safe_sender);
 
-  // Called from ServiceWorkerDispatcher.
-  void OnAssociateRegistration(
+  // For service worker execution contexts. Sets the registration for
+  // ServiceWorkerGlobalScope#registration. Called on the main thread.
+  void SetRegistration(
       std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration,
       std::unique_ptr<ServiceWorkerHandleReference> installing,
       std::unique_ptr<ServiceWorkerHandleReference> waiting,
       std::unique_ptr<ServiceWorkerHandleReference> active);
+
+  // For service worker clients. Sets the controller for
+  // ServiceWorkerContainer#controller. Called on the main thread.
   void OnSetControllerServiceWorker(
       std::unique_ptr<ServiceWorkerHandleReference> controller,
       const std::set<uint32_t>& used_features,
       mojom::ServiceWorkerEventDispatcherPtrInfo event_dispatcher_ptr_info);
 
   // Called on the worker thread. Used for initializing
-  // ServiceWorkerGlobalScope.
-  void GetAssociatedRegistration(ServiceWorkerRegistrationObjectInfo* info,
-                                 ServiceWorkerVersionAttributes* attrs);
-
-  // May be called on the main or worker thread.
-  bool HasAssociatedRegistration();
+  // ServiceWorkerGlobalScope#registration.
+  void GetRegistration(ServiceWorkerRegistrationObjectInfo* info,
+                       ServiceWorkerVersionAttributes* attrs);
 
   int provider_id() const { return provider_id_; }
 
@@ -119,7 +120,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // alive.
   mojo::AssociatedBinding<mojom::ServiceWorkerProvider> binding_;
 
-  // To dispatch events to the controller ServiceWorker.
+  // Only used for controllee contexts. Used to dispatch events to the
+  // controller ServiceWorker.
   mojom::ServiceWorkerEventDispatcherPtr event_dispatcher_;
 
   std::unique_ptr<Delegate> delegate_;
