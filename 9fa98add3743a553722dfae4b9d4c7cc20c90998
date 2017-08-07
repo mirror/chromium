@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "3004067f_9b803078",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/Tile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-07T12:50:35Z",
+      "side": 1,
+      "message": "Thoughts about this? also naming, if we prefer composition? I like just naming it data/siteData as that\u0027s what it is and it\u0027s shorter than SiteSuggestion, but I don\u0027t know if it goes against conventions of the names and types matching.",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "9fa98add3743a553722dfae4b9d4c7cc20c90998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b725d9c5_b2795b81",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 5
@@ -82,6 +105,30 @@
       "writtenOn": "2017-08-07T10:37:52Z",
       "side": 1,
       "message": "When exactly does this happen? Would it be easier to wrap the calls into this class in runOnUiThreadBlocking instead of thread-jumping inside it?",
+      "range": {
+        "startLine": 37,
+        "startChar": 56,
+        "endLine": 37,
+        "endChar": 96
+      },
+      "revId": "9fa98add3743a553722dfae4b9d4c7cc20c90998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e3bdda_16e99db1",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/FakeMostVisitedSites.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-07T12:50:35Z",
+      "side": 1,
+      "message": "I didn\u0027t go too much into details about it, just wanted to make sure I kept existing code consistent, by wrapping the onSiteSuggestionsAvailable call as the previous FakeMostVisitedSites was doing.\n\nSo I think what happens is that we call notifyTileSuggestionsAvailable or similar calls on the test thread, but because it might end up doing view manipulation (when in instrumentation tests) it crashes.\n\nAnother alternative might be to add a notifyTileSuggestionsAvailableOnUIThread(), wdyt?",
+      "parentUuid": "68fe1b72_3656a05c",
       "range": {
         "startLine": 37,
         "startChar": 56,
