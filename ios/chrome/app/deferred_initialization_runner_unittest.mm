@@ -40,7 +40,7 @@ TEST(DeferredInitializationRunnerTest, TestRunBlockSequentially) {
   runner.delayBetweenBlocks = 0.01;
   runner.delayBeforeFirstBlock = 0.01;
 
-  [runner enqueueBlockNamed:@"first block" block:firstBlock];
+  [runner enqueueBlock:firstBlock];
   [runner enqueueBlockNamed:@"second block" block:secondBlock];
 
   ASSERT_FALSE(firstFlag);
