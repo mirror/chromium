@@ -46,6 +46,30 @@
       "revId": "24e1e0708eb827e4d84399b955a523496190f954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddcef762_a037d5cd",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-07T22:23:04Z",
+      "side": 1,
+      "message": "I\u0027m still a bit confused. Is it expected that only the action target will change the toggle, or can tapping the label or control also change it?\n\nCould you add a test where we tap the various elements that can be tap-able?",
+      "parentUuid": "14d1263d_cff4b0ee",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 24
+      },
+      "revId": "24e1e0708eb827e4d84399b955a523496190f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
