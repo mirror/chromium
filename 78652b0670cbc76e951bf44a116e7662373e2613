@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "5448c535_5fb99c43",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-07T19:14:15Z",
+      "side": 1,
+      "message": "FYI, CL for remainder of MD extensions is at https://chromium-review.googlesource.com/c/602602.",
+      "parentUuid": "e2de9ec1_a1f1cf84",
+      "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d863c5d_a80ebb7a",
         "filename": "chrome/browser/resources/md_extensions/view_manager.js",
         "patchSetId": 8
