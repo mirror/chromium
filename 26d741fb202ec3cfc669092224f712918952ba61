@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6393ff56_c9fadecc",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-07T00:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab66ddbb_f87a8b4e",
+      "revId": "26d741fb202ec3cfc669092224f712918952ba61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e88adb1c_9a585373",
         "filename": "components/exo/data_offer.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T08:01:41Z",
       "side": 1,
       "message": "is this just for testing or something that will be used? It\u0027s preferred to create test for real use cases.",
+      "revId": "26d741fb202ec3cfc669092224f712918952ba61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35befbf7_8054f745",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-07T00:46:45Z",
+      "side": 1,
+      "message": "This is for real use cases. The wayland protocol for dnd looks like:\n\n1. Deliver wl_data_offer object at wl_data_device#data_offer event.\n2. Then Deliver the properties of wl_data_offer object at wl_data_offer#{offer, source_actions, dnd_action} events.\n\nThe SendEvents() is used to send events at the step 2.",
+      "parentUuid": "e88adb1c_9a585373",
       "revId": "26d741fb202ec3cfc669092224f712918952ba61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "76fda28c_12ad7224",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-07T00:46:45Z",
+      "side": 1,
+      "message": "This is for future uses. Removed from the CL now.",
+      "parentUuid": "cc102bdd_29e5d8ef",
+      "revId": "26d741fb202ec3cfc669092224f712918952ba61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df41233d_41e4142b",
         "filename": "components/exo/data_offer.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-04T08:01:41Z",
       "side": 1,
       "message": "const or will this be changing past ctor?",
+      "revId": "26d741fb202ec3cfc669092224f712918952ba61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b02836_4cc9acba",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-07T00:46:45Z",
+      "side": 1,
+      "message": "Added const.",
+      "parentUuid": "df41233d_41e4142b",
       "revId": "26d741fb202ec3cfc669092224f712918952ba61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3afd9db2_f284d186",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-07T00:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a533c139_f384a11d",
+      "revId": "26d741fb202ec3cfc669092224f712918952ba61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a4aa4dc_75453c88",
         "filename": "components/exo/data_offer.h",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "26d741fb202ec3cfc669092224f712918952ba61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b153f6_2b26149f",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-07T00:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a4aa4dc_75453c88",
+      "revId": "26d741fb202ec3cfc669092224f712918952ba61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
