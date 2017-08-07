@@ -24,7 +24,7 @@ class VariationsFieldTrialCreator {
  public:
   // Caller is responsible for ensuring that objects passed to the constructor
   // stay valid for the lifetime of this object.
-  VariationsFieldTrialCreator(PrefService* local_state,
+  VariationsFieldTrialCreator(SimplePrefService* local_state,
                               VariationsServiceClient* client,
                               const UIStringOverrider& ui_string_overrider);
   ~VariationsFieldTrialCreator();
@@ -102,9 +102,11 @@ class VariationsFieldTrialCreator {
   virtual bool LoadSeed(VariationsSeed* seed);
 
  private:
-  PrefService* local_state() { return seed_store_.local_state(); }
+  SimplePrefService* local_state() { return seed_store_.local_state(); }
 
-  const PrefService* local_state() const { return seed_store_.local_state(); }
+  const SimplePrefService* local_state() const {
+    return seed_store_.local_state();
+  }
 
   // Set of different possible values to report for the
   // Variations.LoadPermanentConsistencyCountryResult histogram. This enum must

@@ -44,6 +44,9 @@ class AwMetricsServiceClient : public metrics::MetricsServiceClient,
  public:
   static AwMetricsServiceClient* GetInstance();
 
+  // Allow other classes to access the cached client id
+  static std::string GetClientID();
+
   // Retrieve the client ID or generate one if none exists
   static void GetOrCreateGUID();
 
