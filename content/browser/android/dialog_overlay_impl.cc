@@ -36,6 +36,10 @@ static jlong Init(JNIEnv* env,
   if (!rfhi->IsCurrent() || web_contents_impl->IsHidden())
     return 0;
 
+  // Dialog-based overlays are not supported for persistent video.
+  if (web_contents_impl->HasPersistentVideo())
+    return 0;
+
   ContentViewCore* cvc = ContentViewCore::FromWebContents(web_contents_impl);
 
   if (!cvc)
@@ -151,6 +155,15 @@ void DialogOverlayImpl::RenderFrameHostChanged(RenderFrameHost* old_host,
                                                RenderFrameHost* new_host) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (old_host == rfhi_)
+    Stop();
+}
+
+void DialogOverlayImpl::PersistentVideoRequested(bool want_persistent_video) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // If this is a secure overlay, then we might want to avoid doing this, since
+  // L1 content won't fall back to SurfaceTexture.  However, since AOPI stops
+  // PIP for L1 content, hopefully this doesn't happen.
+  if (want_persistent_video)
     Stop();
 }
 
