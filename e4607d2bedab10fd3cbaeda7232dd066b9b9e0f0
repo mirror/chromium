@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0048685d_5b1adee6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T16:43:28Z",
+      "side": 1,
+      "message": "Is it possible to avoid relying on instanceof here (e.g., by move MarginResizer chunk in BookmarkPromoHeader)?",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 70
+      },
+      "revId": "e4607d2bedab10fd3cbaeda7232dd066b9b9e0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126ec67e_a3ac25c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T16:43:28Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 253,
+        "startChar": 0,
+        "endLine": 253,
+        "endChar": 65
+      },
+      "revId": "e4607d2bedab10fd3cbaeda7232dd066b9b9e0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c22fe4_96570f8a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T16:43:28Z",
+      "side": 1,
+      "message": "Can we please move these observers to BookmarkPromoHeader? If you rename onPromoHeaderShowingChanged to onPromoHeaderChanged, it should be possible to call it when ProfileDataCache/AccountManagerFacade call their observers.",
+      "range": {
+        "startLine": 295,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 57
+      },
+      "revId": "e4607d2bedab10fd3cbaeda7232dd066b9b9e0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c31dcd10_dc2292bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T16:43:28Z",
+      "side": 1,
+      "message": "If we move observers to BookmarkPromoHeader, this can be done in mPromoHeaderManager.destroy().",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 313,
+        "endChar": 88
+      },
+      "revId": "e4607d2bedab10fd3cbaeda7232dd066b9b9e0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa075f5_9c5e4af4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T16:43:28Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 343,
+        "startChar": 4,
+        "endLine": 353,
+        "endChar": 5
+      },
+      "revId": "e4607d2bedab10fd3cbaeda7232dd066b9b9e0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1224108c_978b091c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T16:43:28Z",
+      "side": 1,
+      "message": "Is it possible to move this method to BookmarkPromoHeader?",
+      "range": {
+        "startLine": 419,
+        "startChar": 17,
+        "endLine": 419,
+        "endChar": 33
+      },
+      "revId": "e4607d2bedab10fd3cbaeda7232dd066b9b9e0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202cc96f_09783b8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T16:43:28Z",
+      "side": 1,
+      "message": "If you address previous comments, it should be possible to create SigninPromoController inside BookmarkPromoHeader and remove this parameter.",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 44
+      },
+      "revId": "e4607d2bedab10fd3cbaeda7232dd066b9b9e0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5ce249_45d08bbe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T16:43:28Z",
+      "side": 1,
+      "message": "Hm, that\u0027s quite interesting formatting. I think there\u0027s no need to fight clang-format, but we could avoid this by incrementing before calling putInt:\nputInt(PREF_SIGNIN_PROMO_SHOW_COUNT, promoShowCount + 1)",
+      "range": {
+        "startLine": 82,
+        "startChar": 11,
+        "endLine": 84,
+        "endChar": 28
+      },
+      "revId": "e4607d2bedab10fd3cbaeda7232dd066b9b9e0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad19d97_ab9de8d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T16:43:28Z",
+      "side": 1,
+      "message": "Nit: this can be removed if each \"if\" branch will have it\u0027s own return statement.",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 18
+      },
+      "revId": "e4607d2bedab10fd3cbaeda7232dd066b9b9e0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1579908_c17d58a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T16:43:28Z",
+      "side": 1,
+      "message": "Hm, we should probably ask Eli whether we should show new promos if the old one was declined.",
+      "range": {
+        "startLine": 161,
+        "startChar": 59,
+        "endLine": 161,
+        "endChar": 81
+      },
+      "revId": "e4607d2bedab10fd3cbaeda7232dd066b9b9e0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb11e30f_a70eac68",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-07T16:43:28Z",
+      "side": 1,
+      "message": "If Eli asks you to add separate flag for new promos being declined, it would make sense to move isSignInAlowed and isMasterSyncEnabled inside if branches as well (\"\u0026\u003d\" for booleans isn\u0027t very common).",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 9
+      },
+      "revId": "e4607d2bedab10fd3cbaeda7232dd066b9b9e0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
