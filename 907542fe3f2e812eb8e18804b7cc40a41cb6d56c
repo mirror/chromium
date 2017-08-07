@@ -46,6 +46,29 @@
       "revId": "907542fe3f2e812eb8e18804b7cc40a41cb6d56c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca57e9a7_67e17ed1",
+        "filename": "remoting/host/file_transfer_message_handler_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-07T20:01:09Z",
+      "side": 1,
+      "message": "Where does the name come from initially? I would expect the factory (or static Create method) to construct it, perhaps from a base name and a sequence number, since it\u0027s an implementation detail.",
+      "range": {
+        "startLine": 17,
+        "startChar": 36,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "907542fe3f2e812eb8e18804b7cc40a41cb6d56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
