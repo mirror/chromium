@@ -9,7 +9,7 @@
 
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_restrictions.h"
-#include "extensions/browser/component_extension_resource_manager.h"
+#include "extensions/browser/component_extension_delegate.h"
 #include "extensions/browser/extension_api_frame_id_map.h"
 #include "extensions/browser/extensions_browser_client.h"
 #include "extensions/browser/file_reader.h"
@@ -211,12 +211,12 @@ bool ExecuteCodeFunction::LoadFile(const std::string& file) {
   bool might_require_localization = ShouldInsertCSS() && !extension_id.empty();
 
   int resource_id;
-  const ComponentExtensionResourceManager*
-      component_extension_resource_manager =
+  const ComponentExtensionDelegate*
+      component_extension_delegate =
           ExtensionsBrowserClient::Get()
-              ->GetComponentExtensionResourceManager();
-  if (component_extension_resource_manager &&
-      component_extension_resource_manager->IsComponentExtensionResource(
+              ->GetComponentExtensionDelegate();
+  if (component_extension_delegate &&
+      component_extension_delegate->IsComponentExtensionResource(
           resource_.extension_root(),
           resource_.relative_path(),
           &resource_id)) {

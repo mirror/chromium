@@ -27,7 +27,7 @@ class BrowserContext;
 
 namespace extensions {
 
-class ChromeComponentExtensionResourceManager;
+class ChromeComponentExtensionDelegate;
 class ChromeExtensionsAPIClient;
 class ChromeProcessManagerDelegate;
 
@@ -95,8 +95,7 @@ class ChromeExtensionsBrowserClient : public ExtensionsBrowserClient {
                                    const Extension* extension) const override;
   std::unique_ptr<RuntimeAPIDelegate> CreateRuntimeAPIDelegate(
       content::BrowserContext* context) const override;
-  const ComponentExtensionResourceManager*
-  GetComponentExtensionResourceManager() override;
+  const ComponentExtensionDelegate* GetComponentExtensionDelegate() override;
   void BroadcastEventToRenderers(
       events::HistogramValue histogram_value,
       const std::string& event_name,
@@ -140,7 +139,8 @@ class ChromeExtensionsBrowserClient : public ExtensionsBrowserClient {
   // Client for API implementations.
   std::unique_ptr<ChromeExtensionsAPIClient> api_client_;
 
-  std::unique_ptr<ChromeComponentExtensionResourceManager> resource_manager_;
+  std::unique_ptr<ChromeComponentExtensionDelegate>
+      component_extension_delegate_;
 
   std::unique_ptr<ExtensionCache> extension_cache_;
 
