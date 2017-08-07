@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b0898ab_34a9ad1e",
+        "filename": "ios/web/shell/test/app/web_shell_test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-07T21:56:56Z",
+      "side": 1,
+      "message": "This API should not be a part of web_shell_test_util.h. How about using [[UIDevice currentDevice] userInterfaceIdiom] directly?",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 16
+      },
+      "revId": "76de6860ce79b0d96e01b6fb9e435c099c62c575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
