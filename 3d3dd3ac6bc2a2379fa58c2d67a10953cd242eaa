@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a3555fe_76d042a2",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerSettings.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-08T17:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eb1fd1e_3c87d550",
+      "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af5df724_7dd0adf2",
         "filename": "third_party/WebKit/Source/modules/offscreencanvas2d/OffscreenCanvasRenderingContext2D.cpp",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c974a8ad_ae53fcf6",
+        "filename": "third_party/WebKit/Source/modules/offscreencanvas2d/OffscreenCanvasRenderingContext2D.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-08T17:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af5df724_7dd0adf2",
+      "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "11250b9c_3a09692d",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-08T17:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "212f0ffc_fd736828",
+      "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61415c81_ab8d0ce6",
         "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e68698_55933114",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-08T17:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61415c81_ab8d0ce6",
+      "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "61ccab9d_c5f38be6",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-08T17:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dc54a5f_cfb09b87",
+      "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc516d8e_b8ed5d03",
         "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
         "patchSetId": 14
@@ -101,6 +191,24 @@
       "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7911d1f5_472849ea",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-08T17:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc516d8e_b8ed5d03",
+      "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
