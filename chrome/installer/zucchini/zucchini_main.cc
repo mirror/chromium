@@ -44,6 +44,10 @@ int main(int argc, const char* argv[]) {
       *base::CommandLine::ForCurrentProcess();
   InitLogging();
   InitErrorHandling(command_line);
-  return static_cast<int>(
-      RunZucchiniCommand(command_line, std::cout, std::cerr));
+  int status =
+      static_cast<int>(RunZucchiniCommand(command_line, std::cout, std::cerr));
+  if (status != 0) {
+    std::cerr << "Failed with code " << status << std::endl;
+  }
+  return status;
 }
