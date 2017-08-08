@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb6c7e2b_88d57fd7",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notification_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T13:06:43Z",
+      "side": 1,
+      "message": "Optional: I generally think it\u0027s easier if false is the default for booleans, so you might consider making the parameter disable_auto_opt_out (default false) instead.",
+      "revId": "8b4b68bd56457c953293b6ee90377cdd84baf452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef1be30_80e2e9f2",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notification_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T13:06:43Z",
+      "side": 1,
+      "message": "The feature name is already scoped to the content_suggestions_notifications feature. It\u0027s sufficient to call it enable_auto_opt_out.",
+      "revId": "8b4b68bd56457c953293b6ee90377cdd84baf452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
