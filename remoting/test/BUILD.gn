@@ -210,6 +210,32 @@ if (enable_remoting_host && !is_android && !is_chromeos) {
       ]
     }
   }
+
+  # A binary with a specific version of EvaluateCapabilityLocally() for test
+  # purpose only.
+  executable("test_evaluate_capability") {
+    testonly = true
+    sources = [
+      "test_evaluate_capability.cc",
+    ]
+
+    deps = [
+      "//build/config:exe_and_shlib_deps",
+      "//remoting/host",
+    ]
+
+    libs = []
+
+    if (is_win) {
+      deps += [
+        "//remoting/host/win:remoting_core",
+      ]
+
+      libs += [
+        "wtsapi32.lib"
+      ]
+    }
+  }
 }
 
 source_set("unit_tests") {

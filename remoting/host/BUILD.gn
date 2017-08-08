@@ -547,6 +547,7 @@ source_set("unit_tests") {
     } else {
       data_deps = [ ":remoting_me2me_host" ]
     }
+    data_deps += [ "//remoting/test:test_evaluate_capability" ]
   }
 }
 
