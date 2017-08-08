@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad4b17ee_24483744",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-08T23:15:56Z",
+      "side": 1,
+      "message": "Which two variables are included in the \"both\"?",
+      "range": {
+        "startLine": 9,
+        "startChar": 41,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "56059f1abcedc980555782422507b17b6ec667f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b8cd1c_d983b020",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-08T23:15:56Z",
+      "side": 1,
+      "message": "Expand ICF?",
+      "revId": "56059f1abcedc980555782422507b17b6ec667f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b6242d_03e0bedd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-08T23:15:56Z",
+      "side": 1,
+      "message": "can we point to the more relevant bug?",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "56059f1abcedc980555782422507b17b6ec667f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
