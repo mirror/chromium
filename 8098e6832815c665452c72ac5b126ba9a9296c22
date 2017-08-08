@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "f316c91c_b59b5578",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-08T11:40:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c140938_2adece5a",
+      "range": {
+        "startLine": 397,
+        "startChar": 67,
+        "endLine": 397,
+        "endChar": 0
+      },
+      "revId": "8098e6832815c665452c72ac5b126ba9a9296c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e83cf47_adf7bf85",
         "filename": "components/ntp_tiles/popular_sites_impl.h",
         "patchSetId": 9
@@ -261,6 +285,30 @@
       "side": 1,
       "message": "Ping, can you please rename to version_in_pending_url_ or update the comment?",
       "parentUuid": "1dd1aab0_bbe56120",
+      "range": {
+        "startLine": 104,
+        "startChar": 61,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "8098e6832815c665452c72ac5b126ba9a9296c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0547d424_96ee9744",
+        "filename": "components/ntp_tiles/popular_sites_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-08T11:40:08Z",
+      "side": 1,
+      "message": "Comment was updated in PS12, renamed it in addition.",
+      "parentUuid": "206e660b_48e08b11",
       "range": {
         "startLine": 104,
         "startChar": 61,

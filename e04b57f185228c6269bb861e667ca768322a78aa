@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbd9ba76_9160feb3",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-08T11:40:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "985f2ee2_cea1f051",
+      "range": {
+        "startLine": 170,
+        "startChar": 46,
+        "endLine": 170,
+        "endChar": 0
+      },
+      "revId": "e04b57f185228c6269bb861e667ca768322a78aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e061f1d9_24bb4063",
         "filename": "components/ntp_tiles/popular_sites_impl_unittest.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "e04b57f185228c6269bb861e667ca768322a78aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9918aa99_9d3535eb",
+        "filename": "components/ntp_tiles/popular_sites_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-08T11:40:08Z",
+      "side": 1,
+      "message": "Thanks for spotting this, I forgot to do that.",
+      "parentUuid": "e061f1d9_24bb4063",
+      "range": {
+        "startLine": 561,
+        "startChar": 71,
+        "endLine": 561,
+        "endChar": 0
+      },
+      "revId": "e04b57f185228c6269bb861e667ca768322a78aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
