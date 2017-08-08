@@ -59,10 +59,7 @@ class PLATFORM_EXPORT StaticBitmapImage : public Image {
     NOTREACHED();
     return gpu::Mailbox();
   }
-  virtual gpu::SyncToken GetSyncToken() {
-    NOTREACHED();
-    return gpu::SyncToken();
-  }
+  virtual gpu::SyncToken& GetSyncToken();
   virtual void UpdateSyncToken(gpu::SyncToken) { NOTREACHED(); }
 
   // Methods have exactly the same implementation for all sub-classes
