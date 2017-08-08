@@ -9,13 +9,15 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
+#include "chrome/browser/chromeos/extensions/gfx_utils.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "chrome/browser/ui/app_list/search/arc/arc_playstore_search_result.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_service_manager.h"
 
 namespace {
-constexpr int kHistogramBuckets = 7;
+constexpr int kHistogramBuckets = 13;
 }  // namespace
 
 namespace app_list {
@@ -27,7 +29,9 @@ ArcPlayStoreSearchProvider::ArcPlayStoreSearchProvider(
     : max_results_(max_results),
       profile_(profile),
       list_controller_(list_controller),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  DCHECK(max_results + 1 == kHistogramBuckets);
+}
 
 ArcPlayStoreSearchProvider::~ArcPlayStoreSearchProvider() = default;
 
@@ -65,8 +69,21 @@ void ArcPlayStoreSearchProvider::OnResults(
   SearchProvider::Results new_results;
   size_t instant_app_count = 0;
   for (auto& result : results) {
-    if (result->is_instant_app)
+    if (result->is_instant_app) {
       ++instant_app_count;
+    }
+
+    if (!(result->is_instant_app && result->is_recent) &&
+        result->package_name.has_value() &&
+        !extensions::util::GetEquivalentInstalledExtensions(
+             profile_, result->package_name.value())
+             .empty()) {
+      // Skip Playstore apps that have equivalent extensions installed. Not
+      // skipping recent instant apps since they should be treated like
+      // on-device apps.
+      continue;
+    }
+
     new_results.emplace_back(base::MakeUnique<ArcPlayStoreSearchResult>(
         std::move(result), profile_, list_controller_));
   }
