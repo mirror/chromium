@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4d8b111_0f3dad75",
+        "filename": "build/android/pylib/base/environment.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-08T01:00:09Z",
+      "side": 1,
+      "message": "nit: Environment is mostly intended as a java-style interface -- no implementation details. I think this would be better suited in constants for now.",
+      "revId": "dc892ef23bc690ddad477dedd91d86e441419d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97c338c_ec362745",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-08T01:00:09Z",
+      "side": 1,
+      "message": "I like this idea, though I\u0027d quibble with the implementation.",
+      "revId": "dc892ef23bc690ddad477dedd91d86e441419d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a6177e_d8bcb8d5",
+        "filename": "build/android/pylib/logging/__init__.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-08T01:00:09Z",
+      "side": 1,
+      "message": "I worry about confusion w/ naming this \"logging\" -- it\u0027d be very easy for someone to mistakenly think that it refers to the main thing (or not having a way to use them both together without aliasing).\n\nI\u0027ve used _ext for things like this (e.g. tempfile_ext) to make it clear that (1) it\u0027s very closely related to a standard library module and (2) it *isn\u0027t* that standard library module; would that work here?",
+      "revId": "dc892ef23bc690ddad477dedd91d86e441419d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b8f28a_80d4132e",
+        "filename": "build/android/pylib/logging/__init__.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-08T01:00:09Z",
+      "side": 1,
+      "message": "FAIL should probably be higher priority than PASS.",
+      "revId": "dc892ef23bc690ddad477dedd91d86e441419d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f5c22e_1b0cdca3",
+        "filename": "build/android/pylib/logging/__init__.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-08T01:00:09Z",
+      "side": 1,
+      "message": "I like this idea.",
+      "revId": "dc892ef23bc690ddad477dedd91d86e441419d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57db525b_fe9aae8f",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-08T01:00:09Z",
+      "side": 1,
+      "message": "I don\u0027t think test_runner.py should be responsible for this.",
+      "revId": "dc892ef23bc690ddad477dedd91d86e441419d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
