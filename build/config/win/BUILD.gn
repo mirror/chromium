@@ -46,7 +46,10 @@ config("compiler") {
   # for precompiled headers where the same source file is compiled in both
   # modes.
   cflags_c = [ "/TC" ]
-  cflags_cc = [ "/TP" ]
+  cflags_cc = [
+    "/TP",
+    "/std:c++latest",
+  ]
 
   cflags += [
     # Tell the compiler to crash on failures. This is undocumented
