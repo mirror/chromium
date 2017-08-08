@@ -113,17 +113,17 @@ TimeDelta Timer::GetCurrentDelay() const {
   return delay_;
 }
 
-void Timer::SetTaskRunner(scoped_refptr<SequencedTaskRunner> task_runner) {
-  // Do not allow changing the task runner when the Timer is running.
-  // Don't check for |origin_sequence_checker_.CalledOnValidSequence()| here to
-  // allow the use case of constructing the Timer and immediatetly invoking
-  // SetTaskRunner() before starting it (CalledOnValidSequence() would undo the
-  // DetachFromSequence() from the constructor). The |!is_running| check kind of
-  // verifies the same thing (and TSAN should catch callers that do it wrong but
-  // somehow evade all debug checks).
-  DCHECK(!is_running_);
-  task_runner_.swap(task_runner);
-}
+//void Timer::SetTaskRunner(scoped_refptr<SequencedTaskRunner> task_runner) {
+//  // Do not allow changing the task runner when the Timer is running.
+//  // Don't check for |origin_sequence_checker_.CalledOnValidSequence()| here to
+//  // allow the use case of constructing the Timer and immediatetly invoking
+//  // SetTaskRunner() before starting it (CalledOnValidSequence() would undo the
+//  // DetachFromSequence() from the constructor). The |!is_running| check kind of
+//  // verifies the same thing (and TSAN should catch callers that do it wrong but
+//  // somehow evade all debug checks).
+//  DCHECK(!is_running_);
+//  task_runner_.swap(task_runner);
+//}
 
 void Timer::Start(const tracked_objects::Location& posted_from,
                   TimeDelta delay,
@@ -198,23 +198,23 @@ void Timer::PostNewScheduledTask(TimeDelta delay) {
   if (delay > TimeDelta::FromMicroseconds(0)) {
     // TODO(gab): Posting BaseTimerTaskInternal::Run to another sequence makes
     // this code racy. https://crbug.com/587199
-    GetTaskRunner()->PostDelayedTask(
-        posted_from_,
-        base::BindOnce(&BaseTimerTaskInternal::Run,
-                       base::Owned(scheduled_task_)),
-        delay);
+    //GetTaskRunner()->PostDelayedTask(
+        //posted_from_,
+        //base::BindOnce(&BaseTimerTaskInternal::Run,
+                       //base::Owned(scheduled_task_)),
+        //delay);
     scheduled_run_time_ = desired_run_time_ = Now() + delay;
   } else {
-    GetTaskRunner()->PostTask(posted_from_,
-                              base::BindOnce(&BaseTimerTaskInternal::Run,
-                                             base::Owned(scheduled_task_)));
+    //GetTaskRunner()->PostTask(posted_from_,
+                              //base::BindOnce(&BaseTimerTaskInternal::Run,
+                                             //base::Owned(scheduled_task_)));
     scheduled_run_time_ = desired_run_time_ = TimeTicks();
   }
 }
 
-scoped_refptr<SequencedTaskRunner> Timer::GetTaskRunner() {
-  return task_runner_.get() ? task_runner_ : SequencedTaskRunnerHandle::Get();
-}
+//scoped_refptr<SequencedTaskRunner> Timer::GetTaskRunner() {
+  //return task_runner_.get() ? task_runner_ : SequencedTaskRunnerHandle::Get();
+//}
 
 void Timer::AbandonScheduledTask() {
   // TODO(gab): Enable this when it's no longer called racily from

@@ -13,11 +13,11 @@ namespace base {
 void InitIOSTestMessageLoop();
 
 // Inits the run hook for tests on iOS.
-void InitIOSRunHook(TestSuite* suite, int argc, char* argv[]);
+//void InitIOSRunHook(TestSuite* suite, int argc, char* argv[]);
 
 // Launches an iOS app that runs the tests in the suite passed to
 // InitIOSRunHook.
-void RunTestsFromIOSApp();
+void RunTestsFromIOSApp(int argc, char* argv[]);
 
 }  // namespace base
 

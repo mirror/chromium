@@ -5,9 +5,11 @@
 #include "base/threading/thread_local_storage.h"
 
 #include "base/atomicops.h"
-#include "base/logging.h"
-#include "base/synchronization/lock.h"
+//#include "base/logging.h"
+//#include "base/synchronization/lock.h"
 #include "build/build_config.h"
+
+#include <string.h>
 
 using base::internal::PlatformThreadLocalStorage;
 
@@ -91,10 +93,10 @@ struct TlsVectorEntry {
 
 // This lock isn't needed until after we've constructed the per-thread TLS
 // vector, so it's safe to use.
-base::Lock* GetTLSMetadataLock() {
-  static auto* lock = new base::Lock();
-  return lock;
-}
+//base::Lock* GetTLSMetadataLock() {
+  //static auto* lock = new base::Lock();
+  //return lock;
+//}
 TlsMetadata g_tls_metadata[kThreadLocalStorageSize];
 size_t g_last_assigned_slot = 0;
 
@@ -112,7 +114,8 @@ TlsVectorEntry* ConstructTlsVector() {
   PlatformThreadLocalStorage::TLSKey key =
       base::subtle::NoBarrier_Load(&g_native_tls_key);
   if (key == PlatformThreadLocalStorage::TLS_KEY_OUT_OF_INDEXES) {
-    CHECK(PlatformThreadLocalStorage::AllocTLS(&key));
+    //CHECK(PlatformThreadLocalStorage::AllocTLS(&key));
+    PlatformThreadLocalStorage::AllocTLS(&key);
 
     // The TLS_KEY_OUT_OF_INDEXES is used to find out whether the key is set or
     // not in NoBarrier_CompareAndSwap, but Posix doesn't have invalid key, we
@@ -121,8 +124,9 @@ TlsVectorEntry* ConstructTlsVector() {
     // another TLS slot.
     if (key == PlatformThreadLocalStorage::TLS_KEY_OUT_OF_INDEXES) {
       PlatformThreadLocalStorage::TLSKey tmp = key;
-      CHECK(PlatformThreadLocalStorage::AllocTLS(&key) &&
-            key != PlatformThreadLocalStorage::TLS_KEY_OUT_OF_INDEXES);
+      //CHECK(PlatformThreadLocalStorage::AllocTLS(&key) &&
+            //key != PlatformThreadLocalStorage::TLS_KEY_OUT_OF_INDEXES);
+      PlatformThreadLocalStorage::AllocTLS(&key);
       PlatformThreadLocalStorage::FreeTLS(tmp);
     }
     // Atomically test-and-set the tls_key. If the key is
@@ -140,7 +144,7 @@ TlsVectorEntry* ConstructTlsVector() {
       key = base::subtle::NoBarrier_Load(&g_native_tls_key);
     }
   }
-  CHECK(!PlatformThreadLocalStorage::GetTLSValue(key));
+  //CHECK(!PlatformThreadLocalStorage::GetTLSValue(key));
 
   // Some allocators, such as TCMalloc, make use of thread local storage. As a
   // result, any attempt to call new (or malloc) will lazily cause such a system
@@ -163,7 +167,7 @@ TlsVectorEntry* ConstructTlsVector() {
 }
 
 void OnThreadExitInternal(TlsVectorEntry* tls_data) {
-  DCHECK(tls_data);
+  //DCHECK(tls_data);
   // Some allocators, such as TCMalloc, use TLS. As a result, when a thread
   // terminates, one of the destructor calls we make may be to shut down an
   // allocator. We have to be careful that after we've shutdown all of the known
@@ -184,7 +188,7 @@ void OnThreadExitInternal(TlsVectorEntry* tls_data) {
   // Snapshot the TLS Metadata so we don't have to lock on every access.
   TlsMetadata tls_metadata[kThreadLocalStorageSize];
   {
-    base::AutoLock auto_lock(*GetTLSMetadataLock());
+    //base::AutoLock auto_lock(*GetTLSMetadataLock());
     memcpy(tls_metadata, g_tls_metadata, sizeof(g_tls_metadata));
   }
 
@@ -216,7 +220,7 @@ void OnThreadExitInternal(TlsVectorEntry* tls_data) {
       need_to_scan_destructors = true;
     }
     if (--remaining_attempts <= 0) {
-      NOTREACHED();  // Destructors might not have been called.
+      //NOTREACHED();  // Destructors might not have been called.
       break;
     }
   }
@@ -263,7 +267,7 @@ void ThreadLocalStorage::StaticSlot::Initialize(TLSDestructorFunc destructor) {
   slot_ = kInvalidSlotValue;
   version_ = 0;
   {
-    base::AutoLock auto_lock(*GetTLSMetadataLock());
+    //base::AutoLock auto_lock(*GetTLSMetadataLock());
     for (int i = 0; i < kThreadLocalStorageSize; ++i) {
       // Tracking the last assigned slot is an attempt to find the next
       // available slot within one iteration. Under normal usage, slots remain
@@ -282,18 +286,18 @@ void ThreadLocalStorage::StaticSlot::Initialize(TLSDestructorFunc destructor) {
       }
     }
   }
-  CHECK_NE(slot_, kInvalidSlotValue);
-  CHECK_LT(slot_, kThreadLocalStorageSize);
+  //CHECK_NE(slot_, kInvalidSlotValue);
+  //CHECK_LT(slot_, kThreadLocalStorageSize);
 
   // Setup our destructor.
   base::subtle::Release_Store(&initialized_, 1);
 }
 
 void ThreadLocalStorage::StaticSlot::Free() {
-  DCHECK_NE(slot_, kInvalidSlotValue);
-  DCHECK_LT(slot_, kThreadLocalStorageSize);
+  //DCHECK_NE(slot_, kInvalidSlotValue);
+  //DCHECK_LT(slot_, kThreadLocalStorageSize);
   {
-    base::AutoLock auto_lock(*GetTLSMetadataLock());
+    //base::AutoLock auto_lock(*GetTLSMetadataLock());
     g_tls_metadata[slot_].status = TlsStatus::FREE;
     g_tls_metadata[slot_].destructor = nullptr;
     ++(g_tls_metadata[slot_].version);
@@ -308,8 +312,8 @@ void* ThreadLocalStorage::StaticSlot::Get() const {
           base::subtle::NoBarrier_Load(&g_native_tls_key)));
   if (!tls_data)
     tls_data = ConstructTlsVector();
-  DCHECK_NE(slot_, kInvalidSlotValue);
-  DCHECK_LT(slot_, kThreadLocalStorageSize);
+  //DCHECK_NE(slot_, kInvalidSlotValue);
+  //DCHECK_LT(slot_, kThreadLocalStorageSize);
   // Version mismatches means this slot was previously freed.
   if (tls_data[slot_].version != version_)
     return nullptr;
@@ -322,8 +326,8 @@ void ThreadLocalStorage::StaticSlot::Set(void* value) {
           base::subtle::NoBarrier_Load(&g_native_tls_key)));
   if (!tls_data)
     tls_data = ConstructTlsVector();
-  DCHECK_NE(slot_, kInvalidSlotValue);
-  DCHECK_LT(slot_, kThreadLocalStorageSize);
+  //DCHECK_NE(slot_, kInvalidSlotValue);
+  //DCHECK_LT(slot_, kThreadLocalStorageSize);
   tls_data[slot_].data = value;
   tls_data[slot_].version = version_;
 }

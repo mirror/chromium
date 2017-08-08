@@ -39,40 +39,15 @@ Location::Location(const Location& other)
 }
 
 std::string Location::ToString() const {
-  return std::string(function_name_) + "@" + file_name_ + ":" +
-      base::IntToString(line_number_);
+  return ""; //std::string(function_name_) + "@" + file_name_ + ":" +
+      //base::IntToString(line_number_);
 }
 
 void Location::Write(bool display_filename, bool display_function_name,
                      std::string* output) const {
-  base::StringAppendF(output, "%s[%d] ",
-      display_filename ? file_name_ : "line",
-      line_number_);
-
-  if (display_function_name) {
-    WriteFunctionName(output);
-    output->push_back(' ');
-  }
 }
 
 void Location::WriteFunctionName(std::string* output) const {
-  // Translate "<" to "&lt;" for HTML safety.
-  // TODO(jar): Support ASCII or html for logging in ASCII.
-  for (const char *p = function_name_; *p; p++) {
-    switch (*p) {
-      case '<':
-        output->append("&lt;");
-        break;
-
-      case '>':
-        output->append("&gt;");
-        break;
-
-      default:
-        output->push_back(*p);
-        break;
-    }
-  }
 }
 
 //------------------------------------------------------------------------------

@@ -97,7 +97,7 @@ class BASE_EXPORT Lock {
 
   // All private data is implicitly protected by lock_.
   // Be VERY careful to only access members under that lock.
-  base::PlatformThreadRef owning_thread_ref_;
+  //base::PlatformThreadRef owning_thread_ref_;
 #endif  // DCHECK_IS_ON()
 
   // Platform specific underlying lock implementation.

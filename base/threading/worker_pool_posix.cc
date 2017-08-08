@@ -30,14 +30,6 @@ base::LazyInstance<ThreadLocalBoolean>::Leaky
 
 const int kIdleSecondsBeforeExit = 10 * 60;
 
-#if defined(OS_MACOSX)
-// On Mac OS X a background thread's default stack size is 512Kb. We need at
-// least 1MB for compilation tasks in V8, so increase this default.
-const int kStackSize = 1 * 1024 * 1024;
-#else
-const int kStackSize = 0;
-#endif
-
 class WorkerPoolImpl {
  public:
   WorkerPoolImpl();
@@ -84,8 +76,8 @@ class WorkerThread : public PlatformThread::Delegate {
 
 void WorkerThread::ThreadMain() {
   g_worker_pool_running_on_this_thread.Get().Set(true);
-  const std::string name = base::StringPrintf("%s/%d", name_prefix_.c_str(),
-                                              PlatformThread::CurrentId());
+  const std::string name = "mythread"; //base::StringPrintf("%s/%d", name_prefix_.c_str(),
+                                        //      PlatformThread::CurrentId());
   // Note |name.c_str()| must remain valid for for the whole life of the thread.
   PlatformThread::SetName(name);
 
@@ -93,15 +85,15 @@ void WorkerThread::ThreadMain() {
     PendingTask pending_task = pool_->WaitForTask();
     if (pending_task.task.is_null())
       break;
-    TRACE_TASK_EXECUTION("WorkerThread::ThreadMain::Run", pending_task);
+    //TRACE_TASK_EXECUTION("WorkerThread::ThreadMain::Run", pending_task);
 
-    tracked_objects::TaskStopwatch stopwatch;
-    stopwatch.Start();
+    //tracked_objects::TaskStopwatch stopwatch;
+    //stopwatch.Start();
     std::move(pending_task.task).Run();
-    stopwatch.Stop();
+    //stopwatch.Stop();
 
-    tracked_objects::ThreadData::TallyRunOnWorkerThreadIfTracking(
-        pending_task.birth_tally, pending_task.time_posted, stopwatch);
+    //tracked_objects::ThreadData::TallyRunOnWorkerThreadIfTracking(
+        //pending_task.birth_tally, pending_task.time_posted, stopwatch);
   }
 
   // The WorkerThread is non-joinable, so it deletes itself.
@@ -144,25 +136,6 @@ void PosixDynamicThreadPool::PostTask(
 }
 
 void PosixDynamicThreadPool::AddTask(PendingTask* pending_task) {
-  DCHECK(pending_task);
-
-  // Use CHECK instead of DCHECK to crash earlier. See http://crbug.com/711167
-  // for details.
-  CHECK(pending_task->task);
-
-  AutoLock locked(lock_);
-
-  pending_tasks_.push(std::move(*pending_task));
-
-  // We have enough worker threads.
-  if (static_cast<size_t>(num_idle_threads_) >= pending_tasks_.size()) {
-    pending_tasks_available_cv_.Signal();
-  } else {
-    // The new PlatformThread will take ownership of the WorkerThread object,
-    // which will delete itself on exit.
-    WorkerThread* worker = new WorkerThread(name_prefix_, this);
-    PlatformThread::CreateNonJoinable(kStackSize, worker);
-  }
 }
 
 PendingTask PosixDynamicThreadPool::WaitForTask() {

@@ -91,13 +91,13 @@ scoped_refptr<TaskRunner> CreateTaskRunnerWithTraits(const TaskTraits& traits) {
       GetTaskTraitsWithExplicitPriority(traits));
 }
 
-scoped_refptr<SequencedTaskRunner> CreateSequencedTaskRunnerWithTraits(
-    const TaskTraits& traits) {
-  DCHECK(TaskScheduler::GetInstance())
-      << "Ref. Prerequisite section of post_task.h";
-  return TaskScheduler::GetInstance()->CreateSequencedTaskRunnerWithTraits(
-      GetTaskTraitsWithExplicitPriority(traits));
-}
+//scoped_refptr<SequencedTaskRunner> CreateSequencedTaskRunnerWithTraits(
+    //const TaskTraits& traits) {
+  //DCHECK(TaskScheduler::GetInstance())
+      //<< "Ref. Prerequisite section of post_task.h";
+  //return TaskScheduler::GetInstance()->CreateSequencedTaskRunnerWithTraits(
+      //GetTaskTraitsWithExplicitPriority(traits));
+//}
 
 scoped_refptr<SingleThreadTaskRunner> CreateSingleThreadTaskRunnerWithTraits(
     const TaskTraits& traits,

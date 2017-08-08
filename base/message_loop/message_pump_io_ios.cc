@@ -81,7 +81,7 @@ bool MessagePumpIOSForIO::WatchFileDescriptor(
 
   // WatchFileDescriptor should be called on the pump thread. It is not
   // threadsafe, and your watcher may never be registered.
-  DCHECK(watch_file_descriptor_caller_checker_.CalledOnValidThread());
+  //DCHECK(watch_file_descriptor_caller_checker_.CalledOnValidThread());
 
   CFFileDescriptorContext source_context = {0};
   source_context.info = controller;

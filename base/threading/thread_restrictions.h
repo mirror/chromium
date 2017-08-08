@@ -148,7 +148,7 @@ class BASE_EXPORT ThreadRestrictions {
     DISALLOW_COPY_AND_ASSIGN(ScopedAllowIO);
   };
 
-#if DCHECK_IS_ON()
+#if 0 && DCHECK_IS_ON()
   // Set whether the current thread to make IO calls.
   // Threads start out in the *allowed* state.
   // Returns the previous value.
@@ -245,7 +245,7 @@ class BASE_EXPORT ThreadRestrictions {
   friend class viz::ServerGpuMemoryBufferManager;
 // END USAGE THAT NEEDS TO BE FIXED.
 
-#if DCHECK_IS_ON()
+#if 0 && DCHECK_IS_ON()
   static bool SetWaitAllowed(bool allowed);
 #else
   static bool SetWaitAllowed(bool allowed) { return true; }

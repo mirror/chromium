@@ -48,7 +48,7 @@ ScopedClosureRunner ThreadTaskRunnerHandle::OverrideForTesting(
   // would have to be merged into a single impl file and share TLS state. This
   // was deemed unecessary for now as most tests should use higher level
   // constructs and not have to instantiate task runner handles on their own.
-  DCHECK(!SequencedTaskRunnerHandle::IsSet() || IsSet());
+  //DCHECK(!SequencedTaskRunnerHandle::IsSet() || IsSet());
 
   if (!IsSet()) {
     std::unique_ptr<ThreadTaskRunnerHandle> top_level_ttrh =
@@ -84,7 +84,7 @@ ThreadTaskRunnerHandle::ThreadTaskRunnerHandle(
   DCHECK(task_runner_->BelongsToCurrentThread());
   // No SequencedTaskRunnerHandle (which includes ThreadTaskRunnerHandles)
   // should already be set for this thread.
-  DCHECK(!SequencedTaskRunnerHandle::IsSet());
+  //DCHECK(!SequencedTaskRunnerHandle::IsSet());
   lazy_tls_ptr.Pointer()->Set(this);
 }
 

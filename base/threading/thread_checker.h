@@ -60,7 +60,7 @@
 //     THREAD_CHECKER(my_thread_checker_);
 //   }
 
-#if DCHECK_IS_ON()
+#if 0 && DCHECK_IS_ON()
 #define THREAD_CHECKER(name) base::ThreadChecker name
 #define DCHECK_CALLED_ON_VALID_THREAD(name) DCHECK((name).CalledOnValidThread())
 #define DETACH_FROM_THREAD(name) (name).DetachFromThread()

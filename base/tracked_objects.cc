@@ -12,7 +12,7 @@
 
 #include "base/atomicops.h"
 #include "base/base_switches.h"
-#include "base/command_line.h"
+//#include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/debug/leak_annotations.h"
 #include "base/logging.h"
@@ -62,26 +62,26 @@ base::subtle::Atomic32 g_profiler_timing_enabled = UNDEFINED_TIMING;
 // specified.
 // This in turn can be overridden by explicitly calling
 // ThreadData::EnableProfilerTiming, say, based on a field trial.
-inline bool IsProfilerTimingEnabled() {
-  // Reading |g_profiler_timing_enabled| is done without barrier because
-  // multiple initialization is not an issue while the barrier can be relatively
-  // costly given that this method is sometimes called in a tight loop.
-  base::subtle::Atomic32 current_timing_enabled =
-      base::subtle::NoBarrier_Load(&g_profiler_timing_enabled);
-  if (current_timing_enabled == UNDEFINED_TIMING) {
-    if (!base::CommandLine::InitializedForCurrentProcess())
-      return true;
-    current_timing_enabled =
-        (base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-             switches::kProfilerTiming) ==
-         switches::kProfilerTimingDisabledValue)
-            ? DISABLED_TIMING
-            : ENABLED_TIMING;
-    base::subtle::NoBarrier_Store(&g_profiler_timing_enabled,
-                                  current_timing_enabled);
-  }
-  return current_timing_enabled == ENABLED_TIMING;
-}
+//inline bool IsProfilerTimingEnabled() {
+//  // Reading |g_profiler_timing_enabled| is done without barrier because
+//  // multiple initialization is not an issue while the barrier can be relatively
+//  // costly given that this method is sometimes called in a tight loop.
+//  base::subtle::Atomic32 current_timing_enabled =
+//      base::subtle::NoBarrier_Load(&g_profiler_timing_enabled);
+//  if (current_timing_enabled == UNDEFINED_TIMING) {
+//    if (!base::CommandLine::InitializedForCurrentProcess())
+//      return true;
+//    current_timing_enabled =
+//        (base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+//             switches::kProfilerTiming) ==
+//         switches::kProfilerTimingDisabledValue)
+//            ? DISABLED_TIMING
+//            : ENABLED_TIMING;
+//    base::subtle::NoBarrier_Store(&g_profiler_timing_enabled,
+//                                  current_timing_enabled);
+//  }
+//  return current_timing_enabled == ENABLED_TIMING;
+//}
 
 // Sanitize a thread name by replacing trailing sequence of digits with "*".
 // Examples:
@@ -937,8 +937,8 @@ base::TimeTicks ThreadData::Now() {
   if (now_function_for_testing_)
     return base::TimeTicks() +
            base::TimeDelta::FromMilliseconds((*now_function_for_testing_)());
-  if (IsProfilerTimingEnabled() && TrackingStatus())
-    return base::TimeTicks::Now();
+  //if (IsProfilerTimingEnabled() && TrackingStatus())
+    //return base::TimeTicks::Now();
   return base::TimeTicks();  // Super fast when disabled, or not compiled.
 }
 

@@ -68,24 +68,10 @@ bool Thread::Start() {
   DCHECK(owning_sequence_checker_.CalledOnValidSequence());
 
   Options options;
-#if defined(OS_WIN)
-  if (com_status_ == STA)
-    options.message_loop_type = MessageLoop::TYPE_UI;
-#endif
   return StartWithOptions(options);
 }
 
 bool Thread::StartWithOptions(const Options& options) {
-  DCHECK(owning_sequence_checker_.CalledOnValidSequence());
-  DCHECK(!message_loop_);
-  DCHECK(!IsRunning());
-  DCHECK(!stopping_) << "Starting a non-joinable thread a second time? That's "
-                     << "not allowed!";
-#if defined(OS_WIN)
-  DCHECK((com_status_ != STA) ||
-      (options.message_loop_type == MessageLoop::TYPE_UI));
-#endif
-
   // Reset |id_| here to support restarting the thread.
   id_event_.Reset();
   id_ = kInvalidThreadId;
@@ -93,8 +79,6 @@ bool Thread::StartWithOptions(const Options& options) {
   SetThreadWasQuitProperly(false);
 
   MessageLoop::Type type = options.message_loop_type;
-  if (!options.message_pump_factory.is_null())
-    type = MessageLoop::TYPE_CUSTOM;
 
   message_loop_timer_slack_ = options.timer_slack;
   std::unique_ptr<MessageLoop> message_loop_owned =
@@ -107,57 +91,16 @@ bool Thread::StartWithOptions(const Options& options) {
   // fixed).
   {
     AutoLock lock(thread_lock_);
-    bool success =
-        options.joinable
-            ? PlatformThread::CreateWithPriority(options.stack_size, this,
-                                                 &thread_, options.priority)
-            : PlatformThread::CreateNonJoinableWithPriority(
-                  options.stack_size, this, options.priority);
-    if (!success) {
-      DLOG(ERROR) << "failed to create thread";
-      message_loop_ = nullptr;
-      return false;
-    }
+    PlatformThread::CreateWithPriority(options.stack_size, this,
+                                       &thread_, options.priority);
   }
 
   joinable_ = options.joinable;
 
-  // The ownership of |message_loop_| is managed by the newly created thread
-  // within the ThreadMain.
   ignore_result(message_loop_owned.release());
 
   DCHECK(message_loop_);
   return true;
-}
-
-bool Thread::StartAndWaitForTesting() {
-  DCHECK(owning_sequence_checker_.CalledOnValidSequence());
-  bool result = Start();
-  if (!result)
-    return false;
-  WaitUntilThreadStarted();
-  return true;
-}
-
-bool Thread::WaitUntilThreadStarted() const {
-  DCHECK(owning_sequence_checker_.CalledOnValidSequence());
-  if (!message_loop_)
-    return false;
-  base::ThreadRestrictions::ScopedAllowWait allow_wait;
-  start_event_.Wait();
-  return true;
-}
-
-void Thread::FlushForTesting() {
-  DCHECK(owning_sequence_checker_.CalledOnValidSequence());
-  if (!message_loop_)
-    return;
-
-  WaitableEvent done(WaitableEvent::ResetPolicy::AUTOMATIC,
-                     WaitableEvent::InitialState::NOT_SIGNALED);
-  task_runner()->PostTask(FROM_HERE,
-                          BindOnce(&WaitableEvent::Signal, Unretained(&done)));
-  done.Wait();
 }
 
 void Thread::Stop() {
@@ -201,9 +144,6 @@ void Thread::StopSoon() {
   stopping_ = true;
 
   if (using_external_message_loop_) {
-    // Setting |stopping_| to true above should have been sufficient for this
-    // thread to be considered "stopped" per it having never set its |running_|
-    // bit by lack of its own ThreadMain.
     DCHECK(!IsRunning());
     message_loop_ = nullptr;
     return;
@@ -296,65 +236,12 @@ void Thread::ThreadMain() {
 
   // Complete the initialization of our Thread object.
   PlatformThread::SetName(name_.c_str());
-  ANNOTATE_THREAD_NAME(name_.c_str());  // Tell the name to race detector.
+  //ANNOTATE_THREAD_NAME(name_.c_str());  // Tell the name to race detector.
 
   // Lazily initialize the |message_loop| so that it can run on this thread.
   DCHECK(message_loop_);
   std::unique_ptr<MessageLoop> message_loop(message_loop_);
   message_loop_->BindToCurrentThread();
-  message_loop_->SetTimerSlack(message_loop_timer_slack_);
-
-#if defined(OS_POSIX) && !defined(OS_NACL)
-  // Allow threads running a MessageLoopForIO to use FileDescriptorWatcher API.
-  std::unique_ptr<FileDescriptorWatcher> file_descriptor_watcher;
-  if (MessageLoopForIO::IsCurrent()) {
-    DCHECK_EQ(message_loop_, MessageLoopForIO::current());
-    file_descriptor_watcher.reset(
-        new FileDescriptorWatcher(MessageLoopForIO::current()));
-  }
-#endif
-
-#if defined(OS_WIN)
-  std::unique_ptr<win::ScopedCOMInitializer> com_initializer;
-  if (com_status_ != NONE) {
-    com_initializer.reset((com_status_ == STA) ?
-        new win::ScopedCOMInitializer() :
-        new win::ScopedCOMInitializer(win::ScopedCOMInitializer::kMTA));
-  }
-#endif
-
-  // Let the thread do extra initialization.
-  Init();
-
-  {
-    AutoLock lock(running_lock_);
-    running_ = true;
-  }
-
-  start_event_.Signal();
-
-  RunLoop run_loop;
-  run_loop_ = &run_loop;
-  Run(run_loop_);
-
-  {
-    AutoLock lock(running_lock_);
-    running_ = false;
-  }
-
-  // Let the thread do extra cleanup.
-  CleanUp();
-
-#if defined(OS_WIN)
-  com_initializer.reset();
-#endif
-
-  if (message_loop->type() != MessageLoop::TYPE_CUSTOM) {
-    // Assert that RunLoop::QuitWhenIdle was called by ThreadQuitHelper. Don't
-    // check for custom message pumps, because their shutdown might not allow
-    // this.
-    DCHECK(GetThreadWasQuitProperly());
-  }
 
   // We can't receive messages anymore.
   // (The message loop is destructed at the end of this block)

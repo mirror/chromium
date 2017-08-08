@@ -166,49 +166,8 @@ bool MessageLoop::InitMessagePumpForUIFactory(MessagePumpFactory* factory) {
 
 // static
 std::unique_ptr<MessagePump> MessageLoop::CreateMessagePumpForType(Type type) {
-// TODO(rvargas): Get rid of the OS guards.
-#if defined(USE_GLIB) && !defined(OS_NACL)
-  typedef MessagePumpGlib MessagePumpForUI;
-#elif (defined(OS_LINUX) && !defined(OS_NACL)) || defined(OS_BSD)
-  typedef MessagePumpLibevent MessagePumpForUI;
-#elif defined(OS_FUCHSIA)
-  typedef MessagePumpFuchsia MessagePumpForUI;
-#endif
-
-#if defined(OS_IOS) || defined(OS_MACOSX)
-#define MESSAGE_PUMP_UI std::unique_ptr<MessagePump>(MessagePumpMac::Create())
-#elif defined(OS_NACL) || defined(OS_AIX)
-// Currently NaCl and AIX don't have a UI MessageLoop.
-// TODO(abarth): Figure out if we need this.
-#define MESSAGE_PUMP_UI std::unique_ptr<MessagePump>()
-#else
-#define MESSAGE_PUMP_UI std::unique_ptr<MessagePump>(new MessagePumpForUI())
-#endif
-
-#if defined(OS_MACOSX)
-  // Use an OS native runloop on Mac to support timer coalescing.
-#define MESSAGE_PUMP_DEFAULT \
-  std::unique_ptr<MessagePump>(new MessagePumpCFRunLoop())
-#else
-#define MESSAGE_PUMP_DEFAULT \
-  std::unique_ptr<MessagePump>(new MessagePumpDefault())
-#endif
-
-  if (type == MessageLoop::TYPE_UI) {
-    if (message_pump_for_ui_factory_)
-      return message_pump_for_ui_factory_();
-    return MESSAGE_PUMP_UI;
-  }
-  if (type == MessageLoop::TYPE_IO)
-    return std::unique_ptr<MessagePump>(new MessagePumpForIO());
-
-#if defined(OS_ANDROID)
-  if (type == MessageLoop::TYPE_JAVA)
-    return std::unique_ptr<MessagePump>(new MessagePumpForUI());
-#endif
-
-  DCHECK_EQ(MessageLoop::TYPE_DEFAULT, type);
-  return MESSAGE_PUMP_DEFAULT;
+  return 
+    std::unique_ptr<MessagePump>(new MessagePumpCFRunLoop());
 }
 
 void MessageLoop::AddDestructionObserver(
@@ -327,34 +286,18 @@ void MessageLoop::BindToCurrentThread() {
   DCHECK(!current()) << "should only have one message loop per thread";
   GetTLSMessageLoop()->Set(this);
 
-  incoming_task_queue_->StartScheduling();
+  //incoming_task_queue_->StartScheduling();
   unbound_task_runner_->BindToCurrentThread();
   unbound_task_runner_ = nullptr;
-  SetThreadTaskRunnerHandle();
-  thread_id_ = PlatformThread::CurrentId();
-
-  scoped_set_sequence_local_storage_map_for_current_thread_ =
-      MakeUnique<internal::ScopedSetSequenceLocalStorageMapForCurrentThread>(
-          &sequence_local_storage_map_);
-
-  run_loop_client_ = RunLoop::RegisterDelegateForCurrentThread(this);
+  if (this != GetTLSMessageLoop()->Get())
+    asm("bkpt 0");
 }
 
 std::string MessageLoop::GetThreadName() const {
-  DCHECK_NE(kInvalidThreadId, thread_id_)
-      << "GetThreadName() must only be called after BindToCurrentThread()'s "
-      << "side-effects have been synchronized with this thread.";
-  return ThreadIdNameManager::GetInstance()->GetName(thread_id_);
-}
-
-void MessageLoop::SetTaskRunner(
-    scoped_refptr<SingleThreadTaskRunner> task_runner) {
-  DCHECK_EQ(this, current());
-  DCHECK(task_runner);
-  DCHECK(task_runner->BelongsToCurrentThread());
-  DCHECK(!unbound_task_runner_);
-  task_runner_ = std::move(task_runner);
-  SetThreadTaskRunnerHandle();
+  //DCHECK_NE(kInvalidThreadId, thread_id_)
+      //<< "GetThreadName() must only be called after BindToCurrentThread()'s "
+      //<< "side-effects have been synchronized with this thread.";
+  return "";//ThreadIdNameManager::GetInstance()->GetName(thread_id_);
 }
 
 void MessageLoop::ClearTaskRunnerForTesting() {
@@ -375,11 +318,8 @@ void MessageLoop::Quit() {
 }
 
 void MessageLoop::SetThreadTaskRunnerHandle() {
-  DCHECK_EQ(this, current());
-  // Clear the previous thread task runner first, because only one can exist at
-  // a time.
-  thread_task_runner_handle_.reset();
-  thread_task_runner_handle_.reset(new ThreadTaskRunnerHandle(task_runner_));
+  if (this != current())
+    asm("bkpt 0");
 }
 
 bool MessageLoop::ProcessNextDelayedNonNestableTask() {
@@ -419,7 +359,7 @@ void MessageLoop::RunTask(PendingTask* pending_task) {
 
   for (auto& observer : task_observers_)
     observer.WillProcessTask(*pending_task);
-  task_annotator_.RunTask("MessageLoop::PostTask", pending_task);
+  //task_annotator_.RunTask("MessageLoop::PostTask", pending_task);
   for (auto& observer : task_observers_)
     observer.DidProcessTask(*pending_task);
 

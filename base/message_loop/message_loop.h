@@ -300,7 +300,7 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
 
   // Returns the TaskAnnotator which is used to add debug information to posted
   // tasks.
-  debug::TaskAnnotator* task_annotator() { return &task_annotator_; }
+  //debug::TaskAnnotator* task_annotator() { return &task_annotator_; }
 
   // Runs the specified PendingTask.
   void RunTask(PendingTask* pending_task);
@@ -433,7 +433,7 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
 
   ObserverList<TaskObserver> task_observers_;
 
-  debug::TaskAnnotator task_annotator_;
+  //debug::TaskAnnotator task_annotator_;
 
   // Used to allow creating a breadcrumb of program counters in PostTask.
   // This variable is only initialized while a task is being executed and is
