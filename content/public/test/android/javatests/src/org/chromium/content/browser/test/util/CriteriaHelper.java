@@ -107,12 +107,7 @@ public class CriteriaHelper {
      */
     public static void pollUiThread(final Criteria criteria, long maxTimeoutMs,
             long checkIntervalMs) {
-        final Callable<Boolean> callable = new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return criteria.isSatisfied();
-            }
-        };
+        final Callable<Boolean> callable = () -> criteria.isSatisfied();
 
         pollInstrumentationThread(new Criteria() {
             @Override

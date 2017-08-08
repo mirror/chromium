@@ -12,8 +12,6 @@ import com.google.android.gms.cast.CastDevice;
 import com.google.android.gms.cast.MediaStatus;
 import com.google.android.gms.cast.RemoteMediaPlayer;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -108,32 +106,26 @@ public class CastSessionImpl implements MediaNotificationListener, CastSession {
         if (mNamespaces.contains(CastMessageHandler.MEDIA_NAMESPACE)) {
             mMediaPlayer = new RemoteMediaPlayer();
             mMediaPlayer.setOnStatusUpdatedListener(
-                    new RemoteMediaPlayer.OnStatusUpdatedListener() {
-                        @Override
-                        public void onStatusUpdated() {
-                            MediaStatus mediaStatus = mMediaPlayer.getMediaStatus();
-                            if (mediaStatus == null) return;
+                    () -> {
+                        MediaStatus mediaStatus = mMediaPlayer.getMediaStatus();
+                        if (mediaStatus == null) return;
 
-                            int playerState = mediaStatus.getPlayerState();
-                            if (playerState == MediaStatus.PLAYER_STATE_PAUSED
-                                    || playerState == MediaStatus.PLAYER_STATE_PLAYING) {
-                                mNotificationBuilder.setPaused(
-                                        playerState != MediaStatus.PLAYER_STATE_PLAYING);
-                                mNotificationBuilder.setActions(MediaNotificationInfo.ACTION_STOP
-                                        | MediaNotificationInfo.ACTION_PLAY_PAUSE);
-                            } else {
-                                mNotificationBuilder.setActions(MediaNotificationInfo.ACTION_STOP);
-                            }
-                            MediaNotificationManager.show(mNotificationBuilder.build());
+                        int playerState = mediaStatus.getPlayerState();
+                        if (playerState == MediaStatus.PLAYER_STATE_PAUSED
+                                || playerState == MediaStatus.PLAYER_STATE_PLAYING) {
+                            mNotificationBuilder.setPaused(
+                                    playerState != MediaStatus.PLAYER_STATE_PLAYING);
+                            mNotificationBuilder.setActions(MediaNotificationInfo.ACTION_STOP
+                                    | MediaNotificationInfo.ACTION_PLAY_PAUSE);
+                        } else {
+                            mNotificationBuilder.setActions(MediaNotificationInfo.ACTION_STOP);
                         }
+                        MediaNotificationManager.show(mNotificationBuilder.build());
                     });
             mMediaPlayer.setOnMetadataUpdatedListener(
-                    new RemoteMediaPlayer.OnMetadataUpdatedListener() {
-                        @Override
-                        public void onMetadataUpdated() {
-                            setNotificationMetadata(mNotificationBuilder);
-                            MediaNotificationManager.show(mNotificationBuilder.build());
-                        }
+                    () -> {
+                        setNotificationMetadata(mNotificationBuilder);
+                        MediaNotificationManager.show(mNotificationBuilder.build());
                     });
         }
 
@@ -351,24 +343,23 @@ public class CastSessionImpl implements MediaNotificationListener, CastSession {
         try {
             Cast.CastApi.sendMessage(mApiClient, namespace, message)
                     .setResultCallback(
-                            new ResultCallback<Status>() {
-                                @Override
-                                public void onResult(Status result) {
-                                    if (!result.isSuccess()) {
-                                        // TODO(avayvod): should actually report back to the page.
-                                        // See https://crbug.com/550445.
-                                        Log.e(TAG, "Failed to send the message: " + result);
-                                        return;
-                                    }
-
-                                    // Media commands wait for the media status update as a result.
-                                    if (CastMessageHandler.MEDIA_NAMESPACE
-                                            .equals(namespace)) return;
-
-                                    // App messages wait for the empty message with the sequence
-                                    // number.
-                                    mMessageHandler.onAppMessageSent(clientId, sequenceNumber);
+                            result -> {
+                                if (!result.isSuccess()) {
+                                    // TODO(avayvod): should actually report back to the page.
+                                    // See https://crbug.com/550445.
+                                    Log.e(TAG, "Failed to send the message: " + result);
+                                    return;
                                 }
+
+                                // Media commands wait for the media status update as a result.
+                                if (CastMessageHandler.MEDIA_NAMESPACE
+                                        .equals(namespace)) {
+                                    return;
+                                }
+
+                                // App messages wait for the empty message with the sequence
+                                // number.
+                                mMessageHandler.onAppMessageSent(clientId, sequenceNumber);
                             });
         } catch (Exception e) {
             Log.e(TAG, "Exception while sending message", e);
@@ -429,25 +420,22 @@ public class CastSessionImpl implements MediaNotificationListener, CastSession {
 
         mStoppingApplication = true;
         Cast.CastApi.stopApplication(mApiClient, mSessionId)
-                .setResultCallback(new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        mMessageHandler.onApplicationStopped();
-                        // TODO(avayvod): handle a failure to stop the application.
-                        // https://crbug.com/535577
+                .setResultCallback(status -> {
+                    mMessageHandler.onApplicationStopped();
+                    // TODO(avayvod): handle a failure to stop the application.
+                    // https://crbug.com/535577
 
-                        Set<String> namespaces = new HashSet<String>(mNamespaces);
-                        for (String namespace : namespaces) unregisterNamespace(namespace);
-                        mNamespaces.clear();
+                    Set<String> namespaces = new HashSet<String>(mNamespaces);
+                    for (String namespace : namespaces) unregisterNamespace(namespace);
+                    mNamespaces.clear();
 
-                        mSessionId = null;
-                        mApiClient = null;
+                    mSessionId = null;
+                    mApiClient = null;
 
-                        mRouteProvider.onSessionClosed();
-                        mStoppingApplication = false;
+                    mRouteProvider.onSessionClosed();
+                    mStoppingApplication = false;
 
-                        MediaNotificationManager.clear(R.id.presentation_notification);
-                    }
+                    MediaNotificationManager.clear(R.id.presentation_notification);
                 });
     }
 

@@ -233,12 +233,9 @@ public class LocaleManager {
     public void showSearchEnginePromoIfNeeded(
             final Activity activity, final @Nullable Callback<Boolean> onSearchEngineFinalized) {
         assert LibraryLoader.isInitialized();
-        TemplateUrlService.getInstance().runWhenLoaded(new Runnable() {
-            @Override
-            public void run() {
-                handleSearchEnginePromoWithTemplateUrlsLoaded(activity, onSearchEngineFinalized);
-            }
-        });
+        TemplateUrlService.getInstance().runWhenLoaded(
+                () -> handleSearchEnginePromoWithTemplateUrlsLoaded(activity,
+                        onSearchEngineFinalized));
     }
 
     private void handleSearchEnginePromoWithTemplateUrlsLoaded(
@@ -268,23 +265,13 @@ public class LocaleManager {
                 finalizeInternalCallback.onResult(true);
                 return;
             case SEARCH_ENGINE_PROMO_SHOW_SOGOU:
-                dialogCreator = new Callable<PromoDialog>() {
-                    @Override
-                    public PromoDialog call() throws Exception {
-                        return new SogouPromoDialog(
-                                activity, LocaleManager.this, finalizeInternalCallback);
-                    }
-                };
+                dialogCreator = () -> new SogouPromoDialog(
+                        activity, LocaleManager.this, finalizeInternalCallback);
                 break;
             case SEARCH_ENGINE_PROMO_SHOW_EXISTING:
             case SEARCH_ENGINE_PROMO_SHOW_NEW:
-                dialogCreator = new Callable<PromoDialog>() {
-                    @Override
-                    public PromoDialog call() throws Exception {
-                        return new DefaultSearchEnginePromoDialog(
-                                activity, shouldShow, finalizeInternalCallback);
-                    }
-                };
+                dialogCreator = () -> new DefaultSearchEnginePromoDialog(
+                        activity, shouldShow, finalizeInternalCallback);
                 break;
             default:
                 assert false;

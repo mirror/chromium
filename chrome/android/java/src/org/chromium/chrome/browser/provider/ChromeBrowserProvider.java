@@ -246,24 +246,21 @@ public class ChromeBrowserProvider extends ContentProvider {
     public boolean onCreate() {
         // Work around for broken Android versions that break the Android contract and initialize
         // ContentProviders on non-UI threads.  crbug.com/705442
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ContentApplication.initCommandLine(getContext());
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            ContentApplication.initCommandLine(getContext());
 
-                BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
-                        .addStartupCompletedObserver(
-                                new BrowserStartupController.StartupCallback() {
-                                    @Override
-                                    public void onSuccess(boolean alreadyStarted) {
-                                        ensureNativeSideInitialized();
-                                    }
+            BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
+                    .addStartupCompletedObserver(
+                            new BrowserStartupController.StartupCallback() {
+                                @Override
+                                public void onSuccess(boolean alreadyStarted) {
+                                    ensureNativeSideInitialized();
+                                }
 
-                                    @Override
-                                    public void onFailure() {
-                                    }
-                                });
-            }
+                                @Override
+                                public void onFailure() {
+                                }
+                            });
         });
 
         return true;
@@ -635,21 +632,17 @@ public class ChromeBrowserProvider extends ContentProvider {
         ensureUriMatcherInitialized();
         if (mNativeChromeBrowserProvider != 0) return true;
         synchronized (mLoadNativeLock) {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                @SuppressFBWarnings("DM_EXIT")
-                public void run() {
-                    if (mNativeChromeBrowserProvider != 0) return;
-                    try {
-                        ChromeBrowserInitializer.getInstance(getContext())
-                                .handleSynchronousStartup();
-                    } catch (ProcessInitException e) {
-                        // Chrome browser runs in the background, so exit silently; but do exit,
-                        // since otherwise the next attempt to use Chrome will find a broken JNI.
-                        System.exit(-1);
-                    }
-                    ensureNativeSideInitialized();
+            ThreadUtils.runOnUiThreadBlocking(() -> {
+                if (mNativeChromeBrowserProvider != 0) return;
+                try {
+                    ChromeBrowserInitializer.getInstance(getContext())
+                            .handleSynchronousStartup();
+                } catch (ProcessInitException e) {
+                    // Chrome browser runs in the background, so exit silently; but do exit,
+                    // since otherwise the next attempt to use Chrome will find a broken JNI.
+                    System.exit(-1);
                 }
+                ensureNativeSideInitialized();
             });
         }
         return true;
@@ -1154,12 +1147,7 @@ public class ChromeBrowserProvider extends ContentProvider {
         try {
             // Per Object#finalize(), finalizers are run on a single VM-wide finalizer thread, and
             // the native objects need to be destroyed on the UI thread.
-            ThreadUtils.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    ensureNativeChromeDestroyedOnUIThread();
-                }
-            });
+            ThreadUtils.runOnUiThread(() -> ensureNativeChromeDestroyedOnUIThread());
         } finally {
             super.finalize();
         }
@@ -1187,12 +1175,8 @@ public class ChromeBrowserProvider extends ContentProvider {
             UserHandle callingUserHandle = Binder.getCallingUserHandle();
             if (callingUserHandle != null
                     && !callingUserHandle.equals(android.os.Process.myUserHandle())) {
-                ThreadUtils.postOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getContext().getContentResolver().notifyChange(uri, null);
-                    }
-                });
+                ThreadUtils.postOnUiThread(
+                        () -> getContext().getContentResolver().notifyChange(uri, null));
                 return;
             }
         }

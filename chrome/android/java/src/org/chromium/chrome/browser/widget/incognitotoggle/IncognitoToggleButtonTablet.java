@@ -44,12 +44,9 @@ public class IncognitoToggleButtonTablet extends ImageButton {
         setScaleType(ScaleType.CENTER);
         setVisibility(View.GONE);
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mTabModelSelector != null) {
-                    mTabModelSelector.selectModel(!mTabModelSelector.isIncognitoSelected());
-                }
+        setOnClickListener(v -> {
+            if (mTabModelSelector != null) {
+                mTabModelSelector.selectModel(!mTabModelSelector.isIncognitoSelected());
             }
         });
     }
@@ -111,13 +108,8 @@ public class IncognitoToggleButtonTablet extends ImageButton {
             return;
         }
 
-        post(new Runnable() {
-            @Override
-            public void run() {
-                setVisibility(mTabModelSelector.getModel(true).getCount() > 0
-                        ? View.VISIBLE : View.GONE);
-            }
-        });
+        post(() -> setVisibility(mTabModelSelector.getModel(true).getCount() > 0
+                ? View.VISIBLE : View.GONE));
     }
 
     @Override

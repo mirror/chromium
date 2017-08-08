@@ -50,19 +50,16 @@ public class ChromeGcmListenerService extends GcmListenerService {
         final Context applicationContext = getApplicationContext();
 
         // Dispatch the message to the GCM Driver for native features.
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                GCMMessage message = null;
-                try {
-                    message = new GCMMessage(from, data);
-                } catch (IllegalArgumentException e) {
-                    Log.e(TAG, "Received an invalid GCM Message", e);
-                    return;
-                }
-
-                scheduleOrDispatchMessageToDriver(applicationContext, message);
+        ThreadUtils.runOnUiThread(() -> {
+            GCMMessage message = null;
+            try {
+                message = new GCMMessage(from, data);
+            } catch (IllegalArgumentException e) {
+                Log.e(TAG, "Received an invalid GCM Message", e);
+                return;
             }
+
+            scheduleOrDispatchMessageToDriver(applicationContext, message);
         });
     }
 

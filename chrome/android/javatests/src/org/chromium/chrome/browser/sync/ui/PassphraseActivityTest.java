@@ -73,19 +73,16 @@ public class PassphraseActivityTest {
         // Create the activity.
         final PassphraseActivity activity = launchPassphraseActivity();
         Assert.assertNotNull(activity);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // Fake backgrounding the activity.
-                Bundle bundle = new Bundle();
-                InstrumentationRegistry.getInstrumentation().callActivityOnPause(activity);
-                InstrumentationRegistry.getInstrumentation().callActivityOnSaveInstanceState(
-                        activity, bundle);
-                // Fake sync's backend finishing its initialization.
-                FakeProfileSyncService pss = (FakeProfileSyncService) ProfileSyncService.get();
-                pss.setEngineInitialized(true);
-                pss.syncStateChanged();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // Fake backgrounding the activity.
+            Bundle bundle = new Bundle();
+            InstrumentationRegistry.getInstrumentation().callActivityOnPause(activity);
+            InstrumentationRegistry.getInstrumentation().callActivityOnSaveInstanceState(
+                    activity, bundle);
+            // Fake sync's backend finishing its initialization.
+            FakeProfileSyncService pss = (FakeProfileSyncService) ProfileSyncService.get();
+            pss.setEngineInitialized(true);
+            pss.syncStateChanged();
         });
         // Nothing crashed; success!
     }
@@ -106,12 +103,9 @@ public class PassphraseActivityTest {
     }
 
     private void overrideProfileSyncService() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // PSS has to be constructed on the UI thread.
-                ProfileSyncService.overrideForTests(new FakeProfileSyncService());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // PSS has to be constructed on the UI thread.
+            ProfileSyncService.overrideForTests(new FakeProfileSyncService());
         });
     }
 }

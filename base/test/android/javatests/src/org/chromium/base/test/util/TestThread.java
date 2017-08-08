@@ -59,13 +59,10 @@ public class TestThread extends Thread {
     public void run() {
         Looper.prepare();
         mTestThreadHandler = new Handler();
-        mTestThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (mThreadReadyLock) {
-                    mThreadReady.set(true);
-                    mThreadReadyLock.notify();
-                }
+        mTestThreadHandler.post(() -> {
+            synchronized (mThreadReadyLock) {
+                mThreadReady.set(true);
+                mThreadReadyLock.notify();
             }
         });
         Looper.loop();
@@ -116,14 +113,11 @@ public class TestThread extends Thread {
         // Task executed is not really needed since we are only on one thread, it is here to appease
         // findbugs.
         final AtomicBoolean taskExecuted = new AtomicBoolean();
-        mTestThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (r != null) r.run();
-                synchronized (lock) {
-                    taskExecuted.set(true);
-                    lock.notify();
-                }
+        mTestThreadHandler.post(() -> {
+            if (r != null) r.run();
+            synchronized (lock) {
+                taskExecuted.set(true);
+                lock.notify();
             }
         });
         synchronized (lock) {

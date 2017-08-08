@@ -60,16 +60,13 @@ public class ChromeFileProviderTest {
     public void testOpenOnAsyncNotify() {
         final Context context = InstrumentationRegistry.getInstrumentation().getContext();
         final Uri uri = ChromeFileProvider.generateUriAndBlockAccess(context);
-        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    // Ignore exception.
-                }
-                ChromeFileProvider.notifyFileReady(uri, null);
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(() -> {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                // Ignore exception.
             }
+            ChromeFileProvider.notifyFileReady(uri, null);
         });
         ParcelFileDescriptor file = openFileFromProvider(uri);
         // File should be null because the notify passes a null file uri.
@@ -83,16 +80,13 @@ public class ChromeFileProviderTest {
         Uri uri1 = ChromeFileProvider.generateUriAndBlockAccess(context);
         final Uri uri2 = ChromeFileProvider.generateUriAndBlockAccess(context);
         final Uri fileUri2 = new Uri.Builder().path("2").build();
-        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    // Ignore exception.
-                }
-                ChromeFileProvider.notifyFileReady(uri2, fileUri2);
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(() -> {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                // Ignore exception.
             }
+            ChromeFileProvider.notifyFileReady(uri2, fileUri2);
         });
 
         // This should not be blocked even without a notify since file was changed.

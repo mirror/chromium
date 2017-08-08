@@ -294,12 +294,7 @@ public class PromiseTest {
 
     /** Convenience method that returns a Function that just passes through its argument. */
     private static <T> Promise.Function<T, T> identity() {
-        return new Promise.Function<T, T>() {
-            @Override
-            public T apply(T argument) {
-                return argument;
-            }
-        };
+        return argument -> argument;
     }
 
     /** Convenience method that returns a Callback that sets the given Value on execution. */

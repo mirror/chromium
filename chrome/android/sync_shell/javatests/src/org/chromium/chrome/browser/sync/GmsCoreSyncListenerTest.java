@@ -14,8 +14,6 @@ import org.chromium.chrome.test.util.browser.sync.SyncTestUtil;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 
-import java.util.concurrent.Callable;
-
 /**
  * Test suite for the GmsCoreSyncListener.
  */
@@ -42,22 +40,14 @@ public class GmsCoreSyncListenerTest extends SyncTestBase {
     protected void setUp() throws Exception {
         super.setUp();
         mListener = new CountingGmsCoreSyncListener();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ProfileSyncService.get().addSyncStateChangedListener(mListener);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> ProfileSyncService.get().addSyncStateChangedListener(mListener));
     }
 
     @Override
     protected void tearDown() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ProfileSyncService.get().removeSyncStateChangedListener(mListener);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> ProfileSyncService.get().removeSyncStateChangedListener(mListener));
         super.tearDown();
     }
 
@@ -89,24 +79,16 @@ public class GmsCoreSyncListenerTest extends SyncTestBase {
     }
 
     private void encryptWithPassphrase(final String passphrase) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ProfileSyncService.get().setEncryptionPassphrase(passphrase);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> ProfileSyncService.get().setEncryptionPassphrase(passphrase));
         waitForCryptographer();
         // Make sure the new encryption settings make it to the server.
         SyncTestUtil.triggerSyncAndWaitForCompletion();
     }
 
     private void decryptWithPassphrase(final String passphrase) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ProfileSyncService.get().setDecryptionPassphrase(passphrase);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> ProfileSyncService.get().setDecryptionPassphrase(passphrase));
     }
 
     private void waitForCryptographer() {
@@ -122,11 +104,6 @@ public class GmsCoreSyncListenerTest extends SyncTestBase {
     }
 
     private void waitForCallCount(int count) {
-        CriteriaHelper.pollUiThread(Criteria.equals(count, new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return mListener.callCount();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(count, () -> mListener.callCount()));
     }
 }

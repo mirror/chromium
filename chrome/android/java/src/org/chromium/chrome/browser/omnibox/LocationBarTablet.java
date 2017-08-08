@@ -69,13 +69,9 @@ public class LocationBarTablet extends LocationBarLayout {
                 }
             };
 
-    private final Runnable mKeyboardResizeModeTask = new Runnable() {
-        @Override
-        public void run() {
-            getWindowDelegate().setWindowSoftInputMode(
+    private final Runnable mKeyboardResizeModeTask =
+            () -> getWindowDelegate().setWindowSoftInputMode(
                     WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        }
-    };
 
     private View mLocationBarIcon;
     private View mBookmarkButton;

@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser.init;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -52,7 +51,6 @@ import org.chromium.net.NetworkChangeNotifier;
 import org.chromium.policy.CombinedPolicyProvider;
 import org.chromium.ui.base.DeviceFormFactor;
 
-import java.io.File;
 import java.util.Locale;
 
 /**
@@ -251,65 +249,38 @@ public class ChromeBrowserInitializer {
             throws ProcessInitException {
         assert ThreadUtils.runningOnUiThread() : "Tried to start the browser on the wrong thread";
         final ChainedTasks tasks = new ChainedTasks();
-        tasks.add(new Runnable() {
-            @Override
-            public void run() {
-                ProcessInitializationHandler.getInstance().initializePostNative();
-            }
+        tasks.add(() -> ProcessInitializationHandler.getInstance().initializePostNative());
+
+        tasks.add(() -> initNetworkChangeNotifier(mApplication.getApplicationContext()));
+
+        tasks.add(() -> {
+            // This is not broken down as a separate task, since this:
+            // 1. Should happen as early as possible
+            // 2. Only submits asynchronous work
+            // 3. Is thus very cheap (profiled at 0.18ms on a Nexus 5 with Lollipop)
+            // It should also be in a separate task (and after) initNetworkChangeNotifier, as
+            // this posts a task to the UI thread that would interfere with preconneciton
+            // otherwise. By preconnecting afterwards, we make sure that this task has run.
+            delegate.maybePreconnect();
+
+            onStartNativeInitialization();
         });
 
-        tasks.add(new Runnable() {
-            @Override
-            public void run() {
-                initNetworkChangeNotifier(mApplication.getApplicationContext());
-            }
+        tasks.add(() -> {
+            if (delegate.isActivityDestroyed()) return;
+            delegate.initializeCompositor();
         });
 
-        tasks.add(new Runnable() {
-            @Override
-            public void run() {
-                // This is not broken down as a separate task, since this:
-                // 1. Should happen as early as possible
-                // 2. Only submits asynchronous work
-                // 3. Is thus very cheap (profiled at 0.18ms on a Nexus 5 with Lollipop)
-                // It should also be in a separate task (and after) initNetworkChangeNotifier, as
-                // this posts a task to the UI thread that would interfere with preconneciton
-                // otherwise. By preconnecting afterwards, we make sure that this task has run.
-                delegate.maybePreconnect();
-
-                onStartNativeInitialization();
-            }
+        tasks.add(() -> {
+            if (delegate.isActivityDestroyed()) return;
+            delegate.initializeState();
         });
 
-        tasks.add(new Runnable() {
-            @Override
-            public void run() {
-                if (delegate.isActivityDestroyed()) return;
-                delegate.initializeCompositor();
-            }
-        });
+        tasks.add(() -> onFinishNativeInitialization());
 
-        tasks.add(new Runnable() {
-            @Override
-            public void run() {
-                if (delegate.isActivityDestroyed()) return;
-                delegate.initializeState();
-            }
-        });
-
-        tasks.add(new Runnable() {
-            @Override
-            public void run() {
-                onFinishNativeInitialization();
-            }
-        });
-
-        tasks.add(new Runnable() {
-            @Override
-            public void run() {
-                if (delegate.isActivityDestroyed()) return;
-                delegate.finishNativeInitialization();
-            }
+        tasks.add(() -> {
+            if (delegate.isActivityDestroyed()) return;
+            delegate.finishNativeInitialization();
         });
 
         if (isAsync) {
@@ -393,12 +364,9 @@ public class ChromeBrowserInitializer {
         // When a minidump is detected, extract and append a logcat to it, then upload it to the
         // crash server. Note that the logcat extraction might fail. This is ok; in that case, the
         // minidump will be found and uploaded upon the next browser launch.
-        CrashDumpManager.registerUploadCallback(new CrashDumpManager.UploadMinidumpCallback() {
-            @Override
-            public void tryToUploadMinidump(File minidump) {
-                AsyncTask.THREAD_POOL_EXECUTOR.execute(new LogcatExtractionRunnable(minidump));
-            }
-        });
+        CrashDumpManager.registerUploadCallback(
+                minidump -> AsyncTask.THREAD_POOL_EXECUTOR.execute(
+                        new LogcatExtractionRunnable(minidump)));
     }
 
     private void waitForDebuggerIfNeeded() {
@@ -410,20 +378,17 @@ public class ChromeBrowserInitializer {
     }
 
     private ActivityStateListener createActivityStateListener() {
-        return new ActivityStateListener() {
-            @Override
-            public void onActivityStateChange(Activity activity, int newState) {
-                if (newState == ActivityState.CREATED || newState == ActivityState.DESTROYED) {
-                    // Android destroys Activities at some point after a locale change, but doesn't
-                    // kill the process.  This can lead to a bug where Chrome is halfway RTL, where
-                    // stale natively-loaded resources are not reloaded (http://crbug.com/552618).
-                    if (!mInitialLocale.equals(Locale.getDefault())) {
-                        Log.e(TAG, "Killing process because of locale change.");
-                        Process.killProcess(Process.myPid());
-                    }
-
-                    DeviceFormFactor.resetValuesIfNeeded(mApplication);
+        return (activity, newState) -> {
+            if (newState == ActivityState.CREATED || newState == ActivityState.DESTROYED) {
+                // Android destroys Activities at some point after a locale change, but doesn't
+                // kill the process.  This can lead to a bug where Chrome is halfway RTL, where
+                // stale natively-loaded resources are not reloaded (http://crbug.com/552618).
+                if (!mInitialLocale.equals(Locale.getDefault())) {
+                    Log.e(TAG, "Killing process because of locale change.");
+                    Process.killProcess(Process.myPid());
                 }
+
+                DeviceFormFactor.resetValuesIfNeeded(mApplication);
             }
         };
     }

@@ -169,26 +169,18 @@ public class SearchWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
-        run(new Runnable() {
-            @Override
-            public void run() {
-                if (IntentHandler.isIntentChromeOrFirstParty(intent)) {
-                    handleAction(intent);
-                } else {
-                    SearchWidgetProvider.super.onReceive(context, intent);
-                }
+        run(() -> {
+            if (IntentHandler.isIntentChromeOrFirstParty(intent)) {
+                handleAction(intent);
+            } else {
+                SearchWidgetProvider.super.onReceive(context, intent);
             }
         });
     }
 
     @Override
     public void onUpdate(final Context context, final AppWidgetManager manager, final int[] ids) {
-        run(new Runnable() {
-            @Override
-            public void run() {
-                performUpdate(ids);
-            }
-        });
+        run(() -> performUpdate(ids));
     }
 
     /** Handles the intent actions to the widget. */

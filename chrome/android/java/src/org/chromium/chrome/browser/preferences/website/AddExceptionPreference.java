@@ -98,14 +98,11 @@ public class AddExceptionPreference extends Preference implements OnPreferenceCl
         View view = inflater.inflate(R.layout.add_site_dialog, null);
         final EditText input = (EditText) view.findViewById(R.id.site);
 
-        DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int button) {
-                if (button == AlertDialog.BUTTON_POSITIVE) {
-                    mSiteAddedCallback.onAddSite(input.getText().toString().trim());
-                } else {
-                    dialog.dismiss();
-                }
+        DialogInterface.OnClickListener onClickListener = (dialog, button) -> {
+            if (button == AlertDialog.BUTTON_POSITIVE) {
+                mSiteAddedCallback.onAddSite(input.getText().toString().trim());
+            } else {
+                dialog.dismiss();
             }
         };
 
@@ -118,12 +115,7 @@ public class AddExceptionPreference extends Preference implements OnPreferenceCl
                 .setNegativeButton(R.string.cancel, onClickListener)
                 .create();
         alertDialog.getDelegate().setHandleNativeActionModesEnabled(false);
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                UiUtils.showKeyboard(input);
-            }
-        });
+        alertDialog.setOnShowListener(dialog -> UiUtils.showKeyboard(input));
         alertDialog.show();
         final Button okButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
         okButton.setEnabled(false);

@@ -39,12 +39,9 @@ public class NotificationsPreferences extends PreferenceFragment {
         getActivity().setTitle(R.string.prefs_notifications);
 
         mSuggestionsPref = (ChromeSwitchPreference) findPreference(PREF_SUGGESTIONS);
-        mSuggestionsPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                SnippetsBridge.setContentSuggestionsNotificationsEnabled((boolean) newValue);
-                return true;
-            }
+        mSuggestionsPref.setOnPreferenceChangeListener((preference, newValue) -> {
+            SnippetsBridge.setContentSuggestionsNotificationsEnabled((boolean) newValue);
+            return true;
         });
 
         mFromWebsitesPref = findPreference(PREF_FROM_WEBSITES);

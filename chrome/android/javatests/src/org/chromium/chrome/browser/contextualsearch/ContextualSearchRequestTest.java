@@ -39,13 +39,10 @@ public class ContextualSearchRequestTest {
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mRequest = new ContextualSearchRequest("barack obama", "barack", "", true);
-                mNormalPriorityOnlyRequest =
-                        new ContextualSearchRequest("woody allen", "allen", "", false);
-            }
+        InstrumentationRegistry.getInstrumentation().runOnMainSync((Runnable) () -> {
+            mRequest = new ContextualSearchRequest("barack obama", "barack", "", true);
+            mNormalPriorityOnlyRequest =
+                    new ContextualSearchRequest("woody allen", "allen", "", false);
         });
     }
 

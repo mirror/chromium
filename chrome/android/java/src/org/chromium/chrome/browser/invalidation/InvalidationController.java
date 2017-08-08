@@ -92,14 +92,11 @@ public class InvalidationController implements ApplicationStatus.ApplicationStat
             if (mRunnable == null || mHandlerRunnable != null) return;
 
             long delayMs = Math.max(mScheduledTime - SystemClock.elapsedRealtime(), 0);
-            mHandlerRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    Runnable r = mRunnable;
-                    mRunnable = null;
-                    mHandlerRunnable = null;
-                    r.run();
-                }
+            mHandlerRunnable = () -> {
+                Runnable r = mRunnable;
+                mRunnable = null;
+                mHandlerRunnable = null;
+                r.run();
             };
             mHandler.postDelayed(mHandlerRunnable, delayMs);
         }
@@ -322,12 +319,9 @@ public class InvalidationController implements ApplicationStatus.ApplicationStat
         mEnableSessionInvalidationsTimer.cancel();
         if (mSessionInvalidationsEnabled == enabled) return;
 
-        mEnableSessionInvalidationsTimer.setRunnable(new Runnable() {
-            @Override
-            public void run() {
-                mSessionInvalidationsEnabled = enabled;
-                ensureStartedAndUpdateRegisteredTypes();
-            }
+        mEnableSessionInvalidationsTimer.setRunnable(() -> {
+            mSessionInvalidationsEnabled = enabled;
+            ensureStartedAndUpdateRegisteredTypes();
         }, delayMs);
         if (mStarted) {
             mEnableSessionInvalidationsTimer.resume();

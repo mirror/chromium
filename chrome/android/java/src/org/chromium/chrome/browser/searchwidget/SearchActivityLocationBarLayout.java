@@ -137,11 +137,6 @@ public class SearchActivityLocationBarLayout extends LocationBarLayout {
     private void focusTextBox() {
         if (!mUrlBar.hasFocus()) mUrlBar.requestFocus();
 
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                UiUtils.showKeyboard(mUrlBar);
-            }
-        });
+        new Handler().post(() -> UiUtils.showKeyboard(mUrlBar));
     }
 }

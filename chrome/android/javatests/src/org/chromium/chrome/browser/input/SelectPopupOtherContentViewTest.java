@@ -92,21 +92,18 @@ public class SelectPopupOtherContentViewTest {
         CriteriaHelper.pollInstrumentationThread(new PopupShowingCriteria());
 
         // Now create and destroy a different ContentView.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                WebContents webContents = WebContentsFactory.createWebContents(false, false);
-                WindowAndroid windowAndroid =
-                        new ActivityWindowAndroid(mActivityTestRule.getActivity());
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            WebContents webContents = WebContentsFactory.createWebContents(false, false);
+            WindowAndroid windowAndroid =
+                    new ActivityWindowAndroid(mActivityTestRule.getActivity());
 
-                ContentViewCore contentViewCore =
-                        new ContentViewCore(mActivityTestRule.getActivity(), "");
-                ContentView cv = ContentView.createContentView(
-                        mActivityTestRule.getActivity(), contentViewCore);
-                contentViewCore.initialize(ViewAndroidDelegate.createBasicDelegate(cv), cv,
-                        webContents, windowAndroid);
-                contentViewCore.destroy();
-            }
+            ContentViewCore contentViewCore =
+                    new ContentViewCore(mActivityTestRule.getActivity(), "");
+            ContentView cv = ContentView.createContentView(
+                    mActivityTestRule.getActivity(), contentViewCore);
+            contentViewCore.initialize(ViewAndroidDelegate.createBasicDelegate(cv), cv,
+                    webContents, windowAndroid);
+            contentViewCore.destroy();
         });
 
         // Process some more events to give a chance to the dialog to hide if it were to.

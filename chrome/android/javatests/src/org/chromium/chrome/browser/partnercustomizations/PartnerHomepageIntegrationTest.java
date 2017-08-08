@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser.partnercustomizations;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -36,7 +35,6 @@ import org.chromium.content.browser.test.util.TouchCommon;
 import org.chromium.content.browser.test.util.UiUtils;
 import org.chromium.net.test.EmbeddedTestServer;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -47,14 +45,11 @@ public class PartnerHomepageIntegrationTest extends BasePartnerBrowserCustomizat
 
     @Override
     public void startMainActivity() throws InterruptedException {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable(){
-            @Override
-            public void run() {
-                // TODO(newt): Remove this once SharedPreferences is cleared automatically at the
-                // beginning of every test. http://crbug.com/441859
-                SharedPreferences sp = ContextUtils.getAppSharedPreferences();
-                sp.edit().clear().apply();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // TODO(newt): Remove this once SharedPreferences is cleared automatically at the
+            // beginning of every test. http://crbug.com/441859
+            SharedPreferences sp = ContextUtils.getAppSharedPreferences();
+            sp.edit().clear().apply();
         });
 
         startMainActivityFromLauncher();
@@ -87,14 +82,11 @@ public class PartnerHomepageIntegrationTest extends BasePartnerBrowserCustomizat
                     Uri.parse(getActivity().getActivityTab().getUrl()));
 
             // Click homepage button.
-            ChromeTabUtils.waitForTabPageLoaded(getActivity().getActivityTab(), new Runnable() {
-                @Override
-                public void run() {
-                    View homeButton = getActivity().findViewById(R.id.home_button);
-                    assertEquals("Homepage button is not shown",
-                            View.VISIBLE, homeButton.getVisibility());
-                    singleClickView(homeButton);
-                }
+            ChromeTabUtils.waitForTabPageLoaded(getActivity().getActivityTab(), () -> {
+                View homeButton = getActivity().findViewById(R.id.home_button);
+                assertEquals("Homepage button is not shown",
+                        View.VISIBLE, homeButton.getVisibility());
+                singleClickView(homeButton);
             });
             assertEquals(Uri.parse(TestPartnerBrowserCustomizationsProvider.HOMEPAGE_URI),
                     Uri.parse(getActivity().getActivityTab().getUrl()));
@@ -122,13 +114,8 @@ public class PartnerHomepageIntegrationTest extends BasePartnerBrowserCustomizat
 
         // Assert no homepage button.
         assertFalse(HomepageManager.isHomepageEnabled(getActivity()));
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                assertEquals("Homepage button is shown", View.GONE,
-                        getActivity().findViewById(R.id.home_button).getVisibility());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> assertEquals("Homepage button is shown", View.GONE,
+                getActivity().findViewById(R.id.home_button).getVisibility()));
 
         // Enable homepage.
         homepagePreferenceActivity = startPreferences(HomepagePreferences.class.getName());
@@ -140,25 +127,18 @@ public class PartnerHomepageIntegrationTest extends BasePartnerBrowserCustomizat
 
         // Assert homepage button.
         assertTrue(HomepageManager.isHomepageEnabled(getActivity()));
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                assertEquals("Homepage button is shown", View.VISIBLE,
-                        getActivity().findViewById(R.id.home_button).getVisibility());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> assertEquals("Homepage button is shown", View.VISIBLE,
+                        getActivity().findViewById(R.id.home_button).getVisibility()));
     }
 
     private void waitForCheckedState(final Preferences preferenceActivity, boolean isChecked) {
-        CriteriaHelper.pollUiThread(Criteria.equals(isChecked, new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                // The underlying switch view in the preference can change, so we need to fetch
-                // it each time to ensure we are checking the activity view.
-                SwitchCompat homepageSwitch =
-                        (SwitchCompat) preferenceActivity.findViewById(R.id.switch_widget);
-                return homepageSwitch.isChecked();
-            }
+        CriteriaHelper.pollUiThread(Criteria.equals(isChecked, () -> {
+            // The underlying switch view in the preference can change, so we need to fetch
+            // it each time to ensure we are checking the activity view.
+            SwitchCompat homepageSwitch =
+                    (SwitchCompat) preferenceActivity.findViewById(R.id.switch_widget);
+            return homepageSwitch.isChecked();
         }));
     }
 
@@ -174,15 +154,10 @@ public class PartnerHomepageIntegrationTest extends BasePartnerBrowserCustomizat
         // Change home page custom URI on hompage edit screen.
         final Preferences editHomepagePreferenceActivity =
                 startPreferences(HomepageEditor.class.getName());
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            // TODO(crbug.com/635567): Fix this properly.
-            @SuppressLint("SetTextI18n")
-            public void run() {
-                ((EditText) editHomepagePreferenceActivity.findViewById(R.id.homepage_url_edit))
-                        .setText("chrome.com");
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> ((EditText) editHomepagePreferenceActivity.findViewById(
+                        R.id.homepage_url_edit))
+                        .setText("chrome.com"));
         Button saveButton =
                 (Button) editHomepagePreferenceActivity.findViewById(R.id.homepage_save);
         TouchCommon.singleClickView(saveButton);
@@ -225,12 +200,8 @@ public class PartnerHomepageIntegrationTest extends BasePartnerBrowserCustomizat
                 if (tabModel.getCount() == 0) tabClosed.notifyCalled();
             }
         });
-        getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                getActivity().getTabModelSelector().closeAllTabs();
-            }
-        });
+        getInstrumentation().runOnMainSync(
+                () -> getActivity().getTabModelSelector().closeAllTabs());
 
         try {
             tabClosed.waitForCallback(0);

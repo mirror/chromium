@@ -87,12 +87,9 @@ public class MockMediaRouteProvider implements MediaRouteProvider {
         final ArrayList<MediaSink> sinks = new ArrayList<MediaSink>();
         sinks.add(new MediaSink(SINK_ID1, SINK_NAME1, null));
         sinks.add(new MediaSink(SINK_ID2, SINK_NAME2, null));
-        ThreadUtils.postOnUiThreadDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mManager.onSinksReceived(sourceId, MockMediaRouteProvider.this, sinks);
-                }
-            }, mSinksObservedDelayMillis);
+        ThreadUtils.postOnUiThreadDelayed(
+                () -> mManager.onSinksReceived(sourceId, MockMediaRouteProvider.this, sinks),
+                mSinksObservedDelayMillis);
     }
 
     @Override
@@ -111,13 +108,9 @@ public class MockMediaRouteProvider implements MediaRouteProvider {
         if (mCreateRouteDelayMillis == 0) {
             doCreateRoute(sourceId, sinkId, presentationId, origin, tabId, nativeRequestId);
         } else {
-            ThreadUtils.postOnUiThreadDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        doCreateRoute(
-                                sourceId, sinkId, presentationId, origin, tabId, nativeRequestId);
-                    }
-                }, mCreateRouteDelayMillis);
+            ThreadUtils.postOnUiThreadDelayed(() -> doCreateRoute(
+                    sourceId, sinkId, presentationId, origin, tabId, nativeRequestId),
+                    mCreateRouteDelayMillis);
         }
     }
 

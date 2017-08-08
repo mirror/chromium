@@ -49,12 +49,17 @@ import org.chromium.chrome.browser.compositor.bottombar.OverlayContentProgressOb
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.PanelState;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
 import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.ContextualSearchBarControl;
-import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.ContextualSearchCaptionControl;
-import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.ContextualSearchImageControl;
+import org.chromium.chrome.browser.compositor.bottombar.contextualsearch
+        .ContextualSearchCaptionControl;
+import org.chromium.chrome.browser.compositor.bottombar.contextualsearch
+        .ContextualSearchImageControl;
 import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.ContextualSearchPanel;
-import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.ContextualSearchQuickActionControl;
-import org.chromium.chrome.browser.contextualsearch.ContextualSearchFakeServer.FakeSlowResolveSearch;
-import org.chromium.chrome.browser.contextualsearch.ContextualSearchInternalStateController.InternalState;
+import org.chromium.chrome.browser.compositor.bottombar.contextualsearch
+        .ContextualSearchQuickActionControl;
+import org.chromium.chrome.browser.contextualsearch.ContextualSearchFakeServer
+        .FakeSlowResolveSearch;
+import org.chromium.chrome.browser.contextualsearch.ContextualSearchInternalStateController
+        .InternalState;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationHandler;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.gsa.GSAContextDisplaySelection;
@@ -84,7 +89,6 @@ import org.chromium.ui.touch_selection.SelectionEventType;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 
 // TODO(pedrosimonetti): Create class with limited API to encapsulate the internals of simulations.
@@ -169,12 +173,7 @@ public class ContextualSearchManagerTest {
         mTestServer = EmbeddedTestServer.createAndStartServer(
                 InstrumentationRegistry.getInstrumentation().getContext());
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                FirstRunStatus.setFirstRunFlowComplete(true);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> FirstRunStatus.setFirstRunFlowComplete(true));
         LocaleManager.setInstanceForTest(new LocaleManager() {
             @Override
             public boolean needToCheckForSearchEnginePromo() {
@@ -218,12 +217,7 @@ public class ContextualSearchManagerTest {
     @After
     public void tearDown() throws Exception {
         mTestServer.stopAndDestroyServer();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                FirstRunStatus.setFirstRunFlowComplete(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> FirstRunStatus.setFirstRunFlowComplete(false));
     }
 
     /**
@@ -237,12 +231,7 @@ public class ContextualSearchManagerTest {
         mFakeServer.setIsOnline(isOnline);
         final String testUrl = mTestServer.getURL(TEST_PAGE);
         final Tab tab = mActivityTestRule.getActivity().getActivityTab();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                tab.reload();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> tab.reload());
         // Make sure the page is fully loaded.
         ChromeTabUtils.waitForTabPageLoaded(tab, testUrl);
     }
@@ -284,12 +273,8 @@ public class ContextualSearchManagerTest {
      * @param text The string to wait for the selection to become.
      */
     public void waitForSelectionToBe(final String text) {
-        CriteriaHelper.pollInstrumentationThread(Criteria.equals(text, new Callable<String>() {
-            @Override
-            public String call() {
-                return getSelectedText();
-            }
-        }), TEST_TIMEOUT, DEFAULT_POLLING_INTERVAL);
+        CriteriaHelper.pollInstrumentationThread(Criteria.equals(text, () -> getSelectedText()),
+                TEST_TIMEOUT, DEFAULT_POLLING_INTERVAL);
     }
 
     /**
@@ -1092,16 +1077,13 @@ public class ContextualSearchManagerTest {
      * Resets all the counters used, by resetting all shared preferences.
      */
     private void resetCounters() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                SharedPreferences prefs = ContextUtils.getAppSharedPreferences();
-                boolean freStatus = prefs.getBoolean(FirstRunStatus.FIRST_RUN_FLOW_COMPLETE, false);
-                prefs.edit()
-                        .clear()
-                        .putBoolean(FirstRunStatus.FIRST_RUN_FLOW_COMPLETE, freStatus)
-                        .apply();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            SharedPreferences prefs = ContextUtils.getAppSharedPreferences();
+            boolean freStatus = prefs.getBoolean(FirstRunStatus.FIRST_RUN_FLOW_COMPLETE, false);
+            prefs.edit()
+                    .clear()
+                    .putBoolean(FirstRunStatus.FIRST_RUN_FLOW_COMPLETE, freStatus)
+                    .apply();
         });
     }
 
@@ -1110,12 +1092,9 @@ public class ContextualSearchManagerTest {
      * @throws InterruptedException
      */
     private void forcePanelToHandleBarClick() throws InterruptedException {
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                // TODO(donnd): provide better time and x,y data to make this more broadly useful.
-                mPanel.handleBarClick(0, 0, 0);
-            }
+        InstrumentationRegistry.getInstrumentation().runOnMainSync((Runnable) () -> {
+            // TODO(donnd): provide better time and x,y data to make this more broadly useful.
+            mPanel.handleBarClick(0, 0, 0);
         });
     }
 
@@ -1124,12 +1103,8 @@ public class ContextualSearchManagerTest {
      * @throws InterruptedException
      */
     private void closePanel() throws InterruptedException {
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mPanel.closePanel(StateChangeReason.UNKNOWN, false);
-            }
-        });
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(
+                (Runnable) () -> mPanel.closePanel(StateChangeReason.UNKNOWN, false));
     }
 
     /**
@@ -1621,13 +1596,10 @@ public class ContextualSearchManagerTest {
         Assert.assertEquals("States", getSelectedText());
         waitForPanelToPeek();
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mActivityTestRule.getActivity().getActivityTab().simulateRendererKilledForTesting(
-                        true);
-            }
-        });
+        ThreadUtils.runOnUiThread(
+                () -> mActivityTestRule.getActivity().getActivityTab()
+                        .simulateRendererKilledForTesting(
+                                true));
 
         // Give the panelState time to change
         CriteriaHelper.pollInstrumentationThread(new Criteria(){
@@ -1655,24 +1627,16 @@ public class ContextualSearchManagerTest {
                 TabModelUtils.getCurrentTab(mActivityTestRule.getActivity().getCurrentTabModel());
 
         // TODO(donnd): consider using runOnUiThreadBlocking, won't need to waitForIdleSync?
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TabModelUtils.setIndex(mActivityTestRule.getActivity().getCurrentTabModel(), 0);
-            }
-        });
+        ThreadUtils.runOnUiThread(
+                () -> TabModelUtils.setIndex(mActivityTestRule.getActivity().getCurrentTabModel(),
+                        0));
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
 
         clickWordNode("states");
         Assert.assertEquals("States", getSelectedText());
         waitForPanelToPeek();
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                tab2.simulateRendererKilledForTesting(false);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> tab2.simulateRendererKilledForTesting(false));
 
         waitForPanelToPeek();
     }
@@ -1936,14 +1900,9 @@ public class ContextualSearchManagerTest {
      */
     private void assertAppMenuVisibility(final boolean isVisible) {
         CriteriaHelper.pollInstrumentationThread(
-                Criteria.equals(isVisible, new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() {
-                        return mActivityTestRule.getActivity()
-                                .getAppMenuHandler()
-                                .isAppMenuShowing();
-                    }
-                }));
+                Criteria.equals(isVisible, () -> mActivityTestRule.getActivity()
+                        .getAppMenuHandler()
+                        .isAppMenuShowing()));
     }
 
     /**
@@ -2169,15 +2128,10 @@ public class ContextualSearchManagerTest {
      */
     private void assertWaitForSelectActionBarVisible(final boolean visible)
             throws InterruptedException {
-        CriteriaHelper.pollUiThread(Criteria.equals(visible, new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                return mActivityTestRule.getActivity()
-                        .getActivityTab()
-                        .getContentViewCore()
-                        .isSelectActionBarShowing();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(visible, () -> mActivityTestRule.getActivity()
+                .getActivityTab()
+                .getContentViewCore()
+                .isSelectActionBarShowing()));
     }
 
     /**
@@ -2198,12 +2152,7 @@ public class ContextualSearchManagerTest {
         final ContentViewCore contentViewCore =
                 mActivityTestRule.getActivity().getActivityTab().getContentViewCore();
         assertWaitForSelectActionBarVisible(true);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                contentViewCore.destroySelectActionMode();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> contentViewCore.destroySelectActionMode());
         assertWaitForSelectActionBarVisible(false);
 
         waitForPanelToClose();
@@ -2227,14 +2176,11 @@ public class ContextualSearchManagerTest {
         Assert.assertEquals("Search", getSelectedText());
 
         // Simulate a selection change event and assert that the panel has not reappeared.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mManager.onSelectionEvent(
-                        SelectionEventType.SELECTION_HANDLE_DRAG_STARTED, 333, 450);
-                mManager.onSelectionEvent(
-                        SelectionEventType.SELECTION_HANDLE_DRAG_STOPPED, 303, 450);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mManager.onSelectionEvent(
+                    SelectionEventType.SELECTION_HANDLE_DRAG_STARTED, 333, 450);
+            mManager.onSelectionEvent(
+                    SelectionEventType.SELECTION_HANDLE_DRAG_STOPPED, 303, 450);
         });
         assertPanelClosedOrUndefined();
 
@@ -2276,13 +2222,10 @@ public class ContextualSearchManagerTest {
                 false /* isPost */, true /* hasUserGesture */, PageTransition.LINK,
                 false /* isRedirect */, true /* isExternalProtocol */, true /* isMainFrame */,
                 false /* hasUserGestureCarryover */);
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertFalse(mManager.getOverlayContentDelegate().shouldInterceptNavigation(
-                        externalNavHandler, navigationParams));
-            }
-        });
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(
+                (Runnable) () -> Assert.assertFalse(
+                        mManager.getOverlayContentDelegate().shouldInterceptNavigation(
+                                externalNavHandler, navigationParams)));
         Assert.assertEquals(1, mActivityMonitor.getHits());
     }
 
@@ -2307,15 +2250,12 @@ public class ContextualSearchManagerTest {
                 true /* isRedirect */, true /* isExternalProtocol */, true /* isMainFrame */,
                 false /* hasUserGestureCarryover */);
 
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                OverlayContentDelegate delegate = mManager.getOverlayContentDelegate();
-                Assert.assertTrue(delegate.shouldInterceptNavigation(
-                        externalNavHandler, initialNavigationParams));
-                Assert.assertFalse(delegate.shouldInterceptNavigation(
-                        externalNavHandler, redirectedNavigationParams));
-            }
+        InstrumentationRegistry.getInstrumentation().runOnMainSync((Runnable) () -> {
+            OverlayContentDelegate delegate = mManager.getOverlayContentDelegate();
+            Assert.assertTrue(delegate.shouldInterceptNavigation(
+                    externalNavHandler, initialNavigationParams));
+            Assert.assertFalse(delegate.shouldInterceptNavigation(
+                    externalNavHandler, redirectedNavigationParams));
         });
         Assert.assertEquals(1, mActivityMonitor.getHits());
     }
@@ -2335,13 +2275,10 @@ public class ContextualSearchManagerTest {
                 false /* isPost */, false /* hasUserGesture */, PageTransition.LINK,
                 false /* isRedirect */, true /* isExternalProtocol */, true /* isMainFrame */,
                 false /* hasUserGestureCarryover */);
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertFalse(mManager.getOverlayContentDelegate().shouldInterceptNavigation(
-                        externalNavHandler, navigationParams));
-            }
-        });
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(
+                (Runnable) () -> Assert.assertFalse(
+                        mManager.getOverlayContentDelegate().shouldInterceptNavigation(
+                                externalNavHandler, navigationParams)));
         Assert.assertEquals(0, mActivityMonitor.getHits());
     }
 
@@ -2870,23 +2807,15 @@ public class ContextualSearchManagerTest {
         Assert.assertFalse(imageControl.getThumbnailVisible());
         Assert.assertTrue(TextUtils.isEmpty(imageControl.getThumbnailUrl()));
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                imageControl.setThumbnailUrl("http://someimageurl.com/image.png");
-                imageControl.onThumbnailFetched(true);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            imageControl.setThumbnailUrl("http://someimageurl.com/image.png");
+            imageControl.onThumbnailFetched(true);
         });
 
         Assert.assertTrue(imageControl.getThumbnailVisible());
         Assert.assertEquals(imageControl.getThumbnailUrl(), "http://someimageurl.com/image.png");
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                imageControl.hideCustomImage(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> imageControl.hideCustomImage(false));
 
         Assert.assertFalse(imageControl.getThumbnailVisible());
         Assert.assertTrue(TextUtils.isEmpty(imageControl.getThumbnailUrl()));
@@ -2930,14 +2859,11 @@ public class ContextualSearchManagerTest {
     public void testQuickActionCaptionAndImage() throws InterruptedException, TimeoutException {
         // Simulate a tap to show the Bar, then set the quick action data.
         simulateTapSearch("search");
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mPanel.onSearchTermResolved("search", null, "tel:555-555-5555",
-                        QuickActionCategory.PHONE);
-                // Finish all running animations.
-                mPanel.onUpdateAnimation(System.currentTimeMillis(), true);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mPanel.onSearchTermResolved("search", null, "tel:555-555-5555",
+                    QuickActionCategory.PHONE);
+            // Finish all running animations.
+            mPanel.onUpdateAnimation(System.currentTimeMillis(), true);
         });
 
         ContextualSearchBarControl barControl = mPanel.getSearchBarControl();
@@ -2953,12 +2879,7 @@ public class ContextualSearchManagerTest {
         Assert.assertEquals(1.f, imageControl.getCustomImageVisibilityPercentage(), 0);
 
         // Expand the bar.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mPanel.simulateTapOnEndButton();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mPanel.simulateTapOnEndButton());
         waitForPanelToExpand();
 
         // Check that the expanded bar is showing the correct image and caption.
@@ -2996,13 +2917,9 @@ public class ContextualSearchManagerTest {
 
         // Simulate a tap to show the Bar, then set the quick action data.
         simulateTapSearch("search");
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mPanel.onSearchTermResolved("search", null, "tel:555-555-5555",
-                        QuickActionCategory.PHONE);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> mPanel.onSearchTermResolved("search", null, "tel:555-555-5555",
+                        QuickActionCategory.PHONE));
 
         // Tap on the portion of the bar that should trigger the quick action intent to be fired.
         clickPanelBar();
@@ -3023,12 +2940,9 @@ public class ContextualSearchManagerTest {
 
         // Simulate a tap to show the Bar, then set the quick action data.
         simulateTapSearch("search");
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mPanel.onSearchTermResolved("search", null, testUrl, QuickActionCategory.WEBSITE);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> mPanel.onSearchTermResolved("search", null, testUrl,
+                        QuickActionCategory.WEBSITE));
 
         // Tap on the portion of the bar that should trigger the quick action.
         clickPanelBar();

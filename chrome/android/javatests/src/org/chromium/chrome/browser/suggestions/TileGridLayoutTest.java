@@ -160,12 +160,8 @@ public class TileGridLayoutTest {
     }
 
     private void reMeasureLayout(final ViewGroup group) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                group.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> group.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED));
 
         // Wait until the view is updated. TODO(oskopek): Is there a better criterion to check for?
         CriteriaHelper.pollUiThread(new Criteria() {

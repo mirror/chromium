@@ -57,13 +57,8 @@ public class StubbedProvider implements BackendProvider {
 
         @Override
         public void getAllDownloads(final boolean isOffTheRecord) {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.onAllDownloadsRetrieved(
-                            isOffTheRecord ? offTheRecordItems : regularItems, isOffTheRecord);
-                }
-            });
+            mHandler.post(() -> mAdapter.onAllDownloadsRetrieved(
+                    isOffTheRecord ? offTheRecordItems : regularItems, isOffTheRecord));
         }
 
         @Override
@@ -76,12 +71,9 @@ public class StubbedProvider implements BackendProvider {
 
         @Override
         public void removeDownload(final String guid, final boolean isOffTheRecord) {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.onDownloadItemRemoved(guid, isOffTheRecord);
-                    removeDownloadCallback.notifyCalled();
-                }
+            mHandler.post(() -> {
+                mAdapter.onDownloadItemRemoved(guid, isOffTheRecord);
+                removeDownloadCallback.notifyCalled();
             });
         }
 
@@ -108,12 +100,7 @@ public class StubbedProvider implements BackendProvider {
             observer = addedObserver;
             addCallback.notifyCalled();
 
-            ThreadUtils.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    observer.onItemsLoaded();
-                }
-            });
+            ThreadUtils.runOnUiThread(() -> observer.onItemsLoaded());
         }
 
         @Override
@@ -137,12 +124,9 @@ public class StubbedProvider implements BackendProvider {
                 }
             }
 
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    observer.onItemDeleted(guid);
-                    deleteItemCallback.notifyCalled();
-                }
+            mHandler.post(() -> {
+                observer.onItemDeleted(guid);
+                deleteItemCallback.notifyCalled();
             });
         }
 

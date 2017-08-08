@@ -10,7 +10,6 @@ import android.os.CancellationSignal;
 import android.os.ParcelFileDescriptor;
 import android.print.PageRange;
 import android.print.PrintAttributes;
-import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
@@ -41,7 +40,6 @@ import org.chromium.printing.PrintingControllerImpl;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 
@@ -132,12 +130,7 @@ public class PrintingControllerTest {
                 .build();
 
         // Use this to wait for PDF generation to complete, as it will happen asynchronously.
-        final FutureTask<Boolean> result = new FutureTask<Boolean>(new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                return true;
-            }
-        });
+        final FutureTask<Boolean> result = new FutureTask<Boolean>(() -> true);
 
         callLayoutOnUiThread(printingController, null, attributes,
                 new LayoutResultCallbackWrapperMock() {
@@ -201,14 +194,10 @@ public class PrintingControllerTest {
     private PrintingControllerImpl createControllerOnUiThread() {
         try {
             final FutureTask<PrintingControllerImpl> task =
-                    new FutureTask<PrintingControllerImpl>(new Callable<PrintingControllerImpl>() {
-                        @Override
-                        public PrintingControllerImpl call() throws Exception {
-                            return (PrintingControllerImpl) PrintingControllerImpl.create(
+                    new FutureTask<PrintingControllerImpl>(
+                            () -> (PrintingControllerImpl) PrintingControllerImpl.create(
                                     new PrintDocumentAdapterWrapper(),
-                                    PRINT_JOB_NAME);
-                        }
-                    });
+                                    PRINT_JOB_NAME));
 
             InstrumentationRegistry.getInstrumentation().runOnMainSync(task);
             PrintingControllerImpl result = task.get(TEST_TIMEOUT, TimeUnit.MILLISECONDS);
@@ -222,20 +211,15 @@ public class PrintingControllerTest {
     private void startControllerOnUiThread(final PrintingControllerImpl controller,
             final Tab tab) {
         try {
-            final PrintManagerDelegate mockPrintManagerDelegate = new PrintManagerDelegate() {
-                @Override
-                public void print(String printJobName, PrintDocumentAdapter documentAdapter,
-                        PrintAttributes attributes) {
-                    // Do nothing, as we will emulate the framework call sequence within the test.
-                }
-            };
+            final PrintManagerDelegate mockPrintManagerDelegate =
+                    (printJobName, documentAdapter, attributes) -> {
+                        // Do nothing, as we will emulate the framework call sequence within the
+                        // test.
+                    };
 
-            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-                @Override
-                public void run() {
-                    controller.startPrint(new TabPrinter(tab), mockPrintManagerDelegate);
-                }
-            });
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(
+                    (Runnable) () -> controller.startPrint(new TabPrinter(tab),
+                            mockPrintManagerDelegate));
         } catch (Throwable e) {
             Assert.fail("Error on calling startPrint of PrintingControllerImpl " + e);
         }
@@ -243,12 +227,8 @@ public class PrintingControllerTest {
 
     private void callStartOnUiThread(final PrintingControllerImpl controller) {
         try {
-            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-                @Override
-                public void run() {
-                    controller.onStart();
-                }
-            });
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(
+                    (Runnable) () -> controller.onStart());
         } catch (Throwable e) {
             Assert.fail("Error on calling onStart of PrintingControllerImpl " + e);
         }
@@ -260,17 +240,13 @@ public class PrintingControllerTest {
             final PrintAttributes newAttributes,
             final PrintDocumentAdapterWrapper.LayoutResultCallbackWrapper layoutResultCallback) {
         try {
-            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-                @Override
-                public void run() {
-                    controller.onLayout(
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(
+                    (Runnable) () -> controller.onLayout(
                             oldAttributes,
                             newAttributes,
                             new CancellationSignal(),
                             layoutResultCallback,
-                            null);
-                }
-            });
+                            null));
         } catch (Throwable e) {
             Assert.fail("Error on calling onLayout of PrintingControllerImpl " + e);
         }
@@ -300,12 +276,8 @@ public class PrintingControllerTest {
 
     private void callFinishOnUiThread(final PrintingControllerImpl controller) {
         try {
-            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-                @Override
-                public void run() {
-                    controller.onFinish();
-                }
-            });
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(
+                    (Runnable) () -> controller.onFinish());
         } catch (Throwable e) {
             Assert.fail("Error on calling onFinish of PrintingControllerImpl " + e);
         }

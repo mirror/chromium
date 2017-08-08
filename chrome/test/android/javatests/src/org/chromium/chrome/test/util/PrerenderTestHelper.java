@@ -16,8 +16,6 @@ import org.chromium.chrome.test.ChromeTabbedActivityTestBase;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 
-import java.util.concurrent.Callable;
-
 /**
  * Utility class for common methods to test prerendering.
  */
@@ -27,12 +25,7 @@ public class PrerenderTestHelper {
     private static final int SHORT_TIMEOUT_MS = 200;
 
     private static boolean hasTabPrerenderedUrl(final Tab tab, final String url) {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                return tab.hasPrerenderedUrl(url);
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> tab.hasPrerenderedUrl(url));
     }
 
     /**
@@ -89,22 +82,19 @@ public class PrerenderTestHelper {
         final Tab currentTab = tab;
 
         ExternalPrerenderHandler prerenderHandler = ThreadUtils.runOnUiThreadBlockingNoException(
-                new Callable<ExternalPrerenderHandler>() {
-                    @Override
-                    public ExternalPrerenderHandler call() throws Exception {
-                        ExternalPrerenderHandler prerenderHandler = new ExternalPrerenderHandler();
-                        Rect bounds = new Rect(
-                                0, 0, currentTab.getContentViewCore().getRenderCoordinates()
-                                        .getContentWidthPixInt(),
-                                currentTab.getContentViewCore().getRenderCoordinates()
-                                        .getContentHeightPixInt());
-                        boolean didPrerender =
-                                prerenderHandler.addPrerender(currentTab.getProfile(),
-                                        currentTab.getWebContents(), testUrl, null, bounds, true)
-                                != null;
-                        Assert.assertTrue("Failed to prerender test url: " + testUrl, didPrerender);
-                        return prerenderHandler;
-                    }
+                () -> {
+                    ExternalPrerenderHandler prerenderHandler1 = new ExternalPrerenderHandler();
+                    Rect bounds = new Rect(
+                            0, 0, currentTab.getContentViewCore().getRenderCoordinates()
+                            .getContentWidthPixInt(),
+                            currentTab.getContentViewCore().getRenderCoordinates()
+                                    .getContentHeightPixInt());
+                    boolean didPrerender =
+                            prerenderHandler1.addPrerender(currentTab.getProfile(),
+                                    currentTab.getWebContents(), testUrl, null, bounds, true)
+                                    != null;
+                    Assert.assertTrue("Failed to prerender test url: " + testUrl, didPrerender);
+                    return prerenderHandler1;
                 });
 
         Assert.assertTrue("URL was not prerendered.",

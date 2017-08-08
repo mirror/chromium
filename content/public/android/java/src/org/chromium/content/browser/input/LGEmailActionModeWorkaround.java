@@ -99,12 +99,7 @@ public final class LGEmailActionModeWorkaround {
 
                 @Override
                 public void onDestroyActionMode(final ActionMode mode) {
-                    ThreadUtils.postOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            c.onDestroyActionMode(mode);
-                        }
-                    });
+                    ThreadUtils.postOnUiThread(() -> c.onDestroyActionMode(mode));
                 }
             });
 
@@ -120,12 +115,9 @@ public final class LGEmailActionModeWorkaround {
                     null, contentContainer, 150, new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            ThreadUtils.postOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    popupWindow.dismiss();
-                                    contentContainer.removeAllViews();
-                                }
+                            ThreadUtils.postOnUiThread(() -> {
+                                popupWindow.dismiss();
+                                contentContainer.removeAllViews();
                             });
                         }
                     });

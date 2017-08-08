@@ -45,12 +45,8 @@ public class JavaHandlerThread {
     @CalledByNative
     private void startAndInitialize(final long nativeThread, final long nativeEvent) {
         maybeStart();
-        new Handler(mThread.getLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                nativeInitializeThread(nativeThread, nativeEvent);
-            }
-        });
+        new Handler(mThread.getLooper()).post(
+                () -> nativeInitializeThread(nativeThread, nativeEvent));
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
@@ -58,12 +54,9 @@ public class JavaHandlerThread {
     private void stop(final long nativeThread, final long nativeEvent) {
         assert hasStarted();
         final boolean quitSafely = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2;
-        new Handler(mThread.getLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                nativeStopThread(nativeThread, nativeEvent);
-                if (!quitSafely) mThread.quit();
-            }
+        new Handler(mThread.getLooper()).post(() -> {
+            nativeStopThread(nativeThread, nativeEvent);
+            if (!quitSafely) mThread.quit();
         });
         if (quitSafely) mThread.quitSafely();
     }

@@ -38,8 +38,6 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.net.test.EmbeddedTestServer;
 
-import java.util.concurrent.Callable;
-
 /**
  * Tests org.chromium.chrome.browser.webapps.AddToHomescreenManager and its C++ counterpart.
  */
@@ -342,47 +340,27 @@ public class AddToHomescreenManagerTest {
     }
 
     private void startManagerOnUiThread(final AddToHomescreenManager manager) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                manager.start();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> manager.start());
     }
 
     private void destroyManagerOnUiThread(final AddToHomescreenManager manager) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                manager.destroy();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> manager.destroy());
     }
 
     /**
      * Spawns popup via window.open() at {@link url}.
      */
     private Tab spawnPopupInBackground(final String url) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mTab.getWebContents().evaluateJavaScriptForTests(
-                        "(function() {"
+        ThreadUtils.runOnUiThreadBlocking(() -> mTab.getWebContents().evaluateJavaScriptForTests(
+                "(function() {"
                         + "window.open('" + url + "');"
                         + "})()",
-                        null);
-            }
-        });
+                null));
 
-        CriteriaHelper.pollUiThread(Criteria.equals(2, new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return mActivityTestRule.getActivity()
-                        .getTabModelSelector()
-                        .getModel(false)
-                        .getCount();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(2, () -> mActivityTestRule.getActivity()
+                .getTabModelSelector()
+                .getModel(false)
+                .getCount()));
 
         TabModel tabModel = mActivityTestRule.getActivity().getTabModelSelector().getModel(false);
         Assert.assertEquals(0, tabModel.indexOf(mTab));

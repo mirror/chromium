@@ -84,12 +84,7 @@ public class NotificationService extends IntentService {
             return;
         }
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                dispatchIntentOnUIThread(NotificationService.this, intent);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> dispatchIntentOnUIThread(NotificationService.this, intent));
     }
 
     /**

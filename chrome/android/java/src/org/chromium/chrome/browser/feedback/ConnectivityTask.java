@@ -246,12 +246,7 @@ public class ConnectivityTask {
 
         private void postCallbackResult() {
             if (mCallback == null) return;
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mCallback.onResult(get());
-                }
-            });
+            ThreadUtils.postOnUiThread(() -> mCallback.onResult(get()));
         }
     }
 

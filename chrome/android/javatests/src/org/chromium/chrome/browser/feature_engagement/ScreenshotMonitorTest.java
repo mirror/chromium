@@ -76,13 +76,9 @@ public class ScreenshotMonitorTest {
     public void setUp() throws Exception {
         mTestScreenshotMonitorDelegate = new TestScreenshotMonitorDelegate();
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mTestScreenshotMonitor = new ScreenshotMonitor(
-                        mTestScreenshotMonitorDelegate, new TestScreenshotMonitorFileObserver());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> mTestScreenshotMonitor = new ScreenshotMonitor(
+                        mTestScreenshotMonitorDelegate, new TestScreenshotMonitorFileObserver()));
         Assert.assertTrue(
                 mTestScreenshotMonitor.mFileObserver instanceof TestScreenshotMonitorFileObserver);
         mTestFileObserver =
@@ -248,12 +244,9 @@ public class ScreenshotMonitorTest {
     private void startMonitoringOnUiThreadBlocking() {
         final Semaphore semaphore = new Semaphore(0);
 
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mTestScreenshotMonitor.startMonitoring();
-                semaphore.release();
-            }
+        ThreadUtils.postOnUiThread(() -> {
+            mTestScreenshotMonitor.startMonitoring();
+            semaphore.release();
         });
         try {
             Assert.assertTrue(semaphore.tryAcquire(10, TimeUnit.SECONDS));
@@ -266,12 +259,9 @@ public class ScreenshotMonitorTest {
     private void stopMonitoringOnUiThreadBlocking() {
         final Semaphore semaphore = new Semaphore(0);
 
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mTestScreenshotMonitor.stopMonitoring();
-                semaphore.release();
-            }
+        ThreadUtils.postOnUiThread(() -> {
+            mTestScreenshotMonitor.stopMonitoring();
+            semaphore.release();
         });
         try {
             Assert.assertTrue(semaphore.tryAcquire(10, TimeUnit.SECONDS));
@@ -286,15 +276,12 @@ public class ScreenshotMonitorTest {
             final int startCallCount) {
         final Semaphore semaphore = new Semaphore(0);
 
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < startCallCount; i++) {
-                    mTestScreenshotMonitor.startMonitoring();
-                }
-                mTestScreenshotMonitor.stopMonitoring();
-                semaphore.release();
+        ThreadUtils.postOnUiThread(() -> {
+            for (int i = 0; i < startCallCount; i++) {
+                mTestScreenshotMonitor.startMonitoring();
             }
+            mTestScreenshotMonitor.stopMonitoring();
+            semaphore.release();
         });
         try {
             Assert.assertTrue(semaphore.tryAcquire(10, TimeUnit.SECONDS));
@@ -309,15 +296,12 @@ public class ScreenshotMonitorTest {
             final int stopCallCount) {
         final Semaphore semaphore = new Semaphore(0);
 
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < stopCallCount; i++) {
-                    mTestScreenshotMonitor.stopMonitoring();
-                }
-                mTestScreenshotMonitor.startMonitoring();
-                semaphore.release();
+        ThreadUtils.postOnUiThread(() -> {
+            for (int i = 0; i < stopCallCount; i++) {
+                mTestScreenshotMonitor.stopMonitoring();
             }
+            mTestScreenshotMonitor.startMonitoring();
+            semaphore.release();
         });
         try {
             Assert.assertTrue(semaphore.tryAcquire(10, TimeUnit.SECONDS));
@@ -331,12 +315,7 @@ public class ScreenshotMonitorTest {
     private void assertScreenshotShowUiCountOnUiThreadBlocking(int expectedCount) {
         final Semaphore semaphore = new Semaphore(0);
 
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                semaphore.release();
-            }
-        });
+        ThreadUtils.postOnUiThread(() -> semaphore.release());
         try {
             Assert.assertTrue(semaphore.tryAcquire(10, TimeUnit.SECONDS));
         } catch (InterruptedException e) {

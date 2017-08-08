@@ -61,7 +61,6 @@ import org.chromium.ui.base.PageTransition;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -140,12 +139,7 @@ public class NewTabPageTest {
         // Scroll to search bar
         final NewTabPageRecyclerView recyclerView = mNtp.getNewTabPageView().getRecyclerView();
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                recyclerView.smoothScrollBy(0, mFakebox.getTop());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> recyclerView.smoothScrollBy(0, mFakebox.getTop()));
 
         CriteriaHelper.pollUiThread(new Criteria(){
             @Override
@@ -161,39 +155,36 @@ public class NewTabPageTest {
     @MediumTest
     @Feature({"NewTabPage"})
     public void testThumbnailInvalidations() throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                captureThumbnail();
-                Assert.assertFalse(mNtp.shouldCaptureThumbnail());
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            captureThumbnail();
+            Assert.assertFalse(mNtp.shouldCaptureThumbnail());
 
-                // Check that we invalidate the thumbnail when the Recycler View is updated.
-                NewTabPageRecyclerView recyclerView = mNtp.getNewTabPageView().getRecyclerView();
+            // Check that we invalidate the thumbnail when the Recycler View is updated.
+            NewTabPageRecyclerView recyclerView = mNtp.getNewTabPageView().getRecyclerView();
 
-                recyclerView.getAdapter().notifyDataSetChanged();
-                assertThumbnailInvalidAndRecapture();
+            recyclerView.getAdapter().notifyDataSetChanged();
+            assertThumbnailInvalidAndRecapture();
 
-                recyclerView.getAdapter().notifyItemChanged(0);
-                assertThumbnailInvalidAndRecapture();
+            recyclerView.getAdapter().notifyItemChanged(0);
+            assertThumbnailInvalidAndRecapture();
 
-                recyclerView.getAdapter().notifyItemInserted(0);
-                assertThumbnailInvalidAndRecapture();
+            recyclerView.getAdapter().notifyItemInserted(0);
+            assertThumbnailInvalidAndRecapture();
 
-                recyclerView.getAdapter().notifyItemMoved(0, 1);
-                assertThumbnailInvalidAndRecapture();
+            recyclerView.getAdapter().notifyItemMoved(0, 1);
+            assertThumbnailInvalidAndRecapture();
 
-                recyclerView.getAdapter().notifyItemRangeChanged(0, 1);
-                assertThumbnailInvalidAndRecapture();
+            recyclerView.getAdapter().notifyItemRangeChanged(0, 1);
+            assertThumbnailInvalidAndRecapture();
 
-                recyclerView.getAdapter().notifyItemRangeInserted(0, 1);
-                assertThumbnailInvalidAndRecapture();
+            recyclerView.getAdapter().notifyItemRangeInserted(0, 1);
+            assertThumbnailInvalidAndRecapture();
 
-                recyclerView.getAdapter().notifyItemRangeRemoved(0, 1);
-                assertThumbnailInvalidAndRecapture();
+            recyclerView.getAdapter().notifyItemRangeRemoved(0, 1);
+            assertThumbnailInvalidAndRecapture();
 
-                recyclerView.getAdapter().notifyItemRemoved(0);
-                assertThumbnailInvalidAndRecapture();
-            }
+            recyclerView.getAdapter().notifyItemRemoved(0);
+            assertThumbnailInvalidAndRecapture();
         });
     }
 
@@ -238,13 +229,10 @@ public class NewTabPageTest {
                 (LocationBarLayout) mActivityTestRule.getActivity().findViewById(R.id.location_bar);
         OmniboxTestUtils.waitForOmniboxSuggestions(locationBar);
 
-        ChromeTabUtils.waitForTabPageLoaded(mTab, new Runnable() {
-            @Override
-            public void run() {
-                KeyUtils.singleKeyEventView(InstrumentationRegistry.getInstrumentation(), urlBar,
-                        KeyEvent.KEYCODE_ENTER);
-            }
-        });
+        ChromeTabUtils.waitForTabPageLoaded(mTab,
+                () -> KeyUtils.singleKeyEventView(InstrumentationRegistry.getInstrumentation(),
+                        urlBar,
+                        KeyEvent.KEYCODE_ENTER));
     }
 
     /**
@@ -254,12 +242,9 @@ public class NewTabPageTest {
     @SmallTest
     @Feature({"NewTabPage"})
     public void testClickMostVisitedItem() throws InterruptedException {
-        ChromeTabUtils.waitForTabPageLoaded(mTab, new Runnable() {
-            @Override
-            public void run() {
-                View mostVisitedItem = mTileGridLayout.getChildAt(0);
-                TouchCommon.singleClickView(mostVisitedItem);
-            }
+        ChromeTabUtils.waitForTabPageLoaded(mTab, () -> {
+            View mostVisitedItem = mTileGridLayout.getChildAt(0);
+            TouchCommon.singleClickView(mostVisitedItem);
         });
         Assert.assertEquals(mSiteSuggestions.get(0).url, mTab.getUrl());
     }
@@ -312,22 +297,14 @@ public class NewTabPageTest {
     @Feature({"NewTabPage"})
     public void testUrlFocusAnimationsDisabledOnLoad() throws InterruptedException {
         Assert.assertFalse(getUrlFocusAnimationsDisabled());
-        ChromeTabUtils.waitForTabPageLoaded(mTab, new Runnable() {
-            @Override
-            public void run() {
-                ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                    @Override
-                    public void run() {
-                        int pageTransition =
-                                PageTransition.TYPED | PageTransition.FROM_ADDRESS_BAR;
-                        mTab.loadUrl(new LoadUrlParams(mTestServer.getURL(TEST_PAGE),
-                                pageTransition));
-                        // It should be disabled as soon as a load URL is triggered.
-                        Assert.assertTrue(getUrlFocusAnimationsDisabled());
-                    }
-                });
-            }
-        });
+        ChromeTabUtils.waitForTabPageLoaded(mTab, () -> ThreadUtils.runOnUiThreadBlocking(() -> {
+            int pageTransition =
+                    PageTransition.TYPED | PageTransition.FROM_ADDRESS_BAR;
+            mTab.loadUrl(new LoadUrlParams(mTestServer.getURL(TEST_PAGE),
+                    pageTransition));
+            // It should be disabled as soon as a load URL is triggered.
+            Assert.assertTrue(getUrlFocusAnimationsDisabled());
+        }));
         // Ensure it is still marked as disabled once the new page is fully loaded.
         Assert.assertTrue(getUrlFocusAnimationsDisabled());
     }
@@ -340,14 +317,11 @@ public class NewTabPageTest {
         TestWebServer webServer = TestWebServer.start();
         try {
             final Semaphore delaySemaphore = new Semaphore(0);
-            Runnable delayAction = new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Assert.assertTrue(delaySemaphore.tryAcquire(10, TimeUnit.SECONDS));
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            Runnable delayAction = () -> {
+                try {
+                    Assert.assertTrue(delaySemaphore.tryAcquire(10, TimeUnit.SECONDS));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             };
             final String testPageUrl = webServer.setResponseWithRunnableAction(
@@ -381,12 +355,7 @@ public class NewTabPageTest {
             waitForUrlFocusAnimationsDisabledState(true);
             waitForTabLoading();
 
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    mTab.stopLoading();
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(() -> mTab.stopLoading());
             waitForUrlFocusAnimationsDisabledState(false);
             delaySemaphore.release();
             loadedCallback.waitForCallback(0);
@@ -403,17 +372,14 @@ public class NewTabPageTest {
     @SmallTest
     @Feature({"NewTabPage"})
     public void testSetSearchProviderHasLogo() throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                NewTabPageView ntpView = mNtp.getNewTabPageView();
-                View logoView = ntpView.findViewById(R.id.search_provider_logo);
-                Assert.assertEquals(View.VISIBLE, logoView.getVisibility());
-                ntpView.setSearchProviderHasLogo(false);
-                Assert.assertEquals(View.GONE, logoView.getVisibility());
-                ntpView.setSearchProviderHasLogo(true);
-                Assert.assertEquals(View.VISIBLE, logoView.getVisibility());
-            }
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            NewTabPageView ntpView = mNtp.getNewTabPageView();
+            View logoView = ntpView.findViewById(R.id.search_provider_logo);
+            Assert.assertEquals(View.VISIBLE, logoView.getVisibility());
+            ntpView.setSearchProviderHasLogo(false);
+            Assert.assertEquals(View.GONE, logoView.getVisibility());
+            ntpView.setSearchProviderHasLogo(true);
+            Assert.assertEquals(View.VISIBLE, logoView.getVisibility());
         });
     }
 
@@ -425,17 +391,14 @@ public class NewTabPageTest {
     @Feature({"NewTabPage"})
     @CommandLineFlags.Add("enable-features=NTPCondensedLayout")
     public void testSetSearchProviderHasLogoCondensedUi() throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                NewTabPageView ntpView = mNtp.getNewTabPageView();
-                View logoView = ntpView.findViewById(R.id.search_provider_logo);
-                Assert.assertEquals(View.GONE, logoView.getVisibility());
-                ntpView.setSearchProviderHasLogo(false);
-                Assert.assertEquals(View.GONE, logoView.getVisibility());
-                ntpView.setSearchProviderHasLogo(true);
-                Assert.assertEquals(View.GONE, logoView.getVisibility());
-            }
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            NewTabPageView ntpView = mNtp.getNewTabPageView();
+            View logoView = ntpView.findViewById(R.id.search_provider_logo);
+            Assert.assertEquals(View.GONE, logoView.getVisibility());
+            ntpView.setSearchProviderHasLogo(false);
+            Assert.assertEquals(View.GONE, logoView.getVisibility());
+            ntpView.setSearchProviderHasLogo(true);
+            Assert.assertEquals(View.GONE, logoView.getVisibility());
         });
     }
 
@@ -460,17 +423,14 @@ public class NewTabPageTest {
 
         // When the search provider has no logo and there are no tile suggestions, the placeholder
         // is shown.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ntpView.setSearchProviderHasLogo(false);
-                Assert.assertEquals(View.GONE, logoView.getVisibility());
-                Assert.assertEquals(View.GONE, searchBoxView.getVisibility());
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            ntpView.setSearchProviderHasLogo(false);
+            Assert.assertEquals(View.GONE, logoView.getVisibility());
+            Assert.assertEquals(View.GONE, searchBoxView.getVisibility());
 
-                mMostVisitedSites.setTileSuggestions(new String[] {});
+            mMostVisitedSites.setTileSuggestions(new String[]{});
 
-                ntpView.getTileGroup().onSwitchToForeground(false); // Force tile refresh.
-            }
+            ntpView.getTileGroup().onSwitchToForeground(false); // Force tile refresh.
         });
         CriteriaHelper.pollUiThread(new Criteria("The tile grid was not updated.") {
             @Override
@@ -483,14 +443,11 @@ public class NewTabPageTest {
 
         // Once the search provider has a logo again, the logo and search box are shown again and
         // the placeholder is hidden.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ntpView.setSearchProviderHasLogo(true);
-                Assert.assertEquals(View.VISIBLE, logoView.getVisibility());
-                Assert.assertEquals(View.VISIBLE, searchBoxView.getVisibility());
-                Assert.assertEquals(View.GONE, ntpView.getPlaceholder().getVisibility());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            ntpView.setSearchProviderHasLogo(true);
+            Assert.assertEquals(View.VISIBLE, logoView.getVisibility());
+            Assert.assertEquals(View.VISIBLE, searchBoxView.getVisibility());
+            Assert.assertEquals(View.GONE, ntpView.getPlaceholder().getVisibility());
         });
     }
 
@@ -530,21 +487,13 @@ public class NewTabPageTest {
     }
 
     private boolean getUrlFocusAnimationsDisabled() {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return mNtp.getNewTabPageView().urlFocusAnimationsDisabled();
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> mNtp.getNewTabPageView().urlFocusAnimationsDisabled());
     }
 
     private void waitForUrlFocusAnimationsDisabledState(boolean disabled) {
-        CriteriaHelper.pollInstrumentationThread(Criteria.equals(disabled, new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                return getUrlFocusAnimationsDisabled();
-            }
-        }));
+        CriteriaHelper.pollInstrumentationThread(Criteria.equals(disabled,
+                () -> getUrlFocusAnimationsDisabled()));
     }
 
     private void waitForTabLoading() {
@@ -561,12 +510,8 @@ public class NewTabPageTest {
     }
 
     private void waitForUrlFocusPercent(final NewTabPage ntp, float percent) {
-        CriteriaHelper.pollUiThread(Criteria.equals(percent, new Callable<Float>() {
-            @Override
-            public Float call() {
-                return ntp.getNewTabPageView().getUrlFocusChangeAnimationPercent();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(percent,
+                () -> ntp.getNewTabPageView().getUrlFocusChangeAnimationPercent()));
     }
 
     private void clickFakebox() {
@@ -578,14 +523,11 @@ public class NewTabPageTest {
      * @return The position of the top of the fakebox relative to the window.
      */
     private int getFakeboxTop(final NewTabPage ntp) {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                final View fakebox = ntp.getView().findViewById(R.id.search_box);
-                int[] location = new int[2];
-                fakebox.getLocationInWindow(location);
-                return location[1];
-            }
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            final View fakebox = ntp.getView().findViewById(R.id.search_box);
+            int[] location = new int[2];
+            fakebox.getLocationInWindow(location);
+            return location[1];
         });
     }
 
@@ -593,11 +535,6 @@ public class NewTabPageTest {
      * Waits until the top of the fakebox reaches the given position.
      */
     private void waitForFakeboxTopPosition(final NewTabPage ntp, int position) {
-        CriteriaHelper.pollUiThread(Criteria.equals(position, new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return getFakeboxTop(ntp);
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(position, () -> getFakeboxTop(ntp)));
     }
 }

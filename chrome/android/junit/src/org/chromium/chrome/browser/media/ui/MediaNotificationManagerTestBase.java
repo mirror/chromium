@@ -25,8 +25,6 @@ import android.view.KeyEvent;
 
 import org.junit.After;
 import org.junit.Before;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.shadows.ShadowLog;
 import org.robolectric.shadows.ShadowLooper;
@@ -109,25 +107,19 @@ public class MediaNotificationManagerTestBase {
 
         doNothing().when(getManager()).onServiceStarted(any(ListenerService.class));
         // Robolectric does not have "ShadowMediaSession".
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) {
-                MediaSessionCompat mockSession = mock(MediaSessionCompat.class);
-                getManager().mMediaSession = mockSession;
-                doReturn(null).when(mockSession).getSessionToken();
-                return "Created mock media session";
-            }
+        doAnswer(invocation -> {
+            MediaSessionCompat mockSession = mock(MediaSessionCompat.class);
+            getManager().mMediaSession = mockSession;
+            doReturn(null).when(mockSession).getSessionToken();
+            return "Created mock media session";
         })
                 .when(getManager())
                 .updateMediaSession();
 
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) {
-                Intent intent = (Intent) invocation.getArgument(0);
-                startService(intent);
-                return new ComponentName(mMockContext, MockListenerService.class);
-            }
+        doAnswer(invocation -> {
+            Intent intent = (Intent) invocation.getArgument(0);
+            startService(intent);
+            return new ComponentName(mMockContext, MockListenerService.class);
         })
                 .when(mMockContext)
                 .startService(any(Intent.class));
@@ -176,12 +168,10 @@ public class MediaNotificationManagerTestBase {
         if (mService != null) return;
         mService = spy(new MockListenerService());
 
-        doAnswer(new Answer() {
-            public Object answer(InvocationOnMock invocation) {
-                mService.onDestroy();
-                mService = null;
-                return "service stopped";
-            }
+        doAnswer(invocation -> {
+            mService.onDestroy();
+            mService = null;
+            return "service stopped";
         })
                 .when(mService)
                 .stopListenerService();

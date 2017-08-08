@@ -26,7 +26,6 @@ import org.chromium.ui.base.PageTransition;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * Test suite for the typed URLs sync data type.
@@ -107,12 +106,9 @@ public class TypedUrlsTest extends SyncTestBase {
     }
 
     private void loadUrlByTyping(final String url) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                LoadUrlParams params = new LoadUrlParams(url, PageTransition.TYPED);
-                getActivity().getActivityTab().loadUrl(params);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            LoadUrlParams params = new LoadUrlParams(url, PageTransition.TYPED);
+            getActivity().getActivityTab().loadUrl(params);
         });
     }
 
@@ -149,12 +145,9 @@ public class TypedUrlsTest extends SyncTestBase {
     }
 
     private void waitForClientTypedUrlCount(int count) {
-        CriteriaHelper.pollInstrumentationThread(Criteria.equals(count, new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return SyncTestUtil.getLocalData(mContext, TYPED_URLS_TYPE).size();
-            }
-        }), SyncTestUtil.TIMEOUT_MS, SyncTestUtil.INTERVAL_MS);
+        CriteriaHelper.pollInstrumentationThread(Criteria.equals(count,
+                () -> SyncTestUtil.getLocalData(mContext, TYPED_URLS_TYPE).size()),
+                SyncTestUtil.TIMEOUT_MS, SyncTestUtil.INTERVAL_MS);
     }
 
     private void waitForServerTypedUrlCountWithName(final int count, final String name) {

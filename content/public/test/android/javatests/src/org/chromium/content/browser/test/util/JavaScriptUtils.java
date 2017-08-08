@@ -47,12 +47,7 @@ public class JavaScriptUtils {
         // have a chance to process the JavaScript eval response).
         Assert.assertFalse("Executing JavaScript should be done from the test thread, "
                 + " not the UI thread", ThreadUtils.runningOnUiThread());
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                helper.evaluateJavaScriptForTests(webContents, code);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> helper.evaluateJavaScriptForTests(webContents, code));
         helper.waitUntilHasValue(timeout, timeoutUnits);
         Assert.assertTrue("Failed to retrieve JavaScript evaluation results.", helper.hasValue());
         return helper.getJsonResultAndClear();
@@ -62,11 +57,6 @@ public class JavaScriptUtils {
      * Executes the given snippet of JavaScript code but does not wait for the result.
      */
     public static void executeJavaScript(final WebContents webContents, final String code) {
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                webContents.evaluateJavaScriptForTests(code, null);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> webContents.evaluateJavaScriptForTests(code, null));
     }
 }

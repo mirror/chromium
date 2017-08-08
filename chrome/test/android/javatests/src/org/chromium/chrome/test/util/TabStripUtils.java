@@ -78,12 +78,7 @@ public class TabStripUtils {
         final StripLayoutHelperManager manager = getStripLayoutHelperManager(activity);
         final float x = (tab.getDrawX() + tab.getWidth() / 2);
         final float y = (tab.getDrawY() + tab.getHeight() / 2);
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                manager.simulateClick(x, y, false, 0);
-            }
-        });
+        instrumentation.runOnMainSync(() -> manager.simulateClick(x, y, false, 0));
     }
 
     /**
@@ -96,12 +91,7 @@ public class TabStripUtils {
         final StripLayoutHelperManager manager = getStripLayoutHelperManager(activity);
         final float x = button.getX() + button.getWidth() / 2;
         final float y = button.getY() + button.getHeight() / 2;
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                manager.simulateClick(x, y, false, 0);
-            }
-        });
+        instrumentation.runOnMainSync(() -> manager.simulateClick(x, y, false, 0));
     }
 
     /**
@@ -114,12 +104,7 @@ public class TabStripUtils {
         final StripLayoutHelperManager manager = getStripLayoutHelperManager(activity);
         final float x = button.getX() + button.getWidth() / 2;
         final float y = button.getY() + button.getHeight() / 2;
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                manager.simulateLongPress(x, y);
-            }
-        });
+        instrumentation.runOnMainSync(() -> manager.simulateLongPress(x, y));
     }
 
     /**

@@ -10,10 +10,7 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
 import android.text.format.DateFormat;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TimePicker;
@@ -128,18 +125,15 @@ public class InputDialogContainer {
         final DateTimeSuggestionListAdapter adapter =
                 new DateTimeSuggestionListAdapter(mContext, Arrays.asList(suggestions));
         suggestionListView.setAdapter(adapter);
-        suggestionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == adapter.getCount() - 1) {
-                    dismissDialog();
-                    showPickerDialog(dialogType, dialogValue, min, max, step);
-                } else {
-                    double suggestionValue = adapter.getItem(position).value();
-                    mInputActionDelegate.replaceDateTime(suggestionValue);
-                    dismissDialog();
-                    mDialogAlreadyDismissed = true;
-                }
+        suggestionListView.setOnItemClickListener((parent, view, position, id) -> {
+            if (position == adapter.getCount() - 1) {
+                dismissDialog();
+                showPickerDialog(dialogType, dialogValue, min, max, step);
+            } else {
+                double suggestionValue = adapter.getItem(position).value();
+                mInputActionDelegate.replaceDateTime(suggestionValue);
+                dismissDialog();
+                mDialogAlreadyDismissed = true;
             }
         });
 
@@ -159,21 +153,13 @@ public class InputDialogContainer {
             .setTitle(dialogTitleId)
             .setView(suggestionListView)
             .setNegativeButton(mContext.getText(android.R.string.cancel),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dismissDialog();
-                    }
-                })
+                    (dialog, which) -> dismissDialog())
             .create();
 
-        mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                if (mDialog == dialog && !mDialogAlreadyDismissed) {
-                    mDialogAlreadyDismissed = true;
-                    mInputActionDelegate.cancelDateTimeDialog();
-                }
+        mDialog.setOnDismissListener(dialog -> {
+            if (mDialog == dialog && !mDialogAlreadyDismissed) {
+                mDialogAlreadyDismissed = true;
+                mInputActionDelegate.cancelDateTimeDialog();
             }
         });
         mDialogAlreadyDismissed = false;
@@ -247,22 +233,16 @@ public class InputDialogContainer {
 
         mDialog.setButton(DialogInterface.BUTTON_NEUTRAL,
                 mContext.getText(R.string.date_picker_dialog_clear),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mDialogAlreadyDismissed = true;
-                        mInputActionDelegate.replaceDateTime(Double.NaN);
-                    }
+                (dialog, which) -> {
+                    mDialogAlreadyDismissed = true;
+                    mInputActionDelegate.replaceDateTime(Double.NaN);
                 });
 
         mDialog.setOnDismissListener(
-                new OnDismissListener() {
-                    @Override
-                    public void onDismiss(final DialogInterface dialog) {
-                        if (!mDialogAlreadyDismissed) {
-                            mDialogAlreadyDismissed = true;
-                            mInputActionDelegate.cancelDateTimeDialog();
-                        }
+                dialog -> {
+                    if (!mDialogAlreadyDismissed) {
+                        mDialogAlreadyDismissed = true;
+                        mInputActionDelegate.cancelDateTimeDialog();
                     }
                 });
 

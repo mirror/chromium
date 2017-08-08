@@ -96,15 +96,12 @@ public class CompositorVisibilityTest {
     @Test
     @SmallTest
     public void testSetVisibilityHidesSurfaces() throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mCompositorView = new CompositorView(mActivityTestRule.getActivity(), mRenderHost);
-                mCompositorView.setVisibility(View.VISIBLE);
-                Assert.assertEquals(View.VISIBLE, mCompositorView.getChildAt(0).getVisibility());
-                mCompositorView.setVisibility(View.INVISIBLE);
-                Assert.assertEquals(View.INVISIBLE, mCompositorView.getChildAt(0).getVisibility());
-            }
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            mCompositorView = new CompositorView(mActivityTestRule.getActivity(), mRenderHost);
+            mCompositorView.setVisibility(View.VISIBLE);
+            Assert.assertEquals(View.VISIBLE, mCompositorView.getChildAt(0).getVisibility());
+            mCompositorView.setVisibility(View.INVISIBLE);
+            Assert.assertEquals(View.INVISIBLE, mCompositorView.getChildAt(0).getVisibility());
         });
     }
 
@@ -115,13 +112,10 @@ public class CompositorVisibilityTest {
     @Test
     @SmallTest
     public void testSurfaceViewIsAttachedImmediately() throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mCompositorView = new CompositorView(mActivityTestRule.getActivity(), mRenderHost);
-                Assert.assertEquals(mCompositorView.getChildCount(), 1);
-                Assert.assertTrue(mCompositorView.getChildAt(0) instanceof SurfaceView);
-            }
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            mCompositorView = new CompositorView(mActivityTestRule.getActivity(), mRenderHost);
+            Assert.assertEquals(mCompositorView.getChildCount(), 1);
+            Assert.assertTrue(mCompositorView.getChildAt(0) instanceof SurfaceView);
         });
     }
 
@@ -131,13 +125,10 @@ public class CompositorVisibilityTest {
     @Test
     @SmallTest
     public void testInitialVisibility() throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mCompositorView = new CompositorView(mActivityTestRule.getActivity(), mRenderHost);
-                Assert.assertEquals(View.VISIBLE, mCompositorView.getVisibility());
-                Assert.assertEquals(View.INVISIBLE, mCompositorView.getChildAt(0).getVisibility());
-            }
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            mCompositorView = new CompositorView(mActivityTestRule.getActivity(), mRenderHost);
+            Assert.assertEquals(View.VISIBLE, mCompositorView.getVisibility());
+            Assert.assertEquals(View.INVISIBLE, mCompositorView.getChildAt(0).getVisibility());
         });
     }
 }

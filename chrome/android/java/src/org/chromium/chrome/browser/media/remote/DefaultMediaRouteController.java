@@ -93,17 +93,14 @@ public class DefaultMediaRouteController extends AbstractMediaRouteController {
     private int mSessionState = MediaSessionStatus.SESSION_STATE_INVALIDATED;
 
     private final ApplicationStatus.ApplicationStateListener mApplicationStateListener =
-            new ApplicationStatus.ApplicationStateListener() {
-                @Override
-                public void onApplicationStateChange(int newState) {
-                    switch (newState) {
-                        // HAS_DESTROYED_ACTIVITIES means all Chrome activities have been destroyed.
-                        case ApplicationState.HAS_DESTROYED_ACTIVITIES:
-                            onActivitiesDestroyed();
-                            break;
-                        default:
-                            break;
-                    }
+            newState -> {
+                switch (newState) {
+                    // HAS_DESTROYED_ACTIVITIES means all Chrome activities have been destroyed.
+                    case ApplicationState.HAS_DESTROYED_ACTIVITIES:
+                        onActivitiesDestroyed();
+                        break;
+                    default:
+                        break;
                 }
             };
 

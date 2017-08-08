@@ -245,11 +245,8 @@ public class OfflinePageUtils {
         WebContents webContents = tab.getWebContents();
         ClientId clientId = ClientId.createClientIdForBookmarkId(bookmarkId);
 
-        offlinePageBridge.savePage(webContents, clientId, new OfflinePageBridge.SavePageCallback() {
-            @Override
-            public void onSavePageDone(int savePageResult, String url, long offlineId) {
-                // Result of the call is ignored.
-            }
+        offlinePageBridge.savePage(webContents, clientId, (savePageResult, url, offlineId) -> {
+            // Result of the call is ignored.
         });
     }
 
@@ -424,17 +421,14 @@ public class OfflinePageUtils {
     private static OfflinePageBridge.SavePageCallback savePageCallback(
             final Callback<OfflinePageItem> prepareForSharing,
             final OfflinePageBridge offlinePageBridge) {
-        return new OfflinePageBridge.SavePageCallback() {
-            @Override
-            public void onSavePageDone(int savePageResult, String url, long offlineId) {
-                if (savePageResult != SavePageResult.SUCCESS) {
-                    Log.e(TAG, "Unable to save the page.");
-                    prepareForSharing.onResult(null);
-                    return;
-                }
-
-                offlinePageBridge.getPageByOfflineId(offlineId, prepareForSharing);
+        return (savePageResult, url, offlineId) -> {
+            if (savePageResult != SavePageResult.SUCCESS) {
+                Log.e(TAG, "Unable to save the page.");
+                prepareForSharing.onResult(null);
+                return;
             }
+
+            offlinePageBridge.getPageByOfflineId(offlineId, prepareForSharing);
         };
     }
 

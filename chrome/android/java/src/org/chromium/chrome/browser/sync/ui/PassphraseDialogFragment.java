@@ -20,14 +20,12 @@ import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.BuildInfo;
@@ -108,14 +106,11 @@ public class PassphraseDialogFragment extends DialogFragment implements OnClickL
 
         mPassphraseEditText = (EditText) v.findViewById(R.id.passphrase);
         mPassphraseEditText.setHint(R.string.sync_enter_custom_passphrase_hint);
-        mPassphraseEditText.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    handleSubmit();
-                }
-                return false;
+        mPassphraseEditText.setOnEditorActionListener((v1, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                handleSubmit();
             }
+            return false;
         });
 
         // Create a new background Drawable for the passphrase EditText to use when the user has
@@ -130,30 +125,19 @@ public class PassphraseDialogFragment extends DialogFragment implements OnClickL
 
         final AlertDialog d = new AlertDialog.Builder(getActivity(), R.style.AlertDialogTheme)
                 .setView(v)
-                .setPositiveButton(R.string.submit, new Dialog.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface d, int which) {
-                        // We override the onclick. This is a hack to not dismiss the dialog after
-                        // click of OK and instead dismiss it after confirming the passphrase
-                        // is correct.
-                    }
+                .setPositiveButton(R.string.submit, (OnClickListener) (d1, which) -> {
+                    // We override the onclick. This is a hack to not dismiss the dialog after
+                    // click of OK and instead dismiss it after confirming the passphrase
+                    // is correct.
                 })
                  .setNegativeButton(R.string.cancel, this)
                  .setTitle(R.string.sign_in_google_account)
                  .create();
 
         d.getDelegate().setHandleNativeActionModesEnabled(false);
-        d.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                Button b = d.getButton(AlertDialog.BUTTON_POSITIVE);
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        handleSubmit();
-                    }
-                });
-            }
+        d.setOnShowListener(dialog -> {
+            Button b = d.getButton(AlertDialog.BUTTON_POSITIVE);
+            b.setOnClickListener(view -> handleSubmit());
         });
         return d;
     }

@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.omnibox;
 
 import static org.chromium.base.test.util.Restriction.RESTRICTION_TYPE_NON_LOW_END_DEVICE;
 
-import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -45,7 +44,6 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.KeyUtils;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -86,27 +84,21 @@ public class UrlBarTest {
     }
 
     private void toggleFocusAndIgnoreImeOperations(final UrlBar urlBar, final boolean gainFocus) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                OmniboxTestUtils.toggleUrlBarFocus(urlBar, gainFocus);
-                if (gainFocus) startIgnoringImeUntilRestart(urlBar);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            OmniboxTestUtils.toggleUrlBarFocus(urlBar, gainFocus);
+            if (gainFocus) startIgnoringImeUntilRestart(urlBar);
         });
     }
 
     private void runInputConnectionMethodOnUiThreadBlocking(final Runnable runnable) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                UrlBar urlBar = getUrlBar();
-                // Note: in order for this to work correctly, the following conditions should be met
-                // 1) Unset and set ignoreImeForTest within one UI loop.
-                // 2) Do not restartInput() in between.
-                urlBar.setIgnoreImeForTest(false);
-                runnable.run();
-                urlBar.setIgnoreImeForTest(true);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            UrlBar urlBar = getUrlBar();
+            // Note: in order for this to work correctly, the following conditions should be met
+            // 1) Unset and set ignoreImeForTest within one UI loop.
+            // 2) Do not restartInput() in between.
+            urlBar.setIgnoreImeForTest(false);
+            runnable.run();
+            urlBar.setIgnoreImeForTest(true);
         });
     }
 
@@ -119,15 +111,12 @@ public class UrlBarTest {
     }
 
     private void setAutocompleteController(final AutocompleteController controller) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                LocationBarLayout locationBar =
-                        (LocationBarLayout) mActivityTestRule.getActivity().findViewById(
-                                R.id.location_bar);
-                locationBar.cancelPendingAutocompleteStart();
-                locationBar.setAutocompleteController(controller);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            LocationBarLayout locationBar =
+                    (LocationBarLayout) mActivityTestRule.getActivity().findViewById(
+                            R.id.location_bar);
+            locationBar.cancelPendingAutocompleteStart();
+            locationBar.setAutocompleteController(controller);
         });
     }
 
@@ -146,12 +135,7 @@ public class UrlBarTest {
     }
 
     private Editable getUrlBarText(final UrlBar urlBar) throws ExecutionException {
-        return ThreadUtils.runOnUiThreadBlocking(new Callable<Editable>() {
-            @Override
-            public Editable call() throws Exception {
-                return urlBar.getText();
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlocking(() -> urlBar.getText());
     }
 
     private AutocompleteState getAutocompleteState(
@@ -160,14 +144,11 @@ public class UrlBarTest {
         final AtomicReference<String> textWithoutAutocomplete = new AtomicReference<String>();
         final AtomicReference<String> textWithAutocomplete = new AtomicReference<String>();
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                if (action != null) action.run();
-                textWithoutAutocomplete.set(urlBar.getTextWithoutAutocomplete());
-                textWithAutocomplete.set(urlBar.getTextWithAutocomplete());
-                hasAutocomplete.set(urlBar.hasAutocomplete());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            if (action != null) action.run();
+            textWithoutAutocomplete.set(urlBar.getTextWithoutAutocomplete());
+            textWithAutocomplete.set(urlBar.getTextWithAutocomplete());
+            hasAutocomplete.set(urlBar.hasAutocomplete());
         });
 
         return new AutocompleteState(
@@ -175,12 +156,9 @@ public class UrlBarTest {
     }
 
     private void setTextAndVerifyNoAutocomplete(final UrlBar urlBar, final String text) {
-        AutocompleteState state = getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            public void run() {
-                urlBar.setText(text);
-                urlBar.setSelection(text.length());
-            }
+        AutocompleteState state = getAutocompleteState(urlBar, () -> {
+            urlBar.setText(text);
+            urlBar.setSelection(text.length());
         });
 
         Assert.assertEquals(text, state.textWithoutAutocomplete);
@@ -190,12 +168,8 @@ public class UrlBarTest {
 
     private void setAutocomplete(final UrlBar urlBar,
             final String userText, final String autocompleteText) {
-        AutocompleteState state = getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            public void run() {
-                urlBar.setAutocompleteText(userText, autocompleteText);
-            }
-        });
+        AutocompleteState state = getAutocompleteState(urlBar,
+                () -> urlBar.setAutocompleteText(userText, autocompleteText));
 
         Assert.assertEquals(userText, state.textWithoutAutocomplete);
         Assert.assertEquals(userText + autocompleteText, state.textWithAutocomplete);
@@ -204,12 +178,8 @@ public class UrlBarTest {
 
     private AutocompleteState setSelection(
             final UrlBar urlBar, final int selectionStart, final int selectionEnd) {
-        return getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            public void run() {
-                urlBar.setSelection(selectionStart, selectionEnd);
-            }
-        });
+        return getAutocompleteState(urlBar,
+                () -> urlBar.setSelection(selectionStart, selectionEnd));
     }
 
     @Test
@@ -241,12 +211,8 @@ public class UrlBarTest {
         // Replace part of the non-autocomplete text
         setTextAndVerifyNoAutocomplete(urlBar, "test");
         setAutocomplete(urlBar, "test", "ing is fun");
-        AutocompleteState state = getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            public void run() {
-                urlBar.setText(urlBar.getText().replace(1, 2, "a"));
-            }
-        });
+        AutocompleteState state = getAutocompleteState(urlBar,
+                () -> urlBar.setText(urlBar.getText().replace(1, 2, "a")));
         Assert.assertFalse(state.hasAutocomplete);
         if (ChromeFeatureList.isEnabled(ChromeFeatureList.SPANNABLE_INLINE_AUTOCOMPLETE)) {
             // Note: new model clears autocomplete text when non-IME change has been made.
@@ -262,12 +228,8 @@ public class UrlBarTest {
         // Replace part of the autocomplete text.
         setTextAndVerifyNoAutocomplete(urlBar, "test");
         setAutocomplete(urlBar, "test", "ing is fun");
-        state = getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            public void run() {
-                urlBar.setText(urlBar.getText().replace(8, 10, "no"));
-            }
-        });
+        state = getAutocompleteState(urlBar,
+                () -> urlBar.setText(urlBar.getText().replace(8, 10, "no")));
         Assert.assertFalse(state.hasAutocomplete);
         if (ChromeFeatureList.isEnabled(ChromeFeatureList.SPANNABLE_INLINE_AUTOCOMPLETE)) {
             // Note: new model clears autocomplete text when non-IME change has been made.
@@ -437,12 +399,8 @@ public class UrlBarTest {
         final UrlBar urlBar = getUrlBar();
         toggleFocusAndIgnoreImeOperations(urlBar, true);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBar.getInputConnection().commitText(textToBeEntered, 1);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> urlBar.getInputConnection().commitText(textToBeEntered, 1));
         autocompleteHelper.waitForCallback(0);
         Assert.assertFalse(
                 "Inline autocomplete incorrectly prevented.", didPreventInlineAutocomplete.get());
@@ -482,20 +440,10 @@ public class UrlBarTest {
         };
         setAutocompleteController(controller);
 
-        runInputConnectionMethodOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                KeyUtils.singleKeyEventView(
-                        InstrumentationRegistry.getInstrumentation(), urlBar, KeyEvent.KEYCODE_DEL);
-            }
-        });
+        runInputConnectionMethodOnUiThreadBlocking(() -> KeyUtils.singleKeyEventView(
+                InstrumentationRegistry.getInstrumentation(), urlBar, KeyEvent.KEYCODE_DEL));
 
-        CriteriaHelper.pollUiThread(Criteria.equals("test", new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                return urlBar.getText().toString();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals("test", () -> urlBar.getText().toString()));
 
         autocompleteHelper.waitForCallback(0);
         Assert.assertTrue("Inline autocomplete incorrectly allowed after delete.",
@@ -520,23 +468,15 @@ public class UrlBarTest {
         setTextAndVerifyNoAutocomplete(urlBar, "test");
         setAutocomplete(urlBar, "test", "ing is fun");
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBar.getInputConnection().beginBatchEdit();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> urlBar.getInputConnection().beginBatchEdit());
         // Ensure the autocomplete is not modified if in batch mode.
         AutocompleteState state = setSelection(urlBar, 1, 1);
         Assert.assertTrue(state.hasAutocomplete);
         Assert.assertEquals("test", state.textWithoutAutocomplete);
         Assert.assertEquals("testing is fun", state.textWithAutocomplete);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBar.getInputConnection().endBatchEdit();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> urlBar.getInputConnection().endBatchEdit());
         // Ensure that after batch mode has ended that the autocomplete is cleared due to the
         // invalid selection range.
         state = getAutocompleteState(urlBar, null);
@@ -569,31 +509,15 @@ public class UrlBarTest {
         setTextAndVerifyNoAutocomplete(urlBar, "test");
         setAutocomplete(urlBar, "test", "ing is fun");
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBar.getInputConnection().beginBatchEdit();
-            }
-        });
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBar.getInputConnection().commitText("y", 1);
-            }
-        });
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBar.getInputConnection().endBatchEdit();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> urlBar.getInputConnection().beginBatchEdit());
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> urlBar.getInputConnection().commitText("y", 1));
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> urlBar.getInputConnection().endBatchEdit());
 
-        CriteriaHelper.pollUiThread(Criteria.equals("testy", new Callable<String>() {
-            @Override
-            public String call() {
-                return requestedAutocompleteText.get();
-            }
-        }));
+        CriteriaHelper.pollUiThread(
+                Criteria.equals("testy", () -> requestedAutocompleteText.get()));
     }
 
     @Test
@@ -611,14 +535,8 @@ public class UrlBarTest {
         // Valid case (cursor at the end of text, single character, matches previous autocomplete).
         setTextAndVerifyNoAutocomplete(urlBar, "g");
         setAutocomplete(urlBar, "g", "oogle.com");
-        AutocompleteState state = getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            // TODO(crbug.com/635567): Fix this properly.
-            @SuppressLint("SetTextI18n")
-            public void run() {
-                urlBar.getInputConnection().commitText("o", 1);
-            }
-        });
+        AutocompleteState state = getAutocompleteState(urlBar,
+                () -> urlBar.getInputConnection().commitText("o", 1));
         Assert.assertTrue(state.hasAutocomplete);
         Assert.assertEquals("google.com", state.textWithAutocomplete);
         Assert.assertEquals("go", state.textWithoutAutocomplete);
@@ -626,43 +544,25 @@ public class UrlBarTest {
         // Invalid case (cursor not at the end of the text)
         setTextAndVerifyNoAutocomplete(urlBar, "g");
         setAutocomplete(urlBar, "g", "oogle.com");
-        state = getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            // TODO(crbug.com/635567): Fix this properly.
-            @SuppressLint("SetTextI18n")
-            public void run() {
-                urlBar.getInputConnection().beginBatchEdit();
-                urlBar.getInputConnection().commitText("o", 1);
-                urlBar.getInputConnection().setSelection(0, 0);
-                urlBar.getInputConnection().endBatchEdit();
-            }
+        state = getAutocompleteState(urlBar, () -> {
+            urlBar.getInputConnection().beginBatchEdit();
+            urlBar.getInputConnection().commitText("o", 1);
+            urlBar.getInputConnection().setSelection(0, 0);
+            urlBar.getInputConnection().endBatchEdit();
         });
         Assert.assertFalse(state.hasAutocomplete);
 
         // Invalid case (next character did not match previous autocomplete)
         setTextAndVerifyNoAutocomplete(urlBar, "g");
         setAutocomplete(urlBar, "g", "oogle.com");
-        state = getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            // TODO(crbug.com/635567): Fix this properly.
-            @SuppressLint("SetTextI18n")
-            public void run() {
-                urlBar.getInputConnection().commitText("a", 1);
-            }
-        });
+        state = getAutocompleteState(urlBar, () -> urlBar.getInputConnection().commitText("a", 1));
         Assert.assertFalse(state.hasAutocomplete);
 
         // Multiple characters entered instead of 1.
         setTextAndVerifyNoAutocomplete(urlBar, "g");
         setAutocomplete(urlBar, "g", "oogle.com");
-        state = getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            // TODO(crbug.com/635567): Fix this properly.
-            @SuppressLint("SetTextI18n")
-            public void run() {
-                urlBar.getInputConnection().commitText("oogl", 1);
-            }
-        });
+        state = getAutocompleteState(urlBar,
+                () -> urlBar.getInputConnection().commitText("oogl", 1));
         if (ChromeFeatureList.isEnabled(ChromeFeatureList.SPANNABLE_INLINE_AUTOCOMPLETE)) {
             // Note: new model allows multiple characters because usually keyboard app's UI and
             // InputConnection threads are separated and user may type fast enough.
@@ -688,22 +588,14 @@ public class UrlBarTest {
         setTextAndVerifyNoAutocomplete(urlBar, "a");
         setAutocomplete(urlBar, "a", "mazon.com");
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBar.getInputConnection().beginBatchEdit();
-                urlBar.getInputConnection().commitText("l", 1);
-                urlBar.getInputConnection().setComposingText("", 1);
-                urlBar.getInputConnection().endBatchEdit();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            urlBar.getInputConnection().beginBatchEdit();
+            urlBar.getInputConnection().commitText("l", 1);
+            urlBar.getInputConnection().setComposingText("", 1);
+            urlBar.getInputConnection().endBatchEdit();
         });
 
-        CriteriaHelper.pollUiThread(Criteria.equals("al", new Callable<String>() {
-            @Override
-            public String call() {
-                return urlBar.getText().toString();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals("al", () -> urlBar.getText().toString()));
     }
 
     @Test
@@ -740,12 +632,8 @@ public class UrlBarTest {
         setAutocomplete(urlBar, "test", "ing is fun");
 
         Assert.assertNotNull(urlBar.getInputConnection());
-        AutocompleteState state = getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            public void run() {
-                urlBar.getInputConnection().setComposingText("ing compose", 4);
-            }
-        });
+        AutocompleteState state = getAutocompleteState(urlBar,
+                () -> urlBar.getInputConnection().setComposingText("ing compose", 4));
         Assert.assertFalse(state.hasAutocomplete);
 
         Editable urlText = getUrlBarText(urlBar);
@@ -776,12 +664,9 @@ public class UrlBarTest {
         setTextAndVerifyNoAutocomplete(urlBar, "chrome://f");
         setAutocomplete(urlBar, "chrome://f", "lags");
 
-        AutocompleteState state = getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            public void run() {
-                urlBar.getInputConnection().setComposingRegion(13, 14);
-                urlBar.getInputConnection().setComposingText("f", 1);
-            }
+        AutocompleteState state = getAutocompleteState(urlBar, () -> {
+            urlBar.getInputConnection().setComposingRegion(13, 14);
+            urlBar.getInputConnection().setComposingText("f", 1);
         });
 
         Editable urlText = getUrlBarText(urlBar);
@@ -805,12 +690,9 @@ public class UrlBarTest {
         setTextAndVerifyNoAutocomplete(urlBar, "chrome://fl");
         setAutocomplete(urlBar, "chrome://fl", "ags");
 
-        state = getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            public void run() {
-                urlBar.getInputConnection().setComposingRegion(12, 14);
-                urlBar.getInputConnection().setComposingText("fl", 1);
-            }
+        state = getAutocompleteState(urlBar, () -> {
+            urlBar.getInputConnection().setComposingRegion(12, 14);
+            urlBar.getInputConnection().setComposingText("fl", 1);
         });
         urlText = getUrlBarText(urlBar);
 
@@ -834,12 +716,9 @@ public class UrlBarTest {
         setTextAndVerifyNoAutocomplete(urlBar, "chrome://f");
         setAutocomplete(urlBar, "chrome://f", "lags");
 
-        state = getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            public void run() {
-                urlBar.getInputConnection().setComposingRegion(13, 14);
-                urlBar.getInputConnection().setComposingText("g", 1);
-            }
+        state = getAutocompleteState(urlBar, () -> {
+            urlBar.getInputConnection().setComposingRegion(13, 14);
+            urlBar.getInputConnection().setComposingText("g", 1);
         });
         Assert.assertFalse(state.hasAutocomplete);
 
@@ -853,12 +732,9 @@ public class UrlBarTest {
         setTextAndVerifyNoAutocomplete(urlBar, "chrome://f");
         setAutocomplete(urlBar, "chrome://f", "lags");
 
-        state = getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            public void run() {
-                urlBar.getInputConnection().setComposingRegion(13, 14);
-                urlBar.getInputConnection().setComposingText("chrome://f", 1);
-            }
+        state = getAutocompleteState(urlBar, () -> {
+            urlBar.getInputConnection().setComposingRegion(13, 14);
+            urlBar.getInputConnection().setComposingText("chrome://f", 1);
         });
         urlText = getUrlBarText(urlBar);
         if (ChromeFeatureList.isEnabled(ChromeFeatureList.SPANNABLE_INLINE_AUTOCOMPLETE)) {
@@ -882,12 +758,9 @@ public class UrlBarTest {
         setTextAndVerifyNoAutocomplete(urlBar, "chrome://f");
         setAutocomplete(urlBar, "chrome://f", "lags");
 
-        state = getAutocompleteState(urlBar, new Runnable() {
-            @Override
-            public void run() {
-                urlBar.getInputConnection().setComposingRegion(13, 14);
-                urlBar.getInputConnection().setComposingText("blahblahblah", 1);
-            }
+        state = getAutocompleteState(urlBar, () -> {
+            urlBar.getInputConnection().setComposingRegion(13, 14);
+            urlBar.getInputConnection().setComposingText("blahblahblah", 1);
         });
         Assert.assertFalse(state.hasAutocomplete);
 
@@ -943,22 +816,19 @@ public class UrlBarTest {
      * or android.R.id.cut.
      */
     private String copyUrlToClipboard(final int action) {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<String>() {
-            @Override
-            public String call() {
-                ClipboardManager clipboardManager =
-                        (ClipboardManager) mActivityTestRule.getActivity().getSystemService(
-                                Context.CLIPBOARD_SERVICE);
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            ClipboardManager clipboardManager =
+                    (ClipboardManager) mActivityTestRule.getActivity().getSystemService(
+                            Context.CLIPBOARD_SERVICE);
 
-                clipboardManager.setPrimaryClip(ClipData.newPlainText(null, ""));
+            clipboardManager.setPrimaryClip(ClipData.newPlainText(null, ""));
 
-                Assert.assertTrue(getUrlBar().onTextContextMenuItem(action));
-                ClipData clip = clipboardManager.getPrimaryClip();
-                CharSequence text = (clip != null && clip.getItemCount() != 0)
-                        ? clip.getItemAt(0).getText()
-                        : null;
-                return text != null ? text.toString() : null;
-            }
+            Assert.assertTrue(getUrlBar().onTextContextMenuItem(action));
+            ClipData clip = clipboardManager.getPrimaryClip();
+            CharSequence text = (clip != null && clip.getItemCount() != 0)
+                    ? clip.getItemAt(0).getText()
+                    : null;
+            return text != null ? text.toString() : null;
         });
     }
 

@@ -26,7 +26,6 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
 
@@ -105,12 +104,8 @@ public class LauncherActivityTest extends ChromeActivityTestCaseBase<ChromeActiv
 
         // Check that ChromeLauncher Activity successfully launched
         CriteriaHelper.pollInstrumentationThread(
-                Criteria.equals(ApplicationState.HAS_RUNNING_ACTIVITIES, new Callable<Integer>() {
-                    @Override
-                    public Integer call() {
-                        return ApplicationStatus.getStateForApplication();
-                    }
-                }));
+                Criteria.equals(ApplicationState.HAS_RUNNING_ACTIVITIES,
+                        () -> ApplicationStatus.getStateForApplication()));
 
         // Check that Chrome proper was successfully launched as a follow-up
         final AtomicReference<Activity> launchedActivity = new AtomicReference<>();

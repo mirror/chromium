@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.support.annotation.WorkerThread;
-import android.view.View;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
@@ -73,7 +72,6 @@ import org.chromium.chrome.browser.webapps.WebappRegistry;
 import org.chromium.components.background_task_scheduler.BackgroundTaskSchedulerFactory;
 import org.chromium.components.minidump_uploader.CrashFileManager;
 import org.chromium.components.signin.AccountManagerFacade;
-import org.chromium.components.signin.AccountsChangeObserver;
 import org.chromium.content.browser.ChildProcessLauncherHelper;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.device.geolocation.LocationProviderFactory;
@@ -146,20 +144,17 @@ public class ProcessInitializationHandler {
     protected void handlePreNativeInitialization() {
         ChromeApplication application = (ChromeApplication) ContextUtils.getApplicationContext();
 
-        UiUtils.setKeyboardShowingDelegate(new UiUtils.KeyboardShowingDelegate() {
-            @Override
-            public boolean disableKeyboardCheck(Context context, View view) {
-                Activity activity = null;
-                if (context instanceof Activity) {
-                    activity = (Activity) context;
-                } else if (view != null && view.getContext() instanceof Activity) {
-                    activity = (Activity) view.getContext();
-                }
-
-                // For multiwindow mode we do not track keyboard visibility.
-                return activity != null
-                        && MultiWindowUtils.getInstance().isLegacyMultiWindow(activity);
+        UiUtils.setKeyboardShowingDelegate((context, view) -> {
+            Activity activity = null;
+            if (context instanceof Activity) {
+                activity = (Activity) context;
+            } else if (view != null && view.getContext() instanceof Activity) {
+                activity = (Activity) view.getContext();
             }
+
+            // For multiwindow mode we do not track keyboard visibility.
+            return activity != null
+                    && MultiWindowUtils.getInstance().isLegacyMultiWindow(activity);
         });
 
         // Initialize the AccountManagerFacade with the correct AccountManagerDelegate. Must be done
@@ -262,146 +257,99 @@ public class ProcessInitializationHandler {
                 (ChromeApplication) ContextUtils.getApplicationContext();
         DeferredStartupHandler deferredStartupHandler = DeferredStartupHandler.getInstance();
 
-        deferredStartupHandler.addDeferredTask(new Runnable() {
-            @Override
-            public void run() {
-                // Punt all tasks that may block on disk off onto a background thread.
-                initAsyncDiskTask(application);
+        deferredStartupHandler.addDeferredTask(() -> {
+            // Punt all tasks that may block on disk off onto a background thread.
+            initAsyncDiskTask(application);
 
-                DefaultBrowserInfo.initBrowserFetcher();
+            DefaultBrowserInfo.initBrowserFetcher();
 
-                AfterStartupTaskUtils.setStartupComplete();
+            AfterStartupTaskUtils.setStartupComplete();
 
-                PartnerBrowserCustomizations.setOnInitializeAsyncFinished(new Runnable() {
-                    @Override
-                    public void run() {
-                        String homepageUrl = HomepageManager.getHomepageUri(application);
-                        LaunchMetrics.recordHomePageLaunchMetrics(
-                                HomepageManager.isHomepageEnabled(application),
-                                NewTabPage.isNTPUrl(homepageUrl), homepageUrl);
-                    }
-                });
+            PartnerBrowserCustomizations.setOnInitializeAsyncFinished(() -> {
+                String homepageUrl = HomepageManager.getHomepageUri(application);
+                LaunchMetrics.recordHomePageLaunchMetrics(
+                        HomepageManager.isHomepageEnabled(application),
+                        NewTabPage.isNTPUrl(homepageUrl), homepageUrl);
+            });
 
-                PartnerBookmarksShim.kickOffReading(application);
+            PartnerBookmarksShim.kickOffReading(application);
 
-                PowerMonitor.create();
+            PowerMonitor.create();
 
-                ShareHelper.clearSharedImages();
+            ShareHelper.clearSharedImages();
 
-                OfflinePageUtils.clearSharedOfflineFiles(application);
+            OfflinePageUtils.clearSharedOfflineFiles(application);
 
-                SelectFileDialog.clearCapturedCameraFiles();
+            SelectFileDialog.clearCapturedCameraFiles();
 
-                if (ChannelsUpdater.getInstance().shouldUpdateChannels()) {
-                    initChannelsAsync();
-                }
+            if (ChannelsUpdater.getInstance().shouldUpdateChannels()) {
+                initChannelsAsync();
             }
         });
 
-        deferredStartupHandler.addDeferredTask(new Runnable() {
-            @Override
-            public void run() {
-                // Clear any media notifications that existed when Chrome was last killed.
-                MediaCaptureNotificationService.clearMediaNotifications(application);
+        deferredStartupHandler.addDeferredTask(() -> {
+            // Clear any media notifications that existed when Chrome was last killed.
+            MediaCaptureNotificationService.clearMediaNotifications(application);
 
-                startModerateBindingManagementIfNeeded(application);
+            startModerateBindingManagementIfNeeded(application);
 
-                recordKeyboardLocaleUma(application);
+            recordKeyboardLocaleUma(application);
+        });
+
+        deferredStartupHandler.addDeferredTask(() -> {
+            // Start or stop Physical Web
+            PhysicalWeb.onChromeStart();
+        });
+
+        deferredStartupHandler.addDeferredTask(
+                () -> LocaleManager.getInstance().recordStartupMetrics());
+
+        deferredStartupHandler.addDeferredTask(() -> {
+            // Starts syncing with GSA.
+            AppHooks.get().createGsaHelper().startSync();
+        });
+
+        deferredStartupHandler.addDeferredTask(() -> {
+            // Record the saved restore state in a histogram
+            ChromeBackupAgent.recordRestoreHistogram();
+        });
+
+        deferredStartupHandler.addDeferredTask(() -> {
+            ForcedSigninProcessor.start(application, null);
+            AccountManagerFacade.get().addObserver(
+                    () -> ThreadUtils.runOnUiThread(
+                            () -> ForcedSigninProcessor.start(application, null)));
+        });
+
+        deferredStartupHandler.addDeferredTask(() -> {
+            GoogleServicesManager.get(application).onMainActivityStart();
+            RevenueStats.getInstance();
+        });
+
+        deferredStartupHandler.addDeferredTask(() -> {
+            mDevToolsServer = new DevToolsServer(DEV_TOOLS_SERVER_SOCKET_PREFIX);
+            mDevToolsServer.setRemoteDebuggingEnabled(
+                    true, DevToolsServer.Security.ALLOW_DEBUG_PERMISSION);
+        });
+
+        deferredStartupHandler.addDeferredTask(() -> {
+            // Add process check to diagnose http://crbug.com/606309. Remove this after the bug
+            // is fixed.
+            assert !CommandLine.getInstance().hasSwitch(ContentSwitches.SWITCH_PROCESS_TYPE);
+            if (!CommandLine.getInstance().hasSwitch(ContentSwitches.SWITCH_PROCESS_TYPE)) {
+                DownloadController.setDownloadNotificationService(
+                        DownloadManagerService.getDownloadManagerService());
+            }
+
+            if (ApiCompatibilityUtils.isPrintingSupported()) {
+                String errorText = application.getResources().getString(
+                        R.string.error_printing_failed);
+                PrintingControllerImpl.create(new PrintDocumentAdapterWrapper(), errorText);
             }
         });
 
-        deferredStartupHandler.addDeferredTask(new Runnable() {
-            @Override
-            public void run() {
-                // Start or stop Physical Web
-                PhysicalWeb.onChromeStart();
-            }
-        });
-
-        deferredStartupHandler.addDeferredTask(new Runnable() {
-            @Override
-            public void run() {
-                LocaleManager.getInstance().recordStartupMetrics();
-            }
-        });
-
-        deferredStartupHandler.addDeferredTask(new Runnable() {
-            @Override
-            public void run() {
-                // Starts syncing with GSA.
-                AppHooks.get().createGsaHelper().startSync();
-            }
-        });
-
-        deferredStartupHandler.addDeferredTask(new Runnable() {
-            @Override
-            public void run() {
-                // Record the saved restore state in a histogram
-                ChromeBackupAgent.recordRestoreHistogram();
-            }
-        });
-
-        deferredStartupHandler.addDeferredTask(new Runnable() {
-            @Override
-            public void run() {
-                ForcedSigninProcessor.start(application, null);
-                AccountManagerFacade.get().addObserver(
-                        new AccountsChangeObserver() {
-                            @Override
-                            public void onAccountsChanged() {
-                                ThreadUtils.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        ForcedSigninProcessor.start(application, null);
-                                    }
-                                });
-                            }
-                        });
-            }
-        });
-
-        deferredStartupHandler.addDeferredTask(new Runnable() {
-            @Override
-            public void run() {
-                GoogleServicesManager.get(application).onMainActivityStart();
-                RevenueStats.getInstance();
-            }
-        });
-
-        deferredStartupHandler.addDeferredTask(new Runnable() {
-            @Override
-            public void run() {
-                mDevToolsServer = new DevToolsServer(DEV_TOOLS_SERVER_SOCKET_PREFIX);
-                mDevToolsServer.setRemoteDebuggingEnabled(
-                        true, DevToolsServer.Security.ALLOW_DEBUG_PERMISSION);
-            }
-        });
-
-        deferredStartupHandler.addDeferredTask(new Runnable() {
-            @Override
-            public void run() {
-                // Add process check to diagnose http://crbug.com/606309. Remove this after the bug
-                // is fixed.
-                assert !CommandLine.getInstance().hasSwitch(ContentSwitches.SWITCH_PROCESS_TYPE);
-                if (!CommandLine.getInstance().hasSwitch(ContentSwitches.SWITCH_PROCESS_TYPE)) {
-                    DownloadController.setDownloadNotificationService(
-                            DownloadManagerService.getDownloadManagerService());
-                }
-
-                if (ApiCompatibilityUtils.isPrintingSupported()) {
-                    String errorText = application.getResources().getString(
-                            R.string.error_printing_failed);
-                    PrintingControllerImpl.create(new PrintDocumentAdapterWrapper(), errorText);
-                }
-            }
-        });
-
-        deferredStartupHandler.addDeferredTask(new Runnable() {
-            @Override
-            public void run() {
-                BackgroundTaskSchedulerFactory.getScheduler().checkForOSUpgrade(application);
-            }
-        });
+        deferredStartupHandler.addDeferredTask(
+                () -> BackgroundTaskSchedulerFactory.getScheduler().checkForOSUpgrade(application));
     }
 
     private void initChannelsAsync() {

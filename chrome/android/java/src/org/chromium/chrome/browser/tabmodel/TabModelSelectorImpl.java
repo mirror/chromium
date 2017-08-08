@@ -229,12 +229,7 @@ public class TabModelSelectorImpl extends TabModelSelectorBase implements TabMod
             // Make the call to notifyDataSetChanged() after any delayed events
             // have had a chance to fire. Otherwise, this may result in some
             // drawing to occur before animations have a chance to work.
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    notifyChanged();
-                }
-            });
+            new Handler().post(() -> notifyChanged());
         }
     }
 

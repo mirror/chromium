@@ -53,12 +53,7 @@ public final class ConnectivityChecker {
     }
 
     private static void postResult(final ConnectivityCheckerCallback callback, final int result) {
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                callback.onResult(result);
-            }
-        });
+        ThreadUtils.postOnUiThread(() -> callback.onResult(result));
     }
 
     /**

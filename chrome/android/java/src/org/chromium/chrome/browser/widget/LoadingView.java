@@ -42,18 +42,14 @@ public class LoadingView extends ProgressBar {
 
     // Material loading design spec requires us to show progress spinner at least 500ms, so we need
     // this delayed runnable to implement that.
-    private final Runnable mDelayedHide = new Runnable() {
-        @Override
-        public void run() {
-            animate().alpha(0.0f).setInterpolator(BakedBezierInterpolator.TRANSFORM_CURVE)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            setVisibility(GONE);
-                        }
-                    });
-        }
-    };
+    private final Runnable mDelayedHide = () -> animate().alpha(0.0f).setInterpolator(
+            BakedBezierInterpolator.TRANSFORM_CURVE)
+            .setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    setVisibility(GONE);
+                }
+            });
 
     /**
      * Constructor for creating the view programatically.

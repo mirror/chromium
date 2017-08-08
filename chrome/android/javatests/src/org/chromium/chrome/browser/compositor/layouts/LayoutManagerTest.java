@@ -503,17 +503,14 @@ public class LayoutManagerTest implements MockTabModelDelegate {
     @Before
     public void setUp() throws Exception {
         // Load the browser process.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ChromeBrowserInitializer
-                            .getInstance(
-                                    InstrumentationRegistry.getInstrumentation().getTargetContext())
-                            .handleSynchronousStartup();
-                } catch (ProcessInitException e) {
-                    Assert.fail("Failed to load browser");
-                }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            try {
+                ChromeBrowserInitializer
+                        .getInstance(
+                                InstrumentationRegistry.getInstrumentation().getTargetContext())
+                        .handleSynchronousStartup();
+            } catch (ProcessInitException e) {
+                Assert.fail("Failed to load browser");
             }
         });
     }

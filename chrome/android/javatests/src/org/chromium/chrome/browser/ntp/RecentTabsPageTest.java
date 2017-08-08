@@ -87,14 +87,11 @@ public class RecentTabsPageTest {
      */
     private List<RecentlyClosedTab> setRecentlyClosedTabs(final int tabCount) {
         final List<RecentlyClosedTab> tabs = new ArrayList<>();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < tabCount; i++) {
-                    tabs.add(new RecentlyClosedTab(i, "RecentlyClosedTab title " + i, "url " + i));
-                }
-                mManager.setRecentlyClosedTabs(tabs);
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            for (int i = 0; i < tabCount; i++) {
+                tabs.add(new RecentlyClosedTab(i, "RecentlyClosedTab title " + i, "url " + i));
             }
+            mManager.setRecentlyClosedTabs(tabs);
         });
         return tabs;
     }

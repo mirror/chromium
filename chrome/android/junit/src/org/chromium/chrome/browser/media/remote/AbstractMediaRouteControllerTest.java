@@ -29,19 +29,11 @@ import android.support.v7.media.MediaRouter.Callback;
 import android.support.v7.media.MediaRouter.ProviderInfo;
 import android.support.v7.media.MediaRouter.RouteInfo;
 
-import org.chromium.base.BaseChromiumApplication;
-import org.chromium.base.CommandLine;
-import org.chromium.base.ContextUtils;
-import org.chromium.base.test.util.Feature;
-import org.chromium.chrome.browser.media.remote.MediaRouteController.MediaStateListener;
-import org.chromium.chrome.browser.media.remote.MediaRouteController.UiListener;
-import org.chromium.testing.local.LocalRobolectricTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
@@ -49,6 +41,14 @@ import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
 import org.robolectric.shadows.multidex.ShadowMultiDex;
 import org.robolectric.util.ReflectionHelpers;
+
+import org.chromium.base.BaseChromiumApplication;
+import org.chromium.base.CommandLine;
+import org.chromium.base.ContextUtils;
+import org.chromium.base.test.util.Feature;
+import org.chromium.chrome.browser.media.remote.MediaRouteController.MediaStateListener;
+import org.chromium.chrome.browser.media.remote.MediaRouteController.UiListener;
+import org.chromium.testing.local.LocalRobolectricTestRunner;
 
 /** Tests for {@link AbstractMediaRouteController}. */
 @RunWith(LocalRobolectricTestRunner.class)
@@ -347,12 +347,9 @@ public class AbstractMediaRouteControllerTest {
             MediaRouter mediaRouter = mock(MediaRouter.class);
 
             final ArgumentCaptor<Callback> callbackArg = ArgumentCaptor.forClass(Callback.class);
-            final Answer<?> addCallbackAnswer = new Answer<Object>() {
-                @Override
-                public Object answer(InvocationOnMock invocation) {
-                    sCallback = callbackArg.getValue();
-                    return null;
-                }
+            final Answer<?> addCallbackAnswer = (Answer<Object>) invocation -> {
+                sCallback = callbackArg.getValue();
+                return null;
             };
 
             Mockito.doAnswer(addCallbackAnswer)

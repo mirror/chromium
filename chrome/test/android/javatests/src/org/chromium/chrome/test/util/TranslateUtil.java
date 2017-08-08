@@ -135,12 +135,7 @@ public class TranslateUtil {
      */
     public static void invokeOverflowMenuActionSync(
             Instrumentation instrumentation, final TranslateCompactInfoBar infoBar, final int id) {
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                infoBar.onOverflowMenuItemClicked(id);
-            }
-        });
+        instrumentation.runOnMainSync(() -> infoBar.onOverflowMenuItemClicked(id));
     }
 
     private static String findInfoBarText(View view) {

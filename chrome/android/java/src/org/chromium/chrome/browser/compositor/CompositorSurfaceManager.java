@@ -234,15 +234,12 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
         // the client still owns the surface, then our surfaceDestroyed would assume that Android
         // initiated the destruction, and wait for Android to recreate it.
 
-        mParentView.post(new Runnable() {
-            @Override
-            public void run() {
-                if (mOwnedByClient == null) return;
-                SurfaceState owned = mOwnedByClient;
-                mClient.surfaceDestroyed(mOwnedByClient.surfaceHolder());
-                mOwnedByClient = null;
-                detachSurfaceNow(owned);
-            }
+        mParentView.post(() -> {
+            if (mOwnedByClient == null) return;
+            SurfaceState owned = mOwnedByClient;
+            mClient.surfaceDestroyed(mOwnedByClient.surfaceHolder());
+            mOwnedByClient = null;
+            detachSurfaceNow(owned);
         });
     }
 
@@ -408,12 +405,7 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
         assert !state.destroyPending;
         state.createPending = true;
 
-        mParentView.post(new Runnable() {
-            @Override
-            public void run() {
-                attachSurfaceNow(state);
-            }
-        });
+        mParentView.post(() -> attachSurfaceNow(state));
     }
 
     /**
@@ -470,11 +462,6 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
         if (!state.isAttached()) return;
 
         state.destroyPending = true;
-        mParentView.post(new Runnable() {
-            @Override
-            public void run() {
-                detachSurfaceNow(state);
-            }
-        });
+        mParentView.post(() -> detachSurfaceNow(state));
     }
 }

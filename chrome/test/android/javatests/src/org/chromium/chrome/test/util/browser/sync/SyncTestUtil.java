@@ -25,7 +25,6 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -44,24 +43,16 @@ public final class SyncTestUtil {
      * Returns whether sync is requested.
      */
     public static boolean isSyncRequested() {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                return ProfileSyncService.get().isSyncRequested();
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> ProfileSyncService.get().isSyncRequested());
     }
 
     /**
      * Returns whether sync is active.
      */
     public static boolean isSyncActive() {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                return ProfileSyncService.get().isSyncActive();
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> ProfileSyncService.get().isSyncActive());
     }
 
     /**
@@ -94,13 +85,9 @@ public final class SyncTestUtil {
      * Triggers a sync cycle.
      */
     public static void triggerSync() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                InvalidationServiceFactory.getForProfile(Profile.getLastUsedProfile())
-                        .requestSyncFromNativeChromeForAllTypes();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> InvalidationServiceFactory.getForProfile(Profile.getLastUsedProfile())
+                        .requestSyncFromNativeChromeForAllTypes());
     }
 
     /**
@@ -123,12 +110,8 @@ public final class SyncTestUtil {
     }
 
     private static long getCurrentSyncTime() {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Long>() {
-            @Override
-            public Long call() {
-                return ProfileSyncService.get().getLastSyncedTimeForTest();
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> ProfileSyncService.get().getLastSyncedTimeForTest());
     }
 
     /**
@@ -147,12 +130,7 @@ public final class SyncTestUtil {
                     }
         };
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ProfileSyncService.get().getAllNodes(callback);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> ProfileSyncService.get().getAllNodes(callback));
 
         try {
             Assert.assertTrue("Semaphore should have been released.",

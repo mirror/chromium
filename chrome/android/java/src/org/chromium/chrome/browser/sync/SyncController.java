@@ -5,12 +5,10 @@
 package org.chromium.chrome.browser.sync;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
-import org.chromium.base.ApplicationStatus.ActivityStateListener;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
@@ -78,12 +76,7 @@ public class SyncController implements ProfileSyncService.SyncStateChangedListen
         mProfileSyncService = ProfileSyncService.get();
         mProfileSyncService.addSyncStateChangedListener(this);
         mProfileSyncService.setMasterSyncEnabledProvider(
-                new ProfileSyncService.MasterSyncEnabledProvider() {
-                    @Override
-                    public boolean isMasterSyncEnabled() {
-                        return AndroidSyncSettings.isMasterSyncEnabled(mContext);
-                    }
-                });
+                () -> AndroidSyncSettings.isMasterSyncEnabled(mContext));
 
         setSessionsId();
 
@@ -95,12 +88,9 @@ public class SyncController implements ProfileSyncService.SyncStateChangedListen
         updateSyncStateFromAndroid();
 
         // When the application gets paused, tell sync to flush the directory to disk.
-        ApplicationStatus.registerStateListenerForAllActivities(new ActivityStateListener() {
-            @Override
-            public void onActivityStateChange(Activity activity, int newState) {
-                if (newState == ActivityState.PAUSED) {
-                    mProfileSyncService.flushDirectory();
-                }
+        ApplicationStatus.registerStateListenerForAllActivities((activity, newState) -> {
+            if (newState == ActivityState.PAUSED) {
+                mProfileSyncService.flushDirectory();
             }
         });
 
@@ -202,12 +192,7 @@ public class SyncController implements ProfileSyncService.SyncStateChangedListen
      */
     @Override
     public void androidSyncSettingsChanged() {
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                updateSyncStateFromAndroid();
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> updateSyncStateFromAndroid());
     }
 
     /**

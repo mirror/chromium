@@ -9,7 +9,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -41,7 +40,6 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
@@ -2007,17 +2005,14 @@ public class ToolbarPhone extends ToolbarLayout
         mBrandColorTransitionAnimation = ValueAnimator.ofFloat(0, 1)
                 .setDuration(THEME_COLOR_TRANSITION_DURATION);
         mBrandColorTransitionAnimation.setInterpolator(BakedBezierInterpolator.TRANSFORM_CURVE);
-        mBrandColorTransitionAnimation.addUpdateListener(new AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float fraction = animation.getAnimatedFraction();
-                if (shouldAnimateAlpha) {
-                    mLocationBarBackgroundAlpha =
-                            (int) (MathUtils.interpolate(initialAlpha, finalAlpha, fraction));
-                }
-                updateToolbarBackground(
-                        ColorUtils.getColorWithOverlay(initialColor, finalColor, fraction));
+        mBrandColorTransitionAnimation.addUpdateListener(animation -> {
+            float fraction = animation.getAnimatedFraction();
+            if (shouldAnimateAlpha) {
+                mLocationBarBackgroundAlpha =
+                        (int) (MathUtils.interpolate(initialAlpha, finalAlpha, fraction));
             }
+            updateToolbarBackground(
+                    ColorUtils.getColorWithOverlay(initialColor, finalColor, fraction));
         });
         mBrandColorTransitionAnimation.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -2066,12 +2061,9 @@ public class ToolbarPhone extends ToolbarLayout
         // TODO(tedchoc): Move away from updating based on the search engine change and instead
         //                add the toolbar as a listener to the NewTabPage and udpate only when
         //                it notifies the listeners that it has changed its state.
-        post(new Runnable() {
-            @Override
-            public void run() {
-                updateVisualsForToolbarState();
-                updateNtpAnimationState();
-            }
+        post(() -> {
+            updateVisualsForToolbarState();
+            updateNtpAnimationState();
         });
     }
 
@@ -2359,15 +2351,12 @@ public class ToolbarPhone extends ToolbarLayout
                 TabSwitcherCallout.showIfNecessary(getContext(), mToggleTabStackButton);
         if (mTabSwitcherCallout == null) return;
 
-        mTabSwitcherCallout.addOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                if (mControlsVisibilityDelegate != null) {
-                    mControlsVisibilityDelegate.hideControlsPersistent(mFullscreenCalloutToken);
-                    mFullscreenCalloutToken = FullscreenManager.INVALID_TOKEN;
-                }
-                mTabSwitcherCallout = null;
+        mTabSwitcherCallout.addOnDismissListener(() -> {
+            if (mControlsVisibilityDelegate != null) {
+                mControlsVisibilityDelegate.hideControlsPersistent(mFullscreenCalloutToken);
+                mFullscreenCalloutToken = FullscreenManager.INVALID_TOKEN;
             }
+            mTabSwitcherCallout = null;
         });
 
         if (mControlsVisibilityDelegate != null) {

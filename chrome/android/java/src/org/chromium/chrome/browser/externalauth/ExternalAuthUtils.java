@@ -209,12 +209,7 @@ public class ExternalAuthUtils {
             Log.v(TAG, "Unable to use Google Play Services: %s", describeError(resultCode));
 
             if (isUserRecoverableError(resultCode)) {
-                Runnable errorHandlerTask = new Runnable() {
-                    @Override
-                    public void run() {
-                        errorHandler.handleError(context, resultCode);
-                    }
-                };
+                Runnable errorHandlerTask = () -> errorHandler.handleError(context, resultCode);
                 ThreadUtils.runOnUiThread(errorHandlerTask);
             }
         }

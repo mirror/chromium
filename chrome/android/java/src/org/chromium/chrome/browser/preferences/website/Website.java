@@ -439,11 +439,8 @@ public class Website implements Serializable {
         mStorageInfoCallbacksLeft = mStorageInfo.size();
         if (mStorageInfoCallbacksLeft > 0) {
             for (StorageInfo info : mStorageInfo) {
-                info.clear(new WebsitePreferenceBridge.StorageInfoClearedCallback() {
-                    @Override
-                    public void onStorageInfoCleared() {
-                        if (--mStorageInfoCallbacksLeft == 0) callback.onStoredDataCleared();
-                    }
+                info.clear(() -> {
+                    if (--mStorageInfoCallbacksLeft == 0) callback.onStoredDataCleared();
                 });
             }
             mStorageInfo.clear();

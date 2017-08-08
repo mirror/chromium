@@ -28,8 +28,6 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.common.ContentUrlConstants;
 
-import java.util.concurrent.Callable;
-
 @RunWith(ChromeJUnit4ClassRunner.class)
 @CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
         ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
@@ -43,12 +41,9 @@ public class MainIntentBehaviorMetricsIntegrationTest {
     public void testFocusOmnibox() throws InterruptedException {
         mActivityTestRule.startMainActivityFromLauncher();
         assertMainIntentBehavior(null);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                UrlBar urlBar = (UrlBar) mActivityTestRule.getActivity().findViewById(R.id.url_bar);
-                OmniboxTestUtils.toggleUrlBarFocus(urlBar, true);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            UrlBar urlBar = (UrlBar) mActivityTestRule.getActivity().findViewById(R.id.url_bar);
+            OmniboxTestUtils.toggleUrlBarFocus(urlBar, true);
         });
         assertMainIntentBehavior(MainIntentBehaviorMetrics.FOCUS_OMNIBOX);
     }
@@ -58,28 +53,17 @@ public class MainIntentBehaviorMetricsIntegrationTest {
     public void testSwitchTabs() throws InterruptedException {
         mActivityTestRule.startMainActivityFromLauncher();
         assertMainIntentBehavior(null);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mActivityTestRule.getActivity().getTabCreator(false).createNewTab(
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> mActivityTestRule.getActivity().getTabCreator(false).createNewTab(
                         new LoadUrlParams(ContentUrlConstants.ABOUT_BLANK_URL),
-                        TabLaunchType.FROM_RESTORE, null);
-            }
-        });
-        CriteriaHelper.pollUiThread(Criteria.equals(2, new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return mActivityTestRule.getActivity().getTabModelSelector().getTotalTabCount();
-            }
-        }));
+                        TabLaunchType.FROM_RESTORE, null));
+        CriteriaHelper.pollUiThread(Criteria.equals(2,
+                () -> mActivityTestRule.getActivity().getTabModelSelector().getTotalTabCount()));
         assertMainIntentBehavior(null);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                TabModelUtils.setIndex(mActivityTestRule.getActivity().getCurrentTabModel(), 1);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> TabModelUtils.setIndex(mActivityTestRule.getActivity().getCurrentTabModel(),
+                        1));
         assertMainIntentBehavior(MainIntentBehaviorMetrics.SWITCH_TABS);
     }
 
@@ -88,12 +72,7 @@ public class MainIntentBehaviorMetricsIntegrationTest {
     public void testBackgrounded() throws InterruptedException {
         mActivityTestRule.startMainActivityFromLauncher();
         assertMainIntentBehavior(null);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mActivityTestRule.getActivity().finish();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mActivityTestRule.getActivity().finish());
         assertMainIntentBehavior(MainIntentBehaviorMetrics.BACKGROUNDED);
     }
 
@@ -102,12 +81,8 @@ public class MainIntentBehaviorMetricsIntegrationTest {
     public void testCreateNtp() throws InterruptedException {
         mActivityTestRule.startMainActivityFromLauncher();
         assertMainIntentBehavior(null);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mActivityTestRule.getActivity().getTabCreator(false).launchNTP();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> mActivityTestRule.getActivity().getTabCreator(false).launchNTP());
         assertMainIntentBehavior(MainIntentBehaviorMetrics.NTP_CREATED);
     }
 
@@ -134,11 +109,7 @@ public class MainIntentBehaviorMetricsIntegrationTest {
     }
 
     private void assertMainIntentBehavior(Integer expected) {
-        CriteriaHelper.pollUiThread(Criteria.equals(expected, new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return MainIntentBehaviorMetrics.getLastMainIntentBehaviorForTesting();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(expected,
+                () -> MainIntentBehaviorMetrics.getLastMainIntentBehaviorForTesting()));
     }
 }

@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser.webapps;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.StrictMode;
@@ -20,7 +19,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
@@ -205,18 +203,12 @@ public class WebappAuthenticator {
                 return;
             }
 
-            sMacKeyGenerator = new FutureTask<SecretKey>(new Callable<SecretKey>() {
-                // SecureRandomInitializer addresses the bug in SecureRandom that "TrulyRandom"
-                // warns about, so this lint warning can safely be suppressed.
-                @SuppressLint("TrulyRandom")
-                @Override
-                public SecretKey call() throws Exception {
-                    KeyGenerator generator = KeyGenerator.getInstance(MAC_ALGORITHM_NAME);
-                    SecureRandom random = new SecureRandom();
-                    SecureRandomInitializer.initialize(random);
-                    generator.init(MAC_KEY_BYTE_COUNT * 8, random);
-                    return generator.generateKey();
-                }
+            sMacKeyGenerator = new FutureTask<SecretKey>(() -> {
+                KeyGenerator generator = KeyGenerator.getInstance(MAC_ALGORITHM_NAME);
+                SecureRandom random = new SecureRandom();
+                SecureRandomInitializer.initialize(random);
+                generator.init(MAC_KEY_BYTE_COUNT * 8, random);
+                return generator.generateKey();
             });
             AsyncTask.THREAD_POOL_EXECUTOR.execute(sMacKeyGenerator);
         }

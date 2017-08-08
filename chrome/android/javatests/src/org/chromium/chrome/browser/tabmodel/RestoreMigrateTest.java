@@ -34,7 +34,6 @@ import org.chromium.chrome.test.util.browser.tabmodel.MockTabModelSelector;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -46,12 +45,7 @@ public class RestoreMigrateTest {
 
     private void writeStateFile(final TabModelSelector selector, int index) throws IOException {
         byte[] data = ThreadUtils.runOnUiThreadBlockingNoException(
-                new Callable<byte[]>() {
-                    @Override
-                    public byte[] call() throws Exception {
-                        return TabPersistentStore.serializeTabModelSelector(selector, null);
-                    }
-                });
+                () -> TabPersistentStore.serializeTabModelSelector(selector, null));
         File f = TabbedModeTabPersistencePolicy.getOrCreateTabbedModeStateDirectory();
         FileOutputStream fos = null;
         try {
@@ -86,15 +80,12 @@ public class RestoreMigrateTest {
 
     private TabPersistentStore buildTabPersistentStore(
             final TabModelSelector selector, final int selectorIndex) {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<TabPersistentStore>() {
-            @Override
-            public TabPersistentStore call() throws Exception {
-                TabPersistencePolicy persistencePolicy = new TabbedModeTabPersistencePolicy(
-                        selectorIndex, false);
-                TabPersistentStore store = new TabPersistentStore(
-                        persistencePolicy, selector, null, null);
-                return store;
-            }
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            TabPersistencePolicy persistencePolicy = new TabbedModeTabPersistencePolicy(
+                    selectorIndex, false);
+            TabPersistentStore store = new TabPersistentStore(
+                    persistencePolicy, selector, null, null);
+            return store;
         });
     }
 

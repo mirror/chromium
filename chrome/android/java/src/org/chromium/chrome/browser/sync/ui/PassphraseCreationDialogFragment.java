@@ -12,13 +12,11 @@ import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.help.HelpAndFeedback;
@@ -45,14 +43,11 @@ public class PassphraseCreationDialogFragment extends DialogFragment {
         mEnterPassphrase = (EditText) view.findViewById(R.id.passphrase);
         mConfirmPassphrase = (EditText) view.findViewById(R.id.confirm_passphrase);
 
-        mConfirmPassphrase.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    tryToSubmitPassphrase();
-                }
-                return false;
+        mConfirmPassphrase.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                tryToSubmitPassphrase();
             }
+            return false;
         });
 
         TextView instructionsView =
@@ -93,12 +88,7 @@ public class PassphraseCreationDialogFragment extends DialogFragment {
             // onCreate, when it is shown (in super.onStart()), so we have to do this here.
             // Otherwise the dialog will close when the button is clicked regardless of what else we
             // do.
-            d.getButton(Dialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    tryToSubmitPassphrase();
-                }
-            });
+            d.getButton(Dialog.BUTTON_POSITIVE).setOnClickListener(v -> tryToSubmitPassphrase());
         }
     }
 

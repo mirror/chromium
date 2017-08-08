@@ -186,25 +186,17 @@ public class SyncCustomizationFragment extends PreferenceFragment
         }
 
         mSyncSwitchPreference = (ChromeSwitchPreference) findPreference(PREF_SYNC_SWITCH);
-        mSyncSwitchPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                assert canDisableSync();
-                if ((boolean) newValue) {
-                    mProfileSyncService.requestStart();
-                } else {
-                    stopSync();
-                }
-                // Must be done asynchronously because the switch state isn't updated
-                // until after this function exits.
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateSyncStateFromSwitch();
-                    }
-                });
-                return true;
+        mSyncSwitchPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            assert canDisableSync();
+            if ((boolean) newValue) {
+                mProfileSyncService.requestStart();
+            } else {
+                stopSync();
             }
+            // Must be done asynchronously because the switch state isn't updated
+            // until after this function exits.
+            new Handler().post(() -> updateSyncStateFromSwitch());
+            return true;
         });
 
         mSyncedAccountPreference =
@@ -218,31 +210,23 @@ public class SyncCustomizationFragment extends PreferenceFragment
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mSyncEverything) {
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    updateDataTypeState();
-                }
-            });
+            new Handler().post(() -> updateDataTypeState());
             return true;
         }
         if (isSyncTypePreference(preference)) {
             final boolean syncAutofillToggled = preference == mSyncAutofill;
             final boolean preferenceChecked = (boolean) newValue;
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    if (syncAutofillToggled) {
-                        // If the user checks the autofill sync checkbox, then enable and check the
-                        // payments integration checkbox.
-                        //
-                        // If the user unchecks the autofill sync checkbox, then disable and uncheck
-                        // the payments integration checkbox.
-                        mPaymentsIntegration.setEnabled(preferenceChecked);
-                        mPaymentsIntegration.setChecked(preferenceChecked);
-                    }
-                    maybeDisableSync();
+            new Handler().post(() -> {
+                if (syncAutofillToggled) {
+                    // If the user checks the autofill sync checkbox, then enable and check the
+                    // payments integration checkbox.
+                    //
+                    // If the user unchecks the autofill sync checkbox, then disable and uncheck
+                    // the payments integration checkbox.
+                    mPaymentsIntegration.setEnabled(preferenceChecked);
+                    mPaymentsIntegration.setChecked(preferenceChecked);
                 }
+                maybeDisableSync();
             });
             return true;
         }
@@ -723,12 +707,8 @@ public class SyncCustomizationFragment extends PreferenceFragment
 
         if (mCurrentSyncError == SYNC_OTHER_ERRORS) {
             final Account account = ChromeSigninController.get().getSignedInUser();
-            SigninManager.get(getActivity()).signOut(new Runnable() {
-                @Override
-                public void run() {
-                    SigninManager.get(getActivity()).signIn(account, null, null);
-                }
-            });
+            SigninManager.get(getActivity()).signOut(
+                    () -> SigninManager.get(getActivity()).signIn(account, null, null));
             return;
         }
 

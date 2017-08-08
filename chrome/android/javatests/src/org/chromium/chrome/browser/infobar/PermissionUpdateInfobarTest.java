@@ -39,7 +39,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -102,12 +101,7 @@ public class PermissionUpdateInfobarTest {
 
         final String locationUrl = mTestServer.getURL(GEOLOCATION_PAGE);
         final GeolocationInfo geolocationSettings = ThreadUtils.runOnUiThreadBlockingNoException(
-                new Callable<GeolocationInfo>() {
-                    @Override
-                    public GeolocationInfo call() {
-                        return new GeolocationInfo(locationUrl, null, false);
-                    }
-                });
+                () -> new GeolocationInfo(locationUrl, null, false));
 
         mActivityTestRule.getActivity().getWindowAndroid().setAndroidPermissionDelegate(
                 new TestAndroidPermissionDelegate(
@@ -115,26 +109,17 @@ public class PermissionUpdateInfobarTest {
         LocationSettingsTestUtil.setSystemLocationSettingEnabled(true);
 
         try {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    geolocationSettings.setContentSetting(ContentSetting.ALLOW);
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(
+                    () -> geolocationSettings.setContentSetting(ContentSetting.ALLOW));
 
             mActivityTestRule.loadUrl(mTestServer.getURL(GEOLOCATION_PAGE));
             mListener.addInfoBarAnimationFinished("InfoBar not added");
             Assert.assertEquals(1, mActivityTestRule.getInfoBars().size());
 
             final WebContents webContents = ThreadUtils.runOnUiThreadBlockingNoException(
-                    new Callable<WebContents>() {
-                        @Override
-                        public WebContents call() throws Exception {
-                            return mActivityTestRule.getActivity()
-                                    .getActivityTab()
-                                    .getWebContents();
-                        }
-                    });
+                    () -> mActivityTestRule.getActivity()
+                            .getActivityTab()
+                            .getWebContents());
             Assert.assertFalse(webContents.isDestroyed());
 
             ChromeTabUtils.closeCurrentTab(
@@ -146,22 +131,13 @@ public class PermissionUpdateInfobarTest {
                 }
             });
 
-            CriteriaHelper.pollUiThread(Criteria.equals(1, new Callable<Integer>() {
-                @Override
-                public Integer call() {
-                    return mActivityTestRule.getActivity()
-                            .getTabModelSelector()
-                            .getModel(false)
-                            .getCount();
-                }
-            }));
+            CriteriaHelper.pollUiThread(Criteria.equals(1, () -> mActivityTestRule.getActivity()
+                    .getTabModelSelector()
+                    .getModel(false)
+                    .getCount()));
         } finally {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    geolocationSettings.setContentSetting(ContentSetting.DEFAULT);
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(
+                    () -> geolocationSettings.setContentSetting(ContentSetting.DEFAULT));
         }
     }
 
@@ -193,12 +169,7 @@ public class PermissionUpdateInfobarTest {
 
         final String locationUrl = mTestServer.getURL(GEOLOCATION_IFRAME_PAGE);
         final GeolocationInfo geolocationSettings = ThreadUtils.runOnUiThreadBlockingNoException(
-                new Callable<GeolocationInfo>() {
-                    @Override
-                    public GeolocationInfo call() {
-                        return new GeolocationInfo(locationUrl, null, false);
-                    }
-                });
+                () -> new GeolocationInfo(locationUrl, null, false));
 
         mActivityTestRule.getActivity().getWindowAndroid().setAndroidPermissionDelegate(
                 new TestAndroidPermissionDelegate(
@@ -206,36 +177,23 @@ public class PermissionUpdateInfobarTest {
         LocationSettingsTestUtil.setSystemLocationSettingEnabled(true);
 
         try {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    geolocationSettings.setContentSetting(ContentSetting.ALLOW);
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(
+                    () -> geolocationSettings.setContentSetting(ContentSetting.ALLOW));
 
             mActivityTestRule.loadUrl(mTestServer.getURL(GEOLOCATION_IFRAME_PAGE));
             mListener.addInfoBarAnimationFinished("InfoBar not added");
             Assert.assertEquals(1, mActivityTestRule.getInfoBars().size());
 
             final WebContents webContents = ThreadUtils.runOnUiThreadBlockingNoException(
-                    new Callable<WebContents>() {
-                        @Override
-                        public WebContents call() throws Exception {
-                            return mActivityTestRule.getActivity()
-                                    .getActivityTab()
-                                    .getWebContents();
-                        }
-                    });
+                    () -> mActivityTestRule.getActivity()
+                            .getActivityTab()
+                            .getWebContents());
             Assert.assertFalse(webContents.isDestroyed());
 
             mActivityTestRule.runJavaScriptCodeInCurrentTab(
                     "document.querySelector('iframe').src = '';");
-            CriteriaHelper.pollUiThread(Criteria.equals(0, new Callable<Integer>() {
-                @Override
-                public Integer call() {
-                    return mActivityTestRule.getInfoBars().size();
-                }
-            }));
+            CriteriaHelper.pollUiThread(Criteria.equals(0,
+                    () -> mActivityTestRule.getInfoBars().size()));
 
             ChromeTabUtils.closeCurrentTab(
                     InstrumentationRegistry.getInstrumentation(), mActivityTestRule.getActivity());
@@ -246,22 +204,13 @@ public class PermissionUpdateInfobarTest {
                 }
             });
 
-            CriteriaHelper.pollUiThread(Criteria.equals(1, new Callable<Integer>() {
-                @Override
-                public Integer call() {
-                    return mActivityTestRule.getActivity()
-                            .getTabModelSelector()
-                            .getModel(false)
-                            .getCount();
-                }
-            }));
+            CriteriaHelper.pollUiThread(Criteria.equals(1, () -> mActivityTestRule.getActivity()
+                    .getTabModelSelector()
+                    .getModel(false)
+                    .getCount()));
         } finally {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    geolocationSettings.setContentSetting(ContentSetting.DEFAULT);
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(
+                    () -> geolocationSettings.setContentSetting(ContentSetting.DEFAULT));
         }
     }
 

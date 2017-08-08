@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser.widget.bottomsheet;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -21,7 +20,6 @@ import android.view.ViewGroup;
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
-import org.chromium.base.ApplicationStatus.ActivityStateListener;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
@@ -209,12 +207,9 @@ public class BottomSheetContentController extends BottomNavigationView
                 mActivity, (ViewGroup) activity.findViewById(R.id.bottom_sheet_snackbar_container));
         mSnackbarManager.onStart();
 
-        ApplicationStatus.registerStateListenerForActivity(new ActivityStateListener() {
-            @Override
-            public void onActivityStateChange(Activity activity, int newState) {
-                if (newState == ActivityState.STARTED) mSnackbarManager.onStart();
-                if (newState == ActivityState.STOPPED) mSnackbarManager.onStop();
-            }
+        ApplicationStatus.registerStateListenerForActivity((activity1, newState) -> {
+            if (newState == ActivityState.STARTED) mSnackbarManager.onStart();
+            if (newState == ActivityState.STOPPED) mSnackbarManager.onStop();
         }, mActivity);
     }
 

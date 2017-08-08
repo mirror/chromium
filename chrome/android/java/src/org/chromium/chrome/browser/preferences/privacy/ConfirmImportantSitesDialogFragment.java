@@ -291,36 +291,33 @@ public class ConfirmImportantSitesDialogFragment extends DialogFragment {
         mLargeIconBridge.createCache(maxSize);
 
         mAdapter = new ClearBrowsingDataAdapter(mImportantDomains, mFaviconURLs, getResources());
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (which == AlertDialog.BUTTON_POSITIVE) {
-                    Intent data = new Intent();
-                    List<String> deselectedDomains = new ArrayList<>();
-                    List<Integer> deselectedDomainReasons = new ArrayList<>();
-                    List<String> ignoredDomains = new ArrayList<>();
-                    List<Integer> ignoredDomainReasons = new ArrayList<>();
-                    for (Entry<String, Boolean> entry : mCheckedState.entrySet()) {
-                        Integer reason = mImportantDomainsReasons.get(entry.getKey());
-                        if (entry.getValue()) {
-                            ignoredDomains.add(entry.getKey());
-                            ignoredDomainReasons.add(reason);
-                        } else {
-                            deselectedDomains.add(entry.getKey());
-                            deselectedDomainReasons.add(reason);
-                        }
+        DialogInterface.OnClickListener listener = (dialog, which) -> {
+            if (which == AlertDialog.BUTTON_POSITIVE) {
+                Intent data = new Intent();
+                List<String> deselectedDomains = new ArrayList<>();
+                List<Integer> deselectedDomainReasons = new ArrayList<>();
+                List<String> ignoredDomains = new ArrayList<>();
+                List<Integer> ignoredDomainReasons = new ArrayList<>();
+                for (Entry<String, Boolean> entry : mCheckedState.entrySet()) {
+                    Integer reason = mImportantDomainsReasons.get(entry.getKey());
+                    if (entry.getValue()) {
+                        ignoredDomains.add(entry.getKey());
+                        ignoredDomainReasons.add(reason);
+                    } else {
+                        deselectedDomains.add(entry.getKey());
+                        deselectedDomainReasons.add(reason);
                     }
-                    data.putExtra(DESELECTED_DOMAINS_TAG, deselectedDomains.toArray(new String[0]));
-                    data.putExtra(
-                            DESELECTED_DOMAIN_REASONS_TAG, toIntArray(deselectedDomainReasons));
-                    data.putExtra(IGNORED_DOMAINS_TAG, ignoredDomains.toArray(new String[0]));
-                    data.putExtra(IGNORED_DOMAIN_REASONS_TAG, toIntArray(ignoredDomainReasons));
-                    getTargetFragment().onActivityResult(
-                            getTargetRequestCode(), Activity.RESULT_OK, data);
-                } else {
-                    getTargetFragment().onActivityResult(getTargetRequestCode(),
-                            Activity.RESULT_CANCELED, getActivity().getIntent());
                 }
+                data.putExtra(DESELECTED_DOMAINS_TAG, deselectedDomains.toArray(new String[0]));
+                data.putExtra(
+                        DESELECTED_DOMAIN_REASONS_TAG, toIntArray(deselectedDomainReasons));
+                data.putExtra(IGNORED_DOMAINS_TAG, ignoredDomains.toArray(new String[0]));
+                data.putExtra(IGNORED_DOMAIN_REASONS_TAG, toIntArray(ignoredDomainReasons));
+                getTargetFragment().onActivityResult(
+                        getTargetRequestCode(), Activity.RESULT_OK, data);
+            } else {
+                getTargetFragment().onActivityResult(getTargetRequestCode(),
+                        Activity.RESULT_CANCELED, getActivity().getIntent());
             }
         };
         // We create our own ListView, as AlertDialog doesn't let us set a message and a list

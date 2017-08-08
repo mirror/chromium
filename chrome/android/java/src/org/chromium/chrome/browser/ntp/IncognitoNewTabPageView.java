@@ -59,12 +59,7 @@ public class IncognitoNewTabPageView extends FrameLayout {
         mScrollView.setDescendantFocusability(FOCUS_BEFORE_DESCENDANTS);
 
         View learnMore = findViewById(R.id.learn_more);
-        learnMore.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mManager.loadIncognitoLearnMore();
-            }
-        });
+        learnMore.setOnClickListener(v -> mManager.loadIncognitoLearnMore());
     }
 
     /**

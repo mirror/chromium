@@ -143,12 +143,9 @@ public class MediaSessionTabHelper implements MediaImageCallback {
         if (mTab == null) return;
         if (mHideNotificationDelayedTask != null) return;
 
-        mHideNotificationDelayedTask = new Runnable() {
-            @Override
-            public void run() {
-                mHideNotificationDelayedTask = null;
-                hideNotificationInternal();
-            }
+        mHideNotificationDelayedTask = () -> {
+            mHideNotificationDelayedTask = null;
+            hideNotificationInternal();
         };
         mHandler.postDelayed(mHideNotificationDelayedTask, HIDE_NOTIFICATION_DELAY_MILLIS);
 

@@ -7,8 +7,6 @@ package org.chromium.chrome.browser.preferences.website;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,12 +46,9 @@ public class TranslatePreferences extends PreferenceFragment {
         boolean isTranslateEnabled = PrefServiceBridge.getInstance().isTranslateEnabled();
         translateSwitch.setChecked(isTranslateEnabled);
 
-        translateSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                PrefServiceBridge.getInstance().setTranslateEnabled((boolean) newValue);
-                return true;
-            }
+        translateSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
+            PrefServiceBridge.getInstance().setTranslateEnabled((boolean) newValue);
+            return true;
         });
         translateSwitch.setManagedPreferenceDelegate(new ManagedPreferenceDelegate() {
             @Override
@@ -65,15 +60,12 @@ public class TranslatePreferences extends PreferenceFragment {
         ButtonPreference resetTranslateButton = (ButtonPreference)
                 findPreference(PREF_RESET_TRANSLATE_BUTTON);
 
-        resetTranslateButton.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                PrefServiceBridge.getInstance().resetTranslateDefaults();
-                Toast.makeText(getActivity(), getString(
-                        R.string.translate_prefs_toast_description),
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            }
+        resetTranslateButton.setOnPreferenceClickListener(preference -> {
+            PrefServiceBridge.getInstance().resetTranslateDefaults();
+            Toast.makeText(getActivity(), getString(
+                    R.string.translate_prefs_toast_description),
+                    Toast.LENGTH_SHORT).show();
+            return true;
         });
 
     }

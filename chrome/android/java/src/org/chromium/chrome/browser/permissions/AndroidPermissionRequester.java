@@ -92,79 +92,67 @@ public class AndroidPermissionRequester {
 
         if (contentSettingsTypesToPermissionsMap.size() == 0) return false;
 
-        PermissionCallback callback = new PermissionCallback() {
-            @Override
-            public void onRequestPermissionsResult(String[] permissions, int[] grantResults) {
-                boolean allRequestable = true;
-                Set<Integer> deniedContentSettings = new HashSet<Integer>();
-                for (int i = 0; i < grantResults.length; i++) {
-                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                        deniedContentSettings.add(getContentSettingType(
-                                contentSettingsTypesToPermissionsMap, permissions[i]));
+        PermissionCallback callback = (permissions, grantResults) -> {
+            boolean allRequestable = true;
+            Set<Integer> deniedContentSettings = new HashSet<Integer>();
+            for (int i = 0; i < grantResults.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                    deniedContentSettings.add(getContentSettingType(
+                            contentSettingsTypesToPermissionsMap, permissions[i]));
 
-                        if (!windowAndroid.canRequestPermission(permissions[i])) {
-                            allRequestable = false;
-                        }
+                    if (!windowAndroid.canRequestPermission(permissions[i])) {
+                        allRequestable = false;
                     }
                 }
+            }
 
-                Activity activity = windowAndroid.getActivity().get();
-                if (allRequestable && !deniedContentSettings.isEmpty() && activity != null) {
-                    int deniedStringId = -1;
-                    if (deniedContentSettings.size() == 2
-                            && deniedContentSettings.contains(
-                                       ContentSettingsType.CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC)
-                            && deniedContentSettings.contains(
+            Activity activity = windowAndroid.getActivity().get();
+            if (allRequestable && !deniedContentSettings.isEmpty() && activity != null) {
+                int deniedStringId = -1;
+                if (deniedContentSettings.size() == 2
+                        && deniedContentSettings.contains(
+                        ContentSettingsType.CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC)
+                        && deniedContentSettings.contains(
+                        ContentSettingsType
+                                .CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA)) {
+                    deniedStringId =
+                            R.string.infobar_missing_microphone_camera_permissions_text;
+                } else if (deniedContentSettings.size() == 1) {
+                    if (deniedContentSettings.contains(
+                            ContentSettingsType.CONTENT_SETTINGS_TYPE_GEOLOCATION)) {
+                        deniedStringId = R.string.infobar_missing_location_permission_text;
+                    } else if (deniedContentSettings.contains(
                                        ContentSettingsType
+                                               .CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC)) {
+                        deniedStringId = R.string.infobar_missing_microphone_permission_text;
+                    } else if (deniedContentSettings.contains(
+                            ContentSettingsType
                                                .CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA)) {
-                        deniedStringId =
-                                R.string.infobar_missing_microphone_camera_permissions_text;
-                    } else if (deniedContentSettings.size() == 1) {
-                        if (deniedContentSettings.contains(
-                                    ContentSettingsType.CONTENT_SETTINGS_TYPE_GEOLOCATION)) {
-                            deniedStringId = R.string.infobar_missing_location_permission_text;
-                        } else if (deniedContentSettings.contains(
-                                           ContentSettingsType
-                                                   .CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC)) {
-                            deniedStringId = R.string.infobar_missing_microphone_permission_text;
-                        } else if (deniedContentSettings.contains(
-                                           ContentSettingsType
-                                                   .CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA)) {
-                            deniedStringId = R.string.infobar_missing_camera_permission_text;
-                        }
+                        deniedStringId = R.string.infobar_missing_camera_permission_text;
                     }
-
-                    assert deniedStringId
-                            != -1 : "Invalid combination of missing content settings: "
-                                    + deniedContentSettings;
-
-                    View view = activity.getLayoutInflater().inflate(
-                            R.layout.update_permissions_dialog, null);
-                    TextView dialogText = (TextView) view.findViewById(R.id.text);
-                    dialogText.setText(deniedStringId);
-
-                    AlertDialog.Builder builder =
-                            new AlertDialog.Builder(activity, R.style.AlertDialogTheme);
-                    builder.setView(view);
-                    builder.setPositiveButton(R.string.infobar_update_permissions_button_text,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    requestAndroidPermissions(tab, contentSettingsTypes, delegate);
-                                }
-                            });
-                    builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                            delegate.onAndroidPermissionCanceled();
-                        }
-                    });
-                    builder.create().show();
-                } else if (deniedContentSettings.isEmpty()) {
-                    delegate.onAndroidPermissionAccepted();
-                } else {
-                    delegate.onAndroidPermissionCanceled();
                 }
+
+                assert deniedStringId
+                        != -1 : "Invalid combination of missing content settings: "
+                        + deniedContentSettings;
+
+                View view = activity.getLayoutInflater().inflate(
+                        R.layout.update_permissions_dialog, null);
+                TextView dialogText = (TextView) view.findViewById(R.id.text);
+                dialogText.setText(deniedStringId);
+
+                AlertDialog.Builder builder =
+                        new AlertDialog.Builder(activity, R.style.AlertDialogTheme);
+                builder.setView(view);
+                builder.setPositiveButton(R.string.infobar_update_permissions_button_text,
+                        (DialogInterface.OnClickListener) (dialog, id) -> requestAndroidPermissions(
+                                tab, contentSettingsTypes, delegate));
+                builder.setOnCancelListener(dialog -> delegate.onAndroidPermissionCanceled());
+                builder.create().show();
+            } else if (deniedContentSettings.isEmpty()) {
+                delegate.onAndroidPermissionAccepted();
+            } else {
+                delegate.onAndroidPermissionCanceled();
             }
         };
 

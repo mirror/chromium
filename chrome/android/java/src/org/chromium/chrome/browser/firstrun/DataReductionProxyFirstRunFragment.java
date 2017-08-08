@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
@@ -35,25 +34,17 @@ public class DataReductionProxyFirstRunFragment extends FirstRunPage {
                 .findViewById(R.id.enable_data_saver_switch);
         Button nextButton = (Button) view.findViewById(R.id.next_button);
 
-        enableDataSaverSwitch.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DataReductionProxySettings.getInstance().setDataReductionProxyEnabled(
-                        v.getContext(), enableDataSaverSwitch.isChecked());
-                if (enableDataSaverSwitch.isChecked()) {
-                    enableDataSaverSwitch.setText(R.string.data_reduction_enabled_switch);
-                } else {
-                    enableDataSaverSwitch.setText(R.string.data_reduction_disabled_switch);
-                }
+        enableDataSaverSwitch.setOnClickListener(v -> {
+            DataReductionProxySettings.getInstance().setDataReductionProxyEnabled(
+                    v.getContext(), enableDataSaverSwitch.isChecked());
+            if (enableDataSaverSwitch.isChecked()) {
+                enableDataSaverSwitch.setText(R.string.data_reduction_enabled_switch);
+            } else {
+                enableDataSaverSwitch.setText(R.string.data_reduction_disabled_switch);
             }
         });
 
-        nextButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                advanceToNextPage();
-            }
-        });
+        nextButton.setOnClickListener(v -> advanceToNextPage());
 
         enableDataSaverSwitch.setChecked(true);
         DataReductionProxySettings.getInstance().setDataReductionProxyEnabled(

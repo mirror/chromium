@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.contextmenu;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -63,19 +62,9 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
         mContextMenuDialog =
                 createContextMenuDialog(activity, params, items, touchPointXPx, touchPointYPx);
 
-        mContextMenuDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                onMenuShown.run();
-            }
-        });
+        mContextMenuDialog.setOnShowListener(dialogInterface -> onMenuShown.run());
 
-        mContextMenuDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                onMenuClosed.run();
-            }
-        });
+        mContextMenuDialog.setOnDismissListener(dialogInterface -> onMenuClosed.run());
 
         mContextMenuDialog.show();
     }
@@ -201,16 +190,13 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
         }
         headerTextView.setVisibility(View.VISIBLE);
         headerTextView.setText(headerText);
-        headerTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (headerTextView.getMaxLines() == Integer.MAX_VALUE) {
-                    headerTextView.setMaxLines(1);
-                    headerTextView.setEllipsize(TextUtils.TruncateAt.END);
-                } else {
-                    headerTextView.setMaxLines(Integer.MAX_VALUE);
-                    headerTextView.setEllipsize(null);
-                }
+        headerTextView.setOnClickListener(view -> {
+            if (headerTextView.getMaxLines() == Integer.MAX_VALUE) {
+                headerTextView.setMaxLines(1);
+                headerTextView.setEllipsize(TextUtils.TruncateAt.END);
+            } else {
+                headerTextView.setMaxLines(Integer.MAX_VALUE);
+                headerTextView.setEllipsize(null);
             }
         });
     }

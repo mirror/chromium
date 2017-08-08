@@ -28,8 +28,6 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLog;
 
@@ -98,11 +96,7 @@ public class CastMessageHandlerTest {
         final Set<String> clientIds = new HashSet<String>();
         clientIds.add(CLIENT_ID1);
         clientIds.add(CLIENT_ID2);
-        doAnswer(new Answer() {
-                public Object answer(InvocationOnMock invocation) {
-                    return clientIds;
-                }
-            })
+        doAnswer(invocation -> clientIds)
                 .when(mRouteProvider).getClients();
         doNothing().when(mRouteProvider).onMessage(anyString(), anyString());
         doNothing().when(mRouteProvider).onMessageSentResult(anyBoolean(), anyInt());
@@ -176,12 +170,7 @@ public class CastMessageHandlerTest {
         final JSONObject message = buildCastV2Message(CLIENT_ID1, innerMessage);
         // Replace the inner JSON message with string.
         message.put("message", "wrong type inner message");
-        expectException(new CheckedRunnable() {
-                @Override
-                public void run() throws Exception {
-                    mMessageHandler.handleCastV2Message(message);
-                }
-            }, JSONException.class);
+        expectException(() -> mMessageHandler.handleCastV2Message(message), JSONException.class);
         verify(mMessageHandler, never()).handleStopMessage(anyString(), anyInt());
         verify(mSession, never()).handleVolumeMessage(any(JSONObject.class), anyString(), anyInt());
         verify(mMessageHandler, never()).sendJsonCastMessage(
@@ -242,12 +231,7 @@ public class CastMessageHandlerTest {
         JSONObject innerMessage = new JSONObject()
                 .put("type", "SET_VOLUME");
         final JSONObject message = buildCastV2Message(CLIENT_ID1, innerMessage);
-        expectException(new CheckedRunnable() {
-                @Override
-                public void run() throws Exception {
-                    mMessageHandler.handleCastV2Message(message);
-                }
-            }, JSONException.class);
+        expectException(() -> mMessageHandler.handleCastV2Message(message), JSONException.class);
         verify(mSession, never()).handleVolumeMessage(any(JSONObject.class), anyString(), anyInt());
     }
 
@@ -258,12 +242,7 @@ public class CastMessageHandlerTest {
                 .put("type", "SET_VOLUME")
                 .put("volume", "wrong type volume message");
         final JSONObject message = buildCastV2Message(CLIENT_ID1, innerMessage);
-        expectException(new CheckedRunnable() {
-                @Override
-                public void run() throws Exception {
-                    mMessageHandler.handleCastV2Message(message);
-                }
-            }, JSONException.class);
+        expectException(() -> mMessageHandler.handleCastV2Message(message), JSONException.class);
         verify(mSession, never()).handleVolumeMessage(any(JSONObject.class), anyString(), anyInt());
     }
 
@@ -274,8 +253,9 @@ public class CastMessageHandlerTest {
                 any(JSONObject.class), anyString(), anyString(), anyInt());
         for (String messageType : CastMessageHandler.getMediaMessageTypesForTest()) {
             // TODO(zqzhang): SET_VOLUME and STOP should not reach here?
-            if ("MEDIA_SET_VOLUME".equals(messageType) || "STOP_MEDIA".equals(messageType))
+            if ("MEDIA_SET_VOLUME".equals(messageType) || "STOP_MEDIA".equals(messageType)) {
                 continue;
+            }
             JSONObject innerMessage = new JSONObject().put("type", messageType);
             JSONObject message = buildCastV2Message(CLIENT_ID1, innerMessage);
             assertTrue(mMessageHandler.handleCastV2Message(message));
@@ -365,12 +345,7 @@ public class CastMessageHandlerTest {
         JSONObject actualMessage = buildActualAppMessage();
         final JSONObject message = buildAppMessage(CLIENT_ID1, NAMESPACE1, actualMessage);
         message.getJSONObject("message").remove("sessionId");
-        expectException(new CheckedRunnable() {
-                @Override
-                public void run() throws Exception {
-                    mMessageHandler.handleAppMessage(message);
-                }
-            }, JSONException.class);
+        expectException(() -> mMessageHandler.handleAppMessage(message), JSONException.class);
         verify(mMessageHandler, never()).sendJsonCastMessage(
                 any(JSONObject.class), anyString(), anyString(), anyInt());
     }
@@ -396,12 +371,7 @@ public class CastMessageHandlerTest {
         JSONObject actualMessage = buildActualAppMessage();
         final JSONObject message = buildAppMessage(CLIENT_ID1, NAMESPACE1, actualMessage);
         message.getJSONObject("message").remove("message");
-        expectException(new CheckedRunnable() {
-                @Override
-                public void run() throws Exception {
-                    mMessageHandler.handleAppMessage(message);
-                }
-            }, JSONException.class);
+        expectException(() -> mMessageHandler.handleAppMessage(message), JSONException.class);
         verify(mMessageHandler, never()).sendJsonCastMessage(
                 any(JSONObject.class), anyString(), anyString(), anyInt());
     }
@@ -429,12 +399,7 @@ public class CastMessageHandlerTest {
         JSONObject actualMessage = buildActualAppMessage();
         final JSONObject message = buildAppMessage(CLIENT_ID1, NAMESPACE1, actualMessage);
         message.remove("message");
-        expectException(new CheckedRunnable() {
-                @Override
-                public void run() throws Exception {
-                    mMessageHandler.handleAppMessage(message);
-                }
-            }, JSONException.class);
+        expectException(() -> mMessageHandler.handleAppMessage(message), JSONException.class);
         verify(mMessageHandler, never()).sendJsonCastMessage(
                 any(JSONObject.class), anyString(), anyString(), anyInt());
     }
@@ -447,12 +412,7 @@ public class CastMessageHandlerTest {
         JSONObject actualMessage = buildActualAppMessage();
         final JSONObject message = buildAppMessage(CLIENT_ID1, NAMESPACE1, actualMessage);
         message.put("message", new JSONObject());
-        expectException(new CheckedRunnable() {
-                @Override
-                public void run() throws Exception {
-                    mMessageHandler.handleAppMessage(message);
-                }
-            }, JSONException.class);
+        expectException(() -> mMessageHandler.handleAppMessage(message), JSONException.class);
         verify(mMessageHandler, never()).sendJsonCastMessage(
                 any(JSONObject.class), anyString(), anyString(), anyInt());
     }
@@ -465,12 +425,7 @@ public class CastMessageHandlerTest {
         JSONObject actualMessage = buildActualAppMessage();
         final JSONObject message = buildAppMessage(CLIENT_ID1, NAMESPACE1, actualMessage);
         message.put("message", "wrong type app message");
-        expectException(new CheckedRunnable() {
-                @Override
-                public void run() throws Exception {
-                    mMessageHandler.handleAppMessage(message);
-                }
-            }, JSONException.class);
+        expectException(() -> mMessageHandler.handleAppMessage(message), JSONException.class);
         verify(mMessageHandler, never()).sendJsonCastMessage(
                 any(JSONObject.class), anyString(), anyString(), anyInt());
     }
@@ -483,12 +438,7 @@ public class CastMessageHandlerTest {
         JSONObject actualMessage = buildActualAppMessage();
         final JSONObject message = buildAppMessage(CLIENT_ID1, NAMESPACE1, actualMessage);
         message.remove("clientId");
-        expectException(new CheckedRunnable() {
-                @Override
-                public void run() throws Exception {
-                    mMessageHandler.handleAppMessage(message);
-                }
-            }, JSONException.class);
+        expectException(() -> mMessageHandler.handleAppMessage(message), JSONException.class);
         verify(mMessageHandler, never()).sendJsonCastMessage(
                 any(JSONObject.class), anyString(), anyString(), anyInt());
     }

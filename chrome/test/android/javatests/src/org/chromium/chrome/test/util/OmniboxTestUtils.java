@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 /**
  * Utility methods and classes for testing the Omnibox.
@@ -146,19 +145,16 @@ public class OmniboxTestUtils {
         public void start(Profile profile, String url, final String text,
                 boolean preventInlineAutocomplete, boolean focusedFromFakebox) {
             mStartAutocompleteCalled = true;
-            mSuggestionsDispatcher = new Runnable() {
-                @Override
-                public void run() {
-                    List<SuggestionsResult> suggestions =
-                            mSuggestions.get(text.toLowerCase(Locale.US));
-                    if (suggestions == null) return;
+            mSuggestionsDispatcher = () -> {
+                List<SuggestionsResult> suggestions =
+                        mSuggestions.get(text.toLowerCase(Locale.US));
+                if (suggestions == null) return;
 
-                    for (int i = 0; i < suggestions.size(); i++) {
-                        onSuggestionsReceived(
-                                suggestions.get(i).mSuggestions,
-                                suggestions.get(i).mAutocompleteText,
-                                0);
-                    }
+                for (int i = 0; i < suggestions.size(); i++) {
+                    onSuggestionsReceived(
+                            suggestions.get(i).mSuggestions,
+                            suggestions.get(i).mAutocompleteText,
+                            0);
                 }
             };
             mView.post(mSuggestionsDispatcher);
@@ -198,13 +194,8 @@ public class OmniboxTestUtils {
      */
     public static class StubAutocompleteController extends AutocompleteController {
         public StubAutocompleteController() {
-            super(new OnSuggestionsReceivedListener() {
-                @Override
-                public void onSuggestionsReceived(List<OmniboxSuggestion> suggestions,
-                        String inlineAutocompleteText) {
-                    Assert.fail("No autocomplete suggestions should be received");
-                }
-            });
+            super((suggestions, inlineAutocompleteText) -> Assert.fail(
+                    "No autocomplete suggestions should be received"));
         }
 
         @Override
@@ -256,23 +247,15 @@ public class OmniboxTestUtils {
      * @return Whether the UrlBar has focus.
      */
     public static boolean doesUrlBarHaveFocus(final UrlBar urlBar) {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return urlBar.hasFocus();
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> urlBar.hasFocus());
     }
 
     private static boolean isKeyboardActiveForView(final View view) {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                InputMethodManager imm =
-                        (InputMethodManager) view.getContext().getSystemService(
-                                Context.INPUT_METHOD_SERVICE);
-                return imm.isActive(view);
-            }
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            InputMethodManager imm =
+                    (InputMethodManager) view.getContext().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+            return imm.isActive(view);
         });
     }
 
@@ -294,12 +277,7 @@ public class OmniboxTestUtils {
 
             TouchCommon.singleClickView(urlBar);
         } else {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    urlBar.clearFocus();
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(() -> urlBar.clearFocus());
         }
     }
 

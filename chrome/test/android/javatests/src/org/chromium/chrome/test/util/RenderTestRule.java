@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * A TestRule for creating Render Tests. An exception will be thrown after the test method completes
@@ -137,18 +136,15 @@ public class RenderTestRule extends TestWatcher {
     public void render(final View view, String id) throws IOException {
         Assert.assertTrue("Render Tests must have the RenderTest feature.", mHasRenderTestFeature);
 
-        Bitmap testBitmap = ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Bitmap>() {
-            @Override
-            public Bitmap call() throws Exception {
-                int height = view.getMeasuredHeight();
-                int width = view.getMeasuredWidth();
-                if (height <= 0 || width <= 0) {
-                    throw new IllegalStateException(
-                            "Invalid view dimensions: " + width + "x" + height);
-                }
-
-                return UiUtils.generateScaledScreenshot(view, 0, Bitmap.Config.ARGB_8888);
+        Bitmap testBitmap = ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            int height = view.getMeasuredHeight();
+            int width = view.getMeasuredWidth();
+            if (height <= 0 || width <= 0) {
+                throw new IllegalStateException(
+                        "Invalid view dimensions: " + width + "x" + height);
             }
+
+            return UiUtils.generateScaledScreenshot(view, 0, Bitmap.Config.ARGB_8888);
         });
 
         String filename = imageName(mTestClassName, mVariantPrefix, id);

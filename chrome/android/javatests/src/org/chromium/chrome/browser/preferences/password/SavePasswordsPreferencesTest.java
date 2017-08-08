@@ -38,51 +38,41 @@ public class SavePasswordsPreferencesTest {
     @SmallTest
     @Feature({"Preferences"})
     public void testSavePasswordsSwitch() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PrefServiceBridge.getInstance().setRememberPasswordsEnabled(true);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> PrefServiceBridge.getInstance().setRememberPasswordsEnabled(true));
 
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
                         SavePasswordsPreferences.class.getName());
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                SavePasswordsPreferences savedPasswordPrefs =
-                        (SavePasswordsPreferences) preferences.getFragmentForTest();
-                ChromeSwitchPreference onOffSwitch = (ChromeSwitchPreference)
-                        savedPasswordPrefs.findPreference(
-                                SavePasswordsPreferences.PREF_SAVE_PASSWORDS_SWITCH);
-                Assert.assertTrue(onOffSwitch.isChecked());
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            SavePasswordsPreferences savedPasswordPrefs =
+                    (SavePasswordsPreferences) preferences.getFragmentForTest();
+            ChromeSwitchPreference onOffSwitch = (ChromeSwitchPreference)
+                    savedPasswordPrefs.findPreference(
+                            SavePasswordsPreferences.PREF_SAVE_PASSWORDS_SWITCH);
+            Assert.assertTrue(onOffSwitch.isChecked());
 
-                PreferencesTest.clickPreference(savedPasswordPrefs, onOffSwitch);
-                Assert.assertFalse(PrefServiceBridge.getInstance().isRememberPasswordsEnabled());
-                PreferencesTest.clickPreference(savedPasswordPrefs, onOffSwitch);
-                Assert.assertTrue(PrefServiceBridge.getInstance().isRememberPasswordsEnabled());
+            PreferencesTest.clickPreference(savedPasswordPrefs, onOffSwitch);
+            Assert.assertFalse(PrefServiceBridge.getInstance().isRememberPasswordsEnabled());
+            PreferencesTest.clickPreference(savedPasswordPrefs, onOffSwitch);
+            Assert.assertTrue(PrefServiceBridge.getInstance().isRememberPasswordsEnabled());
 
-                preferences.finish();
+            preferences.finish();
 
-                PrefServiceBridge.getInstance().setRememberPasswordsEnabled(false);
-            }
+            PrefServiceBridge.getInstance().setRememberPasswordsEnabled(false);
         });
 
         final Preferences preferences2 =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
                         SavePasswordsPreferences.class.getName());
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                SavePasswordsPreferences savedPasswordPrefs =
-                        (SavePasswordsPreferences) preferences2.getFragmentForTest();
-                ChromeSwitchPreference onOffSwitch = (ChromeSwitchPreference)
-                        savedPasswordPrefs.findPreference(
-                                SavePasswordsPreferences.PREF_SAVE_PASSWORDS_SWITCH);
-                Assert.assertFalse(onOffSwitch.isChecked());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            SavePasswordsPreferences savedPasswordPrefs =
+                    (SavePasswordsPreferences) preferences2.getFragmentForTest();
+            ChromeSwitchPreference onOffSwitch = (ChromeSwitchPreference)
+                    savedPasswordPrefs.findPreference(
+                            SavePasswordsPreferences.PREF_SAVE_PASSWORDS_SWITCH);
+            Assert.assertFalse(onOffSwitch.isChecked());
         });
     }
 
@@ -94,53 +84,43 @@ public class SavePasswordsPreferencesTest {
     @SmallTest
     @Feature({"Preferences"})
     public void testAutoSignInCheckbox() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PrefServiceBridge.getInstance().setPasswordManagerAutoSigninEnabled(true);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> PrefServiceBridge.getInstance().setPasswordManagerAutoSigninEnabled(true));
 
         final Preferences preferences =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
                         SavePasswordsPreferences.class.getName());
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                SavePasswordsPreferences passwordPrefs =
-                        (SavePasswordsPreferences) preferences.getFragmentForTest();
-                ChromeBaseCheckBoxPreference onOffSwitch =
-                        (ChromeBaseCheckBoxPreference) passwordPrefs.findPreference(
-                                SavePasswordsPreferences.PREF_AUTOSIGNIN_SWITCH);
-                Assert.assertTrue(onOffSwitch.isChecked());
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            SavePasswordsPreferences passwordPrefs =
+                    (SavePasswordsPreferences) preferences.getFragmentForTest();
+            ChromeBaseCheckBoxPreference onOffSwitch =
+                    (ChromeBaseCheckBoxPreference) passwordPrefs.findPreference(
+                            SavePasswordsPreferences.PREF_AUTOSIGNIN_SWITCH);
+            Assert.assertTrue(onOffSwitch.isChecked());
 
-                PreferencesTest.clickPreference(passwordPrefs, onOffSwitch);
-                Assert.assertFalse(
-                        PrefServiceBridge.getInstance().isPasswordManagerAutoSigninEnabled());
-                PreferencesTest.clickPreference(passwordPrefs, onOffSwitch);
-                Assert.assertTrue(
-                        PrefServiceBridge.getInstance().isPasswordManagerAutoSigninEnabled());
+            PreferencesTest.clickPreference(passwordPrefs, onOffSwitch);
+            Assert.assertFalse(
+                    PrefServiceBridge.getInstance().isPasswordManagerAutoSigninEnabled());
+            PreferencesTest.clickPreference(passwordPrefs, onOffSwitch);
+            Assert.assertTrue(
+                    PrefServiceBridge.getInstance().isPasswordManagerAutoSigninEnabled());
 
-                preferences.finish();
+            preferences.finish();
 
-                PrefServiceBridge.getInstance().setPasswordManagerAutoSigninEnabled(false);
-            }
+            PrefServiceBridge.getInstance().setPasswordManagerAutoSigninEnabled(false);
         });
 
         final Preferences preferences2 =
                 PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
                         SavePasswordsPreferences.class.getName());
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                SavePasswordsPreferences passwordPrefs =
-                        (SavePasswordsPreferences) preferences2.getFragmentForTest();
-                ChromeBaseCheckBoxPreference onOffSwitch =
-                        (ChromeBaseCheckBoxPreference) passwordPrefs.findPreference(
-                                SavePasswordsPreferences.PREF_AUTOSIGNIN_SWITCH);
-                Assert.assertFalse(onOffSwitch.isChecked());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            SavePasswordsPreferences passwordPrefs =
+                    (SavePasswordsPreferences) preferences2.getFragmentForTest();
+            ChromeBaseCheckBoxPreference onOffSwitch =
+                    (ChromeBaseCheckBoxPreference) passwordPrefs.findPreference(
+                            SavePasswordsPreferences.PREF_AUTOSIGNIN_SWITCH);
+            Assert.assertFalse(onOffSwitch.isChecked());
         });
     }
 }

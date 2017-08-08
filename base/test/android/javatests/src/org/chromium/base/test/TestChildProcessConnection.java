@@ -5,7 +5,6 @@
 package org.chromium.base.test;
 
 import android.content.ComponentName;
-import android.content.Intent;
 import android.os.Bundle;
 
 import org.chromium.base.process_launcher.ChildProcessConnection;
@@ -44,13 +43,7 @@ public class TestChildProcessConnection extends ChildProcessConnection {
     public TestChildProcessConnection(ComponentName serviceName, boolean bindToCaller,
             boolean bindAsExternalService, Bundle serviceBundle) {
         super(null /* context */, serviceName, bindToCaller, bindAsExternalService, serviceBundle,
-                new ChildServiceConnectionFactory() {
-                    @Override
-                    public ChildServiceConnection createConnection(Intent bindIntent, int bindFlags,
-                            ChildServiceConnectionDelegate delegate) {
-                        return new MockChildServiceConnection();
-                    }
-                });
+                (bindIntent, bindFlags, delegate) -> new MockChildServiceConnection());
     }
 
     public void setPid(int pid) {

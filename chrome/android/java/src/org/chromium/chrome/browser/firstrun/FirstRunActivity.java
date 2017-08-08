@@ -289,13 +289,10 @@ public class FirstRunActivity extends AsyncInitializationActivity implements Fir
     public void finishNativeInitialization() {
         super.finishNativeInitialization();
 
-        Runnable onNativeFinished = new Runnable() {
-            @Override
-            public void run() {
-                if (isActivityDestroyed()) return;
+        Runnable onNativeFinished = () -> {
+            if (isActivityDestroyed()) return;
 
-                onNativeDependenciesFullyInitialized();
-            }
+            onNativeDependenciesFullyInitialized();
         };
         TemplateUrlService.getInstance().runWhenLoaded(onNativeFinished);
     }
@@ -568,16 +565,13 @@ public class FirstRunActivity extends AsyncInitializationActivity implements Fir
         try {
             // After the PendingIntent has been sent, send a first run callback to custom tabs if
             // necessary.
-            PendingIntent.OnFinished onFinished = new PendingIntent.OnFinished() {
-                @Override
-                public void onSendFinished(PendingIntent pendingIntent, Intent intent,
-                        int resultCode, String resultData, Bundle resultExtras) {
-                    if (ChromeLauncherActivity.isCustomTabIntent(intent)) {
-                        CustomTabsConnection.getInstance().sendFirstRunCallbackIfNecessary(
-                                intent, complete);
-                    }
-                }
-            };
+            PendingIntent.OnFinished onFinished =
+                    (pendingIntent1, intent, resultCode, resultData, resultExtras) -> {
+                        if (ChromeLauncherActivity.isCustomTabIntent(intent)) {
+                            CustomTabsConnection.getInstance().sendFirstRunCallbackIfNecessary(
+                                    intent, complete);
+                        }
+                    };
 
             // Use the PendingIntent to send the intent that originally launched Chrome. The intent
             // will go back to the ChromeLauncherActivity, which will route it accordingly.
@@ -641,12 +635,9 @@ public class FirstRunActivity extends AsyncInitializationActivity implements Fir
      * @return The simple constructor for a given page type (no parameters, no tuning).
      */
     public static Callable<FirstRunPage> pageOf(final Class<? extends FirstRunPage> clazz) {
-        return new Callable<FirstRunPage>() {
-            @Override
-            public FirstRunPage call() throws Exception {
-                Constructor<? extends FirstRunPage> constructor = clazz.getDeclaredConstructor();
-                return constructor.newInstance();
-            }
+        return () -> {
+            Constructor<? extends FirstRunPage> constructor = clazz.getDeclaredConstructor();
+            return constructor.newInstance();
         };
     }
 

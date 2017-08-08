@@ -87,12 +87,7 @@ class CustomTabBottomBarDelegate implements FullscreenListener {
                 final PendingIntent pendingIntent = params.getPendingIntent();
                 OnClickListener clickListener = null;
                 if (pendingIntent != null) {
-                    clickListener = new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            sendPendingIntentWithUrl(pendingIntent, null, mActivity);
-                        }
-                    };
+                    clickListener = v -> sendPendingIntentWithUrl(pendingIntent, null, mActivity);
                 }
                 layout.addView(
                         params.buildBottomBarButton(mActivity, getBottomBarView(), clickListener));
@@ -164,12 +159,9 @@ class CustomTabBottomBarDelegate implements FullscreenListener {
         mBottomBarView.animate().alpha(0f).translationY(mBottomBarView.getHeight())
                 .setInterpolator(BakedBezierInterpolator.TRANSFORM_CURVE)
                 .setDuration(SLIDE_ANIMATION_DURATION_MS)
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        ((ViewGroup) mBottomBarView.getParent()).removeView(mBottomBarView);
-                        mBottomBarView = null;
-                    }
+                .withEndAction(() -> {
+                    ((ViewGroup) mBottomBarView.getParent()).removeView(mBottomBarView);
+                    mBottomBarView = null;
                 }).start();
         mFullscreenManager.setBottomControlsHeight(0);
     }

@@ -259,34 +259,19 @@ public class ChildProcessConnection {
         mBindToCaller = bindToCaller;
 
         if (connectionFactory == null) {
-            connectionFactory = new ChildServiceConnectionFactory() {
-                @Override
-                public ChildServiceConnection createConnection(
-                        Intent bindIntent, int bindFlags, ChildServiceConnectionDelegate delegate) {
-                    return new ChildServiceConnectionImpl(context, bindIntent, bindFlags, delegate);
-                }
-            };
+            connectionFactory = (bindIntent, bindFlags, delegate) -> new ChildServiceConnectionImpl(
+                    context, bindIntent, bindFlags, delegate);
         }
 
         ChildServiceConnectionDelegate delegate = new ChildServiceConnectionDelegate() {
             @Override
             public void onServiceConnected(final IBinder service) {
-                mLauncherHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        onServiceConnectedOnLauncherThread(service);
-                    }
-                });
+                mLauncherHandler.post(() -> onServiceConnectedOnLauncherThread(service));
             }
 
             @Override
             public void onServiceDisconnected() {
-                mLauncherHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        onServiceDisconnectedOnLauncherThread();
-                    }
-                });
+                mLauncherHandler.post(() -> onServiceDisconnectedOnLauncherThread());
             }
         };
 
@@ -498,12 +483,7 @@ public class ChildProcessConnection {
             ICallbackInt pidCallback = new ICallbackInt.Stub() {
                 @Override
                 public void call(final int pid) {
-                    mLauncherHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            onSetupConnectionResult(pid);
-                        }
-                    });
+                    mLauncherHandler.post(() -> onSetupConnectionResult(pid));
                 }
             };
             try {

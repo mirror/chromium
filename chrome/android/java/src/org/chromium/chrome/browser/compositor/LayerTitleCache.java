@@ -15,7 +15,6 @@ import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.compositor.layouts.content.TitleBitmapFactory;
 import org.chromium.chrome.browser.favicon.FaviconHelper;
-import org.chromium.chrome.browser.favicon.FaviconHelper.FaviconImageCallback;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
@@ -164,12 +163,7 @@ public class LayerTitleCache implements TitleCache {
                 Profile.getLastUsedProfile(),
                 tab.getUrl(),
                 mFaviconSize,
-                new FaviconImageCallback() {
-                    @Override
-                    public void onFaviconAvailable(Bitmap favicon, String iconUrl) {
-                        updateFaviconFromHistory(tab, favicon);
-                    }
-                });
+                (favicon, iconUrl) -> updateFaviconFromHistory(tab, favicon));
     }
 
     /**

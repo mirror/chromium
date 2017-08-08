@@ -6,8 +6,6 @@ package org.chromium.content.browser.input;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.PopupWindow;
 
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.ui.DropdownAdapter;
@@ -31,12 +29,9 @@ public class SelectPopupDropdown implements SelectPopup {
         mContentViewCore = contentViewCore;
         mContext = mContentViewCore.getContext();
         mDropdownPopupWindow = new DropdownPopupWindow(mContext, anchorView);
-        mDropdownPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                notifySelection(new int[] {position});
-                hide(false);
-            }
+        mDropdownPopupWindow.setOnItemClickListener((parent, view, position, id) -> {
+            notifySelection(new int[]{position});
+            hide(false);
         });
 
         int initialSelection = -1;
@@ -49,12 +44,7 @@ public class SelectPopupDropdown implements SelectPopup {
                 null /* dividerColor */, null /* dropdownItemHeight */, null /* margin */));
         mDropdownPopupWindow.setRtl(rightAligned);
         mDropdownPopupWindow.setOnDismissListener(
-                new PopupWindow.OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-                        notifySelection(null);
-                    }
-                });
+                () -> notifySelection(null));
     }
 
     private void notifySelection(int[] indicies) {

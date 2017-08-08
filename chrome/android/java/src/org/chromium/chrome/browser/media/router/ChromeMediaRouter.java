@@ -34,15 +34,13 @@ public class ChromeMediaRouter implements MediaRouteManager {
     private static final String TAG = "MediaRouter";
 
     private static MediaRouteProvider.Factory sRouteProviderFactory =
-            new MediaRouteProvider.Factory() {
-                public void addProviders(MediaRouteManager manager) {
-                    MediaRouteProvider castProvider = CastMediaRouteProvider.create(manager);
-                    manager.addMediaRouteProvider(castProvider);
+            manager -> {
+                MediaRouteProvider castProvider = CastMediaRouteProvider.create(manager);
+                manager.addMediaRouteProvider(castProvider);
 
-                    MediaRouteProvider remotingProvider =
-                            RemotingMediaRouteProvider.create(manager);
-                    manager.addMediaRouteProvider(remotingProvider);
-                }
+                MediaRouteProvider remotingProvider =
+                        RemotingMediaRouteProvider.create(manager);
+                manager.addMediaRouteProvider(remotingProvider);
             };
 
     // The pointer to the native object. Can be null only during tests.

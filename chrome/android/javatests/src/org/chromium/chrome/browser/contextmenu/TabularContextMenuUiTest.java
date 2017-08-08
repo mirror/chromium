@@ -90,13 +90,9 @@ public class TabularContextMenuUiTest {
                                           .inflate(R.layout.tabular_context_menu, null);
         final TabularContextMenuViewPager pager =
                 (TabularContextMenuViewPager) tabularContextMenu.findViewById(R.id.custom_pager);
-        View view = ThreadUtils.runOnUiThreadBlocking(new Callable<View>() {
-            @Override
-            public View call() {
-                return dialog.initPagerView(mActivityTestRule.getActivity(),
-                        new MockMenuParams(url), itemGroups, pager);
-            }
-        });
+        View view = ThreadUtils.runOnUiThreadBlocking(
+                () -> dialog.initPagerView(mActivityTestRule.getActivity(),
+                        new MockMenuParams(url), itemGroups, pager));
 
         TabLayout layout = (TabLayout) view.findViewById(R.id.tab_layout);
         Assert.assertEquals(View.GONE, layout.getVisibility());
@@ -121,13 +117,9 @@ public class TabularContextMenuUiTest {
                                           .inflate(R.layout.tabular_context_menu, null);
         final TabularContextMenuViewPager pager =
                 (TabularContextMenuViewPager) tabularContextMenu.findViewById(R.id.custom_pager);
-        View view = ThreadUtils.runOnUiThreadBlocking(new Callable<View>() {
-            @Override
-            public View call() {
-                return dialog.initPagerView(mActivityTestRule.getActivity(),
-                        new MockMenuParams(url), itemGroups, pager);
-            }
-        });
+        View view = ThreadUtils.runOnUiThreadBlocking(
+                () -> dialog.initPagerView(mActivityTestRule.getActivity(),
+                        new MockMenuParams(url), itemGroups, pager));
 
         TabLayout layout = (TabLayout) view.findViewById(R.id.tab_layout);
         Assert.assertEquals(View.VISIBLE, layout.getVisibility());
@@ -142,13 +134,11 @@ public class TabularContextMenuUiTest {
                 CollectionUtil.newArrayList(ChromeContextMenuItem.ADD_TO_CONTACTS,
                         ChromeContextMenuItem.CALL, ChromeContextMenuItem.COPY_LINK_ADDRESS);
         final String expectedUrl = "http://google.com";
-        View view = ThreadUtils.runOnUiThreadBlocking(new Callable<View>() {
-            @Override
-            public View call() {
-                return dialog.createContextMenuPageUi(mActivityTestRule.getActivity(),
-                        new MockMenuParams(expectedUrl), Collections.unmodifiableList(item), false);
-            }
-        });
+        View view = ThreadUtils.runOnUiThreadBlocking(
+                (Callable<View>) () -> dialog.createContextMenuPageUi(
+                        mActivityTestRule.getActivity(),
+                        new MockMenuParams(expectedUrl), Collections.unmodifiableList(item),
+                        false));
 
         TextView textView = (TextView) view.findViewById(R.id.context_header_text);
         Assert.assertEquals(expectedUrl, String.valueOf(textView.getText()));
@@ -162,13 +152,10 @@ public class TabularContextMenuUiTest {
         final List<? extends ContextMenuItem> item =
                 CollectionUtil.newArrayList(ChromeContextMenuItem.ADD_TO_CONTACTS,
                         ChromeContextMenuItem.CALL, ChromeContextMenuItem.COPY_LINK_ADDRESS);
-        View view = ThreadUtils.runOnUiThreadBlocking(new Callable<View>() {
-            @Override
-            public View call() {
-                return dialog.createContextMenuPageUi(mActivityTestRule.getActivity(),
-                        new MockMenuParams(""), Collections.unmodifiableList(item), false);
-            }
-        });
+        View view = ThreadUtils.runOnUiThreadBlocking(
+                (Callable<View>) () -> dialog.createContextMenuPageUi(
+                        mActivityTestRule.getActivity(),
+                        new MockMenuParams(""), Collections.unmodifiableList(item), false));
 
         Assert.assertEquals(view.findViewById(R.id.context_header_text).getVisibility(), View.GONE);
         Assert.assertEquals(view.findViewById(R.id.context_divider).getVisibility(), View.GONE);
@@ -182,14 +169,11 @@ public class TabularContextMenuUiTest {
         final List<? extends ContextMenuItem> item =
                 CollectionUtil.newArrayList(ChromeContextMenuItem.ADD_TO_CONTACTS,
                         ChromeContextMenuItem.CALL, ChromeContextMenuItem.COPY_LINK_ADDRESS);
-        View view = ThreadUtils.runOnUiThreadBlocking(new Callable<View>() {
-            @Override
-            public View call() {
-                return dialog.createContextMenuPageUi(mActivityTestRule.getActivity(),
+        View view = ThreadUtils.runOnUiThreadBlocking(
+                (Callable<View>) () -> dialog.createContextMenuPageUi(
+                        mActivityTestRule.getActivity(),
                         new MockMenuParams("http://google.com"), Collections.unmodifiableList(item),
-                        false);
-            }
-        });
+                        false));
 
         final TextView headerTextView = (TextView) view.findViewById(R.id.context_header_text);
         int expectedMaxLines = 1;
@@ -197,12 +181,7 @@ public class TabularContextMenuUiTest {
         Assert.assertEquals("Expected a different number of default maximum lines.",
                 expectedMaxLines, actualMaxLines);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                headerTextView.callOnClick();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking((Runnable) () -> headerTextView.callOnClick());
 
         expectedMaxLines = Integer.MAX_VALUE;
         actualMaxLines = headerTextView.getMaxLines();

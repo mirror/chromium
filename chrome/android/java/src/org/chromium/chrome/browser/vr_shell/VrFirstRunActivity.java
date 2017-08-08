@@ -45,12 +45,9 @@ public class VrFirstRunActivity extends Activity {
             return;
         }
         // Show DOFF with a timeout so that this activity has enough time to be the active VR app.
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mApi.exitFromVr(VrShellDelegate.EXIT_VR_RESULT, new Intent());
-            }
-        }, SHOW_DOFF_TIMEOUT_MS);
+        new Handler().postDelayed(
+                () -> mApi.exitFromVr(VrShellDelegate.EXIT_VR_RESULT, new Intent()),
+                SHOW_DOFF_TIMEOUT_MS);
     }
 
     @Override

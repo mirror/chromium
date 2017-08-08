@@ -4,7 +4,8 @@
 
 package org.chromium.chrome.browser.multiwindow;
 
-import static org.chromium.chrome.browser.multiwindow.MultiWindowUtilsTest.createSecondChromeTabbedActivity;
+import static org.chromium.chrome.browser.multiwindow.MultiWindowUtilsTest
+        .createSecondChromeTabbedActivity;
 
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
@@ -38,8 +39,6 @@ import org.chromium.chrome.test.util.MenuUtils;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 
-import java.util.concurrent.Callable;
-
 /**
  * Integration testing for Android's N+ MultiWindow.
  */
@@ -65,12 +64,7 @@ public class MultiWindowIntegrationTest {
     @CommandLineFlags.Add(ChromeSwitches.DISABLE_TAB_MERGING_FOR_TESTING)
     public void testIncognitoNtpHandledCorrectly() throws InterruptedException {
         try {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    FirstRunStatus.setFirstRunFlowComplete(true);
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(() -> FirstRunStatus.setFirstRunFlowComplete(true));
 
             mActivityTestRule.newIncognitoTabFromMenu();
             Assert.assertTrue(mActivityTestRule.getActivity().getActivityTab().isIncognito());
@@ -78,56 +72,35 @@ public class MultiWindowIntegrationTest {
             final ChromeTabbedActivity2 cta2 =
                     createSecondChromeTabbedActivity(mActivityTestRule.getActivity());
 
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    Context context = ContextUtils.getApplicationContext();
-                    ActivityManager activityManager =
-                            (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-                    for (ActivityManager.AppTask task : activityManager.getAppTasks()) {
-                        if (mActivityTestRule.getActivity().getTaskId() == task.getTaskInfo().id) {
-                            task.moveToFront();
-                            break;
-                        }
+            ThreadUtils.runOnUiThreadBlocking(() -> {
+                Context context = ContextUtils.getApplicationContext();
+                ActivityManager activityManager =
+                        (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                for (ActivityManager.AppTask task : activityManager.getAppTasks()) {
+                    if (mActivityTestRule.getActivity().getTaskId() == task.getTaskInfo().id) {
+                        task.moveToFront();
+                        break;
                     }
                 }
             });
             CriteriaHelper.pollUiThread(Criteria.equals(ActivityState.RESUMED,
-                    new Callable<Integer>() {
-                        @Override
-                        public Integer call() throws Exception {
-                            return ApplicationStatus.getStateForActivity(
-                                    mActivityTestRule.getActivity());
-                        }
-                    }));
+                    () -> ApplicationStatus.getStateForActivity(
+                            mActivityTestRule.getActivity())));
 
             MenuUtils.invokeCustomMenuActionSync(InstrumentationRegistry.getInstrumentation(),
                     mActivityTestRule.getActivity(), R.id.move_to_other_window_menu_id);
 
             CriteriaHelper.pollUiThread(Criteria.equals(1,
-                    new Callable<Integer>() {
-                        @Override
-                        public Integer call() throws Exception {
-                            return cta2.getTabModelSelector().getModel(true).getCount();
-                        }
-                    }));
+                    () -> cta2.getTabModelSelector().getModel(true).getCount()));
 
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    Assert.assertEquals(1, TabWindowManager.getInstance().getIncognitoTabCount());
+            ThreadUtils.runOnUiThreadBlocking(() -> {
+                Assert.assertEquals(1, TabWindowManager.getInstance().getIncognitoTabCount());
 
-                    // Ensure the same tab exists in the new activity.
-                    Assert.assertEquals(incognitoTabId, cta2.getActivityTab().getId());
-                }
+                // Ensure the same tab exists in the new activity.
+                Assert.assertEquals(incognitoTabId, cta2.getActivityTab().getId());
             });
         } finally {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    FirstRunStatus.setFirstRunFlowComplete(false);
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(() -> FirstRunStatus.setFirstRunFlowComplete(false));
         }
     }
 

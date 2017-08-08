@@ -61,12 +61,7 @@ public class TabModelSelectorObserverTestRule extends ChromeBrowserTestRule {
     }
 
     private void setUp() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                initialize();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> initialize());
     }
 
     private void initialize() {

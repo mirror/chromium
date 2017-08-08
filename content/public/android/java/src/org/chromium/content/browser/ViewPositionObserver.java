@@ -27,12 +27,9 @@ public class ViewPositionObserver implements PositionObserver {
         mView = view;
         mListeners = new ArrayList<Listener>();
         updatePosition();
-        mPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                updatePosition();
-                return true;
-            }
+        mPreDrawListener = () -> {
+            updatePosition();
+            return true;
         };
     }
 

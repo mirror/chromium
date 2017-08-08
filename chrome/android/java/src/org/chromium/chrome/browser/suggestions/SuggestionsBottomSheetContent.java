@@ -4,14 +4,12 @@
 
 package org.chromium.chrome.browser.suggestions;
 
-import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,8 +20,6 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.ContextMenuManager.TouchEnabledDelegate;
-import org.chromium.chrome.browser.ntp.LogoBridge.Logo;
-import org.chromium.chrome.browser.ntp.LogoBridge.LogoObserver;
 import org.chromium.chrome.browser.ntp.LogoDelegateImpl;
 import org.chromium.chrome.browser.ntp.LogoView;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageAdapter;
@@ -97,22 +93,15 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         mRecyclerView = mView.findViewById(R.id.recycler_view);
         mRecyclerView.setBackgroundColor(backgroundColor);
 
-        TouchEnabledDelegate touchEnabledDelegate = new TouchEnabledDelegate() {
-            @Override
-            public void setTouchEnabled(boolean enabled) {
-                activity.getBottomSheet().setTouchEnabled(enabled);
-            }
-        };
+        TouchEnabledDelegate touchEnabledDelegate =
+                enabled -> activity.getBottomSheet().setTouchEnabled(enabled);
 
         mContextMenuManager =
                 new ContextMenuManager(activity, navigationDelegate, touchEnabledDelegate);
         activity.getWindowAndroid().addContextMenuCloseListener(mContextMenuManager);
-        mSuggestionsUiDelegate.addDestructionObserver(new DestructionObserver() {
-            @Override
-            public void onDestroy() {
-                activity.getWindowAndroid().removeContextMenuCloseListener(mContextMenuManager);
-            }
-        });
+        mSuggestionsUiDelegate.addDestructionObserver(
+                () -> activity.getWindowAndroid().removeContextMenuCloseListener(
+                        mContextMenuManager));
 
         UiConfig uiConfig = new UiConfig(mRecyclerView);
         mRecyclerView.init(uiConfig, mContextMenuManager);
@@ -186,17 +175,13 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         });
 
         final LocationBar locationBar = (LocationBar) sheet.findViewById(R.id.location_bar);
-        mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            @SuppressLint("ClickableViewAccessibility")
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (locationBar != null && locationBar.isUrlBarFocused()) {
-                    locationBar.setUrlBarFocus(false);
-                }
-
-                // Never intercept the touch event.
-                return false;
+        mRecyclerView.setOnTouchListener((view, motionEvent) -> {
+            if (locationBar != null && locationBar.isUrlBarFocused()) {
+                locationBar.setUrlBarFocus(false);
             }
+
+            // Never intercept the touch event.
+            return false;
         });
 
         mLogoView = mView.findViewById(R.id.search_provider_logo);
@@ -309,14 +294,11 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
 
         mLogoView.showSearchProviderInitialView();
 
-        mLogoDelegate.getSearchProviderLogo(new LogoObserver() {
-            @Override
-            public void onLogoAvailable(Logo logo, boolean fromCache) {
-                if (logo == null && fromCache) return;
+        mLogoDelegate.getSearchProviderLogo((logo, fromCache) -> {
+            if (logo == null && fromCache) return;
 
-                mLogoView.setDelegate(mLogoDelegate);
-                mLogoView.updateLogo(logo);
-            }
+            mLogoView.setDelegate(mLogoDelegate);
+            mLogoView.updateLogo(logo);
         });
     }
 

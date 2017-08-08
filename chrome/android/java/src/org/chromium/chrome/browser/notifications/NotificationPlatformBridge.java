@@ -514,15 +514,11 @@ public class NotificationPlatformBridge {
                 WebApkValidator.queryWebApkPackage(ContextUtils.getApplicationContext(), origin);
         if (webApkPackage != null) {
             WebApkIdentityServiceClient.CheckBrowserBacksWebApkCallback callback =
-                    new WebApkIdentityServiceClient.CheckBrowserBacksWebApkCallback() {
-                        @Override
-                        public void onChecked(boolean doesBrowserBackWebApk) {
-                            displayNotificationInternal(notificationId, origin, profileId,
-                                    incognito, tag, title, body, image, icon, badge,
-                                    vibrationPattern, timestamp, renotify, silent, actions,
-                                    doesBrowserBackWebApk ? webApkPackage : "");
-                        }
-                    };
+                    doesBrowserBackWebApk -> displayNotificationInternal(notificationId, origin,
+                            profileId,
+                            incognito, tag, title, body, image, icon, badge,
+                            vibrationPattern, timestamp, renotify, silent, actions,
+                            doesBrowserBackWebApk ? webApkPackage : "");
             ChromeWebApkHost.checkChromeBacksWebApkAsync(webApkPackage, callback);
             return;
         }
@@ -736,13 +732,9 @@ public class NotificationPlatformBridge {
                     ContextUtils.getApplicationContext(), origin);
             if (webApkPackageFound != null) {
                 WebApkIdentityServiceClient.CheckBrowserBacksWebApkCallback callback =
-                        new WebApkIdentityServiceClient.CheckBrowserBacksWebApkCallback() {
-                            @Override
-                            public void onChecked(boolean doesBrowserBackWebApk) {
-                                closeNotificationInternal(notificationId, origin, tag,
-                                        doesBrowserBackWebApk ? webApkPackageFound : null);
-                            }
-                        };
+                        doesBrowserBackWebApk -> closeNotificationInternal(notificationId, origin,
+                                tag,
+                                doesBrowserBackWebApk ? webApkPackageFound : null);
                 ChromeWebApkHost.checkChromeBacksWebApkAsync(webApkPackageFound, callback);
                 return;
             }

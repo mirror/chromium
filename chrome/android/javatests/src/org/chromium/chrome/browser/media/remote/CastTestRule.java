@@ -32,7 +32,6 @@ import org.chromium.net.test.EmbeddedTestServer;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -59,12 +58,9 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
         public void onPlaybackStateChanged(final PlayerState newState) {
             // Use postOnUiThread to handling the latch until the current UI task has completed,
             // this makes sure that Cast has finished handling the event.
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if ((mAwaitedStates.contains(newState))) {
-                        mLatch.countDown();
-                    }
+            ThreadUtils.postOnUiThread(() -> {
+                if ((mAwaitedStates.contains(newState))) {
+                    mLatch.countDown();
                 }
             });
         }
@@ -137,24 +133,15 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
     private void setUp() throws Exception {
         startMainActivityOnBlankPage();
         // Temporary until support library is updated, see http://crbug.com/576393.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mOldPolicy = StrictMode.allowThreadDiskWrites();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> mOldPolicy = StrictMode.allowThreadDiskWrites());
         mTestServer = EmbeddedTestServer.createAndStartServer(getInstrumentation().getContext());
     }
 
     private void tearDown() throws Exception {
         mTestServer.stopAndDestroyServer();
         // Temporary until support library is updated, see http://crbug.com/576393.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                StrictMode.setThreadPolicy(mOldPolicy);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> StrictMode.setThreadPolicy(mOldPolicy));
     }
 
     /**
@@ -166,13 +153,10 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
         mAwaitedStates = states;
         mLatch = new CountDownLatch(1);
         // Deal with the case where Chrome is already in the desired state
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mMediaRouteController != null
-                        && states.contains(mMediaRouteController.getDisplayedPlayerState())) {
-                    mLatch.countDown();
-                }
+        ThreadUtils.runOnUiThread(() -> {
+            if (mMediaRouteController != null
+                    && states.contains(mMediaRouteController.getDisplayedPlayerState())) {
+                mLatch.countDown();
             }
         });
         try {
@@ -283,16 +267,13 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
     public void castVideo(final String chromecastName, final Tab tab, final Rect videoRect) {
         Log.i(TAG, "castVideo, videoRect = " + videoRect);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                RemoteMediaPlayerController playerController =
-                        RemoteMediaPlayerController.instance();
-                mMediaRouteController = playerController.getMediaRouteController(
-                        mTestServer.getURL(DEFAULT_VIDEO), mTestServer.getURL(DEFAULT_VIDEO_PAGE));
-                Assert.assertNotNull("Could not get MediaRouteController", mMediaRouteController);
-                mMediaRouteController.addUiListener(new TestListener());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            RemoteMediaPlayerController playerController =
+                    RemoteMediaPlayerController.instance();
+            mMediaRouteController = playerController.getMediaRouteController(
+                    mTestServer.getURL(DEFAULT_VIDEO), mTestServer.getURL(DEFAULT_VIDEO_PAGE));
+            Assert.assertNotNull("Could not get MediaRouteController", mMediaRouteController);
+            mMediaRouteController.addUiListener(new TestListener());
         });
         tapCastButton(tab, videoRect);
 
@@ -330,23 +311,21 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
         tapCastButton(tab, videoRect);
 
         // Wait for the disconnect button
-        final View disconnectButton = RouterTestUtils.waitForView(new Callable<View>() {
-            @Override
-            public View call() {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                if (fm == null) return null;
-                DialogFragment mediaRouteControllerFragment = (DialogFragment) fm.findFragmentByTag(
-                        "android.support.v7.mediarouter:MediaRouteControllerDialogFragment");
-                if (mediaRouteControllerFragment == null) return null;
-                Dialog dialog = mediaRouteControllerFragment.getDialog();
-                if (dialog == null) return null;
-                // The stop button (previously called disconnect) simply uses 'button1' in the
-                // latest version of the support library. See:
-                // https://cs.corp.google.com/#android/frameworks/support/v7/mediarouter/src/android/support/v7/app/MediaRouteControllerDialog.java&l=90.
-                // TODO(aberent) remove dependency on internals of support library
-                //               https://crbug/548599
-                return dialog.findViewById(android.R.id.button1);
-            }
+        final View disconnectButton = RouterTestUtils.waitForView(() -> {
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            if (fm == null) return null;
+            DialogFragment mediaRouteControllerFragment = (DialogFragment) fm.findFragmentByTag(
+                    "android.support.v7.mediarouter:MediaRouteControllerDialogFragment");
+            if (mediaRouteControllerFragment == null) return null;
+            Dialog dialog = mediaRouteControllerFragment.getDialog();
+            if (dialog == null) return null;
+            // The stop button (previously called disconnect) simply uses 'button1' in the
+            // latest version of the support library. See:
+            // https://cs.corp.google.com/#android/frameworks/support/v7/mediarouter/src/android
+            // /support/v7/app/MediaRouteControllerDialog.java&l=90.
+            // TODO(aberent) remove dependency on internals of support library
+            //               https://crbug/548599
+            return dialog.findViewById(android.R.id.button1);
         }, MAX_VIEW_TIME_MS, VIEW_RETRY_MS);
 
         Assert.assertNotNull("No disconnect button", disconnectButton);
@@ -401,12 +380,7 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
     public CastNotificationControl waitForCastNotification() {
         for (int time = 0; time < MAX_VIEW_TIME_MS; time += VIEW_RETRY_MS) {
             CastNotificationControl result = ThreadUtils.runOnUiThreadBlockingNoException(
-                    new Callable<CastNotificationControl>() {
-                        @Override
-                        public CastNotificationControl call() {
-                            return CastNotificationControl.getForTests();
-                        }
-                    });
+                    () -> CastNotificationControl.getForTests());
             if (result != null) {
                 return result;
             }
@@ -420,16 +394,13 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
     }
 
     private boolean isDisconnected() {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                CastNotificationControl notificationControl = CastNotificationControl.getForTests();
-                if (notificationControl != null && notificationControl.isShowingForTests()) {
-                    return false;
-                }
-                if (getUriPlaying() != null) return false;
-                return !isPlayingRemotely();
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            CastNotificationControl notificationControl = CastNotificationControl.getForTests();
+            if (notificationControl != null && notificationControl.isShowingForTests()) {
+                return false;
             }
+            if (getUriPlaying() != null) return false;
+            return !isPlayingRemotely();
         });
     }
 
@@ -444,60 +415,43 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
     }
 
     public String getUriPlaying() {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<String>() {
-            @Override
-            public String call() {
-                if (mMediaRouteController == null) return "";
-                return mMediaRouteController.getUriPlaying();
-            }
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            if (mMediaRouteController == null) return "";
+            return mMediaRouteController.getUriPlaying();
         });
     }
 
     public long getRemotePositionMs() {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Long>() {
-            @Override
-            public Long call() {
-                return getMediaRouteController().getPosition();
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> getMediaRouteController().getPosition());
     }
 
     public long getRemoteDurationMs() {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Long>() {
-            @Override
-            public Long call() {
-                return getMediaRouteController().getDuration();
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> getMediaRouteController().getDuration());
     }
 
     public boolean isPlayingRemotely() {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                RemoteMediaPlayerController playerController =
-                        RemoteMediaPlayerController.getIfExists();
-                if (playerController == null) return false;
-                MediaRouteController routeController =
-                        playerController.getCurrentlyPlayingMediaRouteController();
-                if (routeController == null) return false;
-                return routeController.isPlaying();
-            }
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            RemoteMediaPlayerController playerController =
+                    RemoteMediaPlayerController.getIfExists();
+            if (playerController == null) return false;
+            MediaRouteController routeController =
+                    playerController.getCurrentlyPlayingMediaRouteController();
+            if (routeController == null) return false;
+            return routeController.isPlaying();
         });
     }
 
     public MediaRouteController getMediaRouteController() {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<MediaRouteController>() {
-            @Override
-            public MediaRouteController call() {
-                RemoteMediaPlayerController playerController =
-                        RemoteMediaPlayerController.getIfExists();
-                Assert.assertNotNull("No RemoteMediaPlayerController", playerController);
-                MediaRouteController routeController =
-                        playerController.getCurrentlyPlayingMediaRouteController();
-                Assert.assertNotNull("No MediaRouteController", routeController);
-                return routeController;
-            }
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            RemoteMediaPlayerController playerController =
+                    RemoteMediaPlayerController.getIfExists();
+            Assert.assertNotNull("No RemoteMediaPlayerController", playerController);
+            MediaRouteController routeController =
+                    playerController.getCurrentlyPlayingMediaRouteController();
+            Assert.assertNotNull("No MediaRouteController", routeController);
+            return routeController;
         });
     }
 

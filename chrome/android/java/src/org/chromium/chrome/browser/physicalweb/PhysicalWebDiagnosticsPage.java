@@ -59,12 +59,9 @@ public class PhysicalWebDiagnosticsPage extends BasicNativePage {
         mPageView = inflater.inflate(R.layout.physical_web_diagnostics, null);
 
         mLaunchButton = (Button) mPageView.findViewById(R.id.physical_web_launch);
-        mLaunchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PhysicalWebUma.onActivityReferral(PhysicalWebUma.DIAGNOSTICS_REFERER);
-                PhysicalWeb.showUrlList();
-            }
+        mLaunchButton.setOnClickListener(v -> {
+            PhysicalWebUma.onActivityReferral(PhysicalWebUma.DIAGNOSTICS_REFERER);
+            PhysicalWeb.showUrlList();
         });
 
         mDiagnosticsText = (TextView) mPageView.findViewById(R.id.physical_web_diagnostics_text);

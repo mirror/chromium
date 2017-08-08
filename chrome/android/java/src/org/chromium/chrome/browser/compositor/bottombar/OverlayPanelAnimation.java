@@ -157,12 +157,7 @@ public abstract class OverlayPanelAnimation extends OverlayPanelBase
             // has the effect of destroying the Views used by the Panel (which are
             // children of the CompositorViewHolder), and if we do that synchronously
             // it will cause a crash in {@link FrameLayout#layoutChildren()}.
-            mContainerView.getHandler().post(new Runnable() {
-                @Override
-                public void run() {
-                    closePanel(StateChangeReason.UNKNOWN, false);
-                }
-            });
+            mContainerView.getHandler().post(() -> closePanel(StateChangeReason.UNKNOWN, false));
         }
     }
 

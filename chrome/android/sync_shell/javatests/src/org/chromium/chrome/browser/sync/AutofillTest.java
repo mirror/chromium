@@ -21,7 +21,6 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * Test suite for the autofill profile sync data type.
@@ -186,11 +185,8 @@ public class AutofillTest extends SyncTestBase {
     }
 
     private void waitForClientAutofillProfileCount(int count) {
-        CriteriaHelper.pollInstrumentationThread(Criteria.equals(count, new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return SyncTestUtil.getLocalData(mContext, AUTOFILL_TYPE).size();
-            }
-        }), SyncTestUtil.TIMEOUT_MS, SyncTestUtil.INTERVAL_MS);
+        CriteriaHelper.pollInstrumentationThread(Criteria.equals(count,
+                () -> SyncTestUtil.getLocalData(mContext, AUTOFILL_TYPE).size()),
+                SyncTestUtil.TIMEOUT_MS, SyncTestUtil.INTERVAL_MS);
     }
 }

@@ -240,12 +240,9 @@ public class SavePasswordsPreferences extends PreferenceFragment
         mSavePasswordsSwitch.setOrder(ORDER_SWITCH);
         mSavePasswordsSwitch.setSummaryOn(R.string.text_on);
         mSavePasswordsSwitch.setSummaryOff(R.string.text_off);
-        mSavePasswordsSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                PrefServiceBridge.getInstance().setRememberPasswordsEnabled((boolean) newValue);
-                return true;
-            }
+        mSavePasswordsSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
+            PrefServiceBridge.getInstance().setRememberPasswordsEnabled((boolean) newValue);
+            return true;
         });
         mSavePasswordsSwitch.setManagedPreferenceDelegate(new ManagedPreferenceDelegate() {
             @Override
@@ -269,13 +266,10 @@ public class SavePasswordsPreferences extends PreferenceFragment
         mAutoSignInSwitch.setTitle(R.string.passwords_auto_signin_title);
         mAutoSignInSwitch.setOrder(ORDER_AUTO_SIGNIN_CHECKBOX);
         mAutoSignInSwitch.setSummary(R.string.passwords_auto_signin_description);
-        mAutoSignInSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                PrefServiceBridge.getInstance().setPasswordManagerAutoSigninEnabled(
-                        (boolean) newValue);
-                return true;
-            }
+        mAutoSignInSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
+            PrefServiceBridge.getInstance().setPasswordManagerAutoSigninEnabled(
+                    (boolean) newValue);
+            return true;
         });
         mAutoSignInSwitch.setManagedPreferenceDelegate(new ManagedPreferenceDelegate() {
             @Override

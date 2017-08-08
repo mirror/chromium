@@ -68,16 +68,13 @@ public class EditorTextField extends FrameLayout implements EditorFieldView, Vie
         mInput.setOnEditorActionListener(mEditorActionListener);
 
         mIconsLayer = findViewById(R.id.icons_layer);
-        mIconsLayer.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                    int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                // Padding at the end of mInput to preserve space for mIconsLayer.
-                ApiCompatibilityUtils.setPaddingRelative(mInput,
-                        ApiCompatibilityUtils.getPaddingStart(mInput), mInput.getPaddingTop(),
-                        mIconsLayer.getWidth(), mInput.getPaddingBottom());
-            }
-        });
+        mIconsLayer.addOnLayoutChangeListener(
+                (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+                    // Padding at the end of mInput to preserve space for mIconsLayer.
+                    ApiCompatibilityUtils.setPaddingRelative(mInput,
+                            ApiCompatibilityUtils.getPaddingStart(mInput), mInput.getPaddingTop(),
+                            mIconsLayer.getWidth(), mInput.getPaddingBottom());
+                });
 
         if (fieldModel.getActionIconAction() != null) {
             mActionIcon = (ImageView) mIconsLayer.findViewById(R.id.action_icon);
@@ -96,15 +93,12 @@ public class EditorTextField extends FrameLayout implements EditorFieldView, Vie
         }
 
         // Validate the field when the user de-focuses it.
-        mInput.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    mHasFocusedAtLeastOnce = true;
-                } else if (mHasFocusedAtLeastOnce) {
-                    // Show no errors until the user has already tried to edit the field once.
-                    updateDisplayedError(!mEditorFieldModel.isValid());
-                }
+        mInput.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                mHasFocusedAtLeastOnce = true;
+            } else if (mHasFocusedAtLeastOnce) {
+                // Show no errors until the user has already tried to edit the field once.
+                updateDisplayedError(!mEditorFieldModel.isValid());
             }
         });
 

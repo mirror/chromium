@@ -35,12 +35,9 @@ public class ProgressIndicatorView extends ImageView {
     public ProgressIndicatorView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mShowSpinnerRunnable = new Runnable() {
-            @Override
-            public void run() {
-                mPostedCallback = false;
-                show();
-            }
+        mShowSpinnerRunnable = () -> {
+            mPostedCallback = false;
+            show();
         };
 
         mProgressDrawable = new MaterialProgressDrawable(getContext(), this);

@@ -10,12 +10,9 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.DrawableRes;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
@@ -102,21 +99,15 @@ public abstract class CardViewHolder
 
         mRecyclerView = recyclerView;
 
-        itemView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (recyclerView.interceptCardTapped(CardViewHolder.this)) return;
-                onCardTapped();
-            }
+        itemView.setOnClickListener(v -> {
+            if (recyclerView.interceptCardTapped(CardViewHolder.this)) return;
+            onCardTapped();
         });
 
-        itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-            @Override
-            public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo) {
-                if (isPeeking()) return;
+        itemView.setOnCreateContextMenuListener((menu, view, menuInfo) -> {
+            if (isPeeking()) return;
 
-                contextMenuManager.createContextMenu(menu, itemView, CardViewHolder.this);
-            }
+            contextMenuManager.createContextMenu(menu, itemView, CardViewHolder.this);
         });
 
         mUiConfig = uiConfig;

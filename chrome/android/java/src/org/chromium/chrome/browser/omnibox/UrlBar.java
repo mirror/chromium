@@ -219,11 +219,8 @@ public class UrlBar extends AutocompleteEditText {
                     }
                 });
         mGestureDetector.setOnDoubleTapListener(null);
-        mKeyboardHideHelper = new KeyboardHideHelper(this, new Runnable() {
-            @Override
-            public void run() {
-                if (mUrlBarDelegate != null) mUrlBarDelegate.backKeyPressed();
-            }
+        mKeyboardHideHelper = new KeyboardHideHelper(this, () -> {
+            if (mUrlBarDelegate != null) mUrlBarDelegate.backKeyPressed();
         });
     }
 
@@ -362,12 +359,7 @@ public class UrlBar extends AutocompleteEditText {
                 // Without the call to post(..), the keyboard was not getting shown when the
                 // window regained focus despite this being the final call in the view system
                 // flow.
-                post(new Runnable() {
-                    @Override
-                    public void run() {
-                        UiUtils.showKeyboard(UrlBar.this);
-                    }
-                });
+                post(() -> UiUtils.showKeyboard(UrlBar.this));
             }
         }
     }

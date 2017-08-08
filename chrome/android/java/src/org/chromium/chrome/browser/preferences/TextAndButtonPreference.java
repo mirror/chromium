@@ -32,12 +32,9 @@ public class TextAndButtonPreference extends Preference {
 
         View button = view.findViewById(R.id.preference_click_target);
         button.setClickable(true);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getOnPreferenceClickListener() != null) {
-                    getOnPreferenceClickListener().onPreferenceClick(TextAndButtonPreference.this);
-                }
+        button.setOnClickListener(v -> {
+            if (getOnPreferenceClickListener() != null) {
+                getOnPreferenceClickListener().onPreferenceClick(TextAndButtonPreference.this);
             }
         });
     }

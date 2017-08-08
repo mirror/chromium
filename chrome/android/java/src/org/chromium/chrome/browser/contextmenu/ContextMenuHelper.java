@@ -106,18 +106,11 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
                         ContextMenuHelper.this, mCurrentContextMenuParams, result);
             }
         };
-        mOnMenuShown = new Runnable() {
-            @Override
-            public void run() {
-                RecordHistogram.recordBooleanHistogram("ContextMenu.Shown", mWebContents != null);
-            }
-        };
-        mOnMenuClosed = new Runnable() {
-            @Override
-            public void run() {
-                if (mNativeContextMenuHelper == 0) return;
-                nativeOnContextMenuClosed(mNativeContextMenuHelper);
-            }
+        mOnMenuShown = () -> RecordHistogram.recordBooleanHistogram("ContextMenu.Shown",
+                mWebContents != null);
+        mOnMenuClosed = () -> {
+            if (mNativeContextMenuHelper == 0) return;
+            nativeOnContextMenuClosed(mNativeContextMenuHelper);
         };
 
         if (ChromeFeatureList.isEnabled(ChromeFeatureList.CUSTOM_CONTEXT_MENU)) {

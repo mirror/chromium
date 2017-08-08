@@ -115,12 +115,9 @@ class NativeInitializationController {
 
             // Allow the UI thread to continue its initialization - so that this call back
             // doesn't block priority work on the UI thread until it's idle.
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (mActivityDelegate.isActivityDestroyed()) return;
-                    mActivityDelegate.onCreateWithNative();
-                }
+            mHandler.post(() -> {
+                if (mActivityDelegate.isActivityDestroyed()) return;
+                mActivityDelegate.onCreateWithNative();
             });
         }
     }

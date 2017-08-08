@@ -139,12 +139,8 @@ public class StripLayoutTab
         mLoadTracker = new TabLoadTracker(id, loadTrackerCallback);
         mRenderHost = renderHost;
         mIncognito = incognito;
-        CompositorOnClickHandler closeClickAction = new CompositorOnClickHandler() {
-            @Override
-            public void onClick(long time) {
-                mDelegate.handleCloseButtonClick(StripLayoutTab.this, time);
-            }
-        };
+        CompositorOnClickHandler closeClickAction = time -> mDelegate.handleCloseButtonClick(
+                StripLayoutTab.this, time);
         mCloseButton = new CompositorButton(context, 0, 0, closeClickAction);
         mCloseButton.setResources(R.drawable.btn_tab_close_normal, R.drawable.btn_tab_close_pressed,
                 R.drawable.btn_tab_close_white_normal, R.drawable.btn_tab_close_white_pressed);

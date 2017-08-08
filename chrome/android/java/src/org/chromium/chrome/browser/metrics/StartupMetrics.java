@@ -133,12 +133,10 @@ public class StartupMetrics {
             }
         } else {
             // Call back later to record the histogram after 10s have elapsed.
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    recordHistogram(false);
-                }
-            }, (RECORDING_THRESHOLD_NS - (System.nanoTime() - mStartTimeNanoMonotonic)) / 1000000);
+            mHandler.postDelayed(
+                    () -> recordHistogram(false),
+                    (RECORDING_THRESHOLD_NS - (System.nanoTime() - mStartTimeNanoMonotonic))
+                            / 1000000);
         }
     }
 }

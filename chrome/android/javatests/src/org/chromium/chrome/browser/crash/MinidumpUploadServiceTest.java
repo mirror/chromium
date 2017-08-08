@@ -209,13 +209,10 @@ public class MinidumpUploadServiceTest extends CrashTestCase {
             @Override
             protected void onHandleIntent(Intent intent) {
                 try {
-                    runTestOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Set up basically a fake.
-                            if (!NetworkChangeNotifier.isInitialized()) {
-                                NetworkChangeNotifier.init();
-                            }
+                    runTestOnUiThread(() -> {
+                        // Set up basically a fake.
+                        if (!NetworkChangeNotifier.isInitialized()) {
+                            NetworkChangeNotifier.init();
                         }
                     });
                 } catch (Throwable t) {
@@ -228,17 +225,14 @@ public class MinidumpUploadServiceTest extends CrashTestCase {
                 if (mTriggerNetworkChange) {
                     mTriggerNetworkChange = false;
                     try {
-                        runTestOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                NetworkChangeNotifier.setAutoDetectConnectivityState(false);
-                                // Quickly force the state to be connected and back to disconnected.
-                                // An event should be triggered for retry logics.
-                                setIsNetworkAvailableForCrashUploads(false);
-                                NetworkChangeNotifier.forceConnectivityState(false);
-                                setIsNetworkAvailableForCrashUploads(true);
-                                NetworkChangeNotifier.forceConnectivityState(true);
-                            }
+                        runTestOnUiThread(() -> {
+                            NetworkChangeNotifier.setAutoDetectConnectivityState(false);
+                            // Quickly force the state to be connected and back to disconnected.
+                            // An event should be triggered for retry logics.
+                            setIsNetworkAvailableForCrashUploads(false);
+                            NetworkChangeNotifier.forceConnectivityState(false);
+                            setIsNetworkAvailableForCrashUploads(true);
+                            NetworkChangeNotifier.forceConnectivityState(true);
                         });
                     } catch (Throwable t) {
                         t.printStackTrace();
@@ -264,12 +258,7 @@ public class MinidumpUploadServiceTest extends CrashTestCase {
             public ComponentName startService(final Intent intentToCheck) {
                 assertTrue(MinidumpUploadService.ACTION_UPLOAD.equals(intentToCheck.getAction()));
                 // Post to the handler thread to run the retry intent.
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mService.onHandleIntent(intentToCheck);
-                    }
-                });
+                mHandler.post(() -> mService.onHandleIntent(intentToCheck));
                 return new ComponentName(getPackageName(), MinidumpUploadService.class.getName());
             }
 

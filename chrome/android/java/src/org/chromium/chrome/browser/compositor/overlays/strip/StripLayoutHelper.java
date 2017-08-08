@@ -4,7 +4,8 @@
 
 package org.chromium.chrome.browser.compositor.overlays.strip;
 
-import static org.chromium.chrome.browser.compositor.layouts.ChromeAnimation.AnimatableAnimation.createAnimation;
+import static org.chromium.chrome.browser.compositor.layouts.ChromeAnimation.AnimatableAnimation
+        .createAnimation;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,8 +18,6 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListPopupWindow;
 
@@ -31,7 +30,8 @@ import org.chromium.chrome.browser.compositor.layouts.ChromeAnimation.Animation;
 import org.chromium.chrome.browser.compositor.layouts.LayoutRenderHost;
 import org.chromium.chrome.browser.compositor.layouts.LayoutUpdateHost;
 import org.chromium.chrome.browser.compositor.layouts.components.CompositorButton;
-import org.chromium.chrome.browser.compositor.layouts.components.CompositorButton.CompositorOnClickHandler;
+import org.chromium.chrome.browser.compositor.layouts.components.CompositorButton
+        .CompositorOnClickHandler;
 import org.chromium.chrome.browser.compositor.layouts.components.VirtualView;
 import org.chromium.chrome.browser.compositor.layouts.phone.stack.StackScroller;
 import org.chromium.chrome.browser.compositor.overlays.strip.TabLoadTracker.TabLoadTrackerCallback;
@@ -173,12 +173,7 @@ public class StripLayoutHelper implements StripLayoutTab.StripLayoutTabDelegate 
         mReorderMoveStartThreshold = REORDER_MOVE_START_THRESHOLD_DP;
         mUpdateHost = updateHost;
         mRenderHost = renderHost;
-        CompositorOnClickHandler newTabClickHandler = new CompositorOnClickHandler() {
-            @Override
-            public void onClick(long time) {
-                handleNewTabClick();
-            }
-        };
+        CompositorOnClickHandler newTabClickHandler = time -> handleNewTabClick();
         mNewTabButton = new CompositorButton(
                 context, NEW_TAB_BUTTON_WIDTH_DP, NEW_TAB_BUTTON_HEIGHT_DP, newTabClickHandler);
         mNewTabButton.setResources(R.drawable.btn_tabstrip_new_tab_normal,
@@ -202,13 +197,10 @@ public class StripLayoutHelper implements StripLayoutTab.StripLayoutTabDelegate 
                 new String[] {
                         mContext.getString(!mIncognito ? R.string.menu_close_all_tabs
                                                        : R.string.menu_close_all_incognito_tabs)}));
-        mTabMenu.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mTabMenu.dismiss();
-                if (position == ID_CLOSE_ALL_TABS) {
-                    mModel.closeAllTabs(false, false);
-                }
+        mTabMenu.setOnItemClickListener((parent, view, position, id) -> {
+            mTabMenu.dismiss();
+            if (position == ID_CLOSE_ALL_TABS) {
+                mModel.closeAllTabs(false, false);
             }
         });
 

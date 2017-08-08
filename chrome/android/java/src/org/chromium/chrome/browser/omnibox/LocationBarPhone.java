@@ -179,12 +179,7 @@ public class LocationBarPhone extends LocationBarLayout {
 
             // The animation rendering may not yet be 100% complete and hiding the keyboard makes
             // the animation quite choppy.
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    UiUtils.hideKeyboard(mUrlBar);
-                }
-            }, KEYBOARD_HIDE_DELAY_MS);
+            postDelayed(() -> UiUtils.hideKeyboard(mUrlBar), KEYBOARD_HIDE_DELAY_MS);
             // Convert the keyboard back to resize mode (delay the change for an arbitrary amount
             // of time in hopes the keyboard will be completely hidden before making this change).
             // If Chrome Home is enabled, it will handle its own mode changes.
@@ -329,12 +324,9 @@ public class LocationBarPhone extends LocationBarLayout {
         if (delegate == null || delegate.getWindowSoftInputMode() == softInputMode) return;
 
         if (delay) {
-            mKeyboardResizeModeTask = new Runnable() {
-                @Override
-                public void run() {
-                    delegate.setWindowSoftInputMode(softInputMode);
-                    mKeyboardResizeModeTask = null;
-                }
+            mKeyboardResizeModeTask = () -> {
+                delegate.setWindowSoftInputMode(softInputMode);
+                mKeyboardResizeModeTask = null;
             };
             postDelayed(mKeyboardResizeModeTask, KEYBOARD_MODE_CHANGE_DELAY_MS);
         } else {

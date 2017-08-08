@@ -356,16 +356,11 @@ public class RemoteMediaPlayerBridge {
         if (mRouteController == null) return;
         mCookies = cookies;
         mRouteController.checkIfPlayableRemotely(mOriginalSourceUrl, mOriginalFrameUrl, cookies,
-                mUserAgent, new MediaRouteController.MediaValidationCallback() {
-
-                    @Override
-                    public void onResult(
-                            boolean isPlayable, String revisedSourceUrl, String revisedFrameUrl) {
-                        mIsPlayable = isPlayable;
-                        mSourceUrl = revisedSourceUrl;
-                        mFrameUrl = revisedFrameUrl;
-                        onRouteAvailabilityChange();
-                    }
+                mUserAgent, (isPlayable, revisedSourceUrl, revisedFrameUrl) -> {
+                    mIsPlayable = isPlayable;
+                    mSourceUrl = revisedSourceUrl;
+                    mFrameUrl = revisedFrameUrl;
+                    onRouteAvailabilityChange();
                 });
     }
 

@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser.vr_shell;
 
-import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
@@ -150,12 +149,8 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
 
         setPresentationView(mPresentationView);
 
-        getUiLayout().setCloseButtonListener(new Runnable() {
-            @Override
-            public void run() {
-                mDelegate.shutdownVr(true /* disableVrMode */, true /* stayingInChrome */);
-            }
-        });
+        getUiLayout().setCloseButtonListener(
+                () -> mDelegate.shutdownVr(true /* disableVrMode */, true /* stayingInChrome */));
 
         DisplayAndroid primaryDisplay = DisplayAndroid.getNonMultiDisplay(activity);
         mContentVirtualDisplay = VirtualDisplayAndroid.createVirtualDisplay();
@@ -268,20 +263,16 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
             }
         };
 
-        mTouchListener = new View.OnTouchListener() {
-            @Override
-            @SuppressLint("ClickableViewAccessibility")
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                    nativeOnTriggerEvent(mNativeVrShell, true);
-                    return true;
-                } else if (event.getActionMasked() == MotionEvent.ACTION_UP
-                        || event.getActionMasked() == MotionEvent.ACTION_CANCEL) {
-                    nativeOnTriggerEvent(mNativeVrShell, false);
-                    return true;
-                }
-                return false;
+        mTouchListener = (v, event) -> {
+            if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                nativeOnTriggerEvent(mNativeVrShell, true);
+                return true;
+            } else if (event.getActionMasked() == MotionEvent.ACTION_UP
+                    || event.getActionMasked() == MotionEvent.ACTION_CANCEL) {
+                nativeOnTriggerEvent(mNativeVrShell, false);
+                return true;
             }
+            return false;
         };
         // We need a parent for the RenderToSurfaceLayout because we want screen taps to only be
         // routed to the GvrUiLayout, and not propagate through to the NativePage. So screen taps
@@ -308,15 +299,12 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
         mRenderToSurfaceLayout.setVisibility(View.VISIBLE);
         // We need a pre-draw listener to invalidate the native page because scrolling usually
         // doesn't trigger an onDraw call, so our texture won't get updated.
-        mPredrawListener = new OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                if (mRenderToSurfaceLayout.isDirty()) {
-                    mRenderToSurfaceLayout.invalidate();
-                    if (mNativePage != null) mNativePage.getView().invalidate();
-                }
-                return true;
+        mPredrawListener = () -> {
+            if (mRenderToSurfaceLayout.isDirty()) {
+                mRenderToSurfaceLayout.invalidate();
+                if (mNativePage != null) mNativePage.getView().invalidate();
             }
+            return true;
         };
         mRenderToSurfaceLayout.getViewTreeObserver().addOnPreDrawListener(mPredrawListener);
         mRenderToSurfaceLayoutParent.addView(mRenderToSurfaceLayout);

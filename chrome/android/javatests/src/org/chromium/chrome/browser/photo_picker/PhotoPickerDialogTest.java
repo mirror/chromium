@@ -23,7 +23,6 @@ import org.chromium.ui.PhotoPickerListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * Tests for the PhotoPickerDialog class.
@@ -106,14 +105,11 @@ public class PhotoPickerDialogTest extends ChromeActivityTestCaseBase<ChromeActi
     private PhotoPickerDialog createDialog(final boolean multiselect, final List<String> mimeTypes)
             throws Exception {
         final PhotoPickerDialog dialog =
-                ThreadUtils.runOnUiThreadBlocking(new Callable<PhotoPickerDialog>() {
-                    @Override
-                    public PhotoPickerDialog call() {
-                        final PhotoPickerDialog dialog = new PhotoPickerDialog(
-                                getActivity(), PhotoPickerDialogTest.this, multiselect, mimeTypes);
-                        dialog.show();
-                        return dialog;
-                    }
+                ThreadUtils.runOnUiThreadBlocking(() -> {
+                    final PhotoPickerDialog dialog1 = new PhotoPickerDialog(
+                            getActivity(), PhotoPickerDialogTest.this, multiselect, mimeTypes);
+                    dialog1.show();
+                    return dialog1;
                 });
 
         mSelectionDelegate = dialog.getCategoryViewForTesting().getSelectionDelegateForTesting();
@@ -161,12 +157,7 @@ public class PhotoPickerDialogTest extends ChromeActivityTestCaseBase<ChromeActi
     }
 
     private void dismissDialog() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mDialog.dismiss();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mDialog.dismiss());
     }
 
     @LargeTest

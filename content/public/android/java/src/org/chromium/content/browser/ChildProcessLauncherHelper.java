@@ -210,12 +210,7 @@ public class ChildProcessLauncherHelper {
      */
     public static void warmUp(final Context context) {
         assert ThreadUtils.runningOnUiThread();
-        LauncherThread.post(new Runnable() {
-            @Override
-            public void run() {
-                warmUpOnLauncherThread(context);
-            }
-        });
+        LauncherThread.post(() -> warmUpOnLauncherThread(context));
     }
 
     private static void warmUpOnLauncherThread(Context context) {
@@ -256,14 +251,11 @@ public class ChildProcessLauncherHelper {
      */
     public static void startModerateBindingManagement(final Context context) {
         assert ThreadUtils.runningOnUiThread();
-        LauncherThread.post(new Runnable() {
-            @Override
-            public void run() {
-                ChildConnectionAllocator allocator = getConnectionAllocator(
-                        context, ChildProcessCreationParams.getDefault(), true /* sandboxed */);
-                getBindingManager().startModerateBindingManagement(
-                        context, allocator.getNumberOfServices());
-            }
+        LauncherThread.post(() -> {
+            ChildConnectionAllocator allocator = getConnectionAllocator(
+                    context, ChildProcessCreationParams.getDefault(), true /* sandboxed */);
+            getBindingManager().startModerateBindingManagement(
+                    context, allocator.getNumberOfServices());
         });
     }
 
@@ -284,12 +276,7 @@ public class ChildProcessLauncherHelper {
     public static void onSentToBackground() {
         assert ThreadUtils.runningOnUiThread();
         sApplicationInForeground = false;
-        LauncherThread.post(new Runnable() {
-            @Override
-            public void run() {
-                getBindingManager().onSentToBackground();
-            }
-        });
+        LauncherThread.post(() -> getBindingManager().onSentToBackground());
     }
 
     /**
@@ -298,12 +285,7 @@ public class ChildProcessLauncherHelper {
     public static void onBroughtToForeground() {
         assert ThreadUtils.runningOnUiThread();
         sApplicationInForeground = true;
-        LauncherThread.post(new Runnable() {
-            @Override
-            public void run() {
-                getBindingManager().onBroughtToForeground();
-            }
-        });
+        LauncherThread.post(() -> getBindingManager().onBroughtToForeground());
     }
 
     @VisibleForTesting
@@ -390,29 +372,26 @@ public class ChildProcessLauncherHelper {
                     // The ChildProcessLauncher may have posted a restart that will create a new
                     // connection with |allocator|. Delay clearing the allocator until that
                     // potential restart task has been run.
-                    LauncherThread.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (allocator.anyConnectionAllocated()
-                                    || !sSandboxedChildConnectionAllocatorMap.containsKey(
-                                               packageName)) {
-                                // Note the second condition above guards against multiple tasks
-                                // like this one posted consecutively removing the listener more
-                                // than once (and asserting).
-                                return;
-                            }
-
-                            // Last connection was freed, the allocator is going aways, remove
-                            // the listener.
-                            allocator.removeListener(listener);
-                            Log.w(TAG,
-                                    "Removing empty ChildConnectionAllocator for package "
-                                            + "name = %s,",
-                                    packageName);
-                            ChildConnectionAllocator removedAllocator =
-                                    sSandboxedChildConnectionAllocatorMap.remove(packageName);
-                            assert removedAllocator == allocator;
+                    LauncherThread.post(() -> {
+                        if (allocator.anyConnectionAllocated()
+                                || !sSandboxedChildConnectionAllocatorMap.containsKey(
+                                packageName)) {
+                            // Note the second condition above guards against multiple tasks
+                            // like this one posted consecutively removing the listener more
+                            // than once (and asserting).
+                            return;
                         }
+
+                        // Last connection was freed, the allocator is going aways, remove
+                        // the listener.
+                        allocator.removeListener(listener);
+                        Log.w(TAG,
+                                "Removing empty ChildConnectionAllocator for package "
+                                        + "name = %s,",
+                                packageName);
+                        ChildConnectionAllocator removedAllocator =
+                                sSandboxedChildConnectionAllocatorMap.remove(packageName);
+                        assert removedAllocator == allocator;
                     });
                 }
             });

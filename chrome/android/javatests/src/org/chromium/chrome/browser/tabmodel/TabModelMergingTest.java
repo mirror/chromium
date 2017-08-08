@@ -7,7 +7,6 @@ package org.chromium.chrome.browser.tabmodel;
 import static org.chromium.base.test.util.Restriction.RESTRICTION_TYPE_NON_LOW_END_DEVICE;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -22,7 +21,6 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
-import org.chromium.base.ApplicationStatus.ActivityStateListener;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
@@ -109,14 +107,11 @@ public class TabModelMergingTest {
         // Initialize activity states and register for state change events.
         mActivity1State = ApplicationStatus.getStateForActivity(mActivity1);
         mActivity2State = ApplicationStatus.getStateForActivity(mActivity2);
-        ApplicationStatus.registerStateListenerForAllActivities(new ActivityStateListener() {
-            @Override
-            public void onActivityStateChange(Activity activity, int newState) {
-                if (activity.equals(mActivity1)) {
-                    mActivity1State = newState;
-                } else if (activity.equals(mActivity2)) {
-                    mActivity2State = newState;
-                }
+        ApplicationStatus.registerStateListenerForAllActivities((activity, newState) -> {
+            if (activity.equals(mActivity1)) {
+                mActivity1State = newState;
+            } else if (activity.equals(mActivity2)) {
+                mActivity2State = newState;
             }
         });
     }
@@ -126,21 +121,18 @@ public class TabModelMergingTest {
      * has the expected number of tabs.
      */
     private void createTabsOnUiThread() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // Create normal tabs.
-                mActivity1.getTabCreator(false).createNewTab(new LoadUrlParams(TEST_URL_0),
-                        TabLaunchType.FROM_CHROME_UI, null);
-                mActivity1.getTabCreator(false).createNewTab(new LoadUrlParams(TEST_URL_1),
-                        TabLaunchType.FROM_CHROME_UI, null);
-                mActivity1.getTabCreator(false).createNewTab(new LoadUrlParams(TEST_URL_2),
-                        TabLaunchType.FROM_CHROME_UI, null);
-                mActivity2.getTabCreator(false).createNewTab(new LoadUrlParams(TEST_URL_3),
-                        TabLaunchType.FROM_CHROME_UI, null);
-                mActivity2.getTabCreator(false).createNewTab(new LoadUrlParams(TEST_URL_4),
-                        TabLaunchType.FROM_CHROME_UI, null);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // Create normal tabs.
+            mActivity1.getTabCreator(false).createNewTab(new LoadUrlParams(TEST_URL_0),
+                    TabLaunchType.FROM_CHROME_UI, null);
+            mActivity1.getTabCreator(false).createNewTab(new LoadUrlParams(TEST_URL_1),
+                    TabLaunchType.FROM_CHROME_UI, null);
+            mActivity1.getTabCreator(false).createNewTab(new LoadUrlParams(TEST_URL_2),
+                    TabLaunchType.FROM_CHROME_UI, null);
+            mActivity2.getTabCreator(false).createNewTab(new LoadUrlParams(TEST_URL_3),
+                    TabLaunchType.FROM_CHROME_UI, null);
+            mActivity2.getTabCreator(false).createNewTab(new LoadUrlParams(TEST_URL_4),
+                    TabLaunchType.FROM_CHROME_UI, null);
         });
 
         // ChromeTabbedActivity should have four normal tabs, the one it started with and the three
@@ -187,12 +179,7 @@ public class TabModelMergingTest {
             final String[] expectedTabUrls, final int expectedNumberOfTabs,
             String expectedSelectedTabUrl) {
         // Merge tabs into the activity.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                activity.maybeMergeTabs();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> activity.maybeMergeTabs());
 
         // Wait for all tabs to be merged into the activity.
         CriteriaHelper.pollUiThread(new Criteria() {
@@ -286,12 +273,9 @@ public class TabModelMergingTest {
         Intent intent = createChromeTabbedActivityIntent(mActivity1);
 
         // Save state.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mActivity1.saveState();
-                mActivity2.saveState();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mActivity1.saveState();
+            mActivity2.saveState();
         });
 
         // Destroy both activities.
@@ -359,12 +343,7 @@ public class TabModelMergingTest {
     public void testMergeWhileInTabSwitcher() throws Exception {
         OverviewModeBehaviorWatcher overviewModeWatcher = new OverviewModeBehaviorWatcher(
                 mActivity1.getLayoutManager(), true, false);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mActivity1.getLayoutManager().showOverview(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mActivity1.getLayoutManager().showOverview(false));
         overviewModeWatcher.waitForBehavior();
 
         mergeTabsAndAssert(mActivity1, mMergeIntoActivity1ExpectedTabs);
@@ -400,12 +379,9 @@ public class TabModelMergingTest {
                 InstrumentationRegistry.getInstrumentation(), mActivity2, TEST_URL_6, true);
 
         // Save state.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mActivity1.saveState();
-                mActivity2.saveState();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mActivity1.saveState();
+            mActivity2.saveState();
         });
 
         Assert.assertEquals("Wrong number of incognito tabs in ChromeTabbedActivity", 1,

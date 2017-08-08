@@ -32,7 +32,6 @@ import org.chromium.chrome.test.util.ChromeTabUtils;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.net.test.EmbeddedTestServer;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -73,31 +72,18 @@ public class ChromeTabCreatorTest {
     public void testCreateNewTabInBackgroundLowEnd()
             throws ExecutionException, InterruptedException {
         final Tab fgTab = mActivityTestRule.getActivity().getActivityTab();
-        final Tab bgTab = ThreadUtils.runOnUiThreadBlocking(new Callable<Tab>() {
-            @Override
-            public Tab call() {
-                return mActivityTestRule.getActivity().getCurrentTabCreator().createNewTab(
+        final Tab bgTab = ThreadUtils.runOnUiThreadBlocking(
+                () -> mActivityTestRule.getActivity().getCurrentTabCreator().createNewTab(
                         new LoadUrlParams(mTestServer.getURL(TEST_PATH)),
-                        TabLaunchType.FROM_LONGPRESS_BACKGROUND, fgTab);
-            }
-        });
+                        TabLaunchType.FROM_LONGPRESS_BACKGROUND, fgTab));
 
         // Verify that the background tab is not loading.
         Assert.assertFalse(bgTab.isLoading());
 
         // Switch tabs and verify that the tab is loaded as it gets foregrounded.
-        ChromeTabUtils.waitForTabPageLoaded(bgTab, new Runnable() {
-            @Override
-            public void run() {
-                ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                    @Override
-                    public void run() {
-                        TabModelUtils.setIndex(mActivityTestRule.getActivity().getCurrentTabModel(),
-                                indexOf(bgTab));
-                    }
-                });
-            }
-        });
+        ChromeTabUtils.waitForTabPageLoaded(bgTab, () -> ThreadUtils.runOnUiThreadBlocking(
+                () -> TabModelUtils.setIndex(mActivityTestRule.getActivity().getCurrentTabModel(),
+                        indexOf(bgTab))));
         Assert.assertNotNull(bgTab.getView());
     }
 
@@ -110,14 +96,10 @@ public class ChromeTabCreatorTest {
     @Feature({"Browser"})
     public void testCreateNewTabInBackground() throws ExecutionException, InterruptedException {
         final Tab fgTab = mActivityTestRule.getActivity().getActivityTab();
-        Tab bgTab = ThreadUtils.runOnUiThreadBlocking(new Callable<Tab>() {
-            @Override
-            public Tab call() {
-                return mActivityTestRule.getActivity().getCurrentTabCreator().createNewTab(
+        Tab bgTab = ThreadUtils.runOnUiThreadBlocking(
+                () -> mActivityTestRule.getActivity().getCurrentTabCreator().createNewTab(
                         new LoadUrlParams(mTestServer.getURL(TEST_PATH)),
-                        TabLaunchType.FROM_LONGPRESS_BACKGROUND, fgTab);
-            }
-        });
+                        TabLaunchType.FROM_LONGPRESS_BACKGROUND, fgTab));
 
         // Verify that the background tab is loaded.
         Assert.assertNotNull(bgTab.getView());
@@ -134,17 +116,14 @@ public class ChromeTabCreatorTest {
     @MediumTest
     @Feature({"Browser"})
     public void testCreateNewTabTakesSpareWebContents() throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Tab currentTab = mActivityTestRule.getActivity().getActivityTab();
-                WarmupManager.getInstance().createSpareWebContents();
-                Assert.assertTrue(WarmupManager.getInstance().hasSpareWebContents());
-                mActivityTestRule.getActivity().getCurrentTabCreator().createNewTab(
-                        new LoadUrlParams(mTestServer.getURL(TEST_PATH)),
-                        TabLaunchType.FROM_EXTERNAL_APP, currentTab);
-                Assert.assertFalse(WarmupManager.getInstance().hasSpareWebContents());
-            }
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            Tab currentTab = mActivityTestRule.getActivity().getActivityTab();
+            WarmupManager.getInstance().createSpareWebContents();
+            Assert.assertTrue(WarmupManager.getInstance().hasSpareWebContents());
+            mActivityTestRule.getActivity().getCurrentTabCreator().createNewTab(
+                    new LoadUrlParams(mTestServer.getURL(TEST_PATH)),
+                    TabLaunchType.FROM_EXTERNAL_APP, currentTab);
+            Assert.assertFalse(WarmupManager.getInstance().hasSpareWebContents());
         });
     }
 

@@ -19,7 +19,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
@@ -48,12 +47,7 @@ public class BrowserActionActivityTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         mContext = RuntimeEnvironment.application;
-        Answer<String> answer = new Answer<String>() {
-            @Override
-            public String answer(InvocationOnMock invocation) {
-                return "some.other.app.package.name";
-            }
-        };
+        Answer<String> answer = invocation -> "some.other.app.package.name";
         doAnswer(answer).when(mPendingIntent).getCreatorPackage();
     }
 

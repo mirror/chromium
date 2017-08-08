@@ -40,14 +40,11 @@ public class OmahaService extends OmahaBase implements BackgroundTask {
                 Log.i(TAG, "Scheduled using AlarmManager and IntentService");
             } else {
                 final long delay = nextTimestampMs - currentTimestampMs;
-                ThreadUtils.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (scheduleJobService(getContext(), delay)) {
-                            Log.i(TAG, "Scheduled using JobService");
-                        } else {
-                            Log.e(TAG, "Failed to schedule job");
-                        }
+                ThreadUtils.runOnUiThread(() -> {
+                    if (scheduleJobService(getContext(), delay)) {
+                        Log.i(TAG, "Scheduled using JobService");
+                    } else {
+                        Log.e(TAG, "Failed to schedule job");
                     }
                 });
             }

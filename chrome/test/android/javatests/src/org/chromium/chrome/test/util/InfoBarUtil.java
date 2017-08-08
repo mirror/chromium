@@ -26,12 +26,7 @@ public class InfoBarUtil {
         final View button = infoBar.getView().findViewById(buttonId);
         if (button == null) return false;
         if (click) {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    button.performClick();
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking((Runnable) () -> button.performClick());
         }
         return true;
     }

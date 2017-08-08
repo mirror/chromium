@@ -68,12 +68,7 @@ public class HistoryItemView extends SelectableItemView<HistoryItem> implements 
         mIconImageView = (ImageView) findViewById(R.id.icon_view);
         mContentView = findViewById(R.id.content);
         mRemoveButton = (TintedImageButton) findViewById(R.id.remove);
-        mRemoveButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                remove();
-            }
-        });
+        mRemoveButton.setOnClickListener(v -> remove());
 
         updateRemoveButtonVisibility();
     }

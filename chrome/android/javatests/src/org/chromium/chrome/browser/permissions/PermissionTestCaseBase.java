@@ -23,7 +23,6 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.net.test.EmbeddedTestServer;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -104,13 +103,10 @@ public class PermissionTestCaseBase extends ChromeActivityTestCaseBase<ChromeAct
         @Override
         public boolean isSatisfied() {
             try {
-                return ThreadUtils.runOnUiThreadBlocking(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() {
-                        mDialog = PermissionDialogController.getInstance()
-                                          .getCurrentDialogForTesting();
-                        return (mDialog != null) == mExpectDialog;
-                    }
+                return ThreadUtils.runOnUiThreadBlocking(() -> {
+                    mDialog = PermissionDialogController.getInstance()
+                            .getCurrentDialogForTesting();
+                    return (mDialog != null) == mExpectDialog;
                 });
             } catch (ExecutionException e) {
                 return false;
@@ -146,12 +142,7 @@ public class PermissionTestCaseBase extends ChromeActivityTestCaseBase<ChromeAct
      * Simulates clicking a button on an AlertDialog.
      */
     private void clickButton(final AlertDialog dialog, final int button) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                dialog.getButton(button).performClick();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking((Runnable) () -> dialog.getButton(button).performClick());
     }
 
     /**
@@ -241,12 +232,7 @@ public class PermissionTestCaseBase extends ChromeActivityTestCaseBase<ChromeAct
         assertNotNull(persistSwitch);
         assertTrue(persistSwitch.isChecked());
         if (toggleSwitch) {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    persistSwitch.toggle();
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(() -> persistSwitch.toggle());
         }
     }
 

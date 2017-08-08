@@ -324,13 +324,10 @@ public class TemplateUrlService {
         // If the load has already been completed, post a load complete to the observer.  Done
         // as an asynchronous call to keep the client code predictable in the loaded/unloaded state.
         if (isLoaded()) {
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (!mLoadListeners.hasObserver(listener)) return;
+            ThreadUtils.postOnUiThread(() -> {
+                if (!mLoadListeners.hasObserver(listener)) return;
 
-                    listener.onTemplateUrlServiceLoaded();
-                }
+                listener.onTemplateUrlServiceLoaded();
             });
         }
     }

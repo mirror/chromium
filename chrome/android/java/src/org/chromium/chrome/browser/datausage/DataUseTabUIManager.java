@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.datausage;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -180,42 +179,33 @@ public class DataUseTabUIManager {
         checkBox.setText(
                 getDataUseUIString(DataUseUIMessage.DATA_USE_TRACKING_ENDED_CHECKBOX_MESSAGE));
         View learnMore = dataUseDialogView.findViewById(R.id.learn_more);
-        learnMore.setOnClickListener(new android.view.View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomTabActivity.showInfoPage(activity,
-                        getDataUseUIString(DataUseUIMessage.DATA_USE_LEARN_MORE_LINK_URL));
-                recordDataUseUIAction(DataUsageUIAction.DIALOG_LEARN_MORE_CLICKED);
-            }
+        learnMore.setOnClickListener(v -> {
+            CustomTabActivity.showInfoPage(activity,
+                    getDataUseUIString(DataUseUIMessage.DATA_USE_LEARN_MORE_LINK_URL));
+            recordDataUseUIAction(DataUsageUIAction.DIALOG_LEARN_MORE_CLICKED);
         });
         new AlertDialog.Builder(activity, R.style.AlertDialogTheme)
                 .setTitle(getDataUseUIString(DataUseUIMessage.DATA_USE_TRACKING_ENDED_TITLE))
                 .setView(dataUseDialogView)
                 .setPositiveButton(
                         getDataUseUIString(DataUseUIMessage.DATA_USE_TRACKING_ENDED_CONTINUE),
-                        new OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                setOptedOutOfDataUseDialog(activity, checkBox.isChecked());
-                                LoadUrlParams loadUrlParams = new LoadUrlParams(url,
-                                        pageTransitionType);
-                                if (!TextUtils.isEmpty(referrerUrl)) {
-                                    Referrer referrer = new Referrer(referrerUrl,
-                                            Referrer.REFERRER_POLICY_ALWAYS);
-                                    loadUrlParams.setReferrer(referrer);
-                                }
-                                tab.loadUrl(loadUrlParams);
-                                recordDataUseUIAction(DataUsageUIAction.DIALOG_CONTINUE_CLICKED);
-                                userClickedContinueOnDialogBox(tab);
+                        (dialog, which) -> {
+                            setOptedOutOfDataUseDialog(activity, checkBox.isChecked());
+                            LoadUrlParams loadUrlParams = new LoadUrlParams(url,
+                                    pageTransitionType);
+                            if (!TextUtils.isEmpty(referrerUrl)) {
+                                Referrer referrer = new Referrer(referrerUrl,
+                                        Referrer.REFERRER_POLICY_ALWAYS);
+                                loadUrlParams.setReferrer(referrer);
                             }
+                            tab.loadUrl(loadUrlParams);
+                            recordDataUseUIAction(DataUsageUIAction.DIALOG_CONTINUE_CLICKED);
+                            userClickedContinueOnDialogBox(tab);
                         })
                 .setNegativeButton(R.string.cancel,
-                        new OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                setOptedOutOfDataUseDialog(activity, checkBox.isChecked());
-                                recordDataUseUIAction(DataUsageUIAction.DIALOG_CANCEL_CLICKED);
-                            }
+                        (OnClickListener) (dialog, which) -> {
+                            setOptedOutOfDataUseDialog(activity, checkBox.isChecked());
+                            recordDataUseUIAction(DataUsageUIAction.DIALOG_CANCEL_CLICKED);
                         })
                 .show();
         recordDataUseUIAction(DataUsageUIAction.DIALOG_SHOWN);

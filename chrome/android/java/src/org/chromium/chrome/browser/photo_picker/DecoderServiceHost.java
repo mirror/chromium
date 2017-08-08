@@ -169,18 +169,15 @@ public class DecoderServiceHost extends IDecoderServiceCallback.Stub {
         // As per the Android documentation, AIDL callbacks can (and will) happen on any thread, so
         // make sure the code runs on the UI thread, since further down the callchain the code will
         // end up creating UI objects.
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                // Read the reply back from the service.
-                String filePath = payload.getString(DecoderService.KEY_FILE_PATH);
-                Boolean success = payload.getBoolean(DecoderService.KEY_SUCCESS);
-                Bitmap bitmap = success
-                        ? (Bitmap) payload.getParcelable(DecoderService.KEY_IMAGE_BITMAP)
-                        : null;
-                long decodeTime = payload.getLong(DecoderService.KEY_DECODE_TIME);
-                closeRequest(filePath, bitmap, decodeTime);
-            }
+        ThreadUtils.runOnUiThread(() -> {
+            // Read the reply back from the service.
+            String filePath = payload.getString(DecoderService.KEY_FILE_PATH);
+            Boolean success = payload.getBoolean(DecoderService.KEY_SUCCESS);
+            Bitmap bitmap = success
+                    ? (Bitmap) payload.getParcelable(DecoderService.KEY_IMAGE_BITMAP)
+                    : null;
+            long decodeTime = payload.getLong(DecoderService.KEY_DECODE_TIME);
+            closeRequest(filePath, bitmap, decodeTime);
         });
     }
 

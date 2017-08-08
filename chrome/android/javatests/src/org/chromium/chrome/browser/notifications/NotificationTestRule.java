@@ -77,13 +77,10 @@ public class NotificationTestRule extends ChromeActivityTestRule<ChromeTabbedAct
             throws InterruptedException, TimeoutException {
         final String origin = getOrigin();
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // The notification content setting does not consider the embedder origin.
-                NotificationInfo notificationInfo = new NotificationInfo(origin, "", false);
-                notificationInfo.setContentSetting(setting);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // The notification content setting does not consider the embedder origin.
+            NotificationInfo notificationInfo = new NotificationInfo(origin, "", false);
+            notificationInfo.setContentSetting(setting);
         });
 
         String permission = runJavaScriptCodeInCurrentTab("Notification.permission");

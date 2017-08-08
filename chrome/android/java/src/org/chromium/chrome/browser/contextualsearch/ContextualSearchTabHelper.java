@@ -94,12 +94,7 @@ public class ContextualSearchTabHelper
         }
         if (mTemplateUrlObserver == null) {
             mTemplateUrlObserver =
-                    new TemplateUrlServiceObserver() {
-                        @Override
-                        public void onTemplateURLServiceChanged() {
-                            updateContextualSearchHooks(mBaseContentViewCore);
-                        }
-                    };
+                    () -> updateContextualSearchHooks(mBaseContentViewCore);
             TemplateUrlService.getInstance().addObserver(mTemplateUrlObserver);
         }
         updateHooksForNewContentViewCore(tab);

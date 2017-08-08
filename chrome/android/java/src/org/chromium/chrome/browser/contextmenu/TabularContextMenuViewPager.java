@@ -7,7 +7,6 @@ package org.chromium.chrome.browser.contextmenu;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
-import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -121,19 +120,15 @@ public class TabularContextMenuViewPager extends ViewPager {
         mAnimator = ValueAnimator.ofFloat(0f, 1f);
         mAnimator.setDuration(ANIMATION_DURATION_MS);
         mAnimator.setInterpolator(new LinearOutSlowInInterpolator());
-        mAnimator.addUpdateListener(new AnimatorUpdateListener() {
-
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float animatedValue = (float) animation.getAnimatedValue();
-                if (mDifferenceInHeight < 0) {
-                    setTranslationY(animatedValue * -mDifferenceInHeight / 2);
-                } else {
-                    setTranslationY((1 - animatedValue) * mDifferenceInHeight / 2);
-                }
-                mClipHeight = mOldHeight + (int) (mDifferenceInHeight * animatedValue);
-                invalidate();
+        mAnimator.addUpdateListener(animation -> {
+            float animatedValue = (float) animation.getAnimatedValue();
+            if (mDifferenceInHeight < 0) {
+                setTranslationY(animatedValue * -mDifferenceInHeight / 2);
+            } else {
+                setTranslationY((1 - animatedValue) * mDifferenceInHeight / 2);
             }
+            mClipHeight = mOldHeight + (int) (mDifferenceInHeight * animatedValue);
+            invalidate();
         });
         mAnimator.addListener(new AnimatorListenerAdapter() {
             @Override

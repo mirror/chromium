@@ -339,12 +339,7 @@ public class LocationBarLayout extends FrameLayout
                 if (mNativeInitialized) {
                     findMatchAndLoadUrl(urlText);
                 } else {
-                    mDeferredNativeRunnables.add(new Runnable() {
-                        @Override
-                        public void run() {
-                            findMatchAndLoadUrl(urlText);
-                        }
-                    });
+                    mDeferredNativeRunnables.add(() -> findMatchAndLoadUrl(urlText));
                 }
                 return true;
             } else if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -757,14 +752,11 @@ public class LocationBarLayout extends FrameLayout
 
         // mLocationBar's direction is tied to this UrlBar's text direction. Icons inside the
         // location bar, e.g. lock, refresh, X, should be reversed if UrlBar's text is RTL.
-        mUrlBar.setUrlDirectionListener(new UrlBar.UrlDirectionListener() {
-            @Override
-            public void onUrlDirectionChanged(int layoutDirection) {
-                ApiCompatibilityUtils.setLayoutDirection(LocationBarLayout.this, layoutDirection);
+        mUrlBar.setUrlDirectionListener(layoutDirection -> {
+            ApiCompatibilityUtils.setLayoutDirection(LocationBarLayout.this, layoutDirection);
 
-                if (mSuggestionList != null) {
-                    mSuggestionList.updateSuggestionsLayoutDirection(layoutDirection);
-                }
+            if (mSuggestionList != null) {
+                mSuggestionList.updateSuggestionsLayoutDirection(layoutDirection);
             }
         });
 
@@ -1073,12 +1065,9 @@ public class LocationBarLayout extends FrameLayout
                     && TemplateUrlService.getInstance().isDefaultSearchEngineGoogle()) {
                 GeolocationHeader.primeLocationForGeoHeader();
             } else {
-                mDeferredNativeRunnables.add(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (TemplateUrlService.getInstance().isDefaultSearchEngineGoogle()) {
-                            GeolocationHeader.primeLocationForGeoHeader();
-                        }
+                mDeferredNativeRunnables.add(() -> {
+                    if (TemplateUrlService.getInstance().isDefaultSearchEngineGoogle()) {
+                        GeolocationHeader.primeLocationForGeoHeader();
                     }
                 });
             }
@@ -1087,12 +1076,9 @@ public class LocationBarLayout extends FrameLayout
         if (mNativeInitialized) {
             startZeroSuggest();
         } else {
-            mDeferredNativeRunnables.add(new Runnable() {
-                @Override
-                public void run() {
-                    if (TextUtils.isEmpty(mUrlBar.getTextWithAutocomplete())) {
-                        startZeroSuggest();
-                    }
+            mDeferredNativeRunnables.add(() -> {
+                if (TextUtils.isEmpty(mUrlBar.getTextWithAutocomplete())) {
+                    startZeroSuggest();
                 }
             });
         }
@@ -1165,25 +1151,22 @@ public class LocationBarLayout extends FrameLayout
             startZeroSuggest();
         } else {
             assert mRequestSuggestions == null : "Multiple omnibox requests in flight.";
-            mRequestSuggestions = new Runnable() {
-                @Override
-                public void run() {
-                    String textWithoutAutocomplete = mUrlBar.getTextWithoutAutocomplete();
-                    boolean preventAutocomplete = !mUrlBar.shouldAutocomplete();
-                    mRequestSuggestions = null;
+            mRequestSuggestions = () -> {
+                String textWithoutAutocomplete = mUrlBar.getTextWithoutAutocomplete();
+                boolean preventAutocomplete = !mUrlBar.shouldAutocomplete();
+                mRequestSuggestions = null;
 
-                    if (!mToolbarDataProvider.hasTab()
-                            && (mBottomSheet == null || !mBottomSheet.isShowingNewTab())) {
-                        return;
-                    }
-
-                    Profile profile = mToolbarDataProvider.getProfile();
-                    String url = mToolbarDataProvider.hasTab()
-                            ? mToolbarDataProvider.getCurrentUrl()
-                            : UrlConstants.NTP_URL;
-                    mAutocomplete.start(profile, url, textWithoutAutocomplete, preventAutocomplete,
-                            mUrlFocusedFromFakebox);
+                if (!mToolbarDataProvider.hasTab()
+                        && (mBottomSheet == null || !mBottomSheet.isShowingNewTab())) {
+                    return;
                 }
+
+                Profile profile = mToolbarDataProvider.getProfile();
+                String url = mToolbarDataProvider.hasTab()
+                        ? mToolbarDataProvider.getCurrentUrl()
+                        : UrlConstants.NTP_URL;
+                mAutocomplete.start(profile, url, textWithoutAutocomplete, preventAutocomplete,
+                        mUrlFocusedFromFakebox);
             };
             if (mNativeInitialized) {
                 postDelayed(mRequestSuggestions, OMNIBOX_SUGGESTION_START_DELAY_MS);
@@ -1237,12 +1220,7 @@ public class LocationBarLayout extends FrameLayout
 
         updateButtonVisibility();
 
-        mUrlBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, final boolean hasFocus) {
-                onUrlFocusChange(hasFocus);
-            }
-        });
+        mUrlBar.setOnFocusChangeListener((v, hasFocus) -> onUrlFocusChange(hasFocus));
     }
 
     @Override
@@ -1592,20 +1570,15 @@ public class LocationBarLayout extends FrameLayout
         assert mNativeInitialized : "Trying to initialize suggestions list before native init";
         if (mSuggestionList != null) return;
 
-        OnLayoutChangeListener suggestionListResizer = new OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                    int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                // On ICS, this update does not take affect unless it is posted to the end of the
-                // current message queue.
-                post(new Runnable() {
-                    @Override
-                    public void run() {
+        OnLayoutChangeListener suggestionListResizer =
+                (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+                    // On ICS, this update does not take affect unless it is posted to the end of
+                    // the
+                    // current message queue.
+                    post(() -> {
                         if (mSuggestionList.isShown()) mSuggestionList.updateLayoutParams();
-                    }
-                });
-            }
-        };
+                    });
+                };
         getRootView().findViewById(R.id.control_container)
                 .addOnLayoutChangeListener(suggestionListResizer);
 
@@ -1883,12 +1856,7 @@ public class LocationBarLayout extends FrameLayout
         if (TextUtils.isEmpty(query)) return;
 
         if (!mNativeInitialized) {
-            mDeferredNativeRunnables.add(new Runnable() {
-                @Override
-                public void run() {
-                    setSearchQuery(query);
-                }
-            });
+            mDeferredNativeRunnables.add(() -> setSearchQuery(query));
             return;
         }
 
@@ -1903,12 +1871,7 @@ public class LocationBarLayout extends FrameLayout
             mAutocomplete.start(
                     mToolbarDataProvider.getProfile(), UrlConstants.NTP_URL, query, false, false);
         }
-        post(new Runnable() {
-            @Override
-            public void run() {
-                UiUtils.showKeyboard(mUrlBar);
-            }
-        });
+        post(() -> UiUtils.showKeyboard(mUrlBar));
     }
 
     /**
@@ -2017,15 +1980,12 @@ public class LocationBarLayout extends FrameLayout
 
         if (mUrlBar.hasFocus()) {
             final boolean updateLayoutParams = itemCountChanged;
-            mShowSuggestions = new Runnable() {
-                @Override
-                public void run() {
-                    setSuggestionsListVisibility(true);
-                    if (updateLayoutParams) {
-                        mSuggestionList.updateLayoutParams();
-                    }
-                    mShowSuggestions = null;
+            mShowSuggestions = () -> {
+                setSuggestionsListVisibility(true);
+                if (updateLayoutParams) {
+                    mSuggestionList.updateLayoutParams();
                 }
+                mShowSuggestions = null;
             };
             if (!isUrlFocusChangeInProgress()) {
                 mShowSuggestions.run();
@@ -2468,19 +2428,15 @@ public class LocationBarLayout extends FrameLayout
         if (!mWindowAndroid.hasPermission(Manifest.permission.RECORD_AUDIO)) {
             if (mWindowAndroid.canRequestPermission(Manifest.permission.RECORD_AUDIO)) {
                 WindowAndroid.PermissionCallback callback =
-                        new WindowAndroid.PermissionCallback() {
-                    @Override
-                    public void onRequestPermissionsResult(
-                            String[] permissions, int[] grantResults) {
-                        if (grantResults.length != 1) return;
+                        (permissions, grantResults) -> {
+                            if (grantResults.length != 1) return;
 
-                        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                            startVoiceRecognition();
-                        } else {
-                            updateMicButtonState();
-                        }
-                    }
-                };
+                            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                                startVoiceRecognition();
+                            } else {
+                                updateMicButtonState();
+                            }
+                        };
                 mWindowAndroid.requestPermissions(
                         new String[] {Manifest.permission.RECORD_AUDIO}, callback);
             } else {

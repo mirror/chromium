@@ -123,12 +123,9 @@ public class ContextualSearchPanel extends OverlayPanel {
         public void onProgressBarFinished() {
             // Hides the Progress Bar after a delay to make sure it is rendered for at least
             // a few frames, otherwise its completion won't be visually noticeable.
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    setProgressBarVisible(false);
-                    requestUpdate();
-                }
+            new Handler().postDelayed(() -> {
+                setProgressBarVisible(false);
+                requestUpdate();
             }, HIDE_PROGRESS_BAR_DELAY);
         }
     }

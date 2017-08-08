@@ -119,12 +119,7 @@ public class AccessibilityTabModelListItem extends FrameLayout implements OnClic
         public void cancelPendingClosure(int tabId);
     }
 
-    private final Runnable mCloseRunnable = new Runnable() {
-        @Override
-        public void run() {
-            runCloseAnimation();
-        }
-    };
+    private final Runnable mCloseRunnable = () -> runCloseAnimation();
 
     private final Handler mHandler = new Handler();
 

@@ -74,27 +74,19 @@ public class SnackbarTest {
                 Snackbar.TYPE_ACTION, Snackbar.UMA_TEST_SNACKBAR);
         final Snackbar queuebar = Snackbar.make("queue", mDefaultController,
                 Snackbar.TYPE_NOTIFICATION, Snackbar.UMA_TEST_SNACKBAR);
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mManager.showSnackbar(stackbar);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> mManager.showSnackbar(stackbar));
         CriteriaHelper.pollUiThread(new Criteria("First snackbar not shown") {
             @Override
             public boolean isSatisfied() {
                 return mManager.isShowing() && mManager.getCurrentSnackbarForTesting() == stackbar;
             }
         });
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mManager.showSnackbar(queuebar);
-                Assert.assertTrue("Snackbar not showing", mManager.isShowing());
-                Assert.assertEquals(
-                        "Snackbars on stack should not be cancled by snackbars on queue", stackbar,
-                        mManager.getCurrentSnackbarForTesting());
-            }
+        ThreadUtils.runOnUiThread(() -> {
+            mManager.showSnackbar(queuebar);
+            Assert.assertTrue("Snackbar not showing", mManager.isShowing());
+            Assert.assertEquals(
+                    "Snackbars on stack should not be cancled by snackbars on queue", stackbar,
+                    mManager.getCurrentSnackbarForTesting());
         });
         CriteriaHelper.pollUiThread(new Criteria("Snackbar on queue not shown") {
             @Override
@@ -118,24 +110,14 @@ public class SnackbarTest {
                 Snackbar.TYPE_ACTION, Snackbar.UMA_TEST_SNACKBAR);
         final Snackbar queuebar = Snackbar.make("queue", mDefaultController,
                 Snackbar.TYPE_NOTIFICATION, Snackbar.UMA_TEST_SNACKBAR);
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mManager.showSnackbar(queuebar);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> mManager.showSnackbar(queuebar));
         CriteriaHelper.pollUiThread(new Criteria("First snackbar not shown") {
             @Override
             public boolean isSatisfied() {
                 return mManager.isShowing() && mManager.getCurrentSnackbarForTesting() == queuebar;
             }
         });
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mManager.showSnackbar(stackbar);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> mManager.showSnackbar(stackbar));
         CriteriaHelper.pollUiThread(
                 new Criteria("Snackbar on queue was not cleared by snackbar stack.") {
                     @Override
@@ -158,12 +140,7 @@ public class SnackbarTest {
         final Snackbar snackbar = Snackbar.make("stack", mDismissController,
                 Snackbar.TYPE_ACTION, Snackbar.UMA_TEST_SNACKBAR);
         mDismissed = false;
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mManager.showSnackbar(snackbar);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> mManager.showSnackbar(snackbar));
         CriteriaHelper.pollUiThread(
                 new Criteria("Snackbar on queue was not cleared by snackbar stack.") {
                     @Override
@@ -172,12 +149,7 @@ public class SnackbarTest {
                                 && mManager.getCurrentSnackbarForTesting() == snackbar;
                     }
                 });
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mManager.dismissSnackbars(mDismissController);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> mManager.dismissSnackbars(mDismissController));
         CriteriaHelper.pollUiThread(new Criteria("Snackbar did not time out") {
             @Override
             public boolean isSatisfied() {

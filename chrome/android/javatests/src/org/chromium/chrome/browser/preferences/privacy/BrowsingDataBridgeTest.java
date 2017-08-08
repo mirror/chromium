@@ -49,12 +49,7 @@ public class BrowsingDataBridgeTest {
     @Before
     public void setUp() throws Exception {
         mCallbackHelper = new CallbackHelper();
-        mListener = new BrowsingDataBridge.OnClearBrowsingDataListener() {
-            @Override
-            public void onBrowsingDataCleared() {
-                mCallbackHelper.notifyCalled();
-            }
-        };
+        mListener = () -> mCallbackHelper.notifyCalled();
         mActivityTestRule.startMainActivityOnBlankPage();
         mActionTester = new UserActionTester();
     }
@@ -71,13 +66,8 @@ public class BrowsingDataBridgeTest {
     @SmallTest
     @RetryOnFailure
     public void testNoCalls() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                BrowsingDataBridge.getInstance().clearBrowsingData(
-                        mListener, new int[] {}, TimePeriod.ALL_TIME);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> BrowsingDataBridge.getInstance().clearBrowsingData(
+                mListener, new int[]{}, TimePeriod.ALL_TIME));
         mCallbackHelper.waitForCallback(0);
         assertThat(mActionTester.toString(), getActions(),
                 Matchers.contains("ClearBrowsingData_Everything"));
@@ -89,13 +79,8 @@ public class BrowsingDataBridgeTest {
     @Test
     @SmallTest
     public void testCookiesDeleted() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                BrowsingDataBridge.getInstance().clearBrowsingData(
-                        mListener, new int[] {BrowsingDataType.COOKIES}, TimePeriod.LAST_HOUR);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> BrowsingDataBridge.getInstance().clearBrowsingData(
+                mListener, new int[]{BrowsingDataType.COOKIES}, TimePeriod.LAST_HOUR));
         mCallbackHelper.waitForCallback(0);
         assertThat(mActionTester.toString(), getActions(),
                 Matchers.containsInAnyOrder("ClearBrowsingData_LastHour",
@@ -123,13 +108,8 @@ public class BrowsingDataBridgeTest {
     @Test
     @SmallTest
     public void testHistoryDeleted() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                BrowsingDataBridge.getInstance().clearBrowsingData(
-                        mListener, new int[] {BrowsingDataType.HISTORY}, TimePeriod.LAST_DAY);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> BrowsingDataBridge.getInstance().clearBrowsingData(
+                mListener, new int[]{BrowsingDataType.HISTORY}, TimePeriod.LAST_DAY));
         mCallbackHelper.waitForCallback(0);
         assertThat(mActionTester.toString(), getActions(),
                 Matchers.containsInAnyOrder("ClearBrowsingData_LastDay",
@@ -143,16 +123,12 @@ public class BrowsingDataBridgeTest {
     @Test
     @SmallTest
     public void testClearingSiteSettingsAndCache() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                BrowsingDataBridge.getInstance().clearBrowsingData(mListener,
-                        new int[] {
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> BrowsingDataBridge.getInstance().clearBrowsingData(mListener,
+                        new int[]{
                                 BrowsingDataType.CACHE, BrowsingDataType.SITE_SETTINGS,
                         },
-                        TimePeriod.FOUR_WEEKS);
-            }
-        });
+                        TimePeriod.FOUR_WEEKS));
         mCallbackHelper.waitForCallback(0);
         assertThat(mActionTester.toString(), getActions(),
                 Matchers.containsInAnyOrder("ClearBrowsingData_LastMonth",
@@ -166,17 +142,13 @@ public class BrowsingDataBridgeTest {
     @Test
     @SmallTest
     public void testClearingSiteSettingsAndCacheWithImportantSites() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                BrowsingDataBridge.getInstance().clearBrowsingDataExcludingDomains(mListener,
-                        new int[] {
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> BrowsingDataBridge.getInstance().clearBrowsingDataExcludingDomains(mListener,
+                        new int[]{
                                 BrowsingDataType.CACHE, BrowsingDataType.SITE_SETTINGS,
                         },
-                        TimePeriod.FOUR_WEEKS, new String[] {"google.com"}, new int[] {1},
-                        new String[0], new int[0]);
-            }
-        });
+                        TimePeriod.FOUR_WEEKS, new String[]{"google.com"}, new int[]{1},
+                        new String[0], new int[0]));
         mCallbackHelper.waitForCallback(0);
         assertThat(mActionTester.toString(), getActions(),
                 Matchers.containsInAnyOrder("ClearBrowsingData_LastMonth",
@@ -193,18 +165,14 @@ public class BrowsingDataBridgeTest {
     @Test
     @SmallTest
     public void testClearingAll() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                BrowsingDataBridge.getInstance().clearBrowsingData(mListener,
-                        new int[] {
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> BrowsingDataBridge.getInstance().clearBrowsingData(mListener,
+                        new int[]{
                                 BrowsingDataType.CACHE, BrowsingDataType.COOKIES,
                                 BrowsingDataType.FORM_DATA, BrowsingDataType.HISTORY,
                                 BrowsingDataType.PASSWORDS, BrowsingDataType.SITE_SETTINGS,
                         },
-                        TimePeriod.LAST_WEEK);
-            }
-        });
+                        TimePeriod.LAST_WEEK));
         mCallbackHelper.waitForCallback(0);
         assertThat(mActionTester.toString(), getActions(),
                 Matchers.containsInAnyOrder("ClearBrowsingData_LastWeek",

@@ -244,12 +244,7 @@ public class DistilledPagePrefsView extends LinearLayout
      */
     private RadioButton initializeAndGetButton(int id, final Theme theme) {
         final RadioButton button = (RadioButton) findViewById(id);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDistilledPagePrefs.setTheme(theme);
-            }
-        });
+        button.setOnClickListener(v -> mDistilledPagePrefs.setTheme(theme));
         return button;
     }
 

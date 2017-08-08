@@ -140,17 +140,14 @@ public class ChildProcessLauncher {
                             assert isRunningOnLauncherThread();
                             assert mConnection == connection;
                             Log.e(TAG, "ChildProcessConnection.start failed, trying again");
-                            mLauncherHandler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    // The child process may already be bound to another client
-                                    // (this can happen if multi-process WebView is used in more
-                                    // than one process), so try starting the process again.
-                                    // This connection that failed to start has not been freed,
-                                    // so a new bound connection will be allocated.
-                                    mConnection = null;
-                                    start(setupConnection, queueIfNoFreeConnection);
-                                }
+                            mLauncherHandler.post(() -> {
+                                // The child process may already be bound to another client
+                                // (this can happen if multi-process WebView is used in more
+                                // than one process), so try starting the process again.
+                                // This connection that failed to start has not been freed,
+                                // so a new bound connection will be allocated.
+                                mConnection = null;
+                                start(setupConnection, queueIfNoFreeConnection);
                             });
                         }
 
@@ -224,12 +221,9 @@ public class ChildProcessLauncher {
 
     private void setupConnection() {
         ChildProcessConnection.ConnectionCallback connectionCallback =
-                new ChildProcessConnection.ConnectionCallback() {
-                    @Override
-                    public void onConnected(ChildProcessConnection connection) {
-                        assert mConnection == connection;
-                        onServiceConnected();
-                    }
+                connection -> {
+                    assert mConnection == connection;
+                    onServiceConnected();
                 };
         Bundle connectionBundle = createConnectionBundle();
         mDelegate.onBeforeConnectionSetup(connectionBundle);

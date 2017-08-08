@@ -10,7 +10,6 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.chrome.browser.bookmarks.BookmarkModel;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -24,25 +23,12 @@ public class BookmarkTestUtil {
      */
     public static void waitForBookmarkModelLoaded() throws InterruptedException {
         final BookmarkModel bookmarkModel = ThreadUtils.runOnUiThreadBlockingNoException(
-                new Callable<BookmarkModel>() {
-                    @Override
-                    public BookmarkModel call() throws Exception {
-                        return new BookmarkModel();
-                    }
-                });
+                () -> new BookmarkModel());
 
         final CallbackHelper loadedCallback = new CallbackHelper();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                bookmarkModel.runAfterBookmarkModelLoaded(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadedCallback.notifyCalled();
-                    }
-                });
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> bookmarkModel.runAfterBookmarkModelLoaded(
+                        () -> loadedCallback.notifyCalled()));
 
         try {
             loadedCallback.waitForCallback(0);
@@ -50,11 +36,6 @@ public class BookmarkTestUtil {
             Assert.fail("Bookmark model did not load: Timeout.");
         }
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                bookmarkModel.destroy();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> bookmarkModel.destroy());
     }
 }

@@ -64,12 +64,9 @@ public class ScreenshotMonitor {
 
         @Override
         public void onEvent(final int event, final String path) {
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (mScreenshotMonitor == null) return;
-                    mScreenshotMonitor.onEventOnUiThread(event, path);
-                }
+            ThreadUtils.postOnUiThread(() -> {
+                if (mScreenshotMonitor == null) return;
+                mScreenshotMonitor.onEventOnUiThread(event, path);
             });
         }
     }

@@ -17,8 +17,6 @@ import org.chromium.chrome.browser.tab.TabWebContentsDelegateAndroid;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 
-import java.util.concurrent.Callable;
-
 /**
  * Static methods for use in tests that require toggling persistent fullscreen.
  */
@@ -48,12 +46,7 @@ public class FullscreenTestUtils {
      */
     public static void togglePersistentFullscreen(final TabWebContentsDelegateAndroid delegate,
             final boolean state) {
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                delegate.toggleFullscreenModeForTab(state);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> delegate.toggleFullscreenModeForTab(state));
     }
 
     /**
@@ -81,12 +74,8 @@ public class FullscreenTestUtils {
      */
     public static void waitForPersistentFullscreen(final TabWebContentsDelegateAndroid delegate,
             boolean state) {
-        CriteriaHelper.pollUiThread(Criteria.equals(state, new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                return delegate.isFullscreenForTabOrPending();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(state,
+                () -> delegate.isFullscreenForTabOrPending()));
     }
 
     private static boolean isFlagSet(int flags, int flag) {

@@ -7,8 +7,6 @@ package org.chromium.chrome.browser.ntp;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewTreeObserver.OnScrollChangedListener;
 import android.widget.ScrollView;
 
 import org.chromium.base.ApiCompatibilityUtils;
@@ -36,14 +34,9 @@ public class IncognitoBottomSheetContent implements BottomSheetContent {
         mView = inflater.inflate(R.layout.incognito_bottom_sheet_content, null);
 
         View learnMore = mView.findViewById(R.id.learn_more);
-        learnMore.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HelpAndFeedback.getInstance(activity).show(activity,
-                        activity.getString(R.string.help_context_incognito_learn_more),
-                        Profile.getLastUsedProfile(), null);
-            }
-        });
+        learnMore.setOnClickListener(v -> HelpAndFeedback.getInstance(activity).show(activity,
+                activity.getString(R.string.help_context_incognito_learn_more),
+                Profile.getLastUsedProfile(), null));
 
         final FadingShadowView shadow = (FadingShadowView) mView.findViewById(R.id.shadow);
         shadow.init(
@@ -51,12 +44,9 @@ public class IncognitoBottomSheetContent implements BottomSheetContent {
                 FadingShadow.POSITION_TOP);
 
         mScrollView = (ScrollView) mView.findViewById(R.id.scroll_view);
-        mScrollView.getViewTreeObserver().addOnScrollChangedListener(new OnScrollChangedListener() {
-            @Override
-            public void onScrollChanged() {
-                boolean shadowVisible = mScrollView.canScrollVertically(-1);
-                shadow.setVisibility(shadowVisible ? View.VISIBLE : View.GONE);
-            }
+        mScrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
+            boolean shadowVisible = mScrollView.canScrollVertically(-1);
+            shadow.setVisibility(shadowVisible ? View.VISIBLE : View.GONE);
         });
     }
 

@@ -4,7 +4,6 @@
 package org.chromium.chrome.browser.physicalweb;
 
 import org.chromium.base.ThreadUtils;
-
 import org.chromium.chrome.browser.UrlConstants;
 
 import java.io.BufferedInputStream;
@@ -103,14 +102,11 @@ abstract class HttpRequest<T> implements Runnable {
         final Exception finalException = ioException;
         final T finalResult = result;
         final int finalResponseCode = responseCode;
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (finalException == null) {
-                    mCallback.onResponse(finalResult);
-                } else {
-                    mCallback.onError(finalResponseCode, finalException);
-                }
+        ThreadUtils.postOnUiThread(() -> {
+            if (finalException == null) {
+                mCallback.onResponse(finalResult);
+            } else {
+                mCallback.onError(finalResponseCode, finalException);
             }
         });
     }

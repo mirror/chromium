@@ -16,7 +16,6 @@ import android.os.Bundle;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.chrome.browser.init.BrowserParts;
 import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
@@ -87,19 +86,15 @@ public class ChromeBrowserSyncAdapter extends AbstractThreadedSyncAdapter {
     private void startBrowserProcess(final BrowserParts parts, final SyncResult syncResult,
             Semaphore semaphore) {
         try {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                @SuppressFBWarnings("DM_EXIT")
-                public void run() {
-                    ChromeBrowserInitializer.getInstance(getContext()).handlePreNativeStartup(
-                            parts);
-                    try {
-                        ChromeBrowserInitializer.getInstance(getContext())
-                                .handlePostNativeStartup(false, parts);
-                    } catch (ProcessInitException e) {
-                        Log.e(TAG, "Unable to load native library.", e);
-                        System.exit(-1);
-                    }
+            ThreadUtils.runOnUiThreadBlocking(() -> {
+                ChromeBrowserInitializer.getInstance(getContext()).handlePreNativeStartup(
+                        parts);
+                try {
+                    ChromeBrowserInitializer.getInstance(getContext())
+                            .handlePostNativeStartup(false, parts);
+                } catch (ProcessInitException e) {
+                    Log.e(TAG, "Unable to load native library.", e);
+                    System.exit(-1);
                 }
             });
         } catch (RuntimeException e) {

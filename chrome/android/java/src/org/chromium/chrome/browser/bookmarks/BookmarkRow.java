@@ -8,8 +8,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListPopupWindow;
@@ -125,33 +123,29 @@ abstract class BookmarkRow extends SelectableItemView<BookmarkId> implements Boo
                             R.dimen.bookmark_item_popup_width));
             mPopupMenu.setVerticalOffset(-view.getHeight());
             mPopupMenu.setModal(true);
-            mPopupMenu.setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position,
-                        long id) {
-                    if (position == 0) {
-                        setChecked(mDelegate.getSelectionDelegate().toggleSelectionForItem(
-                                mBookmarkId));
-                    } else if (position == 1) {
-                        BookmarkItem item = mDelegate.getModel().getBookmarkById(mBookmarkId);
-                        if (item.isFolder()) {
-                            BookmarkAddEditFolderActivity.startEditFolderActivity(
-                                    getContext(), item.getId());
-                        } else {
-                            BookmarkUtils.startEditActivity(getContext(), item.getId());
-                        }
-                    } else if (position == 2) {
-                        BookmarkFolderSelectActivity.startFolderSelectActivity(getContext(),
-                                mBookmarkId);
-                    } else if (position == 3) {
-                        if (mDelegate != null && mDelegate.getModel() != null) {
-                            mDelegate.getModel().deleteBookmarks(mBookmarkId);
-                        }
+            mPopupMenu.setOnItemClickListener((parent, view1, position, id) -> {
+                if (position == 0) {
+                    setChecked(mDelegate.getSelectionDelegate().toggleSelectionForItem(
+                            mBookmarkId));
+                } else if (position == 1) {
+                    BookmarkItem item = mDelegate.getModel().getBookmarkById(mBookmarkId);
+                    if (item.isFolder()) {
+                        BookmarkAddEditFolderActivity.startEditFolderActivity(
+                                getContext(), item.getId());
+                    } else {
+                        BookmarkUtils.startEditActivity(getContext(), item.getId());
                     }
-                    // Somehow the on click event can be triggered way after we dismiss the popup.
-                    // http://crbug.com/600642
-                    if (mPopupMenu != null) mPopupMenu.dismiss();
+                } else if (position == 2) {
+                    BookmarkFolderSelectActivity.startFolderSelectActivity(getContext(),
+                            mBookmarkId);
+                } else if (position == 3) {
+                    if (mDelegate != null && mDelegate.getModel() != null) {
+                        mDelegate.getModel().deleteBookmarks(mBookmarkId);
+                    }
                 }
+                // Somehow the on click event can be triggered way after we dismiss the popup.
+                // http://crbug.com/600642
+                if (mPopupMenu != null) mPopupMenu.dismiss();
             });
         }
         mPopupMenu.show();
@@ -169,12 +163,7 @@ abstract class BookmarkRow extends SelectableItemView<BookmarkId> implements Boo
 
         mMoreIcon = (TintedImageButton) findViewById(R.id.more);
         mMoreIcon.setVisibility(VISIBLE);
-        mMoreIcon.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showMenu(view);
-            }
-        });
+        mMoreIcon.setOnClickListener(view -> showMenu(view));
     }
 
     @Override

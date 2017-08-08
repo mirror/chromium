@@ -505,12 +505,9 @@ public class BottomToolbarPhone extends ToolbarPhone {
 
         mToolbarHandleView.setVisibility(View.GONE);
 
-        mExpandButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mBottomSheet != null && mTabSwitcherState == STATIC_TAB) {
-                    mBottomSheet.onExpandButtonPressed();
-                }
+        mExpandButton.setOnClickListener(v -> {
+            if (mBottomSheet != null && mTabSwitcherState == STATIC_TAB) {
+                mBottomSheet.onExpandButtonPressed();
             }
         });
 

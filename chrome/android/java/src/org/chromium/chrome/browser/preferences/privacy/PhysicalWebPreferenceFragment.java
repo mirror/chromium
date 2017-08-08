@@ -8,9 +8,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 
 import org.chromium.base.Log;
@@ -79,19 +76,16 @@ public class PhysicalWebPreferenceFragment extends PreferenceFragment {
         physicalWebSwitch.setChecked(
                 PrivacyPreferencesManager.getInstance().isPhysicalWebEnabled());
 
-        physicalWebSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                boolean enabled = (boolean) newValue;
-                if (enabled) {
-                    PhysicalWebUma.onPrefsFeatureEnabled();
-                    ensureLocationPermission();
-                } else {
-                    PhysicalWebUma.onPrefsFeatureDisabled();
-                }
-                PrivacyPreferencesManager.getInstance().setPhysicalWebEnabled(enabled);
-                return true;
+        physicalWebSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
+            boolean enabled = (boolean) newValue;
+            if (enabled) {
+                PhysicalWebUma.onPrefsFeatureEnabled();
+                ensureLocationPermission();
+            } else {
+                PhysicalWebUma.onPrefsFeatureDisabled();
             }
+            PrivacyPreferencesManager.getInstance().setPhysicalWebEnabled(enabled);
+            return true;
         });
     }
 
@@ -99,13 +93,10 @@ public class PhysicalWebPreferenceFragment extends PreferenceFragment {
         ButtonPreference physicalWebLaunch =
                 (ButtonPreference) findPreference(PREF_PHYSICAL_WEB_LAUNCH);
 
-        physicalWebLaunch.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                PhysicalWebUma.onActivityReferral(PhysicalWebUma.PREFERENCE_REFERER);
-                PhysicalWeb.showUrlList();
-                return true;
-            }
+        physicalWebLaunch.setOnPreferenceClickListener(preference -> {
+            PhysicalWebUma.onActivityReferral(PhysicalWebUma.PREFERENCE_REFERER);
+            PhysicalWeb.showUrlList();
+            return true;
         });
     }
 }

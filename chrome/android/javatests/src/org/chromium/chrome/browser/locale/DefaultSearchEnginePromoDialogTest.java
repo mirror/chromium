@@ -27,7 +27,6 @@ import org.chromium.chrome.test.util.ActivityUtils;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -38,15 +37,12 @@ import java.util.concurrent.ExecutionException;
 public class DefaultSearchEnginePromoDialogTest {
     @Before
     public void setUp() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ChromeBrowserInitializer.getInstance(InstrumentationRegistry.getTargetContext())
-                            .handleSynchronousStartup();
-                } catch (ProcessInitException e) {
-                    Assert.fail("Failed to initialize Chrome process");
-                }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            try {
+                ChromeBrowserInitializer.getInstance(InstrumentationRegistry.getTargetContext())
+                        .handleSynchronousStartup();
+            } catch (ProcessInitException e) {
+                Assert.fail("Failed to initialize Chrome process");
             }
         });
     }
@@ -80,26 +76,11 @@ public class DefaultSearchEnginePromoDialogTest {
         final DefaultSearchEnginePromoDialog tabbedDialog = showDialog(tabbedActivity);
         Assert.assertEquals(tabbedDialog, DefaultSearchEnginePromoDialog.getCurrentDialog());
 
-        CriteriaHelper.pollUiThread(Criteria.equals(false, new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return searchDialog.isShowing();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(false, () -> searchDialog.isShowing()));
 
-        CriteriaHelper.pollUiThread(Criteria.equals(true, new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return searchActivity.isFinishing();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(true, () -> searchActivity.isFinishing()));
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                tabbedDialog.dismiss();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> tabbedDialog.dismiss());
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -110,14 +91,11 @@ public class DefaultSearchEnginePromoDialogTest {
 
     private DefaultSearchEnginePromoDialog showDialog(final Activity activity)
             throws ExecutionException {
-        return ThreadUtils.runOnUiThreadBlocking(new Callable<DefaultSearchEnginePromoDialog>() {
-            @Override
-            public DefaultSearchEnginePromoDialog call() throws Exception {
-                DefaultSearchEnginePromoDialog dialog = new DefaultSearchEnginePromoDialog(
-                        activity, LocaleManager.SEARCH_ENGINE_PROMO_SHOW_EXISTING, null);
-                dialog.show();
-                return dialog;
-            }
+        return ThreadUtils.runOnUiThreadBlocking(() -> {
+            DefaultSearchEnginePromoDialog dialog = new DefaultSearchEnginePromoDialog(
+                    activity, LocaleManager.SEARCH_ENGINE_PROMO_SHOW_EXISTING, null);
+            dialog.show();
+            return dialog;
         });
     }
 }

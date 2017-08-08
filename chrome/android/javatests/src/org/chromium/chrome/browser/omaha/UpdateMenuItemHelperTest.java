@@ -233,12 +233,9 @@ public class UpdateMenuItemHelperTest {
     }
 
     private void showAppMenuAndAssertMenuShown() {
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mActivityTestRule.getActivity().getAppMenuHandler().showAppMenu(null, false);
-            }
-        });
+        ThreadUtils.runOnUiThread(
+                (Runnable) () -> mActivityTestRule.getActivity().getAppMenuHandler().showAppMenu(
+                        null, false));
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -248,12 +245,8 @@ public class UpdateMenuItemHelperTest {
     }
 
     private void hideAppMenuAndAssertMenuShown() {
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mActivityTestRule.getActivity().getAppMenuHandler().hideAppMenu();
-            }
-        });
+        ThreadUtils.runOnUiThread(
+                () -> mActivityTestRule.getActivity().getAppMenuHandler().hideAppMenu());
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
             @Override
             public boolean isSatisfied() {

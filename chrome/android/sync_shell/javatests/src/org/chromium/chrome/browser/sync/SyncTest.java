@@ -41,12 +41,8 @@ public class SyncTest extends SyncTestBase {
         setUpTestAccountAndSignIn();
         final Activity activity = getActivity();
 
-        runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ApplicationStatus.onStateChangeForTesting(activity, ActivityState.PAUSED);
-            }
-        });
+        runTestOnUiThread(
+                () -> ApplicationStatus.onStateChangeForTesting(activity, ActivityState.PAUSED));
 
         // TODO(pvalenzuela): When available, check that sync is still functional.
     }
@@ -104,34 +100,31 @@ public class SyncTest extends SyncTestBase {
         final Account oldAccount = setUpTestAccountAndSignIn();
         final Account newAccount = SigninTestUtil.addTestAccount("test2@gmail.com");
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // First, we force a call to updateAccountRenameData. In the real world,
-                // this should be called by one of our broadcast listener that listens to
-                // real account rename events instead of the mocks.
-                MockChangeEventChecker eventChecker = new MockChangeEventChecker();
-                eventChecker.insertRenameEvent(oldAccount.name, newAccount.name);
-                SigninHelper.resetAccountRenameEventIndex(mContext);
-                SigninHelper.updateAccountRenameData(mContext, eventChecker);
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // First, we force a call to updateAccountRenameData. In the real world,
+            // this should be called by one of our broadcast listener that listens to
+            // real account rename events instead of the mocks.
+            MockChangeEventChecker eventChecker = new MockChangeEventChecker();
+            eventChecker.insertRenameEvent(oldAccount.name, newAccount.name);
+            SigninHelper.resetAccountRenameEventIndex(mContext);
+            SigninHelper.updateAccountRenameData(mContext, eventChecker);
 
-                // Tell the fake content resolver that a rename had happen and copy over the sync
-                // settings. This would normally be done by the SystemSyncContentResolver.
-                mSyncContentResolver.renameAccounts(
-                        oldAccount, newAccount, AndroidSyncSettings.getContractAuthority(mContext));
+            // Tell the fake content resolver that a rename had happen and copy over the sync
+            // settings. This would normally be done by the SystemSyncContentResolver.
+            mSyncContentResolver.renameAccounts(
+                    oldAccount, newAccount, AndroidSyncSettings.getContractAuthority(mContext));
 
-                // Inform the AccountTracker, these would normally be done by account validation
-                // or signin. We will only be calling the testing versions of it.
-                AccountIdProvider provider = AccountIdProvider.getInstance();
-                String[] accountNames = {oldAccount.name, newAccount.name};
-                String[] accountIds = {provider.getAccountId(accountNames[0]),
-                        provider.getAccountId(accountNames[1])};
-                AccountTrackerService.get().syncForceRefreshForTest(accountIds, accountNames);
+            // Inform the AccountTracker, these would normally be done by account validation
+            // or signin. We will only be calling the testing versions of it.
+            AccountIdProvider provider = AccountIdProvider.getInstance();
+            String[] accountNames = {oldAccount.name, newAccount.name};
+            String[] accountIds = {provider.getAccountId(accountNames[0]),
+                    provider.getAccountId(accountNames[1])};
+            AccountTrackerService.get().syncForceRefreshForTest(accountIds, accountNames);
 
-                // Starts the rename process. Normally, this is triggered by the broadcast
-                // listener as well.
-                SigninHelper.get(mContext).validateAccountSettings(true);
-            }
+            // Starts the rename process. Normally, this is triggered by the broadcast
+            // listener as well.
+            SigninHelper.get(mContext).validateAccountSettings(true);
         });
 
         CriteriaHelper.pollInstrumentationThread(new Criteria() {

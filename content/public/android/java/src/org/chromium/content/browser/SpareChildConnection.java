@@ -98,12 +98,7 @@ public class SpareChildConnection {
             if (serviceCallback != null) {
                 // Post a task so the callback happens after the caller has retrieved the
                 // connection.
-                LauncherThread.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        serviceCallback.onChildStarted();
-                    }
-                });
+                LauncherThread.post(() -> serviceCallback.onChildStarted());
             }
             clearConnection();
         }

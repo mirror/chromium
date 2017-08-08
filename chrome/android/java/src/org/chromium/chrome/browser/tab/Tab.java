@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
-import android.widget.PopupWindow.OnDismissListener;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
@@ -1563,18 +1562,10 @@ public class Tab
                 R.string.iph_data_saver_detail_accessibility_text);
         textBubble.setDismissOnTouchInteraction(true);
         getActivity().getAppMenuHandler().setMenuHighlight(R.id.app_menu_footer);
-        textBubble.addOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                ThreadUtils.postOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        tracker.dismissed(FeatureConstants.DATA_SAVER_DETAIL_FEATURE);
-                        getActivity().getAppMenuHandler().setMenuHighlight(null);
-                    }
-                });
-            }
-        });
+        textBubble.addOnDismissListener(() -> ThreadUtils.postOnUiThread(() -> {
+            tracker.dismissed(FeatureConstants.DATA_SAVER_DETAIL_FEATURE);
+            getActivity().getAppMenuHandler().setMenuHighlight(null);
+        }));
         int yInsetPx = mThemedApplicationContext.getResources().getDimensionPixelOffset(
                 R.dimen.text_bubble_menu_anchor_y_inset);
         textBubble.setInsetPx(0, FeatureUtilities.isChromeHomeEnabled() ? yInsetPx : 0, 0,
@@ -1755,26 +1746,20 @@ public class Tab
             // version and change the onClickListener.
             final boolean showSendFeedbackView = mSadTabSuccessiveRefreshCounter >= 1;
 
-            Runnable suggestionAction = new Runnable() {
-                @Override
-                public void run() {
-                    Activity activity = mWindowAndroid.getActivity().get();
-                    assert activity != null;
-                    HelpAndFeedback.getInstance(activity).show(activity,
-                            activity.getString(R.string.help_context_sad_tab),
-                            Profile.getLastUsedProfile(), null);
-                }
+            Runnable suggestionAction = () -> {
+                Activity activity = mWindowAndroid.getActivity().get();
+                assert activity != null;
+                HelpAndFeedback.getInstance(activity).show(activity,
+                        activity.getString(R.string.help_context_sad_tab),
+                        Profile.getLastUsedProfile(), null);
             };
 
-            Runnable buttonAction = new Runnable() {
-                @Override
-                public void run() {
-                    if (showSendFeedbackView) {
-                        getActivity().startHelpAndFeedback(
-                                getUrl(), "MobileSadTabFeedback", getProfile());
-                    } else {
-                        reload();
-                    }
+            Runnable buttonAction = () -> {
+                if (showSendFeedbackView) {
+                    getActivity().startHelpAndFeedback(
+                            getUrl(), "MobileSadTabFeedback", getProfile());
+                } else {
+                    reload();
                 }
             };
 

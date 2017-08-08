@@ -134,19 +134,16 @@ public class MainPreferences extends PreferenceFragment
         // notifications page, not to Chrome's notifications settings page.
         if (BuildInfo.isAtLeastO()) {
             Preference notifications = findPreference(PREF_NOTIFICATIONS);
-            notifications.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    // TODO(crbug.com/707804): Use Android O constants.
-                    Intent intent = new Intent();
-                    intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
-                    intent.putExtra(
-                            "android.provider.extra.APP_PACKAGE", BuildInfo.getPackageName());
-                    startActivity(intent);
-                    // We handle the click so the default action (opening NotificationsPreference)
-                    // isn't triggered.
-                    return true;
-                }
+            notifications.setOnPreferenceClickListener(preference -> {
+                // TODO(crbug.com/707804): Use Android O constants.
+                Intent intent = new Intent();
+                intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                intent.putExtra(
+                        "android.provider.extra.APP_PACKAGE", BuildInfo.getPackageName());
+                startActivity(intent);
+                // We handle the click so the default action (opening NotificationsPreference)
+                // isn't triggered.
+                return true;
             });
         }
     }
@@ -180,12 +177,7 @@ public class MainPreferences extends PreferenceFragment
     public void onSignedIn() {
         // After signing in or out of a managed account, preferences may change or become enabled
         // or disabled.
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                updatePreferences();
-            }
-        });
+        new Handler().post(() -> updatePreferences());
     }
 
     @Override

@@ -19,7 +19,6 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.multidex.ShadowMultiDex;
@@ -297,42 +296,36 @@ public class OfflinePageBridgeUnitTest {
     }
 
     private void answerNativeGetAllPages(final int itemCount) {
-        Answer<Void> answer = new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocation) {
-                List<OfflinePageItem> result = mResultArgument.getValue();
-                for (int i = 0; i < itemCount; i++) {
-                    result.add(TEST_OFFLINE_PAGE_ITEM);
-                }
-
-                mCallbackArgument.getValue().onResult(result);
-
-                return null;
+        Answer<Void> answer = invocation -> {
+            List<OfflinePageItem> result = mResultArgument.getValue();
+            for (int i = 0; i < itemCount; i++) {
+                result.add(TEST_OFFLINE_PAGE_ITEM);
             }
+
+            mCallbackArgument.getValue().onResult(result);
+
+            return null;
         };
         doAnswer(answer).when(mBridge).nativeGetAllPages(
                 anyLong(), mResultArgument.capture(), mCallbackArgument.capture());
     }
 
     private void answerGetPagesByClientIds(final int itemCount) {
-        Answer<Void> answer = new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocation) {
-                List<OfflinePageItem> result = mResultArgument.getValue();
-                String[] namespaces = mNamespacesArgument.getValue();
-                String[] ids = mIdsArgument.getValue();
+        Answer<Void> answer = invocation -> {
+            List<OfflinePageItem> result = mResultArgument.getValue();
+            String[] namespaces = mNamespacesArgument.getValue();
+            String[] ids = mIdsArgument.getValue();
 
-                assertEquals(namespaces.length, itemCount);
-                assertEquals(ids.length, itemCount);
+            assertEquals(namespaces.length, itemCount);
+            assertEquals(ids.length, itemCount);
 
-                for (int i = 0; i < itemCount; i++) {
-                    result.add(TEST_OFFLINE_PAGE_ITEM);
-                }
-
-                mCallbackArgument.getValue().onResult(result);
-
-                return null;
+            for (int i = 0; i < itemCount; i++) {
+                result.add(TEST_OFFLINE_PAGE_ITEM);
             }
+
+            mCallbackArgument.getValue().onResult(result);
+
+            return null;
         };
 
         doAnswer(answer).when(mBridge).nativeGetPagesByClientId(anyLong(),
@@ -341,20 +334,17 @@ public class OfflinePageBridgeUnitTest {
     }
 
     private void answerDeletePagesByOfflineIds(final int itemCount) {
-        Answer<Void> answer = new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocation) {
-                long[] offlineIds = mOfflineIdsArgument.getValue();
+        Answer<Void> answer = invocation -> {
+            long[] offlineIds = mOfflineIdsArgument.getValue();
 
-                if (itemCount < 0) {
-                    assertEquals(offlineIds, null);
-                } else {
-                    assertEquals(offlineIds.length, itemCount);
-                }
-                mDeleteCallbackArgument.getValue().onResult(Integer.valueOf(0));
-
-                return null;
+            if (itemCount < 0) {
+                assertEquals(offlineIds, null);
+            } else {
+                assertEquals(offlineIds.length, itemCount);
             }
+            mDeleteCallbackArgument.getValue().onResult(Integer.valueOf(0));
+
+            return null;
         };
 
         doAnswer(answer).when(mBridge).nativeDeletePagesByOfflineId(
@@ -362,19 +352,16 @@ public class OfflinePageBridgeUnitTest {
     }
 
     private void answerDeletePagesByClientIds(final int itemCount) {
-        Answer<Void> answer = new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocation) {
-                String[] namespaces = mNamespacesArgument.getValue();
-                String[] ids = mIdsArgument.getValue();
+        Answer<Void> answer = invocation -> {
+            String[] namespaces = mNamespacesArgument.getValue();
+            String[] ids = mIdsArgument.getValue();
 
-                assertEquals(namespaces.length, itemCount);
-                assertEquals(ids.length, itemCount);
+            assertEquals(namespaces.length, itemCount);
+            assertEquals(ids.length, itemCount);
 
-                mDeleteCallbackArgument.getValue().onResult(Integer.valueOf(0));
+            mDeleteCallbackArgument.getValue().onResult(Integer.valueOf(0));
 
-                return null;
-            }
+            return null;
         };
 
         doAnswer(answer).when(mBridge).nativeDeletePagesByClientId(anyLong(),

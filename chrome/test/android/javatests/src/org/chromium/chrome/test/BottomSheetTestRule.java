@@ -113,13 +113,8 @@ public class BottomSheetTestRule extends ChromeTabbedActivityTestRule {
     }
 
     protected void afterStartingActivity() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                getActivity().getBottomSheet().setSheetState(
-                        BottomSheet.SHEET_STATE_FULL, /* animate = */ false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> getActivity().getBottomSheet().setSheetState(
+                BottomSheet.SHEET_STATE_FULL, /* animate = */ false));
         // The default BottomSheetContent is SuggestionsBottomSheetContent, whose content view is a
         // RecyclerView.
         RecyclerViewTestUtils.waitForStableRecyclerView(
@@ -169,12 +164,7 @@ public class BottomSheetTestRule extends ChromeTabbedActivityTestRule {
      * @param animate If the sheet should animate to the provided state.
      */
     public void setSheetState(final int state, final boolean animate) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mBottomSheet.setSheetState(state, animate);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mBottomSheet.setSheetState(state, animate));
     }
 
     /**
@@ -183,12 +173,8 @@ public class BottomSheetTestRule extends ChromeTabbedActivityTestRule {
      * @param offset The offset from the bottom that the sheet should be.
      */
     public void setSheetOffsetFromBottom(final float offset) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mBottomSheet.setSheetOffsetFromBottomForTesting(offset);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> mBottomSheet.setSheetOffsetFromBottomForTesting(offset));
     }
 
     public BottomSheetContent getBottomSheetContent() {
@@ -200,11 +186,6 @@ public class BottomSheetTestRule extends ChromeTabbedActivityTestRule {
      *               select.
      */
     public void selectBottomSheetContent(final int itemId) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mBottomSheetContentController.selectItem(itemId);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mBottomSheetContentController.selectItem(itemId));
     }
 }

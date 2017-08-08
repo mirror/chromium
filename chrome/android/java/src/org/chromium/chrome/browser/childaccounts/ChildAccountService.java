@@ -69,12 +69,7 @@ public class ChildAccountService {
 
         Activity activity = windowAndroid.getActivity().get();
         if (activity == null) {
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    nativeOnReauthenticationResult(nativeCallback, false);
-                }
-            });
+            ThreadUtils.postOnUiThread(() -> nativeOnReauthenticationResult(nativeCallback, false));
             return;
         }
 

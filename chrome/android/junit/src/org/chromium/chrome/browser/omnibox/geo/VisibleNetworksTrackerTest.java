@@ -91,12 +91,7 @@ public class VisibleNetworksTrackerTest {
                 Arrays.asList(FIRST_ONLY_CONNECTED_NETWORKS, SECOND_ONLY_CONNECTED_NETWORKS));
 
         // Make sure that the cache is empty before every test.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable(){
-            @Override
-            public void run() {
-                VisibleNetworksTracker.clearCache();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> VisibleNetworksTracker.clearCache());
     }
 
     @Test

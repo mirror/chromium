@@ -4,8 +4,6 @@
 
 package org.chromium.chrome.browser.offlinepages.prefetch;
 
-import android.content.Context;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -17,6 +15,8 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import android.content.Context;
 
 import org.junit.After;
 import org.junit.Before;
@@ -38,7 +38,6 @@ import org.robolectric.shadows.multidex.ShadowMultiDex;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.chrome.browser.init.BrowserParts;
 import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
-import org.chromium.components.background_task_scheduler.BackgroundTask.TaskFinishedCallback;
 import org.chromium.components.background_task_scheduler.BackgroundTaskScheduler;
 import org.chromium.components.background_task_scheduler.BackgroundTaskSchedulerFactory;
 import org.chromium.components.background_task_scheduler.TaskIds;
@@ -111,11 +110,9 @@ public class PrefetchBackgroundTaskUnitTest {
 
         ChromeBrowserInitializer.setForTesting(mChromeBrowserInitializer);
 
-        doAnswer(new Answer() {
-            public Object answer(InvocationOnMock invocation) {
-                mPrefetchBackgroundTask.setNativeTask(1);
-                return Boolean.TRUE;
-            }
+        doAnswer(invocation -> {
+            mPrefetchBackgroundTask.setNativeTask(1);
+            return Boolean.TRUE;
         })
                 .when(mPrefetchBackgroundTask)
                 .nativeStartPrefetchTask(any());
@@ -168,12 +165,8 @@ public class PrefetchBackgroundTaskUnitTest {
         TaskParameters params = mock(TaskParameters.class);
         when(params.getTaskId()).thenReturn(TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID);
 
-        mPrefetchBackgroundTask.onStartTask(null, params, new TaskFinishedCallback() {
-            @Override
-            public void taskFinished(boolean needsReschedule) {
-                reschedules.add(needsReschedule);
-            }
-        });
+        mPrefetchBackgroundTask.onStartTask(null, params,
+                needsReschedule -> reschedules.add(needsReschedule));
         mPrefetchBackgroundTask.doneProcessing(false);
 
         assertEquals(1, reschedules.size());

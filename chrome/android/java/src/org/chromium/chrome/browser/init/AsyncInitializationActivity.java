@@ -211,13 +211,8 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
         // Set up the initial orientation of the device.
         checkOrientation();
         findViewById(android.R.id.content).addOnLayoutChangeListener(
-                new View.OnLayoutChangeListener() {
-                    @Override
-                    public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                            int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                        checkOrientation();
-                    }
-                });
+                (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) ->
+                        checkOrientation());
         mMemoryUma = new MemoryUma();
         mNativeInitializationController.onNativeInitializationComplete();
     }
@@ -469,12 +464,7 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
         assert mFirstDrawComplete;
         assert !mStartupDelayed;
 
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mNativeInitializationController.firstDrawComplete();
-            }
-        });
+        mHandler.post(() -> mNativeInitializationController.firstDrawComplete());
     }
 
     @Override
@@ -684,14 +674,11 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
         private final OnPreDrawListener mPreDrawListener = new OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mPaused) {
-                            getDecorView().setVisibility(View.GONE);
-                        }
-                        getViewTreeObserver().removeOnPreDrawListener(mPreDrawListener);
+                mHandler.post(() -> {
+                    if (mPaused) {
+                        getDecorView().setVisibility(View.GONE);
                     }
+                    getViewTreeObserver().removeOnPreDrawListener(mPreDrawListener);
                 });
                 return true;
             }

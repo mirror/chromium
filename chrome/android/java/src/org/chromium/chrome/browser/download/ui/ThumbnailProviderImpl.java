@@ -97,12 +97,7 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     }
 
     private void processQueue() {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                processNextRequest();
-            }
-        });
+        mHandler.post(() -> processNextRequest());
     }
 
     private Bitmap getBitmapFromCache(String filepath, int bitmapSizePx) {

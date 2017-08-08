@@ -249,12 +249,9 @@ public class ChromeFullscreenManager
             // notification bar when this was done in onStart()).
             setPersistentFullscreenMode(false);
         } else if (newState == ActivityState.STARTED) {
-            ThreadUtils.postOnUiThreadDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mBrowserVisibilityDelegate.showControlsTransient();
-                }
-            }, ACTIVITY_RETURN_SHOW_REQUEST_DELAY_MS);
+            ThreadUtils.postOnUiThreadDelayed(
+                    () -> mBrowserVisibilityDelegate.showControlsTransient(),
+                    ACTIVITY_RETURN_SHOW_REQUEST_DELAY_MS);
         } else if (newState == ActivityState.DESTROYED) {
             ApplicationStatus.unregisterActivityStateListener(this);
             ((BaseChromiumApplication) mWindow.getContext().getApplicationContext())

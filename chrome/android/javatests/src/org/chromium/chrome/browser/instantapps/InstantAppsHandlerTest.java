@@ -169,14 +169,10 @@ public class InstantAppsHandlerTest {
     @Test
     @SmallTest
     public void testHandleNavigation_startAsyncCheck() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertFalse(mHandler.handleNavigation(mContext, INSTANT_APP_URL,
+        ThreadUtils.runOnUiThreadBlocking((Runnable) () -> Assert.assertFalse(
+                mHandler.handleNavigation(mContext, INSTANT_APP_URL,
                         REFERRER_URI,
-                        mActivityTestRule.getActivity().getTabModelSelector().getCurrentTab()));
-            }
-        });
+                        mActivityTestRule.getActivity().getTabModelSelector().getCurrentTab())));
         Assert.assertFalse(mHandler.mLaunchInstantApp);
         Assert.assertTrue(mHandler.mStartedAsyncCall);
     }
@@ -192,17 +188,14 @@ public class InstantAppsHandlerTest {
                 InstrumentationRegistry.getInstrumentation().addMonitor(
                         new IntentFilter(Intent.ACTION_MAIN), null, true);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mHandler.launchFromBanner(new InstantAppsBannerData("App", null, INSTANT_APP_URL,
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> mHandler.launchFromBanner(
+                        new InstantAppsBannerData("App", null, INSTANT_APP_URL,
                         REFERRER_URI, i, "Launch",
                         mActivityTestRule.getActivity()
                                 .getTabModelSelector()
                                 .getCurrentTab()
-                                .getWebContents()));
-            }
-        });
+                                .getWebContents())));
 
         // Started instant apps intent
         Assert.assertEquals(1, monitor.getHits());
@@ -216,13 +209,9 @@ public class InstantAppsHandlerTest {
 
         // After a banner launch, test that the next launch happens automatically
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(mHandler.handleNavigation(mContext, INSTANT_APP_URL, REFERRER_URI,
-                        mActivityTestRule.getActivity().getTabModelSelector().getCurrentTab()));
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking((Runnable) () -> Assert.assertTrue(
+                mHandler.handleNavigation(mContext, INSTANT_APP_URL, REFERRER_URI,
+                        mActivityTestRule.getActivity().getTabModelSelector().getCurrentTab())));
         Assert.assertFalse(mHandler.mStartedAsyncCall);
         Assert.assertTrue(mHandler.mLaunchInstantApp);
     }

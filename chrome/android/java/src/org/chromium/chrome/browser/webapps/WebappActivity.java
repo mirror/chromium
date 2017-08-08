@@ -15,7 +15,6 @@ import android.os.StrictMode;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.View.OnSystemUiVisibilityChangeListener;
 import android.view.ViewGroup;
 
 import org.chromium.base.ActivityState;
@@ -255,26 +254,20 @@ public class WebappActivity extends SingleTabActivity {
 
             final View decor = getWindow().getDecorView();
 
-            mSetImmersiveRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    int currentFlags = decor.getSystemUiVisibility();
-                    int desiredFlags = currentFlags | IMMERSIVE_MODE_UI_FLAGS;
-                    if (currentFlags != desiredFlags) {
-                        decor.setSystemUiVisibility(desiredFlags);
-                    }
+            mSetImmersiveRunnable = () -> {
+                int currentFlags = decor.getSystemUiVisibility();
+                int desiredFlags = currentFlags | IMMERSIVE_MODE_UI_FLAGS;
+                if (currentFlags != desiredFlags) {
+                    decor.setSystemUiVisibility(desiredFlags);
                 }
             };
 
             // When we enter immersive mode for the first time, register a
             // SystemUiVisibilityChangeListener that restores immersive mode. This is necessary
             // because user actions like focusing a keyboard will break out of immersive mode.
-            decor.setOnSystemUiVisibilityChangeListener(new OnSystemUiVisibilityChangeListener() {
-                @Override
-                public void onSystemUiVisibilityChange(int newFlags) {
-                    if ((newFlags & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
-                        asyncSetImmersive(RESTORE_IMMERSIVE_MODE_DELAY_MILLIS);
-                    }
+            decor.setOnSystemUiVisibilityChangeListener(newFlags -> {
+                if ((newFlags & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                    asyncSetImmersive(RESTORE_IMMERSIVE_MODE_DELAY_MILLIS);
                 }
             });
         }
@@ -504,14 +497,11 @@ public class WebappActivity extends SingleTabActivity {
 
                 // Pretend like the navigation never happened.  We delay so that this happens while
                 // the Activity is in the background.
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (getActivityTab().canGoBack()) {
-                            getActivityTab().goBack();
-                        } else {
-                            ApiCompatibilityUtils.finishAndRemoveTask(WebappActivity.this);
-                        }
+                mHandler.postDelayed(() -> {
+                    if (getActivityTab().canGoBack()) {
+                        getActivityTab().goBack();
+                    } else {
+                        ApiCompatibilityUtils.finishAndRemoveTask(WebappActivity.this);
                     }
                 }, MS_BEFORE_NAVIGATING_BACK_FROM_INTERSTITIAL);
             }

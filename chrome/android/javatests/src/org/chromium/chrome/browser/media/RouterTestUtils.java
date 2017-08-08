@@ -27,31 +27,28 @@ public class RouterTestUtils {
     public static View waitForRouteButton(
             final ChromeActivity activity, final String chromecastName,
             int maxTimeoutMs, int intervalMs) {
-        return waitForView(new Callable<View>() {
-                @Override
-                public View call() {
-                    Dialog mediaRouteListDialog = getDialog(activity);
-                    if (mediaRouteListDialog == null) {
-                        Log.w(TAG, "Cannot find device selection dialog");
-                        return null;
-                    }
-                    View mediaRouteList =
-                            mediaRouteListDialog.findViewById(R.id.mr_chooser_list);
-                    if (mediaRouteList == null) {
-                        Log.w(TAG, "Cannot find device list");
-                        return null;
-                    }
-                    ArrayList<View> routesWanted = new ArrayList<View>();
-                    mediaRouteList.findViewsWithText(routesWanted, chromecastName,
-                                                     View.FIND_VIEWS_WITH_TEXT);
-                    if (routesWanted.size() == 0) {
-                        Log.w(TAG, "Cannot find wanted device");
-                        return null;
-                    }
-                    Log.i(TAG, "Found wanted device");
-                    return routesWanted.get(0);
-                }
-            }, maxTimeoutMs, intervalMs);
+        return waitForView(() -> {
+            Dialog mediaRouteListDialog = getDialog(activity);
+            if (mediaRouteListDialog == null) {
+                Log.w(TAG, "Cannot find device selection dialog");
+                return null;
+            }
+            View mediaRouteList =
+                    mediaRouteListDialog.findViewById(R.id.mr_chooser_list);
+            if (mediaRouteList == null) {
+                Log.w(TAG, "Cannot find device list");
+                return null;
+            }
+            ArrayList<View> routesWanted = new ArrayList<View>();
+            mediaRouteList.findViewsWithText(routesWanted, chromecastName,
+                    View.FIND_VIEWS_WITH_TEXT);
+            if (routesWanted.size() == 0) {
+                Log.w(TAG, "Cannot find wanted device");
+                return null;
+            }
+            Log.i(TAG, "Found wanted device");
+            return routesWanted.get(0);
+        }, maxTimeoutMs, intervalMs);
     }
 
     public static Dialog waitForDialog(

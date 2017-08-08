@@ -75,13 +75,10 @@ class FindResultBar extends View {
 
     boolean mWaitingForActivateAck;
 
-    private static Comparator<RectF> sComparator = new Comparator<RectF>() {
-        @Override
-        public int compare(RectF a, RectF b) {
-            int top = Float.compare(a.top, b.top);
-            if (top != 0) return top;
-            return Float.compare(a.left, b.left);
-        }
+    private static Comparator<RectF> sComparator = (a, b) -> {
+        int top = Float.compare(a.top, b.top);
+        if (top != 0) return top;
+        return Float.compare(a.left, b.left);
     };
 
     /**

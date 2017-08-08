@@ -28,7 +28,6 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.net.test.EmbeddedTestServer;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -68,16 +67,13 @@ public class TabUmaTest {
     @MediumTest
     @Feature({"Uma"})
     public void testTabStatusWhenSwitchedToLazyLoads() throws ExecutionException {
-        final Tab tab = ThreadUtils.runOnUiThreadBlocking(new Callable<Tab>() {
-            @Override
-            public Tab call() {
-                Tab bgTab = Tab.createTabForLazyLoad(false,
-                        mActivityTestRule.getActivity().getWindowAndroid(),
-                        TabLaunchType.FROM_LONGPRESS_BACKGROUND, Tab.INVALID_TAB_ID,
-                        new LoadUrlParams(mTestUrl));
-                bgTab.initialize(null, null, new TabDelegateFactory(), true, false);
-                return bgTab;
-            }
+        final Tab tab = ThreadUtils.runOnUiThreadBlocking(() -> {
+            Tab bgTab = Tab.createTabForLazyLoad(false,
+                    mActivityTestRule.getActivity().getWindowAndroid(),
+                    TabLaunchType.FROM_LONGPRESS_BACKGROUND, Tab.INVALID_TAB_ID,
+                    new LoadUrlParams(mTestUrl));
+            bgTab.initialize(null, null, new TabDelegateFactory(), true, false);
+            return bgTab;
         });
 
         String histogram = "Tab.StatusWhenSwitchedBackToForeground";
@@ -86,21 +82,11 @@ public class TabUmaTest {
         Assert.assertEquals(0, lazyLoadCount.getDelta()); // Sanity check.
 
         // Show the tab and verify that one sample was recorded in the lazy load bucket.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                tab.show(TabSelectionType.FROM_USER);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> tab.show(TabSelectionType.FROM_USER));
         Assert.assertEquals(1, lazyLoadCount.getDelta());
 
         // Show the tab again and verify that we didn't record another sample.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                tab.show(TabSelectionType.FROM_USER);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> tab.show(TabSelectionType.FROM_USER));
         Assert.assertEquals(1, lazyLoadCount.getDelta());
     }
 
@@ -123,53 +109,44 @@ public class TabUmaTest {
         Assert.assertEquals(0, skippedLoadCount.getDelta());
 
         // Test a live tab created in background and shown.
-        final Tab liveBgTab = ThreadUtils.runOnUiThreadBlocking(new Callable<Tab>() {
-            @Override
-            public Tab call() {
-                Tab bgTab = Tab.createLiveTab(Tab.INVALID_TAB_ID, false,
-                        mActivityTestRule.getActivity().getWindowAndroid(),
-                        TabLaunchType.FROM_LONGPRESS_BACKGROUND, Tab.INVALID_TAB_ID, true);
-                bgTab.initialize(null, null, new TabDelegateFactory(), true, false);
-                bgTab.loadUrl(new LoadUrlParams(mTestUrl));
-                bgTab.show(TabSelectionType.FROM_USER);
-                return bgTab;
-            }
+        final Tab liveBgTab = ThreadUtils.runOnUiThreadBlocking(() -> {
+            Tab bgTab = Tab.createLiveTab(Tab.INVALID_TAB_ID, false,
+                    mActivityTestRule.getActivity().getWindowAndroid(),
+                    TabLaunchType.FROM_LONGPRESS_BACKGROUND, Tab.INVALID_TAB_ID, true);
+            bgTab.initialize(null, null, new TabDelegateFactory(), true, false);
+            bgTab.loadUrl(new LoadUrlParams(mTestUrl));
+            bgTab.show(TabSelectionType.FROM_USER);
+            return bgTab;
         });
         Assert.assertEquals(1, shownLoadCount.getDelta());
         Assert.assertEquals(0, lostLoadCount.getDelta());
         Assert.assertEquals(0, skippedLoadCount.getDelta());
 
         // Test a live tab killed in background before shown.
-        final Tab killedBgTab = ThreadUtils.runOnUiThreadBlocking(new Callable<Tab>() {
-            @Override
-            public Tab call() {
-                Tab bgTab = Tab.createLiveTab(Tab.INVALID_TAB_ID, false,
-                        mActivityTestRule.getActivity().getWindowAndroid(),
-                        TabLaunchType.FROM_LONGPRESS_BACKGROUND, Tab.INVALID_TAB_ID, true);
-                bgTab.initialize(null, null, new TabDelegateFactory(), true, false);
-                bgTab.loadUrl(new LoadUrlParams(mTestUrl));
-                // Simulate the renderer being killed by the OS.
-                bgTab.simulateRendererKilledForTesting(false);
-                bgTab.show(TabSelectionType.FROM_USER);
-                return bgTab;
-            }
+        final Tab killedBgTab = ThreadUtils.runOnUiThreadBlocking(() -> {
+            Tab bgTab = Tab.createLiveTab(Tab.INVALID_TAB_ID, false,
+                    mActivityTestRule.getActivity().getWindowAndroid(),
+                    TabLaunchType.FROM_LONGPRESS_BACKGROUND, Tab.INVALID_TAB_ID, true);
+            bgTab.initialize(null, null, new TabDelegateFactory(), true, false);
+            bgTab.loadUrl(new LoadUrlParams(mTestUrl));
+            // Simulate the renderer being killed by the OS.
+            bgTab.simulateRendererKilledForTesting(false);
+            bgTab.show(TabSelectionType.FROM_USER);
+            return bgTab;
         });
         Assert.assertEquals(1, shownLoadCount.getDelta());
         Assert.assertEquals(1, lostLoadCount.getDelta());
         Assert.assertEquals(0, skippedLoadCount.getDelta());
 
         // Test a tab created in background but not loaded eagerly.
-        final Tab frozenBgTab = ThreadUtils.runOnUiThreadBlocking(new Callable<Tab>() {
-            @Override
-            public Tab call() {
-                Tab bgTab = Tab.createTabForLazyLoad(false,
-                        mActivityTestRule.getActivity().getWindowAndroid(),
-                        TabLaunchType.FROM_LONGPRESS_BACKGROUND, Tab.INVALID_TAB_ID,
-                        new LoadUrlParams(mTestUrl));
-                bgTab.initialize(null, null, new TabDelegateFactory(), true, false);
-                bgTab.show(TabSelectionType.FROM_USER);
-                return bgTab;
-            }
+        final Tab frozenBgTab = ThreadUtils.runOnUiThreadBlocking(() -> {
+            Tab bgTab = Tab.createTabForLazyLoad(false,
+                    mActivityTestRule.getActivity().getWindowAndroid(),
+                    TabLaunchType.FROM_LONGPRESS_BACKGROUND, Tab.INVALID_TAB_ID,
+                    new LoadUrlParams(mTestUrl));
+            bgTab.initialize(null, null, new TabDelegateFactory(), true, false);
+            bgTab.show(TabSelectionType.FROM_USER);
+            return bgTab;
         });
         Assert.assertEquals(1, shownLoadCount.getDelta());
         Assert.assertEquals(1, lostLoadCount.getDelta());
@@ -177,13 +154,10 @@ public class TabUmaTest {
 
         // Show every tab again and make sure we didn't record more samples - this metric should be
         // recorded only on first display.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                liveBgTab.show(TabSelectionType.FROM_USER);
-                killedBgTab.show(TabSelectionType.FROM_USER);
-                frozenBgTab.show(TabSelectionType.FROM_USER);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            liveBgTab.show(TabSelectionType.FROM_USER);
+            killedBgTab.show(TabSelectionType.FROM_USER);
+            frozenBgTab.show(TabSelectionType.FROM_USER);
         });
         Assert.assertEquals(1, shownLoadCount.getDelta());
         Assert.assertEquals(1, lostLoadCount.getDelta());

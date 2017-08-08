@@ -42,12 +42,7 @@ public class InvalidationGcmUpstreamSender extends GcmUpstreamSenderService {
         final Bundle dataToSend = createDeepCopy(data);
         final Context applicationContext = getApplicationContext();
 
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                doDeliverMessage(applicationContext, to, dataToSend);
-            }
-        });
+        ThreadUtils.postOnUiThread(() -> doDeliverMessage(applicationContext, to, dataToSend));
     }
 
     @MainThread

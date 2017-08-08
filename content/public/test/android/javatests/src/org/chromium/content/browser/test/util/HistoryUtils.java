@@ -12,7 +12,6 @@ import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.InstrumentationUtils;
 import org.chromium.content_public.browser.WebContents;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -34,12 +33,7 @@ public class HistoryUtils {
     public static boolean canGoBackOnUiThread(Instrumentation instrumentation,
             final WebContents webContents) throws Throwable {
         return InstrumentationUtils.runOnMainSyncAndGetResult(
-                instrumentation, new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() {
-                        return webContents.getNavigationController().canGoBack();
-                    }
-                });
+                instrumentation, () -> webContents.getNavigationController().canGoBack());
     }
 
     /**
@@ -55,12 +49,7 @@ public class HistoryUtils {
     public static boolean canGoToOffsetOnUiThread(Instrumentation instrumentation,
             final WebContents webContents, final int offset) throws Throwable {
         return InstrumentationUtils.runOnMainSyncAndGetResult(
-                instrumentation, new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return webContents.getNavigationController().canGoToOffset(offset);
-                    }
-                });
+                instrumentation, () -> webContents.getNavigationController().canGoToOffset(offset));
     }
 
     /**
@@ -74,12 +63,7 @@ public class HistoryUtils {
     public static boolean canGoForwardOnUiThread(Instrumentation instrumentation,
             final WebContents webContents) throws Throwable {
         return InstrumentationUtils.runOnMainSyncAndGetResult(
-                instrumentation, new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() {
-                        return webContents.getNavigationController().canGoForward();
-                    }
-                });
+                instrumentation, () -> webContents.getNavigationController().canGoForward());
     }
 
     /**
@@ -91,12 +75,7 @@ public class HistoryUtils {
      */
     public static void clearHistoryOnUiThread(Instrumentation instrumentation,
             final WebContents webContents) throws Throwable {
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                webContents.getNavigationController().clearHistory();
-            }
-        });
+        instrumentation.runOnMainSync(() -> webContents.getNavigationController().clearHistory());
     }
 
     /**
@@ -110,12 +89,7 @@ public class HistoryUtils {
     public static String getUrlOnUiThread(Instrumentation instrumentation,
             final WebContents webContents) throws Throwable {
         return InstrumentationUtils.runOnMainSyncAndGetResult(
-                instrumentation, new Callable<String>() {
-                    @Override
-                    public String call() throws Exception {
-                        return webContents.getLastCommittedUrl();
-                    }
-                });
+                instrumentation, () -> webContents.getLastCommittedUrl());
     }
 
     /**
@@ -132,12 +106,7 @@ public class HistoryUtils {
             final WebContents webContents,
             CallbackHelper onPageFinishedHelper) throws Throwable {
         int currentCallCount = onPageFinishedHelper.getCallCount();
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                webContents.getNavigationController().goBack();
-            }
-        });
+        instrumentation.runOnMainSync(() -> webContents.getNavigationController().goBack());
 
         onPageFinishedHelper.waitForCallback(currentCallCount, 1, WAIT_TIMEOUT_SECONDS,
                 TimeUnit.SECONDS);
@@ -155,12 +124,7 @@ public class HistoryUtils {
             final WebContents webContents,
             CallbackHelper onPageFinishedHelper) throws Throwable {
         int currentCallCount = onPageFinishedHelper.getCallCount();
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                webContents.getNavigationController().goForward();
-            }
-        });
+        instrumentation.runOnMainSync(() -> webContents.getNavigationController().goForward());
 
         onPageFinishedHelper.waitForCallback(currentCallCount, 1, WAIT_TIMEOUT_SECONDS,
                 TimeUnit.SECONDS);

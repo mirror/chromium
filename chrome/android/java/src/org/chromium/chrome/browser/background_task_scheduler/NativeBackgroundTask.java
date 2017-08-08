@@ -104,21 +104,18 @@ public abstract class NativeBackgroundTask implements BackgroundTask {
             }
         };
 
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                // If task was stopped before we got here, don't start native initialization.
-                if (mTaskStopped) return;
-                try {
-                    ChromeBrowserInitializer.getInstance(context).handlePreNativeStartup(parts);
+        ThreadUtils.postOnUiThread(() -> {
+            // If task was stopped before we got here, don't start native initialization.
+            if (mTaskStopped) return;
+            try {
+                ChromeBrowserInitializer.getInstance(context).handlePreNativeStartup(parts);
 
-                    ChromeBrowserInitializer.getInstance(context).handlePostNativeStartup(
-                            true /* isAsync */, parts);
-                } catch (ProcessInitException e) {
-                    Log.e(TAG, "ProcessInitException while starting the browser process.");
-                    rescheduleRunnable.run();
-                    return;
-                }
+                ChromeBrowserInitializer.getInstance(context).handlePostNativeStartup(
+                        true /* isAsync */, parts);
+            } catch (ProcessInitException e) {
+                Log.e(TAG, "ProcessInitException while starting the browser process.");
+                rescheduleRunnable.run();
+                return;
             }
         });
     }
@@ -154,26 +151,20 @@ public abstract class NativeBackgroundTask implements BackgroundTask {
 
     /** Builds a runnable rescheduling task. */
     private Runnable buildRescheduleRunnable(final TaskFinishedCallback callback) {
-        return new Runnable() {
-            @Override
-            public void run() {
-                ThreadUtils.assertOnUiThread();
-                if (mTaskStopped) return;
-                callback.taskFinished(true);
-            }
+        return () -> {
+            ThreadUtils.assertOnUiThread();
+            if (mTaskStopped) return;
+            callback.taskFinished(true);
         };
     }
 
     /** Builds a runnable starting task with native portion. */
     private Runnable buildStartWithNativeRunnable(final Context context,
             final TaskParameters taskParameters, final TaskFinishedCallback callback) {
-        return new Runnable() {
-            @Override
-            public void run() {
-                ThreadUtils.assertOnUiThread();
-                if (mTaskStopped) return;
-                onStartTaskWithNative(context, taskParameters, callback);
-            }
+        return () -> {
+            ThreadUtils.assertOnUiThread();
+            if (mTaskStopped) return;
+            onStartTaskWithNative(context, taskParameters, callback);
         };
     }
 

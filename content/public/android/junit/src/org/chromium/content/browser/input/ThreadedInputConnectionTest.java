@@ -39,8 +39,6 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.Feature;
 import org.chromium.testing.local.LocalRobolectricTestRunner;
 
-import java.util.concurrent.Callable;
-
 /**
  * Unit tests for {@ThreadedInputConnection}.
  */
@@ -185,18 +183,15 @@ public class ThreadedInputConnectionTest {
     public void testRendererCannotUpdateState() {
         when(mImeAdapter.requestTextInputStateUpdate()).thenReturn(true);
         // We found that renderer cannot update state, e.g., due to a crash.
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // TODO(changwan): find a way to avoid this.
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    fail();
-                }
-                mConnection.unblockOnUiThread();
+        ThreadUtils.postOnUiThread(() -> {
+            try {
+                // TODO(changwan): find a way to avoid this.
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                fail();
             }
+            mConnection.unblockOnUiThread();
         });
         // Should not hang here. Return null to indicate failure.
         assertEquals(null, mConnection.getTextBeforeCursor(10, 0));
@@ -210,21 +205,13 @@ public class ThreadedInputConnectionTest {
         mRunningOnUiThread = true;
         // Depending on the timing, the result may not be up-to-date.
         assertNotEquals("hello",
-                ThreadUtils.runOnUiThreadBlockingNoException(new Callable<CharSequence>() {
-                    @Override
-                    public CharSequence call() {
-                        return mConnection.getTextBeforeCursor(10, 0);
-                    }
-                }));
+                ThreadUtils.runOnUiThreadBlockingNoException(
+                        () -> mConnection.getTextBeforeCursor(10, 0)));
         // Or it could be.
         mConnection.updateStateOnUiThread("hello", 5, 5, -1, -1, true, false);
         assertEquals("hello",
-                ThreadUtils.runOnUiThreadBlockingNoException(new Callable<CharSequence>() {
-                    @Override
-                    public CharSequence call() {
-                        return mConnection.getTextBeforeCursor(10, 0);
-                    }
-                }));
+                ThreadUtils.runOnUiThreadBlockingNoException(
+                        () -> mConnection.getTextBeforeCursor(10, 0)));
 
         mRunningOnUiThread = false;
     }

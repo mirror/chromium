@@ -21,12 +21,8 @@ public class VrShellDelegateUtils {
      */
     public static VrShellDelegate getDelegateInstance() {
         final AtomicReference<VrShellDelegate> delegate = new AtomicReference<VrShellDelegate>();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                delegate.set(VrShellDelegate.getInstanceForTesting());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> delegate.set(VrShellDelegate.getInstanceForTesting()));
         return delegate.get();
     }
 }

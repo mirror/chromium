@@ -19,7 +19,6 @@ import org.chromium.chrome.browser.history.HistoryManagerUtils;
 import org.chromium.chrome.browser.invalidation.InvalidationController;
 import org.chromium.chrome.browser.metrics.StartupMetrics;
 import org.chromium.chrome.browser.ntp.ForeignSessionHelper.ForeignSession;
-import org.chromium.chrome.browser.ntp.ForeignSessionHelper.ForeignSessionCallback;
 import org.chromium.chrome.browser.ntp.ForeignSessionHelper.ForeignSessionTab;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.signin.SigninManager;
@@ -86,12 +85,9 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
         mSignInManager = SigninManager.get(context);
         mContext = context;
 
-        mRecentlyClosedTabManager.setTabsUpdatedRunnable(new Runnable() {
-            @Override
-            public void run() {
-                updateRecentlyClosedTabs();
-                postUpdate();
-            }
+        mRecentlyClosedTabManager.setTabsUpdatedRunnable(() -> {
+            updateRecentlyClosedTabs();
+            postUpdate();
         });
 
         updateRecentlyClosedTabs();
@@ -131,12 +127,9 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
     }
 
     private void registerForForeignSessionUpdates() {
-        mForeignSessionHelper.setOnForeignSessionCallback(new ForeignSessionCallback() {
-            @Override
-            public void onUpdated() {
-                updateForeignSessions();
-                postUpdate();
-            }
+        mForeignSessionHelper.setOnForeignSessionCallback(() -> {
+            updateForeignSessions();
+            postUpdate();
         });
     }
 
@@ -386,13 +379,10 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
     // AndroidSyncSettingsObserver
     @Override
     public void androidSyncSettingsChanged() {
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mIsDestroyed) return;
-                updateForeignSessions();
-                postUpdate();
-            }
+        ThreadUtils.runOnUiThread(() -> {
+            if (mIsDestroyed) return;
+            updateForeignSessions();
+            postUpdate();
         });
     }
 

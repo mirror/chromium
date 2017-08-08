@@ -32,13 +32,8 @@ public class MenuUtils {
 
         @Override
         public void run() {
-            mInstrumentation.runOnMainSync(new Runnable() {
-                @Override
-                public void run() {
-                    Assert.assertTrue("Could not execute menu item.",
-                            mActivity.onMenuOrKeyboardAction(mMenuId, true));
-                }
-            });
+            mInstrumentation.runOnMainSync(() -> Assert.assertTrue("Could not execute menu item.",
+                    mActivity.onMenuOrKeyboardAction(mMenuId, true)));
         }
     }
 
@@ -48,12 +43,7 @@ public class MenuUtils {
      */
     public static void invokeCustomMenuActionSync(Instrumentation instrumentation,
             final ChromeActivity activity, final int id) {
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue("Could not execute menu item.",
-                        activity.onMenuOrKeyboardAction(id, true));
-            }
-        });
+        instrumentation.runOnMainSync(() -> Assert.assertTrue("Could not execute menu item.",
+                activity.onMenuOrKeyboardAction(id, true)));
     }
 }

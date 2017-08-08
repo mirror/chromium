@@ -73,12 +73,8 @@ public class NotificationPlatformBridgeIntentTest {
                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         Preferences activity = ActivityUtils.waitForActivity(
-                InstrumentationRegistry.getInstrumentation(), Preferences.class, new Runnable() {
-                    @Override
-                    public void run() {
-                        context.startActivity(intent);
-                    }
-                });
+                InstrumentationRegistry.getInstrumentation(), Preferences.class,
+                () -> context.startActivity(intent));
         Assert.assertNotNull("Could not find the Preferences activity", activity);
 
         SingleCategoryPreferences fragment =
@@ -114,12 +110,8 @@ public class NotificationPlatformBridgeIntentTest {
                                         null /* tag */));
 
         Preferences activity = ActivityUtils.waitForActivity(
-                InstrumentationRegistry.getInstrumentation(), Preferences.class, new Runnable() {
-                    @Override
-                    public void run() {
-                        context.startActivity(intent);
-                    }
-                });
+                InstrumentationRegistry.getInstrumentation(), Preferences.class,
+                () -> context.startActivity(intent));
         Assert.assertNotNull("Could not find the Preferences activity", activity);
 
         SingleWebsitePreferences fragment =

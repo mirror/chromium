@@ -60,12 +60,9 @@ public class ChainedTasks {
         if (mFinalized) throw new IllegalStateException("Cannot call start() several times");
         mFinalized = true;
         if (coalesceTasks) {
-            ThreadUtils.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    for (Runnable task : mTasks) task.run();
-                    mTasks.clear();
-                }
+            ThreadUtils.runOnUiThread(() -> {
+                for (Runnable task : mTasks) task.run();
+                mTasks.clear();
             });
         } else {
             ThreadUtils.postOnUiThread(mRunAndPost);

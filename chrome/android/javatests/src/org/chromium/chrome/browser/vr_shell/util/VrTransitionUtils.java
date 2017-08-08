@@ -26,7 +26,6 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content_public.browser.WebContents;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -43,25 +42,16 @@ public class VrTransitionUtils {
      * Forces the browser into VR mode via a VrShellDelegate call.
      */
     public static void forceEnterVr() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                VrShellDelegate.enterVrIfNecessary();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> VrShellDelegate.enterVrIfNecessary());
     }
 
     /**
      * Forces the browser out of VR mode via a VrShellDelegate call.
      */
     public static void forceExitVr() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                VrShellDelegateUtils.getDelegateInstance().shutdownVr(
-                        true /* disableVrMode */, true /* stayingInChrome */);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> VrShellDelegateUtils.getDelegateInstance().shutdownVr(
+                        true /* disableVrMode */, true /* stayingInChrome */));
     }
 
     /**
@@ -72,12 +62,9 @@ public class VrTransitionUtils {
     public static void waitForVrEntry(final int timeout) {
         // If VR Shell is supported, mInVr should eventually go to true
         // Relatively long timeout because sometimes GVR takes a while to enter VR
-        CriteriaHelper.pollUiThread(Criteria.equals(true, new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                return VrShellDelegate.getInstanceForTesting().isVrEntryComplete();
-            }
-        }), timeout, POLL_CHECK_INTERVAL_SHORT_MS);
+        CriteriaHelper.pollUiThread(Criteria.equals(true,
+                () -> VrShellDelegate.getInstanceForTesting().isVrEntryComplete()), timeout,
+                POLL_CHECK_INTERVAL_SHORT_MS);
     }
 
     /**
@@ -129,13 +116,8 @@ public class VrTransitionUtils {
      */
     public static Boolean isBackButtonEnabled() {
         final AtomicBoolean isBackButtonEnabled = new AtomicBoolean();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                isBackButtonEnabled.set(
-                        VrShellDelegate.getVrShellForTesting().isBackButtonEnabled());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> isBackButtonEnabled.set(
+                VrShellDelegate.getVrShellForTesting().isBackButtonEnabled()));
         return isBackButtonEnabled.get();
     }
 
@@ -158,11 +140,7 @@ public class VrTransitionUtils {
         CustomTabsIntent.setAlwaysUseBrowserUI(intent);
 
         final VrClassesWrapperImpl wrapper = new VrClassesWrapperImpl();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                wrapper.createVrDaydreamApi(activity).launchInVr(intent);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> wrapper.createVrDaydreamApi(activity).launchInVr(intent));
     }
 }

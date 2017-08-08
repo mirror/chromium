@@ -7,8 +7,6 @@ package org.chromium.chrome.browser.infobar;
 import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLayoutChangeListener;
 import android.widget.LinearLayout;
 
 import org.chromium.base.annotations.CalledByNative;
@@ -206,38 +204,34 @@ public class TranslateCompactInfoBar extends InfoBar
         mTabLayout.addOnTabSelectedListener(this);
 
         // Dismiss all menus and end scrolling animation when there is layout changed.
-        mTabLayout.addOnLayoutChangeListener(new OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                    int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                if (left != oldLeft || top != oldTop || right != oldRight || bottom != oldBottom) {
-                    // Dismiss all menus to prevent menu misplacement.
-                    dismissMenus();
+        mTabLayout.addOnLayoutChangeListener(
+                (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+                    if (left != oldLeft || top != oldTop || right != oldRight
+                            || bottom != oldBottom) {
+                        // Dismiss all menus to prevent menu misplacement.
+                        dismissMenus();
 
-                    if (mIsFirstLayout) {
-                        // Scrolls to the end to make sure the target language tab is visible when
-                        // language tabs is too long.
-                        mTabLayout.startScrollingAnimationIfNeeded();
-                        mIsFirstLayout = false;
-                        return;
+                        if (mIsFirstLayout) {
+                            // Scrolls to the end to make sure the target language tab is visible
+                            // when
+                            // language tabs is too long.
+                            mTabLayout.startScrollingAnimationIfNeeded();
+                            mIsFirstLayout = false;
+                            return;
+                        }
+
+                        // End scrolling animation when layout changed.
+                        mTabLayout.endScrollingAnimationIfPlaying();
                     }
-
-                    // End scrolling animation when layout changed.
-                    mTabLayout.endScrollingAnimationIfPlaying();
-                }
-            }
-        });
+                });
 
         mMenuButton = (TintedImageButton) content.findViewById(R.id.translate_infobar_menu_button);
-        mMenuButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTabLayout.endScrollingAnimationIfPlaying();
-                recordInfobarAction(INFOBAR_OPTIONS);
-                initMenuHelper(TranslateMenu.MENU_OVERFLOW);
-                mOverflowMenuHelper.show(TranslateMenu.MENU_OVERFLOW);
-                mMenuExpanded = true;
-            }
+        mMenuButton.setOnClickListener(v -> {
+            mTabLayout.endScrollingAnimationIfPlaying();
+            recordInfobarAction(INFOBAR_OPTIONS);
+            initMenuHelper(TranslateMenu.MENU_OVERFLOW);
+            mOverflowMenuHelper.show(TranslateMenu.MENU_OVERFLOW);
+            mMenuExpanded = true;
         });
 
         parent.addContent(content, 1.0f);

@@ -4,10 +4,6 @@
 
 package org.chromium.base.process_launcher;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.os.Bundle;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -24,13 +20,15 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.os.Bundle;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLooper;
 
@@ -68,13 +66,10 @@ public class ChildConnectionAllocatorTest {
             if (mConnection == null) {
                 mConnection = mock(ChildProcessConnection.class);
                 // Retrieve the ServiceCallback so we can simulate the service process dying.
-                doAnswer(new Answer() {
-                    @Override
-                    public Object answer(InvocationOnMock invocation) {
-                        mConnectionServiceCallback =
-                                (ChildProcessConnection.ServiceCallback) invocation.getArgument(1);
-                        return null;
-                    }
+                doAnswer(invocation -> {
+                    mConnectionServiceCallback =
+                            (ChildProcessConnection.ServiceCallback) invocation.getArgument(1);
+                    return null;
                 })
                         .when(mConnection)
                         .start(anyBoolean(), any(ChildProcessConnection.ServiceCallback.class),
@@ -95,22 +90,19 @@ public class ChildConnectionAllocatorTest {
                 final boolean onStartFailed, final boolean onChildProcessDied) {
             final ChildProcessConnection connection = mock(ChildProcessConnection.class);
             mConnection = connection;
-            doAnswer(new Answer() {
-                @Override
-                public Object answer(InvocationOnMock invocation) {
-                    ChildProcessConnection.ServiceCallback serviceCallback =
-                            (ChildProcessConnection.ServiceCallback) invocation.getArgument(1);
-                    if (onChildStarted) {
-                        serviceCallback.onChildStarted();
-                    }
-                    if (onStartFailed) {
-                        serviceCallback.onChildStartFailed(connection);
-                    }
-                    if (onChildProcessDied) {
-                        serviceCallback.onChildProcessDied(connection);
-                    }
-                    return null;
+            doAnswer(invocation -> {
+                ChildProcessConnection.ServiceCallback serviceCallback =
+                        (ChildProcessConnection.ServiceCallback) invocation.getArgument(1);
+                if (onChildStarted) {
+                    serviceCallback.onChildStarted();
                 }
+                if (onStartFailed) {
+                    serviceCallback.onChildStartFailed(connection);
+                }
+                if (onChildProcessDied) {
+                    serviceCallback.onChildProcessDied(connection);
+                }
+                return null;
             })
                     .when(mConnection)
                     .start(anyBoolean(), any(ChildProcessConnection.ServiceCallback.class),

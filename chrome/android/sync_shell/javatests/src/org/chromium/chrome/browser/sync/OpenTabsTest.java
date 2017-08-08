@@ -35,7 +35,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 /**
  * Test suite for the open tabs (sessions) sync data type.
@@ -123,12 +122,9 @@ public class OpenTabsTest extends SyncTestBase {
         waitForLocalTabsForClient(mClientName, URL, URL2);
         waitForServerTabs(URL, URL2);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                TabModelSelector selector = getActivity().getTabModelSelector();
-                assertTrue(TabModelUtils.closeCurrentTab(selector.getCurrentModel()));
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            TabModelSelector selector = getActivity().getTabModelSelector();
+            assertTrue(TabModelUtils.closeCurrentTab(selector.getCurrentModel()));
         });
 
         waitForLocalTabsForClient(mClientName, URL);
@@ -265,12 +261,8 @@ public class OpenTabsTest extends SyncTestBase {
             throws InterruptedException {
         final List<String> urlList = new ArrayList<>(urls.length);
         for (String url : urls) urlList.add(url);
-        pollInstrumentationThread(Criteria.equals(urlList, new Callable<List<String>>() {
-            @Override
-            public List<String> call() throws Exception {
-                return getLocalTabsForClient(clientName).urls;
-            }
-        }));
+        pollInstrumentationThread(Criteria.equals(urlList,
+                () -> getLocalTabsForClient(clientName).urls));
     }
 
     private void waitForServerTabs(final String... urls)

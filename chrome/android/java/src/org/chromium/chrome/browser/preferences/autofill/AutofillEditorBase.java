@@ -120,22 +120,14 @@ public abstract class AutofillEditorBase
     /** Initializes the buttons within the layout. */
     protected void initializeButtons(View layout) {
         Button button = (Button) layout.findViewById(R.id.button_secondary);
-        button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getActivity().finish();
-                }
-            });
+        button.setOnClickListener(v -> getActivity().finish());
 
         button = (Button) layout.findViewById(R.id.button_primary);
-        button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (saveEntry()) {
-                        getActivity().finish();
-                    }
-                }
-            });
+        button.setOnClickListener(v -> {
+            if (saveEntry()) {
+                getActivity().finish();
+            }
+        });
         button.setEnabled(false);
     }
 

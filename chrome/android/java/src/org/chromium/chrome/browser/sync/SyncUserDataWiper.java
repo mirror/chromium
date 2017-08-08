@@ -31,20 +31,12 @@ public class SyncUserDataWiper {
         final Promise<Void> promise = new Promise<>();
 
         final BookmarkModel model = new BookmarkModel();
-        model.runAfterBookmarkModelLoaded(new Runnable() {
-            @Override
-            public void run() {
-                model.removeAllUserBookmarks();
-                model.destroy();
-                BrowsingDataBridge.getInstance().clearBrowsingData(
-                        new OnClearBrowsingDataListener() {
-                            @Override
-                            public void onBrowsingDataCleared() {
-                                promise.fulfill(null);
-                            }
-                        },
-                        SYNC_DATA_TYPES, TimePeriod.ALL_TIME);
-            }
+        model.runAfterBookmarkModelLoaded(() -> {
+            model.removeAllUserBookmarks();
+            model.destroy();
+            BrowsingDataBridge.getInstance().clearBrowsingData(
+                    (OnClearBrowsingDataListener) () -> promise.fulfill(null),
+                    SYNC_DATA_TYPES, TimePeriod.ALL_TIME);
         });
 
         return promise;

@@ -31,13 +31,7 @@ import org.chromium.chrome.test.util.browser.tabmodel.MockTabModelSelector;
 @RunWith(ChromeJUnit4ClassRunner.class)
 public class TabWindowManagerTest {
     private final TabModelSelectorFactory mMockTabModelSelectorFactory =
-            new TabModelSelectorFactory() {
-                @Override
-                public TabModelSelector buildSelector(Activity activity,
-                        TabCreatorManager tabCreatorManager, int selectorIndex) {
-                    return new MockTabModelSelector(0, 0, null);
-                }
-    };
+            (activity, tabCreatorManager, selectorIndex) -> new MockTabModelSelector(0, 0, null);
 
     private ChromeActivity buildActivity() {
         ChromeActivity activity = new CustomTabActivity();

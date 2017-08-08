@@ -117,12 +117,7 @@ public class InvalidationControllerTest {
         AccountManagerFacade.overrideAccountManagerFacadeForTests(
                 mContext, new SystemAccountManagerDelegate());
 
-        ModelTypeHelper.setTestDelegate(new ModelTypeHelper.TestDelegate() {
-            @Override
-            public String toNotificationType(int modelType) {
-                return Integer.toString(modelType);
-            }
-        });
+        ModelTypeHelper.setTestDelegate(modelType -> Integer.toString(modelType));
 
         ProfileSyncServiceStub profileSyncServiceStub = new ProfileSyncServiceStub();
         ProfileSyncService.overrideForTests(profileSyncServiceStub);

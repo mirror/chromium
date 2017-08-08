@@ -55,13 +55,10 @@ public class EmptyBackgroundViewTablet extends FrameLayout {
         super.onFinishInflate();
 
         View newTabButton = findViewById(R.id.empty_new_tab_button);
-        newTabButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mTabCreator == null) return;
-                mTabModelSelector.getModel(false).commitAllTabClosures();
-                mTabCreator.launchNTP();
-            }
+        newTabButton.setOnClickListener(v -> {
+            if (mTabCreator == null) return;
+            mTabModelSelector.getModel(false).commitAllTabClosures();
+            mTabCreator.launchNTP();
         });
 
         buildAnimatorSets();
@@ -97,12 +94,8 @@ public class EmptyBackgroundViewTablet extends FrameLayout {
         final ImageButton menuBtn = (ImageButton) findViewById(R.id.empty_menu_button);
         final AppMenuButtonHelper menuPopupButtonHelper = new AppMenuButtonHelper(menuHandler);
         menuBtn.setOnTouchListener(menuPopupButtonHelper);
-        menuPopupButtonHelper.setOnAppMenuShownListener(new Runnable() {
-            @Override
-            public void run() {
-                RecordUserAction.record("MobileToolbarShowMenu");
-            }
-        });
+        menuPopupButtonHelper.setOnAppMenuShownListener(
+                () -> RecordUserAction.record("MobileToolbarShowMenu"));
     }
 
     public void setEmptyContainerState(boolean shouldShow) {

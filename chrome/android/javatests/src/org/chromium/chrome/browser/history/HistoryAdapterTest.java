@@ -40,12 +40,7 @@ public class HistoryAdapterTest {
     }
 
     private void initializeAdapter() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable(){
-            @Override
-            public void run() {
-                mAdapter.initialize();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.initialize());
     }
 
     @Test
@@ -221,12 +216,7 @@ public class HistoryAdapterTest {
 
         mHistoryProvider.removeItem(item1);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.onHistoryDeleted();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.onHistoryDeleted());
 
         checkAdapterContents(false);
     }

@@ -284,18 +284,14 @@ public abstract class SwipableOverlayView extends FrameLayout {
      * @return The SimpleOnGestureListener that will monitor the View.
      */
     private View.OnLayoutChangeListener createLayoutChangeListener() {
-        return new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                    int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                removeOnLayoutChangeListener(mLayoutChangeListener);
+        return (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            removeOnLayoutChangeListener(mLayoutChangeListener);
 
-                // Animate the View coming in from the bottom of the screen.
-                setTranslationY(mTotalHeight);
-                mIsBeingDisplayedForFirstTime = true;
-                createVerticalSnapAnimation(true);
-                mCurrentAnimation.start();
-            }
+            // Animate the View coming in from the bottom of the screen.
+            setTranslationY(mTotalHeight);
+            mIsBeingDisplayedForFirstTime = true;
+            createVerticalSnapAnimation(true);
+            mCurrentAnimation.start();
         };
     }
 

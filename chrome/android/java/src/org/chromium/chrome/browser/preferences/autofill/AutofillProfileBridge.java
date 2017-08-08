@@ -12,7 +12,6 @@ import org.chromium.base.annotations.JNINamespace;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -89,13 +88,10 @@ public class AutofillProfileBridge {
 
         final Collator collator = Collator.getInstance(Locale.getDefault());
         collator.setStrength(Collator.PRIMARY);
-        Collections.sort(countries, new Comparator<DropdownKeyValue>() {
-            @Override
-            public int compare(DropdownKeyValue lhs, DropdownKeyValue rhs) {
-                int result = collator.compare(lhs.getValue(), rhs.getValue());
-                if (result == 0) result = lhs.getKey().compareTo(rhs.getKey());
-                return result;
-            }
+        Collections.sort(countries, (lhs, rhs) -> {
+            int result = collator.compare(lhs.getValue(), rhs.getValue());
+            if (result == 0) result = lhs.getKey().compareTo(rhs.getKey());
+            return result;
         });
         return countries;
     }
@@ -111,13 +107,10 @@ public class AutofillProfileBridge {
 
         final Collator collator = Collator.getInstance(Locale.getDefault());
         collator.setStrength(Collator.PRIMARY);
-        Collections.sort(adminAreas, new Comparator<DropdownKeyValue>() {
-            @Override
-            public int compare(DropdownKeyValue lhs, DropdownKeyValue rhs) {
-                // Sorted according to the admin area values, such as Quebec,
-                // rather than the admin area keys, such as QC.
-                return collator.compare(lhs.getValue(), rhs.getValue());
-            }
+        Collections.sort(adminAreas, (lhs, rhs) -> {
+            // Sorted according to the admin area values, such as Quebec,
+            // rather than the admin area keys, such as QC.
+            return collator.compare(lhs.getValue(), rhs.getValue());
         });
         return adminAreas;
     }

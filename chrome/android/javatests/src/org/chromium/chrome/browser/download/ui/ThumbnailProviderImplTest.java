@@ -65,11 +65,7 @@ public class ThumbnailProviderImplTest {
         final TestThumbnailRequest request = new TestThumbnailRequest(
                 testFilePath, requiredSize, thumbnailRetrievedCallbackHelper);
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            public void run() {
-                mThumbnailProvider.getThumbnail(request);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> mThumbnailProvider.getThumbnail(request));
 
         thumbnailRetrievedCallbackHelper.waitForCallback(
                 "Reached timeout when fetching a thumbnail for a downloaded image.", 0);
@@ -89,11 +85,7 @@ public class ThumbnailProviderImplTest {
         final TestThumbnailRequest request = new TestThumbnailRequest(
                 testFilePath, requiredSize, thumbnailRetrievedCallbackHelper);
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            public void run() {
-                mThumbnailProvider.getThumbnail(request);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> mThumbnailProvider.getThumbnail(request));
 
         thumbnailRetrievedCallbackHelper.waitForCallback(
                 "Reached timeout when fetching a thumbnail for a downloaded image.", 0);
@@ -113,11 +105,7 @@ public class ThumbnailProviderImplTest {
         final TestThumbnailRequest request = new TestThumbnailRequest(
                 testFilePath, requiredSize, thumbnailRetrievedCallbackHelper);
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            public void run() {
-                mThumbnailProvider.getThumbnail(request);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> mThumbnailProvider.getThumbnail(request));
 
         thumbnailRetrievedCallbackHelper.waitForCallback(
                 "Reached timeout when fetching a thumbnail for a downloaded image.", 0);
@@ -137,11 +125,7 @@ public class ThumbnailProviderImplTest {
         final TestThumbnailRequest request = new TestThumbnailRequest(
                 testFilePath, requiredSize, thumbnailRetrievedCallbackHelper);
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            public void run() {
-                mThumbnailProvider.getThumbnail(request);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> mThumbnailProvider.getThumbnail(request));
 
         thumbnailRetrievedCallbackHelper.waitForCallback(
                 "Reached timeout when fetching a thumbnail for a downloaded image.", 0);
@@ -161,11 +145,7 @@ public class ThumbnailProviderImplTest {
         final TestThumbnailRequest request = new TestThumbnailRequest(
                 testFilePath, requiredSize, thumbnailRetrievedCallbackHelper);
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            public void run() {
-                mThumbnailProvider.getThumbnail(request);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> mThumbnailProvider.getThumbnail(request));
 
         thumbnailRetrievedCallbackHelper.waitForCallback(
                 "Reached timeout when fetching a thumbnail for a downloaded image.", 0);
@@ -180,12 +160,7 @@ public class ThumbnailProviderImplTest {
     }
 
     private void clearThumbnailCache() {
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ThumbnailProviderImpl.clearCache();
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> ThumbnailProviderImpl.clearCache());
     }
 
     private static class TestThumbnailRequest implements ThumbnailRequest {

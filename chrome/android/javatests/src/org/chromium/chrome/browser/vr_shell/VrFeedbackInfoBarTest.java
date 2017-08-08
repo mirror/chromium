@@ -152,14 +152,10 @@ public class VrFeedbackInfoBarTest {
 
         // Exit presentation mode by navigating to a different url.
         ChromeTabUtils.waitForTabPageLoaded(
-                mVrTestRule.getActivity().getActivityTab(), new Runnable() {
-                    @Override
-                    public void run() {
-                        mVrTestRule.runJavaScriptOrFail(
-                                "window.location.href = '" + TEST_PAGE_2D_URL + "';",
-                                POLL_TIMEOUT_SHORT_MS, mVrTestRule.getFirstTabWebContents());
-                    }
-                }, POLL_TIMEOUT_LONG_MS);
+                mVrTestRule.getActivity().getActivityTab(), () -> mVrTestRule.runJavaScriptOrFail(
+                        "window.location.href = '" + TEST_PAGE_2D_URL + "';",
+                        POLL_TIMEOUT_SHORT_MS, mVrTestRule.getFirstTabWebContents()),
+                POLL_TIMEOUT_LONG_MS);
 
         // Exiting VR should prompt for feedback since 2D browsing was performed after.
         VrTransitionUtils.forceExitVr();

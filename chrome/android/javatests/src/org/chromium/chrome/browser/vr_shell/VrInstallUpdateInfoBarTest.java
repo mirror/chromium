@@ -45,16 +45,13 @@ public class VrInstallUpdateInfoBarTest {
      * @param checkerReturnCompatibility The compatibility to have the VrCoreVersionChecker return
      */
     private void infoBarTestHelper(final int checkerReturnCompatibility) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                MockVrCoreVersionCheckerImpl mockChecker = new MockVrCoreVersionCheckerImpl();
-                mockChecker.setMockReturnValue(new VrCoreInfo(null, checkerReturnCompatibility));
-                VrShellDelegateUtils.getDelegateInstance().overrideVrCoreVersionCheckerForTesting(
-                        mockChecker);
-                Assert.assertEquals(
-                        checkerReturnCompatibility, mockChecker.getLastReturnValue().compatibility);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            MockVrCoreVersionCheckerImpl mockChecker = new MockVrCoreVersionCheckerImpl();
+            mockChecker.setMockReturnValue(new VrCoreInfo(null, checkerReturnCompatibility));
+            VrShellDelegateUtils.getDelegateInstance().overrideVrCoreVersionCheckerForTesting(
+                    mockChecker);
+            Assert.assertEquals(
+                    checkerReturnCompatibility, mockChecker.getLastReturnValue().compatibility);
         });
         View decorView = mVrTestRule.getActivity().getWindow().getDecorView();
         if (checkerReturnCompatibility == VrCoreCompatibility.VR_READY) {

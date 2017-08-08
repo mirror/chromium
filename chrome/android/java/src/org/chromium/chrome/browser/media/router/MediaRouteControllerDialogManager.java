@@ -47,12 +47,7 @@ public class MediaRouteControllerDialogManager extends BaseMediaRouteDialogManag
         private MediaRouter.Callback mCallback;
 
         public Fragment() {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    Fragment.this.dismiss();
-                }
-            });
+            mHandler.post(() -> Fragment.this.dismiss());
         }
 
         public Fragment(BaseMediaRouteDialogManager manager, MediaRouter.Callback callback) {

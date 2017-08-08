@@ -4,13 +4,13 @@
 
 package org.chromium.chrome.browser.offlinepages.prefetch;
 
-import android.content.Context;
-import android.support.test.filters.SmallTest;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
+import android.content.Context;
+import android.support.test.filters.SmallTest;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -24,7 +24,6 @@ import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
-import org.chromium.components.background_task_scheduler.BackgroundTask.TaskFinishedCallback;
 import org.chromium.components.background_task_scheduler.BackgroundTaskScheduler;
 import org.chromium.components.background_task_scheduler.BackgroundTaskSchedulerDelegate;
 import org.chromium.components.background_task_scheduler.TaskIds;
@@ -61,44 +60,28 @@ public class PrefetchBackgroundTaskTest {
             TaskParameters.Builder builder =
                     TaskParameters.create(TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID);
             TaskParameters params = builder.build();
-            onStartTask(context, params, new TaskFinishedCallback() {
-                @Override
-                public void taskFinished(boolean needsReschedule) {
-                    mNeedsReschedule = needsReschedule;
-                    callback.taskFinished(needsReschedule);
-                    mStopSemaphore.release();
-                }
+            onStartTask(context, params, needsReschedule -> {
+                mNeedsReschedule = needsReschedule;
+                callback.taskFinished(needsReschedule);
+                mStopSemaphore.release();
             });
         }
 
         public void signalTaskFinished() {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    signalTaskFinishedForTesting();
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(() -> signalTaskFinishedForTesting());
         }
 
         public void stopTask() {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    TaskParameters.Builder builder =
-                            TaskParameters.create(TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID);
-                    TaskParameters params = builder.build();
-                    onStopTask(ContextUtils.getApplicationContext(), params);
-                }
+            ThreadUtils.runOnUiThreadBlocking(() -> {
+                TaskParameters.Builder builder =
+                        TaskParameters.create(TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID);
+                TaskParameters params = builder.build();
+                onStopTask(ContextUtils.getApplicationContext(), params);
             });
         }
 
         public void setTaskRescheduling(final boolean reschedule, final boolean backoff) {
-            ThreadUtils.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    setTaskReschedulingForTesting(reschedule, backoff);
-                }
-            });
+            ThreadUtils.runOnUiThread(() -> setTaskReschedulingForTesting(reschedule, backoff));
         }
 
         public void waitForTaskFinished() throws Exception {
@@ -137,19 +120,11 @@ public class PrefetchBackgroundTaskTest {
         @Override
         public boolean schedule(final Context context, final TaskInfo taskInfo) {
             mAddCount++;
-            ThreadUtils.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    TestPrefetchBackgroundTask task = new TestPrefetchBackgroundTask(taskInfo);
-                    mTasks.put(taskInfo.getTaskId(), task);
-                    task.startTask(context, new TaskFinishedCallback() {
-                        @Override
-                        public void taskFinished(boolean needsReschedule) {
-                            removeTask(taskInfo.getTaskId());
-                        }
-                    });
-                    mStartSemaphore.release();
-                }
+            ThreadUtils.runOnUiThread(() -> {
+                TestPrefetchBackgroundTask task = new TestPrefetchBackgroundTask(taskInfo);
+                mTasks.put(taskInfo.getTaskId(), task);
+                task.startTask(context, needsReschedule -> removeTask(taskInfo.getTaskId()));
+                mStartSemaphore.release();
             });
             return true;
         }
@@ -208,12 +183,9 @@ public class PrefetchBackgroundTaskTest {
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mScheduler = new TestBackgroundTaskScheduler();
-                PrefetchBackgroundTask.setSchedulerForTesting(mScheduler);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mScheduler = new TestBackgroundTaskScheduler();
+            PrefetchBackgroundTask.setSchedulerForTesting(mScheduler);
         });
     }
 

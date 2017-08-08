@@ -849,12 +849,9 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
         // Intent is sent by WindowAndroid by default.
         try {
-            mWindowAndroid.showIntent(intent, new WindowAndroid.IntentCallback() {
-                @Override
-                public void onIntentCompleted(WindowAndroid window, int resultCode, Intent data) {
-                    onReceivedProcessTextResult(resultCode, data);
-                }
-            }, null);
+            mWindowAndroid.showIntent(intent,
+                    (window, resultCode, data) -> onReceivedProcessTextResult(resultCode, data),
+                    null);
         } catch (android.content.ActivityNotFoundException ex) {
             // If no app handles it, do nothing.
         }

@@ -11,7 +11,6 @@ import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Space;
@@ -366,12 +365,8 @@ public class HistoryAdapter extends DateDividedAdapter implements BrowsingHistor
 
         mClearBrowsingDataButton = (Button) clearBrowsingDataButtonContainer.findViewById(
                 R.id.clear_browsing_data_button);
-        mClearBrowsingDataButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mHistoryManager.openClearBrowsingDataPreference();
-            }
-        });
+        mClearBrowsingDataButton.setOnClickListener(
+                v -> mHistoryManager.openClearBrowsingDataPreference());
         MarginResizer.createAndAttach(clearBrowsingDataButtonContainer,
                 mHistoryManager.getSelectableListLayout().getUiConfig(),
                 SelectableListLayout.getDefaultListItemLateralMarginPx(resources), 0);

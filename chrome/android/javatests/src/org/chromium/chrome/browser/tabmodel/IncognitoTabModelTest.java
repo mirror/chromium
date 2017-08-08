@@ -52,13 +52,9 @@ public class IncognitoTabModelTest {
     }
 
     private void createTabOnUiThread() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mActivityTestRule.getActivity().getTabCreator(true).createNewTab(
-                        new LoadUrlParams("about:blank"), TabLaunchType.FROM_CHROME_UI, null);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> mActivityTestRule.getActivity().getTabCreator(true).createNewTab(
+                        new LoadUrlParams("about:blank"), TabLaunchType.FROM_CHROME_UI, null));
     }
 
     /**

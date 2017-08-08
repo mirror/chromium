@@ -48,7 +48,6 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -73,42 +72,22 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         public void onChanged() {
             // To guarantee that all real Observers have had a chance to react to the event, post
             // the CallbackHelper.notifyCalled() call.
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    onChangedCallback.notifyCalled();
-                }
-            });
+            mHandler.post(() -> onChangedCallback.notifyCalled());
         }
 
         @Override
         public void onSelectionStateChange(List<HistoryItem> selectedItems) {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    onSelectionCallback.notifyCalled();
-                }
-            });
+            mHandler.post(() -> onSelectionCallback.notifyCalled());
         }
 
         @Override
         public void onSignedIn() {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    onSigninStateChangedCallback.notifyCalled();
-                }
-            });
+            mHandler.post(() -> onSigninStateChangedCallback.notifyCalled());
         }
 
         @Override
         public void onSignedOut() {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    onSigninStateChangedCallback.notifyCalled();
-                }
-            });
+            mHandler.post(() -> onSigninStateChangedCallback.notifyCalled());
         }
     }
 
@@ -156,12 +135,8 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
 
         if (!mAdapter.isClearBrowsingDataButtonVisible()) {
             int changedCallCount = mTestObserver.onChangedCallback.getCallCount();
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.setClearBrowsingDataButtonVisibilityForTest(true);
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(
+                    () -> mAdapter.setClearBrowsingDataButtonVisibilityForTest(true));
             mTestObserver.onChangedCallback.waitForCallback(changedCallCount);
         }
 
@@ -179,12 +154,8 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         int callCount = mTestObserver.onChangedCallback.getCallCount();
         final SelectableItemView<HistoryItem> itemView = getItemView(2);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ((TintedImageButton) itemView.findViewById(R.id.remove)).performClick();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> ((TintedImageButton) itemView.findViewById(R.id.remove)).performClick());
 
         // Check that one item was removed.
         mTestObserver.onChangedCallback.waitForCallback(callCount, 1);
@@ -202,13 +173,8 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
 
         int callCount = mTestObserver.onChangedCallback.getCallCount();
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                assertTrue(mHistoryManager.getToolbarForTests().getMenu()
-                        .performIdentifierAction(R.id.selection_mode_delete_menu_id, 0));
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> assertTrue(mHistoryManager.getToolbarForTests().getMenu()
+                .performIdentifierAction(R.id.selection_mode_delete_menu_id, 0)));
 
         // Check that all items were removed. The onChangedCallback should be called three times -
         // once for each item that is being removed and once for the removal of the header.
@@ -307,13 +273,8 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
 
         toggleItemSelection(2);
         toggleItemSelection(3);
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                assertTrue(mHistoryManager.getToolbarForTests().getMenu()
-                        .performIdentifierAction(R.id.selection_mode_open_in_incognito, 0));
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> assertTrue(mHistoryManager.getToolbarForTests().getMenu()
+                .performIdentifierAction(R.id.selection_mode_open_in_incognito, 0)));
 
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
             @Override
@@ -342,12 +303,7 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
 
         mHistoryProvider.removeItem(mItem1);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.onHistoryDeleted();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.onHistoryDeleted());
 
         // The selection should be cleared and the items in the adapter should be reloaded.
         assertFalse(mHistoryManager.getSelectionDelegateForTests().isSelectionEnabled());
@@ -423,12 +379,8 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         assertTrue(mHistoryManager.getSelectionDelegateForTests().isSelectionEnabled());
 
         int callCount = mTestObserver.onSelectionCallback.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                toolbar.getMenu().performIdentifierAction(R.id.search_menu_id, 0);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> toolbar.getMenu().performIdentifierAction(R.id.search_menu_id, 0));
 
         // The selection should be cleared when a search is started.
         mTestObserver.onSelectionCallback.waitForCallback(callCount, 1);
@@ -449,12 +401,7 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         assertEquals(View.VISIBLE, toolbarSearchView.getVisibility());
 
         // Close the search view.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                toolbar.onNavigationBack();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> toolbar.onNavigationBack());
         assertEquals(View.GONE, toolbarShadow.getVisibility());
         assertEquals(View.GONE, toolbarSearchView.getVisibility());
     }
@@ -475,12 +422,7 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         // Signed in but not synced and history has items
         signinController.setSignedInAccountName("test@gmail.com");
         setHasOtherFormsOfBrowsingData(false, false);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                toolbar.onSignInStateChange();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> toolbar.onSignInStateChange());
         assertTrue(infoMenuItem.isVisible());
 
         // Signed in, synced, has other forms and has items
@@ -492,23 +434,15 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         assertEquals(2, headerGroup.size());
 
         // Toggle Info Menu Item to off
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mHistoryManager.onMenuItemClick(infoMenuItem);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> mHistoryManager.onMenuItemClick(infoMenuItem));
         headerGroup = mAdapter.getFirstGroupForTests();
         assertTrue(mAdapter.hasListHeader());
         assertEquals(1, headerGroup.size());
 
         // Toggle Info Menu Item to on
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mHistoryManager.onMenuItemClick(infoMenuItem);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> mHistoryManager.onMenuItemClick(infoMenuItem));
         headerGroup = mAdapter.getFirstGroupForTests();
         assertTrue(mAdapter.hasListHeader());
         assertEquals(2, headerGroup.size());
@@ -525,12 +459,9 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         int callCount = mTestObserver.onSelectionCallback.getCallCount();
         ChromeSigninController signinController = ChromeSigninController.get();
         signinController.setSignedInAccountName("test@gmail.com");
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                toolbar.onSignInStateChange();
-                mAdapter.onSignInStateChange();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            toolbar.onSignInStateChange();
+            mAdapter.onSignInStateChange();
         });
         mTestObserver.onChangedCallback.waitForCallback(callCount, 1);
         DateDividedAdapter.ItemGroup firstGroup = mAdapter.getFirstGroupForTests();
@@ -540,12 +471,8 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
 
         // Enter search mode
         callCount = mTestObserver.onSelectionCallback.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                toolbar.getMenu().performIdentifierAction(R.id.search_menu_id, 0);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> toolbar.getMenu().performIdentifierAction(R.id.search_menu_id, 0));
 
         mTestObserver.onSelectionCallback.waitForCallback(callCount, 1);
         firstGroup = mAdapter.getFirstGroupForTests();
@@ -564,12 +491,9 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         // Not sign in and set clear browsing data button to invisible
         ChromeSigninController signinController = ChromeSigninController.get();
         signinController.setSignedInAccountName(null);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.setClearBrowsingDataButtonVisibilityForTest(false);
-                mAdapter.setPrivacyDisclaimerVisibility();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mAdapter.setClearBrowsingDataButtonVisibilityForTest(false);
+            mAdapter.setPrivacyDisclaimerVisibility();
         });
 
         DateDividedAdapter.ItemGroup firstGroup = mAdapter.getFirstGroupForTests();
@@ -592,13 +516,9 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         assertTrue(toolbar.getItemById(R.id.selection_mode_copy_link).isVisible());
 
         // Check that link is copied to the clipboard.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                assertTrue(mHistoryManager.getToolbarForTests().getMenu()
-                        .performIdentifierAction(R.id.selection_mode_copy_link, 0));
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> assertTrue(mHistoryManager.getToolbarForTests().getMenu()
+                        .performIdentifierAction(R.id.selection_mode_copy_link, 0)));
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -615,23 +535,13 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
     private void toggleItemSelection(int position) throws Exception {
         int callCount = mTestObserver.onSelectionCallback.getCallCount();
         final SelectableItemView<HistoryItem> itemView = getItemView(position);
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                itemView.performLongClick();
-            }
-        });
+        ThreadUtils.runOnUiThread((Runnable) () -> itemView.performLongClick());
         mTestObserver.onSelectionCallback.waitForCallback(callCount, 1);
     }
 
     private void clickItem(int position) throws Exception {
         final SelectableItemView<HistoryItem> itemView = getItemView(position);
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                itemView.performClick();
-            }
-        });
+        ThreadUtils.runOnUiThread((Runnable) () -> itemView.performClick());
     }
 
     @SuppressWarnings("unchecked")
@@ -644,36 +554,26 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
 
     private void setHasOtherFormsOfBrowsingData(final boolean hasOtherForms,
             final boolean hasSyncedResults)  {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.hasOtherFormsOfBrowsingData(hasOtherForms, hasSyncedResults);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> mAdapter.hasOtherFormsOfBrowsingData(hasOtherForms, hasSyncedResults));
     }
 
     private void signInToSupervisedAccount() throws Exception {
         // Set supervised user.
-        assertTrue(ThreadUtils.runOnUiThreadBlocking(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                PrefServiceBridge.getInstance().setSupervisedUserId("ChildAccountSUID");
-                return Profile.getLastUsedProfile().isChild()
-                        && !PrefServiceBridge.getInstance().canDeleteBrowsingHistory()
-                        && !PrefServiceBridge.getInstance().isIncognitoModeEnabled();
-            }
+        assertTrue(ThreadUtils.runOnUiThreadBlocking(() -> {
+            PrefServiceBridge.getInstance().setSupervisedUserId("ChildAccountSUID");
+            return Profile.getLastUsedProfile().isChild()
+                    && !PrefServiceBridge.getInstance().canDeleteBrowsingHistory()
+                    && !PrefServiceBridge.getInstance().isIncognitoModeEnabled();
         }));
 
         // Sign in to account.
         SigninTestUtil.setUpAuthForTest(getInstrumentation());
         final Account account = SigninTestUtil.addTestAccount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                SigninManager.get(getActivity()).onFirstRunCheckDone();
-                SigninManager.get(getActivity()).addSignInStateObserver(mTestObserver);
-                SigninManager.get(getActivity()).signIn(account, null, null);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            SigninManager.get(getActivity()).onFirstRunCheckDone();
+            SigninManager.get(getActivity()).addSignInStateObserver(mTestObserver);
+            SigninManager.get(getActivity()).signIn(account, null, null);
         });
         mTestObserver.onSigninStateChangedCallback.waitForCallback(0, 1,
                 SyncTestUtil.TIMEOUT_MS, TimeUnit.MILLISECONDS);
@@ -682,32 +582,19 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
 
     private void signOut() throws Exception {
         // Clear supervised user id.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PrefServiceBridge.getInstance().setSupervisedUserId("");
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> PrefServiceBridge.getInstance().setSupervisedUserId(""));
 
         // Sign out of account.
         int currentCallCount = mTestObserver.onSigninStateChangedCallback.getCallCount();
         SigninTestUtil.resetSigninState();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                SigninManager.get(getActivity()).signOut(null);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> SigninManager.get(getActivity()).signOut(null));
         mTestObserver.onSigninStateChangedCallback.waitForCallback(currentCallCount, 1);
         assertNull(SigninTestUtil.getCurrentAccount());
 
         // Remove observer
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                SigninManager.get(getActivity()).removeSignInStateObserver(mTestObserver);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> SigninManager.get(getActivity()).removeSignInStateObserver(mTestObserver));
         SigninTestUtil.tearDownAuthForTest();
     }
 }

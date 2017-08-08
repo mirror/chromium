@@ -65,12 +65,9 @@ public class WebVrInputTest {
         // Set to 2 because there's an ACTION_DOWN followed by ACTION_UP
         final CountDownLatch touchRegisteredLatch = new CountDownLatch(2);
         ((VrShellImpl) VrShellDelegate.getVrShellForTesting())
-                .setOnDispatchTouchEventForTesting(new OnDispatchTouchEventCallback() {
-                    @Override
-                    public void onDispatchTouchEvent(boolean parentConsumed) {
-                        if (!parentConsumed) Assert.fail("Parent did not consume event");
-                        touchRegisteredLatch.countDown();
-                    }
+                .setOnDispatchTouchEventForTesting(parentConsumed -> {
+                    if (!parentConsumed) Assert.fail("Parent did not consume event");
+                    touchRegisteredLatch.countDown();
                 });
         CardboardUtils.sendCardboardClick(mVrTestRule.getActivity());
         Assert.assertTrue("VrShellImpl dispatched touches",
@@ -174,12 +171,9 @@ public class WebVrInputTest {
                 return VrShellDelegate.getInstanceForTesting().isListeningForWebVrActivate();
             }
         }, POLL_TIMEOUT_LONG_MS, POLL_CHECK_INTERVAL_SHORT_MS);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mVrTestRule.getActivity().getCurrentContentViewCore().onPause();
-                Assert.assertTrue(VrShellDelegate.getInstanceForTesting().isClearActivatePending());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mVrTestRule.getActivity().getCurrentContentViewCore().onPause();
+            Assert.assertTrue(VrShellDelegate.getInstanceForTesting().isClearActivatePending());
         });
     }
 }

@@ -36,7 +36,6 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.net.test.EmbeddedTestServer;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
@@ -83,23 +82,14 @@ public class BottomSheetBackBehaviorTest {
     @Test
     @SmallTest
     public void testBackButton_tabSwitcher() throws InterruptedException, TimeoutException {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mLayoutManager.showOverview(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mLayoutManager.showOverview(false));
 
         assertTrue("Overview mode should be showing.", mLayoutManager.overviewVisible());
 
         pressBackButton();
         endBottomSheetAnimations();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mLayoutManager.getActiveLayout().finishAnimationsForTests();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> mLayoutManager.getActiveLayout().finishAnimationsForTests());
 
         assertFalse("Overview mode should not be showing.", mLayoutManager.overviewVisible());
         assertEquals("The bottom sheet should be peeking.", BottomSheet.SHEET_STATE_PEEK,
@@ -255,12 +245,7 @@ public class BottomSheetBackBehaviorTest {
         intent.setData(Uri.parse(url));
 
         final Tab originalTab = mActivity.getActivityTab();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mActivity.onNewIntent(intent);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mActivity.onNewIntent(intent));
         CriteriaHelper.pollUiThread(new Criteria("Failed to select different tab") {
             @Override
             public boolean isSatisfied() {
@@ -275,13 +260,8 @@ public class BottomSheetBackBehaviorTest {
      * @param url The URL to launch in the tab.
      */
     private Tab launchNewTabFromChrome(final String url) throws ExecutionException {
-        return ThreadUtils.runOnUiThreadBlocking(new Callable<Tab>() {
-            @Override
-            public Tab call() {
-                return mActivity.getTabCreator(false).launchUrl(
-                        url, TabLaunchType.FROM_CHROME_UI);
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlocking(() -> mActivity.getTabCreator(false).launchUrl(
+                url, TabLaunchType.FROM_CHROME_UI));
     }
 
     /**
@@ -290,12 +270,9 @@ public class BottomSheetBackBehaviorTest {
      */
     private void hideBrowserControls(final Tab tab) throws ExecutionException {
         // Hide the browser controls.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                tab.getActivity().getFullscreenManager().setHideBrowserControlsAndroidView(true);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> tab.getActivity().getFullscreenManager().setHideBrowserControlsAndroidView(
+                        true));
 
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
@@ -319,21 +296,11 @@ public class BottomSheetBackBehaviorTest {
 
     /** Notify the activity that the hardware back button was pressed. */
     private void pressBackButton() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mActivity.onBackPressed();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mActivity.onBackPressed());
     }
 
     /** End bottom sheet animations. */
     private void endBottomSheetAnimations() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mBottomSheet.endAnimations();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mBottomSheet.endAnimations());
     }
 }

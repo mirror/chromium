@@ -81,12 +81,9 @@ public class PushMessagingTest implements PushMessagingServiceObserver.Listener 
     @Before
     public void setUp() throws Exception {
         final PushMessagingServiceObserver.Listener listener = this;
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                FakeInstanceIDWithSubtype.clearDataAndSetEnabled(true);
-                PushMessagingServiceObserver.setListenerForTesting(listener);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            FakeInstanceIDWithSubtype.clearDataAndSetEnabled(true);
+            PushMessagingServiceObserver.setListenerForTesting(listener);
         });
         mPushTestPage = mNotificationTestRule.getTestServer().getURL(PUSH_TEST_PAGE);
         mNotificationTestRule.loadUrl(mPushTestPage);
@@ -94,12 +91,9 @@ public class PushMessagingTest implements PushMessagingServiceObserver.Listener 
 
     @After
     public void tearDown() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PushMessagingServiceObserver.setListenerForTesting(null);
-                FakeInstanceIDWithSubtype.clearDataAndSetEnabled(false);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            PushMessagingServiceObserver.setListenerForTesting(null);
+            FakeInstanceIDWithSubtype.clearDataAndSetEnabled(false);
         });
     }
 
@@ -316,23 +310,20 @@ public class PushMessagingTest implements PushMessagingServiceObserver.Listener 
             throws InterruptedException, TimeoutException {
         final String appId = appIdAndSenderId.first;
         final String senderId = appIdAndSenderId.second;
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Context context = InstrumentationRegistry.getInstrumentation()
-                                          .getTargetContext()
-                                          .getApplicationContext();
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            Context context = InstrumentationRegistry.getInstrumentation()
+                    .getTargetContext()
+                    .getApplicationContext();
 
-                Bundle extras = new Bundle();
-                extras.putString("subtype", appId);
+            Bundle extras = new Bundle();
+            extras.putString("subtype", appId);
 
-                GCMMessage message = new GCMMessage(senderId, extras);
-                try {
-                    ChromeBrowserInitializer.getInstance(context).handleSynchronousStartup();
-                    GCMDriver.dispatchMessage(message);
-                } catch (ProcessInitException e) {
-                    Assert.fail("Chrome browser failed to initialize.");
-                }
+            GCMMessage message = new GCMMessage(senderId, extras);
+            try {
+                ChromeBrowserInitializer.getInstance(context).handleSynchronousStartup();
+                GCMDriver.dispatchMessage(message);
+            } catch (ProcessInitException e) {
+                Assert.fail("Chrome browser failed to initialize.");
             }
         });
         mMessageHandledHelper.waitForCallback(mMessageHandledHelper.getCallCount());

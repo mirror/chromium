@@ -42,12 +42,7 @@ public class RecordUserAction {
             return;
         }
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                nativeRecordUserAction(action);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> nativeRecordUserAction(action));
     }
 
     /**

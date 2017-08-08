@@ -58,12 +58,8 @@ final class ChromeTabbedActivityTestCommon {
         for (int i = 0; i < numTabs; ++i) {
             final TabModel tabModel = mCallback.getActivity().getCurrentTabModel();
             final Tab tab = TabModelUtils.getTabById(tabModel, tabIds[i]);
-            mCallback.getInstrumentation().runOnMainSync(new Runnable() {
-                @Override
-                public void run() {
-                    TabModelUtils.setIndex(tabModel, tabModel.indexOf(tab));
-                }
-            });
+            mCallback.getInstrumentation().runOnMainSync(
+                    () -> TabModelUtils.setIndex(tabModel, tabModel.indexOf(tab)));
             try {
                 pageLoadedCallbacks[i].waitForCallback(0);
             } catch (TimeoutException e) {

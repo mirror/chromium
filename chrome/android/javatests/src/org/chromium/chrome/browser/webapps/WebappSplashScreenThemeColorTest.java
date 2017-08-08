@@ -30,8 +30,6 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 
-import java.util.concurrent.Callable;
-
 /**
  * Tests for splash screens with EXTRA_THEME_COLOR specified in the Intent.
  */
@@ -70,22 +68,13 @@ public class WebappSplashScreenThemeColorTest {
     public void testThemeColorNotUsedIfPagesHasOne() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return;
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TabTestUtils.simulateChangeThemeColor(
-                        mActivityTestRule.getActivity().getActivityTab(), Color.GREEN);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> TabTestUtils.simulateChangeThemeColor(
+                mActivityTestRule.getActivity().getActivityTab(), Color.GREEN));
 
         // Waits for theme-color to change so the test doesn't rely on system timing.
         CriteriaHelper.pollInstrumentationThread(Criteria.equals(
-                ColorUtils.getDarkenedColorForStatusBar(Color.GREEN), new Callable<Integer>() {
-                    @Override
-                    public Integer call() {
-                        return mActivityTestRule.getActivity().getWindow().getStatusBarColor();
-                    }
-                }));
+                ColorUtils.getDarkenedColorForStatusBar(Color.GREEN),
+                () -> mActivityTestRule.getActivity().getWindow().getStatusBarColor()));
     }
 
     @Test

@@ -33,7 +33,6 @@ import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.help.HelpAndFeedback;
 import org.chromium.chrome.browser.media.cdm.MediaDrmCredentialManager;
-import org.chromium.chrome.browser.media.cdm.MediaDrmCredentialManager.MediaDrmCredentialManagerCallback;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
 import org.chromium.chrome.browser.preferences.ChromeBasePreference;
 import org.chromium.chrome.browser.preferences.ChromeSwitchPreference;
@@ -44,7 +43,6 @@ import org.chromium.chrome.browser.preferences.ManagedPreferencesUtils;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.preferences.PreferenceUtils;
 import org.chromium.chrome.browser.preferences.ProtectedContentResetCredentialConfirmDialogFragment;
-import org.chromium.chrome.browser.preferences.website.Website.StoredDataClearedCallback;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.widget.TintedDrawable;
 import org.chromium.ui.widget.Toast;
@@ -330,12 +328,9 @@ public class SingleCategoryPreferences extends PreferenceFragment
         numLeft[0] = mWebsites.size();
         for (int i = 0; i < mWebsites.size(); i++) {
             WebsitePreference preference = mWebsites.get(i);
-            preference.site().clearAllStoredData(new StoredDataClearedCallback() {
-                @Override
-                public void onStoredDataCleared() {
-                    if (--numLeft[0] <= 0) {
-                        getInfoForOrigins();
-                    }
+            preference.site().clearAllStoredData(() -> {
+                if (--numLeft[0] <= 0) {
+                    getInfoForOrigins();
                 }
             });
         }
@@ -394,14 +389,11 @@ public class SingleCategoryPreferences extends PreferenceFragment
             // Add a menu item to reset protected media identifier device credentials.
             MenuItem resetMenu =
                     menu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.reset_device_credentials);
-            resetMenu.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem menuItem) {
-                    ProtectedContentResetCredentialConfirmDialogFragment
-                            .newInstance(SingleCategoryPreferences.this)
-                            .show(getFragmentManager(), null);
-                    return true;
-                }
+            resetMenu.setOnMenuItemClickListener(menuItem -> {
+                ProtectedContentResetCredentialConfirmDialogFragment
+                        .newInstance(SingleCategoryPreferences.this)
+                        .show(getFragmentManager(), null);
+                return true;
             });
         }
 
@@ -463,12 +455,7 @@ public class SingleCategoryPreferences extends PreferenceFragment
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setPositiveButton(R.string.storage_clear_dialog_clear_storage_option,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        clearStorage();
-                    }
-                });
+                (DialogInterface.OnClickListener) (dialog, id) -> clearStorage());
         builder.setNegativeButton(R.string.cancel, null);
         builder.setTitle(R.string.storage_clear_site_storage_title);
         Resources res = getResources();
@@ -777,13 +764,10 @@ public class SingleCategoryPreferences extends PreferenceFragment
     // ProtectedContentResetCredentialConfirmDialogFragment.Listener:
     @Override
     public void resetDeviceCredential() {
-        MediaDrmCredentialManager.resetCredentials(new MediaDrmCredentialManagerCallback() {
-            @Override
-            public void onCredentialResetFinished(boolean succeeded) {
-                if (succeeded) return;
-                String message = getString(R.string.protected_content_reset_failed);
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-            }
+        MediaDrmCredentialManager.resetCredentials(succeeded -> {
+            if (succeeded) return;
+            String message = getString(R.string.protected_content_reset_failed);
+            Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
         });
     }
 }

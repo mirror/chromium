@@ -64,12 +64,7 @@ public class PaymentRequestUiErrorView extends BoundedLinearLayout {
 
         // Make the user explicitly click on the OK button to dismiss the dialog.
         View confirmButton = findViewById(R.id.ok_button);
-        confirmButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callback.run();
-            }
-        });
+        confirmButton.setOnClickListener(v -> callback.run());
     }
 
     /**

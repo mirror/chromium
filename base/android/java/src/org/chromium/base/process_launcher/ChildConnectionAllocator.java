@@ -188,12 +188,7 @@ public class ChildConnectionAllocator {
                     public void onChildStarted() {
                         assert isRunningOnLauncherThread();
                         if (serviceCallback != null) {
-                            mLauncherHandler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    serviceCallback.onChildStarted();
-                                }
-                            });
+                            mLauncherHandler.post(() -> serviceCallback.onChildStarted());
                         }
                     }
 
@@ -201,12 +196,8 @@ public class ChildConnectionAllocator {
                     public void onChildStartFailed(final ChildProcessConnection connection) {
                         assert isRunningOnLauncherThread();
                         if (serviceCallback != null) {
-                            mLauncherHandler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    serviceCallback.onChildStartFailed(connection);
-                                }
-                            });
+                            mLauncherHandler.post(
+                                    () -> serviceCallback.onChildStartFailed(connection));
                         }
                         freeConnectionWithDelay(connection);
                     }
@@ -215,12 +206,8 @@ public class ChildConnectionAllocator {
                     public void onChildProcessDied(final ChildProcessConnection connection) {
                         assert isRunningOnLauncherThread();
                         if (serviceCallback != null) {
-                            mLauncherHandler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    serviceCallback.onChildProcessDied(connection);
-                                }
-                            });
+                            mLauncherHandler.post(
+                                    () -> serviceCallback.onChildProcessDied(connection));
                         }
                         freeConnectionWithDelay(connection);
                     }
@@ -232,12 +219,8 @@ public class ChildConnectionAllocator {
                         // time. If a new connection to the same service is bound at that point, the
                         // process is reused and bad things happen (mostly static variables are set
                         // when we don't expect them to).
-                        mLauncherHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                free(connection);
-                            }
-                        }, FREE_CONNECTION_DELAY_MILLIS);
+                        mLauncherHandler.postDelayed(() -> free(connection),
+                                FREE_CONNECTION_DELAY_MILLIS);
                     }
                 };
 

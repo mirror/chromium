@@ -81,12 +81,7 @@ public class ManageSpaceActivityTest {
     }
 
     public Runnable getClickClearRunnable(final ManageSpaceActivity activity) {
-        return new Runnable() {
-            @Override
-            public void run() {
-                activity.onClick(activity.getClearUnimportantButton());
-            }
-        };
+        return () -> activity.onClick(activity.getClearUnimportantButton());
     }
 
     public void waitForDialogShowing(final ManageSpaceActivity activity) {
@@ -99,12 +94,7 @@ public class ManageSpaceActivityTest {
     }
 
     public Runnable getPressClearRunnable(final AlertDialog dialog) {
-        return new Runnable() {
-            @Override
-            public void run() {
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
-            }
-        };
+        return () -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
     }
 
     @Test
@@ -132,12 +122,8 @@ public class ManageSpaceActivityTest {
         mActivityTestRule.loadUrl("about:blank");
 
         // Now we set the origin as important, and check that we don't clear it.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                BrowsingDataBridge.markOriginAsImportantForTesting(serverOrigin);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> BrowsingDataBridge.markOriginAsImportantForTesting(serverOrigin));
 
         ManageSpaceActivity manageSpaceActivity = startManageSpaceActivity();
         // Click 'clear' in the CBD screen.

@@ -61,12 +61,7 @@ public class UpgradeActivity extends AppCompatActivity {
                 // while other Observers are being alerted.
                 long msElapsed = System.currentTimeMillis() - mStartTimestamp;
                 long msRemaining = Math.max(0, MIN_MS_TO_DISPLAY_ACTIVITY - msElapsed);
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        continueApplicationLaunch();
-                    }
-                }, msRemaining);
+                mHandler.postDelayed(() -> continueApplicationLaunch(), msRemaining);
             }
         };
     }

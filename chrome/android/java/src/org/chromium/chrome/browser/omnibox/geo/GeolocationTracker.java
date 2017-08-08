@@ -48,12 +48,9 @@ class GeolocationTracker {
         private SelfCancelingListener(LocationManager manager) {
             mLocationManager = manager;
             mHandler = new Handler();
-            mCancelRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    mLocationManager.removeUpdates(SelfCancelingListener.this);
-                    sListener = null;
-                }
+            mCancelRunnable = () -> {
+                mLocationManager.removeUpdates(SelfCancelingListener.this);
+                sListener = null;
             };
             mHandler.postDelayed(mCancelRunnable, REQUEST_TIMEOUT_MS);
         }

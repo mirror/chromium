@@ -35,12 +35,9 @@ public class PlatformContextMenuUi implements ContextMenuUi {
             setHeaderText(activity, mMenu, headerText);
         }
 
-        MenuItem.OnMenuItemClickListener menuListener = new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                listener.onResult(menuItem.getItemId());
-                return true;
-            }
+        MenuItem.OnMenuItemClickListener menuListener = menuItem -> {
+            listener.onResult(menuItem.getItemId());
+            return true;
         };
         for (int groupIndex = 0; groupIndex < itemGroups.size(); groupIndex++) {
             List<ContextMenuItem> group = itemGroups.get(groupIndex).second;

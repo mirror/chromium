@@ -257,13 +257,10 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
             return;
         }
 
-        WebApkUpdateCallback callback = new WebApkUpdateCallback() {
-            @Override
-            public void onResultFromNative(@WebApkInstallResult int result, boolean relaxUpdates) {
-                recordUpdate(result, relaxUpdates);
-                mStorage.updateLastRequestedShellApkVersion(
-                        WebApkVersion.CURRENT_SHELL_APK_VERSION);
-            }
+        WebApkUpdateCallback callback = (result, relaxUpdates) -> {
+            recordUpdate(result, relaxUpdates);
+            mStorage.updateLastRequestedShellApkVersion(
+                    WebApkVersion.CURRENT_SHELL_APK_VERSION);
         };
         nativeUpdateWebApk(info.webApkPackageName(), info.manifestStartUrl(), info.shortName(),
                 serializedProto, callback);

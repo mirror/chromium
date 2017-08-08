@@ -259,18 +259,15 @@ class ContextualSearchFakeServer
          * @return A Runnable to handle the fake Search Term Resolution.
          */
         private Runnable getRunnable() {
-            return new Runnable() {
-                @Override
-                public void run() {
-                    if (!mDidFinishResolution) {
-                        handleSearchTermResolutionResponse(mIsNetworkUnavailable, mResponseCode,
-                                mSearchTerm, mDisplayText, mAlternateTerm, mMid, mDoPreventPreload,
-                                mStartAdjust, mEndAdjust, mContextLanguage, mThumbnailUrl,
-                                mCaption, mQuickActionUri, mQuickActionCategory);
+            return () -> {
+                if (!mDidFinishResolution) {
+                    handleSearchTermResolutionResponse(mIsNetworkUnavailable, mResponseCode,
+                            mSearchTerm, mDisplayText, mAlternateTerm, mMid, mDoPreventPreload,
+                            mStartAdjust, mEndAdjust, mContextLanguage, mThumbnailUrl,
+                            mCaption, mQuickActionUri, mQuickActionCategory);
 
-                        mActiveFakeTapSearch = null;
-                        mDidFinishResolution = true;
-                    }
+                    mActiveFakeTapSearch = null;
+                    mDidFinishResolution = true;
                 }
             };
         }

@@ -65,12 +65,7 @@ class ChromeLifetimeController implements ApplicationLifetime.Observer,
 
     private ChromeLifetimeController() {
         mHandler = new Handler(Looper.getMainLooper());
-        mRestartRunnable = new Runnable() {
-            @Override
-            public void run() {
-                fireBrowserRestartActivityIntent();
-            }
-        };
+        mRestartRunnable = () -> fireBrowserRestartActivityIntent();
     }
 
     @Override

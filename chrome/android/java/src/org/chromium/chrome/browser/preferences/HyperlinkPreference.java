@@ -9,7 +9,6 @@ import android.content.res.TypedArray;
 import android.preference.Preference;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import org.chromium.chrome.R;
@@ -52,12 +51,7 @@ public class HyperlinkPreference extends Preference {
 
             titleView.setClickable(true);
             titleView.setTextColor(titleView.getPaint().linkColor);
-            titleView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    HyperlinkPreference.this.onClick();
-                }
-            });
+            titleView.setOnClickListener(v -> HyperlinkPreference.this.onClick());
         }
     }
 }

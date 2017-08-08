@@ -41,18 +41,15 @@ public class ChromeWebApkHost {
         if (sListener == null) {
             // Registers an application listener to disconnect all connections to WebAPKs
             // when Chrome is stopped.
-            sListener = new ApplicationStatus.ApplicationStateListener() {
-                @Override
-                public void onApplicationStateChange(int newState) {
-                    if (newState == ApplicationState.HAS_STOPPED_ACTIVITIES
-                            || newState == ApplicationState.HAS_DESTROYED_ACTIVITIES) {
-                        WebApkIdentityServiceClient.disconnectAll(
-                                ContextUtils.getApplicationContext());
-                        WebApkServiceClient.disconnectAll();
+            sListener = newState -> {
+                if (newState == ApplicationState.HAS_STOPPED_ACTIVITIES
+                        || newState == ApplicationState.HAS_DESTROYED_ACTIVITIES) {
+                    WebApkIdentityServiceClient.disconnectAll(
+                            ContextUtils.getApplicationContext());
+                    WebApkServiceClient.disconnectAll();
 
-                        ApplicationStatus.unregisterApplicationStateListener(sListener);
-                        sListener = null;
-                    }
+                    ApplicationStatus.unregisterApplicationStateListener(sListener);
+                    sListener = null;
                 }
             };
             ApplicationStatus.registerApplicationStateListener(sListener);

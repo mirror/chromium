@@ -28,7 +28,6 @@ import org.chromium.ui.base.DeviceFormFactor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -94,12 +93,8 @@ public class ChromeInstrumentationTestRunner extends BaseChromiumInstrumentation
             }
             // isDaydreamCurrentViewer() creates a concrete instance of DaydreamApi,
             // which can only be done on the main thread
-            FutureTask<Boolean> checker = new FutureTask<>(new Callable<Boolean>() {
-                @Override
-                public Boolean call() {
-                    return getDaydreamApi().isDaydreamCurrentViewer();
-                }
-            });
+            FutureTask<Boolean> checker = new FutureTask<>(
+                    () -> getDaydreamApi().isDaydreamCurrentViewer());
             ThreadUtils.runOnUiThreadBlocking(checker);
             try {
                 return checker.get().booleanValue();

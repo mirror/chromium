@@ -172,12 +172,7 @@ public class FeedbackCollector
     }
 
     private void postTimeoutTask() {
-        ThreadUtils.postOnUiThreadDelayed(new Runnable() {
-            @Override
-            public void run() {
-                maybePostResult();
-            }
-        }, TIMEOUT_MS);
+        ThreadUtils.postOnUiThreadDelayed(() -> maybePostResult(), TIMEOUT_MS);
     }
 
     private boolean shouldWaitForScreenshot() {
@@ -197,12 +192,7 @@ public class FeedbackCollector
         if (shouldWaitForScreenshot() || shouldWaitForConnectivityTask()) return;
 
         mResultPosted = true;
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mCallback.onResult(FeedbackCollector.this);
-            }
-        });
+        ThreadUtils.postOnUiThread(() -> mCallback.onResult(FeedbackCollector.this));
     }
 
     @VisibleForTesting

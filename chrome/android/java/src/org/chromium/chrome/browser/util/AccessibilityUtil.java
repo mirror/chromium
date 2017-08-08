@@ -99,21 +99,15 @@ public class AccessibilityUtil {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogTheme)
                 .setTitle(R.string.old_talkback_title)
                 .setPositiveButton(R.string.update_from_market,
-                        new DialogInterface.OnClickListener() {
-                        @Override
-                            public void onClick(DialogInterface dialog, int id) {
+                        (DialogInterface.OnClickListener) (dialog, id) -> {
                                 Uri marketUri = Uri.parse(TALKBACK_MARKET_LINK);
                                 Intent marketIntent = new Intent(
                                         Intent.ACTION_VIEW, marketUri);
                                 context.startActivity(marketIntent);
-                            }
                         })
                 .setNegativeButton(R.string.cancel_talkback_alert,
-                        new DialogInterface.OnClickListener() {
-                        @Override
-                            public void onClick(DialogInterface dialog, int id) {
+                        (DialogInterface.OnClickListener) (dialog, id) -> {
                                 // Do nothing, this alert is only shown once either way.
-                            }
                         });
         AlertDialog dialog = builder.create();
         dialog.show();

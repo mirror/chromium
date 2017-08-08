@@ -36,13 +36,10 @@ public class DefaultSearchEngineDialogHelperUtils {
         });
 
         // Click on the first search engine option available.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ViewGroup options = (ViewGroup) rootView.findViewById(OPTION_LAYOUT_ID);
-                options.getChildAt(0).performClick();
-                sSelectedEngine = (String) (options.getChildAt(0).getTag());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            ViewGroup options = (ViewGroup) rootView.findViewById(OPTION_LAYOUT_ID);
+            options.getChildAt(0).performClick();
+            sSelectedEngine = (String) (options.getChildAt(0).getTag());
         });
 
         // Wait for the OK button to be clicakble.
@@ -55,24 +52,17 @@ public class DefaultSearchEngineDialogHelperUtils {
         });
 
         // Click on the OK button.
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                View view = rootView.findViewById(OK_BUTTON_ID);
-                view.performClick();
-            }
+        ThreadUtils.runOnUiThread(() -> {
+            View view = rootView.findViewById(OK_BUTTON_ID);
+            view.performClick();
         });
 
         // Confirm the engine was set appropriately.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertEquals("Search engine wasn't set",
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> Assert.assertEquals("Search engine wasn't set",
                         TemplateUrlService.getInstance()
                                 .getDefaultSearchEngineTemplateUrl()
                                 .getKeyword(),
-                        sSelectedEngine);
-            }
-        });
+                        sSelectedEngine));
     }
 }

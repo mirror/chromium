@@ -259,12 +259,7 @@ public class InterceptNavigationDelegateImpl implements InterceptNavigationDeleg
             }
             // Defer closing a tab (and the associated WebContents) till the navigation
             // request and the throttle finishes the job with it.
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mTab.getTabModelSelector().closeTab(mTab);
-                }
-            });
+            ThreadUtils.postOnUiThread(() -> mTab.getTabModelSelector().closeTab(mTab));
         } else if (mTab.getTabRedirectHandler().isOnNavigation()) {
             int lastCommittedEntryIndexBeforeNavigation = mTab.getTabRedirectHandler()
                     .getLastCommittedEntryIndexBeforeStartingNavigation();

@@ -131,12 +131,8 @@ public class NewTabPageRecyclerViewTest {
         SnippetArticle suggestion = suggestions.get(suggestions.size() - 1);
         int suggestionPosition = getLastCardPosition();
         final View suggestionView = getViewHolderAtPosition(suggestionPosition).itemView;
-        ChromeTabUtils.waitForTabPageLoaded(mTab, new Runnable() {
-            @Override
-            public void run() {
-                TouchCommon.singleClickView(suggestionView);
-            }
-        });
+        ChromeTabUtils.waitForTabPageLoaded(mTab,
+                () -> TouchCommon.singleClickView(suggestionView));
         Assert.assertEquals(suggestion.mUrl, mTab.getUrl());
     }
 
@@ -372,14 +368,10 @@ public class NewTabPageRecyclerViewTest {
     private ViewHolder getViewHolderAtPosition(final int position) {
         final NewTabPageRecyclerView recyclerView = getRecyclerView();
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                recyclerView.getLinearLayoutManager().scrollToPositionWithOffset(position,
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> recyclerView.getLinearLayoutManager().scrollToPositionWithOffset(position,
                         mActivityTestRule.getActivity().getResources().getDimensionPixelSize(
-                                R.dimen.tab_strip_height));
-            }
-        });
+                                R.dimen.tab_strip_height)));
         return RecyclerViewTestUtils.waitForView(getRecyclerView(), position);
     }
 
@@ -392,24 +384,17 @@ public class NewTabPageRecyclerViewTest {
      */
     private void dismissItemAtPosition(int position) throws InterruptedException, TimeoutException {
         final ViewHolder viewHolder = getViewHolderAtPosition(position);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                getRecyclerView().dismissItemWithAnimation(viewHolder);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> getRecyclerView().dismissItemWithAnimation(viewHolder));
         RecyclerViewTestUtils.waitForViewToDetach(getRecyclerView(), (viewHolder.itemView));
     }
 
     private void setSuggestionsAndWaitForUpdate(final int suggestionsCount) {
         final FakeSuggestionsSource source = mSource;
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                source.setStatusForCategory(TEST_CATEGORY, CategoryStatus.AVAILABLE);
-                source.setSuggestionsForCategory(TEST_CATEGORY, buildSuggestions(suggestionsCount));
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            source.setStatusForCategory(TEST_CATEGORY, CategoryStatus.AVAILABLE);
+            source.setSuggestionsForCategory(TEST_CATEGORY, buildSuggestions(suggestionsCount));
         });
         RecyclerViewTestUtils.waitForStableRecyclerView(getRecyclerView());
     }

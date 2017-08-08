@@ -135,12 +135,7 @@ public class SearchActivity extends AsyncInitializationActivity
 
         // Kick off loading of the native library.
         if (!getActivityDelegate().shouldDelayNativeInitialization()) {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    startDelayedNativeInitialization();
-                }
-            });
+            mHandler.post(() -> startDelayedNativeInitialization());
         }
     }
 
@@ -170,12 +165,7 @@ public class SearchActivity extends AsyncInitializationActivity
                     return;
                 }
 
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        finishDeferredInitialization();
-                    }
-                });
+                mHandler.post(() -> finishDeferredInitialization());
             }
         };
         getActivityDelegate().showSearchEngineDialogIfNeeded(
@@ -264,12 +254,7 @@ public class SearchActivity extends AsyncInitializationActivity
 
         ViewGroup contentView = (ViewGroup) LayoutInflater.from(this).inflate(
                 R.layout.search_activity, null, false);
-        contentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cancelSearch();
-            }
-        });
+        contentView.setOnClickListener(v -> cancelSearch());
         return contentView;
     }
 

@@ -771,32 +771,30 @@ public class BottomSheet
         });
 
         // Listen to height changes on the toolbar.
-        controlContainer.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                    int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                // Make sure the size of the layout actually changed.
-                if (bottom - top == oldBottom - oldTop && right - left == oldRight - oldLeft) {
-                    return;
-                }
-
-                mToolbarHeight = bottom - top;
-                updateSheetDimensions();
-
-                if (!mIsScrolling) {
-                    cancelAnimation();
-
-                    // This onLayoutChange() will be called after the user enters fullscreen video
-                    // mode. Ensure the sheet state is reset to peek so that the sheet does not
-                    // open over the fullscreen video. See crbug.com/740499.
-                    if (mFullscreenManager != null && mFullscreenManager.isOverlayVideoMode()) {
-                        setSheetState(SHEET_STATE_PEEK, false);
-                    } else {
-                        setSheetState(mCurrentState, false);
+        controlContainer.addOnLayoutChangeListener(
+                (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+                    // Make sure the size of the layout actually changed.
+                    if (bottom - top == oldBottom - oldTop && right - left == oldRight - oldLeft) {
+                        return;
                     }
-                }
-            }
-        });
+
+                    mToolbarHeight = bottom - top;
+                    updateSheetDimensions();
+
+                    if (!mIsScrolling) {
+                        cancelAnimation();
+
+                        // This onLayoutChange() will be called after the user enters fullscreen
+                        // video
+                        // mode. Ensure the sheet state is reset to peek so that the sheet does not
+                        // open over the fullscreen video. See crbug.com/740499.
+                        if (mFullscreenManager != null && mFullscreenManager.isOverlayVideoMode()) {
+                            setSheetState(SHEET_STATE_PEEK, false);
+                        } else {
+                            setSheetState(mCurrentState, false);
+                        }
+                    }
+                });
 
         mToolbarHolder = (FrameLayout) mControlContainer.findViewById(R.id.toolbar_holder);
         mDefaultToolbarView = (BottomToolbarPhone) mControlContainer.findViewById(R.id.toolbar);
@@ -1196,12 +1194,8 @@ public class BottomSheet
             }
         });
 
-        mSettleAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                setSheetOffsetFromBottom((Float) animator.getAnimatedValue());
-            }
-        });
+        mSettleAnimator.addUpdateListener(
+                animator -> setSheetOffsetFromBottom((Float) animator.getAnimatedValue()));
 
         setInternalCurrentState(SHEET_STATE_SCROLLING);
         mSettleAnimator.start();

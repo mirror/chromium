@@ -346,12 +346,7 @@ public class SingleWebsitePreferences extends PreferenceFragment
                     String.format(context.getString(R.string.origin_settings_storage_usage_brief),
                             Formatter.formatShortFileSize(context, usage)));
             ((ClearWebsiteStorage) preference)
-                    .setConfirmationListener(new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            clearStoredData();
-                        }
-                    });
+                    .setConfirmationListener((dialog, which) -> clearStoredData());
         } else {
             getPreferenceScreen().removePreference(preference);
         }
@@ -381,20 +376,17 @@ public class SingleWebsitePreferences extends PreferenceFragment
             // This preference is read-only so should not attempt to persist to shared prefs.
             preference.setPersistent(false);
 
-            preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    // There is no guarantee that a channel has been initialized yet for sites
-                    // that were granted permission before the channel-initialization-on-grant
-                    // code was in place. However, getChannelIdForOrigin will fall back to the
-                    // generic Sites channel if no specific channel has been created for the given
-                    // origin, so it is safe to open the channel settings for whatever channel ID
-                    // it returns.
-                    String channelId = SiteChannelsManager.getInstance().getChannelIdForOrigin(
-                            mSite.getAddress().getOrigin());
-                    launchOsChannelSettings(preference.getContext(), channelId);
-                    return true;
-                }
+            preference.setOnPreferenceClickListener(preference1 -> {
+                // There is no guarantee that a channel has been initialized yet for sites
+                // that were granted permission before the channel-initialization-on-grant
+                // code was in place. However, getChannelIdForOrigin will fall back to the
+                // generic Sites channel if no specific channel has been created for the given
+                // origin, so it is safe to open the channel settings for whatever channel ID
+                // it returns.
+                String channelId = SiteChannelsManager.getInstance().getChannelIdForOrigin(
+                        mSite.getAddress().getOrigin());
+                launchOsChannelSettings(preference1.getContext(), channelId);
+                return true;
             });
             preference.setOrder(listPreference.getOrder());
             getPreferenceScreen().removePreference(listPreference);
@@ -747,18 +739,15 @@ public class SingleWebsitePreferences extends PreferenceFragment
 
     private void clearStoredData() {
         mSite.clearAllStoredData(
-                new Website.StoredDataClearedCallback() {
-                    @Override
-                    public void onStoredDataCleared() {
-                        PreferenceScreen preferenceScreen = getPreferenceScreen();
+                () -> {
+                    PreferenceScreen preferenceScreen = getPreferenceScreen();
+                    preferenceScreen.removePreference(
+                            preferenceScreen.findPreference(PREF_CLEAR_DATA));
+                    if (!hasUsagePreferences()) {
                         preferenceScreen.removePreference(
-                                preferenceScreen.findPreference(PREF_CLEAR_DATA));
-                        if (!hasUsagePreferences()) {
-                            preferenceScreen.removePreference(
-                                    preferenceScreen.findPreference(PREF_USAGE));
-                        }
-                        popBackIfNoSettings();
+                                preferenceScreen.findPreference(PREF_USAGE));
                     }
+                    popBackIfNoSettings();
                 });
     }
 
@@ -825,12 +814,8 @@ public class SingleWebsitePreferences extends PreferenceFragment
         new AlertDialog.Builder(getActivity(), R.style.AlertDialogTheme)
                 .setTitle(R.string.website_reset)
                 .setMessage(R.string.website_reset_confirmation)
-                .setPositiveButton(R.string.website_reset, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        resetSite();
-                    }
-                })
+                .setPositiveButton(R.string.website_reset,
+                        (DialogInterface.OnClickListener) (dialog, which) -> resetSite())
                 .setNegativeButton(R.string.cancel, null)
                 .show();
         return true;

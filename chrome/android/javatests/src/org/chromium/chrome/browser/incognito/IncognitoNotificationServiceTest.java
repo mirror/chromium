@@ -26,7 +26,6 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content_public.browser.LoadUrlParams;
 
 import java.io.File;
-import java.util.concurrent.Callable;
 
 /**
  * Tests for the Incognito Notification service.
@@ -39,13 +38,9 @@ public class IncognitoNotificationServiceTest extends ChromeTabbedActivityTestBa
     }
 
     private void createTabOnUiThread() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                getActivity().getTabCreator(true).createNewTab(new LoadUrlParams("about:blank"),
-                        TabLaunchType.FROM_CHROME_UI, null);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking((Runnable) () -> getActivity().getTabCreator(
+                true).createNewTab(new LoadUrlParams("about:blank"),
+                TabLaunchType.FROM_CHROME_UI, null));
     }
 
     private void sendClearIncognitoIntent() throws CanceledException {
@@ -65,36 +60,20 @@ public class IncognitoNotificationServiceTest extends ChromeTabbedActivityTestBa
         createTabOnUiThread();
         createTabOnUiThread();
 
-        CriteriaHelper.pollUiThread(Criteria.equals(2, new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return getActivity().getTabModelSelector().getModel(true).getCount();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(2,
+                () -> getActivity().getTabModelSelector().getModel(true).getCount()));
 
         final Profile incognitoProfile = ThreadUtils.runOnUiThreadBlockingNoException(
-                new Callable<Profile>() {
-                    @Override
-                    public Profile call() throws Exception {
-                        return getActivity().getTabModelSelector().getModel(true).getProfile();
-                    }
-                });
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                assertTrue(incognitoProfile.isOffTheRecord());
-                assertTrue(incognitoProfile.isNativeInitialized());
-            }
+                () -> getActivity().getTabModelSelector().getModel(true).getProfile());
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            assertTrue(incognitoProfile.isOffTheRecord());
+            assertTrue(incognitoProfile.isNativeInitialized());
         });
 
         sendClearIncognitoIntent();
 
-        CriteriaHelper.pollUiThread(Criteria.equals(0, new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return getActivity().getTabModelSelector().getModel(true).getCount();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(0,
+                () -> getActivity().getTabModelSelector().getModel(true).getCount()));
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -148,42 +127,31 @@ public class IncognitoNotificationServiceTest extends ChromeTabbedActivityTestBa
 
         sendClearIncognitoIntent();
 
-        CriteriaHelper.pollInstrumentationThread(Criteria.equals(0, new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                File[] tabbedModeFiles = tabbedModeDirectory.getDataDirectory().listFiles();
-                if (tabbedModeFiles == null) return 0;
-                int incognitoCount = 0;
-                for (File tabbedModeFile : tabbedModeFiles) {
-                    Pair<Integer, Boolean> tabFileInfo =
-                            TabState.parseInfoFromFilename(tabbedModeFile.getName());
-                    if (tabFileInfo != null && tabFileInfo.second) incognitoCount++;
-                }
-                return incognitoCount;
+        CriteriaHelper.pollInstrumentationThread(Criteria.equals(0, () -> {
+            File[] tabbedModeFiles12 = tabbedModeDirectory.getDataDirectory().listFiles();
+            if (tabbedModeFiles12 == null) return 0;
+            int incognitoCount1 = 0;
+            for (File tabbedModeFile : tabbedModeFiles12) {
+                Pair<Integer, Boolean> tabFileInfo =
+                        TabState.parseInfoFromFilename(tabbedModeFile.getName());
+                if (tabFileInfo != null && tabFileInfo.second) incognitoCount1++;
             }
+            return incognitoCount1;
         }));
 
-        CriteriaHelper.pollInstrumentationThread(Criteria.equals(2, new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                File[] tabbedModeFiles = tabbedModeDirectory.getDataDirectory().listFiles();
-                if (tabbedModeFiles == null) return 0;
-                int normalCount = 0;
-                for (File tabbedModeFile : tabbedModeFiles) {
-                    Pair<Integer, Boolean> tabFileInfo =
-                            TabState.parseInfoFromFilename(tabbedModeFile.getName());
-                    if (tabFileInfo != null && !tabFileInfo.second) normalCount++;
-                }
-                return normalCount;
+        CriteriaHelper.pollInstrumentationThread(Criteria.equals(2, () -> {
+            File[] tabbedModeFiles1 = tabbedModeDirectory.getDataDirectory().listFiles();
+            if (tabbedModeFiles1 == null) return 0;
+            int normalCount1 = 0;
+            for (File tabbedModeFile : tabbedModeFiles1) {
+                Pair<Integer, Boolean> tabFileInfo =
+                        TabState.parseInfoFromFilename(tabbedModeFile.getName());
+                if (tabFileInfo != null && !tabFileInfo.second) normalCount1++;
             }
+            return normalCount1;
         }));
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                assertFalse(LibraryLoader.isInitialized());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> assertFalse(LibraryLoader.isInitialized()));
     }
 
 }

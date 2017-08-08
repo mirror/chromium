@@ -100,24 +100,15 @@ public class BrowsingDataRemoverIntegrationTest {
         Assert.assertEquals(apps.keySet(), WebappRegistry.getRegisteredWebappIdsForTesting());
 
         // Clear cookies and site data excluding the registrable domain "google.com".
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                BrowsingDataBridge.getInstance().clearBrowsingDataExcludingDomains(
-                        new OnClearBrowsingDataListener() {
-                            @Override
-                            public void onBrowsingDataCleared() {
-                                mCallbackCalled = true;
-                            }
-                        },
-                        new int[]{ BrowsingDataType.COOKIES },
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> BrowsingDataBridge.getInstance().clearBrowsingDataExcludingDomains(
+                        (OnClearBrowsingDataListener) () -> mCallbackCalled = true,
+                        new int[]{BrowsingDataType.COOKIES},
                         TimePeriod.ALL_TIME,
-                        new String[]{ "google.com" },
-                        new int[] { 1 },
+                        new String[]{"google.com"},
+                        new int[]{1},
                         new String[0],
-                        new int[0]);
-            }
-        });
+                        new int[0]));
         CriteriaHelper.pollUiThread(new CallbackCriteria());
 
         // The last two webapps should have been unregistered.
@@ -125,20 +116,10 @@ public class BrowsingDataRemoverIntegrationTest {
                 WebappRegistry.getRegisteredWebappIdsForTesting());
 
         // Clear cookies and site data with no url filter.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                BrowsingDataBridge.getInstance().clearBrowsingData(
-                        new OnClearBrowsingDataListener() {
-                            @Override
-                            public void onBrowsingDataCleared() {
-                                mCallbackCalled = true;
-                            }
-                        },
-                        new int[]{ BrowsingDataType.COOKIES },
-                        TimePeriod.ALL_TIME);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> BrowsingDataBridge.getInstance().clearBrowsingData(
+                (OnClearBrowsingDataListener) () -> mCallbackCalled = true,
+                new int[]{BrowsingDataType.COOKIES},
+                TimePeriod.ALL_TIME));
         CriteriaHelper.pollUiThread(new CallbackCriteria());
 
         // All webapps should have been unregistered.

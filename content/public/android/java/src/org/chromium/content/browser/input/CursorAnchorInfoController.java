@@ -92,12 +92,7 @@ final class CursorAnchorInfoController {
             InputMethodManagerWrapper inputMethodManagerWrapper,
             ComposingTextDelegate composingTextDelegate) {
         return new CursorAnchorInfoController(inputMethodManagerWrapper,
-                composingTextDelegate, new ViewDelegate() {
-                    @Override
-                    public void getLocationOnScreen(View view, int[] location) {
-                        view.getLocationOnScreen(location);
-                    }
-                });
+                composingTextDelegate, (view, location) -> view.getLocationOnScreen(location));
     }
 
     @VisibleForTesting
