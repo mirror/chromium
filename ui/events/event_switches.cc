@@ -36,4 +36,11 @@ const char kTouchCalibration[] = "touch-calibration";
 const char kEdgeTouchFiltering[] = "edge-touch-filtering";
 #endif
 
+// Enable the recording of PlatformEvents recieved by the PlatformEventSource
+// for debugging purposes. These events will be serialized and replayed as
+// part of a test.
+#if !defined(NDEBUG)
+const char kEnableEventRecording[] = "enable-event-recording";
+#endif
+
 }  // namespace switches
