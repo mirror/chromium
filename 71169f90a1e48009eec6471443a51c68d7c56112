@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3c0edbc_3ec6d2f9",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T21:10:12Z",
+      "side": 1,
+      "message": "nit:\n\n    viewFrame.size.width -\u003d gfx::scrollbar_size();",
+      "revId": "71169f90a1e48009eec6471443a51c68d7c56112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ff1b23_16594ca6",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T21:10:12Z",
+      "side": 1,
+      "message": "nit: The label\u0027s resizing behavior might change when you change these flags. I would move `[self resizeLabel]` down here.",
+      "revId": "71169f90a1e48009eec6471443a51c68d7c56112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
