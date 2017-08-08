@@ -34,6 +34,24 @@
       "revId": "8e011366cee7fe888d21201be747144446a31c63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06dbae2a_c929ee31",
+        "filename": "content/public/browser/render_widget_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T17:01:13Z",
+      "side": 1,
+      "message": "That would be even better for our usecase! And also for touch emulator which I know about. Is it worth to introduce callback now (before Mojo)? I am not exactly sure how that fits current architecture. WDYT?",
+      "parentUuid": "072baa6e_97e3eaff",
+      "revId": "8e011366cee7fe888d21201be747144446a31c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
