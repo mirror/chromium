@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.webapps;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.browser.tab.Tab;
@@ -42,6 +43,9 @@ public class AddToHomescreenManager {
 
     /** Starts add-to-homescreen process. */
     public void start() {
+        // Don't start if we've already started or if there is no visible URL to add.
+        if (mNativeAddToHomescreenManager != 0 || TextUtils.isEmpty(mTab.getUrl())) return;
+
         mNativeAddToHomescreenManager = nativeInitializeAndStart(mTab.getWebContents());
     }
 
@@ -54,9 +58,10 @@ public class AddToHomescreenManager {
      * Puts the object in a state where it is safe to be destroyed.
      */
     public void destroy() {
-        nativeDestroy(mNativeAddToHomescreenManager);
-
         mObserver = null;
+        if (mNativeAddToHomescreenManager == 0) return;
+
+        nativeDestroy(mNativeAddToHomescreenManager);
         mNativeAddToHomescreenManager = 0;
     }
 
@@ -65,6 +70,8 @@ public class AddToHomescreenManager {
      * @param userRequestedTitle Title of the shortcut displayed on the homescreen.
      */
     public void addShortcut(String userRequestedTitle) {
+        if (mNativeAddToHomescreenManager == 0) return;
+
         nativeAddShortcut(mNativeAddToHomescreenManager, userRequestedTitle);
     }
 
