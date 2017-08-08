@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81c041e9_b94071ab",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2752,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-08T08:25:20Z",
+      "side": 1,
+      "message": "Would it make sense for the return type to be const? Either here, or in a follow-up CL?\n\nBeing able to turn a const Node into a non-const LayoutObject isn\u0027t very great, especially if we don\u0027t need it.",
+      "revId": "1fb227833aa50b8569f5a2f89391128ede657221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
