@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "3166426d_d15edbd4",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-08T00:52:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "383f8ad0_5f0eef50",
+      "range": {
+        "startLine": 488,
+        "startChar": 41,
+        "endLine": 488,
+        "endChar": 58
+      },
+      "revId": "e6347dbe3062a9ef0859b3b1f04a9012dd6b4d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74c15b21_2da73a00",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-08T00:52:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e04678ca_1c5048ed",
+      "range": {
+        "startLine": 488,
+        "startChar": 6,
+        "endLine": 488,
+        "endChar": 9
+      },
+      "revId": "e6347dbe3062a9ef0859b3b1f04a9012dd6b4d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dba909dd_27cc7147",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 1
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "a2d0ccd1_6323465f",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-08T00:52:05Z",
+      "side": 1,
+      "message": "This method is called whenever the user hit the assistant key.  We send out the request to Android side, but if Android side isn\u0027t fully booted (not ready), it\u0027s going to wait to handle the request.  This would be many seconds after user login. \n\nWe tell ash::Shell that we will be in WAITING state.  Then when Android side fulfilled the reuqest, it\u0027s going to tell Chrome voice interaction started and we update ash::Shell that it\u0027s RUNNING.",
+      "parentUuid": "dba909dd_27cc7147",
+      "revId": "e6347dbe3062a9ef0859b3b1f04a9012dd6b4d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6f6f5d8_768d018b",
         "filename": "components/arc/common/voice_interaction_framework.mojom",
         "patchSetId": 1
@@ -76,6 +142,24 @@
       "writtenOn": "2017-08-07T21:37:40Z",
       "side": 1,
       "message": "Not sure what the difference between this and the previous method are. Or maybe they should be the same method, and use an enum?",
+      "revId": "e6347dbe3062a9ef0859b3b1f04a9012dd6b4d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207846c5_3807d805",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-08T00:52:05Z",
+      "side": 1,
+      "message": "They signal different state, ready is when container is fully booted and voice interaction service ready to serve request.  Running is when voice interaction activity is currently running.  Updated this to an enum.  Anyway to reuse this mojom enum instead of create another enum in ash::VoiceInteractionState?",
+      "parentUuid": "f6f6f5d8_768d018b",
       "revId": "e6347dbe3062a9ef0859b3b1f04a9012dd6b4d8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
