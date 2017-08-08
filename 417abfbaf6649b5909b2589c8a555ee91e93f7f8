@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2307cbc5_c7b016e2",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T23:07:01Z",
+      "side": 1,
+      "message": "Mentioned in person: This and |AccessibilityTest.define| both iterate the rules.\nLet\u0027s combine them in |AccessibilityTest.define| and remove |SettingsAccessibilityTest.createTestF| because it doesn\u0027t have anything specific to settings",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "417abfbaf6649b5909b2589c8a555ee91e93f7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f1d5589_64f9746b",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T23:07:01Z",
+      "side": 1,
+      "message": "Looks like this serves the same purpose as axeOptions.runOnly.\nLet\u0027s use only axeOptions.runOnly and remove rulesToSkip. WDYT?",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 13
+      },
+      "revId": "417abfbaf6649b5909b2589c8a555ee91e93f7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aada3e52_1099cb27",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T23:07:01Z",
+      "side": 1,
+      "message": "use \u003d\u003e",
+      "range": {
+        "startLine": 60,
+        "startChar": 36,
+        "endLine": 60,
+        "endChar": 54
+      },
+      "revId": "417abfbaf6649b5909b2589c8a555ee91e93f7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33feadde_c4264ead",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T23:07:01Z",
+      "side": 1,
+      "message": "replace with testName",
+      "range": {
+        "startLine": 67,
+        "startChar": 23,
+        "endLine": 67,
+        "endChar": 50
+      },
+      "revId": "417abfbaf6649b5909b2589c8a555ee91e93f7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3c582a_d99eae36",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T23:07:01Z",
+      "side": 1,
+      "message": "Change to\ntest.setup \u003d test.setup || () \u003d\u003e {};\n\nThis will let you delete line 124",
+      "range": {
+        "startLine": 113,
+        "startChar": 28,
+        "endLine": 113,
+        "endChar": 41
+      },
+      "revId": "417abfbaf6649b5909b2589c8a555ee91e93f7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429a0b74_02471677",
+        "filename": "chrome/test/data/webui/settings/basic_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T23:07:01Z",
+      "side": 1,
+      "message": "Let\u0027s keep this around the TEST_F so that people don\u0027t have to write this in every test.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "417abfbaf6649b5909b2589c8a555ee91e93f7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd2a5ed4_3ed360e8",
+        "filename": "chrome/test/data/webui/settings/basic_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T23:07:01Z",
+      "side": 1,
+      "message": "Move this to the bottom and it becomes (after combining the TEST_F + define)\n\nAccessibilityTest.define(\u0027SettingsA11yBasic\u0027, {\n...\n});",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 2
+      },
+      "revId": "417abfbaf6649b5909b2589c8a555ee91e93f7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84452f51_6d4d78b9",
+        "filename": "chrome/test/data/webui/settings/basic_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T23:07:01Z",
+      "side": 1,
+      "message": "Use SettingsAccessibilityTest if nothing is overriden by SettingsA11yBasic",
+      "range": {
+        "startLine": 52,
+        "startChar": 39,
+        "endLine": 52,
+        "endChar": 56
+      },
+      "revId": "417abfbaf6649b5909b2589c8a555ee91e93f7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e075d715_4579fd57",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T23:07:01Z",
+      "side": 1,
+      "message": "Same as above",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 27
+      },
+      "revId": "417abfbaf6649b5909b2589c8a555ee91e93f7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eddf049_e290361e",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T23:07:01Z",
+      "side": 1,
+      "message": "Same as above",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "417abfbaf6649b5909b2589c8a555ee91e93f7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
