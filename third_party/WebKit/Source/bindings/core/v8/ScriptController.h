@@ -131,6 +131,7 @@ class CORE_EXPORT ScriptController final
   void UpdateSecurityOrigin(SecurityOrigin*);
 
   void ClearForClose();
+  void ClearGlobal();
 
   // Registers a v8 extension to be available on webpages. Will only
   // affect v8 contexts initialized after this call. Takes ownership of

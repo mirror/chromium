@@ -49,6 +49,9 @@ class CORE_EXPORT V8GCController {
   static void GcPrologue(v8::Isolate*, v8::GCType, v8::GCCallbackFlags);
   static void GcEpilogue(v8::Isolate*, v8::GCType, v8::GCCallbackFlags);
 
+  static bool IsDisabled();
+  static void SetDisabled(bool disabled);
+
   static void CollectGarbage(v8::Isolate*, bool only_minor_gc = false);
   // You should use collectAllGarbageForTesting() when you want to collect all
   // V8 & Blink objects. It runs multiple V8 GCs to collect references

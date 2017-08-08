@@ -285,6 +285,15 @@ class CORE_EXPORT Document : public ContainerNode,
   using SecurityContext::GetContentSecurityPolicy;
   using TreeScope::getElementById;
 
+  void toggleImageDecode(bool enabled);
+  void toggleFrames(bool enabled);
+  void toggleBackgroundImage(bool enabled);
+  void toggleCSS(bool enabled);
+  String trimDOM();
+  void trimJS();
+  void TrimJSTimerFired(TimerBase*);
+  void pauseJS();
+
   bool CanContainRangeEndPoint() const override { return true; }
 
   SelectorQueryCache& GetSelectorQueryCache();
@@ -1716,6 +1725,8 @@ class CORE_EXPORT Document : public ContainerNode,
   Member<NetworkStateObserver> network_state_observer_;
 
   bool has_high_media_engagement_;
+  bool js_disabled_;
+  TaskRunnerTimer<Document> trim_js_timer_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;

@@ -112,11 +112,11 @@ class CORE_EXPORT HTMLLinkElement final : public HTMLElement,
   DECLARE_VIRTUAL_TRACE();
 
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
+  LinkStyle* GetLinkStyle() const;
 
  private:
   HTMLLinkElement(Document&, bool created_by_parser);
 
-  LinkStyle* GetLinkStyle() const;
   LinkImport* GetLinkImport() const;
   LinkResource* LinkResourceToProcess();
 

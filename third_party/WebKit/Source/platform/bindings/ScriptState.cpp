@@ -45,6 +45,7 @@ ScriptState::~ScriptState() {
 }
 
 void ScriptState::DetachGlobalObject() {
+  LOG(ERROR) << "ScriptState::DetachGlobalObject";
   DCHECK(!context_.IsEmpty());
   GetContext()->DetachGlobal();
 }

@@ -92,6 +92,9 @@ void RemoteWindowProxy::Initialize() {
   SetupWindowPrototypeChain();
 }
 
+void RemoteWindowProxy::ClearGlobal() {
+}
+
 void RemoteWindowProxy::CreateContext() {
   // Create a new v8::Context with the window object as the global object
   // (aka the inner global). Reuse the outer global proxy if it already exists.

@@ -275,8 +275,12 @@ v8::HeapProfiler::RetainerInfos V8GCController::GetRetainerInfos(
   HeapSnaphotWrapperVisitor* tracer =
       reinterpret_cast<HeapSnaphotWrapperVisitor*>(scope.CurrentVisitor());
   tracer->CollectV8Roots();
-  tracer->TraceV8Roots();
-  tracer->TracePendingActivities();
+  if (!V8GCController::IsDisabled()) {
+    tracer->TraceV8Roots();
+    tracer->TracePendingActivities();
+  } else {
+    LOG(ERROR) << "Skipped tracewrapper";
+  }
   return v8::HeapProfiler::RetainerInfos{tracer->Groups(), tracer->Edges()};
 }
 
@@ -360,6 +364,14 @@ void UpdateCollectedPhantomHandles(v8::Isolate* isolate) {
 }
 
 }  // namespace
+
+static bool s_is_disabled = false;
+bool V8GCController::IsDisabled() {
+  return s_is_disabled;
+}
+void V8GCController::SetDisabled(bool disabled) {
+  s_is_disabled = disabled;
+}
 
 void V8GCController::GcEpilogue(v8::Isolate* isolate,
                                 v8::GCType type,

@@ -75,7 +75,18 @@ bool HTMLFrameElementBase::IsURLAllowed() const {
   return true;
 }
 
+static bool s_is_disabled = false;
+bool HTMLFrameElementBase::IsDisabled() {
+  return s_is_disabled;
+}
+void HTMLFrameElementBase::SetDisabled(bool disabled) {
+  s_is_disabled = disabled;
+}
+
 void HTMLFrameElementBase::OpenURL(bool replace_current_item) {
+  if (HTMLFrameElementBase::IsDisabled()) {
+    return;
+  }
   if (!IsURLAllowed())
     return;
 

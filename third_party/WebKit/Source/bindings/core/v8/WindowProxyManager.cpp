@@ -32,6 +32,10 @@ void WindowProxyManager::ClearForSwap() {
     entry.value->ClearForSwap();
 }
 
+void WindowProxyManager::ClearGlobal() {
+  window_proxy_->ClearGlobal();
+}
+
 void WindowProxyManager::ReleaseGlobalProxies(
     GlobalProxyVector& global_proxies) {
   DCHECK(global_proxies.IsEmpty());

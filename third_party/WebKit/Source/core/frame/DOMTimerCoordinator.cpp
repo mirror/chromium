@@ -40,6 +40,13 @@ DOMTimer* DOMTimerCoordinator::RemoveTimeoutByID(int timeout_id) {
   return removed_timer;
 }
 
+void DOMTimerCoordinator::Clear() {
+  for (const auto& it : timers_) {
+    it.value->Stop();
+  }
+  timers_.clear();
+}
+
 DEFINE_TRACE(DOMTimerCoordinator) {
   visitor->Trace(timers_);
 }

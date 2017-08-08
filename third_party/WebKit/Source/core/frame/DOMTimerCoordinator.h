@@ -51,6 +51,8 @@ class DOMTimerCoordinator {
 
   void SetTimerTaskRunner(RefPtr<WebTaskRunner>);
 
+
+  void Clear();
   RefPtr<WebTaskRunner> TimerTaskRunner() const { return timer_task_runner_; }
 
   DECLARE_TRACE();  // Oilpan.

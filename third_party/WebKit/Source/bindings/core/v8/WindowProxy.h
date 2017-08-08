@@ -164,6 +164,7 @@ class WindowProxy : public GarbageCollectedFinalized<WindowProxy> {
   virtual bool IsLocal() const { return false; }
 
   enum FrameReuseStatus { kFrameWillNotBeReused, kFrameWillBeReused };
+  virtual void ClearGlobal() = 0;
 
  protected:
   // Lifecycle represents the following four states.
