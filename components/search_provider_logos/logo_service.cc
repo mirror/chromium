@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "build/build_config.h"
 #include "components/image_fetcher/core/image_decoder.h"
 #include "components/search_engines/search_terms_data.h"
 #include "components/search_engines/template_url_service.h"
@@ -121,8 +122,13 @@ void LogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
   if (command_line->HasSwitch(switches::kSearchProviderLogoURL)) {
     logo_url = GURL(
         command_line->GetSwitchValueASCII(switches::kSearchProviderLogoURL));
+#if defined(OS_ANDROID)
   } else {
+    // Non-Google default search engine logos are currently going through launch
+    // review (https://crbug.com/737283). Since that review is scoped to
+    // Android, restrict the feature to that platform only.
     logo_url = template_url->logo_url();
+#endif
   }
   const bool use_fixed_logo = logo_url.is_valid();
 
