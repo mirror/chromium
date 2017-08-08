@@ -34,6 +34,24 @@
       "revId": "44ef0f339d545e45709500f72bf7bc3318ec1b89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3f2b5d_7df038ae",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-08T08:01:24Z",
+      "side": 1,
+      "message": "Ok, thanks for the pointers. Can we handle this in a way that\u0027s consistent with WaylandGamepadDelegate instead (https://cs.chromium.org/chromium/src/components/exo/wayland/server.cc?l\u003d3860)? ie. the DataOffer instance is guaranteed to be valid until OnPerformDrop/OnDragExited and we just reset the resource on the server.cc side if destroyed by the client early.",
+      "parentUuid": "95cd36e5_23b7f115",
+      "revId": "44ef0f339d545e45709500f72bf7bc3318ec1b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
