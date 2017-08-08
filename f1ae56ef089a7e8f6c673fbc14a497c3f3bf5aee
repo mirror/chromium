@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "779a267c_ca56ecef",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-08T11:40:32Z",
+      "side": 1,
+      "message": "Nope.",
+      "parentUuid": "cd7b2a37_ec092c2b",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4401c721_17b98cd3",
         "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-08T10:40:44Z",
       "side": 1,
       "message": "Hrm. Why did we need to drop the const attribute?",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c0a5d0_8f3b3346",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-08T11:40:32Z",
+      "side": 1,
+      "message": "I think because when we construct WebSecurityOrigins later, the constructor drops the const attribute. I could probably work around that by passing copies of the SecurityOrigin instead of the pointer into the WebSecurityOrigins?",
+      "parentUuid": "4401c721_17b98cd3",
       "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "32f12e0d_51b2c26f",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheStorage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-08T11:40:32Z",
+      "side": 1,
+      "message": "It references HTTPNames::GET at line 335, so perhaps the question is why didn\u0027t we need this before (now the compiler is unhappy). I couldn\u0027t figure out what I did to break/alter what I think is an implicit import via other header files, but I admit I stopped searching after a few minutes. Let me know if I should put more effort into finding the answer to why we didn\u0027t need the import before.",
+      "parentUuid": "ae8c606e_dc19a272",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5d0cb72_40a78f69",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchParameters.cpp",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98119552_7627f1c5",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchParameters.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-08T11:40:32Z",
+      "side": 1,
+      "message": "Nope. Gone.",
+      "parentUuid": "e5d0cb72_40a78f69",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "cd170137_36e48a39",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-08T11:40:32Z",
+      "side": 1,
+      "message": "Gone.",
+      "parentUuid": "d9a58e95_22838e13",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b07201ef_88cf3f1a",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-08T10:40:44Z",
       "side": 1,
       "message": "I thought this conversion (here and elsewhere) would happen automatically (as the constructor isn\u0027t marked `explicit`).",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12319d2f_ff668235",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-08T11:40:32Z",
+      "side": 1,
+      "message": "I think it does not work because the parameter is not const. The compiler tells me\n\n error: non-const lvalue reference to type \u0027blink::WebSecurityOrigin\u0027 cannot bind to a value of unrelated type \u0027RefPtr\u003cblink::SecurityOrigin\u003e\u0027\n\nif I try automatic type conversion and if I use the constructor explicitly for the parameter, I get\n\nnon-const lvalue reference to type \u0027blink::WebSecurityOrigin\u0027 cannot bind to a temporary of type \u0027blink::WebSecurityOrigin\u0027. \n\nHowever, I think I can\u0027t make the parameter const without changing some logic since it actually manipulates the Origin. Anything else I could try / am missing?",
+      "parentUuid": "b07201ef_88cf3f1a",
       "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5440c0_ea19cb1c",
+        "filename": "third_party/WebKit/public/platform/WebCrossOriginAccessControl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-08T11:40:32Z",
+      "side": 1,
+      "message": "That saves a lot of otherwise ugly broken lines. Done.",
+      "parentUuid": "5bb47c2b_524f8b91",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
