@@ -425,22 +425,32 @@ class VideoRendererImplTest : public testing::Test {
     ASSERT_TRUE(IsReadPending());
 
     // Queue some frames, satisfy reads, and make sure expired frames are gone
-    // when the renderer paints the first frame.
+    // when the renderer starts up again.
     {
       SCOPED_TRACE("Waiting for BUFFERING_HAVE_ENOUGH");
       WaitableMessageLoopEvent event;
-      EXPECT_CALL(mock_cb_, FrameReceived(HasTimestampMatcher(80))).Times(1);
       EXPECT_CALL(mock_cb_, OnStatisticsUpdate(_)).Times(AnyNumber());
       EXPECT_CALL(mock_cb_, OnBufferingStateChange(BUFFERING_HAVE_ENOUGH))
           .WillOnce(RunClosure(event.GetClosure()));
+
       // Note: In the normal underflow case we queue 5 frames here instead of
       // four since the underflow increases the number of required frames to
       // reach the have enough state.
       if (type == UnderflowTestType::NORMAL)
         QueueFrames("80 100 120 140 160");
       else
-        QueueFrames("40 60 80 90");
+        QueueFrames("40 60 80 90 100");
       SatisfyPendingDecode();
+      event.RunAndWait();
+    }
+
+    {
+      SCOPED_TRACE("Waiting for first post-resume frame.");
+      WaitableMessageLoopEvent event;
+      EXPECT_CALL(mock_cb_, FrameReceived(HasTimestampMatcher(80)))
+          .WillOnce(RunClosure(event.GetClosure()));
+      renderer_->OnTimeProgressing();
+      time_source_.StartTicking();
       event.RunAndWait();
     }
 
