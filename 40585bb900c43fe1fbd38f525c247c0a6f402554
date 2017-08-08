@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "800c55a4_557a1aec",
+        "filename": "components/search_provider_logos/logo_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-08T09:57:17Z",
+      "side": 1,
+      "message": "nit: I\u0027d move this into the \"else\" block - #if\u0027ed out control constructs make me nervous.",
+      "revId": "40585bb900c43fe1fbd38f525c247c0a6f402554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc6a5f06_198a178c",
+        "filename": "ios/chrome/browser/google/google_logo_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-08T09:57:17Z",
+      "side": 1,
+      "message": "Maybe update the comment to say what it does over the default LogoService?",
+      "revId": "40585bb900c43fe1fbd38f525c247c0a6f402554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c67e18_c44f1461",
+        "filename": "ios/chrome/browser/google/google_logo_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-08T09:57:17Z",
+      "side": 1,
+      "message": "Does this do anything?",
+      "revId": "40585bb900c43fe1fbd38f525c247c0a6f402554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687287ee_3334dc8c",
+        "filename": "ios/chrome/browser/google/google_logo_service.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-08T09:57:17Z",
+      "side": 1,
+      "message": "I think some of these includes can go now.",
+      "range": {
+        "startLine": 17,
+        "startChar": 74,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "40585bb900c43fe1fbd38f525c247c0a6f402554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
