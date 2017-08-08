@@ -16,6 +16,24 @@
       "revId": "61e2fdf096c6eee13f9aa36f46190d12a811928c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2785e09_668d142c",
+        "filename": "third_party/WebKit/Source/core/loader/CookieJar.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-08T08:50:52Z",
+      "side": 1,
+      "message": "Well, maybe I can, while you\u0027re also very welcome to own this :)",
+      "parentUuid": "ecb21c56_3e69f17d",
+      "revId": "61e2fdf096c6eee13f9aa36f46190d12a811928c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
