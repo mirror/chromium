@@ -128,12 +128,11 @@ struct StructTraits<cc::mojom::FilterOperationDataView, cc::FilterOperation> {
     return operation.image_filter();
   }
 
-  static FilterOperationMatrix matrix(const cc::FilterOperation& operation) {
+  static ConstCArray<float> matrix(const cc::FilterOperation& operation) {
     if (operation.type() != cc::FilterOperation::COLOR_MATRIX)
-      return FilterOperationMatrix();
-    constexpr size_t MATRIX_SIZE = 20;
-    return {MATRIX_SIZE, MATRIX_SIZE,
-            const_cast<float*>(&operation.matrix()[0])};
+      return ConstCArray<float>();
+    constexpr size_t kMatrixSize = 20;
+    return ConstCArray<float>(operation.matrix(), kMatrixSize);
   }
 
   static int32_t zoom_inset(const cc::FilterOperation& operation) {
@@ -184,11 +183,10 @@ struct StructTraits<cc::mojom::FilterOperationDataView, cc::FilterOperation> {
       case cc::FilterOperation::COLOR_MATRIX: {
         // TODO(fsamuel): It would be nice to modify cc::FilterOperation to
         // avoid this extra copy.
-        constexpr size_t MATRIX_SIZE = 20;
-        float matrix_buffer[MATRIX_SIZE];
+        constexpr size_t kMatrixSize = 20;
+        float matrix_buffer[kMatrixSize];
         memset(&matrix_buffer[0], 0, sizeof(matrix_buffer));
-        FilterOperationMatrix matrix = {MATRIX_SIZE, MATRIX_SIZE,
-                                        &matrix_buffer[0]};
+        FilterOperationMatrix matrix(matrix_buffer);
         if (!data.ReadMatrix(&matrix))
           return false;
         out->set_matrix(matrix_buffer);
