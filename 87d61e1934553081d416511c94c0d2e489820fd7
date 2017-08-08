@@ -93,6 +93,30 @@
       "revId": "87d61e1934553081d416511c94c0d2e489820fd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736c585b_cd0205be",
+        "filename": "third_party/WebKit/Source/modules/battery/BatteryDispatcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-08T19:57:01Z",
+      "side": 1,
+      "message": "Revisiting this patch (sorry for the delay was traveling for work). I still feel a bit conflicted about the BatteryDispatcher becoming a frame supplement. Battery seems like a basic service and having a singleton BatteryDispatcher where the frames can add/remove controllers (as it was previously) seems sufficient. That way there is no need for the \u0027overhead\u0027 of per frame BatteryDispachers and multiple mojo connections for essentially the same thing.. And I think it wouldn\u0027t change the tests anyway.. Unless I am missing something, wdyt?",
+      "parentUuid": "b24c56e3_0a4a5867",
+      "range": {
+        "startLine": 25,
+        "startChar": 46,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "87d61e1934553081d416511c94c0d2e489820fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
