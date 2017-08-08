@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2d92d38b_6b8a028e",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-08T05:30:40Z",
+      "side": 1,
+      "message": "Please add a comment to this effect, I also tripped over this code otherwise.",
+      "parentUuid": "42d1ce54_39c2ae13",
+      "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e322d17b_8e5a23c9",
         "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
         "patchSetId": 5

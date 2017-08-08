@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "408881ce_fdc753a5",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-08T05:30:40Z",
+      "side": 1,
+      "message": "The method other subobjects of PrefetchService use to obtain pointers to each other is to have a pointer to service and call service-\u003eGetFoo() every time they need another subobject. It is more consistent and allows to avoid passing various raw pointers around.\n\nCan be done as a small follow-up patch (but please do it right after this one)",
+      "revId": "3760eb2e32f809070c547a43c3a32dea8e6d9801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fadfc153_320db81e",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-08T05:30:40Z",
+      "side": 1,
+      "message": "This is already available. Just call it. Same below.\n\nCan be immediate follow up patch as well.",
+      "range": {
+        "startLine": 89,
+        "startChar": 27,
+        "endLine": 89,
+        "endChar": 53
+      },
+      "revId": "3760eb2e32f809070c547a43c3a32dea8e6d9801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a70b0e8_d65758e5",
+        "filename": "components/offline_pages/core/prefetch/import_archives_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-08T05:30:40Z",
+      "side": 1,
+      "message": "Just an observation: returning std::unique_ptr\u003cvector\u003cPAI\u003e\u003e here would allow early \"return nullptr\" and then jsut check for null... Much less characters :)",
+      "revId": "3760eb2e32f809070c547a43c3a32dea8e6d9801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f522d4a_574413c0",
+        "filename": "components/offline_pages/core/prefetch/prefetch_importer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-08T05:30:40Z",
+      "side": 1,
+      "message": "as already mentioned, this should be a pointer to PrefetchService...",
+      "range": {
+        "startLine": 29,
+        "startChar": 22,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "3760eb2e32f809070c547a43c3a32dea8e6d9801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
