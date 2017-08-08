@@ -22,6 +22,29 @@
       "revId": "64da9eff67dfaf48c317d693fcf41abaf94d4bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e42638_2cdf7761",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-08-08T10:52:52Z",
+      "side": 1,
+      "message": "I did not understand that how \"//media/base\" dependency is traversing here using \"//media/cdm:unit_tests\" even all deps in \"//media/cdm:unit_tests\" are private.",
+      "range": {
+        "startLine": 344,
+        "startChar": 14,
+        "endLine": 344,
+        "endChar": 28
+      },
+      "revId": "64da9eff67dfaf48c317d693fcf41abaf94d4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
