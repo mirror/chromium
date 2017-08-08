@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0775129a_4e66b18f",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-08T00:11:37Z",
+      "side": 1,
+      "message": "I\u0027d be interested to dig into this if you can give me some repro steps - perhaps I can find a bug to file on axe-core.",
+      "range": {
+        "startLine": 50,
+        "startChar": 61,
+        "endLine": 50,
+        "endChar": 79
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d48c217_4c8e5ce5",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-08T00:11:37Z",
+      "side": 1,
+      "message": "This is debatable - skip links are really more for keyboard users than for screen reader users in my experience, and keyboard users may appreciate a way to skip large numbers of tab stops (https://a11ywins.tumblr.com/post/116335338923/nytimescoms-skip-link-design has a discussion of a nice skip link design pattern). \n\nHowever, if there isn\u0027t a large number of tab stops before the main content then a skip link is indeed unnecessary.\n\nThat said, perhaps it should be enabled/disabled on a per-page basis, unless the design is such that this is true of all pages covered by these tests?",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 61
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671d0c25_d89101a8",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-08T00:11:37Z",
+      "side": 1,
+      "message": "Calling this a selector is a bit confusing given \u0027selector\u0027 usually refers to a CSS selector. What about \u0027exclusionRule\u0027 or similar?",
+      "range": {
+        "startLine": 38,
+        "startChar": 38,
+        "endLine": 38,
+        "endChar": 46
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9bb2a64_8ddff8d3",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-08T00:11:37Z",
+      "side": 1,
+      "message": "Stray comment?",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 26
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b130cf_5f776992",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-08T00:11:37Z",
+      "side": 1,
+      "message": "If this was specified a dictionary of audit rule ID to filter function, you could skip the extra step of pulling the violations into a dict and just iterate over the violations once.",
+      "range": {
+        "startLine": 90,
+        "startChar": 48,
+        "endLine": 90,
+        "endChar": 58
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f76bde_14f0a750",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-08T00:11:37Z",
+      "side": 1,
+      "message": "Terminology nits: \n- I\u0027m sure you thought of this already, but \"exception\" obviously has a specific meaning in JS and other languages, which makes this somewhat confusing to read. It\u0027s not as poetic, but maybe `AccessibilityTest.ViolationFilter[Rule]` or something like that?\n- \"prune\" typically refers specifically to cutting out parts of a decision tree (although honestly in all fairness I don\u0027t think it\u0027s going to confuse anyone here, probably fine to leave it)\n\nSo then maybe this could become AccessibilityTest.[prune|filter]Violations?",
+      "range": {
+        "startLine": 95,
+        "startChar": 18,
+        "endLine": 95,
+        "endChar": 34
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "771685eb_1793a520",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-08T00:11:37Z",
+      "side": 1,
+      "message": "We typically use {} around neither or both parts of if/else (i.e. if the if block requires them, use them on the else part even if it doesn\u0027t).",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 112,
+        "endChar": 12
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
