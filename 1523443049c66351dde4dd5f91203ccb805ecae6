@@ -34,6 +34,24 @@
       "revId": "1523443049c66351dde4dd5f91203ccb805ecae6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31127fe_3d3d1daa",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T00:05:27Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "31d30a2a_a2e7823b",
+      "revId": "1523443049c66351dde4dd5f91203ccb805ecae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

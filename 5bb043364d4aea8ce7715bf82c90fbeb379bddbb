@@ -69,6 +69,24 @@
       "revId": "5bb043364d4aea8ce7715bf82c90fbeb379bddbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5038c3f_41d91271",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1904,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T00:05:27Z",
+      "side": 1,
+      "message": "\u003e ... Is that OK?\nYeah. Please add a TODO to change the IDS_ or the tags if they are intended to change later. On the IDS_SETTINGS prefix, if there\u0027s a reason not to, that\u0027s good with me.\n\n\u003e ...strings should be duplicated instead...\nSorry to answer a question with a question, but do they have the same meaning in both places? If the same text is used in two places, but the text has different meaning in those two places, then they should be duplicated (so translators can write different things if the locale calls for it).",
+      "parentUuid": "6d023952_dce9007f",
+      "revId": "5bb043364d4aea8ce7715bf82c90fbeb379bddbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
