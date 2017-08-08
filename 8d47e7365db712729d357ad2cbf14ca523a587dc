@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82e244c0_436a128c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T16:47:43Z",
+      "side": 1,
+      "message": "why not make this more strict? make sure the indices are within range and whatnot?",
+      "revId": "8d47e7365db712729d357ad2cbf14ca523a587dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
