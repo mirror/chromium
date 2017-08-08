@@ -23,7 +23,11 @@ assert(is_win)
 tool_wrapper_path = rebase_path("tool_wrapper.py", root_build_dir)
 
 if (use_goma) {
-  goma_prefix = "$goma_dir/gomacc.exe "
+  if (host_os == "win") {
+    goma_prefix = "$goma_dir/gomacc.exe "
+  } else {
+    goma_prefix = "$goma_dir/gomacc "
+  }
 } else {
   goma_prefix = ""
 }
@@ -177,7 +181,10 @@ template("msvc_toolchain") {
     }
 
     tool("rc") {
-      command = "$python_path $tool_wrapper_path rc-wrapper $env rc.exe {{defines}} {{include_dirs}} /fo{{output}} {{source}}"
+      # TODO(thakis): something like https://codereview.chromium.org/2628573003/
+      # instead, or wait for llvm-rc
+      #command = "$python_path $tool_wrapper_path rc-wrapper $env rc.exe {{defines}} {{include_dirs}} /fo{{output}} {{source}}"
+      command = "cp ../../empty.res {{output}}"
       outputs = [
         "$object_subdir/{{source_name_part}}.res",
       ]
@@ -191,6 +198,10 @@ template("msvc_toolchain") {
         ml = "ml.exe"
       }
       command = "$python_path $tool_wrapper_path asm-wrapper $env $ml {{defines}} {{include_dirs}} {{asmflags}} /c /Fo{{output}} {{source}}"
+      #command = "cp ../../empty.obj  {{output}}"
+      # This is questionable. No {{asmflags}} 'cause that only has /safeseh
+      # which clang-cl doesn't understand (also questionable).
+      #command = "$prefix/clang -target i386-pc-win {{defines}} {{include_dirs}} -c {{source}} -o {{output}}"
       description = "ASM {{output}}"
       outputs = [
         "$object_subdir/{{source_name_part}}.obj",
@@ -222,6 +233,7 @@ template("msvc_toolchain") {
       pool = "//build/toolchain:link_pool($default_toolchain)"
 
       command = "$python_path $tool_wrapper_path link-wrapper $env False $link /nologo /IMPLIB:$libname /DLL /OUT:$dllname /PDB:$pdbname @$rspfile"
+      #command = "$python_path $tool_wrapper_path link-wrapper $env False \$HOME/src/llvm-build-nolibcxx/bin/lld-link /nologo /IMPLIB:$libname /DLL /OUT:$dllname /PDB:$pdbname @$rspfile"
 
       default_output_extension = ".dll"
       default_output_dir = "{{root_out_dir}}"
