@@ -515,6 +515,11 @@ void WindowSelector::PositionWindows(bool animate) {
     grid->PositionWindows(animate);
 }
 
+void WindowSelector::SetIgnoredItem(WindowSelectorItem* ignored_item) {
+  for (std::unique_ptr<WindowGrid>& grid : grid_list_)
+    grid->set_ignored_item(ignored_item);
+}
+
 bool WindowSelector::HandleKeyEvent(views::Textfield* sender,
                                     const ui::KeyEvent& key_event) {
   if (key_event.type() != ui::ET_KEY_PRESSED)
