@@ -22,6 +22,30 @@
       "revId": "61ef564c1f407bdf17c162c672129502751f3ee6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c24d5e_d1a9ea3f",
+        "filename": "gpu/command_buffer/common/gl2_types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-08T23:35:52Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md says that copyright header should be in files but no \"(c)\" after \"Copyright\". Is that what you meant?",
+      "parentUuid": "942dff4b_40612a81",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "61ef564c1f407bdf17c162c672129502751f3ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
