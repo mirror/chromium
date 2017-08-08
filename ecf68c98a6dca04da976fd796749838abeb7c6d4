@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08cd5361_506e2ca2",
+        "filename": "media/base/video_frame.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-08T18:29:54Z",
+      "side": 1,
+      "message": "Elsewhere we assume that if HasTextures(), then NumPlanes() \u003d\u003d NumTextures(). Are there cases where that is not true?",
+      "range": {
+        "startLine": 649,
+        "startChar": 13,
+        "endLine": 649,
+        "endChar": 22
+      },
+      "revId": "ecf68c98a6dca04da976fd796749838abeb7c6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
