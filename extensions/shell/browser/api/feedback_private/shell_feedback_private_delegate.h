@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_EXTENSIONS_API_FEEDBACK_PRIVATE_CHROME_FEEDBACK_PRIVATE_DELEGATE_H_
-#define CHROME_BROWSER_EXTENSIONS_API_FEEDBACK_PRIVATE_CHROME_FEEDBACK_PRIVATE_DELEGATE_H_
+#ifndef EXTENSIONS_SHELL_BROWSER_API_FEEDBACK_PRIVATE_SHELL_FEEDBACK_PRIVATE_DELEGATE_H_
+#define EXTENSIONS_SHELL_BROWSER_API_FEEDBACK_PRIVATE_SHELL_FEEDBACK_PRIVATE_DELEGATE_H_
 
 #include "extensions/browser/api/feedback_private/feedback_private_delegate.h"
 
@@ -13,10 +13,10 @@
 
 namespace extensions {
 
-class ChromeFeedbackPrivateDelegate : public FeedbackPrivateDelegate {
+class ShellFeedbackPrivateDelegate : public FeedbackPrivateDelegate {
  public:
-  ChromeFeedbackPrivateDelegate();
-  ~ChromeFeedbackPrivateDelegate() override;
+  ShellFeedbackPrivateDelegate();
+  ~ShellFeedbackPrivateDelegate() override;
 
   // FeedbackPrivateDelegate:
   std::unique_ptr<base::DictionaryValue> GetStrings(
@@ -26,9 +26,9 @@ class ChromeFeedbackPrivateDelegate : public FeedbackPrivateDelegate {
       content::BrowserContext* context) const override;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(ChromeFeedbackPrivateDelegate);
+  DISALLOW_COPY_AND_ASSIGN(ShellFeedbackPrivateDelegate);
 };
 
 }  // namespace extensions
 
-#endif  // CHROME_BROWSER_EXTENSIONS_API_FEEDBACK_PRIVATE_CHROME_FEEDBACK_PRIVATE_DELEGATE_H_
+#endif  // EXTENSIONS_SHELL_BROWSER_API_FEEDBACK_PRIVATE_SHELL_FEEDBACK_PRIVATE_DELEGATE_H_

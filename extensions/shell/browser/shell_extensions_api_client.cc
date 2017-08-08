@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "extensions/browser/api/messaging/messaging_delegate.h"
+#include "extensions/shell/browser/api/feedback_private/shell_feedback_private_delegate.h"
 #include "extensions/shell/browser/delegates/shell_kiosk_delegate.h"
 #include "extensions/shell/browser/shell_app_view_guest_delegate.h"
 #include "extensions/shell/browser/shell_extension_web_contents_observer.h"
@@ -49,6 +50,14 @@ MessagingDelegate* ShellExtensionsAPIClient::GetMessagingDelegate() {
   if (!messaging_delegate_)
     messaging_delegate_ = base::MakeUnique<MessagingDelegate>();
   return messaging_delegate_.get();
+}
+
+FeedbackPrivateDelegate*
+ShellExtensionsAPIClient::GetFeedbackPrivateDelegate() {
+  if (!feedback_private_delegate_)
+    feedback_private_delegate_ =
+        base::MakeUnique<ShellFeedbackPrivateDelegate>();
+  return feedback_private_delegate_.get();
 }
 
 }  // namespace extensions
