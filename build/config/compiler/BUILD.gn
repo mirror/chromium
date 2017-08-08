@@ -464,7 +464,7 @@ config("compiler") {
       # Override Chromium's default for projects that wish to stay on C++11.
       cflags_cc += [ "-std=gnu++11" ]
     } else {
-      cflags_cc += [ "-std=gnu++14" ]
+      cflags_cc += [ "-std=gnu++1z" ]
     }
   } else if (!is_win && !is_nacl) {
     # TODO(mcgrathr) - the NaCl GCC toolchain doesn't support either gnu11/gnu++11
@@ -475,7 +475,7 @@ config("compiler") {
     if (use_cxx11) {
       cflags_cc += [ "-std=c++11" ]
     } else {
-      cflags_cc += [ "-std=c++14" ]
+      cflags_cc += [ "-std=c++1z" ]
     }
   }
 
