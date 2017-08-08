@@ -1,0 +1,337 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b59ec253_3d5591f8",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "Please sort alphabetically.",
+      "range": {
+        "startLine": 44,
+        "startChar": 28,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da2ddd2_46e0fc0d",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "Nit: can you put this back before OnIconMadeAvailable()? In all occurrences including the interface. This avoid ordering mismatches in existing implementations that you just renamed.",
+      "range": {
+        "startLine": 141,
+        "startChar": 23,
+        "endLine": 141,
+        "endChar": 0
+      },
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658ca532_026209ea",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "The kFoo naming is usually used for actual constants, this is a regular variable that depends on the input.\n\nHowever, since you actually use this for reserve() only, I suggest that you instead drop it. This makes the code simpler and avoids relying on PERSONALIZED being populated. If you would like to avoid reallocations, a better solution would be to make these vectors member variables of the class, but honestly I don\u0027t think this is worth.",
+      "range": {
+        "startLine": 158,
+        "startChar": 34,
+        "endLine": 158,
+        "endChar": 0
+      },
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088d009b_e0bdd685",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "I\u0027m not sure how important this is, but since IsEnabled() can have side effects wrt to user activation, can you invert the order of the OR operands?",
+      "range": {
+        "startLine": 41,
+        "startChar": 64,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b95bad1_d5fdde33",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "I think an \u0027else\u0027 branch would be more readable than a \u0027continue\u0027 statement (also makes the indentation equal and obvious for both branches).",
+      "range": {
+        "startLine": 374,
+        "startChar": 15,
+        "endLine": 374,
+        "endChar": 0
+      },
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c753887_f76725c2",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "Existence is AFAIK often checked using hosts_to_skip.count(host) !\u003d 0.",
+      "range": {
+        "startLine": 400,
+        "startChar": 58,
+        "endLine": 400,
+        "endChar": 0
+      },
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41376b63_b60a0281",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "Remove? This kind of verification belongs, if at all, in PopularSitesImpl.",
+      "range": {
+        "startLine": 409,
+        "startChar": 77,
+        "endLine": 409,
+        "endChar": 0
+      },
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b471588f_f14c40b0",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "Remove std::move() since it\u0027s useless with the current signature. Alternatively, although I wouldn\u0027t really recommend this, change the proposed signature to pass the map by value, not a const reference. If you do the latter, you can also std::move() the strings around in the bridge.",
+      "range": {
+        "startLine": 520,
+        "startChar": 50,
+        "endLine": 520,
+        "endChar": 0
+      },
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06261a1_21591174",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "Is this related to this patch? Please remove otherwise.",
+      "range": {
+        "startLine": 543,
+        "startChar": 57,
+        "endLine": 543,
+        "endChar": 0
+      },
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850f7540_c98a01ce",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 546,
+        "startChar": 79,
+        "endLine": 546,
+        "endChar": 0
+      },
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c9196e_683ed283",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "Please add a comment like:\n// |sections| must contain an entry for PERSONALIZED.\n\nThis allows implementations to rely on that guarantee.",
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850d6d19_ac62ba2b",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "Rename to sites_vector? PopularSites itself a class and hence potentially confusing.",
+      "range": {
+        "startLine": 208,
+        "startChar": 53,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95957088_d52f40c2",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "Rename to |num_max_tiles|?",
+      "range": {
+        "startLine": 210,
+        "startChar": 33,
+        "endLine": 210,
+        "endChar": 0
+      },
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ff1f2b_0454a455",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "Unused?",
+      "range": {
+        "startLine": 62,
+        "startChar": 32,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ea3918_5326a6f7",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-08T13:02:33Z",
+      "side": 1,
+      "message": "Rename to FirstPersonalizedTileIs.",
+      "revId": "af249574d858c17d2fdbf31475098e5f2c437f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
