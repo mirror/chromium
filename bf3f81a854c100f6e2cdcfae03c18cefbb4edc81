@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aca3f30d_62566bdd",
+        "filename": "chrome/android/java/res/drawable-hdpi/ic_videocam_white_24dp.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 1,
+      "message": "We already have infobar_camera.png and permission_camera.png. Let\u0027s use one of those and tint it rather than introducing a new asset.",
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e1da1c_0c862f5f",
+        "filename": "chrome/android/java/res/layout/bottom_sheet_bottom_nav.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 1,
+      "message": "nit: Remove this white space while we\u0027re mucking with this file.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 5
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d8f6c6_0f7ffca9",
+        "filename": "chrome/android/java/res/layout/download_item_view.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 1,
+      "message": "nit: Will you please remove this white space as well?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 4
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e115aff_27dab298",
+        "filename": "chrome/android/java/res/layout/history_clear_browsing_data_header.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 1,
+      "message": "0dp should be the default, so this line and line 21 shouldn\u0027t be necessary.",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f6ffd57_a06f11e5",
+        "filename": "chrome/android/java/res/layout/selectable_list_layout.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 1,
+      "message": "In Chrome Home, the bookmarks/history/downloads action bars are set to a constant 56dp to match BottomToolbarPhone.\n\nIf you follow these steps, is the top padding for the RecyclerView correct?\n\n1) Rotate phone into landscape\n2) Open Chrome Home\n3) Switch to bookmarks (or downloads or history)",
+      "range": {
+        "startLine": 12,
+        "startChar": 34,
+        "endLine": 12,
+        "endChar": 47
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75f0e7d_41501f9e",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 1,
+      "message": "What do we keep from this parent style? It\u0027s probably simpler to define a text style without a parent and set the specific attributes that we care about. textStyle \u003d normal should be teh default, so we likely don\u0027t need to set that if we drop the parent.  I think that sans-serif is also the default.",
+      "range": {
+        "startLine": 558,
+        "startChar": 45,
+        "endLine": 558,
+        "endChar": 90
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d4ff64a_c52a9c36",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 1,
+      "message": "We have a \"Divider\" style that\u0027s very similar. Can that be used instead of creating a new \"Separator\"?",
+      "range": {
+        "startLine": 610,
+        "startChar": 17,
+        "endLine": 610,
+        "endChar": 26
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bed104a_f67556a6",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 1,
+      "message": "It looks like Hannah added two new text styles to the spec (\"Dense List Text 1\" and \"Dense List Text 2\"). This matches dense list text 2.\n\nCan we add the new ones to ui/.../styles.xml and reference the pre-defined style from here?",
+      "range": {
+        "startLine": 659,
+        "startChar": 38,
+        "endLine": 659,
+        "endChar": 42
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e61173_1ef77682",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkFolderSelectActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 1,
+      "message": "Can this padding be set in the XML containing R.id.bookmark_folder_list rather than setting it programatically here?",
+      "range": {
+        "startLine": 142,
+        "startChar": 63,
+        "endLine": 142,
+        "endChar": 93
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb32267c_a9add2be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 1,
+      "message": "I suspect this isn\u0027t going to localize correctly. In RTL languages, we probably need to show\n\n        filename | image |\n   domain - size | image |\n\nLet\u0027s check with UX. If we need to support this sort of localization, we can update the .grd to take two inputs. I think VERSION_WITH_UPDATE_TIME is an example of this.",
+      "range": {
+        "startLine": 167,
+        "startChar": 64,
+        "endLine": 167,
+        "endChar": 73
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27cfa17_9d6922cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 1,
+      "message": "This entire comment can be removed, and the block can be condensed to:\n\nif (getItem() \u003d\u003d item) return;",
+      "range": {
+        "startLine": 85,
+        "startChar": 29,
+        "endLine": 85,
+        "endChar": 33
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779c894e_7c73b8c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 1,
+      "message": "Now that we have ABBREV_WEEKDAY, is SHOW_WEEKDAY still needed?",
+      "range": {
+        "startLine": 179,
+        "startChar": 30,
+        "endLine": 179,
+        "endChar": 59
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5467da80_ee4f834c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t match anymore.",
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

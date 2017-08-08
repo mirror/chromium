@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1928270_6c62762e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 0,
+      "message": "We should be able to remove the super method SelectableItemView#setBackgroundResourceForGroupPosition() as part of this patch as well as the list_item* 9-patches in res/.",
+      "range": {
+        "startLine": 210,
+        "startChar": 8,
+        "endLine": 210,
+        "endChar": 45
+      },
+      "revId": "fef7242f6cf2a1100a5b4d53bf3b4686ac7ddf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ec2432_67978cd8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 0,
+      "message": "#isFirstInGroup() is coming from DateDividedAdapter\u0027s TimedItem#isFirstInGroup(). Those methods were added exclusively for determining which 9-patch background to use. Now that we\u0027re not using 9-patches, we should clean up TimedItem/DateDividedAdapter to remove the un-used methods and logic.\n\nThis CL where I added list item shadows and width constrained styling is a good reference for this that can be dropped or need to be modified in this visual refresh: https://codereview.chromium.org/2654193002",
+      "range": {
+        "startLine": 204,
+        "startChar": 26,
+        "endLine": 204,
+        "endChar": 40
+      },
+      "revId": "fef7242f6cf2a1100a5b4d53bf3b4686ac7ddf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2392bae2_b3cc981b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 0,
+      "message": "This method and the one below were used to resize items that use list_item_*.9.png as backgrounds. They work in conjunction with a MarginResizer, which adjusts layout when the width changes. \n\nThese need to be updated now that the list items are no longer using 9-patches as backgrounds. To test out that the items are displayed correctly in narrow and wide views, you just need a device with a width \u003c 600dp (all phones in portrait mode) and a device with a width \u003e 600dp (all tablets and many phones in landscape).",
+      "range": {
+        "startLine": 62,
+        "startChar": 22,
+        "endLine": 62,
+        "endChar": 55
+      },
+      "revId": "fef7242f6cf2a1100a5b4d53bf3b4686ac7ddf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e566bd1_f2516247",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T17:09:13Z",
+      "side": 0,
+      "message": "Let\u0027s double check with Hannah that this shouldn\u0027t be conditionalized on Chrome Home. Ideally we don\u0027t have to conditionalize, but since we still have the shadow on selection \u0026 search in non-Chrome Home it\u0027s possible she intended to keep it on scroll for non-Chrome Home as well (and also possible she meant to have a 100% white bg pre-CH launch).\n\nIf it needs to be conditionalized, we can always set the toolbar opacity and styling via BottomToolbarPhone#setOtherToolbarStyle() which is a helper method for doing some re-styling based on the contents being displayed in CH.",
+      "revId": "fef7242f6cf2a1100a5b4d53bf3b4686ac7ddf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
