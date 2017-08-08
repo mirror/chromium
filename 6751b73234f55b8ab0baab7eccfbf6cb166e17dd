@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8bf9d45b_d7e95f02",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-08T21:39:50Z",
+      "side": 1,
+      "message": "oops.\nborderline coding",
+      "parentUuid": "bd2fbed2_53793983",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 3
+      },
+      "revId": "6751b73234f55b8ab0baab7eccfbf6cb166e17dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14f2aece_06d1feee",
         "filename": "components/metrics/component_metrics_provider.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "6751b73234f55b8ab0baab7eccfbf6cb166e17dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbdb9520_beaa7156",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-08T21:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14f2aece_06d1feee",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 9
+      },
+      "revId": "6751b73234f55b8ab0baab7eccfbf6cb166e17dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "94b537a5_d8b882d7",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-08T21:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9f15a0c_a8280780",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 12
+      },
+      "revId": "6751b73234f55b8ab0baab7eccfbf6cb166e17dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "321c170f_3fb037d2",
         "filename": "components/metrics/component_metrics_provider.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "6751b73234f55b8ab0baab7eccfbf6cb166e17dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e63833d_0598bd5a",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-08T21:39:50Z",
+      "side": 1,
+      "message": "It\u0027s owned by system_profile, and we want to mutate it in the following three lines.\n\nNot a huge fan of this API, but...",
+      "parentUuid": "321c170f_3fb037d2",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 10
+      },
+      "revId": "6751b73234f55b8ab0baab7eccfbf6cb166e17dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
