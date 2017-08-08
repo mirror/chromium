@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67435181_cd35ae1c",
+        "filename": "headless/public/util/generic_url_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-08T19:18:37Z",
+      "side": 1,
+      "message": "Yeah looks like this should become async, but let\u0027s go with this for now.",
+      "range": {
+        "startLine": 310,
+        "startChar": 5,
+        "endLine": 310,
+        "endChar": 9
+      },
+      "revId": "fc49c762ed9d936ca6ccb4537d0d386366a858e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
