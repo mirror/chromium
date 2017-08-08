@@ -16,6 +16,40 @@
       "revId": "653bc4ff159d39a39ea8870a1fbecb743fac8cb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a59544_d7d5e883",
+        "filename": "media/gpu/vaapi_drm_picture.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-08T22:52:14Z",
+      "side": 1,
+      "message": "Again, as I already commented twice, this is not needed an can just return true.\nIn your tests we would accept the configuration with an NV12 buffer and not fail because you are not correctly creating the resource in video_resource_updater.cc.\n\nI cced you to https://chromium-review.googlesource.com/c/602908, that correctly creates the resource (specifying the buffer_format) from a NV12 VideoFrame so that the DrmOverlayValidator will reject NV12 as an overlay.",
+      "revId": "653bc4ff159d39a39ea8870a1fbecb743fac8cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b4d2363_ecf54a86",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-08T22:52:14Z",
+      "side": 1,
+      "message": "Please remove all of this.",
+      "revId": "653bc4ff159d39a39ea8870a1fbecb743fac8cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
