@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7efb8d5_114a58a9",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1803,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-08T09:05:51Z",
+      "side": 1,
+      "message": "context.resolved_style needs to be set to the non-attached computed style. It\u0027s currently always null for descendants of the root of the reattach, afaict.",
+      "revId": "b4cc7a9dc5cfe68daaed68993a9934b1f67edc10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af8702c_62823099",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2130,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-08T09:05:51Z",
+      "side": 1,
+      "message": "SetNonAttachedStyle() and SetNeedsReattachLayoutTree() should be done inside the if-block, I think. RecalcStyleForDescendants are only done for descendants of elements which are already been marked for reattach.",
+      "revId": "b4cc7a9dc5cfe68daaed68993a9934b1f67edc10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5072b21e_f03553a3",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-08T09:05:51Z",
+      "side": 1,
+      "message": "If we are attaching a subtree, and the recalc for re-attach stopped generating computed styles because of a display:none, we will try to generate it again here. You still need StyleForLayoutObject() here for the special cases?",
+      "revId": "b4cc7a9dc5cfe68daaed68993a9934b1f67edc10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
