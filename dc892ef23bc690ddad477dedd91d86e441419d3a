@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "56213c96_272f9f8c",
+        "filename": "build/android/pylib/base/environment.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-08T22:54:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4d8b111_0f3dad75",
+      "revId": "dc892ef23bc690ddad477dedd91d86e441419d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d97c338c_ec362745",
         "filename": "build/android/pylib/local/device/local_device_test_run.py",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-08T01:00:09Z",
       "side": 1,
       "message": "I worry about confusion w/ naming this \"logging\" -- it\u0027d be very easy for someone to mistakenly think that it refers to the main thing (or not having a way to use them both together without aliasing).\n\nI\u0027ve used _ext for things like this (e.g. tempfile_ext) to make it clear that (1) it\u0027s very closely related to a standard library module and (2) it *isn\u0027t* that standard library module; would that work here?",
+      "revId": "dc892ef23bc690ddad477dedd91d86e441419d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3752de_e52d1669",
+        "filename": "build/android/pylib/logging/__init__.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-08T22:54:53Z",
+      "side": 1,
+      "message": "I mean, this will work. I wonder if I change it to logging_ext whether I should still forward all of hte logging functions (should I do like \"critical \u003d logging.critical\" or should people just use logging_ext for the custom functions?)",
+      "parentUuid": "11a6177e_d8bcb8d5",
       "revId": "dc892ef23bc690ddad477dedd91d86e441419d3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -101,6 +137,24 @@
       "revId": "dc892ef23bc690ddad477dedd91d86e441419d3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26610cdc_4480f34f",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-08T22:54:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57db525b_fe9aae8f",
+      "revId": "dc892ef23bc690ddad477dedd91d86e441419d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

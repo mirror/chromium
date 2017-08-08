@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e31dd451_a1ac4357",
+        "filename": "build/android/pylib/logging_ext/__init__.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-08T22:54:53Z",
+      "side": 1,
+      "message": "There is some code duplication btw devil, but we kinda need all of the logging formatter, level setter, and other stuff here so make everything nice.",
+      "revId": "05cbd10dcd8d8fa6e95134db53be301756c86ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
