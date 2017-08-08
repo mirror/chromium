@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "243433a2_be81f571",
+        "filename": "net/http/http_network_transaction.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1142668
+      },
+      "writtenOn": "2017-08-08T06:03:42Z",
+      "side": 1,
+      "message": "nit: minor\nHow about moving this api to anonymous namespace?",
+      "revId": "384b610b6f8700614747bc67d7c1146e87fae32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6115179_18c34db4",
+        "filename": "net/http/http_network_transaction.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1142668
+      },
+      "writtenOn": "2017-08-08T06:03:42Z",
+      "side": 1,
+      "message": "nit: minor\nyou can move this constant as well to anonymous namespace?",
+      "revId": "384b610b6f8700614747bc67d7c1146e87fae32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
