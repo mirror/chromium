@@ -24,6 +24,7 @@
 #include "ui/app_list/app_list_item_list.h"
 #include "ui/app_list/app_list_model.h"
 #include "ui/app_list/app_list_view_delegate.h"
+#include "ui/app_list/app_list_view_delegate_observer.h"
 #include "ui/app_list/search_box_model.h"
 #include "ui/app_list/search_result.h"
 #include "ui/app_list/speech_ui_model.h"
@@ -296,8 +297,22 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
 
   bool IsSpeechRecognitionEnabled() override { return false; }
 
+  void GetWallpaperProminentColors(std::vector<SkColor>* colors) override {
+    NOTIMPLEMENTED();
+  }
+
+  void AddObserver(app_list::AppListViewDelegateObserver* observer) override {
+    NOTIMPLEMENTED();
+  }
+
+  void RemoveObserver(
+      app_list::AppListViewDelegateObserver* observer) override {
+    NOTIMPLEMENTED();
+  }
+
   std::unique_ptr<app_list::AppListModel> model_;
   app_list::SpeechUIModel speech_ui_;
+  std::vector<SkColor> wallpaper_prominent_colors_;
 
   DISALLOW_COPY_AND_ASSIGN(ExampleAppListViewDelegate);
 };

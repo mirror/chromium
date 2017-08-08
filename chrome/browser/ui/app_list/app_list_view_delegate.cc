@@ -266,10 +266,12 @@ void AppListViewDelegate::SetUpCustomLauncherPages() {
 
 void AppListViewDelegate::OnWallpaperColorsChanged(
     const std::vector<SkColor>& prominent_colors) {
-  if (!model_)
+  if (wallpaper_prominent_colors_ == prominent_colors)
     return;
 
-  model_->search_box()->SetWallpaperProminentColors(prominent_colors);
+  wallpaper_prominent_colors_ = prominent_colors;
+  for (auto& observer : observers_)
+    observer.OnWallpaperColorsChanged();
 }
 
 void AppListViewDelegate::OnHotwordStateChanged(bool started) {
@@ -527,6 +529,21 @@ bool AppListViewDelegate::IsSpeechRecognitionEnabled() {
   app_list::StartPageService* service =
       app_list::StartPageService::Get(profile_);
   return service && service->GetSpeechRecognitionContents();
+}
+
+void AppListViewDelegate::GetWallpaperProminentColors(
+    std::vector<SkColor>* colors) {
+  *colors = wallpaper_prominent_colors_;
+}
+
+void AppListViewDelegate::AddObserver(
+    app_list::AppListViewDelegateObserver* observer) {
+  observers_.AddObserver(observer);
+}
+
+void AppListViewDelegate::RemoveObserver(
+    app_list::AppListViewDelegateObserver* observer) {
+  observers_.RemoveObserver(observer);
 }
 
 void AppListViewDelegate::OnTemplateURLServiceChanged() {
