@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddb3ca07_776cb470",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ShortcutHelper.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-08T19:57:39Z",
+      "side": 1,
+      "message": "This is no longer necessary since the package is now set in createWebappShortcutIntent() ?",
+      "revId": "33c179998f5a5c6bd9d87cf2c2bce10d3c22ac4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
