@@ -34,6 +34,24 @@
       "revId": "a85e2f6a695d401bbe539d96598f3636973bed1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd9a0147_efcbc0b7",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T21:47:15Z",
+      "side": 1,
+      "message": "Moving to WebKit/common sounds good...\n\nWhen added to blink_headers there are errors like this:\nIn file included from gen/content/public/common/url_loader_factory.mojom.cc:15:\nIn file included from gen/content/public/common/url_loader_factory.mojom.h:35:\nIn file included from gen/content/public/common/url_loader.mojom.h:38:\nIn file included from ../../content/public/common/resource_response.h:15:\nIn file included from ../../content/public/common/resource_response_info.h:24:\nIn file included from gen/third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom.h:40:\n../../content/common/service_worker/service_worker_types.h:24:10: fatal error: \u0027third_party/WebKit/public/platform/modules/fetch/fetch_response_\ntype.mojom.h\u0027 file not found\n#include \"third_party/WebKit/public/platform/modules/fetch/fetch_response_type.mojom.h\"\n         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\nIn file included from gen/content/common/service_worker/embedded_worker.mojom.cc:15:\nIn file included from gen/content/common/service_worker/embedded_worker.mojom.h:34:\nIn file included from gen/content/common/service_worker/service_worker_event_dispatcher.mojom.h:34:\nIn file included from gen/content/public/common/url_loader.mojom.h:38:\nIn file included from ../../content/public/common/resource_response.h:15:\nIn file included from ../../content/public/common/resource_response_info.h:24:\nIn file included from gen/third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom.h:40:\n../../content/common/service_worker/service_worker_types.h:24:10: fatal error: \u0027third_party/WebKit/public/platform/modules/fetch/fetch_response_type.mojom.h\u0027 file not found\n#include \"third_party/WebKit/public/platform/modules/fetch/fetch_response_type.mojom.h\"\n\nfetch_api_request.mojom.h includes service_worker_types.h for the typemapping, and service_worker_types.h needs fetch_response_type_mojom.h since it uses FetchResponseType. content/common/BUILD.gn and content/public/common/BUILD.gn already have a deps on blink_headers.",
+      "parentUuid": "f3b56765_92b55545",
+      "revId": "a85e2f6a695d401bbe539d96598f3636973bed1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
