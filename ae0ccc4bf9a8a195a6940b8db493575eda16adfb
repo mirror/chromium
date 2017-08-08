@@ -34,6 +34,24 @@
       "revId": "ae0ccc4bf9a8a195a6940b8db493575eda16adfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "712901b1_579f648c",
+        "filename": "content/shell/browser/shell_web_contents_view_delegate_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-08T03:00:26Z",
+      "side": 1,
+      "message": "It\u0027s still cool to keep Content Shell up-to-date. I\u0027m happy with this change either way.",
+      "parentUuid": "4fe90dc0_38ea37df",
+      "revId": "ae0ccc4bf9a8a195a6940b8db493575eda16adfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
