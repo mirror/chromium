@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa5f79a3_bb69c24f",
+        "filename": "net/url_request/url_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-08T15:58:56Z",
+      "side": 0,
+      "message": "I think I\u0027d meant for that TODO applied to the whole block? I forget. I think it was something about how downstream code in Blink also had its own copy of redirect-processing logic and needed to be kept in sync. I think ResourceLoader::WillFollowRedirect? Though that doesn\u0027t seem to bother with headers? At the time I was working through how //net and Blink or so had a copy of the logic which decided when to switch POST to GET on redirect (should be fixed now with net::RedirectInfo).\n\nI dunno, at this point you\u0027re probably more familiar with this mess than me. Is there anything more to be done there?",
+      "revId": "e2c118d19fbf7ce3c966f5330d0f12a19f6be501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

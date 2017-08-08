@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdeaa79c_f44553a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-08T15:58:56Z",
+      "side": 1,
+      "message": "Probably want to tweak this now.",
+      "revId": "7f841fd4a3cac93facc02358cc8c07d5b4d591ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec3222f9_be0e06e9",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 8073,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-08T15:58:56Z",
+      "side": 1,
+      "message": "Looks like you need to fix this test too.",
+      "revId": "7f841fd4a3cac93facc02358cc8c07d5b4d591ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
