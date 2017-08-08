@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60d77eae_566a0073",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-08T04:59:01Z",
+      "side": 1,
+      "message": "hm, not a fan of this weak ptr usage. where\u0027s the delegate code so I can suggest an alternative?",
+      "revId": "44ef0f339d545e45709500f72bf7bc3318ec1b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
