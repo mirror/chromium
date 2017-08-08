@@ -93,6 +93,9 @@ void AppShortcutLauncherItemController::ItemSelected(
     int64_t display_id,
     ash::ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  if (WillShowContextMenu(event.get(), display_id, &callback))
+    return;
+
   // In case of a keyboard event, we were called by a hotkey. In that case we
   // activate the next item in line if an item of our list is already active.
   if (event && event->type() == ui::ET_KEY_RELEASED && AdvanceToNextApp()) {
@@ -108,9 +111,7 @@ void AppShortcutLauncherItemController::ItemSelected(
     // they open a window. Since there is currently no other way to detect if an
     // app was started we suppress any further clicks within a special time out.
     if (IsV2App() && !AllowNextLaunchAttempt()) {
-      std::move(callback).Run(
-          ash::SHELF_ACTION_NONE,
-          GetAppMenuItems(event ? event->flags() : ui::EF_NONE));
+      std::move(callback).Run(ash::SHELF_ACTION_NONE, base::nullopt);
       return;
     }
 
@@ -144,8 +145,21 @@ ash::MenuItemList AppShortcutLauncherItemController::GetAppMenuItems(
   return items;
 }
 
-void AppShortcutLauncherItemController::ExecuteCommand(uint32_t command_id,
-                                                       int32_t event_flags) {
+std::unique_ptr<ui::MenuModel>
+AppShortcutLauncherItemController::GetContextMenu(int64_t display_id) {
+  ChromeLauncherController* controller = ChromeLauncherController::instance();
+  const ash::ShelfItem* item = controller->GetItem(shelf_id());
+  return base::WrapUnique<LauncherContextMenu>(
+      LauncherContextMenu::Create(controller, item, display_id));
+}
+
+void AppShortcutLauncherItemController::ExecuteCommand(bool from_context_menu,
+                                                       int64_t command_id,
+                                                       int32_t event_flags,
+                                                       int64_t display_id) {
+  if (from_context_menu && ExecuteContextMenuCommand(command_id, event_flags))
+    return;
+
   if (static_cast<size_t>(command_id) >= app_menu_items_.size()) {
     app_menu_items_.clear();
     return;
