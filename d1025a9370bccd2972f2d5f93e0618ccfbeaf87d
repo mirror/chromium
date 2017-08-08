@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96e3b188_be66f3b2",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-08T17:12:47Z",
+      "side": 1,
+      "message": "Cruft.",
+      "range": {
+        "startLine": 47,
+        "startChar": 19,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "d1025a9370bccd2972f2d5f93e0618ccfbeaf87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ab6e72_be670cff",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-08T17:12:47Z",
+      "side": 1,
+      "message": "Maybe OnTaskUnresponsive(), to match the other two? Logically these three methods are the interface from SubproviderSource back here, so it makes sense to model them consistently.",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "d1025a9370bccd2972f2d5f93e0618ccfbeaf87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60342fe3_a69d1b37",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-08T17:12:47Z",
+      "side": 1,
+      "message": "This header needs (somewhere) a comment explaining what \u0027primary\u0027 and \u0027secondary\u0027 mean, or what the rules are for when tasks are shown from each source. Possibly, the class header can talk about it.",
+      "revId": "d1025a9370bccd2972f2d5f93e0618ccfbeaf87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59b421a_97e62e71",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-08T17:12:47Z",
+      "side": 1,
+      "message": "Comment each data member, please.",
+      "revId": "d1025a9370bccd2972f2d5f93e0618ccfbeaf87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
