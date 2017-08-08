@@ -628,8 +628,9 @@ class VIEWS_EXPORT Widget : public internal::NativeWidgetDelegate,
   void SetNativeWindowProperty(const char* name, void* value);
   void* GetNativeWindowProperty(const char* name) const;
 
-  // Tell the window to update its title from the delegate.
-  void UpdateWindowTitle();
+  // Tell the window to update its title from the delegate. Performs a Layout()
+  // unless |do_layout| is false.
+  void UpdateWindowTitle(bool do_layout = true);
 
   // Tell the window to update its icon from the delegate.
   void UpdateWindowIcon();

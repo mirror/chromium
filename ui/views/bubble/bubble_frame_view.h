@@ -123,6 +123,10 @@ class VIEWS_EXPORT BubbleFrameView : public NonClientFrameView,
   // Calculates the size needed to accommodate the given client area.
   gfx::Size GetSizeForClientSize(const gfx::Size& client_size) const;
 
+  gfx::Insets GetTitleLabelInsets() const;
+  int GetTitleWidthForClientWidth(int client_width) const;
+  gfx::Insets GetInsetsForClientWidth(int client_width) const;
+
   // The bubble border.
   BubbleBorder* bubble_border_;
 
