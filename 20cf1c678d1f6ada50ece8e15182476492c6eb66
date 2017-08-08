@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1b18eb9_08cdde7b",
+        "filename": "ui/android/java/src/org/chromium/ui/base/SelectFileDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1237932
+      },
+      "writtenOn": "2017-08-08T12:31:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cbf6e8f_9bd1d595",
+      "revId": "20cf1c678d1f6ada50ece8e15182476492c6eb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00a8d8b2_58a4cce8",
         "filename": "ui/android/java/src/org/chromium/ui/base/SelectFileDialog.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "20cf1c678d1f6ada50ece8e15182476492c6eb66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7859134d_eecfa92c",
+        "filename": "ui/android/java/src/org/chromium/ui/base/SelectFileDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1237932
+      },
+      "writtenOn": "2017-08-08T12:31:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00a8d8b2_58a4cce8",
+      "revId": "20cf1c678d1f6ada50ece8e15182476492c6eb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
