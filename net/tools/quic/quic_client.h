@@ -34,61 +34,45 @@ namespace test {
 class QuicClientPeer;
 }  // namespace test
 
-class QuicClient : public QuicSpdyClientBase,
-                   public EpollCallbackInterface,
-                   public ProcessPacketInterface {
+// An implementation of the QuicClientBase::NetworkHelper based off
+// the epoll server.
+class QuicClientEpollNetworkHelper : public QuicClientBase::NetworkHelper,
+                                     public EpollCallbackInterface,
+                                     public ProcessPacketInterface {
  public:
   // Create a quic client, which will have events managed by an externally owned
   // EpollServer.
-  QuicClient(QuicSocketAddress server_address,
-             const QuicServerId& server_id,
-             const QuicVersionVector& supported_versions,
-             EpollServer* epoll_server,
-             std::unique_ptr<ProofVerifier> proof_verifier);
-  QuicClient(QuicSocketAddress server_address,
-             const QuicServerId& server_id,
-             const QuicVersionVector& supported_versions,
-             const QuicConfig& config,
-             EpollServer* epoll_server,
-             std::unique_ptr<ProofVerifier> proof_verifier);
+  QuicClientEpollNetworkHelper(EpollServer* epoll_server,
+                               QuicClientBase* client);
 
-  ~QuicClient() override;
+  ~QuicClientEpollNetworkHelper() override;
 
   // From EpollCallbackInterface
-  void OnRegistration(EpollServer* eps, int fd, int event_mask) override {}
-  void OnModification(int fd, int event_mask) override {}
+  void OnRegistration(EpollServer* eps, int fd, int event_mask) override;
+  void OnModification(int fd, int event_mask) override;
   void OnEvent(int fd, EpollEvent* event) override;
   // |fd_| can be unregistered without the client being disconnected. This
   // happens in b3m QuicProber where we unregister |fd_| to feed in events to
   // the client from the SelectServer.
-  void OnUnregistration(int fd, bool replaced) override {}
-  void OnShutdown(EpollServer* eps, int fd) override {}
+  void OnUnregistration(int fd, bool replaced) override;
+  void OnShutdown(EpollServer* eps, int fd) override;
 
-  // If the client has at least one UDP socket, return the latest created one.
-  // Otherwise, return -1.
-  int GetLatestFD() const;
-
-  // From QuicClientBase
-  QuicSocketAddress GetLatestClientAddress() const override;
-
-  // Implements ProcessPacketInterface. This will be called for each received
+  // From ProcessPacketInterface. This will be called for each received
   // packet.
   void ProcessPacket(const QuicSocketAddress& self_address,
                      const QuicSocketAddress& peer_address,
                      const QuicReceivedPacket& packet) override;
 
- protected:
-  // From QuicClientBase
-  QuicPacketWriter* CreateQuicPacketWriter() override;
+  // From NetworkHelper.
   void RunEventLoop() override;
   bool CreateUDPSocketAndBind(QuicSocketAddress server_address,
                               QuicIpAddress bind_to_address,
                               int bind_to_port) override;
   void CleanUpAllUDPSockets() override;
+  QuicSocketAddress GetLatestClientAddress() const override;
+  QuicPacketWriter* CreateQuicPacketWriter() override;
 
-  // If |fd| is an open UDP socket, unregister and close it. Otherwise, do
-  // nothing.
-  virtual void CleanUpUDPSocket(int fd);
+  // Accessors provided for convenience, not part of any interface.
 
   EpollServer* epoll_server() { return epoll_server_; }
 
@@ -96,8 +80,21 @@ class QuicClient : public QuicSpdyClientBase,
     return fd_address_map_;
   }
 
+  // If the client has at least one UDP socket, return the latest created one.
+  // Otherwise, return -1.
+  int GetLatestFD() const;
+
+  QuicClientBase* client() { return client_; }
+
  private:
   friend class test::QuicClientPeer;
+
+  // Used for testing.
+  void SetClientPort(int port);
+
+  // If |fd| is an open UDP socket, unregister and close it. Otherwise, do
+  // nothing.
+  void CleanUpUDPSocket(int fd);
 
   // Actually clean up |fd|.
   void CleanUpUDPSocketImpl(int fd);
@@ -120,6 +117,45 @@ class QuicClient : public QuicSpdyClientBase,
   // Point to a QuicPacketReader object on the heap. The reader allocates more
   // space than allowed on the stack.
   std::unique_ptr<QuicPacketReader> packet_reader_;
+
+  QuicClientBase* client_;
+
+  DISALLOW_COPY_AND_ASSIGN(QuicClientEpollNetworkHelper);
+};
+
+class QuicClient : public QuicSpdyClientBase {
+ public:
+  // This will create its own QuicClientEpollNetworkHelper.
+  QuicClient(QuicSocketAddress server_address,
+             const QuicServerId& server_id,
+             const QuicVersionVector& supported_versions,
+             EpollServer* epoll_server,
+             std::unique_ptr<ProofVerifier> proof_verifier);
+  // This will take ownership of a passed in network primitive.
+  QuicClient(QuicSocketAddress server_address,
+             const QuicServerId& server_id,
+             const QuicVersionVector& supported_versions,
+             EpollServer* epoll_server,
+             std::unique_ptr<QuicClientEpollNetworkHelper> network_helper,
+             std::unique_ptr<ProofVerifier> proof_verifier);
+  QuicClient(QuicSocketAddress server_address,
+             const QuicServerId& server_id,
+             const QuicVersionVector& supported_versions,
+             const QuicConfig& config,
+             EpollServer* epoll_server,
+             std::unique_ptr<QuicClientEpollNetworkHelper> network_helper,
+             std::unique_ptr<ProofVerifier> proof_verifier);
+
+  ~QuicClient() override;
+
+  // Exposed for the quic client test.
+  int GetLatestFD() const { return epoll_network_helper()->GetLatestFD(); }
+
+  QuicClientEpollNetworkHelper* epoll_network_helper();
+  const QuicClientEpollNetworkHelper* epoll_network_helper() const;
+
+ private:
+  friend class test::QuicClientPeer;
 
   DISALLOW_COPY_AND_ASSIGN(QuicClient);
 };

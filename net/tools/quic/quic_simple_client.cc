@@ -24,6 +24,7 @@
 #include "net/quic/core/quic_server_id.h"
 #include "net/quic/core/spdy_utils.h"
 #include "net/quic/platform/api/quic_flags.h"
+#include "net/quic/platform/api/quic_ptr_util.h"
 #include "net/socket/udp_client_socket.h"
 #include "net/spdy/chromium/spdy_http_utils.h"
 #include "net/spdy/core/spdy_header_block.h"
@@ -31,6 +32,16 @@
 using std::string;
 
 namespace net {
+
+QuicClientMessageLooplNetworkHelper::QuicClientMessageLooplNetworkHelper(
+    QuicChromiumClock* clock,
+    QuicClientBase* client)
+    : packet_reader_started_(false),
+      clock_(clock),
+      client_(client) {}
+
+QuicClientMessageLooplNetworkHelper::~QuicClientMessageLooplNetworkHelper() {}
+
 
 QuicSimpleClient::QuicSimpleClient(
     QuicSocketAddress server_address,
@@ -42,9 +53,9 @@ QuicSimpleClient::QuicSimpleClient(
                          QuicConfig(),
                          CreateQuicConnectionHelper(),
                          CreateQuicAlarmFactory(),
+                         QuicWrapUnique(new QuicClientMessageLooplNetworkHelper(&clock_, this)),
                          std::move(proof_verifier)),
       initialized_(false),
-      packet_reader_started_(false),
       weak_factory_(this) {
   set_server_address(server_address);
 }
@@ -57,7 +68,7 @@ QuicSimpleClient::~QuicSimpleClient() {
   }
 }
 
-bool QuicSimpleClient::CreateUDPSocketAndBind(QuicSocketAddress server_address,
+bool QuicClientMessageLooplNetworkHelper::CreateUDPSocketAndBind(QuicSocketAddress server_address,
                                               QuicIpAddress bind_to_address,
                                               int bind_to_port) {
   std::unique_ptr<UDPClientSocket> socket(
@@ -65,7 +76,7 @@ bool QuicSimpleClient::CreateUDPSocketAndBind(QuicSocketAddress server_address,
                           &net_log_, NetLogSource()));
 
   if (bind_to_address.IsInitialized()) {
-    client_address_ = QuicSocketAddress(bind_to_address, local_port());
+    client_address_ = QuicSocketAddress(bind_to_address, client_->local_port());
   } else if (server_address.host().address_family() == IpAddressFamily::IP_V4) {
     client_address_ = QuicSocketAddress(QuicIpAddress::Any4(), bind_to_port);
   } else {
@@ -100,7 +111,7 @@ bool QuicSimpleClient::CreateUDPSocketAndBind(QuicSocketAddress server_address,
 
   socket_.swap(socket);
   packet_reader_.reset(new QuicChromiumPacketReader(
-      socket_.get(), &clock_, this, kQuicYieldAfterPacketsRead,
+      socket_.get(), clock_, this, kQuicYieldAfterPacketsRead,
       QuicTime::Delta::FromMilliseconds(kQuicYieldAfterDurationMilliseconds),
       NetLogWithSource()));
 
@@ -111,21 +122,21 @@ bool QuicSimpleClient::CreateUDPSocketAndBind(QuicSocketAddress server_address,
   return true;
 }
 
-void QuicSimpleClient::CleanUpAllUDPSockets() {
-  reset_writer();
+void QuicClientMessageLooplNetworkHelper::CleanUpAllUDPSockets() {
+  client_->reset_writer();
   packet_reader_.reset();
   packet_reader_started_ = false;
 
 }
 
-void QuicSimpleClient::StartPacketReaderIfNotStarted() {
+void QuicClientMessageLooplNetworkHelper::StartPacketReaderIfNotStarted() {
   if (!packet_reader_started_) {
     packet_reader_->StartReading();
     packet_reader_started_ = true;
   }
 }
 
-void QuicSimpleClient::RunEventLoop() {
+void QuicClientMessageLooplNetworkHelper::RunEventLoop() {
   StartPacketReaderIfNotStarted();
   base::RunLoop().RunUntilIdle();
 }
@@ -139,26 +150,26 @@ QuicChromiumAlarmFactory* QuicSimpleClient::CreateQuicAlarmFactory() {
                                       &clock_);
 }
 
-QuicPacketWriter* QuicSimpleClient::CreateQuicPacketWriter() {
+QuicPacketWriter* QuicClientMessageLooplNetworkHelper::CreateQuicPacketWriter() {
   return new QuicChromiumPacketWriter(socket_.get());
 }
 
-void QuicSimpleClient::OnReadError(int result,
+void QuicClientMessageLooplNetworkHelper::OnReadError(int result,
                                    const DatagramClientSocket* socket) {
   LOG(ERROR) << "QuicSimpleClient read failed: " << ErrorToShortString(result);
-  Disconnect();
+  client_->Disconnect();
 }
 
-QuicSocketAddress QuicSimpleClient::GetLatestClientAddress() const {
+QuicSocketAddress QuicClientMessageLooplNetworkHelper::GetLatestClientAddress() const {
   return client_address_;
 }
 
-bool QuicSimpleClient::OnPacket(const QuicReceivedPacket& packet,
+bool QuicClientMessageLooplNetworkHelper::OnPacket(const QuicReceivedPacket& packet,
                                 const QuicSocketAddress& local_address,
                                 const QuicSocketAddress& peer_address) {
-  session()->connection()->ProcessUdpPacket(local_address, peer_address,
+  client_->session()->connection()->ProcessUdpPacket(local_address, peer_address,
                                             packet);
-  if (!session()->connection()->connected()) {
+  if (!client_->session()->connection()->connected()) {
     return false;
   }
 

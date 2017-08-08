@@ -73,6 +73,7 @@ class QuicSpdyClientBase : public QuicClientBase,
                      const QuicConfig& config,
                      QuicConnectionHelperInterface* helper,
                      QuicAlarmFactory* alarm_factory,
+                     std::unique_ptr<NetworkHelper> network_helper,
                      std::unique_ptr<ProofVerifier> proof_verifier);
 
   ~QuicSpdyClientBase() override;
@@ -138,7 +139,7 @@ class QuicSpdyClientBase : public QuicClientBase,
   int GetNumReceivedServerConfigUpdatesFromSession() override;
 
   // Takes ownership of |connection|.
-  std::unique_ptr<QuicSpdyClientSession> CreateQuicSpdyClientSession(
+  std::unique_ptr<QuicSession> CreateQuicClientSession(
       QuicConnection* connection) override;
 
   // If the crypto handshake has not yet been confirmed, adds the data to the

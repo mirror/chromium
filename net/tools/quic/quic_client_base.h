@@ -32,11 +32,38 @@ class QuicServerId;
 // create and run the underlying network transport.
 class QuicClientBase {
  public:
+  // An interface to various network events that the QuicClient will need to
+  // interact with.
+  class NetworkHelper {
+   public:
+    virtual ~NetworkHelper();
+
+    // Runs one iteration of the event loop.
+    virtual void RunEventLoop() = 0;
+
+    // Used during initialization: creates the UDP socket FD, sets socket
+    // options, and binds the socket to our address.
+    virtual bool CreateUDPSocketAndBind(QuicSocketAddress server_address,
+                                        QuicIpAddress bind_to_address,
+                                        int bind_to_port) = 0;
+
+    // Unregister and close all open UDP sockets.
+    virtual void CleanUpAllUDPSockets() = 0;
+
+    // If the client has at least one UDP socket, return address of the latest
+    // created one. Otherwise, return an empty socket address.
+    virtual QuicSocketAddress GetLatestClientAddress() const = 0;
+
+    // Creates a packet writer to be used for the next connection.
+    virtual QuicPacketWriter* CreateQuicPacketWriter() = 0;
+  };
+
   QuicClientBase(const QuicServerId& server_id,
                  const QuicVersionVector& supported_versions,
                  const QuicConfig& config,
                  QuicConnectionHelperInterface* helper,
                  QuicAlarmFactory* alarm_factory,
+                 std::unique_ptr<NetworkHelper> network_helper,
                  std::unique_ptr<ProofVerifier> proof_verifier);
 
   virtual ~QuicClientBase();
@@ -203,6 +230,9 @@ class QuicClientBase {
 
   QuicConnectionHelperInterface* helper() { return helper_.get(); }
 
+  NetworkHelper* network_helper();
+  const NetworkHelper* network_helper() const;
+
  protected:
   // TODO(rch): Move GetNumSentClientHellosFromSession and
   // GetNumReceivedServerConfigUpdatesFromSession into a new/better
@@ -229,27 +259,8 @@ class QuicClientBase {
   // you probably want to call ResetSession() in your destructor.
   // TODO(rch): Change the connection parameter to take in a
   // std::unique_ptr<QuicConnection> instead.
-  virtual std::unique_ptr<QuicSpdyClientSession> CreateQuicSpdyClientSession(
+  virtual std::unique_ptr<QuicSession> CreateQuicClientSession(
       QuicConnection* connection) = 0;
-
-  // Creates a packet writer to be used for the next connection.
-  virtual QuicPacketWriter* CreateQuicPacketWriter() = 0;
-
-  // Runs one iteration of the event loop.
-  virtual void RunEventLoop() = 0;
-
-  // Used during initialization: creates the UDP socket FD, sets socket options,
-  // and binds the socket to our address.
-  virtual bool CreateUDPSocketAndBind(QuicSocketAddress server_address,
-                                      QuicIpAddress bind_to_address,
-                                      int bind_to_port) = 0;
-
-  // Unregister and close all open UDP sockets.
-  virtual void CleanUpAllUDPSockets() = 0;
-
-  // If the client has at least one UDP socket, return address of the latest
-  // created one. Otherwise, return an empty socket address.
-  virtual QuicSocketAddress GetLatestClientAddress() const = 0;
 
   // Generates the next ConnectionId for |server_id_|.  By default, if the
   // cached server config contains a server-designated ID, that ID will be
@@ -310,7 +321,7 @@ class QuicClientBase {
   std::unique_ptr<QuicPacketWriter> writer_;
 
   // Session which manages streams.
-  std::unique_ptr<QuicSpdyClientSession> session_;
+  std::unique_ptr<QuicSession> session_;
 
   // This vector contains QUIC versions which we currently support.
   // This should be ordered such that the highest supported version is the first
@@ -343,6 +354,10 @@ class QuicClientBase {
   // connected_or_attempting_connect_ is false, the session object corresponds
   // to the previous client-level connection.
   bool connected_or_attempting_connect_;
+
+  // The network helper used to create sockets and manage the event loop.
+  // Not owned by this class.
+  std::unique_ptr<NetworkHelper> network_helper_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicClientBase);
 };

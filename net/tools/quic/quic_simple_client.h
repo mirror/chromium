@@ -36,8 +36,57 @@ namespace test {
 class QuicClientPeer;
 }  // namespace test
 
-class QuicSimpleClient : public QuicSpdyClientBase,
-                         public QuicChromiumPacketReader::Visitor {
+// An implementation of the QuicClientBase::NetworkHelper based off
+// the chromium epoll server.
+class QuicClientMessageLooplNetworkHelper
+    : public QuicClientBase::NetworkHelper,
+      public QuicChromiumPacketReader::Visitor {
+ public:
+  // Create a quic client, which will have events managed by an externally owned
+  // EpollServer.
+  QuicClientMessageLooplNetworkHelper(QuicChromiumClock* clock,
+                                      QuicClientBase* client);
+
+  ~QuicClientMessageLooplNetworkHelper() override;
+
+  // QuicChromiumPacketReader::Visitor
+  void OnReadError(int result, const DatagramClientSocket* socket) override;
+  bool OnPacket(const QuicReceivedPacket& packet,
+                const QuicSocketAddress& local_address,
+                const QuicSocketAddress& peer_address) override;
+
+  // From NetworkHelper.
+  void RunEventLoop() override;
+  bool CreateUDPSocketAndBind(QuicSocketAddress server_address,
+                              QuicIpAddress bind_to_address,
+                              int bind_to_port) override;
+  void CleanUpAllUDPSockets() override;
+  QuicSocketAddress GetLatestClientAddress() const override;
+  QuicPacketWriter* CreateQuicPacketWriter() override;
+
+ private:
+  void StartPacketReaderIfNotStarted();
+
+  // Address of the client if the client is connected to the server.
+  QuicSocketAddress client_address_;
+
+  // UDP socket connected to the server.
+  std::unique_ptr<UDPClientSocket> socket_;
+
+  // The log used for the sockets.
+  NetLog net_log_;
+
+  std::unique_ptr<QuicChromiumPacketReader> packet_reader_;
+
+  bool packet_reader_started_;
+
+  QuicChromiumClock* clock_;
+  QuicClientBase* client_;
+
+  DISALLOW_COPY_AND_ASSIGN(QuicClientMessageLooplNetworkHelper);
+};
+
+class QuicSimpleClient : public QuicSpdyClientBase {
  public:
   // Create a quic client, which will have events managed by the message loop.
   QuicSimpleClient(QuicSocketAddress server_address,
@@ -47,53 +96,23 @@ class QuicSimpleClient : public QuicSpdyClientBase,
 
   ~QuicSimpleClient() override;
 
-  // QuicChromiumPacketReader::Visitor
-  void OnReadError(int result, const DatagramClientSocket* socket) override;
-  bool OnPacket(const QuicReceivedPacket& packet,
-                const QuicSocketAddress& local_address,
-                const QuicSocketAddress& peer_address) override;
-
-  // From QuicClientBase
-  QuicSocketAddress GetLatestClientAddress() const override;
-
- protected:
-  // From QuicClientBase
-  QuicPacketWriter* CreateQuicPacketWriter() override;
-  void RunEventLoop() override;
-  bool CreateUDPSocketAndBind(QuicSocketAddress server_address,
-                              QuicIpAddress bind_to_address,
-                              int bind_to_port) override;
-  void CleanUpAllUDPSockets() override;
-
  private:
   friend class net::test::QuicClientPeer;
 
   QuicChromiumAlarmFactory* CreateQuicAlarmFactory();
   QuicChromiumConnectionHelper* CreateQuicConnectionHelper();
 
+  /*
   // Read a UDP packet and hand it to the framer.
   bool ReadAndProcessPacket();
 
-  void StartPacketReaderIfNotStarted();
+  */
 
   //  Used by |helper_| to time alarms.
   QuicChromiumClock clock_;
 
-  // Address of the client if the client is connected to the server.
-  QuicSocketAddress client_address_;
-
-  // UDP socket connected to the server.
-  std::unique_ptr<UDPClientSocket> socket_;
-
   // Tracks if the client is initialized to connect.
   bool initialized_;
-
-  // The log used for the sockets.
-  NetLog net_log_;
-
-  std::unique_ptr<QuicChromiumPacketReader> packet_reader_;
-
-  bool packet_reader_started_;
 
   base::WeakPtrFactory<QuicSimpleClient> weak_factory_;
 

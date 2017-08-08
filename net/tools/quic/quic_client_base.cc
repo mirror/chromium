@@ -16,11 +16,14 @@ using std::string;
 
 namespace net {
 
+QuicClientBase::NetworkHelper::~NetworkHelper() {}
+
 QuicClientBase::QuicClientBase(const QuicServerId& server_id,
                                const QuicVersionVector& supported_versions,
                                const QuicConfig& config,
                                QuicConnectionHelperInterface* helper,
                                QuicAlarmFactory* alarm_factory,
+                               std::unique_ptr<NetworkHelper> network_helper,
                                std::unique_ptr<ProofVerifier> proof_verifier)
     : server_id_(server_id),
       initialized_(false),
@@ -34,7 +37,8 @@ QuicClientBase::QuicClientBase(const QuicServerId& server_id,
       num_stateless_rejects_received_(0),
       num_sent_client_hellos_(0),
       connection_error_(QUIC_NO_ERROR),
-      connected_or_attempting_connect_(false) {}
+      connected_or_attempting_connect_(false),
+      network_helper_(std::move(network_helper)) {}
 
 QuicClientBase::~QuicClientBase() {}
 
@@ -58,7 +62,8 @@ bool QuicClientBase::Initialize() {
         kSessionMaxRecvWindowSize);
   }
 
-  if (!CreateUDPSocketAndBind(server_address_, bind_to_address_, local_port_)) {
+  if (!network_helper_->CreateUDPSocketAndBind(server_address_,
+                                               bind_to_address_, local_port_)) {
     return false;
   }
 
@@ -100,9 +105,7 @@ bool QuicClientBase::Connect() {
 void QuicClientBase::StartConnect() {
   DCHECK(initialized_);
   DCHECK(!connected());
-
-  QuicPacketWriter* writer = CreateQuicPacketWriter();
-
+  QuicPacketWriter* writer = network_helper_->CreateQuicPacketWriter();
   if (connected_or_attempting_connect()) {
     // If the last error was not a stateless reject, then the queued up data
     // does not need to be resent.
@@ -114,7 +117,7 @@ void QuicClientBase::StartConnect() {
     UpdateStats();
   }
 
-  session_ = CreateQuicSpdyClientSession(new QuicConnection(
+  session_ = CreateQuicClientSession(new QuicConnection(
       GetNextConnectionId(), server_address(), helper(), alarm_factory(),
       writer,
       /* owns_writer= */ false, Perspective::IS_CLIENT, supported_versions()));
@@ -143,7 +146,7 @@ void QuicClientBase::Disconnect() {
 
   ClearDataToResend();
 
-  CleanUpAllUDPSockets();
+  network_helper_->CleanUpAllUDPSockets();
 
   initialized_ = false;
 }
@@ -160,7 +163,7 @@ bool QuicClientBase::EncryptionBeingEstablished() {
 bool QuicClientBase::WaitForEvents() {
   DCHECK(connected());
 
-  RunEventLoop();
+  network_helper_->RunEventLoop();
 
   DCHECK(session() != nullptr);
   if (!connected() &&
@@ -179,16 +182,18 @@ bool QuicClientBase::MigrateSocket(const QuicIpAddress& new_host) {
     return false;
   }
 
-  CleanUpAllUDPSockets();
+  network_helper_->CleanUpAllUDPSockets();
 
   set_bind_to_address(new_host);
-  if (!CreateUDPSocketAndBind(server_address_, bind_to_address_, local_port_)) {
+  if (!network_helper_->CreateUDPSocketAndBind(server_address_,
+                                               bind_to_address_, local_port_)) {
     return false;
   }
 
-  session()->connection()->SetSelfAddress(GetLatestClientAddress());
+  session()->connection()->SetSelfAddress(
+      network_helper_->GetLatestClientAddress());
 
-  QuicPacketWriter* writer = CreateQuicPacketWriter();
+  QuicPacketWriter* writer = network_helper_->CreateQuicPacketWriter();
   set_writer(writer);
   session()->connection()->SetQuicPacketWriter(writer, false);
 
@@ -197,6 +202,14 @@ bool QuicClientBase::MigrateSocket(const QuicIpAddress& new_host) {
 
 QuicSession* QuicClientBase::session() {
   return session_.get();
+}
+
+QuicClientBase::NetworkHelper* QuicClientBase::network_helper() {
+  return network_helper_.get();
+}
+
+const QuicClientBase::NetworkHelper* QuicClientBase::network_helper() const {
+  return network_helper_.get();
 }
 
 void QuicClientBase::WaitForStreamToClose(QuicStreamId id) {

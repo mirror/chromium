@@ -36,12 +36,14 @@ QuicSpdyClientBase::QuicSpdyClientBase(
     const QuicConfig& config,
     QuicConnectionHelperInterface* helper,
     QuicAlarmFactory* alarm_factory,
+    std::unique_ptr<NetworkHelper> network_helper,
     std::unique_ptr<ProofVerifier> proof_verifier)
     : QuicClientBase(server_id,
                      supported_versions,
                      config,
                      helper,
                      alarm_factory,
+                     std::move(network_helper),
                      std::move(proof_verifier)),
       store_response_(false),
       latest_response_code_(-1) {}
@@ -89,8 +91,8 @@ void QuicSpdyClientBase::OnClose(QuicSpdyStream* stream) {
   }
 }
 
-std::unique_ptr<QuicSpdyClientSession>
-QuicSpdyClientBase::CreateQuicSpdyClientSession(QuicConnection* connection) {
+std::unique_ptr<QuicSession> QuicSpdyClientBase::CreateQuicClientSession(
+    QuicConnection* connection) {
   return QuicMakeUnique<QuicSpdyClientSession>(*config(), connection,
                                                server_id(), crypto_config(),
                                                &push_promise_index_);
