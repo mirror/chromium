@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a47a4047_610f0c18",
+        "filename": "media/mojo/clients/mojo_renderer_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-08T00:28:17Z",
+      "side": 1,
+      "message": "create",
+      "range": {
+        "startLine": 53,
+        "startChar": 51,
+        "endLine": 53,
+        "endChar": 56
+      },
+      "revId": "ca0b9a2efb092dcbe8fd077646152afdea678b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
