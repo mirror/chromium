@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d12b5276_8913a924",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-08T22:16:53Z",
+      "side": 1,
+      "message": "Nit: The param is an extension id right? So why not name it |extension_id|?",
+      "range": {
+        "startLine": 46,
+        "startChar": 69,
+        "endLine": 46,
+        "endChar": 73
+      },
+      "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c878407_51642430",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-08T22:16:53Z",
+      "side": 1,
+      "message": "Given this logic requires knowledge of fingerprint format, maybe it can be moved to ComponentInfo class?",
+      "range": {
+        "startLine": 56,
+        "startChar": 29,
+        "endLine": 56,
+        "endChar": 33
+      },
+      "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d370f565_95012621",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-08T22:16:53Z",
+      "side": 1,
+      "message": "Can you add a simple unit test for this? It can provide some components and check that they get added with expected values into the proto.",
+      "range": {
+        "startLine": 74,
+        "startChar": 41,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e224e50c_11f57949",
+        "filename": "components/metrics/component_metrics_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-08T22:16:53Z",
+      "side": 1,
+      "message": "Nit: Can omit empty lines and the comment for a simple fwd decl.",
+      "range": {
+        "startLine": 14,
+        "startChar": 16,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f46dc8_94371296",
+        "filename": "components/metrics/component_metrics_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-08T22:16:53Z",
+      "side": 1,
+      "message": "Nit: add :",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645cb972_39fb6523",
+        "filename": "components/metrics/component_metrics_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-08T22:16:53Z",
+      "side": 1,
+      "message": "Nit: Prefer to spell things out - e.g. service_",
+      "range": {
+        "startLine": 32,
+        "startChar": 45,
+        "endLine": 32,
+        "endChar": 49
+      },
+      "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
