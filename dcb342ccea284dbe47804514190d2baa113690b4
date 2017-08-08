@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "764649f0_eca55a16",
+        "filename": "third_party/WebKit/Source/core/frame/Navigator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T18:08:00Z",
+      "side": 1,
+      "message": "Instead of reaching for DevToolsEmulator, let\u0027s add a setting to Settings.json5 called navigatorPlatformOverride and set it from DevToolsEmulator. Overall, settings is a preferred method to change web platform behavior without too much involvement.",
+      "revId": "dcb342ccea284dbe47804514190d2baa113690b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b1caca_9e0780a1",
+        "filename": "third_party/WebKit/Source/core/frame/NavigatorID.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T18:08:00Z",
+      "side": 1,
+      "message": "I am probably missing something, but where is this overriden?",
+      "revId": "dcb342ccea284dbe47804514190d2baa113690b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae4ccbe7_12a40c53",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorEmulationAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T18:08:00Z",
+      "side": 1,
+      "message": "Similar to setEmulatedMedia, we have to store this in state_, clear in Disable and restore in Restore. These are parts of our harness to support cross-process navigation. Otherwise, navigator.platfrom will be reset to original value in new renderer process.",
+      "revId": "dcb342ccea284dbe47804514190d2baa113690b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e14672dc_376df3e4",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 1
@@ -31,6 +82,24 @@
       "side": 1,
       "message": "I saw that article too :) Personally I don\u0027t mind if folks can detect headless chrome, the main thing we want to do is make sure exiting pages render properly in the server environment that is mocking a mobile device.",
       "parentUuid": "e14672dc_376df3e4",
+      "revId": "dcb342ccea284dbe47804514190d2baa113690b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f5ba77_49ecb862",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T18:08:00Z",
+      "side": 1,
+      "message": "Let\u0027s change this to setNavigatorOverrides({platform: \u0027...\u0027}) for future extensibility.",
+      "parentUuid": "8b29936f_ee859242",
       "revId": "dcb342ccea284dbe47804514190d2baa113690b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
