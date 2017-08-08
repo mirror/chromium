@@ -6,6 +6,7 @@
 #define THIRD_PARTY_WEBKIT_PUBLIC_PLATFORM_SCHEDULER_RENDERER_RENDERER_SCHEDULER_H_
 
 #include <memory>
+#include <string>
 
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
@@ -36,6 +37,7 @@ struct BeginFrameArgs;
 namespace blink {
 namespace scheduler {
 
+enum class RendererProcessType;
 class RenderWidgetSchedulingState;
 
 class BLINK_PLATFORM_EXPORT RendererScheduler : public ChildScheduler {
@@ -197,6 +199,10 @@ class BLINK_PLATFORM_EXPORT RendererScheduler : public ChildScheduler {
   // compositor thread.
   virtual bool MainThreadSeemsUnresponsive(
       base::TimeDelta main_thread_responsiveness_threshold) = 0;
+
+  // Sets the kind of renderer process. Should be called on the main thread
+  // once.
+  virtual void SetRendererProcessType(RendererProcessType type) = 0;
 
  protected:
   RendererScheduler();
