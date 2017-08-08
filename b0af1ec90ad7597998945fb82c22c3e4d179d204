@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9a4720b1_2ba39df2",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-08T00:10:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "47be0967_42a9f72e",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "530f51dd_d4c8df93",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 2
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Is it possible to pull that code out? And then have just that different for the two different code paths?",
       "parentUuid": "dd2cfab0_a7cf22a3",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662fa06c_de163aa1",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-08T00:10:06Z",
+      "side": 1,
+      "message": "I cant refactor more, if there were one way it would be get the loop and the layer_name variable out all together and it is not necessary to break this function down so small.",
+      "parentUuid": "756bcfab_3dbfa237",
       "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "8b0f656c_16ab6ff9",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-08T00:10:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "45743ff8_8abe7620",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "382bbf18_2aad24a3",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 2
@@ -211,6 +265,24 @@
       "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c8701e_653dad69",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-08T00:10:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fe30f312_37111dd0",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
