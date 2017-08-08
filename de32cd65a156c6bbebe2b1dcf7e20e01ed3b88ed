@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19a545c4_9e38387e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppHooks.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-08T18:39:35Z",
+      "side": 1,
+      "message": "per offline discussion, let\u0027s do this should there be another whitelist or method :)",
+      "parentUuid": "deadae19_f713a2da",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dc12328_3ff47ed8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/CctOfflinePageModelObserver.java",
         "patchSetId": 10
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "b0882b59_e998660b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-08T18:39:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f01bd86d_1f860e51",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aea06bf6_7aac8821",
         "filename": "chrome/browser/offline_pages/android/cct_origin_observer.cc",
         "patchSetId": 10
@@ -156,6 +192,24 @@
       "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7c7d89_2813d4b6",
+        "filename": "chrome/browser/offline_pages/android/cct_origin_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-08T18:39:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aea06bf6_7aac8821",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -262,6 +316,24 @@
       "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d0dfd8_193fbedb",
+        "filename": "chrome/browser/offline_pages/android/offline_page_model_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-08T18:39:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6d683fa5_8e835ab7",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
