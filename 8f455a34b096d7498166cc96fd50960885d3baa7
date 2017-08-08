@@ -16,6 +16,24 @@
       "revId": "8f455a34b096d7498166cc96fd50960885d3baa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4360351_3e422bc8",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-08T14:26:42Z",
+      "side": 1,
+      "message": "The stack tool strips out all non-stack lines. I looked at changing this behaviour a couple weeks ago, but it would basically entail rewriting the tool :(.\n\nWould be good to add a comment mentioning this fact so that it\u0027s clear why the prefiltering is necessary.",
+      "parentUuid": "56cd7944_216b7903",
+      "revId": "8f455a34b096d7498166cc96fd50960885d3baa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
