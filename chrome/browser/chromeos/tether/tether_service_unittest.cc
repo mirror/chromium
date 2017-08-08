@@ -67,6 +67,32 @@ class MockCryptAuthDeviceManager : public cryptauth::CryptAuthDeviceManager {
                      std::vector<cryptauth::ExternalDeviceInfo>());
 };
 
+class MockExtendedBluetoothAdapter : public device::MockBluetoothAdapter {
+ public:
+  void SetAdvertisingInterval(
+      const base::TimeDelta& min,
+      const base::TimeDelta& max,
+      const base::Closure& callback,
+      const AdvertisementErrorCallback& error_callback) override {
+    if (is_ble_advertising_supported_) {
+      callback.Run();
+    } else {
+      error_callback.Run(device::BluetoothAdvertisement::ErrorCode::
+                             ERROR_INVALID_ADVERTISEMENT_INTERVAL);
+    }
+  }
+
+  void set_is_ble_advertising_supported(bool is_ble_advertising_supported) {
+    is_ble_advertising_supported_ = is_ble_advertising_supported;
+  }
+
+ protected:
+  ~MockExtendedBluetoothAdapter() override {}
+
+ private:
+  bool is_ble_advertising_supported_ = true;
+};
+
 class TestTetherService : public TetherService {
  public:
   TestTetherService(Profile* profile,
@@ -109,7 +135,8 @@ class TestInitializerDelegate : public TetherService::InitializerDelegate {
       chromeos::ManagedNetworkConfigurationHandler*
           managed_network_configuration_handler,
       chromeos::NetworkConnect* network_connect,
-      chromeos::NetworkConnectionHandler* network_connection_handler) override {
+      chromeos::NetworkConnectionHandler* network_connection_handler,
+      scoped_refptr<device::BluetoothAdapter> adapter) override {
     is_tether_running_ = true;
   }
 
@@ -155,8 +182,8 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
         mock_cryptauth_device_manager_.get());
 
     mock_adapter_ =
-        make_scoped_refptr(new NiceMock<device::MockBluetoothAdapter>());
-    is_adapter_powered_ = true;
+        make_scoped_refptr(new NiceMock<MockExtendedBluetoothAdapter>());
+    SetIsBluetoothPowered(true);
     ON_CALL(*mock_adapter_, IsPresent()).WillByDefault(Return(true));
     ON_CALL(*mock_adapter_, IsPowered())
         .WillByDefault(Invoke(this, &TetherServiceTest::IsBluetoothPowered));
@@ -221,6 +248,12 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
     base::RunLoop().RunUntilIdle();
   }
 
+  void SetIsBluetoothPowered(bool powered) {
+    is_adapter_powered_ = powered;
+    for (auto& observer : mock_adapter_->GetObservers())
+      observer.AdapterPoweredChanged(mock_adapter_.get(), powered);
+  }
+
   bool IsBluetoothPowered() { return is_adapter_powered_; }
 
   void DisconnectDefaultShillNetworks() {
@@ -244,7 +277,7 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
   chromeos::tether::FakeNotificationPresenter* fake_notification_presenter_;
   std::unique_ptr<cryptauth::FakeCryptAuthService> fake_cryptauth_service_;
 
-  scoped_refptr<device::MockBluetoothAdapter> mock_adapter_;
+  scoped_refptr<MockExtendedBluetoothAdapter> mock_adapter_;
   bool is_adapter_powered_;
 
   std::unique_ptr<TestTetherService> tether_service_;
@@ -286,6 +319,41 @@ TEST_F(TetherServiceTest, TestSuspend) {
             network_state_handler()->GetTechnologyState(
                 chromeos::NetworkTypePattern::Tether()));
   EXPECT_TRUE(test_initializer_delegate_->is_tether_running());
+}
+
+TEST_F(TetherServiceTest, TestBleAdvertisingNotSupported) {
+  mock_adapter_->set_is_ble_advertising_supported(false);
+
+  CreateTetherService();
+
+  EXPECT_EQ(
+      chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_UNAVAILABLE,
+      network_state_handler()->GetTechnologyState(
+          chromeos::NetworkTypePattern::Tether()));
+  EXPECT_FALSE(test_initializer_delegate_->is_tether_running());
+}
+
+TEST_F(TetherServiceTest,
+       TestBleAdvertisingNotSupported_BluetoothIsInitiallyNotPowered) {
+  SetIsBluetoothPowered(false);
+
+  mock_adapter_->set_is_ble_advertising_supported(false);
+
+  CreateTetherService();
+
+  EXPECT_EQ(
+      chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_UNAVAILABLE,
+      network_state_handler()->GetTechnologyState(
+          chromeos::NetworkTypePattern::Tether()));
+  EXPECT_FALSE(test_initializer_delegate_->is_tether_running());
+
+  SetIsBluetoothPowered(true);
+
+  EXPECT_EQ(
+      chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_UNAVAILABLE,
+      network_state_handler()->GetTechnologyState(
+          chromeos::NetworkTypePattern::Tether()));
+  EXPECT_FALSE(test_initializer_delegate_->is_tether_running());
 }
 
 TEST_F(TetherServiceTest, TestScreenLock) {
@@ -348,10 +416,29 @@ TEST_F(TetherServiceTest, TestProhibitedByPolicy) {
   EXPECT_FALSE(test_initializer_delegate_->is_tether_running());
 }
 
-TEST_F(TetherServiceTest, TestBluetoothIsNotPowered) {
-  is_adapter_powered_ = false;
+TEST_F(TetherServiceTest, TestIsBluetoothPowered) {
+  SetIsBluetoothPowered(false);
 
   CreateTetherService();
+
+  // Because TetherService has not yet had the chance to fully initialize, the
+  // TechnologyState should remain TECHNOLOGY_UNAVAILABLE. When TetherService
+  // is fully initialized and Bluetooth is not powered, it TechnologyState
+  // should be TECHNOLOGY_UNINITIALIZED.
+  EXPECT_EQ(
+      chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_UNAVAILABLE,
+      network_state_handler()->GetTechnologyState(
+          chromeos::NetworkTypePattern::Tether()));
+  EXPECT_FALSE(test_initializer_delegate_->is_tether_running());
+
+  SetIsBluetoothPowered(true);
+
+  EXPECT_EQ(chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_ENABLED,
+            network_state_handler()->GetTechnologyState(
+                chromeos::NetworkTypePattern::Tether()));
+  EXPECT_TRUE(test_initializer_delegate_->is_tether_running());
+
+  SetIsBluetoothPowered(false);
 
   EXPECT_EQ(
       chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_UNINITIALIZED,
@@ -466,7 +553,7 @@ TEST_F(TetherServiceTest, TestEnabled) {
 // state than the user preference.
 TEST_F(TetherServiceTest, TestEnabledMultipleChanges) {
   CreateTetherService();
-  // CreateTetherService calls RunUntilIdle() so  UpdateTetherTechnologyState()
+  // CreateTetherService calls RunUntilIdle() so UpdateTetherTechnologyState()
   // may be called multiple times in the initialization process.
   int updated_technology_state_count =
       tether_service_->updated_technology_state_count();
@@ -489,7 +576,7 @@ TEST_F(TetherServiceTest, TestEnabledMultipleChanges) {
 }
 
 TEST_F(TetherServiceTest, TestBluetoothNotification) {
-  is_adapter_powered_ = false;
+  SetIsBluetoothPowered(false);
 
   CreateTetherService();
   DisconnectDefaultShillNetworks();
@@ -499,20 +586,16 @@ TEST_F(TetherServiceTest, TestBluetoothNotification) {
   EXPECT_TRUE(
       fake_notification_presenter_->is_enable_bluetooth_notification_shown());
 
-  // Now, simulate the adapter being turned off. The notification should no
+  // Now, simulate the adapter being turned on. The notification should no
   // longer be visible.
-  is_adapter_powered_ = true;
-  tether_service_->AdapterPoweredChanged(mock_adapter_.get(),
-                                         true /* powered */);
+  SetIsBluetoothPowered(true);
   EXPECT_FALSE(
       fake_notification_presenter_->is_enable_bluetooth_notification_shown());
 
-  // Now, simulate the adapter being turned back on. The notification should
+  // Now, simulate the adapter being turned off again. The notification should
   // still *not* be available. It should only be shown when the service starts
   // up or when the network has been disconnected.
-  is_adapter_powered_ = false;
-  tether_service_->AdapterPoweredChanged(mock_adapter_.get(),
-                                         false /* powered */);
+  SetIsBluetoothPowered(false);
   EXPECT_FALSE(
       fake_notification_presenter_->is_enable_bluetooth_notification_shown());
 
