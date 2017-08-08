@@ -258,6 +258,7 @@ static_library("test_support") {
     "//base/test:test_support",
     "//media:test_support",
     "//media/base:test_support",
+    "//media/filters",
     "//net",
     "//testing/gtest",
     "//third_party/libyuv",
