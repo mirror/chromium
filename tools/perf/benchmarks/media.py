@@ -52,7 +52,6 @@ class _MSEMeasurement(legacy_page_test.LegacyPageTest):
 # android: See media.android.tough_video_cases below
 @benchmark.Owner(emails=['crouleau@chromium.org'],
                  component='Internals>Media')
-@benchmark.Disabled('android')
 class MediaToughVideoCases(perf_benchmark.PerfBenchmark):
   """Obtains media metrics for key user scenarios."""
   test = media.Media
@@ -70,8 +69,6 @@ class MediaToughVideoCases(perf_benchmark.PerfBenchmark):
     return StoryExpectations()
 
 
-@benchmark.Enabled('android')
-@benchmark.Disabled('l', 'android-webview')  # WebView: crbug.com/419689.
 @benchmark.Owner(emails=['crouleau@chromium.org', 'videostack-eng@google.com'],
                  component='Internals>Media')
 class MediaAndroidToughVideoCases(perf_benchmark.PerfBenchmark):
@@ -80,10 +77,6 @@ class MediaAndroidToughVideoCases(perf_benchmark.PerfBenchmark):
   tag = 'android'
   page_set = page_sets.ToughVideoCasesPageSet
   options = {'story_tag_filter_exclude': 'is_4k,is_50fps'}
-
-  @classmethod
-  def ShouldDisable(cls, possible_browser):
-    return cls.IsSvelte(possible_browser)
 
   @classmethod
   def Name(cls):
@@ -130,7 +123,6 @@ class _MediaTBMv2Benchmark(perf_benchmark.PerfBenchmark):
 # android: See media.android.tough_video_cases below
 @benchmark.Owner(emails=['johnchen@chromium.org', 'crouleau@chromium.org'],
                  component='Internals>Media')
-@benchmark.Disabled('android')
 class MediaToughVideoCasesTBMv2(_MediaTBMv2Benchmark):
   """Obtains media metrics using TBMv2.
   Will eventually replace MediaToughVideoCases class."""
@@ -156,18 +148,12 @@ class MediaToughVideoCasesTBMv2(_MediaTBMv2Benchmark):
 
 @benchmark.Owner(emails=['johnchen@chromium.org', 'crouleau@chromium.org'],
                  component='Internals>Media')
-@benchmark.Enabled('android')
-@benchmark.Disabled('l', 'android-webview')  # WebView: crbug.com/419689.
 class MediaAndroidToughVideoCasesTBMv2(_MediaTBMv2Benchmark):
   """Obtains media metrics for key user scenarios on Android using TBMv2.
   Will eventually replace MediaAndroidToughVideoCases class."""
 
   tag = 'android'
   options = {'story_tag_filter_exclude': 'is_4k,is_50fps'}
-
-  @classmethod
-  def ShouldDisable(cls, possible_browser):
-    return cls.IsSvelte(possible_browser)
 
   @classmethod
   def Name(cls):
@@ -215,11 +201,11 @@ class MediaNetworkSimulation(perf_benchmark.PerfBenchmark):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # Nothing disabled.
+        self.PermanentlyDisableBenchmark(
+            [story.expectations.ALL], 'Code path is old. crbug.com/676345')
     return StoryExpectations()
 
 
-@benchmark.Disabled('android-webview')  # crbug.com/419689
 @benchmark.Owner(emails=['crouleau@chromium.org', 'videostack-eng@google.com'],
                  component='Internals>Media>Source')
 class MediaSourceExtensions(perf_benchmark.PerfBenchmark):
