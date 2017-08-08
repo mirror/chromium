@@ -24,7 +24,7 @@
 #include "components/omnibox/browser/omnibox_edit_model.h"
 #include "content/public/test/browser_test_utils.h"
 #include "extensions/browser/extension_registry.h"
-#include "extensions/common/extension.h"
+#include "extensions/common/constants.h"
 #include "extensions/common/feature_switch.h"
 #include "extensions/test/extension_test_message_listener.h"
 
@@ -129,7 +129,7 @@ void ExtensionMessageBubbleBrowserTest::TestBubbleAnchoredToAppMenu() {
   // that lets us test anchoring to the app menu, since we usually anchor to the
   // extension action now that every extension is given a permanent UI presence.
   extension_service()->DisableExtension(
-      no_action_extension->id(), extensions::Extension::DISABLE_NOT_VERIFIED);
+      no_action_extension->id(), extensions::EXTENSION_DISABLE_NOT_VERIFIED);
   Browser* second_browser = new Browser(Browser::CreateParams(profile(), true));
   ASSERT_TRUE(second_browser);
   second_browser->window()->Show();
@@ -159,7 +159,7 @@ void ExtensionMessageBubbleBrowserTest::
   // that lets us test anchoring to the app menu, since we usually anchor to the
   // extension action now that every extension is given a permanent UI presence.
   extension_service()->DisableExtension(
-      no_action_extension->id(), extensions::Extension::DISABLE_NOT_VERIFIED);
+      no_action_extension->id(), extensions::EXTENSION_DISABLE_NOT_VERIFIED);
 
   Browser* second_browser = new Browser(Browser::CreateParams(profile(), true));
   ASSERT_TRUE(second_browser);

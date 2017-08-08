@@ -24,7 +24,7 @@ const char kValidId[] = "abcdefghijklmnopabcdefghijklmnop";
 const char kVersion[] = "1.0.0.1";
 const char kValidUpdateUrl[] =
     "https://clients2.google.com/service/update2/crx";
-const int kValidDisableReasons = Extension::DISABLE_USER_ACTION;
+const int kValidDisableReasons = EXTENSION_DISABLE_USER_ACTION;
 const char kName[] = "MyExtension";
 
 // Serializes a protobuf structure (entity specifics) into an ExtensionSyncData
