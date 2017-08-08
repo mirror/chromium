@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+FAIL Local redirect to remote origin assert_false: Sync case not expected to fail? expected false got true
+FAIL Remote redirect to local origin assert_false: Sync case not expected to fail? expected false got true
+FAIL Remote redirect to same remote origin assert_false: Sync case not expected to fail? expected false got true
+Harness: the test ran to completion.
+
