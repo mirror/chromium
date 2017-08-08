@@ -48,6 +48,10 @@ class ScriptStreamingTest : public ::testing::Test {
         .WillRepeatedly(::testing::Return(String()));
     EXPECT_CALL(*element, GetDocument())
         .WillRepeatedly(::testing::ReturnRef(*dummy_document_.Get()));
+    // Avoid GMOCK WARNING "Uninteresting mock function call - returning
+    // directly" for HandleViolationEvent().
+    EXPECT_CALL(*element, HandleViolationEvent(::testing::_))
+        .Times(::testing::AnyNumber());
 
     pending_script_ = ClassicPendingScript::Create(element, resource_.Get());
     ScriptStreamer::SetSmallScriptThresholdForTesting(0);

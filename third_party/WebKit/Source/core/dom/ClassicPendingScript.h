@@ -92,6 +92,8 @@ class CORE_EXPORT ClassicPendingScript final
   void NotifyFinished(Resource*) override;
   String DebugName() const override { return "PendingScript"; }
   void NotifyAppendData(ScriptResource*) override;
+  void HandleViolationEvent(
+      const SecurityViolationEventDataContainer& violation_data_container);
 
   // MemoryCoordinatorClient
   void OnPurgeMemory() override;
