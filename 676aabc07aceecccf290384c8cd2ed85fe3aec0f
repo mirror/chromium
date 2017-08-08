@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af0f6d4a_2ad38c17",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T17:20:41Z",
+      "side": 1,
+      "message": "all this code just to pass up a constant? wonder if there are easier ways to do this..",
+      "revId": "676aabc07aceecccf290384c8cd2ed85fe3aec0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
