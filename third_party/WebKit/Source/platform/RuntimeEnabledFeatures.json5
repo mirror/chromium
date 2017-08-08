@@ -1047,6 +1047,10 @@
       status: "experimental",
     },
     {
+      name: "V8ContextSnapshot",
+      status: "test",
+    },
+    {
       name: "V8IdleTasks",
     },
     {

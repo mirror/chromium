@@ -413,8 +413,9 @@ config("compiler") {
     # chromeos binutils has been patched with the fix, so always use icf there.
     # The bug only affects x86 and x64, so we can still use ICF when targeting
     # other architectures.
-    if ((!is_android && linux_use_bundled_binutils) || is_chromeos ||
-        !(current_cpu == "x86" || current_cpu == "x64")) {
+    if (use_icf &&
+        ((!is_android && linux_use_bundled_binutils) || is_chromeos ||
+         !(current_cpu == "x86" || current_cpu == "x64"))) {
       ldflags += [ "-Wl,--icf=all" ]
     }
   }
@@ -1419,7 +1420,7 @@ if (is_win) {
   # /OPT:ICF is not desirable in Debug builds, since code-folding can result in
   # misleading symbols in stack traces. It is also incompatible with
   # incremental linking, which we enable for both Debug and component builds.
-  if (!is_debug && !is_component_build) {
+  if (use_icf && !is_debug && !is_component_build) {
     common_optimize_on_ldflags += [ "/OPT:ICF" ]  # Redundant COMDAT folding.
   }
 

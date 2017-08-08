@@ -64,6 +64,10 @@ declare_args() {
 
   # Whether or not we should use position independent code.
   use_pic = true
+
+  # Optimize symbols in linking files. ICF merges different functions into one
+  # if their body are identical.
+  use_icf = true
 }
 
 # Determine whether to enable or disable frame pointers, based on the platform
