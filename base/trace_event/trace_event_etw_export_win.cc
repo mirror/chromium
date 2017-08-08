@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#if 0
 #include "base/trace_event/trace_event_etw_export_win.h"
 
 #include <stddef.h>
@@ -376,3 +377,4 @@ void TraceEventETWExport::UpdateETWKeyword() {
 }
 }  // namespace trace_event
 }  // namespace base
+#endif
