@@ -18,6 +18,7 @@ public class FakeMostVisitedSites implements MostVisitedSites {
 
     private String[] mTitles = new String[] {};
     private String[] mUrls = new String[] {};
+    private int[] mSections = new int[] {};
     private String[] mWhitelistIconPaths = new String[] {};
     private int[] mSources = new int[] {};
     private Observer mObserver;
@@ -105,7 +106,7 @@ public class FakeMostVisitedSites implements MostVisitedSites {
             public void run() {
                 mObserver.onSiteSuggestionsAvailable(
                         MostVisitedSitesBridge.buildSiteSuggestions(mTitles.clone(), mUrls.clone(),
-                                mWhitelistIconPaths.clone(), mSources.clone()));
+                                mSections.clone(), mWhitelistIconPaths.clone(), mSources.clone()));
             }
         });
     }

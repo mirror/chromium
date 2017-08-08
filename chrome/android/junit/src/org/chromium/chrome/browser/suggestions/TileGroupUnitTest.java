@@ -451,10 +451,11 @@ public class TileGroupUnitTest {
         String[] titles = urls.clone();
         String[] whitelistIconPaths = new String[urls.length];
         int[] sources = new int[urls.length];
+        int[] sections = new int[urls.length];
         for (int i = 0; i < urls.length; ++i) whitelistIconPaths[i] = "";
         mTileGroupDelegate.mObserver.onSiteSuggestionsAvailable(
                 MostVisitedSitesBridge.buildSiteSuggestions(
-                        titles, urls, whitelistIconPaths, sources));
+                        titles, urls, sections, whitelistIconPaths, sources));
     }
 
     /** {@link #initialiseTileGroup(boolean, String...)} override that does not defer loads. */
