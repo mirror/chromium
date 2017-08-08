@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "088fd09e_4de3c479",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 2026,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T03:22:20Z",
+      "side": 1,
+      "message": "Explicitly adjusting for the download shelf doesn\u0027t seem right. I think you can get the same results with something like this (then you don\u0027t even need headerHeight!):\n\n    viewFrame.origin.y \u003d NSHeight(windowFrame) - NSMaxY(viewFrame);",
+      "revId": "02e8675c44d31aa7088ba82020e1895c1294debe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f291f561_b967f354",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 2035,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T03:22:20Z",
+      "side": 1,
+      "message": "On a retina screen, I get a screenshot that\u0027s only the upper left quadrant of the page (sorry!). I think the issue is that the screenshot doesn\u0027t preserve the window\u0027s scale factor. You should be able to fix this by replacing `viewFrame` with `[window convertRectToBacking:viewFrame]`.",
+      "revId": "02e8675c44d31aa7088ba82020e1895c1294debe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4973923f_7299fa28",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T03:22:20Z",
+      "side": 1,
+      "message": "Remove this include. It\u0027s covering up an issue which you\u0027ll see below.",
+      "revId": "02e8675c44d31aa7088ba82020e1895c1294debe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ca979b_78f26a99",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T03:22:20Z",
+      "side": 1,
+      "message": "The screenshot still fades out around the edges. CIAffineClamp might be the hero you need:\n\n\u003e You can use this filter when you need to blur an image but you want to avoid a soft, black fringe along the edges.\n\nhttps://developer.apple.com/library/content/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIAffineClamp\n\nhttps://stackoverflow.com/questions/12839729/correct-crop-of-cigaussianblur/31021838#31021838\n\nI tested this locally and it worked. I did actually need to set the CIAffineClamp filter\u0027s transform (setDefaults didn\u0027t work).\n\nIt *might* also be time to refactor this into a function in a `namespace {}` block that takes an image and a radius and returns the blurred image.",
+      "revId": "02e8675c44d31aa7088ba82020e1895c1294debe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea8501b_7a0f819a",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T03:22:20Z",
+      "side": 1,
+      "message": "This method is 10.12+ and will crash on older macOS. You can use it in an `if (@available(…)) { … }` block and have a fallback in the `else`, or just avoid it. Sorry, it should probably be removed from sdk_forward_declarations now that we\u0027re on the 10.12 SDK.",
+      "revId": "02e8675c44d31aa7088ba82020e1895c1294debe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410fd1e1_f80be02d",
+        "filename": "chrome/browser/ui/cocoa/fullscreen_placeholder_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T03:22:20Z",
+      "side": 1,
+      "message": "De-dupe this :). You can have a -resizeLabel method that you call from both places, but don\u0027t have two copies of this code.",
+      "revId": "02e8675c44d31aa7088ba82020e1895c1294debe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
