@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5fc75423_b9d03bf7",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 21
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-08T13:51:43Z",
+      "side": 1,
+      "message": "As discussed offline, the field name is probably a better option than the proto type name (first, conceptually the type is something that can be reused, and, second, the obsolete policies have the OBSOLETE_ prefix added to their type).\n\nPolicy names from policy_templates.json would be even a better option - if this can be implemented in a reasonable way...",
+      "parentUuid": "46103f26_22da1ac4",
+      "range": {
+        "startLine": 854,
+        "startChar": 0,
+        "endLine": 855,
+        "endChar": 66
+      },
+      "revId": "cb908a00e5776edd987a2b53c9d06c0343edc9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ab7902_232eb15b",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 21

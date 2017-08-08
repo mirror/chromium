@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de3e56eb_f36e4f6b",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-08T13:51:43Z",
+      "side": 1,
+      "message": "nit: Please reorganize the code in a more linear way, where the \"if\" blocks surround only the failure branches:\n\n  if (!weekly_time.has_weekday()) {\n    LOG ...\n    return nullptr;\n  }\n  ... use  weekly_time.weekday() ...\n  if (!weekly_time.has_time()) {\n  ... etc.\n\nIt\u0027s easier to read the code this way.",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 3
+      },
+      "revId": "6d23c4d57289befda5d17100b8979cbaba13f0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52cb5d3_4ae557a9",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-08T13:51:43Z",
+      "side": 1,
+      "message": "nit: Probably better to use base::TimeDelta::FromDays(1).InMilliseconds().",
+      "range": {
+        "startLine": 125,
+        "startChar": 44,
+        "endLine": 125,
+        "endChar": 63
+      },
+      "revId": "6d23c4d57289befda5d17100b8979cbaba13f0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d0cf516_79dda568",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-08T13:51:43Z",
+      "side": 1,
+      "message": "nit: Better not hardcode this nontrivial constant. Either introduce a variable that will contain this value calculated, or completely replace this number with a textual description. (To me, the first option sounds better.)",
+      "range": {
+        "startLine": 127,
+        "startChar": 50,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "6d23c4d57289befda5d17100b8979cbaba13f0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550ebbd7_74d8e13b",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-08T13:51:43Z",
+      "side": 1,
+      "message": "Is this hardcoded name really needed here in the parser? Would be better if this (the timezone absence) could be handled by the code that handles the timezone (where, hopefully, there is a way to default to GMT without hardcoding the string too).\nBesides making the decoder cleaner, it would be essentially the same as the handling of incorrect/unknown time zones.",
+      "range": {
+        "startLine": 944,
+        "startChar": 4,
+        "endLine": 944,
+        "endChar": 33
+      },
+      "revId": "6d23c4d57289befda5d17100b8979cbaba13f0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af33643_5f528193",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 22
+      },
+      "lineNbr": 9939,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-08T13:51:43Z",
+      "side": 1,
+      "message": "nit: s/i. e./i.e./\n(there\u0027s no space used in these abbreviations typically)",
+      "range": {
+        "startLine": 9939,
+        "startChar": 378,
+        "endLine": 9939,
+        "endChar": 383
+      },
+      "revId": "6d23c4d57289befda5d17100b8979cbaba13f0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
