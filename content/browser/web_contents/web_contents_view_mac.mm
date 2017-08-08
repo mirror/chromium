@@ -324,9 +324,12 @@ void WebContentsViewMac::OnMenuClosed() {
 }
 
 gfx::Rect WebContentsViewMac::GetViewBounds() const {
-  // This method is not currently used on mac.
-  NOTIMPLEMENTED();
-  return gfx::Rect();
+  NSWindow* window = [cocoa_view_.get() window];
+  NSRect bounds = [cocoa_view_.get() bounds];
+  return gfx::Rect(bounds.origin.x,
+                   window.frame.size.height - bounds.size.height,
+                   bounds.size.width,
+                   bounds.size.height);
 }
 
 void WebContentsViewMac::SetAllowOtherViews(bool allow) {
@@ -686,6 +689,9 @@ void WebContentsViewMac::CloseTab() {
 
 - (void)setFrameSize:(NSSize)newSize {
   [super setFrameSize:newSize];
+
+  if (webContentsView_->delegate())
+    webContentsView_->delegate()->SizeChanged(gfx::Size(newSize));
 
   // Perform manual layout of subviews, e.g., when the window size changes.
   for (NSView* subview in [self subviews])

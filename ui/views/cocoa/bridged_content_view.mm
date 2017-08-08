@@ -622,6 +622,15 @@ ui::TextEditCommand GetTextEditCommandForMenuAction(SEL action) {
 
   ui::MouseEvent event(theEvent);
 
+  // Event location should be adjusted if this view is reparented.
+  if ([[self window] contentView] != self) {
+    gfx::Point reparent_origin =
+        gfx::Point(NSWidth([[self window] frame]) - NSWidth([self frame]),
+                   NSHeight([[self window] frame]) - NSHeight([self frame]));
+    event.set_location(gfx::Point(event.x() - reparent_origin.x(),
+                                  event.y() - reparent_origin.y()));
+  }
+
   // Aura updates tooltips with the help of aura::Window::AddPreTargetHandler().
   // Mac hooks in here.
   [self updateTooltipIfRequiredAt:event.location()];
@@ -669,7 +678,8 @@ ui::TextEditCommand GetTextEditCommandForMenuAction(SEL action) {
   // window containing it, since AppKit requires a titlebar to give frameless
   // windows correct shadows and rounded corners.
   NSWindow* window = [self window];
-  if (window)
+  // Reparented view does not have the size of the window.
+  if (window && [window contentView] == self)
     newSize = [window contentRectForFrameRect:[window frame]].size;
 
   [super setFrameSize:newSize];
