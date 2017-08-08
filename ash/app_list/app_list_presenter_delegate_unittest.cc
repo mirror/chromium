@@ -543,6 +543,41 @@ TEST_P(FullscreenAppListPresenterDelegateTest,
   EXPECT_FALSE(app_list_presenter_impl()->IsVisible());
 }
 
+TEST_P(FullscreenAppListPresenterDelegateTest, LongPressOutsideCloseAppList1) {
+  app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+  EXPECT_TRUE(app_list_presenter_impl()->IsVisible());
+
+  gfx::Point press_point =
+      app_list_presenter_impl()->GetView()->bounds().origin();
+  press_point.Offset(0, -10);
+
+  // Dispatch LONG_PRESS to ash::AppListPresenterDelegate.
+  ui::test::EventGenerator& generator = GetEventGenerator();
+  ui::TouchEvent long_press(
+      ui::ET_GESTURE_LONG_PRESS, press_point, base::TimeTicks::Now(),
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH));
+  generator.Dispatch(&long_press);
+  EXPECT_FALSE(app_list_presenter_impl()->IsVisible());
+}
+
+TEST_P(FullscreenAppListPresenterDelegateTest,
+       TwoFingerTapOutsideCloseAppList) {
+  app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+  EXPECT_TRUE(app_list_presenter_impl()->IsVisible());
+
+  gfx::Point tap_point =
+      app_list_presenter_impl()->GetView()->bounds().origin();
+  tap_point.Offset(0, -10);
+
+  // Dispatch TWO_FINGER_TAP to ash::AppListPresenterDelegate.
+  ui::test::EventGenerator& generator = GetEventGenerator();
+  ui::TouchEvent two_finger_tap(
+      ui::ET_GESTURE_TWO_FINGER_TAP, tap_point, base::TimeTicks::Now(),
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH));
+  generator.Dispatch(&two_finger_tap);
+  EXPECT_FALSE(app_list_presenter_impl()->IsVisible());
+}
+
 // Tests that a keypress activates the searchbox and that clearing the
 // searchbox, the searchbox remains active.
 TEST_F(FullscreenAppListPresenterDelegateTest, KeyPressEnablesSearchBox) {
