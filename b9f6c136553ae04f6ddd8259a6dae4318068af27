@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d988800_2c412568",
+        "filename": "android_webview/browser/android_webview_field_trials.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T17:57:33Z",
+      "side": 1,
+      "message": "space before {} everywhere",
+      "revId": "b9f6c136553ae04f6ddd8259a6dae4318068af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c51f12_2bf4093a",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T17:57:33Z",
+      "side": 1,
+      "message": "I see you added this class, but then also told me everything in components is a hack, so is this part of the code also a hack..?",
+      "range": {
+        "startLine": 120,
+        "startChar": 36,
+        "endLine": 120,
+        "endChar": 53
+      },
+      "revId": "b9f6c136553ae04f6ddd8259a6dae4318068af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3770981_365fdda3",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T17:57:33Z",
+      "side": 1,
+      "message": "so why is it ok to be doing IO on the UI thread? leave a link to the justification in a comment",
+      "revId": "b9f6c136553ae04f6ddd8259a6dae4318068af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872f635e_499a84f6",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T17:57:33Z",
+      "side": 1,
+      "message": "put constants at the top, don\u0027t inline them",
+      "range": {
+        "startLine": 129,
+        "startChar": 46,
+        "endLine": 129,
+        "endChar": 66
+      },
+      "revId": "b9f6c136553ae04f6ddd8259a6dae4318068af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5acc7489_f550b46b",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T17:57:33Z",
+      "side": 1,
+      "message": "what owns and deletes this?",
+      "range": {
+        "startLine": 177,
+        "startChar": 29,
+        "endLine": 177,
+        "endChar": 35
+      },
+      "revId": "b9f6c136553ae04f6ddd8259a6dae4318068af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86a62cd_43fd423d",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T17:57:33Z",
+      "side": 1,
+      "message": "this method is not thread safe, so assert this is called on a single (UI?) thread/sequence",
+      "revId": "b9f6c136553ae04f6ddd8259a6dae4318068af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a1ea6c_f2e4c26a",
+        "filename": "android_webview/browser/aw_variations_service_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T17:57:33Z",
+      "side": 1,
+      "message": "base::ThreadRestrictions::AssertIOAllowed",
+      "revId": "b9f6c136553ae04f6ddd8259a6dae4318068af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f55c2a9_bad42209",
+        "filename": "android_webview/browser/aw_variations_service_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T17:57:33Z",
+      "side": 1,
+      "message": "should match file path",
+      "range": {
+        "startLine": 5,
+        "startChar": 32,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "b9f6c136553ae04f6ddd8259a6dae4318068af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d27e71_82360bd2",
+        "filename": "android_webview/browser/aw_variations_service_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T17:57:33Z",
+      "side": 1,
+      "message": "namespace android_webview",
+      "revId": "b9f6c136553ae04f6ddd8259a6dae4318068af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
