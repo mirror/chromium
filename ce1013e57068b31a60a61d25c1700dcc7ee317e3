@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32a920e9_f24bc258",
+        "filename": "chrome/browser/extensions/process_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-08T01:32:23Z",
+      "side": 1,
+      "message": "Note: will add comment (including the bug id)",
+      "revId": "ce1013e57068b31a60a61d25c1700dcc7ee317e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
