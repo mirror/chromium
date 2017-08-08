@@ -22,6 +22,30 @@
       "revId": "0b968ee9aa6d5d9194804a2587938640c9bb9ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce38632c_e1a18449",
+        "filename": "ui/views/widget/widget.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T21:42:30Z",
+      "side": 1,
+      "message": "\u003e Is there any real harm in doing the layout? It would be nice to not have to have the some what confusing default argument to UpdateWindowTitle if possible.\n\nWithout this, a DCHECK in StyledLabel is hit. The code (originally taken from BubbleFrameView::Layout()) which does\n\n  const int title_available_width \u003d\n      std::max(1, title_label_right - title_label_x);\n\nmeans that when the widget bounds are 0x0, we may attempt to size a StyledLabel with a width of 1 pixel, which it will object to at the end of StyledLabel::CalculateAndDoLayout and   DCHECK_LE(used_width, width) when it tries to fit a title into 1px.\n\n\nAlternatives could be to do use something bigger than 1px as the minimum, or bail out early somewhere - (I\u0027ll need to poke around to find out where, or if it\u0027s feasible).",
+      "parentUuid": "8f2978ae_eddb51a3",
+      "range": {
+        "startLine": 355,
+        "startChar": 5,
+        "endLine": 355,
+        "endChar": 20
+      },
+      "revId": "0b968ee9aa6d5d9194804a2587938640c9bb9ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
