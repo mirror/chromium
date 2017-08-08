@@ -22,6 +22,30 @@
       "revId": "184902680185aee08d0be15da7ecc11f63dc4b24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fbf8dda_73dfeac1",
+        "filename": "chromeos/system/statistics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-08-08T11:03:24Z",
+      "side": 1,
+      "message": "I think the comment above kMachineInfoSerialNumberKeys[] does well in explaining the lumpy special case.\n\nA concrete example from one of the devices in MUC:\nProduct_S/N\u003dHTKH91KC400645\nserial_number\u003dHTKH91KC400645F\n\nserial_number has a checksum attached and Product_S/N doesn\u0027t. We prefer the latter and thus this code should stay until lumpy AUE.",
+      "parentUuid": "3c7a3128_27f28dd6",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 44
+      },
+      "revId": "184902680185aee08d0be15da7ecc11f63dc4b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
