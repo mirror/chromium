@@ -643,11 +643,10 @@ FileManager.prototype = /** @struct */ {
 
     this.ui_.decorateFilesMenuItems();
 
-    chrome.commandLinePrivate.hasSwitch(
-        'disable-file-manager-touch-mode', function(isDisabled) {
-          if (!isDisabled)
-            this.ui_.selectionMenuButton.hidden = false;
-        }.bind(this));
+    util.isTouchModeEnabled(function(isEnabled) {
+      if (isEnabled)
+        this.ui_.selectionMenuButton.hidden = false;
+    }.bind(this));
   };
 
   /**

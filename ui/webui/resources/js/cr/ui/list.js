@@ -577,10 +577,9 @@ cr.define('cr.ui', function() {
       var target = /** @type {HTMLElement} */ (e.target);
 
       // If the target was this element we need to make sure that the user did
-      // not click on a border or a scrollbar.
+      // not drag on a border.
       if (target == this) {
-        if (inViewport(target, e))
-          this.selectionController_.handleTouchEvents(e, -1);
+        this.selectionController_.handleTouchEvents(e, -1);
         return;
       }
 
