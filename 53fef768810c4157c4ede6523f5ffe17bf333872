@@ -22,6 +22,30 @@
       "revId": "53fef768810c4157c4ede6523f5ffe17bf333872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148e2fe8_f97ded3e",
+        "filename": "cc/paint/paint_canvas.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-08T18:56:29Z",
+      "side": 1,
+      "message": "It seems like a reasonable helper? But...we do also only have two non-test callers.  Kinda torn.",
+      "parentUuid": "dadb6141_e2946d22",
+      "range": {
+        "startLine": 118,
+        "startChar": 7,
+        "endLine": 118,
+        "endChar": 17
+      },
+      "revId": "53fef768810c4157c4ede6523f5ffe17bf333872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
