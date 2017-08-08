@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dc8fc41_d06cb793",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-08T16:57:39Z",
+      "side": 1,
+      "message": "nit: Does std::vector not work in this case?\nIf it works, change to vector.",
+      "range": {
+        "startLine": 248,
+        "startChar": 9,
+        "endLine": 248,
+        "endChar": 12
+      },
+      "revId": "bfc7fcd0941e9a4cdb770dfeeef8d21067c942b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
