@@ -354,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "2bf58427_e17e680b",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-08T13:51:41Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "6fa24ffb_367445d5",
+      "range": {
+        "startLine": 423,
+        "startChar": 4,
+        "endLine": 423,
+        "endChar": 67
+      },
+      "revId": "9035b1ef96b7c838cf27d8b837be0da077167f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8692560a_ad151814",
         "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
         "patchSetId": 6

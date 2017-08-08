@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "315de968_0081ddbc",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-08T13:51:41Z",
+      "side": 1,
+      "message": "You should probably also set payment_instruments_ready_ to true before calling onPaymentMethodsReady on the delegate.",
+      "revId": "8155840580f4554f52c33a58cecc6a20f75af8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
