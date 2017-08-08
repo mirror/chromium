@@ -8,6 +8,9 @@ def main(request, response):
         delay = float(request.GET.first("delay"))
         time.sleep(delay / 1E3);
 
+    if "allow_origin" in request.GET:
+        response.headers.set("Access-Control-Allow-Origin", request.headers.get("origin"))
+
     if "followed" in request.GET:
         return [("Content:Type", "text/plain")], "MAGIC HAPPENED"
     else:

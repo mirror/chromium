@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tests that redirect between origins are allowed when access control is involved.</title>
+    <!--Per the spec, these test cases should be allowed, sync or async, but sync cross-origin redirects are currently unsupported in WebCore.-->
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+    <script src="/common/get-host-info.sub.js"></script>
+  </head>
+  <body>
+    <script>
+    function runTest(test, url, expectSyncSuccess, expectAsyncSuccess)
+    {
+      let xhr = new XMLHttpRequest();
+      xhr.open("GET", url, false);
+
+      try {
+        xhr.send(null);
+        test.step(function() {
+          assert_true(expectSyncSuccess, "Sync case expected to succeed?");
+          assert_equals(xhr.responseText, "PASS: Cross-domain access allowed.");
+        });
+      } catch (ex) {
+        test.step(function() {
+          assert_false(expectSyncSuccess, "Sync case not expected to fail?");
+        });
+      }
+
+      xhr = new XMLHttpRequest();
+      xhr.open("GET", url, true);
+      xhr.onload = test.step_func_done(function() {
+        assert_true(expectAsyncSuccessi, "Async case expected to succeed?");
+        assert_equals(xhr.responseText, "PASS: Cross-domain access allowed.");
+      });
+      xhr.onerror = test.step_func_done(function() {
+        assert_false(expectAsyncSuccess, "Async case not expected to fail?");
+        assert_equals(xhr.status, 0);
+      });
+      xhr.send(null);
+    }
+
+    const succeedsSync = true;
+    const succeedsAsync = true;
+    const failsSync = false;
+    const failsAsync = false;
+
+    async_test(t => {
+      runTest(t, "resources/redirect.py?location=" + get_host_info().HTTP_REMOTE_ORIGIN +
+          "/XMLHttpRequest/resources/access-control-basic-allow.py", succeedsSync, succeedsAsync)
+    }, "Local redirect to remote origin");
+    async_test(t => {
+      runTest(t, get_host_info().HTTP_REMOTE_ORIGIN +
+          "/XMLHttpRequest/resources/redirect.py?location=" + get_host_info().HTTP_ORIGIN +
+          "/XMLHttpRequest/resources/access-control-basic-allow.py&allow_origin=true",
+          succeedsSync, succeedsAsync)
+    }, "Remote redirect to local origin");
+    async_test(t => {
+      runTest(t, get_host_info().HTTP_REMOTE_ORIGIN +
+          "/XMLHttpRequest/resources/redirect.py?location=" + get_host_info().HTTP_REMOTE_ORIGIN +
+          "/XMLHttpRequest/resources/access-control-basic-allow.py&allow_origin=true",
+          succeedsSync, succeedsAsync)
+    }, "Remote redirect to same remote origin");
+    </script>
+  </body>
+</html>
