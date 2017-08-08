@@ -83,6 +83,7 @@ void SyncResourceHandler::OnResponseStarted(
   result_.mime_type = response->head.mime_type;
   result_.charset = response->head.charset;
   result_.download_file_path = response->head.download_file_path;
+  result_.blob_uuid = response->head.blob_uuid;
   result_.request_time = response->head.request_time;
   result_.response_time = response->head.response_time;
   result_.load_timing = response->head.load_timing;

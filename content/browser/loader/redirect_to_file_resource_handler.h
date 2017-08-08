@@ -53,6 +53,10 @@ class CONTENT_EXPORT RedirectToFileResourceHandler
   // |next_handler|.
   RedirectToFileResourceHandler(std::unique_ptr<ResourceHandler> next_handler,
                                 net::URLRequest* request);
+  RedirectToFileResourceHandler(
+      std::unique_ptr<ResourceHandler> next_handler,
+      CreateTemporaryFileStreamFunction create_temporary_file_stream,
+      net::URLRequest* request);
   ~RedirectToFileResourceHandler() override;
 
   // Replace the CreateTemporaryFileStream implementation with a mocked one for
@@ -66,6 +70,7 @@ class CONTENT_EXPORT RedirectToFileResourceHandler
   void OnResponseStarted(
       ResourceResponse* response,
       std::unique_ptr<ResourceController> controller) override;
+  // Immediately starts creating the file.
   void OnWillStart(const GURL& url,
                    std::unique_ptr<ResourceController> controller) override;
   void OnWillRead(scoped_refptr<net::IOBuffer>* buf,
@@ -79,6 +84,14 @@ class CONTENT_EXPORT RedirectToFileResourceHandler
 
   // Returns the size of |buf_|, to make sure it's being increased as expected.
   int GetBufferSizeForTesting() const;
+
+ protected:
+  // Returns a net error code. The request is cancelled if the code is an error.
+  virtual int OnResponseCompletedHook();
+
+  // Attaches file path to the response. Called in OnResponseStarted when the
+  // file path has been provided.
+  virtual void PopulateResponseData(ResourceResponse* response);
 
  private:
   void DidCreateTemporaryFile(base::File::Error error_code,

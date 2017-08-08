@@ -41,6 +41,7 @@
 #include "content/browser/appcache/appcache_navigation_handle_core.h"
 #include "content/browser/appcache/chrome_appcache_service.h"
 #include "content/browser/bad_message.h"
+#include "content/browser/blob_storage/redirect_to_blob_resource_handler.h"
 #include "content/browser/browsing_data/clear_site_data_throttle.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/frame_host/navigation_request_info.h"
@@ -852,6 +853,8 @@ bool ResourceDispatcherHostImpl::OnMessageReceived(
                                                OnSyncLoad)
     IPC_MESSAGE_HANDLER(ResourceHostMsg_ReleaseDownloadedFile,
                         OnReleaseDownloadedFile)
+    IPC_MESSAGE_HANDLER(ResourceHostMsg_ReleaseDownloadedBlob,
+                        OnReleaseDownloadedBlob)
     IPC_MESSAGE_HANDLER(ResourceHostMsg_CancelRequest, OnCancelRequest)
     IPC_MESSAGE_HANDLER(ResourceHostMsg_DidChangePriority, OnDidChangePriority)
     IPC_MESSAGE_UNHANDLED(handled = false)
@@ -1451,9 +1454,12 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     // PlzNavigate: do not add ResourceThrottles for main resource requests from
     // the renderer.  Decisions about the navigation should have been done in
     // the initial request.
+    scoped_refptr<ChromeBlobStorageContext> chrome_blob_context(
+        GetChromeBlobStorageContextForResourceContext(resource_context));
     handler = CreateBaseResourceHandler(
         new_request.get(), std::move(mojo_request),
-        std::move(url_loader_client), request_data.resource_type);
+        std::move(url_loader_client), request_data.resource_type,
+        std::move(chrome_blob_context));
   } else {
     // Initialize the service worker handler for the request. We don't use
     // ServiceWorker for synchronous loads to avoid renderer deadlocks.
@@ -1512,7 +1518,7 @@ ResourceDispatcherHostImpl::CreateResourceHandler(
   std::unique_ptr<ResourceHandler> handler;
   if (sync_result_handler) {
     // download_to_file is not supported for synchronous requests.
-    if (request_data.download_to_file) {
+    if (request_data.download_to_file || request_data.download_to_blob) {
       DCHECK(requester_info->IsRenderer());
       bad_message::ReceivedBadMessage(requester_info->filter(),
                                       bad_message::RDH_BAD_DOWNLOAD);
@@ -1523,14 +1529,20 @@ ResourceDispatcherHostImpl::CreateResourceHandler(
     DCHECK(!url_loader_client);
     handler.reset(new SyncResourceHandler(request, sync_result_handler, this));
   } else {
-    handler = CreateBaseResourceHandler(request, std::move(mojo_request),
-                                        std::move(url_loader_client),
-                                        request_data.resource_type);
+    scoped_refptr<ChromeBlobStorageContext> chrome_blob_context(
+        GetChromeBlobStorageContextForResourceContext(resource_context));
+    handler = CreateBaseResourceHandler(
+        request, std::move(mojo_request), std::move(url_loader_client),
+        request_data.resource_type, chrome_blob_context);
 
     // The RedirectToFileResourceHandler depends on being next in the chain.
     if (request_data.download_to_file) {
       handler.reset(
           new RedirectToFileResourceHandler(std::move(handler), request));
+    } else if (request_data.download_to_blob) {
+      // The RedirectToBlobResourceHandler depends on being next in the chain.
+      handler.reset(new RedirectToBlobResourceHandler(
+          std::move(handler), chrome_blob_context, request));
     }
   }
 
@@ -1571,14 +1583,16 @@ ResourceDispatcherHostImpl::CreateBaseResourceHandler(
     net::URLRequest* request,
     mojom::URLLoaderAssociatedRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client,
-    ResourceType resource_type) {
+    ResourceType resource_type,
+    scoped_refptr<ChromeBlobStorageContext> blob_context) {
   std::unique_ptr<ResourceHandler> handler;
   if (mojo_request.is_pending()) {
     handler.reset(new MojoAsyncResourceHandler(
         request, this, std::move(mojo_request), std::move(url_loader_client),
         resource_type));
   } else {
-    handler.reset(new AsyncResourceHandler(request, this));
+    handler.reset(
+        new AsyncResourceHandler(request, this, std::move(blob_context)));
   }
   return handler;
 }
@@ -1695,6 +1709,12 @@ void ResourceDispatcherHostImpl::OnReleaseDownloadedFile(
   UnregisterDownloadedTempFile(requester_info->child_id(), request_id);
 }
 
+void ResourceDispatcherHostImpl::OnReleaseDownloadedBlob(
+    ResourceRequesterInfo* requester_info,
+    int request_id) {
+  UnregisterDownloadedTempBlob(requester_info->child_id(), request_id);
+}
+
 void ResourceDispatcherHostImpl::OnDidChangePriority(
     ResourceRequesterInfo* requester_info,
     int request_id,
@@ -1744,6 +1764,23 @@ void ResourceDispatcherHostImpl::UnregisterDownloadedTempFile(
 
   // Note that we don't remove the security bits here. This will be done
   // when all file refs are deleted (see RegisterDownloadedTempFile).
+}
+
+void ResourceDispatcherHostImpl::RegisterDownloadedTempBlob(
+    int child_id,
+    int request_id,
+    std::unique_ptr<storage::BlobDataHandle> blob_data_handle) {
+  registered_temp_blobs_[child_id].insert(
+      std::make_pair(request_id, std::move(*blob_data_handle.release())));
+}
+
+void ResourceDispatcherHostImpl::UnregisterDownloadedTempBlob(int child_id,
+                                                              int request_id) {
+  TemporaryBlobMap& map = registered_temp_blobs_[child_id];
+  TemporaryBlobMap::iterator found = map.find(request_id);
+  if (found == map.end())
+    return;
+  map.erase(found);
 }
 
 bool ResourceDispatcherHostImpl::Send(IPC::Message* message) {
@@ -1827,6 +1864,7 @@ void ResourceDispatcherHostImpl::CancelRequestsForProcess(int child_id) {
   CancelRequestsForRoute(
       GlobalFrameRoutingId(child_id, MSG_ROUTING_NONE /* cancel all */));
   registered_temp_files_.erase(child_id);
+  registered_temp_blobs_.erase(child_id);
 }
 
 void ResourceDispatcherHostImpl::CancelRequestsForRoute(

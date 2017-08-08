@@ -28,6 +28,7 @@ specific_include_rules = {
     "+content/public/common/content_features.h",
 
     # TODO: To be replaced by mojo.
+    "+content/browser/blob_storage/chrome_blob_storage_context.h",
     "+content/common/resource_messages.h",
     "+content/common/view_messages.h",
     "+content/public/common/resource_request_completion_status.h",
@@ -142,6 +143,7 @@ specific_include_rules = {
     "+content/browser/appcache/chrome_appcache_service.h",
     "+content/browser/bad_message.h",
     "+content/browser/blob_storage/chrome_blob_storage_context.h",
+    "+content/browser/blob_storage/redirect_to_blob_resource_handler.h",
     "+content/browser/browsing_data/clear_site_data_throttle.h",
     "+content/browser/child_process_security_policy_impl.h",
     "+content/browser/frame_host/navigation_request_info.h",

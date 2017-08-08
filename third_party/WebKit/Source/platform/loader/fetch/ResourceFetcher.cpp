@@ -976,7 +976,8 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
 
   // Never use cache entries for downloadToFile / useStreamOnResponse requests.
   // The data will be delivered through other paths.
-  if (request.DownloadToFile() || request.UseStreamOnResponse())
+  if (request.DownloadToFile() || request.UseStreamOnResponse() ||
+      request.DownloadToBlob())
     return false;
 
   // Never reuse opaque responses from a service worker for requests that are
