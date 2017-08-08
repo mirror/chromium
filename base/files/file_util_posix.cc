@@ -740,6 +740,8 @@ FILE* OpenFile(const FilePath& filename, const char* mode) {
 // NaCl doesn't implement system calls to open files directly.
 #if !defined(OS_NACL)
 FILE* FileToFILE(File file, const char* mode) {
+  if (file.GetPlatformFile() < 0)
+    return nullptr;
   FILE* stream = fdopen(file.GetPlatformFile(), mode);
   if (stream)
     file.TakePlatformFile();
