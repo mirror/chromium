@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "814c8198_b83e6e2b",
+        "filename": "chrome/browser/extensions/api/page_capture/page_capture_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-08T00:53:33Z",
+      "side": 1,
+      "message": "This is interesting. I had to understand the code bit more to realize this.\n\nI ended up writing a (hacky) browsertest that shows how SKIP_ON_SHUTDOWN or CONTINUE_ON_SHUTDOWN will not work for storage::ScopedFile objects:\n\nhttps://chromium-review.googlesource.com/c/604403\n\nThere\u0027s a chance that other places where we use ShareableFileReference might be doing this incorrectly. I\u0027ll look them up later.",
+      "range": {
+        "startLine": 185,
+        "startChar": 19,
+        "endLine": 185,
+        "endChar": 39
+      },
+      "revId": "f0dc707252fa91e486f3d61f941fba05f55a153a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
