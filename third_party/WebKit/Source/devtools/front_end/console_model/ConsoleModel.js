@@ -592,7 +592,7 @@ ConsoleModel.ConsoleMessage = class {
   }
 };
 
-// Note: Keep these constants in sync with the ones in Console.h
+// Note: Keep these constants in sync with the ones in ConsoleTypes.h
 /**
  * @enum {string}
  */
@@ -610,6 +610,7 @@ ConsoleModel.ConsoleMessage.MessageSource = {
   Worker: 'worker',
   Violation: 'violation',
   Intervention: 'intervention',
+  DOM: 'dom',
   Other: 'other'
 };
 

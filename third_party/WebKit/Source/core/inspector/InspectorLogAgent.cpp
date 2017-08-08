@@ -48,6 +48,8 @@ String MessageSourceValue(MessageSource source) {
       return protocol::Log::LogEntry::SourceEnum::Violation;
     case kInterventionMessageSource:
       return protocol::Log::LogEntry::SourceEnum::Intervention;
+    case kDOMMessageSource:
+      return protocol::Log::LogEntry::SourceEnum::Dom;
     default:
       return protocol::Log::LogEntry::SourceEnum::Other;
   }

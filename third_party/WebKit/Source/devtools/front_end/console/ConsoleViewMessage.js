@@ -246,7 +246,7 @@ Console.ConsoleViewMessage = class {
             messageElement.createTextChildren(' ', String(request.statusCode), ' (', request.statusText, ')');
 
         } else {
-          var fragment = Console.ConsoleViewMessage._linkifyWithCustomLinkifier(
+          var fragment = this._linkifyWithCustomLinkifier(
               messageText,
               title => Components.Linkifier.linkifyRevealable(
                   /** @type {!SDK.NetworkRequest} */ (request), title, request.url()));
@@ -260,8 +260,10 @@ Console.ConsoleViewMessage = class {
         messageText = Common.UIString('[Violation] %s', messageText);
       else if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Intervention)
         messageText = Common.UIString('[Intervention] %s', messageText);
-      if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Deprecation)
+      else if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Deprecation)
         messageText = Common.UIString('[Deprecation] %s', messageText);
+      else if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.DOM)
+        messageText = Common.UIString('[DOM] %s', messageText);
       var args = this._message.parameters || [messageText];
       messageElement = this._format(args);
     }
@@ -487,7 +489,7 @@ Console.ConsoleViewMessage = class {
     for (var i = 0; i < parameters.length; ++i) {
       // Inline strings when formatting.
       if (shouldFormatMessage && parameters[i].type === 'string')
-        formattedResult.appendChild(Console.ConsoleViewMessage._linkifyStringAsFragment(parameters[i].description));
+        formattedResult.appendChild(this._linkifyStringAsFragment(parameters[i].description));
       else
         formattedResult.appendChild(this._formatParameter(parameters[i], false, true));
       if (i < parameters.length - 1)
@@ -676,7 +678,7 @@ Console.ConsoleViewMessage = class {
    */
   _formatParameterAsString(output) {
     var span = createElement('span');
-    span.appendChild(Console.ConsoleViewMessage._linkifyStringAsFragment(output.description || ''));
+    span.appendChild(this._linkifyStringAsFragment(output.description || ''));
 
     var result = createElement('span');
     result.createChild('span', 'object-value-string-quote').textContent = '"';
@@ -692,8 +694,7 @@ Console.ConsoleViewMessage = class {
   _formatParameterAsError(output) {
     var result = createElement('span');
     var errorSpan = this._tryFormatAsError(output.description || '');
-    result.appendChild(
-        errorSpan ? errorSpan : Console.ConsoleViewMessage._linkifyStringAsFragment(output.description || ''));
+    result.appendChild(errorSpan ? errorSpan : this._linkifyStringAsFragment.bind(this)(output.description || ''));
     return result;
   }
 
@@ -827,11 +828,14 @@ Console.ConsoleViewMessage = class {
 
     formatters._ = bypassFormatter;
 
+    /**
+     * @this Console.ConsoleViewMessage
+     */
     function append(a, b) {
       if (b instanceof Node) {
         a.appendChild(b);
       } else if (typeof b !== 'undefined') {
-        var toAppend = Console.ConsoleViewMessage._linkifyStringAsFragment(String(b));
+        var toAppend = this._linkifyStringAsFragment(String(b));
         if (currentStyle) {
           var wrapper = createElement('span');
           wrapper.appendChild(toAppend);
@@ -854,7 +858,7 @@ Console.ConsoleViewMessage = class {
     }
 
     // String.format does treat formattedResult like a Builder, result is an object.
-    return String.format(format, parameters, formatters, formattedResult, append);
+    return String.format(format, parameters, formatters, formattedResult, append.bind(this));
   }
 
   /**
@@ -1027,6 +1031,7 @@ Console.ConsoleViewMessage = class {
         case ConsoleModel.ConsoleMessage.MessageSource.Violation:
         case ConsoleModel.ConsoleMessage.MessageSource.Deprecation:
         case ConsoleModel.ConsoleMessage.MessageSource.Intervention:
+        case ConsoleModel.ConsoleMessage.MessageSource.DOM:
           this._element.classList.add('console-warning-level');
           break;
       }
@@ -1231,15 +1236,14 @@ Console.ConsoleViewMessage = class {
     var formattedResult = createElement('span');
     var start = 0;
     for (var i = 0; i < links.length; ++i) {
-      formattedResult.appendChild(
-          Console.ConsoleViewMessage._linkifyStringAsFragment(string.substring(start, links[i].positionLeft)));
+      formattedResult.appendChild(this._linkifyStringAsFragment(string.substring(start, links[i].positionLeft)));
       formattedResult.appendChild(this._linkifier.linkifyScriptLocation(
           debuggerModel.target(), null, links[i].url, links[i].lineNumber, links[i].columnNumber));
       start = links[i].positionRight;
     }
 
     if (start !== string.length)
-      formattedResult.appendChild(Console.ConsoleViewMessage._linkifyStringAsFragment(string.substring(start)));
+      formattedResult.appendChild(this._linkifyStringAsFragment(string.substring(start)));
 
     return formattedResult;
   }
@@ -1249,30 +1253,47 @@ Console.ConsoleViewMessage = class {
    * @param {function(string,string,number=,number=):!Node} linkifier
    * @return {!DocumentFragment}
    */
-  static _linkifyWithCustomLinkifier(string, linkifier) {
+  _linkifyWithCustomLinkifier(string, linkifier) {
     var container = createDocumentFragment();
     var linkStringRegEx =
         /(?:[a-zA-Z][a-zA-Z0-9+.-]{2,}:\/\/|data:|www\.)[\w$\-_+*'=\|\/\\(){}[\]^%@&#~,:;.!?]{2,}[\w$\-_+*=\|\/\\({^%@&#~]/;
     var pathLineRegex = /(?:\/[\w\.-]*)+\:[\d]+/;
+    var nodeRegex = /\*\*\d+/;
 
     while (string && string.length < Components.Linkifier.MaxLengthToIgnoreLinkifier) {
-      var linkString = linkStringRegEx.exec(string) || pathLineRegex.exec(string);
+      var linkToNode;
+      var linkString =
+          linkStringRegEx.exec(string) || pathLineRegex.exec(string) || (linkToNode = nodeRegex.exec(string));
       if (!linkString)
         break;
 
       linkString = linkString[0];
       var linkIndex = string.indexOf(linkString);
       var nonLink = string.substring(0, linkIndex);
+      var linkNode;
+      var title = linkString;
       container.appendChild(createTextNode(nonLink));
 
-      var title = linkString;
-      var realURL = (linkString.startsWith('www.') ? 'http://' + linkString : linkString);
-      var splitResult = Common.ParsedURL.splitLineAndColumn(realURL);
-      var linkNode;
-      if (splitResult)
-        linkNode = linkifier(title, splitResult.url, splitResult.lineNumber, splitResult.columnNumber);
-      else
-        linkNode = linkifier(title, realURL);
+      if (!linkToNode) {
+        var realURL = (linkString.startsWith('www.') ? 'http://' + linkString : linkString);
+        var splitResult = Common.ParsedURL.splitLineAndColumn(realURL);
+
+        if (splitResult)
+          linkNode = linkifier(title, splitResult.url, splitResult.lineNumber, splitResult.columnNumber);
+        else
+          linkNode = linkifier(title, realURL);
+      } else {
+        var domModel = SDK.targetManager.mainTarget().model(SDK.DOMModel);
+        if (!domModel)
+          continue;
+        var nodeId = parseInt(title.match(/\d+/)[0], 10);
+        domModel.pushNodesByBackendIdsToFrontend(new Set([nodeId]))
+            .then(map => map.values().next().value)
+            .then(
+                node =>
+                    node.resolveToObject('').then(parameter => linkNode.appendChild(this._formatParameter(parameter))));
+        linkNode = createElement('span');
+      }
 
       container.appendChild(linkNode);
       string = string.substring(linkIndex + linkString.length, string.length);
@@ -1288,8 +1309,8 @@ Console.ConsoleViewMessage = class {
    * @param {string} string
    * @return {!DocumentFragment}
    */
-  static _linkifyStringAsFragment(string) {
-    return Console.ConsoleViewMessage._linkifyWithCustomLinkifier(string, (text, url, lineNumber, columnNumber) => {
+  _linkifyStringAsFragment(string) {
+    return this._linkifyWithCustomLinkifier(string, (text, url, lineNumber, columnNumber) => {
       return Components.Linkifier.linkifyURL(url, {text, lineNumber, columnNumber});
     });
   }

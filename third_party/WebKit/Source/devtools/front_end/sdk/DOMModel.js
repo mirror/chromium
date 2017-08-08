@@ -1111,7 +1111,6 @@ SDK.DOMModel = class extends SDK.SDKModel {
       return Promise.resolve(this._document);
     if (this._pendingDocumentRequestPromise)
       return this._pendingDocumentRequestPromise;
-
     this._pendingDocumentRequestPromise = this._agent.getDocument().then(root => {
       if (root)
         this._setDocument(root);
