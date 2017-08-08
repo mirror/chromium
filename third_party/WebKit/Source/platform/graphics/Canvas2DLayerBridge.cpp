@@ -85,9 +85,6 @@ static void ReleaseMailboxImageResource(
       texture->abandon();
     } else {
       texture->textureParamsModified();
-      if (gl) {
-        gl->ProduceTextureDirectCHROMIUM(0, GL_TEXTURE_2D, mailbox.name);
-      }
     }
   }
 }
@@ -484,21 +481,16 @@ bool Canvas2DLayerBridge::PrepareMailboxFromImage(
   gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
   gpu::Mailbox mailbox;
-  gl->GenMailboxCHROMIUM(mailbox.name);
-  gl->ProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox.name);
-
   gpu::SyncToken sync_token;
+  context_provider_wrapper_->Utils()->GetMailboxForSkImage(
+      mailbox, sync_token, mailbox_info->image_);
+
   if (IsHidden()) {
     // With hidden canvases, we release the SkImage immediately because
     // there is no need for animations to be double buffered.
     mailbox_info->image_.reset();
-  } else {
-    // FIXME: We'd rather insert a syncpoint than perform a flush here,
-    // but currently the canvas will flicker if we don't flush here.
-    const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
-    gl->Flush();
-    gl->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
   }
+
   mailbox_info->mailbox_ = mailbox;
   *out_mailbox = viz::TextureMailbox(mailbox, sync_token, GL_TEXTURE_2D);
 
@@ -1058,7 +1050,8 @@ void Canvas2DLayerBridge::ReleaseFrameResources(
                           std::move(info->gpu_memory_buffer_), info->image_id_,
                           info->texture_id_);
     } else {
-      layer_bridge->image_info_cache_.push_back(info);
+      if (layer_bridge)
+        layer_bridge->image_info_cache_.push_back(info);
     }
   }
 #endif  // USE_IOSURFACE_FOR_2D_CANVAS

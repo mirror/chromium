@@ -155,15 +155,22 @@ void OffscreenCanvasResourceProvider::
     SetTransferableResourceToStaticBitmapImage(
         viz::TransferableResource& resource,
         RefPtr<StaticBitmapImage> image) {
+  DCHECK(image->IsTextureBacked());
+  DCHECK(image->IsValid());
   image->EnsureMailbox();
+  if (!image->GetSyncToken().verified_flush()) {
+    int8_t* token_data = image->GetSyncToken().GetData();
+    // TODO(junov): Batch this verification in the case where there are multiple
+    // offscreen canvases being committed.
+    image->ContextProvider()->ContextGL()->VerifySyncTokensCHROMIUM(&token_data,
+                                                                    1);
+    image->GetSyncToken().SetVerifyFlush();
+  }
   resource.mailbox_holder = gpu::MailboxHolder(
       image->GetMailbox(), image->GetSyncToken(), GL_TEXTURE_2D);
   resource.read_lock_fences_enabled = false;
   resource.is_software = false;
 
-  // TODO(junov): crbug.com/725919 Recycle mailboxes for this code path. This is
-  // hard to do because the texture associated with the mailbox gets recycled
-  // through skia and skia does not store mailbox names.
   std::unique_ptr<FrameResource> frame_resource =
       CreateOrRecycleFrameResource();
   frame_resource->image_ = std::move(image);

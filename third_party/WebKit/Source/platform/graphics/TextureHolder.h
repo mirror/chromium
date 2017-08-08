@@ -32,9 +32,10 @@ class PLATFORM_EXPORT TextureHolder {
     NOTREACHED();
     return gpu::Mailbox();
   }
-  virtual gpu::SyncToken GetSyncToken() {
+  virtual gpu::SyncToken& GetSyncToken() {
     NOTREACHED();
-    return gpu::SyncToken();
+    static gpu::SyncToken token = gpu::SyncToken();
+    return token;
   }
   virtual void UpdateSyncToken(gpu::SyncToken) { NOTREACHED(); }
 
