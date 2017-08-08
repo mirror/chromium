@@ -62,16 +62,31 @@ namespace content {
 
 namespace {
 
+ui::CompositionUnderline::Type ConvertWebTypeToUiType(
+    blink::WebCompositionUnderline::Type type) {
+  switch (type) {
+    case blink::WebCompositionUnderline::Type::COMPOSITION:
+      return ui::CompositionUnderline::Type::COMPOSITION;
+    case blink::WebCompositionUnderline::Type::SUGGESTION:
+      return ui::CompositionUnderline::Type::SUGGESTION;
+    case blink::WebCompositionUnderline::Type::MISSPELLING_SUGGESTION:
+      return ui::CompositionUnderline::Type::MISSPELLING_SUGGESTION;
+  }
+}
+
 std::vector<ui::CompositionUnderline> ConvertToUiUnderline(
     const std::vector<blink::WebCompositionUnderline>& underlines) {
   std::vector<ui::CompositionUnderline> ui_underlines;
   for (const auto& underline : underlines) {
     ui_underlines.emplace_back(ui::CompositionUnderline(
-        underline.start_offset, underline.end_offset, underline.color,
-        underline.thick, underline.background_color));
+        ConvertWebTypeToUiType(underline.type), underline.start_offset,
+        underline.end_offset, underline.underline_color, underline.thick,
+        underline.background_color, underline.suggestion_highlight_color,
+        underline.suggestions));
   }
   return ui_underlines;
 }
+
 };  // namespace
 
 class BrowserPluginGuest::EmbedderVisibilityObserver

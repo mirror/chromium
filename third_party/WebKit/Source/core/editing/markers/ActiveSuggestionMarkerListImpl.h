@@ -37,9 +37,11 @@ class CORE_EXPORT ActiveSuggestionMarkerListImpl final
 
   bool MoveMarkers(int length, DocumentMarkerList* dst_list) final;
   bool RemoveMarkers(unsigned start_offset, int length) final;
-  bool ShiftMarkers(unsigned offset,
+  bool ShiftMarkers(const CharacterData& node,
+                    unsigned offset,
                     unsigned old_length,
-                    unsigned new_length) final;
+                    unsigned new_length,
+                    bool edit_is_suggestion_replacement) final;
 
   DECLARE_VIRTUAL_TRACE();
 

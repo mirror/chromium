@@ -18,6 +18,23 @@
 
 namespace content {
 
+namespace {
+
+blink::WebCompositionUnderline::Type
+ConvertUiCompositionUnderlineTypeToBlinkType(
+    ui::CompositionUnderline::Type type) {
+  switch (type) {
+    case ui::CompositionUnderline::Type::COMPOSITION:
+      return blink::WebCompositionUnderline::Type::COMPOSITION;
+    case ui::CompositionUnderline::Type::SUGGESTION:
+      return blink::WebCompositionUnderline::Type::SUGGESTION;
+    case ui::CompositionUnderline::Type::MISSPELLING_SUGGESTION:
+      return blink::WebCompositionUnderline::Type::MISSPELLING_SUGGESTION;
+  }
+}
+
+}  // namespace
+
 FrameInputHandlerImpl::FrameInputHandlerImpl(
     base::WeakPtr<RenderFrameImpl> render_frame,
     mojom::FrameInputHandlerRequest request)
@@ -81,8 +98,10 @@ void FrameInputHandlerImpl::SetCompositionFromExistingText(
   std::vector<blink::WebCompositionUnderline> underlines;
   for (const auto& underline : ui_underlines) {
     blink::WebCompositionUnderline blink_underline(
-        underline.start_offset, underline.end_offset, underline.color,
-        underline.thick, underline.background_color);
+        ConvertUiCompositionUnderlineTypeToBlinkType(underline.type),
+        underline.start_offset, underline.end_offset, underline.underline_color,
+        underline.thick, underline.background_color,
+        underline.suggestion_highlight_color, underline.suggestions);
     underlines.push_back(blink_underline);
   }
 

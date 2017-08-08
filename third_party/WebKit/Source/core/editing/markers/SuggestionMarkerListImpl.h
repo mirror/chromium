@@ -10,10 +10,12 @@
 namespace blink {
 
 // Implementation of DocumentMarkerList for Suggestion markers. Suggestion
-// markers are somewhat unusual compared to some other MarkerTypes in that they
-// can overlap. Since sorting by start offset doesn't help very much when the
-// markers can overlap, and other ways of doing this efficiently would add a lot
-// of complexity, suggestion markers are currently stored unsorted.
+// markers are somewhat unusual compared to other MarkerTypes in that they can
+// overlap. Other marker lists store markers sorted by start offset (which
+// means they're also sorted by end offset, since the markers don't overlap).
+// Since sorting by start offset doesn't help very much when the markers can
+// overlap, and other ways of doing this efficiently would add a lot of
+// complexity, suggestion markers are currently stored unsorted.
 class CORE_EXPORT SuggestionMarkerListImpl final : public DocumentMarkerList {
  public:
   SuggestionMarkerListImpl() = default;
@@ -35,17 +37,36 @@ class CORE_EXPORT SuggestionMarkerListImpl final : public DocumentMarkerList {
 
   bool MoveMarkers(int length, DocumentMarkerList* dst_list) final;
   bool RemoveMarkers(unsigned start_offset, int length) final;
-  bool ShiftMarkers(unsigned offset,
+  bool ShiftMarkers(const CharacterData& node,
+                    unsigned offset,
                     unsigned old_length,
-                    unsigned new_length) final;
+                    unsigned new_length,
+                    bool edit_is_suggestion_replacement) final;
 
   DECLARE_VIRTUAL_TRACE();
 
+  // SuggestionMarkerListImpl-specific
+  bool RemoveMarkerByTag(uint32_t tag);
+
  private:
+  bool ShiftMarkersForSuggestionReplacement(unsigned offset,
+                                            unsigned old_length,
+                                            unsigned new_length);
+  bool ShiftMarkersForNonSuggestionEditingOperation(const CharacterData& node,
+                                                    unsigned offset,
+                                                    unsigned old_length,
+                                                    unsigned new_length);
+
   HeapVector<Member<DocumentMarker>> markers_;
 
   DISALLOW_COPY_AND_ASSIGN(SuggestionMarkerListImpl);
 };
+
+DEFINE_TYPE_CASTS(SuggestionMarkerListImpl,
+                  DocumentMarkerList,
+                  list,
+                  list->MarkerType() == DocumentMarker::kSuggestion,
+                  list.MarkerType() == DocumentMarker::kSuggestion);
 
 }  // namespace blink
 

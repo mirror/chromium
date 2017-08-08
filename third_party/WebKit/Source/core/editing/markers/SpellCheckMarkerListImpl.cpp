@@ -91,9 +91,11 @@ bool SpellCheckMarkerListImpl::RemoveMarkers(unsigned start_offset,
                                                  length);
 }
 
-bool SpellCheckMarkerListImpl::ShiftMarkers(unsigned offset,
+bool SpellCheckMarkerListImpl::ShiftMarkers(const CharacterData&,
+                                            unsigned offset,
                                             unsigned old_length,
-                                            unsigned new_length) {
+                                            unsigned new_length,
+                                            bool) {
   return DocumentMarkerListEditor::ShiftMarkersContentDependent(
       &markers_, offset, old_length, new_length);
 }

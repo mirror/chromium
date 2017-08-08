@@ -21,8 +21,9 @@ TEST_F(TextSuggestionControllerTest, ApplySpellCheckSuggestion) {
   Element* div = GetDocument().QuerySelector("div");
   Node* text = div->firstChild();
 
-  GetDocument().Markers().AddSpellingMarker(
-      EphemeralRange(Position(text, 0), Position(text, 8)));
+  GetDocument().Markers().AddActiveSuggestionMarker(
+      EphemeralRange(Position(text, 0), Position(text, 8)), Color::kBlack,
+      StyleableMarker::Thickness::kThin, Color::kBlack);
   // Select immediately before misspelling
   GetDocument().GetFrame()->Selection().SetSelection(
       SelectionInDOMTree::Builder()
