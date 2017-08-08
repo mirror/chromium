@@ -156,6 +156,10 @@ group("gn_all") {
     ]
   }
 
+  if (enable_oop_heap_profiling) {
+    deps += [ "//chrome/profiling:unit_tests" ]
+  }
+
   if (!is_ios) {
     deps += [
       "//media:media_unittests",
