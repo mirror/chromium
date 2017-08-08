@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "493adc40_c21af534",
+        "filename": "headless/app/headless_shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-08T17:10:35Z",
+      "side": 0,
+      "message": "I think it would be preferable to keep this reference const to make it clear that no other locations modify it. And perhaps move the mutation that we\u0027re doing #if Fuchsia up to before it\u0027s retrieved as a const version (and before ValidateCommmandLine()).",
+      "range": {
+        "startLine": 604,
+        "startChar": 2,
+        "endLine": 604,
+        "endChar": 8
+      },
+      "revId": "175a953ca82fbbf6bd787ea0213103d65d9d61ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
