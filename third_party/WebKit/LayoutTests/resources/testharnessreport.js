@@ -164,6 +164,12 @@
 
         if (outputDocument.URL.indexOf('/html/dom/reflection') >= 0) {
             resultStr += compactTestOutput(tests);
+        } else if (pathAndBaseNameInWPT()) {
+            // For wpt tests, we ignore error messages in order to
+            // make the test not depend on particular error message strings,
+            // which can be a source of flakiness.
+            resultsStr += strippedSortedTestOutput(tests);
+        }
         } else {
             resultStr += testOutput(tests);
         }
@@ -298,14 +304,24 @@
         return testResults.join('');
     }
 
+    /** Returns a string with test output including status, name and message. */
     function testOutput(tests) {
         let testResults = '';
-        window.tests = tests;
         for (let test of tests) {
             testResults += `${convertResult(test.status)} ` +
                 `${sanitize(test.name)} ${sanitize(test.message)}\n`;
         }
         return testResults;
+    }
+
+    /** Returns a string with test output, with lines sorted and no message. */
+    function strippedSortedTestOutput(tests) {
+        let testResults = [];
+        for (let test of tests) {
+            testResults += `${convertResult(test.status)} ${sanitize(test.name)}\n`;
+        }
+        testResults.sort();
+        return testResults.join('');
     }
 
     /** Prepares the given text for display in test results. */
@@ -320,7 +336,6 @@
         // so escaping carriage returns should now be unnecessary.
         text = text.replace(/\r/g, '\\r');
         // Replace machine-dependent path with "...".
-
         if (localPathRegExp) {
             text = text.replace(localPathRegExp, '...');
         }
