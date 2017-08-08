@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "bf889969_f4ed005c",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-08T09:00:28Z",
+      "side": 1,
+      "message": "We need to use HasAuthorBackground in StyleResolver to determine if the author has changed the background. What do you think of either of the following?\n\n  1) Add a boolean to AdjustComputedStyle containing the result of HasAuthorBackground.\n  2) Make HasAuthorBackground static and pass in StyleResolverState to AdjustComputedStyle.",
+      "parentUuid": "e9f19b4c_a5e3efd5",
+      "revId": "78fd62fd85def2cfe7338eecaab6251f9222c14f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2db05096_37c13021",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
         "patchSetId": 2
