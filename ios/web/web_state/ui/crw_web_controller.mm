@@ -323,9 +323,6 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
   // Content view was reset due to low memory. Use the placeholder overlay on
   // next creation.
   BOOL _usePlaceholderOverlay;
-  // The next time the view is requested, reload the page (using the placeholder
-  // overlay until it's loaded).
-  BOOL _requireReloadOnDisplay;
   // Overlay view used instead of webView.
   base::scoped_nsobject<UIImageView> _placeholderOverlayView;
   // The touch tracking recognizer allowing us to decide if a navigation is
@@ -1119,10 +1116,6 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 
 - (void)requirePageReconstruction {
   [self removeWebViewAllowingCachedReconstruction:NO];
-}
-
-- (void)requirePageReload {
-  _requireReloadOnDisplay = YES;
 }
 
 - (void)resetContainerView {
@@ -1995,10 +1988,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // Don't reset the overlay flag if in preview mode.
     if (!_overlayPreviewMode)
       _usePlaceholderOverlay = NO;
-  } else if (_requireReloadOnDisplay && _webView) {
-    _requireReloadOnDisplay = NO;
-    [self addPlaceholderOverlay];
-    [self loadCurrentURL];
   }
 }
 
