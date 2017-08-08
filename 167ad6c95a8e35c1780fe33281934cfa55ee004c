@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f52a4bcf_c161cfad",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T01:38:43Z",
+      "side": 1,
+      "message": "Nit: can we use \u0027using\u0027 style type aliases for new things?\n\n(Yes, this means it will be inconsistent \u003dP)",
+      "revId": "167ad6c95a8e35c1780fe33281934cfa55ee004c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
