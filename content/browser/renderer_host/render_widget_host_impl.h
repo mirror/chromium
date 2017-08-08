@@ -38,6 +38,7 @@
 #include "content/browser/renderer_host/input/touch_emulator_client.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
+#include "content/browser/web_contents_importance.h"
 #include "content/common/drag_event_source_info.h"
 #include "content/common/input/input_event_ack_state.h"
 #include "content/common/input/input_handler.mojom.h"
@@ -274,6 +275,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // having been hidden.
   void WasHidden();
   void WasShown(const ui::LatencyInfo& latency_info);
+
+  void SetImportance(WebContentsImportance importance);
+  WebContentsImportance GetImportance() const;
 
   // Returns true if the RenderWidget is hidden.
   bool is_hidden() const { return is_hidden_; }
@@ -799,6 +803,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // Indicates whether a page is hidden or not. It has to stay in sync with the
   // most recent call to process_->WidgetRestored() / WidgetHidden().
   bool is_hidden_;
+
+  WebContentsImportance importance_ = WebContentsImportance::NORMAL;
 
   // Set if we are waiting for a repaint ack for the view.
   bool repaint_ack_pending_;

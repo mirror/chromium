@@ -1539,6 +1539,18 @@ void WebContentsImpl::WasHidden() {
   should_normally_be_visible_ = false;
 }
 
+void WebContentsImpl::SetImportance(WebContentsImportance importance) {
+  if (importance_ == importance)
+    return;
+  importance_ = importance;
+  UpdateWebContentsImportance();
+}
+
+void WebContentsImpl::UpdateWebContentsImportance() {
+  for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
+    static_cast<RenderWidgetHostViewBase*>(view)->SetImportance(importance_);
+}
+
 bool WebContentsImpl::IsVisible() const {
   return should_normally_be_visible_;
 }
@@ -4433,6 +4445,8 @@ void WebContentsImpl::LoadingStateChanged(bool to_different_document,
 
 void WebContentsImpl::NotifyViewSwapped(RenderViewHost* old_host,
                                         RenderViewHost* new_host) {
+  UpdateWebContentsImportance();
+
   // After sending out a swap notification, we need to send a disconnect
   // notification so that clients that pick up a pointer to |this| can NULL the
   // pointer.  See Bug 1230284.

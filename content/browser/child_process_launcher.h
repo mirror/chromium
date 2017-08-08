@@ -16,6 +16,7 @@
 #include "base/sequence_checker.h"
 #include "build/build_config.h"
 #include "content/browser/child_process_launcher_helper.h"
+#include "content/browser/web_contents_importance.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/result_codes.h"
@@ -108,7 +109,9 @@ class CONTENT_EXPORT ChildProcessLauncher {
 
   // Changes whether the process runs in the background or not.  Only call
   // this after the process has started.
-  void SetProcessPriority(bool background, bool boost_for_pending_views);
+  void SetProcessPriority(bool background,
+                          bool boost_for_pending_views,
+                          WebContentsImportance importance);
 
   // Terminates the process associated with this ChildProcessLauncher.
   // Returns true if the process was stopped, false if the process had not been
