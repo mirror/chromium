@@ -153,9 +153,6 @@ void AutofillPopupViewViews::DrawAutofillEntry(gfx::Canvas* canvas,
   const int frontend_id = controller_->GetSuggestionAt(index).frontend_id;
   const bool is_http_warning =
       (frontend_id == POPUP_ITEM_ID_HTTP_NOT_SECURE_WARNING_MESSAGE);
-  const bool icon_in_front_of_text =
-      (is_http_warning ||
-       frontend_id == POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY);
   const bool is_rtl = controller_->IsRTL();
   const int text_align =
       is_rtl ? gfx::Canvas::TEXT_ALIGN_RIGHT : gfx::Canvas::TEXT_ALIGN_LEFT;
@@ -163,7 +160,7 @@ void AutofillPopupViewViews::DrawAutofillEntry(gfx::Canvas* canvas,
   value_rect.Inset(AutofillPopupLayoutModel::kEndPadding, 0);
 
   // If the icon is on the right of the rect, no matter in RTL or LTR mode.
-  bool icon_on_the_right = icon_in_front_of_text == is_rtl;
+  bool icon_on_the_right = is_http_warning == is_rtl;
   int x_align_left = icon_on_the_right ? value_rect.right() : value_rect.x();
 
   // Draw the Autofill icon, if one exists
@@ -179,7 +176,7 @@ void AutofillPopupViewViews::DrawAutofillEntry(gfx::Canvas* canvas,
     canvas->DrawImageInt(image, icon_x_align_left, icon_y);
 
     // An icon was drawn; adjust the |x_align_left| value for the next element.
-    if (icon_in_front_of_text) {
+    if (is_http_warning) {
       x_align_left =
           icon_x_align_left +
           (is_rtl ? -AutofillPopupLayoutModel::kPaddingAfterLeadingIcon
@@ -199,7 +196,7 @@ void AutofillPopupViewViews::DrawAutofillEntry(gfx::Canvas* canvas,
       controller_->layout_model().GetValueFontListForRow(index));
   int value_x_align_left = x_align_left;
 
-  if (icon_in_front_of_text) {
+  if (is_http_warning) {
     value_x_align_left += is_rtl ? -value_width : 0;
   } else {
     value_x_align_left =
