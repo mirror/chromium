@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a4051852_12cf8661",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-08T19:54:28Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the first time we need it, which happens in OnResponseStarted. We don\u0027t need it before that call. I\u0027ll try to do a general explanation and see if that helps... \n\nWe can\u0027t set  response-\u003ehead.download_file_path \u003d writer_-\u003epath() before OnResponseStarted is called in our handler, as we don\u0027t have the response yet. The first time that is used is when we continue the OnResponseStarted() onto the next_handler_, which eventually makes it back to the async_resource_handler I pasted above.\n\nPreviously we block in OnWillStart and waited until the file was created before continuing. Now we allow OnWillStart to continue, and handle the case where the file wasn\u0027t created before OnResponseStarted is called. If that is the case, we store our response for later, and block until the file is created. This spot in the code is where we continue that call path - we forward the response, which will hit the code in async_resource_handler.\n\nDoes that make sense and answer your question?",
+      "parentUuid": "b0466f13_04155444",
+      "revId": "05628c17415c8e01352e65aefb1ee634a0134bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f9ca3c4_fba5f994",
         "filename": "content/browser/loader/redirect_to_file_resource_handler_unittest.cc",
         "patchSetId": 6
