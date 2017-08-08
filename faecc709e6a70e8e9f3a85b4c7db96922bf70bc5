@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "d6aedd95_baba2a4a",
+        "filename": "sandbox/win/src/win_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-08T08:17:04Z",
+      "side": 1,
+      "message": "nit: \"constexpr wchar_t ...\" here and below",
+      "revId": "faecc709e6a70e8e9f3a85b4c7db96922bf70bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d359a1_02112124",
+        "filename": "sandbox/win/src/win_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-08T08:17:04Z",
+      "side": 1,
+      "message": "nit: \"static constexpr wchar_t kPattern[] \u003d ...\"",
+      "revId": "faecc709e6a70e8e9f3a85b4c7db96922bf70bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad38af51_5752ce8f",
         "filename": "sandbox/win/src/win_utils.h",
         "patchSetId": 6
