@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac12cd7d_c63d14db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T01:19:38Z",
+      "side": 1,
+      "message": "address_bytes",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "5e414dfc6be611b94585c8e306ba5bc7acdadd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b51c64_4a180a05",
+        "filename": "net/interfaces/ip_address_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T01:19:38Z",
+      "side": 1,
+      "message": "Sorry, I think I must have missed your reply on the original CL, but can we make this return a mojo::CArray? That would remove the copy here.\n\n(I guess this is why it didn\u0027t return a const ref to begin with)",
+      "revId": "5e414dfc6be611b94585c8e306ba5bc7acdadd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
