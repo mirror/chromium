@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b07db4b8_aba2da9d",
+        "filename": "content/public/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-08T03:12:54Z",
+      "side": 1,
+      "message": "Why not include the source files and deps in a positive condition? I.e.\nif (enable_webrtc) {\n  sources +\u003d [ ... ]\n  deps +\u003d [ ... ]\n}",
+      "revId": "bd6da825af7647152c0ce5be0ed63551f5dd6f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
