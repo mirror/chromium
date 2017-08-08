@@ -4,6 +4,11 @@
 
 #import "ios/chrome/browser/app_startup_parameters.h"
 
+#include "base/stl_util.h"
+#include "ios/chrome/browser/chrome_url_constants.h"
+#include "ios/chrome/browser/payments/ios_payment_instrument_launcher.h"
+#import "net/base/mac/url_conversions.h"
+#include "net/base/url_util.h"
 #include "url/gurl.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -14,8 +19,10 @@
   GURL _externalURL;
 }
 
+@synthesize externalURLParams = _externalURLParams;
 @synthesize postOpeningAction = _postOpeningAction;
 @synthesize launchInIncognito = _launchInIncognito;
+@synthesize completePaymentRequest = _completePaymentRequest;
 
 - (const GURL&)externalURL {
   return _externalURL;
@@ -27,6 +34,32 @@
     _externalURL = externalURL;
   }
   return self;
+}
+
++ (instancetype)initWithUniversalLink:(const GURL&)universalLink {
+  // If a new tab with |_externalURL| needs to be opened after the App
+  // was launched as the result of a Universal Link navigation, the only
+  // supported possibility at this time is the New Tab Page.
+  GURL newTabURL(kChromeUINewTabURL);
+  AppStartupParameters* startupParams =
+      [[AppStartupParameters alloc] initWithExternalURL:newTabURL];
+
+  std::map<std::string, std::string> parameters;
+  net::QueryIterator query_iterator(universalLink);
+  while (!query_iterator.IsAtEnd()) {
+    parameters.insert(std::make_pair(query_iterator.GetKey(),
+                                     query_iterator.GetUnescapedValue()));
+    query_iterator.Advance();
+  }
+
+  // Currently only Payment Request parameters are supported.
+  if (base::ContainsKey(parameters, payments::kPaymentRequestID) &&
+      base::ContainsKey(parameters, payments::kPaymentRequestData)) {
+    [startupParams setExternalURLParams:parameters];
+    [startupParams setCompletePaymentRequest:YES];
+  }
+
+  return startupParams;
 }
 
 - (NSString*)description {
@@ -49,6 +82,10 @@
       break;
     default:
       break;
+  }
+
+  if (self.completePaymentRequest) {
+    [description appendString:@", should complete payment request"];
   }
 
   return description;
