@@ -16,6 +16,29 @@
       "revId": "167ad6c95a8e35c1780fe33281934cfa55ee004c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85718769_5b67d151",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1131524
+      },
+      "writtenOn": "2017-08-08T19:59:01Z",
+      "side": 1,
+      "message": "Some of them do a bit more. In particular, mxsio_wait_begin_stream (the version for the stream socket protocol) has to check the socket connection state to compute the bits, and will return different signals for the same events depending upon the connection state.",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 37
+      },
+      "revId": "167ad6c95a8e35c1780fe33281934cfa55ee004c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
