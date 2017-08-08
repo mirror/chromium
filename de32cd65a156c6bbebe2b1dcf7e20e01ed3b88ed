@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4c082a0d_ec9865e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/CctOfflinePageModelObserver.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-08T16:57:30Z",
+      "side": 1,
+      "message": "ack.  No need to wait for response for this particular patch.",
+      "parentUuid": "8e3ed85e_48abed4d",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "128d3d94_bbdbe281",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
         "patchSetId": 10
@@ -100,6 +118,24 @@
       "side": 1,
       "message": "Yes, but I want to prevent the situation where the jsonString is something like [\"someAppName\", [1, 2]], which would cause JSONException in line 53 when we call signatureInfo.getString(i). In this situation, we\u0027d already have recorded name \u003d \"someAppName\", and initialized signatures to empty string array of 2.  We want to reset the values back.",
       "parentUuid": "04026952_c1a6a08a",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01bd86d_1f860e51",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-08T16:57:30Z",
+      "side": 1,
+      "message": "Ack, yeah I misunderstood the code when I wrote that comment. Thanks!",
+      "parentUuid": "f8ea0e18_e55db6bd",
       "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -158,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "e5b77831_f89c8860",
+        "filename": "chrome/browser/offline_pages/android/cct_origin_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-08T16:57:30Z",
+      "side": 1,
+      "message": "Only a few ns, I think.  Probably fine, better to encapsulate all the origin processing into the specific origin class.",
+      "parentUuid": "e3184af9_ce4988c7",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d5e7bc2_4dd81d3d",
         "filename": "chrome/browser/offline_pages/android/offline_page_model_factory.cc",
         "patchSetId": 10
@@ -187,6 +241,24 @@
       "side": 1,
       "message": "I gave it a little bit of thought, but decided to follow the example set by request_coordinator_factory.",
       "parentUuid": "9d5e7bc2_4dd81d3d",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d683fa5_8e835ab7",
+        "filename": "chrome/browser/offline_pages/android/offline_page_model_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-08T16:57:30Z",
+      "side": 1,
+      "message": "Sounds reasonable to me, but probably good to fyi dimich@ on this one.",
+      "parentUuid": "5bcf7ea1_65abd588",
       "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
