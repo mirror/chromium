@@ -22,6 +22,30 @@
       "revId": "6b8aa4a4d45007dd341c4eab15e5f58c632529e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b929eb4a_6188a1eb",
+        "filename": "base/process/process_handle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-08T22:57:33Z",
+      "side": 1,
+      "message": "Hmm, in that case I think it might be a good idea to remove the \"d\" altogether.  The purpose of this #define is to abstract away platform-specific details about the PID representation, right? In that case we might be better served by \"CrPRIPid\" (which is CrPRIdPid minus the \u0027d\u0027). Otherwise we\u0027ll need platform #ifdefs in any place where we format strings with PIDs.\n\nPTAL",
+      "parentUuid": "cd73bac7_92a51290",
+      "range": {
+        "startLine": 53,
+        "startChar": 18,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "6b8aa4a4d45007dd341c4eab15e5f58c632529e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
