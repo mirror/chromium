@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "8e3ed85e_48abed4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/CctOfflinePageModelObserver.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-08T14:24:21Z",
+      "side": 1,
+      "message": "I\u0027ll confirm with Lauren on this. Currently the talk is to notify them that a page has changed, and they will re-fetch all the pages?",
+      "parentUuid": "0dc12328_3ff47ed8",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "128d3d94_bbdbe281",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
         "patchSetId": 10
@@ -64,6 +82,24 @@
       "writtenOn": "2017-08-07T23:03:24Z",
       "side": 1,
       "message": "This code seems redundant because the finally block will run after this block, right?",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ea0e18_e55db6bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-08T14:24:21Z",
+      "side": 1,
+      "message": "Yes, but I want to prevent the situation where the jsonString is something like [\"someAppName\", [1, 2]], which would cause JSONException in line 53 when we call signatureInfo.getString(i). In this situation, we\u0027d already have recorded name \u003d \"someAppName\", and initialized signatures to empty string array of 2.  We want to reset the values back.",
+      "parentUuid": "04026952_c1a6a08a",
       "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "e3184af9_ce4988c7",
+        "filename": "chrome/browser/offline_pages/android/cct_origin_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-08T14:24:21Z",
+      "side": 1,
+      "message": "The Java side already checks for non-empty origin, it felt redundant.  On the other hand, it would save us a JNI call for most of the cases.... I\u0027m not sure how expensive the JNI call is?",
+      "parentUuid": "eaf996d4_a4b23ed5",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d5e7bc2_4dd81d3d",
         "filename": "chrome/browser/offline_pages/android/offline_page_model_factory.cc",
         "patchSetId": 10
@@ -115,6 +169,24 @@
       "writtenOn": "2017-08-07T23:03:24Z",
       "side": 1,
       "message": "Did you consider alternative ways to do this?  I can see it being useful to only have a factory on supported platforms but there could be quite a bit of duplicated code when we add a second platform.\n\nMost viable alternate off the top of my head is to declare an AddPlatformObservers(OfflinePageModelImpl*) method that is only implemented on android and calls into CctOriginObserver.",
+      "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bcf7ea1_65abd588",
+        "filename": "chrome/browser/offline_pages/android/offline_page_model_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-08T14:24:21Z",
+      "side": 1,
+      "message": "I gave it a little bit of thought, but decided to follow the example set by request_coordinator_factory.",
+      "parentUuid": "9d5e7bc2_4dd81d3d",
       "revId": "de32cd65a156c6bbebe2b1dcf7e20e01ed3b88ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
