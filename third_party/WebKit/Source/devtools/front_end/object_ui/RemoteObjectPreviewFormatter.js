@@ -79,6 +79,13 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
    * @param {!Protocol.Runtime.ObjectPreview} preview
    */
   _appendObjectPropertiesPreview(parentElement, preview) {
+    var primitiveValue =
+        preview.properties.find(prop => prop.name === ObjectUI.RemoteObjectPreviewFormatter._primitiveValueName);
+    if (primitiveValue) {
+      parentElement.appendChild(this._renderPropertyPreviewOrAccessor([primitiveValue]));
+      return;
+    }
+
     var properties = preview.properties.filter(p => p.type !== 'accessor')
                          .stableSort(ObjectUI.RemoteObjectPreviewFormatter._objectPropertyComparator);
     for (var i = 0; i < properties.length; ++i) {
@@ -86,7 +93,8 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
         parentElement.createTextChild(', ');
 
       var property = properties[i];
-      parentElement.appendChild(this._renderDisplayName(property.name));
+      var name = ObjectUI.RemoteObjectPreviewFormatter._internalPropertyDisplayName.get(property.name) || property.name;
+      parentElement.appendChild(this._renderDisplayName(name));
       parentElement.createTextChild(': ');
       parentElement.appendChild(this._renderPropertyPreviewOrAccessor([property]));
     }
@@ -208,6 +216,11 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
    */
   _renderPropertyPreviewOrAccessor(propertyPath) {
     var property = propertyPath.peekLast();
+    if (property.valuePreview) {
+      var result = createElement('span');
+      this.appendObjectPreview(result, property.valuePreview, false /* isEntry */);
+      return result;
+    }
     return this.renderPropertyPreview(property.type, /** @type {string} */ (property.subtype), property.value);
   }
 
@@ -255,3 +268,15 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
     return span;
   }
 };
+
+/**
+ * @const
+ * @type {string}
+ */
+ObjectUI.RemoteObjectPreviewFormatter._primitiveValueName = '[[PrimitiveValue]]';
+
+/** @type {!Map<string, string>} */
+ObjectUI.RemoteObjectPreviewFormatter._internalPropertyDisplayName = new Map([
+  ['[[PromiseStatus]]', Common.UIString('status')], ['[[PromiseValue]]', Common.UIString('value')],
+  ['[[GeneratorStatus]]', Common.UIString('status')]
+]);
