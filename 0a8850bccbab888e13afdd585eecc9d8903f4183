@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5dac20f2_4d2e3299",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b80f70d_abed7eff",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de878ac9_944e14b3",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0876e407_8506676c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de878ac9_944e14b3",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4a912c1_ce028b79",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -47,6 +83,30 @@
       "writtenOn": "2017-08-04T17:04:39Z",
       "side": 1,
       "message": "If I\u0027m reading the code right, on low end devices web facing APIs use the same \"Default\" block cache, right?",
+      "range": {
+        "startLine": 11,
+        "startChar": 56,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966c05aa_eae080f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "Yes. Completely open to reviewers that feel that\u0027s incorrect.",
+      "parentUuid": "f4a912c1_ce028b79",
       "range": {
         "startLine": 11,
         "startChar": 56,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "95e4f59c_cd6747a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "I reworded the comment to include malicious pages, but still left in data intensive since the cache is so small. Let me know if you\u0027re ok with the new wording.",
+      "parentUuid": "010bacba_754c3171",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffd60e15_2fdd6df7",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "6af8dfa8_a668d65d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffd60e15_2fdd6df7",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf6e9f51_ed3e516b",
         "filename": "components/leveldb/leveldb_database_impl.h",
         "patchSetId": 1
@@ -104,6 +200,30 @@
       "writtenOn": "2017-08-04T17:04:39Z",
       "side": 1,
       "message": "It might make sense to do the memory infra logging that this used to be used for in DBTracker::MemoryDumpProvider instead? I only added it here because at the time there was no DBTracker yet.\n\nActually, with the shared block cache (unless we somehow have a wrapper to attribute usage to an individual database) it doesn\u0027t really make sense to report cache memory usage like this at all. But same problem applies to memory usage in general. \"leveldb.approximate-memory-usage\" will include the full cache size in all database, so you\u0027ll definitely have to somehow change DBTracker to not double count all that memory...",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 75
+      },
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b0d024_1740818b",
+        "filename": "components/leveldb/leveldb_database_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "1) This memory is doubly counted as it\u0027s using chromium_env::OpenDB(). I\u0027m going to delete that in an upcoming CL: crbug.com/735269\n\n2) There is a way to amortize the cost of the shared block cache for memory-infra, and I\u0027ll be doing that in an upcoming CL: crbug.com/750770",
+      "parentUuid": "bf6e9f51_ed3e516b",
       "range": {
         "startLine": 80,
         "startChar": 0,
@@ -151,6 +271,24 @@
     },
     {
       "key": {
+        "uuid": "82b21644_50bec30e",
+        "filename": "components/leveldb/leveldb_database_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "1) Correct caches (for LevelDBDatabaseImpl) are always shared.\n2) Marijn\u0027s correct. It passed CQ because cache_ is always NULL. I\u0027m going to delete cache_ entirely as part of crbug.com/735269.",
+      "parentUuid": "08a1e2c6_ea5f703c",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "908d1e7b_36c88d12",
         "filename": "components/leveldb/leveldb_service_impl.cc",
         "patchSetId": 1
@@ -186,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "5bf89133_c3f683f5",
+        "filename": "components/leveldb/leveldb_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "yes, I\u0027m talking about the leveldb_env default instead of the one that leveldb creates for you. I\u0027m happy to rename/change to avoid confusion. Suggestions?",
+      "parentUuid": "08e3fa69_d4c8cc46",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aab556dd_632f8f3e",
         "filename": "components/leveldb/public/interfaces/leveldb.mojom",
         "patchSetId": 1
@@ -197,6 +353,24 @@
       "writtenOn": "2017-08-03T23:43:45Z",
       "side": 1,
       "message": "It might be useful to have clients specify an abstract access class / access pattern / isolation level instead of explicitly coupling the option to the block cache. This\u0027d let us use the same option to select the right pool if we implement file descriptor pooling.\n\nIf you prefer, I\u0027m OK with deferring a change to the point where we actually implement descriptor pooling, so we don\u0027t pay the mental cost of the extra abstraction until we\u0027re ready to get some benefits out of it.",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7116c5cf_f68a0d0e",
+        "filename": "components/leveldb/public/interfaces/leveldb.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "If I create struct-traits to map this to a leveldb_env::Options instance then the code can\u0027t call leveldb::mojom::OpenOptions::New(), and instead must use a leveldb_env::Options. Does that sound reasonable? If so then this CL or a follow-on?",
+      "parentUuid": "aab556dd_632f8f3e",
       "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -238,6 +412,24 @@
     },
     {
       "key": {
+        "uuid": "1a621b4a_a887850a",
+        "filename": "components/leveldb_proto/options.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "I changed it as you suggested. I would up changing BudgetDatabase to using InitWithOptions. I agree, that a future CL should merge the two functions. Since you both volunteered :-) I\u0027ll assume that one you will do it, but if not let me know and I\u0027ll do that CL too.",
+      "parentUuid": "617be5d2_5c6dad16",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e342e74_b925eeb9",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 1
@@ -252,6 +444,24 @@
       "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb73fdd5_2b43ac8b",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "I\u0027ve added your comment to my memory/todo for this work. I\u0027ll research further and get back to you. thx.",
+      "parentUuid": "5e342e74_b925eeb9",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +482,24 @@
     },
     {
       "key": {
+        "uuid": "8e4ba595_c1b04b3f",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46c3f40c_8cb69542",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98b78bde_c12c20be",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 1
@@ -283,6 +511,24 @@
       "writtenOn": "2017-08-07T18:41:26Z",
       "side": 1,
       "message": "This is now double what it was in //components/leveldb_proto from before. Is that intentional? If so, could you add a message to the CL description that you are doubling the total size? It\u0027s shared though, so not necessarily a negative, I just think it\u0027s worth mentioning.",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6a7f24_c0372cc1",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "Yes, instead of two 512KB caches there\u0027s a single 1MB cache. I updated the description so let me know if it\u0027s OK.",
+      "parentUuid": "98b78bde_c12c20be",
       "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -306,6 +552,24 @@
     },
     {
       "key": {
+        "uuid": "c9d31711_1e48cd10",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "353f3a4c_1b35503f",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c43824a_8828d6b8",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 1
@@ -320,6 +584,24 @@
       "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a31196b6_6da904cf",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c43824a_8828d6b8",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -340,6 +622,24 @@
     },
     {
       "key": {
+        "uuid": "79109d88_1a88817c",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a82f07f1_ca1d4ba2",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08e979e5_aeb1cf82",
         "filename": "third_party/leveldatabase/env_chromium.h",
         "patchSetId": 1
@@ -354,6 +654,24 @@
       "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd56523_0003bdb0",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08e979e5_aeb1cf82",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -374,6 +692,24 @@
     },
     {
       "key": {
+        "uuid": "eec0d8aa_076b6094",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "You and Josh are going to make me a better writer.",
+      "parentUuid": "f87fa82e_6fdbe53b",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c7c64b_9df5cf35",
         "filename": "third_party/leveldatabase/env_chromium.h",
         "patchSetId": 1
@@ -388,6 +724,24 @@
       "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f44f26_58a501db",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-08T19:54:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c7c64b_9df5cf35",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
