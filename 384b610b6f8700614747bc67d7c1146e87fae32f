@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "f5912bd6_6afde2ae",
+        "filename": "net/http/http_network_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1540,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T18:49:42Z",
+      "side": 1,
+      "message": "This should be just above the \"ResetConnectionAndRequestForResend\", so we don\u0027t log it when we don\u0027t actually retry",
+      "range": {
+        "startLine": 1540,
+        "startChar": 27,
+        "endLine": 1540,
+        "endChar": 63
+      },
+      "revId": "384b610b6f8700614747bc67d7c1146e87fae32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0979a500_eaf881b2",
+        "filename": "net/http/http_network_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1544,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T18:49:42Z",
+      "side": 1,
+      "message": "nit: early return/breaking is often preferred.  It reduces indentation, and often makes code a little easier to read.  So I suggest a break here and getting rid of the else.",
+      "range": {
+        "startLine": 1544,
+        "startChar": 8,
+        "endLine": 1544,
+        "endChar": 42
+      },
+      "revId": "384b610b6f8700614747bc67d7c1146e87fae32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a078eb9_c31d5462",
+        "filename": "net/http/http_network_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1559,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T18:49:42Z",
+      "side": 1,
+      "message": "This accounting seems a little weird - we\u0027re incrementing \"retry_attempts\" before we actually retry.  Suggest putting this with the following \"ResetConnectionAndRequestForResend()\" calls.  That does mean we\u0027ll need an extra copy, and we should probably make kMaxRetryAttempts be 2 instead (2 retries, 3 total attempts, updating the description of that value to be clear what it means)",
+      "range": {
+        "startLine": 1559,
+        "startChar": 6,
+        "endLine": 1559,
+        "endChar": 21
+      },
+      "revId": "384b610b6f8700614747bc67d7c1146e87fae32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1443d3d6_eeb305a1",
+        "filename": "net/http/http_network_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1638,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T18:49:42Z",
+      "side": 1,
+      "message": "nit:  ExceededMaxRetries() const {\n\n(And the same for the declaration)",
+      "range": {
+        "startLine": 1638,
+        "startChar": 28,
+        "endLine": 1638,
+        "endChar": 29
+      },
+      "revId": "384b610b6f8700614747bc67d7c1146e87fae32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "243433a2_be81f571",
         "filename": "net/http/http_network_transaction.h",
         "patchSetId": 2
@@ -69,6 +161,29 @@
       "revId": "384b610b6f8700614747bc67d7c1146e87fae32f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "348ba758_09248a63",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T18:49:42Z",
+      "side": 1,
+      "message": "Suggest making this another test - it\u0027s generally easier to follow test cases when they\u0027re separate, even if that means duplicating a bit of code.",
+      "range": {
+        "startLine": 1721,
+        "startChar": 14,
+        "endLine": 1721,
+        "endChar": 21
+      },
+      "revId": "384b610b6f8700614747bc67d7c1146e87fae32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
