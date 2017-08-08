@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54761efb_f53651bd",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-08T15:08:45Z",
+      "side": 1,
+      "message": "File a bug?",
+      "parentUuid": "3e06a8b7_8c59bc71",
+      "range": {
+        "startLine": 243,
+        "startChar": 30,
+        "endLine": 243,
+        "endChar": 31
+      },
+      "revId": "64abc8e04cf992bb93d014efcb43828dcab11298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bed57cc_9c515b63",
         "filename": "media/audio/audio_manager_base.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-08T14:45:48Z",
       "side": 1,
       "message": "I think this should be USE_CRAS, as you can run chrome on chromeos on linux with pulseaudio. Doesn\u0027t matter right now though, as GetDefaultOutputDeviceID isn\u0027t implemented for pulse.",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 252,
+        "endChar": 24
+      },
+      "revId": "64abc8e04cf992bb93d014efcb43828dcab11298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97ac2a0d_9701f172",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-08T15:08:45Z",
+      "side": 1,
+      "message": "Ack. I guess you can fix that in a follow-up CL.",
+      "parentUuid": "2bed57cc_9c515b63",
       "range": {
         "startLine": 252,
         "startChar": 0,
