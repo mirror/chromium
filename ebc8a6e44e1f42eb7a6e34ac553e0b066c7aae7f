@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "33b819d4_2e5e49cb",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorTraceEvents.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-08T22:51:44Z",
+      "side": 1,
+      "message": "The naming convention for most of the trace data fields is camelCase (see nodeId above), so please make these srcWidth/srcHeight.",
+      "revId": "ebc8a6e44e1f42eb7a6e34ac553e0b066c7aae7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54d11b08_ea3ba8ea",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorTraceEvents.cpp",
         "patchSetId": 2
@@ -13,6 +30,57 @@
       "writtenOn": "2017-08-08T22:26:31Z",
       "side": 1,
       "message": "These other two trace event constructors seemed to only be called during measurement when the source size was not readily available and another subsequent PaintImage event was about to be recorded. Please correct me if I\u0027m wrong and should add the data there too :)",
+      "revId": "ebc8a6e44e1f42eb7a6e34ac553e0b066c7aae7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5ee543_f33737bf",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorTraceEvents.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-08T22:51:44Z",
+      "side": 1,
+      "message": "Let\u0027s add parameter names, we only omit these in case it\u0027s obvious from type.",
+      "revId": "ebc8a6e44e1f42eb7a6e34ac553e0b066c7aae7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c3f9de_ccc21c6a",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-08T22:51:44Z",
+      "side": 1,
+      "message": "Can we pass float rects and do the conversion within InspectorPaintImageEvent::Data()?",
+      "revId": "ebc8a6e44e1f42eb7a6e34ac553e0b066c7aae7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a7c6b8_310ba6cd",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-08T22:51:44Z",
+      "side": 1,
+      "message": "I wonder if we should rather be concerned with the tile size for your use case?",
       "revId": "ebc8a6e44e1f42eb7a6e34ac553e0b066c7aae7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
