@@ -218,9 +218,9 @@ public class VrShellImpl
                     // We need the CVC to think it has Window Focus so it doesn't blur the page,
                     // even though we're drawing VR layouts over top of it.
                     mContentViewCore.onWindowFocusChanged(true);
-                    nativeSwapContents(mNativeVrShell, mContentViewCore.getWebContents(), null);
+                    nativeSwapContents(mNativeVrShell, tab, null);
                 } else {
-                    nativeSwapContents(mNativeVrShell, null, mMotionEventSynthesizer);
+                    nativeSwapContents(mNativeVrShell, tab, mMotionEventSynthesizer);
                 }
                 updateHistoryButtonsVisibility();
             }
@@ -788,7 +788,7 @@ public class VrShellImpl
     private native void nativeSetSurface(long nativeVrShell, Surface surface);
     private native void nativeSetSplashScreenIcon(long nativeVrShell, Bitmap bitmap);
     private native void nativeSwapContents(
-            long nativeVrShell, WebContents webContents, MotionEventSynthesizer eventSynthesizer);
+            long nativeVrShell, Tab tab, MotionEventSynthesizer eventSynthesizer);
     private native void nativeDestroy(long nativeVrShell);
     private native void nativeOnTriggerEvent(long nativeVrShell, boolean touched);
     private native void nativeOnPause(long nativeVrShell);
