@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b31bc095_36583f83",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-08T00:20:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edcf3e58_d4213e59",
+      "revId": "13ebf1f27487a794b5390030578c3035f9ef1760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "595b763f_4cc5eb1b",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "13ebf1f27487a794b5390030578c3035f9ef1760",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491e5691_dd9311e6",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-08T00:20:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "595b763f_4cc5eb1b",
+      "revId": "13ebf1f27487a794b5390030578c3035f9ef1760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9435e81f_d2ee4196",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-08T00:20:54Z",
+      "side": 1,
+      "message": "Correct; removing this line causes |updateConstraints| to never be called. IIUC, |updateConstraintsIfNeeded| is called during layout multiple times, but |updateConstraints| is only called if |setNeedsUpdateConstraints| is called.",
+      "parentUuid": "147f6de8_7dd93f6f",
+      "revId": "13ebf1f27487a794b5390030578c3035f9ef1760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d15d0d5f_69d91dc0",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "13ebf1f27487a794b5390030578c3035f9ef1760",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa29bc5_f8a68393",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-08T00:20:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d15d0d5f_69d91dc0",
+      "revId": "13ebf1f27487a794b5390030578c3035f9ef1760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
