@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "736be9e9_54608452",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1213334
+      },
+      "writtenOn": "2017-08-08T00:23:20Z",
+      "side": 1,
+      "message": "I think I will leave it, for currently the project doesn\u0027t need to collect the information about the background task.",
+      "parentUuid": "42c68088_c02cfaad",
+      "range": {
+        "startLine": 70,
+        "startChar": 29,
+        "endLine": 70,
+        "endChar": 46
+      },
+      "revId": "2f49a235aaa043cebf257f914ba888252e3fe8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2638fabd_424a712f",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
         "patchSetId": 14
