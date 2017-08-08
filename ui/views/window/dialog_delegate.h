@@ -8,6 +8,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "base/time/time.h"
 #include "ui/accessibility/ax_enums.h"
 #include "ui/base/models/dialog_model.h"
 #include "ui/base/ui_base_types.h"
@@ -124,6 +125,9 @@ class VIEWS_EXPORT DialogDelegate : public ui::DialogModel,
   // A flag indicating whether this dialog is able to use the custom frame
   // style for dialogs.
   bool supports_custom_frame_;
+
+  // The time the dialog in created.
+  base::Time creation_time_;
 };
 
 // A DialogDelegate implementation that is-a View. Used to override GetWidget()
