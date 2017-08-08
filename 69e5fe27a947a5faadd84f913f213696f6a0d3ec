@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee442646_54add8ac",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-08T19:17:08Z",
+      "side": 1,
+      "message": "move it before the loop.",
+      "range": {
+        "startLine": 479,
+        "startChar": 9,
+        "endLine": 479,
+        "endChar": 37
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c6b8e4_9ff64a31",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-08T19:17:08Z",
+      "side": 1,
+      "message": "the comment is great.\nmove it to private section. \ndo we use underscore for field names in this file?\nthe name is not relevant (it is a field name but not username (value)).",
+      "range": {
+        "startLine": 300,
+        "startChar": 33,
+        "endLine": 300,
+        "endChar": 49
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
