@@ -38,6 +38,13 @@ bool ShouldOverrideNavigation(
     const Extension* app,
     content::WebContents* source,
     const navigation_interception::NavigationParams& params) {
+  DVLOG(1) << "ShouldOverrideNavigation called for: " << params.url();
+
+  if (params.transition_type() & ui::PAGE_TRANSITION_TYPED) {
+    DVLOG(1) << "Don't override: URL typed in omnibox or explicit navigation.";
+    return false;
+  }
+
   Browser* browser = chrome::FindBrowserWithWebContents(source);
   if (browser == nullptr) {
     DVLOG(1) << "Don't override: No browser, can't know if already in app.";
