@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e41a2fbe_6d07d5f2",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 1984,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-08T18:07:04Z",
+      "side": 1,
+      "message": "interact -\u003e interacting",
+      "range": {
+        "startLine": 1984,
+        "startChar": 53,
+        "endLine": 1984,
+        "endChar": 61
+      },
+      "revId": "a81045a6b52859ddaa6bc32911d020d26d8691e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19dcd0d9_021aa44c",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-08T18:07:04Z",
+      "side": 1,
+      "message": "s/when when/when/",
+      "range": {
+        "startLine": 160,
+        "startChar": 69,
+        "endLine": 160,
+        "endChar": 73
+      },
+      "revId": "a81045a6b52859ddaa6bc32911d020d26d8691e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b65750_f84114c1",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-08T18:07:04Z",
+      "side": 1,
+      "message": "methods like this should not be declared inline, so move this to the .cc",
+      "range": {
+        "startLine": 48,
+        "startChar": 14,
+        "endLine": 48,
+        "endChar": 40
+      },
+      "revId": "a81045a6b52859ddaa6bc32911d020d26d8691e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a6ceca_3207527d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 2743,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-08T18:07:04Z",
+      "side": 1,
+      "message": "this variable name is not descriptive enough - I would just not use a variable here, and test the flag each time",
+      "range": {
+        "startLine": 2743,
+        "startChar": 7,
+        "endLine": 2743,
+        "endChar": 17
+      },
+      "revId": "a81045a6b52859ddaa6bc32911d020d26d8691e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a66a092_289daee8",
+        "filename": "content/browser/web_contents/web_contents_view_mac.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-08T18:07:04Z",
+      "side": 1,
+      "message": "isn\u0027t this only when content fullscreen is enabled?",
+      "range": {
+        "startLine": 223,
+        "startChar": 21,
+        "endLine": 223,
+        "endChar": 46
+      },
+      "revId": "a81045a6b52859ddaa6bc32911d020d26d8691e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
