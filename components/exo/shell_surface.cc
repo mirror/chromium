@@ -484,6 +484,15 @@ void ShellSurface::SetSystemUiVisibility(bool autohide) {
   ash::wm::SetAutoHideShelf(widget_->GetNativeWindow(), autohide);
 }
 
+void ShellSurface::SetWindowSelectorBehavior(uint32_t behavior) {
+  if (!widget_)
+    CreateShellSurfaceWidget(ui::SHOW_STATE_NORMAL);
+
+  widget_->GetNativeWindow()->SetProperty(
+      aura::client::kWindowSelectorBehaviorKey,
+      static_cast<aura::client::WindowSelectorBehavior>(behavior));
+}
+
 void ShellSurface::SetAlwaysOnTop(bool always_on_top) {
   TRACE_EVENT1("exo", "ShellSurface::SetAlwaysOnTop", "always_on_top",
                always_on_top);

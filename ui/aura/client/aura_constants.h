@@ -5,6 +5,7 @@
 #ifndef UI_AURA_CLIENT_AURA_CONSTANTS_H_
 #define UI_AURA_CLIENT_AURA_CONSTANTS_H_
 
+#include <cstdint>
 #include <string>
 
 #include "base/strings/string16.h"
@@ -27,6 +28,13 @@ enum class WindowEmbedType {
   NONE,
   EMBED_IN_OWNER,
   TOP_LEVEL_IN_WM,
+};
+
+// Defines window's behaivor in overview mode and in alt-tab.
+enum class WindowSelectorBehavior : uint32_t {
+  SHOW = 0,  // window is visible and in window list
+  HIDDEN,    // window is not visible in window selector
+  SKIP,      // window is visible but not in window list
 };
 
 // Alphabetical sort.
@@ -128,6 +136,11 @@ AURA_EXPORT extern const WindowProperty<gfx::Rect*>* const kRestoreBoundsKey;
 // See ui/base/ui_base_types.h for its definition.
 AURA_EXPORT extern const WindowProperty<ui::WindowShowState>* const
     kShowStateKey;
+
+// A property key to indicate that the window should not appear in window
+// selector.
+AURA_EXPORT extern const WindowProperty<WindowSelectorBehavior>* const
+    kWindowSelectorBehaviorKey;
 
 // A property key to store the title of the window; sometimes shown to users.
 AURA_EXPORT extern const WindowProperty<base::string16*>* const kTitleKey;

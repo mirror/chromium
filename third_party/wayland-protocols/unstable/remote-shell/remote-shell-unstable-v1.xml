@@ -478,6 +478,16 @@
 
     <!-- Version 5 additions -->
 
+    <enum name="window_selector_behavior">
+      <description summary="the window selector behavior">
+        Defines how a client should behave in window selector.
+      </description>
+      <entry name="show" value="0" summary="window is present in overview list"/>
+      <entry name="hidden" value="1" summary="window is not visible in window selector"/>
+      <entry name="skip" value="2"
+        summary="window is not present in overview list but visible in window selector"/>
+    </enum>
+
     <event name="configure" since="5">
       <description summary="suggest a surface change">
 	The configure event asks the client to change surface state.
@@ -539,6 +549,15 @@
 	The compositor may ignore move requests depending on the state of the
 	surface, e.g. fullscreen or maximized.
       </description>
+    </request>
+
+    <request name="set_window_selector_behavior" since="5">
+      <description summary="send window flags to server">
+        Request that defines window behavior in overview mode.
+
+        Such behavior is just a hint and the compositor may ignore the request.
+      </description>
+      <arg name="window_selector_behavior" type="uint"/>
     </request>
 
     <!-- Version 6 additions -->

@@ -2196,6 +2196,12 @@ void remote_surface_unset_always_on_top(wl_client* client,
   GetUserDataAs<ShellSurface>(resource)->SetAlwaysOnTop(false);
 }
 
+void remote_surface_set_window_selector_behavior(wl_client* client,
+                                                 wl_resource* resource,
+                                                 uint32_t behavior) {
+  GetUserDataAs<ShellSurface>(resource)->SetWindowSelectorBehavior(behavior);
+}
+
 void remote_surface_ack_configure(wl_client* client,
                                   wl_resource* resource,
                                   uint32_t serial) {
@@ -2231,6 +2237,7 @@ const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_unset_always_on_top,
     remote_surface_ack_configure,
     remote_surface_move,
+    remote_surface_set_window_selector_behavior,
     remote_surface_set_orientation};
 
 ////////////////////////////////////////////////////////////////////////////////

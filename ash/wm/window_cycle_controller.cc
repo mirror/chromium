@@ -17,6 +17,7 @@
 #include "ash/wm/window_cycle_list.h"
 #include "ash/wm/window_state.h"
 #include "base/metrics/histogram_macros.h"
+#include "ui/aura/client/aura_constants.h"
 
 namespace ash {
 
@@ -72,7 +73,9 @@ void WindowCycleController::StartCycling() {
     return !state->IsUserPositionable() || state->is_dragged() ||
            window->GetRootWindow()
                ->GetChildById(kShellWindowId_AppListContainer)
-               ->Contains(window);
+               ->Contains(window) ||
+           window->GetProperty(aura::client::kWindowSelectorBehaviorKey) !=
+               aura::client::WindowSelectorBehavior::SHOW;
   };
   window_list.erase(std::remove_if(window_list.begin(), window_list.end(),
                                    window_is_ineligible),
