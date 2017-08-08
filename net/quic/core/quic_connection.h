@@ -1095,7 +1095,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
   // Indicates whether a write error is encountered currently. This is used to
   // avoid infinite write errors.
-  bool write_error_occured_;
+  bool write_error_occurred_;
 
   // Indicates not to send or process stop waiting frames.
   bool no_stop_waiting_frames_;

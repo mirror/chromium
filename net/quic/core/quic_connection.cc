@@ -270,7 +270,7 @@ QuicConnection::QuicConnection(QuicConnectionId connection_id,
       largest_received_packet_size_(0),
       goaway_sent_(false),
       goaway_received_(false),
-      write_error_occured_(false),
+      write_error_occurred_(false),
       no_stop_waiting_frames_(false),
       consecutive_num_packets_with_no_retransmittable_frames_(0) {
   QUIC_DLOG(INFO) << ENDPOINT
@@ -1639,11 +1639,11 @@ bool QuicConnection::AllowSelfAddressChange() const {
 }
 
 void QuicConnection::OnWriteError(int error_code) {
-  if (write_error_occured_) {
+  if (write_error_occurred_) {
     // A write error already occurred. The connection is being closed.
     return;
   }
-  write_error_occured_ = true;
+  write_error_occurred_ = true;
 
   const string error_details = QuicStrCat(
       "Write failed with error: ", error_code, " (", strerror(error_code), ")");
