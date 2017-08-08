@@ -16,8 +16,6 @@ class LifeTimeTrackerForDebugging {
   ~LifeTimeTrackerForDebugging() { state_ = DESTROYED; }
 
   void CheckObjectIsValid() {
-    CHECK(this);
-
     // This adress has been used to construct a LifeTimeTrackerForDebugging.
     CHECK(state_ == ALIVE || state_ == DESTROYED);
 
