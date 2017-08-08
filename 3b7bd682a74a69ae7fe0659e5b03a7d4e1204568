@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45413284_4c531071",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-08-08T19:30:34Z",
+      "side": 1,
+      "message": "is_sanitizer_coverage_supported \u003d use_xcode_clang || !(is_mac \u0026\u0026 is_clang \u0026\u0026 current_cpu \u003d\u003d \"x64\")\n\nis_sanitizer_coverage_broken \u003d !use_xcode_clang \u0026\u0026 is_mac \u0026\u0026 is_clang \u0026\u0026 current_cpu \u003d\u003d \"x64\"\n\nassert(!is_sanitizer_coverage_broken || !use_sanitizer_coverage)\n\nassert(!(use_sanitizer_coverage \u0026\u0026 is_sanitizer_coverage_broken))",
+      "range": {
+        "startLine": 213,
+        "startChar": 32,
+        "endLine": 214,
+        "endChar": 30
+      },
+      "revId": "3b7bd682a74a69ae7fe0659e5b03a7d4e1204568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
