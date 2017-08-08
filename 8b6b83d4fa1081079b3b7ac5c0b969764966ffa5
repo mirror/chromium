@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "890b155c_37422991",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSet.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-08T18:28:18Z",
+      "side": 1,
+      "message": "Why do we need this file?  If there is a valid reason, please explain it in a comment.",
+      "range": {
+        "startLine": 3,
+        "startChar": 16,
+        "endLine": 3,
+        "endChar": 23
+      },
+      "revId": "8b6b83d4fa1081079b3b7ac5c0b969764966ffa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d0241d6_f8421598",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSet.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-08T18:28:18Z",
+      "side": 1,
+      "message": "Why do we need this?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "8b6b83d4fa1081079b3b7ac5c0b969764966ffa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
