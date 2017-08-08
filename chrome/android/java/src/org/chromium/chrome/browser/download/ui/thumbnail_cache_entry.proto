@@ -1,0 +1,23 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
+// Protocol buffer definition for a thumbnail entry on disk, used for storing
+// thumbnail and its related data for caching.
+
+syntax = "proto2";
+
+package org.chromium.chrome.browser.download.ui;
+
+option java_package = "org.chromium.chrome.browser.download.ui";
+
+message ContentId {
+  optional string id = 1;
+}
+
+message ThumbnailEntry {
+  optional ContentId content_id = 1;
+  // The width (pixel) of the square thumbnail.
+  optional int32 width_px = 2;
+  optional bytes compressed_png = 3;
+}
