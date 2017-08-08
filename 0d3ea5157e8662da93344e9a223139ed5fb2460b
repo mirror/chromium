@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aab7f74_9de7758d",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1230735
+      },
+      "writtenOn": "2017-08-08T21:27:18Z",
+      "side": 1,
+      "message": "I was looking before, and I think it might be fairly simple to get rid of this method in favor of the above method.  That might make the code a bit easier to reason about.",
+      "range": {
+        "startLine": 82,
+        "startChar": 58,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "0d3ea5157e8662da93344e9a223139ed5fb2460b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51e916f_c5d6a9df",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1230735
+      },
+      "writtenOn": "2017-08-08T21:27:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure what \u0027tossed out to the new writer\u0027 means?",
+      "range": {
+        "startLine": 90,
+        "startChar": 5,
+        "endLine": 90,
+        "endChar": 11
+      },
+      "revId": "0d3ea5157e8662da93344e9a223139ed5fb2460b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
