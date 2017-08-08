@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f852272c_fe8085ff",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-08T19:13:04Z",
+      "side": 1,
+      "message": "nit: % 21 would better fit the DCHECKs below, and the statement in the CL description that this is 10% noise.",
+      "range": {
+        "startLine": 245,
+        "startChar": 63,
+        "endLine": 245,
+        "endChar": 65
+      },
+      "revId": "559177a464320fcc1c641e63deaeeff82d7028b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
