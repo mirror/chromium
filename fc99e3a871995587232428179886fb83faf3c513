@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2a35c79_034de363",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-08-08T14:34:53Z",
+      "side": 1,
+      "message": "should we update this bug link to a doc or a bug describing this fixit, what we are doing with it and why we are updating to 20 only temporarily?? noting that we should move back down to x in some amount of time when we decided things have leveled out?\n\nor so we plan on keeping it at 20 for some time?",
+      "revId": "fc99e3a871995587232428179886fb83faf3c513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
