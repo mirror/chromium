@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "f3ba9137_d79b4200",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encrypted-media/encrypted-media-default-feature-policy.https.sub.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-08T00:05:50Z",
+      "side": 1,
+      "message": "Just to note that the tests in the encrypted-media/ directory are not currently being run, as they require https. I had a pull request to rename them, but it\u0027s old. It\u0027s on my TODO list to redo the pull request, and then re-enable these tests in Chromium (http://crbug.com/664193).",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68fd7c1_4d3f7126",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encrypted-media/encrypted-media-default-feature-policy.https.sub.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-08T00:05:50Z",
+      "side": 1,
+      "message": "webm is only supported by Chrome. Better choice is to use getPossibleAudioCapabilities() found in encrypted-media/util/utils.js (if possible).",
+      "range": {
+        "startLine": 16,
+        "startChar": 47,
+        "endLine": 16,
+        "endChar": 72
+      },
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a68ec170_07de76ce",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
         "patchSetId": 6
@@ -18,6 +64,29 @@
         "startChar": 0,
         "endLine": 68,
         "endChar": 60
+      },
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608fa867_cfa7d4e5",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-08T00:05:50Z",
+      "side": 1,
+      "message": "The EME spec (http://w3c.github.io/encrypted-media/#exceptions) doesn\u0027t list SecurityError as a possible error, so I would suggest kNotSupportedError. However, it\u0027s possible policy checking requires SecurityError, in which case the EME spec needs to be updated.",
+      "range": {
+        "startLine": 283,
+        "startChar": 14,
+        "endLine": 283,
+        "endChar": 28
       },
       "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
