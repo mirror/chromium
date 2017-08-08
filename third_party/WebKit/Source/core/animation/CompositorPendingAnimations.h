@@ -44,9 +44,16 @@ namespace blink {
 
 // Manages the starting of pending animations on the compositor following a
 // compositing update.
+//
 // For CSS Animations, used to synchronize the start of main-thread animations
 // with compositor animations when both classes of CSS Animations are triggered
 // by the same recalc
+//
+// Note that this class considers *all* animations, not just
+// animations that are actually started and run on the compositor. For
+// example, when the Document changes visibility state, all animations
+// for the document's timeline are set to "compositor pending" which
+// will include them in a consideration pass for this class.
 class CORE_EXPORT CompositorPendingAnimations final
     : public GarbageCollectedFinalized<CompositorPendingAnimations> {
  public:
