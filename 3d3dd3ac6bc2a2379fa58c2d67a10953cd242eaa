@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eb1fd1e_3c87d550",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerSettings.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-08T17:38:04Z",
+      "side": 1,
+      "message": "Should this ever be false? If not, DCHECK instead of if.",
+      "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5df724_7dd0adf2",
+        "filename": "third_party/WebKit/Source/modules/offscreencanvas2d/OffscreenCanvasRenderingContext2D.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-08T17:38:04Z",
+      "side": 1,
+      "message": "super-nit: all that\u0027s used is the settings; might as well do:\n\nSettings* settings \u003d ToDocument(execution_context)-\u003eGetSettings();\n\nFor a tiny amount of speed, and consistency with the below use of WorkerSettings.",
+      "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "212f0ffc_fd736828",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-08T17:38:04Z",
+      "side": 1,
+      "message": "Should this be clearing the map? It seems like it ought not to.",
+      "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61415c81_ab8d0ce6",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-08T17:38:04Z",
+      "side": 1,
+      "message": "nit: \"used on different threads\" sounds like the whole class is thread-safe. WDYT of \"This allows GenericFontFamilySettings to be sent from one thread to another\" or something to that effect?",
+      "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc54a5f_cfb09b87",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-08T17:38:04Z",
+      "side": 1,
+      "message": "super-nit: IsolatedCopyTo, if this is going to copy to an argument instead of returning a value? Not a strong feeling, but without looking at the signature this would have surprised me.\n\nAlso, this function can be const.",
+      "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc516d8e_b8ed5d03",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-08T17:38:04Z",
+      "side": 1,
+      "message": "const",
+      "revId": "3d3dd3ac6bc2a2379fa58c2d67a10953cd242eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
