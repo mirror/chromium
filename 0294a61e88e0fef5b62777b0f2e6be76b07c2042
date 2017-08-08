@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78137c83_fbc4dd47",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-08T22:14:00Z",
+      "side": 1,
+      "message": "nit: is enabled",
+      "revId": "0294a61e88e0fef5b62777b0f2e6be76b07c2042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
