@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf66f07f_66e1e131",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-08T10:04:43Z",
+      "side": 1,
+      "message": "Since this was a informal patch and plan was to split it into multiple patches if everything works fine. \nSo i will create a separate patch for this.",
+      "parentUuid": "6ea3a2c6_df290f11",
+      "revId": "f8860a4ed93585efe4e28c1b619ca8bdc7be9052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45e7270a_1baebbd9",
         "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.cpp",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "09ea68f1_399ce114",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-08T10:04:43Z",
+      "side": 1,
+      "message": "Since this was a movement of is_directional from SelectionTemplate to FrameSelection,\ni haven\u0027t went too deep into this. So i have kept in mind not to do any other logical changes.\nMay be when we split this patch into multiple patches we can cover these ?",
+      "parentUuid": "45e7270a_1baebbd9",
+      "revId": "f8860a4ed93585efe4e28c1b619ca8bdc7be9052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ece6ec07_fcd5c74c",
         "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.cpp",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-07T19:11:10Z",
       "side": 1,
       "message": "What\u0027s the reason of having a layout update here?\n\nCreation of SelectionTemplate \u0026 SelectionForUndoStep shouldn\u0027t require clean layout.",
+      "revId": "f8860a4ed93585efe4e28c1b619ca8bdc7be9052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c4ddff_d1ba7f36",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-08T10:04:43Z",
+      "side": 1,
+      "message": "Since this patch is a movement of selction direction from SelectionTemplate to Frame Selection,\nSo i have kept in mind to not do any logical changes.\n\nAs SetEndingSelection(SelectionInDomTree\u0026) does a layout update, so where ever I have bypass the SetEndingSelection(SelectionInDomTree\u0026 ) with SetEndingSelection(SelectionForUndoStep), i have called for a layout update.",
+      "parentUuid": "ece6ec07_fcd5c74c",
       "revId": "f8860a4ed93585efe4e28c1b619ca8bdc7be9052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
