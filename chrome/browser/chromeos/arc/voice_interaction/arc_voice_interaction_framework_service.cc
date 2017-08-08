@@ -285,7 +285,28 @@ void ArcVoiceInteractionFrameworkService::CaptureFullscreen(
 
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionRunning(
     bool running) {
-  ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(running);
+  ash::VoiceInteractionState state = running
+                                         ? ash::VoiceInteractionState::RUNNING
+                                         : ash::VoiceInteractionState::STOPPED;
+  ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(state);
+}
+
+void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
+    mojom::VoiceInteractionState state) {
+  state_ = state;
+  ash::VoiceInteractionState ash_state;
+  switch (state) {
+    case mojom::VoiceInteractionState::NOT_READY:
+      ash_state = ash::VoiceInteractionState::WAITING;
+      break;
+    case mojom::VoiceInteractionState::STOPPED:
+      ash_state = ash::VoiceInteractionState::STOPPED;
+      break;
+    case mojom::VoiceInteractionState::RUNNING:
+      ash_state = ash::VoiceInteractionState::RUNNING;
+      break;
+  }
+  ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(ash_state);
 }
 
 void ArcVoiceInteractionFrameworkService::OnMetalayerClosed() {
@@ -412,6 +433,12 @@ void ArcVoiceInteractionFrameworkService::StartSessionFromUserInteraction(
         new chromeos::LoginDisplayHostImpl(screen_bounds);
     display_host->StartVoiceInteractionOobe();
     return;
+  }
+
+  if (state_ == mojom::VoiceInteractionState::NOT_READY) {
+    // If the container side is not ready, we will be waiting for a while.
+    ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(
+        ash::VoiceInteractionState::WAITING);
   }
 
   if (!arc_bridge_service_->voice_interaction_framework()->has_instance()) {
