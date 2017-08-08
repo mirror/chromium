@@ -342,8 +342,6 @@ extern const char kUseSystemDefaultPrinter[];
 
 #if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
 extern const char kMemlog[];
-extern const char kMemlogPipe[];
-extern const char kProfiling[];
 #endif
 
 bool ExtensionsDisabled(const base::CommandLine& command_line);
