@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c08304f5_26dd2134",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-08T12:32:17Z",
+      "side": 1,
+      "message": "Thank you - I had wondered about this too and consulted with @kylechar, and I don\u0027t think there is a disadvantage.  The purpose of this test unit test is to verify struct traits and that the work with serialization/deserialization and this will do that.  It\u0027s also inline with what is being done elsewhere for similar tests.",
+      "parentUuid": "a27c3a90_5fbc9a33",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 1
+      },
+      "revId": "bbcc0c66a9db1fee4926356e435c8d07f0a617ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf6a4535_af0a5598",
         "filename": "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom",
         "patchSetId": 4
