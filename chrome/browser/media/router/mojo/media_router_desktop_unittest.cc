@@ -42,40 +42,14 @@ class NullMessageObserver : public RouteMessageObserver {
       final {}
 };
 
-class TestEventPageRequestManager : public EventPageRequestManager {
- public:
-  static std::unique_ptr<KeyedService> Create(
-      content::BrowserContext* context) {
-    return base::MakeUnique<TestEventPageRequestManager>(context);
-  }
-
-  explicit TestEventPageRequestManager(content::BrowserContext* context)
-      : EventPageRequestManager(context) {}
-  ~TestEventPageRequestManager() = default;
-
-  MOCK_METHOD1(SetExtensionId, void(const std::string& extension_id));
-  void RunOrDefer(base::OnceClosure request,
-                  MediaRouteProviderWakeReason wake_reason) override {
-    RunOrDeferInternal(request, wake_reason);
-  }
-  MOCK_METHOD2(RunOrDeferInternal,
-               void(base::OnceClosure& request,
-                    MediaRouteProviderWakeReason wake_reason));
-  MOCK_METHOD0(OnMojoConnectionsReady, void());
-  MOCK_METHOD0(OnMojoConnectionError, void());
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(TestEventPageRequestManager);
-};
-
 }  // namespace
 
 class MediaRouterDesktopTest : public MediaRouterMojoTest {
  public:
   MediaRouterDesktopTest() {
     EventPageRequestManagerFactory::GetInstance()->SetTestingFactory(
-        profile(), &TestEventPageRequestManager::Create);
-    request_manager_ = static_cast<TestEventPageRequestManager*>(
+        profile(), &MockEventPageRequestManager::Create);
+    request_manager_ = static_cast<MockEventPageRequestManager*>(
         EventPageRequestManagerFactory::GetApiForBrowserContext(profile()));
     request_manager_->set_mojo_connections_ready_for_test(true);
     ON_CALL(*request_manager_, RunOrDeferInternal(_, _))
@@ -93,7 +67,7 @@ class MediaRouterDesktopTest : public MediaRouterMojoTest {
         new MediaRouterDesktop(profile()));
   }
 
-  TestEventPageRequestManager* request_manager_ = nullptr;
+  MockEventPageRequestManager* request_manager_ = nullptr;
 };
 
 TEST_F(MediaRouterDesktopTest, CreateRoute) {

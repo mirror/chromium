@@ -71,6 +71,24 @@ MockEventPageTracker::MockEventPageTracker() {}
 
 MockEventPageTracker::~MockEventPageTracker() {}
 
+// static
+std::unique_ptr<KeyedService> MockEventPageRequestManager::Create(
+    content::BrowserContext* context) {
+  return base::MakeUnique<MockEventPageRequestManager>(context);
+}
+
+MockEventPageRequestManager::MockEventPageRequestManager(
+    content::BrowserContext* context)
+    : EventPageRequestManager(context) {}
+
+MockEventPageRequestManager::~MockEventPageRequestManager() = default;
+
+void MockEventPageRequestManager::RunOrDefer(
+    base::OnceClosure request,
+    MediaRouteProviderWakeReason wake_reason) {
+  RunOrDeferInternal(request, wake_reason);
+}
+
 MockMediaController::MockMediaController() : binding_(this) {}
 
 MockMediaController::~MockMediaController() {}
@@ -96,10 +114,10 @@ void MockMediaController::CloseBinding() {
 MockMediaRouteController::MockMediaRouteController(
     const MediaRoute::Id& route_id,
     mojom::MediaControllerPtr mojo_media_controller,
-    MediaRouter* media_router)
+    content::BrowserContext* context)
     : MediaRouteController(route_id,
                            std::move(mojo_media_controller),
-                           media_router) {}
+                           context) {}
 
 MockMediaRouteController::~MockMediaRouteController() {}
 

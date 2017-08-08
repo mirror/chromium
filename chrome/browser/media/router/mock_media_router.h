@@ -24,6 +24,8 @@ namespace media_router {
 // Media Router mock class. Used for testing purposes.
 class MockMediaRouter : public MediaRouterBase {
  public:
+  static std::unique_ptr<KeyedService> Create(content::BrowserContext* context);
+
   MockMediaRouter();
   ~MockMediaRouter() override;
 

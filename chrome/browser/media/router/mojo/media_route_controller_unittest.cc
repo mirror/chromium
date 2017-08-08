@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/run_loop.h"
+#include "chrome/browser/media/router/event_page_request_manager_factory.h"
 #include "chrome/browser/media/router/mock_media_router.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_test.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -22,6 +23,10 @@ namespace {
 
 constexpr char kRouteId[] = "routeId";
 
+std::unique_ptr<KeyedService> CreateMockMediaRouter(content::BrowserContext* context) {
+  return base::MakeUnique<MockMediaRouter>();
+}
+
 }  // namespace
 
 class MediaRouteControllerTest : public ::testing::Test {
@@ -30,6 +35,11 @@ class MediaRouteControllerTest : public ::testing::Test {
   ~MediaRouteControllerTest() override {}
 
   void SetUp() override {
+    EventPageRequestManagerFactory::GetInstance()->SetTestingFactory(
+        &profile_, &MockEventPageRequestManager::Create);
+    MediaRouterFactory::GetInstance()->SetTestingFactory(
+        &profile_, &CreateMockMediaRouter);
+
     mojom::MediaControllerPtr media_controller_ptr;
     mojom::MediaControllerRequest media_controller_request =
         mojo::MakeRequest(&media_controller_ptr);
@@ -37,7 +47,7 @@ class MediaRouteControllerTest : public ::testing::Test {
 
     observer_ = base::MakeUnique<MockMediaRouteControllerObserver>(
         base::MakeRefCounted<MediaRouteController>(
-            kRouteId, std::move(media_controller_ptr), &router_));
+            kRouteId, std::move(media_controller_ptr), &profile_));
   }
 
   scoped_refptr<MediaRouteController> GetController() const {
@@ -55,6 +65,7 @@ class MediaRouteControllerTest : public ::testing::Test {
   MockMediaRouter router_;
   MockMediaController mock_media_controller_;
   std::unique_ptr<MockMediaRouteControllerObserver> observer_;
+  TestingProfile profile_;
 
   content::TestBrowserThreadBundle test_thread_bundle_;
 

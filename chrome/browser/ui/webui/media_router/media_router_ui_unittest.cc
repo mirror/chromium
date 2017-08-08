@@ -11,6 +11,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
 #include "chrome/browser/media/router/create_presentation_connection_request.h"
+#include "chrome/browser/media/router/event_page_request_manager_factory.h"
 #include "chrome/browser/media/router/mock_media_router.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_test.h"
 #include "chrome/browser/media/router/test_helper.h"
@@ -106,6 +107,14 @@ class MediaRouterUITest : public ChromeRenderViewHostTestHarness {
         std::string() /* disabled features */);
   }
 
+  void SetUp() override {
+    ChromeRenderViewHostTestHarness::SetUp();
+    EventPageRequestManagerFactory::GetInstance()->SetTestingFactory(profile(),
+        &MockEventPageRequestManager::Create);
+    MediaRouterFactory::GetInstance()->SetTestingFactory(profile(),
+        &MockMediaRouter::Create);
+  }
+
   void TearDown() override {
     EXPECT_CALL(mock_router_, UnregisterMediaSinksObserver(_))
         .Times(AnyNumber());
@@ -163,7 +172,7 @@ class MediaRouterUITest : public ChromeRenderViewHostTestHarness {
     mojom::MediaControllerPtr mojo_media_controller;
     mojo::MakeRequest(&mojo_media_controller);
     return scoped_refptr<MockMediaRouteController>(new MockMediaRouteController(
-        route_id, std::move(mojo_media_controller), &mock_router_));
+        route_id, std::move(mojo_media_controller), profile()));
   }
 
   // Notifies MediaRouterUI that a route details view has been opened. Expects

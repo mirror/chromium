@@ -142,6 +142,9 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   void BindToMojoRequest(mojo::InterfaceRequest<mojom::MediaRouter> request,
                          const extensions::Extension& extension);
 
+  // Bind each MediaRouteController to its extension-side couterpart.
+  void BindRouteControllers();
+
 #if defined(OS_WIN)
   // Ensures that mDNS discovery is enabled in the MRPM extension. This can be
   // called many times but the MRPM will only be called once per registration
