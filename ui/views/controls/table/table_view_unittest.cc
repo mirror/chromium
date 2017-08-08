@@ -220,6 +220,15 @@ class TableViewTest : public ViewsTestBase {
   }
 
   void TearDown() override {
+    // Under Material mode, the focus is represented by a separate "focus ring"
+    // control that is inserted into and removed from the parent control list.
+    // During the destruction process, while the child controls are iterated in
+    // order to be destroyed, the control which has focus will cause the focus
+    // manager to remove the focus ring. This leads to the control list being
+    // changed while also being iterrated, triggering a DCHECK().
+    // This will remove the focus ring before initiating the destruction
+    // process.
+    widget_->GetRootView()->GetFocusManager()->ClearFocus();
     widget_.reset();
     ViewsTestBase::TearDown();
   }
