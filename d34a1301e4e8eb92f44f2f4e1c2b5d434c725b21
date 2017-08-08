@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d57b824e_0ca835b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ProcessInitializationHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-08T18:44:45Z",
+      "side": 1,
+      "message": "The min for histograms is supposed to be at least 1.  0s (or technically anything less than the min) gets recorded in an \"underflow\" bucket.",
+      "range": {
+        "startLine": 686,
+        "startChar": 38,
+        "endLine": 686,
+        "endChar": 0
+      },
+      "revId": "d34a1301e4e8eb92f44f2f4e1c2b5d434c725b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8e524ab_a6ead4a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ProcessInitializationHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-08T18:44:45Z",
+      "side": 1,
+      "message": "Please make these two sizes consts and comment that they cannot be changed without altering the histogram bucketing and thus making the dashboard confused.",
+      "range": {
+        "startLine": 687,
+        "startChar": 41,
+        "endLine": 687,
+        "endChar": 0
+      },
+      "revId": "d34a1301e4e8eb92f44f2f4e1c2b5d434c725b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
