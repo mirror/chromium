@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e6066411_b1efab86",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-08T17:36:04Z",
+      "side": 1,
+      "message": "Hmm. I think min is still correct here?\nSuppose tile width/height is 252, so tile width - 2 \u003d 250, so 5 tiles is 1250 in each dimension.\nIf we have a layer that is 1250x1, then the x scale is 1.f, and the y scale is 1250.f. If we use the max, then the cap is 1250.f scale, which means it will take layer_width*scale / tile_width tiles to cover it, which is 1250*1250 / 250, which is 6250. That\u0027s too large. If we use 1.f here then it takes 1 * 1250 / 250 tiles which is 5, which is kind of the intent.",
+      "parentUuid": "21df70ab_4931a967",
+      "revId": "cd5177036a9d078731b9ea63cf45ed611e141ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab5f6401_027a3eca",
         "filename": "cc/layers/layer_impl_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-08T02:15:19Z",
       "side": 1,
       "message": "I know you just mean \"extremely large\" here, but could you pick another word other than \"crazy\" as a descriptor here, as it\u0027s ableist language.",
+      "revId": "cd5177036a9d078731b9ea63cf45ed611e141ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f658b544_9b0e7870",
+        "filename": "cc/layers/layer_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-08T17:36:04Z",
+      "side": 1,
+      "message": "My bad, changed.",
+      "parentUuid": "ab5f6401_027a3eca",
       "revId": "cd5177036a9d078731b9ea63cf45ed611e141ebd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
