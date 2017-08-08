@@ -34,6 +34,24 @@
       "revId": "72faf0cf69773f66c097d4ab0496b3a813b6f82c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf0daca_334827e4",
+        "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-08T15:00:04Z",
+      "side": 1,
+      "message": "Thanks for the explanation!\n\nFrom a quick look around the codebase, it seems that many of the calls to Notification are still using resource bundle images; if these are also going to be converted, would it make sense to then add this as a constant somewhere (notification.h?)",
+      "parentUuid": "d94d35a8_07ff353f",
+      "revId": "72faf0cf69773f66c097d4ab0496b3a813b6f82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
