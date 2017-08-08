@@ -4,6 +4,7 @@
 
 #include "gpu/ipc/gpu_in_process_thread_service.h"
 
+#include "base/debug/stack_trace.h"
 #include "base/lazy_instance.h"
 #include "base/threading/thread_task_runner_handle.h"
 
@@ -19,13 +20,22 @@ GpuInProcessThreadService::GpuInProcessThreadService(
       sync_point_manager_(sync_point_manager) {}
 
 void GpuInProcessThreadService::ScheduleTask(const base::Closure& task) {
-  task_runner_->PostTask(FROM_HERE, task);
+  const bool result = task_runner_->PostTask(FROM_HERE, task);
+  if (!result) {
+    LOG(ERROR) << "GpuInProcessThreadService::ScheduleTask failed stack="
+               << base::debug::StackTrace().ToString();
+  }
 }
 
 void GpuInProcessThreadService::ScheduleDelayedWork(const base::Closure& task) {
-  task_runner_->PostDelayedTask(FROM_HERE, task,
+  const bool result = task_runner_->PostDelayedTask(FROM_HERE, task,
                                 base::TimeDelta::FromMilliseconds(2));
+  if (!result) {
+    LOG(ERROR) << "GpuInProcessThreadService::ScheduleDelayedWork failed stack="
+               << base::debug::StackTrace().ToString();
+  }
 }
+
 bool GpuInProcessThreadService::UseVirtualizedGLContexts() {
   return true;
 }
