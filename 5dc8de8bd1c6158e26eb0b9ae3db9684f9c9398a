@@ -464,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "b5c01b61_0b3fed64",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Removed a few more states. I currently feel that the remaining states are actually useful. WDYT?\n\nThe diagram I will do in a later CL once they stabilize (probably after Hotword, etc).",
+      "parentUuid": "f1924e36_57677832",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8431c33_f6e37eba",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 3
@@ -669,6 +687,24 @@
     },
     {
       "key": {
+        "uuid": "57c9bd23_d3c8b2e0",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60a87b23_4e8aaaa4",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40008233_de1415c6",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 3
@@ -719,6 +755,24 @@
       "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aeb1254_385b9ab2",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Oops. Fixed.",
+      "parentUuid": "ad9c02f8_0d4b24e6",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -845,6 +899,24 @@
     },
     {
       "key": {
+        "uuid": "43506f9d_456ce6ae",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "No, unfortunately it doesn\u0027t throw any errors. We could add a non-null check to the $() function, or substitute the $() function during testing. Or add tests for all elements manually, but that seems cumbersome and inflexible. Any other suggestions?\n\nTo clarify: Some elements, like the text area, are used during initialization, and thus are detected. But f.e. removing the whole microphone button (icon) \u003cdiv\u003e goes undetected.",
+      "parentUuid": "e2f43140_df4da3b5",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac63a706_4c9e0bb9",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 3
@@ -895,6 +967,24 @@
       "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f9e966_3967c76b",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adcb0c21_7bf8e465",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

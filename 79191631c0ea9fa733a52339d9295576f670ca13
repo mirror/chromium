@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcfeca01_14ba9803",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Do we want to stop the whole UI and animate back to the main screen before redirecting? Seems like a waste of time, do we want to just try to abort the Speech API and then redirect? The remote NTP does both, but then again, the search does not navigate away from the remote NTP, so it  actually has to care about the UI state.",
+      "revId": "79191631c0ea9fa733a52339d9295576f670ca13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

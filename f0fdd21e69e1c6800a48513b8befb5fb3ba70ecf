@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c58f16ae_772c7ca8",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3f37958_5a71894a",
+      "range": {
+        "startLine": 601,
+        "startChar": 73,
+        "endLine": 601,
+        "endChar": 0
+      },
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4575191f_9081303e",
         "filename": "chrome/browser/resources/local_ntp/voice.css",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb36aaa4_3739a3a3",
+        "filename": "chrome/browser/resources/local_ntp/voice.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Good point, thanks for catching this. Overall I agree with removing, seems pointless. Can\u0027t really test on other platforms though.",
+      "parentUuid": "4575191f_9081303e",
+      "range": {
+        "startLine": 238,
+        "startChar": 36,
+        "endLine": 238,
+        "endChar": 0
+      },
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "837304c7_59eacb7d",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Oops. Fixed.",
+      "parentUuid": "f156e71e_b912f42e",
+      "range": {
+        "startLine": 21,
+        "startChar": 50,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "270ed790_a2d73b19",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 4
@@ -82,6 +154,24 @@
       "writtenOn": "2017-08-07T10:20:54Z",
       "side": 1,
       "message": "Can both exist and have different values?!",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "823b0b11_15536ea7",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Yes, both exist and actually have different values. window.navigator.languages copies the actual values in chrome/chromeos settings (the ordering of languages/locales), while I\u0027ve never seen window.navigator.language have anything different than \"en\". I\u0027ve verified this locally on my chromebook and workstation. I\u0027ve observed a state where navigator.languages is [\"de\"] and navigator.language is \"en\". Do we want a test for this method?",
+      "parentUuid": "270ed790_a2d73b19",
       "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "2cc669b6_57236095",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Nope, it replaces a parameter for the actual page we are linking to, and it works quite well. Try it out with sample locales:\n* https://support.google.com/chrome/?p\u003dui_voice_search\u0026hl\u003den\n* https://support.google.com/chrome/?p\u003dui_voice_search\u0026hl\u003dde\n* https://support.google.com/chrome/?p\u003dui_voice_search\u0026hl\u003dcs_CZ\n* https://support.google.com/chrome/?p\u003dui_voice_search\u0026hl\u003dXYZ (doesn\u0027t fail, falls back to the last one?)\n\nI don\u0027t know how to check if they exist for all locales (they probably don\u0027t, but there\u0027s a fallback mechanism which should be OK for this use case).",
+      "parentUuid": "d9dca6c8_e2ef3269",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfc55cc4_df2c2a41",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 4
@@ -116,6 +224,24 @@
       "writtenOn": "2017-08-07T10:20:54Z",
       "side": 1,
       "message": "Ah, so have you verified that this actually still happens?",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5751be3_ceb8ca25",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Yes, it does happen (learned the hard way :). Do we want to combat this in this CL?",
+      "parentUuid": "cfc55cc4_df2c2a41",
       "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "e04abbf9_8283747c",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "559bcfbe_71d38c17",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e4d7bde_40aed7e0",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 4
@@ -153,6 +297,24 @@
       "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ebd367_ecfe380f",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e4d7bde_40aed7e0",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "5a35114e_f8cf47f8",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Nope, as far as I know and can tell, it cannot happen.",
+      "parentUuid": "46e43a6d_cb56e6ba",
+      "range": {
+        "startLine": 454,
+        "startChar": 55,
+        "endLine": 454,
+        "endChar": 0
+      },
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "331a678e_856cd339",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 4
@@ -196,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "bcded546_8f6bf296",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "Good point. Originally, the code claimed to do it, but I couldn\u0027t verify on the live remote NTP. Removing TODO, as it seems pointless.",
+      "parentUuid": "331a678e_856cd339",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a18e8810_9875e6d2",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 4
@@ -207,6 +411,24 @@
       "writtenOn": "2017-08-07T10:20:54Z",
       "side": 1,
       "message": "I think finalResult may not be set yet? And if we do have a finalResult, speechQuery should probably have the same value? (I\u0027m guessing here - whatever\u0027s the case, this is definitely worth a comment :)",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9112f600_5f28e2b1",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-08T16:11:20Z",
+      "side": 1,
+      "message": "finalResult is set before speechQuery, if I\u0027m not mistaken. Anyway, speechQuery is the right variable to use here in any case.\n\nThe real problem is, I realized I don\u0027t know when this is actually used. As far as I can tell, there is no such situation? I failed to reproduce the ENTER behavior on both the local and remote NTP.",
+      "parentUuid": "a18e8810_9875e6d2",
       "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
