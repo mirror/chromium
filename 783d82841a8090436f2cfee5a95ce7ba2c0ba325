@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7d0d7ce_88f39f82",
+        "filename": "ui/events/platform/platform_event_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-08T21:05:03Z",
+      "side": 1,
+      "message": "This will fail to compile on other OSes",
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd0d2ea_4bc1687b",
+        "filename": "ui/events/platform/platform_event_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-08T21:05:03Z",
+      "side": 1,
+      "message": "Can the event be const?",
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c8bc44_28b8c86a",
+        "filename": "ui/events/platform/platform_event_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-08T21:05:03Z",
+      "side": 1,
+      "message": "For a class we only intend to use within the private scope, we tend to forward declare it in the header. Then have the full class declaration within the .cc file.",
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b93e53f_fdc64051",
+        "filename": "ui/events/platform/platform_event_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-08T21:05:03Z",
+      "side": 1,
+      "message": "This style fits the enable/disable pattern, vs the current naming of the method. See comment in the header",
+      "range": {
+        "startLine": 86,
+        "startChar": 49,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535a4f3c_0b260fd8",
+        "filename": "ui/events/platform/platform_event_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-08T21:05:03Z",
+      "side": 1,
+      "message": "Consider a style like EnablePlatformEvenRecorder(bool enabled)",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380f378b_8f63b240",
+        "filename": "ui/views/test/recorder_files/README.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-08T21:05:03Z",
+      "side": 1,
+      "message": "Will need to make sure that this link is viewable to those outside of Google.\n\nAlso consider adding this directory to gitignore",
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
