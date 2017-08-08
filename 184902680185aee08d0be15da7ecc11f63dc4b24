@@ -46,6 +46,30 @@
       "revId": "184902680185aee08d0be15da7ecc11f63dc4b24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0e633dd_6fe41472",
+        "filename": "chromeos/system/statistics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000239
+      },
+      "writtenOn": "2017-08-08T11:07:23Z",
+      "side": 1,
+      "message": "Hmmm. I think all Samsung products may have this issue. Try to check stumpy, daisy_snow, pit, kevin, and caroline... etc.",
+      "parentUuid": "3fbf8dda_73dfeac1",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 44
+      },
+      "revId": "184902680185aee08d0be15da7ecc11f63dc4b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
