@@ -164,6 +164,28 @@ void TodayMetricsLog::GetOpenEncodedLog(std::string* encoded_log) const {
   uma_proto()->SerializeToString(encoded_log);
 }
 
+class TodayMetricsProvider : public metrics::MetricsProvider {
+ public:
+  TodayMetricsProvider(int64_t enabled_date, int64_t install_date)
+      : enabled_date_(enabled_date), install_date_(install_date) {}
+  ~TodayMetricsProvider() override = default;
+
+  void ProvideSystemProfileMetrics(metrics::SystemProfileProto* system_profile);
+
+ private:
+  int64_t enabled_date_;
+  int64_t install_date_;
+};
+
+void TodayMetricsProvider::ProvideSystemProfileMetrics(
+    metrics::SystemProfileProto* system_profile) {
+  // Reduce granularity of the enabled_date field to nearest hour.
+  system_profile->set_uma_enabled_date(RoundSecondsToHour(enabled_date_));
+
+  // Reduce granularity of the install_date field to nearest hour.
+  system_profile->set_install_date(RoundSecondsToHour(install_date_));
+}
+
 }  // namespace
 
 TodayMetricsLogger* TodayMetricsLogger::GetInstance() {
@@ -216,7 +238,6 @@ bool TodayMetricsLogger::CreateNewLog() {
       stringForKey:base::SysUTF8ToNSString(app_group::kChromeAppClientID)];
   NSString* enabled_date = [shared_defaults
       stringForKey:base::SysUTF8ToNSString(app_group::kUserMetricsEnabledDate)];
-
   NSString* install_date = [shared_defaults
       stringForKey:base::SysUTF8ToNSString(app_group::kInstallDate)];
 
@@ -236,9 +257,10 @@ bool TodayMetricsLogger::CreateNewLog() {
                                  metrics_service_client_.get()));
 
   metrics::DelegatingProvider delegating_provider;
-  log_->RecordEnvironment(&delegating_provider, [install_date longLongValue],
-                          [enabled_date longLongValue]);
-
+  delegating_provider.RegisterMetricsProvider(
+      base::MakeUnique<TodayMetricsProvider>([enabled_date longLongValue],
+                                             [install_date longLongValue]));
+  log_->RecordEnvironment(&delegating_provider);
   return true;
 }
 
