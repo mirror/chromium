@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "090a9223_253d2b23",
+        "filename": "sandbox/linux/bpf_dsl/seccomp_macros.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1117686
+      },
+      "writtenOn": "2017-08-08T08:10:57Z",
+      "side": 1,
+      "message": "You should remove this comment, as it is not correct for n64.\nAnd I think SECCOMP_STACKPARM is not used and can be removed as well.",
+      "range": {
+        "startLine": 267,
+        "startChar": 8,
+        "endLine": 267,
+        "endChar": 11
+      },
+      "revId": "1090eee12088e690b9ac94b7c9c5dbb82ce1d59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
