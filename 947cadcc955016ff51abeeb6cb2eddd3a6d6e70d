@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0396e43e_fc57a2d0",
+        "filename": "chrome/app/theme/default_200_percent/legacy/info_small.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-08T03:16:04Z",
+      "side": 1,
+      "message": "Would it make more sense to put these in the mac directory?",
+      "revId": "947cadcc955016ff51abeeb6cb2eddd3a6d6e70d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
