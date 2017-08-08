@@ -32,6 +32,10 @@ source_set("mac") {
     "//media:media_implementation",
   ]
 
+  public_deps = [
+    "//media/base",
+  ]
+
   deps = [
     "//ui/gfx:color_space",
   ]
