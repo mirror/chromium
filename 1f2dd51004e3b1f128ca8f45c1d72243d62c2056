@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c071614e_af2eab1f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 80187,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-08T17:28:12Z",
+      "side": 1,
+      "message": "optional nit: \"its title is updated\" reads better to me.",
+      "range": {
+        "startLine": 80186,
+        "startChar": 73,
+        "endLine": 80187,
+        "endChar": 23
+      },
+      "revId": "1f2dd51004e3b1f128ca8f45c1d72243d62c2056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
