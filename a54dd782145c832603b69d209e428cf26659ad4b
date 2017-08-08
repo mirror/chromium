@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9585f144_c018de71",
+        "filename": "third_party/WebKit/Source/core/testing/data/composited_selection_bounds_input.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-08T20:36:41Z",
+      "side": 1,
+      "message": "How about just passing the hit point to the test (just 2 more params)? And optionally using the handle locations to compute it if the test case doesn\u0027t provide it?",
+      "range": {
+        "startLine": 25,
+        "startChar": 39,
+        "endLine": 25,
+        "endChar": 77
+      },
+      "revId": "a54dd782145c832603b69d209e428cf26659ad4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
