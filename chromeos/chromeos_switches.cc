@@ -515,6 +515,9 @@ const char kCrosGaiaApiV1[] = "cros-gaia-api-v1";
 // List of locales supported by voice interaction.
 const char kVoiceInteractionLocales[] = "voice-interaction-supported-locales";
 
+// Enables a rename action for external drive such as USB and SD.
+const char kEnableExternalDriveRename[] = "enable-external-drive-rename";
+
 bool WakeOnWifiEnabled() {
   return !base::CommandLine::ForCurrentProcess()->HasSwitch(kDisableWakeOnWifi);
 }

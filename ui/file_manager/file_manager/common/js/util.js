@@ -1124,6 +1124,52 @@ util.validateFileName = function(parentEntry, name, filterHiddenOn) {
 };
 
 /**
+ * Verifies the user entered name for external drive to be
+ * renamed to. Name restrictions must correspond to the target filesystem and
+ * File API restrictions
+ * (see DOMFilePath::isValidPath). Curernt WebKit implementation is
+ * out of date (spec is
+ * http://dev.w3.org/2009/dap/file-system/file-dir-sys.html, 8.3) and going to
+ * be fixed. Shows message box if the name is invalid.
+ *
+ * It also verifies if the name length is in the limit of the filesystem.
+ *
+ * @param {!DirectoryEntry} parentEntry The entry of the parent directory.
+ * @param {string} name New external drive name.
+ * @param {boolean} filterHiddenOn Whether to report the hidden file name error
+ *     or not.
+ * @param {!VolumeInfo} volumeInfo
+ * @return {Promise} Promise fulfilled on success, or rejected with the error
+ *     message.
+ */
+util.validateExternalDriveName = function(
+    parentEntry, name, filterHiddenOn, volumeInfo) {
+  // Verify if entered name for external drive respects restrictions provided by
+  // the target filesystem
+
+  var fileSystem = volumeInfo.diskFileSystemType;
+  var nameLength = name.length;
+
+  // Verify length for the target file system type
+  if ((fileSystem == VolumeManagerCommon.FileSystemType.VFAT ||
+       fileSystem == VolumeManagerCommon.FileSystemType.EXFAT) &&
+      nameLength > VolumeManagerCommon.FileSystemTypeLengthLimit.FAT) {
+    return Promise.reject(strf(
+        'ERROR_EXTERNAL_DRIVE_LONG_NAME',
+        VolumeManagerCommon.FileSystemTypeLengthLimit.FAT));
+  }
+
+  // Forbidden characters
+  var testResult = /[\*\?\.\,\;\:\/\\\|\+\=\<\>\[\]\"\'\t]/.exec(name);
+  if (testResult) {
+    return Promise.reject(
+        strf('ERROR_EXTERNAL_DRIVE_INVALID_CHARACTER', testResult[0]));
+  }
+
+  return util.validateFileName(parentEntry, name, filterHiddenOn);
+};
+
+/**
  * Adds a foregorund listener to the background page components.
  * The lisner will be removed when the foreground window is closed.
  * @param {!cr.EventTarget} target

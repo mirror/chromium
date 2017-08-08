@@ -1246,6 +1246,7 @@ enum HistogramValue {
   LOCKSCREENDATA_SETCONTENT,
   LOCKSCREENDATA_DELETE,
   BLUETOOTHLOWENERGY_RESETADVERTISING,
+  FILEMANAGERPRIVATE_RENAMEVOLUME,
   // Last entry: Add new entries above, then run:
   // python tools/metrics/histograms/update_extension_histograms.py
   ENUM_BOUNDARY
