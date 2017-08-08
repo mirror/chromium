@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b36d346e_a3ad6c10",
+        "filename": "components/url_formatter/url_formatter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-08T20:44:43Z",
+      "side": 1,
+      "message": "I tweaked the order here to list all flags, then the defaults.  I also moved the OmitHTTPS up above the experimental flags, which changes their values.  This should be fine, but it\u0027s not necessary.  I could move it further up, to live next to its HTTP counterpart too.\n\nCompletely up to you as to how these are ordered.  If you have a different preference, just let me know.",
+      "revId": "8f630588fc39993e51b5cae677accdd0e5e3b3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c409329_33e840a5",
+        "filename": "components/url_formatter/url_formatter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-08T20:44:43Z",
+      "side": 1,
+      "message": "I did look at call sites for this.  \"All\" was misleading.  The current set of \"defaults\" seems okay.  Some code removes flags, and other code adds more flags, but we don\u0027t seem to get value from changing the default set.  If anything, I would remove it completely and force each call site to build their own list, but I don\u0027t think that\u0027s better.",
+      "revId": "8f630588fc39993e51b5cae677accdd0e5e3b3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
