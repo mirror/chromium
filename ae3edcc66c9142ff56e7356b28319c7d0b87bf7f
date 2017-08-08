@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "30f0af0b_2140f3db",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-08T08:08:53Z",
+      "side": 1,
+      "message": "I like that, thank you for the suggestion.",
+      "parentUuid": "53f6b417_436475dc",
+      "range": {
+        "startLine": 474,
+        "startChar": 2,
+        "endLine": 474,
+        "endChar": 18
+      },
+      "revId": "ae3edcc66c9142ff56e7356b28319c7d0b87bf7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46e528cd_ecddc273",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node_data.h",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-08T06:43:41Z",
       "side": 1,
       "message": "Allocating an empty vector probably works just as well?",
+      "range": {
+        "startLine": 36,
+        "startChar": 18,
+        "endLine": 36,
+        "endChar": 24
+      },
+      "revId": "ae3edcc66c9142ff56e7356b28319c7d0b87bf7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e024b305_8142285c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-08T08:08:53Z",
+      "side": 1,
+      "message": "Minor, but an empty vector needs pointer+unsigned+unsigned for capacity/size. I hope this doesn\u0027t sacrifice the readability compared to saving the 8 bytes?",
+      "parentUuid": "46e528cd_ecddc273",
       "range": {
         "startLine": 36,
         "startChar": 18,
@@ -68,6 +116,30 @@
       "revId": "ae3edcc66c9142ff56e7356b28319c7d0b87bf7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "125e9c75_b917f25d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-08T08:08:53Z",
+      "side": 1,
+      "message": "Removed, this was a left over, thanks.",
+      "parentUuid": "2bed14be_648098fb",
+      "range": {
+        "startLine": 780,
+        "startChar": 23,
+        "endLine": 780,
+        "endChar": 28
+      },
+      "revId": "ae3edcc66c9142ff56e7356b28319c7d0b87bf7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
