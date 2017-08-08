@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0ffc424_7589e5b6",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-08T02:08:26Z",
+      "side": 1,
+      "message": "nit: don\u0027t need \u0027static\u0027 comments on data members (as opposed to methods), since it\u0027s clear from the definition here that it\u0027s static",
+      "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117b7af5_e8ca3b3b",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-08T02:08:26Z",
+      "side": 1,
+      "message": "will IsStylusDevice ever return true with an empty model name? if not, it feels like it\u0027d be a bit cleaner to get rid of the ternary and just do something like:\n\n  const auto it \u003d batteries_.find(address);\n  if (it !\u003d batteries_.end() \u0026\u0026 IsStylusDevice(address, it-\u003esecond.name)) {\n    ...\n  }",
+      "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902e3d97_77fe151d",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-08T02:08:26Z",
+      "side": 1,
+      "message": "mind adding a TODO to move this class to ash if possible? it seems like we\u0027d still want to display these notifications in a mustash world where chrome may not be running.",
+      "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e342fab_43529e20",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-08T02:08:26Z",
+      "side": 1,
+      "message": "nit: if the new test doesn\u0027t need access to any private members (see suggestion there), consider removing the FRIEND_TEST_ALL_PREFIXES for it and just making this static member public. (i usually recommend avoiding friending tests when possible, since only testing a class\u0027s public interface makes it less likely that tests will need to be refactored when the class\u0027s implementation is changed in the future.)",
+      "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4c401a_2ad6af29",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-08T02:08:26Z",
+      "side": 1,
+      "message": "nit, but not your fault: this struct has non-pod members, so its c\u0027tors should be defined in the .cc file instead",
+      "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd82aa7b_b87a617f",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-08T02:08:26Z",
+      "side": 1,
+      "message": "nit: consider deleting this line (and the blank line after it), since you\u0027re already testing the end result (in the form of the notification)",
+      "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
