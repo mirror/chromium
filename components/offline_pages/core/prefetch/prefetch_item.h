@@ -6,6 +6,7 @@
 #define COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_PREFETCH_ITEM_H_
 
 #include <stdint.h>
+#include <iosfwd>
 #include <string>
 
 #include "base/time/time.h"
@@ -33,6 +34,8 @@ struct PrefetchItem {
   bool operator==(const PrefetchItem& other) const;
   bool operator!=(const PrefetchItem& other) const;
   bool operator<(const PrefetchItem& other) const;
+
+  std::string ToString() const;
 
   // Primary key that stays consistent between prefetch item, request and
   // offline page.
@@ -102,6 +105,8 @@ struct PrefetchItem {
   // disregarded until reaching that state.
   PrefetchItemErrorCode error_code = PrefetchItemErrorCode::SUCCESS;
 };
+
+std::ostream& operator<<(std::ostream& out, const PrefetchItem& pi);
 
 }  // namespace offline_pages
 
