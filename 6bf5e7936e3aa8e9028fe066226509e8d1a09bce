@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6014061d_8f6dfd7b",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-08T21:37:44Z",
+      "side": 1,
+      "message": "I\u0027ve refactored this out, so it should no longer be a problem.",
+      "parentUuid": "001d1e82_63f49489",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32cf92f3_c826e633",
         "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d3172b4d_87c63cd2",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-08T21:37:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32cf92f3_c826e633",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5436a40_a9445edb",
         "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-17T19:24:01Z",
       "side": 1,
       "message": "This method seems to do more than just get the top level menu model.  Could we maybe split this into a CreateContextMenu() method and then another method to actually get the menu (or just use the menu directly)?",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260e9226_6375fcf4",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-08T21:37:44Z",
+      "side": 1,
+      "message": "I have refactored out this method to be more general, \"SetUpTopLevelMenuModel\". Would you still like me to split that method?",
+      "parentUuid": "f5436a40_a9445edb",
       "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3fd1b217_bf9e1d79",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-08T21:37:44Z",
+      "side": 1,
+      "message": "This is a really good idea. Have refactored the test according to the proposal above.",
+      "parentUuid": "3f57c7da_f4e63e97",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe87a13b_839c2794",
         "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8debbb5_4ec7ea3c",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-08T21:37:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe87a13b_839c2794",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "4ee556b8_90cffe06",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-08T21:37:44Z",
+      "side": 1,
+      "message": "I just removed this check entirely. I don\u0027t think there is a",
+      "parentUuid": "bab0770c_1efa73df",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9eef272_d0f3da54",
         "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
         "patchSetId": 5
@@ -118,6 +226,24 @@
       "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f08e720_e073fac0",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-08T21:37:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9eef272_d0f3da54",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "6fc1b079_575d4e48",
+        "filename": "chrome/browser/extensions/context_menu_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-08T21:37:44Z",
+      "side": 1,
+      "message": "N/A. Code deleted.",
+      "parentUuid": "0860524f_3692c299",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee4cb894_75a7005c",
         "filename": "chrome/browser/extensions/context_menu_matcher.cc",
         "patchSetId": 5
@@ -152,6 +296,24 @@
       "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74372c17_c5bc2692",
+        "filename": "chrome/browser/extensions/context_menu_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-08T21:37:44Z",
+      "side": 1,
+      "message": "With the way the code is today, I don\u0027t think this will ever be called on a null item. Though it\u0027s possible that someone (in the future) could use the method in a way in which item is null. \n\nThat all being said, I\u0027ll make this const \u0026.",
+      "parentUuid": "ee4cb894_75a7005c",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "9f6d90a4_f594f671",
+        "filename": "chrome/browser/extensions/context_menu_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-08T21:37:44Z",
+      "side": 1,
+      "message": "N/A. Code is deleted.",
+      "parentUuid": "24bb3dc3_0f26bf5a",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59a96f5b_13530008",
         "filename": "chrome/browser/extensions/context_menu_matcher.h",
         "patchSetId": 5
@@ -186,6 +366,24 @@
       "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ddc8d8_9f1932d2",
+        "filename": "chrome/browser/extensions/context_menu_matcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-08T21:37:44Z",
+      "side": 1,
+      "message": "N/A. Code is deleted.",
+      "parentUuid": "59a96f5b_13530008",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "c57a4234_efdca376",
+        "filename": "chrome/browser/extensions/context_menu_matcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-08T21:37:44Z",
+      "side": 1,
+      "message": "N/A. Code is deleted.",
+      "parentUuid": "307f6fa6_2f07abd0",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfcac2eb_b66c87d8",
         "filename": "chrome/browser/renderer_context_menu/render_view_context_menu_browsertest.cc",
         "patchSetId": 5
@@ -220,6 +436,24 @@
       "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753097e0_b3c5ef40",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-08T21:37:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfcac2eb_b66c87d8",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +488,24 @@
       "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1004fbb1_0d408f67",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/extension_items_container/item_limit/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-08T21:37:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b0d7e82_facf7b09",
+      "revId": "6bf5e7936e3aa8e9028fe066226509e8d1a09bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
