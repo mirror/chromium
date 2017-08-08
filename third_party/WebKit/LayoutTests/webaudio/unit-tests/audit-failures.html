@@ -29,10 +29,10 @@
             description: 'Testing basic assertion failures.'
           },
           function(task, should) {
-            should(function() {
+            should(function () {
               let foo = bar;
             }, 'Setting foo to bar').notThrow();
-            should(function() {
+            should(function () {
               let foo = 0;
             }).throw('ReferenceError');
             should(3 > 5, '3 < 5').beTrue();

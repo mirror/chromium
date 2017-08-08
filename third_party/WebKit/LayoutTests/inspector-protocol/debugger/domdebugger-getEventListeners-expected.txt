@@ -19,7 +19,7 @@ Event listeners of window
   type:scroll
   useCapture:false
   lineNumber:1
-  columnNumber:54
+  columnNumber:55
   handler.type:function
   handler.className:Function
   handler.description:function (){ consol.log(42) }
@@ -27,7 +27,7 @@ Event listeners of window
   type:scroll
   useCapture:false
   lineNumber:2
-  columnNumber:54
+  columnNumber:55
   handler.type:function
   handler.className:Function
   handler.description:function (){ consol.log(42) }

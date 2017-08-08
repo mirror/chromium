@@ -25,24 +25,24 @@ function runTest()
     log("Type/value for null is " + typeof localStorage.a + "/" + localStorage.a);
     localStorage.b = 0;
     log("Type/value for 0 is " + typeof localStorage.b + "/" + localStorage.b);
-    localStorage.c = function(){};
-    log("Type/value for function(){} is " + typeof localStorage.c + "/" + localStorage.c);
+    localStorage.c = function (){};
+    log("Type/value for function (){} is " + typeof localStorage.c + "/" + localStorage.c);
 
     log("Testing explicit setters");
     localStorage.setItem('d', null);
     log("Type/value for null is " + typeof localStorage.d + "/" + localStorage.d);
     localStorage.setItem('e', 0);
     log("Type/value for 0 is " + typeof localStorage.e + "/" + localStorage.e);
-    localStorage.setItem('f', function(){});
-    log("Type/value for function(){} is " + typeof localStorage.f + "/" + localStorage.f);
+    localStorage.setItem('f', function (){});
+    log("Type/value for function (){} is " + typeof localStorage.f + "/" + localStorage.f);
 
     log("Testing index setters");
     localStorage['g'] = null;
     log("Type/value for null is " + typeof localStorage.g + "/" + localStorage.g);
     localStorage['h'] = 0;
     log("Type/value for 0 is " + typeof localStorage.h + "/" + localStorage.h);
-    localStorage['i'] = function(){};
-    log("Type/value for function(){} is " + typeof localStorage.i + "/" + localStorage.i);
+    localStorage['i'] = function (){};
+    log("Type/value for function (){} is " + typeof localStorage.i + "/" + localStorage.i);
 }
 
 </script>

@@ -21,19 +21,19 @@
           },
           function(task, should) {
             should(OfflineAudioContext, 'OfflineAudioContext').exist();
-            should(function() {
+            should(function () {
               let foo1 = 0;
             }, 'Setting foo1 to 0').notThrow();
-            should(function() {
+            should(function () {
               let foo2 = bar;
             }).throw();
-            should(function() {
+            should(function () {
               let foo3 = bar;
             }).throw('ReferenceError');
-            should(function() {
+            should(function () {
               let foo4 = bar;
             }).throw(null);
-            should(function() {
+            should(function () {
               let foo5 = bar;
             }).throw(undefined);
             should(() => {

@@ -93,7 +93,7 @@ shouldBe("walker.nextNode(); walker.currentNode.id", "'B1'");
 
 debug("<br>Testing acceptNode callee");
 var filter = {
-  acceptNode: function(node) {
+  acceptNode: function (node) {
     debug('Callee: ' + arguments.callee);
     return NodeFilter.FILTER_ACCEPT;
   }

@@ -14,17 +14,17 @@ function run()
         try {
             window.open.call(frame.contentWindow);
         } catch (e) {
-            e.constructor.constructor(check)();
+            e.constructor.constructor("", check)();
         }
         try {
             location.assign.call(frame.contentWindow.location);
         } catch (e) {
-            e.constructor.constructor(check)();
+            e.constructor.constructor("", check)();
         }
         try {
             frame.contentWindow.opener = 1;
         } catch (e) {
-            e.constructor.constructor(check)();
+            e.constructor.constructor("", check)();
         }
         if (window.testRunner)
             testRunner.notifyDone();

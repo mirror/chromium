@@ -11,7 +11,7 @@
   await TestRunner.evaluateInPagePromise(`
      function logObject()
     {
-        var A = function() { this.value = 239; }
+        var A = function () { this.value = 239; }
         A.prototype = {
             constructor: A,
             get foo()
@@ -19,7 +19,7 @@
                 return this.value;
             }
         }
-        var B = function() { A.call(this); }
+        var B = function () { A.call(this); }
         B.prototype = {
             constructor: B,
             __proto__: A.prototype

@@ -150,7 +150,7 @@ function extension_testElementsSidebarSetExpression(nextTest)
                 f7: 42,
                 f8: fooInstance,
                 f9: document.body.children,
-                f10: function() {},
+                f10: function () {},
                 f11: $0.testProperty
             };
         }
@@ -186,7 +186,7 @@ function extension_testSourcesSidebarSetExpression(nextTest)
                 f7: 42,
                 f8: fooInstance,
                 f9: document.body.children,
-                f10: function() {},
+                f10: function () {},
             };
         }
         sidebar.setExpression("(" + expression.toString() + ")();", "title", extension_dumpSidebarContent.bind(this, panelName, nextTest));

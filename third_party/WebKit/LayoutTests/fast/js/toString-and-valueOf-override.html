@@ -27,29 +27,29 @@
             var results = '';
             results += testToStringAndValueOf('Unmodified ' + type, type, object);
 
-            object.toString = function() { return "toString" }
+            object.toString = function () { return "toString" }
             object.valueOf = function() { return "valueOf" }
             results += testToStringAndValueOf(type + ' with modified toString and valueOf', type, object);
 
-            object.toString = function() { return new Object(); }
+            object.toString = function () { return new Object(); }
             results += testToStringAndValueOf(type + ' with modified toString that returns an Object', type, object);
 
-            object.toString = function() { return 'toString'; }
+            object.toString = function () { return 'toString'; }
             object.valueOf = function() { return new Object(); }
             results += testToStringAndValueOf(type + ' with modified valueOf that returns an Object', type, object);
 
-            object.toString = function() { return new Object(); }
+            object.toString = function () { return new Object(); }
             results += testToStringAndValueOf(type + ' with modified toString and valueOf that returns an Object', type, object);
 
-            object.toString = function() { throw "Exception"; }
+            object.toString = function () { throw "Exception"; }
             object.valueOf = function() { return "valueOf"; }
             results += testToStringAndValueOf(type + ' with modified toString that throws an exception', type, object);
 
-            object.toString = function() { return 'toString'; }
+            object.toString = function () { return 'toString'; }
             object.valueOf = function() { throw "Exception"; }
             results += testToStringAndValueOf(type + ' with modified valueOf that throws an exception', type, object);
 
-            object.toString = function() { throw "Exception"; }
+            object.toString = function () { throw "Exception"; }
             object.valueOf = function() { throw "Exception"; }
             results += testToStringAndValueOf(type + ' with modified toString an valueOf that throw exceptions', type, object);
 

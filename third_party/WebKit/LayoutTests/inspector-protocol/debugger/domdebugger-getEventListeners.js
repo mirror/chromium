@@ -25,8 +25,8 @@
 
   var objectId = (await dp.Runtime.evaluate({expression:
     `(function(){
-            window.addEventListener('scroll', function(){ consol.log(42) }, false);
-            window.addEventListener('scroll', function(){ consol.log(42) }, false);
+            window.addEventListener('scroll', function (){ consol.log(42) }, false);
+            window.addEventListener('scroll', function (){ consol.log(42) }, false);
             function clickHandler(event) { console.log('click - button - bubbling (registered before attribute)'); }
             window.addEventListener('click', clickHandler, true);
             window.addEventListener('hover', function hoverHandler(event) { console.log("hover - button - bubbling"); }, true);
