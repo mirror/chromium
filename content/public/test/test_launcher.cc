@@ -496,6 +496,16 @@ int LaunchTests(TestLauncherDelegate* launcher_delegate,
     return 0;
   }
 
+  if (command_line->HasSwitch(switches::kTestLauncherJobs)) {
+    if (!base::StringToSizeT(
+            command_line->GetSwitchValueASCII(switches::kTestLauncherJobs),
+            &parallel_jobs) ||
+        !parallel_jobs) {
+      LOG(ERROR) << "Invalid value for " << switches::kTestLauncherJobs;
+      return 1;
+    }
+  }
+
   std::unique_ptr<ContentMainDelegate> chrome_main_delegate(
       launcher_delegate->CreateContentMainDelegate());
   ContentMainParams params(chrome_main_delegate.get());
