@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tests "*" setting for Access-Control-Allow-Origin header</title>
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+    <script src="/common/get-host-info.sub.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+    const xhr = new XMLHttpRequest;
+
+    async_test(function(test) {
+      try {
+        xhr.open("GET", get_host_info().HTTP_REMOTE_ORIGIN + "/XMLHttpRequest/resources/access-control-basic-allow-star.py", false);
+      } catch(e) {
+        assert_unreached("Exception thrown. Cross-domain access is not allowed in 'open'. [" + e.message + "].");
+        return;
+      }
+
+      try {
+        xhr.send();
+      } catch(e) {
+        assert_unreached("Exception thrown. Cross-domain access is not allowed in 'send'. [" + e.message + "].");
+        return;
+      }
+
+      assert_equals(xhr.responseText, "PASS: Cross-domain access allowed.");
+      test.done();
+    }, "Allow star");
+    </script>
+  </body>
+</html>
