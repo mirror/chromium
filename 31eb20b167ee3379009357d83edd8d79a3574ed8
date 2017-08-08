@@ -70,6 +70,30 @@
       "revId": "31eb20b167ee3379009357d83edd8d79a3574ed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d817040_eb75d62d",
+        "filename": "third_party/WebKit/Source/core/events/Event.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-08T14:09:33Z",
+      "side": 1,
+      "message": "We share the same pain :-)\nSince this is a deprecated feature and no longer part of any spec, I chose to keep the behavior unchanged to avoid the risk of breaking anything for remaining users, even if it means not abiding by the WebIDL best practices.",
+      "parentUuid": "9cd2b164_2678e5fb",
+      "range": {
+        "startLine": 58,
+        "startChar": 67,
+        "endLine": 58,
+        "endChar": 73
+      },
+      "revId": "31eb20b167ee3379009357d83edd8d79a3574ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
