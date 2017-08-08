@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cfeaad7a_00d1cf88",
+        "filename": "media/capture/video/android/video_capture_device_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1142462
+      },
+      "writtenOn": "2017-08-08T14:08:26Z",
+      "side": 1,
+      "message": "Refactored it so that both are resolved. if (ThrottleFrame()) is used instead of if (!AdvanceToNextFrameTime(current_time)).",
+      "parentUuid": "1a966fdc_047a8235",
+      "range": {
+        "startLine": 339,
+        "startChar": 2,
+        "endLine": 339,
+        "endChar": 43
+      },
+      "revId": "33c17eb66b1ab738b814a05a755c49ccd0dc9b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bfd9e17_118c52d2",
         "filename": "media/capture/video/android/video_capture_device_android.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "33c17eb66b1ab738b814a05a755c49ccd0dc9b65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565a60d4_f9d0c416",
+        "filename": "media/capture/video/android/video_capture_device_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1142462
+      },
+      "writtenOn": "2017-08-08T14:08:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bfd9e17_118c52d2",
+      "range": {
+        "startLine": 399,
+        "startChar": 0,
+        "endLine": 399,
+        "endChar": 26
+      },
+      "revId": "33c17eb66b1ab738b814a05a755c49ccd0dc9b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2466f1b4_1401ed47",
+        "filename": "media/capture/video/android/video_capture_device_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1142462
+      },
+      "writtenOn": "2017-08-08T14:08:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56f4c9b6_7e3cff31",
+      "range": {
+        "startLine": 406,
+        "startChar": 32,
+        "endLine": 406,
+        "endChar": 65
+      },
+      "revId": "33c17eb66b1ab738b814a05a755c49ccd0dc9b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c215df68_fa18ec9f",
         "filename": "media/capture/video/android/video_capture_device_android.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6a094f61_3f92d2c7",
+        "filename": "media/capture/video/android/video_capture_device_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1142462
+      },
+      "writtenOn": "2017-08-08T14:08:26Z",
+      "side": 1,
+      "message": "Done. ThrottleFrame is.",
+      "parentUuid": "c215df68_fa18ec9f",
+      "range": {
+        "startLine": 411,
+        "startChar": 32,
+        "endLine": 411,
+        "endChar": 54
+      },
+      "revId": "33c17eb66b1ab738b814a05a755c49ccd0dc9b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e3987ae_eb83d558",
         "filename": "media/capture/video/android/video_capture_device_android.h",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "33c17eb66b1ab738b814a05a755c49ccd0dc9b65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7ec377_c47224ac",
+        "filename": "media/capture/video/android/video_capture_device_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1142462
+      },
+      "writtenOn": "2017-08-08T14:08:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e3987ae_eb83d558",
+      "range": {
+        "startLine": 114,
+        "startChar": 5,
+        "endLine": 114,
+        "endChar": 10
+      },
+      "revId": "33c17eb66b1ab738b814a05a755c49ccd0dc9b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
