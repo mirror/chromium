@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97d4991f_ac0bea90",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-08T22:30:08Z",
+      "side": 1,
+      "message": "after an offline discussion with dale, the idea is that we\u0027ll probably need a separate thread based on past experience.  however, media thread is fine for now.  we can get the thing running end to end before revisiting, + measurements.\n\njust needs TODO / crbug.",
+      "parentUuid": "a00cbedd_a94f0a29",
+      "revId": "81035890f01b11e868ae2e3c3621d3e1c03fd837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9faa470f_0890a51e",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 7
