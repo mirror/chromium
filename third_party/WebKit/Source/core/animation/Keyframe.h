@@ -69,7 +69,10 @@ class CORE_EXPORT Keyframe : public RefCounted<Keyframe> {
    public:
     virtual ~PropertySpecificKeyframe() {}
     double Offset() const { return offset_; }
-    TimingFunction& Easing() const { return *easing_; }
+    TimingFunction& Easing() const {
+      DCHECK(easing_);
+      return *easing_;
+    }
     EffectModel::CompositeOperation Composite() const { return composite_; }
     double UnderlyingFraction() const {
       return composite_ == EffectModel::kCompositeReplace ? 0 : 1;
