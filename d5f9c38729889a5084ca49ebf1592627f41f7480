@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07e95544_aff4c0bd",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-08T22:00:08Z",
+      "side": 1,
+      "message": "This is probably fine but I\u0027m slightly worried about battery life regressions here because the thread has to wake up. However, 10 seconds is sufficiently rare that it should be negligible.",
+      "revId": "d5f9c38729889a5084ca49ebf1592627f41f7480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
