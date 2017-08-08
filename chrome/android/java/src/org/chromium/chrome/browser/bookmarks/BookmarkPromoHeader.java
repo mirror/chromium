@@ -4,38 +4,52 @@
 
 package org.chromium.chrome.browser.bookmarks;
 
+import android.accounts.Account;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
+import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
+import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.signin.ProfileDataCache;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninAndSyncView;
 import org.chromium.chrome.browser.signin.SigninManager;
 import org.chromium.chrome.browser.signin.SigninManager.SignInStateObserver;
+import org.chromium.chrome.browser.signin.SigninPromoController;
+import org.chromium.chrome.browser.signin.SigninPromoView;
+import org.chromium.chrome.browser.widget.displaystyle.MarginResizer;
+import org.chromium.chrome.browser.widget.selection.SelectableListLayout;
+import org.chromium.components.signin.AccountManagerFacade;
+import org.chromium.components.signin.AccountsChangeObserver;
 import org.chromium.components.sync.AndroidSyncSettings;
 import org.chromium.components.sync.AndroidSyncSettings.AndroidSyncSettingsObserver;
+
+import java.util.Collections;
 
 /**
  * Class that manages all the logic and UI behind the signin promo header in the bookmark
  * content UI. The header is shown only on certain situations, (e.g., not signed in).
  */
-class BookmarkPromoHeader implements AndroidSyncSettingsObserver,
-        SignInStateObserver {
+class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObserver,
+                                     ProfileDataCache.Observer, AccountsChangeObserver {
     /**
-     * Interface to listen signin promo header visibility changes.
+     * Interface to listen signin promo header changes.
      */
-    interface PromoHeaderShowingChangeListener {
+    interface PromoHeaderChangeListener {
         /**
-         * Called when signin promo header visibility is changed.
-         * @param isShowing Whether it should be showing.
+         * Called when signin promo header is changed.
          */
-        void onPromoHeaderShowingChanged(boolean isShowing);
+        void onPromoHeaderChanged();
     }
 
     private static final String PREF_SIGNIN_PROMO_DECLINED =
@@ -43,36 +57,61 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver,
     private static final String PREF_SIGNIN_PROMO_SHOW_COUNT =
             "enhanced_bookmark_signin_promo_show_count";
     // TODO(kkimlabs): Figure out the optimal number based on UMA data.
-    private static final int MAX_SIGNIN_PROMO_SHOW_COUNT = 5;
+    private static final int MAX_SIGNIN_PROMO_SHOW_COUNT = 10;
 
     private static boolean sShouldShowForTests;
 
     private Context mContext;
     private SigninManager mSignInManager;
     private boolean mShouldShow;
-    private PromoHeaderShowingChangeListener mShowingChangeListener;
+    private PromoHeaderChangeListener mShowingChangeListener;
+    private BookmarkDelegate mBookmarkDelegate;
+    private SigninPromoController mSigninPromoController;
+    private ProfileDataCache mProfileDataCache;
 
     /**
      * Initializes the class. Note that this will start listening to signin related events and
      * update itself if needed.
      */
-    BookmarkPromoHeader(Context context,
-            PromoHeaderShowingChangeListener showingChangeListener) {
+    BookmarkPromoHeader(Context context, PromoHeaderChangeListener showingChangeListener,
+            BookmarkDelegate bookmarkDelegate) {
         mContext = context;
         mShowingChangeListener = showingChangeListener;
+        mBookmarkDelegate = bookmarkDelegate;
 
         AndroidSyncSettings.registerObserver(mContext, this);
+
+        if (SigninPromoController.shouldShowPromo(SigninAccessPoint.BOOKMARK_MANAGER)) {
+            int imageSize =
+                    mContext.getResources().getDimensionPixelSize(R.dimen.user_picture_size);
+            mProfileDataCache =
+                    new ProfileDataCache(mContext, Profile.getLastUsedProfile(), imageSize);
+            mProfileDataCache.addObserver(this);
+            mSigninPromoController = new SigninPromoController(
+                    mProfileDataCache, SigninAccessPoint.BOOKMARK_MANAGER);
+
+            AccountManagerFacade.get().addObserver(this);
+        }
 
         mSignInManager = SigninManager.get(mContext);
         mSignInManager.addSignInStateObserver(this);
 
         updateShouldShow(false);
         if (shouldShow()) {
-            int promoShowCount = ContextUtils.getAppSharedPreferences()
-                    .getInt(PREF_SIGNIN_PROMO_SHOW_COUNT, 0) + 1;
-            ContextUtils.getAppSharedPreferences().edit()
-                    .putInt(PREF_SIGNIN_PROMO_SHOW_COUNT, promoShowCount).apply();
-            RecordUserAction.record("Signin_Impression_FromBookmarkManager");
+            if (SigninPromoController.shouldShowPromo(SigninAccessPoint.BOOKMARK_MANAGER)) {
+                Account[] accounts = AccountManagerFacade.get().tryGetGoogleAccounts();
+                String defaultAccountName = accounts.length == 0 ? null : accounts[0].name;
+                mSigninPromoController.setAccountName(defaultAccountName);
+                mSigninPromoController.recordSigninPromoImpression();
+            } else {
+                int promoShowCount = ContextUtils.getAppSharedPreferences().getInt(
+                        PREF_SIGNIN_PROMO_SHOW_COUNT, 0);
+                ContextUtils.getAppSharedPreferences()
+                        .edit()
+                        .putInt(PREF_SIGNIN_PROMO_SHOW_COUNT, promoShowCount + 1)
+                        .apply();
+                RecordUserAction.record("Signin_Impression_FromBookmarkManager");
+            }
         }
     }
 
@@ -81,6 +120,11 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver,
      */
     void destroy() {
         AndroidSyncSettings.unregisterObserver(mContext, this);
+
+        if (SigninPromoController.shouldShowPromo(SigninAccessPoint.BOOKMARK_MANAGER)) {
+            AccountManagerFacade.get().removeObserver(this);
+            mProfileDataCache.removeObserver(this);
+        }
 
         mSignInManager.removeSignInStateObserver(this);
         mSignInManager = null;
@@ -94,25 +138,47 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver,
     }
 
     /**
+     * Updates the information of the promo header.
+     * @param holder The holder containing the view to be updated
+     */
+    void bindHolder(ViewHolder holder) {
+        if (SigninPromoController.shouldShowPromo(SigninAccessPoint.BOOKMARK_MANAGER)) {
+            SigninPromoView view = (SigninPromoView) holder.itemView;
+            setupSigninPromo(view);
+        }
+    }
+
+    /**
      * @return Signin promo header {@link ViewHolder} instance that can be used with
      *         {@link RecyclerView}.
      */
     ViewHolder createHolder(ViewGroup parent) {
-        SigninAndSyncView.Listener listener = new SigninAndSyncView.Listener() {
-            @Override
-            public void onViewDismissed() {
-                setSigninPromoDeclined();
-                updateShouldShow(true);
-            }
-        };
+        if (SigninPromoController.shouldShowPromo(SigninAccessPoint.BOOKMARK_MANAGER)) {
+            View view = LayoutInflater.from(mContext).inflate(
+                    R.layout.signin_promo_view_bookmarks, parent, false);
+            return new ViewHolder(view) {};
+        } else {
+            SigninAndSyncView.Listener listener = new SigninAndSyncView.Listener() {
+                @Override
+                public void onViewDismissed() {
+                    setSigninPromoDeclined();
+                }
+            };
 
-        SigninAndSyncView view =
-                SigninAndSyncView.create(parent, listener, SigninAccessPoint.BOOKMARK_MANAGER);
-        // A MarginResizer is used to apply margins in regular and wide display modes. Remove the
-        // view's lateral padding so that margins can be used instead.
-        ApiCompatibilityUtils.setPaddingRelative(
-                view, 0, view.getPaddingTop(), 0, view.getPaddingBottom());
-        return new ViewHolder(view) {};
+            View view =
+                    SigninAndSyncView.create(parent, listener, SigninAccessPoint.BOOKMARK_MANAGER);
+            // A MarginResizer is used to apply margins in regular and wide display modes. Remove
+            // the view's lateral padding so that margins can be used instead.
+            ApiCompatibilityUtils.setPaddingRelative(
+                    view, 0, view.getPaddingTop(), 0, view.getPaddingBottom());
+            MarginResizer.createAndAttach(view,
+                    mBookmarkDelegate.getSelectableListLayout().getUiConfig(),
+                    parent.getResources().getDimensionPixelSize(
+                            R.dimen.signin_and_sync_view_padding),
+                    SelectableListLayout.getDefaultListItemLateralShadowSizePx(
+                            parent.getResources()));
+            return new ViewHolder(view) {};
+        }
     }
 
     /**
@@ -124,24 +190,54 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver,
     }
 
     /**
-     * Save that user tapped "No" button on the signin promo header.
+     * Saves that the promo was dismissed and updates the UI.
      */
     private void setSigninPromoDeclined() {
         SharedPreferences.Editor sharedPreferencesEditor =
                 ContextUtils.getAppSharedPreferences().edit();
         sharedPreferencesEditor.putBoolean(PREF_SIGNIN_PROMO_DECLINED, true);
         sharedPreferencesEditor.apply();
+        updateShouldShow(true);
+    }
+
+    private void setupSigninPromo(SigninPromoView view) {
+        Account[] accounts = AccountManagerFacade.get().tryGetGoogleAccounts();
+        String defaultAccountName = accounts.length == 0 ? null : accounts[0].name;
+
+        if (defaultAccountName != null) {
+            mProfileDataCache.update(Collections.singletonList(defaultAccountName));
+        }
+
+        mSigninPromoController.setAccountName(defaultAccountName);
+
+        SigninPromoController.OnDismissListener listener =
+                new SigninPromoController.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        setSigninPromoDeclined();
+                    }
+                };
+        mSigninPromoController.setupSigninPromoView(mContext, view, listener);
     }
 
     private void updateShouldShow(boolean notifyUI) {
         boolean oldIsShowing = mShouldShow;
-        mShouldShow = AndroidSyncSettings.isMasterSyncEnabled(mContext)
-                && mSignInManager.isSignInAllowed()
-                && !wasSigninPromoDeclined()
-                && ContextUtils.getAppSharedPreferences().getInt(
-                        PREF_SIGNIN_PROMO_SHOW_COUNT, 0) < MAX_SIGNIN_PROMO_SHOW_COUNT;
+
+        mShouldShow = mSignInManager.isSignInAllowed() && !wasSigninPromoDeclined()
+                && AndroidSyncSettings.isMasterSyncEnabled(mContext);
+
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_SIGNIN_PROMOS)) {
+            mShouldShow &=
+                    SigninPromoController.shouldShowPromo(SigninAccessPoint.BOOKMARK_MANAGER);
+
+        } else {
+            mShouldShow &=
+                    ContextUtils.getAppSharedPreferences().getInt(PREF_SIGNIN_PROMO_SHOW_COUNT, 0)
+                    < MAX_SIGNIN_PROMO_SHOW_COUNT;
+        }
+
         if (oldIsShowing != mShouldShow && notifyUI) {
-            mShowingChangeListener.onPromoHeaderShowingChanged(mShouldShow);
+            mShowingChangeListener.onPromoHeaderChanged();
         }
     }
 
@@ -162,6 +258,20 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver,
     @Override
     public void onSignedOut() {
         updateShouldShow(true);
+    }
+
+    // ProfileDataCacheObserver implementation.
+
+    @Override
+    public void onProfileDataUpdated(String accountId) {
+        mShowingChangeListener.onPromoHeaderChanged();
+    }
+
+    // AccountsChangeObserver implementation.
+
+    @Override
+    public void onAccountsChanged() {
+        mShowingChangeListener.onPromoHeaderChanged();
     }
 
     /**
