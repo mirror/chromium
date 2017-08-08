@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cea39a2_96b88f13",
+        "filename": "headless/public/util/generic_url_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-08T14:30:35Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment why we special-case the BytesReader - I\u0027m assuming this is for performance?",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 78
+      },
+      "revId": "c923528e50092d130b9cfa237a9613019556adfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bdde30a_06037e2b",
+        "filename": "headless/public/util/generic_url_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-08T14:30:35Z",
+      "side": 1,
+      "message": "I don\u0027t think you\u0027re actually setting this to the quit closure of the run loop below.",
+      "range": {
+        "startLine": 310,
+        "startChar": 18,
+        "endLine": 310,
+        "endChar": 30
+      },
+      "revId": "c923528e50092d130b9cfa237a9613019556adfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
