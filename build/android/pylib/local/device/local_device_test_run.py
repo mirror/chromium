@@ -4,14 +4,19 @@
 
 import fnmatch
 import imp
+import json
 import logging
+import os
 import posixpath
 import signal
+import time
 import thread
 import threading
 
 from devil.android import crash_handler
 from devil.utils import signal_handler
+from pylib import constants
+from pylib import logging_ext
 from pylib import valgrind_tools
 from pylib.base import base_test_result
 from pylib.base import test_run
@@ -72,20 +77,35 @@ class LocalDeviceTestRun(test_run.TestRun):
     super(LocalDeviceTestRun, self).__init__(env, test_instance)
     self._tools = {}
 
+    # Fields used for logging time remaining estimates
+    self._start_tests_remaining = None
+    self._start_time = None
+    self._last_time_log = 0
+    self._log_lock = threading.Lock()
+    self._test_duration_info = {}
+
   #override
   def RunTests(self):
     tests = self._GetTests()
-
     exit_now = threading.Event()
+
+    if os.path.exists(constants.TestInfoCachePath()):
+      with open(constants.TestInfoCachePath(), 'r') as f:
+        self._test_duration_info = json.load(f)
 
     @local_device_environment.handle_shard_failures
     def run_tests_on_device(dev, tests, results):
+      if isinstance(tests, test_collection.TestCollection):
+        self._start_tests_remaining = len(tests)
+        self._start_time = time.time()
       for test in tests:
         if exit_now.isSet():
           thread.exit()
 
         result = None
         rerun = None
+        if isinstance(tests, test_collection.TestCollection):
+          self._MaybeLogTimeRemaining(tests)
         try:
           result, rerun = crash_handler.RetryOnSystemCrash(
               lambda d, t=test: self._RunTest(d, t),
@@ -163,7 +183,47 @@ class LocalDeviceTestRun(test_run.TestRun):
     except TestsTerminated:
       pass
 
+    _CacheTestInfo(results)
     return results
+
+  def _MaybeLogTimeRemaining(self, tc):
+    """Log an estimate for how long remains to run the test suite.
+
+    If this function has not logged an estimate in the previous |LOG_COOLDOWN|
+    then it will log the number of tests remaining to run. This function will
+    also attempt to estimate the time remaining in the test run. It does this
+    by (1) looking to see if runtimes for tests were cached by a previous run,
+    (2) else attempt to extrapolate test runtimes from the tests run so far,
+    (3) or fall back to a hardcoded fix value.
+
+    Args:
+      tc: Test collection.
+    """
+    LOG_COOLDOWN = 30 # seconds
+
+    # Lock is to prevent multiple test shards from simultaneously printing
+    # time estimate.
+    with self._log_lock:
+      if time.time() - self._last_time_log < LOG_COOLDOWN:
+        return
+      self._last_time_log = time.time()
+
+    tests_remaining = len(tc)
+    if tests_remaining < self._start_tests_remaining:
+      avg_test_duration = (float(time.time() - self._start_time) /
+                           (tests_remaining - self._start_tests_remaining))
+    else:
+      avg_test_duration = 1000
+
+    def get_test_time_estimate(t):
+      return self._test_duration_info.get(t, {}).get(
+          'duration_ms', avg_test_duration)
+
+    # pylint: disable=bad-builtin
+    time_estimate = float(sum(map(get_test_time_estimate,
+        [self._GetUniqueTestName(t) for t in tc.test_names()]))) / 1000
+    logging_ext.test_time('Tests remaining: %d, Time remaining: %f',
+                     tests_remaining, time_estimate / len(self._env.devices))
 
   def _GetTestsToRetry(self, tests, try_results):
 
@@ -224,6 +284,19 @@ class LocalDeviceTestRun(test_run.TestRun):
 
   def _ShouldShard(self):
     raise NotImplementedError
+
+
+def _CacheTestInfo(results):
+  test_info = {}
+  if os.path.exists(constants.TestInfoCachePath()):
+    with open(constants.TestInfoCachePath(), 'r') as f:
+      test_info = json.load(f)
+  for try_results in results:
+    for r in try_results.GetAll():
+      if r.GetDuration():
+        test_info[str(r)] = {'duration_ms': r.GetDuration()}
+  with open(constants.TestInfoCachePath(), 'w') as f:
+    json.dump(test_info, f)
 
 
 class NoTestsError(Exception):

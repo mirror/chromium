@@ -17,6 +17,7 @@ from devil.android import device_temp_file
 from devil.android import flag_changer
 from devil.android.tools import system_app
 from devil.utils import reraiser_thread
+from pylib import logging_ext
 from pylib import valgrind_tools
 from pylib.android import logdog_logcat_monitor
 from pylib.base import base_test_result
@@ -549,6 +550,12 @@ class LocalDeviceInstrumentationTestRun(
 
     if self._env.concurrent_adb:
       post_test_step_thread_group.JoinAll()
+
+    if result.GetType() == base_test_result.ResultType.PASS:
+      logging_ext.test_pass('%s %s', result.GetType(), test_display_name)
+    else:
+      logging_ext.test_fail('%s %s', result.GetType(), test_display_name)
+
     return results, None
 
   def _SaveScreenshot(self, device, screenshot_host_dir, screenshot_device_file,
