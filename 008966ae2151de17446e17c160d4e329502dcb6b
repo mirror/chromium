@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac2a0be8_53a80e89",
+        "filename": "content/public/test/test_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-08T17:13:41Z",
+      "side": 1,
+      "message": "Please add a description as to what |output_file| is.",
+      "range": {
+        "startLine": 162,
+        "startChar": 43,
+        "endLine": 162,
+        "endChar": 54
+      },
+      "revId": "008966ae2151de17446e17c160d4e329502dcb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
