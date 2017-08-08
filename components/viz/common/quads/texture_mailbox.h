@@ -57,6 +57,7 @@ class VIZ_COMMON_EXPORT TextureMailbox {
 
   bool Equals(const TextureMailbox&) const;
 
+  const gpu::MailboxHolder& mailbox_holder() const { return mailbox_holder_; }
   const gpu::Mailbox& mailbox() const { return mailbox_holder_.mailbox; }
   const int8_t* name() const { return mailbox().name; }
   uint32_t target() const { return mailbox_holder_.texture_target; }
