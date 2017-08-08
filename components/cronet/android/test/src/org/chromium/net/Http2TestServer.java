@@ -38,7 +38,7 @@ import io.netty.handler.ssl.SupportedCipherSuiteFilter;
  * Wrapper class to start a HTTP/2 test server.
  */
 public final class Http2TestServer {
-    private static final ConditionVariable sBlock = new ConditionVariable();
+    private static ConditionVariable sBlock = new ConditionVariable();
     private static Channel sServerChannel;
     private static final String TAG = Http2TestServer.class.getSimpleName();
 
@@ -50,6 +50,7 @@ public final class Http2TestServer {
         if (sServerChannel != null) {
             sServerChannel.close();
             sServerChannel = null;
+            sBlock = new ConditionVariable();
             return true;
         }
         return false;
