@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07749b88_978ff719",
+        "filename": "remoting/ios/client_keyboard.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-08T01:57:56Z",
+      "side": 1,
+      "message": "It feels strange to have a getter method change state.\nMaybe better to override resignFirstResponder to set this variable (as you did in patch #1).\nIf that leads to more complicated code, I\u0027m not sure what\u0027s the best way :(",
+      "revId": "04a6fc88fd5c6bd2887db757c0e62f09061553a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
