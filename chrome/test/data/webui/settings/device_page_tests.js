@@ -247,6 +247,11 @@ cr.define('device_page_tests', function() {
             value: false,
           },
         },
+        restore_last_lock_screen_note: {
+          key: 'settings.restore_last_lock_screen_note',
+          type: chrome.settingsPrivate.PrefType.BOOLEAN,
+          value: true,
+        },
         touchpad: {
           enable_tap_to_click: {
             key: 'settings.touchpad.enable_tap_to_click',
@@ -1098,20 +1103,41 @@ cr.define('device_page_tests', function() {
       /**
        * @return {Element | undefined}
        */
+      function noteTakingAppLockScreenSettings() {
+        return stylusPage.$$('#note-taking-app-lock-screen-settings');
+      }
+
+      /**
+       * @return {Element | undefined}
+       */
       function enableAppOnLockScreenToggle() {
         return stylusPage.$$('#enable-app-on-lock-screen-toggle');
       }
 
+      /**
+       * @return {Element | undefined}
+       */
       function enableAppOnLockScreenPolicyIndicator() {
         return stylusPage.$$("#enable-app-on-lock-screen-policy-indicator");
       }
 
+      /**
+       * @return {Element | undefined}
+       */
       function enableAppOnLockScreenToggleLabel() {
         return stylusPage.$$('#lock-screen-toggle-label');
       }
 
       /**
+       * @return {Element | undefined}
+       */
+      function keepLastNoteOnLockScreenToggle() {
+        return stylusPage.$$('#keep-last-note-on-lock-screen-toggle');
+      }
+
+      /**
        * @param {Element|undefined} element
+       * @return {boolean}
        */
       function isVisible(element) {
         return !!element && element.offsetWidth > 0 && element.offsetHeight > 0;
@@ -1213,6 +1239,7 @@ cr.define('device_page_tests', function() {
       });
 
       test('enabled-on-lock-screen', function() {
+        expectFalse(isVisible(noteTakingAppLockScreenSettings()));
         expectFalse(isVisible(enableAppOnLockScreenToggle()));
         expectFalse(isVisible(enableAppOnLockScreenPolicyIndicator()));
 
@@ -1222,6 +1249,7 @@ cr.define('device_page_tests', function() {
           stylusPage.async(resolve);
         }).then(function() {
           Polymer.dom.flush();
+          expectFalse(isVisible(noteTakingAppLockScreenSettings()));
           expectFalse(isVisible(enableAppOnLockScreenToggle()));
           expectFalse(isVisible(enableAppOnLockScreenPolicyIndicator()));
 
@@ -1231,6 +1259,7 @@ cr.define('device_page_tests', function() {
           return new Promise(function(resolve) {stylusPage.async(resolve);});
         }).then(function() {
           Polymer.dom.flush();
+          expectFalse(isVisible(noteTakingAppLockScreenSettings()));
           expectFalse(isVisible(enableAppOnLockScreenToggle()));
           expectFalse(isVisible(enableAppOnLockScreenPolicyIndicator()));
 
@@ -1240,6 +1269,7 @@ cr.define('device_page_tests', function() {
           return new Promise(function(resolve) { stylusPage.async(resolve); });
         }).then(function() {
           Polymer.dom.flush();
+          expectFalse(isVisible(noteTakingAppLockScreenSettings()));
           expectFalse(isVisible(enableAppOnLockScreenToggle()));
           expectFalse(isVisible(enableAppOnLockScreenPolicyIndicator()));
 
@@ -1252,6 +1282,7 @@ cr.define('device_page_tests', function() {
           return new Promise(function(resolve) { stylusPage.async(resolve); });
         }).then(function() {
           Polymer.dom.flush();
+          expectTrue(isVisible(noteTakingAppLockScreenSettings()));
           expectFalse(isVisible(enableAppOnLockScreenPolicyIndicator()));
           assert(isVisible(enableAppOnLockScreenToggle()));
           expectFalse(enableAppOnLockScreenToggle().checked);
@@ -1264,6 +1295,7 @@ cr.define('device_page_tests', function() {
           return new Promise(function(resolve) { stylusPage.async(resolve); });
         }).then(function() {
           Polymer.dom.flush();
+          expectTrue(isVisible(noteTakingAppLockScreenSettings()));
           expectFalse(isVisible(enableAppOnLockScreenPolicyIndicator()));
           assert(isVisible(enableAppOnLockScreenToggle()));
           expectTrue(enableAppOnLockScreenToggle().checked);
@@ -1277,6 +1309,7 @@ cr.define('device_page_tests', function() {
           return new Promise(function(resolve) { stylusPage.async(resolve); });
         }).then(function() {
           Polymer.dom.flush();
+          expectFalse(isVisible(noteTakingAppLockScreenSettings()));
           expectFalse(isVisible(enableAppOnLockScreenToggle()));
           expectFalse(isVisible(enableAppOnLockScreenPolicyIndicator()));
         });
@@ -1291,6 +1324,7 @@ cr.define('device_page_tests', function() {
         }).then(function() {
           Polymer.dom.flush();
 
+          expectTrue(isVisible(noteTakingAppLockScreenSettings()));
           assert(isVisible(enableAppOnLockScreenToggle()));
           expectFalse(enableAppOnLockScreenToggle().checked);
           expectFalse(isVisible(enableAppOnLockScreenPolicyIndicator()));
@@ -1302,6 +1336,7 @@ cr.define('device_page_tests', function() {
           return new Promise(function(resolve) { stylusPage.async(resolve); });
         }).then(function() {
           Polymer.dom.flush();
+          expectTrue(isVisible(noteTakingAppLockScreenSettings()));
           assert(isVisible(enableAppOnLockScreenToggle()));
           expectTrue(enableAppOnLockScreenToggle().checked);
           expectFalse(isVisible(enableAppOnLockScreenPolicyIndicator()));
@@ -1313,6 +1348,7 @@ cr.define('device_page_tests', function() {
           return new Promise(function(resolve) { stylusPage.async(resolve); });
         }).then(function() {
           Polymer.dom.flush();
+          expectTrue(isVisible(noteTakingAppLockScreenSettings()));
           assert(isVisible(enableAppOnLockScreenToggle()));
           expectFalse(enableAppOnLockScreenToggle().checked);
           expectFalse(isVisible(enableAppOnLockScreenPolicyIndicator()));
@@ -1410,6 +1446,7 @@ cr.define('device_page_tests', function() {
           stylusPage.async(resolve);
         }).then(function() {
           Polymer.dom.flush();
+          expectTrue(isVisible(noteTakingAppLockScreenSettings()));
           assert(isVisible(enableAppOnLockScreenToggle()));
           expectFalse(enableAppOnLockScreenToggle().checked);
           expectTrue(isVisible(enableAppOnLockScreenPolicyIndicator()));
@@ -1430,12 +1467,58 @@ cr.define('device_page_tests', function() {
           return new Promise(function(resolve) { stylusPage.async(resolve); });
         }).then(function() {
           Polymer.dom.flush();
+          expectTrue(isVisible(noteTakingAppLockScreenSettings()));
           assert(isVisible(enableAppOnLockScreenToggle()));
           expectFalse(enableAppOnLockScreenToggle().checked);
           expectTrue(isVisible(enableAppOnLockScreenPolicyIndicator()));
 
           expectEquals(LockScreenSupport.NOT_ALLOWED_BY_POLICY,
                        browserProxy.getPreferredAppLockScreenState());
+        });
+      });
+
+      test('keep-last-note-on-lock-screen', function() {
+        return new Promise(function(resolve) {
+          browserProxy.setNoteTakingApps([
+            entry('n1', 'v1', true, LockScreenSupport.NOT_SUPPORTED),
+            entry('n2', 'v2', false, LockScreenSupport.SUPPORTED)
+          ]);
+          stylusPage.async(resolve);
+        }).then(function() {
+          Polymer.dom.flush();
+          expectFalse(isVisible(noteTakingAppLockScreenSettings()));
+          expectFalse(isVisible(keepLastNoteOnLockScreenToggle()));
+
+          browserProxy.setNoteTakingApps([
+            entry('n1', 'v1', false, LockScreenSupport.NOT_SUPPORTED),
+            entry('n2', 'v2', true, LockScreenSupport.SUPPORTED)
+          ]);
+          return new Promise(function(resolve) { stylusPage.async(resolve); });
+        }).then(function() {
+          Polymer.dom.flush();
+          expectTrue(isVisible(noteTakingAppLockScreenSettings()));
+          expectFalse(isVisible(keepLastNoteOnLockScreenToggle()));
+
+          browserProxy.setNoteTakingApps([
+            entry('n2', 'v2', true, LockScreenSupport.ENABLED),
+          ]);
+        }).then(function() {
+          Polymer.dom.flush();
+          expectTrue(isVisible(noteTakingAppLockScreenSettings()));
+          assert(isVisible(keepLastNoteOnLockScreenToggle()));
+          expectTrue(keepLastNoteOnLockScreenToggle().checked);
+
+          // Clicking the toggle updates the pref value.
+          MockInteractions.tap(keepLastNoteOnLockScreenToggle().$$('#control'));
+          expectFalse(keepLastNoteOnLockScreenToggle().checked);
+
+          expectFalse(
+              devicePage.prefs.settings.restore_last_lock_screen_note.value);
+
+          // Changing the pref value updates the toggle.
+          devicePage.set(
+              'prefs.settings.restore_last_lock_screen_note.value', true);
+          expectTrue(keepLastNoteOnLockScreenToggle().checked);
         });
       });
     });
