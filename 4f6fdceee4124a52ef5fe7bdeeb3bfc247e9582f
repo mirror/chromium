@@ -16,6 +16,24 @@
       "revId": "4f6fdceee4124a52ef5fe7bdeeb3bfc247e9582f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c2a245_57b7e159",
+        "filename": "chrome/renderer/resources/extensions/platform_keys/subtle_crypto.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-08T22:14:11Z",
+      "side": 1,
+      "message": "Without looking deeply, I\u0027d guess it\u0027s where the microtask scope ends up with each bindings system.\n\nPromise resolution doesn\u0027t happen at the top of the event loop, but when the microtask scope finishes, and that\u0027s associated with when JS is entered/left.",
+      "parentUuid": "90a6036d_d91ee8c7",
+      "revId": "4f6fdceee4124a52ef5fe7bdeeb3bfc247e9582f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
