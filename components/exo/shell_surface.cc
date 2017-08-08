@@ -6,11 +6,13 @@
 
 #include <algorithm>
 
+#include "ash/accelerators/accelerator_controller.h"
 #include "ash/frame/custom_frame_view_ash.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/interfaces/window_pin_type.mojom.h"
+#include "ash/shell.h"
 #include "ash/wm/drag_window_resizer.h"
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_state.h"
@@ -195,6 +197,16 @@ class ShellSurfaceWidget : public views::Widget {
   void OnKeyEvent(ui::KeyEvent* event) override {
     // TODO(hidehiko): Handle ESC + SHIFT + COMMAND accelerator key
     // to escape pinned mode.
+
+    // If there is a global keyboard accelerator with high priority, let it
+    // handle the key event.
+    ui::Accelerator accelerator(*event);
+    ash::AcceleratorController* accelerator_controller =
+        ash::Shell::Get()->accelerator_controller();
+    if (accelerator_controller->HasPriorityHandler(accelerator) &&
+        accelerator_controller->Process(accelerator)) {
+      event->StopPropagation();
+    }
   }
 
  private:
