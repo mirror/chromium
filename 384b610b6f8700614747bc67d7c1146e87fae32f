@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e188383b_f08c97b7",
+        "filename": "net/http/http_network_transaction.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1237699
+      },
+      "writtenOn": "2017-08-08T18:12:18Z",
+      "side": 1,
+      "message": "retry_attempts_ needs to be a member variable, as there can be more than one HttpNetworkTransaction in flight. And since ExceededMaxRetries() makes use of retry_attempts_ I don\u0027t think it will be possible to move this to an anonymous namespace. Correct me if I am wrong.",
+      "parentUuid": "243433a2_be81f571",
+      "revId": "384b610b6f8700614747bc67d7c1146e87fae32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6115179_18c34db4",
         "filename": "net/http/http_network_transaction.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "384b610b6f8700614747bc67d7c1146e87fae32f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632e1083_3a7826f3",
+        "filename": "net/http/http_network_transaction.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1237699
+      },
+      "writtenOn": "2017-08-08T18:12:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e6115179_18c34db4",
+      "revId": "384b610b6f8700614747bc67d7c1146e87fae32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
