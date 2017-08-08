@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb555a25_d0502b91",
+        "filename": "chrome/browser/permissions/permission_request_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-08T12:20:50Z",
+      "side": 0,
+      "message": "This call clears all params including necessary params for ResourceLoadScheduiler.\nThat results in crashing inside base::FieldTrialList::GetParamsFromSharedMemory() when ResourceLoadScheduler checks params in Blink.\n\nhttps://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.linux%2Flinux_chromium_rel_ng%2F519784%2F%2B%2Frecipes%2Fsteps%2Fbrowser_tests__with_patch_%2F0%2Flogs%2FPermissionRequestManagerBrowserTest.KillSwitchGeolocation%2F0\n\nSo, I swapped testing order so that we do not need to load another page after calling ClearAllVariationParams.",
+      "revId": "8f51b9de091614f73bf63e53be547a12d980508c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
