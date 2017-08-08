@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1560890c_dcaef1e3",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-08T14:50:02Z",
+      "side": 1,
+      "message": "this is a very good idea.",
+      "revId": "2efa36df7d1637693af598c705ef553bb54bc02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487b94e1_60ba2ebb",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-08T14:50:02Z",
+      "side": 1,
+      "message": "could also replace 518-522 with to save... two lines :) :\nif (eos)\n  OnCodecDrained()\nreturn !eos",
+      "revId": "2efa36df7d1637693af598c705ef553bb54bc02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363c8c9d_97d71946",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-08T14:50:02Z",
+      "side": 1,
+      "message": "how does |output_cb_| know that this is an eos?  is it normal to issue a video frame for it?\n\nalso, CodecWrapperImpl is going to wrap whatever output buffer comes out of MediaCodec along with eos, and ReleaseCodecBuffer it on destruction (which isn\u0027t new in this change -- i just never noticed).  is that okay?  actually, is this required?  i don\u0027t think that AVDA does this.",
+      "revId": "2efa36df7d1637693af598c705ef553bb54bc02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
