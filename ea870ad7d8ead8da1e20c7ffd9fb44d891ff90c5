@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c059eae3_1eb2a881",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/wrapper_class_declaration.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-08T15:52:48Z",
+      "side": 1,
+      "message": "Would you please explain why this \"makes it slightly easier for Blink devs to use the correct type\"? I haven\u0027t understood.\n\nFor consistency\u0027s sake, please also change wrapper_union_class_declaration.tmpl.",
+      "revId": "ea870ad7d8ead8da1e20c7ffd9fb44d891ff90c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
