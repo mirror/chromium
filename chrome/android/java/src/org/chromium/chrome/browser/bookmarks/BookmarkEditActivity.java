@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import org.chromium.base.Log;
@@ -71,13 +70,9 @@ public class BookmarkEditActivity extends SynchronousInitializationActivity {
         mFolderTextView = (TextView) findViewById(R.id.folder_text);
         mUrlEditText = (EmptyAlertEditText) findViewById(R.id.url_text);
 
-        mFolderTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BookmarkFolderSelectActivity.startFolderSelectActivity(
-                        BookmarkEditActivity.this, mBookmarkId);
-            }
-        });
+        mFolderTextView.setOnClickListener(
+                v -> BookmarkFolderSelectActivity.startFolderSelectActivity(
+                        BookmarkEditActivity.this, mBookmarkId));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

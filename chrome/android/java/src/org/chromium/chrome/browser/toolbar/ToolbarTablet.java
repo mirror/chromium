@@ -402,14 +402,11 @@ public class ToolbarTablet
         }
         mVisibleNtp = newVisibleNtp;
         if (mVisibleNtp != null) {
-            mVisibleNtp.setSearchBoxScrollListener(new NewTabPage.OnSearchBoxScrollListener() {
-                @Override
-                public void onNtpScrollChanged(float scrollPercentage) {
-                    // Fade the search box out in the first 40% of the scrolling transition.
-                    float alpha = Math.max(1f - scrollPercentage * 2.5f, 0f);
-                    mVisibleNtp.setSearchBoxAlpha(alpha);
-                    mVisibleNtp.setSearchProviderLogoAlpha(alpha);
-                }
+            mVisibleNtp.setSearchBoxScrollListener(scrollPercentage -> {
+                // Fade the search box out in the first 40% of the scrolling transition.
+                float alpha = Math.max(1f - scrollPercentage * 2.5f, 0f);
+                mVisibleNtp.setSearchBoxAlpha(alpha);
+                mVisibleNtp.setSearchProviderLogoAlpha(alpha);
             });
         }
     }

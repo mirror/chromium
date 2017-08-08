@@ -36,13 +36,8 @@ public class ClearBrowsingDataPreferencesBasic extends ClearBrowsingDataPreferen
         ClearBrowsingDataTabCheckBoxPreference cookiesCheckbox =
                 (ClearBrowsingDataTabCheckBoxPreference) findPreference(PREF_COOKIES);
 
-        historyCheckbox.setLinkClickDelegate(new Runnable() {
-            @Override
-            public void run() {
-                new TabDelegate(false /* incognito */)
-                        .launchUrl(MY_ACTIVITY_URL, TabModel.TabLaunchType.FROM_CHROME_UI);
-            }
-        });
+        historyCheckbox.setLinkClickDelegate(() -> new TabDelegate(false /* incognito */)
+                .launchUrl(MY_ACTIVITY_URL, TabModel.TabLaunchType.FROM_CHROME_UI));
 
         if (ChromeSigninController.get().isSignedIn()) {
             if (isHistorySyncEnabled()) {

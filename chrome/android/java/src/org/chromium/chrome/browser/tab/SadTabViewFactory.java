@@ -14,7 +14,6 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.BulletSpan;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -60,12 +59,9 @@ public class SadTabViewFactory {
         int buttonTextId = showSendFeedbackView ? R.string.sad_tab_send_feedback_label
                                                 : R.string.sad_tab_reload_label;
         button.setText(buttonTextId);
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SadTabViewFactory.recordEvent(showSendFeedbackView, SadTabEvent.BUTTON_CLICKED);
-                buttonAction.run();
-            }
+        button.setOnClickListener(v -> {
+            SadTabViewFactory.recordEvent(showSendFeedbackView, SadTabEvent.BUTTON_CLICKED);
+            buttonAction.run();
         });
 
         SadTabViewFactory.recordEvent(showSendFeedbackView, SadTabEvent.DISPLAYED);

@@ -16,7 +16,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
 import android.view.View.OnClickListener;
-import android.widget.PopupWindow.OnDismissListener;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
@@ -231,13 +230,8 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
 
         mAppMenuPropertiesDelegate = appMenuPropertiesDelegate;
 
-        mHomepageStateListener = new HomepageStateListener() {
-            @Override
-            public void onHomepageStateUpdated() {
-                mToolbar.onHomeButtonUpdate(
-                        HomepageManager.isHomepageEnabled(mToolbar.getContext()));
-            }
-        };
+        mHomepageStateListener = () -> mToolbar.onHomeButtonUpdate(
+                HomepageManager.isHomepageEnabled(mToolbar.getContext()));
         HomepageManager.getInstance(mToolbar.getContext()).addListener(mHomepageStateListener);
 
         mTabModelSelectorObserver = new EmptyTabModelSelectorObserver() {
@@ -511,18 +505,10 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
                         R.string.iph_download_page_for_offline_usage_text,
                         R.string.iph_download_page_for_offline_usage_accessibility_text);
                 mTextBubble.setDismissOnTouchInteraction(true);
-                mTextBubble.addOnDismissListener(new OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                tracker.dismissed(FeatureConstants.DOWNLOAD_PAGE_FEATURE);
-                                activity.getAppMenuHandler().setMenuHighlight(null);
-                            }
-                        });
-                    }
-                });
+                mTextBubble.addOnDismissListener(() -> mHandler.post(() -> {
+                    tracker.dismissed(FeatureConstants.DOWNLOAD_PAGE_FEATURE);
+                    activity.getAppMenuHandler().setMenuHighlight(null);
+                }));
                 activity.getAppMenuHandler().setMenuHighlight(R.id.offline_page_id);
                 int yInsetPx = mToolbar.getContext().getResources().getDimensionPixelOffset(
                         R.dimen.text_bubble_menu_anchor_y_inset);
@@ -880,20 +866,17 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
             }
         });
         mAppMenuButtonHelper = new AppMenuButtonHelper(menuHandler);
-        mAppMenuButtonHelper.setOnAppMenuShownListener(new Runnable() {
-            @Override
-            public void run() {
-                RecordUserAction.record("MobileToolbarShowMenu");
-                mToolbar.onMenuShown();
+        mAppMenuButtonHelper.setOnAppMenuShownListener(() -> {
+            RecordUserAction.record("MobileToolbarShowMenu");
+            mToolbar.onMenuShown();
 
-                // Assume data saver footer is shown only if data reduction proxy is enabled and
-                // Chrome home is not
-                if (DataReductionProxySettings.getInstance().isDataReductionProxyEnabled()
-                        && !FeatureUtilities.isChromeHomeEnabled()) {
-                    Tracker tracker =
-                            TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
-                    tracker.notifyEvent(EventConstants.OVERFLOW_OPENED_WITH_DATA_SAVER_SHOWN);
-                }
+            // Assume data saver footer is shown only if data reduction proxy is enabled and
+            // Chrome home is not
+            if (DataReductionProxySettings.getInstance().isDataReductionProxyEnabled()
+                    && !FeatureUtilities.isChromeHomeEnabled()) {
+                Tracker tracker =
+                        TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
+                tracker.notifyEvent(EventConstants.OVERFLOW_OPENED_WITH_DATA_SAVER_SHOWN);
             }
         });
     }
@@ -1081,12 +1064,9 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         // Record startup performance statistics
         long elapsedTime = SystemClock.elapsedRealtime() - activityCreationTimeMs;
         if (elapsedTime < RECORD_UMA_PERFORMANCE_METRICS_DELAY_MS) {
-            ThreadUtils.postOnUiThreadDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    onDeferredStartup(activityCreationTimeMs, activityName);
-                }
-            }, RECORD_UMA_PERFORMANCE_METRICS_DELAY_MS - elapsedTime);
+            ThreadUtils.postOnUiThreadDelayed(
+                    () -> onDeferredStartup(activityCreationTimeMs, activityName),
+                    RECORD_UMA_PERFORMANCE_METRICS_DELAY_MS - elapsedTime);
         }
         RecordHistogram.recordTimesHistogram("MobileStartup.ToolbarFirstDrawTime." + activityName,
                 mToolbar.getFirstDrawTime() - activityCreationTimeMs, TimeUnit.MILLISECONDS);

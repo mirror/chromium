@@ -50,16 +50,13 @@ public class CastSwitchVideoTest {
     @LargeTest
     @RetryOnFailure // crbug.com/623526
     public void testPlayNewVideoInNewTab() throws InterruptedException, TimeoutException {
-        checkPlaySecondVideo(DEFAULT_VIDEO_PAGE, VIDEO_ELEMENT, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mCastTestRule.loadUrlInNewTab(
-                            mCastTestRule.getTestServer().getURL(TEST_VIDEO_PAGE_2));
-                    playVideoFromCurrentTab(VIDEO_ELEMENT);
-                } catch (Exception e) {
-                    Assert.fail("Failed to start second video; " + e.getMessage());
-                }
+        checkPlaySecondVideo(DEFAULT_VIDEO_PAGE, VIDEO_ELEMENT, () -> {
+            try {
+                mCastTestRule.loadUrlInNewTab(
+                        mCastTestRule.getTestServer().getURL(TEST_VIDEO_PAGE_2));
+                playVideoFromCurrentTab(VIDEO_ELEMENT);
+            } catch (Exception e) {
+                Assert.fail("Failed to start second video; " + e.getMessage());
             }
         });
     }
@@ -69,15 +66,12 @@ public class CastSwitchVideoTest {
     @LargeTest
     @RetryOnFailure // crbug.com/623526
     public void testPlayNewVideoNewPageSameTab() throws InterruptedException, TimeoutException {
-        checkPlaySecondVideo(DEFAULT_VIDEO_PAGE, VIDEO_ELEMENT, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mCastTestRule.loadUrl(mCastTestRule.getTestServer().getURL(TEST_VIDEO_PAGE_2));
-                    playVideoFromCurrentTab(VIDEO_ELEMENT);
-                } catch (Exception e) {
-                    Assert.fail("Failed to start second video; " + e.getMessage());
-                }
+        checkPlaySecondVideo(DEFAULT_VIDEO_PAGE, VIDEO_ELEMENT, () -> {
+            try {
+                mCastTestRule.loadUrl(mCastTestRule.getTestServer().getURL(TEST_VIDEO_PAGE_2));
+                playVideoFromCurrentTab(VIDEO_ELEMENT);
+            } catch (Exception e) {
+                Assert.fail("Failed to start second video; " + e.getMessage());
             }
         });
     }
@@ -87,14 +81,11 @@ public class CastSwitchVideoTest {
     @LargeTest
     @RetryOnFailure // crbug.com/623526
     public void testPlayTwoVideosSamePage() throws InterruptedException, TimeoutException {
-        checkPlaySecondVideo(TWO_VIDEO_PAGE, VIDEO_ELEMENT_2, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    playVideoFromCurrentTab(VIDEO_ELEMENT_2);
-                } catch (Exception e) {
-                    Assert.fail("Failed to start second video; " + e.getMessage());
-                }
+        checkPlaySecondVideo(TWO_VIDEO_PAGE, VIDEO_ELEMENT_2, () -> {
+            try {
+                playVideoFromCurrentTab(VIDEO_ELEMENT_2);
+            } catch (Exception e) {
+                Assert.fail("Failed to start second video; " + e.getMessage());
             }
         });
     }
@@ -104,16 +95,13 @@ public class CastSwitchVideoTest {
     @LargeTest
     @RetryOnFailure // crbug.com/623526
     public void testCastNewVideoInNewTab() throws InterruptedException, TimeoutException {
-        checkCastSecondVideo(DEFAULT_VIDEO_PAGE, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mCastTestRule.loadUrlInNewTab(
-                            mCastTestRule.getTestServer().getURL(TEST_VIDEO_PAGE_2));
-                    castVideoFromCurrentTab(VIDEO_ELEMENT);
-                } catch (Exception e) {
-                    Assert.fail("Failed to start second video; " + e.getMessage());
-                }
+        checkCastSecondVideo(DEFAULT_VIDEO_PAGE, () -> {
+            try {
+                mCastTestRule.loadUrlInNewTab(
+                        mCastTestRule.getTestServer().getURL(TEST_VIDEO_PAGE_2));
+                castVideoFromCurrentTab(VIDEO_ELEMENT);
+            } catch (Exception e) {
+                Assert.fail("Failed to start second video; " + e.getMessage());
             }
         });
     }
@@ -123,15 +111,12 @@ public class CastSwitchVideoTest {
     @LargeTest
     @RetryOnFailure // crbug.com/623526
     public void testCastNewVideoNewPageSameTab() throws InterruptedException, TimeoutException {
-        checkCastSecondVideo(DEFAULT_VIDEO_PAGE, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mCastTestRule.loadUrl(mCastTestRule.getTestServer().getURL(TEST_VIDEO_PAGE_2));
-                    castVideoFromCurrentTab(VIDEO_ELEMENT);
-                } catch (Exception e) {
-                    Assert.fail("Failed to start second video; " + e.getMessage());
-                }
+        checkCastSecondVideo(DEFAULT_VIDEO_PAGE, () -> {
+            try {
+                mCastTestRule.loadUrl(mCastTestRule.getTestServer().getURL(TEST_VIDEO_PAGE_2));
+                castVideoFromCurrentTab(VIDEO_ELEMENT);
+            } catch (Exception e) {
+                Assert.fail("Failed to start second video; " + e.getMessage());
             }
         });
     }
@@ -141,14 +126,11 @@ public class CastSwitchVideoTest {
     @LargeTest
     @RetryOnFailure // crbug.com/623526
     public void testCastTwoVideosSamePage() throws InterruptedException, TimeoutException {
-        checkCastSecondVideo(TWO_VIDEO_PAGE, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    castVideoFromCurrentTab(VIDEO_ELEMENT_2);
-                } catch (Exception e) {
-                    Assert.fail("Failed to start second video; " + e.getMessage());
-                }
+        checkCastSecondVideo(TWO_VIDEO_PAGE, () -> {
+            try {
+                castVideoFromCurrentTab(VIDEO_ELEMENT_2);
+            } catch (Exception e) {
+                Assert.fail("Failed to start second video; " + e.getMessage());
             }
         });
     }

@@ -102,12 +102,7 @@ public class InstalledAppProviderImpl implements InstalledAppProvider {
                 int delayMillis = result.second;
                 // Before calling the callback, delay for the amount of time that has been
                 // calculated in |delayMillis|.
-                delayThenRun(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.call(installedApps);
-                    }
-                }, delayMillis);
+                delayThenRun(() -> callback.call(installedApps), delayMillis);
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }

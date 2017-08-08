@@ -11,8 +11,6 @@ import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -31,9 +29,6 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationState;
@@ -452,34 +447,28 @@ public class ShareHelper {
 
         final AlertDialog dialog = builder.create();
         dialog.show();
-        dialog.getListView().setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ResolveInfo info = adapter.getItem(position);
-                ActivityInfo ai = info.activityInfo;
-                ComponentName component =
-                        new ComponentName(ai.applicationInfo.packageName, ai.name);
+        dialog.getListView().setOnItemClickListener((parent, view, position, id) -> {
+            ResolveInfo info = adapter.getItem(position);
+            ActivityInfo ai = info.activityInfo;
+            ComponentName component =
+                    new ComponentName(ai.applicationInfo.packageName, ai.name);
 
-                if (callback != null && !callbackCalled[0]) {
-                    callback.onTargetChosen(component);
-                    callbackCalled[0] = true;
-                }
-                if (params.saveLastUsed()) {
-                    setLastShareComponentName(component, params.getSourcePackageName());
-                }
-                makeIntentAndShare(params, component);
-                dialog.dismiss();
+            if (callback != null && !callbackCalled[0]) {
+                callback.onTargetChosen(component);
+                callbackCalled[0] = true;
             }
+            if (params.saveLastUsed()) {
+                setLastShareComponentName(component, params.getSourcePackageName());
+            }
+            makeIntentAndShare(params, component);
+            dialog.dismiss();
         });
 
         if (callback != null) {
-            dialog.setOnDismissListener(new OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    if (!callbackCalled[0]) {
-                        callback.onCancel();
-                        callbackCalled[0] = true;
-                    }
+            dialog.setOnDismissListener(dialog1 -> {
+                if (!callbackCalled[0]) {
+                    callback.onCancel();
+                    callbackCalled[0] = true;
                 }
             });
         }

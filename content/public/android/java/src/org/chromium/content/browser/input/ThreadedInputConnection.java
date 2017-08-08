@@ -50,12 +50,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         }
     };
 
-    private final Runnable mProcessPendingInputStatesRunnable = new Runnable() {
-        @Override
-        public void run() {
-            processPendingInputStates();
-        }
-    };
+    private final Runnable mProcessPendingInputStatesRunnable = () -> processPendingInputStates();
 
     private final Runnable mRequestTextInputStateUpdate = new Runnable() {
         @Override
@@ -72,12 +67,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         }
     };
 
-    private final Runnable mFinishComposingTextRunnable = new Runnable() {
-        @Override
-        public void run() {
-            finishComposingTextOnUiThread();
-        }
-    };
+    private final Runnable mFinishComposingTextRunnable = () -> finishComposingTextOnUiThread();
 
     private final ImeAdapter mImeAdapter;
     private final Handler mHandler;
@@ -102,14 +92,11 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     void resetOnUiThread() {
         ImeUtils.checkOnUiThread();
 
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mNumNestedBatchEdits = 0;
-                mPendingAccent = 0;
-                mCurrentExtractedTextRequestToken = 0;
-                mShouldUpdateExtractedText = false;
-            }
+        mHandler.post(() -> {
+            mNumNestedBatchEdits = 0;
+            mPendingAccent = 0;
+            mCurrentExtractedTextRequestToken = 0;
+            mShouldUpdateExtractedText = false;
         });
     }
 
@@ -149,12 +136,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean sendKeyEventOnUiThread(final KeyEvent event) {
         ImeUtils.checkOnUiThread();
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                sendKeyEvent(event);
-            }
-        });
+        mHandler.post(() -> sendKeyEvent(event));
         return true;
     }
 
@@ -298,12 +280,8 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @VisibleForTesting
     public boolean updateComposingText(
             final CharSequence text, final int newCursorPosition, final boolean isPendingAccent) {
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                updateComposingTextOnUiThread(text, newCursorPosition, isPendingAccent);
-            }
-        });
+        ThreadUtils.postOnUiThread(
+                () -> updateComposingTextOnUiThread(text, newCursorPosition, isPendingAccent));
         notifyUserAction();
         return true;
     }
@@ -323,12 +301,9 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     public boolean commitText(final CharSequence text, final int newCursorPosition) {
         if (DEBUG_LOGS) Log.i(TAG, "commitText [%s] [%d]", text, newCursorPosition);
         if (text == null) return false;
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                cancelCombiningAccentOnUiThread();
-                mImeAdapter.sendCompositionToNative(text, newCursorPosition, true, 0);
-            }
+        ThreadUtils.postOnUiThread(() -> {
+            cancelCombiningAccentOnUiThread();
+            mImeAdapter.sendCompositionToNative(text, newCursorPosition, true, 0);
         });
         notifyUserAction();
         return true;
@@ -340,12 +315,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean performEditorAction(final int actionCode) {
         if (DEBUG_LOGS) Log.i(TAG, "performEditorAction [%d]", actionCode);
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mImeAdapter.performEditorAction(actionCode);
-            }
-        });
+        ThreadUtils.postOnUiThread(() -> mImeAdapter.performEditorAction(actionCode));
         return true;
     }
 
@@ -355,12 +325,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean performContextMenuAction(final int id) {
         if (DEBUG_LOGS) Log.i(TAG, "performContextMenuAction [%d]", id);
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mImeAdapter.performContextMenuAction(id);
-            }
-        });
+        ThreadUtils.postOnUiThread(() -> mImeAdapter.performContextMenuAction(id));
         return true;
     }
 
@@ -426,14 +391,11 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean deleteSurroundingText(final int beforeLength, final int afterLength) {
         if (DEBUG_LOGS) Log.i(TAG, "deleteSurroundingText [%d %d]", beforeLength, afterLength);
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mPendingAccent != 0) {
-                    finishComposingTextOnUiThread();
-                }
-                mImeAdapter.deleteSurroundingText(beforeLength, afterLength);
+        ThreadUtils.postOnUiThread(() -> {
+            if (mPendingAccent != 0) {
+                finishComposingTextOnUiThread();
             }
+            mImeAdapter.deleteSurroundingText(beforeLength, afterLength);
         });
         return true;
     }
@@ -447,14 +409,11 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         if (DEBUG_LOGS) {
             Log.i(TAG, "deleteSurroundingTextInCodePoints [%d %d]", beforeLength, afterLength);
         }
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mPendingAccent != 0) {
-                    finishComposingTextOnUiThread();
-                }
-                mImeAdapter.deleteSurroundingTextInCodePoints(beforeLength, afterLength);
+        ThreadUtils.postOnUiThread(() -> {
+            if (mPendingAccent != 0) {
+                finishComposingTextOnUiThread();
             }
+            mImeAdapter.deleteSurroundingTextInCodePoints(beforeLength, afterLength);
         });
         return true;
     }
@@ -465,12 +424,9 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean sendKeyEvent(final KeyEvent event) {
         if (DEBUG_LOGS) Log.i(TAG, "sendKeyEvent [%d %d]", event.getAction(), event.getKeyCode());
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (handleCombiningAccentOnUiThread(event)) return;
-                mImeAdapter.sendKeyEvent(event);
-            }
+        ThreadUtils.postOnUiThread(() -> {
+            if (handleCombiningAccentOnUiThread(event)) return;
+            mImeAdapter.sendKeyEvent(event);
         });
         notifyUserAction();
         return true;
@@ -538,12 +494,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean setSelection(final int start, final int end) {
         if (DEBUG_LOGS) Log.i(TAG, "setSelection [%d %d]", start, end);
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mImeAdapter.setEditableSelectionOffsets(start, end);
-            }
-        });
+        ThreadUtils.postOnUiThread(() -> mImeAdapter.setEditableSelectionOffsets(start, end));
         return true;
     }
 
@@ -553,12 +504,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean setComposingRegion(final int start, final int end) {
         if (DEBUG_LOGS) Log.i(TAG, "setComposingRegion [%d %d]", start, end);
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mImeAdapter.setComposingRegion(start, end);
-            }
-        });
+        ThreadUtils.postOnUiThread(() -> mImeAdapter.setComposingRegion(start, end));
         return true;
     }
 
@@ -667,12 +613,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     @Override
     public boolean requestCursorUpdates(final int cursorUpdateMode) {
         if (DEBUG_LOGS) Log.i(TAG, "requestCursorUpdates [%x]", cursorUpdateMode);
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mImeAdapter.onRequestCursorUpdates(cursorUpdateMode);
-            }
-        });
+        ThreadUtils.postOnUiThread(() -> mImeAdapter.onRequestCursorUpdates(cursorUpdateMode));
         return true;
     }
 

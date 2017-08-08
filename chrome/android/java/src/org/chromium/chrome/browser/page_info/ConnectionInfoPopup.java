@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.page_info;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.provider.Browser;
@@ -84,13 +83,10 @@ public class ConnectionInfoPopup implements OnClickListener {
                 mDialog.dismiss();
             }
         };
-        mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                assert mNativeConnectionInfoPopup != 0;
-                webContentsObserver.destroy();
-                nativeDestroy(mNativeConnectionInfoPopup);
-            }
+        mDialog.setOnDismissListener(dialog -> {
+            assert mNativeConnectionInfoPopup != 0;
+            webContentsObserver.destroy();
+            nativeDestroy(mNativeConnectionInfoPopup);
         });
     }
 

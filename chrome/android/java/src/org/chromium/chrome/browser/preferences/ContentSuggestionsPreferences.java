@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.support.annotation.IntDef;
 import android.view.Menu;
@@ -170,23 +169,20 @@ public class ContentSuggestionsPreferences extends PreferenceFragment {
         mCaveatsDescription = findPreference(PREF_CAVEATS);
         mLearnMoreButton = findPreference(PREF_LEARN_MORE);
 
-        mFeatureSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                boolean isEnabled = (boolean) newValue;
-                SnippetsBridge.setRemoteSuggestionsEnabled(isEnabled);
-                // TODO(dgn): Is there a way to have a visual feedback of when the remote
-                // suggestions service has completed being turned on or off?
-                updatePreferences(isEnabled);
+        mFeatureSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
+            boolean isEnabled = (boolean) newValue;
+            SnippetsBridge.setRemoteSuggestionsEnabled(isEnabled);
+            // TODO(dgn): Is there a way to have a visual feedback of when the remote
+            // suggestions service has completed being turned on or off?
+            updatePreferences(isEnabled);
 
-                if (isEnabled) {
-                    RecordUserAction.record("ContentSuggestions.RemoteSuggestionsPreferenceOn");
-                } else {
-                    RecordUserAction.record("ContentSuggestions.RemoteSuggestionsPreferenceOff");
-                }
-
-                return true;
+            if (isEnabled) {
+                RecordUserAction.record("ContentSuggestions.RemoteSuggestionsPreferenceOn");
+            } else {
+                RecordUserAction.record("ContentSuggestions.RemoteSuggestionsPreferenceOff");
             }
+
+            return true;
         });
         mFeatureSwitch.setManagedPreferenceDelegate(new ManagedPreferenceDelegate() {
             @Override
@@ -200,22 +196,19 @@ public class ContentSuggestionsPreferences extends PreferenceFragment {
             }
         });
 
-        mNotificationsSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                boolean isEnabled = (boolean) newValue;
-                SnippetsBridge.setContentSuggestionsNotificationsEnabled(isEnabled);
+        mNotificationsSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
+            boolean isEnabled = (boolean) newValue;
+            SnippetsBridge.setContentSuggestionsNotificationsEnabled(isEnabled);
 
-                if (isEnabled) {
-                    RecordUserAction.record("ContentSuggestions.NotificationsPreferenceOn");
-                } else {
-                    RecordUserAction.record("ContentSuggestions.NotificationsPreferenceOff");
-                    ContentSuggestionsNotificationHelper.recordNotificationOptOut(
-                            ContentSuggestionsNotificationOptOut.EXPLICIT);
-                }
-
-                return true;
+            if (isEnabled) {
+                RecordUserAction.record("ContentSuggestions.NotificationsPreferenceOn");
+            } else {
+                RecordUserAction.record("ContentSuggestions.NotificationsPreferenceOff");
+                ContentSuggestionsNotificationHelper.recordNotificationOptOut(
+                        ContentSuggestionsNotificationOptOut.EXPLICIT);
             }
+
+            return true;
         });
     }
 }

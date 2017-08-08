@@ -108,12 +108,8 @@ public class PasswordViewingTypeTest {
                 return true;
             }
         }
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ProfileSyncService.overrideForTests(new FakeProfileSyncService());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> ProfileSyncService.overrideForTests(new FakeProfileSyncService()));
     }
 
     /**
@@ -146,12 +142,9 @@ public class PasswordViewingTypeTest {
         setSyncability(true);
         overrideProfileSyncService(false);
         Assert.assertTrue(AndroidSyncSettings.isSyncEnabled(mContext));
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(ProfileSyncService.get().isEngineInitialized());
-                Assert.assertFalse(ProfileSyncService.get().isUsingSecondaryPassphrase());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            Assert.assertTrue(ProfileSyncService.get().isEngineInitialized());
+            Assert.assertFalse(ProfileSyncService.get().isUsingSecondaryPassphrase());
         });
         Assert.assertEquals(
                 SavePasswordsPreferences.class.getCanonicalName(), mPasswordsPref.getFragment());

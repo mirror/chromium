@@ -14,7 +14,6 @@ import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -37,7 +36,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -74,7 +72,6 @@ import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.base.WindowAndroid;
-import org.chromium.ui.base.WindowAndroid.PermissionCallback;
 import org.chromium.ui.interpolators.BakedBezierInterpolator;
 import org.chromium.ui.widget.Toast;
 
@@ -353,16 +350,13 @@ public class PageInfoPopup implements OnClickListener {
         mUrlTitle.setAlwaysShowFullUrl(mIsBottomPopup);
         mUrlTitle.setOnClickListener(this);
         // Long press the url text to copy it to the clipboard.
-        mUrlTitle.setOnLongClickListener(new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                ClipboardManager clipboard = (ClipboardManager) mContext
-                        .getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("url", mFullUrl);
-                clipboard.setPrimaryClip(clip);
-                Toast.makeText(mContext, R.string.url_copied, Toast.LENGTH_SHORT).show();
-                return true;
-            }
+        mUrlTitle.setOnLongClickListener(v -> {
+            ClipboardManager clipboard = (ClipboardManager) mContext
+                    .getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("url", mFullUrl);
+            clipboard.setPrimaryClip(clip);
+            Toast.makeText(mContext, R.string.url_copied, Toast.LENGTH_SHORT).show();
+            return true;
         });
 
         mConnectionSummary = (TextView) mContainer
@@ -459,12 +453,7 @@ public class PageInfoPopup implements OnClickListener {
                             // onAnimationEnd is called during the final frame of the animation.
                             // Delay the cleanup by a tiny amount to give this frame a chance to be
                             // displayed before we destroy the dialog.
-                            mContainer.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    superDismiss();
-                                }
-                            }, CLOSE_CLEANUP_DELAY);
+                            mContainer.postDelayed(() -> superDismiss(), CLOSE_CLEANUP_DELAY);
                         }
                     });
                     animator.start();
@@ -508,14 +497,11 @@ public class PageInfoPopup implements OnClickListener {
                 mDialog.dismiss();
             }
         };
-        mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                assert mNativePageInfoPopup != 0;
-                webContentsObserver.destroy();
-                nativeDestroy(mNativePageInfoPopup);
-                mNativePageInfoPopup = 0;
-            }
+        mDialog.setOnDismissListener(dialog -> {
+            assert mNativePageInfoPopup != 0;
+            webContentsObserver.destroy();
+            nativeDestroy(mNativePageInfoPopup);
+            mNativePageInfoPopup = 0;
         });
 
         if (mIsBottomPopup) {
@@ -794,20 +780,17 @@ public class PageInfoPopup implements OnClickListener {
     public void onClick(View view) {
         if (view == mSiteSettingsButton) {
             // Delay while the PageInfoPopup closes.
-            runAfterDismiss(new Runnable() {
-                @Override
-                public void run() {
-                    recordAction(PageInfoAction.PAGE_INFO_SITE_SETTINGS_OPENED);
-                    Bundle fragmentArguments =
-                            SingleWebsitePreferences.createFragmentArgsForSite(mFullUrl);
-                    fragmentArguments.putParcelable(SingleWebsitePreferences.EXTRA_WEB_CONTENTS,
-                            mTab.getWebContents());
-                    Intent preferencesIntent = PreferencesLauncher.createIntentForSettingsPage(
-                            mContext, SingleWebsitePreferences.class.getName());
-                    preferencesIntent.putExtra(
-                            Preferences.EXTRA_SHOW_FRAGMENT_ARGUMENTS, fragmentArguments);
-                    mContext.startActivity(preferencesIntent);
-                }
+            runAfterDismiss(() -> {
+                recordAction(PageInfoAction.PAGE_INFO_SITE_SETTINGS_OPENED);
+                Bundle fragmentArguments =
+                        SingleWebsitePreferences.createFragmentArgsForSite(mFullUrl);
+                fragmentArguments.putParcelable(SingleWebsitePreferences.EXTRA_WEB_CONTENTS,
+                        mTab.getWebContents());
+                Intent preferencesIntent = PreferencesLauncher.createIntentForSettingsPage(
+                        mContext, SingleWebsitePreferences.class.getName());
+                preferencesIntent.putExtra(
+                        Preferences.EXTRA_SHOW_FRAGMENT_ARGUMENTS, fragmentArguments);
+                mContext.startActivity(preferencesIntent);
             });
         } else if (view == mInstantAppButton) {
             try {
@@ -820,14 +803,11 @@ public class PageInfoPopup implements OnClickListener {
             // Expand/collapse the displayed URL title.
             mUrlTitle.toggleTruncation();
         } else if (view == mConnectionMessage) {
-            runAfterDismiss(new Runnable() {
-                @Override
-                public void run() {
-                    if (!mTab.getWebContents().isDestroyed()) {
-                        recordAction(
-                                PageInfoAction.PAGE_INFO_SECURITY_DETAILS_OPENED);
-                        ConnectionInfoPopup.show(mContext, mTab.getWebContents());
-                    }
+            runAfterDismiss(() -> {
+                if (!mTab.getWebContents().isDestroyed()) {
+                    recordAction(
+                            PageInfoAction.PAGE_INFO_SECURITY_DETAILS_OPENED);
+                    ConnectionInfoPopup.show(mContext, mTab.getWebContents());
                 }
             });
         } else if (view.getId() == R.id.page_info_permission_row) {
@@ -840,50 +820,41 @@ public class PageInfoPopup implements OnClickListener {
                     if (!mWindowAndroid.canRequestPermission(permissionType[i])) continue;
 
                     // If any permissions can be requested, attempt to request them all.
-                    mWindowAndroid.requestPermissions(permissionType, new PermissionCallback() {
-                        @Override
-                        public void onRequestPermissionsResult(
-                                String[] permissions, int[] grantResults) {
-                            boolean allGranted = true;
-                            for (int i = 0; i < grantResults.length; i++) {
-                                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                                    allGranted = false;
-                                    break;
+                    mWindowAndroid.requestPermissions(permissionType,
+                            (permissions, grantResults) -> {
+                                boolean allGranted = true;
+                                for (int i1 = 0; i1 < grantResults.length; i1++) {
+                                    if (grantResults[i1] != PackageManager.PERMISSION_GRANTED) {
+                                        allGranted = false;
+                                        break;
+                                    }
                                 }
-                            }
-                            if (allGranted) updatePermissionDisplay();
-                        }
-                    });
+                                if (allGranted) updatePermissionDisplay();
+                            });
                     return;
                 }
             }
 
-            runAfterDismiss(new Runnable() {
-                @Override
-                public void run() {
-                    Intent settingsIntent;
-                    if (intentOverride != null) {
-                        settingsIntent = (Intent) intentOverride;
-                    } else {
-                        settingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        settingsIntent.setData(Uri.parse("package:" + mContext.getPackageName()));
-                    }
-                    settingsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mContext.startActivity(settingsIntent);
+            runAfterDismiss(() -> {
+                Intent settingsIntent;
+                if (intentOverride != null) {
+                    settingsIntent = (Intent) intentOverride;
+                } else {
+                    settingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    settingsIntent.setData(Uri.parse("package:" + mContext.getPackageName()));
                 }
+                settingsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(settingsIntent);
             });
         } else if (view == mOpenOnlineButton) {
-            runAfterDismiss(new Runnable() {
-                @Override
-                public void run() {
-                    // Attempt to reload to an online version of the viewed offline web page. This
-                    // attempt might fail if the user is offline, in which case an offline copy will
-                    // be reloaded.
-                    RecordHistogram.recordBooleanHistogram(
-                            "OfflinePages.WebsiteSettings.ConnectedWhenOpenOnlineButtonClicked",
-                            OfflinePageUtils.isConnected());
-                    OfflinePageUtils.reload(mTab);
-                }
+            runAfterDismiss(() -> {
+                // Attempt to reload to an online version of the viewed offline web page. This
+                // attempt might fail if the user is offline, in which case an offline copy will
+                // be reloaded.
+                RecordHistogram.recordBooleanHistogram(
+                        "OfflinePages.WebsiteSettings.ConnectedWhenOpenOnlineButtonClicked",
+                        OfflinePageUtils.isConnected());
+                OfflinePageUtils.reload(mTab);
             });
         }
     }

@@ -75,12 +75,8 @@ public class ToolbarTest {
 
     private boolean isErrorPage(final Tab tab) {
         final boolean[] isShowingError = new boolean[1];
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                isShowingError[0] = tab.isShowingErrorPage();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> isShowingError[0] = tab.isShowingErrorPage());
         return isShowingError[0];
     }
 
@@ -100,12 +96,8 @@ public class ToolbarTest {
 
         // Stop the server and also disconnect the network.
         testServer.stopAndDestroyServer();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                NetworkChangeNotifier.forceConnectivityState(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> NetworkChangeNotifier.forceConnectivityState(false));
 
         mActivityTestRule.loadUrl(testUrl);
         Assert.assertEquals(testUrl, tab.getUrl());

@@ -13,11 +13,8 @@ import org.chromium.base.annotations.SuppressFBWarnings;
 abstract class ThrowUncaughtException {
     @CalledByNative
     private static void post() {
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                throw new RuntimeException("Intentional exception not caught by JNI");
-            }
+        ThreadUtils.postOnUiThread(() -> {
+            throw new RuntimeException("Intentional exception not caught by JNI");
         });
     }
 }

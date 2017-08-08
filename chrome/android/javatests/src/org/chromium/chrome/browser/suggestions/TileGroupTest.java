@@ -114,13 +114,8 @@ public class TileGroupTest {
 
         // Ensure that the removal is reflected in the ui.
         Assert.assertEquals(3, getTileGridLayout().getChildCount());
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mMostVisitedSites.setTileSuggestions(
-                        mSiteSuggestionUrls[1], mSiteSuggestionUrls[2]);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mMostVisitedSites.setTileSuggestions(
+                mSiteSuggestionUrls[1], mSiteSuggestionUrls[2]));
         waitForTileRemoved(siteToDismiss);
         Assert.assertEquals(2, getTileGridLayout().getChildCount());
     }
@@ -138,34 +133,20 @@ public class TileGroupTest {
         invokeContextMenu(tileView, ContextMenuManager.ID_REMOVE);
 
         // Ensure that the removal update goes through.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mMostVisitedSites.setTileSuggestions(
-                        mSiteSuggestionUrls[1], mSiteSuggestionUrls[2]);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mMostVisitedSites.setTileSuggestions(
+                mSiteSuggestionUrls[1], mSiteSuggestionUrls[2]));
         waitForTileRemoved(siteToDismiss);
         Assert.assertEquals(2, tileContainer.getChildCount());
         final View snackbarButton = waitForSnackbar(mActivityTestRule.getActivity());
 
         Assert.assertTrue(mMostVisitedSites.isUrlBlacklisted(mSiteSuggestionUrls[0]));
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                snackbarButton.callOnClick();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking((Runnable) () -> snackbarButton.callOnClick());
 
         Assert.assertFalse(mMostVisitedSites.isUrlBlacklisted(mSiteSuggestionUrls[0]));
 
         // Ensure that the removal of the update goes through.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mMostVisitedSites.setTileSuggestions(mSiteSuggestionUrls);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> mMostVisitedSites.setTileSuggestions(mSiteSuggestionUrls));
         waitForTileAdded(siteToDismiss);
         Assert.assertEquals(3, tileContainer.getChildCount());
     }

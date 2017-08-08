@@ -288,26 +288,20 @@ public class InstallerDelegate {
     }
 
     private WindowAndroid.IntentCallback createIntentCallback(final AppData appData) {
-        return new WindowAndroid.IntentCallback() {
-            @Override
-            public void onIntentCompleted(WindowAndroid window, int resultCode, Intent data) {
-                boolean isInstalling = resultCode == Activity.RESULT_OK;
-                if (isInstalling) {
-                    startMonitoring(appData.packageName());
-                }
-
-                mObserver.onInstallIntentCompleted(InstallerDelegate.this, isInstalling);
+        return (window, resultCode, data) -> {
+            boolean isInstalling = resultCode == Activity.RESULT_OK;
+            if (isInstalling) {
+                startMonitoring(appData.packageName());
             }
+
+            mObserver.onInstallIntentCompleted(InstallerDelegate.this, isInstalling);
         };
     }
 
     private ApplicationStatus.ApplicationStateListener createApplicationStateListener() {
-        return new ApplicationStatus.ApplicationStateListener() {
-            @Override
-            public void onApplicationStateChange(int newState) {
-                if (!ApplicationStatus.hasVisibleActivities()) return;
-                mObserver.onApplicationStateChanged(InstallerDelegate.this, newState);
-            }
+        return newState -> {
+            if (!ApplicationStatus.hasVisibleActivities()) return;
+            mObserver.onApplicationStateChanged(InstallerDelegate.this, newState);
         };
     }
 

@@ -45,12 +45,7 @@ public class DefaultSearchEngineFirstRunFragment extends FirstRunPage {
         assert TemplateUrlService.getInstance().isLoaded();
         mSearchEnginePromoDialoType = LocaleManager.getInstance().getSearchEnginePromoShowType();
         if (mSearchEnginePromoDialoType != LocaleManager.SEARCH_ENGINE_PROMO_DONT_SHOW) {
-            Runnable dismissRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    advanceToNextPage();
-                }
-            };
+            Runnable dismissRunnable = () -> advanceToNextPage();
             new DefaultSearchEngineDialogHelper(
                     mSearchEnginePromoDialoType, mEngineLayout, mButton, dismissRunnable);
         }
@@ -64,12 +59,7 @@ public class DefaultSearchEngineFirstRunFragment extends FirstRunPage {
 
         if (isVisibleToUser) {
             if (mSearchEnginePromoDialoType == LocaleManager.SEARCH_ENGINE_PROMO_DONT_SHOW) {
-                ThreadUtils.postOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        advanceToNextPage();
-                    }
-                });
+                ThreadUtils.postOnUiThread(() -> advanceToNextPage());
             }
 
             recordShown();

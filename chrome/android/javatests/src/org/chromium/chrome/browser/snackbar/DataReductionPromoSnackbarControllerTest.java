@@ -65,42 +65,39 @@ public class DataReductionPromoSnackbarControllerTest {
                     + ".Enabled:" + DataReductionPromoSnackbarController.PROMO_PARAM_NAME + "/"
                     + FIRST_SNACKBAR_SIZE_MB + ";" + SECOND_SNACKBAR_SIZE_MB})
     public void testDataReductionPromoSnackbarController() throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertFalse(
-                        DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            Assert.assertFalse(
+                    DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
 
-                mController.maybeShowDataReductionPromoSnackbar(0);
+            mController.maybeShowDataReductionPromoSnackbar(0);
 
-                Assert.assertFalse(mManager.isShowing());
-                Assert.assertTrue(
-                        DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
-                Assert.assertEquals(
-                        0, DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
+            Assert.assertFalse(mManager.isShowing());
+            Assert.assertTrue(
+                    DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
+            Assert.assertEquals(
+                    0, DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
 
-                mController.maybeShowDataReductionPromoSnackbar(
-                        FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB);
+            mController.maybeShowDataReductionPromoSnackbar(
+                    FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB);
 
-                Assert.assertTrue(mManager.isShowing());
-                Assert.assertTrue(
-                        mManager.getCurrentSnackbarForTesting().getText().toString().endsWith(
-                                FIRST_SNACKBAR_SIZE_STRING));
-                Assert.assertEquals(FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB,
-                        DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
-                mManager.dismissSnackbars(mController);
+            Assert.assertTrue(mManager.isShowing());
+            Assert.assertTrue(
+                    mManager.getCurrentSnackbarForTesting().getText().toString().endsWith(
+                            FIRST_SNACKBAR_SIZE_STRING));
+            Assert.assertEquals(FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB,
+                    DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
+            mManager.dismissSnackbars(mController);
 
-                mController.maybeShowDataReductionPromoSnackbar(
-                        SECOND_SNACKBAR_SIZE_MB * BYTES_IN_MB);
+            mController.maybeShowDataReductionPromoSnackbar(
+                    SECOND_SNACKBAR_SIZE_MB * BYTES_IN_MB);
 
-                Assert.assertTrue(mManager.isShowing());
+            Assert.assertTrue(mManager.isShowing());
 
-                Assert.assertTrue(
-                        mManager.getCurrentSnackbarForTesting().getText().toString().endsWith(
-                                SECOND_SNACKBAR_SIZE_STRING));
-                Assert.assertEquals(SECOND_SNACKBAR_SIZE_MB * BYTES_IN_MB,
-                        DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
-            }
+            Assert.assertTrue(
+                    mManager.getCurrentSnackbarForTesting().getText().toString().endsWith(
+                            SECOND_SNACKBAR_SIZE_STRING));
+            Assert.assertEquals(SECOND_SNACKBAR_SIZE_MB * BYTES_IN_MB,
+                    DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
         });
     }
 
@@ -113,34 +110,31 @@ public class DataReductionPromoSnackbarControllerTest {
                     + ".SnackbarPromoOnly:" + DataReductionPromoSnackbarController.PROMO_PARAM_NAME
                     + "/" + FIRST_SNACKBAR_SIZE_MB + ";" + SECOND_SNACKBAR_SIZE_MB})
     public void testDataReductionPromoSnackbarControllerNoOtherPromos() throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertFalse(
-                        DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            Assert.assertFalse(
+                    DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
 
-                mController.maybeShowDataReductionPromoSnackbar(0);
+            mController.maybeShowDataReductionPromoSnackbar(0);
 
-                Assert.assertFalse(mManager.isShowing());
-                Assert.assertTrue(
-                        DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
-                Assert.assertEquals(
-                        0, DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
+            Assert.assertFalse(mManager.isShowing());
+            Assert.assertTrue(
+                    DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
+            Assert.assertEquals(
+                    0, DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
 
-                mController.maybeShowDataReductionPromoSnackbar(
-                        FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB);
+            mController.maybeShowDataReductionPromoSnackbar(
+                    FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB);
 
-                Assert.assertTrue(mManager.isShowing());
-                Assert.assertTrue(
-                        mManager.getCurrentSnackbarForTesting().getText().toString().endsWith(
-                                FIRST_SNACKBAR_SIZE_STRING));
-                Assert.assertEquals(FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB,
-                        DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
-                mManager.dismissSnackbars(mController);
+            Assert.assertTrue(mManager.isShowing());
+            Assert.assertTrue(
+                    mManager.getCurrentSnackbarForTesting().getText().toString().endsWith(
+                            FIRST_SNACKBAR_SIZE_STRING));
+            Assert.assertEquals(FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB,
+                    DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
+            mManager.dismissSnackbars(mController);
 
-                Assert.assertFalse(DataReductionProxySettings.getInstance()
-                                           .isDataReductionProxyPromoAllowed());
-            }
+            Assert.assertFalse(DataReductionProxySettings.getInstance()
+                    .isDataReductionProxyPromoAllowed());
         });
     }
 
@@ -152,28 +146,25 @@ public class DataReductionPromoSnackbarControllerTest {
                     + ".Enabled:" + DataReductionPromoSnackbarController.PROMO_PARAM_NAME + "/"
                     + FIRST_SNACKBAR_SIZE_MB + ";" + SECOND_SNACKBAR_SIZE_MB})
     public void testDataReductionPromoSnackbarControllerExistingUser() throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertFalse(
-                        DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            Assert.assertFalse(
+                    DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
 
-                mController.maybeShowDataReductionPromoSnackbar(
-                        SECOND_SNACKBAR_SIZE_MB * BYTES_IN_MB);
+            mController.maybeShowDataReductionPromoSnackbar(
+                    SECOND_SNACKBAR_SIZE_MB * BYTES_IN_MB);
 
-                Assert.assertFalse(mManager.isShowing());
-                Assert.assertTrue(
-                        DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
-                Assert.assertEquals(SECOND_SNACKBAR_SIZE_MB * BYTES_IN_MB,
-                        DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
+            Assert.assertFalse(mManager.isShowing());
+            Assert.assertTrue(
+                    DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
+            Assert.assertEquals(SECOND_SNACKBAR_SIZE_MB * BYTES_IN_MB,
+                    DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
 
-                mController.maybeShowDataReductionPromoSnackbar(
-                        SECOND_SNACKBAR_SIZE_MB * BYTES_IN_MB + 1);
+            mController.maybeShowDataReductionPromoSnackbar(
+                    SECOND_SNACKBAR_SIZE_MB * BYTES_IN_MB + 1);
 
-                Assert.assertFalse(mManager.isShowing());
-                Assert.assertEquals(SECOND_SNACKBAR_SIZE_MB * BYTES_IN_MB,
-                        DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
-            }
+            Assert.assertFalse(mManager.isShowing());
+            Assert.assertEquals(SECOND_SNACKBAR_SIZE_MB * BYTES_IN_MB,
+                    DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
         });
     }
 
@@ -185,49 +176,46 @@ public class DataReductionPromoSnackbarControllerTest {
                     + ".Enabled:" + DataReductionPromoSnackbarController.PROMO_PARAM_NAME + "/"
                     + FIRST_SNACKBAR_SIZE_MB + ";" + SECOND_SNACKBAR_SIZE_MB})
     public void testDataReductionPromoSnackbarControllerHistograms() throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertFalse(
-                        DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            Assert.assertFalse(
+                    DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
 
-                mController.maybeShowDataReductionPromoSnackbar(0);
+            mController.maybeShowDataReductionPromoSnackbar(0);
 
-                Assert.assertTrue(
-                        DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
-                Assert.assertEquals(0,
-                        RecordHistogram.getHistogramValueCountForTesting(
-                                DataReductionProxyUma.SNACKBAR_HISTOGRAM_NAME, 0));
+            Assert.assertTrue(
+                    DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
+            Assert.assertEquals(0,
+                    RecordHistogram.getHistogramValueCountForTesting(
+                            DataReductionProxyUma.SNACKBAR_HISTOGRAM_NAME, 0));
 
-                mController.maybeShowDataReductionPromoSnackbar(
-                        FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB);
+            mController.maybeShowDataReductionPromoSnackbar(
+                    FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB);
 
-                Assert.assertTrue(mManager.isShowing());
-                Assert.assertEquals(1,
-                        RecordHistogram.getHistogramValueCountForTesting(
-                                DataReductionProxyUma.SNACKBAR_HISTOGRAM_NAME,
-                                FIRST_SNACKBAR_SIZE_MB));
-                mManager.getCurrentSnackbarForTesting().getController().onDismissNoAction(null);
-                Assert.assertEquals(1,
-                        RecordHistogram.getHistogramValueCountForTesting(
-                                DataReductionProxyUma.UI_ACTION_HISTOGRAM_NAME,
-                                DataReductionProxyUma.ACTION_SNACKBAR_DISMISSED));
+            Assert.assertTrue(mManager.isShowing());
+            Assert.assertEquals(1,
+                    RecordHistogram.getHistogramValueCountForTesting(
+                            DataReductionProxyUma.SNACKBAR_HISTOGRAM_NAME,
+                            FIRST_SNACKBAR_SIZE_MB));
+            mManager.getCurrentSnackbarForTesting().getController().onDismissNoAction(null);
+            Assert.assertEquals(1,
+                    RecordHistogram.getHistogramValueCountForTesting(
+                            DataReductionProxyUma.UI_ACTION_HISTOGRAM_NAME,
+                            DataReductionProxyUma.ACTION_SNACKBAR_DISMISSED));
 
-                mController.maybeShowDataReductionPromoSnackbar(
-                        SECOND_SNACKBAR_SIZE_MB * BYTES_IN_MB);
+            mController.maybeShowDataReductionPromoSnackbar(
+                    SECOND_SNACKBAR_SIZE_MB * BYTES_IN_MB);
 
-                Assert.assertTrue(mManager.isShowing());
-                Assert.assertEquals(1,
-                        RecordHistogram.getHistogramValueCountForTesting(
-                                DataReductionProxyUma.SNACKBAR_HISTOGRAM_NAME,
-                                SECOND_SNACKBAR_SIZE_MB));
-                mManager.getCurrentSnackbarForTesting().getController().onAction(null);
-                // The dismissed histogram should not have been incremented.
-                Assert.assertEquals(1,
-                        RecordHistogram.getHistogramValueCountForTesting(
-                                DataReductionProxyUma.UI_ACTION_HISTOGRAM_NAME,
-                                DataReductionProxyUma.ACTION_SNACKBAR_DISMISSED));
-            }
+            Assert.assertTrue(mManager.isShowing());
+            Assert.assertEquals(1,
+                    RecordHistogram.getHistogramValueCountForTesting(
+                            DataReductionProxyUma.SNACKBAR_HISTOGRAM_NAME,
+                            SECOND_SNACKBAR_SIZE_MB));
+            mManager.getCurrentSnackbarForTesting().getController().onAction(null);
+            // The dismissed histogram should not have been incremented.
+            Assert.assertEquals(1,
+                    RecordHistogram.getHistogramValueCountForTesting(
+                            DataReductionProxyUma.UI_ACTION_HISTOGRAM_NAME,
+                            DataReductionProxyUma.ACTION_SNACKBAR_DISMISSED));
         });
     }
 
@@ -236,29 +224,26 @@ public class DataReductionPromoSnackbarControllerTest {
     @CommandLineFlags.Add({"enable-data-reduction-proxy-savings-promo",
             "disable-field-trial-config"})
     public void testDataReductionPromoSnackbarControllerCommandLineFlag() throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertFalse(
-                        DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
-                mController.maybeShowDataReductionPromoSnackbar(0);
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            Assert.assertFalse(
+                    DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
+            mController.maybeShowDataReductionPromoSnackbar(0);
 
-                mController.maybeShowDataReductionPromoSnackbar(
-                        COMMAND_LINE_FLAG_SNACKBAR_SIZE_MB * BYTES_IN_MB);
+            mController.maybeShowDataReductionPromoSnackbar(
+                    COMMAND_LINE_FLAG_SNACKBAR_SIZE_MB * BYTES_IN_MB);
 
-                Assert.assertTrue(mManager.isShowing());
-                Assert.assertTrue(
-                        mManager.getCurrentSnackbarForTesting().getText().toString().endsWith(
-                                COMMAND_LINE_FLAG_SNACKBAR_SIZE_STRING));
-                Assert.assertEquals(COMMAND_LINE_FLAG_SNACKBAR_SIZE_MB * BYTES_IN_MB,
-                        DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
-                mManager.dismissSnackbars(mController);
+            Assert.assertTrue(mManager.isShowing());
+            Assert.assertTrue(
+                    mManager.getCurrentSnackbarForTesting().getText().toString().endsWith(
+                            COMMAND_LINE_FLAG_SNACKBAR_SIZE_STRING));
+            Assert.assertEquals(COMMAND_LINE_FLAG_SNACKBAR_SIZE_MB * BYTES_IN_MB,
+                    DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
+            mManager.dismissSnackbars(mController);
 
-                mController.maybeShowDataReductionPromoSnackbar(
-                        FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB);
+            mController.maybeShowDataReductionPromoSnackbar(
+                    FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB);
 
-                Assert.assertFalse(mManager.isShowing());
-            }
+            Assert.assertFalse(mManager.isShowing());
         });
     }
 
@@ -272,35 +257,32 @@ public class DataReductionPromoSnackbarControllerTest {
                     + FIRST_SNACKBAR_SIZE_MB + ";" + SECOND_SNACKBAR_SIZE_MB})
     public void testDataReductionPromoSnackbarControllerCommandLineFlagWithFieldTrial()
             throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertFalse(
-                        DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
-                mController.maybeShowDataReductionPromoSnackbar(0);
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            Assert.assertFalse(
+                    DataReductionPromoUtils.hasSnackbarPromoBeenInitWithStartingSavedBytes());
+            mController.maybeShowDataReductionPromoSnackbar(0);
 
-                mController.maybeShowDataReductionPromoSnackbar(
-                        COMMAND_LINE_FLAG_SNACKBAR_SIZE_MB * BYTES_IN_MB);
+            mController.maybeShowDataReductionPromoSnackbar(
+                    COMMAND_LINE_FLAG_SNACKBAR_SIZE_MB * BYTES_IN_MB);
 
-                Assert.assertTrue(mManager.isShowing());
-                Assert.assertTrue(
-                        mManager.getCurrentSnackbarForTesting().getText().toString().endsWith(
-                                COMMAND_LINE_FLAG_SNACKBAR_SIZE_STRING));
-                Assert.assertEquals(COMMAND_LINE_FLAG_SNACKBAR_SIZE_MB * BYTES_IN_MB,
-                        DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
-                mManager.dismissSnackbars(mController);
+            Assert.assertTrue(mManager.isShowing());
+            Assert.assertTrue(
+                    mManager.getCurrentSnackbarForTesting().getText().toString().endsWith(
+                            COMMAND_LINE_FLAG_SNACKBAR_SIZE_STRING));
+            Assert.assertEquals(COMMAND_LINE_FLAG_SNACKBAR_SIZE_MB * BYTES_IN_MB,
+                    DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
+            mManager.dismissSnackbars(mController);
 
-                mController.maybeShowDataReductionPromoSnackbar(
-                        FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB);
+            mController.maybeShowDataReductionPromoSnackbar(
+                    FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB);
 
-                Assert.assertTrue(mManager.isShowing());
+            Assert.assertTrue(mManager.isShowing());
 
-                Assert.assertTrue(
-                        mManager.getCurrentSnackbarForTesting().getText().toString().endsWith(
-                                FIRST_SNACKBAR_SIZE_STRING));
-                Assert.assertEquals(FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB,
-                        DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
-            }
+            Assert.assertTrue(
+                    mManager.getCurrentSnackbarForTesting().getText().toString().endsWith(
+                            FIRST_SNACKBAR_SIZE_STRING));
+            Assert.assertEquals(FIRST_SNACKBAR_SIZE_MB * BYTES_IN_MB,
+                    DataReductionPromoUtils.getDisplayedSnackbarPromoSavedBytes());
         });
     }
 }

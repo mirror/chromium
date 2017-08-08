@@ -69,12 +69,7 @@ public class SuggestionsBottomSheetTest {
                 InstrumentationRegistry.getInstrumentation(), firstCardViewHolder.itemView);
         assertTrue(mActivityRule.getBottomSheet().onInterceptTouchEvent(createTapEvent()));
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mActivityRule.getActivity().closeContextMenu();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mActivityRule.getActivity().closeContextMenu());
 
         assertFalse(mActivityRule.getBottomSheet().onInterceptTouchEvent(createTapEvent()));
     }

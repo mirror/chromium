@@ -133,37 +133,34 @@ public class ToolbarProgressBarTest {
         final AtomicBoolean animationEnded = new AtomicBoolean(false);
         final AtomicReference<ToolbarProgressBar> progressBar =
                 new AtomicReference<>();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.set(mActivityTestRule.getActivity()
-                                        .getToolbarManager()
-                                        .getToolbarLayout()
-                                        .getProgressBar());
-                progressBar.get().setAlphaAnimationDuration(10);
-                progressBar.get().setHidingDelay(10);
-                progressBar.get().animate().setListener(new AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-                    }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            progressBar.set(mActivityTestRule.getActivity()
+                    .getToolbarManager()
+                    .getToolbarLayout()
+                    .getProgressBar());
+            progressBar.get().setAlphaAnimationDuration(10);
+            progressBar.get().setHidingDelay(10);
+            progressBar.get().animate().setListener(new AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                }
 
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
-                    }
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                }
 
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        synchronized (onAnimationEnd) {
-                            animationEnded.set(true);
-                            onAnimationEnd.notify();
-                        }
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    synchronized (onAnimationEnd) {
+                        animationEnded.set(true);
+                        onAnimationEnd.notify();
                     }
+                }
 
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                    }
-                });
-            }
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                }
+            });
         });
 
         CriteriaHelper.pollUiThread(new Criteria("Progress bar not hidden at start") {
@@ -176,12 +173,9 @@ public class ToolbarProgressBarTest {
         // Make some progress and check that the progress bar is fully visible.
         animationEnded.set(false);
         synchronized (onAnimationEnd) {
-            ThreadUtils.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    progressBar.get().start();
-                    progressBar.get().setProgress(0.5f);
-                }
+            ThreadUtils.runOnUiThread(() -> {
+                progressBar.get().start();
+                progressBar.get().setProgress(0.5f);
             });
 
             long deadline = System.currentTimeMillis() + TEST_WAIT_TIME_MS;
@@ -195,12 +189,7 @@ public class ToolbarProgressBarTest {
         // Clear progress and check that the progress bar is hidden.
         animationEnded.set(false);
         synchronized (onAnimationEnd) {
-            ThreadUtils.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    progressBar.get().finish(true);
-                }
-            });
+            ThreadUtils.runOnUiThread(() -> progressBar.get().finish(true));
 
             long deadline = System.currentTimeMillis() + TEST_WAIT_TIME_MS;
             while (!animationEnded.get() && System.currentTimeMillis() < deadline) {

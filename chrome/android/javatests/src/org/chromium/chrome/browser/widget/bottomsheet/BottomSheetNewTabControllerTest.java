@@ -140,12 +140,8 @@ public class BottomSheetNewTabControllerTest {
                 normalTabModel.index() == TabModel.INVALID_TAB_INDEX);
 
         // Load a URL in the bottom sheet.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mBottomSheet.loadUrlInNewTab(new LoadUrlParams("about:blank"));
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> mBottomSheet.loadUrlInNewTab(new LoadUrlParams("about:blank")));
 
         // The sheet should now be closed and a regular tab should have been created
         validateState(false, BottomSheet.SHEET_STATE_PEEK);
@@ -225,12 +221,8 @@ public class BottomSheetNewTabControllerTest {
                 incognitoTabModel.isPendingTabAdd());
 
         // Load an URL in the incognito tab.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mBottomSheet.loadUrlInNewTab(new LoadUrlParams("about:blank"));
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> mBottomSheet.loadUrlInNewTab(new LoadUrlParams("about:blank")));
 
         // The sheet should now be closed and an incognito tab should have been created
         validateState(false, BottomSheet.SHEET_STATE_PEEK);
@@ -266,12 +258,7 @@ public class BottomSheetNewTabControllerTest {
         ToolbarDataProvider toolbarDataProvider =
                 mActivity.getToolbarManager().getToolbarDataProviderForTests();
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                layoutManager.showOverview(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> layoutManager.showOverview(false));
 
         assertFalse("Normal model should be selected.", mTabModelSelector.isIncognitoSelected());
         assertTrue("Overview mode should be showing.", layoutManager.overviewVisible());
@@ -300,13 +287,10 @@ public class BottomSheetNewTabControllerTest {
 
         MenuUtils.invokeCustomMenuActionSync(InstrumentationRegistry.getInstrumentation(),
                 mActivity, R.id.new_incognito_tab_menu_id);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mBottomSheet.loadUrlInNewTab(new LoadUrlParams("about:blank"));
-                layoutManager.showOverview(false);
-                mBottomSheet.endAnimations();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mBottomSheet.loadUrlInNewTab(new LoadUrlParams("about:blank"));
+            layoutManager.showOverview(false);
+            mBottomSheet.endAnimations();
         });
 
         assertTrue("Incognito model should be selected.", mTabModelSelector.isIncognitoSelected());
@@ -402,13 +386,9 @@ public class BottomSheetNewTabControllerTest {
         // Create a new tab using a launcher shortcut intent.
         int currentPendingTabCalls =
                 mIncognitoTabModelObserver.mPendingTabAddCallbackHelper.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mActivity.startActivity(LauncherShortcutActivity.getChromeLauncherActivityIntent(
-                        mActivity, LauncherShortcutActivity.ACTION_OPEN_NEW_TAB));
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mActivity.startActivity(
+                LauncherShortcutActivity.getChromeLauncherActivityIntent(
+                        mActivity, LauncherShortcutActivity.ACTION_OPEN_NEW_TAB)));
         mNormalTabModelObserver.mPendingTabAddCallbackHelper.waitForCallback(
                 currentPendingTabCalls);
 
@@ -427,13 +407,9 @@ public class BottomSheetNewTabControllerTest {
                 mNormalTabModelObserver.mPendingTabAddCallbackHelper.getCallCount();
         int currentTabModelSelectedCalls =
                 mTabModelSelectorObserver.mTabModelSelectedCallbackHelper.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mActivity.startActivity(LauncherShortcutActivity.getChromeLauncherActivityIntent(
-                        mActivity, LauncherShortcutActivity.ACTION_OPEN_NEW_INCOGNITO_TAB));
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mActivity.startActivity(
+                LauncherShortcutActivity.getChromeLauncherActivityIntent(
+                        mActivity, LauncherShortcutActivity.ACTION_OPEN_NEW_INCOGNITO_TAB)));
 
         mIncognitoTabModelObserver.mPendingTabAddCallbackHelper.waitForCallback(
                 currentIncognitoPendingTabCalls, 1);
@@ -468,13 +444,9 @@ public class BottomSheetNewTabControllerTest {
                 mIncognitoTabModelObserver.mPendingTabAddCallbackHelper.getCallCount();
         int currentTabModelSelectedCalls =
                 mTabModelSelectorObserver.mTabModelSelectedCallbackHelper.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mActivity.startActivity(LauncherShortcutActivity.getChromeLauncherActivityIntent(
-                        mActivity, LauncherShortcutActivity.ACTION_OPEN_NEW_INCOGNITO_TAB));
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mActivity.startActivity(
+                LauncherShortcutActivity.getChromeLauncherActivityIntent(
+                        mActivity, LauncherShortcutActivity.ACTION_OPEN_NEW_INCOGNITO_TAB)));
 
         mIncognitoTabModelObserver.mPendingTabAddCallbackHelper.waitForCallback(
                 currentIncognitoPendingTabCalls, 1);
@@ -499,13 +471,9 @@ public class BottomSheetNewTabControllerTest {
                 mNormalTabModelObserver.mPendingTabAddCallbackHelper.getCallCount();
         currentTabModelSelectedCalls =
                 mTabModelSelectorObserver.mTabModelSelectedCallbackHelper.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mActivity.startActivity(LauncherShortcutActivity.getChromeLauncherActivityIntent(
-                        mActivity, LauncherShortcutActivity.ACTION_OPEN_NEW_TAB));
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mActivity.startActivity(
+                LauncherShortcutActivity.getChromeLauncherActivityIntent(
+                        mActivity, LauncherShortcutActivity.ACTION_OPEN_NEW_TAB)));
 
         mIncognitoTabModelObserver.mPendingTabAddCallbackHelper.waitForCallback(
                 currentIncognitoPendingTabCalls, 1);
@@ -537,12 +505,7 @@ public class BottomSheetNewTabControllerTest {
     }
 
     private void validateState(boolean chromeHomeTabPageSelected, int expectedEndState) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mBottomSheet.endAnimations();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mBottomSheet.endAnimations());
 
         assertEquals("Sheet state incorrect", expectedEndState, mBottomSheet.getSheetState());
 

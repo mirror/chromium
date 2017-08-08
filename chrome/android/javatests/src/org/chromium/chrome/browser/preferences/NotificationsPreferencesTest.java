@@ -60,29 +60,26 @@ public class NotificationsPreferencesTest {
         final ChromeSwitchPreference toggle = (ChromeSwitchPreference) fragment.findPreference(
                 NotificationsPreferences.PREF_SUGGESTIONS);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // Make sure the toggle reflects the state correctly.
-                boolean initiallyChecked = toggle.isChecked();
-                Assert.assertEquals(toggle.isChecked(),
-                        SnippetsBridge.areContentSuggestionsNotificationsEnabled());
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // Make sure the toggle reflects the state correctly.
+            boolean initiallyChecked = toggle.isChecked();
+            Assert.assertEquals(toggle.isChecked(),
+                    SnippetsBridge.areContentSuggestionsNotificationsEnabled());
 
-                // Make sure we can change the state.
-                PreferencesTest.clickPreference(fragment, toggle);
-                Assert.assertEquals(toggle.isChecked(), !initiallyChecked);
-                Assert.assertEquals(toggle.isChecked(),
-                        SnippetsBridge.areContentSuggestionsNotificationsEnabled());
+            // Make sure we can change the state.
+            PreferencesTest.clickPreference(fragment, toggle);
+            Assert.assertEquals(toggle.isChecked(), !initiallyChecked);
+            Assert.assertEquals(toggle.isChecked(),
+                    SnippetsBridge.areContentSuggestionsNotificationsEnabled());
 
-                // Make sure we can change it back.
-                PreferencesTest.clickPreference(fragment, toggle);
-                Assert.assertEquals(toggle.isChecked(), initiallyChecked);
-                Assert.assertEquals(toggle.isChecked(),
-                        SnippetsBridge.areContentSuggestionsNotificationsEnabled());
+            // Make sure we can change it back.
+            PreferencesTest.clickPreference(fragment, toggle);
+            Assert.assertEquals(toggle.isChecked(), initiallyChecked);
+            Assert.assertEquals(toggle.isChecked(),
+                    SnippetsBridge.areContentSuggestionsNotificationsEnabled());
 
-                // Click it one last time so we're in a toggled state for the UI Capture.
-                PreferencesTest.clickPreference(fragment, toggle);
-            }
+            // Click it one last time so we're in a toggled state for the UI Capture.
+            PreferencesTest.clickPreference(fragment, toggle);
         });
     }
 
@@ -91,15 +88,12 @@ public class NotificationsPreferencesTest {
     @Feature({"Preferences"})
     @DisableIf.Build(sdk_is_greater_than = Build.VERSION_CODES.N)
     public void testLinkToWebsiteNotifications() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PreferenceFragment fragment = (PreferenceFragment) mActivity.getFragmentForTest();
-                Preference fromWebsites =
-                        fragment.findPreference(NotificationsPreferences.PREF_FROM_WEBSITES);
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            PreferenceFragment fragment = (PreferenceFragment) mActivity.getFragmentForTest();
+            Preference fromWebsites =
+                    fragment.findPreference(NotificationsPreferences.PREF_FROM_WEBSITES);
 
-                PreferencesTest.clickPreference(fragment, fromWebsites);
-            }
+            PreferencesTest.clickPreference(fragment, fromWebsites);
         });
 
         CriteriaHelper.pollUiThread(new Criteria() {
@@ -129,17 +123,14 @@ public class NotificationsPreferencesTest {
         final Preference fromWebsites =
                 fragment.findPreference(NotificationsPreferences.PREF_FROM_WEBSITES);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PrefServiceBridge.getInstance().setNotificationsEnabled(false);
-                fragment.onResume();
-                Assert.assertEquals(fromWebsites.getSummary(), getNotificationsSummary(false));
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            PrefServiceBridge.getInstance().setNotificationsEnabled(false);
+            fragment.onResume();
+            Assert.assertEquals(fromWebsites.getSummary(), getNotificationsSummary(false));
 
-                PrefServiceBridge.getInstance().setNotificationsEnabled(true);
-                fragment.onResume();
-                Assert.assertEquals(fromWebsites.getSummary(), getNotificationsSummary(true));
-            }
+            PrefServiceBridge.getInstance().setNotificationsEnabled(true);
+            fragment.onResume();
+            Assert.assertEquals(fromWebsites.getSummary(), getNotificationsSummary(true));
         });
     }
 

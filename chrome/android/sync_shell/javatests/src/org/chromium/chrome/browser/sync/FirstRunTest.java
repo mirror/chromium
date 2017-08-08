@@ -91,13 +91,10 @@ public class FirstRunTest extends SyncTestBase {
         final ActivityMonitor freMonitor =
                 new ActivityMonitor(FirstRunActivity.class.getName(), null, false);
         instrumentation.addMonitor(freMonitor);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                FirstRunFlowSequencer.launch(context, intent, false /* requiresBroadcast */,
-                        false /* preferLightweightFre */);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> FirstRunFlowSequencer.launch(context, intent, false /*
+                requiresBroadcast */,
+                        false /* preferLightweightFre */));
 
         // Wait for the FRE to be ready to use.
         Activity activity =
@@ -199,12 +196,7 @@ public class FirstRunTest extends SyncTestBase {
         Preferences prefActivity = null;
         if (showSettings == ShowSettings.YES) {
             prefActivity = ActivityUtils.waitForActivity(
-                    getInstrumentation(), Preferences.class, new Runnable() {
-                        @Override
-                        public void run() {
-                            processFirstRunOnUiThread();
-                        }
-                    });
+                    getInstrumentation(), Preferences.class, () -> processFirstRunOnUiThread());
             assertNotNull("Could not find the preferences activity", prefActivity);
         } else {
             processFirstRunOnUiThread();
@@ -220,11 +212,6 @@ public class FirstRunTest extends SyncTestBase {
     }
 
     private void processFirstRunOnUiThread() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                FirstRunSignInProcessor.start(mActivity);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> FirstRunSignInProcessor.start(mActivity));
     }
 }

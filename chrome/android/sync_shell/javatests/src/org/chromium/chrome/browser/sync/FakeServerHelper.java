@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.sync;
 
 import android.content.Context;
 
-import com.google.protobuf.nano.InvalidProtocolBufferNanoException;
 import com.google.protobuf.nano.MessageNano;
 
 import org.chromium.base.ThreadUtils;
@@ -60,16 +59,13 @@ public class FakeServerHelper {
                     "deleteFakeServer must be called before calling useFakeServer again.");
         }
 
-        sNativeFakeServer = ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Long>() {
-            @Override
-            public Long call() {
-                FakeServerHelper fakeServerHelper = FakeServerHelper.get();
-                long nativeFakeServer = fakeServerHelper.createFakeServer();
-                long resources = fakeServerHelper.createNetworkResources(nativeFakeServer);
-                ProfileSyncService.get().overrideNetworkResourcesForTest(resources);
+        sNativeFakeServer = ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            FakeServerHelper fakeServerHelper = FakeServerHelper.get();
+            long nativeFakeServer = fakeServerHelper.createFakeServer();
+            long resources = fakeServerHelper.createNetworkResources(nativeFakeServer);
+            ProfileSyncService.get().overrideNetworkResourcesForTest(resources);
 
-                return nativeFakeServer;
-            }
+            return nativeFakeServer;
         });
     }
 
@@ -96,12 +92,8 @@ public class FakeServerHelper {
      * @return the FakeServer pointer
      */
     public long createFakeServer() {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Long>() {
-            @Override
-            public Long call() {
-                return nativeCreateFakeServer(mNativeFakeServerHelperAndroid);
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> nativeCreateFakeServer(mNativeFakeServerHelperAndroid));
     }
 
     /**
@@ -112,13 +104,8 @@ public class FakeServerHelper {
      * @return the NetworkResources pointer
      */
     public long createNetworkResources(final long nativeFakeServer) {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Long>() {
-            @Override
-            public Long call() {
-                return nativeCreateNetworkResources(
-                        mNativeFakeServerHelperAndroid, nativeFakeServer);
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> nativeCreateNetworkResources(
+                mNativeFakeServerHelperAndroid, nativeFakeServer));
     }
 
     /**
@@ -150,13 +137,9 @@ public class FakeServerHelper {
             final String name) {
         checkFakeServerInitialized(
                 "useFakeServer must be called before data verification.");
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                return nativeVerifyEntityCountByTypeAndName(mNativeFakeServerHelperAndroid,
-                        sNativeFakeServer, count, modelType, name);
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> nativeVerifyEntityCountByTypeAndName(mNativeFakeServerHelperAndroid,
+                        sNativeFakeServer, count, modelType, name));
     }
 
     /**
@@ -169,13 +152,9 @@ public class FakeServerHelper {
     public boolean verifySessions(final String[] urls) {
         checkFakeServerInitialized(
                 "useFakeServer must be called before data verification.");
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                return nativeVerifySessions(mNativeFakeServerHelperAndroid, sNativeFakeServer,
-                        urls);
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> nativeVerifySessions(mNativeFakeServerHelperAndroid, sNativeFakeServer,
+                        urls));
     }
 
     /**
@@ -188,19 +167,16 @@ public class FakeServerHelper {
     public List<SyncEntity> getSyncEntitiesByModelType(final int modelType)
             throws ExecutionException {
         checkFakeServerInitialized("useFakeServer must be called before getting sync entities.");
-        return ThreadUtils.runOnUiThreadBlocking(new Callable<List<SyncEntity>>() {
-            @Override
-            public List<SyncEntity> call() throws InvalidProtocolBufferNanoException {
-                byte[][] serializedEntities = nativeGetSyncEntitiesByModelType(
-                        mNativeFakeServerHelperAndroid, sNativeFakeServer, modelType);
-                List<SyncEntity> entities = new ArrayList<SyncEntity>(serializedEntities.length);
-                for (int i = 0; i < serializedEntities.length; i++) {
-                    SyncEntity entity = new SyncEntity();
-                    MessageNano.mergeFrom(entity, serializedEntities[i]);
-                    entities.add(entity);
-                }
-                return entities;
+        return ThreadUtils.runOnUiThreadBlocking(() -> {
+            byte[][] serializedEntities = nativeGetSyncEntitiesByModelType(
+                    mNativeFakeServerHelperAndroid, sNativeFakeServer, modelType);
+            List<SyncEntity> entities = new ArrayList<SyncEntity>(serializedEntities.length);
+            for (int i = 0; i < serializedEntities.length; i++) {
+                SyncEntity entity = new SyncEntity();
+                MessageNano.mergeFrom(entity, serializedEntities[i]);
+                entities.add(entity);
             }
+            return entities;
         });
     }
 
@@ -352,13 +328,9 @@ public class FakeServerHelper {
      */
     public String getBookmarkBarFolderId() {
         checkFakeServerInitialized("useFakeServer must be called before access");
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<String>() {
-            @Override
-            public String call() {
-                return nativeGetBookmarkBarFolderId(mNativeFakeServerHelperAndroid,
-                        sNativeFakeServer);
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> nativeGetBookmarkBarFolderId(mNativeFakeServerHelperAndroid,
+                        sNativeFakeServer));
     }
 
     /**
@@ -366,12 +338,8 @@ public class FakeServerHelper {
      */
     public void clearServerData() {
         checkFakeServerInitialized("useFakeServer must be called before clearing data");
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                nativeClearServerData(mNativeFakeServerHelperAndroid, sNativeFakeServer);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> nativeClearServerData(mNativeFakeServerHelperAndroid, sNativeFakeServer));
     }
 
     private static void checkFakeServerInitialized(String failureMessage) {

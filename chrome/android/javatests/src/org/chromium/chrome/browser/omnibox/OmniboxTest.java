@@ -62,7 +62,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -85,19 +84,11 @@ public class OmniboxTest {
         final UrlBar urlBar = (UrlBar) mActivityTestRule.getActivity().findViewById(R.id.url_bar);
         Assert.assertNotNull(urlBar);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBar.setText("");
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> urlBar.setText(""));
     }
 
     private static final OnSuggestionsReceivedListener sEmptySuggestionListener =
-            new OnSuggestionsReceivedListener() {
-                @Override
-                public void onSuggestionsReceived(
-                        List<OmniboxSuggestion> suggestions, String inlineAutocompleteText) {}
+            (suggestions, inlineAutocompleteText) -> {
             };
 
     /**
@@ -116,14 +107,11 @@ public class OmniboxTest {
         OmniboxTestUtils.waitForOmniboxSuggestions(locationBar);
 
         ChromeTabUtils.waitForTabPageLoadStart(
-                mActivityTestRule.getActivity().getActivityTab(), new Runnable() {
-                    @Override
-                    public void run() {
-                        final UrlBar urlBar =
-                                (UrlBar) mActivityTestRule.getActivity().findViewById(R.id.url_bar);
-                        KeyUtils.singleKeyEventView(InstrumentationRegistry.getInstrumentation(),
-                                urlBar, KeyEvent.KEYCODE_ENTER);
-                    }
+                mActivityTestRule.getActivity().getActivityTab(), () -> {
+                    final UrlBar urlBar =
+                            (UrlBar) mActivityTestRule.getActivity().findViewById(R.id.url_bar);
+                    KeyUtils.singleKeyEventView(InstrumentationRegistry.getInstrumentation(),
+                            urlBar, KeyEvent.KEYCODE_ENTER);
                 }, ScalableTimeout.scaleTimeout(20));
     }
 
@@ -139,27 +127,19 @@ public class OmniboxTest {
 
         OmniboxTestUtils.toggleUrlBarFocus(urlBar, true);
         CriteriaHelper.pollInstrumentationThread(Criteria.equals(
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN, new Callable<Integer>() {
-                    @Override
-                    public Integer call() {
-                        return mActivityTestRule.getActivity()
-                                .getWindow()
-                                .getAttributes()
-                                .softInputMode;
-                    }
-                }));
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN,
+                () -> mActivityTestRule.getActivity()
+                        .getWindow()
+                        .getAttributes()
+                        .softInputMode));
 
         OmniboxTestUtils.toggleUrlBarFocus(urlBar, false);
         CriteriaHelper.pollInstrumentationThread(Criteria.equals(
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE, new Callable<Integer>() {
-                    @Override
-                    public Integer call() {
-                        return mActivityTestRule.getActivity()
-                                .getWindow()
-                                .getAttributes()
-                                .softInputMode;
-                    }
-                }));
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE,
+                () -> mActivityTestRule.getActivity()
+                        .getWindow()
+                        .getAttributes()
+                        .softInputMode));
     }
 
     /**
@@ -174,33 +154,20 @@ public class OmniboxTest {
                 (LocationBarLayout) mActivityTestRule.getActivity().findViewById(R.id.location_bar);
         final UrlBar urlBar = (UrlBar) mActivityTestRule.getActivity().findViewById(R.id.url_bar);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable(){
-            @Override
-            public void run() {
-                urlBar.setUrl("http://www.example.com/", null);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> urlBar.setUrl("http://www.example.com/", null));
 
         final TestAutocompleteController controller = new TestAutocompleteController(locationBar,
                 sEmptySuggestionListener, new HashMap<String, List<SuggestionsResult>>());
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                locationBar.setAutocompleteController(controller);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> locationBar.setAutocompleteController(controller));
         Assert.assertEquals("Should not have any zero suggest requests yet", 0,
                 controller.numZeroSuggestRequests());
 
         OmniboxTestUtils.toggleUrlBarFocus(urlBar, true);
 
-        CriteriaHelper.pollInstrumentationThread(Criteria.equals(1, new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return controller.numZeroSuggestRequests();
-            }
-        }));
+        CriteriaHelper.pollInstrumentationThread(Criteria.equals(1,
+                () -> controller.numZeroSuggestRequests()));
 
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
 
@@ -225,12 +192,9 @@ public class OmniboxTest {
                 sEmptySuggestionListener, new HashMap<String, List<SuggestionsResult>>());
 
         OmniboxTestUtils.toggleUrlBarFocus(urlBar, true);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                locationBar.setAutocompleteController(controller);
-                urlBar.setText("g");
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            locationBar.setAutocompleteController(controller);
+            urlBar.setText("g");
         });
 
         CriteriaHelper.pollInstrumentationThread(
@@ -248,12 +212,8 @@ public class OmniboxTest {
 
         TouchCommon.singleClickView(deleteButton);
 
-        CriteriaHelper.pollInstrumentationThread(Criteria.equals(1, new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return controller.numZeroSuggestRequests();
-            }
-        }));
+        CriteriaHelper.pollInstrumentationThread(Criteria.equals(1,
+                () -> controller.numZeroSuggestRequests()));
     }
 
     @Test
@@ -270,24 +230,17 @@ public class OmniboxTest {
 
         OmniboxTestUtils.toggleUrlBarFocus(urlBar, true);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                locationBar.setAutocompleteController(controller);
-                urlBar.setText("g");
-                urlBar.setSelection(1);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            locationBar.setAutocompleteController(controller);
+            urlBar.setText("g");
+            urlBar.setSelection(1);
         });
 
         Assert.assertEquals("No calls to zero suggest yet", 0, controller.numZeroSuggestRequests());
         KeyUtils.singleKeyEventView(
                 InstrumentationRegistry.getInstrumentation(), urlBar, KeyEvent.KEYCODE_DEL);
-        CriteriaHelper.pollInstrumentationThread(Criteria.equals(1, new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return controller.numZeroSuggestRequests();
-            }
-        }));
+        CriteriaHelper.pollInstrumentationThread(Criteria.equals(1,
+                () -> controller.numZeroSuggestRequests()));
     }
 
     // Sanity check that no text is displayed in the omnibox when on the NTP page and that the hint
@@ -312,12 +265,9 @@ public class OmniboxTest {
         // Type something in the omnibox.
         // Note that the TextView does not provide a way to test if the hint is showing, the API
         // documentation simply says it shows when the text is empty.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBar.requestFocus();
-                urlBar.setText("G");
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            urlBar.requestFocus();
+            urlBar.setText("G");
         });
         Assert.assertEquals("Location bar should have text.", "G", urlBar.getText().toString());
     }
@@ -486,12 +436,9 @@ public class OmniboxTest {
             throws InterruptedException, ExecutionException {
         final TextView urlBarView =
                 (TextView) mActivityTestRule.getActivity().findViewById(R.id.url_bar);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBarView.requestFocus();
-                urlBarView.setText("");
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            urlBarView.requestFocus();
+            urlBarView.setText("");
         });
 
         final LocationBarLayout locationBar =
@@ -501,31 +448,22 @@ public class OmniboxTest {
         final Object suggestionsProcessedSignal = new Object();
         final AtomicInteger suggestionsLeft = new AtomicInteger(
                 suggestionsMap.get(textToType).size());
-        OnSuggestionsReceivedListener suggestionsListener = new OnSuggestionsReceivedListener() {
-            @Override
-            public void onSuggestionsReceived(
-                    List<OmniboxSuggestion> suggestions,
-                    String inlineAutocompleteText) {
-                locationBar.onSuggestionsReceived(suggestions, inlineAutocompleteText);
-                synchronized (suggestionsProcessedSignal) {
-                    int remaining = suggestionsLeft.decrementAndGet();
-                    if (remaining == 0) {
-                        suggestionsProcessedSignal.notifyAll();
-                    } else if (remaining < 0) {
-                        Assert.fail("Unexpected suggestions received");
+        OnSuggestionsReceivedListener suggestionsListener =
+                (suggestions, inlineAutocompleteText) -> {
+                    locationBar.onSuggestionsReceived(suggestions, inlineAutocompleteText);
+                    synchronized (suggestionsProcessedSignal) {
+                        int remaining = suggestionsLeft.decrementAndGet();
+                        if (remaining == 0) {
+                            suggestionsProcessedSignal.notifyAll();
+                        } else if (remaining < 0) {
+                            Assert.fail("Unexpected suggestions received");
+                        }
                     }
-                }
-            }
-        };
+                };
         final TestAutocompleteController controller = new TestAutocompleteController(
                 locationBar, suggestionsListener, suggestionsMap);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                locationBar.setAutocompleteController(controller);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> locationBar.setAutocompleteController(controller));
 
         KeyUtils.typeTextIntoView(
                 InstrumentationRegistry.getInstrumentation(), urlBarView, textToType);
@@ -539,12 +477,7 @@ public class OmniboxTest {
             }
         }
 
-        CharSequence urlText = ThreadUtils.runOnUiThreadBlocking(new Callable<CharSequence>() {
-            @Override
-            public CharSequence call() throws Exception {
-                return urlBarView.getText();
-            }
-        });
+        CharSequence urlText = ThreadUtils.runOnUiThreadBlocking(() -> urlBarView.getText());
         Assert.assertEquals("URL Bar text not autocompleted as expected.", expectedAutocompleteText,
                 urlText.toString());
         Assert.assertEquals(expectedAutocompleteStart, Selection.getSelectionStart(urlText));
@@ -701,12 +634,9 @@ public class OmniboxTest {
     public void testSuggestionDirectionSwitching() throws InterruptedException {
         final TextView urlBarView =
                 (TextView) mActivityTestRule.getActivity().findViewById(R.id.url_bar);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBarView.requestFocus();
-                urlBarView.setText("");
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            urlBarView.requestFocus();
+            urlBarView.setText("");
         });
 
         final LocationBarLayout locationBar =
@@ -740,53 +670,30 @@ public class OmniboxTest {
         final TestAutocompleteController controller = new TestAutocompleteController(
                 locationBar, locationBar, suggestionsMap);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                locationBar.setAutocompleteController(controller);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> locationBar.setAutocompleteController(controller));
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBarView.setText("ل");
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> urlBarView.setText("ل"));
         verifyOmniboxSuggestionAlignment(locationBar, 3, View.LAYOUT_DIRECTION_RTL);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBarView.setText("للك");
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> urlBarView.setText("للك"));
         verifyOmniboxSuggestionAlignment(locationBar, 1, View.LAYOUT_DIRECTION_RTL);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBarView.setText("f");
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> urlBarView.setText("f"));
         verifyOmniboxSuggestionAlignment(locationBar, 3, View.LAYOUT_DIRECTION_LTR);
     }
 
     private void verifyOmniboxSuggestionAlignment(final LocationBarLayout locationBar,
             final int expectedSuggestionCount, final int expectedLayoutDirection) {
         OmniboxTestUtils.waitForOmniboxSuggestions(locationBar, expectedSuggestionCount);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                OmniboxSuggestionsList suggestionsList = locationBar.getSuggestionList();
-                Assert.assertEquals(expectedSuggestionCount, suggestionsList.getChildCount());
-                for (int i = 0; i < suggestionsList.getChildCount(); i++) {
-                    SuggestionView suggestionView = (SuggestionView) suggestionsList.getChildAt(i);
-                    Assert.assertEquals(
-                            String.format(Locale.getDefault(),
-                                    "Incorrect layout direction of suggestion at index %d", i),
-                            expectedLayoutDirection, ViewCompat.getLayoutDirection(suggestionView));
-                }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            OmniboxSuggestionsList suggestionsList = locationBar.getSuggestionList();
+            Assert.assertEquals(expectedSuggestionCount, suggestionsList.getChildCount());
+            for (int i = 0; i < suggestionsList.getChildCount(); i++) {
+                SuggestionView suggestionView = (SuggestionView) suggestionsList.getChildAt(i);
+                Assert.assertEquals(
+                        String.format(Locale.getDefault(),
+                                "Incorrect layout direction of suggestion at index %d", i),
+                        expectedLayoutDirection, ViewCompat.getLayoutDirection(suggestionView));
             }
         });
     }

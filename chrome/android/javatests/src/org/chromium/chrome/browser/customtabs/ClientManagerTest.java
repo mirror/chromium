@@ -51,12 +51,7 @@ public class ClientManagerTest {
         RequestThrottler.purgeAllEntriesForTesting(context);
         mClientManager = new ClientManager(context);
         RecordHistogram.initialize();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                OriginVerifier.reset();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> OriginVerifier.reset());
     }
 
     @Test
@@ -174,18 +169,15 @@ public class ClientManagerTest {
         // Should always start with no origin.
         Assert.assertNull(cm.getPostMessageOriginForSessionForTesting(mSession));
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // With no prepopulated origins, this verification should fail.
-                cm.verifyAndInitializeWithPostMessageOriginForSession(mSession, Uri.parse(URL));
-                Assert.assertNull(cm.getPostMessageOriginForSessionForTesting(mSession));
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // With no prepopulated origins, this verification should fail.
+            cm.verifyAndInitializeWithPostMessageOriginForSession(mSession, Uri.parse(URL));
+            Assert.assertNull(cm.getPostMessageOriginForSessionForTesting(mSession));
 
-                // If there is a prepopulated origin, we should get a synchronous verification.
-                OriginVerifier.addVerifiedOriginForPackage(
-                        ContextUtils.getApplicationContext().getPackageName(), Uri.parse(URL));
-                cm.verifyAndInitializeWithPostMessageOriginForSession(mSession, Uri.parse(URL));
-            }
+            // If there is a prepopulated origin, we should get a synchronous verification.
+            OriginVerifier.addVerifiedOriginForPackage(
+                    ContextUtils.getApplicationContext().getPackageName(), Uri.parse(URL));
+            cm.verifyAndInitializeWithPostMessageOriginForSession(mSession, Uri.parse(URL));
         });
 
         CriteriaHelper.pollUiThread(new Criteria() {
@@ -195,18 +187,15 @@ public class ClientManagerTest {
             }
         });
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Uri verifiedOrigin = cm.getPostMessageOriginForSessionForTesting(mSession);
-                Assert.assertEquals(
-                        IntentHandler.ANDROID_APP_REFERRER_SCHEME, verifiedOrigin.getScheme());
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            Uri verifiedOrigin = cm.getPostMessageOriginForSessionForTesting(mSession);
+            Assert.assertEquals(
+                    IntentHandler.ANDROID_APP_REFERRER_SCHEME, verifiedOrigin.getScheme());
 
-                // initializeWithPostMessageOriginForSession should override without checking
-                // origin.
-                cm.initializeWithPostMessageOriginForSession(mSession, null);
-                Assert.assertNull(cm.getPostMessageOriginForSessionForTesting(mSession));
-            }
+            // initializeWithPostMessageOriginForSession should override without checking
+            // origin.
+            cm.initializeWithPostMessageOriginForSession(mSession, null);
+            Assert.assertNull(cm.getPostMessageOriginForSessionForTesting(mSession));
         });
     }
 
@@ -218,21 +207,18 @@ public class ClientManagerTest {
         // Should always start with no origin.
         Assert.assertNull(cm.getPostMessageOriginForSessionForTesting(mSession));
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Uri uri = Uri.parse(HTTP_URL);
-                // With no prepopulated origins, this verification should fail.
-                cm.verifyAndInitializeWithPostMessageOriginForSession(mSession, uri);
-                Assert.assertNull(cm.getPostMessageOriginForSessionForTesting(mSession));
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            Uri uri = Uri.parse(HTTP_URL);
+            // With no prepopulated origins, this verification should fail.
+            cm.verifyAndInitializeWithPostMessageOriginForSession(mSession, uri);
+            Assert.assertNull(cm.getPostMessageOriginForSessionForTesting(mSession));
 
-                // Even if there is a prepopulated origin, non-https origins should get an early
-                // return with false.
-                OriginVerifier.addVerifiedOriginForPackage(
-                        ContextUtils.getApplicationContext().getPackageName(), uri);
-                cm.verifyAndInitializeWithPostMessageOriginForSession(mSession, uri);
-                Assert.assertNull(cm.getPostMessageOriginForSessionForTesting(mSession));
-            }
+            // Even if there is a prepopulated origin, non-https origins should get an early
+            // return with false.
+            OriginVerifier.addVerifiedOriginForPackage(
+                    ContextUtils.getApplicationContext().getPackageName(), uri);
+            cm.verifyAndInitializeWithPostMessageOriginForSession(mSession, uri);
+            Assert.assertNull(cm.getPostMessageOriginForSessionForTesting(mSession));
         });
     }
 

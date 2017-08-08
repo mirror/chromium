@@ -25,12 +25,7 @@ public class ClearBrowsingDataPreferencesTab extends ClearBrowsingDataPreference
         View view = inflater.inflate(R.layout.clear_browsing_data_tab_content, container, false);
 
         Button clearButton = (Button) view.findViewById(R.id.clear_button);
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClearButtonClicked();
-            }
-        });
+        clearButton.setOnClickListener(v -> onClearButtonClicked());
 
         return view;
     }

@@ -115,24 +115,15 @@ public class SadTabTest {
      * Helper method that kills the renderer on a UI thread.
      */
     private void simulateRendererKilled(final Tab tab, final boolean wasOomProtected) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                tab.simulateRendererKilledForTesting(wasOomProtected);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> tab.simulateRendererKilledForTesting(wasOomProtected));
     }
 
     /**
      * Helper method that reloads a tab with a SadTabView currently displayed.
      */
     private void reloadSadTab(final Tab tab) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                tab.reloadSadTabForTesting();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> tab.reloadSadTabForTesting());
     }
 
     /**

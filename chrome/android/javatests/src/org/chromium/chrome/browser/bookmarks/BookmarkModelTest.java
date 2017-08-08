@@ -51,23 +51,17 @@ public class BookmarkModelTest {
 
     @Before
     public void setUp() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Profile profile = Profile.getLastUsedProfile();
-                mBookmarkModel = new BookmarkModel(profile);
-                mBookmarkModel.loadEmptyPartnerBookmarkShimForTesting();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            Profile profile = Profile.getLastUsedProfile();
+            mBookmarkModel = new BookmarkModel(profile);
+            mBookmarkModel.loadEmptyPartnerBookmarkShimForTesting();
         });
 
         BookmarkTestUtil.waitForBookmarkModelLoaded();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mMobileNode = mBookmarkModel.getMobileFolderId();
-                mDesktopNode = mBookmarkModel.getDesktopFolderId();
-                mOtherNode = mBookmarkModel.getOtherFolderId();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mMobileNode = mBookmarkModel.getMobileFolderId();
+            mDesktopNode = mBookmarkModel.getDesktopFolderId();
+            mOtherNode = mBookmarkModel.getOtherFolderId();
         });
     }
 
@@ -189,12 +183,9 @@ public class BookmarkModelTest {
             final String url) {
         final AtomicReference<BookmarkId> result = new AtomicReference<BookmarkId>();
         final Semaphore semaphore = new Semaphore(0);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                result.set(mBookmarkModel.addBookmark(parent, index, title, url));
-                semaphore.release();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            result.set(mBookmarkModel.addBookmark(parent, index, title, url));
+            semaphore.release();
         });
         try {
             if (semaphore.tryAcquire(TIMEOUT_MS, TimeUnit.MILLISECONDS)) {

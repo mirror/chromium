@@ -37,7 +37,6 @@ import android.telephony.TelephonyManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.annotation.Config;
@@ -577,11 +576,7 @@ public class PlatformNetworksManagerTest {
     }
 
     private void verifyNetworkStateAction() {
-        verify(mContext).registerReceiver(eq(null), argThat(new ArgumentMatcher<IntentFilter>() {
-            @Override
-            public boolean matches(IntentFilter intentFilter) {
-                return intentFilter.hasAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-            }
-        }));
+        verify(mContext).registerReceiver(eq(null), argThat(
+                intentFilter -> intentFilter.hasAction(WifiManager.NETWORK_STATE_CHANGED_ACTION)));
     }
 }

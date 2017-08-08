@@ -57,12 +57,9 @@ public class CastNotificationTest {
         final CastNotificationControl notificationControl = mCastTestRule.waitForCastNotification();
         Assert.assertNotNull("No notificationTransportControl", notificationControl);
         // Send pause
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                notificationControl.onPause(MediaNotificationListener.ACTION_SOURCE_MEDIA_SESSION);
-            }
-        });
+        ThreadUtils.runOnUiThread(
+                () -> notificationControl.onPause(
+                        MediaNotificationListener.ACTION_SOURCE_MEDIA_SESSION));
         Assert.assertTrue(
                 "Not paused", mCastTestRule.waitForState(PlayerState.PAUSED, MAX_VIEW_TIME_MS));
 
@@ -75,12 +72,9 @@ public class CastNotificationTest {
         Assert.assertEquals(
                 "Pause didn't stop playback", position, mCastTestRule.getRemotePositionMs());
         // Send play
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                notificationControl.onPlay(MediaNotificationListener.ACTION_SOURCE_MEDIA_SESSION);
-            }
-        });
+        ThreadUtils.runOnUiThread(
+                () -> notificationControl.onPlay(
+                        MediaNotificationListener.ACTION_SOURCE_MEDIA_SESSION));
         Assert.assertTrue(
                 "Not playing", mCastTestRule.waitForState(PlayerState.PLAYING, MAX_VIEW_TIME_MS));
 

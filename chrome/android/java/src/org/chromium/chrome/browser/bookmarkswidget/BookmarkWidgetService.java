@@ -42,7 +42,6 @@ import org.chromium.components.bookmarks.BookmarkId;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -187,12 +186,7 @@ public class BookmarkWidgetService extends RemoteViewsService {
 
             mRemainingTaskCount = 1;
             mBookmarkModel = new BookmarkModel();
-            mBookmarkModel.runAfterBookmarkModelLoaded(new Runnable() {
-                @Override
-                public void run() {
-                    loadBookmarks(folderId);
-                }
-            });
+            mBookmarkModel.runAfterBookmarkModelLoaded(() -> loadBookmarks(folderId));
         }
 
         @UiThread
@@ -216,12 +210,8 @@ public class BookmarkWidgetService extends RemoteViewsService {
             List<BookmarkItem> items = mBookmarkModel.getBookmarksForFolder(folderId);
 
             // Move folders to the beginning of the list.
-            Collections.sort(items, new Comparator<BookmarkItem>() {
-                @Override
-                public int compare(BookmarkItem lhs, BookmarkItem rhs) {
-                    return lhs.isFolder() == rhs.isFolder() ? 0 : lhs.isFolder() ? -1 : 1;
-                }
-            });
+            Collections.sort(items,
+                    (lhs, rhs) -> lhs.isFolder() == rhs.isFolder() ? 0 : lhs.isFolder() ? -1 : 1);
 
             for (BookmarkItem item : items) {
                 Bookmark bookmark = Bookmark.fromBookmarkItem(item);
@@ -237,20 +227,16 @@ public class BookmarkWidgetService extends RemoteViewsService {
             if (bookmark.isFolder) return;
 
             mRemainingTaskCount++;
-            LargeIconCallback callback = new LargeIconCallback() {
-                @Override
-                public void onLargeIconAvailable(
-                        Bitmap icon, int fallbackColor, boolean isFallbackColorDefault) {
-                    if (icon == null) {
-                        mIconGenerator.setBackgroundColor(fallbackColor);
-                        icon = mIconGenerator.generateIconForUrl(bookmark.url);
-                    } else {
-                        icon = Bitmap.createScaledBitmap(icon, mDisplayedIconSize,
-                                mDisplayedIconSize, true);
-                    }
-                    bookmark.favicon = icon;
-                    taskFinished();
+            LargeIconCallback callback = (icon, fallbackColor, isFallbackColorDefault) -> {
+                if (icon == null) {
+                    mIconGenerator.setBackgroundColor(fallbackColor);
+                    icon = mIconGenerator.generateIconForUrl(bookmark.url);
+                } else {
+                    icon = Bitmap.createScaledBitmap(icon, mDisplayedIconSize,
+                            mDisplayedIconSize, true);
                 }
+                bookmark.favicon = icon;
+                taskFinished();
             };
             mLargeIconBridge.getLargeIconForUrl(bookmark.url, mMinIconSizeDp, callback);
         }
@@ -357,11 +343,8 @@ public class BookmarkWidgetService extends RemoteViewsService {
         @BinderThread
         @Override
         public void onDestroy() {
-            ThreadUtils.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (mBookmarkModel != null) mBookmarkModel.destroy();
-                }
+            ThreadUtils.runOnUiThread(() -> {
+                if (mBookmarkModel != null) mBookmarkModel.destroy();
             });
             deleteWidgetState(mContext, mWidgetId);
         }
@@ -387,17 +370,9 @@ public class BookmarkWidgetService extends RemoteViewsService {
             //A reference of BookmarkLoader is needed in binder thread to
             //prevent it from being garbage collected.
             final BookmarkLoader bookmarkLoader = new BookmarkLoader();
-            ThreadUtils.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    bookmarkLoader.initialize(mContext, folderId, new BookmarkLoaderCallback() {
-                        @Override
-                        public void onBookmarksLoaded(BookmarkFolder folder) {
-                            resultQueue.add(folder);
-                        }
-                    });
-                }
-            });
+            ThreadUtils.runOnUiThread(
+                    () -> bookmarkLoader.initialize(mContext, folderId,
+                            folder -> resultQueue.add(folder)));
             try {
                 return resultQueue.take();
             } catch (InterruptedException e) {
@@ -443,12 +418,7 @@ public class BookmarkWidgetService extends RemoteViewsService {
             //returns. If it happens, refresh widget until the bookmarks are all loaded.
             if (mCurrentFolder == null || !mPreferences.getString(PREF_CURRENT_FOLDER, "")
                     .equals(mCurrentFolder.folder.id.toString())) {
-                ThreadUtils.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshWidget();
-                    }
-                });
+                ThreadUtils.runOnUiThread(() -> refreshWidget());
             }
             if (mCurrentFolder == null) {
                 return 0;

@@ -100,13 +100,8 @@ public class NewTabPageLoadTest {
         @Override
         public boolean getLargeIconForUrl(String pageUrl, int desiredSizePx,
                 final LargeIconBridge.LargeIconCallback callback) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    callback.onLargeIconAvailable(
-                            Bitmap.createBitmap(148, 148, Bitmap.Config.ALPHA_8), 0, false);
-                }
-            }, 0);
+            new Handler().postDelayed(() -> callback.onLargeIconAvailable(
+                    Bitmap.createBitmap(148, 148, Bitmap.Config.ALPHA_8), 0, false), 0);
 
             return true;
         }

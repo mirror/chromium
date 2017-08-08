@@ -31,22 +31,12 @@ class ThreadHoppingHost implements DialogOverlayCore.Host {
 
     @Override
     public void onSurfaceReady(final Surface surface) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mHost.onSurfaceReady(surface);
-            }
-        });
+        mHandler.post(() -> mHost.onSurfaceReady(surface));
     }
 
     @Override
     public void onOverlayDestroyed() {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mHost.onOverlayDestroyed();
-            }
-        });
+        mHandler.post(() -> mHost.onOverlayDestroyed());
     }
 
     // We don't forward via to |mHandler|, since it should be asynchronous.  Else, the |mHandler|

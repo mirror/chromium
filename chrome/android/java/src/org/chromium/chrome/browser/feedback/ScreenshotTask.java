@@ -60,12 +60,7 @@ public final class ScreenshotTask {
         }
 
         final Bitmap bitmap = prepareScreenshot(activity, null);
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                callback.onGotBitmap(bitmap);
-            }
-        });
+        ThreadUtils.postOnUiThread(() -> callback.onGotBitmap(bitmap));
     }
 
     private static boolean shouldTakeCompositorScreenshot(ChromeActivity activity) {
@@ -96,13 +91,8 @@ public final class ScreenshotTask {
 
     private static void createCompositorScreenshot(WindowAndroid windowAndroid,
             Rect windowRect, final ScreenshotTaskCallback callback) {
-        SnapshotResultCallback resultCallback = new SnapshotResultCallback() {
-            @Override
-            public void onCompleted(byte[] pngBytes) {
-                callback.onGotBitmap(pngBytes != null
-                        ? BitmapFactory.decodeByteArray(pngBytes, 0, pngBytes.length) : null);
-            }
-        };
+        SnapshotResultCallback resultCallback = pngBytes -> callback.onGotBitmap(pngBytes != null
+                ? BitmapFactory.decodeByteArray(pngBytes, 0, pngBytes.length) : null);
         nativeGrabWindowSnapshotAsync(resultCallback, windowAndroid.getNativePointer(),
                 windowRect.width(), windowRect.height());
     }

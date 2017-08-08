@@ -55,12 +55,7 @@ public class ExternalPrerenderHandlerTest {
     public void setUp() throws Exception {
         mExternalPrerenderHandler = new ExternalPrerenderHandler();
 
-        final Callable<Profile> profileCallable = new Callable<Profile>() {
-            @Override
-            public Profile call() throws Exception {
-                return Profile.getLastUsedProfile();
-            }
-        };
+        final Callable<Profile> profileCallable = () -> Profile.getLastUsedProfile();
         mProfile = ThreadUtils.runOnUiThreadBlocking(profileCallable);
 
         mTestServer = EmbeddedTestServer.createAndStartServer(
@@ -71,12 +66,7 @@ public class ExternalPrerenderHandlerTest {
 
     @After
     public void tearDown() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mExternalPrerenderHandler.cancelCurrentPrerender();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mExternalPrerenderHandler.cancelCurrentPrerender());
         mTestServer.stopAndDestroyServer();
     }
 
@@ -96,13 +86,10 @@ public class ExternalPrerenderHandlerTest {
     public void testAddAndCancelPrerender() throws Exception {
         final WebContents webContents = ensureStartedPrerenderForUrl(mTestPage);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mExternalPrerenderHandler.cancelCurrentPrerender();
-                Assert.assertFalse(ExternalPrerenderHandler.hasPrerenderedUrl(
-                        mProfile, mTestPage, webContents));
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mExternalPrerenderHandler.cancelCurrentPrerender();
+            Assert.assertFalse(ExternalPrerenderHandler.hasPrerenderedUrl(
+                    mProfile, mTestPage, webContents));
         });
     }
 
@@ -117,30 +104,23 @@ public class ExternalPrerenderHandlerTest {
         final WebContents webContents2 = ensureStartedPrerenderForUrl(mTestPage2);
 
         // Make sure that the second one didn't remove the first one.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(ExternalPrerenderHandler.hasPrerenderedUrl(
-                        mProfile, mTestPage2, webContents2));
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> Assert.assertTrue(ExternalPrerenderHandler.hasPrerenderedUrl(
+                        mProfile, mTestPage2, webContents2)));
         ensureCompletedPrerenderForUrl(webContents2, mTestPage2);
     }
 
     private WebContents ensureStartedPrerenderForUrl(final String url) throws Exception {
-        Callable<WebContents> addPrerenderCallable = new Callable<WebContents>() {
-            @Override
-            public WebContents call() {
-                Pair<WebContents, WebContents> webContents =
-                        mExternalPrerenderHandler.addPrerender(mProfile, url, "", new Rect(), true);
+        Callable<WebContents> addPrerenderCallable = () -> {
+            Pair<WebContents, WebContents> webContents =
+                    mExternalPrerenderHandler.addPrerender(mProfile, url, "", new Rect(), true);
 
-                Assert.assertNotNull(webContents);
-                Assert.assertNotNull(webContents.first);
-                Assert.assertNotNull(webContents.second);
-                Assert.assertTrue(ExternalPrerenderHandler.hasPrerenderedUrl(
-                        mProfile, url, webContents.first));
-                return webContents.first;
-            }
+            Assert.assertNotNull(webContents);
+            Assert.assertNotNull(webContents.first);
+            Assert.assertNotNull(webContents.second);
+            Assert.assertTrue(ExternalPrerenderHandler.hasPrerenderedUrl(
+                    mProfile, url, webContents.first));
+            return webContents.first;
         };
         return ThreadUtils.runOnUiThreadBlocking(addPrerenderCallable);
     }

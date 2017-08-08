@@ -150,18 +150,8 @@ public class AccountSigninView extends FrameLayout {
 
     public AccountSigninView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mAccountsChangedObserver = new AccountsChangeObserver() {
-            @Override
-            public void onAccountsChanged() {
-                triggerUpdateAccounts();
-            }
-        };
-        mProfileDataCacheObserver = new ProfileDataCache.Observer() {
-            @Override
-            public void onProfileDataUpdated(String accountId) {
-                updateProfileData();
-            }
-        };
+        mAccountsChangedObserver = () -> triggerUpdateAccounts();
+        mProfileDataCacheObserver = accountId -> updateProfileData();
     }
 
     /**
@@ -241,12 +231,9 @@ public class AccountSigninView extends FrameLayout {
         super.onFinishInflate();
 
         mSigninChooseView = (AccountSigninChooseView) findViewById(R.id.account_signin_choose_view);
-        mSigninChooseView.setAddNewAccountObserver(new AccountSigninChooseView.Observer() {
-            @Override
-            public void onAddNewAccount() {
-                mListener.onNewAccount();
-                RecordUserAction.record("Signin_AddAccountToDevice");
-            }
+        mSigninChooseView.setAddNewAccountObserver(() -> {
+            mListener.onNewAccount();
+            RecordUserAction.record("Signin_AddAccountToDevice");
         });
 
         mPositiveButton = (ButtonCompat) findViewById(R.id.positive_button);
@@ -615,34 +602,24 @@ public class AccountSigninView extends FrameLayout {
         setNegativeButtonVisible(true);
 
         mNegativeButton.setText(getResources().getText(mCancelButtonTextId));
-        mNegativeButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setButtonsEnabled(false);
-                mListener.onAccountSelectionCanceled();
-            }
+        mNegativeButton.setOnClickListener(v -> {
+            setButtonsEnabled(false);
+            mListener.onAccountSelectionCanceled();
         });
     }
 
     private void setUpSigninButton(boolean hasAccounts) {
         if (hasAccounts) {
             mPositiveButton.setText(R.string.continue_sign_in);
-            mPositiveButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showConfirmSigninPageAccountTrackerServiceCheck();
-                }
-            });
+            mPositiveButton.setOnClickListener(
+                    v -> showConfirmSigninPageAccountTrackerServiceCheck());
         } else {
             mPositiveButton.setText(R.string.choose_account_sign_in);
-            mPositiveButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (hasGmsError()) return;
+            mPositiveButton.setOnClickListener(v -> {
+                if (hasGmsError()) return;
 
-                    RecordUserAction.record("Signin_AddAccountToDevice");
-                    mListener.onNewAccount();
-                }
+                RecordUserAction.record("Signin_AddAccountToDevice");
+                mListener.onNewAccount();
             });
         }
         setUpMoreButtonVisible(false);
@@ -655,28 +632,22 @@ public class AccountSigninView extends FrameLayout {
         }
         setNegativeButtonVisible(true);
         mNegativeButton.setText(getResources().getText(R.string.undo));
-        mNegativeButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mUndoBehavior == UNDO_BACK_TO_SELECTION) {
-                    RecordUserAction.record("Signin_Undo_Signin");
-                    showSigninPage();
-                } else {
-                    assert mUndoBehavior == UNDO_ABORT;
-                    mListener.onAccountSelectionCanceled();
-                }
+        mNegativeButton.setOnClickListener(v -> {
+            if (mUndoBehavior == UNDO_BACK_TO_SELECTION) {
+                RecordUserAction.record("Signin_Undo_Signin");
+                showSigninPage();
+            } else {
+                assert mUndoBehavior == UNDO_ABORT;
+                mListener.onAccountSelectionCanceled();
             }
         });
     }
 
     private void setUpConfirmButton() {
         mPositiveButton.setText(getResources().getText(R.string.signin_accept));
-        mPositiveButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onAccountSelected(mSelectedAccountName, mIsDefaultAccountSelected, false);
-                RecordUserAction.record("Signin_Signin_WithDefaultSyncSettings");
-            }
+        mPositiveButton.setOnClickListener(v -> {
+            mListener.onAccountSelected(mSelectedAccountName, mIsDefaultAccountSelected, false);
+            RecordUserAction.record("Signin_Signin_WithDefaultSyncSettings");
         });
         setUpMoreButtonVisible(true);
     }
@@ -689,19 +660,11 @@ public class AccountSigninView extends FrameLayout {
         if (enabled) {
             mPositiveButton.setVisibility(View.GONE);
             mMoreButton.setVisibility(View.VISIBLE);
-            mMoreButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mSigninConfirmationView.smoothScrollBy(0, mSigninConfirmationView.getHeight());
-                    RecordUserAction.record("Signin_MoreButton_Shown");
-                }
+            mMoreButton.setOnClickListener(v -> {
+                mSigninConfirmationView.smoothScrollBy(0, mSigninConfirmationView.getHeight());
+                RecordUserAction.record("Signin_MoreButton_Shown");
             });
-            mSigninConfirmationView.setObserver(new AccountSigninConfirmationView.Observer() {
-                @Override
-                public void onScrolledToBottom() {
-                    setUpMoreButtonVisible(false);
-                }
-            });
+            mSigninConfirmationView.setObserver(() -> setUpMoreButtonVisible(false));
         } else {
             mPositiveButton.setVisibility(View.VISIBLE);
             mMoreButton.setVisibility(View.GONE);

@@ -85,14 +85,10 @@ public class VrShellNavigationTest {
      */
     private void navigateTo(final Page to) throws InterruptedException {
         ChromeTabUtils.waitForTabPageLoaded(
-                mVrTestRule.getActivity().getActivityTab(), new Runnable() {
-                    @Override
-                    public void run() {
-                        mVrTestRule.runJavaScriptOrFail(
-                                "window.location.href = '" + getUrl(to) + "';",
-                                POLL_TIMEOUT_SHORT_MS, mVrTestRule.getFirstTabWebContents());
-                    }
-                }, POLL_TIMEOUT_LONG_MS);
+                mVrTestRule.getActivity().getActivityTab(), () -> mVrTestRule.runJavaScriptOrFail(
+                        "window.location.href = '" + getUrl(to) + "';",
+                        POLL_TIMEOUT_SHORT_MS, mVrTestRule.getFirstTabWebContents()),
+                POLL_TIMEOUT_LONG_MS);
     }
 
     private void enterFullscreenOrFail(ContentViewCore cvc)
@@ -291,12 +287,8 @@ public class VrShellNavigationTest {
         final Tab tab =
                 mVrTestRule.loadUrlInNewTab(getUrl(Page.PAGE_2D), false, TabLaunchType.FROM_LINK);
         Assert.assertTrue("Back button isn't enabled.", VrTransitionUtils.isBackButtonEnabled());
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mVrTestRule.getActivity().getTabModelSelector().closeTab(tab);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> mVrTestRule.getActivity().getTabModelSelector().closeTab(tab));
         Assert.assertFalse("Back button isn't disabled.", VrTransitionUtils.isBackButtonEnabled());
     }
 }

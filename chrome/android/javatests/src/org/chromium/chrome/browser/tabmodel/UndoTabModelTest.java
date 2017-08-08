@@ -40,7 +40,6 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content_public.browser.LoadUrlParams;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -102,22 +101,14 @@ public class UndoTabModelTest {
     }
 
     private void createTabOnUiThread(final ChromeTabCreator tabCreator) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                tabCreator.createNewTab(new LoadUrlParams("about:blank"),
-                        TabLaunchType.FROM_CHROME_UI, null);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> tabCreator.createNewTab(new LoadUrlParams("about:blank"),
+                        TabLaunchType.FROM_CHROME_UI, null));
     }
 
     private void selectTabOnUiThread(final TabModel model, final Tab tab) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                model.setIndex(model.indexOf(tab), TabSelectionType.FROM_USER);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> model.setIndex(model.indexOf(tab), TabSelectionType.FROM_USER));
     }
 
     private void closeTabOnUiThread(
@@ -137,12 +128,9 @@ public class UndoTabModelTest {
             }
         });
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // Take action.
-                model.closeTab(tab, true, false, undoable);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // Take action.
+            model.closeTab(tab, true, false, undoable);
         });
 
         boolean didUndo = undoable && model.supportsPendingClosures();
@@ -164,21 +152,11 @@ public class UndoTabModelTest {
     }
 
     private void closeAllTabsOnUiThread(final TabModel model) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                model.closeAllTabs();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> model.closeAllTabs());
     }
 
     private void moveTabOnUiThread(final TabModel model, final Tab tab, final int newIndex) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                model.moveTab(tab.getId(), newIndex);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> model.moveTab(tab.getId(), newIndex));
     }
 
     private void cancelTabClosureOnUiThread(final TabModel model, final Tab tab)
@@ -197,12 +175,9 @@ public class UndoTabModelTest {
             }
         });
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // Take action.
-                model.cancelTabClosure(tab.getId());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // Take action.
+            model.cancelTabClosure(tab.getId());
         });
 
         // Make sure the TabModel throws a tabClosureUndone.
@@ -239,13 +214,10 @@ public class UndoTabModelTest {
             });
         }
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < expectedToClose.length; i++) {
-                    Tab tab = expectedToClose[i];
-                    model.cancelTabClosure(tab.getId());
-                }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            for (int i = 0; i < expectedToClose.length; i++) {
+                Tab tab = expectedToClose[i];
+                model.cancelTabClosure(tab.getId());
             }
         });
 
@@ -280,12 +252,9 @@ public class UndoTabModelTest {
             }
         });
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // Take action.
-                model.commitTabClosure(tab.getId());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // Take action.
+            model.commitTabClosure(tab.getId());
         });
 
         // Make sure the TabModel throws a tabClosureCommitted.
@@ -321,12 +290,7 @@ public class UndoTabModelTest {
             });
         }
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                model.commitAllTabClosures();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> model.commitAllTabClosures());
 
         try {
             tabClosureCommittedHelper.waitForCallback(0, expectedToClose.length);
@@ -342,12 +306,7 @@ public class UndoTabModelTest {
     }
 
     private void saveStateOnUiThread(final TabModelSelector selector) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ((TabModelSelectorImpl) selector).saveState();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> ((TabModelSelectorImpl) selector).saveState());
 
         for (int i = 0; i < selector.getModels().size(); i++) {
             TabList tabs = selector.getModelAt(i).getComprehensiveModel();
@@ -358,12 +317,8 @@ public class UndoTabModelTest {
     }
 
     private void openMostRecentlyClosedTabOnUiThread(final TabModelSelector selector) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                selector.getCurrentModel().openMostRecentlyClosedTab();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> selector.getCurrentModel().openMostRecentlyClosedTab());
     }
 
     // Helper class that notifies after the tab is closed, and a tab restore service entry has been
@@ -1693,12 +1648,8 @@ public class UndoTabModelTest {
         // Closed the second window. Must wait until it's totally closed.
         int numExpectedActivities = ApplicationStatus.getRunningActivities().size() - 1;
         secondActivity.finishAndRemoveTask();
-        CriteriaHelper.pollUiThread(Criteria.equals(numExpectedActivities, new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return ApplicationStatus.getRunningActivities().size();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(numExpectedActivities,
+                () -> ApplicationStatus.getRunningActivities().size()));
         Assert.assertEquals("Window 1 should have 1 tab.", 1, firstModel.getCount());
 
         // Restore closed tab from second window. It should be created in first window.

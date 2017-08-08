@@ -128,14 +128,10 @@ public class LargeIconBridge {
                 return true;
             }
 
-            LargeIconCallback callbackWrapper = new LargeIconCallback() {
-                @Override
-                public void onLargeIconAvailable(
-                        Bitmap icon, int fallbackColor, boolean isFallbackColorDefault) {
-                    mFaviconCache.put(pageUrl,
-                            new CachedFavicon(icon, fallbackColor, isFallbackColorDefault));
-                    callback.onLargeIconAvailable(icon, fallbackColor, isFallbackColorDefault);
-                }
+            LargeIconCallback callbackWrapper = (icon, fallbackColor, isFallbackColorDefault) -> {
+                mFaviconCache.put(pageUrl,
+                        new CachedFavicon(icon, fallbackColor, isFallbackColorDefault));
+                callback.onLargeIconAvailable(icon, fallbackColor, isFallbackColorDefault);
             };
             return nativeGetLargeIconForURL(mNativeLargeIconBridge, mProfile, pageUrl,
                     desiredSizePx, callbackWrapper);

@@ -34,17 +34,14 @@ import java.util.concurrent.TimeoutException;
 public class LocaleManagerTest {
     @Before
     public void setUp() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ChromeBrowserInitializer
-                            .getInstance(
-                                    InstrumentationRegistry.getInstrumentation().getTargetContext())
-                            .handleSynchronousStartup();
-                } catch (ProcessInitException e) {
-                    Assert.fail("Failed to load browser");
-                }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            try {
+                ChromeBrowserInitializer
+                        .getInstance(
+                                InstrumentationRegistry.getInstrumentation().getTargetContext())
+                        .handleSynchronousStartup();
+            } catch (ProcessInitException e) {
+                Assert.fail("Failed to load browser");
             }
         });
     }
@@ -68,19 +65,15 @@ public class LocaleManagerTest {
                 InstrumentationRegistry.getInstrumentation(), SearchActivity.class);
 
         final CallbackHelper searchEnginesFinalizedCallback = new CallbackHelper();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                LocaleManager.getInstance().showSearchEnginePromoIfNeeded(
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> LocaleManager.getInstance().showSearchEnginePromoIfNeeded(
                         searchActivity, new Callback<Boolean>() {
                             @Override
                             public void onResult(Boolean result) {
                                 Assert.assertTrue(result);
                                 searchEnginesFinalizedCallback.notifyCalled();
                             }
-                        });
-            }
-        });
+                        }));
         searchEnginesFinalizedCallback.waitForCallback(0);
         Assert.assertEquals(0, getShowTypeCallback.getCallCount());
     }

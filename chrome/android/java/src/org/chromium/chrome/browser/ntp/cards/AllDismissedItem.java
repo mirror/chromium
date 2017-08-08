@@ -6,8 +6,6 @@ package org.chromium.chrome.browser.ntp.cards;
 
 import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
@@ -56,13 +54,10 @@ public class AllDismissedItem extends OptionalLeaf {
             mBodyTextView = (TextView) itemView.findViewById(R.id.body_text);
 
             ((Button) itemView.findViewById(R.id.action_button))
-                    .setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            NewTabPageUma.recordAction(
-                                    NewTabPageUma.ACTION_CLICKED_ALL_DISMISSED_REFRESH);
-                            sections.restoreDismissedSections();
-                        }
+                    .setOnClickListener(v -> {
+                        NewTabPageUma.recordAction(
+                                NewTabPageUma.ACTION_CLICKED_ALL_DISMISSED_REFRESH);
+                        sections.restoreDismissedSections();
                     });
         }
 

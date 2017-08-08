@@ -73,12 +73,7 @@ public class MediaRouteControllerDialogFactory extends MediaRouteDialogFactory {
         // Since we can't pass any callbacks to the fragment easily, just close the dialog.
         // See https://crbug.com/618993.
         public Fragment() {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    Fragment.this.dismiss();
-                }
-            });
+            mHandler.post(() -> Fragment.this.dismiss());
             mPlayer = null;
         }
 

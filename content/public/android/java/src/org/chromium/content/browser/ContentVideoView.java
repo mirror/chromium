@@ -6,7 +6,6 @@ package org.chromium.content.browser;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Point;
 import android.provider.Settings;
 import android.view.Display;
@@ -128,12 +127,7 @@ public class ContentVideoView extends FrameLayout
                 public void setSystemUiVisibility(boolean enterFullscreen) {}
     };
 
-    private final Runnable mExitFullscreenRunnable = new Runnable() {
-        @Override
-        public void run() {
-            exitFullscreen(true);
-        }
-    };
+    private final Runnable mExitFullscreenRunnable = () -> exitFullscreen(true);
 
     private ContentVideoView(Context context, long nativeContentVideoView,
             ContentVideoViewEmbedder embedder, int videoWidth, int videoHeight) {
@@ -216,9 +210,7 @@ public class ContentVideoView extends FrameLayout
                         .setTitle(mErrorTitle)
                         .setMessage(message)
                         .setPositiveButton(mErrorButton,
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int whichButton) {}
+                                (dialog, whichButton) -> {
                                 })
                         .setCancelable(false)
                         .show();

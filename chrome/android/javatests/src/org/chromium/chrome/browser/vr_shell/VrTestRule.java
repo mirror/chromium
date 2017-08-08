@@ -17,7 +17,6 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.JavaScriptUtils;
 import org.chromium.content_public.browser.WebContents;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -162,18 +161,15 @@ public class VrTestRule extends ChromeTabbedActivityTestRule {
     public static boolean pollJavaScriptBoolean(
             final String boolName, int timeoutMs, final WebContents webContents) {
         try {
-            CriteriaHelper.pollInstrumentationThread(Criteria.equals(true, new Callable<Boolean>() {
-                @Override
-                public Boolean call() {
-                    String result = "false";
-                    try {
-                        result = JavaScriptUtils.executeJavaScriptAndWaitForResult(webContents,
-                                boolName, POLL_CHECK_INTERVAL_SHORT_MS, TimeUnit.MILLISECONDS);
-                    } catch (InterruptedException | TimeoutException e) {
-                        // Expected to happen regularly, do nothing
-                    }
-                    return Boolean.parseBoolean(result);
+            CriteriaHelper.pollInstrumentationThread(Criteria.equals(true, () -> {
+                String result = "false";
+                try {
+                    result = JavaScriptUtils.executeJavaScriptAndWaitForResult(webContents,
+                            boolName, POLL_CHECK_INTERVAL_SHORT_MS, TimeUnit.MILLISECONDS);
+                } catch (InterruptedException | TimeoutException e) {
+                    // Expected to happen regularly, do nothing
                 }
+                return Boolean.parseBoolean(result);
             }), timeoutMs, POLL_CHECK_INTERVAL_LONG_MS);
         } catch (AssertionError e) {
             Log.d(TAG, "pollJavaScriptBoolean() timed out");

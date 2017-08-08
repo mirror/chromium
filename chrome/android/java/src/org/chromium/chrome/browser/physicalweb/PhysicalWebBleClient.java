@@ -28,12 +28,8 @@ public class PhysicalWebBleClient {
         public void onFound(Message message) {
             final String url = PhysicalWebBleClient.getInstance().getUrlFromMessage(message);
             if (url != null) {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        UrlManager.getInstance().addUrl(new UrlInfo(url));
-                    }
-                });
+                new Handler(Looper.getMainLooper()).post(
+                        () -> UrlManager.getInstance().addUrl(new UrlInfo(url)));
             }
         }
 
@@ -41,12 +37,8 @@ public class PhysicalWebBleClient {
         public void onLost(Message message) {
             final String url = PhysicalWebBleClient.getInstance().getUrlFromMessage(message);
             if (url != null) {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        UrlManager.getInstance().removeUrl(new UrlInfo(url));
-                    }
-                });
+                new Handler(Looper.getMainLooper()).post(
+                        () -> UrlManager.getInstance().removeUrl(new UrlInfo(url)));
             }
         }
     };

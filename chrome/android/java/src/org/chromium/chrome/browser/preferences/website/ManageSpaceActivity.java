@@ -217,15 +217,14 @@ public class ManageSpaceActivity extends AppCompatActivity implements View.OnCli
         if (view == mClearUnimportantButton) {
             if (mUnimportantDialog == null) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        mUnimportantDialog = null;
-                        RecordHistogram.recordEnumeratedHistogram("Android.ManageSpace.ActionTaken",
-                                OPTION_CLEAR_UNIMPORTANT, OPTION_MAX);
-                        clearUnimportantData();
-                    }
-                });
+                builder.setPositiveButton(R.string.ok,
+                        (DialogInterface.OnClickListener) (dialog, id) -> {
+                            mUnimportantDialog = null;
+                            RecordHistogram.recordEnumeratedHistogram(
+                                    "Android.ManageSpace.ActionTaken",
+                                    OPTION_CLEAR_UNIMPORTANT, OPTION_MAX);
+                            clearUnimportantData();
+                        });
                 builder.setNegativeButton(R.string.cancel, null);
                 builder.setTitle(R.string.storage_clear_site_storage_title);
                 builder.setMessage(R.string.storage_management_clear_unimportant_dialog_text);
@@ -248,20 +247,20 @@ public class ManageSpaceActivity extends AppCompatActivity implements View.OnCli
             final ActivityManager activityManager =
                     (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    if (mIsNativeInitialized) {
-                        // This probably won't actually be uploaded, as android will probably kill
-                        // all processes & data before it gets sent to the network.
-                        RecordHistogram.recordEnumeratedHistogram("Android.ManageSpace.ActionTaken",
-                                OPTION_CLEAR_APP_DATA, OPTION_MAX);
-                    }
+            builder.setPositiveButton(R.string.ok,
+                    (DialogInterface.OnClickListener) (dialog, id) -> {
+                        if (mIsNativeInitialized) {
+                            // This probably won't actually be uploaded, as android will probably
+                            // kill
+                            // all processes & data before it gets sent to the network.
+                            RecordHistogram.recordEnumeratedHistogram(
+                                    "Android.ManageSpace.ActionTaken",
+                                    OPTION_CLEAR_APP_DATA, OPTION_MAX);
+                        }
 
-                    SearchWidgetProvider.reset();
-                    activityManager.clearApplicationUserData();
-                }
-            });
+                        SearchWidgetProvider.reset();
+                        activityManager.clearApplicationUserData();
+                    });
             builder.setNegativeButton(R.string.cancel, null);
             builder.setTitle(R.string.storage_management_reset_app_dialog_title);
             builder.setMessage(R.string.storage_management_reset_app_dialog_text);

@@ -208,18 +208,15 @@ public class MediaNotificationManager {
             // If no notification hasn't been updated in the last THROTTLE_MILLIS, update
             // immediately and queue a task for blocking further updates.
             mManager.showNotification(mediaNotificationInfo);
-            mTask = new Runnable() {
-                @Override
-                public void run() {
-                    if (mLastPendingInfo != null) {
-                        // If any notification info is pended during the throttling time window,
-                        // update the notification.
-                        showNotificationImmediately(mLastPendingInfo);
-                        mLastPendingInfo = null;
-                    } else {
-                        // Otherwise, clear the task so further update is unthrottled.
-                        mTask = null;
-                    }
+            mTask = () -> {
+                if (mLastPendingInfo != null) {
+                    // If any notification info is pended during the throttling time window,
+                    // update the notification.
+                    showNotificationImmediately(mLastPendingInfo);
+                    mLastPendingInfo = null;
+                } else {
+                    // Otherwise, clear the task so further update is unthrottled.
+                    mTask = null;
                 }
             };
             if (!mHandler.postDelayed(mTask, THROTTLE_MILLIS)) {

@@ -31,7 +31,6 @@ import org.chromium.components.signin.test.util.FakeAccountManagerDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * Unit Test for FeatureUtilities.
@@ -128,14 +127,9 @@ public class FeatureUtilitiesTest {
             final IntentTestMockContext context, final boolean useCachedResult) {
         // Context can only be queried on a UI Thread.
         return ThreadUtils.runOnUiThreadBlockingNoException(
-            new Callable<Boolean>() {
-                @Override
-                public Boolean call() {
-                    return FeatureUtilities.isRecognitionIntentPresent(
-                            context,
-                            useCachedResult);
-                }
-            });
+                () -> FeatureUtilities.isRecognitionIntentPresent(
+                        context,
+                        useCachedResult));
     }
 
     private void setUpAccountManager(String accountType) {

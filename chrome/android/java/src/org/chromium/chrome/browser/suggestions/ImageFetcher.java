@@ -183,23 +183,20 @@ public class ImageFetcher {
             final long faviconFetchStartTimeMs, final int faviconSizePx,
             final SnippetArticle suggestion, final Callback<Bitmap> faviconCallback) {
         getFaviconHelper().getLocalFaviconImageForURL(mProfile, getSnippetDomain(snippetUri),
-                faviconSizePx, new FaviconHelper.FaviconImageCallback() {
-                    @Override
-                    public void onFaviconAvailable(Bitmap image, String iconUrl) {
-                        if (image != null) {
-                            assert faviconCallback != null;
+                faviconSizePx, (image, iconUrl) -> {
+                    if (image != null) {
+                        assert faviconCallback != null;
 
-                            faviconCallback.onResult(image);
-                            recordFaviconFetchHistograms(suggestion,
-                                    fallbackToService ? FaviconFetchResult.SUCCESS_CACHED
-                                                      : FaviconFetchResult.SUCCESS_FETCHED,
+                        faviconCallback.onResult(image);
+                        recordFaviconFetchHistograms(suggestion,
+                                fallbackToService ? FaviconFetchResult.SUCCESS_CACHED
+                                        : FaviconFetchResult.SUCCESS_FETCHED,
+                                SystemClock.elapsedRealtime() - faviconFetchStartTimeMs);
+                    } else if (fallbackToService) {
+                        if (!fetchFaviconFromService(suggestion, snippetUri,
+                                faviconFetchStartTimeMs, faviconSizePx, faviconCallback)) {
+                            recordFaviconFetchHistograms(suggestion, FaviconFetchResult.FAILURE,
                                     SystemClock.elapsedRealtime() - faviconFetchStartTimeMs);
-                        } else if (fallbackToService) {
-                            if (!fetchFaviconFromService(suggestion, snippetUri,
-                                        faviconFetchStartTimeMs, faviconSizePx, faviconCallback)) {
-                                recordFaviconFetchHistograms(suggestion, FaviconFetchResult.FAILURE,
-                                        SystemClock.elapsedRealtime() - faviconFetchStartTimeMs);
-                            }
                         }
                     }
                 });
@@ -235,19 +232,16 @@ public class ImageFetcher {
                 getSnippetDomain(snippetUri), // Store to the cache for the whole domain.
                 String.format(FAVICON_SERVICE_FORMAT, snippetUri.getHost(), sizePx),
                 /* useLargeIcon = */ false, /* isTemporary = */ true,
-                new FaviconHelper.IconAvailabilityCallback() {
-                    @Override
-                    public void onIconAvailabilityChecked(boolean newlyAvailable) {
-                        if (!newlyAvailable) {
-                            recordFaviconFetchHistograms(suggestion, FaviconFetchResult.FAILURE,
-                                    SystemClock.elapsedRealtime() - faviconFetchStartTimeMs);
-                            return;
-                        }
-                        // The download succeeded, the favicon is in the cache; fetch it.
-                        fetchFaviconFromLocalCache(snippetUri, /* fallbackToService = */ false,
-                                faviconFetchStartTimeMs, faviconSizePx, suggestion,
-                                faviconCallback);
+                newlyAvailable -> {
+                    if (!newlyAvailable) {
+                        recordFaviconFetchHistograms(suggestion, FaviconFetchResult.FAILURE,
+                                SystemClock.elapsedRealtime() - faviconFetchStartTimeMs);
+                        return;
                     }
+                    // The download succeeded, the favicon is in the cache; fetch it.
+                    fetchFaviconFromLocalCache(snippetUri, /* fallbackToService = */ false,
+                            faviconFetchStartTimeMs, faviconSizePx, suggestion,
+                            faviconCallback);
                 });
         return true;
     }

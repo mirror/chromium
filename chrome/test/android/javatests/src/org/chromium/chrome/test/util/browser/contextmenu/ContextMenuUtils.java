@@ -151,12 +151,9 @@ public class ContextMenuUtils {
         Assert.assertTrue("'" + itemId + "' is not visible", item.isVisible());
         Assert.assertTrue("'" + itemId + "' is not enabled", item.isEnabled());
 
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                boolean activated = menu.performIdentifierAction(itemId, 0);
-                Assert.assertTrue("Failed to activate '" + itemId + "' in menu", activated);
-            }
+        instrumentation.runOnMainSync(() -> {
+            boolean activated = menu.performIdentifierAction(itemId, 0);
+            Assert.assertTrue("Failed to activate '" + itemId + "' in menu", activated);
         });
 
         if (activity != null) {

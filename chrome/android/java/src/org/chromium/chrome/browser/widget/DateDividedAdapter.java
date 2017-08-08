@@ -19,12 +19,10 @@ import android.widget.TextView;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.widget.DateDividedAdapter.ItemGroup;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.SortedSet;
@@ -289,12 +287,7 @@ public abstract class DateDividedAdapter extends Adapter<RecyclerView.ViewHolder
             if (mIsSorted) return;
             mIsSorted = true;
 
-            Collections.sort(mItems, new Comparator<TimedItem>() {
-                @Override
-                public int compare(TimedItem lhs, TimedItem rhs) {
-                    return compareItem(lhs, rhs);
-                }
-            });
+            Collections.sort(mItems, (lhs, rhs) -> compareItem(lhs, rhs));
         }
 
         protected int compareItem(TimedItem lhs, TimedItem rhs) {
@@ -327,17 +320,14 @@ public abstract class DateDividedAdapter extends Adapter<RecyclerView.ViewHolder
     private boolean mHasListHeader;
     private boolean mHasListFooter;
 
-    private SortedSet<ItemGroup> mGroups = new TreeSet<>(new Comparator<ItemGroup>() {
-        @Override
-        public int compare(ItemGroup lhs, ItemGroup rhs) {
-            if (lhs == rhs) return 0;
+    private SortedSet<ItemGroup> mGroups = new TreeSet<>((lhs, rhs) -> {
+        if (lhs == rhs) return 0;
 
-            // There should only be at most one list header and one list footer in the SortedSet.
-            if (lhs.mIsListHeader || rhs.mIsListFooter) return -1;
-            if (lhs.mIsListFooter || rhs.mIsListHeader) return 1;
+        // There should only be at most one list header and one list footer in the SortedSet.
+        if (lhs.mIsListHeader || rhs.mIsListFooter) return -1;
+        if (lhs.mIsListFooter || rhs.mIsListHeader) return 1;
 
-            return compareDate(lhs.mDate, rhs.mDate);
-        }
+        return compareDate(lhs.mDate, rhs.mDate);
     });
 
     /**

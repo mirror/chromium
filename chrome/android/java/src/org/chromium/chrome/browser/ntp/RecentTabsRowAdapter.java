@@ -13,7 +13,6 @@ import android.text.TextUtils;
 import android.util.LruCache;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.ViewGroup;
@@ -289,26 +288,20 @@ public class RecentTabsRowAdapter extends BaseExpandableListAdapter {
         @Override
         public void onCreateContextMenuForGroup(ContextMenu menu, Activity activity) {
             menu.add(R.string.recent_tabs_open_all_menu_option)
-                    .setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            RecordHistogram.recordEnumeratedHistogram(
-                                    "HistoryPage.OtherDevicesMenu", OtherSessionsActions.OPEN_ALL,
-                                    OtherSessionsActions.LIMIT);
-                            openAllTabs();
-                            return true;
-                        }
+                    .setOnMenuItemClickListener(item -> {
+                        RecordHistogram.recordEnumeratedHistogram(
+                                "HistoryPage.OtherDevicesMenu", OtherSessionsActions.OPEN_ALL,
+                                OtherSessionsActions.LIMIT);
+                        openAllTabs();
+                        return true;
                     });
             menu.add(R.string.recent_tabs_hide_menu_option)
-                    .setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            RecordHistogram.recordEnumeratedHistogram(
-                                    "HistoryPage.OtherDevicesMenu",
-                                    OtherSessionsActions.HIDE_FOR_NOW, OtherSessionsActions.LIMIT);
-                            mRecentTabsManager.deleteForeignSession(mForeignSession);
-                            return true;
-                        }
+                    .setOnMenuItemClickListener(item -> {
+                        RecordHistogram.recordEnumeratedHistogram(
+                                "HistoryPage.OtherDevicesMenu",
+                                OtherSessionsActions.HIDE_FOR_NOW, OtherSessionsActions.LIMIT);
+                        mRecentTabsManager.deleteForeignSession(mForeignSession);
+                        return true;
                     });
         }
 
@@ -316,13 +309,10 @@ public class RecentTabsRowAdapter extends BaseExpandableListAdapter {
         public void onCreateContextMenuForChild(int childPosition, ContextMenu menu,
                 Activity activity) {
             final ForeignSessionTab foreignSessionTab = getChild(childPosition);
-            OnMenuItemClickListener listener = new OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    mRecentTabsManager.openForeignSessionTab(mForeignSession, foreignSessionTab,
-                            WindowOpenDisposition.NEW_BACKGROUND_TAB);
-                    return true;
-                }
+            OnMenuItemClickListener listener = item -> {
+                mRecentTabsManager.openForeignSessionTab(mForeignSession, foreignSessionTab,
+                        WindowOpenDisposition.NEW_BACKGROUND_TAB);
+                return true;
             };
             menu.add(R.string.contextmenu_open_in_new_tab).setOnMenuItemClickListener(listener);
         }
@@ -438,22 +428,19 @@ public class RecentTabsRowAdapter extends BaseExpandableListAdapter {
                 Activity activity) {
             final RecentlyClosedTab recentlyClosedTab = getChild(childPosition);
             if (recentlyClosedTab == null) return;
-            OnMenuItemClickListener listener = new OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()) {
-                        case ID_REMOVE_ALL:
-                            mRecentTabsManager.clearRecentlyClosedTabs();
-                            break;
-                        case ID_OPEN_IN_NEW_TAB:
-                            mRecentTabsManager.openRecentlyClosedTab(recentlyClosedTab,
-                                    WindowOpenDisposition.NEW_BACKGROUND_TAB);
-                            break;
-                        default:
-                            assert false;
-                    }
-                    return true;
+            OnMenuItemClickListener listener = item -> {
+                switch (item.getItemId()) {
+                    case ID_REMOVE_ALL:
+                        mRecentTabsManager.clearRecentlyClosedTabs();
+                        break;
+                    case ID_OPEN_IN_NEW_TAB:
+                        mRecentTabsManager.openRecentlyClosedTab(recentlyClosedTab,
+                                WindowOpenDisposition.NEW_BACKGROUND_TAB);
+                        break;
+                    default:
+                        assert false;
                 }
+                return true;
             };
             menu.add(ContextMenu.NONE, ID_OPEN_IN_NEW_TAB, ContextMenu.NONE,
                     R.string.contextmenu_open_in_new_tab).setOnMenuItemClickListener(listener);
@@ -535,12 +522,9 @@ public class RecentTabsRowAdapter extends BaseExpandableListAdapter {
         View getChildView(int childPosition, boolean isLastChild, View convertView,
                 ViewGroup parent) {
             if (convertView == null) {
-                SigninAndSyncView.Listener listener = new SigninAndSyncView.Listener() {
-                    @Override
-                    public void onViewDismissed() {
-                        mRecentTabsManager.setSigninPromoDeclined();
-                        notifyDataSetChanged();
-                    }
+                SigninAndSyncView.Listener listener = () -> {
+                    mRecentTabsManager.setSigninPromoDeclined();
+                    notifyDataSetChanged();
                 };
 
                 convertView =

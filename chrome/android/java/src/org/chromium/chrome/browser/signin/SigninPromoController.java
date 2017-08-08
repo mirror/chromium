@@ -140,12 +140,7 @@ public class SigninPromoController {
 
         if (onDismissListener != null) {
             view.getDismissButton().setVisibility(View.VISIBLE);
-            view.getDismissButton().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onDismissListener.onDismiss();
-                }
-            });
+            view.getDismissButton().setOnClickListener(view1 -> onDismissListener.onDismiss());
         } else {
             view.getDismissButton().setVisibility(View.GONE);
         }
@@ -244,12 +239,8 @@ public class SigninPromoController {
         setImageSize(context, view, R.dimen.signin_promo_cold_state_image_size);
 
         view.getSigninButton().setText(R.string.sign_in_to_chrome);
-        view.getSigninButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AccountSigninActivity.startFromAddAccountPage(context, mAccessPoint);
-            }
-        });
+        view.getSigninButton().setOnClickListener(
+                view1 -> AccountSigninActivity.startFromAddAccountPage(context, mAccessPoint));
 
         view.getChooseAccountButton().setVisibility(View.GONE);
     }
@@ -263,23 +254,15 @@ public class SigninPromoController {
         String signinButtonText =
                 context.getString(R.string.signin_promo_continue_as, accountTitle);
         view.getSigninButton().setText(signinButtonText);
-        view.getSigninButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AccountSigninActivity.startFromConfirmationPage(
-                        context, mAccessPoint, mAccountName, true);
-            }
-        });
+        view.getSigninButton().setOnClickListener(
+                view12 -> AccountSigninActivity.startFromConfirmationPage(
+                        context, mAccessPoint, mAccountName, true));
 
         String chooseAccountButtonText =
                 context.getString(R.string.signin_promo_choose_account, mAccountName);
         view.getChooseAccountButton().setText(chooseAccountButtonText);
-        view.getChooseAccountButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AccountSigninActivity.startAccountSigninActivity(context, mAccessPoint);
-            }
-        });
+        view.getChooseAccountButton().setOnClickListener(
+                view1 -> AccountSigninActivity.startAccountSigninActivity(context, mAccessPoint));
         view.getChooseAccountButton().setVisibility(View.VISIBLE);
     }
 

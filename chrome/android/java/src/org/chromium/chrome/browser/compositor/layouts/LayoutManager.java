@@ -484,12 +484,7 @@ public abstract class LayoutManager implements LayoutUpdateHost, LayoutProvider 
                     if (getActiveLayout() != null) getActiveLayout().onTabStateInitialized();
 
                     final EmptyTabModelSelectorObserver observer = this;
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mTabModelSelector.removeObserver(observer);
-                        }
-                    });
+                    new Handler().post(() -> mTabModelSelector.removeObserver(observer));
                 }
             });
         }

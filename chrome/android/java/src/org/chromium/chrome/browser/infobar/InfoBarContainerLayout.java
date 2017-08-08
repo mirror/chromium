@@ -216,12 +216,9 @@ public class InfoBarContainerLayout extends FrameLayout {
          */
         ValueAnimator createTranslationYAnimator(final InfoBarWrapper wrapper, float endValue) {
             ValueAnimator animator = ValueAnimator.ofFloat(wrapper.getTranslationY(), endValue);
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    wrapper.setTranslationY((float) animation.getAnimatedValue());
-                    mFloatingBehavior.updateShadowPosition();
-                }
+            animator.addUpdateListener(animation -> {
+                wrapper.setTranslationY((float) animation.getAnimatedValue());
+                mFloatingBehavior.updateShadowPosition();
             });
             return animator;
         }

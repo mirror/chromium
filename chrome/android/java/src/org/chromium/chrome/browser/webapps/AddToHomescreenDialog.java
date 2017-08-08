@@ -55,12 +55,7 @@ public class AddToHomescreenDialog implements AddToHomescreenManager.Observer {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AlertDialogTheme)
                 .setTitle(AppBannerManager.getHomescreenLanguageOption())
                 .setNegativeButton(R.string.cancel,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+                        (DialogInterface.OnClickListener) (dialog, id) -> dialog.cancel());
 
         mDialog = builder.create();
         mDialog.getDelegate().setHandleNativeActionModesEnabled(false);
@@ -109,26 +104,13 @@ public class AddToHomescreenDialog implements AddToHomescreenManager.Observer {
         mDialog.setView(view);
         mDialog.setButton(DialogInterface.BUTTON_POSITIVE,
                 activity.getResources().getString(R.string.add),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        mManager.addShortcut(mInput.getText().toString());
-                    }
-                });
+                (dialog, id) -> mManager.addShortcut(mInput.getText().toString()));
 
-        mDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface d) {
-                updateAddButtonEnabledState();
-            }
-        });
+        mDialog.setOnShowListener(d -> updateAddButtonEnabledState());
 
-        mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                mDialog = null;
-                mManager.onFinished();
-            }
+        mDialog.setOnDismissListener(dialog -> {
+            mDialog = null;
+            mManager.onFinished();
         });
 
         mDialog.show();

@@ -193,12 +193,8 @@ final class ChromeActivityTestCommon<T extends ChromeActivity> {
      * etc. Network predictions are enabled by default.
      */
     void setNetworkPredictionEnabled(final boolean enabled) {
-        mCallback.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                PrefServiceBridge.getInstance().setNetworkPredictionEnabled(enabled);
-            }
-        });
+        mCallback.getInstrumentation().runOnMainSync(
+                () -> PrefServiceBridge.getInstance().setNetworkPredictionEnabled(enabled));
     }
 
     /**
@@ -262,17 +258,9 @@ final class ChromeActivityTestCommon<T extends ChromeActivity> {
         Assert.assertNotNull("Cannot load the URL in a null tab", tab);
         final AtomicInteger result = new AtomicInteger();
 
-        ChromeTabUtils.waitForTabPageLoaded(tab, new Runnable() {
-            @Override
-            public void run() {
-                ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                    @Override
-                    public void run() {
-                        result.set(tab.loadUrl(new LoadUrlParams(url, pageTransition)));
-                    }
-                });
-            }
-        }, secondsToWait);
+        ChromeTabUtils.waitForTabPageLoaded(tab, () -> ThreadUtils.runOnUiThreadBlocking(
+                () -> result.set(tab.loadUrl(new LoadUrlParams(url, pageTransition)))),
+                secondsToWait);
         mCallback.getInstrumentation().waitForIdleSync();
         return result.get();
     }
@@ -319,13 +307,9 @@ final class ChromeActivityTestCommon<T extends ChromeActivity> {
             throws InterruptedException {
         Tab tab = null;
         try {
-            tab = ThreadUtils.runOnUiThreadBlocking(new Callable<Tab>() {
-                @Override
-                public Tab call() throws Exception {
-                    return mCallback.getActivity().getTabCreator(incognito).launchUrl(
-                            url, launchType);
-                }
-            });
+            tab = ThreadUtils.runOnUiThreadBlocking(
+                    () -> mCallback.getActivity().getTabCreator(incognito).launchUrl(
+                            url, launchType));
         } catch (ExecutionException e) {
             Assert.fail("Failed to create new tab");
         }
@@ -499,12 +483,8 @@ final class ChromeActivityTestCommon<T extends ChromeActivity> {
      * @return The number of incognito tabs currently open.
      */
     int incognitoTabsCount() {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return mCallback.getActivity().getTabModelSelector().getModel(true).getCount();
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> mCallback.getActivity().getTabModelSelector().getModel(true).getCount());
     }
 
     /**
@@ -521,13 +501,10 @@ final class ChromeActivityTestCommon<T extends ChromeActivity> {
         final UrlBar urlBar = (UrlBar) mCallback.getActivity().findViewById(R.id.url_bar);
         Assert.assertNotNull(urlBar);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                urlBar.requestFocus();
-                if (!oneCharAtATime) {
-                    urlBar.setText(text);
-                }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            urlBar.requestFocus();
+            if (!oneCharAtATime) {
+                urlBar.setText(text);
             }
         });
 
@@ -632,14 +609,11 @@ final class ChromeActivityTestCommon<T extends ChromeActivity> {
      * Returns the infobars being displayed by the current tab, or null if they don't exist.
      */
     List<InfoBar> getInfoBars() {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<List<InfoBar>>() {
-            @Override
-            public List<InfoBar> call() throws Exception {
-                Tab currentTab = mCallback.getActivity().getActivityTab();
-                Assert.assertNotNull(currentTab);
-                Assert.assertNotNull(currentTab.getInfoBarContainer());
-                return currentTab.getInfoBarContainer().getInfoBarsForTesting();
-            }
+        return ThreadUtils.runOnUiThreadBlockingNoException((Callable<List<InfoBar>>) () -> {
+            Tab currentTab = mCallback.getActivity().getActivityTab();
+            Assert.assertNotNull(currentTab);
+            Assert.assertNotNull(currentTab.getInfoBarContainer());
+            return currentTab.getInfoBarContainer().getInfoBarsForTesting();
         });
     }
 

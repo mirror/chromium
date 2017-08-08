@@ -46,7 +46,6 @@ import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.ui.base.PageTransition;
 
 import java.io.UnsupportedEncodingException;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -167,12 +166,8 @@ public class UrlOverridingTest {
         }
 
         mActivityTestRule.getActivity().onUserInteraction();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                tab.loadUrl(new LoadUrlParams(url, PageTransition.LINK));
-            }
-        });
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(
+                (Runnable) () -> tab.loadUrl(new LoadUrlParams(url, PageTransition.LINK)));
 
         if (finishCallback.getCallCount() == 0) {
             try {
@@ -239,12 +234,8 @@ public class UrlOverridingTest {
                 });
 
         CriteriaHelper.pollUiThread(
-                Criteria.equals(shouldLaunchExternalIntent ? 1 : 0, new Callable<Integer>() {
-                    @Override
-                    public Integer call() {
-                        return mActivityMonitor.getHits();
-                    }
-                }));
+                Criteria.equals(shouldLaunchExternalIntent ? 1 : 0,
+                        () -> mActivityMonitor.getHits()));
         Assert.assertEquals(1 + (hasFallbackUrl ? 1 : 0), finishCallback.getCallCount());
         Assert.assertEquals(1, failCallback.getCallCount());
     }
@@ -378,11 +369,6 @@ public class UrlOverridingTest {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         targetContext.startActivity(intent);
 
-        CriteriaHelper.pollUiThread(Criteria.equals(1, new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return mActivityMonitor.getHits();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(1, () -> mActivityMonitor.getHits()));
     }
 }

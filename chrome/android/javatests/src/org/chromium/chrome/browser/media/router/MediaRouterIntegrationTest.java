@@ -90,12 +90,8 @@ public class MediaRouterIntegrationTest {
         ChromeMediaRouter.setRouteProviderFactoryForTest(new MockMediaRouteProvider.Factory());
         mActivityTestRule.startMainActivityOnBlankPage();
         // Temporary until support library is updated, see http://crbug.com/576393.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mOldPolicy = StrictMode.allowThreadDiskWrites();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> mOldPolicy = StrictMode.allowThreadDiskWrites());
         mTestServer = EmbeddedTestServer.createAndStartServer(
                 InstrumentationRegistry.getInstrumentation().getContext());
     }
@@ -103,12 +99,7 @@ public class MediaRouterIntegrationTest {
     @After
     public void tearDown() throws Exception {
         // Temporary until support library is updated, see http://crbug.com/576393.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                StrictMode.setThreadPolicy(mOldPolicy);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> StrictMode.setThreadPolicy(mOldPolicy));
         mTestServer.stopAndDestroyServer();
     }
 
@@ -377,12 +368,7 @@ public class MediaRouterIntegrationTest {
         final Dialog routeSelectionDialog = RouterTestUtils.waitForDialog(
                 mActivityTestRule.getActivity(), VIEW_TIMEOUT_MS, VIEW_RETRY_MS);
         Assert.assertNotNull(routeSelectionDialog);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    routeSelectionDialog.cancel();
-                }
-            });
+        ThreadUtils.runOnUiThreadBlocking(() -> routeSelectionDialog.cancel());
         checkStartFailed(webContents, "NotAllowedError", "Dialog closed.");
     }
 }

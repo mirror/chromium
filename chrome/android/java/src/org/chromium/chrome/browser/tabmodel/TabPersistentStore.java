@@ -653,25 +653,22 @@ public class TabPersistentStore extends TabPersister {
     public void clearState() {
         mPersistencePolicy.cancelCleanupInProgress();
 
-        AsyncTask.SERIAL_EXECUTOR.execute(new Runnable() {
-            @Override
-            public void run() {
-                File[] baseStateFiles = getOrCreateBaseStateDirectory().listFiles();
-                if (baseStateFiles == null) return;
-                for (File baseStateFile : baseStateFiles) {
-                    // In legacy scenarios (prior to migration, state files could reside in the
-                    // root state directory.  So, handle deleting direct child files as well as
-                    // those that reside in sub directories.
-                    if (!baseStateFile.isDirectory()) {
-                        if (!baseStateFile.delete()) {
-                            Log.e(TAG, "Failed to delete file: " + baseStateFile);
-                        }
-                    } else {
-                        File[] files = baseStateFile.listFiles();
-                        if (files == null) continue;
-                        for (File file : files) {
-                            if (!file.delete()) Log.e(TAG, "Failed to delete file: " + file);
-                        }
+        AsyncTask.SERIAL_EXECUTOR.execute(() -> {
+            File[] baseStateFiles = getOrCreateBaseStateDirectory().listFiles();
+            if (baseStateFiles == null) return;
+            for (File baseStateFile : baseStateFiles) {
+                // In legacy scenarios (prior to migration, state files could reside in the
+                // root state directory.  So, handle deleting direct child files as well as
+                // those that reside in sub directories.
+                if (!baseStateFile.isDirectory()) {
+                    if (!baseStateFile.delete()) {
+                        Log.e(TAG, "Failed to delete file: " + baseStateFile);
+                    }
+                } else {
+                    File[] files = baseStateFile.listFiles();
+                    if (files == null) continue;
+                    for (File file : files) {
+                        if (!file.delete()) Log.e(TAG, "Failed to delete file: " + file);
                     }
                 }
             }
@@ -925,40 +922,36 @@ public class TabPersistentStore extends TabPersister {
      */
     private OnTabStateReadCallback createOnTabStateReadCallback(final boolean isIncognitoSelected,
             final boolean fromMerge) {
-        return new OnTabStateReadCallback() {
-            @Override
-            public void onDetailsRead(int index, int id, String url, Boolean isIncognito,
-                    boolean isStandardActiveIndex, boolean isIncognitoActiveIndex) {
-                if (mLoadInProgress) {
-                    // If a load and merge are both in progress, that means two metadata files
-                    // are being read. If a merge was previously started and interrupted due to the
-                    // app dying, the two metadata files may contain duplicate IDs. Skip tabs with
-                    // duplicate IDs.
-                    if (mPersistencePolicy.isMergeInProgress() && mTabIdsToRestore.contains(id)) {
-                        return;
-                    }
-
-                    mTabIdsToRestore.add(id);
+        return (index, id, url, isIncognito, isStandardActiveIndex, isIncognitoActiveIndex) -> {
+            if (mLoadInProgress) {
+                // If a load and merge are both in progress, that means two metadata files
+                // are being read. If a merge was previously started and interrupted due to the
+                // app dying, the two metadata files may contain duplicate IDs. Skip tabs with
+                // duplicate IDs.
+                if (mPersistencePolicy.isMergeInProgress() && mTabIdsToRestore.contains(id)) {
+                    return;
                 }
 
-                // Note that incognito tab may not load properly so we may need to use
-                // the current tab from the standard model.
-                // This logic only works because we store the incognito indices first.
-                TabRestoreDetails details =
-                        new TabRestoreDetails(id, index, isIncognito, url, fromMerge);
+                mTabIdsToRestore.add(id);
+            }
 
-                if (!fromMerge && ((isIncognitoActiveIndex && isIncognitoSelected)
-                        || (isStandardActiveIndex && !isIncognitoSelected))) {
-                    // Active tab gets loaded first
-                    mTabsToRestore.addFirst(details);
-                } else {
-                    mTabsToRestore.addLast(details);
-                }
+            // Note that incognito tab may not load properly so we may need to use
+            // the current tab from the standard model.
+            // This logic only works because we store the incognito indices first.
+            TabRestoreDetails details =
+                    new TabRestoreDetails(id, index, isIncognito, url, fromMerge);
 
-                if (mObserver != null) {
-                    mObserver.onDetailsRead(
-                            index, id, url, isStandardActiveIndex, isIncognitoActiveIndex);
-                }
+            if (!fromMerge && ((isIncognitoActiveIndex && isIncognitoSelected)
+                    || (isStandardActiveIndex && !isIncognitoSelected))) {
+                // Active tab gets loaded first
+                mTabsToRestore.addFirst(details);
+            } else {
+                mTabsToRestore.addLast(details);
+            }
+
+            if (mObserver != null) {
+                mObserver.onDetailsRead(
+                        index, id, url, isStandardActiveIndex, isIncognitoActiveIndex);
             }
         };
     }
@@ -1192,14 +1185,11 @@ public class TabPersistentStore extends TabPersister {
                             TimeUnit.MILLISECONDS);
                 }
 
-                ThreadUtils.postOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // This eventually calls serializeTabModelSelector() which much be called
-                        // from the UI thread. #mergeState() starts an async task in the background
-                        // that goes through this code path.
-                        saveTabListAsynchronously();
-                    }
+                ThreadUtils.postOnUiThread(() -> {
+                    // This eventually calls serializeTabModelSelector() which much be called
+                    // from the UI thread. #mergeState() starts an async task in the background
+                    // that goes through this code path.
+                    saveTabListAsynchronously();
                 });
                 deleteFileAsync(mPersistencePolicy.getStateToBeMergedFileName());
                 if (mObserver != null) mObserver.onStateMerged();

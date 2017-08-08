@@ -38,12 +38,8 @@ public class ConnectionInfoPopupTest {
     @RetryOnFailure
     public void testShow() throws InterruptedException {
         mActivityTestRule.startMainActivityOnBlankPage();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ConnectionInfoPopup.show(mActivityTestRule.getActivity(),
-                        mActivityTestRule.getActivity().getActivityTab().getWebContents());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> ConnectionInfoPopup.show(mActivityTestRule.getActivity(),
+                        mActivityTestRule.getActivity().getActivityTab().getWebContents()));
     }
 }

@@ -67,12 +67,8 @@ class WebappSplashScreenController extends EmptyTabObserver {
             return;
         }
 
-        storage.getSplashScreenImage(new WebappDataStorage.FetchCallback<Bitmap>() {
-            @Override
-            public void onDataRetrieved(Bitmap splashImage) {
-                initializeLayout(webappInfo, backgroundColor, splashImage);
-            }
-        });
+        storage.getSplashScreenImage(
+                splashImage -> initializeLayout(webappInfo, backgroundColor, splashImage));
     }
 
     /** Should be called once native has loaded. */
@@ -185,15 +181,12 @@ class WebappSplashScreenController extends EmptyTabObserver {
     private void hideSplashScreen(final Tab tab, final int reason) {
         if (mSplashScreen == null) return;
 
-        mSplashScreen.animate().alpha(0f).withEndAction(new Runnable() {
-            @Override
-            public void run() {
-                if (mSplashScreen == null) return;
-                mParentView.removeView(mSplashScreen);
-                tab.removeObserver(WebappSplashScreenController.this);
-                mSplashScreen = null;
-                mWebappUma.splashscreenHidden(reason);
-            }
+        mSplashScreen.animate().alpha(0f).withEndAction(() -> {
+            if (mSplashScreen == null) return;
+            mParentView.removeView(mSplashScreen);
+            tab.removeObserver(WebappSplashScreenController.this);
+            mSplashScreen = null;
+            mWebappUma.splashscreenHidden(reason);
         });
     }
 }

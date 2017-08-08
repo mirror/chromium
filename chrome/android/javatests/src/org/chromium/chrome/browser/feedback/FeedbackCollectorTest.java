@@ -31,7 +31,6 @@ import org.chromium.net.ConnectionType;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -82,92 +81,54 @@ public class FeedbackCollectorTest {
 
         @Override
         public void onResult(final ConnectivityTask.FeedbackData feedbackData) {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    TestFeedbackCollector.super.onResult(feedbackData);
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(
+                    () -> TestFeedbackCollector.super.onResult(feedbackData));
         }
 
         @Override
         public void onGotBitmap(@Nullable final Bitmap bitmap) {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    TestFeedbackCollector.super.onGotBitmap(bitmap);
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(
+                    () -> TestFeedbackCollector.super.onGotBitmap(bitmap));
         }
 
         @Override
         void maybePostResult() {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    TestFeedbackCollector.super.maybePostResult();
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(() -> TestFeedbackCollector.super.maybePostResult());
         }
 
         @Override
         public void add(final String key, final String value) {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    TestFeedbackCollector.super.add(key, value);
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(() -> TestFeedbackCollector.super.add(key, value));
         }
 
         @Override
         public void setDescription(final String description) {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    TestFeedbackCollector.super.setDescription(description);
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(
+                    () -> TestFeedbackCollector.super.setDescription(description));
         }
 
         @Override
         public String getDescription() {
-            return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<String>() {
-                @Override
-                public String call() {
-                    return TestFeedbackCollector.super.getDescription();
-                }
-            });
+            return ThreadUtils.runOnUiThreadBlockingNoException(
+                    () -> TestFeedbackCollector.super.getDescription());
         }
 
         @Override
         public void setScreenshot(final Bitmap screenshot) {
-            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-                public void run() {
-                    TestFeedbackCollector.super.setScreenshot(screenshot);
-                }
-            });
+            ThreadUtils.runOnUiThreadBlocking(
+                    () -> TestFeedbackCollector.super.setScreenshot(screenshot));
         }
 
         @Override
         public Bitmap getScreenshot() {
-            return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Bitmap>() {
-                @Override
-                public Bitmap call() {
-                    return TestFeedbackCollector.super.getScreenshot();
-                }
-            });
+            return ThreadUtils.runOnUiThreadBlockingNoException(
+                    () -> TestFeedbackCollector.super.getScreenshot());
         }
 
         @Override
         public Bundle getBundle() {
-            return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Bundle>() {
-                @Override
-                public Bundle call() {
-                    return TestFeedbackCollector.super.getBundle();
-                }
-            });
+            return ThreadUtils.runOnUiThreadBlockingNoException(
+                    () -> TestFeedbackCollector.super.getBundle());
         }
 
         @Override
@@ -206,12 +167,7 @@ public class FeedbackCollectorTest {
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
         mActivity = mActivityTestRule.getActivity();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mProfile = Profile.getLastUsedProfile();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking((Runnable) () -> mProfile = Profile.getLastUsedProfile());
     }
 
     @Test
@@ -242,12 +198,9 @@ public class FeedbackCollectorTest {
     public void testGatheringOfDataWithCallback() throws InterruptedException {
         final Semaphore semaphore = new Semaphore(0);
         final AtomicBoolean hasResult = new AtomicBoolean(false);
-        FeedbackCollector.FeedbackResult callback = new FeedbackCollector.FeedbackResult() {
-            @Override
-            public void onResult(FeedbackCollector collector) {
-                hasResult.set(true);
-                semaphore.release();
-            }
+        FeedbackCollector.FeedbackResult callback = collector -> {
+            hasResult.set(true);
+            semaphore.release();
         };
         mCollector =
                 createCollector("http://www.example.com/", true /* takeScreenshot */, callback);
@@ -279,12 +232,9 @@ public class FeedbackCollectorTest {
     public void testGatheringOfDataTimesOut() throws InterruptedException {
         final Semaphore semaphore = new Semaphore(0);
         final AtomicBoolean hasResult = new AtomicBoolean(false);
-        FeedbackCollector.FeedbackResult callback = new FeedbackCollector.FeedbackResult() {
-            @Override
-            public void onResult(FeedbackCollector collector) {
-                hasResult.set(true);
-                semaphore.release();
-            }
+        FeedbackCollector.FeedbackResult callback = collector -> {
+            hasResult.set(true);
+            semaphore.release();
         };
         mCollector = createCollector(null, true /* takeScreenshot */, callback);
         Assert.assertFalse("Result should not be ready directly after creation.", hasResult.get());
@@ -316,12 +266,9 @@ public class FeedbackCollectorTest {
     public void testGatheringOfDataWaitForScreenshot() throws InterruptedException {
         final Semaphore semaphore = new Semaphore(0);
         final AtomicBoolean hasResult = new AtomicBoolean(false);
-        FeedbackCollector.FeedbackResult callback = new FeedbackCollector.FeedbackResult() {
-            @Override
-            public void onResult(FeedbackCollector collector) {
-                hasResult.set(true);
-                semaphore.release();
-            }
+        FeedbackCollector.FeedbackResult callback = collector -> {
+            hasResult.set(true);
+            semaphore.release();
         };
         mCollector = createCollector(null, true /* takeScreenshot */, callback);
         Assert.assertFalse("Result should not be ready directly after creation.", hasResult.get());
@@ -356,12 +303,9 @@ public class FeedbackCollectorTest {
     public void testGatheringOfDataNoScreenshot() throws InterruptedException {
         final Semaphore semaphore = new Semaphore(0);
         final AtomicBoolean hasResult = new AtomicBoolean(false);
-        FeedbackCollector.FeedbackResult callback = new FeedbackCollector.FeedbackResult() {
-            @Override
-            public void onResult(FeedbackCollector collector) {
-                hasResult.set(true);
-                semaphore.release();
-            }
+        FeedbackCollector.FeedbackResult callback = collector -> {
+            hasResult.set(true);
+            semaphore.release();
         };
         mCollector = createCollector(null, false /* takeScreenshot */, callback);
         Assert.assertFalse("Result should not be ready directly after creation.", hasResult.get());
@@ -390,12 +334,7 @@ public class FeedbackCollectorTest {
 
     private TestFeedbackCollector createCollector(final String url, final boolean takeScreenshot,
             final FeedbackCollector.FeedbackResult callback) {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<TestFeedbackCollector>() {
-            @Override
-            public TestFeedbackCollector call() {
-                return new TestFeedbackCollector(
-                        mActivity, mProfile, url, takeScreenshot, callback);
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> new TestFeedbackCollector(
+                mActivity, mProfile, url, takeScreenshot, callback));
     }
 }

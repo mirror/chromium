@@ -7,7 +7,6 @@ package org.chromium.chrome.browser.toolbar;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v7.app.ActionBar;
@@ -154,14 +153,11 @@ public class ActionModeController {
             }
         });
 
-        mCurrentAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                ActionBar actionBar = mActionBarDelegate.getSupportActionBar();
-                if (actionBar != null) {
-                    animation.setIntValues((int) (Math.max(0,
-                            queryCurrentActionBarHeight() - mTabStripHeight)));
-                }
+        mCurrentAnimation.addUpdateListener(animation -> {
+            ActionBar actionBar = mActionBarDelegate.getSupportActionBar();
+            if (actionBar != null) {
+                animation.setIntValues((int) (Math.max(0,
+                        queryCurrentActionBarHeight() - mTabStripHeight)));
             }
         });
 

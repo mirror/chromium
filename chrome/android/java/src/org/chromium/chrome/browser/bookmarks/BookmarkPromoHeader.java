@@ -98,12 +98,9 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver,
      *         {@link RecyclerView}.
      */
     ViewHolder createHolder(ViewGroup parent) {
-        SigninAndSyncView.Listener listener = new SigninAndSyncView.Listener() {
-            @Override
-            public void onViewDismissed() {
-                setSigninPromoDeclined();
-                updateShouldShow(true);
-            }
+        SigninAndSyncView.Listener listener = () -> {
+            setSigninPromoDeclined();
+            updateShouldShow(true);
         };
 
         SigninAndSyncView view =

@@ -37,19 +37,13 @@ public class PhysicalWebShareEntryActivity extends Activity {
                 .setTitle(R.string.physical_web_share_entry_title)
                 .setMessage(R.string.physical_web_share_entry_message)
                 .setPositiveButton(R.string.continue_button,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                PhysicalWeb.setSharingOptedIn();
-                                PhysicalWebBroadcastService.startBroadcastService(url);
-                                finish();
-                            }
+                        (DialogInterface.OnClickListener) (dialog, which) -> {
+                            PhysicalWeb.setSharingOptedIn();
+                            PhysicalWebBroadcastService.startBroadcastService(url);
+                            finish();
                         })
                 .setNegativeButton(R.string.cancel,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        })
+                        (DialogInterface.OnClickListener) (dialog, which) -> finish())
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setCancelable(false)
                 .show();

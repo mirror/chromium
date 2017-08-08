@@ -153,16 +153,11 @@ public class AccountChooserDialog
 
                 if (!originUrl.isEmpty()) {
                     pslInfoButton.setVisibility(View.VISIBLE);
-                    pslInfoButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            showTooltip(
-                                    view,
-                                    UrlFormatter.formatUrlForSecurityDisplay(
-                                        originUrl, true /* showScheme */),
-                                    R.layout.material_tooltip);
-                        }
-                    });
+                    pslInfoButton.setOnClickListener(view -> showTooltip(
+                            view,
+                            UrlFormatter.formatUrlForSecurityDisplay(
+                                    originUrl, true /* showScheme */),
+                            R.layout.material_tooltip));
                 }
 
                 return convertView;
@@ -195,12 +190,7 @@ public class AccountChooserDialog
                 new AlertDialog.Builder(mContext, R.style.AlertDialogTheme)
                         .setCustomTitle(titleView)
                         .setNegativeButton(R.string.cancel, this)
-                        .setAdapter(mAdapter, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int item) {
-                                mCredential = mCredentials[item];
-                            }
-                        });
+                        .setAdapter(mAdapter, (dialog, item) -> mCredential = mCredentials[item]);
         if (!TextUtils.isEmpty(mSigninButtonText)) {
             builder.setPositiveButton(mSigninButtonText, this);
         }

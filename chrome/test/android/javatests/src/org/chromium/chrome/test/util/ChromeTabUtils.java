@@ -32,7 +32,6 @@ import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.ui.base.DeviceFormFactor;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -116,15 +115,12 @@ public class ChromeTabUtils {
 
         final CountDownLatch loadStoppedLatch = new CountDownLatch(1);
         final CallbackHelper loadedCallback = new CallbackHelper();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                if (loadComplete(tab, url)) {
-                    loadedCallback.notifyCalled();
-                    return;
-                }
-                tab.addObserver(new TabPageLoadedObserver(loadedCallback, url, loadStoppedLatch));
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            if (loadComplete(tab, url)) {
+                loadedCallback.notifyCalled();
+                return;
             }
+            tab.addObserver(new TabPageLoadedObserver(loadedCallback, url, loadStoppedLatch));
         });
 
         try {
@@ -178,13 +174,10 @@ public class ChromeTabUtils {
             throws InterruptedException {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
         final CallbackHelper loadedCallback = new CallbackHelper();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                TabObserver observer =
-                        new TabPageLoadedObserver(loadedCallback, null, countDownLatch);
-                tab.addObserver(observer);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            TabObserver observer =
+                    new TabPageLoadedObserver(loadedCallback, null, countDownLatch);
+            tab.addObserver(observer);
         });
         loadTrigger.run();
         try {
@@ -239,12 +232,8 @@ public class ChromeTabUtils {
      */
     public static void switchTabInCurrentTabModel(final ChromeActivity activity,
             final int tabIndex) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                TabModelUtils.setIndex(activity.getCurrentTabModel(), tabIndex);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> TabModelUtils.setIndex(activity.getCurrentTabModel(), tabIndex));
     }
 
     /**
@@ -364,22 +353,12 @@ public class ChromeTabUtils {
         newTabFromMenu(instrumentation, activity, incognito, false);
 
         final Tab tab = activity.getActivityTab();
-        waitForTabPageLoaded(tab, new Runnable(){
-            @Override
-            public void run() {
-                loadUrlOnUiThread(tab, url);
-            }
-        });
+        waitForTabPageLoaded(tab, () -> loadUrlOnUiThread(tab, url));
         instrumentation.waitForIdleSync();
     }
 
     public static void loadUrlOnUiThread(final Tab tab, final String url) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                tab.loadUrl(new LoadUrlParams(url));
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking((Runnable) () -> tab.loadUrl(new LoadUrlParams(url)));
     }
 
     /**
@@ -398,12 +377,8 @@ public class ChromeTabUtils {
      * Fetch the number of tabs open in the current model.
      */
     public static int getNumOpenTabs(final ChromeActivity activity) {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return activity.getCurrentTabModel().getCount();
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> activity.getCurrentTabModel().getCount());
     }
 
     /**
@@ -414,17 +389,8 @@ public class ChromeTabUtils {
     public static void closeCurrentTab(final Instrumentation instrumentation,
             final ChromeTabbedActivity activity)
             throws InterruptedException {
-        closeTabWithAction(instrumentation, activity, new Runnable() {
-            @Override
-            public void run() {
-                instrumentation.runOnMainSync(new Runnable() {
-                    @Override
-                    public void run() {
-                        TabModelUtils.closeCurrentTab(activity.getCurrentTabModel());
-                    }
-                });
-            }
-        });
+        closeTabWithAction(instrumentation, activity, () -> instrumentation.runOnMainSync(
+                () -> TabModelUtils.closeCurrentTab(activity.getCurrentTabModel())));
     }
 
     /**
@@ -439,13 +405,10 @@ public class ChromeTabUtils {
                 closeCallback.notifyCalled();
             }
         };
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                TabModelSelector selector = activity.getTabModelSelector();
-                for (TabModel tabModel : selector.getModels()) {
-                    tabModel.addObserver(observer);
-                }
+        instrumentation.runOnMainSync(() -> {
+            TabModelSelector selector = activity.getTabModelSelector();
+            for (TabModel tabModel : selector.getModels()) {
+                tabModel.addObserver(observer);
             }
         });
 
@@ -456,13 +419,10 @@ public class ChromeTabUtils {
         } catch (TimeoutException e) {
             Assert.fail("Tab closed event was never received");
         }
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                TabModelSelector selector = activity.getTabModelSelector();
-                for (TabModel tabModel : selector.getModels()) {
-                    tabModel.removeObserver(observer);
-                }
+        instrumentation.runOnMainSync(() -> {
+            TabModelSelector selector = activity.getTabModelSelector();
+            for (TabModel tabModel : selector.getModels()) {
+                tabModel.removeObserver(observer);
             }
         });
         instrumentation.waitForIdleSync();
@@ -481,35 +441,24 @@ public class ChromeTabUtils {
                 closeCallback.notifyCalled();
             }
         };
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                TabModelSelector selector = activity.getTabModelSelector();
-                for (TabModel tabModel : selector.getModels()) {
-                    tabModel.addObserver(observer);
-                }
+        instrumentation.runOnMainSync(() -> {
+            TabModelSelector selector = activity.getTabModelSelector();
+            for (TabModel tabModel : selector.getModels()) {
+                tabModel.addObserver(observer);
             }
         });
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                activity.getTabModelSelector().closeAllTabs();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> activity.getTabModelSelector().closeAllTabs());
 
         try {
             closeCallback.waitForCallback(0);
         } catch (TimeoutException e) {
             Assert.fail("All tabs pending closure event was never received");
         }
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                TabModelSelector selector = activity.getTabModelSelector();
-                for (TabModel tabModel : selector.getModels()) {
-                    tabModel.removeObserver(observer);
-                }
+        instrumentation.runOnMainSync(() -> {
+            TabModelSelector selector = activity.getTabModelSelector();
+            for (TabModel tabModel : selector.getModels()) {
+                tabModel.removeObserver(observer);
             }
         });
         instrumentation.waitForIdleSync();
@@ -527,13 +476,10 @@ public class ChromeTabUtils {
                 selectCallback.notifyCalled();
             }
         };
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                TabModelSelector selector = activity.getTabModelSelector();
-                for (TabModel tabModel : selector.getModels()) {
-                    tabModel.addObserver(observer);
-                }
+        instrumentation.runOnMainSync(() -> {
+            TabModelSelector selector = activity.getTabModelSelector();
+            for (TabModel tabModel : selector.getModels()) {
+                tabModel.addObserver(observer);
             }
         });
 
@@ -544,13 +490,10 @@ public class ChromeTabUtils {
         } catch (TimeoutException e) {
             Assert.fail("Tab selected event was never received");
         }
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                TabModelSelector selector = activity.getTabModelSelector();
-                for (TabModel tabModel : selector.getModels()) {
-                    tabModel.removeObserver(observer);
-                }
+        instrumentation.runOnMainSync(() -> {
+            TabModelSelector selector = activity.getTabModelSelector();
+            for (TabModel tabModel : selector.getModels()) {
+                tabModel.removeObserver(observer);
             }
         });
     }

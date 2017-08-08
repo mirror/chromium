@@ -76,24 +76,14 @@ public class CopylessPasteTest {
             }
         });
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                FirstRunStatus.setFirstRunFlowComplete(true);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> FirstRunStatus.setFirstRunFlowComplete(true));
         mActivityTestRule.startMainActivityOnBlankPage();
     }
 
     @After
     public void tearDown() throws Exception {
         mTestServer.stopAndDestroyServer();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                FirstRunStatus.setFirstRunFlowComplete(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> FirstRunStatus.setFirstRunFlowComplete(false));
         AppIndexingUtil.setCallbackForTesting(null);
     }
 

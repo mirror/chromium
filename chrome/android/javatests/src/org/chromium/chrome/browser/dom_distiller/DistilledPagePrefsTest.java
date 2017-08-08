@@ -47,13 +47,10 @@ public class DistilledPagePrefsTest {
     }
 
     private void getDistilledPagePrefs() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                DomDistillerService domDistillerService = DomDistillerServiceFactory
-                        .getForProfile(Profile.getLastUsedProfile());
-                mDistilledPagePrefs = domDistillerService.getDistilledPagePrefs();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            DomDistillerService domDistillerService = DomDistillerServiceFactory
+                    .getForProfile(Profile.getLastUsedProfile());
+            mDistilledPagePrefs = domDistillerService.getDistilledPagePrefs();
         });
     }
 
@@ -289,29 +286,14 @@ public class DistilledPagePrefsTest {
     }
 
     private void setFontFamily(final FontFamily font) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mDistilledPagePrefs.setFontFamily(font);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mDistilledPagePrefs.setFontFamily(font));
     }
 
     private void setTheme(final Theme theme) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mDistilledPagePrefs.setTheme(theme);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mDistilledPagePrefs.setTheme(theme));
     }
 
     private void setFontScaling(final float scaling) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mDistilledPagePrefs.setFontScaling(scaling);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mDistilledPagePrefs.setFontScaling(scaling));
     }
 }

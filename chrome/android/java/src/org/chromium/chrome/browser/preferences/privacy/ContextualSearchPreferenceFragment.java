@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.preferences.privacy;
 
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 
 import org.chromium.chrome.R;
@@ -40,13 +39,10 @@ public class ContextualSearchPreferenceFragment extends PreferenceFragment {
                 !PrefServiceBridge.getInstance().isContextualSearchDisabled();
         contextualSearchSwitch.setChecked(isContextualSearchEnabled);
 
-        contextualSearchSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                PrefServiceBridge.getInstance().setContextualSearchState((boolean) newValue);
-                ContextualSearchUma.logPreferenceChange((boolean) newValue);
-                return true;
-            }
+        contextualSearchSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
+            PrefServiceBridge.getInstance().setContextualSearchState((boolean) newValue);
+            ContextualSearchUma.logPreferenceChange((boolean) newValue);
+            return true;
         });
         contextualSearchSwitch.setManagedPreferenceDelegate(new ManagedPreferenceDelegate() {
             @Override

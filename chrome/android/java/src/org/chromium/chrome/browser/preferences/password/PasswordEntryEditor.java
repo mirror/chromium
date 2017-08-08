@@ -192,54 +192,40 @@ public class PasswordEntryEditor extends Fragment {
         final Button deleteButton = (Button) mView.findViewById(R.id.password_entry_editor_delete);
         final Button cancelButton = (Button) mView.findViewById(R.id.password_entry_editor_cancel);
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeItem();
-                deleteButton.setEnabled(false);
-                cancelButton.setEnabled(false);
-            }
+        deleteButton.setOnClickListener(v -> {
+            removeItem();
+            deleteButton.setEnabled(false);
+            cancelButton.setEnabled(false);
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        cancelButton.setOnClickListener(v -> getActivity().finish());
     }
 
     private void hookupCopyUsernameButton(View usernameView) {
         final ImageButton copyUsernameButton =
                 (ImageButton) usernameView.findViewById(R.id.password_entry_editor_copy);
-        copyUsernameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClipData clip = ClipData.newPlainText("username",
-                        getArguments().getString(SavePasswordsPreferences.PASSWORD_LIST_NAME));
-                mClipboard.setPrimaryClip(clip);
-                Toast.makeText(getActivity().getApplicationContext(),
-                             R.string.password_entry_editor_username_copied_into_clipboard,
-                             Toast.LENGTH_SHORT)
-                        .show();
-            }
+        copyUsernameButton.setOnClickListener(v -> {
+            ClipData clip = ClipData.newPlainText("username",
+                    getArguments().getString(SavePasswordsPreferences.PASSWORD_LIST_NAME));
+            mClipboard.setPrimaryClip(clip);
+            Toast.makeText(getActivity().getApplicationContext(),
+                    R.string.password_entry_editor_username_copied_into_clipboard,
+                    Toast.LENGTH_SHORT)
+                    .show();
         });
     }
 
     private void hookupCopySiteButton(View siteView) {
         final ImageButton copySiteButton =
                 (ImageButton) siteView.findViewById(R.id.password_entry_editor_copy);
-        copySiteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClipData clip = ClipData.newPlainText("site",
-                        getArguments().getString(SavePasswordsPreferences.PASSWORD_LIST_URL));
-                mClipboard.setPrimaryClip(clip);
-                Toast.makeText(getActivity().getApplicationContext(),
-                             R.string.password_entry_editor_site_copied_into_clipboard,
-                             Toast.LENGTH_SHORT)
-                        .show();
-            }
+        copySiteButton.setOnClickListener(v -> {
+            ClipData clip = ClipData.newPlainText("site",
+                    getArguments().getString(SavePasswordsPreferences.PASSWORD_LIST_URL));
+            mClipboard.setPrimaryClip(clip);
+            Toast.makeText(getActivity().getApplicationContext(),
+                    R.string.password_entry_editor_site_copied_into_clipboard,
+                    Toast.LENGTH_SHORT)
+                    .show();
         });
     }
 
@@ -289,39 +275,33 @@ public class PasswordEntryEditor extends Fragment {
                 (ImageButton) mView.findViewById(R.id.password_entry_editor_copy_password);
         final ImageButton viewPasswordButton =
                 (ImageButton) mView.findViewById(R.id.password_entry_editor_view_password);
-        copyPasswordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!mKeyguardManager.isKeyguardSecure()) {
-                    Toast.makeText(getActivity().getApplicationContext(),
-                                 R.string.password_entry_editor_set_lock_screen, Toast.LENGTH_LONG)
-                            .show();
-                } else if (authenticationStillValid()) {
-                    copyPassword();
-                } else {
-                    mCopyButtonPressed = true;
-                    displayReauthenticationFragment();
-                }
+        copyPasswordButton.setOnClickListener(v -> {
+            if (!mKeyguardManager.isKeyguardSecure()) {
+                Toast.makeText(getActivity().getApplicationContext(),
+                        R.string.password_entry_editor_set_lock_screen, Toast.LENGTH_LONG)
+                        .show();
+            } else if (authenticationStillValid()) {
+                copyPassword();
+            } else {
+                mCopyButtonPressed = true;
+                displayReauthenticationFragment();
             }
         });
-        viewPasswordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView passwordView =
-                        (TextView) mView.findViewById(R.id.password_entry_editor_password);
-                if (!mKeyguardManager.isKeyguardSecure()) {
-                    Toast.makeText(getActivity().getApplicationContext(),
-                                 R.string.password_entry_editor_set_lock_screen, Toast.LENGTH_LONG)
-                            .show();
-                } else if (passwordView.getInputType()
-                        == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
-                    hidePassword();
-                } else if (authenticationStillValid()) {
-                    displayPassword();
-                } else {
-                    mViewButtonPressed = true;
-                    displayReauthenticationFragment();
-                }
+        viewPasswordButton.setOnClickListener(v -> {
+            TextView passwordView =
+                    (TextView) mView.findViewById(R.id.password_entry_editor_password);
+            if (!mKeyguardManager.isKeyguardSecure()) {
+                Toast.makeText(getActivity().getApplicationContext(),
+                        R.string.password_entry_editor_set_lock_screen, Toast.LENGTH_LONG)
+                        .show();
+            } else if (passwordView.getInputType()
+                    == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                hidePassword();
+            } else if (authenticationStillValid()) {
+                displayPassword();
+            } else {
+                mViewButtonPressed = true;
+                displayReauthenticationFragment();
             }
         });
     }

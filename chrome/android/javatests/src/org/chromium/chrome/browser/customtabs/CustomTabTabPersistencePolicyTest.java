@@ -47,7 +47,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -181,46 +180,43 @@ public class CustomTabTabPersistencePolicyTest {
     @Feature("TabPersistentStore")
     @SmallTest
     public void testGettingTabAndTaskIds() throws Throwable {
-        mRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Set<Integer> tabIds = new HashSet<>();
-                Set<Integer> taskIds = new HashSet<>();
-                CustomTabTabPersistencePolicy.getAllLiveTabAndTaskIds(tabIds, taskIds);
-                Assert.assertThat(tabIds, Matchers.emptyIterable());
-                Assert.assertThat(taskIds, Matchers.emptyIterable());
+        mRule.runOnUiThread((Runnable) () -> {
+            Set<Integer> tabIds = new HashSet<>();
+            Set<Integer> taskIds = new HashSet<>();
+            CustomTabTabPersistencePolicy.getAllLiveTabAndTaskIds(tabIds, taskIds);
+            Assert.assertThat(tabIds, Matchers.emptyIterable());
+            Assert.assertThat(taskIds, Matchers.emptyIterable());
 
-                tabIds.clear();
-                taskIds.clear();
+            tabIds.clear();
+            taskIds.clear();
 
-                CustomTabActivity cct1 = buildTestCustomTabActivity(1, new int[] {4, 8, 9}, null);
-                ApplicationStatus.onStateChangeForTesting(cct1, ActivityState.CREATED);
+            CustomTabActivity cct1 = buildTestCustomTabActivity(1, new int[]{4, 8, 9}, null);
+            ApplicationStatus.onStateChangeForTesting(cct1, ActivityState.CREATED);
 
-                CustomTabActivity cct2 =
-                        buildTestCustomTabActivity(5, new int[] {458}, new int[] {9878});
-                ApplicationStatus.onStateChangeForTesting(cct2, ActivityState.CREATED);
+            CustomTabActivity cct2 =
+                    buildTestCustomTabActivity(5, new int[]{458}, new int[]{9878});
+            ApplicationStatus.onStateChangeForTesting(cct2, ActivityState.CREATED);
 
-                // Add a tabbed mode activity to ensure that its IDs are not included in the
-                // returned CCT ID sets.
-                final TabModelSelectorImpl tabbedSelector =
-                        buildTestTabModelSelector(new int[] {12121212}, new int[] {1515151515});
-                ChromeTabbedActivity tabbedActivity = new ChromeTabbedActivity() {
-                    @Override
-                    public int getTaskId() {
-                        return 888;
-                    }
+            // Add a tabbed mode activity to ensure that its IDs are not included in the
+            // returned CCT ID sets.
+            final TabModelSelectorImpl tabbedSelector =
+                    buildTestTabModelSelector(new int[]{12121212}, new int[]{1515151515});
+            ChromeTabbedActivity tabbedActivity = new ChromeTabbedActivity() {
+                @Override
+                public int getTaskId() {
+                    return 888;
+                }
 
-                    @Override
-                    public TabModelSelector getTabModelSelector() {
-                        return tabbedSelector;
-                    }
-                };
-                ApplicationStatus.onStateChangeForTesting(tabbedActivity, ActivityState.CREATED);
+                @Override
+                public TabModelSelector getTabModelSelector() {
+                    return tabbedSelector;
+                }
+            };
+            ApplicationStatus.onStateChangeForTesting(tabbedActivity, ActivityState.CREATED);
 
-                CustomTabTabPersistencePolicy.getAllLiveTabAndTaskIds(tabIds, taskIds);
-                Assert.assertThat(tabIds, Matchers.containsInAnyOrder(4, 8, 9, 458, 9878));
-                Assert.assertThat(taskIds, Matchers.containsInAnyOrder(1, 5));
-            }
+            CustomTabTabPersistencePolicy.getAllLiveTabAndTaskIds(tabIds, taskIds);
+            Assert.assertThat(tabIds, Matchers.containsInAnyOrder(4, 8, 9, 458, 9878));
+            Assert.assertThat(taskIds, Matchers.containsInAnyOrder(1, 5));
         });
     }
 
@@ -261,12 +257,9 @@ public class CustomTabTabPersistencePolicyTest {
         Assert.assertThat(filesToDelete.get(), Matchers.containsInAnyOrder(tab999File.getName()));
 
         // Reference the tab state file and ensure it is no longer marked for deletion.
-        mRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                CustomTabActivity cct1 = buildTestCustomTabActivity(1, new int[] {999}, null);
-                ApplicationStatus.onStateChangeForTesting(cct1, ActivityState.CREATED);
-            }
+        mRule.runOnUiThread((Runnable) () -> {
+            CustomTabActivity cct1 = buildTestCustomTabActivity(1, new int[]{999}, null);
+            ApplicationStatus.onStateChangeForTesting(cct1, ActivityState.CREATED);
         });
         policy.cleanupUnusedFiles(filesToDeleteCallback);
         callbackSignal.waitForCallback(2);
@@ -274,13 +267,10 @@ public class CustomTabTabPersistencePolicyTest {
 
         // Create a tab model and associated tabs. Ensure it is not marked for deletion as it is
         // new enough.
-        byte[] data = ThreadUtils.runOnUiThreadBlockingNoException(new Callable<byte[]>() {
-            @Override
-            public byte[] call() throws Exception {
-                TabModelSelectorImpl selectorImpl =
-                        buildTestTabModelSelector(new int[] {111, 222, 333}, null);
-                return TabPersistentStore.serializeTabModelSelector(selectorImpl, null);
-            }
+        byte[] data = ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            TabModelSelectorImpl selectorImpl =
+                    buildTestTabModelSelector(new int[]{111, 222, 333}, null);
+            return TabPersistentStore.serializeTabModelSelector(selectorImpl, null);
         });
         FileOutputStream fos = null;
         File metadataFile = new File(
@@ -439,15 +429,10 @@ public class CustomTabTabPersistencePolicyTest {
     private static TabModelSelectorImpl buildTestTabModelSelector(
             int[] normalTabIds, int[] incognitoTabIds) {
         MockTabModel.MockTabModelDelegate tabModelDelegate =
-                new MockTabModel.MockTabModelDelegate() {
+                (id, incognito) -> new Tab(id, incognito, null) {
                     @Override
-                    public Tab createTab(int id, boolean incognito) {
-                        return new Tab(id, incognito, null) {
-                            @Override
-                            public String getUrl() {
-                                return "https://www.google.com";
-                            }
-                        };
+                    public String getUrl() {
+                        return "https://www.google.com";
                     }
                 };
         final MockTabModel normalTabModel = new MockTabModel(false, tabModelDelegate);

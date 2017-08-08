@@ -22,7 +22,6 @@ import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge.OfflinePageModelObserver;
-import org.chromium.chrome.browser.offlinepages.OfflinePageBridge.SavePageCallback;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.snackbar.SnackbarManager.SnackbarController;
 import org.chromium.chrome.browser.tab.Tab;
@@ -160,36 +159,29 @@ public class OfflinePageUtilsTest {
         // Note that this will create a SnackbarController when the page loads, but we use our own
         // for the test. The one created here will also get the notification, but that won't
         // interfere with our test.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                NetworkChangeNotifier.forceConnectivityState(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> NetworkChangeNotifier.forceConnectivityState(false));
         String testUrl = mTestServer.getURL(TEST_PAGE);
         mActivityTestRule.loadUrl(testUrl);
 
         int tabId = mActivityTestRule.getActivity().getActivityTab().getId();
 
         // Act.  This needs to be called from the UI thread.
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                OfflinePageTabObserver offlineObserver = new OfflinePageTabObserver(
-                        mActivityTestRule.getActivity().getTabModelSelector(),
-                        mActivityTestRule.getActivity().getSnackbarManager(),
-                        mockSnackbarController);
-                OfflinePageTabObserver.setObserverForTesting(
-                        mActivityTestRule.getActivity(), offlineObserver);
-                OfflinePageUtils.showOfflineSnackbarIfNecessary(
-                        mActivityTestRule.getActivity().getActivityTab());
+        ThreadUtils.runOnUiThread(() -> {
+            OfflinePageTabObserver offlineObserver = new OfflinePageTabObserver(
+                    mActivityTestRule.getActivity().getTabModelSelector(),
+                    mActivityTestRule.getActivity().getSnackbarManager(),
+                    mockSnackbarController);
+            OfflinePageTabObserver.setObserverForTesting(
+                    mActivityTestRule.getActivity(), offlineObserver);
+            OfflinePageUtils.showOfflineSnackbarIfNecessary(
+                    mActivityTestRule.getActivity().getActivityTab());
 
-                // Pretend that we went online, this should cause the snackbar to show.
-                // This call will set the isConnected call to return true.
-                NetworkChangeNotifier.forceConnectivityState(true);
-                // This call will make an event get sent with connection type CONNECTION_WIFI.
-                NetworkChangeNotifier.fakeNetworkConnected(0, ConnectionType.CONNECTION_WIFI);
-            }
+            // Pretend that we went online, this should cause the snackbar to show.
+            // This call will set the isConnected call to return true.
+            NetworkChangeNotifier.forceConnectivityState(true);
+            // This call will make an event get sent with connection type CONNECTION_WIFI.
+            NetworkChangeNotifier.fakeNetworkConnected(0, ConnectionType.CONNECTION_WIFI);
         });
 
         // Wait for the snackbar to be dismissed before we check its values.  The snackbar is on a
@@ -212,42 +204,29 @@ public class OfflinePageUtilsTest {
     private void savePage(final int expectedResult, final String expectedUrl)
             throws InterruptedException {
         final Semaphore semaphore = new Semaphore(0);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mOfflinePageBridge.savePage(
-                        mActivityTestRule.getActivity().getActivityTab().getWebContents(),
-                        BOOKMARK_ID, new SavePageCallback() {
-                            @Override
-                            public void onSavePageDone(
-                                    int savePageResult, String url, long offlineId) {
-                                Assert.assertEquals(
-                                        "Requested and returned URLs differ.", expectedUrl, url);
-                                Assert.assertEquals(
-                                        "Save result incorrect.", expectedResult, savePageResult);
-                                semaphore.release();
-                            }
-                        });
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mOfflinePageBridge.savePage(
+                mActivityTestRule.getActivity().getActivityTab().getWebContents(),
+                BOOKMARK_ID, (savePageResult, url, offlineId) -> {
+                    Assert.assertEquals(
+                            "Requested and returned URLs differ.", expectedUrl, url);
+                    Assert.assertEquals(
+                            "Save result incorrect.", expectedResult, savePageResult);
+                    semaphore.release();
+                }));
         Assert.assertTrue(semaphore.tryAcquire(TIMEOUT_MS, TimeUnit.MILLISECONDS));
     }
 
     private List<OfflinePageItem> getAllPages() throws InterruptedException {
         final Semaphore semaphore = new Semaphore(0);
         final List<OfflinePageItem> result = new ArrayList<OfflinePageItem>();
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mOfflinePageBridge.getAllPages(new Callback<List<OfflinePageItem>>() {
+        ThreadUtils.runOnUiThread(
+                () -> mOfflinePageBridge.getAllPages(new Callback<List<OfflinePageItem>>() {
                     @Override
                     public void onResult(List<OfflinePageItem> allPages) {
                         result.addAll(allPages);
                         semaphore.release();
                     }
-                });
-            }
-        });
+                }));
         Assert.assertTrue(semaphore.tryAcquire(TIMEOUT_MS, TimeUnit.MILLISECONDS));
         return result;
     }
@@ -318,12 +297,7 @@ public class OfflinePageUtilsTest {
     private void clearSharedOfflineFilesAndWait() {
         final Context context = mActivityTestRule.getActivity().getBaseContext();
         final File offlineSharingDir = OfflinePageUtils.getDirectoryForOfflineSharing(context);
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                OfflinePageUtils.clearSharedOfflineFiles(context);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> OfflinePageUtils.clearSharedOfflineFiles(context));
 
         CriteriaHelper.pollInstrumentationThread(
                 new Criteria("Failed while waiting for file operation to complete.") {

@@ -162,15 +162,12 @@ public class BrowserStartupController {
             mHasStartedInitializingBrowserProcess = true;
 
             setShouldStartGpuProcessOnBrowserStartup(startGpuProcess);
-            prepareToStartBrowserProcess(false, new Runnable() {
-                @Override
-                public void run() {
-                    ThreadUtils.assertOnUiThread();
-                    if (mHasCalledContentStart) return;
-                    if (contentStart() > 0) {
-                        // Failed. The callbacks may not have run, so run them.
-                        enqueueCallbackExecution(STARTUP_FAILURE, NOT_ALREADY_STARTED);
-                    }
+            prepareToStartBrowserProcess(false, () -> {
+                ThreadUtils.assertOnUiThread();
+                if (mHasCalledContentStart) return;
+                if (contentStart() > 0) {
+                    // Failed. The callbacks may not have run, so run them.
+                    enqueueCallbackExecution(STARTUP_FAILURE, NOT_ALREADY_STARTED);
                 }
             });
         }
@@ -264,23 +261,15 @@ public class BrowserStartupController {
     // Queue the callbacks to run. Since running the callbacks clears the list it is safe to call
     // this more than once.
     private void enqueueCallbackExecution(final int startupFailure, final boolean alreadyStarted) {
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                executeEnqueuedCallbacks(startupFailure, alreadyStarted);
-            }
-        });
+        new Handler().post(() -> executeEnqueuedCallbacks(startupFailure, alreadyStarted));
     }
 
     private void postStartupCompleted(final StartupCallback callback) {
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                if (mStartupSuccess) {
-                    callback.onSuccess(ALREADY_STARTED);
-                } else {
-                    callback.onFailure();
-                }
+        new Handler().post(() -> {
+            if (mStartupSuccess) {
+                callback.onSuccess(ALREADY_STARTED);
+            } else {
+                callback.onFailure();
             }
         });
     }
@@ -311,20 +300,17 @@ public class BrowserStartupController {
             StrictMode.setThreadPolicy(oldPolicy);
         }
 
-        Runnable postResourceExtraction = new Runnable() {
-            @Override
-            public void run() {
-                if (!mPostResourceExtractionTasksCompleted) {
-                    // TODO(yfriedman): Remove dependency on a command line flag for this.
-                    DeviceUtils.addDeviceSpecificUserAgentSwitch(
-                            ContextUtils.getApplicationContext());
-                    nativeSetCommandLineFlags(
-                            singleProcess, nativeIsPluginEnabled() ? getPlugins() : null);
-                    mPostResourceExtractionTasksCompleted = true;
-                }
-
-                if (completionCallback != null) completionCallback.run();
+        Runnable postResourceExtraction = () -> {
+            if (!mPostResourceExtractionTasksCompleted) {
+                // TODO(yfriedman): Remove dependency on a command line flag for this.
+                DeviceUtils.addDeviceSpecificUserAgentSwitch(
+                        ContextUtils.getApplicationContext());
+                nativeSetCommandLineFlags(
+                        singleProcess, nativeIsPluginEnabled() ? getPlugins() : null);
+                mPostResourceExtractionTasksCompleted = true;
             }
+
+            if (completionCallback != null) completionCallback.run();
         };
 
         if (completionCallback == null) {

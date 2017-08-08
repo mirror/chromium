@@ -7,7 +7,6 @@ package org.chromium.chrome.browser.toolbar;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
-import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -178,18 +177,15 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     @Override
     public void onNativeLibraryReady() {
         super.onNativeLibraryReady();
-        mSecurityButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Tab currentTab = getToolbarDataProvider().getTab();
-                if (currentTab == null || currentTab.getWebContents() == null) return;
-                Activity activity = currentTab.getWindowAndroid().getActivity().get();
-                if (activity == null) return;
-                String publisherName = mState == STATE_TITLE_ONLY
-                        ? parsePublisherNameFromUrl(currentTab.getUrl()) : null;
-                PageInfoPopup.show(
-                        activity, currentTab, publisherName, PageInfoPopup.OPENED_FROM_TOOLBAR);
-            }
+        mSecurityButton.setOnClickListener(v -> {
+            Tab currentTab = getToolbarDataProvider().getTab();
+            if (currentTab == null || currentTab.getWebContents() == null) return;
+            Activity activity = currentTab.getWindowAndroid().getActivity().get();
+            if (activity == null) return;
+            String publisherName = mState == STATE_TITLE_ONLY
+                    ? parsePublisherNameFromUrl(currentTab.getUrl()) : null;
+            PageInfoPopup.show(
+                    activity, currentTab, publisherName, PageInfoPopup.OPENED_FROM_TOOLBAR);
         });
     }
 
@@ -533,18 +529,15 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
         mBrandColorTransitionAnimation = ValueAnimator.ofFloat(0, 1)
                 .setDuration(ToolbarPhone.THEME_COLOR_TRANSITION_DURATION);
         mBrandColorTransitionAnimation.setInterpolator(BakedBezierInterpolator.TRANSFORM_CURVE);
-        mBrandColorTransitionAnimation.addUpdateListener(new AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float fraction = animation.getAnimatedFraction();
-                int red = (int) (Color.red(initialColor)
-                        + fraction * (Color.red(finalColor) - Color.red(initialColor)));
-                int green = (int) (Color.green(initialColor)
-                        + fraction * (Color.green(finalColor) - Color.green(initialColor)));
-                int blue = (int) (Color.blue(initialColor)
-                        + fraction * (Color.blue(finalColor) - Color.blue(initialColor)));
-                background.setColor(Color.rgb(red, green, blue));
-            }
+        mBrandColorTransitionAnimation.addUpdateListener(animation -> {
+            float fraction = animation.getAnimatedFraction();
+            int red = (int) (Color.red(initialColor)
+                    + fraction * (Color.red(finalColor) - Color.red(initialColor)));
+            int green = (int) (Color.green(initialColor)
+                    + fraction * (Color.green(finalColor) - Color.green(initialColor)));
+            int blue = (int) (Color.blue(initialColor)
+                    + fraction * (Color.blue(finalColor) - Color.blue(initialColor)));
+            background.setColor(Color.rgb(red, green, blue));
         });
         mBrandColorTransitionAnimation.addListener(new AnimatorListenerAdapter() {
             @Override

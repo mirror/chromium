@@ -91,12 +91,8 @@ public class ClearBrowsingDataPreferencesBasicTest {
             AndroidSyncSettings.disableChromeSync(context);
         }
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ProfileSyncService.overrideForTests(new StubProfileSyncService(syncable));
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> ProfileSyncService.overrideForTests(new StubProfileSyncService(syncable)));
     }
 
     private String getCheckboxSummary(PreferenceScreen screen, String preference) {
@@ -115,22 +111,19 @@ public class ClearBrowsingDataPreferencesBasicTest {
         final Preferences preferences = mActivityTestRule.startPreferences(
                 ClearBrowsingDataPreferencesBasic.class.getName());
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ClearBrowsingDataPreferencesBasic fragment =
-                        (ClearBrowsingDataPreferencesBasic) preferences.getFragmentForTest();
-                PreferenceScreen screen = fragment.getPreferenceScreen();
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            ClearBrowsingDataPreferencesBasic fragment =
+                    (ClearBrowsingDataPreferencesBasic) preferences.getFragmentForTest();
+            PreferenceScreen screen = fragment.getPreferenceScreen();
 
-                String cookiesSummary =
-                        getCheckboxSummary(screen, ClearBrowsingDataPreferencesBasic.PREF_COOKIES);
-                String historySummary =
-                        getCheckboxSummary(screen, ClearBrowsingDataPreferencesBasic.PREF_HISTORY);
+            String cookiesSummary =
+                    getCheckboxSummary(screen, ClearBrowsingDataPreferencesBasic.PREF_COOKIES);
+            String historySummary =
+                    getCheckboxSummary(screen, ClearBrowsingDataPreferencesBasic.PREF_HISTORY);
 
-                assertThat(cookiesSummary, not(containsString(GOOGLE_ACCOUNT)));
-                assertThat(historySummary, not(containsString(OTHER_ACTIVITY)));
-                assertThat(historySummary, not(containsString(SIGNED_IN_DEVICES)));
-            }
+            assertThat(cookiesSummary, not(containsString(GOOGLE_ACCOUNT)));
+            assertThat(historySummary, not(containsString(OTHER_ACTIVITY)));
+            assertThat(historySummary, not(containsString(SIGNED_IN_DEVICES)));
         });
     }
 
@@ -147,22 +140,19 @@ public class ClearBrowsingDataPreferencesBasicTest {
         final Preferences preferences = mActivityTestRule.startPreferences(
                 ClearBrowsingDataPreferencesBasic.class.getName());
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ClearBrowsingDataPreferencesBasic fragment =
-                        (ClearBrowsingDataPreferencesBasic) preferences.getFragmentForTest();
-                PreferenceScreen screen = fragment.getPreferenceScreen();
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            ClearBrowsingDataPreferencesBasic fragment =
+                    (ClearBrowsingDataPreferencesBasic) preferences.getFragmentForTest();
+            PreferenceScreen screen = fragment.getPreferenceScreen();
 
-                String cookiesSummary =
-                        getCheckboxSummary(screen, ClearBrowsingDataPreferencesBasic.PREF_COOKIES);
-                String historySummary =
-                        getCheckboxSummary(screen, ClearBrowsingDataPreferencesBasic.PREF_HISTORY);
+            String cookiesSummary =
+                    getCheckboxSummary(screen, ClearBrowsingDataPreferencesBasic.PREF_COOKIES);
+            String historySummary =
+                    getCheckboxSummary(screen, ClearBrowsingDataPreferencesBasic.PREF_HISTORY);
 
-                assertThat(cookiesSummary, containsString(GOOGLE_ACCOUNT));
-                assertThat(historySummary, containsString(OTHER_ACTIVITY));
-                assertThat(historySummary, not(containsString(SIGNED_IN_DEVICES)));
-            }
+            assertThat(cookiesSummary, containsString(GOOGLE_ACCOUNT));
+            assertThat(historySummary, containsString(OTHER_ACTIVITY));
+            assertThat(historySummary, not(containsString(SIGNED_IN_DEVICES)));
         });
     }
 
@@ -179,22 +169,19 @@ public class ClearBrowsingDataPreferencesBasicTest {
         final Preferences preferences = mActivityTestRule.startPreferences(
                 ClearBrowsingDataPreferencesBasic.class.getName());
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ClearBrowsingDataPreferencesBasic fragment =
-                        (ClearBrowsingDataPreferencesBasic) preferences.getFragmentForTest();
-                PreferenceScreen screen = fragment.getPreferenceScreen();
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            ClearBrowsingDataPreferencesBasic fragment =
+                    (ClearBrowsingDataPreferencesBasic) preferences.getFragmentForTest();
+            PreferenceScreen screen = fragment.getPreferenceScreen();
 
-                String cookiesSummary =
-                        getCheckboxSummary(screen, ClearBrowsingDataPreferencesBasic.PREF_COOKIES);
-                String historySummary =
-                        getCheckboxSummary(screen, ClearBrowsingDataPreferencesBasic.PREF_HISTORY);
+            String cookiesSummary =
+                    getCheckboxSummary(screen, ClearBrowsingDataPreferencesBasic.PREF_COOKIES);
+            String historySummary =
+                    getCheckboxSummary(screen, ClearBrowsingDataPreferencesBasic.PREF_HISTORY);
 
-                assertThat(cookiesSummary, containsString(GOOGLE_ACCOUNT));
-                assertThat(historySummary, containsString(OTHER_ACTIVITY));
-                assertThat(historySummary, containsString(SIGNED_IN_DEVICES));
-            }
+            assertThat(cookiesSummary, containsString(GOOGLE_ACCOUNT));
+            assertThat(historySummary, containsString(OTHER_ACTIVITY));
+            assertThat(historySummary, containsString(SIGNED_IN_DEVICES));
         });
     }
 }

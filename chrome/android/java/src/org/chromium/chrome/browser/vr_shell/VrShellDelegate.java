@@ -754,23 +754,13 @@ public class VrShellDelegate
         mVrClassesWrapper.setVrModeEnabled(mActivity, true);
         if (!isWindowModeCorrectForVr()) {
             setWindowModeForVr(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            mEnterVrHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    enterVr(tentativeWebVrMode);
-                }
-            });
+            mEnterVrHandler.post(() -> enterVr(tentativeWebVrMode));
             return;
         }
         // We need to add VR UI asynchronously, or we get flashes of 2D content. Presumably this is
         // because adding the VR UI is slow and Android times out and decides to just show
         // something.
-        mEnterVrHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                enterVrWithCorrectWindowMode(tentativeWebVrMode);
-            }
-        });
+        mEnterVrHandler.post(() -> enterVrWithCorrectWindowMode(tentativeWebVrMode));
     }
 
     private void enterVrWithCorrectWindowMode(final boolean tentativeWebVrMode) {
@@ -823,13 +813,10 @@ public class VrShellDelegate
             // assume it will never start. Once we know whether or not entering VR will trigger the
             // DON flow, we should remove this. See b/63116739.
             mProbablyInDon = true;
-            mExpectPauseOrDonSucceeded.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mProbablyInDon = false;
-                    mDonSucceeded = true;
-                    handleDonFlowSuccess();
-                }
+            mExpectPauseOrDonSucceeded.postDelayed(() -> {
+                mProbablyInDon = false;
+                mDonSucceeded = true;
+                handleDonFlowSuccess();
             }, EXPECT_DON_TIMEOUT_MS);
         }
     }
@@ -1098,13 +1085,10 @@ public class VrShellDelegate
         if (mVrSupportLevel != VR_DAYDREAM) return;
         if (isVrShellEnabled(mVrSupportLevel) && activitySupportsVrBrowsing(mActivity)) {
             // Perform slow initialization asynchronously.
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    if (!mPaused) {
-                        registerDaydreamIntent(mVrDaydreamApi, mActivity);
-                        createNonPresentingNativeContext();
-                    }
+            new Handler().post(() -> {
+                if (!mPaused) {
+                    registerDaydreamIntent(mVrDaydreamApi, mActivity);
+                    createNonPresentingNativeContext();
                 }
             });
         }
@@ -1430,12 +1414,8 @@ public class VrShellDelegate
                 || vrCoreCompatibility == VrCoreCompatibility.VR_OUT_OF_DATE;
         if (tabToShowInfobarIn != null && needsUpdate) {
             ThreadUtils.assertOnUiThread();
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    promptToUpdateVrServices(vrCoreCompatibility, tabToShowInfobarIn);
-                }
-            });
+            new Handler().post(
+                    () -> promptToUpdateVrServices(vrCoreCompatibility, tabToShowInfobarIn));
         }
 
         return vrCoreCompatibility == VrCoreCompatibility.VR_READY;

@@ -32,7 +32,6 @@ import org.chromium.net.test.EmbeddedTestServer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -82,14 +81,11 @@ public class RecentTabsTest {
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // Ensure we start in an offline state.
-                NetworkChangeNotifier.forceConnectivityState(false);
-                if (!NetworkChangeNotifier.isInitialized()) {
-                    NetworkChangeNotifier.init();
-                }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // Ensure we start in an offline state.
+            NetworkChangeNotifier.forceConnectivityState(false);
+            if (!NetworkChangeNotifier.isInitialized()) {
+                NetworkChangeNotifier.init();
             }
         });
 
@@ -154,12 +150,8 @@ public class RecentTabsTest {
         Assert.assertTrue(tabModel.supportsPendingClosures());
 
         // Requests closing of the tab allowing for closure undo and checks it's actually closing.
-        boolean closeTabReturnValue = ThreadUtils.runOnUiThreadBlocking(new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                return tabModel.closeTab(tab, false, false, true);
-            }
-        });
+        boolean closeTabReturnValue = ThreadUtils.runOnUiThreadBlocking(
+                () -> tabModel.closeTab(tab, false, false, true));
         Assert.assertTrue(closeTabReturnValue);
         Assert.assertTrue(tab.isHidden());
         Assert.assertTrue(tab.isClosing());
@@ -169,13 +161,10 @@ public class RecentTabsTest {
         Assert.assertNull(getPageByClientId(firstTabClientId));
 
         // Undo the closure and make sure the tab is again the current one on foreground.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                tabModel.cancelTabClosure(tab.getId());
-                int tabIndex = TabModelUtils.getTabIndexById(tabModel, tab.getId());
-                TabModelUtils.setIndex(tabModel, tabIndex);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            tabModel.cancelTabClosure(tab.getId());
+            int tabIndex = TabModelUtils.getTabIndexById(tabModel, tab.getId());
+            TabModelUtils.setIndex(tabModel, tabIndex);
         });
         Assert.assertFalse(tab.isHidden());
         Assert.assertFalse(tab.isClosing());
@@ -215,21 +204,16 @@ public class RecentTabsTest {
         final List<ClientId> clientIdList = new ArrayList<>();
         clientIdList.add(clientId);
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mOfflinePageBridge.getPagesByClientIds(
-                        clientIdList, new Callback<List<OfflinePageItem>>() {
-                            @Override
-                            public void onResult(List<OfflinePageItem> items) {
-                                if (!items.isEmpty()) {
-                                    result[0] = items.get(0);
-                                }
-                                semaphore.release();
-                            }
-                        });
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> mOfflinePageBridge.getPagesByClientIds(
+                clientIdList, new Callback<List<OfflinePageItem>>() {
+                    @Override
+                    public void onResult(List<OfflinePageItem> items) {
+                        if (!items.isEmpty()) {
+                            result[0] = items.get(0);
+                        }
+                        semaphore.release();
+                    }
+                }));
         Assert.assertTrue(semaphore.tryAcquire(TIMEOUT_MS, TimeUnit.MILLISECONDS));
         return result[0];
     }

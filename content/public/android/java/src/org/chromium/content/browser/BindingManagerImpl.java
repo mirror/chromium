@@ -55,23 +55,20 @@ class BindingManagerImpl implements BindingManager {
         @Override
         public void onTrimMemory(final int level) {
             ThreadUtils.assertOnUiThread();
-            LauncherThread.post(new Runnable() {
-                @Override
-                public void run() {
-                    Log.i(TAG, "onTrimMemory: level=%d, size=%d", level, mConnections.size());
-                    if (mConnections.isEmpty()) {
-                        return;
-                    }
-                    if (level <= TRIM_MEMORY_RUNNING_MODERATE) {
-                        reduce(MODERATE_BINDING_LOW_REDUCE_RATIO);
-                    } else if (level <= TRIM_MEMORY_RUNNING_LOW) {
-                        reduce(MODERATE_BINDING_HIGH_REDUCE_RATIO);
-                    } else if (level == TRIM_MEMORY_UI_HIDDEN) {
-                        // This will be handled by |mDelayedClearer|.
-                        return;
-                    } else {
-                        removeAllConnections();
-                    }
+            LauncherThread.post(() -> {
+                Log.i(TAG, "onTrimMemory: level=%d, size=%d", level, mConnections.size());
+                if (mConnections.isEmpty()) {
+                    return;
+                }
+                if (level <= TRIM_MEMORY_RUNNING_MODERATE) {
+                    reduce(MODERATE_BINDING_LOW_REDUCE_RATIO);
+                } else if (level <= TRIM_MEMORY_RUNNING_LOW) {
+                    reduce(MODERATE_BINDING_HIGH_REDUCE_RATIO);
+                } else if (level == TRIM_MEMORY_UI_HIDDEN) {
+                    // This will be handled by |mDelayedClearer|.
+                    return;
+                } else {
+                    removeAllConnections();
                 }
             });
         }
@@ -79,12 +76,9 @@ class BindingManagerImpl implements BindingManager {
         @Override
         public void onLowMemory() {
             ThreadUtils.assertOnUiThread();
-            LauncherThread.post(new Runnable() {
-                @Override
-                public void run() {
-                    Log.i(TAG, "onLowMemory: evict %d bindings", mConnections.size());
-                    removeAllConnections();
-                }
+            LauncherThread.post(() -> {
+                Log.i(TAG, "onLowMemory: evict %d bindings", mConnections.size());
+                removeAllConnections();
             });
         }
 
@@ -153,16 +147,13 @@ class BindingManagerImpl implements BindingManager {
 
         void onSentToBackground(final boolean onTesting) {
             if (mConnections.isEmpty()) return;
-            mDelayedClearer = new Runnable() {
-                @Override
-                public void run() {
-                    Log.i(TAG, "Release moderate connections: %d", mConnections.size());
-                    if (!onTesting) {
-                        RecordHistogram.recordCountHistogram(
-                                "Android.ModerateBindingCount", mConnections.size());
-                    }
-                    removeAllConnections();
+            mDelayedClearer = () -> {
+                Log.i(TAG, "Release moderate connections: %d", mConnections.size());
+                if (!onTesting) {
+                    RecordHistogram.recordCountHistogram(
+                            "Android.ModerateBindingCount", mConnections.size());
                 }
+                removeAllConnections();
             };
             LauncherThread.postDelayed(mDelayedClearer, MODERATE_BINDING_POOL_CLEARER_DELAY_MILLIS);
         }
@@ -211,14 +202,11 @@ class BindingManagerImpl implements BindingManager {
 
             // This runnable performs the actual unbinding. It will be executed synchronously when
             // on low-end devices and posted with a delay otherwise.
-            Runnable doUnbind = new Runnable() {
-                @Override
-                public void run() {
-                    if (mConnection.isStrongBindingBound()) {
-                        mConnection.removeStrongBinding();
-                        if (keepAsModerate) {
-                            addConnectionToModerateBindingPool(mConnection);
-                        }
+            Runnable doUnbind = () -> {
+                if (mConnection.isStrongBindingBound()) {
+                    mConnection.removeStrongBinding();
+                    if (keepAsModerate) {
+                        addConnectionToModerateBindingPool(mConnection);
                     }
                 }
             };

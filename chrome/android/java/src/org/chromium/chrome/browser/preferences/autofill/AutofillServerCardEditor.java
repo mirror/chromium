@@ -37,25 +37,18 @@ public class AutofillServerCardEditor extends AutofillCreditCardEditor {
         ((TextView) v.findViewById(R.id.title)).setText(mCard.getObfuscatedNumber());
         ((TextView) v.findViewById(R.id.summary)).setText(mCard.getFormattedExpirationDate(
                 getActivity()));
-        v.findViewById(R.id.edit_server_card).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomTabActivity.showInfoPage(
-                        getActivity(), ChromeStringConstants.AUTOFILL_MANAGE_WALLET_CARD_URL);
-            }
-        });
+        v.findViewById(R.id.edit_server_card).setOnClickListener(
+                v12 -> CustomTabActivity.showInfoPage(
+                        getActivity(), ChromeStringConstants.AUTOFILL_MANAGE_WALLET_CARD_URL));
 
 
         mLocalCopyLabel = v.findViewById(R.id.local_copy_label);
         mClearLocalCopy = v.findViewById(R.id.clear_local_copy);
 
         if (mCard.getIsCached()) {
-            mClearLocalCopy.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PersonalDataManager.getInstance().clearUnmaskedCache(mGUID);
-                    removeLocalCopyViews();
-                }
+            mClearLocalCopy.setOnClickListener(v1 -> {
+                PersonalDataManager.getInstance().clearUnmaskedCache(mGUID);
+                removeLocalCopyViews();
             });
         } else {
             removeLocalCopyViews();

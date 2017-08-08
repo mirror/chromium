@@ -159,12 +159,6 @@ public final class CommandLineFlags {
     }
 
     public static PreTestHook getRegistrationHook() {
-        return new PreTestHook() {
-            @Override
-            public void run(Context targetContext, Method testMethod) {
-                CommandLineFlags.setUp(targetContext, testMethod);
-            }
-
-        };
+        return (targetContext, testMethod) -> CommandLineFlags.setUp(targetContext, testMethod);
     }
 }

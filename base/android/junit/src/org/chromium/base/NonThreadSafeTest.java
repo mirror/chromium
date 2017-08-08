@@ -34,12 +34,7 @@ public class NonThreadSafeTest {
     public void testCreateAndUseOnDifferentThread() {
         final NonThreadSafe t = new NonThreadSafe();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertFalse(t.calledOnValidThread());
-            }
-        }).start();
+        new Thread(() -> Assert.assertFalse(t.calledOnValidThread())).start();
     }
 
     /**
@@ -52,12 +47,9 @@ public class NonThreadSafeTest {
         Assert.assertTrue(t.calledOnValidThread());
         t.detachFromThread();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(t.calledOnValidThread());
-                Assert.assertTrue(t.calledOnValidThread());
-            }
+        new Thread(() -> {
+            Assert.assertTrue(t.calledOnValidThread());
+            Assert.assertTrue(t.calledOnValidThread());
         }).start();
     }
 }

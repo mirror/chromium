@@ -565,12 +565,7 @@ class LegacyLinker extends Linker {
      */
     @CalledByNative
     public static void postCallbackOnMainThread(final long opaque) {
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                nativeRunCallbackOnUiThread(opaque);
-            }
-        });
+        ThreadUtils.postOnUiThread(() -> nativeRunCallbackOnUiThread(opaque));
     }
 
     /**

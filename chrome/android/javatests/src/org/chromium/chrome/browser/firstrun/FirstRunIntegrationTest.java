@@ -66,16 +66,13 @@ public class FirstRunIntegrationTest {
     @SmallTest
     public void testGenericViewIntentGoesToFirstRun() {
         final String asyncClassName = ChromeLauncherActivity.class.getName();
-        runFirstRunRedirectTestForActivity(asyncClassName, new Runnable() {
-            @Override
-            public void run() {
-                final Context context =
-                        InstrumentationRegistry.getInstrumentation().getTargetContext();
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://test.com"));
-                intent.setPackage(context.getPackageName());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
+        runFirstRunRedirectTestForActivity(asyncClassName, () -> {
+            final Context context =
+                    InstrumentationRegistry.getInstrumentation().getTargetContext();
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://test.com"));
+            intent.setPackage(context.getPackageName());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         });
     }
 
@@ -83,15 +80,12 @@ public class FirstRunIntegrationTest {
     @SmallTest
     public void testRedirectCustomTabActivityToFirstRun() {
         final String asyncClassName = ChromeLauncherActivity.class.getName();
-        runFirstRunRedirectTestForActivity(asyncClassName, new Runnable() {
-            @Override
-            public void run() {
-                Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-                CustomTabsIntent customTabIntent = new CustomTabsIntent.Builder().build();
-                customTabIntent.intent.setPackage(context.getPackageName());
-                customTabIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                customTabIntent.launchUrl(context, Uri.parse("http://test.com"));
-            }
+        runFirstRunRedirectTestForActivity(asyncClassName, () -> {
+            Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+            CustomTabsIntent customTabIntent = new CustomTabsIntent.Builder().build();
+            customTabIntent.intent.setPackage(context.getPackageName());
+            customTabIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            customTabIntent.launchUrl(context, Uri.parse("http://test.com"));
         });
     }
 
@@ -99,16 +93,13 @@ public class FirstRunIntegrationTest {
     @SmallTest
     public void testRedirectChromeTabbedActivityToFirstRun() {
         final String asyncClassName = ChromeTabbedActivity.class.getName();
-        runFirstRunRedirectTestForActivity(asyncClassName, new Runnable() {
-            @Override
-            public void run() {
-                final Context context =
-                        InstrumentationRegistry.getInstrumentation().getTargetContext();
-                Intent intent = new Intent();
-                intent.setClassName(context, asyncClassName);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
+        runFirstRunRedirectTestForActivity(asyncClassName, () -> {
+            final Context context =
+                    InstrumentationRegistry.getInstrumentation().getTargetContext();
+            Intent intent = new Intent();
+            intent.setClassName(context, asyncClassName);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         });
     }
 
@@ -116,16 +107,13 @@ public class FirstRunIntegrationTest {
     @SmallTest
     public void testRedirectSearchActivityToFirstRun() {
         final String asyncClassName = SearchActivity.class.getName();
-        runFirstRunRedirectTestForActivity(asyncClassName, new Runnable() {
-            @Override
-            public void run() {
-                final Context context =
-                        InstrumentationRegistry.getInstrumentation().getTargetContext();
-                Intent intent = new Intent();
-                intent.setClassName(context, asyncClassName);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
+        runFirstRunRedirectTestForActivity(asyncClassName, () -> {
+            final Context context =
+                    InstrumentationRegistry.getInstrumentation().getTargetContext();
+            Intent intent = new Intent();
+            intent.setClassName(context, asyncClassName);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         });
     }
 
@@ -338,13 +326,10 @@ public class FirstRunIntegrationTest {
             }
         });
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Button button = (Button) activity.findViewById(id);
-                Assert.assertNotNull(message, button);
-                button.performClick();
-            }
+        ThreadUtils.runOnUiThread(() -> {
+            Button button = (Button) activity.findViewById(id);
+            Assert.assertNotNull(message, button);
+            button.performClick();
         });
     }
 }

@@ -19,7 +19,6 @@ import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge.OfflinePageModelObserver;
-import org.chromium.chrome.browser.offlinepages.OfflinePageBridge.SavePageCallback;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.test.ChromeActivityTestRule;
@@ -101,12 +100,8 @@ public class OfflinePageRequestTest {
 
         // Stop the server and also disconnect the network.
         testServer.stopAndDestroyServer();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                NetworkChangeNotifier.forceConnectivityState(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> NetworkChangeNotifier.forceConnectivityState(false));
 
         // Load the page that has an offline copy. The offline page should be shown.
         mActivityTestRule.loadUrl(testUrl);
@@ -132,12 +127,8 @@ public class OfflinePageRequestTest {
 
         // Stop the server and also disconnect the network.
         testServer.stopAndDestroyServer();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                NetworkChangeNotifier.forceConnectivityState(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> NetworkChangeNotifier.forceConnectivityState(false));
 
         // Load the URL without the fragment. The offline page should be shown.
         mActivityTestRule.loadUrl(testUrl);
@@ -149,44 +140,27 @@ public class OfflinePageRequestTest {
         mActivityTestRule.loadUrl(url);
 
         final Semaphore semaphore = new Semaphore(0);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mOfflinePageBridge.savePage(
-                        mActivityTestRule.getActivity().getActivityTab().getWebContents(),
-                        CLIENT_ID, new SavePageCallback() {
-                            @Override
-                            public void onSavePageDone(
-                                    int savePageResult, String url, long offlineId) {
-                                Assert.assertEquals(
-                                        "Save failed.", SavePageResult.SUCCESS, savePageResult);
-                                semaphore.release();
-                            }
-                        });
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mOfflinePageBridge.savePage(
+                mActivityTestRule.getActivity().getActivityTab().getWebContents(),
+                CLIENT_ID, (savePageResult, url1, offlineId) -> {
+                    Assert.assertEquals(
+                            "Save failed.", SavePageResult.SUCCESS, savePageResult);
+                    semaphore.release();
+                }));
         Assert.assertTrue(semaphore.tryAcquire(TIMEOUT_MS, TimeUnit.MILLISECONDS));
     }
 
     private boolean isOfflinePage(final Tab tab) {
         final boolean[] isOffline = new boolean[1];
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                isOffline[0] = OfflinePageUtils.isOfflinePage(tab);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> isOffline[0] = OfflinePageUtils.isOfflinePage(tab));
         return isOffline[0];
     }
 
     private boolean isErrorPage(final Tab tab) {
         final boolean[] isShowingError = new boolean[1];
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                isShowingError[0] = tab.isShowingErrorPage();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> isShowingError[0] = tab.isShowingErrorPage());
         return isShowingError[0];
     }
 }

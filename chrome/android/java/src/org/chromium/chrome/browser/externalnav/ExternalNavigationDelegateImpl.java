@@ -7,8 +7,6 @@ package org.chromium.chrome.browser.externalnav;
 import android.Manifest.permission;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -388,30 +386,20 @@ public class ExternalNavigationDelegateImpl implements ExternalNavigationDelegat
                 .setTitle(R.string.external_app_leave_incognito_warning_title)
                 .setMessage(R.string.external_app_leave_incognito_warning)
                 .setPositiveButton(R.string.external_app_leave_incognito_leave,
-                        new OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                startActivity(intent, proxy);
-                                if (tab != null && !tab.isClosing() && tab.isInitialized()
-                                        && needsToCloseTab) {
-                                    closeTab(tab);
-                                }
+                        (OnClickListener) (dialog, which) -> {
+                            startActivity(intent, proxy);
+                            if (tab != null && !tab.isClosing() && tab.isInitialized()
+                                    && needsToCloseTab) {
+                                closeTab(tab);
                             }
                         })
                 .setNegativeButton(R.string.external_app_leave_incognito_stay,
-                        new OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                loadIntent(intent, referrerUrl, fallbackUrl, tab, needsToCloseTab,
-                                        true);
-                            }
-                        })
-                .setOnCancelListener(new OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        loadIntent(intent, referrerUrl, fallbackUrl, tab, needsToCloseTab, true);
-                    }
-                })
+                        (OnClickListener) (dialog, which) -> loadIntent(intent, referrerUrl,
+                                fallbackUrl, tab, needsToCloseTab,
+                                true))
+                .setOnCancelListener(
+                        dialog -> loadIntent(intent, referrerUrl, fallbackUrl, tab, needsToCloseTab,
+                                true))
                 .show();
     }
 
@@ -433,19 +421,16 @@ public class ExternalNavigationDelegateImpl implements ExternalNavigationDelegat
     @Override
     public void startFileIntent(final Intent intent, final String referrerUrl, final Tab tab,
             final boolean needsToCloseTab) {
-        PermissionCallback permissionCallback = new PermissionCallback() {
-            @Override
-            public void onRequestPermissionsResult(String[] permissions, int[] grantResults) {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    loadIntent(intent, referrerUrl, null, tab, needsToCloseTab, tab.isIncognito());
-                } else {
-                    // TODO(tedchoc): Show an indication to the user that the navigation failed
-                    //                instead of silently dropping it on the floor.
-                    if (needsToCloseTab) {
-                        // If the access was not granted, then close the tab if necessary.
-                        closeTab(tab);
-                    }
+        PermissionCallback permissionCallback = (permissions, grantResults) -> {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                loadIntent(intent, referrerUrl, null, tab, needsToCloseTab, tab.isIncognito());
+            } else {
+                // TODO(tedchoc): Show an indication to the user that the navigation failed
+                //                instead of silently dropping it on the floor.
+                if (needsToCloseTab) {
+                    // If the access was not granted, then close the tab if necessary.
+                    closeTab(tab);
                 }
             }
         };
@@ -505,12 +490,7 @@ public class ExternalNavigationDelegateImpl implements ExternalNavigationDelegat
             // Loading URL will start a new navigation which cancels the current one
             // that this clobbering is being done for. It leads to UAF. To avoid that,
             // we're loading URL asynchronously. See https://crbug.com/732260.
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    tab.loadUrl(loadUrlParams);
-                }
-            });
+            ThreadUtils.postOnUiThread(() -> tab.loadUrl(loadUrlParams));
             return OverrideUrlLoadingResult.OVERRIDE_WITH_CLOBBERING_TAB;
         } else {
             assert false : "clobberCurrentTab was called with an empty tab.";

@@ -47,13 +47,10 @@ public class ProviderTestRule extends ChromeActivityTestRule<ChromeActivity> {
         Assert.assertNotNull(activity);
 
         final ContentProvider provider = new ChromeBrowserProvider();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ProviderInfo providerInfo = new ProviderInfo();
-                providerInfo.authority = ChromeBrowserProvider.getApiAuthority(activity);
-                provider.attachInfo(activity, providerInfo);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            ProviderInfo providerInfo = new ProviderInfo();
+            providerInfo.authority = ChromeBrowserProvider.getApiAuthority(activity);
+            provider.attachInfo(activity, providerInfo);
         });
 
         MockContentResolver resolver = new MockContentResolver();

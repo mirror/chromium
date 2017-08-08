@@ -16,13 +16,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
-import android.support.v7.widget.Toolbar.OnMenuItemClickListener;
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -30,7 +26,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -110,21 +105,18 @@ public class EditorDialog
         mContext = activity;
         mObserverForTest = observerForTest;
         mHandler = new Handler();
-        mEditorActionListener = new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    mDoneButton.performClick();
+        mEditorActionListener = (v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                mDoneButton.performClick();
+                return true;
+            } else if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                View next = v.focusSearch(View.FOCUS_FORWARD);
+                if (next != null) {
+                    next.requestFocus();
                     return true;
-                } else if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    View next = v.focusSearch(View.FOCUS_FORWARD);
-                    if (next != null) {
-                        next.requestFocus();
-                        return true;
-                    }
                 }
-                return false;
             }
+            return false;
         };
 
         mHalfRowMargin = activity.getResources().getDimensionPixelSize(
@@ -136,21 +128,17 @@ public class EditorDialog
         mDropdownFields = new ArrayList<>();
 
         final Pattern cardNumberPattern = Pattern.compile("^[\\d- ]*$");
-        mCardNumberInputFilter = new InputFilter() {
-            @Override
-            public CharSequence filter(
-                    CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                // Accept deletions.
-                if (start == end) return null;
+        mCardNumberInputFilter = (source, start, end, dest, dstart, dend) -> {
+            // Accept deletions.
+            if (start == end) return null;
 
-                // Accept digits, "-", and spaces.
-                if (cardNumberPattern.matcher(source.subSequence(start, end)).matches()) {
-                    return null;
-                }
-
-                // Reject everything else.
-                return "";
+            // Accept digits, "-", and spaces.
+            if (cardNumberPattern.matcher(source.subSequence(start, end)).matches()) {
+                return null;
             }
+
+            // Reject everything else.
+            return "";
         };
 
         mCardNumberFormatter = new CreditCardNumberFormattingTextWatcher();
@@ -184,23 +172,15 @@ public class EditorDialog
         toolbar.setShowDeleteMenuItem(false);
 
         // Show the help article when the user asks.
-        toolbar.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                launchAutofillHelpPage(mContext);
-                return true;
-            }
+        toolbar.setOnMenuItemClickListener(item -> {
+            launchAutofillHelpPage(mContext);
+            return true;
         });
 
         // Cancel editing when the user hits the back arrow.
         toolbar.setNavigationContentDescription(R.string.cancel);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                animateOutDialog();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> animateOutDialog());
 
         // Make it appear that the toolbar is floating by adding a shadow.
         FadingShadowView shadow = (FadingShadowView) mLayout.findViewById(R.id.shadow);
@@ -406,16 +386,13 @@ public class EditorDialog
         } else if (fieldModel.getInputTypeHint() == EditorFieldModel.INPUT_TYPE_HINT_LABEL) {
             childView = new EditorLabelField(mContext, parent, fieldModel).getLayout();
         } else if (fieldModel.getInputTypeHint() == EditorFieldModel.INPUT_TYPE_HINT_DROPDOWN) {
-            Runnable prepareEditorRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    // The dialog has been dismissed.
-                    if (mEditorModel == null) return;
+            Runnable prepareEditorRunnable = () -> {
+                // The dialog has been dismissed.
+                if (mEditorModel == null) return;
 
-                    // The fields may have changed.
-                    prepareEditor();
-                    if (mObserverForTest != null) mObserverForTest.onPaymentRequestReadyToEdit();
-                }
+                // The fields may have changed.
+                prepareEditor();
+                if (mObserverForTest != null) mObserverForTest.onPaymentRequestReadyToEdit();
             };
             EditorDropdownField dropdownView = new EditorDropdownField(
                     mContext, parent, fieldModel, prepareEditorRunnable, mObserverForTest);
@@ -428,12 +405,9 @@ public class EditorDialog
             checkbox.setId(R.id.payments_edit_checkbox);
             checkbox.setText(fieldModel.getLabel());
             checkbox.setChecked(fieldModel.isChecked());
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    fieldModel.setIsChecked(isChecked);
-                    if (mObserverForTest != null) mObserverForTest.onPaymentRequestReadyToEdit();
-                }
+            checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                fieldModel.setIsChecked(isChecked);
+                if (mObserverForTest != null) mObserverForTest.onPaymentRequestReadyToEdit();
             });
 
             childView = checkbox;
@@ -542,12 +516,9 @@ public class EditorDialog
         // Immediately focus the first invalid field to make it faster to edit.
         final List<EditorFieldView> invalidViews = getViewsWithInvalidInformation(false);
         if (!invalidViews.isEmpty()) {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    invalidViews.get(0).scrollToAndFocus();
-                    if (mObserverForTest != null) mObserverForTest.onPaymentRequestReadyToEdit();
-                }
+            mHandler.post(() -> {
+                invalidViews.get(0).scrollToAndFocus();
+                if (mObserverForTest != null) mObserverForTest.onPaymentRequestReadyToEdit();
             });
         } else {
             // The first field will be focused, we are ready to edit.

@@ -70,12 +70,7 @@ public class MainIntentBehaviorMetrics implements ApplicationStatus.ActivityStat
     public MainIntentBehaviorMetrics(ChromeActivity activity) {
         mActivity = activity;
         mHandler = new Handler();
-        mTimeoutRunnable = new Runnable() {
-            @Override
-            public void run() {
-                recordUserBehavior(CONTINUATION);
-            }
-        };
+        mTimeoutRunnable = () -> recordUserBehavior(CONTINUATION);
     }
 
     /**

@@ -214,23 +214,21 @@ public class CompositorViewHolder extends FrameLayout
 
         mEnableCompositorTabStrip = DeviceFormFactor.isTablet();
 
-        addOnLayoutChangeListener(new OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                    int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                onViewportChanged();
+        addOnLayoutChangeListener(
+                (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+                    onViewportChanged();
 
-                // If there's an event that needs to occur after the keyboard is hidden, post
-                // it as a delayed event.  Otherwise this happens in the midst of the
-                // ContentView's relayout, which causes the ContentView to relayout on top of the
-                // stack view.  The 30ms is arbitrary, hoping to let the view get one repaint
-                // in so the full page is shown.
-                if (mPostHideKeyboardTask != null) {
-                    new Handler().postDelayed(mPostHideKeyboardTask, 30);
-                    mPostHideKeyboardTask = null;
-                }
-            }
-        });
+                    // If there's an event that needs to occur after the keyboard is hidden, post
+                    // it as a delayed event.  Otherwise this happens in the midst of the
+                    // ContentView's relayout, which causes the ContentView to relayout on top of
+                    // the
+                    // stack view.  The 30ms is arbitrary, hoping to let the view get one repaint
+                    // in so the full page is shown.
+                    if (mPostHideKeyboardTask != null) {
+                        new Handler().postDelayed(mPostHideKeyboardTask, 30);
+                        mPostHideKeyboardTask = null;
+                    }
+                });
 
         mCompositorView = new CompositorView(getContext(), this);
         // mCompositorView should always be the first child.
@@ -590,13 +588,10 @@ public class CompositorViewHolder extends FrameLayout
         // and the tab strip, to ensure the compositor frame has been drawn.
         final ViewGroup controlContainer = (ViewGroup) mControlContainer;
         if (mHasDrawnOnce) {
-            post(new Runnable() {
-                @Override
-                public void run() {
-                    mCompositorView.setBackgroundResource(0);
-                    if (controlContainer != null) {
-                        controlContainer.setBackgroundResource(0);
-                    }
+            post(() -> {
+                mCompositorView.setBackgroundResource(0);
+                if (controlContainer != null) {
+                    controlContainer.setBackgroundResource(0);
                 }
             });
         }

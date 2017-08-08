@@ -10,7 +10,6 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
 import org.chromium.ui.resources.dynamics.DynamicResourceLoader;
 
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -63,13 +62,10 @@ public class OverlayPanelManager {
      */
     public OverlayPanelManager() {
         mSuppressedPanels = new PriorityQueue<>(INITIAL_QUEUE_CAPACITY,
-                new Comparator<OverlayPanel>() {
-                    @Override
-                    public int compare(OverlayPanel p1, OverlayPanel p2) {
-                        // The head of the queue is the smallest element, so subtract p1's priority
-                        // from p2's priority.
-                        return p2.getPriority().ordinal() - p1.getPriority().ordinal();
-                    }
+                (p1, p2) -> {
+                    // The head of the queue is the smallest element, so subtract p1's priority
+                    // from p2's priority.
+                    return p2.getPriority().ordinal() - p1.getPriority().ordinal();
                 });
         mPanelSet = new HashSet<>();
     }

@@ -25,7 +25,6 @@ import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -56,49 +55,33 @@ public class VrShellCompositorViewHolderTest {
         final ContentViewCore cvc =
                 mVrTestRule.getActivity().getActivityTab().getActiveContentViewCore();
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                CompositorViewHolder compositorViewHolder =
-                        (CompositorViewHolder) mVrTestRule.getActivity().findViewById(
-                                R.id.compositor_view_holder);
-                selector.set(compositorViewHolder.detachForVr());
-                oldWidth.set(cvc.getViewportWidthPix());
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            CompositorViewHolder compositorViewHolder =
+                    (CompositorViewHolder) mVrTestRule.getActivity().findViewById(
+                            R.id.compositor_view_holder);
+            selector.set(compositorViewHolder.detachForVr());
+            oldWidth.set(cvc.getViewportWidthPix());
 
-                ViewGroup.LayoutParams layoutParams = compositorViewHolder.getLayoutParams();
-                layoutParams.width = testWidth;
-                layoutParams.height = 456;
-                compositorViewHolder.requestLayout();
-            }
+            ViewGroup.LayoutParams layoutParams = compositorViewHolder.getLayoutParams();
+            layoutParams.width = testWidth;
+            layoutParams.height = 456;
+            compositorViewHolder.requestLayout();
         });
-        CriteriaHelper.pollUiThread(Criteria.equals(testWidth, new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return mVrTestRule.getActivity()
-                        .findViewById(R.id.compositor_view_holder)
-                        .getMeasuredWidth();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(testWidth, () -> mVrTestRule.getActivity()
+                .findViewById(R.id.compositor_view_holder)
+                .getMeasuredWidth()));
 
         Assert.assertEquals("Viewport width should not have changed when resizing a detached "
                         + "CompositorViewHolder",
                 cvc.getViewportWidthPix(), oldWidth.get().intValue());
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                CompositorViewHolder compositorViewHolder =
-                        (CompositorViewHolder) mVrTestRule.getActivity().findViewById(
-                                R.id.compositor_view_holder);
-                compositorViewHolder.onExitVr(selector.get());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            CompositorViewHolder compositorViewHolder =
+                    (CompositorViewHolder) mVrTestRule.getActivity().findViewById(
+                            R.id.compositor_view_holder);
+            compositorViewHolder.onExitVr(selector.get());
         });
 
-        CriteriaHelper.pollUiThread(Criteria.equals(testWidth, new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return cvc.getViewportWidthPix();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(testWidth, () -> cvc.getViewportWidthPix()));
     }
 }

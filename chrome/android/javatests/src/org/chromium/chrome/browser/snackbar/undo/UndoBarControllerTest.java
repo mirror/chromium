@@ -27,7 +27,6 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
 import org.chromium.chrome.test.util.ChromeTabUtils;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -140,23 +139,13 @@ public class UndoBarControllerTest {
     }
 
     private void clickSnackbar() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mSnackbarManager.onClick(
-                        mActivityTestRule.getActivity().findViewById(R.id.snackbar_button));
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mSnackbarManager.onClick(
+                mActivityTestRule.getActivity().findViewById(R.id.snackbar_button)));
     }
 
     private void dismissSnackbars() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mSnackbarManager.dismissSnackbars(
-                        mSnackbarManager.getCurrentSnackbarForTesting().getController());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mSnackbarManager.dismissSnackbars(
+                mSnackbarManager.getCurrentSnackbarForTesting().getController()));
     }
 
     private String getSnackbarText() {
@@ -166,11 +155,7 @@ public class UndoBarControllerTest {
     }
 
     private Snackbar getCurrentSnackbar() throws ExecutionException {
-        return ThreadUtils.runOnUiThreadBlocking(new Callable<Snackbar>() {
-            @Override
-            public Snackbar call() throws Exception {
-                return mSnackbarManager.getCurrentSnackbarForTesting();
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlocking(
+                () -> mSnackbarManager.getCurrentSnackbarForTesting());
     }
 }

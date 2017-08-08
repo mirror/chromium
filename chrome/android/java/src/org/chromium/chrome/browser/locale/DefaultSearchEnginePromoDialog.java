@@ -82,12 +82,7 @@ public class DefaultSearchEnginePromoDialog extends PromoDialog {
         radioButtons.setId(R.id.default_search_engine_dialog_options);
         addControl(radioButtons);
 
-        Runnable dismissRunnable = new Runnable() {
-            @Override
-            public void run() {
-                dismiss();
-            }
-        };
+        Runnable dismissRunnable = () -> dismiss();
         mHelper = new DefaultSearchEngineDialogHelper(
                 mDialogType, radioButtons, okButton, dismissRunnable);
     }

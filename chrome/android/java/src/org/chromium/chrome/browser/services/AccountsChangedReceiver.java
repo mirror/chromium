@@ -67,12 +67,8 @@ public class AccountsChangedReceiver extends BroadcastReceiver {
         BrowserParts parts = new EmptyBrowserParts() {
             @Override
             public void finishNativeInitialization() {
-                ThreadUtils.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SigninHelper.get(context).validateAccountSettings(true);
-                    }
-                });
+                ThreadUtils.runOnUiThread(
+                        () -> SigninHelper.get(context).validateAccountSettings(true));
             }
 
             @Override

@@ -217,12 +217,7 @@ public class CastMessageHandler {
             } else {
                 // It's usually bad to have request and response on the same call stack so post the
                 // response to the Android message loop.
-                mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            onVolumeChanged(clientId, sequenceNumber);
-                        }
-                    });
+                mHandler.post(() -> onVolumeChanged(clientId, sequenceNumber));
             }
             return true;
         }

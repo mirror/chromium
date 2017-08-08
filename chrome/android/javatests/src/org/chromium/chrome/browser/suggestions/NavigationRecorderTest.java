@@ -78,12 +78,7 @@ public class NavigationRecorderTest {
         });
 
         ChromeTabUtils.waitForTabPageLoaded(mInitialTab, (String) null);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mInitialTab.goBack();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mInitialTab.goBack());
 
         callback.waitForCallback(0);
     }
@@ -127,12 +122,8 @@ public class NavigationRecorderTest {
     /** Loads the provided URL in the current tab and sets up navigation recording for it. */
     private void loadUrlAndRecordVisit(
             final String url, Callback<NavigationRecorder.VisitData> visitCallback) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mInitialTab.loadUrl(new LoadUrlParams(url));
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> mInitialTab.loadUrl(new LoadUrlParams(url)));
         NavigationRecorder.record(mInitialTab, visitCallback);
     }
 }

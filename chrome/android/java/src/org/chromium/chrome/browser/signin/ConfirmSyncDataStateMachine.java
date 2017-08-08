@@ -225,22 +225,12 @@ public class ConfirmSyncDataStateMachine
 
     private void showProgressDialog() {
         mDelegate.showFetchManagementPolicyProgressDialog(
-                new ConfirmSyncDataStateMachineDelegate.ProgressDialogListener() {
-                    @Override
-                    public void onCancel() {
-                        ConfirmSyncDataStateMachine.this.onCancel();
-                    }
-                });
+                () -> ConfirmSyncDataStateMachine.this.onCancel());
     }
 
     private void scheduleTimeout() {
         if (mCheckTimeoutRunnable == null) {
-            mCheckTimeoutRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    checkTimeout();
-                }
-            };
+            mCheckTimeoutRunnable = () -> checkTimeout();
         }
         mHandler.postDelayed(mCheckTimeoutRunnable, ACCOUNT_CHECK_TIMEOUT_MS);
     }

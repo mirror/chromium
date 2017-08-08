@@ -57,15 +57,13 @@ public class AccountAdder {
                 new AlertDialog.Builder(activity, R.style.SigninAlertDialogTheme);
         builder.setMessage(R.string.signin_open_add_google_account_page_failed);
         builder.setPositiveButton(
-                R.string.signin_open_settings_accounts, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Open Accounts page in device's Settings app.
-                        Intent openSettingsAccounts = new Intent(Settings.ACTION_SYNC_SETTINGS);
-                        if (openSettingsAccounts.resolveActivity(activity.getPackageManager())
-                                != null) {
-                            activity.startActivityForResult(openSettingsAccounts, result);
-                        }
+                R.string.signin_open_settings_accounts,
+                (DialogInterface.OnClickListener) (dialog, which) -> {
+                    // Open Accounts page in device's Settings app.
+                    Intent openSettingsAccounts = new Intent(Settings.ACTION_SYNC_SETTINGS);
+                    if (openSettingsAccounts.resolveActivity(activity.getPackageManager())
+                            != null) {
+                        activity.startActivityForResult(openSettingsAccounts, result);
                     }
                 });
         builder.create().show();

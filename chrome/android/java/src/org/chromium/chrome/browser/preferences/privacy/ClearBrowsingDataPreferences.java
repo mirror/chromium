@@ -610,23 +610,13 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
         TextMessageWithLinkAndIconPreference general_summary =
                 (TextMessageWithLinkAndIconPreference) findPreference(PREF_GENERAL_SUMMARY);
 
-        google_summary.setLinkClickDelegate(new Runnable() {
-            @Override
-            public void run() {
-                new TabDelegate(false /* incognito */).launchUrl(
-                        WEB_HISTORY_URL, TabLaunchType.FROM_CHROME_UI);
-            }
-        });
-        general_summary.setLinkClickDelegate(new Runnable() {
-            @Override
-            public void run() {
-                HelpAndFeedback.getInstance(getActivity()).show(
-                        getActivity(),
-                        getResources().getString(R.string.help_context_clear_browsing_data),
-                        Profile.getLastUsedProfile(),
-                        null);
-            }
-        });
+        google_summary.setLinkClickDelegate(() -> new TabDelegate(false /* incognito */).launchUrl(
+                WEB_HISTORY_URL, TabLaunchType.FROM_CHROME_UI));
+        general_summary.setLinkClickDelegate(() -> HelpAndFeedback.getInstance(getActivity()).show(
+                getActivity(),
+                getResources().getString(R.string.help_context_clear_browsing_data),
+                Profile.getLastUsedProfile(),
+                null));
         if (ChromeSigninController.get().isSignedIn()) {
             general_summary.setSummary(
                     R.string.clear_browsing_data_footnote_sync_and_site_settings);

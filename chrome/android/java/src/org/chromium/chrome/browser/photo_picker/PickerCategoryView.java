@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.photo_picker;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -207,12 +206,9 @@ public class PickerCategoryView extends RelativeLayout
 
         enumerateBitmaps();
 
-        mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                recordFinalUmaStats(ACTION_CANCEL);
-                mListener.onPickerUserAction(PhotoPickerListener.Action.CANCEL, null);
-            }
+        mDialog.setOnCancelListener(dialog1 -> {
+            recordFinalUmaStats(ACTION_CANCEL);
+            mListener.onPickerUserAction(PhotoPickerListener.Action.CANCEL, null);
         });
     }
 

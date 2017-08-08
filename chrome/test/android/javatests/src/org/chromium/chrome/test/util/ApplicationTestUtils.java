@@ -26,8 +26,6 @@ import org.chromium.chrome.browser.omaha.VersionNumberGetter;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 
-import java.util.concurrent.Callable;
-
 /**
  * Methods used for testing Chrome at the Application-level.
  */
@@ -113,39 +111,29 @@ public class ApplicationTestUtils {
     /** Waits until Chrome is in the foreground. */
     public static void waitUntilChromeInForeground() {
         CriteriaHelper.pollInstrumentationThread(
-                Criteria.equals(ApplicationState.HAS_RUNNING_ACTIVITIES, new Callable<Integer>() {
-                    @Override
-                    public Integer call() {
-                        return ApplicationStatus.getStateForApplication();
-                    }
-                }));
+                Criteria.equals(ApplicationState.HAS_RUNNING_ACTIVITIES,
+                        () -> ApplicationStatus.getStateForApplication()));
     }
 
     /** Finishes the given activity and waits for its onDestroy() to be called. */
     public static void finishActivity(final Activity activity) throws Exception {
         final CallbackHelper callbackHelper = new CallbackHelper();
         final ApplicationStatus.ActivityStateListener activityStateListener =
-                new ApplicationStatus.ActivityStateListener() {
-                    @Override
-                    public void onActivityStateChange(Activity activity, int newState) {
-                        if (newState == ActivityState.DESTROYED) {
-                            callbackHelper.notifyCalled();
-                        }
+                (activity1, newState) -> {
+                    if (newState == ActivityState.DESTROYED) {
+                        callbackHelper.notifyCalled();
                     }
                 };
         try {
-            boolean alreadyDestroyed = ThreadUtils.runOnUiThreadBlocking(new Callable<Boolean>() {
-                @Override
-                public Boolean call() {
-                    if (ApplicationStatus.getStateForActivity(activity)
-                            == ActivityState.DESTROYED) {
-                        return true;
-                    }
-                    ApplicationStatus.registerStateListenerForActivity(
-                            activityStateListener, activity);
-                    activity.finish();
-                    return false;
+            boolean alreadyDestroyed = ThreadUtils.runOnUiThreadBlocking(() -> {
+                if (ApplicationStatus.getStateForActivity(activity)
+                        == ActivityState.DESTROYED) {
+                    return true;
                 }
+                ApplicationStatus.registerStateListenerForActivity(
+                        activityStateListener, activity);
+                activity.finish();
+                return false;
             });
             if (!alreadyDestroyed) {
                 callbackHelper.waitForCallback(0);
@@ -158,29 +146,21 @@ public class ApplicationTestUtils {
     /** Finishes all tasks Chrome has listed in Android's Overview. */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void finishAllChromeTasks(final Context context) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Close all of the tasks one by one.
-                    ActivityManager activityManager =
-                            (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-                    for (ActivityManager.AppTask task : activityManager.getAppTasks()) {
-                        task.finishAndRemoveTask();
-                    }
-                } catch (Exception e) {
-                    // Ignore any exceptions the Android framework throws so that otherwise passing
-                    // tests don't fail during tear down. See crbug.com/653731.
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            try {
+                // Close all of the tasks one by one.
+                ActivityManager activityManager =
+                        (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                for (ActivityManager.AppTask task : activityManager.getAppTasks()) {
+                    task.finishAndRemoveTask();
                 }
+            } catch (Exception e) {
+                // Ignore any exceptions the Android framework throws so that otherwise passing
+                // tests don't fail during tear down. See crbug.com/653731.
             }
         });
 
-        CriteriaHelper.pollUiThread(Criteria.equals(0, new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return getNumChromeTasks(context);
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(0, () -> getNumChromeTasks(context)));
     }
 
     /** Counts how many tasks Chrome has listed in Android's Overview. */

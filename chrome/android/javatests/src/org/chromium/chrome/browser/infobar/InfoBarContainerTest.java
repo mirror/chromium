@@ -9,7 +9,6 @@ import android.graphics.Region;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import org.junit.After;
@@ -37,7 +36,6 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.net.test.EmbeddedTestServer;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -105,14 +103,10 @@ public class InfoBarContainerTest {
         int previousCount = infoBars.size();
 
         final TestListener testListener = new TestListener();
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                SimpleConfirmInfoBarBuilder.create(mActivityTestRule.getActivity().getActivityTab(),
-                        testListener, InfoBarIdentifier.TEST_INFOBAR, 0, MESSAGE_TEXT, null, null,
-                        expires);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> SimpleConfirmInfoBarBuilder.create(
+                mActivityTestRule.getActivity().getActivityTab(),
+                testListener, InfoBarIdentifier.TEST_INFOBAR, 0, MESSAGE_TEXT, null, null,
+                expires));
         mListener.addInfoBarAnimationFinished("InfoBar not added.");
 
         // Verify it's really there.
@@ -131,12 +125,8 @@ public class InfoBarContainerTest {
     private void dismissInfoBar(final InfoBar infoBar, TestListener listener)
             throws Exception {
         Assert.assertEquals(0, listener.dismissedCallback.getCallCount());
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                infoBar.onCloseButtonClicked();
-            }
-        });
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(
+                (Runnable) () -> infoBar.onCloseButtonClicked());
         mListener.removeInfoBarAnimationFinished("InfoBar not removed.");
         listener.dismissedCallback.waitForCallback(0, 1);
         Assert.assertEquals(0, listener.primaryButtonCallback.getCallCount());
@@ -179,13 +169,8 @@ public class InfoBarContainerTest {
 
     // Define function to pass parameter to Runnable to be used in testInfoBarExpirationNoPrerender.
     private Runnable setNetworkPredictionOptions(final boolean networkPredictionEnabled) {
-        return new Runnable() {
-            @Override
-            public void run() {
-                PrefServiceBridge.getInstance().setNetworkPredictionEnabled(
-                        networkPredictionEnabled);
-            }
-        };
+        return () -> PrefServiceBridge.getInstance().setNetworkPredictionEnabled(
+                networkPredictionEnabled);
     }
 
     /**
@@ -199,12 +184,8 @@ public class InfoBarContainerTest {
     public void testInfoBarExpirationNoPrerender() throws Exception {
         // Save prediction preference.
         boolean networkPredictionEnabled =
-                ThreadUtils.runOnUiThreadBlocking(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() {
-                        return PrefServiceBridge.getInstance().getNetworkPredictionEnabled();
-                    }
-                });
+                ThreadUtils.runOnUiThreadBlocking(
+                        () -> PrefServiceBridge.getInstance().getNetworkPredictionEnabled());
         try {
             ThreadUtils.runOnUiThreadBlocking(setNetworkPredictionOptions(false));
             testInfoBarExpiration();
@@ -244,14 +225,11 @@ public class InfoBarContainerTest {
         Assert.assertEquals(1, mActivityTestRule.getInfoBars().size());
         final InfoBar infoBar = mActivityTestRule.getInfoBars().get(0);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertEquals(0, infobarListener.dismissedCallback.getCallCount());
-                infoBar.onCloseButtonClicked();
-                mActivityTestRule.getActivity().getTabModelSelector().closeTab(
-                        mActivityTestRule.getActivity().getActivityTab());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            Assert.assertEquals(0, infobarListener.dismissedCallback.getCallCount());
+            infoBar.onCloseButtonClicked();
+            mActivityTestRule.getActivity().getTabModelSelector().closeTab(
+                    mActivityTestRule.getActivity().getActivityTab());
         });
 
         infobarListener.dismissedCallback.waitForCallback(0, 1);
@@ -301,18 +279,9 @@ public class InfoBarContainerTest {
 
         // Detect layouts. Note this doesn't actually need to be atomic (just final).
         final AtomicInteger layoutCount = new AtomicInteger();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                decorView.getViewTreeObserver().addOnGlobalLayoutListener(
-                        new ViewTreeObserver.OnGlobalLayoutListener() {
-                            @Override
-                            public void onGlobalLayout() {
-                                layoutCount.incrementAndGet();
-                            }
-                        });
-            }
-        });
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(
+                (Runnable) () -> decorView.getViewTreeObserver().addOnGlobalLayoutListener(
+                        () -> layoutCount.incrementAndGet()));
 
         // First add an infobar.
         TestListener infobarListener = addInfoBarToCurrentTab(false);
@@ -332,25 +301,22 @@ public class InfoBarContainerTest {
         final Rect fullDisplayFrameMinusContainer = new Rect();
         final Rect containerDisplayFrame = new Rect();
 
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                decorView.getWindowVisibleDisplayFrame(fullDisplayFrame);
-                decorView.getWindowVisibleDisplayFrame(fullDisplayFrameMinusContainer);
-                fullDisplayFrameMinusContainer.bottom -= infoBarContainer.getHeight();
-                int windowLocation[] = new int[2];
-                infoBarContainer.getLocationInWindow(windowLocation);
-                containerDisplayFrame.set(
-                        windowLocation[0],
-                        windowLocation[1],
-                        windowLocation[0] + infoBarContainer.getWidth(),
-                        windowLocation[1] + infoBarContainer.getHeight());
+        InstrumentationRegistry.getInstrumentation().runOnMainSync((Runnable) () -> {
+            decorView.getWindowVisibleDisplayFrame(fullDisplayFrame);
+            decorView.getWindowVisibleDisplayFrame(fullDisplayFrameMinusContainer);
+            fullDisplayFrameMinusContainer.bottom -= infoBarContainer.getHeight();
+            int windowLocation[] = new int[2];
+            infoBarContainer.getLocationInWindow(windowLocation);
+            containerDisplayFrame.set(
+                    windowLocation[0],
+                    windowLocation[1],
+                    windowLocation[0] + infoBarContainer.getWidth(),
+                    windowLocation[1] + infoBarContainer.getHeight());
 
-                // The InfoBarContainer subtracts itself from the transparent region.
-                Region transparentRegion = new Region(fullDisplayFrame);
-                infoBarContainer.gatherTransparentRegion(transparentRegion);
-                Assert.assertEquals(transparentRegion.getBounds(), fullDisplayFrameMinusContainer);
-            }
+            // The InfoBarContainer subtracts itself from the transparent region.
+            Region transparentRegion = new Region(fullDisplayFrame);
+            infoBarContainer.gatherTransparentRegion(transparentRegion);
+            Assert.assertEquals(transparentRegion.getBounds(), fullDisplayFrameMinusContainer);
         });
 
         // Now remove the infobar.
@@ -366,19 +332,16 @@ public class InfoBarContainerTest {
                     }
                 });
 
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                // The InfoBarContainer should no longer be subtracted from the transparent region.
-                // We really want assertTrue(transparentRegion.contains(containerDisplayFrame)),
-                // but region doesn't have 'contains(Rect)', so we invert the test. So, the old
-                // container rect can't touch the bounding rect of the non-transparent region).
-                Region transparentRegion = new Region();
-                decorView.gatherTransparentRegion(transparentRegion);
-                Region opaqueRegion = new Region(fullDisplayFrame);
-                opaqueRegion.op(transparentRegion, Region.Op.DIFFERENCE);
-                Assert.assertFalse(opaqueRegion.getBounds().intersect(containerDisplayFrame));
-            }
+        InstrumentationRegistry.getInstrumentation().runOnMainSync((Runnable) () -> {
+            // The InfoBarContainer should no longer be subtracted from the transparent region.
+            // We really want assertTrue(transparentRegion.contains(containerDisplayFrame)),
+            // but region doesn't have 'contains(Rect)', so we invert the test. So, the old
+            // container rect can't touch the bounding rect of the non-transparent region).
+            Region transparentRegion = new Region();
+            decorView.gatherTransparentRegion(transparentRegion);
+            Region opaqueRegion = new Region(fullDisplayFrame);
+            opaqueRegion.op(transparentRegion, Region.Op.DIFFERENCE);
+            Assert.assertFalse(opaqueRegion.getBounds().intersect(containerDisplayFrame));
         });
 
         // Additional manual test that this is working:

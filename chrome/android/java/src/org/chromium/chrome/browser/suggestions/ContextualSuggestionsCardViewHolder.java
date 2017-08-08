@@ -6,13 +6,11 @@ package org.chromium.chrome.browser.suggestions;
 
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
-import org.chromium.chrome.browser.widget.displaystyle.DisplayStyleObserver;
 import org.chromium.chrome.browser.widget.displaystyle.DisplayStyleObserverAdapter;
 import org.chromium.chrome.browser.widget.displaystyle.HorizontalDisplayStyle;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
@@ -40,24 +38,17 @@ public class ContextualSuggestionsCardViewHolder extends NewTabPageViewHolder {
         mUiDelegate = uiDelegate;
         mSuggestionsBinder = new SuggestionsBinder(itemView, uiDelegate);
 
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO(fhorschig): Add metrics to be recorded for the contextual suggestions.
-                int windowDisposition = WindowOpenDisposition.CURRENT_TAB;
-                mUiDelegate.getEventReporter().onSuggestionOpened(
-                        mSuggestion, windowDisposition, mUiDelegate.getSuggestionsRanker());
-                mUiDelegate.getNavigationDelegate().openSnippet(windowDisposition, mSuggestion);
-            }
+        itemView.setOnClickListener(v -> {
+            // TODO(fhorschig): Add metrics to be recorded for the contextual suggestions.
+            int windowDisposition = WindowOpenDisposition.CURRENT_TAB;
+            mUiDelegate.getEventReporter().onSuggestionOpened(
+                    mSuggestion, windowDisposition, mUiDelegate.getSuggestionsRanker());
+            mUiDelegate.getNavigationDelegate().openSnippet(windowDisposition, mSuggestion);
         });
 
         mDisplayStyleObserver =
-                new DisplayStyleObserverAdapter(itemView, uiConfig, new DisplayStyleObserver() {
-                    @Override
-                    public void onDisplayStyleChanged(UiConfig.DisplayStyle newDisplayStyle) {
-                        updateCardWidth(newDisplayStyle);
-                    }
-                });
+                new DisplayStyleObserverAdapter(itemView, uiConfig,
+                        newDisplayStyle -> updateCardWidth(newDisplayStyle));
         mSuggestionsBinder.updateFieldsVisibility(/* showHeadline = */ true,
                 /* showDescription = */ false, /* showThumbnail = */ true,
                 /* showThumbnailVideoOverlay = */ false, /* headerMaxLines = */ 3);

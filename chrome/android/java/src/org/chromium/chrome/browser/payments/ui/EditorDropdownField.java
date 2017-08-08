@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser.payments.ui;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -112,20 +111,16 @@ class EditorDropdownField implements EditorFieldView {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
         final int count = adapter.getCount();
-        mDropdown.setOnTouchListener(new View.OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) requestFocusAndHideKeyboard();
+        mDropdown.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) requestFocusAndHideKeyboard();
 
-                // If the dropdown supports an hint and the hint is selected, select the first
-                // element instead.
-                if (mDropdown.getSelectedItemPosition() == count) {
-                    mDropdown.setSelection(0);
-                }
-
-                return false;
+            // If the dropdown supports an hint and the hint is selected, select the first
+            // element instead.
+            if (mDropdown.getSelectedItemPosition() == count) {
+                mDropdown.setSelection(0);
             }
+
+            return false;
         });
     }
 

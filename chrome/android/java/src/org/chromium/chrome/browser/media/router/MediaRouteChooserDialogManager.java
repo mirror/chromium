@@ -36,12 +36,7 @@ public class MediaRouteChooserDialogManager extends BaseMediaRouteDialogManager 
         private boolean mCancelled;
 
         public Fragment() {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    Fragment.this.dismiss();
-                }
-            });
+            mHandler.post(() -> Fragment.this.dismiss());
         }
 
         public Fragment(BaseMediaRouteDialogManager manager) {

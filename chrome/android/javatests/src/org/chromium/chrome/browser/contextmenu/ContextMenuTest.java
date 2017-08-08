@@ -50,7 +50,6 @@ import org.chromium.policy.test.annotations.Policies;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -82,23 +81,13 @@ public class ContextMenuTest implements CustomMainActivityStart {
 
     @Before
     public void setUp() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                FirstRunStatus.setFirstRunFlowComplete(true);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> FirstRunStatus.setFirstRunFlowComplete(true));
     }
 
     @After
     public void tearDown() throws Exception {
         mTestServer.stopAndDestroyServer();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                FirstRunStatus.setFirstRunFlowComplete(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> FirstRunStatus.setFirstRunFlowComplete(false));
         deleteTestFiles();
     }
 
@@ -193,12 +182,7 @@ public class ContextMenuTest implements CustomMainActivityStart {
 
         // Only check for the URL matching as the tab will not be fully created in svelte mode.
         final String expectedUrl = mTestServer.getURL(expectedPath);
-        CriteriaHelper.pollUiThread(Criteria.equals(expectedUrl, new Callable<String>() {
-            @Override
-            public String call() {
-                return newTab.get().getUrl();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(expectedUrl, () -> newTab.get().getUrl()));
     }
 
     @Test
@@ -473,17 +457,14 @@ public class ContextMenuTest implements CustomMainActivityStart {
 
     private String getClipboardText() throws Throwable {
         final AtomicReference<String> clipboardTextRef = new AtomicReference<>();
-        mDownloadTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ClipboardManager clipMgr =
-                        (ClipboardManager) mDownloadTestRule.getActivity().getSystemService(
-                                Context.CLIPBOARD_SERVICE);
-                ClipData clipData = clipMgr.getPrimaryClip();
-                Assert.assertNotNull("Primary clip is null", clipData);
-                Assert.assertTrue("Primary clip contains no items.", clipData.getItemCount() > 0);
-                clipboardTextRef.set(clipData.getItemAt(0).getText().toString());
-            }
+        mDownloadTestRule.runOnUiThread((Runnable) () -> {
+            ClipboardManager clipMgr =
+                    (ClipboardManager) mDownloadTestRule.getActivity().getSystemService(
+                            Context.CLIPBOARD_SERVICE);
+            ClipData clipData = clipMgr.getPrimaryClip();
+            Assert.assertNotNull("Primary clip is null", clipData);
+            Assert.assertTrue("Primary clip contains no items.", clipData.getItemCount() > 0);
+            clipboardTextRef.set(clipData.getItemAt(0).getText().toString());
         });
         return clipboardTextRef.get();
     }

@@ -132,16 +132,13 @@ public class WebappDataStorageTest {
                         ShortcutHelper.encodeBitmapAsString(expected))
                 .apply();
         WebappDataStorage.open("test").getSplashScreenImage(
-                new WebappDataStorage.FetchCallback<Bitmap>() {
-                    @Override
-                    public void onDataRetrieved(Bitmap actual) {
-                        mCallbackCalled = true;
+                actual -> {
+                    mCallbackCalled = true;
 
-                        // TODO(lalitm) - once the Robolectric bug is fixed change to
-                        // assertTrue(expected.sameAs(actual)).
-                        // See bitmapEquals(Bitmap, Bitmap) for more information.
-                        assertTrue(bitmapEquals(expected, actual));
-                    }
+                    // TODO(lalitm) - once the Robolectric bug is fixed change to
+                    // assertTrue(expected.sameAs(actual)).
+                    // See bitmapEquals(Bitmap, Bitmap) for more information.
+                    assertTrue(bitmapEquals(expected, actual));
                 });
         BackgroundShadowAsyncTask.runBackgroundTasks();
         ShadowLooper.runUiThreadTasks();

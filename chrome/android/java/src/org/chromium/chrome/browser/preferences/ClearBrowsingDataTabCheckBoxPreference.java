@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser.preferences;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -53,29 +52,25 @@ public class ClearBrowsingDataTabCheckBoxPreference extends ClearBrowsingDataChe
         final TextView textView = (TextView) view.findViewById(android.R.id.summary);
 
         // Create custom onTouch listener to be able to respond to click events inside the summary.
-        textView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            @SuppressLint("ClickableViewAccessibility")
-            public boolean onTouch(View v, MotionEvent event) {
-                if (!mHasClickableSpans) {
-                    return false;
-                }
-                // Find out which character was touched.
-                int offset = textView.getOffsetForPosition(event.getX(), event.getY());
-                // Check if this character contains a span.
-                Spanned text = (Spanned) textView.getText();
-                ClickableSpan[] types = text.getSpans(offset, offset, ClickableSpan.class);
+        textView.setOnTouchListener((v, event) -> {
+            if (!mHasClickableSpans) {
+                return false;
+            }
+            // Find out which character was touched.
+            int offset = textView.getOffsetForPosition(event.getX(), event.getY());
+            // Check if this character contains a span.
+            Spanned text = (Spanned) textView.getText();
+            ClickableSpan[] types = text.getSpans(offset, offset, ClickableSpan.class);
 
-                if (types.length > 0) {
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        for (ClickableSpan type : types) {
-                            type.onClick(textView);
-                        }
+            if (types.length > 0) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    for (ClickableSpan type : types) {
+                        type.onClick(textView);
                     }
-                    return true;
-                } else {
-                    return false;
                 }
+                return true;
+            } else {
+                return false;
             }
         });
 

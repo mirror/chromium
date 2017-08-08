@@ -47,14 +47,14 @@ import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.InfoBarUtil;
 import org.chromium.chrome.test.util.browser.TabTitleObserver;
-import org.chromium.chrome.test.util.browser.notifications.MockNotificationManagerProxy.NotificationEntry;
+import org.chromium.chrome.test.util.browser.notifications.MockNotificationManagerProxy
+        .NotificationEntry;
 import org.chromium.components.url_formatter.UrlFormatter;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 
 import java.net.URL;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
@@ -127,13 +127,9 @@ public class NotificationPlatformBridgeTest {
 
     private double getEngagementScoreBlocking() {
         try {
-            return ThreadUtils.runOnUiThreadBlocking(new Callable<Double>() {
-                @Override
-                public Double call() throws Exception {
-                    return SiteEngagementService.getForProfile(Profile.getLastUsedProfile())
-                            .getScore(mNotificationTestRule.getOrigin());
-                }
-            });
+            return ThreadUtils.runOnUiThreadBlocking(
+                    () -> SiteEngagementService.getForProfile(Profile.getLastUsedProfile())
+                            .getScore(mNotificationTestRule.getOrigin()));
         } catch (ExecutionException ex) {
             assert false : "Unexpected ExecutionException";
         }
@@ -489,12 +485,8 @@ public class NotificationPlatformBridgeTest {
         mNotificationTestRule.setNotificationContentSettingForCurrentOrigin(ContentSetting.ALLOW);
 
         // Disable notification vibration in preferences.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PrefServiceBridge.getInstance().setNotificationsVibrateEnabled(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> PrefServiceBridge.getInstance().setNotificationsVibrateEnabled(false));
 
         Notification notification =
                 mNotificationTestRule.showAndGetNotification("MyNotification", notificationOptions);
@@ -543,12 +535,9 @@ public class NotificationPlatformBridgeTest {
         mNotificationTestRule.setNotificationContentSettingForCurrentOrigin(ContentSetting.ALLOW);
 
         // By default, vibration is enabled in notifications.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(PrefServiceBridge.getInstance().isNotificationsVibrateEnabled());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> Assert.assertTrue(
+                        PrefServiceBridge.getInstance().isNotificationsVibrateEnabled()));
 
         Notification notification =
                 mNotificationTestRule.showAndGetNotification("MyNotification", "{ vibrate: 42 }");

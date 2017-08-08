@@ -163,75 +163,71 @@ public class ChildProcessServiceImpl {
 
         mDelegate.onServiceCreated();
 
-        mMainThread = new Thread(new Runnable() {
-            @Override
-            @SuppressFBWarnings("DM_EXIT")
-            public void run() {
-                try {
-                    // CommandLine must be initialized before everything else.
-                    synchronized (mMainThread) {
-                        while (mCommandLineParams == null) {
-                            mMainThread.wait();
-                        }
+        mMainThread = new Thread(() -> {
+            try {
+                // CommandLine must be initialized before everything else.
+                synchronized (mMainThread) {
+                    while (mCommandLineParams == null) {
+                        mMainThread.wait();
                     }
-                    assert mServiceBound;
-                    CommandLine.init(mCommandLineParams);
-
-                    if (CommandLine.getInstance().hasSwitch(
-                                BaseSwitches.RENDERER_WAIT_FOR_JAVA_DEBUGGER)) {
-                        android.os.Debug.waitForDebugger();
-                    }
-
-                    boolean nativeLibraryLoaded = false;
-                    try {
-                        nativeLibraryLoaded = mDelegate.loadNativeLibrary(hostContext);
-                    } catch (Exception e) {
-                        Log.e(TAG, "Failed to load native library.", e);
-                    }
-                    if (!nativeLibraryLoaded) {
-                        System.exit(-1);
-                    }
-
-                    synchronized (mLibraryInitializedLock) {
-                        mLibraryInitialized = true;
-                        mLibraryInitializedLock.notifyAll();
-                    }
-                    synchronized (mMainThread) {
-                        mMainThread.notifyAll();
-                        while (mFdInfos == null) {
-                            mMainThread.wait();
-                        }
-                    }
-
-                    SparseArray<String> idsToKeys = mDelegate.getFileDescriptorsIdsToKeys();
-
-                    int[] fileIds = new int[mFdInfos.length];
-                    String[] keys = new String[mFdInfos.length];
-                    int[] fds = new int[mFdInfos.length];
-                    long[] regionOffsets = new long[mFdInfos.length];
-                    long[] regionSizes = new long[mFdInfos.length];
-                    for (int i = 0; i < mFdInfos.length; i++) {
-                        FileDescriptorInfo fdInfo = mFdInfos[i];
-                        String key = idsToKeys != null ? idsToKeys.get(fdInfo.id) : null;
-                        if (key != null) {
-                            keys[i] = key;
-                        } else {
-                            fileIds[i] = fdInfo.id;
-                        }
-                        fds[i] = fdInfo.fd.detachFd();
-                        regionOffsets[i] = fdInfo.offset;
-                        regionSizes[i] = fdInfo.size;
-                    }
-                    nativeRegisterFileDescriptors(keys, fileIds, fds, regionOffsets, regionSizes);
-
-                    mDelegate.onBeforeMain();
-                    if (mActivitySemaphore.tryAcquire()) {
-                        mDelegate.runMain();
-                        nativeExitChildProcess();
-                    }
-                } catch (InterruptedException e) {
-                    Log.w(TAG, "%s startup failed: %s", MAIN_THREAD_NAME, e);
                 }
+                assert mServiceBound;
+                CommandLine.init(mCommandLineParams);
+
+                if (CommandLine.getInstance().hasSwitch(
+                        BaseSwitches.RENDERER_WAIT_FOR_JAVA_DEBUGGER)) {
+                    android.os.Debug.waitForDebugger();
+                }
+
+                boolean nativeLibraryLoaded = false;
+                try {
+                    nativeLibraryLoaded = mDelegate.loadNativeLibrary(hostContext);
+                } catch (Exception e) {
+                    Log.e(TAG, "Failed to load native library.", e);
+                }
+                if (!nativeLibraryLoaded) {
+                    System.exit(-1);
+                }
+
+                synchronized (mLibraryInitializedLock) {
+                    mLibraryInitialized = true;
+                    mLibraryInitializedLock.notifyAll();
+                }
+                synchronized (mMainThread) {
+                    mMainThread.notifyAll();
+                    while (mFdInfos == null) {
+                        mMainThread.wait();
+                    }
+                }
+
+                SparseArray<String> idsToKeys = mDelegate.getFileDescriptorsIdsToKeys();
+
+                int[] fileIds = new int[mFdInfos.length];
+                String[] keys = new String[mFdInfos.length];
+                int[] fds = new int[mFdInfos.length];
+                long[] regionOffsets = new long[mFdInfos.length];
+                long[] regionSizes = new long[mFdInfos.length];
+                for (int i = 0; i < mFdInfos.length; i++) {
+                    FileDescriptorInfo fdInfo = mFdInfos[i];
+                    String key = idsToKeys != null ? idsToKeys.get(fdInfo.id) : null;
+                    if (key != null) {
+                        keys[i] = key;
+                    } else {
+                        fileIds[i] = fdInfo.id;
+                    }
+                    fds[i] = fdInfo.fd.detachFd();
+                    regionOffsets[i] = fdInfo.offset;
+                    regionSizes[i] = fdInfo.size;
+                }
+                nativeRegisterFileDescriptors(keys, fileIds, fds, regionOffsets, regionSizes);
+
+                mDelegate.onBeforeMain();
+                if (mActivitySemaphore.tryAcquire()) {
+                    mDelegate.runMain();
+                    nativeExitChildProcess();
+                }
+            } catch (InterruptedException e) {
+                Log.w(TAG, "%s startup failed: %s", MAIN_THREAD_NAME, e);
             }
         }, MAIN_THREAD_NAME);
         mMainThread.start();

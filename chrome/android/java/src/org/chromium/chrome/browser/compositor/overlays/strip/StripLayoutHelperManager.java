@@ -144,12 +144,7 @@ public class StripLayoutHelperManager implements SceneOverlay {
         mNormalHelper = new StripLayoutHelper(context, updateHost, renderHost, false);
         mIncognitoHelper = new StripLayoutHelper(context, updateHost, renderHost, true);
 
-        CompositorOnClickHandler selectorClickHandler = new CompositorOnClickHandler() {
-            @Override
-            public void onClick(long time) {
-                handleModelSelectorButtonClick();
-            }
-        };
+        CompositorOnClickHandler selectorClickHandler = time -> handleModelSelectorButtonClick();
         mModelSelectorButton = new CompositorButton(context, MODEL_SELECTOR_BUTTON_WIDTH_DP,
                 MODEL_SELECTOR_BUTTON_HEIGHT_DP, selectorClickHandler);
         mModelSelectorButton.setIncognito(false);

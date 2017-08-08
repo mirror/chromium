@@ -132,26 +132,23 @@ public class OfflinePageSavePageLaterEvaluationTest {
                         Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
         final Semaphore mClearingSemaphore = new Semaphore(0);
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                assert mBridge != null;
-                mBridge.getRequestsInQueue(new Callback<SavePageRequest[]>() {
-                    @Override
-                    public void onResult(SavePageRequest[] results) {
-                        ArrayList<Long> ids = new ArrayList<Long>(results.length);
-                        for (int i = 0; i < results.length; i++) {
-                            ids.add(results[i].getRequestId());
-                        }
-                        mBridge.removeRequestsFromQueue(ids, new Callback<Integer>() {
-                            @Override
-                            public void onResult(Integer removedCount) {
-                                mClearingSemaphore.release();
-                            }
-                        });
+        ThreadUtils.runOnUiThread(() -> {
+            assert mBridge != null;
+            mBridge.getRequestsInQueue(new Callback<SavePageRequest[]>() {
+                @Override
+                public void onResult(SavePageRequest[] results) {
+                    ArrayList<Long> ids = new ArrayList<Long>(results.length);
+                    for (int i = 0; i < results.length; i++) {
+                        ids.add(results[i].getRequestId());
                     }
-                });
-            }
+                    mBridge.removeRequestsFromQueue(ids, new Callback<Integer>() {
+                        @Override
+                        public void onResult(Integer removedCount) {
+                            mClearingSemaphore.release();
+                        }
+                    });
+                }
+            });
         });
         checkTrue(mClearingSemaphore.tryAcquire(REMOVE_REQUESTS_TIMEOUT_MS, TimeUnit.MILLISECONDS),
                 "Timed out when clearing remaining requests!");
@@ -327,12 +324,7 @@ public class OfflinePageSavePageLaterEvaluationTest {
      */
     private void savePageLater(final String url, final String namespace)
             throws InterruptedException {
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mBridge.savePageLater(url, namespace, mIsUserRequested);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> mBridge.savePageLater(url, namespace, mIsUserRequested));
     }
 
     private void processUrls(List<String> urls) throws InterruptedException, IOException {
@@ -411,20 +403,15 @@ public class OfflinePageSavePageLaterEvaluationTest {
      */
     private void loadSavedPages() throws InterruptedException {
         final Semaphore semaphore = new Semaphore(0);
-        ThreadUtils.runOnUiThread(new Runnable() {
+        ThreadUtils.runOnUiThread(() -> mBridge.getAllPages(new Callback<List<OfflinePageItem>>() {
             @Override
-            public void run() {
-                mBridge.getAllPages(new Callback<List<OfflinePageItem>>() {
-                    @Override
-                    public void onResult(List<OfflinePageItem> pages) {
-                        for (OfflinePageItem page : pages) {
-                            mRequestMetadata.get(page.getOfflineId()).mPage = page;
-                        }
-                        semaphore.release();
-                    }
-                });
+            public void onResult(List<OfflinePageItem> pages) {
+                for (OfflinePageItem page : pages) {
+                    mRequestMetadata.get(page.getOfflineId()).mPage = page;
+                }
+                semaphore.release();
             }
-        });
+        }));
         checkTrue(semaphore.tryAcquire(GET_PAGES_TIMEOUT_MS, TimeUnit.MILLISECONDS),
                 "Timed out when getting all offline pages");
     }

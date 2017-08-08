@@ -6,13 +6,9 @@ package org.chromium.content.browser.input;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.util.SparseBooleanArray;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import org.chromium.content.R;
@@ -50,19 +46,10 @@ public class SelectPopupDialog implements SelectPopup {
         setInverseBackgroundForced(b);
 
         if (multiple) {
-            b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    notifySelection(getSelectedIndices(listView));
-                }
-            });
+            b.setPositiveButton(android.R.string.ok,
+                    (dialog, which) -> notifySelection(getSelectedIndices(listView)));
             b.setNegativeButton(android.R.string.cancel,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            notifySelection(null);
-                        }
-                    });
+                    (dialog, which) -> notifySelection(null));
         }
         mListBoxPopup = b.create();
         final SelectPopupAdapter adapter = new SelectPopupAdapter(
@@ -77,25 +64,16 @@ public class SelectPopupDialog implements SelectPopup {
             }
         } else {
             listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            listView.setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View v,
-                        int position, long id) {
-                    notifySelection(getSelectedIndices(listView));
-                    mListBoxPopup.dismiss();
-                }
+            listView.setOnItemClickListener((parent, v, position, id) -> {
+                notifySelection(getSelectedIndices(listView));
+                mListBoxPopup.dismiss();
             });
             if (selected.length > 0) {
                 listView.setSelection(selected[0]);
                 listView.setItemChecked(selected[0], true);
             }
         }
-        mListBoxPopup.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                notifySelection(null);
-            }
-        });
+        mListBoxPopup.setOnCancelListener(dialog -> notifySelection(null));
     }
 
     @SuppressWarnings("deprecation")

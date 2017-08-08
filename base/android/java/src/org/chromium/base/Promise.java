@@ -328,12 +328,7 @@ public class Promise<T> {
     private <S> void postCallbackToLooper(final Callback<S> callback, final S result) {
         // Post the callbacks to the Thread looper so we don't get a long chain of callbacks
         // holding up the thread.
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                callback.onResult(result);
-            }
-        });
+        mHandler.post(() -> callback.onResult(result));
     }
 
     /**

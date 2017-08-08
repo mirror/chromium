@@ -8,7 +8,6 @@ import android.app.Activity;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
-import org.chromium.base.ApplicationStatus.ActivityStateListener;
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
@@ -86,14 +85,11 @@ public class OfflinePageTabObserver
     private static void ensureObserverMapInitialized() {
         if (sObservers != null) return;
         sObservers = new HashMap<>();
-        ApplicationStatus.registerStateListenerForAllActivities(new ActivityStateListener() {
-            @Override
-            public void onActivityStateChange(Activity activity, int newState) {
-                if (newState != ActivityState.DESTROYED) return;
-                OfflinePageTabObserver observer = sObservers.remove(activity);
-                if (observer == null) return;
-                observer.destroy();
-            }
+        ApplicationStatus.registerStateListenerForAllActivities((activity, newState) -> {
+            if (newState != ActivityState.DESTROYED) return;
+            OfflinePageTabObserver observer = sObservers.remove(activity);
+            if (observer == null) return;
+            observer.destroy();
         });
     }
 

@@ -33,7 +33,8 @@ import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.locale.DefaultSearchEngineDialogHelperUtils;
 import org.chromium.chrome.browser.locale.DefaultSearchEnginePromoDialog;
-import org.chromium.chrome.browser.locale.DefaultSearchEnginePromoDialog.DefaultSearchEnginePromoDialogObserver;
+import org.chromium.chrome.browser.locale.DefaultSearchEnginePromoDialog
+        .DefaultSearchEnginePromoDialogObserver;
 import org.chromium.chrome.browser.locale.LocaleManager;
 import org.chromium.chrome.browser.omnibox.UrlBar;
 import org.chromium.chrome.browser.searchwidget.SearchActivity.SearchActivityDelegate;
@@ -45,8 +46,6 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.KeyUtils;
 import org.chromium.content_public.common.ContentUrlConstants;
-
-import java.util.concurrent.Callable;
 
 /**
  * Tests the {@link SearchActivity}.
@@ -205,12 +204,7 @@ public class SearchActivityTest {
         setUrlBarText(searchActivity, ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
 
         // Start loading native, then let the activity finish initialization.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                searchActivity.startDelayedNativeInitialization();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> searchActivity.startDelayedNativeInitialization());
 
         Assert.assertEquals(
                 1, mTestDelegate.shouldDelayNativeInitializationCallback.getCallCount());
@@ -256,12 +250,7 @@ public class SearchActivityTest {
         ActivityMonitor browserMonitor =
                 new ActivityMonitor(ChromeTabbedActivity.class.getName(), null, false);
         instrumentation.addMonitor(browserMonitor);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                searchActivity.startDelayedNativeInitialization();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> searchActivity.startDelayedNativeInitialization());
 
         Assert.assertEquals(
                 1, mTestDelegate.shouldDelayNativeInitializationCallback.getCallCount());
@@ -284,12 +273,8 @@ public class SearchActivityTest {
 
         // Set some text in the search box, then continue startup.
         setUrlBarText(searchActivity, ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mTestDelegate.onSearchEngineFinalizedCallback.onResult(true);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> mTestDelegate.onSearchEngineFinalizedCallback.onResult(true));
 
         // Let the initialization finish completely.
         Assert.assertEquals(
@@ -368,12 +353,8 @@ public class SearchActivityTest {
         mTestDelegate.shownPromoDialog.dismiss();
 
         // SearchActivity should realize the failure case and prevent the user from using it.
-        CriteriaHelper.pollInstrumentationThread(Criteria.equals(0, new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return ApplicationStatus.getRunningActivities().size();
-            }
-        }));
+        CriteriaHelper.pollInstrumentationThread(Criteria.equals(0,
+                () -> ApplicationStatus.getRunningActivities().size()));
         Assert.assertEquals(
                 1, mTestDelegate.shouldDelayNativeInitializationCallback.getCallCount());
         Assert.assertEquals(1, mTestDelegate.showSearchEngineDialogIfNeededCallback.getCallCount());
@@ -442,27 +423,21 @@ public class SearchActivityTest {
         Assert.assertTrue(
                 "Wrong activity started", browserActivity instanceof ChromeTabbedActivity);
 
-        CriteriaHelper.pollUiThread(Criteria.equals(expectedUrl, new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                ChromeTabbedActivity chromeActivity = (ChromeTabbedActivity) browserActivity;
-                Tab tab = chromeActivity.getActivityTab();
-                if (tab == null) return null;
+        CriteriaHelper.pollUiThread(Criteria.equals(expectedUrl, () -> {
+            ChromeTabbedActivity chromeActivity = (ChromeTabbedActivity) browserActivity;
+            Tab tab = chromeActivity.getActivityTab();
+            if (tab == null) return null;
 
-                return tab.getUrl();
-            }
+            return tab.getUrl();
         }));
     }
 
     @SuppressLint("SetTextI18n")
     private void setUrlBarText(final Activity activity, final String url) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                UrlBar urlBar = (UrlBar) activity.findViewById(R.id.url_bar);
-                if (!urlBar.hasFocus()) urlBar.requestFocus();
-                urlBar.setText(url);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            UrlBar urlBar = (UrlBar) activity.findViewById(R.id.url_bar);
+            if (!urlBar.hasFocus()) urlBar.requestFocus();
+            urlBar.setText(url);
         });
     }
 }

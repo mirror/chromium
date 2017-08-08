@@ -42,12 +42,9 @@ class NestedSystemMessageHandler {
         boolean quitLoop = false;
 
         MessageQueue queue = Looper.myQueue();
-        queue.addIdleHandler(new MessageQueue.IdleHandler() {
-            @Override
-            public boolean queueIdle() {
-                sHandler.sendMessage(sHandler.obtainMessage(QUIT_MESSAGE));
-                return false;
-            }
+        queue.addIdleHandler(() -> {
+            sHandler.sendMessage(sHandler.obtainMessage(QUIT_MESSAGE));
+            return false;
         });
 
         Class<?> messageQueueClazz = queue.getClass();

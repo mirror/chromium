@@ -129,15 +129,11 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
 
         // Cancel the Payment Request.
         int callCount = mPaymentRequestTestRule.getDismissed().getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mPaymentRequestTestRule.getPaymentRequestUI()
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> mPaymentRequestTestRule.getPaymentRequestUI()
                         .getDialogForTest()
                         .findViewById(R.id.button_secondary)
-                        .performClick();
-            }
-        });
+                        .performClick());
         mPaymentRequestTestRule.getDismissed().waitForCallback(callCount);
         mPaymentRequestTestRule.expectResultContains(new String[] {"Request cancelled"});
 
@@ -196,12 +192,9 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
 
         // Press the back button.
         int callCount = mPaymentRequestTestRule.getDismissed().getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mPaymentRequestTestRule.getPaymentRequestUI().getDialogForTest().onBackPressed();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> mPaymentRequestTestRule.getPaymentRequestUI().getDialogForTest()
+                        .onBackPressed());
         mPaymentRequestTestRule.getDismissed().waitForCallback(callCount);
         mPaymentRequestTestRule.expectResultContains(new String[] {"Request cancelled"});
 

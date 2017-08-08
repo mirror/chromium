@@ -34,12 +34,7 @@ public class WebApkOfflineDialog {
                 new ContextThemeWrapper(context, android.R.style.Theme_DeviceDefault_Light_Dialog));
         builder.setMessage(context.getString(R.string.webapk_offline_dialog, appName))
                 .setNegativeButton(R.string.webapk_offline_dialog_quit_button,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                listener.onQuit();
-                            }
-                        });
+                        (DialogInterface.OnClickListener) (dialog, which) -> listener.onQuit());
 
         mDialog = builder.create();
         mDialog.setCanceledOnTouchOutside(false);

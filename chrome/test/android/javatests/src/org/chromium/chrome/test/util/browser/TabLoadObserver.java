@@ -74,12 +74,8 @@ public class TabLoadObserver extends EmptyTabObserver {
      * @param transitionType the transition type to use.
      */
     public void fullyLoadUrl(final String url, final int transitionType) throws Exception {
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mTab.loadUrl(new LoadUrlParams(url, transitionType));
-            }
-        });
+        ThreadUtils.runOnUiThread(
+                (Runnable) () -> mTab.loadUrl(new LoadUrlParams(url, transitionType)));
         assertLoaded();
     }
 

@@ -22,7 +22,6 @@ import org.chromium.ui.widget.Toast;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -71,14 +70,11 @@ class BeamCallback implements CreateNdefMessageCallback, OnNdefPushCompleteCallb
         // Default status is an error
         Status status = new Status(R.string.nfc_beam_error_bad_url);
         try {
-            status = ThreadUtils.runOnUiThread(new Callable<Status>() {
-                @Override
-                public Status call() {
-                    String url = mProvider.getTabUrlForBeam();
-                    if (url == null) return new Status(R.string.nfc_beam_error_overlay_active);
-                    if (!isValidUrl(url)) return new Status(R.string.nfc_beam_error_bad_url);
-                    return new Status(url);
-                }
+            status = ThreadUtils.runOnUiThread(() -> {
+                String url = mProvider.getTabUrlForBeam();
+                if (url == null) return new Status(R.string.nfc_beam_error_overlay_active);
+                if (!isValidUrl(url)) return new Status(R.string.nfc_beam_error_bad_url);
+                return new Status(url);
             }).get(2000, TimeUnit.MILLISECONDS); // Arbitrarily chosen timeout for query.
         } catch (TimeoutException e) {
             // Squelch this exception, we'll treat it as a bad tab
@@ -109,12 +105,8 @@ class BeamCallback implements CreateNdefMessageCallback, OnNdefPushCompleteCallb
      */
     private void onInvalidBeam(final int errorStringId) {
         RecordUserAction.record("MobileBeamInvalidAppState");
-        Runnable errorRunnable = new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(mActivity, errorStringId, Toast.LENGTH_SHORT).show();
-            }
-        };
+        Runnable errorRunnable =
+                () -> Toast.makeText(mActivity, errorStringId, Toast.LENGTH_SHORT).show();
         ThreadUtils.runOnUiThread(errorRunnable);
     }
 

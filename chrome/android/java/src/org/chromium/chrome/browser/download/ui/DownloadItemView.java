@@ -92,22 +92,14 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
         mPauseResumeButton = (TintedImageButton) findViewById(R.id.pause_button);
         mCancelButton = findViewById(R.id.cancel_button);
 
-        mPauseResumeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mItem.isPaused()) {
-                    mItem.resume();
-                } else if (!mItem.isComplete()) {
-                    mItem.pause();
-                }
+        mPauseResumeButton.setOnClickListener(v -> {
+            if (mItem.isPaused()) {
+                mItem.resume();
+            } else if (!mItem.isComplete()) {
+                mItem.pause();
             }
         });
-        mCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mItem.cancel();
-            }
-        });
+        mCancelButton.setOnClickListener(v -> mItem.cancel());
     }
 
     @Override

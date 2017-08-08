@@ -71,41 +71,35 @@ public class SupervisedUserContentProvider extends WebRestrictionsContentProvide
             }
             final Context appContext = getContext().getApplicationContext();
             final SupervisedUserReply<Long> reply = new SupervisedUserReply<>();
-            ThreadUtils.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        ChromeBrowserInitializer.getInstance(appContext).handleSynchronousStartup();
-                    } catch (ProcessInitException e) {
+            ThreadUtils.runOnUiThread(() -> {
+                try {
+                    ChromeBrowserInitializer.getInstance(appContext).handleSynchronousStartup();
+                } catch (ProcessInitException e) {
+                    reply.onQueryFinished(0L);
+                    return;
+                }
+                final ChromeSigninController chromeSigninController =
+                        ChromeSigninController.get();
+                if (chromeSigninController.isSignedIn()) {
+                    reply.onQueryFinished(nativeCreateSupervisedUserContentProvider());
+                    return;
+                }
+                // Try to sign in, Chrome needs to be signed in to get the URL filter.
+                startForcedSigninProcessor(appContext, () -> {
+                    if (!chromeSigninController.isSignedIn()) {
                         reply.onQueryFinished(0L);
                         return;
                     }
-                    final ChromeSigninController chromeSigninController =
-                            ChromeSigninController.get();
-                    if (chromeSigninController.isSignedIn()) {
-                        reply.onQueryFinished(nativeCreateSupervisedUserContentProvider());
-                        return;
-                    }
-                    // Try to sign in, Chrome needs to be signed in to get the URL filter.
-                    startForcedSigninProcessor(appContext, new Runnable() {
+                    // Wait for the status change; Chrome can't check any URLs until this
+                    // has happened.
+                    listenForChildAccountStatusChange(new Callback<Boolean>() {
                         @Override
-                        public void run() {
-                            if (!chromeSigninController.isSignedIn()) {
-                                reply.onQueryFinished(0L);
-                                return;
-                            }
-                            // Wait for the status change; Chrome can't check any URLs until this
-                            // has happened.
-                            listenForChildAccountStatusChange(new Callback<Boolean>() {
-                                @Override
-                                public void onResult(Boolean result) {
-                                    reply.onQueryFinished(
-                                            nativeCreateSupervisedUserContentProvider());
-                                }
-                            });
+                        public void onResult(Boolean result) {
+                            reply.onQueryFinished(
+                                    nativeCreateSupervisedUserContentProvider());
                         }
                     });
-                }
+                });
             });
             try {
                 Long result = reply.getResult();
@@ -181,12 +175,7 @@ public class SupervisedUserContentProvider extends WebRestrictionsContentProvide
         }
 
         final SupervisedUserQueryReply queryReply = new SupervisedUserQueryReply();
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                nativeShouldProceed(contentProvider, queryReply, url);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> nativeShouldProceed(contentProvider, queryReply, url));
         try {
             // This will block until an onQueryComplete call on a different thread adds
             // something to the queue.
@@ -236,12 +225,7 @@ public class SupervisedUserContentProvider extends WebRestrictionsContentProvide
         final SupervisedUserInsertReply insertReply = new SupervisedUserInsertReply();
         final long contentProvider = getSupervisedUserContentProvider();
         if (contentProvider == 0) return false;
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                nativeRequestInsert(contentProvider, insertReply, url);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> nativeRequestInsert(contentProvider, insertReply, url));
         try {
             Boolean result = insertReply.getResult();
             if (result == null) return false;
@@ -323,12 +307,7 @@ public class SupervisedUserContentProvider extends WebRestrictionsContentProvide
     void setFilterForTesting() {
         final long contentProvider = getSupervisedUserContentProvider();
         if (contentProvider == 0) return;
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                nativeSetFilterForTesting(contentProvider);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> nativeSetFilterForTesting(contentProvider));
     }
 
     void setNativeSupervisedUserContentProviderForTesting(long nativeProvider) {

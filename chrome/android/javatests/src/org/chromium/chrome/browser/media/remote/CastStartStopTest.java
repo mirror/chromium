@@ -89,12 +89,9 @@ public class CastStartStopTest {
         final CastNotificationControl notificationControl = mCastTestRule.waitForCastNotification();
 
         // Send play
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                notificationControl.onStop(MediaNotificationListener.ACTION_SOURCE_MEDIA_SESSION);
-            }
-        });
+        ThreadUtils.runOnUiThread(
+                () -> notificationControl.onStop(
+                        MediaNotificationListener.ACTION_SOURCE_MEDIA_SESSION));
         mCastTestRule.checkDisconnected();
     }
 

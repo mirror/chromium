@@ -4,8 +4,6 @@
 
 package org.chromium.chrome.browser.ntp.cards;
 
-import android.view.View;
-
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
@@ -100,20 +98,12 @@ public class ActionItem extends OptionalLeaf {
             super(R.layout.new_tab_page_action_card, recyclerView, uiConfig, contextMenuManager);
 
             itemView.findViewById(R.id.action_button)
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mActionListItem.performAction(uiDelegate);
-                        }
-                    });
+                    .setOnClickListener(v -> mActionListItem.performAction(uiDelegate));
 
-            new ImpressionTracker(itemView, new ImpressionTracker.Listener() {
-                @Override
-                public void onImpression() {
-                    if (mActionListItem != null && !mActionListItem.mImpressionTracked) {
-                        mActionListItem.mImpressionTracked = true;
-                        uiDelegate.getEventReporter().onMoreButtonShown(mActionListItem);
-                    }
+            new ImpressionTracker(itemView, () -> {
+                if (mActionListItem != null && !mActionListItem.mImpressionTracked) {
+                    mActionListItem.mImpressionTracked = true;
+                    uiDelegate.getEventReporter().onMoreButtonShown(mActionListItem);
                 }
             });
         }

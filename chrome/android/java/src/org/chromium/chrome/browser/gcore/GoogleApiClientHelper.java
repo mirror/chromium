@@ -179,13 +179,10 @@ public class GoogleApiClientHelper
     void scheduleDisconnection() {
         cancelPendingDisconnection();
 
-        mPendingDisconnect = new Runnable() {
-            @Override
-            public void run() {
-                Log.d(TAG, "Disconnect delay expired.");
-                mPendingDisconnect = null;
-                disconnect();
-            }
+        mPendingDisconnect = () -> {
+            Log.d(TAG, "Disconnect delay expired.");
+            mPendingDisconnect = null;
+            disconnect();
         };
 
         mHandler.postDelayed(mPendingDisconnect, mDisconnectionDelayMs);
@@ -220,12 +217,7 @@ public class GoogleApiClientHelper
                     mResolutionAttempts, ConnectedTask.RETRY_NUMBER_LIMIT, result.getErrorCode());
             mResolutionAttempts += 1;
 
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mClient.connect();
-                }
-            }, ConnectedTask.CONNECTION_RETRY_TIME_MS);
+            mHandler.postDelayed(() -> mClient.connect(), ConnectedTask.CONNECTION_RETRY_TIME_MS);
         }
     }
 

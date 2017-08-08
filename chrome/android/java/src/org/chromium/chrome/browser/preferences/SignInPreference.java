@@ -106,13 +106,8 @@ public class SignInPreference
             setupSignedIn(accountName);
         }
 
-        setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                return AccountSigninActivity.startIfAllowed(
-                        getContext(), SigninAccessPoint.SETTINGS);
-            }
-        });
+        setOnPreferenceClickListener(preference -> AccountSigninActivity.startIfAllowed(
+                getContext(), SigninAccessPoint.SETTINGS));
     }
 
     private void setupSigninDisabled() {

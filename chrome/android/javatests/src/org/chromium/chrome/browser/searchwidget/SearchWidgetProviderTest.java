@@ -35,7 +35,6 @@ import org.chromium.content.browser.test.util.CriteriaHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -126,59 +125,40 @@ public class SearchWidgetProviderTest extends InstrumentationTestCase {
 
         // The microphone icon should disappear if voice queries are unavailable.
         mDelegate.mViews.clear();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                SearchWidgetProvider.updateCachedVoiceSearchAvailability(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> SearchWidgetProvider.updateCachedVoiceSearchAvailability(false));
         checkWidgetStates(TEXT_GENERIC, View.GONE);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                SearchWidgetProvider.updateCachedEngineName(TEXT_SEARCH_ENGINE);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> SearchWidgetProvider.updateCachedEngineName(TEXT_SEARCH_ENGINE));
         checkWidgetStates(TEXT_GENERIC, View.GONE);
 
         // After recording that the default search engine is "X" and search engine promo check,
         // it should say "Search with X".
         mDelegate.mViews.clear();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                LocaleManager.setInstanceForTest(new LocaleManager() {
-                    @Override
-                    public boolean needToCheckForSearchEnginePromo() {
-                        return false;
-                    }
-                });
-                SearchWidgetProvider.updateCachedEngineName(TEXT_SEARCH_ENGINE);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            LocaleManager.setInstanceForTest(new LocaleManager() {
+                @Override
+                public boolean needToCheckForSearchEnginePromo() {
+                    return false;
+                }
+            });
+            SearchWidgetProvider.updateCachedEngineName(TEXT_SEARCH_ENGINE);
         });
         checkWidgetStates(TEXT_SEARCH_ENGINE_FULL, View.GONE);
 
         // The microphone icon should appear if voice queries are available.
         mDelegate.mViews.clear();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                SearchWidgetProvider.updateCachedVoiceSearchAvailability(true);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> SearchWidgetProvider.updateCachedVoiceSearchAvailability(true));
         checkWidgetStates(TEXT_SEARCH_ENGINE_FULL, View.VISIBLE);
     }
 
     @SmallTest
     @CommandLineFlags.Remove(ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE)
     public void testUpdateCachedEngineNameBeforeFirstRun() throws ExecutionException {
-        assertFalse(ThreadUtils.runOnUiThreadBlocking(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return SearchWidgetProvider.shouldShowFullString();
-            }
-        }));
+        assertFalse(ThreadUtils.runOnUiThreadBlocking(
+                () -> SearchWidgetProvider.shouldShowFullString()));
         SearchWidgetProvider.handleAction(
                 new Intent(SearchWidgetProvider.ACTION_UPDATE_ALL_WIDGETS));
 
@@ -190,17 +170,14 @@ public class SearchWidgetProviderTest extends InstrumentationTestCase {
         // already displaying the generic string, and should continue doing so, so they don't get
         // updated.
         mDelegate.mViews.clear();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                LocaleManager.setInstanceForTest(new LocaleManager() {
-                    @Override
-                    public boolean needToCheckForSearchEnginePromo() {
-                        return false;
-                    }
-                });
-                SearchWidgetProvider.updateCachedEngineName(TEXT_SEARCH_ENGINE);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            LocaleManager.setInstanceForTest(new LocaleManager() {
+                @Override
+                public boolean needToCheckForSearchEnginePromo() {
+                    return false;
+                }
+            });
+            SearchWidgetProvider.updateCachedEngineName(TEXT_SEARCH_ENGINE);
         });
         assertEquals(0, mDelegate.mViews.size());
 
@@ -212,12 +189,8 @@ public class SearchWidgetProviderTest extends InstrumentationTestCase {
                 .edit()
                 .putString(SearchWidgetProvider.PREF_SEARCH_ENGINE_SHORTNAME, TEXT_SEARCH_ENGINE)
                 .apply();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                SearchWidgetProvider.updateCachedEngineName(TEXT_SEARCH_ENGINE);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> SearchWidgetProvider.updateCachedEngineName(TEXT_SEARCH_ENGINE));
         checkWidgetStates(TEXT_GENERIC, View.VISIBLE);
     }
 
@@ -228,25 +201,22 @@ public class SearchWidgetProviderTest extends InstrumentationTestCase {
             Assert.assertEquals(TestDelegate.ALL_IDS[i], mDelegate.mViews.get(i).first.intValue());
         }
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // Check the contents of the RemoteViews by inflating them.
-                for (int i = 0; i < mDelegate.mViews.size(); i++) {
-                    FrameLayout parentView = new FrameLayout(mContext);
-                    RemoteViews views = mDelegate.mViews.get(i).second;
-                    View view = views.apply(mContext, parentView);
-                    parentView.addView(view);
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // Check the contents of the RemoteViews by inflating them.
+            for (int i = 0; i < mDelegate.mViews.size(); i++) {
+                FrameLayout parentView = new FrameLayout(mContext);
+                RemoteViews views = mDelegate.mViews.get(i).second;
+                View view = views.apply(mContext, parentView);
+                parentView.addView(view);
 
-                    // Confirm that the string is correct.
-                    TextView titleView = (TextView) view.findViewById(R.id.title);
-                    Assert.assertEquals(View.VISIBLE, titleView.getVisibility());
-                    Assert.assertEquals(expectedString, titleView.getText());
+                // Confirm that the string is correct.
+                TextView titleView = (TextView) view.findViewById(R.id.title);
+                Assert.assertEquals(View.VISIBLE, titleView.getVisibility());
+                Assert.assertEquals(expectedString, titleView.getText());
 
-                    // Confirm the visibility of the microphone.
-                    View microphoneView = view.findViewById(R.id.microphone_icon);
-                    Assert.assertEquals(expectedMicrophoneState, microphoneView.getVisibility());
-                }
+                // Confirm the visibility of the microphone.
+                View microphoneView = view.findViewById(R.id.microphone_icon);
+                Assert.assertEquals(expectedMicrophoneState, microphoneView.getVisibility());
             }
         });
     }
@@ -292,14 +262,11 @@ public class SearchWidgetProviderTest extends InstrumentationTestCase {
         instrumentation.addMonitor(monitor);
 
         // Click on the widget.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                FrameLayout parentView = new FrameLayout(mContext);
-                View view = views.apply(mContext, parentView);
-                parentView.addView(view);
-                view.findViewById(clickTarget).performClick();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            FrameLayout parentView = new FrameLayout(mContext);
+            View view = views.apply(mContext, parentView);
+            parentView.addView(view);
+            view.findViewById(clickTarget).performClick();
         });
 
         Activity activity = instrumentation.waitForMonitorWithTimeout(
@@ -316,11 +283,8 @@ public class SearchWidgetProviderTest extends InstrumentationTestCase {
 
     @SmallTest
     public void testCrashAbsorption() {
-        Runnable crashingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                throw new RuntimeException();
-            }
+        Runnable crashingRunnable = () -> {
+            throw new RuntimeException();
         };
 
         SharedPreferences prefs = mDelegate.getSharedPreferences();

@@ -125,12 +125,9 @@ public class WebApkActivity extends WebappActivity {
 
             NetworkChangeNotifier.addConnectionTypeObserver(observer);
             mOfflineDialog = new WebApkOfflineDialog();
-            mOfflineDialog.show(WebApkActivity.this, new WebApkOfflineDialog.DialogListener() {
-                @Override
-                public void onQuit() {
-                    ApiCompatibilityUtils.finishAndRemoveTask(WebApkActivity.this);
-                }
-            }, mWebappInfo.name());
+            mOfflineDialog.show(WebApkActivity.this,
+                    () -> ApiCompatibilityUtils.finishAndRemoveTask(WebApkActivity.this),
+                    mWebappInfo.name());
         }
     }
 
@@ -307,15 +304,12 @@ public class WebApkActivity extends WebappActivity {
         // Register the WebAPK. The WebAPK was registered when it was created, but may also become
         // unregistered after a user clears Chrome's data.
         WebappRegistry.getInstance().register(
-                mWebappInfo.id(), new WebappRegistry.FetchWebappDataStorageCallback() {
-                    @Override
-                    public void onWebappDataStorageRetrieved(WebappDataStorage storage) {
-                        // Initialize the time of the last is-update-needed check with the
-                        // registration time. This prevents checking for updates on the first run.
-                        storage.updateTimeOfLastCheckForUpdatedWebManifest();
+                mWebappInfo.id(), storage -> {
+                    // Initialize the time of the last is-update-needed check with the
+                    // registration time. This prevents checking for updates on the first run.
+                    storage.updateTimeOfLastCheckForUpdatedWebManifest();
 
-                        onDeferredStartupWithStorage(storage);
-                    }
+                    onDeferredStartupWithStorage(storage);
                 });
     }
 

@@ -23,7 +23,6 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 
 import java.lang.ref.WeakReference;
-import java.util.concurrent.Callable;
 
 /**
  * Class for testing MultiWindowUtils.
@@ -72,12 +71,8 @@ public class MultiWindowUtilsTest extends  ChromeTabbedActivityTestBase {
         // Open settings and wait for ChromeTabbedActivity2 to pause.
         activity2.onMenuOrKeyboardAction(R.id.preferences_id, true);
         int expected = ActivityState.PAUSED;
-        CriteriaHelper.pollUiThread(Criteria.equals(expected, new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return ApplicationStatus.getStateForActivity(activity2);
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(expected,
+                () -> ApplicationStatus.getStateForActivity(activity2)));
 
         assertEquals("The most recently resumed ChromeTabbedActivity should be used for intents.",
                 ChromeTabbedActivity2.class,
@@ -174,12 +169,8 @@ public class MultiWindowUtilsTest extends  ChromeTabbedActivityTestBase {
         activity.startActivity(intent);
 
         // Wait for ChromeTabbedActivity2 to be created.
-        CriteriaHelper.pollUiThread(Criteria.equals(numExpectedActivities, new Callable<Integer>() {
-            @Override
-            public Integer call() {
-                return ApplicationStatus.getRunningActivities().size();
-            }
-        }));
+        CriteriaHelper.pollUiThread(Criteria.equals(numExpectedActivities,
+                () -> ApplicationStatus.getRunningActivities().size()));
 
         // Find and return the second ChromeTabbedActivity.
         ChromeTabbedActivity2 returnActivity = null;

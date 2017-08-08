@@ -49,12 +49,9 @@ public class PartnerHomepageUnitTest extends BasePartnerBrowserCustomizationUnit
         // a system package.
         PartnerBrowserCustomizations.setProviderAuthorityForTests(
                 PARTNER_BROWSER_CUSTOMIZATIONS_PROVIDER);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PartnerBrowserCustomizations.initializeAsync(getContext(), DEFAULT_TIMEOUT_MS);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> PartnerBrowserCustomizations.initializeAsync(getContext(),
+                        DEFAULT_TIMEOUT_MS));
         PartnerBrowserCustomizations.setOnInitializeAsyncFinished(mCallback, DEFAULT_TIMEOUT_MS);
 
         mCallbackLock.acquire();
@@ -80,12 +77,9 @@ public class PartnerHomepageUnitTest extends BasePartnerBrowserCustomizationUnit
         PartnerBrowserCustomizations.ignoreBrowserProviderSystemPackageCheckForTests(true);
         PartnerBrowserCustomizations.setProviderAuthorityForTests(
                 PARTNER_BROWSER_CUSTOMIZATIONS_NO_PROVIDER);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PartnerBrowserCustomizations.initializeAsync(getContext(), DEFAULT_TIMEOUT_MS);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> PartnerBrowserCustomizations.initializeAsync(getContext(),
+                        DEFAULT_TIMEOUT_MS));
         PartnerBrowserCustomizations.setOnInitializeAsyncFinished(mCallback, DEFAULT_TIMEOUT_MS);
         mCallbackLock.acquire();
 
@@ -112,12 +106,9 @@ public class PartnerHomepageUnitTest extends BasePartnerBrowserCustomizationUnit
         PartnerBrowserCustomizations.ignoreBrowserProviderSystemPackageCheckForTests(true);
         PartnerBrowserCustomizations.setProviderAuthorityForTests(
                 PARTNER_BROWSER_CUSTOMIZATIONS_PROVIDER);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PartnerBrowserCustomizations.initializeAsync(getContext(), DEFAULT_TIMEOUT_MS);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> PartnerBrowserCustomizations.initializeAsync(getContext(),
+                        DEFAULT_TIMEOUT_MS));
         PartnerBrowserCustomizations.setOnInitializeAsyncFinished(mCallback, DEFAULT_TIMEOUT_MS);
 
         mCallbackLock.acquire();
@@ -146,12 +137,9 @@ public class PartnerHomepageUnitTest extends BasePartnerBrowserCustomizationUnit
         PartnerBrowserCustomizations.ignoreBrowserProviderSystemPackageCheckForTests(true);
         PartnerBrowserCustomizations.setProviderAuthorityForTests(
                 PARTNER_BROWSER_CUSTOMIZATIONS_PROVIDER);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PartnerBrowserCustomizations.initializeAsync(getContext(), DEFAULT_TIMEOUT_MS);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> PartnerBrowserCustomizations.initializeAsync(getContext(),
+                        DEFAULT_TIMEOUT_MS));
         PartnerBrowserCustomizations.setOnInitializeAsyncFinished(mCallback, DEFAULT_TIMEOUT_MS);
 
         mCallbackLock.acquire();
@@ -179,12 +167,8 @@ public class PartnerHomepageUnitTest extends BasePartnerBrowserCustomizationUnit
         PartnerBrowserCustomizations.ignoreBrowserProviderSystemPackageCheckForTests(true);
         PartnerBrowserCustomizations.setProviderAuthorityForTests(
                 PARTNER_BROWSER_CUSTOMIZATIONS_DELAYED_PROVIDER);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PartnerBrowserCustomizations.initializeAsync(getContext(), 500);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> PartnerBrowserCustomizations.initializeAsync(getContext(), 500));
         PartnerBrowserCustomizations.setOnInitializeAsyncFinished(mCallback, 300);
 
         mCallbackLock.acquire();
@@ -225,12 +209,8 @@ public class PartnerHomepageUnitTest extends BasePartnerBrowserCustomizationUnit
         PartnerBrowserCustomizations.setProviderAuthorityForTests(
                 PARTNER_BROWSER_CUSTOMIZATIONS_DELAYED_PROVIDER);
         setDelayProviderUriPathForDelay(PartnerBrowserCustomizations.PARTNER_HOMEPAGE_PATH);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PartnerBrowserCustomizations.initializeAsync(getContext(), 2000);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> PartnerBrowserCustomizations.initializeAsync(getContext(), 2000));
         PartnerBrowserCustomizations.setOnInitializeAsyncFinished(mCallback, 300);
 
         mCallbackLock.acquire();
@@ -271,12 +251,9 @@ public class PartnerHomepageUnitTest extends BasePartnerBrowserCustomizationUnit
         PartnerBrowserCustomizations.ignoreBrowserProviderSystemPackageCheckForTests(true);
         PartnerBrowserCustomizations.setProviderAuthorityForTests(
                 PARTNER_BROWSER_CUSTOMIZATIONS_PROVIDER);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PartnerBrowserCustomizations.initializeAsync(getContext(), DEFAULT_TIMEOUT_MS);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> PartnerBrowserCustomizations.initializeAsync(getContext(),
+                        DEFAULT_TIMEOUT_MS));
         PartnerBrowserCustomizations.setOnInitializeAsyncFinished(mCallback, DEFAULT_TIMEOUT_MS);
 
         mCallbackLock.acquire();

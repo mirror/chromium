@@ -119,14 +119,11 @@ public class WebApkUpdateDataFetcherTest {
     private void startWebApkUpdateDataFetcher(final String scopeUrl,
             final String manifestUrl, final WebApkUpdateDataFetcher.Observer observer) {
         final WebApkUpdateDataFetcher fetcher = new WebApkUpdateDataFetcher();
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                WebApkInfo oldInfo = WebApkInfo.create("", "", scopeUrl, null, null, null, null, -1,
-                        -1, -1, -1, -1, "random.package", -1, manifestUrl, "",
-                        new HashMap<String, String>(), false /* forceNavigation */);
-                fetcher.start(mTab, oldInfo, observer);
-            }
+        ThreadUtils.runOnUiThread(() -> {
+            WebApkInfo oldInfo = WebApkInfo.create("", "", scopeUrl, null, null, null, null, -1,
+                    -1, -1, -1, -1, "random.package", -1, manifestUrl, "",
+                    new HashMap<String, String>(), false /* forceNavigation */);
+            fetcher.start(mTab, oldInfo, observer);
         });
     }
 

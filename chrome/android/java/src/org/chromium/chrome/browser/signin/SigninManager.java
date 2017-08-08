@@ -287,12 +287,9 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
     }
 
     private void notifySignInAllowedChanged() {
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                for (SignInAllowedObserver observer : mSignInAllowedObservers) {
-                    observer.onSignInAllowedChanged();
-                }
+        new Handler().post(() -> {
+            for (SignInAllowedObserver observer : mSignInAllowedObservers) {
+                observer.onSignInAllowedChanged();
             }
         });
     }
@@ -491,12 +488,7 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
     public Promise<Void> signOutPromise() {
         final Promise<Void> promise = new Promise<Void>();
 
-        signOut(new Runnable(){
-            @Override
-            public void run() {
-                promise.fulfill(null);
-            }
-        });
+        signOut(() -> promise.fulfill(null));
 
         return promise;
     }

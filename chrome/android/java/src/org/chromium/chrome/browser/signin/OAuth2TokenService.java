@@ -136,12 +136,7 @@ public final class OAuth2TokenService
             String username, String scope, final long nativeCallback) {
         Account account = getAccountOrNullFromUsername(username);
         if (account == null) {
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    nativeOAuth2TokenFetched(null, false, nativeCallback);
-                }
-            });
+            ThreadUtils.postOnUiThread(() -> nativeOAuth2TokenFetched(null, false, nativeCallback));
             return;
         }
         String oauth2Scope = OAUTH2_SCOPE_PREFIX + scope;

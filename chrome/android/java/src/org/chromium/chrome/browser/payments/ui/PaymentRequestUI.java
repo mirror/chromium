@@ -11,7 +11,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -265,12 +264,9 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
          */
         public NotifierForTest(final Runnable notification) {
             mHandler = new Handler();
-            mNotification = new Runnable() {
-                @Override
-                public void run() {
-                    notification.run();
-                    mNotificationPending = false;
-                }
+            mNotification = () -> {
+                notification.run();
+                mNotificationPending = false;
             };
         }
 
@@ -383,12 +379,9 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
                 R.layout.payment_request_error, null);
         mErrorView.initialize(title, origin, securityLevel);
 
-        mReadyToPayNotifierForTest = new NotifierForTest(new Runnable() {
-            @Override
-            public void run() {
-                if (sObserverForTest != null && isAcceptingUserInput() && mPayButton.isEnabled()) {
-                    sObserverForTest.onPaymentRequestReadyToPay(PaymentRequestUI.this);
-                }
+        mReadyToPayNotifierForTest = new NotifierForTest(() -> {
+            if (sObserverForTest != null && isAcceptingUserInput() && mPayButton.isEnabled()) {
+                sObserverForTest.onPaymentRequestReadyToPay(PaymentRequestUI.this);
             }
         });
 
@@ -613,12 +606,9 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
     public void close(boolean shouldCloseImmediately, final Runnable callback) {
         mIsClientClosing = true;
 
-        Runnable dismissRunnable = new Runnable() {
-            @Override
-            public void run() {
-                dismissDialog(false);
-                if (callback != null) callback.run();
-            }
+        Runnable dismissRunnable = () -> {
+            dismissDialog(false);
+            if (callback != null) callback.run();
         };
 
         if (shouldCloseImmediately) {
@@ -1185,13 +1175,10 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
      * positions.
      */
     private void startSectionResizeAnimation() {
-        Runnable animationEndRunnable = new Runnable() {
-            @Override
-            public void run() {
-                mSectionAnimator = null;
-                notifyReadyForInput();
-                mReadyToPayNotifierForTest.run();
-            }
+        Runnable animationEndRunnable = () -> {
+            mSectionAnimator = null;
+            notifyReadyForInput();
+            mReadyToPayNotifierForTest.run();
         };
 
         mSectionAnimator =
@@ -1291,12 +1278,9 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
             mContainerHeightDifference = (bottom - top) - (oldBottom - oldTop);
 
             ValueAnimator containerAnimator = ValueAnimator.ofFloat(1f, 0f);
-            containerAnimator.addUpdateListener(new AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    float alpha = (Float) animation.getAnimatedValue();
-                    update(alpha);
-                }
+            containerAnimator.addUpdateListener(animation -> {
+                float alpha = (Float) animation.getAnimatedValue();
+                update(alpha);
             });
 
             mSheetAnimator = containerAnimator;

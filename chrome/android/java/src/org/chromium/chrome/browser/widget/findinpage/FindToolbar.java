@@ -23,7 +23,6 @@ import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnKeyListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -222,16 +221,13 @@ public class FindToolbar extends LinearLayout
         mFindQuery.setFindToolbar(this);
         mFindQuery.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_FILTER);
         mFindQuery.setSelectAllOnFocus(true);
-        mFindQuery.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                mAccessibilityDidActivateResult = false;
-                if (!hasFocus) {
-                    if (mFindQuery.getText().length() > 0) {
-                        mSearchKeyShouldTriggerSearch = true;
-                    }
-                    UiUtils.hideKeyboard(mFindQuery);
+        mFindQuery.setOnFocusChangeListener((v, hasFocus) -> {
+            mAccessibilityDidActivateResult = false;
+            if (!hasFocus) {
+                if (mFindQuery.getText().length() > 0) {
+                    mSearchKeyShouldTriggerSearch = true;
                 }
+                UiUtils.hideKeyboard(mFindQuery);
             }
         });
         mFindQuery.addTextChangedListener(new TextWatcher() {
@@ -274,54 +270,36 @@ public class FindToolbar extends LinearLayout
             public void afterTextChanged(Editable s) {
             }
         });
-        mFindQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (event != null && event.getAction() == KeyEvent.ACTION_UP) return false;
+        mFindQuery.setOnEditorActionListener((v, actionId, event) -> {
+            if (event != null && event.getAction() == KeyEvent.ACTION_UP) return false;
 
-                if (mFindInPageBridge == null) return false;
+            if (mFindInPageBridge == null) return false;
 
-                // Only trigger a new find if the text was set programmatically.
-                // Otherwise just revisit the current active match.
-                if (mSearchKeyShouldTriggerSearch) {
-                    mSearchKeyShouldTriggerSearch = false;
-                    startFinding(true);
-                } else {
-                    UiUtils.hideKeyboard(mFindQuery);
-                    mFindInPageBridge.activateFindInPageResultForAccessibility();
-                    mAccessibilityDidActivateResult = true;
-                }
-                return true;
+            // Only trigger a new find if the text was set programmatically.
+            // Otherwise just revisit the current active match.
+            if (mSearchKeyShouldTriggerSearch) {
+                mSearchKeyShouldTriggerSearch = false;
+                startFinding(true);
+            } else {
+                UiUtils.hideKeyboard(mFindQuery);
+                mFindInPageBridge.activateFindInPageResultForAccessibility();
+                mAccessibilityDidActivateResult = true;
             }
+            return true;
         });
 
         mFindStatus = (TextView) findViewById(R.id.find_status);
 
         mFindPrevButton = (TintedImageButton) findViewById(R.id.find_prev_button);
-        mFindPrevButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startFinding(false);
-            }
-        });
+        mFindPrevButton.setOnClickListener(v -> startFinding(false));
 
         mFindNextButton = (TintedImageButton) findViewById(R.id.find_next_button);
-        mFindNextButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startFinding(true);
-            }
-        });
+        mFindNextButton.setOnClickListener(v -> startFinding(true));
 
         setPrevNextEnabled(false);
 
         mCloseFindButton = (TintedImageButton) findViewById(R.id.close_find_button);
-        mCloseFindButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deactivate();
-            }
-        });
+        mCloseFindButton.setOnClickListener(v -> deactivate());
     }
 
     // Overriden by subclasses.
@@ -353,21 +331,18 @@ public class FindToolbar extends LinearLayout
             // from the options menu, but we still need to use postDelayed with
             // a zero wait time to delay until all the side-effects are complete
             // (e.g. becoming the target of the Input Method).
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    showKeyboard();
+            mHandler.postDelayed(() -> {
+                showKeyboard();
 
-                    // This is also a great time to set accessibility focus to the query box -
-                    // this also fails if we don't wait until the window regains focus.
-                    // Sending a HOVER_ENTER event before the ACCESSIBILITY_FOCUSED event
-                    // is a widely-used hack to force TalkBack to move accessibility focus
-                    // to a view, which is discouraged in general but reasonable in this case.
-                    mFindQuery.sendAccessibilityEvent(
-                            AccessibilityEventCompat.TYPE_VIEW_HOVER_ENTER);
-                    mFindQuery.sendAccessibilityEvent(
-                            AccessibilityEventCompat.TYPE_VIEW_ACCESSIBILITY_FOCUSED);
-                }
+                // This is also a great time to set accessibility focus to the query box -
+                // this also fails if we don't wait until the window regains focus.
+                // Sending a HOVER_ENTER event before the ACCESSIBILITY_FOCUSED event
+                // is a widely-used hack to force TalkBack to move accessibility focus
+                // to a view, which is discouraged in general but reasonable in this case.
+                mFindQuery.sendAccessibilityEvent(
+                        AccessibilityEventCompat.TYPE_VIEW_HOVER_ENTER);
+                mFindQuery.sendAccessibilityEvent(
+                        AccessibilityEventCompat.TYPE_VIEW_ACCESSIBILITY_FOCUSED);
             }, 0);
         }
     }
@@ -483,12 +458,8 @@ public class FindToolbar extends LinearLayout
             mHandler.removeCallbacks(mAccessibleAnnouncementRunnable);
         }
 
-        mAccessibleAnnouncementRunnable = new Runnable() {
-            @Override
-            public void run() {
-                mFindQuery.announceForAccessibility(announcementText);
-            }
-        };
+        mAccessibleAnnouncementRunnable =
+                () -> mFindQuery.announceForAccessibility(announcementText);
         mHandler.postDelayed(mAccessibleAnnouncementRunnable,
                 ACCESSIBLE_ANNOUNCEMENT_DELAY_MILLIS);
     }

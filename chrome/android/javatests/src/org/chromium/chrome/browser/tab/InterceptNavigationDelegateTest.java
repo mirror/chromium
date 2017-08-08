@@ -32,7 +32,6 @@ import org.chromium.net.test.EmbeddedTestServer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -98,12 +97,8 @@ public class InterceptNavigationDelegateTest {
 
     private void waitTillExpectedCallsComplete(int count, long timeout) {
         CriteriaHelper.pollUiThread(
-                Criteria.equals(count, new Callable<Integer>() {
-                    @Override
-                    public Integer call() {
-                        return mNavParamHistory.size();
-                    }
-                }), timeout, CriteriaHelper.DEFAULT_POLLING_INTERVAL);
+                Criteria.equals(count, () -> mNavParamHistory.size()), timeout,
+                CriteriaHelper.DEFAULT_POLLING_INTERVAL);
     }
 
     @Before
@@ -111,12 +106,9 @@ public class InterceptNavigationDelegateTest {
         mActivityTestRule.startMainActivityOnBlankPage();
         mActivity = mActivityTestRule.getActivity();
         mInterceptNavigationDelegate = new TestInterceptNavigationDelegate();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Tab tab = mActivity.getActivityTab();
-                tab.setInterceptNavigationDelegate(mInterceptNavigationDelegate);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            Tab tab = mActivity.getActivityTab();
+            tab.setInterceptNavigationDelegate(mInterceptNavigationDelegate);
         });
         mTestServer = EmbeddedTestServer.createAndStartServer(
                 InstrumentationRegistry.getInstrumentation().getContext());

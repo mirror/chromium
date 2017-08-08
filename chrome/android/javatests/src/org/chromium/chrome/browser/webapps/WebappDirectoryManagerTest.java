@@ -30,7 +30,6 @@ import org.chromium.webapk.lib.common.WebApkConstants;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 /**
  * Tests that directories for WebappActivities are managed correctly.
@@ -213,11 +212,6 @@ public class WebappDirectoryManagerTest {
         final AsyncTask task =
                 mWebappDirectoryManager.cleanUpDirectories(mMockContext, WEBAPP_ID_1);
         CriteriaHelper.pollInstrumentationThread(
-                Criteria.equals(AsyncTask.Status.FINISHED, new Callable<AsyncTask.Status>() {
-                    @Override
-                    public AsyncTask.Status call() {
-                        return task.getStatus();
-                    }
-                }));
+                Criteria.equals(AsyncTask.Status.FINISHED, () -> task.getStatus()));
     }
 }

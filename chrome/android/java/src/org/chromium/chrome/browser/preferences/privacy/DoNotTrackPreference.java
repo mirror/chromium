@@ -5,8 +5,6 @@
 package org.chromium.chrome.browser.preferences.privacy;
 
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 
 import org.chromium.chrome.R;
@@ -33,12 +31,9 @@ public class DoNotTrackPreference extends PreferenceFragment {
         boolean isDoNotTrackEnabled = PrefServiceBridge.getInstance().isDoNotTrackEnabled();
         doNotTrackSwitch.setChecked(isDoNotTrackEnabled);
 
-        doNotTrackSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                PrefServiceBridge.getInstance().setDoNotTrackEnabled((boolean) newValue);
-                return true;
-            }
+        doNotTrackSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
+            PrefServiceBridge.getInstance().setDoNotTrackEnabled((boolean) newValue);
+            return true;
         });
     }
 }

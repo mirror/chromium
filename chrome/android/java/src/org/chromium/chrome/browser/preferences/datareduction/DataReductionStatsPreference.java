@@ -17,7 +17,6 @@ import android.text.format.Formatter;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -183,16 +182,13 @@ public class DataReductionStatsPreference extends Preference {
 
         mResetStatisticsButton = (Button) view.findViewById(R.id.data_reduction_reset_statistics);
         if (mResetStatisticsButton != null) {
-            mResetStatisticsButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    DataReductionProxySettings.getInstance().clearDataSavingStatistics();
-                    updateReductionStatistics();
-                    setDetailText();
-                    notifyChanged();
-                    DataReductionProxyUma.dataReductionProxyUIAction(
-                            DataReductionProxyUma.ACTION_STATS_RESET);
-                }
+            mResetStatisticsButton.setOnClickListener(view1 -> {
+                DataReductionProxySettings.getInstance().clearDataSavingStatistics();
+                updateReductionStatistics();
+                setDetailText();
+                notifyChanged();
+                DataReductionProxyUma.dataReductionProxyUIAction(
+                        DataReductionProxyUma.ACTION_STATS_RESET);
             });
         }
     }

@@ -38,13 +38,8 @@ public class PageInfoPopupTest {
     @RetryOnFailure
     public void testShow() throws InterruptedException {
         mActivityTestRule.startMainActivityOnBlankPage();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PageInfoPopup.show(mActivityTestRule.getActivity(),
-                        mActivityTestRule.getActivity().getActivityTab(), null,
-                        PageInfoPopup.OPENED_FROM_MENU);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> PageInfoPopup.show(mActivityTestRule.getActivity(),
+                mActivityTestRule.getActivity().getActivityTab(), null,
+                PageInfoPopup.OPENED_FROM_MENU));
     }
 }

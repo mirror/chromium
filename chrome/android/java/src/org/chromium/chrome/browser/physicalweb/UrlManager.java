@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -81,13 +80,10 @@ class UrlManager {
         mNearbyUrls = new HashSet<>();
         mUrlInfoMap = new HashMap<>();
         mPwsResultMap = new HashMap<>();
-        mUrlsSortedByTimestamp = new PriorityQueue<String>(1, new Comparator<String>() {
-            @Override
-            public int compare(String url1, String url2) {
-                Long timestamp1 = Long.valueOf(mUrlInfoMap.get(url1).getFirstSeenTimestamp());
-                Long timestamp2 = Long.valueOf(mUrlInfoMap.get(url2).getFirstSeenTimestamp());
-                return timestamp1.compareTo(timestamp2);
-            }
+        mUrlsSortedByTimestamp = new PriorityQueue<String>(1, (url1, url2) -> {
+            Long timestamp1 = Long.valueOf(mUrlInfoMap.get(url1).getFirstSeenTimestamp());
+            Long timestamp2 = Long.valueOf(mUrlInfoMap.get(url2).getFirstSeenTimestamp());
+            return timestamp1.compareTo(timestamp2);
         });
         initSharedPreferences();
         registerNativeInitStartupCallback();
@@ -210,13 +206,10 @@ class UrlManager {
         } else {
             urlInfos = getUrlInfoList(intersection);
         }
-        Collections.sort(urlInfos, new Comparator<UrlInfo>() {
-            @Override
-            public int compare(UrlInfo urlInfo1, UrlInfo urlInfo2) {
-                Double distance1 = Double.valueOf(urlInfo1.getDistance());
-                Double distance2 = Double.valueOf(urlInfo2.getDistance());
-                return distance1.compareTo(distance2);
-            }
+        Collections.sort(urlInfos, (urlInfo1, urlInfo2) -> {
+            Double distance1 = Double.valueOf(urlInfo1.getDistance());
+            Double distance2 = Double.valueOf(urlInfo2.getDistance());
+            return distance1.compareTo(distance2);
         });
 
         // Keep only the first UrlInfo with a given groupid. The list is already
@@ -447,25 +440,19 @@ class UrlManager {
     private void resolveUrl(final UrlInfo url) {
         Set<UrlInfo> urls = new HashSet<UrlInfo>(Arrays.asList(url));
         final long timestamp = SystemClock.elapsedRealtime();
-        mPwsClient.resolve(urls, new PwsClient.ResolveScanCallback() {
-            @Override
-            public void onPwsResults(final Collection<PwsResult> pwsResults) {
-                long duration = SystemClock.elapsedRealtime() - timestamp;
-                PhysicalWebUma.onBackgroundPwsResolution(duration);
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (PwsResult pwsResult : pwsResults) {
-                            String requestUrl = pwsResult.requestUrl;
-                            if (url.getUrl().equalsIgnoreCase(requestUrl)) {
-                                addResolvedUrl(pwsResult);
-                                return;
-                            }
-                        }
-                        removeResolvedUrl(url);
+        mPwsClient.resolve(urls, pwsResults -> {
+            long duration = SystemClock.elapsedRealtime() - timestamp;
+            PhysicalWebUma.onBackgroundPwsResolution(duration);
+            new Handler(Looper.getMainLooper()).post(() -> {
+                for (PwsResult pwsResult : pwsResults) {
+                    String requestUrl = pwsResult.requestUrl;
+                    if (url.getUrl().equalsIgnoreCase(requestUrl)) {
+                        addResolvedUrl(pwsResult);
+                        return;
                     }
-                });
-            }
+                }
+                removeResolvedUrl(url);
+            });
         });
     }
 
@@ -507,10 +494,8 @@ class UrlManager {
      * Register a StartupCallback to initialize the native portion of the JNI bridge.
      */
     private void registerNativeInitStartupCallback() {
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
+        ThreadUtils.postOnUiThread(
+                () -> BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
                         .addStartupCompletedObserver(new StartupCallback() {
                             @Override
                             public void onSuccess(boolean alreadyStarted) {
@@ -524,9 +509,7 @@ class UrlManager {
                             public void onFailure() {
                                 // Startup failed.
                             }
-                        });
-            }
-        });
+                        }));
     }
 
     /**
@@ -547,12 +530,9 @@ class UrlManager {
             return;
         }
 
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (isNativeInitialized()) {
-                    nativeOnFound(mNativePhysicalWebDataSourceAndroid, url);
-                }
+        ThreadUtils.postOnUiThread(() -> {
+            if (isNativeInitialized()) {
+                nativeOnFound(mNativePhysicalWebDataSourceAndroid, url);
             }
         });
     }
@@ -567,12 +547,9 @@ class UrlManager {
             return;
         }
 
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (isNativeInitialized()) {
-                    nativeOnLost(mNativePhysicalWebDataSourceAndroid, url);
-                }
+        ThreadUtils.postOnUiThread(() -> {
+            if (isNativeInitialized()) {
+                nativeOnLost(mNativePhysicalWebDataSourceAndroid, url);
             }
         });
     }
@@ -589,13 +566,10 @@ class UrlManager {
             return;
         }
 
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (isNativeInitialized()) {
-                    nativeOnDistanceChanged(mNativePhysicalWebDataSourceAndroid, url,
-                            distanceEstimate);
-                }
+        ThreadUtils.postOnUiThread(() -> {
+            if (isNativeInitialized()) {
+                nativeOnDistanceChanged(mNativePhysicalWebDataSourceAndroid, url,
+                        distanceEstimate);
             }
         });
     }

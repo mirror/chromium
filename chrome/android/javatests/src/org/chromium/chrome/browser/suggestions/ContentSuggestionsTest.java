@@ -55,12 +55,8 @@ public class ContentSuggestionsTest extends ChromeActivityTestCaseBase<ChromeAct
     private NewTabPage loadNTPWithSearchSuggestState(final boolean enabled)
             throws InterruptedException {
         Tab tab = getActivity().getActivityTab();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PrefServiceBridge.getInstance().setSearchSuggestEnabled(enabled);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> PrefServiceBridge.getInstance().setSearchSuggestEnabled(enabled));
 
         loadUrl(UrlConstants.NTP_URL);
         NewTabPageTestUtils.waitForNtpLoaded(tab);

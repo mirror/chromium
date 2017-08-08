@@ -61,12 +61,8 @@ public class PageLoadMetricsTest {
 
     @After
     public void tearDown() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PageLoadMetrics.removeObserver(mMetricsObserver);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> PageLoadMetrics.removeObserver(mMetricsObserver));
 
         mTestServer.stopAndDestroyServer();
     }
@@ -111,12 +107,8 @@ public class PageLoadMetricsTest {
     public void testPageLoadMetricEmitted() throws InterruptedException {
         Assert.assertFalse("Tab shouldn't be loading anything before we add observer",
                 mActivityTestRule.getActivity().getActivityTab().isLoading());
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                PageLoadMetrics.addObserver(mMetricsObserver);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> PageLoadMetrics.addObserver(mMetricsObserver));
 
         mActivityTestRule.loadUrl(mTestPage);
 

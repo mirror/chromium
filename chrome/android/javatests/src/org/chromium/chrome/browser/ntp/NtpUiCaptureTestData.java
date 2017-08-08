@@ -130,13 +130,8 @@ public class NtpUiCaptureTestData {
             @Override
             public boolean getLargeIconForUrl(
                     final String pageUrl, int desiredSizePx, final LargeIconCallback callback) {
-                ThreadUtils.postOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onLargeIconAvailable(
-                                iconMap.get(pageUrl), colorMap.get(pageUrl), true);
-                    }
-                });
+                ThreadUtils.postOnUiThread(() -> callback.onLargeIconAvailable(
+                        iconMap.get(pageUrl), colorMap.get(pageUrl), true));
                 return true;
             }
         };

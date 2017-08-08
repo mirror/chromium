@@ -58,17 +58,12 @@ public class CombinedPolicyProviderTest {
         Assert.assertEquals(2, incognitoTabModel.getCount());
 
         final CombinedPolicyProvider provider = CombinedPolicyProvider.get();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+        ThreadUtils.runOnUiThreadBlocking(() -> provider.registerProvider(new PolicyProvider() {
             @Override
-            public void run() {
-                provider.registerProvider(new PolicyProvider() {
-                    @Override
-                    public void refresh() {
-                        terminateIncognitoSession();
-                    }
-                });
+            public void refresh() {
+                terminateIncognitoSession();
             }
-        });
+        }));
 
         Assert.assertEquals(0, incognitoTabModel.getCount());
     }

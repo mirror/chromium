@@ -55,16 +55,13 @@ public class MultiInstanceMigrationTest {
     }
 
     private void buildPersistentStoreAndWaitForMigration() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                MockTabModelSelector selector = new MockTabModelSelector(0, 0, null);
-                TabbedModeTabPersistencePolicy persistencePolicy =
-                        new TabbedModeTabPersistencePolicy(0, false);
-                TabPersistentStore store = new TabPersistentStore(
-                        persistencePolicy, selector, null, null);
-                store.waitForMigrationToFinish();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            MockTabModelSelector selector = new MockTabModelSelector(0, 0, null);
+            TabbedModeTabPersistencePolicy persistencePolicy =
+                    new TabbedModeTabPersistencePolicy(0, false);
+            TabPersistentStore store = new TabPersistentStore(
+                    persistencePolicy, selector, null, null);
+            store.waitForMigrationToFinish();
         });
     }
 

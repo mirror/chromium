@@ -85,13 +85,10 @@ public class PassphraseActivity extends FragmentActivity implements
         if (mSyncStateChangedListener != null) {
             return;
         }
-        mSyncStateChangedListener = new ProfileSyncService.SyncStateChangedListener() {
-            @Override
-            public void syncStateChanged() {
-                if (ProfileSyncService.get().isEngineInitialized()) {
-                    removeSyncStateChangedListener();
-                    displayPassphraseDialog();
-                }
+        mSyncStateChangedListener = () -> {
+            if (ProfileSyncService.get().isEngineInitialized()) {
+                removeSyncStateChangedListener();
+                displayPassphraseDialog();
             }
         };
         ProfileSyncService.get().addSyncStateChangedListener(mSyncStateChangedListener);

@@ -47,12 +47,8 @@ public final class SigninTestUtil {
     public static void setUpAuthForTest(Instrumentation instrumentation) {
         assert sContext == null;
         sContext = instrumentation.getTargetContext();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ProcessInitializationHandler.getInstance().initializePreNative();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> ProcessInitializationHandler.getInstance().initializePreNative());
         sAccountManager = new FakeAccountManagerDelegate(sContext);
         AccountManagerFacade.overrideAccountManagerFacadeForTests(sContext, sAccountManager);
         overrideAccountIdProvider();
@@ -90,12 +86,8 @@ public final class SigninTestUtil {
      */
     public static Account addTestAccount(String name) {
         Account account = createTestAccount(name);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                AccountTrackerService.get().invalidateAccountSeedStatus(true);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> AccountTrackerService.get().invalidateAccountSeedStatus(true));
         return account;
     }
 
@@ -104,12 +96,9 @@ public final class SigninTestUtil {
      */
     public static Account addAndSignInTestAccount() {
         Account account = createTestAccount(DEFAULT_ACCOUNT);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ChromeSigninController.get().setSignedInAccountName(DEFAULT_ACCOUNT);
-                AccountTrackerService.get().invalidateAccountSeedStatus(true);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            ChromeSigninController.get().setSignedInAccountName(DEFAULT_ACCOUNT);
+            AccountTrackerService.get().invalidateAccountSeedStatus(true);
         });
         return account;
     }
@@ -124,10 +113,8 @@ public final class SigninTestUtil {
     }
 
     private static void overrideAccountIdProvider() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                AccountIdProvider.setInstanceForTest(new AccountIdProvider() {
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> AccountIdProvider.setInstanceForTest(new AccountIdProvider() {
                     @Override
                     public String getAccountId(String accountName) {
                         return "gaia-id-" + accountName;
@@ -137,9 +124,7 @@ public final class SigninTestUtil {
                     public boolean canBeUsed() {
                         return true;
                     }
-                });
-            }
-        });
+                }));
     }
 
     /**

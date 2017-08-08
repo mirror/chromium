@@ -72,13 +72,9 @@ public class StatusCardViewHolder extends CardViewHolder {
         int actionLabel = item.getActionLabel();
         if (actionLabel != 0) {
             mActionView.setText(actionLabel);
-            mActionView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    SuggestionsMetrics.recordCardActionTapped();
-                    item.performAction(v.getContext());
-                }
+            mActionView.setOnClickListener(v -> {
+                SuggestionsMetrics.recordCardActionTapped();
+                item.performAction(v.getContext());
             });
             mActionView.setVisibility(View.VISIBLE);
         } else {

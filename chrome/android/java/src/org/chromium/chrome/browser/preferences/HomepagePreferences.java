@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.preferences;
 
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 
 import org.chromium.chrome.R;
@@ -34,12 +33,9 @@ public class HomepagePreferences extends PreferenceFragment {
         mHomepageSwitch = (ChromeSwitchPreference) findPreference(PREF_HOMEPAGE_SWITCH);
         boolean isHomepageEnabled = mHomepageManager.getPrefHomepageEnabled();
         mHomepageSwitch.setChecked(isHomepageEnabled);
-        mHomepageSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                mHomepageManager.setPrefHomepageEnabled((boolean) newValue);
-                return true;
-            }
+        mHomepageSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
+            mHomepageManager.setPrefHomepageEnabled((boolean) newValue);
+            return true;
         });
 
         mHomepageEdit = findPreference(PREF_HOMEPAGE_EDIT);

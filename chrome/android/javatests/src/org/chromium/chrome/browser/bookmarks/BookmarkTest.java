@@ -34,7 +34,6 @@ import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.ui.base.DeviceFormFactor;
 
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -76,12 +75,8 @@ public class BookmarkTest extends ChromeActivityTestCaseBase<ChromeActivity> {
     @Override
     public void startMainActivity() throws InterruptedException {
         startMainActivityFromLauncher();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mBookmarkModel = new BookmarkModel(getActivity().getActivityTab().getProfile());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking((Runnable) () ->
+                mBookmarkModel = new BookmarkModel(getActivity().getActivityTab().getProfile()));
         BookmarkTestUtil.waitForBookmarkModelLoaded();
     }
 
@@ -99,21 +94,18 @@ public class BookmarkTest extends ChromeActivityTestCaseBase<ChromeActivity> {
     }
 
     private boolean isItemPresentInBookmarkList(final String expectedTitle) {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                for (int i = 0; i < mItemsContainer.getAdapter().getItemCount(); i++) {
-                    BookmarkId item =
-                            ((BookmarkItemsAdapter) mItemsContainer.getAdapter()).getItem(i);
-                    if (item == null) continue;
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            for (int i = 0; i < mItemsContainer.getAdapter().getItemCount(); i++) {
+                BookmarkId item =
+                        ((BookmarkItemsAdapter) mItemsContainer.getAdapter()).getItem(i);
+                if (item == null) continue;
 
-                    String actualTitle = mBookmarkModel.getBookmarkTitle(item);
-                    if (TextUtils.equals(actualTitle, expectedTitle)) {
-                        return true;
-                    }
+                String actualTitle = mBookmarkModel.getBookmarkTitle(item);
+                if (TextUtils.equals(actualTitle, expectedTitle)) {
+                    return true;
                 }
-                return false;
             }
+            return false;
         });
     }
 
@@ -124,18 +116,15 @@ public class BookmarkTest extends ChromeActivityTestCaseBase<ChromeActivity> {
         MenuUtils.invokeCustomMenuActionSync(getInstrumentation(), getActivity(),
                 R.id.bookmark_this_page_id);
         // All actions with BookmarkModel needs to run on UI thread.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                long bookmarkIdLong = getActivity().getActivityTab().getUserBookmarkId();
-                BookmarkId id = new BookmarkId(bookmarkIdLong, BookmarkType.NORMAL);
-                assertTrue("The test page is not added as bookmark: ",
-                        mBookmarkModel.doesBookmarkExist(id));
-                BookmarkItem item = mBookmarkModel.getBookmarkById(id);
-                assertEquals(mBookmarkModel.getDefaultFolder(), item.getParentId());
-                assertEquals(mTestPage, item.getUrl());
-                assertEquals(TEST_PAGE_TITLE_GOOGLE, item.getTitle());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            long bookmarkIdLong = getActivity().getActivityTab().getUserBookmarkId();
+            BookmarkId id = new BookmarkId(bookmarkIdLong, BookmarkType.NORMAL);
+            assertTrue("The test page is not added as bookmark: ",
+                    mBookmarkModel.doesBookmarkExist(id));
+            BookmarkItem item = mBookmarkModel.getBookmarkById(id);
+            assertEquals(mBookmarkModel.getDefaultFolder(), item.getParentId());
+            assertEquals(mTestPage, item.getUrl());
+            assertEquals(TEST_PAGE_TITLE_GOOGLE, item.getTitle());
         });
     }
 
@@ -146,12 +135,8 @@ public class BookmarkTest extends ChromeActivityTestCaseBase<ChromeActivity> {
         assertTrue("Grid view does not contain added bookmark: ",
                 isItemPresentInBookmarkList(TEST_PAGE_TITLE_GOOGLE));
         final View tile = getViewWithText(mItemsContainer, TEST_PAGE_TITLE_GOOGLE);
-        ChromeTabUtils.waitForTabPageLoaded(getActivity().getActivityTab(), new Runnable() {
-            @Override
-            public void run() {
-                TouchCommon.singleClickView(tile);
-            }
-        });
+        ChromeTabUtils.waitForTabPageLoaded(getActivity().getActivityTab(),
+                () -> TouchCommon.singleClickView(tile));
         assertEquals(TEST_PAGE_TITLE_GOOGLE, getActivity().getActivityTab().getTitle());
     }
 
@@ -186,24 +171,15 @@ public class BookmarkTest extends ChromeActivityTestCaseBase<ChromeActivity> {
         final BookmarkActionBar toolbar = ((BookmarkManager) delegate).getToolbarForTests();
 
         // Open the "Mobile bookmarks" folder.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                delegate.openFolder(mBookmarkModel.getMobileFolderId());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> delegate.openFolder(mBookmarkModel.getMobileFolderId()));
 
         assertEquals(SelectableListToolbar.NAVIGATION_BUTTON_BACK,
                 toolbar.getNavigationButtonForTests());
         assertFalse(toolbar.getMenu().findItem(R.id.edit_menu_id).isVisible());
 
         // Call BookmarkActionBar#onClick() to activate the navigation button.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                toolbar.onClick(toolbar);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> toolbar.onClick(toolbar));
 
         // Check that we are in the root folder.
         assertEquals("Bookmarks", toolbar.getTitle());
@@ -225,12 +201,7 @@ public class BookmarkTest extends ChromeActivityTestCaseBase<ChromeActivity> {
         assertEquals(BookmarkUIState.STATE_FOLDER, delegate.getCurrentState());
         assertBookmarkItems("Wrong number of items before starting search.", 3, adapter, delegate);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                delegate.openSearchUI();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> delegate.openSearchUI());
 
         assertEquals(BookmarkUIState.STATE_SEARCHING, delegate.getCurrentState());
         assertBookmarkItems(
@@ -253,12 +224,7 @@ public class BookmarkTest extends ChromeActivityTestCaseBase<ChromeActivity> {
         assertBookmarkItems("Wrong number of items after searching for non-existent item.", 0,
                 mItemsContainer.getAdapter(), delegate);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                delegate.closeSearchUI();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> delegate.closeSearchUI());
         assertBookmarkItems("Wrong number of items after closing search UI.", 3,
                 mItemsContainer.getAdapter(), delegate);
         assertEquals(BookmarkUIState.STATE_FOLDER, delegate.getCurrentState());
@@ -292,49 +258,33 @@ public class BookmarkTest extends ChromeActivityTestCaseBase<ChromeActivity> {
      * @return The unique view, if one exists. Throws an exception if one doesn't exist.
      */
     private static View getViewWithText(final ViewGroup viewGroup, final String expectedText) {
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<View>() {
-            @Override
-            public View call() throws Exception {
-                ArrayList<View> outViews = new ArrayList<View>();
-                ArrayList<View> matchingViews = new ArrayList<View>();
-                viewGroup.findViewsWithText(outViews, expectedText, View.FIND_VIEWS_WITH_TEXT);
-                // outViews includes all views whose text contains expectedText as a
-                // case-insensitive substring. Filter these views to find only exact string matches.
-                for (View v : outViews) {
-                    if (TextUtils.equals(((TextView) v).getText().toString(), expectedText)) {
-                        matchingViews.add(v);
-                    }
+        return ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+            ArrayList<View> outViews = new ArrayList<View>();
+            ArrayList<View> matchingViews = new ArrayList<View>();
+            viewGroup.findViewsWithText(outViews, expectedText, View.FIND_VIEWS_WITH_TEXT);
+            // outViews includes all views whose text contains expectedText as a
+            // case-insensitive substring. Filter these views to find only exact string matches.
+            for (View v : outViews) {
+                if (TextUtils.equals(((TextView) v).getText().toString(), expectedText)) {
+                    matchingViews.add(v);
                 }
-                Assert.assertEquals("Exactly one item should be present.", 1, matchingViews.size());
-                return matchingViews.get(0);
             }
+            Assert.assertEquals("Exactly one item should be present.", 1, matchingViews.size());
+            return matchingViews.get(0);
         });
     }
 
     private BookmarkId addBookmark(final String title, final String url) throws ExecutionException {
-        return ThreadUtils.runOnUiThreadBlocking(new Callable<BookmarkId>() {
-            @Override
-            public BookmarkId call() throws Exception {
-                return mBookmarkModel.addBookmark(mBookmarkModel.getDefaultFolder(), 0, title, url);
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlocking(
+                () -> mBookmarkModel.addBookmark(mBookmarkModel.getDefaultFolder(), 0, title, url));
     }
 
     private void removeBookmark(final BookmarkId bookmarkId) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mBookmarkModel.deleteBookmark(bookmarkId);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mBookmarkModel.deleteBookmark(bookmarkId));
     }
 
     private void searchBookmarks(final String query) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ((BookmarkItemsAdapter) mItemsContainer.getAdapter()).search(query);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> ((BookmarkItemsAdapter) mItemsContainer.getAdapter()).search(query));
     }
 }

@@ -205,12 +205,8 @@ public class FakeSuggestionsSource implements SuggestionsSource {
     public void fetchSuggestionImage(
             final SnippetArticle suggestion, final Callback<Bitmap> callback) {
         if (mThumbnails.containsKey(suggestion.mIdWithinCategory)) {
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    callback.onResult(mThumbnails.get(suggestion.mIdWithinCategory));
-                }
-            });
+            ThreadUtils.postOnUiThread(
+                    () -> callback.onResult(mThumbnails.get(suggestion.mIdWithinCategory)));
         }
     }
 
@@ -219,12 +215,7 @@ public class FakeSuggestionsSource implements SuggestionsSource {
             int desiredSizePx, final Callback<Bitmap> callback) {
         final Bitmap favicon = getFaviconForId(suggestion.mIdWithinCategory);
         if (favicon != null) {
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    callback.onResult(favicon);
-                }
-            });
+            ThreadUtils.postOnUiThread(() -> callback.onResult(favicon));
         }
     }
 

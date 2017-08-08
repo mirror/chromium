@@ -30,12 +30,7 @@ class NativeLibraryTestCommon {
         // LibraryLoader is not in general multithreaded; as other InstrumentationTestCase code
         // (specifically, ChromeBrowserProvider) uses it from the main thread we must do
         // likewise.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                nativeInitialization(initBrowserProcess);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> nativeInitialization(initBrowserProcess));
     }
 
     void nativeInitialization(boolean initBrowserProcess) {

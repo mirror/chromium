@@ -23,13 +23,9 @@ public class TestCallbackHelperContainer {
         // TODO(yfriedman): Change callers to be executed on the UI thread. Unfortunately this is
         // super convenient as the caller is nearly always on the test thread which is fine to block
         // and it's cumbersome to keep bouncing to the UI thread.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mTestWebContentsObserver = new TestWebContentsObserver(contentViewCore
-                        .getWebContents());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking((Runnable) () -> mTestWebContentsObserver =
+                new TestWebContentsObserver(contentViewCore
+                        .getWebContents()));
     }
 
     /**
@@ -119,12 +115,7 @@ public class TestCallbackHelperContainer {
          */
         public void evaluateJavaScriptForTests(WebContents webContents, String code) {
             JavaScriptCallback callback =
-                    new JavaScriptCallback() {
-                    @Override
-                        public void handleJavaScriptResult(String jsonResult) {
-                            notifyCalled(jsonResult);
-                        }
-                    };
+                    jsonResult -> notifyCalled(jsonResult);
             mJsonResult = null;
             webContents.evaluateJavaScriptForTests(code, callback);
         }

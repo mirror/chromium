@@ -13,7 +13,6 @@ import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
-import org.chromium.chrome.browser.suggestions.DestructionObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.util.FeatureUtilities;
@@ -46,12 +45,7 @@ public class SectionList
         mUiDelegate.getSuggestionsSource().addObserver(this);
         mOfflinePageBridge = offlinePageBridge;
 
-        mUiDelegate.addDestructionObserver(new DestructionObserver() {
-            @Override
-            public void onDestroy() {
-                removeAllSections();
-            }
-        });
+        mUiDelegate.addDestructionObserver(() -> removeAllSections());
     }
 
     /**

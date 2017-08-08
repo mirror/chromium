@@ -577,12 +577,7 @@ public class WebContentsAccessibility {
     private void sendDelayedWindowContentChangedEvent() {
         if (mSendWindowContentChangedRunnable != null) return;
 
-        mSendWindowContentChangedRunnable = new Runnable() {
-            @Override
-            public void run() {
-                sendWindowContentChangedOnView();
-            }
-        };
+        mSendWindowContentChangedRunnable = () -> sendWindowContentChangedOnView();
 
         mView.postDelayed(mSendWindowContentChangedRunnable, WINDOW_CONTENT_CHANGED_DELAY_MS);
     }

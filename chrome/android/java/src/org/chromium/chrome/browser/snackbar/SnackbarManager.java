@@ -71,12 +71,9 @@ public class SnackbarManager implements OnClickListener, InfoBarContainer.InfoBa
     private boolean mActivityInForeground;
     private boolean mIsDisabledForTesting;
     private ViewGroup mSnackbarParentView;
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mSnackbars.removeCurrentDueToTimeout();
-            updateView();
-        }
+    private final Runnable mHideRunnable = () -> {
+        mSnackbars.removeCurrentDueToTimeout();
+        updateView();
     };
 
     /**

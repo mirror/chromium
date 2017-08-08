@@ -98,12 +98,9 @@ class TabularContextMenuListAdapter extends BaseAdapter {
                 viewHolder.mShareIcon.setVisibility(View.VISIBLE);
                 viewHolder.mShareIcon.setContentDescription(mActivity.getString(
                         R.string.accessibility_menu_share_via, shareInfo.second));
-                viewHolder.mShareIcon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mOnDirectShare.onResult(((ShareContextMenuItem) menuItem).isShareLink());
-                    }
-                });
+                viewHolder.mShareIcon.setOnClickListener(
+                        view -> mOnDirectShare.onResult(
+                                ((ShareContextMenuItem) menuItem).isShareLink()));
                 viewHolder.mRightPadding.setVisibility(View.GONE);
             }
         } else {

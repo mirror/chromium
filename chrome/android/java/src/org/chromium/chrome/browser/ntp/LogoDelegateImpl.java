@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.ntp;
 
 import org.chromium.base.metrics.RecordHistogram;
-import org.chromium.chrome.browser.ntp.LogoBridge.Logo;
 import org.chromium.chrome.browser.ntp.LogoBridge.LogoObserver;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.suggestions.SuggestionsNavigationDelegate;
@@ -14,8 +13,6 @@ import org.chromium.ui.base.PageTransition;
 import org.chromium.ui.mojom.WindowOpenDisposition;
 
 import java.util.concurrent.TimeUnit;
-
-import jp.tomorrowkey.android.gifplayer.BaseGifImage;
 
 /**
  * An implementation of {@link LogoView.Delegate}.
@@ -68,12 +65,9 @@ public class LogoDelegateImpl implements LogoView.Delegate {
         if (!isAnimatedLogoShowing && mAnimatedLogoUrl != null) {
             RecordHistogram.recordSparseSlowlyHistogram(LOGO_CLICK_UMA_NAME, CTA_IMAGE_CLICKED);
             mLogoView.showLoadingView();
-            mLogoBridge.getAnimatedLogo(new LogoBridge.AnimatedLogoCallback() {
-                @Override
-                public void onAnimatedLogoAvailable(BaseGifImage animatedLogoImage) {
-                    if (mIsDestroyed) return;
-                    mLogoView.playAnimatedLogo(animatedLogoImage);
-                }
+            mLogoBridge.getAnimatedLogo(animatedLogoImage -> {
+                if (mIsDestroyed) return;
+                mLogoView.playAnimatedLogo(animatedLogoImage);
             }, mAnimatedLogoUrl);
         } else if (mOnLogoClickUrl != null) {
             RecordHistogram.recordSparseSlowlyHistogram(LOGO_CLICK_UMA_NAME,
@@ -88,26 +82,23 @@ public class LogoDelegateImpl implements LogoView.Delegate {
 
         final long loadTimeStart = System.currentTimeMillis();
 
-        LogoObserver wrapperCallback = new LogoObserver() {
-            @Override
-            public void onLogoAvailable(Logo logo, boolean fromCache) {
-                if (mIsDestroyed) return;
-                mOnLogoClickUrl = logo != null ? logo.onClickUrl : null;
-                mAnimatedLogoUrl = logo != null ? logo.animatedLogoUrl : null;
-                if (logo != null) {
-                    RecordHistogram.recordSparseSlowlyHistogram(LOGO_SHOWN_UMA_NAME,
-                            logo.animatedLogoUrl == null ? STATIC_LOGO_SHOWN : CTA_IMAGE_SHOWN);
-                    if (mShouldRecordLoadTime) {
-                        long loadTime = System.currentTimeMillis() - loadTimeStart;
-                        RecordHistogram.recordMediumTimesHistogram(
-                                LOGO_SHOWN_TIME_UMA_NAME, loadTime, TimeUnit.MILLISECONDS);
-                    }
+        LogoObserver wrapperCallback = (logo, fromCache) -> {
+            if (mIsDestroyed) return;
+            mOnLogoClickUrl = logo != null ? logo.onClickUrl : null;
+            mAnimatedLogoUrl = logo != null ? logo.animatedLogoUrl : null;
+            if (logo != null) {
+                RecordHistogram.recordSparseSlowlyHistogram(LOGO_SHOWN_UMA_NAME,
+                        logo.animatedLogoUrl == null ? STATIC_LOGO_SHOWN : CTA_IMAGE_SHOWN);
+                if (mShouldRecordLoadTime) {
+                    long loadTime = System.currentTimeMillis() - loadTimeStart;
+                    RecordHistogram.recordMediumTimesHistogram(
+                            LOGO_SHOWN_TIME_UMA_NAME, loadTime, TimeUnit.MILLISECONDS);
                 }
-                // If there currently is no Doodle, don't record the time if a refresh happens
-                // later.
-                mShouldRecordLoadTime = false;
-                logoObserver.onLogoAvailable(logo, fromCache);
             }
+            // If there currently is no Doodle, don't record the time if a refresh happens
+            // later.
+            mShouldRecordLoadTime = false;
+            logoObserver.onLogoAvailable(logo, fromCache);
         };
 
         mLogoBridge.getCurrentLogo(wrapperCallback);

@@ -49,14 +49,11 @@ public class OmniboxUrlEmphasizerTest {
     public void setUp() throws Exception {
         CommandLine.init(null);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mProfile = Profile.getLastUsedProfile().getOriginalProfile();
-                mResources = InstrumentationRegistry.getInstrumentation()
-                                     .getTargetContext()
-                                     .getResources();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mProfile = Profile.getLastUsedProfile().getOriginalProfile();
+            mResources = InstrumentationRegistry.getInstrumentation()
+                    .getTargetContext()
+                    .getResources();
         });
     }
 

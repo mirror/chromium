@@ -81,20 +81,14 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
         final DialogOverlayCore dialogCore = mDialogCore;
         final Context context = ContextUtils.getApplicationContext();
         nativeGetCompositorOffset(mNativeHandle, config.rect);
-        mOverlayHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                dialogCore.initialize(context, config, mHoppingHost, asPanel);
-                // Now that |mDialogCore| has been initialized, we are ready for token callbacks.
-                ThreadUtils.postOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mNativeHandle != 0) {
-                            nativeCompleteInit(mNativeHandle);
-                        }
-                    }
-                });
-            }
+        mOverlayHandler.post(() -> {
+            dialogCore.initialize(context, config, mHoppingHost, asPanel);
+            // Now that |mDialogCore| has been initialized, we are ready for token callbacks.
+            ThreadUtils.postOnUiThread(() -> {
+                if (mNativeHandle != 0) {
+                    nativeCompleteInit(mNativeHandle);
+                }
+            });
         });
     }
 
@@ -119,12 +113,7 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
         // the connection before we find out that it's been destroyed on the overlay thread.
         if (mDialogCore != null) {
             final DialogOverlayCore dialogCore = mDialogCore;
-            mOverlayHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    dialogCore.release();
-                }
-            });
+            mOverlayHandler.post(() -> dialogCore.release());
 
             // Note that we might get messagaes from |mDialogCore| after this, since they might be
             // dispatched before |r| arrives.  Clearing |mDialogCore| causes us to ignore them.
@@ -158,12 +147,7 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
         nativeGetCompositorOffset(mNativeHandle, rect);
 
         final DialogOverlayCore dialogCore = mDialogCore;
-        mOverlayHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                dialogCore.layoutSurface(rect);
-            }
-        });
+        mOverlayHandler.post(() -> dialogCore.layoutSurface(rect));
     }
 
     // Receive the compositor offset, as part of scheduleLayout.  Adjust the layout position.
@@ -219,12 +203,7 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
 
         if (mDialogCore != null) {
             final DialogOverlayCore dialogCore = mDialogCore;
-            mOverlayHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    dialogCore.onWindowToken(token);
-                }
-            });
+            mOverlayHandler.post(() -> dialogCore.onWindowToken(token));
         }
     }
 

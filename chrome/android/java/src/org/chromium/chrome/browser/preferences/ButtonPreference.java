@@ -35,22 +35,16 @@ public class ButtonPreference extends Preference {
         super.onBindView(view);
         Button button = (Button) view.findViewById(R.id.button_preference);
         button.setText(this.getTitle());
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getOnPreferenceClickListener() != null) {
-                    getOnPreferenceClickListener().onPreferenceClick(ButtonPreference.this);
-                }
+        button.setOnClickListener(v -> {
+            if (getOnPreferenceClickListener() != null) {
+                getOnPreferenceClickListener().onPreferenceClick(ButtonPreference.this);
             }
         });
 
         View viewFrame = view.findViewById(android.R.id.widget_frame);
-        viewFrame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // This is intentionally left blank to prevent triggering an event after tapping
-                // any part of the view that is not the button.
-            }
+        viewFrame.setOnClickListener(v -> {
+            // This is intentionally left blank to prevent triggering an event after tapping
+            // any part of the view that is not the button.
         });
     }
 }

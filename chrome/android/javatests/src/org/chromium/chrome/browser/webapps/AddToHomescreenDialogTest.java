@@ -63,25 +63,22 @@ public class AddToHomescreenDialogTest {
     @Feature("{Webapp}")
     @RetryOnFailure
     public void testSmoke() throws InterruptedException {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                AddToHomescreenDialog dialog = new AddToHomescreenDialog(
-                        new MockAddToHomescreenManager(mActivityTestRule.getActivity(),
-                                mActivityTestRule.getActivity().getActivityTab()));
-                dialog.show(mActivityTestRule.getActivity());
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            AddToHomescreenDialog dialog = new AddToHomescreenDialog(
+                    new MockAddToHomescreenManager(mActivityTestRule.getActivity(),
+                            mActivityTestRule.getActivity().getActivityTab()));
+            dialog.show(mActivityTestRule.getActivity());
 
-                AlertDialog alertDialog = dialog.getAlertDialogForTesting();
-                Assert.assertNotNull(alertDialog);
+            AlertDialog alertDialog = dialog.getAlertDialogForTesting();
+            Assert.assertNotNull(alertDialog);
 
-                Assert.assertTrue(alertDialog.isShowing());
+            Assert.assertTrue(alertDialog.isShowing());
 
-                Assert.assertNotNull(alertDialog.findViewById(R.id.spinny));
-                Assert.assertNotNull(alertDialog.findViewById(R.id.icon));
-                Assert.assertNotNull(alertDialog.findViewById(R.id.text));
-                Assert.assertNotNull(alertDialog.getButton(DialogInterface.BUTTON_POSITIVE));
-                Assert.assertNotNull(alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE));
-            }
+            Assert.assertNotNull(alertDialog.findViewById(R.id.spinny));
+            Assert.assertNotNull(alertDialog.findViewById(R.id.icon));
+            Assert.assertNotNull(alertDialog.findViewById(R.id.text));
+            Assert.assertNotNull(alertDialog.getButton(DialogInterface.BUTTON_POSITIVE));
+            Assert.assertNotNull(alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE));
         });
     }
 }

@@ -613,25 +613,19 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
 
             @Override
             public void onPopupZoomerShown(final PopupZoomer zoomer) {
-                mContainerViewAtCreation.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mContainerViewAtCreation.indexOfChild(zoomer) == -1) {
-                            mContainerViewAtCreation.addView(zoomer);
-                        }
+                mContainerViewAtCreation.post(() -> {
+                    if (mContainerViewAtCreation.indexOfChild(zoomer) == -1) {
+                        mContainerViewAtCreation.addView(zoomer);
                     }
                 });
             }
 
             @Override
             public void onPopupZoomerHidden(final PopupZoomer zoomer) {
-                mContainerViewAtCreation.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mContainerViewAtCreation.indexOfChild(zoomer) != -1) {
-                            mContainerViewAtCreation.removeView(zoomer);
-                            mContainerViewAtCreation.invalidate();
-                        }
+                mContainerViewAtCreation.post(() -> {
+                    if (mContainerViewAtCreation.indexOfChild(zoomer) != -1) {
+                        mContainerViewAtCreation.removeView(zoomer);
+                        mContainerViewAtCreation.invalidate();
                     }
                 });
             }

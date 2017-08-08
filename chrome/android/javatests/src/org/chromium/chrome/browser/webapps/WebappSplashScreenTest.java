@@ -102,13 +102,8 @@ public class WebappSplashScreenTest {
         mActivityTestRule.startWebappActivity();
         Assert.assertTrue(mActivityTestRule.isSplashScreenVisible());
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TabTestUtils.simulateFirstVisuallyNonEmptyPaint(
-                        mActivityTestRule.getActivity().getActivityTab());
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> TabTestUtils.simulateFirstVisuallyNonEmptyPaint(
+                mActivityTestRule.getActivity().getActivityTab()));
 
         mActivityTestRule.waitUntilSplashscreenHides();
     }
@@ -121,12 +116,9 @@ public class WebappSplashScreenTest {
         mActivityTestRule.startWebappActivity();
         Assert.assertTrue(mActivityTestRule.isSplashScreenVisible());
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TabTestUtils.simulateCrash(mActivityTestRule.getActivity().getActivityTab(), true);
-            }
-        });
+        ThreadUtils.runOnUiThread(
+                () -> TabTestUtils.simulateCrash(mActivityTestRule.getActivity().getActivityTab(),
+                        true));
 
         mActivityTestRule.waitUntilSplashscreenHides();
     }
@@ -139,13 +131,8 @@ public class WebappSplashScreenTest {
         mActivityTestRule.startWebappActivity();
         Assert.assertTrue(mActivityTestRule.isSplashScreenVisible());
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TabTestUtils.simulatePageLoadFinished(
-                        mActivityTestRule.getActivity().getActivityTab());
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> TabTestUtils.simulatePageLoadFinished(
+                mActivityTestRule.getActivity().getActivityTab()));
 
         mActivityTestRule.waitUntilSplashscreenHides();
     }
@@ -158,13 +145,8 @@ public class WebappSplashScreenTest {
         mActivityTestRule.startWebappActivity();
         Assert.assertTrue(mActivityTestRule.isSplashScreenVisible());
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TabTestUtils.simulatePageLoadFailed(
-                        mActivityTestRule.getActivity().getActivityTab(), 0);
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> TabTestUtils.simulatePageLoadFailed(
+                mActivityTestRule.getActivity().getActivityTab(), 0));
 
         mActivityTestRule.waitUntilSplashscreenHides();
     }
@@ -177,15 +159,12 @@ public class WebappSplashScreenTest {
         mActivityTestRule.startWebappActivity();
         Assert.assertTrue(mActivityTestRule.isSplashScreenVisible());
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Tab tab = mActivityTestRule.getActivity().getActivityTab();
+        ThreadUtils.runOnUiThread(() -> {
+            Tab tab = mActivityTestRule.getActivity().getActivityTab();
 
-                TabTestUtils.simulatePageLoadFinished(tab);
-                TabTestUtils.simulatePageLoadFailed(tab, 0);
-                TabTestUtils.simulateFirstVisuallyNonEmptyPaint(tab);
-            }
+            TabTestUtils.simulatePageLoadFinished(tab);
+            TabTestUtils.simulatePageLoadFailed(tab, 0);
+            TabTestUtils.simulateFirstVisuallyNonEmptyPaint(tab);
         });
 
         mActivityTestRule.waitUntilSplashscreenHides();
@@ -240,13 +219,8 @@ public class WebappSplashScreenTest {
     @RetryOnFailure
     public void testUmaWhenSplashHides() throws Exception {
         mActivityTestRule.startWebappActivity();
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TabTestUtils.simulateFirstVisuallyNonEmptyPaint(
-                        mActivityTestRule.getActivity().getActivityTab());
-            }
-        });
+        ThreadUtils.runOnUiThread(() -> TabTestUtils.simulateFirstVisuallyNonEmptyPaint(
+                mActivityTestRule.getActivity().getActivityTab()));
 
         mActivityTestRule.waitUntilSplashscreenHides();
 

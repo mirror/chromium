@@ -127,26 +127,23 @@ public class ArticleSnippetsTest {
         final Bitmap watch = BitmapFactory.decodeFile(
                 UrlUtils.getIsolatedTestFilePath("chrome/test/data/android/watch.jpg"));
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                setupTestData(watch);
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            setupTestData(watch);
 
-                mContentView = new FrameLayout(mActivityTestRule.getActivity());
-                mUiConfig = new UiConfig(mContentView);
+            mContentView = new FrameLayout(mActivityTestRule.getActivity());
+            mUiConfig = new UiConfig(mContentView);
 
-                mActivityTestRule.getActivity().setContentView(mContentView);
+            mActivityTestRule.getActivity().setContentView(mContentView);
 
-                mRecyclerView = new SuggestionsRecyclerView(mActivityTestRule.getActivity());
-                mContentView.addView(mRecyclerView);
+            mRecyclerView = new SuggestionsRecyclerView(mActivityTestRule.getActivity());
+            mContentView.addView(mRecyclerView);
 
-                mAdapter = new NewTabPageAdapter(mUiDelegate, /* aboveTheFold = */ null, mUiConfig,
-                        OfflinePageBridge.getForProfile(Profile.getLastUsedProfile()),
-                        /* contextMenuManager = */ null, /* tileGroupDelegate = */ null,
-                        /* suggestionsCarousel = */ null);
-                mAdapter.refreshSuggestions();
-                mRecyclerView.setAdapter(mAdapter);
-            }
+            mAdapter = new NewTabPageAdapter(mUiDelegate, /* aboveTheFold = */ null, mUiConfig,
+                    OfflinePageBridge.getForProfile(Profile.getLastUsedProfile()),
+                    /* contextMenuManager = */ null, /* tileGroupDelegate = */ null,
+                    /* suggestionsCarousel = */ null);
+            mAdapter.refreshSuggestions();
+            mRecyclerView.setAdapter(mAdapter);
         });
 
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
@@ -161,20 +158,17 @@ public class ArticleSnippetsTest {
         mRenderTestRule.render(mRecyclerView, "snippets");
 
         // See how everything looks in narrow layout.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // Since we inform the UiConfig manually about the desired display style, the only
-                // reason we actually change the LayoutParams is for the rendered Views to look
-                // right.
-                ViewGroup.LayoutParams params = mContentView.getLayoutParams();
-                params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350,
-                        mRecyclerView.getResources().getDisplayMetrics());
-                mContentView.setLayoutParams(params);
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // Since we inform the UiConfig manually about the desired display style, the only
+            // reason we actually change the LayoutParams is for the rendered Views to look
+            // right.
+            ViewGroup.LayoutParams params = mContentView.getLayoutParams();
+            params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350,
+                    mRecyclerView.getResources().getDisplayMetrics());
+            mContentView.setLayoutParams(params);
 
-                mUiConfig.setDisplayStyleForTesting(new UiConfig.DisplayStyle(
-                        HorizontalDisplayStyle.NARROW, VerticalDisplayStyle.REGULAR));
-            }
+            mUiConfig.setDisplayStyleForTesting(new UiConfig.DisplayStyle(
+                    HorizontalDisplayStyle.NARROW, VerticalDisplayStyle.REGULAR));
         });
 
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
@@ -194,44 +188,37 @@ public class ArticleSnippetsTest {
     public void testDownloadSuggestion() throws IOException {
         final String filePath =
                 UrlUtils.getIsolatedTestFilePath("chrome/test/data/android/capybara.jpg");
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mContentView = new FrameLayout(mActivityTestRule.getActivity());
-                mUiConfig = new UiConfig(mContentView);
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mContentView = new FrameLayout(mActivityTestRule.getActivity());
+            mUiConfig = new UiConfig(mContentView);
 
-                mActivityTestRule.getActivity().setContentView(mContentView);
+            mActivityTestRule.getActivity().setContentView(mContentView);
 
-                mRecyclerView = new SuggestionsRecyclerView(mActivityTestRule.getActivity());
-                TouchEnabledDelegate touchEnabledDelegate = new TouchEnabledDelegate() {
-                    @Override
-                    public void setTouchEnabled(boolean enabled) {
-                        mRecyclerView.setTouchEnabled(enabled);
-                    }
-                };
-                ContextMenuManager contextMenuManager =
-                        new ContextMenuManager(mActivityTestRule.getActivity(),
-                                mUiDelegate.getNavigationDelegate(), touchEnabledDelegate);
-                mRecyclerView.init(mUiConfig, contextMenuManager);
-                mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView = new SuggestionsRecyclerView(mActivityTestRule.getActivity());
+            TouchEnabledDelegate touchEnabledDelegate =
+                    enabled -> mRecyclerView.setTouchEnabled(enabled);
+            ContextMenuManager contextMenuManager =
+                    new ContextMenuManager(mActivityTestRule.getActivity(),
+                            mUiDelegate.getNavigationDelegate(), touchEnabledDelegate);
+            mRecyclerView.init(mUiConfig, contextMenuManager);
+            mRecyclerView.setAdapter(mAdapter);
 
-                mSuggestion = new SnippetArticleViewHolder(
-                        mRecyclerView, contextMenuManager, mUiDelegate, mUiConfig);
+            mSuggestion = new SnippetArticleViewHolder(
+                    mRecyclerView, contextMenuManager, mUiDelegate, mUiConfig);
 
-                long timestamp = System.currentTimeMillis() - 5 * DateUtils.MINUTE_IN_MILLIS;
+            long timestamp = System.currentTimeMillis() - 5 * DateUtils.MINUTE_IN_MILLIS;
 
-                SnippetArticle download = new SnippetArticle(KnownCategories.DOWNLOADS, "id1",
-                        "test_image.jpg", "example.com", null, "http://example.com", timestamp, 10f,
-                        timestamp, false);
-                download.setAssetDownloadData("asdf", filePath, "image/jpeg");
-                SuggestionsCategoryInfo categoryInfo =
-                        new SuggestionsCategoryInfo(KnownCategories.DOWNLOADS, "Downloads",
-                                ContentSuggestionsCardLayout.FULL_CARD,
-                                ContentSuggestionsAdditionalAction.NONE,
-                                /* show_if_empty = */ true, "No suggestions");
-                mSuggestion.onBindViewHolder(download, categoryInfo);
-                mContentView.addView(mSuggestion.itemView);
-            }
+            SnippetArticle download = new SnippetArticle(KnownCategories.DOWNLOADS, "id1",
+                    "test_image.jpg", "example.com", null, "http://example.com", timestamp, 10f,
+                    timestamp, false);
+            download.setAssetDownloadData("asdf", filePath, "image/jpeg");
+            SuggestionsCategoryInfo categoryInfo =
+                    new SuggestionsCategoryInfo(KnownCategories.DOWNLOADS, "Downloads",
+                            ContentSuggestionsCardLayout.FULL_CARD,
+                            ContentSuggestionsAdditionalAction.NONE,
+                            /* show_if_empty = */ true, "No suggestions");
+            mSuggestion.onBindViewHolder(download, categoryInfo);
+            mContentView.addView(mSuggestion.itemView);
         });
 
         mRenderTestRule.render(mSuggestion.itemView, "download_snippet_placeholder");
@@ -244,12 +231,8 @@ public class ArticleSnippetsTest {
 
         final Bitmap thumbnail = BitmapFactory.decodeFile(filePath);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mThumbnailProvider.fulfillRequest(request, thumbnail);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> mThumbnailProvider.fulfillRequest(request, thumbnail));
         mRenderTestRule.render(mSuggestion.itemView, "download_snippet_thumbnail");
     }
 
@@ -420,13 +403,10 @@ public class ArticleSnippetsTest {
         public void makeFaviconRequest(SnippetArticle suggestion, final int faviconSizePx,
                 final Callback<Bitmap> faviconCallback) {
             // Run the callback asynchronously in case the caller made that assumption.
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    // Return an arbitrary drawable.
-                    faviconCallback.onResult(BitmapFactory.decodeResource(
-                            mActivityTestRule.getActivity().getResources(), R.drawable.star_green));
-                }
+            ThreadUtils.postOnUiThread(() -> {
+                // Return an arbitrary drawable.
+                faviconCallback.onResult(BitmapFactory.decodeResource(
+                        mActivityTestRule.getActivity().getResources(), R.drawable.star_green));
             });
         }
 
@@ -434,16 +414,13 @@ public class ArticleSnippetsTest {
         public void makeLargeIconRequest(final String url, final int largeIconSizePx,
                 final LargeIconBridge.LargeIconCallback callback) {
             // Run the callback asynchronously in case the caller made that assumption.
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    // Return an arbitrary drawable.
-                    callback.onLargeIconAvailable(
-                            BitmapFactory.decodeResource(
-                                    mActivityTestRule.getActivity().getResources(),
-                                    R.drawable.star_green),
-                            largeIconSizePx, true);
-                }
+            ThreadUtils.postOnUiThread(() -> {
+                // Return an arbitrary drawable.
+                callback.onLargeIconAvailable(
+                        BitmapFactory.decodeResource(
+                                mActivityTestRule.getActivity().getResources(),
+                                R.drawable.star_green),
+                        largeIconSizePx, true);
             });
         }
     }

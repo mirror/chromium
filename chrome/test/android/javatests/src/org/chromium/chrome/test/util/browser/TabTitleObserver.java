@@ -29,12 +29,9 @@ public class TabTitleObserver extends EmptyTabObserver {
     public TabTitleObserver(final Tab tab, final String expectedTitle) {
         mExpectedTitle = expectedTitle;
         mCallback = new CallbackHelper();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                if (!notifyCallbackIfTitleMatches(tab)) {
-                    tab.addObserver(TabTitleObserver.this);
-                }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            if (!notifyCallbackIfTitleMatches(tab)) {
+                tab.addObserver(TabTitleObserver.this);
             }
         });
     }

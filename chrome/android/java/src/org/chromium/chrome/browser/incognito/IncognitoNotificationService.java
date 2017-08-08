@@ -72,35 +72,29 @@ public class IncognitoNotificationService extends IntentService {
         // If we failed clearing all of the incognito tabs, then do not dismiss the notification.
         if (!clearedIncognito) return;
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                if (!TabWindowManager.getInstance().canDestroyIncognitoProfile()) {
-                    assert false : "Not all incognito tabs closed as expected";
-                    return;
-                }
-                IncognitoNotificationManager.dismissIncognitoNotification();
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            if (!TabWindowManager.getInstance().canDestroyIncognitoProfile()) {
+                assert false : "Not all incognito tabs closed as expected";
+                return;
+            }
+            IncognitoNotificationManager.dismissIncognitoNotification();
 
-                if (BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
-                        .isStartupSuccessfullyCompleted()) {
-                    if (Profile.getLastUsedProfile().hasOffTheRecordProfile()) {
-                        Profile.getLastUsedProfile().getOffTheRecordProfile()
-                                .destroyWhenAppropriate();
-                    }
+            if (BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
+                    .isStartupSuccessfullyCompleted()) {
+                if (Profile.getLastUsedProfile().hasOffTheRecordProfile()) {
+                    Profile.getLastUsedProfile().getOffTheRecordProfile()
+                            .destroyWhenAppropriate();
                 }
             }
         });
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // Now ensure that the snapshots in recents are all cleared for Tabbed activities
-                // to remove any trace of incognito mode.
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    focusChromeIfNecessary();
-                } else {
-                    removeNonVisibleChromeTabbedRecentEntries();
-                }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // Now ensure that the snapshots in recents are all cleared for Tabbed activities
+            // to remove any trace of incognito mode.
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                focusChromeIfNecessary();
+            } else {
+                removeNonVisibleChromeTabbedRecentEntries();
             }
         });
     }
@@ -181,33 +175,30 @@ public class IncognitoNotificationService extends IntentService {
      * @see TabWindowManager#getIndexForWindow(Activity)
      */
     private void closeIncognitoTabsInRunningTabbedActivities() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                List<WeakReference<Activity>> runningActivities =
-                        ApplicationStatus.getRunningActivities();
-                for (int i = 0; i < runningActivities.size(); i++) {
-                    Activity activity = runningActivities.get(i).get();
-                    if (activity == null) continue;
-                    if (!(activity instanceof ChromeTabbedActivity)) continue;
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            List<WeakReference<Activity>> runningActivities =
+                    ApplicationStatus.getRunningActivities();
+            for (int i = 0; i < runningActivities.size(); i++) {
+                Activity activity = runningActivities.get(i).get();
+                if (activity == null) continue;
+                if (!(activity instanceof ChromeTabbedActivity)) continue;
 
-                    ChromeTabbedActivity tabbedActivity = (ChromeTabbedActivity) activity;
-                    if (tabbedActivity.isActivityDestroyed()) continue;
+                ChromeTabbedActivity tabbedActivity = (ChromeTabbedActivity) activity;
+                if (tabbedActivity.isActivityDestroyed()) continue;
 
-                    // Close the Chrome Home bottom sheet if it is open over an incognito tab.
-                    if (tabbedActivity.getBottomSheet() != null
-                            && tabbedActivity.getBottomSheet().isSheetOpen()
-                            && tabbedActivity.getTabModelSelector().isIncognitoSelected()) {
-                        // Skip animating to ensure to sheet is closed immediately. If the animation
-                        // is run, the incognito profile will be in use until the end of the
-                        // animation.
-                        tabbedActivity.getBottomSheet().setSheetState(
-                                BottomSheet.SHEET_STATE_PEEK, false);
-                    }
-
-                    tabbedActivity.getTabModelSelector().getModel(true).closeAllTabs(
-                            false, false);
+                // Close the Chrome Home bottom sheet if it is open over an incognito tab.
+                if (tabbedActivity.getBottomSheet() != null
+                        && tabbedActivity.getBottomSheet().isSheetOpen()
+                        && tabbedActivity.getTabModelSelector().isIncognitoSelected()) {
+                    // Skip animating to ensure to sheet is closed immediately. If the animation
+                    // is run, the incognito profile will be in use until the end of the
+                    // animation.
+                    tabbedActivity.getBottomSheet().setSheetState(
+                            BottomSheet.SHEET_STATE_PEEK, false);
                 }
+
+                tabbedActivity.getTabModelSelector().getModel(true).closeAllTabs(
+                        false, false);
             }
         });
     }

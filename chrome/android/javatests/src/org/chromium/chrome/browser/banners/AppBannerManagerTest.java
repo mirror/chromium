@@ -59,7 +59,6 @@ import org.chromium.ui.base.PageTransition;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * Tests the app banners.
@@ -123,12 +122,7 @@ public class AppBannerManagerTest {
             mAppData = new AppData(url, packageName);
             mAppData.setPackageInfo(NATIVE_APP_TITLE, mTestServer.getURL(NATIVE_ICON_PATH), 4.5f,
                     NATIVE_APP_INSTALL_TEXT, null, mInstallIntent);
-            ThreadUtils.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mObserver.onAppDetailsRetrieved(mAppData);
-                }
-            });
+            ThreadUtils.runOnUiThread(() -> mObserver.onAppDetailsRetrieved(mAppData));
         }
 
         @Override
@@ -209,12 +203,8 @@ public class AppBannerManagerTest {
         mActivityTestRule.startMainActivityOnBlankPage();
         // Must be set after native has loaded.
         mDetailsDelegate = new MockAppDetailsDelegate();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                AppBannerManager.setAppDetailsDelegate(mDetailsDelegate);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> AppBannerManager.setAppDetailsDelegate(mDetailsDelegate));
 
         AppBannerManager.setTotalEngagementForTesting(10);
         mTestServer = EmbeddedTestServer.createAndStartServer(
@@ -229,13 +219,9 @@ public class AppBannerManagerTest {
     }
 
     private void resetEngagementForUrl(final String url, final double engagement) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                SiteEngagementService.getForProfile(Profile.getLastUsedProfile())
-                        .resetBaseScoreForUrl(url, engagement);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> SiteEngagementService.getForProfile(Profile.getLastUsedProfile())
+                        .resetBaseScoreForUrl(url, engagement));
     }
 
     private void waitUntilAppDetailsRetrieved(final int numExpected) {
@@ -563,12 +549,8 @@ public class AppBannerManagerTest {
                     .fullyLoadUrl(mNativeAppUrl, PageTransition.TYPED);
 
             final Integer iteration = Integer.valueOf(i);
-            CriteriaHelper.pollUiThread(Criteria.equals(iteration, new Callable<Integer>() {
-                @Override
-                public Integer call() {
-                    return mDetailsDelegate.mNumRetrieved;
-                }
-            }));
+            CriteriaHelper.pollUiThread(Criteria.equals(iteration,
+                    () -> mDetailsDelegate.mNumRetrieved));
         }
     }
 
@@ -579,21 +561,18 @@ public class AppBannerManagerTest {
         triggerWebAppBanner(mWebAppUrl, WEB_APP_TITLE, false);
 
         // Verify metrics calling in the successful case.
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AppBannerManager manager =
-                        mActivityTestRule.getActivity().getActivityTab().getAppBannerManager();
-                manager.recordMenuItemAddToHomescreen();
-                Assert.assertEquals(1,
-                        RecordHistogram.getHistogramValueCountForTesting(
-                                "Webapp.InstallabilityCheckStatus.MenuItemAddToHomescreen", 5));
+        ThreadUtils.runOnUiThread(() -> {
+            AppBannerManager manager =
+                    mActivityTestRule.getActivity().getActivityTab().getAppBannerManager();
+            manager.recordMenuItemAddToHomescreen();
+            Assert.assertEquals(1,
+                    RecordHistogram.getHistogramValueCountForTesting(
+                            "Webapp.InstallabilityCheckStatus.MenuItemAddToHomescreen", 5));
 
-                manager.recordMenuOpen();
-                Assert.assertEquals(1,
-                        RecordHistogram.getHistogramValueCountForTesting(
-                                "Webapp.InstallabilityCheckStatus.MenuOpen", 5));
-            }
+            manager.recordMenuOpen();
+            Assert.assertEquals(1,
+                    RecordHistogram.getHistogramValueCountForTesting(
+                            "Webapp.InstallabilityCheckStatus.MenuOpen", 5));
         });
     }
 

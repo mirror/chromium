@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -64,20 +63,10 @@ public class LightweightFirstRunActivity extends FirstRunActivity {
                 .setMovementMethod(LinkMovementMethod.getInstance());
 
         mOkButton = (Button) findViewById(R.id.lightweight_fre_terms_accept);
-        mOkButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                acceptTermsOfService();
-            }
-        });
+        mOkButton.setOnClickListener(v -> acceptTermsOfService());
 
         ((Button) findViewById(R.id.lightweight_fre_cancel))
-                .setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        abortFirstRunExperience();
-                    }
-                });
+                .setOnClickListener(v -> abortFirstRunExperience());
     }
 
     @Override

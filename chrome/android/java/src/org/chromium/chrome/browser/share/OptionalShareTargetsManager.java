@@ -50,12 +50,9 @@ public class OptionalShareTargetsManager {
         ThreadUtils.assertOnUiThread();
 
         if (sStateListener == null) {
-            sStateListener = new ActivityStateListener() {
-                @Override
-                public void onActivityStateChange(Activity triggeringActivity, int newState) {
-                    if (newState == ActivityState.PAUSED) return;
-                    handleShareFinish(triggeringActivity);
-                }
+            sStateListener = (triggeringActivity1, newState) -> {
+                if (newState == ActivityState.PAUSED) return;
+                handleShareFinish(triggeringActivity1);
             };
         }
         ApplicationStatus.registerStateListenerForAllActivities(sStateListener);

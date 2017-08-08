@@ -67,21 +67,18 @@ public class ActivityUtils {
      */
     public static <T> T waitForActivity(
             final Instrumentation instrumentation, final Class<T> activityType) {
-        Runnable intentTrigger = new Runnable() {
-            @Override
-            public void run() {
-                Context context = instrumentation.getTargetContext().getApplicationContext();
-                Intent activityIntent = new Intent();
-                activityIntent.setClass(context, activityType);
-                activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+        Runnable intentTrigger = () -> {
+            Context context = instrumentation.getTargetContext().getApplicationContext();
+            Intent activityIntent = new Intent();
+            activityIntent.setClass(context, activityType);
+            activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
 
-                Bundle optionsBundle =
-                        ActivityOptionsCompat
-                                .makeCustomAnimation(context, R.anim.activity_open_enter, 0)
-                                .toBundle();
-                IntentUtils.safeStartActivity(context, activityIntent, optionsBundle);
-            }
+            Bundle optionsBundle =
+                    ActivityOptionsCompat
+                            .makeCustomAnimation(context, R.anim.activity_open_enter, 0)
+                            .toBundle();
+            IntentUtils.safeStartActivity(context, activityIntent, optionsBundle);
         };
         return waitForActivity(instrumentation, activityType, intentTrigger);
     }

@@ -30,7 +30,6 @@ import java.io.FileInputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -207,14 +206,11 @@ public class CustomTabTabPersistencePolicy implements TabPersistencePolicy {
      * Triggers an async deletion of the tab state metadata file.
      */
     public void deleteMetadataStateFileAsync() {
-        AsyncTask.SERIAL_EXECUTOR.execute(new Runnable() {
-            @Override
-            public void run() {
-                File stateDir = getOrCreateStateDirectory();
-                File metadataFile = new File(stateDir, getStateFileName());
-                if (metadataFile.exists() && !metadataFile.delete()) {
-                    Log.e(TAG, "Failed to delete file: " + metadataFile);
-                }
+        AsyncTask.SERIAL_EXECUTOR.execute(() -> {
+            File stateDir = getOrCreateStateDirectory();
+            File metadataFile = new File(stateDir, getStateFileName());
+            if (metadataFile.exists() && !metadataFile.delete()) {
+                Log.e(TAG, "Failed to delete file: " + metadataFile);
             }
         });
     }
@@ -230,16 +226,13 @@ public class CustomTabTabPersistencePolicy implements TabPersistencePolicy {
      */
     protected static List<File> getMetadataFilesForDeletion(
             long currentTimeMillis, List<File> allMetadataFiles) {
-        Collections.sort(allMetadataFiles, new Comparator<File>() {
-            @Override
-            public int compare(File lhs, File rhs) {
-                long lhsModifiedTime = lhs.lastModified();
-                long rhsModifiedTime = rhs.lastModified();
+        Collections.sort(allMetadataFiles, (lhs, rhs) -> {
+            long lhsModifiedTime = lhs.lastModified();
+            long rhsModifiedTime = rhs.lastModified();
 
-                // Sort such that older files (those with an lower timestamp number) are at the
-                // end of the sorted listed.
-                return ApiCompatibilityUtils.compareLong(rhsModifiedTime, lhsModifiedTime);
-            }
+            // Sort such that older files (those with an lower timestamp number) are at the
+            // end of the sorted listed.
+            return ApiCompatibilityUtils.compareLong(rhsModifiedTime, lhsModifiedTime);
         });
 
         List<File> stateFilesApplicableForDeletion = new ArrayList<File>();

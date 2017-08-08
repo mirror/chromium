@@ -18,21 +18,12 @@ public class UserActionTester implements RecordUserAction.UserActionCallback {
 
     public UserActionTester() {
         mActions = new ArrayList<>();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                RecordUserAction.setActionCallbackForTesting(UserActionTester.this);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> RecordUserAction.setActionCallbackForTesting(UserActionTester.this));
     }
 
     public void tearDown() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                RecordUserAction.removeActionCallbackForTesting();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> RecordUserAction.removeActionCallbackForTesting());
     }
 
     @Override

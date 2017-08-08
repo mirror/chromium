@@ -71,18 +71,8 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
             PendingIntent onBrowserActionSelectedCallback) {
         mActivity = activity;
         mCurrentContextMenuParams = params;
-        mOnMenuShown = new Runnable() {
-            @Override
-            public void run() {
-                mActivity.onMenuShown();
-            }
-        };
-        mOnMenuClosed = new Runnable() {
-            @Override
-            public void run() {
-                mActivity.finish();
-            }
-        };
+        mOnMenuShown = () -> mActivity.onMenuShown();
+        mOnMenuClosed = () -> mActivity.finish();
         mItemSelectedCallback = new Callback<Integer>() {
             @Override
             public void onResult(Integer result) {

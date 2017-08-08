@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.preferences.privacy;
 
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 
 import org.chromium.chrome.R;
@@ -39,12 +38,9 @@ public class UsageAndCrashReportsPreferenceFragment extends PreferenceFragment {
                 PrivacyPreferencesManager.getInstance().isUsageAndCrashReportingPermittedByUser();
         usageAndCrashReportsSwitch.setChecked(enabled);
 
-        usageAndCrashReportsSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                UmaSessionStats.changeMetricsReportingConsent((boolean) newValue);
-                return true;
-            }
+        usageAndCrashReportsSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
+            UmaSessionStats.changeMetricsReportingConsent((boolean) newValue);
+            return true;
         });
 
         usageAndCrashReportsSwitch.setManagedPreferenceDelegate(new ManagedPreferenceDelegate() {

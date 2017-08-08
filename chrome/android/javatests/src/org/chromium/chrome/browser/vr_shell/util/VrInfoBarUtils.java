@@ -15,7 +15,6 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * Class containing utility functions for interacting with InfoBars at
@@ -42,16 +41,13 @@ public class VrInfoBarUtils {
     public static void clickInfoBarButton(final Button button, VrTestRule rule) {
         if (!isInfoBarPresent(rule)) return;
         final List<InfoBar> infoBars = rule.getInfoBars();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                switch (button) {
-                    case PRIMARY:
-                        InfoBarUtil.clickPrimaryButton(infoBars.get(0));
-                        break;
-                    default:
-                        InfoBarUtil.clickSecondaryButton(infoBars.get(0));
-                }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            switch (button) {
+                case PRIMARY:
+                    InfoBarUtil.clickPrimaryButton(infoBars.get(0));
+                    break;
+                default:
+                    InfoBarUtil.clickSecondaryButton(infoBars.get(0));
             }
         });
         InfoBarUtil.waitUntilNoInfoBarsExist(rule.getInfoBars());
@@ -64,12 +60,8 @@ public class VrInfoBarUtils {
     public static void clickInfobarCloseButton(VrTestRule rule) {
         if (!isInfoBarPresent(rule)) return;
         final List<InfoBar> infoBars = rule.getInfoBars();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                InfoBarUtil.clickCloseButton(infoBars.get(0));
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> InfoBarUtil.clickCloseButton(infoBars.get(0)));
         InfoBarUtil.waitUntilNoInfoBarsExist(rule.getInfoBars());
     }
 
@@ -79,11 +71,7 @@ public class VrInfoBarUtils {
      * @param present Whether an InfoBar should be present.
      */
     public static void expectInfoBarPresent(final VrTestRule rule, boolean present) {
-        CriteriaHelper.pollUiThread(Criteria.equals(present, new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                return isInfoBarPresent(rule);
-            }
-        }), POLL_TIMEOUT_SHORT_MS, POLL_CHECK_INTERVAL_SHORT_MS);
+        CriteriaHelper.pollUiThread(Criteria.equals(present, () -> isInfoBarPresent(rule)),
+                POLL_TIMEOUT_SHORT_MS, POLL_CHECK_INTERVAL_SHORT_MS);
     }
 }

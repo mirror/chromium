@@ -90,13 +90,10 @@ public class GeolocationSnackbarController implements SnackbarController {
                 .setSingleLine(false)
                 .setDuration(durationMs);
 
-        view.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                snackbarManager.dismissSnackbars(controller);
-                snackbarManager.showSnackbar(snackbar);
-                setGeolocationSnackbarShown(context);
-            }
+        view.postDelayed(() -> {
+            snackbarManager.dismissSnackbars(controller);
+            snackbarManager.showSnackbar(snackbar);
+            setGeolocationSnackbarShown(context);
         }, delayMs);
     }
 

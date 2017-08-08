@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -53,12 +52,7 @@ public class ToSAndUMAFirstRunFragment extends FirstRunPage {
         mSendReportCheckBox = (CheckBox) view.findViewById(R.id.send_report_checkbox);
         mTosAndPrivacy = (TextView) view.findViewById(R.id.tos_and_privacy);
 
-        mAcceptButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                acceptTermsOfService();
-            }
-        });
+        mAcceptButton.setOnClickListener(v -> acceptTermsOfService());
 
         if (ChromeVersionInfo.isOfficialBuild()) {
             int paddingStart = getResources().getDimensionPixelSize(

@@ -22,7 +22,6 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.net.test.EmbeddedTestServer;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -47,18 +46,15 @@ public class PartnerDisableIncognitoModeIntegrationTest extends
     }
 
     private void assertIncognitoMenuItemEnabled(boolean enabled) throws ExecutionException {
-        Menu menu = ThreadUtils.runOnUiThreadBlocking(new Callable<Menu>() {
-            @Override
-            public Menu call() throws Exception {
-                // PopupMenu is a convenient way of building a temp menu.
-                PopupMenu tempMenu = new PopupMenu(
-                        getActivity(), getActivity().findViewById(R.id.menu_anchor_stub));
-                tempMenu.inflate(R.menu.main_menu);
-                Menu menu = tempMenu.getMenu();
+        Menu menu = ThreadUtils.runOnUiThreadBlocking(() -> {
+            // PopupMenu is a convenient way of building a temp menu.
+            PopupMenu tempMenu = new PopupMenu(
+                    getActivity(), getActivity().findViewById(R.id.menu_anchor_stub));
+            tempMenu.inflate(R.menu.main_menu);
+            Menu menu1 = tempMenu.getMenu();
 
-                getActivity().prepareMenu(menu);
-                return menu;
-            }
+            getActivity().prepareMenu(menu1);
+            return menu1;
         });
         for (int i = 0; i < menu.size(); ++i) {
             MenuItem item = menu.getItem(i);
@@ -85,30 +81,10 @@ public class PartnerDisableIncognitoModeIntegrationTest extends
     }
 
     private void toggleActivityForegroundState() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                getActivity().onPause();
-            }
-        });
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                getActivity().onStop();
-            }
-        });
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                getActivity().onStart();
-            }
-        });
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                getActivity().onResume();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> getActivity().onPause());
+        ThreadUtils.runOnUiThreadBlocking(() -> getActivity().onStop());
+        ThreadUtils.runOnUiThreadBlocking(() -> getActivity().onStart());
+        ThreadUtils.runOnUiThreadBlocking(() -> getActivity().onResume());
     }
 
     @MediumTest
@@ -162,12 +138,8 @@ public class PartnerDisableIncognitoModeIntegrationTest extends
             toggleActivityForegroundState();
             waitForParentalControlsEnabledState(true);
 
-            CriteriaHelper.pollInstrumentationThread(Criteria.equals(0, new Callable<Integer>() {
-                @Override
-                public Integer call() {
-                    return incognitoTabsCount();
-                }
-            }));
+            CriteriaHelper.pollInstrumentationThread(
+                    Criteria.equals(0, () -> incognitoTabsCount()));
         } finally {
             testServer.stopAndDestroyServer();
         }

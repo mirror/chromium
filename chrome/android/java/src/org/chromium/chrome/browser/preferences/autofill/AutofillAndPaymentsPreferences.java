@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.preferences.autofill;
 
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 
 import org.chromium.chrome.R;
@@ -37,12 +36,9 @@ public class AutofillAndPaymentsPreferences extends PreferenceFragment {
 
         ChromeSwitchPreference autofillSwitch =
                 (ChromeSwitchPreference) findPreference(PREF_AUTOFILL_SWITCH);
-        autofillSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                PersonalDataManager.setAutofillEnabled((boolean) newValue);
-                return true;
-            }
+        autofillSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
+            PersonalDataManager.setAutofillEnabled((boolean) newValue);
+            return true;
         });
 
         if (ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_PAYMENT_APPS)) {

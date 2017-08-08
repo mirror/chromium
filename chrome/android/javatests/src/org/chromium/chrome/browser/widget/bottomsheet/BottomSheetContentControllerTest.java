@@ -89,12 +89,8 @@ public class BottomSheetContentControllerTest {
         int initialContentChangedCount = mObserver.mContentChangedCallbackHelper.getCallCount();
         int initialOpenedCount = mObserver.mOpenedCallbackHelper.getCallCount();
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                BookmarkUtils.showBookmarkManager(mBottomSheetTestRule.getActivity());
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> BookmarkUtils.showBookmarkManager(mBottomSheetTestRule.getActivity()));
 
         mObserver.mContentChangedCallbackHelper.waitForCallback(initialContentChangedCount, 1);
         mObserver.mOpenedCallbackHelper.waitForCallback(initialOpenedCount, 1);
@@ -111,12 +107,9 @@ public class BottomSheetContentControllerTest {
         int initialContentChangedCount = mObserver.mContentChangedCallbackHelper.getCallCount();
         int initialOpenedCount = mObserver.mOpenedCallbackHelper.getCallCount();
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ChromeTabbedActivity activity = mBottomSheetTestRule.getActivity();
-                DownloadUtils.showDownloadManager(activity, activity.getActivityTab());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            ChromeTabbedActivity activity = mBottomSheetTestRule.getActivity();
+            DownloadUtils.showDownloadManager(activity, activity.getActivityTab());
         });
 
         mObserver.mContentChangedCallbackHelper.waitForCallback(initialContentChangedCount, 1);
@@ -134,12 +127,9 @@ public class BottomSheetContentControllerTest {
         int initialContentChangedCount = mObserver.mContentChangedCallbackHelper.getCallCount();
         int initialOpenedCount = mObserver.mOpenedCallbackHelper.getCallCount();
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ChromeTabbedActivity activity = mBottomSheetTestRule.getActivity();
-                HistoryManagerUtils.showHistoryManager(activity, activity.getActivityTab());
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            ChromeTabbedActivity activity = mBottomSheetTestRule.getActivity();
+            HistoryManagerUtils.showHistoryManager(activity, activity.getActivityTab());
         });
 
         mObserver.mContentChangedCallbackHelper.waitForCallback(initialContentChangedCount, 1);

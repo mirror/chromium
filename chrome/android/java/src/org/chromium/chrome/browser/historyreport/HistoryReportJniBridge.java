@@ -30,12 +30,8 @@ public class HistoryReportJniBridge implements SearchJniBridge {
         if (observer == null) return false;
         if (mNativeHistoryReportJniBridge != 0) return true;
         mDataChangeObserver = observer;
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mNativeHistoryReportJniBridge = nativeInit();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> mNativeHistoryReportJniBridge = nativeInit());
         if (mNativeHistoryReportJniBridge == 0) {
             Log.w(TAG, "JNI bridge initialization unsuccessful.");
             return false;

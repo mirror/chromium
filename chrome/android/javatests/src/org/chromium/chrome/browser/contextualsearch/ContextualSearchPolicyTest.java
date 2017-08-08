@@ -40,12 +40,8 @@ public class ContextualSearchPolicyTest {
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                mPolicy = new ContextualSearchPolicy(null, null);
-            }
-        });
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(
+                (Runnable) () -> mPolicy = new ContextualSearchPolicy(null, null));
     }
 
     @Test

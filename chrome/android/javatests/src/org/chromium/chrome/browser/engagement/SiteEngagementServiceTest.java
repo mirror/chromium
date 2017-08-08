@@ -38,20 +38,17 @@ public class SiteEngagementServiceTest {
     @SmallTest
     @Feature({"Engagement"})
     public void testSettingAndRetrievingScore() throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                final String url = "https://www.google.com";
-                SiteEngagementService service = SiteEngagementService.getForProfile(
-                        mActivityTestRule.getActivity().getActivityTab().getProfile());
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            final String url = "https://www.google.com";
+            SiteEngagementService service = SiteEngagementService.getForProfile(
+                    mActivityTestRule.getActivity().getActivityTab().getProfile());
 
-                Assert.assertEquals(0.0, service.getScore(url), 0);
-                service.resetBaseScoreForUrl(url, 5.0);
-                Assert.assertEquals(5.0, service.getScore(url), 0);
+            Assert.assertEquals(0.0, service.getScore(url), 0);
+            service.resetBaseScoreForUrl(url, 5.0);
+            Assert.assertEquals(5.0, service.getScore(url), 0);
 
-                service.resetBaseScoreForUrl(url, 2.0);
-                Assert.assertEquals(2.0, service.getScore(url), 0);
-            }
+            service.resetBaseScoreForUrl(url, 2.0);
+            Assert.assertEquals(2.0, service.getScore(url), 0);
         });
     }
 
@@ -62,22 +59,19 @@ public class SiteEngagementServiceTest {
     @SmallTest
     @Feature({"Engagement"})
     public void testRepeatedlyGettingService() throws Throwable {
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                final String url = "https://www.google.com";
-                Profile profile = mActivityTestRule.getActivity().getActivityTab().getProfile();
+        mActivityTestRule.runOnUiThread((Runnable) () -> {
+            final String url = "https://www.google.com";
+            Profile profile = mActivityTestRule.getActivity().getActivityTab().getProfile();
 
-                Assert.assertEquals(
-                        0.0, SiteEngagementService.getForProfile(profile).getScore(url), 0);
-                SiteEngagementService.getForProfile(profile).resetBaseScoreForUrl(url, 5.0);
-                Assert.assertEquals(
-                        5.0, SiteEngagementService.getForProfile(profile).getScore(url), 0);
+            Assert.assertEquals(
+                    0.0, SiteEngagementService.getForProfile(profile).getScore(url), 0);
+            SiteEngagementService.getForProfile(profile).resetBaseScoreForUrl(url, 5.0);
+            Assert.assertEquals(
+                    5.0, SiteEngagementService.getForProfile(profile).getScore(url), 0);
 
-                SiteEngagementService.getForProfile(profile).resetBaseScoreForUrl(url, 2.0);
-                Assert.assertEquals(
-                        2.0, SiteEngagementService.getForProfile(profile).getScore(url), 0);
-            }
+            SiteEngagementService.getForProfile(profile).resetBaseScoreForUrl(url, 2.0);
+            Assert.assertEquals(
+                    2.0, SiteEngagementService.getForProfile(profile).getScore(url), 0);
         });
     }
 

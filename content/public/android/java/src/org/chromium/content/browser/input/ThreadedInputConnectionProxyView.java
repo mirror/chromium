@@ -15,7 +15,6 @@ import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.UsedByReflection;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -90,12 +89,8 @@ public class ThreadedInputConnectionProxyView extends View {
     @Override
     public InputConnection onCreateInputConnection(final EditorInfo outAttrs) {
         if (DEBUG_LOGS) Log.w(TAG, "onCreateInputConnection");
-        return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<InputConnection>() {
-            @Override
-            public InputConnection call() throws Exception {
-                return mContainerView.onCreateInputConnection(outAttrs);
-            }
-        });
+        return ThreadUtils.runOnUiThreadBlockingNoException(
+                () -> mContainerView.onCreateInputConnection(outAttrs));
     }
 
     @Override

@@ -82,28 +82,13 @@ public class NewTabPageUiCaptureTest {
         final View fakebox = mNtp.getView().findViewById(org.chromium.chrome.R.id.search_box);
         final int scrollHeight = fakebox.getTop();
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                recyclerView.smoothScrollBy(0, scrollHeight);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> recyclerView.smoothScrollBy(0, scrollHeight));
         waitForWindowUpdates();
         mScreenShooter.shoot("New Tab Page scrolled");
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                recyclerView.smoothScrollBy(0, scrollHeight);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> recyclerView.smoothScrollBy(0, scrollHeight));
         waitForWindowUpdates();
         mScreenShooter.shoot("New Tab Page scrolled twice");
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                recyclerView.smoothScrollBy(0, scrollHeight);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> recyclerView.smoothScrollBy(0, scrollHeight));
         waitForWindowUpdates();
         mScreenShooter.shoot("New Tab Page scrolled thrice");
     }

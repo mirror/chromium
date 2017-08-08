@@ -55,13 +55,9 @@ class SnackbarView {
     private Rect mPreviousVisibleRect = new Rect();
     private int[] mTempLocation = new int[2];
 
-    private OnLayoutChangeListener mLayoutListener = new OnLayoutChangeListener() {
-        @Override
-        public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft,
-                int oldTop, int oldRight, int oldBottom) {
-            adjustViewPosition();
-        }
-    };
+    private OnLayoutChangeListener mLayoutListener =
+            (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) ->
+                    adjustViewPosition();
 
     /**
      * Creates an instance of the {@link SnackbarView}.

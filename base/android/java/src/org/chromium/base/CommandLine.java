@@ -146,11 +146,8 @@ public abstract class CommandLine {
     @VisibleForTesting
     public static void reset() {
         setInstance(null);
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for (ResetListener listener : sResetListeners) listener.onCommandLineReset();
-            }
+        ThreadUtils.postOnUiThread(() -> {
+            for (ResetListener listener : sResetListeners) listener.onCommandLineReset();
         });
     }
 

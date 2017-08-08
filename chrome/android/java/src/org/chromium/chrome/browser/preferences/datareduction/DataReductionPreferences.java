@@ -7,7 +7,6 @@ package org.chromium.chrome.browser.preferences.datareduction;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -153,14 +152,11 @@ public class DataReductionPreferences extends PreferenceFragment {
         dataReductionSwitch.setSummaryOn(R.string.text_on);
         dataReductionSwitch.setSummaryOff(R.string.text_off);
         dataReductionSwitch.setDrawDivider(true);
-        dataReductionSwitch.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                DataReductionProxySettings.getInstance().setDataReductionProxyEnabled(
-                        dataReductionSwitch.getContext(), (boolean) newValue);
-                DataReductionPreferences.this.updatePreferences((boolean) newValue);
-                return true;
-            }
+        dataReductionSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
+            DataReductionProxySettings.getInstance().setDataReductionProxyEnabled(
+                    dataReductionSwitch.getContext(), (boolean) newValue);
+            DataReductionPreferences.this.updatePreferences((boolean) newValue);
+            return true;
         });
         dataReductionSwitch.setManagedPreferenceDelegate(new ManagedPreferenceDelegate() {
             @Override

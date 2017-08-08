@@ -34,13 +34,8 @@ class NearbyForegroundSubscription extends NearbySubscription {
             final String url = PhysicalWebBleClient.getInstance().getUrlFromMessage(message);
             if (url == null) return;
 
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    UrlManager.getInstance().addUrl(
-                            new UrlInfo(url).setDistance(distance.getMeters()));
-                }
-            });
+            ThreadUtils.postOnUiThread(() -> UrlManager.getInstance().addUrl(
+                    new UrlInfo(url).setDistance(distance.getMeters())));
         }
     };
     private boolean mShouldSubscribe;

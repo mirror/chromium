@@ -150,16 +150,13 @@ public class ConnectivityCheckerTest {
             final boolean useSystemStack) throws Exception {
         Semaphore semaphore = new Semaphore(0);
         final Callback callback = new Callback(semaphore);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                if (useSystemStack) {
-                    ConnectivityChecker.checkConnectivitySystemNetworkStack(
-                            url, timeoutMs, callback);
-                } else {
-                    ConnectivityChecker.checkConnectivityChromeNetworkStack(
-                            Profile.getLastUsedProfile(), url, timeoutMs, callback);
-                }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            if (useSystemStack) {
+                ConnectivityChecker.checkConnectivitySystemNetworkStack(
+                        url, timeoutMs, callback);
+            } else {
+                ConnectivityChecker.checkConnectivityChromeNetworkStack(
+                        Profile.getLastUsedProfile(), url, timeoutMs, callback);
             }
         });
 

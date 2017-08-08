@@ -32,7 +32,6 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.browser.signin.SigninTestUtil;
 import org.chromium.components.webrestrictions.browser.WebRestrictionsContentProvider;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -94,14 +93,9 @@ public class SupervisedUserContentProviderTest {
     @Test
     @SmallTest
     public void testNoSupervisedUser() throws RemoteException, ExecutionException {
-        Assert.assertFalse(ThreadUtils.runOnUiThreadBlocking(new Callable<Boolean>() {
-
-            @Override
-            public Boolean call() throws Exception {
-                PrefServiceBridge.getInstance().setSupervisedUserId("");
-                return Profile.getLastUsedProfile().isChild();
-            }
-
+        Assert.assertFalse(ThreadUtils.runOnUiThreadBlocking(() -> {
+            PrefServiceBridge.getInstance().setSupervisedUserId("");
+            return Profile.getLastUsedProfile().isChild();
         }));
         ContentProviderClient client = mResolver.acquireContentProviderClient(mAuthority);
         Assert.assertNotNull(client);
@@ -119,14 +113,9 @@ public class SupervisedUserContentProviderTest {
     public void testWithSupervisedUser() throws RemoteException, ExecutionException {
         final Account account = SigninTestUtil.addAndSignInTestAccount();
         Assert.assertNotNull(account);
-        Assert.assertTrue(ThreadUtils.runOnUiThreadBlocking(new Callable<Boolean>() {
-
-            @Override
-            public Boolean call() throws Exception {
-                PrefServiceBridge.getInstance().setSupervisedUserId("ChildAccountSUID");
-                return Profile.getLastUsedProfile().isChild();
-            }
-
+        Assert.assertTrue(ThreadUtils.runOnUiThreadBlocking(() -> {
+            PrefServiceBridge.getInstance().setSupervisedUserId("ChildAccountSUID");
+            return Profile.getLastUsedProfile().isChild();
         }));
         ContentProviderClient client = mResolver.acquireContentProviderClient(mAuthority);
         Assert.assertNotNull(client);

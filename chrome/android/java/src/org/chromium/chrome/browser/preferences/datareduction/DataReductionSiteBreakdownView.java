@@ -10,7 +10,6 @@ import android.support.annotation.ColorInt;
 import android.text.format.Formatter;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -64,28 +63,22 @@ public class DataReductionSiteBreakdownView extends LinearLayout {
         mLightTextColor = ApiCompatibilityUtils.getColor(
                 getContext().getResources(), R.color.data_reduction_breakdown_light_text_color);
 
-        mDataUsedTitle.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DataReductionProxyUma.dataReductionProxyUIAction(
-                        DataReductionProxyUma.ACTION_SITE_BREAKDOWN_SORTED_BY_DATA_USED);
-                setTextViewUnsortedAttributes(mDataSavedTitle);
-                setTextViewSortedAttributes(mDataUsedTitle);
-                Collections.sort(mDataUseItems, new DataUsedComparator());
-                updateSiteBreakdown();
-            }
+        mDataUsedTitle.setOnClickListener(v -> {
+            DataReductionProxyUma.dataReductionProxyUIAction(
+                    DataReductionProxyUma.ACTION_SITE_BREAKDOWN_SORTED_BY_DATA_USED);
+            setTextViewUnsortedAttributes(mDataSavedTitle);
+            setTextViewSortedAttributes(mDataUsedTitle);
+            Collections.sort(mDataUseItems, new DataUsedComparator());
+            updateSiteBreakdown();
         });
 
-        mDataSavedTitle.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DataReductionProxyUma.dataReductionProxyUIAction(
-                        DataReductionProxyUma.ACTION_SITE_BREAKDOWN_SORTED_BY_DATA_SAVED);
-                setTextViewUnsortedAttributes(mDataUsedTitle);
-                setTextViewSortedAttributes(mDataSavedTitle);
-                Collections.sort(mDataUseItems, new DataSavedComparator());
-                updateSiteBreakdown();
-            }
+        mDataSavedTitle.setOnClickListener(v -> {
+            DataReductionProxyUma.dataReductionProxyUIAction(
+                    DataReductionProxyUma.ACTION_SITE_BREAKDOWN_SORTED_BY_DATA_SAVED);
+            setTextViewUnsortedAttributes(mDataUsedTitle);
+            setTextViewSortedAttributes(mDataSavedTitle);
+            Collections.sort(mDataUseItems, new DataSavedComparator());
+            updateSiteBreakdown();
         });
     }
 
@@ -258,14 +251,11 @@ public class DataReductionSiteBreakdownView extends LinearLayout {
             dataUsedView.setTextColor(lightActiveColor);
             dataSavedView.setTextColor(lightActiveColor);
 
-            row.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DataReductionProxyUma.dataReductionProxyUIAction(
-                            DataReductionProxyUma.ACTION_SITE_BREAKDOWN_EXPANDED);
-                    mNumDataUseItemsToDisplay += NUM_DATA_USE_ITEMS_TO_ADD;
-                    updateSiteBreakdown();
-                }
+            row.setOnClickListener(v -> {
+                DataReductionProxyUma.dataReductionProxyUIAction(
+                        DataReductionProxyUma.ACTION_SITE_BREAKDOWN_EXPANDED);
+                mNumDataUseItemsToDisplay += NUM_DATA_USE_ITEMS_TO_ADD;
+                updateSiteBreakdown();
             });
 
             mTableLayout.addView(row, mNumDataUseItemsToDisplay + 1);

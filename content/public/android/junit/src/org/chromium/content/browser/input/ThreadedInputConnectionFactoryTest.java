@@ -142,13 +142,8 @@ public class ThreadedInputConnectionFactoryTest {
         when(mProxyView.getContext()).thenReturn(mContext);
         when(mProxyView.requestFocus()).thenReturn(true);
         when(mProxyView.getHandler()).thenReturn(mImeHandler);
-        final Callable<InputConnection> callable = new Callable<InputConnection>() {
-            @Override
-            public InputConnection call() throws Exception {
-                return mFactory.initializeAndGet(
-                        mContainerView, mImeAdapter, 1, 0, 0, 0, 0, mEditorInfo);
-            }
-        };
+        final Callable<InputConnection> callable = () -> mFactory.initializeAndGet(
+                mContainerView, mImeAdapter, 1, 0, 0, 0, 0, mEditorInfo);
         when(mProxyView.onCreateInputConnection(any(EditorInfo.class))).thenAnswer(
                 new Answer<InputConnection>() {
                     @Override
@@ -184,13 +179,8 @@ public class ThreadedInputConnectionFactoryTest {
     }
 
     private void activateInput() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                assertNull(mFactory.initializeAndGet(
-                        mContainerView, mImeAdapter, 1, 0, 0, 0, 0, mEditorInfo));
-            }
-        });
+        mUiHandler.post(() -> assertNull(mFactory.initializeAndGet(
+                mContainerView, mImeAdapter, 1, 0, 0, 0, 0, mEditorInfo)));
     }
 
     private void runOneUiTask() {

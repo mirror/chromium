@@ -201,11 +201,6 @@ public class TestTouchUtils extends android.test.TouchUtils {
      * @param v The view to call performClick on.
      */
     public static void performClickOnMainSync(Instrumentation instrumentation, final View v) {
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                v.performClick();
-            }
-        });
+        instrumentation.runOnMainSync(() -> v.performClick());
     }
 }

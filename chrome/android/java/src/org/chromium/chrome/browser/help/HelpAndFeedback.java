@@ -88,12 +88,7 @@ public class HelpAndFeedback {
             @Nullable String url) {
         RecordUserAction.record("MobileHelpAndFeedback");
         FeedbackCollector.create(activity, profile, url, true /* takeScreenshot */,
-                new FeedbackCollector.FeedbackResult() {
-                    @Override
-                    public void onResult(FeedbackCollector collector) {
-                        show(activity, helpContext, collector);
-                    }
-                });
+                collector -> show(activity, helpContext, collector));
     }
 
     /**
@@ -108,14 +103,11 @@ public class HelpAndFeedback {
     public void showFeedback(final Activity activity, Profile profile, @Nullable String url,
             @Nullable final String categoryTag) {
         FeedbackCollector.create(activity, profile, url, false /* takeScreenshot */,
-                new FeedbackCollector.FeedbackResult() {
-                    @Override
-                    public void onResult(FeedbackCollector collector) {
-                        if (categoryTag != null) {
-                            collector.setCategoryTag(categoryTag);
-                        }
-                        showFeedback(activity, collector);
+                collector -> {
+                    if (categoryTag != null) {
+                        collector.setCategoryTag(categoryTag);
                     }
+                    showFeedback(activity, collector);
                 });
     }
 

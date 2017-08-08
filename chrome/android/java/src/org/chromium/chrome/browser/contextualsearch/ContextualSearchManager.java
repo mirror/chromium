@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.ViewTreeObserver.OnGlobalFocusChangeListener;
 
 import org.chromium.base.ObserverList;
 import org.chromium.base.SysUtils;
@@ -24,8 +23,10 @@ import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.PanelState;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanelContentViewDelegate;
 import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.ContextualSearchPanel;
-import org.chromium.chrome.browser.contextualsearch.ContextualSearchInternalStateController.InternalState;
-import org.chromium.chrome.browser.contextualsearch.ContextualSearchSelectionController.SelectionType;
+import org.chromium.chrome.browser.contextualsearch.ContextualSearchInternalStateController
+        .InternalState;
+import org.chromium.chrome.browser.contextualsearch.ContextualSearchSelectionController
+        .SelectionType;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationHandler;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationHandler.OverrideUrlLoadingResult;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationParams;
@@ -204,12 +205,9 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
         mTabPromotionDelegate = tabPromotionDelegate;
 
         final View controlContainer = mActivity.findViewById(R.id.control_container);
-        mOnFocusChangeListener = new OnGlobalFocusChangeListener() {
-            @Override
-            public void onGlobalFocusChanged(View oldFocus, View newFocus) {
-                if (controlContainer != null && controlContainer.hasFocus()) {
-                    hideContextualSearch(StateChangeReason.UNKNOWN);
-                }
+        mOnFocusChangeListener = (oldFocus, newFocus) -> {
+            if (controlContainer != null && controlContainer.hasFocus()) {
+                hideContextualSearch(StateChangeReason.UNKNOWN);
             }
         };
 
@@ -1306,12 +1304,8 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
         if (delayBeforeFinishingWorkMs <= 0) {
             finishSuppressionDecision();
         } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    finishSuppressionDecision();
-                }
-            }, delayBeforeFinishingWorkMs);
+            new Handler().postDelayed(() -> finishSuppressionDecision(),
+                    delayBeforeFinishingWorkMs);
         }
     }
 
@@ -1513,13 +1507,9 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
             public void waitForPossibleTapNearPrevious() {
                 mInternalStateController.notifyStartingWorkOn(
                         InternalState.WAITING_FOR_POSSIBLE_TAP_NEAR_PREVIOUS);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mInternalStateController.notifyFinishedWorkOn(
-                                InternalState.WAITING_FOR_POSSIBLE_TAP_NEAR_PREVIOUS);
-                    }
-                }, TAP_NEAR_PREVIOUS_DETECTION_DELAY_MS);
+                new Handler().postDelayed(() -> mInternalStateController.notifyFinishedWorkOn(
+                        InternalState.WAITING_FOR_POSSIBLE_TAP_NEAR_PREVIOUS),
+                        TAP_NEAR_PREVIOUS_DETECTION_DELAY_MS);
             }
 
             /**
@@ -1533,13 +1523,9 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
             public void waitForPossibleTapOnTapSelection() {
                 mInternalStateController.notifyStartingWorkOn(
                         InternalState.WAITING_FOR_POSSIBLE_TAP_ON_TAP_SELECTION);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mInternalStateController.notifyFinishedWorkOn(
-                                InternalState.WAITING_FOR_POSSIBLE_TAP_ON_TAP_SELECTION);
-                    }
-                }, TAP_ON_TAP_SELECTION_DELAY_MS);
+                new Handler().postDelayed(() -> mInternalStateController.notifyFinishedWorkOn(
+                        InternalState.WAITING_FOR_POSSIBLE_TAP_ON_TAP_SELECTION),
+                        TAP_ON_TAP_SELECTION_DELAY_MS);
             }
 
             /** Starts a Resolve request to our server for the best Search Term. */

@@ -225,16 +225,13 @@ public class SigninHelper {
 
         // TODO(acleung): Deal with passphrase or just prompt user to re-enter it?
         // Perform a sign-out with a callback to sign-in again.
-        mSigninManager.signOut(new Runnable() {
-            @Override
-            public void run() {
-                // Clear the shared perf only after signOut is successful.
-                // If Chrome dies, we can try it again on next run.
-                // Otherwise, if re-sign-in fails, we'll just leave chrome
-                // signed-out.
-                clearNewSignedInAccountName(mContext);
-                performResignin(newName);
-            }
+        mSigninManager.signOut(() -> {
+            // Clear the shared perf only after signOut is successful.
+            // If Chrome dies, we can try it again on next run.
+            // Otherwise, if re-sign-in fails, we'll just leave chrome
+            // signed-out.
+            clearNewSignedInAccountName(mContext);
+            performResignin(newName);
         });
     }
 

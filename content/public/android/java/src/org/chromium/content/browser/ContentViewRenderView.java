@@ -179,11 +179,7 @@ public class ContentViewRenderView extends FrameLayout {
     @CalledByNative
     private void didSwapFrame() {
         if (mSurfaceView.getBackground() != null) {
-            post(new Runnable() {
-                @Override public void run() {
-                    mSurfaceView.setBackgroundResource(0);
-                }
-            });
+            post(() -> mSurfaceView.setBackgroundResource(0));
         }
     }
 

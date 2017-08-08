@@ -24,7 +24,6 @@ import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
-import org.chromium.chrome.browser.tabmodel.TabWindowManager.TabModelSelectorFactory;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
@@ -79,28 +78,13 @@ public class ContextMenuLoadUrlParamsTest {
         // Plant RecordingTabModelSelector as the TabModelSelector used in Main. The factory has to
         // be set before super.setUp(), as super.setUp() creates Main and consequently the
         // TabModelSelector.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                TabWindowManager.getInstance().setTabModelSelectorFactory(
-                        new TabModelSelectorFactory() {
-                            @Override
-                            public TabModelSelector buildSelector(
-                                    Activity activity, TabCreatorManager tabCreatorManager,
-                                    int selectorIndex) {
-                                return new RecordingTabModelSelector(
-                                        activity, tabCreatorManager, selectorIndex);
-                            }
-                        });
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> TabWindowManager.getInstance().setTabModelSelectorFactory(
+                        (activity, tabCreatorManager, selectorIndex) -> new
+                                RecordingTabModelSelector(
+                                activity, tabCreatorManager, selectorIndex)));
         mActivityTestRule.startMainActivityOnBlankPage();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                FirstRunStatus.setFirstRunFlowComplete(true);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> FirstRunStatus.setFirstRunFlowComplete(true));
 
         mTestServer = EmbeddedTestServer.createAndStartServer(
                 InstrumentationRegistry.getInstrumentation().getContext());
@@ -108,12 +92,7 @@ public class ContextMenuLoadUrlParamsTest {
 
     @After
     public void tearDown() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                FirstRunStatus.setFirstRunFlowComplete(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> FirstRunStatus.setFirstRunFlowComplete(false));
         mTestServer.stopAndDestroyServer();
     }
 

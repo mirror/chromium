@@ -173,54 +173,41 @@ public class PermissionDialogController implements AndroidPermissionRequester.Re
         // the delegate's native pointers are freed, and the next queued dialog (if any) is
         // displayed.
         mDialog.setButton(DialogInterface.BUTTON_POSITIVE, mDialogDelegate.getPrimaryButtonText(),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        mDecision = ACCEPTED;
-                    }
-                });
+                (dialog, id) -> mDecision = ACCEPTED);
 
         mDialog.setButton(DialogInterface.BUTTON_NEGATIVE, mDialogDelegate.getSecondaryButtonText(),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        mDecision = CANCELED;
-                    }
-                });
+                (dialog, id) -> mDecision = CANCELED);
 
         // Called when the dialog is dismissed. Interacting with either button in the dialog will
         // call this handler after the primary/secondary handler.
-        mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                // Null if dismiss initiated by C++, or for some unknown reason (crbug.com/708562).
-                if (mDialogDelegate == null) {
-                    scheduleDisplay();
-                    return;
-                }
+        mDialog.setOnDismissListener(dialog -> {
+            // Null if dismiss initiated by C++, or for some unknown reason (crbug.com/708562).
+            if (mDialogDelegate == null) {
+                scheduleDisplay();
+                return;
+            }
 
-                mDialog = null;
-                if (mDecision == ACCEPTED) {
-                    // Request Android permissions if necessary. This will call back into either
-                    // onAndroidPermissionAccepted or onAndroidPermissionCanceled, which will
-                    // schedule the next permission dialog. If it returns false, no system level
-                    // permissions need to be requested, so just run the accept callback.
-                    if (!AndroidPermissionRequester.requestAndroidPermissions(
-                                mDialogDelegate.getTab(), mDialogDelegate.getContentSettingsTypes(),
-                                PermissionDialogController.this)) {
-                        onAndroidPermissionAccepted();
-                    }
-                } else {
-                    // Otherwise, run the necessary delegate callback immediately and schedule the
-                    // next dialog.
-                    if (mDecision == CANCELED) {
-                        mDialogDelegate.onCancel(mSwitchView.isChecked());
-                    } else {
-                        mDialogDelegate.onDismiss();
-                    }
-                    destroyDelegate();
-                    scheduleDisplay();
+            mDialog = null;
+            if (mDecision == ACCEPTED) {
+                // Request Android permissions if necessary. This will call back into either
+                // onAndroidPermissionAccepted or onAndroidPermissionCanceled, which will
+                // schedule the next permission dialog. If it returns false, no system level
+                // permissions need to be requested, so just run the accept callback.
+                if (!AndroidPermissionRequester.requestAndroidPermissions(
+                        mDialogDelegate.getTab(), mDialogDelegate.getContentSettingsTypes(),
+                        PermissionDialogController.this)) {
+                    onAndroidPermissionAccepted();
                 }
+            } else {
+                // Otherwise, run the necessary delegate callback immediately and schedule the
+                // next dialog.
+                if (mDecision == CANCELED) {
+                    mDialogDelegate.onCancel(mSwitchView.isChecked());
+                } else {
+                    mDialogDelegate.onDismiss();
+                }
+                destroyDelegate();
+                scheduleDisplay();
             }
         });
 

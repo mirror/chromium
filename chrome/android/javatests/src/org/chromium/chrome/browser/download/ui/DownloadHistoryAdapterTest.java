@@ -106,12 +106,7 @@ public class DownloadHistoryAdapterTest {
         int callCount = mObserver.onChangedCallback.getCallCount();
         int onSpaceDisplayUpdatedCallCount = mObserver.onSpaceDisplayUpdatedCallback.getCallCount();
         Assert.assertEquals(0, callCount);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.initialize(mBackendProvider, null);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.initialize(mBackendProvider, null));
         mAdapter.getSpaceDisplayForTests().addObserverForTests(mObserver);
         mDownloadDelegate.addCallback.waitForCallback(0);
         // If header should be added, onChanged() will be called twice because both setHeaders()
@@ -125,12 +120,7 @@ public class DownloadHistoryAdapterTest {
             throws Exception {
         int callCount = mObserver.onChangedCallback.getCallCount();
         int onSpaceDisplayUpdatedCallCount = mObserver.onSpaceDisplayUpdatedCallback.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.onDownloadItemCreated(item);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.onDownloadItemCreated(item));
         if (numberOfCallsToWaitFor > 0) {
             mObserver.onChangedCallback.waitForCallback(callCount, numberOfCallsToWaitFor);
             mObserver.onSpaceDisplayUpdatedCallback.waitForCallback(onSpaceDisplayUpdatedCallCount);
@@ -140,12 +130,7 @@ public class DownloadHistoryAdapterTest {
     private void onDownloadItemUpdated(final DownloadItem item, int numberOfCallsToWaitFor)
             throws Exception {
         int callCount = mObserver.onDownloadItemUpdatedCallback.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.onDownloadItemUpdated(item);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.onDownloadItemUpdated(item));
         if (numberOfCallsToWaitFor > 0) {
             mObserver.onDownloadItemUpdatedCallback.waitForCallback(
                     callCount, numberOfCallsToWaitFor);
@@ -156,12 +141,7 @@ public class DownloadHistoryAdapterTest {
             int numberOfCallsToWaitFor) throws Exception {
         int callCount = mObserver.onChangedCallback.getCallCount();
         int onSpaceDisplayUpdatedCallCount = mObserver.onSpaceDisplayUpdatedCallback.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.onDownloadItemRemoved(id, isOffTheRecord);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.onDownloadItemRemoved(id, isOffTheRecord));
         if (numberOfCallsToWaitFor > 0) {
             mObserver.onChangedCallback.waitForCallback(callCount, numberOfCallsToWaitFor);
             mObserver.onSpaceDisplayUpdatedCallback.waitForCallback(onSpaceDisplayUpdatedCallCount);
@@ -171,12 +151,7 @@ public class DownloadHistoryAdapterTest {
     private void onOfflineItemAdded(final OfflinePageDownloadItem item, int numberOfCallsToWaitFor)
             throws Exception {
         int callCount = mObserver.onChangedCallback.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mOfflineDelegate.observer.onItemAdded(item);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mOfflineDelegate.observer.onItemAdded(item));
         if (numberOfCallsToWaitFor > 0) {
             mObserver.onChangedCallback.waitForCallback(callCount, numberOfCallsToWaitFor);
         }
@@ -185,12 +160,7 @@ public class DownloadHistoryAdapterTest {
     private void onOfflineItemUpdated(
             final OfflinePageDownloadItem item, int numberOfCallsToWaitFor) throws Exception {
         int callCount = mObserver.onChangedCallback.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mOfflineDelegate.observer.onItemUpdated(item);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mOfflineDelegate.observer.onItemUpdated(item));
         if (numberOfCallsToWaitFor > 0) {
             mObserver.onChangedCallback.waitForCallback(callCount, numberOfCallsToWaitFor);
         }
@@ -199,12 +169,7 @@ public class DownloadHistoryAdapterTest {
     private void onOfflineItemDeleted(final String id, int numberOfCallsToWaitFor)
             throws Exception {
         int callCount = mObserver.onChangedCallback.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mOfflineDelegate.observer.onItemDeleted(id);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mOfflineDelegate.observer.onItemDeleted(id));
         if (numberOfCallsToWaitFor > 0) {
             mObserver.onChangedCallback.waitForCallback(callCount, numberOfCallsToWaitFor);
         }
@@ -212,12 +177,7 @@ public class DownloadHistoryAdapterTest {
 
     private void onFilterChanged(final int flag, int numberOfCallsToWaitFor) throws Exception {
         int callCount = mObserver.onChangedCallback.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.onFilterChanged(flag);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.onFilterChanged(flag));
         if (numberOfCallsToWaitFor > 0) {
             mObserver.onChangedCallback.waitForCallback(callCount, numberOfCallsToWaitFor);
         }
@@ -231,12 +191,7 @@ public class DownloadHistoryAdapterTest {
         Assert.assertEquals(0, mAdapter.getItemCount());
         Assert.assertEquals(0, mAdapter.getTotalDownloadSize());
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.onManagerDestroyed();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.onManagerDestroyed());
 
         mDownloadDelegate.removeCallback.waitForCallback(0);
     }
@@ -304,21 +259,11 @@ public class DownloadHistoryAdapterTest {
         Assert.assertEquals(11, mAdapter.getTotalDownloadSize());
 
         // Turn off info and check that header is gone.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.setShowStorageInfoHeader(false);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.setShowStorageInfoHeader(false));
         checkAdapterContents(null, item1, item0);
 
         // Turn on info and check that header is back again.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.setShowStorageInfoHeader(true);
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.setShowStorageInfoHeader(true));
         checkAdapterContents(HEADER, null, item1, item0);
     }
 
@@ -592,34 +537,19 @@ public class DownloadHistoryAdapterTest {
                 HEADER, null, item5, item4, item6, null, item3, item2, null, item1, item0);
 
         // Perform a search that matches the file name for a few downloads.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.search("FiLe");
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.search("FiLe"));
 
         // Only items matching the query should be shown.
         checkAdapterContents(null, item2, null, item1, item0);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.onEndSearch();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.onEndSearch());
 
         // All items should be shown again after the search is ended.
         checkAdapterContents(
                 HEADER, null, item5, item4, item6, null, item3, item2, null, item1, item0);
 
         // Perform a search that matches the hostname for a couple downloads.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.search("oNE");
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.search("oNE"));
 
         checkAdapterContents(null, item4, null, item1);
     }
@@ -649,22 +579,12 @@ public class DownloadHistoryAdapterTest {
         onFilterChanged(DownloadFilter.FILTER_IMAGE, 2);
         checkAdapterContents(HEADER, null, item1, item0);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.search("FiRSt");
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.search("FiRSt"));
 
         // Only items matching both the filter and the search query should be shown.
         checkAdapterContents(null, item0);
 
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.onEndSearch();
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.onEndSearch());
 
         // All items matching the filter should be shown after the search is ended.
         checkAdapterContents(HEADER, null, item1, item0);
@@ -692,12 +612,7 @@ public class DownloadHistoryAdapterTest {
                 HEADER, null, item5, item4, item6, null, item3, item2, null, item1, item0);
 
         // Perform a search that matches the file name for a few downloads.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.search("FiLe");
-            }
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> mAdapter.search("FiLe"));
         // Only items matching the query should be shown.
         checkAdapterContents(null, item2, null, item1, item0);
 

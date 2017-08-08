@@ -26,18 +26,10 @@ public class ClickUtils {
      * @param button the button to be clicked.
      */
     public static void clickButton(final View button) {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // Post the actual click to the button's message queue, to ensure that it has been
-                // inflated before the click is received.
-                button.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        button.performClick();
-                    }
-                });
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // Post the actual click to the button's message queue, to ensure that it has been
+            // inflated before the click is received.
+            button.post(() -> button.performClick());
         });
     }
 

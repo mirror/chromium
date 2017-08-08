@@ -66,12 +66,9 @@ public class HomepageEditor extends Fragment implements TextWatcher {
 
     private void initializeSaveCancelResetButtons(View v) {
         mResetButton = (Button) v.findViewById(R.id.homepage_reset);
-        mResetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mHomepageManager.setPrefHomepageUseDefaultUri(true);
-                getActivity().finish();
-            }
+        mResetButton.setOnClickListener(v13 -> {
+            mHomepageManager.setPrefHomepageUseDefaultUri(true);
+            getActivity().finish();
         });
         if (mHomepageManager.getPrefHomepageUseDefaultUri()) {
             mResetButton.setEnabled(false);
@@ -79,22 +76,14 @@ public class HomepageEditor extends Fragment implements TextWatcher {
 
         mSaveButton = (Button) v.findViewById(R.id.homepage_save);
         mSaveButton.setEnabled(false);
-        mSaveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mHomepageManager.setPrefHomepageCustomUri(
-                        UrlFormatter.fixupUrl(mHomepageUrlEdit.getText().toString()));
-                mHomepageManager.setPrefHomepageUseDefaultUri(false);
-                getActivity().finish();
-            }
+        mSaveButton.setOnClickListener(v12 -> {
+            mHomepageManager.setPrefHomepageCustomUri(
+                    UrlFormatter.fixupUrl(mHomepageUrlEdit.getText().toString()));
+            mHomepageManager.setPrefHomepageUseDefaultUri(false);
+            getActivity().finish();
         });
 
         Button button = (Button) v.findViewById(R.id.homepage_cancel);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        button.setOnClickListener(v1 -> getActivity().finish());
     }
 }

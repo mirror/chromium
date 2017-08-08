@@ -247,12 +247,7 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
         });
 
         mClearTextButton = (TintedImageButton) findViewById(R.id.clear_text_button);
-        mClearTextButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSearchEditText.setText("");
-            }
-        });
+        mClearTextButton.setOnClickListener(v -> mSearchEditText.setText(""));
     }
 
     @Override

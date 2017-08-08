@@ -47,23 +47,17 @@ public class BookmarkBridgeTest {
 
     @Before
     public void setUp() throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Profile profile = Profile.getLastUsedProfile();
-                mBookmarkBridge = new BookmarkBridge(profile);
-                mBookmarkBridge.loadEmptyPartnerBookmarkShimForTesting();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            Profile profile = Profile.getLastUsedProfile();
+            mBookmarkBridge = new BookmarkBridge(profile);
+            mBookmarkBridge.loadEmptyPartnerBookmarkShimForTesting();
         });
 
         BookmarkTestUtil.waitForBookmarkModelLoaded();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mMobileNode = mBookmarkBridge.getMobileFolderId();
-                mDesktopNode = mBookmarkBridge.getDesktopFolderId();
-                mOtherNode = mBookmarkBridge.getOtherFolderId();
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mMobileNode = mBookmarkBridge.getMobileFolderId();
+            mDesktopNode = mBookmarkBridge.getDesktopFolderId();
+            mOtherNode = mBookmarkBridge.getOtherFolderId();
         });
     }
 
