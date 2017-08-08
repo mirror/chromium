@@ -16,6 +16,24 @@
       "revId": "ae5212df5054d45a05dfc23b3f8066afe7870351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef252065_a4f000bb",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-08T16:33:53Z",
+      "side": 1,
+      "message": "would you object to a new observer that\u0027s internal to content/ ?  maybe specific like PersistentVideoObserver or general like WebContentsImplObserver?  it\u0027ll have two or three PV-related methods, and two consumers (MediaWebContentsObserver, DialogOverlayImpl) by the time the dust settles.\n\ni\u0027m trying to keep WebContents as the thing sending out the notification of state changes.  the alternative is to have some sideband channel in PictureInPictureController.java \u003d\u003e DialogOverlayImpl, where the signal to WC originates.  that seems fragile.",
+      "parentUuid": "2451091f_42088c23",
+      "revId": "ae5212df5054d45a05dfc23b3f8066afe7870351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
