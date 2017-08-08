@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ec87f9c_01b569a7",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-08T14:41:54Z",
+      "side": 1,
+      "message": "Don\u0027t trim field name. We don\u0027t do it anywhere.",
+      "range": {
+        "startLine": 377,
+        "startChar": 2,
+        "endLine": 378,
+        "endChar": 38
+      },
+      "revId": "7b1c27f6d29dd17f19afbf0efbb47d561ac47218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a38c2a_9be0d303",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-08T14:41:54Z",
+      "side": 1,
+      "message": "Check how base::Optional\u003c\u003e is used.",
+      "range": {
+        "startLine": 884,
+        "startChar": 8,
+        "endLine": 884,
+        "endChar": 44
+      },
+      "revId": "7b1c27f6d29dd17f19afbf0efbb47d561ac47218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8a7acc_84d1e2ad",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-08T14:41:54Z",
+      "side": 1,
+      "message": "I believe we don\u0027t need getter\u0026setter. All work is done withing the PasswordFormManager class.",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 292,
+        "endChar": 3
+      },
+      "revId": "7b1c27f6d29dd17f19afbf0efbb47d561ac47218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d230e300_f20a72fb",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-08T14:41:54Z",
+      "side": 1,
+      "message": "Type of the field should be base::Optional\u003cbase::string16\u003e. Rename the field, it is not a boolean flag anymore.",
+      "range": {
+        "startLine": 594,
+        "startChar": 17,
+        "endLine": 594,
+        "endChar": 43
+      },
+      "revId": "7b1c27f6d29dd17f19afbf0efbb47d561ac47218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ef6db3_9605c93a",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 3145,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-08T14:41:54Z",
+      "side": 1,
+      "message": "Why was it moved to the next line?",
+      "range": {
+        "startLine": 3145,
+        "startChar": 26,
+        "endLine": 3145,
+        "endChar": 40
+      },
+      "revId": "7b1c27f6d29dd17f19afbf0efbb47d561ac47218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
