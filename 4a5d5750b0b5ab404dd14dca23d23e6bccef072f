@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eaa8fdd_b266c74c",
+        "filename": "net/cert/x509_util_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-08T15:22:02Z",
+      "side": 1,
+      "message": "Might be worth a brief comment as to what\u0027s being implemented here. The old logic was pretty clear that it went common name, then org name, then org unit name.\n\n(There is also a slight difference in that the old code used NSS\u0027s CERT_GetCommonName which returned the last common name rather than the first. Dunno how much that matters. Though CERT_GetCommonName seems to also call this escapeAndQuote thing on top of CERT_DecodeAVAValue, so maybe just call CERT_GetCommonName?)",
+      "revId": "4a5d5750b0b5ab404dd14dca23d23e6bccef072f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
