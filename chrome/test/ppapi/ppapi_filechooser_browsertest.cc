@@ -340,7 +340,9 @@ IN_PROC_BROWSER_TEST_F(PPAPIFileChooserTest,
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   base::FilePath suggested_filename = temp_dir.GetPath().AppendASCII("foo");
-
+  LOG(ERROR)
+      << "@@@ FileChooser_SaveAs_UnsafeDefaultName suggested_filename =  "
+      << suggested_filename.value();
   TestSelectFileDialogFactory::SelectedFileInfoList file_info_list;
   file_info_list.push_back(
       ui::SelectedFileInfo(suggested_filename, suggested_filename));
@@ -349,7 +351,7 @@ IN_PROC_BROWSER_TEST_F(PPAPIFileChooserTest,
 
   RunTestViaHTTP("FileChooser_SaveAsUnsafeDefaultName");
   base::FilePath actual_filename =
-      temp_dir.GetPath().AppendASCII("unsafe.txt-");
+      temp_dir.GetPath().AppendASCII("unsafe.txt_");
 
   ASSERT_TRUE(base::PathExists(actual_filename));
   std::string file_contents;

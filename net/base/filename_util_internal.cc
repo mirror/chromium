@@ -6,6 +6,7 @@
 
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/macros.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/sys_string_conversions.h"
@@ -225,6 +226,9 @@ base::string16 GetSuggestedFilenameImpl(
   // TODO: this function to be updated to match the httpbis recommendations.
   // Talk to abarth for the latest news.
 
+  LOG(ERROR) << "@@@ suggested_name = " << suggested_name;
+  LOG(ERROR) << "@@@ default_name = " << default_name;
+
   // We don't translate this fallback string, "download". If localization is
   // needed, the caller should provide localized fallback in |default_name|.
   static const base::FilePath::CharType kFinalFallbackName[] =
@@ -277,8 +281,12 @@ base::string16 GetSuggestedFilenameImpl(
                      : base::FilePath::StringType(kFinalFallbackName);
     overwrite_extension = false;
   }
-  replace_illegal_characters_function(&result_str, '-');
+  LOG(ERROR) << "@@@ result_str, before replace_illegal = " << result_str;
+  replace_illegal_characters_function(&result_str, '_', true);
+  LOG(ERROR) << "@@@ result_str, after replace_illegal = " << result_str;
   base::FilePath result(result_str);
+  LOG(ERROR) << "@@@ result, before generateSafeFileName  = " << result.value();
+
   // extension should not appended to filename derived from
   // content-disposition, if it does not have one.
   // Hence mimetype and overwrite_extension values are not used.
@@ -286,6 +294,8 @@ base::string16 GetSuggestedFilenameImpl(
     GenerateSafeFileName("", false, &result);
   else
     GenerateSafeFileName(mime_type, overwrite_extension, &result);
+
+  LOG(ERROR) << "@@@ result, after generateSafeFileName  = " << result.value();
 
   base::string16 result16;
   if (!FilePathToString16(result, &result16)) {
@@ -295,6 +305,7 @@ base::string16 GetSuggestedFilenameImpl(
       FilePathToString16(result, &result16);
     }
   }
+  LOG(ERROR) << "@@@ result16 return = " << result16;
   return result16;
 }
 

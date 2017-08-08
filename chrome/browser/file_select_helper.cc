@@ -506,17 +506,22 @@ void FileSelectHelper::GetFileTypesInThreadPool(
 
 void FileSelectHelper::GetSanitizedFilenameOnUIThread(
     std::unique_ptr<FileChooserParams> params) {
+  LOG(ERROR) << "@@@ " << __func__;
+
   if (AbortIfWebContentsDestroyed())
     return;
 
   base::FilePath default_file_path = profile_->last_selected_directory().Append(
       GetSanitizedFileName(params->default_file_name));
-#if defined(FULL_SAFE_BROWSING)
+  LOG(ERROR) << "@@@ GetSanitizedFilenameOnUIThread 1, default_file_path = " << default_file_path.value();
+
+  #if defined(FULL_SAFE_BROWSING)
   if (params->mode == FileChooserParams::Save) {
     CheckDownloadRequestWithSafeBrowsing(default_file_path, std::move(params));
     return;
   }
 #endif
+  LOG(ERROR) << "@@@ GetSanitizedFilenameOnUIThread 2, default_file_path = " << default_file_path.value();
   RunFileChooserOnUIThread(default_file_path, std::move(params));
 }
 
