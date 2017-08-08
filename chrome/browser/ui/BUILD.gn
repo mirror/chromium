@@ -1013,6 +1013,8 @@ split_static_library("ui") {
       "webui/settings/appearance_handler.h",
       "webui/settings/browser_lifetime_handler.cc",
       "webui/settings/browser_lifetime_handler.h",
+      "webui/settings/change_password_handler.cc",
+      "webui/settings/change_password_handler.h",
       "webui/settings/chromeos/accessibility_handler.cc",
       "webui/settings/chromeos/accessibility_handler.h",
       "webui/settings/chromeos/android_apps_handler.cc",
