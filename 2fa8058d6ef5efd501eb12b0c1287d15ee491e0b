@@ -16,6 +16,93 @@
       "revId": "2fa8058d6ef5efd501eb12b0c1287d15ee491e0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e390b7_55ea2188",
+        "filename": "chrome/browser/resources/settings/appearance_page/fonts_browser_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-08T22:43:15Z",
+      "side": 1,
+      "message": "Nice.",
+      "parentUuid": "901dfa9d_a9a8bb5e",
+      "revId": "2fa8058d6ef5efd501eb12b0c1287d15ee491e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c88e6bc_c7b59d39",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-08T22:43:15Z",
+      "side": 1,
+      "message": "optional: add \", all the way up the prototype chain.\"",
+      "range": {
+        "startLine": 438,
+        "startChar": 69,
+        "endLine": 438,
+        "endChar": 70
+      },
+      "revId": "2fa8058d6ef5efd501eb12b0c1287d15ee491e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1855539d_cee950eb",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-08T22:43:15Z",
+      "side": 1,
+      "message": "enumerable",
+      "range": {
+        "startLine": 438,
+        "startChar": 50,
+        "endLine": 438,
+        "endChar": 58
+      },
+      "revId": "2fa8058d6ef5efd501eb12b0c1287d15ee491e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "821bdcd0_ac774bd4",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-08T22:43:15Z",
+      "side": 1,
+      "message": "nit: \"of\" ;-)",
+      "range": {
+        "startLine": 443,
+        "startChar": 31,
+        "endLine": 443,
+        "endChar": 32
+      },
+      "revId": "2fa8058d6ef5efd501eb12b0c1287d15ee491e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
