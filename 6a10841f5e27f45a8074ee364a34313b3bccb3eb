@@ -16,6 +16,24 @@
       "revId": "6a10841f5e27f45a8074ee364a34313b3bccb3eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d017292c_1fe3d7a6",
+        "filename": "net/nqe/network_quality_estimator_params.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-08T19:56:02Z",
+      "side": 1,
+      "message": "I think negative is safer in case \u003e changes to \u003e\u003d inadvertently.",
+      "parentUuid": "c341de04_e6a75ead",
+      "revId": "6a10841f5e27f45a8074ee364a34313b3bccb3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
