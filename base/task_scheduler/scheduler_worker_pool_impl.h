@@ -18,6 +18,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/atomic_flag.h"
 #include "base/synchronization/condition_variable.h"
+#include "base/task_runner.h"
 #include "base/task_scheduler/priority_queue.h"
 #include "base/task_scheduler/scheduler_lock.h"
 #include "base/task_scheduler/scheduler_worker.h"
@@ -61,8 +62,10 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
       DelayedTaskManager* delayed_task_manager);
 
   // Creates workers following the |params| specification, allowing existing and
-  // future tasks to run. Can only be called once. CHECKs on failure.
-  void Start(const SchedulerWorkerPoolParams& params);
+  // future tasks to run. Uses |service_thread_task_runner| to monitor for
+  // blocked threads in the pool. Can only be called once. CHECKs on failure.
+  void Start(const SchedulerWorkerPoolParams& params,
+             scoped_refptr<TaskRunner> service_thread_task_runner);
 
   // Destroying a SchedulerWorkerPoolImpl returned by Create() is not allowed in
   // production; it is always leaked. In tests, it can only be destroyed after
@@ -136,6 +139,10 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
  private:
   class SchedulerWorkerDelegateImpl;
 
+  // How often the |delayed_task_manager_| monitors for blocked workers.
+  static constexpr TimeDelta kBlockedWorkersPollPeriod =
+      TimeDelta::FromMilliseconds(30);
+
   SchedulerWorkerPoolImpl(const SchedulerWorkerPoolParams& params,
                           TaskTracker* task_tracker,
                           DelayedTaskManager* delayed_task_manager);
@@ -179,6 +186,16 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // of a ScopedMayBlock before |worker_capacity_| can be increased.
   TimeDelta BlockedThreshold() const;
 
+  // Returns whether there are unsuspended idle workers in the pool. This must
+  // be called under the protection of |lock_|.
+  bool HasAvailableIdleWorker();
+
+  // Posts a task to |delayed_task_manager_| to periodically check and adjust
+  // worker capacity until there are idle unsuspended workers in the pool. This
+  // should be called under the protection of |lock_| as it needs to access
+  // |polling_worker_capacity_|.
+  void PostAdjustWorkerCapacityPollingTask();
+
   const std::string name_;
   const ThreadPriority priority_hint_;
 
@@ -193,10 +210,10 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
 
   // Synchronizes accesses to |workers_|, |worker_capacity_|,
   // |idle_workers_stack_|, |idle_workers_stack_cv_for_testing_|,
-  // |num_wake_ups_before_start_|, and |cleanup_timestamps_| . Has
-  // |shared_priority_queue_|'s lock as its predecessor so that a worker can be
-  // pushed to |idle_workers_stack_| within the scope of a Transaction (more
-  // details in GetWork()).
+  // |num_wake_ups_before_start_|, |polling_worker_capacity_|, and
+  // |cleanup_timestamps|_. Has |shared_priority_queue_|'s lock as its
+  // predecessor so that a worker can be pushed to |idle_workers_stack_| within
+  // the scope of a Transaction (more details in GetWork()).
   mutable SchedulerLock lock_;
 
   // All workers owned by this worker pool.
@@ -222,6 +239,10 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // Number of wake ups that occurred before Start(). Never modified after
   // Start() (i.e. can be read without synchronization after Start()).
   int num_wake_ups_before_start_ = 0;
+
+  // Indicates whether we are currently polling for necessary adjustments to
+  // |worker_capacity_|.
+  bool polling_worker_capacity_ = false;
 
   // Stack that contains the timestamps of when workers get cleaned up.
   // Timestamps get popped off the stack as new workers are added.
@@ -254,6 +275,9 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
 
   TaskTracker* const task_tracker_;
   DelayedTaskManager* const delayed_task_manager_;
+  scoped_refptr<TaskRunner> service_thread_task_runner_;
+
+  friend class TaskSchedulerWorkerPoolBlockedUnblockedTest;
 
   friend class TaskSchedulerWorkerPoolBlockedUnblockedTest;
 
