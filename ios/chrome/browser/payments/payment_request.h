@@ -21,6 +21,7 @@
 #include "components/payments/core/payment_options_provider.h"
 #include "components/payments/core/payment_request_base_delegate.h"
 #include "components/payments/core/payments_profile_comparator.h"
+#import "ios/chrome/browser/payments/ios_payment_instrument_finder.h"
 #import "ios/chrome/browser/payments/payment_response_helper.h"
 #include "ios/web/public/payments/payment_request.h"
 #include "url/gurl.h"
@@ -47,7 +48,8 @@ class WebState;
 
 // A protocol implementd by any UI classes that the PaymentRequest object
 // needs to communicate with in order to perform certain actions such as
-// initiating UI to request full card details for payment.
+// initiating UI to request full card details for payment or determining when
+// payment methods have been fetched.
 @protocol PaymentRequestUIDelegate<NSObject>
 
 - (void)
@@ -59,6 +61,8 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 - (void)launchAppWithUniversalLink:(std::string)universalLink
                 instrumentDelegate:
                     (payments::PaymentInstrument::Delegate*)instrumentDelegate;
+
+- (void)onPaymentMethodsReady;
 
 @end
 
@@ -195,6 +199,10 @@ class PaymentRequest : public PaymentOptionsProvider,
     return url_payment_method_identifiers_;
   }
 
+  const std::vector<GURL>& unfiltered_url_payment_method_identifiers() const {
+    return unfiltered_url_payment_method_identifiers_;
+  }
+
   const std::map<std::string, std::set<std::string>>& stringified_method_data()
       const {
     return stringified_method_data_;
@@ -244,6 +252,9 @@ class PaymentRequest : public PaymentOptionsProvider,
   // method above returns.
   const PaymentsProfileComparator* profile_comparator() const;
 
+  // Returns whether or not all payment instruments have been fetched.
+  bool payment_instruments_ready() { return payment_instruments_ready_; }
+
   // Returns whether the current PaymentRequest can be used to make a payment.
   bool CanMakePayment() const;
 
@@ -265,10 +276,19 @@ class PaymentRequest : public PaymentOptionsProvider,
   // cached profiles ordered by completeness.
   void PopulateAvailableProfiles();
 
-  // Fetches the payment methods for this user that match a supported type
-  // specified in |web_payment_request_| and stores copies of them, owned
-  // by this PaymentRequest, in payment_method_cache_.
-  void PopulatePaymentMethodCache();
+  // Parses the accepted payment method types and card networks requested by
+  // the merchant and starts creating the native app payment methods
+  // asynchronously.
+  void CreateNativeAppPaymentMethods();
+
+  // Stores a copy of |native_app_instruments| and autofill payment instruments
+  // that match the supported types specified in |web_payment_request_|. Sets
+  // |selected_payment_method_| and notifies the UI delegate that the payment
+  // methods are ready. This serves as a callback for when all native app
+  // payment instruments are ready.
+  void PopulatePaymentMethodCache(
+      std::vector<std::unique_ptr<IOSPaymentInstrument>>
+          native_app_instruments);
 
   // Sets the available payment methods as references to the cached payment
   // methods.
@@ -342,6 +362,10 @@ class PaymentRequest : public PaymentOptionsProvider,
   // other being standardized payment method identifiers i.e., basic-card.
   std::vector<GURL> url_payment_method_identifiers_;
 
+  // Exposed for testing; this can be used to ensure that parsing the methods
+  // requested by the merchant returns the correct identifiers.
+  std::vector<GURL> unfiltered_url_payment_method_identifiers_;
+
   // A mapping of the payment method names to the corresponding JSON-stringified
   // payment method specific data.
   std::map<std::string, std::set<std::string>> stringified_method_data_;
@@ -359,6 +383,13 @@ class PaymentRequest : public PaymentOptionsProvider,
   JourneyLogger journey_logger_;
 
   std::unique_ptr<PaymentResponseHelper> response_helper_;
+
+  // Boolean to track if payment instruments are still being fetched.
+  bool payment_instruments_ready_;
+
+  // Finds all iOS payment instruments for the url payment methods requested by
+  // the merchant.
+  IOSPaymentInstrumentFinder ios_instrument_finder_;
 
   DISALLOW_COPY_AND_ASSIGN(PaymentRequest);
 };
