@@ -85,26 +85,72 @@ __gCrWeb['credentialManager'].invokeOnHost_ = function(command, options) {
   return __gCrWeb['credentialManager'].createPromise_(requestId);
 }
 
+// TODO(crbug.com/435046) tgarbus: Implement Credential types completely
+
 /**
  * The Credential interface, for more information see
  * https://w3c.github.io/webappsec-credential-management/#the-credential-interface
  * @constructor
  */
 function Credential() {}
-
 /** @type {string} */
 Credential.prototype.id;
-
 /** @type {string} */
 Credential.prototype.type;
 
-// TODO(crbug.com/435046) tgarbus: Implement |serialize| for different
-// Credential types
+/**
+ * CredentialUserData mixin, for more information see
+ * https://w3c.github.io/webappsec-credential-management/#credentialuserdata
+ * @constructor
+ */
+function CredentialUserData() {}
+/** @type {string} */
+CredentialUserData.prototype.name;
+/** @type {string} */
+CredentialUserData.prototype.iconURL;
+
+/**
+ * PasswordCredential interace, for more information see
+ * https://w3c.github.io/webappsec-credential-management/#passwordcredential-interface
+ * @extends {Credential}
+ * @extends {CredentialUserData}
+ * @constructor
+ */
+function PasswordCredential() {}
+/** @type {string} */
+PasswordCredential.prototype.password;
+
+/**
+ * FederatedCredential interface, for more information see
+ * https://w3c.github.io/webappsec-credential-management/#federatedcredential-interface
+ * @extends {Credential}
+ * @extends {CredentialUserData}
+ * @constructor
+ */
+function FederatedCredential() {}
+/** @type {string} */
+FederatedCredential.prototype.provider;
+/** @type {?string} */
+FederatedCredential.prototype.protocol;
+
 Credential.prototype.serialize = function() {
   var serialized = {
     'id': this.id,
     'type': this.type
   }
+}
+
+PasswordCredential.prototype.serialize = function() {
+  var serialized = Credential.prototype.serialize.call(this);
+  serialized.password = this.password;
+  return serialized;
+}
+
+FederatedCredential.prototype.serialize = function() {
+  var serialized = Credential.prototype.serialize.call(this);
+  serialized.provider = this.provider;
+  serialized.protocol = this.protocol;
+  return serialized;
 }
 
 /**
