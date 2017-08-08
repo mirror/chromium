@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4271c3ad_8d4556ae",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-08T19:04:22Z",
+      "side": 1,
+      "message": "In Chromium code, we generally use \"Variations\" rather than \"Finch\". So suggest renaming to enableVariations.",
+      "range": {
+        "startLine": 459,
+        "startChar": 77,
+        "endLine": 459,
+        "endChar": 97
+      },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53c3bc79_6da31bea",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
         "patchSetId": 19
@@ -48,6 +71,53 @@
     },
     {
       "key": {
+        "uuid": "baad8d18_f01619b4",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-08T19:04:22Z",
+      "side": 1,
+      "message": "+1\n\nPlease document all the public fields at least.",
+      "parentUuid": "71c56a2f_f7a028db",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 54
+      },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826dded3_7302ad99",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-08T19:04:22Z",
+      "side": 1,
+      "message": "Use TimeUnit.MINUTES.toMillis(30) (assuming I read your constant right).",
+      "range": {
+        "startLine": 69,
+        "startChar": 68,
+        "endLine": 69,
+        "endChar": 70
+      },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6519425a_9b167be6",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
         "patchSetId": 19
@@ -87,6 +157,75 @@
         "startChar": 23,
         "endLine": 197,
         "endChar": 46
+      },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe06c51_da7526f6",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsSeedFetchService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-08T19:04:22Z",
+      "side": 1,
+      "message": "Why ArrayList\u003c\u003e explicitly and not just List\u003cString\u003e? Currently you have an extra conversion which is not necessary if you just use List.",
+      "range": {
+        "startLine": 131,
+        "startChar": 41,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d32791_cb8ad248",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsSeedFetchService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-08T19:04:22Z",
+      "side": 1,
+      "message": "Is this only used for test code? If so, also name it ForTesting().",
+      "range": {
+        "startLine": 235,
+        "startChar": 23,
+        "endLine": 235,
+        "endChar": 38
+      },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dfb8491_b3fe542b",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsSeedFetchService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-08T19:04:22Z",
+      "side": 1,
+      "message": "Can you use Java API for this instead of exec()? Or if Java API doesn\u0027t meet your needs, add a comment.",
+      "range": {
+        "startLine": 237,
+        "startChar": 42,
+        "endLine": 237,
+        "endChar": 43
       },
       "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
