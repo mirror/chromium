@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "837774bb_2ccc0194",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-08T00:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e47e2e7_2c1aa227",
+      "range": {
+        "startLine": 87,
+        "startChar": 29,
+        "endLine": 87,
+        "endChar": 70
+      },
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9418f5ab_ab5714f5",
         "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7cf9db4_44fe0b3e",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-08T00:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9418f5ab_ab5714f5",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 9
+      },
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e18cbf36_b2e5ae5b",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-08T00:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d6137c7_03d30b2a",
+      "range": {
+        "startLine": 247,
+        "startChar": 31,
+        "endLine": 247,
+        "endChar": 39
+      },
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2f0c22f_1a81a4e8",
         "filename": "ios/chrome/app/main_controller.mm",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c55b37b_deb98ac2",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 2373,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-08T00:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2f0c22f_1a81a4e8",
+      "range": {
+        "startLine": 2373,
+        "startChar": 2,
+        "endLine": 2373,
+        "endChar": 4
+      },
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,54 @@
     },
     {
       "key": {
+        "uuid": "d3cc57d4_b2ec6769",
+        "filename": "ios/chrome/browser/app_startup_parameters.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-08T00:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bac7ef0a_4b3238a2",
+      "range": {
+        "startLine": 47,
+        "startChar": 45,
+        "endLine": 47,
+        "endChar": 65
+      },
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4744af8_91a430d1",
+        "filename": "ios/chrome/browser/app_startup_parameters.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-08T00:53:24Z",
+      "side": 1,
+      "message": "A suitable compromise could be launchPaymentResponse? Maintains accuracy and also consistency with other properties.",
+      "parentUuid": "455e5e9d_3d823b68",
+      "range": {
+        "startLine": 47,
+        "startChar": 45,
+        "endLine": 47,
+        "endChar": 65
+      },
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b50fa018_67886fb9",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
         "patchSetId": 7
@@ -164,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "d323f370_fa75d356",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-08T00:53:24Z",
+      "side": 1,
+      "message": "Agree--if this is something we want to do maybe one way is keeping a map of payment request IDs to delegates.",
+      "parentUuid": "b50fa018_67886fb9",
+      "range": {
+        "startLine": 27,
+        "startChar": 22,
+        "endLine": 27,
+        "endChar": 74
+      },
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f7a4101_42f180d3",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
         "patchSetId": 7
@@ -175,6 +343,24 @@
       "writtenOn": "2017-08-07T15:17:59Z",
       "side": 1,
       "message": "What does \"exit\" mean in this context?",
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d236e0_22341f86",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-08T00:53:24Z",
+      "side": 1,
+      "message": "In this context \"exit\" means that we have finished a request from a caller to launch and get a response back from a payment app. We are returning control back to the caller. I see how this seems confusing though--I have changed the name to \"CompleteLaunchRequest.\" Do you think that works better?",
+      "parentUuid": "5f7a4101_42f180d3",
       "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -198,6 +384,24 @@
     },
     {
       "key": {
+        "uuid": "20794553_32aa22ef",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-08T00:53:24Z",
+      "side": 1,
+      "message": "Will +mahmadi my host!",
+      "parentUuid": "5a63b76a_6c28bd97",
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44f4c3b2_001f5c37",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
         "patchSetId": 7
@@ -215,6 +419,24 @@
     },
     {
       "key": {
+        "uuid": "73638d7c_05734c1f",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-08T00:53:24Z",
+      "side": 1,
+      "message": "I have added above \"return\" a call to CompleteLaunchRequest (formerly ExitLauncher). CompleteLaunchRequest will always call either OnInstrumentDetailsReady or OnInstrumentDetailsError. The caller should implement OnInstrumentDetailsError such that if its called the UI should appropriately display that information to the user. This also means we will have to reset the delegate here so that the expected delegate is used to return control to the user.",
+      "parentUuid": "44f4c3b2_001f5c37",
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f8b3e25_eb8e3fdd",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 7
@@ -226,6 +448,24 @@
       "writtenOn": "2017-08-07T15:17:59Z",
       "side": 1,
       "message": "Referencing an earlier comment -- if the call to LaunchIOSPaymentInstrument below returns early without doing anything, this ui will get stuck in the pending state forever.  Might be ok for a prototype, since there is still a cancel button.",
+      "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165c9eab_e53687aa",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-08T00:53:24Z",
+      "side": 1,
+      "message": "As I mentioned in the other comment if LaunchPaymentRequest will always call CompleteLaunchRequest after it is invoked which will in turn either call OnInstrumentDetailsReady or OnInstrumentDetailsError. If OnInstrumentDetails error is called the UI should appropriately display that to the user. I\u0027m currently not doing this in this CL but I will add this now as I think that\u0027s a good point you make about this being in a pending state forever. In this case if OnInstrumentDetailsError is called the user should be taken out of the pending state and given the chance to make another request.",
+      "parentUuid": "5f8b3e25_eb8e3fdd",
       "revId": "73b0a07be84021fb080580df3648f7bebdc0b248",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "de2cf902_5ff806ba",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2379,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-08T00:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f94b7410_b8e5ab19",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4697a9d5_9211f630",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
         "patchSetId": 5
@@ -172,6 +190,24 @@
       "side": 1,
       "message": "Ack, left a comment about making sure that callers can handle the early return.",
       "parentUuid": "d9ca9b28_45fc318a",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58a3a2e2_27fa6c91",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-08T00:53:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f96fdcad_db9bb4f3",
       "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -330,6 +366,24 @@
       "side": 1,
       "message": "How is the current PaymentRequest canceled when a tab is closed?  Can we call back into IOSPaymentInstrumentLauncher at that point and set the delegate to nullptr?  Then your suggestion of checking to make sure the delegate is nonnull sgtm.\n\nOwning the delegate is probably not possible, because it\u0027s a C++ object that\u0027s already owned by something else.",
       "parentUuid": "3d360462_dcc0d482",
+      "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330ce35d_e14f2c71",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-08T00:53:24Z",
+      "side": 1,
+      "message": "Good point--the PaymentRequest is canceled in the PaymentRequestManager tab. The browser view controller lets the manager know when a tab is closed by the user and when that the happens the manager cancels the current pending payment request by setting it to a null pointer. In this \"cancelRequest\" function I can also add a call to set the delegate to a null pointer.",
+      "parentUuid": "76b69e2a_ce8d7182",
       "revId": "72b2a3eebade327852a22d9e800bd27d0f321567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
