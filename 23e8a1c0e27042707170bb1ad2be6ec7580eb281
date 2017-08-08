@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0eaf877f_c0605d02",
+        "filename": "build/config/posix/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-08T21:59:41Z",
+      "side": 0,
+      "message": "don\u0027t we still need this when is_clang\u003dfalse?",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 5
+      },
+      "revId": "23e8a1c0e27042707170bb1ad2be6ec7580eb281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
