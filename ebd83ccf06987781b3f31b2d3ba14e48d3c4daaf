@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21f47e6b_6f3fdc29",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-08T16:00:04Z",
+      "side": 1,
+      "message": "I don\u0027t think webState can be null here. It is a method caller.",
+      "range": {
+        "startLine": 198,
+        "startChar": 7,
+        "endLine": 198,
+        "endChar": 15
+      },
+      "revId": "ebd83ccf06987781b3f31b2d3ba14e48d3c4daaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "792c0a75_675c2dac",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-08T16:00:04Z",
+      "side": 1,
+      "message": "nit: Could you please spell the variable name.\n\nFrom Style Guide: \"Avoid non-standard abbreviations. Don\u0027t worry about saving horizontal space as it is far more important to make your code immediately understandable by a new reader.\"",
+      "range": {
+        "startLine": 201,
+        "startChar": 26,
+        "endLine": 201,
+        "endChar": 29
+      },
+      "revId": "ebd83ccf06987781b3f31b2d3ba14e48d3c4daaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c92e8708_600ecd81",
+        "filename": "ios/web/public/web_state/ui/crw_native_content.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-08T16:00:04Z",
+      "side": 1,
+      "message": "Is this implemented anywhere?",
+      "range": {
+        "startLine": 96,
+        "startChar": 11,
+        "endLine": 96,
+        "endChar": 23
+      },
+      "revId": "ebd83ccf06987781b3f31b2d3ba14e48d3c4daaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
