@@ -16,6 +16,24 @@
       "revId": "d4e28239048f47cdee71202bc29f548ecba655b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f60faefe_745632f3",
+        "filename": "base/files/scoped_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-08T20:49:17Z",
+      "side": 1,
+      "message": "\u003e I could also just unconditionally enable this. I suppose there\u0027s OS_OPENBSD or OS_AIX or whatever else we have. Dunno if we care enough about auditing each one\u0027s error close behavior. Which do you prefer?\n\nI don’t think we need to answer that question, we’re not worried about supporting those platforms here. If one of them came forward with a request to do this one way or the other, we’d adapt the logic as needed, but this is fine for now.",
+      "parentUuid": "f8b656a7_ad2b4587",
+      "revId": "d4e28239048f47cdee71202bc29f548ecba655b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
