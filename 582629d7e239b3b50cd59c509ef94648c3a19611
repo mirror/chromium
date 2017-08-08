@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f061f993_31d517e8",
+        "filename": "chrome/browser/sessions/session_restore_observer_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-08T22:48:52Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 2
+      },
+      "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d7feb0_c8b1c452",
+        "filename": "chrome/browser/sessions/session_restore_observer_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-08T22:48:52Z",
+      "side": 1,
+      "message": "Style guide says to use kFoo style for enum values now.",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97127db_b970b574",
+        "filename": "chrome/browser/sessions/session_restore_observer_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-08T22:48:52Z",
+      "side": 1,
+      "message": "ASSERT_TRUE (and make sure call calls to this use ASSERT_NO_FATAL_FAILURE",
+      "range": {
+        "startLine": 135,
+        "startChar": 6,
+        "endLine": 135,
+        "endChar": 40
+      },
+      "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984c45aa_8f854c56",
+        "filename": "chrome/browser/sessions/session_restore_observer_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-08T22:48:52Z",
+      "side": 1,
+      "message": "DISALLOW..",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 2
+      },
+      "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a098470_97b9d378",
+        "filename": "chrome/browser/ui/browser_tabrestore.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-08T22:48:52Z",
+      "side": 1,
+      "message": "Please update this here and below to indicate this is used by both session and tab restore.",
+      "range": {
+        "startLine": 25,
+        "startChar": 56,
+        "endLine": 25,
+        "endChar": 70
+      },
+      "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa061593_a0c190e4",
+        "filename": "chrome/browser/ui/browser_tabrestore.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-08T22:48:52Z",
+      "side": 1,
+      "message": "optional: rename to from_session_restore.",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
