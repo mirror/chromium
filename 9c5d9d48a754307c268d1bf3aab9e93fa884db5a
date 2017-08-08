@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05d148bb_4298eb50",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T01:22:23Z",
+      "side": 1,
+      "message": "This change is a little confusing.\n\nThe way things work is that \"response_body_stream_\" is the pipe with the response body. \n While we\u0027re trying to read data from net, we transfer ownership of the buffer to pending_write_ (It\u0027s an IOBuffer, so it needs to be able to outlive |this| on cancellation, since we could be writing to it on another thread).  The old code called pending_write_-\u003eOnComplete, which released ownership of the pipe, and since the return value (Which is a smart pointer that owns the pipe) wasn\u0027t stored anywhere, the pipe was then closed.  The new code takes ownership of the pipe like a normal read completion, but then deletes the pipe directly, which I think is clearer, and less regression prone.",
+      "range": {
+        "startLine": 332,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 25
+      },
+      "revId": "9c5d9d48a754307c268d1bf3aab9e93fa884db5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91fb1ac2_d9be9ece",
+        "filename": "net/test/embedded_test_server/default_handlers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T01:22:23Z",
+      "side": 1,
+      "message": "I\u0027m going to use this in one of the tests for my URLFetcher replacement.",
+      "range": {
+        "startLine": 648,
+        "startChar": 16,
+        "endLine": 648,
+        "endChar": 28
+      },
+      "revId": "9c5d9d48a754307c268d1bf3aab9e93fa884db5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
