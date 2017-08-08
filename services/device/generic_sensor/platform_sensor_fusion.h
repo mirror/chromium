@@ -73,6 +73,8 @@ class PlatformSensorFusion : public PlatformSensor,
   // Repeating timer for data polling if all source sensors are CONTINUOUS
   // reporting mode.
   base::RepeatingTimer timer_;
+  bool has_reporting_mode_ = false;
+  mojom::ReportingMode reporting_mode_;
 
   DISALLOW_COPY_AND_ASSIGN(PlatformSensorFusion);
 };

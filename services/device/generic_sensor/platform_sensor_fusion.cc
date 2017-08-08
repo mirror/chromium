@@ -35,11 +35,20 @@ PlatformSensorFusion::PlatformSensorFusion(
 }
 
 mojom::ReportingMode PlatformSensorFusion::GetReportingMode() {
-  for (const auto& sensor : source_sensors_) {
-    if (sensor->GetReportingMode() == mojom::ReportingMode::ON_CHANGE)
-      return mojom::ReportingMode::ON_CHANGE;
+  if (!has_reporting_mode_) {
+    reporting_mode_ = mojom::ReportingMode::CONTINUOUS;
+
+    for (const auto& sensor : source_sensors_) {
+      if (sensor->GetReportingMode() == mojom::ReportingMode::ON_CHANGE) {
+        reporting_mode_ = mojom::ReportingMode::ON_CHANGE;
+        break;
+      }
+    }
+
+    has_reporting_mode_ = true;
   }
-  return mojom::ReportingMode::CONTINUOUS;
+
+  return reporting_mode_;
 }
 
 PlatformSensorConfiguration PlatformSensorFusion::GetDefaultConfiguration() {
