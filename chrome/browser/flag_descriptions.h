@@ -1333,8 +1333,8 @@ extern const char kEnableEncryptionMigrationDescription[];
 extern const char kEnableImeMenuName[];
 extern const char kEnableImeMenuDescription[];
 
-extern const char kEnableLockScreenAppsName[];
-extern const char kEnableLockScreenAppsDescription[];
+extern const char kDisableLockScreenAppsName[];
+extern const char kDisableLockScreenAppsDescription[];
 
 extern const char kEnableTouchSupportForScreenMagnifierName[];
 extern const char kEnableTouchSupportForScreenMagnifierDescription[];
