@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "def1465d_719a86ea",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-08T21:00:15Z",
+      "side": 1,
+      "message": "I just tried it is not erroring: \n\n../../chrome/browser/component_updater/cros_component_installer_unittest.cc:69:37: error: \u0027InstallComponent\u0027 is a private member of \u0027component_updater::CrOSComponent\u0027\n  component_updater::CrOSComponent::InstallComponent(\n                                    ^\n../../chrome/browser/component_updater/cros_component_installer.h:108:15: note: declared private here\n  static void InstallComponent(\n              ^\n../../chrome/browser/component_updater/cros_component_installer_unittest.cc:77:37: error: \u0027InstallComponent\u0027 is a private member of \u0027component_updater::CrOSComponent\u0027\n  component_updater::CrOSComponent::InstallComponent(\u0026cus, \"star-cups-driver\",\n                                    ^\n../../chrome/browser/component_updater/cros_component_installer.h:108:15: note: declared private here\n  static void InstallComponent(\n              ^\n../../chrome/browser/component_updater/cros_component_installer_unittest.cc:85:37: error: \u0027InstallComponent\u0027 is a private member of \u0027component_updater::CrOSComponent\u0027\n  component_updater::CrOSComponent::InstallComponent(\u0026cus, \"cros-termina\",\n                                    ^\n../../chrome/browser/component_updater/cros_component_installer.h:108:15: note: declared private here\n  static void InstallComponent(\n              ^\n3 errors generated.\n\nIt looks like FRIEND_TEST_ALL_PREFIXES is equivalent to FRIEND_TEST:\n\n#define FRIEND_TEST_ALL_PREFIXES(test_case_name, test_name) \\\n  FRIEND_TEST(test_case_name, test_name); \\\n  FRIEND_TEST(test_case_name, DISABLED_##test_name); \\\n  FRIEND_TEST(test_case_name, FLAKY_##test_name)",
+      "parentUuid": "108cd78d_4f75331e",
+      "range": {
+        "startLine": 102,
+        "startChar": 54,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "b64e8173c39dd522318223c5811914a3361f64cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "131c48f6_7c642612",
         "filename": "chrome/browser/component_updater/cros_component_installer_unittest.cc",
         "patchSetId": 4
