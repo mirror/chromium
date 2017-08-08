@@ -208,6 +208,9 @@ void InstalledLoader::Load(const ExtensionInfo& info, bool write_to_prefs) {
     Extension::DisableReason disable_reason = Extension::DISABLE_NONE;
     bool force_disabled = false;
     if (!policy->UserMayLoad(extension.get(), nullptr)) {
+      if (!extension_prefs_->IsExtensionBlockedByPolicy(extension->id()))
+        extension_prefs_->SetExtensionBlockedByPolicy(extension->id());
+
       // The error message from UserMayInstall() often contains the extension ID
       // and is therefore not well suited to this UI.
       error = errors::kDisabledByPolicy;
