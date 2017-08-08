@@ -407,16 +407,16 @@ public class NewTabPageTest {
     @Test
     @SmallTest
     @Feature({"NewTabPage"})
-    public void testSetSearchProviderHasLogo() throws Throwable {
+    public void testSetSearchProviderInfo() throws Throwable {
         mActivityTestRule.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 NewTabPageView ntpView = mNtp.getNewTabPageView();
                 View logoView = ntpView.findViewById(R.id.search_provider_logo);
                 Assert.assertEquals(View.VISIBLE, logoView.getVisibility());
-                ntpView.setSearchProviderHasLogo(false);
+                ntpView.setSearchProviderInfo(/* hasLogo = */ false, /* isGoogle */ true);
                 Assert.assertEquals(View.GONE, logoView.getVisibility());
-                ntpView.setSearchProviderHasLogo(true);
+                ntpView.setSearchProviderInfo(/* hasLogo = */ true, /* isGoogle */ true);
                 Assert.assertEquals(View.VISIBLE, logoView.getVisibility());
             }
         });
@@ -429,16 +429,16 @@ public class NewTabPageTest {
     @SmallTest
     @Feature({"NewTabPage"})
     @CommandLineFlags.Add("enable-features=NTPCondensedLayout")
-    public void testSetSearchProviderHasLogoCondensedUi() throws Throwable {
+    public void testSetSearchProviderInfoCondensedUi() throws Throwable {
         mActivityTestRule.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 NewTabPageView ntpView = mNtp.getNewTabPageView();
                 View logoView = ntpView.findViewById(R.id.search_provider_logo);
                 Assert.assertEquals(View.GONE, logoView.getVisibility());
-                ntpView.setSearchProviderHasLogo(false);
+                ntpView.setSearchProviderInfo(/* hasLogo = */ false, /* isGoogle */ true);
                 Assert.assertEquals(View.GONE, logoView.getVisibility());
-                ntpView.setSearchProviderHasLogo(true);
+                ntpView.setSearchProviderInfo(/* hasLogo = */ true, /* isGoogle */ true);
                 Assert.assertEquals(View.GONE, logoView.getVisibility());
             }
         });
@@ -468,7 +468,7 @@ public class NewTabPageTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                ntpView.setSearchProviderHasLogo(false);
+                ntpView.setSearchProviderInfo(/* hasLogo = */ false, /* isGoogle */ true);
                 Assert.assertEquals(View.GONE, logoView.getVisibility());
                 Assert.assertEquals(View.GONE, searchBoxView.getVisibility());
             }
@@ -495,7 +495,7 @@ public class NewTabPageTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                ntpView.setSearchProviderHasLogo(true);
+                ntpView.setSearchProviderInfo(/* hasLogo = */ true, /* isGoogle */ true);
                 Assert.assertEquals(View.VISIBLE, logoView.getVisibility());
                 Assert.assertEquals(View.VISIBLE, searchBoxView.getVisibility());
                 Assert.assertEquals(View.GONE, ntpView.getPlaceholder().getVisibility());
