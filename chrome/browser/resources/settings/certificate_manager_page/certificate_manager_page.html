@@ -13,17 +13,14 @@
 <link rel="import" href="certificate_password_encryption_dialog.html">
 <link rel="import" href="certificates_browser_proxy.html">
 <link rel="import" href="certificates_error_dialog.html">
+<link rel="import" href="../settings_vars_css.html">
 
 <dom-module id="settings-certificate-manager-page">
   <template>
     <style>
-      :host {
-        --paper-tabs-selection-bar-color: var(--paper-blue-500);
-      }
-
       paper-tabs {
         font-size: inherit;
-        height: 40px;
+        height: var(--tab-height);
         margin-bottom: 24px;
       }
 
