@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d4e7e7fb_62d86082",
+        "filename": "remoting/ios/client_keyboard.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-08T01:24:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11135512_64703c7b",
+      "revId": "52a88bb16a6591deb9cb354b3188775c6450dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f670a37_0888abc5",
         "filename": "remoting/ios/client_keyboard.mm",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "52a88bb16a6591deb9cb354b3188775c6450dcda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "869ebd80_43efc982",
+        "filename": "remoting/ios/client_keyboard.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-08T01:24:00Z",
+      "side": 1,
+      "message": "Done. Still need additional logic to disable the translation though...",
+      "parentUuid": "6f670a37_0888abc5",
+      "revId": "52a88bb16a6591deb9cb354b3188775c6450dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
