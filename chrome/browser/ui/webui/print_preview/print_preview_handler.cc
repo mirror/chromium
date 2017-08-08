@@ -1368,7 +1368,8 @@ WebContents* PrintPreviewHandler::GetInitiator() const {
 void PrintPreviewHandler::OnAddAccountToCookieCompleted(
     const std::string& account_id,
     const GoogleServiceAuthError& error) {
-  FireWebUIListener("reload-printer-list");
+  if (IsJavascriptAllowed())
+    FireWebUIListener("reload-printer-list");
 }
 
 void PrintPreviewHandler::SelectFile(const base::FilePath& default_filename,
@@ -1479,6 +1480,11 @@ void PrintPreviewHandler::OnInvalidPrinterSettings() {
 void PrintPreviewHandler::SendPrintPresetOptions(bool disable_scaling,
                                                  int copies,
                                                  int duplex) {
+  if (preview_callbacks_.empty()) {
+    BadMessageReceived();
+    return;
+  }
+
   FireWebUIListener("print-preset-options", base::Value(disable_scaling),
                     base::Value(copies), base::Value(duplex));
 }
@@ -1486,6 +1492,11 @@ void PrintPreviewHandler::SendPrintPresetOptions(bool disable_scaling,
 void PrintPreviewHandler::SendPageCountReady(int page_count,
                                              int request_id,
                                              int fit_to_page_scaling) {
+  if (preview_callbacks_.empty()) {
+    BadMessageReceived();
+    return;
+  }
+
   FireWebUIListener("page-count-ready", base::Value(page_count),
                     base::Value(request_id), base::Value(fit_to_page_scaling));
 }
@@ -1493,6 +1504,11 @@ void PrintPreviewHandler::SendPageCountReady(int page_count,
 void PrintPreviewHandler::SendPageLayoutReady(
     const base::DictionaryValue& layout,
     bool has_custom_page_size_style) {
+  if (preview_callbacks_.empty()) {
+    BadMessageReceived();
+    return;
+  }
+
   FireWebUIListener("page-layout-ready", layout,
                     base::Value(has_custom_page_size_style));
 }
@@ -1500,6 +1516,11 @@ void PrintPreviewHandler::SendPageLayoutReady(
 void PrintPreviewHandler::SendPagePreviewReady(int page_index,
                                                int preview_uid,
                                                int preview_response_id) {
+  if (preview_callbacks_.empty()) {
+    BadMessageReceived();
+    return;
+  }
+
   FireWebUIListener("page-preview-ready", base::Value(page_index),
                     base::Value(preview_uid), base::Value(preview_response_id));
 }
@@ -1697,10 +1718,12 @@ void PrintPreviewHandler::SetPdfSavedClosureForTesting(
 }
 
 void PrintPreviewHandler::SendEnableManipulateSettingsForTest() {
-  FireWebUIListener("enable-manipulate-settings-for-test", base::Value());
+  if (IsJavascriptAllowed())
+    FireWebUIListener("enable-manipulate-settings-for-test", base::Value());
 }
 
 void PrintPreviewHandler::SendManipulateSettingsForTest(
     const base::DictionaryValue& settings) {
-  FireWebUIListener("manipulate-settings-for-test", settings);
+  if (IsJavascriptAllowed())
+    FireWebUIListener("manipulate-settings-for-test", settings);
 }
