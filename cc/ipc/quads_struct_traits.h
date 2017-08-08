@@ -282,7 +282,7 @@ struct StructTraits<cc::mojom::TextureQuadStateDataView, cc::DrawQuad> {
 
   static CArray<float> vertex_opacity(const cc::DrawQuad& input) {
     const cc::TextureDrawQuad* quad = cc::TextureDrawQuad::MaterialCast(&input);
-    return {4, 4, const_cast<float*>(&quad->vertex_opacity[0])};
+    return {4, const_cast<float*>(&quad->vertex_opacity[0])};
   }
 
   static bool y_flipped(const cc::DrawQuad& input) {

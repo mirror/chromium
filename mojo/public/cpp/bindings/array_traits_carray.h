@@ -11,29 +11,23 @@ namespace mojo {
 
 template <typename T>
 struct CArray {
-  CArray() : size(0), max_size(0), data(nullptr) {}
-  CArray(size_t size, size_t max_size, T* data)
-      : size(size), max_size(max_size), data(data) {}
-  size_t size;
-  const size_t max_size;
-  T* data;
+  CArray() : size(0), data(nullptr) {}
+  CArray(size_t size, T* data) : size(size), data(data) {}
+  const size_t size;
+  T* const data;
 };
 
 template <typename T>
 struct ConstCArray {
   ConstCArray() : size(0), data(nullptr) {}
   ConstCArray(size_t size, const T* data) : size(size), data(data) {}
-  size_t size;
-  const T* data;
+  const size_t size;
+  const T* const data;
 };
 
 template <typename T>
 struct ArrayTraits<CArray<T>> {
   using Element = T;
-
-  static bool IsNull(const CArray<T>& input) { return !input.data; }
-
-  static void SetToNull(CArray<T>* output) { output->data = nullptr; }
 
   static size_t GetSize(const CArray<T>& input) { return input.size; }
 
@@ -48,11 +42,7 @@ struct ArrayTraits<CArray<T>> {
   }
 
   static bool Resize(CArray<T>& input, size_t size) {
-    if (size > input.max_size)
-      return false;
-
-    input.size = size;
-    return true;
+    return size <= input.size;
   }
 };
 
