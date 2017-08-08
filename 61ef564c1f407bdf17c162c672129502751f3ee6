@@ -70,6 +70,30 @@
       "revId": "61ef564c1f407bdf17c162c672129502751f3ee6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5e0b003_366ab1e9",
+        "filename": "gpu/command_buffer/common/gl2_types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-08T23:38:12Z",
+      "side": 1,
+      "message": "Exactly, no (C) copyright symbol.",
+      "parentUuid": "88c24d5e_d1a9ea3f",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "61ef564c1f407bdf17c162c672129502751f3ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
