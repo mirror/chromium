@@ -134,21 +134,12 @@ void CredentialManagerImpl::Get(CredentialMediationRequirement mediation,
                                 pending_request_.get());
 }
 
-bool CredentialManagerImpl::IsZeroClickAllowed() const {
-  return *auto_signin_enabled_ && !client_->IsIncognito();
-}
-
-PasswordStore::FormDigest CredentialManagerImpl::GetSynthesizedFormForOrigin()
-    const {
-  PasswordStore::FormDigest digest = {autofill::PasswordForm::SCHEME_HTML,
-                                      std::string(),
-                                      GetLastCommittedURL().GetOrigin()};
-  digest.signon_realm = digest.origin.spec();
-  return digest;
-}
-
 GURL CredentialManagerImpl::GetOrigin() const {
   return GetLastCommittedURL().GetOrigin();
+}
+
+bool CredentialManagerImpl::IsZeroClickAllowed() const {
+  return *auto_signin_enabled_ && !client_->IsIncognito();
 }
 
 void CredentialManagerImpl::SendCredential(
@@ -249,6 +240,15 @@ void CredentialManagerImpl::OnProvisionalSaveComplete() {
 
 GURL CredentialManagerImpl::GetLastCommittedURL() const {
   return client_->GetLastCommittedEntryURL();
+}
+
+PasswordStore::FormDigest CredentialManagerImpl::GetSynthesizedFormForOrigin()
+    const {
+  PasswordStore::FormDigest digest = {autofill::PasswordForm::SCHEME_HTML,
+                                      std::string(),
+                                      GetLastCommittedURL().GetOrigin()};
+  digest.signon_realm = digest.origin.spec();
+  return digest;
 }
 
 }  // namespace password_manager
