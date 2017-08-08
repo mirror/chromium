@@ -4,7 +4,19 @@
 
 /** @fileoverview Define accessibility tests for the MANAGE_PASSWORDS route. */
 
-AccessibilityTest.define({
+ // Disable in debug and memory sanitizer modes because of timeouts.
+GEN('#if defined(NDEBUG)');
+
+/** @const {string} Path to root from chrome/test/data/webui/settings/. */
+var ROOT_PATH = '../../../../../';
+
+// Polymer BrowserTest fixture and aXe-core accessibility audit.
+GEN_INCLUDE([
+  ROOT_PATH + 'chrome/test/data/webui/settings/accessibility_browsertest.js',
+]);
+
+/** @type {AccessibilityTest.Definition} */
+var testDef = {
   /** @override */
   name: 'MANAGE_PASSWORDS',
   /** @type {PasswordManager} */
@@ -78,5 +90,30 @@ AccessibilityTest.define({
     'aria-valid-attr': function(nodeResult) {
       return nodeResult.element.hasAttribute('aria-active-attribute');
     },
-  }
-});
+  },
+
+  // On this page, disable 'skip-link' check since there are few tab stops
+  // before the main content.Also disable rules that are flaky for CFI build.
+  rulesToSkip:['skip-link', 'meta-viewpoint', 'list', 'frame-title', 'label',
+    'hidden_content', 'aria-valid-attr-value', 'button-name']
+};
+
+/**
+ * Test fixture for MANAGE PASSWORDS
+ * @constructor
+ * @extends {PolymerTest}
+ */
+function SettingsA11yManagePasswords() {}
+
+SettingsA11yManagePasswords.prototype = {
+  __proto__: SettingsAccessibilityTest.prototype,
+
+  // Include files that define the mocha tests.
+  extraLibraries: SettingsAccessibilityTest.prototype.extraLibraries.concat([
+    'passwords_and_autofill_fake_data.js',
+  ]),
+};
+
+SettingsAccessibilityTest.createTestF('SettingsA11yManagePasswords', testDef);
+
+GEN('#endif  // defined(NDEBUG)');
