@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb5c4898_fef36eed",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-08T00:19:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f6a7dab_49d212d7",
+      "range": {
+        "startLine": 221,
+        "startChar": 19,
+        "endLine": 221,
+        "endChar": 28
+      },
+      "revId": "06bb43bfd54701f05f93592e0e18571bf98ce8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53817153_68fdc5e2",
         "filename": "ui/app_list/views/search_box_view.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-07T23:38:37Z",
       "side": 1,
       "message": "This can be static. And ideally it should be moved to utility class (not requested for this CL)",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 6
+      },
+      "revId": "06bb43bfd54701f05f93592e0e18571bf98ce8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14415eab_3e9f5814",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-08T00:19:30Z",
+      "side": 1,
+      "message": "Done, I added a TODO to move it to utility class. Or maybe I could move it to app_list_constants.h which already has static function.",
+      "parentUuid": "53817153_68fdc5e2",
       "range": {
         "startLine": 148,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6aef4dc2_3522cc3e",
+        "filename": "ui/app_list/views/start_page_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-08T00:19:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "912a4d29_2d0c4ed1",
+      "range": {
+        "startLine": 309,
+        "startChar": 6,
+        "endLine": 309,
+        "endChar": 20
+      },
+      "revId": "06bb43bfd54701f05f93592e0e18571bf98ce8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86d17d89_3189e85a",
         "filename": "ui/app_list/views/start_page_view.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-07T23:38:37Z",
       "side": 1,
       "message": "nit: If it possible I would move to L559 instead.",
+      "range": {
+        "startLine": 562,
+        "startChar": 2,
+        "endLine": 563,
+        "endChar": 17
+      },
+      "revId": "06bb43bfd54701f05f93592e0e18571bf98ce8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6dcf5b_c7c82af7",
+        "filename": "ui/app_list/views/start_page_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-08T00:19:30Z",
+      "side": 1,
+      "message": "Yes, you are right. Done.",
+      "parentUuid": "86d17d89_3189e85a",
       "range": {
         "startLine": 562,
         "startChar": 2,
@@ -114,6 +210,30 @@
       "revId": "06bb43bfd54701f05f93592e0e18571bf98ce8f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2113f747_0972e849",
+        "filename": "ui/app_list/views/start_page_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-08T00:19:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f1f7614_e2228b7f",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 81,
+        "endChar": 11
+      },
+      "revId": "06bb43bfd54701f05f93592e0e18571bf98ce8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
