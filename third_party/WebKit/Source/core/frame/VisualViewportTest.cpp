@@ -1817,21 +1817,19 @@ TEST_P(VisualViewportTest, SlowScrollAfterImplScroll) {
   EXPECT_SIZE_EQ(FloatSize(300, 200), visual_viewport.GetScrollOffset());
 
   // Send a scroll event on the main thread path.
-  WebGestureEvent gsb(WebInputEvent::kGestureScrollBegin,
-                      WebInputEvent::kNoModifiers,
-                      WebInputEvent::kTimeStampForTesting);
+  WebGestureEvent gsb(
+      WebInputEvent::kGestureScrollBegin, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchpad);
   gsb.SetFrameScale(1);
-  gsb.source_device = kWebGestureDeviceTouchpad;
   gsb.data.scroll_begin.delta_x_hint = -50;
   gsb.data.scroll_begin.delta_x_hint = -60;
   gsb.data.scroll_begin.delta_hint_units = WebGestureEvent::kPrecisePixels;
   GetFrame()->GetEventHandler().HandleGestureEvent(gsb);
 
-  WebGestureEvent gsu(WebInputEvent::kGestureScrollUpdate,
-                      WebInputEvent::kNoModifiers,
-                      WebInputEvent::kTimeStampForTesting);
+  WebGestureEvent gsu(
+      WebInputEvent::kGestureScrollUpdate, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchpad);
   gsu.SetFrameScale(1);
-  gsu.source_device = kWebGestureDeviceTouchpad;
   gsu.data.scroll_update.delta_x = -50;
   gsu.data.scroll_update.delta_y = -60;
   gsu.data.scroll_update.delta_units = WebGestureEvent::kPrecisePixels;
@@ -1971,10 +1969,9 @@ TEST_P(VisualViewportTest, PinchZoomGestureScrollsVisualViewportOnly) {
   RegisterMockedHttpURLLoad("200-by-800-viewport.html");
   NavigateTo(base_url_ + "200-by-800-viewport.html");
 
-  WebGestureEvent pinch_update(WebInputEvent::kGesturePinchUpdate,
-                               WebInputEvent::kNoModifiers,
-                               WebInputEvent::kTimeStampForTesting);
-  pinch_update.source_device = kWebGestureDeviceTouchpad;
+  WebGestureEvent pinch_update(
+      WebInputEvent::kGesturePinchUpdate, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
   pinch_update.x = 100;
   pinch_update.y = 100;
   pinch_update.data.pinch_update.scale = 2;

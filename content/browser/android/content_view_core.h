@@ -310,7 +310,8 @@ class ContentViewCore : public WebContentsObserver {
   blink::WebGestureEvent MakeGestureEvent(blink::WebInputEvent::Type type,
                                           int64_t time_ms,
                                           float x,
-                                          float y) const;
+                                          float y,
+                                          bool from_gamepad) const;
 
   gfx::Size GetViewportSizePix() const;
   int GetTopControlsHeightPix() const;
