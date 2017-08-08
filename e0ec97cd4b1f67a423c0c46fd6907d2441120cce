@@ -16,6 +16,24 @@
       "revId": "e0ec97cd4b1f67a423c0c46fd6907d2441120cce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e00056_bcaf3c21",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-08T10:15:17Z",
+      "side": 1,
+      "message": "Actually we prefer \u0027..\u0027 over os.pardir because it\u0027s more readable, less typing \u0026 just as portable.",
+      "parentUuid": "1abfa5e0_65802369",
+      "revId": "e0ec97cd4b1f67a423c0c46fd6907d2441120cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
