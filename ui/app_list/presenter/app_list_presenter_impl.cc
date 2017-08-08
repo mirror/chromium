@@ -75,6 +75,9 @@ void AppListPresenterImpl::Show(int64_t display_id) {
     presenter_delegate_->Init(view, display_id, current_apps_page_);
     SetView(view);
   }
+  if (is_fullscreen_app_list_enabled_) {
+    view_->SetState(AppListView::PEEKING);
+  }
   presenter_delegate_->OnShown(display_id);
   base::RecordAction(base::UserMetricsAction("Launcher_Show"));
 }

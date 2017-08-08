@@ -182,7 +182,7 @@ AppListView::AppListView(AppListViewDelegate* delegate)
       search_box_view_(nullptr),
       is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()),
       processing_scroll_event_series_(false),
-      app_list_state_(PEEKING),
+      app_list_state_(CLOSED),
       display_observer_(this),
       overlay_view_(nullptr),
       animation_observer_(new HideViewAnimationObserver()) {
@@ -219,9 +219,6 @@ void AppListView::Initialize(gfx::NativeView parent,
 
   InitChildWidgets();
   AddChildView(overlay_view_);
-
-  if (is_fullscreen_app_list_enabled_)
-    SetState(app_list_state_);
 
   if (delegate_)
     delegate_->ViewInitialized();
@@ -920,12 +917,17 @@ void AppListView::StartAnimationForState(AppListState target_state) {
       target_state_y = display_height - kHalfAppListHeight;
       break;
     case CLOSED:
+
       return;
     default:
       break;
   }
 
   gfx::Rect target_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
+  if (target_state == PEEKING && target_bounds.y() == 0) {
+    target_bounds.set_y(display_height);
+    fullscreen_widget_->SetBounds(target_bounds);
+  }
   target_bounds.set_y(target_state_y);
 
   std::unique_ptr<ui::LayerAnimationElement> bounds_animation_element =
