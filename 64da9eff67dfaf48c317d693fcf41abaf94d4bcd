@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7d92dbb_9ce32e8c",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-08-08T10:28:34Z",
+      "side": 1,
+      "message": "If it is not included then windows build is fine.",
+      "range": {
+        "startLine": 344,
+        "startChar": 0,
+        "endLine": 344,
+        "endChar": 30
+      },
+      "revId": "64da9eff67dfaf48c317d693fcf41abaf94d4bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
