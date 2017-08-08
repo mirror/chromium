@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "device/bluetooth/test/mock_bluetooth_advertisement.h"
 
@@ -99,7 +100,7 @@ void MockBluetoothAdapter::RegisterAdvertisement(
     std::unique_ptr<BluetoothAdvertisement::Data> advertisement_data,
     const CreateAdvertisementCallback& callback,
     const AdvertisementErrorCallback& error_callback) {
-  callback.Run(new MockBluetoothAdvertisement);
+  callback.Run(base::MakeUnique<MockBluetoothAdvertisement>());
 }
 
 #if defined(OS_CHROMEOS) || defined(OS_LINUX)

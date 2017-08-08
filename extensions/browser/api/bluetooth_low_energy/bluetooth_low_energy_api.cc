@@ -1122,10 +1122,10 @@ void BluetoothLowEnergyRegisterAdvertisementFunction::DoWork() {
 }
 
 void BluetoothLowEnergyRegisterAdvertisementFunction::SuccessCallback(
-    scoped_refptr<device::BluetoothAdvertisement> advertisement) {
-  Respond(ArgumentList(
-      apibtle::RegisterAdvertisement::Results::Create(AddAdvertisement(
-          new BluetoothApiAdvertisement(extension_id(), advertisement)))));
+    std::unique_ptr<device::BluetoothAdvertisement> advertisement) {
+  Respond(ArgumentList(apibtle::RegisterAdvertisement::Results::Create(
+      AddAdvertisement(new BluetoothApiAdvertisement(
+          extension_id(), std::move(advertisement))))));
 }
 
 void BluetoothLowEnergyRegisterAdvertisementFunction::ErrorCallback(

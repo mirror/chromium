@@ -39,7 +39,7 @@ class DEVICE_BLUETOOTH_EXPORT FakeBluetoothLEAdvertisingManagerClient
   void RemoveObserver(Observer* observer) override;
   void RegisterAdvertisement(const dbus::ObjectPath& manager_object_path,
                              const dbus::ObjectPath& advertisement_object_path,
-                             const base::Closure& callback,
+                             base::OnceClosure callback,
                              const ErrorCallback& error_callback) override;
   void UnregisterAdvertisement(
       const dbus::ObjectPath& manager_object_path,

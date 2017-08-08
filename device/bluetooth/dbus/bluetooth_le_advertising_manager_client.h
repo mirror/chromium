@@ -57,7 +57,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothLEAdvertisingManagerClient
   virtual void RegisterAdvertisement(
       const dbus::ObjectPath& manager_object_path,
       const dbus::ObjectPath& advertisement_object_path,
-      const base::Closure& callback,
+      base::OnceClosure callback,
       const ErrorCallback& error_callback) = 0;
 
   // Unregisters an advertisement with the DBus object path

@@ -205,13 +205,14 @@ void BluetoothAdapterBlueZ::Shutdown() {
     delete it.second;
   profile_queues_.clear();
 
-  // This may call unregister on advertisements that have already been
-  // unregistered but that's fine. The advertisement object keeps a track of
-  // the fact that it has been already unregistered and will call our empty
-  // error callback with an "Already unregistered" error, which we'll ignore.
+  // advertisements_ may contain pointers to already destructed objects
+  // so we need to check if the weak pointer is still valid before calling
+  // Unregister on each of them.
   for (auto& it : advertisements_) {
-    it->Unregister(base::Bind(&base::DoNothing),
-                   base::Bind(&DoNothingOnAdvertisementError));
+    if (it) {
+      it->Unregister(base::Bind(&base::DoNothing),
+                     base::Bind(&DoNothingOnAdvertisementError));
+    }
   }
   advertisements_.clear();
 
@@ -508,10 +509,14 @@ void BluetoothAdapterBlueZ::RegisterAdvertisement(
     std::unique_ptr<device::BluetoothAdvertisement::Data> advertisement_data,
     const CreateAdvertisementCallback& callback,
     const AdvertisementErrorCallback& error_callback) {
-  scoped_refptr<BluetoothAdvertisementBlueZ> advertisement(
-      new BluetoothAdvertisementBlueZ(std::move(advertisement_data), this));
-  advertisement->Register(base::Bind(callback, advertisement), error_callback);
-  advertisements_.emplace_back(advertisement);
+  std::unique_ptr<BluetoothAdvertisementBlueZ> advertisement =
+      base::MakeUnique<BluetoothAdvertisementBlueZ>(
+          std::move(advertisement_data), this);
+  advertisements_.emplace_back(advertisement->GetWeakPtr());
+
+  BluetoothAdvertisementBlueZ* advertisement_ptr = advertisement.get();
+  advertisement_ptr->Register(
+      base::BindOnce(callback, std::move(advertisement)), error_callback);
 }
 
 void BluetoothAdapterBlueZ::SetAdvertisingInterval(

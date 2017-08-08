@@ -92,6 +92,8 @@ class FakeBluetoothAdvertisement : public device::BluetoothAdvertisement {
           unregister_callback)
       : unregister_callback_(unregister_callback) {}
 
+  ~FakeBluetoothAdvertisement() override {}
+
   // BluetoothAdvertisement:
   void Unregister(
       const device::BluetoothAdvertisement::SuccessCallback& success_callback,
@@ -101,8 +103,6 @@ class FakeBluetoothAdvertisement : public device::BluetoothAdvertisement {
   }
 
  private:
-  ~FakeBluetoothAdvertisement() override {}
-
   base::Callback<void(const device::BluetoothAdvertisement::SuccessCallback&)>
       unregister_callback_;
 
@@ -247,9 +247,9 @@ class BleAdvertiserTest : public testing::Test {
   }
 
   void InvokeCallback(scoped_refptr<RegisterAdvertisementArgs> args) {
-    args->callback.Run(make_scoped_refptr(new FakeBluetoothAdvertisement(
+    args->callback.Run(base::MakeUnique<FakeBluetoothAdvertisement>(
         base::Bind(&BleAdvertiserTest::OnAdvertisementUnregistered,
-                   base::Unretained(this)))));
+                   base::Unretained(this))));
   }
 
   void ReleaseAdvertisement(

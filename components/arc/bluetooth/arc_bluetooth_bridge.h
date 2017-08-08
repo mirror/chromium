@@ -330,7 +330,7 @@ class ArcBluetoothBridge
   void OnGattDisconnected(mojom::BluetoothAddressPtr addr);
 
   void OnStartLEListenDone(const StartLEListenCallback& callback,
-                           scoped_refptr<device::BluetoothAdvertisement> adv);
+                           std::unique_ptr<device::BluetoothAdvertisement> adv);
   void OnStartLEListenError(
       const StartLEListenCallback& callback,
       device::BluetoothAdvertisement::ErrorCode error_code);
@@ -466,7 +466,7 @@ class ArcBluetoothBridge
   void OnRegisterAdvertisementDone(
       const BroadcastAdvertisementCallback& callback,
       int32_t adv_handle,
-      scoped_refptr<device::BluetoothAdvertisement> advertisement);
+      std::unique_ptr<device::BluetoothAdvertisement> advertisement);
   // Called when the attempt to register an advertisement for handle
   // |adv_handle| has failed. |adv_handle| remains reserved, but no
   // advertisement is associated with it.
@@ -496,7 +496,7 @@ class ArcBluetoothBridge
   mojo::Binding<mojom::BluetoothHost> binding_;
 
   scoped_refptr<bluez::BluetoothAdapterBlueZ> bluetooth_adapter_;
-  scoped_refptr<device::BluetoothAdvertisement> advertisment_;
+  std::unique_ptr<device::BluetoothAdvertisement> advertisment_;
   std::unique_ptr<device::BluetoothDiscoverySession> discovery_session_;
   std::unordered_map<std::string,
                      std::unique_ptr<device::BluetoothGattNotifySession>>
@@ -549,7 +549,7 @@ class ArcBluetoothBridge
   // TODO(crbug.com/658385) Change back to 5 when we support setting signal
   // strength per each advertisement slot.
   enum { kMaxAdvertisements = 1 };
-  std::map<int32_t, scoped_refptr<device::BluetoothAdvertisement>>
+  std::map<int32_t, std::unique_ptr<device::BluetoothAdvertisement>>
       advertisements_;
 
   THREAD_CHECKER(thread_checker_);
