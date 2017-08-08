@@ -116,7 +116,6 @@ if (pdf_enable_xfa) {
     deps = [
       "//third_party/pdfium/testing/libfuzzer:pdf_codec_bmp_fuzzer",
     ]
-    seed_corpus = "corpora/pdf_codec_bmp"
   }
 
   fuzzer_test("pdf_codec_gif_fuzzer") {
@@ -216,6 +215,6 @@ if (pdf_enable_xfa) {
       "//v8:external_startup_data",
     ]
     dict = "dicts/pdf.dict"
-    seed_corpus = "src/third_party/pdfium/test"
+    seed_corpus = "//third_party/pdfium/test"
   }
 }
