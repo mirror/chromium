@@ -122,6 +122,24 @@
       "revId": "8d646028c848926aecfe9ebdb1d410f34d9d42e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdaeea7_8b6d4722",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-08T22:55:05Z",
+      "side": 1,
+      "message": "Failing fast sounds good so we don\u0027t have to think about the implications of running other steps. Perhaps ideally, the API would not even be visible (like `[SecureContext]`), but I guess that does not work for other APIs.\n\nIt\u0027s unfortunate that other features fail differently. Is that necessary or just how they have been specified/implemented?",
+      "parentUuid": "892377f9_bb219311",
+      "revId": "8d646028c848926aecfe9ebdb1d410f34d9d42e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -91,6 +91,30 @@
       "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e097dc56_84bf8bba",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-08T22:55:05Z",
+      "side": 1,
+      "message": "Please use whatever value is \"correct\" per the Feature Policy spec and consistent with other APIs it controls.\n\nIf this one is correct, we should updated the list in the spec pull request.",
+      "parentUuid": "608fa867_cfa7d4e5",
+      "range": {
+        "startLine": 283,
+        "startChar": 14,
+        "endLine": 283,
+        "endChar": 28
+      },
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
