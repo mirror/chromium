@@ -70,6 +70,30 @@
       "revId": "53fef768810c4157c4ede6523f5ffe17bf333872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "909a5da5_dbba8b3e",
+        "filename": "cc/paint/paint_canvas.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-08T21:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04bf8988_ed40fe6d",
+      "range": {
+        "startLine": 118,
+        "startChar": 7,
+        "endLine": 118,
+        "endChar": 17
+      },
+      "revId": "53fef768810c4157c4ede6523f5ffe17bf333872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
