@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a8abb5d_de04d40d",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-08T00:43:07Z",
+      "side": 1,
+      "message": "This will not work for waiting state animation.  Basically when user clicks keyboard assistant key, we will start the animation if container is not running.\n\nBut if we move this also to keyboard event handler, that means there is no timing guarantee this would happen after user session starts, right?",
+      "range": {
+        "startLine": 105,
+        "startChar": 20,
+        "endLine": 105,
+        "endChar": 34
+      },
+      "revId": "49f6ad02d8b389e18e84f3a179e654ad0e738fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
