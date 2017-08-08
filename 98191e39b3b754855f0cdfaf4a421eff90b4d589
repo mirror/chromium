@@ -22,6 +22,30 @@
       "revId": "98191e39b3b754855f0cdfaf4a421eff90b4d589",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b521815c_cbc07ae2",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-08T21:58:37Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9250e220_cf8baf3c",
+      "range": {
+        "startLine": 91,
+        "startChar": 32,
+        "endLine": 91,
+        "endChar": 54
+      },
+      "revId": "98191e39b3b754855f0cdfaf4a421eff90b4d589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
