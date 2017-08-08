@@ -110,6 +110,8 @@ void DrawBlobs(PaintCanvas* canvas,
                const PaintFlags& flags,
                const ShapeResultBloberizer::BlobBuffer& blobs,
                const FloatPoint& point) {
+  PaintFlags myFlags(flags);
+  myFlags.setHinting(PaintFlags::kFull_Hinting);
   for (const auto& blob_info : blobs) {
     DCHECK(blob_info.blob);
     PaintCanvasAutoRestore auto_restore(canvas, false);
@@ -122,7 +124,7 @@ void DrawBlobs(PaintCanvas* canvas,
       canvas->concat(m);
     }
 
-    canvas->drawTextBlob(blob_info.blob, point.X(), point.Y(), flags);
+    canvas->drawTextBlob(blob_info.blob, point.X(), point.Y(), myFlags);
   }
 }
 

@@ -74,6 +74,8 @@ void FontPlatformData::SetupPaint(SkPaint* paint, float, const Font*) const {
   flags |= text_flags;
 
   paint->setFlags(flags);
+
+  paint->setHinting(SkPaint::kFull_Hinting);
 }
 
 static bool IsWebFont(const String& family_name) {

@@ -217,7 +217,8 @@ sk_sp<SkTypeface> WebFontDecoder::Decode(SharedBuffer* buffer) {
 
   // TODO(fmalita): we can avoid this copy by processing into a
   // SkDynamicMemoryWStream-backed OTSStream.
-  sk_sp<SkData> sk_data = SkData::MakeWithCopy(output.get(), decoded_length);
+  //  sk_sp<SkData> sk_data = SkData::MakeWithCopy(output.get(), decoded_length);
+  sk_sp<SkData> sk_data = SkData::MakeWithCopy(data, buffer->size());
   SkMemoryStream* stream = new SkMemoryStream(sk_data);
 #if defined(OS_WIN)
   sk_sp<SkTypeface> typeface(
