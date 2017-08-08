@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff7a559b_68578b2c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-08T20:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04ef6a1b_963ae168",
+      "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "515c2f6c_aff341c8",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da791eec_251c4a87",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-08T20:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "515c2f6c_aff341c8",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "187ae399_1d4ff400",
+        "filename": "chromeos/components/tether/ble_advertiser_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-08T20:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34e95bc4_2eeaad51",
+      "range": {
+        "startLine": 250,
+        "startChar": 29,
+        "endLine": 250,
+        "endChar": 39
+      },
+      "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "789eaf81_9f8329a9",
         "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
         "patchSetId": 4
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "0e6b2462_bba7d4d6",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-08T20:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "789eaf81_9f8329a9",
+      "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "676555c9_585db9ff",
         "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
         "patchSetId": 4
@@ -96,6 +180,24 @@
       "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7d7cc2_f424f090",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-08T20:48:28Z",
+      "side": 1,
+      "message": "Yes it works, with plumbing through OnceClosure instead of Closure\u0026 all the way up.",
+      "parentUuid": "676555c9_585db9ff",
+      "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "1258effe_5d32093b",
+        "filename": "device/bluetooth/bluez/bluetooth_adapter_bluez.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-08T20:48:28Z",
+      "side": 1,
+      "message": "that\u0027s right it would leak, the above BindOnce modification should solve this too.",
+      "parentUuid": "13d3ae2d_408d3e8a",
+      "range": {
+        "startLine": 523,
+        "startChar": 6,
+        "endLine": 523,
+        "endChar": 20
+      },
+      "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc9bee50_677188c5",
         "filename": "device/bluetooth/test/mock_bluetooth_adapter.cc",
         "patchSetId": 4
@@ -142,6 +268,30 @@
       "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d270ca9e_c3c8d7b3",
+        "filename": "device/bluetooth/test/mock_bluetooth_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-08T20:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc9bee50_677188c5",
+      "range": {
+        "startLine": 103,
+        "startChar": 21,
+        "endLine": 103,
+        "endChar": 31
+      },
+      "revId": "6e69dae37f2c122157e5a7a5ad43a5664cf1fc41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
