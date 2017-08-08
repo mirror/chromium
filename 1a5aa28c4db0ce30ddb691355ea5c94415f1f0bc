@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "def63153_966b8bce",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T11:39:52Z",
+      "side": 1,
+      "message": "Oh, by the way: this +1 stuff didn\u0027t seem to be necessary in my testing, and causes (now and before) a 1 pixel mismatch between the fakebox width and the right edge of mv-tiles. That\u0027s not new, though. I could fix it in the CSS, but I wasn\u0027t sure I wanted to couple the hack in the JS and CSS.",
+      "range": {
+        "startLine": 416,
+        "startChar": 74,
+        "endLine": 416,
+        "endChar": 78
+      },
+      "revId": "1a5aa28c4db0ce30ddb691355ea5c94415f1f0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
