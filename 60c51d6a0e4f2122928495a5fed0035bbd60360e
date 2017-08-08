@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc00350c_79cc7538",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-08T02:44:14Z",
+      "side": 1,
+      "message": "I\u0027m still somewhat confused as to who would be calling these functions. Is there a follow up patch that I can look at to better understand how this is going to fit together?",
+      "revId": "60c51d6a0e4f2122928495a5fed0035bbd60360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b11b4d_d545d185",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2850,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-08T02:44:14Z",
+      "side": 1,
+      "message": "nit: s/class DataOffer*/DataOffer*/",
+      "revId": "60c51d6a0e4f2122928495a5fed0035bbd60360e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
