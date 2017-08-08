@@ -70,6 +70,30 @@
       "revId": "24e1e0708eb827e4d84399b955a523496190f954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9058d65_49f84694",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T22:23:34Z",
+      "side": 1,
+      "message": "Thank you for letting me know. Your question also helped my find an issue with two change events firing for a single click!\n\nI\u0027ve added several tests. One test for each kind of tap that can cause a change: action-target, the label, and the control itself (the part that slides). And a test to check that each of those will fire one and only one change event. PTAL.",
+      "parentUuid": "ddcef762_a037d5cd",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 24
+      },
+      "revId": "24e1e0708eb827e4d84399b955a523496190f954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
