@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70f68f39_07f5fce3",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-08T19:00:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b264a96_b6b14638",
+      "revId": "20984253c435c1cfbe0ed459d27c4eac331c6ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f125d93f_aa445a2e",
         "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
         "patchSetId": 30
@@ -33,6 +51,24 @@
       "revId": "20984253c435c1cfbe0ed459d27c4eac331c6ca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e32dceb_fdd248d7",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-08T19:00:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f125d93f_aa445a2e",
+      "revId": "20984253c435c1cfbe0ed459d27c4eac331c6ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e3850194_23c6ec2c",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-08T19:00:02Z",
+      "side": 1,
+      "message": "The function fits better as a local function in TITextNodeHandler.cpp.\n\nMoved.",
+      "parentUuid": "260392c3_9e0c9303",
+      "revId": "20984253c435c1cfbe0ed459d27c4eac331c6ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48d14999_a95bdc56",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
         "patchSetId": 30
@@ -67,6 +121,24 @@
       "revId": "20984253c435c1cfbe0ed459d27c4eac331c6ca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b428ba_2f1d233f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-08T19:00:02Z",
+      "side": 1,
+      "message": "Simplified and moved to another CL:\n\nhttps://chromium-review.googlesource.com/c/606671",
+      "parentUuid": "48d14999_a95bdc56",
+      "revId": "20984253c435c1cfbe0ed459d27c4eac331c6ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
