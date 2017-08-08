@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36d0d5fb_5a327833",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-08T05:11:39Z",
+      "side": 1,
+      "message": "I had to expose this so we could have one less provider. But there are other ways of going around this like using the dispatcher or indeed having an extra \"toolbar presentation provider\", let me know WDYT.",
+      "revId": "d38729de5cbcc9291a8e01d2cb81ce0882f159f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
