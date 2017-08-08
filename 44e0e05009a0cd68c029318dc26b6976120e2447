@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b167bd2_cc53403c",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-08T17:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "223849ea_24dafd13",
+      "revId": "44e0e05009a0cd68c029318dc26b6976120e2447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de9c9296_817b93ad",
         "filename": "chrome/browser/resources/md_extensions/view_manager.js",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "44e0e05009a0cd68c029318dc26b6976120e2447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fecb3ada_be2eb681",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-08T17:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de9c9296_817b93ad",
+      "revId": "44e0e05009a0cd68c029318dc26b6976120e2447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d7b5073e_542a0738",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-08T17:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c38b2ee_d66aa8fb",
+      "revId": "44e0e05009a0cd68c029318dc26b6976120e2447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfee38da_dcaf5888",
         "filename": "chrome/browser/resources/md_extensions/view_manager.js",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "44e0e05009a0cd68c029318dc26b6976120e2447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2568e2_4ed9859f",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-08T17:26:31Z",
+      "side": 1,
+      "message": "Oops, totally forgot about this guy. Changing.",
+      "parentUuid": "bfee38da_dcaf5888",
+      "revId": "44e0e05009a0cd68c029318dc26b6976120e2447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "75150711_fe49f909",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-08T17:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f12aec5e_aaa95446",
+      "revId": "44e0e05009a0cd68c029318dc26b6976120e2447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10f44d61_c8d2f05e",
         "filename": "chrome/browser/resources/md_extensions/view_manager.js",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-07T21:40:57Z",
       "side": 1,
       "message": "We don\u0027t usually assert() when the type is !Element (we trust the compiler).",
+      "revId": "44e0e05009a0cd68c029318dc26b6976120e2447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91872c3_2c0fa8b1",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-08T17:26:31Z",
+      "side": 1,
+      "message": "The element is retrieved via querySelector at runtime then passed into this function, so I thought the compiler wouldn\u0027t necessarily know if the element can be found at run-time. For example, if someone does:\n\nswitchView(\u0027non-existent-id\u0027);\n\nThen would the compiler be able to catch it?",
+      "parentUuid": "10f44d61_c8d2f05e",
       "revId": "44e0e05009a0cd68c029318dc26b6976120e2447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "44e0e05009a0cd68c029318dc26b6976120e2447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc3cf89_f3508e03",
+        "filename": "chrome/test/data/webui/extensions/cr_extensions_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-08T17:26:31Z",
+      "side": 1,
+      "message": "I was going to do that after the ES6 conversion CL land, just so this test is still consistent with the other tests in this commit.. but considering I\u0027m already in the process of landing that and this is a completely new set of tests, I can change it now and there should be no conflicts.",
+      "parentUuid": "ae0a29a5_fb700c3b",
+      "revId": "44e0e05009a0cd68c029318dc26b6976120e2447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
