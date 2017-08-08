@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a004213_fce4187f",
+        "filename": "components/url_formatter/url_formatter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-08T20:47:59Z",
+      "side": 1,
+      "message": "It seems that you have made a reasonable choice.\n\nSince the bitmask values are internal-only and can be easily changed later, I don\u0027t think we need to \"overthink\" it.\n\npkasting@ may have a strong opinion here and i\u0027ll defer to him on this.",
+      "parentUuid": "b36d346e_a3ad6c10",
+      "revId": "8f630588fc39993e51b5cae677accdd0e5e3b3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c409329_33e840a5",
         "filename": "components/url_formatter/url_formatter.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "8f630588fc39993e51b5cae677accdd0e5e3b3b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91188303_415bba6a",
+        "filename": "components/url_formatter/url_formatter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-08T20:47:59Z",
+      "side": 1,
+      "message": "Ack. I think your reasoning is good.",
+      "parentUuid": "2c409329_33e840a5",
+      "revId": "8f630588fc39993e51b5cae677accdd0e5e3b3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
