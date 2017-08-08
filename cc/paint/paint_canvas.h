@@ -115,10 +115,15 @@ class CC_PAINT_EXPORT PaintCanvas {
   virtual void drawDRRect(const SkRRect& outer,
                           const SkRRect& inner,
                           const PaintFlags& flags) = 0;
-  virtual void drawCircle(SkScalar cx,
-                          SkScalar cy,
-                          SkScalar radius,
-                          const PaintFlags& flags) = 0;
+  void drawCircle(SkScalar cx,
+                  SkScalar cy,
+                  SkScalar radius,
+                  const PaintFlags& flags) {
+    DCHECK_GE(radius, 0);
+    drawOval(
+        SkRect::MakeLTRB(cx - radius, cy - radius, cx + radius, cy + radius),
+        flags);
+  }
   virtual void drawArc(const SkRect& oval,
                        SkScalar start_angle,
                        SkScalar sweep_angle,
