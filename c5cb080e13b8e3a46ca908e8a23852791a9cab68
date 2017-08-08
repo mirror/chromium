@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "20ed3762_23860a16",
+        "filename": "content/browser/appcache/appcache_update_request_base.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-08T19:05:13Z",
+      "side": 1,
+      "message": "Thanks. The potential performance issues with OnReadCompleted being called asynchronously are acceptable for now I think.",
+      "parentUuid": "14c6fed4_70e2ab99",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7655e051_80283351",
         "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
         "patchSetId": 20
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "15500a25_ba01c825",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-08T19:05:13Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "7655e051_80283351",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f55dbd53_62fc349d",
         "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
         "patchSetId": 20
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-08T18:40:49Z",
       "side": 1,
       "message": "ditto.",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c33e2e3_d006f236",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-08T19:05:13Z",
+      "side": 1,
+      "message": "Sure thing. This is something which we chose to live with",
+      "parentUuid": "f55dbd53_62fc349d",
       "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "ea3cf0d2_8b1a0285",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-08T19:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c28049df_303383d2",
+      "range": {
+        "startLine": 19,
+        "startChar": 47,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cf428a3_b14a4569",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 20
@@ -90,6 +168,24 @@
       "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2890b8_4379956b",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-08T19:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cf428a3_b14a4569",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "4cdefb67_90a607e6",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-08T19:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7885921d_17534a17",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64098c5e_0b470ec3",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 20
@@ -159,6 +273,24 @@
       "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f468508e_3a580fc4",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-08T19:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64098c5e_0b470ec3",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "5b5a9457_fdf13d56",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-08T19:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3790641_ebabcece",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b99585c0_6db8c07a",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 20
@@ -193,6 +343,24 @@
       "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244bab0c_2dfa8104",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-08T19:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b99585c0_6db8c07a",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "9647f56c_52e91b6b",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-08T19:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c18df12e_0b33b2b2",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3fb72ad_a158bfab",
         "filename": "content/common/net_adapters.cc",
         "patchSetId": 20
@@ -230,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "20278d5d_b0e2ddcd",
+        "filename": "content/common/net_adapters.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-08T19:05:13Z",
+      "side": 1,
+      "message": "Noted. Do you propose renaming this method to Complete?",
+      "parentUuid": "c3fb72ad_a158bfab",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76871d2b_95c0b27d",
         "filename": "content/common/net_adapters.h",
         "patchSetId": 20
@@ -241,6 +445,24 @@
       "writtenOn": "2017-08-08T18:40:49Z",
       "side": 1,
       "message": "Did you restore the version removed by https://codereview.chromium.org/1873463003?\n\nI think it is not exactly the same. Did you make some changes in this CL?\nIf yes usually it is nice to upload original/modified version so that reviewers could look at the difference.",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ed63b5_63de2320",
+        "filename": "content/common/net_adapters.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-08T19:05:13Z",
+      "side": 1,
+      "message": "Thanks. Should have done that. The main difference being that the MojoToNetIOBuffer which provides a refcounted IOBuffer wrapper completes the read in the dtor which allows for the case where the consumer may take some time to process the data.",
+      "parentUuid": "76871d2b_95c0b27d",
       "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
