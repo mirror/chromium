@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "460c181f_22e485ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T18:48:22Z",
+      "side": 1,
+      "message": "Consider condensing this:\n\nThe aXe-audit sometimes has false positives, this CL allows exceptions to be filtered.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 69
+      },
+      "revId": "3367470a61d027ca512a06a002606816ad864a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c769692c_029a02a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T18:48:22Z",
+      "side": 1,
+      "message": "Should adding the aXe audit definitions be a separate CL?",
+      "range": {
+        "startLine": 12,
+        "startChar": 58,
+        "endLine": 12,
+        "endChar": 7
+      },
+      "revId": "3367470a61d027ca512a06a002606816ad864a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363d5e1f_581d6dc6",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T18:48:22Z",
+      "side": 1,
+      "message": "Move this above AccessibilityTest.Definition",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 34
+      },
+      "revId": "3367470a61d027ca512a06a002606816ad864a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097da2af_12106041",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T18:48:22Z",
+      "side": 1,
+      "message": "Nit: pass in the testDef object",
+      "range": {
+        "startLine": 54,
+        "startChar": 39,
+        "endLine": 54,
+        "endChar": 54
+      },
+      "revId": "3367470a61d027ca512a06a002606816ad864a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a5de5c_edc2fa70",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T18:48:22Z",
+      "side": 1,
+      "message": "Consider changing this comment to explain why we need the references.\n// References needed for ....",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 67
+      },
+      "revId": "3367470a61d027ca512a06a002606816ad864a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b554de27_15891b3b",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T18:48:22Z",
+      "side": 1,
+      "message": "filter is an object, should this be {} ?",
+      "range": {
+        "startLine": 61,
+        "startChar": 21,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "3367470a61d027ca512a06a002606816ad864a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde4f09e_673e9d17",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T18:48:22Z",
+      "side": 1,
+      "message": "This is only used here, consider deleting line 61 and putting that code here:\nAccessibilityTest.filterViolations_(results.violations, filter || {});",
+      "range": {
+        "startLine": 69,
+        "startChar": 66,
+        "endLine": 69,
+        "endChar": 72
+      },
+      "revId": "3367470a61d027ca512a06a002606816ad864a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dfcdb09_287c4375",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T18:48:22Z",
+      "side": 1,
+      "message": "Even better, don\u0027t assign an object if the filter isn\u0027t defined, and early abandon here.\n\nif (!filter)\n  return violations;",
+      "range": {
+        "startLine": 89,
+        "startChar": 59,
+        "endLine": 89,
+        "endChar": 65
+      },
+      "revId": "3367470a61d027ca512a06a002606816ad864a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501a1929_a655def8",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T18:48:22Z",
+      "side": 1,
+      "message": "violation.nodes \u003d violation.nodes.filter((node) \u003d\u003e !exclusionRule(node));",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 40
+      },
+      "revId": "3367470a61d027ca512a06a002606816ad864a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7d4dd4_77721854",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T18:48:22Z",
+      "side": 1,
+      "message": "Rename to print_?\n\nAdd a comment that it removes circular references. (Side effect of this function)",
+      "range": {
+        "startLine": 180,
+        "startChar": 18,
+        "endLine": 180,
+        "endChar": 34
+      },
+      "revId": "3367470a61d027ca512a06a002606816ad864a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5d9642_ddb861e6",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T18:48:22Z",
+      "side": 1,
+      "message": "nit: use a different name here. Maybe \"relatedNode\"",
+      "range": {
+        "startLine": 187,
+        "startChar": 19,
+        "endLine": 187,
+        "endChar": 23
+      },
+      "revId": "3367470a61d027ca512a06a002606816ad864a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82306dd6_f2f258c1",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T18:48:22Z",
+      "side": 1,
+      "message": "This comment fits on one line:\n/** @fileoverview Define accessibility tests for the MANAGE_PASSWORDS route. */",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 3
+      },
+      "revId": "3367470a61d027ca512a06a002606816ad864a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca81e5e_463bff0c",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-08T18:48:22Z",
+      "side": 1,
+      "message": "nit: spacing\n\nAdd a comment that this is for polymer, maybe:\n// Ignore errors caused by polymer aria-* attributes.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 6
+      },
+      "revId": "3367470a61d027ca512a06a002606816ad864a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
