@@ -161,6 +161,8 @@ class CHROMEOS_EXPORT CrasAudioHandler : public CrasAudioClient::Observer,
   // This call can be invoked from I/O thread or UI thread because
   // it does not need to access CrasAudioClient on DBus.
   void GetAudioDevices(AudioDeviceList* device_list) const;
+  void GetBufferSizeInternal();
+  void GetBufferSize(int* buffer_size) const;
 
   bool GetPrimaryActiveOutputDevice(AudioDevice* device) const;
 
@@ -385,6 +387,7 @@ class CHROMEOS_EXPORT CrasAudioHandler : public CrasAudioClient::Observer,
 
   // Handles dbus callback for GetNodes.
   void HandleGetNodes(const chromeos::AudioNodeList& node_list, bool success);
+  void HandleGetBufferSize(int buffer_size, bool success);
 
   // Handles the dbus error callback.
   void HandleGetNodesError(const std::string& error_name,
@@ -517,6 +520,8 @@ class CHROMEOS_EXPORT CrasAudioHandler : public CrasAudioClient::Observer,
 
   bool front_camera_on_ = false;
   bool rear_camera_on_ = false;
+
+  int buffer_size_;
 
   base::WeakPtrFactory<CrasAudioHandler> weak_ptr_factory_;
 

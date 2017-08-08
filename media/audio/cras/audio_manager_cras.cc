@@ -348,14 +348,10 @@ AudioInputStream* AudioManagerCras::MakeLowLatencyInputStream(
 }
 
 int AudioManagerCras::GetMinimumOutputBufferSizePerBoard() {
-  // On faster boards we can use smaller buffer size for lower latency.
-  // On slower boards we should use larger buffer size to prevent underrun.
-  std::string board = base::SysInfo::GetLsbReleaseBoard();
-  if (board == "kevin")
-    return 768;
-  else if (board == "samus")
-    return 256;
-  return 512;
+  LOG(WARNING) << __func__;
+  int buffer_size = 512;
+  chromeos::CrasAudioHandler::Get()->GetBufferSize(&buffer_size);
+  return buffer_size;
 }
 
 AudioParameters AudioManagerCras::GetPreferredOutputStreamParameters(

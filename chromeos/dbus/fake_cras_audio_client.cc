@@ -100,6 +100,10 @@ void FakeCrasAudioClient::GetVolumeState(
   callback.Run(volume_state_, true);
 }
 
+void FakeCrasAudioClient::GetBufferSize(
+    const GetBufferSizeCallback& callback) {
+}
+
 void FakeCrasAudioClient::GetNodes(const GetNodesCallback& callback,
                                    const ErrorCallback& error_callback) {
   callback.Run(node_list_, true);
