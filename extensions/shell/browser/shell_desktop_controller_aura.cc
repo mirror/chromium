@@ -12,7 +12,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -187,7 +187,7 @@ class AppsFocusRules : public wm::BaseFocusRules {
 }  // namespace
 
 ShellDesktopControllerAura::ShellDesktopControllerAura()
-    : app_window_client_(new ShellAppWindowClient) {
+    : app_window_client_(new ShellAppWindowClient), run_loop_(nullptr) {
   extensions::AppWindowClient::Set(app_window_client_.get());
 
 #if defined(OS_CHROMEOS)
@@ -219,6 +219,13 @@ ShellDesktopControllerAura::~ShellDesktopControllerAura() {
 
 gfx::Size ShellDesktopControllerAura::GetWindowSize() {
   return host_->window()->bounds().size();
+}
+
+void ShellDesktopControllerAura::Run() {
+  base::RunLoop run_loop;
+  run_loop_ = &run_loop;
+  run_loop.Run();
+  run_loop_ = nullptr;
 }
 
 AppWindow* ShellDesktopControllerAura::CreateAppWindow(
@@ -284,8 +291,8 @@ void ShellDesktopControllerAura::OnHostCloseRequested(
     const aura::WindowTreeHost* host) {
   DCHECK_EQ(host_.get(), host);
   CloseAppWindows();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
+  if (run_loop_)
+    run_loop_->QuitWhenIdle();
 }
 
 ui::EventDispatchDetails ShellDesktopControllerAura::DispatchKeyEventPostIME(

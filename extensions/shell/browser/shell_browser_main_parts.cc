@@ -242,9 +242,7 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
 bool ShellBrowserMainParts::MainMessageLoopRun(int* result_code) {
   if (!run_message_loop_)
     return true;
-  // TODO(yoz): just return false here?
-  base::RunLoop run_loop;
-  run_loop.Run();
+  desktop_controller_->Run();
   *result_code = content::RESULT_CODE_NORMAL_EXIT;
   return true;
 }
