@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "769fc2f1_1b551e6b",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T17:26:51Z",
+      "side": 1,
+      "message": "// If |queue_empty_closure| is not null, it means that external code exited the RunLoop and that the MessageLoop and TaskScheduler queues might not be empty. Run the loop again to make sure that no task remains.",
+      "range": {
+        "startLine": 161,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 51
+      },
+      "revId": "00d88aadfced1cf1d71b09ec6b851c5e4d1ca05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c845e63a_f195da5c",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T17:26:51Z",
+      "side": 1,
+      "message": "Remove this.",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 165,
+        "endChar": 53
+      },
+      "revId": "00d88aadfced1cf1d71b09ec6b851c5e4d1ca05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
