@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
+#include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features_test_support.h"
 #include "components/variations/variations_associated_data.h"
@@ -130,22 +131,24 @@ TEST(SubresourceFilterFeaturesTest, ActivationLevel) {
 
 TEST(SubresourceFilterFeaturesTest, ActivationScope) {
   const struct {
+    bool valid_config;
     bool feature_enabled;
     const char* activation_scope_param;
     ActivationScope expected_activation_scope;
   } kTestCases[] = {
-      {false, "", ActivationScope::NO_SITES},
-      {false, "no_sites", ActivationScope::NO_SITES},
-      {false, "allsites", ActivationScope::NO_SITES},
-      {false, "enabled", ActivationScope::NO_SITES},
-      {false, "%$ garbage !%", ActivationScope::NO_SITES},
-      {true, "", ActivationScope::NO_SITES},
-      {true, "nosites", ActivationScope::NO_SITES},
-      {true, "No_sites", ActivationScope::NO_SITES},
-      {true, "no_sites", ActivationScope::NO_SITES},
-      {true, "%$ garbage !%", ActivationScope::NO_SITES},
-      {true, kActivationScopeAllSites, ActivationScope::ALL_SITES},
-      {true, kActivationScopeActivationList, ActivationScope::ACTIVATION_LIST}};
+      {true, false, "", ActivationScope::NO_SITES},
+      {true, false, "no_sites", ActivationScope::NO_SITES},
+      {true, false, "allsites", ActivationScope::NO_SITES},
+      {true, false, "enabled", ActivationScope::NO_SITES},
+      {true, false, "%$ garbage !%", ActivationScope::NO_SITES},
+      {true, true, "", ActivationScope::NO_SITES},
+      {true, true, "nosites", ActivationScope::NO_SITES},
+      {true, true, "No_sites", ActivationScope::NO_SITES},
+      {true, true, "no_sites", ActivationScope::NO_SITES},
+      {true, true, "%$ garbage !%", ActivationScope::NO_SITES},
+      {true, true, kActivationScopeAllSites, ActivationScope::ALL_SITES},
+      {false, true, kActivationScopeActivationList,
+       ActivationScope::ACTIVATION_LIST}};
 
   for (const auto& test_case : kTestCases) {
     SCOPED_TRACE(::testing::Message("Enabled = ") << test_case.feature_enabled);
@@ -158,8 +161,19 @@ TEST(SubresourceFilterFeaturesTest, ActivationScope) {
         {{kActivationLevelParameterName, kActivationLevelDisabled},
          {kActivationScopeParameterName, test_case.activation_scope_param}});
 
+    std::map<std::string, std::string> params;
+    base::GetFieldTrialParamsByFeature(kSafeBrowsingSubresourceFilter, &params);
+    Configuration parsed_configuration =
+        Configuration::ParseConfigurationForTesting(&params);
+    EXPECT_EQ(!test_case.valid_config, parsed_configuration.IsInvalid());
+    EXPECT_EQ(
+        !test_case.valid_config,
+        GetEnabledConfigurations()->configs_by_decreasing_priority().empty());
+    if (!test_case.valid_config)
+      continue;
     Configuration actual_configuration;
     ExpectAndRetrieveExactlyOneEnabledConfig(&actual_configuration);
+    EXPECT_EQ(actual_configuration, parsed_configuration);
     EXPECT_EQ(ActivationLevel::DISABLED,
               actual_configuration.activation_options.activation_level);
     EXPECT_EQ(test_case.expected_activation_scope,
@@ -169,39 +183,40 @@ TEST(SubresourceFilterFeaturesTest, ActivationScope) {
 
 TEST(SubresourceFilterFeaturesTest, ActivationLevelAndScope) {
   const struct {
+    bool valid_config;
     bool feature_enabled;
     const char* activation_level_param;
     ActivationLevel expected_activation_level;
     const char* activation_scope_param;
     ActivationScope expected_activation_scope;
   } kTestCases[] = {
-      {false, kActivationLevelDisabled, ActivationLevel::DISABLED,
+      {true, false, kActivationLevelDisabled, ActivationLevel::DISABLED,
        kActivationScopeNoSites, ActivationScope::NO_SITES},
-      {true, kActivationLevelDisabled, ActivationLevel::DISABLED,
+      {true, true, kActivationLevelDisabled, ActivationLevel::DISABLED,
        kActivationScopeNoSites, ActivationScope::NO_SITES},
-      {true, kActivationLevelDisabled, ActivationLevel::DISABLED,
+      {true, true, kActivationLevelDisabled, ActivationLevel::DISABLED,
        kActivationScopeAllSites, ActivationScope::ALL_SITES},
-      {true, kActivationLevelDisabled, ActivationLevel::DISABLED,
+      {false, true, kActivationLevelDisabled, ActivationLevel::DISABLED,
        kActivationScopeActivationList, ActivationScope::ACTIVATION_LIST},
-      {true, kActivationLevelDisabled, ActivationLevel::DISABLED,
+      {true, true, kActivationLevelDisabled, ActivationLevel::DISABLED,
        kActivationScopeAllSites, ActivationScope::ALL_SITES},
-      {true, kActivationLevelDryRun, ActivationLevel::DRYRUN,
+      {true, true, kActivationLevelDryRun, ActivationLevel::DRYRUN,
        kActivationScopeNoSites, ActivationScope::NO_SITES},
-      {true, kActivationLevelDryRun, ActivationLevel::DRYRUN,
+      {true, true, kActivationLevelDryRun, ActivationLevel::DRYRUN,
        kActivationScopeAllSites, ActivationScope::ALL_SITES},
-      {true, kActivationLevelDryRun, ActivationLevel::DRYRUN,
+      {false, true, kActivationLevelDryRun, ActivationLevel::DRYRUN,
        kActivationScopeActivationList, ActivationScope::ACTIVATION_LIST},
-      {true, kActivationLevelDryRun, ActivationLevel::DRYRUN,
+      {true, true, kActivationLevelDryRun, ActivationLevel::DRYRUN,
        kActivationScopeAllSites, ActivationScope::ALL_SITES},
-      {true, kActivationLevelEnabled, ActivationLevel::ENABLED,
+      {true, true, kActivationLevelEnabled, ActivationLevel::ENABLED,
        kActivationScopeNoSites, ActivationScope::NO_SITES},
-      {true, kActivationLevelEnabled, ActivationLevel::ENABLED,
+      {true, true, kActivationLevelEnabled, ActivationLevel::ENABLED,
        kActivationScopeAllSites, ActivationScope::ALL_SITES},
-      {true, kActivationLevelEnabled, ActivationLevel::ENABLED,
+      {false, true, kActivationLevelEnabled, ActivationLevel::ENABLED,
        kActivationScopeActivationList, ActivationScope::ACTIVATION_LIST},
-      {true, kActivationLevelEnabled, ActivationLevel::ENABLED,
+      {true, true, kActivationLevelEnabled, ActivationLevel::ENABLED,
        kActivationScopeAllSites, ActivationScope::ALL_SITES},
-      {false, kActivationLevelEnabled, ActivationLevel::DISABLED,
+      {true, false, kActivationLevelEnabled, ActivationLevel::DISABLED,
        kActivationScopeAllSites, ActivationScope::NO_SITES}};
 
   for (const auto& test_case : kTestCases) {
@@ -217,6 +232,16 @@ TEST(SubresourceFilterFeaturesTest, ActivationLevelAndScope) {
         {{kActivationLevelParameterName, test_case.activation_level_param},
          {kActivationScopeParameterName, test_case.activation_scope_param}});
 
+    std::map<std::string, std::string> params;
+    base::GetFieldTrialParamsByFeature(kSafeBrowsingSubresourceFilter, &params);
+    Configuration parsed_configuration =
+        Configuration::ParseConfigurationForTesting(&params);
+    EXPECT_EQ(!test_case.valid_config, parsed_configuration.IsInvalid());
+    EXPECT_EQ(
+        !test_case.valid_config,
+        GetEnabledConfigurations()->configs_by_decreasing_priority().empty());
+    if (!test_case.valid_config)
+      continue;
     Configuration actual_configuration;
     ExpectAndRetrieveExactlyOneEnabledConfig(&actual_configuration);
     EXPECT_EQ(test_case.expected_activation_level,
@@ -385,11 +410,16 @@ TEST(SubresourceFilterFeaturesTest, SuppressNotifications) {
         {{kSuppressNotificationsParameterName,
           test_case.suppress_notifications_param}});
 
-    Configuration actual_configuration;
-    ExpectAndRetrieveExactlyOneEnabledConfig(&actual_configuration);
+    std::map<std::string, std::string> params;
+    base::GetFieldTrialParamsByFeature(kSafeBrowsingSubresourceFilter, &params);
+    Configuration parsed_configuration =
+        Configuration::ParseConfigurationForTesting(&params);
     EXPECT_EQ(
         test_case.expected_suppress_notifications_value,
-        actual_configuration.activation_options.should_suppress_notifications);
+        parsed_configuration.activation_options.should_suppress_notifications);
+    // Requires whitelist on reload.
+    EXPECT_EQ(test_case.expected_suppress_notifications_value,
+              parsed_configuration.IsInvalid());
   }
 }
 
@@ -420,11 +450,16 @@ TEST(SubresourceFilterFeaturesTest, WhitelistSiteOnReload) {
         {{kWhitelistSiteOnReloadParameterName,
           test_case.whitelist_site_on_reload_param}});
 
-    Configuration actual_configuration;
-    ExpectAndRetrieveExactlyOneEnabledConfig(&actual_configuration);
+    std::map<std::string, std::string> params;
+    base::GetFieldTrialParamsByFeature(kSafeBrowsingSubresourceFilter, &params);
+    Configuration parsed_configuration =
+        Configuration::ParseConfigurationForTesting(&params);
     EXPECT_EQ(test_case.expected_whitelist_site_on_reload_value,
-              actual_configuration.activation_options
+              parsed_configuration.activation_options
                   .should_whitelist_site_on_reload);
+    // Requires suppress notifications.
+    EXPECT_EQ(test_case.expected_whitelist_site_on_reload_value,
+              parsed_configuration.IsInvalid());
   }
 }
 
@@ -678,6 +713,63 @@ TEST(SubresourceFilterFeaturesTest,
           Configuration::MakePresetForPerformanceTestingDryRunOnAllSites()));
   EXPECT_EQ(kTestRulesetFlavor,
             config_list->lexicographically_greatest_ruleset_flavor());
+}
+
+TEST(SubresourceFilterFeaturesTest, ParseAndValidate) {
+  const struct {
+    std::string params;
+    bool valid_config;
+  } kTestCases[] = {
+      {"activation_scope:all_sites/activation_state:enabled", true},
+      {"activation_scope:all_sites/activation_state:dryrun", true},
+      {"activation_scope:all_sites/activation_state:disabled", true},
+
+      {"activation_scope:activation_list/activation_state:enabled", false},
+      {"activation_scope:activation_list/activation_state:dryrun", false},
+      {"activation_scope:activation_list/activation_state:disabled", false},
+      {"activation_scope:activation_list/activation_state:enabled/"
+       "activation_lists:phishing_interstitial",
+       true},
+      {"activation_scope:activation_list/activation_state:enabled/"
+       "activation_lists:subresource_filter",
+       true},
+      {"activation_scope:activation_list/activation_state:enabled/"
+       "activation_lists:subresource_filter,phishing_interstitial",
+       true},
+
+      {"activation_scope:activation_list/activation_state:enabled/"
+       "activation_lists:phishing_interstitial/suppress_notifications:false",
+       true},
+      {"activation_scope:activation_list/activation_state:enabled/"
+       "activation_lists:phishing_interstitial/whitelist_site_on_reload:false",
+       true},
+      {"activation_scope:activation_list/activation_state:enabled/"
+       "activation_lists:phishing_interstitial/suppress_notifications:true",
+       false},
+      {"activation_scope:activation_list/activation_state:enabled/"
+       "activation_lists:phishing_interstitial/whitelist_site_on_reload:true",
+       false},
+      {"activation_scope:activation_list/activation_state:enabled/"
+       "activation_lists:phishing_interstitial/whitelist_site_on_reload:true/"
+       "suppress_notifications:true",
+       true},
+  };
+  for (const auto& test_case : kTestCases) {
+    SCOPED_TRACE(::testing::Message() << test_case.params);
+    testing::GetAndSetActivateConfigurations(nullptr);
+
+    base::StringPairs pairs;
+    EXPECT_TRUE(
+        base::SplitStringIntoKeyValuePairs(test_case.params, ':', '/', &pairs));
+    std::map<std::string, std::string> param_map;
+    for (const auto& it : pairs)
+      param_map[it.first] = it.second;
+    ScopedExperimentalStateToggle scoped_experimental_state(
+        base::FeatureList::OVERRIDE_ENABLE_FEATURE, param_map);
+    EXPECT_EQ(
+        test_case.valid_config,
+        !GetEnabledConfigurations()->configs_by_decreasing_priority().empty());
+  }
 }
 
 }  // namespace subresource_filter

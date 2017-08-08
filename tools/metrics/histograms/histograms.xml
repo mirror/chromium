@@ -77301,6 +77301,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="SubresourceFilter.InvalidConfiguration" enum="BooleanInvalid">
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    Records whether the given set of finch configurations is valid (0) or
+    invalid (1). Recorded once per browsing session.
+  </summary>
+</histogram>
+
 <histogram name="SubresourceFilter.PageLoad.Activation.CPUDuration"
     units="microseconds">
   <owner>csharrison@chromium.org</owner>
