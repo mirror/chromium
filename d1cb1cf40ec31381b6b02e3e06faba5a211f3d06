@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "8a6f38ed_8ff4537d",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-08T02:29:30Z",
+      "side": 1,
+      "message": "You are correct that it gets sent to Java as a signed int. I don\u0027t think it\u0027s a problem to cast back-and-forth, since it\u0027s just used as an opaque identifier in Java, it\u0027s just a question of what we think is cleaner. xiaochengh@ wanted at least the suggestion index to be unsigned so we don\u0027t need to cast to unsigned in C++ code to do comparisons, and then I thought it made sense to use the same for both.\n\nWhat do you think?",
+      "parentUuid": "96fec90d_6d9b1ad8",
+      "revId": "d1cb1cf40ec31381b6b02e3e06faba5a211f3d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b1c7e65_c7990b15",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
         "patchSetId": 4
@@ -79,6 +97,24 @@
       "revId": "d1cb1cf40ec31381b6b02e3e06faba5a211f3d06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeee0ae0_04c53d12",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-08T02:29:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6a6ae1b_e99bed25",
+      "revId": "d1cb1cf40ec31381b6b02e3e06faba5a211f3d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
