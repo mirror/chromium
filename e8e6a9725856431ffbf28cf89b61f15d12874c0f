@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c359423a_073583e1",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-08T17:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0ffc424_7589e5b6",
+      "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "117b7af5_e8ca3b3b",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f27da9a_6148c1b1",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-08T17:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "117b7af5_e8ca3b3b",
+      "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7567d807_c5ebf25e",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-08T17:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "902e3d97_77fe151d",
+      "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e342fab_43529e20",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f09f5a_5e15d1f9",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-08T17:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e342fab_43529e20",
+      "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "625658d5_4faaf5b0",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-08T17:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb4c401a_2ad6af29",
+      "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd82aa7b_b87a617f",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1872aa1b_a7a7b5f1",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-08T17:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd82aa7b_b87a617f",
+      "revId": "e8e6a9725856431ffbf28cf89b61f15d12874c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
