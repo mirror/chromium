@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "13a3f456_a76f2925",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-08T13:07:12Z",
+      "side": 1,
+      "message": "\u003e I realize that value_type is more future-proof \n\nYeah. It\u0027s exactly what I thought.\n\n\u003e but the truth is other people end up encoding in code that this is a UR\n\nAnd I totally agree with this.\n\n\u003e Use GURL\n\nActually it\u0027s value_type is std::pair\u003cint32_t, GURL\u003e. I believe you meant it and I\u0027ll change param\u0027s type to it and name it |id_and_url|. Thanks:)",
+      "parentUuid": "2a2b39d6_29ecd206",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bbc3288_578c2cee",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
         "patchSetId": 4
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9418decd_302e5653",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-08T13:07:12Z",
+      "side": 1,
+      "message": "\u003e Maybe if script on the page programmatically window.close()s one of the popups?\n\nI think it can\u0027t happen. AFAIK we don\u0027t create web contents when it\u0027s blocked(http://crbug.com/38458/). A script on a popup will be executed after it\u0027s been freed from popup blocker(I\u0027ve tested this with a toy example, think this is true). So I can say list items are removed only here. \n\n\u003e But if this is the only way blocked popups can disappear from the list, this is probably fine.\n\nYeah. I\u0027ll levae it as it is. Thanks for your comment :)",
+      "parentUuid": "1fc7a663_3002e1fa",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e3c1f2_8eca3225",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
         "patchSetId": 4
@@ -65,6 +101,24 @@
       "writtenOn": "2017-08-08T00:15:34Z",
       "side": 1,
       "message": "Nit: I would use a ScopedObserver member instead of this manual remove call, it\u0027s safer.\n\nThough this also makes me wonder what destruction orders we can have.  Can the tab helper go away before this model?",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a62b8ff_013d30a0",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-08T13:07:12Z",
+      "side": 1,
+      "message": "\u003e Though this also makes me wonder what destruction orders we can have.  Can the tab helper go away before this model?\n\nI think it might happen. Why I think so are:\n1. ContentSettingBubbleModel observes NOTIFICATION_WEB_CONTENTS_DESTROYED and sets |web_contents_| nullp on that.\n2. In ContentSettingPopupBubbleModel::OnListItemClicked(), we are checing web_contents() is null or not.\n\n\u003e Nit: I would use a ScopedObserver member instead of this manual remove call, it\u0027s safer.\n\nIn this case, ScopedPointer seems to access dangled pointer. WDYT?",
+      "parentUuid": "90e3c1f2_8eca3225",
       "revId": "02c622d518cb6160ff156b03057da889a34d1547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "9de35376_d522b12c",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1659,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-08T13:07:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c2af1355_f66ef1f5",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89015019_422b63c2",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 4
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "8207aa14_a6738753",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-08T13:07:12Z",
+      "side": 1,
+      "message": "That\u0027s true. Removed.",
+      "parentUuid": "89015019_422b63c2",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "117dca34_44c37965",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 4
@@ -119,6 +209,24 @@
       "revId": "02c622d518cb6160ff156b03057da889a34d1547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51013006_5d3d584e",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-08T13:07:12Z",
+      "side": 1,
+      "message": "\u003e Or is the model guaranteed to be torn down before this object?\n\nYep. This object owns the model so outlives it.",
+      "parentUuid": "117dca34_44c37965",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
