@@ -69,6 +69,24 @@
       "revId": "53aec973838fef984fc0e43d42035983428bd614",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024bd6e9_afca9b7e",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-08T17:33:49Z",
+      "side": 1,
+      "message": "Oh ok. Could you add a comment so it\u0027s clear why it\u0027s there.",
+      "parentUuid": "ee9af9ce_0f7d2f45",
+      "revId": "53aec973838fef984fc0e43d42035983428bd614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
