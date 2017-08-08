@@ -43,6 +43,7 @@
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_view.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_view.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
+#include "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h"
 #include "chrome/browser/ui/find_bar/find_bar.h"
 #include "chrome/browser/ui/find_bar/find_bar_controller.h"
 #include "chrome/browser/ui/find_bar/find_tab_helper.h"
@@ -1367,6 +1368,16 @@ NSRect FlipRectInView(NSView* view, NSRect rect) {
 
   // Swap in the contents for the new tab.
   [self swapInTabAtIndex:modelIndex];
+
+  // If ContentFullscreen feature is active and it's currently in fullscreen,
+  // we don't want to focus on WebContentsViewCocoa as it will make us shift
+  // from the main browser window space to the fullscreen window space when
+  // activating the tab (i.e. dragging the tab, selecting the tab).
+  if (FullscreenWithinTabHelper::IsContentFullscreenEnabled() &&
+      FullscreenWithinTabHelper::FromWebContents(newContents) &&
+      FullscreenWithinTabHelper::FromWebContents(newContents)
+          ->is_fullscreen_or_pending())
+    return;
 
   if (newContents)
     newContents->RestoreFocus();
