@@ -36,4 +36,9 @@ const char kTouchCalibration[] = "touch-calibration";
 const char kEdgeTouchFiltering[] = "edge-touch-filtering";
 #endif
 
+// Enable platform event recorder tool
+#if !defined(NDEBUG)
+const char kEventRecorderTool[] = "event-recorder-tool";
+#endif
+
 }  // namespace switches
