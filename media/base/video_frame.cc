@@ -641,6 +641,13 @@ bool VideoFrame::HasTextures() const {
   return !mailbox_holders_[0].mailbox.IsZero();
 }
 
+size_t VideoFrame::NumTextures() const {
+  for (size_t i = 0; i < NumPlanes(format_); ++i)
+    if (mailbox_holders_[i].mailbox.IsZero())
+      return i;
+  return 0;
+}
+
 gfx::ColorSpace VideoFrame::ColorSpace() const {
   if (color_space_ == gfx::ColorSpace()) {
     int videoframe_color_space;
