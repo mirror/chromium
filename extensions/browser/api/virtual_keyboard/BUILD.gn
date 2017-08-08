@@ -6,7 +6,6 @@ import("//extensions/features/features.gni")
 
 assert(enable_extensions,
        "Cannot depend on extensions because enable_extensions=false.")
-assert(is_chromeos, "virtualKeyboard is Kiosk only API.")
 
 source_set("virtual_keyboard") {
   sources = [
