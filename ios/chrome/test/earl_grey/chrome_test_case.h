@@ -10,6 +10,8 @@
 #import "base/ios/block_types.h"
 #import "ios/testing/earl_grey/disabled_test_macros.h"
 
+#define HttpSourceFileDirectory "ios/testing/data/http_server_files/"
+
 // Base class for all Chrome Earl Grey tests.
 @interface ChromeTestCase : XCTestCase
 
