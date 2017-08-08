@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03d323a3_075faf32",
+        "filename": "content/test/data/content-sniffer-test0.html.mock-http-headers",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T01:04:12Z",
+      "side": 1,
+      "message": "All of these content-lengths were bogus, and made requests fail (So a bunch of the existing tests were running into the fixed cases)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "5deb8ba176eb9aa2636bdf39d975b40e7e5e5c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9acccab2_0d9bcd44",
+        "filename": "net/test/embedded_test_server/default_handlers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T01:04:12Z",
+      "side": 1,
+      "message": "Intend to use this in my URLFetcher replacement CL.",
+      "range": {
+        "startLine": 648,
+        "startChar": 30,
+        "endLine": 648,
+        "endChar": 44
+      },
+      "revId": "5deb8ba176eb9aa2636bdf39d975b40e7e5e5c80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
