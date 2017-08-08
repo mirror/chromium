@@ -34,6 +34,24 @@
       "revId": "ea870ad7d8ead8da1e20c7ffd9fb44d891ff90c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20be8fa4_f40732cd",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/wrapper_class_declaration.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-08T19:42:11Z",
+      "side": 1,
+      "message": "It seems part of comment hasn\u0027t been addressed:\n\"For consistency\u0027s sake, please also change wrapper_union_class_declaration.tmpl\"",
+      "parentUuid": "e36bcd24_a4f38bed",
+      "revId": "ea870ad7d8ead8da1e20c7ffd9fb44d891ff90c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
