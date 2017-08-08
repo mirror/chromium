@@ -53,6 +53,11 @@ public class AutocompleteEditText
                 (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
     }
 
+    @VisibleForTesting
+    public AccessibilityManager getAccessibilityManagerForTesting() {
+        return mAccessibilityManager;
+    }
+
     private void ensureModel() {
         if (mModel != null) return;
 
@@ -215,6 +220,7 @@ public class AutocompleteEditText
                 return;
             }
         }
+        if (DEBUG) Log.i(TAG, "sendAccessibilityEventUnchecked");
         super.sendAccessibilityEventUnchecked(event);
     }
 
