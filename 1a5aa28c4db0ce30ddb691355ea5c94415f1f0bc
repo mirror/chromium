@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "e6840f7f_f134a9b2",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-08T13:08:48Z",
+      "side": 1,
+      "message": "Thanks! Either #search or #google sound good to me.",
+      "parentUuid": "d36b404b_23bdf63a",
+      "revId": "1a5aa28c4db0ce30ddb691355ea5c94415f1f0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "def63153_966b8bce",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 6
