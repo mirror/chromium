@@ -599,7 +599,7 @@ Protocol.InspectorBackend._AgentPrototype = class {
           return;
         }
         var args = this._replyArgs[method];
-        resolve(result && args.length ? result[args[0]] : undefined);
+        resolve(result[args[0]]);
       });
     });
   }
