@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "86ce97a2_a329754c",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-08T20:35:14Z",
+      "side": 1,
+      "message": "In tests, ShellBrowserMainParts doesn\u0027t run the main loop. Posting the quit closure here didn\u0027t seem to cause problems.\n\nAnd I still want to let tests call this method without calling ShellDesktopControllerAura::Run() and juggling threads.",
+      "parentUuid": "7da8a365_b1560164",
+      "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2897a6f3_52e56567",
         "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21eefe0c_702c8964",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-08T20:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2897a6f3_52e56567",
+      "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9f317eb4_c4383bdb",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-08T20:35:14Z",
+      "side": 1,
+      "message": "I\u0027ve gotten pushback for that from other reviewers, especially when some variables are initialized in the constructor\u0027s initializer list and others are initialized in the class definition. :-\\",
+      "parentUuid": "0a970fb1_ce4a065c",
+      "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46187b87_88dc21fc",
         "filename": "extensions/shell/browser/shell_desktop_controller_mac.mm",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-08T19:33:36Z",
       "side": 1,
       "message": "Why wouldn\u0027t Mac need to run too?",
+      "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586521fc_bc91ee49",
+        "filename": "extensions/shell/browser/shell_desktop_controller_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-08T20:35:14Z",
+      "side": 1,
+      "message": "I suppose it does. I\u0027m not sure how it ever quits, though.... (we don\u0027t target Mac so we\u0027re just trying to leave this code in a relatively unbroken state).",
+      "parentUuid": "46187b87_88dc21fc",
       "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
