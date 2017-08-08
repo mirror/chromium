@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83ab6204_90d30aad",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-08T22:28:56Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "720281e1_d119ea1a",
+      "revId": "64e25a27ab028610e6097f6458c749a26eea3050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a22363b_322ebb47",
         "filename": "cc/paint/record_paint_canvas.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "64e25a27ab028610e6097f6458c749a26eea3050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "611f5347_d2ab44d6",
+        "filename": "cc/paint/record_paint_canvas.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-08T22:28:56Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "6a22363b_322ebb47",
+      "revId": "64e25a27ab028610e6097f6458c749a26eea3050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
