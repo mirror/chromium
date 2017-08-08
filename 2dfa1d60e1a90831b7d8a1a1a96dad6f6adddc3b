@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb77db47_216c2c13",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-08T12:00:27Z",
+      "side": 1,
+      "message": "I agree that is is a bit confusing. We are trying to add some explanation to each option, e.g. we added \"Some sites may load more slowly on your next visit\" to the cache option because it is a common misconception that chrome becomes faster by deleting cache.\n\nIn this case we are telling users that cookies are responsible to manage their signins.\nThe issue is that there might be some weird websites that use a different way to manage the sign than cookies e.g. by ip based authentication or other fingerprinting methods, certificates or kerberos authentication. This statement shouldn\u0027t be too optimistic about ALL signins being removed.",
+      "parentUuid": "4e41dafc_36919f83",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0073b2b_8b92eb1b",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6242df_6de3387b",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-08T12:00:27Z",
+      "side": 1,
+      "message": "I incorrectly copied this text from Android. \nIt isn\u0027t used yet because Chrome for Desktop doesn\u0027t synchronize google.com signin with chrome signin yet. \nI removed the string again.\n\nYou are right that string is confusing when a user is signed in with multiple accounts. I will think about that. The same phrase was already used in the old UI on Android inside the footer and in the counter description in the new ui.",
+      "parentUuid": "f0073b2b_8b92eb1b",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "14ddc4d1_af399a00",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-08T12:00:27Z",
+      "side": 1,
+      "message": "I replaced \"text\" with \"description\", thanks!",
+      "parentUuid": "78bfcc23_6f0602cf",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fd00333_19c0a316",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83c8786_93880e3b",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-08T12:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fd00333_19c0a316",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "045e5ead_3271b0d2",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-08T12:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3861cbab_ac21240a",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a89a09cd_cda1c02c",
         "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
         "patchSetId": 6
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d60ad046_7e33ac4d",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-08T12:00:27Z",
+      "side": 1,
+      "message": "I moved paper-tabs-selection-bar-color to settings_vars_css and removed it from the other files.\nI added a --tab-height variable with 40px, I\u0027ll see what max thinks about this",
+      "parentUuid": "a89a09cd_cda1c02c",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "392a96d3_41624460",
         "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
         "patchSetId": 6
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-08T01:06:35Z",
       "side": 1,
       "message": "This can wait until later: Please use $i18nPolymer rather than loading the strings using loadTimeData. Example at https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/internet_page/internet_subpage.html?type\u003dcs\u0026q\u003di18nPolymer\u0026l\u003d55\n\nIf you\u0027d rather deal with this bit of it in a later, follow-up CL, that\u0027s ok with me. This should work as-is (there\u0027s just newer/improved ways to use the i18n strings).",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d392b971_06cb7d2c",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-08T12:00:27Z",
+      "side": 1,
+      "message": "Thanks for pointing at this. I didn\u0027t find any use of $i18nPolymer in Javascript code. Can it only be used in html? I don\u0027t know how if it is possible to express this complex condition in a polymer template?",
+      "parentUuid": "392a96d3_41624460",
       "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "7a2f443e_b658ec3e",
+        "filename": "chrome/browser/resources/settings/controls/settings_boolean_control_behavior.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-08T12:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebbc0879_2707c19e",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f76fea4_e8f53b63",
         "filename": "chrome/browser/resources/settings/controls/settings_boolean_control_behavior.js",
         "patchSetId": 6
@@ -152,6 +296,24 @@
       "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ea9772_1ba2a783",
+        "filename": "chrome/browser/resources/settings/controls/settings_boolean_control_behavior.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-08T12:00:27Z",
+      "side": 1,
+      "message": "This is set from the outside, so I don\u0027t think it should be private",
+      "parentUuid": "8f76fea4_e8f53b63",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "23fe6944_4b567d63",
+        "filename": "chrome/browser/resources/settings/controls/settings_boolean_control_behavior.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-08T12:00:27Z",
+      "side": 1,
+      "message": "thanks, I used the same style that is used for the other string properties here but I noticed that they are also defining a default value. I think I should probably add a default value here too.",
+      "parentUuid": "940c5c3a_b51c3960",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4da9690_2aa5d489",
         "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
         "patchSetId": 6
@@ -183,6 +363,24 @@
       "writtenOn": "2017-08-08T01:06:35Z",
       "side": 1,
       "message": "The indentation looks incorrect. Please try running \ngit cl format",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535c26fa_dad6a86e",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-08T12:00:27Z",
+      "side": 1,
+      "message": "I also think that this should be indented by 2 spaces but clang-format changes it to 4 spaces :(",
+      "parentUuid": "b4da9690_2aa5d489",
       "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "0199d0fc_a0e46538",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-08T12:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa648b20_26607d0a",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9612ea36_ea9eaeba",
         "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
         "patchSetId": 6
@@ -220,6 +436,24 @@
       "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e398497d_79e6ed7d",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-08T12:00:27Z",
+      "side": 1,
+      "message": "yes, it was my intention to have a default value, thanks!",
+      "parentUuid": "9612ea36_ea9eaeba",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
