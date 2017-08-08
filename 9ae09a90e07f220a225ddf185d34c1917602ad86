@@ -22,6 +22,30 @@
       "revId": "9ae09a90e07f220a225ddf185d34c1917602ad86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b67e88_b6ab2ade",
+        "filename": "content/browser/payments/payment_app_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-08T15:29:55Z",
+      "side": 1,
+      "message": "Done. I added \"AbortPaymentWithInvalidRegistrationId\" test.",
+      "parentUuid": "6c8bc053_482ed4ad",
+      "range": {
+        "startLine": 241,
+        "startChar": 1,
+        "endLine": 242,
+        "endChar": 31
+      },
+      "revId": "9ae09a90e07f220a225ddf185d34c1917602ad86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
