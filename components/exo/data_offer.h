@@ -11,6 +11,7 @@
 #include "base/containers/flat_set.h"
 #include "base/files/scoped_file.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "ui/base/class_property.h"
 
 namespace ui {
@@ -27,6 +28,8 @@ class DataOffer : public ui::PropertyHandler {
  public:
   DataOffer(DataOfferDelegate* delegate);
   ~DataOffer();
+
+  base::WeakPtr<DataOffer> AsWeakPtr();
 
   // Accepts one of the offered mime types.
   void Accept(const std::string& mime_type);
@@ -48,12 +51,15 @@ class DataOffer : public ui::PropertyHandler {
   // Sets source actions.
   void SetSourceActions(const base::flat_set<DndAction>& source_actions);
 
+  DndAction dnd_action() { return dnd_action_; }
+
  private:
   DataOfferDelegate* const delegate_;
   base::flat_set<std::string> mime_types_;
   base::flat_set<DndAction> source_actions_;
   DndAction dnd_action_;
 
+  base::WeakPtrFactory<DataOffer> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(DataOffer);
 };
 

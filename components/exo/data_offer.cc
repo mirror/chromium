@@ -10,10 +10,15 @@
 
 namespace exo {
 
-DataOffer::DataOffer(DataOfferDelegate* delegate) : delegate_(delegate) {}
+DataOffer::DataOffer(DataOfferDelegate* delegate)
+    : delegate_(delegate), weak_factory_(this) {}
 
 DataOffer::~DataOffer() {
   delegate_->OnDataOfferDestroying(this);
+}
+
+base::WeakPtr<DataOffer> DataOffer::AsWeakPtr() {
+  return weak_factory_.GetWeakPtr();
 }
 
 void DataOffer::Accept(const std::string& mime_type) {
