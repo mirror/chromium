@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "310f07e8_083ed3e7",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSet.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-08T18:31:25Z",
+      "side": 1,
+      "message": "ahn, we don\u0027t right now. But we will when I create the FontFaceSetWorker, because I can use this for common functions.\nI didn\u0027t want to remove it + remove it from the build just to add it again tomorrow.",
+      "parentUuid": "890b155c_37422991",
+      "range": {
+        "startLine": 3,
+        "startChar": 16,
+        "endLine": 3,
+        "endChar": 23
+      },
+      "revId": "8b6b83d4fa1081079b3b7ac5c0b969764966ffa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d0241d6_f8421598",
         "filename": "third_party/WebKit/Source/core/css/FontFaceSet.cpp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "8b6b83d4fa1081079b3b7ac5c0b969764966ffa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0fa6859_001c4e87",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSet.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-08T18:31:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d0241d6_f8421598",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "8b6b83d4fa1081079b3b7ac5c0b969764966ffa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
