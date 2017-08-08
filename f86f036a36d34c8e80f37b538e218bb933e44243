@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "9cf7297d_5ab0e072",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa_input_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1207134
+      },
+      "writtenOn": "2017-08-08T18:03:53Z",
+      "side": 1,
+      "message": "No, I prefer the way with explicit division, it\u0027s easier to read.",
+      "parentUuid": "a0cb37e7_4ffe79c3",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 58
+      },
+      "revId": "f86f036a36d34c8e80f37b538e218bb933e44243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7e2f71c_0582129b",
         "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa_unittest.cc",
         "patchSetId": 1
