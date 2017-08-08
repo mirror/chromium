@@ -565,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "2bbdc3f0_f5316864",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-08T22:51:52Z",
+      "side": 1,
+      "message": "Ken, how do we plumb an InterfaceRequest through legacy IPC? My understanding was that this is not possible.",
+      "parentUuid": "3d121d84_a093f2e9",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "233719e0_3538667d",
         "filename": "content/common/frame.mojom",
         "patchSetId": 33
@@ -722,6 +746,24 @@
       "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6fa0d19_8836acbc",
+        "filename": "content/common/frame_messages.typemap",
+        "patchSetId": 33
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-08T22:51:52Z",
+      "side": 1,
+      "message": "Added a TODO to this effect.",
+      "parentUuid": "83928cb4_bd90e777",
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

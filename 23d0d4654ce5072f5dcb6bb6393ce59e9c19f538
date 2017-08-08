@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "39a3a3a9_91b34fbc",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 1466,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-08T22:51:52Z",
+      "side": 1,
+      "message": "Good idea. While this will be a nullptr for same document navigations, I added a check for non-same document navigations.",
+      "parentUuid": "9f184268_ff4974dd",
+      "revId": "23d0d4654ce5072f5dcb6bb6393ce59e9c19f538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "915a9c83_a25262fe",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 37
@@ -83,6 +101,24 @@
       "writtenOn": "2017-08-03T23:38:14Z",
       "side": 1,
       "message": "Hmm, this is an interesting place for this call. Technically, we could ignore the navigation and we will be lying to the ResourceScheduler. I realize it is just moving code around and it is likely an existing bug, maybe at least add a check for same-document navigations or a TODO to revisit this.",
+      "revId": "23d0d4654ce5072f5dcb6bb6393ce59e9c19f538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8059718d_9833f301",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-08T22:51:52Z",
+      "side": 1,
+      "message": "We do make a same-document check in the implementation of this method, but I agree my current workaround is rather primitive.\n\n@Charlie, can you think of any nice solutions here?",
+      "parentUuid": "915a9c83_a25262fe",
       "revId": "23d0d4654ce5072f5dcb6bb6393ce59e9c19f538",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -106,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "e7ada363_668016db",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 2705,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-08T22:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa83c691_7acfe9dc",
+      "revId": "23d0d4654ce5072f5dcb6bb6393ce59e9c19f538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f715bb14_76ad8467",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 37
@@ -120,6 +174,24 @@
       "revId": "23d0d4654ce5072f5dcb6bb6393ce59e9c19f538",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ccb7cbb_8f53a0a8",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 3798,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-08T22:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f715bb14_76ad8467",
+      "revId": "23d0d4654ce5072f5dcb6bb6393ce59e9c19f538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +215,30 @@
       "revId": "23d0d4654ce5072f5dcb6bb6393ce59e9c19f538",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1288ce3a_b2ff8335",
+        "filename": "content/test/did_commit_provisional_load_interceptor.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-08T22:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc264f99_6fd97d2f",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "23d0d4654ce5072f5dcb6bb6393ce59e9c19f538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
