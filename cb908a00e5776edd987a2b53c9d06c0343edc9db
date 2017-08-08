@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "425c22e5_631faba4",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 21
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-08T09:49:07Z",
+      "side": 1,
+      "message": "Add a comment that if not set, then \"GMT\" is used.",
+      "range": {
+        "startLine": 853,
+        "startChar": 2,
+        "endLine": 853,
+        "endChar": 30
+      },
+      "revId": "cb908a00e5776edd987a2b53c9d06c0343edc9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e74a33_e8350bd5",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 21
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-08T09:49:07Z",
+      "side": 1,
+      "message": "What is interesting about these strings is format of the \u0027name\u0027, i.e.should it be policy name from policy_templates.json, like \u0027DeviceAllowNewUsers\u0027, or name of the proto for the policy, like \u0027AllowNewUsersProto\u0027.\nI\u0027m not sure that there is a mapping between them in runtime other than code in device_policy_decoder_chromeos.cc. But real application of these strings will be removing values from proto, so proto names are more useful...",
+      "range": {
+        "startLine": 854,
+        "startChar": 0,
+        "endLine": 855,
+        "endChar": 66
+      },
+      "revId": "cb908a00e5776edd987a2b53c9d06c0343edc9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ab7902_232eb15b",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 21
+      },
+      "lineNbr": 9937,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-08T09:49:07Z",
+      "side": 1,
+      "message": "nit: |ignored_policy|",
+      "range": {
+        "startLine": 9937,
+        "startChar": 62,
+        "endLine": 9937,
+        "endChar": 78
+      },
+      "revId": "cb908a00e5776edd987a2b53c9d06c0343edc9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
