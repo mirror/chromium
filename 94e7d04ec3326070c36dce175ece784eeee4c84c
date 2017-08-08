@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a56f9900_838b1cfe",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-08T04:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3110b4f6_5bfc7bd4",
+      "revId": "94e7d04ec3326070c36dce175ece784eeee4c84c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7421725_54139265",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "94e7d04ec3326070c36dce175ece784eeee4c84c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774782f9_9a66afb2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-08T04:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7421725_54139265",
+      "revId": "94e7d04ec3326070c36dce175ece784eeee4c84c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cfdf36f9_00aa491a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-08T04:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6b5e038_8e804d88",
+      "revId": "94e7d04ec3326070c36dce175ece784eeee4c84c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bb28adf_6f84d4c8",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "94e7d04ec3326070c36dce175ece784eeee4c84c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02efd79b_d2a8ff1b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-08T04:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bb28adf_6f84d4c8",
+      "revId": "94e7d04ec3326070c36dce175ece784eeee4c84c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0badef2d_088d2e6a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/protocol/InspectorBackend.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-08T04:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82ce1dcb_5999f731",
+      "revId": "94e7d04ec3326070c36dce175ece784eeee4c84c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c008da1_ad126865",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSModel.js",
         "patchSetId": 12
@@ -98,6 +188,30 @@
       "writtenOn": "2017-08-07T19:01:26Z",
       "side": 1,
       "message": "You can use invoke_getBackgroundColors(nodeId) which will return an object with multiple fields (look at other invoke_ calls throughout frontend code).",
+      "range": {
+        "startLine": 368,
+        "startChar": 77,
+        "endLine": 368,
+        "endChar": 96
+      },
+      "revId": "94e7d04ec3326070c36dce175ece784eeee4c84c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1690f4e0_f377d5d1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSModel.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-08T04:43:59Z",
+      "side": 1,
+      "message": "Done, thanks for the pointer.",
+      "parentUuid": "0c008da1_ad126865",
       "range": {
         "startLine": 368,
         "startChar": 77,
