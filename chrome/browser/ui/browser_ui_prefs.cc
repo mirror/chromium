@@ -116,6 +116,9 @@ void RegisterBrowserUserPrefs(user_prefs::PrefRegistrySyncable* registry) {
       prefs::kShowFullscreenToolbar,
       true,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+  registry->RegisterBooleanPref(
+      prefs::kAllowJavascriptAppleEvents, false,
+      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
 #else
   registry->RegisterBooleanPref(prefs::kFullscreenAllowed, true);
 #endif
