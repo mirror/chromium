@@ -39,6 +39,7 @@ class WebNotificationDelegate : public NotificationDelegate {
   void ButtonClick(int button_index) override;
   void ButtonClickWithReply(int button_index,
                             const base::string16& reply) override;
+  bool HasClickedListener() override;
 
  protected:
   ~WebNotificationDelegate() override;
