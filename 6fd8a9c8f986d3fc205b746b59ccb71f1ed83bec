@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "388b3424_74309fce",
+        "filename": "ui/events/gesture_detection/touch_disposition_gesture_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-08T15:04:07Z",
+      "side": 1,
+      "message": "I\u0027m thinking this needs to be called if we reach of popping a sequence event (line 274).\nInstead of having a comparison of ack_state to COMSUMED, we could call state_.OnTouchEventAck(true, IsTouchStartEvent(source)); (This is assuming that if a gesture event is allowed to be released that it is CONSUMED. I am not sure if this is actually the case.)",
+      "range": {
+        "startLine": 377,
+        "startChar": 0,
+        "endLine": 377,
+        "endChar": 29
+      },
+      "revId": "6fd8a9c8f986d3fc205b746b59ccb71f1ed83bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
