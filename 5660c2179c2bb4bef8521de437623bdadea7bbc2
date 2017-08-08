@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "481949f1_fb3ddbc9",
+        "filename": "components/offline_pages/core/client_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-08T23:21:41Z",
+      "side": 1,
+      "message": "nit: I wonder what \"git cl format\" thinks about this. If it leaves this as this, then ok, but looks uncommon...",
+      "revId": "5660c2179c2bb4bef8521de437623bdadea7bbc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6fc7551_8c6e0b18",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-08T23:21:41Z",
+      "side": 1,
+      "message": "It is not clear why non-zero makes debugging easier. Or why \"1\" doesn\u0027t work as well. It\u0027d be clearer if comment specifically says why the choice or that the choice is completely arbitrary.",
+      "revId": "5660c2179c2bb4bef8521de437623bdadea7bbc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98deb2d_d391dbc9",
+        "filename": "components/offline_pages/core/prefetch/prefetch_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-08T23:21:41Z",
+      "side": 1,
+      "message": "This is nice. Could you also move prefetch_item.[h,cc] to \"test_support\" target of components/offline_pages/core/prefetch/BUILD.gn, so we surely avoid building the code for it into production Chrome? It is only used in test files and looks like this is going to stay this way.",
+      "revId": "5660c2179c2bb4bef8521de437623bdadea7bbc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
