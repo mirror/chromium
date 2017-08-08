@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "729d3896_6a98d7a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-08T09:12:09Z",
+      "side": 1,
+      "message": "nit: you can use the SuggestionsConfig.useModern() alias, it\u0027s shorter.",
+      "range": {
+        "startLine": 264,
+        "startChar": 29,
+        "endLine": 264,
+        "endChar": 30
+      },
+      "revId": "f59a2e01341d2ceec5ed8c87f7c28da0a056131d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
