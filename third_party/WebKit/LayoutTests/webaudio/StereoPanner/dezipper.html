@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Test StereoPannerNode Has No Dezippering
+    </title>
+    <script src="../../resources/testharness.js"></script>
+    <script src="../../resources/testharnessreport.js"></script>
+    <script src="../resources/audit-util.js"></script>
+    <script src="../resources/audit.js"></script>
+  </head>
+  <body>
+    <script id="layout-test-code">
+      // Arbitrary sample rate except that it should be a power of two to
+      // eliminate any round-off in computing frame boundaries.
+      let sampleRate = 16384;
+
+      let audit = Audit.createTaskRunner();
+
+      audit.define(
+          {
+            label: 'test mono input',
+            description: 'Test StereoPanner with mono input has no dezippering'
+          },
+          (task, should) => {
+            let context = new OfflineAudioContext(2, sampleRate, sampleRate);
+            let src = new ConstantSourceNode(context, {offset: 1});
+            let p = new StereoPannerNode(context, {pan: -1});
+
+            src.connect(p).connect(context.destination);
+            src.start();
+
+            // Frame at which to change pan value.
+            let panFrame = 256;
+            context.suspend(panFrame / context.sampleRate)
+                .then(() => p.pan.value = 1)
+                .then(() => context.resume());
+
+            context.startRendering()
+                .then(renderedBuffer => {
+                  let c0 = renderedBuffer.getChannelData(0);
+                  let c1 = renderedBuffer.getChannelData(1);
+
+                  // The first part should be full left.
+                  should(
+                      c0.slice(0, panFrame), 'Mono: Left channel, pan = -1: ')
+                      .beConstantValueOf(1);
+                  should(
+                      c1.slice(0, panFrame), 'Mono: Right channel, pan = -1:')
+                      .beConstantValueOf(0);
+
+                  // The second part should be full right, but due to roundoff,
+                  // the left channel won't be exactly zero.  Compare the left
+                  // channel against zero with a threshold instead.
+                  let tail = c0.slice(panFrame);
+                  let zero = new Float32Array(tail.length);
+
+                  should(c0.slice(panFrame), 'Mono: Left channel, pan = 1: ')
+                      .beCloseToArray(zero, {absoluteThreshold: 6.1233e-17});
+                  should(c1.slice(panFrame), 'Mono: Right channel, pan = 1:')
+                      .beConstantValueOf(1);
+                })
+                .then(() => task.done());
+          });
+
+      audit.define(
+          {
+            label: 'test stereo input',
+            description:
+                'Test StereoPanner with stereo input has no dezippering'
+          },
+          (task, should) => {
+            let context = new OfflineAudioContext(2, sampleRate, sampleRate);
+
+            // Create stereo source from two constant source nodes.
+            let s0 = new ConstantSourceNode(context, {offset: 1});
+            let s1 = new ConstantSourceNode(context, {offset: 2});
+            let merger = new ChannelMergerNode(context, {numberOfInputs: 2});
+
+            s0.connect(merger, 0, 0);
+            s1.connect(merger, 0, 1);
+
+            let p = new StereoPannerNode(context, {pan: -1});
+
+            merger.connect(p).connect(context.destination);
+            s0.start();
+            s1.start();
+
+            // Frame at which to change pan value.
+            let panFrame = 256;
+            context.suspend(panFrame / context.sampleRate)
+                .then(() => p.pan.value = 1)
+                .then(() => context.resume());
+
+            context.startRendering()
+                .then(renderedBuffer => {
+                  let c0 = renderedBuffer.getChannelData(0);
+                  let c1 = renderedBuffer.getChannelData(1);
+
+                  // The first part should be full left.
+                  should(
+                      c0.slice(0, panFrame), 'Stereo: Left channel, pan = -1: ')
+                      .beConstantValueOf(3);
+                  should(
+                      c1.slice(0, panFrame), 'Stereo: Right channel, pan = -1:')
+                      .beConstantValueOf(0);
+
+                  // The second part should be full right, but due to roundoff,
+                  // the left channel won't be exactly zero.  Compare the left
+                  // channel against zero with a threshold instead.
+                  let tail = c0.slice(panFrame);
+                  let zero = new Float32Array(tail.length);
+
+                  should(c0.slice(panFrame), 'Stereo: Left channel, pan = 1: ')
+                      .beCloseToArray(zero, {absoluteThreshold: 6.1233e-17});
+                  should(c1.slice(panFrame), 'Stereo: Right channel, pan = 1:')
+                      .beConstantValueOf(3);
+                })
+                .then(() => task.done());
+          });
+
+      audit.run();
+    </script>
+  </body>
+</html>
