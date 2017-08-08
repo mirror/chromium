@@ -15740,6 +15740,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The write size for calls to BaseFile::AppendDataTofile().</summary>
 </histogram>
 
+<histogram name="DragAndDrop.DragContent" enum="DragContent">
+  <owner>jif@chromium.org</owner>
+  <summary>
+    The type of content that the user is dragging into Chrome. Because a drag
+    can contain multiple types of objects, multiple DragContent values may be
+    recorded for a single drag event.
+  </summary>
+</histogram>
+
 <histogram name="Drive.BatchUploadResponseCode" enum="HttpResponseCode">
   <owner>hirono@chromium.org</owner>
   <summary>Respose code of batch upload request.</summary>
