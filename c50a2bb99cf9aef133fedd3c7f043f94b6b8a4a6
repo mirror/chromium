@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d40b5ec4_368cd98a",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-08T14:22:50Z",
+      "side": 1,
+      "message": "double space here",
+      "revId": "c50a2bb99cf9aef133fedd3c7f043f94b6b8a4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af2574f_b13b7979",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-08T14:22:50Z",
+      "side": 1,
+      "message": "needed?",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "c50a2bb99cf9aef133fedd3c7f043f94b6b8a4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

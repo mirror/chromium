@@ -376,6 +376,24 @@
     },
     {
       "key": {
+        "uuid": "764a144d_5b542f8e",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-08T14:22:50Z",
+      "side": 1,
+      "message": "This code validates country codes without libaddressinput, could we use this approach? https://cs.chromium.org/chromium/src/components/autofill/core/browser/autofill_country.cc?rcl\u003dfdaa2ecef3225eac65591065d70247bf12de5eb5\u0026l\u003d59",
+      "parentUuid": "5e2c2076_d693813a",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b5468c3_62ea77e8",
         "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
         "patchSetId": 21
@@ -408,6 +426,24 @@
       "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e64f3b_71be3df9",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-08T14:22:50Z",
+      "side": 1,
+      "message": "Ok yes please remember to come back here and add it :)",
+      "parentUuid": "6b514664_0b138478",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -902,6 +938,24 @@
     },
     {
       "key": {
+        "uuid": "dc941b04_a49b4cf2",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-08T14:22:50Z",
+      "side": 1,
+      "message": "As discussed offline, let\u0027s try to have a class declaration below in private, such as\n\nprivate:\nclass ValidationRequest {\n\n  ...\n};",
+      "parentUuid": "778423ea_ed73e573",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6e2f35b_8428ac8b",
         "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
         "patchSetId": 21
@@ -1122,6 +1176,30 @@
       "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c7c998d_b72d74f1",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-08T14:22:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c940d586_ec1059ff",
+      "range": {
+        "startLine": 110,
+        "startChar": 30,
+        "endLine": 111,
+        "endChar": 34
+      },
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
