@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7073f3f7_39b573eb",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-08T17:15:03Z",
+      "side": 1,
+      "message": "nits: We shouldn\u0027t need this condition if it gets here. If it gets here, then |context_or_layer_bridge_lost| is false. The only reason that it could be false is that it goes into the |if (layer_bridge)| statement at line  1035 which means |layer_bridge| is alive.",
+      "range": {
+        "startLine": 1053,
+        "startChar": 6,
+        "endLine": 1053,
+        "endChar": 23
+      },
+      "revId": "0727e00b70218ac61c2d344dfdae489fdf319b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
