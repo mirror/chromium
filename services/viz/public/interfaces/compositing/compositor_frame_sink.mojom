@@ -11,7 +11,6 @@ import "cc/ipc/frame_sink_id.mojom";
 import "cc/ipc/local_surface_id.mojom";
 import "cc/ipc/surface_id.mojom";
 import "cc/ipc/returned_resource.mojom";
-import "cc/ipc/surface_sequence.mojom";
 import "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
 

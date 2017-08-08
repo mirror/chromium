@@ -56,7 +56,6 @@ mojom("interfaces") {
     "shared_quad_state.mojom",
     "surface_id.mojom",
     "surface_info.mojom",
-    "surface_sequence.mojom",
     "texture_mailbox.mojom",
     "texture_mailbox_releaser.mojom",
     "transferable_resource.mojom",
