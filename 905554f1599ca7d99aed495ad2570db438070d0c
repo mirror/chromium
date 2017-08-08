@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40a357ae_a9b8a232",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-08T23:28:14Z",
+      "side": 1,
+      "message": "Description needs updating.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 68
+      },
+      "revId": "905554f1599ca7d99aed495ad2570db438070d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f126b1e0_dba4c2ec",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-08T23:28:14Z",
+      "side": 1,
+      "message": "nit: Adjust naming to reflect that these are storing/retrieving from user prefs.",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 35
+      },
+      "revId": "905554f1599ca7d99aed495ad2570db438070d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bcb3866_a22d6972",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-08T23:28:14Z",
+      "side": 1,
+      "message": "Should be renamed since this is now set to true even in error cases. Maybe has_attempted_to_set_ble_advertising_interval_?",
+      "range": {
+        "startLine": 173,
+        "startChar": 7,
+        "endLine": 173,
+        "endChar": 40
+      },
+      "revId": "905554f1599ca7d99aed495ad2570db438070d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926cf3c1_5947e780",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-08T23:28:14Z",
+      "side": 1,
+      "message": "weird",
+      "revId": "905554f1599ca7d99aed495ad2570db438070d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
