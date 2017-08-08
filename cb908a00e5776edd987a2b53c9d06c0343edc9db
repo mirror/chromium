@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "6c0cb196_2e009759",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 21
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-08T14:45:51Z",
+      "side": 1,
+      "message": "We can\u0027t find solution how to create proto annotation in chrome.\nBut we can use field names in ChromeDeviceSettingsProto.",
+      "parentUuid": "5fc75423_b9d03bf7",
+      "range": {
+        "startLine": 854,
+        "startChar": 0,
+        "endLine": 855,
+        "endChar": 66
+      },
+      "revId": "cb908a00e5776edd987a2b53c9d06c0343edc9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ab7902_232eb15b",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 21
