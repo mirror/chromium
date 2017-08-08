@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0259f160_54f1c525",
+        "filename": "remoting/host/file_transfer_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-08T16:51:28Z",
+      "side": 1,
+      "message": "This is used by the FileTransferMessageHandler to do file io. I couldn\u0027t think of a better name, any suggestions?",
+      "revId": "d4f95e46bd78553d59fd379a0668ce32e92c359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7957ca85_4857ee56",
+        "filename": "remoting/host/file_transfer_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-08T16:51:28Z",
+      "side": 1,
+      "message": "My idea here is to give the FileTransferMessageHandler a reference to a FileTransferHandler which is owned by the FileTranferManager. However, I am unsure how the FileTransferManager will keep track of multiple Handlers and be able to delete them when either they are done writing a file or when this class gets destroyed. This will be implemented in a future change.",
+      "revId": "d4f95e46bd78553d59fd379a0668ce32e92c359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
