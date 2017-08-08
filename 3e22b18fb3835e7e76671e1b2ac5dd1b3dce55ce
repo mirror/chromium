@@ -164,6 +164,23 @@
       "revId": "3e22b18fb3835e7e76671e1b2ac5dd1b3dce55ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c494581_f0fdce18",
+        "filename": "third_party/WebKit/Source/core/paint/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-08T08:46:13Z",
+      "side": 1,
+      "message": "layout/ng/ uses Chromium-style file names and .extensions. Shouldn\u0027t we do the same here?",
+      "revId": "3e22b18fb3835e7e76671e1b2ac5dd1b3dce55ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
