@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffd3a52e_39f7846b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-08T20:20:37Z",
+      "side": 1,
+      "message": "should we remove the view from the view hierarchy if in the modern path?",
+      "range": {
+        "startLine": 264,
+        "startChar": 58,
+        "endLine": 264,
+        "endChar": 83
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6313d270_60ba0d8a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-08T20:20:37Z",
+      "side": 1,
+      "message": "one too many *s",
+      "range": {
+        "startLine": 187,
+        "startChar": 7,
+        "endLine": 187,
+        "endChar": 8
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bab083a_363c1f2d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-08T20:20:37Z",
+      "side": 1,
+      "message": "can we keep this final and just set the values internally?",
+      "range": {
+        "startLine": 213,
+        "startChar": 13,
+        "endLine": 213,
+        "endChar": 14
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e57935_6030efcf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-08T20:20:37Z",
+      "side": 1,
+      "message": "the previous RTL variable was check the RTL state of the toolbar and not the location bar.  I think they might have been updated so they are always in sync, but it used to be where the location bar would have the rtl state changed based on the text shown and the toolbar reflected the system language.",
+      "range": {
+        "startLine": 948,
+        "startChar": 12,
+        "endLine": 948,
+        "endChar": 28
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

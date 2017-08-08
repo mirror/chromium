@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5f18d52_4920d372",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-08T20:20:37Z",
+      "side": 0,
+      "message": "does this break the snapshot in the old version of chrome?\n\nI wonder why this was conditionalized before.",
+      "range": {
+        "startLine": 1265,
+        "startChar": 24,
+        "endLine": 1265,
+        "endChar": 43
+      },
+      "revId": "73786a799a4795940a639868166aec2b16c3ebad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2a4a92_a71b158d",
+        "filename": "chrome/browser/android/compositor/layer/toolbar_layer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-08T20:20:37Z",
+      "side": 0,
+      "message": "I thought this was needed when we were drawing the snapshot for theme color toolbars where the location bar background was transparent a bit.  I don\u0027t really recall this well enough to know whether it is still needed, but just wanted to clarify we tested on various theme colors in the old UI.",
+      "range": {
+        "startLine": 76,
+        "startChar": 21,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "73786a799a4795940a639868166aec2b16c3ebad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
