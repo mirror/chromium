@@ -436,14 +436,6 @@ static SelectionMarkingRange CalcSelectionRangeAndSetSelectionState(
     InsertLayoutObjectAndAncestorBlocks(&invalidation_set, end_layout_object);
   }
 
-  // TODO(yoichio): If start == end, they should be kStartAndEnd.
-  // If not, start.SelectionState == kStart and vice versa.
-  DCHECK(start_layout_object->GetSelectionState() == SelectionState::kStart ||
-         start_layout_object->GetSelectionState() ==
-             SelectionState::kStartAndEnd);
-  DCHECK(end_layout_object->GetSelectionState() == SelectionState::kEnd ||
-         end_layout_object->GetSelectionState() ==
-             SelectionState::kStartAndEnd);
   return {start_layout_object, start_pos.ComputeEditingOffset(),
           end_layout_object, end_pos.ComputeEditingOffset(),
           std::move(invalidation_set)};
@@ -468,6 +460,16 @@ void LayoutSelection::Commit() {
   DCHECK(!frame_selection_->GetDocument().NeedsLayoutTreeUpdate());
   SetShouldInvalidateSelection(new_range, paint_range_);
   paint_range_ = new_range.ToPaintRange();
+  // TODO(yoichio): If start == end, they should be kStartAndEnd.
+  // If not, start.SelectionState == kStart and vice versa.
+  DCHECK(paint_range_.StartLayoutObject()->GetSelectionState() ==
+             SelectionState::kStart ||
+         paint_range_.StartLayoutObject()->GetSelectionState() ==
+             SelectionState::kStartAndEnd);
+  DCHECK(paint_range_.EndLayoutObject()->GetSelectionState() ==
+             SelectionState::kEnd ||
+         paint_range_.EndLayoutObject()->GetSelectionState() ==
+             SelectionState::kStartAndEnd);
 }
 
 void LayoutSelection::OnDocumentShutdown() {

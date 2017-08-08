@@ -1446,6 +1446,10 @@ float LayoutText::FirstRunY() const {
 void LayoutText::SetSelectionState(SelectionState state) {
   LayoutObject::SetSelectionState(state);
 
+  // TODO(yoichio): Make SetSelectionState non virtual and control
+  // SelectionState propagation in LayoutSelection.
+  if (state == SelectionState::kNone)
+    return;
   // The containing block can be null in case of an orphaned tree.
   LayoutBlock* containing_block = this->ContainingBlock();
   if (containing_block && !containing_block->IsLayoutView())
