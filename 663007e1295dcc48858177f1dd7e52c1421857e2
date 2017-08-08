@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af551009_8ddd9eb2",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-08T18:35:31Z",
+      "side": 1,
+      "message": "Nit: It might make sense to log the render_process_id and render_frame_id here to distinguish multiple calls.",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693aa692_707afe7a",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-08T18:35:31Z",
+      "side": 1,
+      "message": "(1) These strings are only used for the DVLOG below.  Can it be inlined into the DVLOG statement?\n(2) Maybe it could be simplified to just DVLOG IsSameDocument()?  Doesn\u0027t that imply that the hosts are the same?",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d287ca_561f693f",
+        "filename": "content/browser/presentation/presentation_service_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-08T18:35:31Z",
+      "side": 1,
+      "message": "This class a mashup of two different services (one for controlling frames, and one for receiving frames).  Long term, I would like to see if we can split up the Mojo PresentationService into controller and receiver services.\n\nIn lieu of that, documenting the expected call sequence and use of this class from controlling and receiving frames would be helpful, e.g.\n\nController:\n\n  Create()\n  SetClient()\n\n  SetDefaultPresentationUrls()\n  ListenForScreenAvailability()\n  etc.\n\nReceiver:\n\n  Create()\n  SetReceiver()\n  SetPresentationConnection();",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af677b9_1962af95",
+        "filename": "content/browser/presentation/presentation_service_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-08T18:35:31Z",
+      "side": 1,
+      "message": "Prefer to have a private ctor and a static CreateForTest method exposed.",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0554cd60_f066aa8a",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-08T18:35:31Z",
+      "side": 1,
+      "message": "Nice ;)",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9f6adf_c78e8e2a",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-08T18:35:31Z",
+      "side": 1,
+      "message": "What is the difference between DidClose(), OnClose(), and DoClose()?  Can these be simplified to use fewer methods with more specific names?",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49455ab_7e29f26a",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-08T18:35:31Z",
+      "side": 1,
+      "message": "Correct.  The spec actually does not fire an event when the receiver page is being terminated.",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c79c3585_e29f477e",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-08T18:35:31Z",
+      "side": 1,
+      "message": "Note that receiver connections must be TERMINATED before the receiver document is unloaded.  I think this should go in DoTerminate().\n\nhttps://w3c.github.io/presentation-api/#terminating-a-presentation-in-a-receiving-browsing-context\n\nI am not 100% sure the layout or web platform tests cover this.  Hmmm...",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5de833_95e522a7",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-08T18:35:31Z",
+      "side": 1,
+      "message": "Does this need to be implemented, or is it handled by DidChangeState(CLOSED)?\nCan a comment be added here explaining and/or a NOTREACHED()?",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73423f2c_c1f65eac",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-08T18:35:31Z",
+      "side": 1,
+      "message": "Actually this limitation only applies to string messages AFAIK, since those are the only messages that can be passed to Cast devices.",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7e3108_9e21d5a5",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-08T18:35:31Z",
+      "side": 1,
+      "message": "See comment above.",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aeee663_1c605d75",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-08T18:35:31Z",
+      "side": 1,
+      "message": "Where do the reason and message get passed for the other situations where a connection is closed?",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e40f6ad_de49c4ae",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/WebPresentationConnection.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-08T18:35:31Z",
+      "side": 1,
+      "message": "Specifically, \"a PresentationConnection owned by a controlling frame.\"",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e390a3_1390ed4d",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-08T18:35:31Z",
+      "side": 1,
+      "message": "Bikeshed: For APIs that flow browser -\u003e renderer, the convention has been to call them client, so PresentationReceiverClient?\n\nOn the other hand, this is a service that is basically implemented by the Blink PresentationReceiver object, so I see an advantage to having the mojo interface name line up with the Blink object that implements it.\n\nI don\u0027t feel strongly either way.  Feel free to look around and see if there is a convention that others are using.",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
