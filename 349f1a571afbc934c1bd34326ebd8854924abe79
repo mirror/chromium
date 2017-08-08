@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f06293e9_d0621d2f",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 2018,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-08T20:30:40Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "be619122_64b762ba",
+      "revId": "349f1a571afbc934c1bd34326ebd8854924abe79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0c3e337_89d24641",
         "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
         "patchSetId": 6
