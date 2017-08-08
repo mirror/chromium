@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5550549f_6823dd61",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-08T23:43:19Z",
+      "side": 1,
+      "message": "Yes (though now it\u0027s not needed since I\u0027m removing the filtering it was needed for.)",
+      "parentUuid": "89867399_6a9e432d",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 54
+      },
+      "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc7d1072_dd26b114",
         "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-08T22:55:36Z",
       "side": 1,
       "message": "Enterprise printer ids are in a different space than configured printers currently (SHA1 hashes vs UUIDs) so this is never expected to be true.",
+      "range": {
+        "startLine": 172,
+        "startChar": 60,
+        "endLine": 172,
+        "endChar": 72
+      },
+      "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3552c1_1350552e",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-08T23:43:19Z",
+      "side": 1,
+      "message": "I think we could possibly do the right thing by changing from id to uuid here, but rather than try to work it out, I\u0027m just removing this for now.",
+      "parentUuid": "dc7d1072_dd26b114",
       "range": {
         "startLine": 172,
         "startChar": 60,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6eecadc1_bd324bf2",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-08T23:43:19Z",
+      "side": 1,
+      "message": "Not sure, but it\u0027s gone now.",
+      "parentUuid": "8f732941_e4104e6a",
+      "range": {
+        "startLine": 186,
+        "startChar": 4,
+        "endLine": 186,
+        "endChar": 65
+      },
+      "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5c897ef_df815586",
         "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea2ea71_61108f3d",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-08T23:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5c897ef_df815586",
+      "range": {
+        "startLine": 187,
+        "startChar": 1,
+        "endLine": 190,
+        "endChar": 11
+      },
+      "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5f617368_b8df6a59",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-08T23:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91632a0b_5978428b",
+      "range": {
+        "startLine": 242,
+        "startChar": 1,
+        "endLine": 242,
+        "endChar": 7
+      },
+      "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caa5254c_7e4f968f",
         "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "7cab3b70_670d76a9",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-08T23:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caa5254c_7e4f968f",
+      "range": {
+        "startLine": 244,
+        "startChar": 2,
+        "endLine": 244,
+        "endChar": 6
+      },
+      "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "778dbfdf_c4e0dec6",
         "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2017-08-08T22:55:36Z",
       "side": 1,
       "message": "Note that this is what our FakePpdProvider expects which is distinct from what the actual behavior might be.",
+      "range": {
+        "startLine": 296,
+        "startChar": 49,
+        "endLine": 297,
+        "endChar": 22
+      },
+      "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd00bbbe_d3fb5d24",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-08T23:43:19Z",
+      "side": 1,
+      "message": "reworded to try to make clearer.",
+      "parentUuid": "778dbfdf_c4e0dec6",
       "range": {
         "startLine": 296,
         "startChar": 49,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "66b25ac4_38a58c73",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-08T23:43:19Z",
+      "side": 1,
+      "message": "I *think* we\u0027re ok here.\n\nWhen a printer transitions from discovered or automatic to configured, it should do so via an UpdateConfiguredPrinter call using the existing detector-sourced Printer structure.  This means we\u0027ll have an id assigned for that printer, and it should be the same as the id that was assigned by the detector (assuming detector-generated ids are stable, which they should be).\n\nDoes that sound sane?  I could be missing something.",
+      "parentUuid": "708771a2_b10baf18",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 360,
+        "endChar": 78
+      },
+      "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c30d56e7_d01b6de9",
         "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
         "patchSetId": 3
@@ -206,6 +398,30 @@
       "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1711076_e8a37130",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-08T23:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c30d56e7_d01b6de9",
+      "range": {
+        "startLine": 434,
+        "startChar": 0,
+        "endLine": 440,
+        "endChar": 57
+      },
+      "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
