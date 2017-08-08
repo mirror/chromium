@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0dc703af_f981468a",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1207509
+      },
+      "writtenOn": "2017-08-08T21:21:43Z",
+      "side": 1,
+      "message": "But what is going to call this function? The alignment should be determined during the ctor based on command line flags, or perhaps eventually by querying PostProcessors. I don\u0027t see a use case for any other classes changing the alignment.",
+      "parentUuid": "a0c29319_64fc520d",
+      "range": {
+        "startLine": 207,
+        "startChar": 7,
+        "endLine": 207,
+        "endChar": 30
+      },
+      "revId": "f86f036a36d34c8e80f37b538e218bb933e44243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0cb37e7_4ffe79c3",
         "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa_input_impl.cc",
         "patchSetId": 1
