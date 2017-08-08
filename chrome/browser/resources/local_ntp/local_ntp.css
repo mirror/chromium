@@ -14,7 +14,10 @@ body {
 }
 
 #ntp-contents {
+  margin: 0 auto;
   text-align: -webkit-center;
+  /* #ntp-contents width is set dynamically from JS */
+  width: 300px;
 }
 
 .non-google-page #ntp-contents {
@@ -28,20 +31,33 @@ body.hide-fakebox-logo #fakebox {
   visibility: hidden;
 }
 
+#ntp-header {
+  margin: 0 8px;
+  width: calc(100% - 2*8px);
+}
+
 #logo {
-  background-image: url(../../../../ui/webui/resources/images/google_logo.svg);
-  background-repeat: no-repeat;
-  height: 92px;
+  height: 249px;
   margin-bottom: 24px;
-  margin-top: 157px;
-  width: 272px;
+  position: relative;
 }
 
 .non-google-page #logo {
   display: none;
 }
 
-body.alternate-logo #logo {
+#logo-default {
+  background-image: url(../../../../ui/webui/resources/images/google_logo.svg);
+  background-repeat: no-repeat;
+  bottom: 0;
+  height: 92px;
+  left: calc(50% - 272px/2);
+  position: absolute;
+  transition: opacity 130ms;
+  width: 272px;
+}
+
+body.alternate-logo #logo-default {
   -webkit-mask-image:
       url(../../../../ui/webui/resources/images/google_logo.svg);
   -webkit-mask-repeat: no-repeat;
@@ -61,8 +77,6 @@ body.alternate-logo #logo {
   outline: none;
   position: relative;
   transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  /* #fakebox width is set dynamically from JS. */
-  width: 300px;
 }
 
 .non-google-page #fakebox {
