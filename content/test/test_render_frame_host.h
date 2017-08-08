@@ -53,6 +53,9 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
   TestRenderViewHost* GetRenderViewHost() override;
   MockRenderProcessHost* GetProcess() override;
 
+  service_manager::mojom::InterfaceProviderRequest RouteThroughCapabilityFilter(
+      service_manager::mojom::InterfaceProviderRequest request) override;
+
   // RenderFrameHostTester implementation.
   void InitializeRenderFrameIfNeeded() override;
   TestRenderFrameHost* AppendChild(const std::string& frame_name) override;
@@ -95,7 +98,8 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
       const GURL& url,
       const ModificationCallback& callback);
   void SendNavigateWithParams(
-      FrameHostMsg_DidCommitProvisionalLoad_Params* params);
+      FrameHostMsg_DidCommitProvisionalLoad_Params* params,
+      service_manager::mojom::InterfaceProviderRequest request = nullptr);
 
   // With the current navigation logic this method is a no-op.
   // PlzNavigate: this method simulates receiving a BeginNavigation IPC.
@@ -140,6 +144,9 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
 
   // Creates a WebBluetooth Service with a dummy InterfaceRequest.
   WebBluetoothServiceImpl* CreateWebBluetoothServiceForTesting();
+
+  // Exposes the interface registry to be manipulated for testing.
+  service_manager::BinderRegistry& binder_registry() { return *registry_; }
 
  private:
   void SendNavigateWithParameters(int nav_entry_id,

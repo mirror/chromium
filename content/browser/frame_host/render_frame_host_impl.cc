@@ -44,6 +44,7 @@
 #include "content/browser/installedapp/installed_app_provider_impl_default.h"
 #include "content/browser/keyboard_lock/keyboard_lock_service_impl.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
+#include "content/browser/loader/resource_scheduler_filter.h"
 #include "content/browser/media/media_interface_proxy.h"
 #include "content/browser/media/session/media_session_service_impl.h"
 #include "content/browser/payments/payment_app_context_impl.h"
@@ -107,6 +108,7 @@
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_utils.h"
+#include "device/geolocation/geolocation_context.h"
 #include "device/vr/features/features.h"
 #include "media/base/media_switches.h"
 #include "media/media_features.h"
@@ -212,7 +214,7 @@ base::i18n::TextDirection WebTextDirectionToChromeTextDirection(
   }
 }
 
-// Ensure that we reset nav_entry_id_ in OnDidCommitProvisionalLoad if any of
+// Ensure that we reset nav_entry_id_ in DidCommitProvisionalLoad if any of
 // the validations fail and lead to an early return.  Call disable() once we
 // know the commit will be successful.  Resetting nav_entry_id_ avoids acting on
 // any UpdateState or UpdateTitle messages after an ignored commit.
@@ -370,6 +372,23 @@ void CreatePaymentManager(RenderFrameHostImpl* rfh,
       std::move(request));
 }
 
+void NotifyResourceSchedulerOfNavigation(
+    int render_process_id,
+    const FrameHostMsg_DidCommitProvisionalLoad_Params& params) {
+  // TODO(csharrison): This isn't quite right for OOPIF, as we *do* want to
+  // propagate OnNavigate to the client associated with the OOPIF's RVH. This
+  // should not result in show-stopping bugs, just poorer loading performance.
+  if (!ui::PageTransitionIsMainFrame(params.transition) ||
+      params.was_within_same_document) {
+    return;
+  }
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::Bind(&ResourceSchedulerFilter::OnDidCommitMainframeNavigation,
+                 render_process_id, params.render_view_routing_id));
+}
+
 }  // namespace
 
 // static
@@ -485,10 +504,10 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       has_selection_(false),
       is_audible_(false),
       last_navigation_previews_state_(PREVIEWS_UNSPECIFIED),
-      frame_host_interface_broker_binding_(this),
       frame_host_associated_binding_(this),
       waiting_for_init_(renderer_initiated_creation),
       has_focused_editable_element_(false),
+      document_scoped_interface_provider_binding_(this),
       weak_ptr_factory_(this) {
   frame_tree_->AddRenderViewHostRef(render_view_host_);
   GetProcess()->AddRoute(routing_id_, this);
@@ -843,8 +862,6 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
                         OnDidFailProvisionalLoadWithError)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidFailLoadWithError,
                         OnDidFailLoadWithError)
-    IPC_MESSAGE_HANDLER_GENERIC(FrameHostMsg_DidCommitProvisionalLoad,
-                                OnDidCommitProvisionalLoad(msg))
     IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateState, OnUpdateState)
     IPC_MESSAGE_HANDLER(FrameHostMsg_OpenURL, OnOpenURL)
     IPC_MESSAGE_HANDLER(FrameHostMsg_CancelInitialHistoryLoad,
@@ -1443,38 +1460,47 @@ void RenderFrameHostImpl::OnDidFailLoadWithError(
 
 // Called when the renderer navigates.  For every frame loaded, we'll get this
 // notification containing parameters identifying the navigation.
-void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
+void RenderFrameHostImpl::DidCommitProvisionalLoad(
+    std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+        validated_params,
+    service_manager::mojom::InterfaceProviderRequest request) {
+  if (did_commit_provisional_load_callback_for_testing_)
+    did_commit_provisional_load_callback_for_testing_.Run(*validated_params);
+
   ScopedCommitStateResetter commit_state_resetter(this);
   RenderProcessHost* process = GetProcess();
 
-  // Read the parameters out of the IPC message directly to avoid making another
-  // copy when we filter the URLs.
-  base::PickleIterator iter(msg);
-  FrameHostMsg_DidCommitProvisionalLoad_Params validated_params;
-  if (!IPC::ParamTraits<FrameHostMsg_DidCommitProvisionalLoad_Params>::
-      Read(&msg, &iter, &validated_params)) {
-    bad_message::ReceivedBadMessage(
-        process, bad_message::RFH_COMMIT_DESERIALIZATION_FAILED);
-    return;
-  }
-  TRACE_EVENT2("navigation", "RenderFrameHostImpl::OnDidCommitProvisionalLoad",
+  TRACE_EVENT2("navigation", "RenderFrameHostImpl::DidCommitProvisionalLoad",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
-               validated_params.url.possibly_invalid_spec());
+               validated_params->url.possibly_invalid_spec());
 
   // Sanity-check the page transition for frame type.
-  DCHECK_EQ(ui::PageTransitionIsMainFrame(validated_params.transition),
+  DCHECK_EQ(ui::PageTransitionIsMainFrame(validated_params->transition),
             !GetParent());
+
+  // Notify the resource scheduler of the navigation committing.
+  NotifyResourceSchedulerOfNavigation(process->GetID(), *validated_params);
 
   // If we're waiting for a cross-site beforeunload ack from this renderer and
   // we receive a Navigate message from the main frame, then the renderer was
   // navigating already and sent it before hearing the FrameMsg_Stop message.
   // Treat this as an implicit beforeunload ack to allow the pending navigation
   // to continue.
-  if (is_waiting_for_beforeunload_ack_ &&
-      unload_ack_is_for_navigation_ &&
+  if (is_waiting_for_beforeunload_ack_ && unload_ack_is_for_navigation_ &&
       !GetParent()) {
     base::TimeTicks approx_renderer_start_time = send_before_unload_start_time_;
     OnBeforeUnloadACK(true, approx_renderer_start_time, base::TimeTicks::Now());
+  }
+
+  if (request.is_pending()) {
+    // Replace the old binding if present, to ensure that no pending interface
+    // requests originating from the previous document be dispatched.
+    document_scoped_interface_provider_binding_.Close();
+    BindInterfaceProviderForNewDocument(std::move(request));
+  } else if (!validated_params->was_within_same_document) {
+    bad_message::ReceivedBadMessage(
+        process, bad_message::RFH_INTERFACE_PROVIDER_MISSING);
+    return;
   }
 
   // If we're waiting for an unload ack from this renderer and we receive a
@@ -1485,18 +1511,18 @@ void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
   if (IsWaitingForUnloadACK())
     return;
 
-  if (validated_params.report_type ==
+  if (validated_params->report_type ==
       FrameMsg_UILoadMetricsReportType::REPORT_LINK) {
     UMA_HISTOGRAM_CUSTOM_TIMES(
         "Navigation.UI_OnCommitProvisionalLoad.Link",
-        base::TimeTicks::Now() - validated_params.ui_timestamp,
+        base::TimeTicks::Now() - validated_params->ui_timestamp,
         base::TimeDelta::FromMilliseconds(10), base::TimeDelta::FromMinutes(10),
         100);
-  } else if (validated_params.report_type ==
+  } else if (validated_params->report_type ==
              FrameMsg_UILoadMetricsReportType::REPORT_INTENT) {
     UMA_HISTOGRAM_CUSTOM_TIMES(
         "Navigation.UI_OnCommitProvisionalLoad.Intent",
-        base::TimeTicks::Now() - validated_params.ui_timestamp,
+        base::TimeTicks::Now() - validated_params->ui_timestamp,
         base::TimeDelta::FromMilliseconds(10), base::TimeDelta::FromMinutes(10),
         100);
   }
@@ -1504,8 +1530,8 @@ void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
   // Attempts to commit certain off-limits URL should be caught more strictly
   // than our FilterURL checks below.  If a renderer violates this policy, it
   // should be killed.
-  if (!CanCommitURL(validated_params.url)) {
-    VLOG(1) << "Blocked URL " << validated_params.url.spec();
+  if (!CanCommitURL(validated_params->url)) {
+    VLOG(1) << "Blocked URL " << validated_params->url.spec();
     // Kills the process.
     bad_message::ReceivedBadMessage(process,
                                     bad_message::RFH_CAN_COMMIT_URL_BLOCKED);
@@ -1514,7 +1540,7 @@ void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
 
   // Verify that the origin passed from the renderer process is valid and can
   // be allowed to commit in this RenderFrameHost.
-  if (!CanCommitOrigin(validated_params.origin, validated_params.url)) {
+  if (!CanCommitOrigin(validated_params->origin, validated_params->url)) {
     bad_message::ReceivedBadMessage(GetProcess(),
                                     bad_message::RFH_INVALID_ORIGIN_ON_COMMIT);
     return;
@@ -1527,17 +1553,19 @@ void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
   // renderer to load the URL and grant the renderer the privileges to request
   // the URL.  To prevent this attack, we block the renderer from inserting
   // banned URLs into the navigation controller in the first place.
-  process->FilterURL(false, &validated_params.url);
-  process->FilterURL(true, &validated_params.referrer.url);
-  for (std::vector<GURL>::iterator it(validated_params.redirects.begin());
-       it != validated_params.redirects.end(); ++it) {
+  // TODO(https://crbug.com/729021): Make DCPL take Params by const& once
+  // these filtering calls no longer modify the URL in place.
+  process->FilterURL(false, &validated_params->url);
+  process->FilterURL(true, &validated_params->referrer.url);
+  for (std::vector<GURL>::iterator it(validated_params->redirects.begin());
+       it != validated_params->redirects.end(); ++it) {
     process->FilterURL(false, &(*it));
   }
-  process->FilterURL(true, &validated_params.searchable_form_url);
+  process->FilterURL(true, &validated_params->searchable_form_url);
 
   // Without this check, the renderer can trick the browser into using
   // filenames it can't access in a future session restore.
-  if (!CanAccessFilesOfPageState(validated_params.page_state)) {
+  if (!CanAccessFilesOfPageState(validated_params->page_state)) {
     bad_message::ReceivedBadMessage(
         GetProcess(), bad_message::RFH_CAN_ACCESS_FILES_OF_PAGE_STATE);
     return;
@@ -1558,37 +1586,37 @@ void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
 
   // Find the appropriate NavigationHandle for this navigation.
   std::unique_ptr<NavigationHandleImpl> navigation_handle =
-      TakeNavigationHandleForCommit(validated_params);
+      TakeNavigationHandleForCommit(*validated_params);
   DCHECK(navigation_handle);
 
   // Update the site url if the navigation was successful and the page is not an
   // interstitial.
-  if (validated_params.url_is_unreachable ||
+  if (validated_params->url_is_unreachable ||
       delegate_->GetAsInterstitialPage()) {
     SetLastCommittedSiteUrl(GURL());
   } else {
-    SetLastCommittedSiteUrl(validated_params.url);
+    SetLastCommittedSiteUrl(validated_params->url);
   }
 
   // PlzNavigate sends searchable form data in the BeginNavigation message
   // while non-PlzNavigate sends it in the DidCommitProvisionalLoad message.
   // Update |navigation_handle| if necessary.
   if (!IsBrowserSideNavigationEnabled() &&
-      !validated_params.searchable_form_url.is_empty()) {
+      !validated_params->searchable_form_url.is_empty()) {
     navigation_handle->set_searchable_form_url(
-        validated_params.searchable_form_url);
+        validated_params->searchable_form_url);
     navigation_handle->set_searchable_form_encoding(
-        validated_params.searchable_form_encoding);
+        validated_params->searchable_form_encoding);
 
     // Reset them so that they are consistent in both the PlzNavigate and
     // non-PlzNavigate case. Users should use those values from
     // NavigationHandle.
-    validated_params.searchable_form_url = GURL();
-    validated_params.searchable_form_encoding = std::string();
+    validated_params->searchable_form_url = GURL();
+    validated_params->searchable_form_encoding = std::string();
   }
 
   accessibility_reset_count_ = 0;
-  frame_tree_node()->navigator()->DidNavigate(this, validated_params,
+  frame_tree_node()->navigator()->DidNavigate(this, *validated_params,
                                               std::move(navigation_handle));
 
   // Since we didn't early return, it's safe to keep the commit state.
@@ -1602,9 +1630,9 @@ void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
   // situation) then we clear it after a while anyway.
   // See https://crbug.com/497588.
   if (frame_tree_node_->IsMainFrame() && GetView() &&
-      !validated_params.was_within_same_document) {
+      !validated_params->was_within_same_document) {
     RenderWidgetHostImpl::From(GetView()->GetRenderWidgetHost())
-        ->StartNewContentRenderingTimeout(validated_params.content_source_id);
+        ->StartNewContentRenderingTimeout(validated_params->content_source_id);
   }
 }
 
@@ -1708,12 +1736,12 @@ void RenderFrameHostImpl::OnBeforeUnloadACK(
                          "FrameTreeNode id",
                          frame_tree_node_->frame_tree_node_id());
   // If this renderer navigated while the beforeunload request was in flight, we
-  // may have cleared this state in OnDidCommitProvisionalLoad, in which case we
+  // may have cleared this state in DidCommitProvisionalLoad, in which case we
   // can ignore this message.
   // However renderer might also be swapped out but we still want to proceed
   // with navigation, otherwise it would block future navigations. This can
   // happen when pending cross-site navigation is canceled by a second one just
-  // before OnDidCommitProvisionalLoad while current RVH is waiting for commit
+  // before DidCommitProvisionalLoad while current RVH is waiting for commit
   // but second navigation is started from the beginning.
   if (!is_waiting_for_beforeunload_ack_) {
     return;
@@ -2837,6 +2865,31 @@ void RenderFrameHostImpl::CreateNewWindow(
       main_frame_route_id, main_frame_widget_route_id, cloned_namespace->id());
 }
 
+void RenderFrameHostImpl::BindInterfaceProviderForInitialEmptyDocument(
+    service_manager::mojom::InterfaceProviderRequest request) {
+  BindInterfaceProviderForNewDocument(std::move(request));
+}
+
+void RenderFrameHostImpl::BindInterfaceProviderForNewDocument(
+    service_manager::mojom::InterfaceProviderRequest request) {
+  document_scoped_interface_provider_binding_.Bind(
+      RouteThroughCapabilityFilter(std::move(request)));
+}
+
+service_manager::mojom::InterfaceProviderRequest
+RenderFrameHostImpl::RouteThroughCapabilityFilter(
+    service_manager::mojom::InterfaceProviderRequest request) {
+  service_manager::mojom::InterfaceProviderPtr filtered_provider;
+  auto filtered_request = mojo::MakeRequest(&filtered_provider);
+  service_manager::Connector* connector =
+      BrowserContext::GetConnectorFor(GetProcess()->GetBrowserContext());
+  DCHECK(connector);
+  connector->FilterInterfaces(mojom::kNavigation_FrameSpec,
+                              GetProcess()->GetChildIdentity(),
+                              std::move(request), std::move(filtered_provider));
+  return filtered_request;
+}
+
 void RenderFrameHostImpl::RunCreateWindowCompleteCallback(
     CreateNewWindowCallback callback,
     mojom::CreateNewWindowReplyPtr reply,
@@ -2853,28 +2906,27 @@ void RenderFrameHostImpl::RunCreateWindowCompleteCallback(
 }
 
 void RenderFrameHostImpl::RegisterMojoInterfaces() {
+  device::GeolocationContext* geolocation_context =
+      delegate_ ? delegate_->GetGeolocationContext() : NULL;
+
 #if !defined(OS_ANDROID)
   // The default (no-op) implementation of InstalledAppProvider. On Android, the
   // real implementation is provided in Java.
   registry_->AddInterface(base::Bind(&InstalledAppProviderImplDefault::Create));
 #endif  // !defined(OS_ANDROID)
 
-  if (delegate_) {
-    device::GeolocationContext* geolocation_context =
-        delegate_->GetGeolocationContext();
-    PermissionManager* permission_manager =
-        GetProcess()->GetBrowserContext()->GetPermissionManager();
-    if (geolocation_context && permission_manager) {
-      geolocation_service_.reset(new GeolocationServiceImpl(
-          geolocation_context, permission_manager, this));
-      // NOTE: Both the |interface_registry_| and |geolocation_service_| are
-      // owned by |this|, so their destruction will be triggered together.
-      // |interface_registry_| is declared after |geolocation_service_|, so it
-      // will be destroyed prior to |geolocation_service_|.
-      registry_->AddInterface(
-          base::Bind(&GeolocationServiceImpl::Bind,
-                     base::Unretained(geolocation_service_.get())));
-    }
+  if (geolocation_context) {
+    // TODO(creis): Bind process ID here so that GeolocationImpl
+    // can perform permissions checks once site isolation is complete.
+    // crbug.com/426384
+    // NOTE: At shutdown, there is no guaranteed ordering between destruction of
+    // this object and destruction of any GeolocationsImpls created via
+    // the below service registry, the reason being that the destruction of the
+    // latter is triggered by receiving a message that the pipe was closed from
+    // the renderer side. Hence, supply the reference to this object as a weak
+    // pointer.
+    registry_->AddInterface(base::Bind(&device::GeolocationContext::Bind,
+                                       base::Unretained(geolocation_context)));
   }
 
   registry_->AddInterface<device::mojom::WakeLock>(base::Bind(
@@ -2995,9 +3047,6 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   registry_->AddInterface(
       base::Bind(&ForwardRequest<device::mojom::VibrationManager>,
                  device::mojom::kServiceName));
-
-  registry_->AddInterface(
-      base::Bind(&media::WatchTimeRecorder::CreateWatchTimeRecorderProvider));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {
@@ -3005,7 +3054,7 @@ void RenderFrameHostImpl::ResetWaitingState() {
 
   // Whenever we reset the RFH state, we should not be waiting for beforeunload
   // or close acks.  We clear them here to be safe, since they can cause
-  // navigations to be ignored in OnDidCommitProvisionalLoad.
+  // navigations to be ignored in DidCommitProvisionalLoad.
   if (is_waiting_for_beforeunload_ack_) {
     is_waiting_for_beforeunload_ack_ = false;
     if (beforeunload_timeout_)
@@ -3371,11 +3420,7 @@ void RenderFrameHostImpl::SetUpMojoIfNeeded() {
   RegisterMojoInterfaces();
   mojom::FrameFactoryPtr frame_factory;
   BindInterface(GetProcess(), &frame_factory);
-
-  mojom::FrameHostInterfaceBrokerPtr broker_proxy;
-  frame_host_interface_broker_binding_.Bind(mojo::MakeRequest(&broker_proxy));
-  frame_factory->CreateFrame(routing_id_, MakeRequest(&frame_),
-                             std::move(broker_proxy));
+  frame_factory->CreateFrame(routing_id_, MakeRequest(&frame_));
 
   service_manager::mojom::InterfaceProviderPtr remote_interfaces;
   frame_->GetInterfaceProvider(mojo::MakeRequest(&remote_interfaces));
@@ -3393,17 +3438,14 @@ void RenderFrameHostImpl::InvalidateMojoConnection() {
   registry_.reset();
 
   frame_.reset();
-  frame_host_interface_broker_binding_.Close();
   frame_bindings_control_.reset();
+  frame_host_associated_binding_.Close();
+  document_scoped_interface_provider_binding_.Close();
 
   // Disconnect with ImageDownloader Mojo service in RenderFrame.
   mojo_image_downloader_.reset();
 
   frame_resource_coordinator_.reset();
-
-  // The geolocation service may attempt to cancel permission requests so it
-  // must be reset before the routing_id mapping is removed.
-  geolocation_service_.reset();
 }
 
 bool RenderFrameHostImpl::IsFocused() {
@@ -3698,17 +3740,6 @@ void RenderFrameHostImpl::FilesSelectedInChooser(
 
 bool RenderFrameHostImpl::HasSelection() {
   return has_selection_;
-}
-
-void RenderFrameHostImpl::GetInterfaceProvider(
-    service_manager::mojom::InterfaceProviderRequest interfaces) {
-  service_manager::Identity child_identity = GetProcess()->GetChildIdentity();
-  service_manager::Connector* connector =
-      BrowserContext::GetConnectorFor(GetProcess()->GetBrowserContext());
-  service_manager::mojom::InterfaceProviderPtr provider;
-  interface_provider_bindings_.AddBinding(this, mojo::MakeRequest(&provider));
-  connector->FilterInterfaces(mojom::kNavigation_FrameSpec, child_identity,
-                              std::move(interfaces), std::move(provider));
 }
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
@@ -4034,6 +4065,10 @@ void RenderFrameHostImpl::BindNFCRequest(device::mojom::NFCRequest request) {
 void RenderFrameHostImpl::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
+  // NOTE: This method services requests on
+  // |document_scoped_interface_provider_binding_|. It is therefore safe to
+  // assume that every incoming interface request is coming from the currently
+  // committed navigation's document in the renderer.
   if (!registry_ ||
       !registry_->TryBindInterface(interface_name, &interface_pipe)) {
     delegate_->OnInterfaceRequest(this, interface_name, &interface_pipe);
