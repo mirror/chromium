@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f2bd52c8_c7cf2d53",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-08T22:46:30Z",
+      "side": 1,
+      "message": "Yes, content_browsertests don\u0027t appear to actually load full error pages, but rather leave the contents blank. When I tried the test below from content/, is_error() was false, and the location.href of the committed document was \"http://invalid.foo\" instead of chrome-error://chromewebdata/.  The url_is_unreachable in DidCommit was false (despite the correct 404 status code); I didn\u0027t dig much further into why, but maybe because of https://cs.chromium.org/chromium/src/content/renderer/render_frame_impl.cc?l\u003d2515\u0026rcl\u003d10820afc6a5b6462e5382ee518c74dcf763669be and/or https://cs.chromium.org/chromium/src/chrome/renderer/net/net_error_helper.cc?l\u003d226\u0026rcl\u003d10820afc6a5b6462e5382ee518c74dcf763669be being in chrome/.",
+      "parentUuid": "9ca2c25d_7208f0fd",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5c48f83_20c37307",
         "filename": "chrome/browser/chrome_navigation_browsertest.cc",
         "patchSetId": 11
@@ -65,6 +83,30 @@
       "writtenOn": "2017-08-07T21:59:21Z",
       "side": 1,
       "message": "Do we need to explicitly wrap these in domAutomationController.send() calls? Most content/ tests don\u0027t, so I wonder if it is just syntax sugar we have in content/ that helps eliminate it.",
+      "range": {
+        "startLine": 482,
+        "startChar": 19,
+        "endLine": 482,
+        "endChar": 47
+      },
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3a825d_5735d675",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-08T22:46:30Z",
+      "side": 1,
+      "message": "I thought ExecuteScript doesn\u0027t require this, but ExecuteScriptAndExtract* do: https://cs.chromium.org/chromium/src/content/public/test/browser_test_utils.h?l\u003d245\u0026rcl\u003df552ae48cd2725ebcb2b5811e74699e376b32bab\nAFAICT the tests in content/ that extract return values also use the domAutomationController.send right now; if there\u0027s a way to get away without it, I\u0027d like to know. :)  I think that\u0027s something that Nick is simplifying in his ExecuteScript refactor though?",
+      "parentUuid": "b5c48f83_20c37307",
       "range": {
         "startLine": 482,
         "startChar": 19,
@@ -112,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "b0190786_b0fba8f4",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-08T22:46:30Z",
+      "side": 1,
+      "message": "Yes, that\u0027s a fair point.  If the error page doesn\u0027t load, we won\u0027t get PAGE_TYPE_ERROR for the last committed entry\u0027s PageType, as well as last_navigation_succeeded(), but I agree it\u0027s worth also checking that the error page text actually showed up for this test.  One problem with checking it is that the text appears to be loaded asynchronously by scripts running on the error page after DidFinishLoad.  I was hesitant to add a polling check for it, but did it now, as I didn\u0027t see a better way.",
+      "parentUuid": "1477ba8f_27651ae5",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d3141ce_e599c4d3",
         "filename": "chrome/test/data/empty_with_404.html.mock-http-headers",
         "patchSetId": 11
@@ -126,6 +186,24 @@
       "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96940dd1_95c0b71d",
+        "filename": "chrome/test/data/empty_with_404.html.mock-http-headers",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-08T22:46:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d3141ce_e599c4d3",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -199,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "ad3df566_99ed55f0",
+        "filename": "content/browser/child_process_security_policy_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-08T22:46:30Z",
+      "side": 1,
+      "message": "I think today the committed URL (params.url in DidCommit) is the URL of the page that failed to load, not kUnreachableWebDataURL, so that should be fine.  This check will only matter if someone explicitly tries to navigate to kUnreachableWebDataURL, like in one of my tests.  I think params.base_url, as well as one of the redirect entries has kUnreachableWebDataURL though, and some places check that, e.g. [1].  Interestingly, the URL we pass to DidStartProvisionalLoad and DidFinishLoad are indeed kUnreachableWebDataURL when we are loading the error page.  It\u0027s a mess :/, and we will probably need to revisit this if we want to make error pages commit with the new error scheme, rather than with the URL that failed to load. \n\n[1] https://cs.chromium.org/chromium/src/content/browser/frame_host/navigation_handle_impl.cc?l\u003d787\u0026rcl\u003dafc7dd011216d97d717336c698d0bac4b6802a15",
+      "parentUuid": "dbc763de_ace91093",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecefeb96_bb6595e0",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 11
@@ -234,6 +330,24 @@
     },
     {
       "key": {
+        "uuid": "ae08cc93_3dcd9b2c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2289,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-08T22:46:30Z",
+      "side": 1,
+      "message": "I considered this - I think in the common case though, this is probably not a sign of an exploited renderer, but rather someone typing in \"location\u003d\u0027chrome-error://chromewebdata\u0027\" in DevTools, after finding out that this is what \"location.href\" returns on an error page.  I didn\u0027t think this was worth killing the process for, but if you feel it\u0027s worth it, I can add it.",
+      "parentUuid": "49682e23_2591fdf7",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7632ab6e_69ae2c9e",
         "filename": "content/common/url_schemes.cc",
         "patchSetId": 11
@@ -263,6 +377,24 @@
       "side": 1,
       "message": "That\u0027s a good question. I wonder what our current behavior is for `frame-src \u0027none\u0027` when committing the existing error page? It\u0027s probably not correct. :) I\u0027m a little wary of adding another scheme to this list, as I think it\u0027s already a bit less restrictive than it should be.\n\nRather than poke at it in this patch, I\u0027d suggest adding a `TODO(mkwst)`, and I\u0027ll try to put together reasonable behavior.",
       "parentUuid": "7632ab6e_69ae2c9e",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ff8d9c_ace3d212",
+        "filename": "content/common/url_schemes.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-08T22:46:30Z",
+      "side": 1,
+      "message": "frame-src: \u0027none\u0027 makes an error page in a subframe not load without PlzNavigate, but it appears to load with PlzNavigate, whether or not chrome-error:// is included in csp_bypassing_schemes.  Though with PlzNav, the error page contents is \"Requests to the server have been blocked by an extension,\" which is probably not right. :/\n  \nI followed Mike\u0027s suggestion and added a TODO to deal with this in a followup.",
+      "parentUuid": "e096314f_a0dc27d3",
       "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -318,6 +450,24 @@
       "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ee2be5_0f65409d",
+        "filename": "content/public/common/url_constants.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-08T22:46:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42172992_179f95d7",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
