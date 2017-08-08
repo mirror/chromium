@@ -120,8 +120,18 @@ class PasswordAutofillManagerTest : public testing::Test {
         security_state::kHttpFormWarningFeature);
   }
 
-  void SetManualFallbacksForFillingFeatureEnabled() {
-    scoped_feature_list_.InitAndEnableFeature(
+  void SetManualFallbacksForFilling(bool enabled) {
+    if (enabled) {
+      scoped_feature_list_.InitAndEnableFeature(
+          password_manager::features::kEnableManualFallbacksFilling);
+    } else {
+      scoped_feature_list_.InitAndDisableFeature(
+          password_manager::features::kEnableManualFallbacksFilling);
+    }
+  }
+
+  static bool IsManualFallbackForFillingEnabled() {
+    return base::FeatureList::IsEnabled(
         password_manager::features::kEnableManualFallbacksFilling);
   }
 
@@ -210,16 +220,20 @@ TEST_F(PasswordAutofillManagerTest, ExternalDelegatePasswordSuggestions) {
     EXPECT_CALL(*client->mock_driver(),
                 FillSuggestion(test_username_, test_password_));
 
-    // The enums must be cast to ints to prevent compile errors on linux_rel.
-    auto suggestion_ids_matcher =
-        is_suggestion_on_password_field
-            ? SuggestionVectorIdsAre(
-                  testing::ElementsAre(autofill::POPUP_ITEM_ID_TITLE,
-                                       autofill::POPUP_ITEM_ID_PASSWORD_ENTRY))
-            : SuggestionVectorIdsAre(
-                  testing::ElementsAre(autofill::POPUP_ITEM_ID_USERNAME_ENTRY));
-    EXPECT_CALL(*autofill_client,
-                ShowAutofillPopup(_, _, suggestion_ids_matcher, _));
+    std::vector<autofill::PopupItemId> ids = {
+        autofill::POPUP_ITEM_ID_USERNAME_ENTRY};
+    if (is_suggestion_on_password_field) {
+      ids = {autofill::POPUP_ITEM_ID_TITLE,
+             autofill::POPUP_ITEM_ID_PASSWORD_ENTRY};
+      if (IsManualFallbackForFillingEnabled()) {
+        ids.push_back(autofill::POPUP_ITEM_ID_SEPARATOR);
+        ids.push_back(autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY);
+      }
+    }
+    EXPECT_CALL(
+        *autofill_client,
+        ShowAutofillPopup(
+            _, _, SuggestionVectorIdsAre(testing::ElementsAreArray(ids)), _));
 
     int show_suggestion_options =
         is_suggestion_on_password_field ? autofill::IS_PASSWORD_FIELD : 0;
@@ -380,13 +394,18 @@ TEST_F(PasswordAutofillManagerTest, FillSuggestionPasswordField) {
   // field is a password field.
   base::string16 title = l10n_util::GetStringUTF16(
       IDS_AUTOFILL_PASSWORD_FIELD_SUGGESTIONS_TITLE);
-  EXPECT_CALL(*autofill_client,
-              ShowAutofillPopup(
-                  element_bounds, _,
-                  SuggestionVectorValuesAre(testing::UnorderedElementsAre(
-                      title,
-                      test_username_)),
-                  _));
+  std::vector<base::string16> elements = {title, test_username_};
+  if (IsManualFallbackForFillingEnabled()) {
+    elements = {
+        title, test_username_, base::string16(),
+        l10n_util::GetStringUTF16(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK)};
+  }
+
+  EXPECT_CALL(
+      *autofill_client,
+      ShowAutofillPopup(
+          element_bounds, _,
+          SuggestionVectorValuesAre(testing::ElementsAreArray(elements)), _));
   password_autofill_manager_->OnShowPasswordSuggestions(
       dummy_key, base::i18n::RIGHT_TO_LEFT, test_username_,
       autofill::IS_PASSWORD_FIELD, element_bounds);
@@ -673,12 +692,20 @@ TEST_F(PasswordAutofillManagerTest, NonSecurePasswordFieldHttpWarningMessage) {
   base::string16 title =
       l10n_util::GetStringUTF16(IDS_AUTOFILL_PASSWORD_FIELD_SUGGESTIONS_TITLE);
 
+  base::string16 show_all_saved_row_text =
+      l10n_util::GetStringUTF16(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK);
+  std::vector<base::string16> elements = {title, test_username_};
+  if (IsManualFallbackForFillingEnabled()) {
+    elements.push_back(base::string16());
+    elements.push_back(show_all_saved_row_text);
+  }
+
   // Http warning message won't show with switch flag off.
-  EXPECT_CALL(*autofill_client,
-              ShowAutofillPopup(element_bounds, _,
-                                SuggestionVectorValuesAre(testing::ElementsAre(
-                                    title, test_username_)),
-                                _));
+  EXPECT_CALL(
+      *autofill_client,
+      ShowAutofillPopup(
+          element_bounds, _,
+          SuggestionVectorValuesAre(testing::ElementsAreArray(elements)), _));
   password_autofill_manager_->OnShowPasswordSuggestions(
       dummy_key, base::i18n::RIGHT_TO_LEFT, test_username_,
       autofill::IS_PASSWORD_FIELD, element_bounds);
@@ -688,15 +715,24 @@ TEST_F(PasswordAutofillManagerTest, NonSecurePasswordFieldHttpWarningMessage) {
   // Http warning message shows for non-secure context and switch flag on, so
   // there are 3 suggestions (+ 1 separator on desktop) in total, and the
   // message comes first among suggestions.
-  auto elements = testing::ElementsAre(warning_message,
+  elements = {
+    warning_message,
 #if !defined(OS_ANDROID)
-                                       base::string16(),
+    base::string16(),
 #endif
-                                       title, test_username_);
+    title,
+    test_username_
+  };
+  if (IsManualFallbackForFillingEnabled()) {
+    elements.push_back(base::string16());
+    elements.push_back(show_all_saved_row_text);
+  }
 
-  EXPECT_CALL(*autofill_client,
-              ShowAutofillPopup(element_bounds, _,
-                                SuggestionVectorValuesAre(elements), _));
+  EXPECT_CALL(
+      *autofill_client,
+      ShowAutofillPopup(
+          element_bounds, _,
+          SuggestionVectorValuesAre(testing::ElementsAreArray(elements)), _));
   password_autofill_manager_->OnShowPasswordSuggestions(
       dummy_key, base::i18n::RIGHT_TO_LEFT, test_username_,
       autofill::IS_PASSWORD_FIELD, element_bounds);
@@ -789,12 +825,18 @@ TEST_F(PasswordAutofillManagerTest, SecurePasswordFieldHttpWarningMessage) {
   base::string16 title =
       l10n_util::GetStringUTF16(IDS_AUTOFILL_PASSWORD_FIELD_SUGGESTIONS_TITLE);
 
+  std::vector<base::string16> elements = {title, test_username_};
+  if (IsManualFallbackForFillingEnabled()) {
+    elements = {
+        title, test_username_, base::string16(),
+        l10n_util::GetStringUTF16(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK)};
+  }
   // Http warning message won't show with switch flag off.
-  EXPECT_CALL(*autofill_client,
-              ShowAutofillPopup(element_bounds, _,
-                                SuggestionVectorValuesAre(testing::ElementsAre(
-                                    title, test_username_)),
-                                _));
+  EXPECT_CALL(
+      *autofill_client,
+      ShowAutofillPopup(
+          element_bounds, _,
+          SuggestionVectorValuesAre(testing::ElementsAreArray(elements)), _));
   password_autofill_manager_->OnShowPasswordSuggestions(
       dummy_key, base::i18n::RIGHT_TO_LEFT, test_username_,
       autofill::IS_PASSWORD_FIELD, element_bounds);
@@ -803,11 +845,11 @@ TEST_F(PasswordAutofillManagerTest, SecurePasswordFieldHttpWarningMessage) {
 
   // Http warning message won't show for secure context, even with switch flag
   // on.
-  EXPECT_CALL(*autofill_client,
-              ShowAutofillPopup(element_bounds, _,
-                                SuggestionVectorValuesAre(testing::ElementsAre(
-                                    title, test_username_)),
-                                _));
+  EXPECT_CALL(
+      *autofill_client,
+      ShowAutofillPopup(
+          element_bounds, _,
+          SuggestionVectorValuesAre(testing::ElementsAreArray(elements)), _));
   password_autofill_manager_->OnShowPasswordSuggestions(
       dummy_key, base::i18n::RIGHT_TO_LEFT, test_username_,
       autofill::IS_PASSWORD_FIELD, element_bounds);
@@ -879,6 +921,8 @@ TEST_F(PasswordAutofillManagerTest,
   base::string16 title =
       l10n_util::GetStringUTF16(IDS_AUTOFILL_PASSWORD_FIELD_SUGGESTIONS_TITLE);
 
+  SetManualFallbacksForFilling(false);
+
   // No "Show all passwords row" when feature is disabled.
   EXPECT_CALL(*autofill_client,
               ShowAutofillPopup(element_bounds, _,
@@ -916,7 +960,7 @@ TEST_F(PasswordAutofillManagerTest, ShowAllPasswordsOptionOnPasswordField) {
   base::string16 title =
       l10n_util::GetStringUTF16(IDS_AUTOFILL_PASSWORD_FIELD_SUGGESTIONS_TITLE);
 
-  SetManualFallbacksForFillingFeatureEnabled();
+  SetManualFallbacksForFilling(true);
 
 // "Show all passwords" row shows only on Desktop when the feature is enabled,
 // so there are 3 suggestions (+ 1 separator on desktop) in total, and the
@@ -962,7 +1006,7 @@ TEST_F(PasswordAutofillManagerTest, ShowStandaloneShowAllPasswords) {
   base::string16 show_all_saved_row_text =
       l10n_util::GetStringUTF16(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK);
 
-  SetManualFallbacksForFillingFeatureEnabled();
+  SetManualFallbacksForFilling(true);
 
   auto elements = testing::ElementsAre(show_all_saved_row_text);
 
@@ -1000,16 +1044,7 @@ TEST_F(PasswordAutofillManagerTest,
   int dummy_key = 0;
   password_autofill_manager_->OnAddPasswordFormMapping(dummy_key, data);
 
-  // No "Show all passwords row" when feature is disabled.
-  EXPECT_CALL(
-      *autofill_client,
-      ShowAutofillPopup(
-          element_bounds, _,
-          SuggestionVectorValuesAre(testing::ElementsAre(test_username_)), _));
-  password_autofill_manager_->OnShowPasswordSuggestions(
-      dummy_key, base::i18n::RIGHT_TO_LEFT, test_username_, 0, element_bounds);
-
-  SetManualFallbacksForFillingFeatureEnabled();
+  SetManualFallbacksForFilling(true);
 
   EXPECT_CALL(
       *autofill_client,
