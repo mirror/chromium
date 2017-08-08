@@ -22,6 +22,23 @@
       "revId": "ca7bd853f785654ae9dd1b5f7057637162023f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa9d51d_a6673464",
+        "filename": "base/threading/scoped_may_block.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T21:04:03Z",
+      "side": 1,
+      "message": "Add some details about what the user can expect from this e.g.\n\n\"This will hint the BlockingObserver for this thread about the scope of the blocking operation. In particular, on TaskScheduler owned threads: this will cause the thread to be replaced in its pool if the blocking scope doesn\u0027t expire shortly.\"",
+      "revId": "ca7bd853f785654ae9dd1b5f7057637162023f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
