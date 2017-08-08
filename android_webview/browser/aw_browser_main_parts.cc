@@ -117,8 +117,6 @@ CreateLowEntropyProvider() {
           android_webview::AwMetricsServiceClient::GetClientID()));
 }
 
-// Synchronous read of variations data is allowed for now. See discussion at:
-// https://groups.google.com/a/google.com/d/topic/webview-finch-project/YuX7HlF1vMw/discussion
 bool ReadVariationsSeedDataFromFile(SimplePrefService* local_state) {
   base::FilePath user_data_dir;
   if (!PathService::Get(base::DIR_ANDROID_APP_DATA, &user_data_dir)) {
@@ -126,12 +124,9 @@ bool ReadVariationsSeedDataFromFile(SimplePrefService* local_state) {
     return false;
   }
 
+  // Set compressed seed data.
   const base::FilePath variations_seed_path =
       user_data_dir.Append(FILE_PATH_LITERAL("variations_seed_data"));
-  const base::FilePath variations_pref_path =
-      user_data_dir.Append(FILE_PATH_LITERAL("variations_seed_pref"));
-
-  // Set compressed seed data.
   std::string tmp_str;
   if (!base::ReadFileToString(variations_seed_path, &tmp_str)) {
     LOG(ERROR) << "Failed to read variations seed data";
@@ -140,6 +135,8 @@ bool ReadVariationsSeedDataFromFile(SimplePrefService* local_state) {
   local_state->SetString(variations::prefs::kVariationsCompressedSeed, tmp_str);
 
   // Set seed meta-data.
+  const base::FilePath variations_pref_path =
+      user_data_dir.Append(FILE_PATH_LITERAL("variations_seed_pref"));
   if (!base::ReadFileToString(variations_pref_path, &tmp_str)) {
     LOG(ERROR) << "Failed to read variations seed meta-data";
     return false;
@@ -168,12 +165,6 @@ bool ReadVariationsSeedDataFromFile(SimplePrefService* local_state) {
 }
 
 void AwBrowserMainParts::SetUpFieldTrials() {
-  // UMA is only enabled on Android N+, don't enable Finch without UMA
-  if (base::android::BuildInfo::GetInstance()->sdk_int() <
-      base::android::SDK_VERSION_NOUGAT) {
-    return;
-  }
-
   DCHECK(!field_trial_list_);
   field_trial_list_.reset(new base::FieldTrialList(CreateLowEntropyProvider()));
 
@@ -183,10 +174,9 @@ void AwBrowserMainParts::SetUpFieldTrials() {
   }
 
   variations::UIStringOverrider ui_string_overrider;
-  std::unique_ptr<AwVariationsServiceClient> client(
-      new AwVariationsServiceClient);
+  AwVariationsServiceClient* client = new AwVariationsServiceClient;
   variations_field_trial_creator_.reset(
-      new variations::VariationsFieldTrialCreator(&local_state, client.get(),
+      new variations::VariationsFieldTrialCreator(&local_state, client,
                                                   ui_string_overrider));
 
   std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);

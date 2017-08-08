@@ -5,17 +5,14 @@
 #include "android_webview/browser/aw_variations_service_client.h"
 
 #include "base/bind.h"
-#include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 #include "components/version_info/version_info.h"
 
-namespace android_webview {
 namespace {
 
 // Gets the version number to use for variations seed simulation. Must be called
 // on a thread where IO is allowed.
 base::Version GetVersionForSimulation() {
-  base::ThreadRestrictions::AssertIOAllowed();
   return base::Version(version_info::GetVersionNumber());
 }
 
@@ -52,5 +49,3 @@ bool AwVariationsServiceClient::OverridesRestrictParameter(
     std::string* parameter) {
   return false;
 }
-
-}  // namespace android_webview
