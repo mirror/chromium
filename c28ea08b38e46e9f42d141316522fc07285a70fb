@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4202f83f_3a055330",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-08T10:46:07Z",
+      "side": 1,
+      "message": "The existing code in Blink enumerates the schemes which inherit a policy from their parent: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/Document.cpp?rcl\u003d2dab99eb614d76c0446b46538515f13a77319408\u0026l\u003d5590.",
+      "parentUuid": "d23d9742_aed0f8aa",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ca2c25d_7208f0fd",
         "filename": "chrome/browser/chrome_navigation_browsertest.cc",
         "patchSetId": 11
@@ -227,6 +245,24 @@
       "writtenOn": "2017-08-08T00:51:18Z",
       "side": 1,
       "message": "Does this scheme bypass CSP for some other reason?",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e096314f_a0dc27d3",
+        "filename": "content/common/url_schemes.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-08T10:46:07Z",
+      "side": 1,
+      "message": "That\u0027s a good question. I wonder what our current behavior is for `frame-src \u0027none\u0027` when committing the existing error page? It\u0027s probably not correct. :) I\u0027m a little wary of adding another scheme to this list, as I think it\u0027s already a bit less restrictive than it should be.\n\nRather than poke at it in this patch, I\u0027d suggest adding a `TODO(mkwst)`, and I\u0027ll try to put together reasonable behavior.",
+      "parentUuid": "7632ab6e_69ae2c9e",
       "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
