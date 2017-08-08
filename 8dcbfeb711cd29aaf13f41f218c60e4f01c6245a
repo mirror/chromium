@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "932c1414_31a1aeaa",
+        "filename": "chrome/common/extensions/api/file_manager_private.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-08T07:09:51Z",
+      "side": 1,
+      "message": "I think you can eliminate this method from this changelist, if we want to limit the scope of the changelist like described in the CL description.",
+      "revId": "8dcbfeb711cd29aaf13f41f218c60e4f01c6245a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "974887ee_8804cbb4",
+        "filename": "chromeos/dbus/cros_disks_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-08T07:09:51Z",
+      "side": 1,
+      "message": "Can you add this field to the unit test CrosDisksClientTest.DiskInfo as well?",
+      "revId": "8dcbfeb711cd29aaf13f41f218c60e4f01c6245a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
