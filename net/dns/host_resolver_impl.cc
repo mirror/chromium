@@ -2220,6 +2220,40 @@ bool HostResolverImpl::ResolveAsIP(const Key& key,
   return true;
 }
 
+class DnsRefresher {
+ public:
+  DnsRefresher(const HostResolver::RequestInfo& info,
+               AddressList* addresses,
+               HostResolver* resolver)
+      : refreshed_info(info),
+        refreshed_addresses(*addresses),
+        resolver(resolver) {
+    refreshed_info.set_allow_cached_response(false);
+  }
+
+  static void Refresh(const HostResolver::RequestInfo& info,
+                      AddressList* addresses,
+                      HostResolver* resolver) {
+    DnsRefresher* dr = new DnsRefresher(info, addresses, resolver);
+    dr->Refresh();
+  }
+
+  void Refresh() {
+    resolver->Resolve(
+        refreshed_info, IDLE, &refreshed_addresses,
+        base::Bind(&DnsRefresher::OnRefreshComplete, base::Unretained(this)),
+        &request_, NetLogWithSource());
+  }
+
+  void OnRefreshComplete(int status) {}
+
+ private:
+  HostResolver::RequestInfo refreshed_info;
+  AddressList refreshed_addresses;
+  HostResolver* resolver;
+  std::unique_ptr<HostResolver::Request> request_;
+};
+
 bool HostResolverImpl::ServeFromCache(const Key& key,
                                       const RequestInfo& info,
                                       int* net_error,
@@ -2242,8 +2276,13 @@ bool HostResolverImpl::ServeFromCache(const Key& key,
 
   *net_error = cache_entry->error();
   if (*net_error == OK) {
-    if (cache_entry->has_ttl())
+    if (cache_entry->has_ttl()) {
+      if (cache_entry->ttl() / 2 >
+          cache_entry->expires() - base::TimeTicks::Now()) {
+        DnsRefresher::Refresh(info, addresses, this);
+      }
       RecordTTL(cache_entry->ttl());
+    }
     *addresses = EnsurePortOnAddressList(cache_entry->addresses(), info.port());
   }
   return true;
