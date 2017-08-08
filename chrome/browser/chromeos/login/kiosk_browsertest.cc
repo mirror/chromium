@@ -76,6 +76,7 @@
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "ui/aura/window.h"
 #include "ui/base/accelerators/accelerator.h"
+#include "ui/keyboard/keyboard_switches.h"
 
 namespace em = enterprise_management;
 
@@ -118,6 +119,11 @@ const char kTestLocalFsKioskApp[] = "bmbpicmpniaclbbpdkfglgipkkebnbjf";
 //     chrome/test/data/chromeos/app_mode/webstore/inlineinstall/
 //         detail/aaedpojejpghjkedenggihopfhfijcko
 const char kTestGetVolumeListKioskApp[] = "aaedpojejpghjkedenggihopfhfijcko";
+
+// An app to test Kiosk virtual keyboard API chrome.virtualKeyboard.* .
+// Source files are in
+//     chrome/test/data/chromeos/app_mode/virtual_keyboard/src/
+const char kTestVirtualKeyboardKioskApp[] = "fmmbbdiapbcicajbpkpkdbcgidgppada";
 
 // Testing apps for testing kiosk multi-app feature. All the crx files are in
 //    chrome/test/data/chromeos/app_mode/webstore/downloads.
@@ -2283,8 +2289,36 @@ IN_PROC_BROWSER_TEST_F(KioskEnterpriseTest, PrivateStore) {
   EXPECT_EQ(extensions::Manifest::EXTERNAL_POLICY, GetInstalledAppLocation());
 }
 
-// Specialized test fixture for testing kiosk mode on the
-// hidden WebUI initialization flow for slow hardware.
+// Specialized test fixture for testing kiosk mode where virtual keyboard is
+// enabled.
+class KioskVirtualKeyboardTest : public KioskTest {
+ public:
+  KioskVirtualKeyboardTest() {}
+  ~KioskVirtualKeyboardTest() override {}
+
+  // KioskTest overrides:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    KioskTest::SetUpCommandLine(command_line);
+    command_line->AppendSwitch(keyboard::switches::kEnableVirtualKeyboard);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(KioskVirtualKeyboardTest);
+};
+
+// Verifies that chrome.virtualKeyboard.restrictFeatures and related private
+// APIs work.
+IN_PROC_BROWSER_TEST_F(KioskVirtualKeyboardTest, RestrictFeatures) {
+  set_test_app_id(kTestVirtualKeyboardKioskApp);
+  set_test_app_version("0.1");
+  set_test_crx_file(test_app_id() + ".crx");
+
+  extensions::ResultCatcher catcher;
+  StartAppLaunchFromLoginScreen(SimulateNetworkOnlineClosure());
+  ASSERT_TRUE(catcher.GetNextResult()) << catcher.message();
+}
+
+// Specialized test fixture for testing virtual keyboard on kiosk mode.
 class KioskHiddenWebUITest : public KioskTest,
                              public ash::WallpaperControllerObserver {
  public:
