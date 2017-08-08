@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "412a9b12_75264128",
+        "filename": "build/fuchsia/exe_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-08T17:07:36Z",
+      "side": 1,
+      "message": "nit; 2 since the one in test_runner.py is 2.",
+      "range": {
+        "startLine": 41,
+        "startChar": 11,
+        "endLine": 41,
+        "endChar": 12
+      },
+      "revId": "aa7dec44b4ef5faab8e2b4cd0ed655fbb4936a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
