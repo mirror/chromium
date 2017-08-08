@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95a982eb_eb72d608",
+        "filename": "content/renderer/pepper/pepper_webplugin_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-08-08T15:37:52Z",
+      "side": 1,
+      "message": "Can we move the:\n\nif (!CanEditText())\n  return false;\n\nup here then we don\u0027t have to check it below in each case?",
+      "revId": "26180ecfdd5e13dbdce4e3b58a771696071a9dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
