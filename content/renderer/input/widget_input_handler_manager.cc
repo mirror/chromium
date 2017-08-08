@@ -69,14 +69,16 @@ WidgetInputHandlerManager::WidgetInputHandlerManager(
   // TODO(dtapuska): Define a mojo channel for back to the host. Currently
   // we use legacy IPC.
   legacy_host_message_routing_id_ = render_widget->routing_id();
+}
 
+void WidgetInputHandlerManager::Init() {
   if (compositor_task_runner_) {
     compositor_task_runner_->PostTask(
         FROM_HERE,
         base::BindOnce(
             &WidgetInputHandlerManager::InitOnCompositorThread, this,
-            render_widget->compositor()->GetInputHandler(),
-            render_widget->compositor_deps()->IsScrollAnimatorEnabled()));
+            render_widget_->compositor()->GetInputHandler(),
+            render_widget_->compositor_deps()->IsScrollAnimatorEnabled()));
   }
 }
 

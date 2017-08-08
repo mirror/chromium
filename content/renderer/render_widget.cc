@@ -550,6 +550,7 @@ void RenderWidget::Init(const ShowCallback& show_callback,
             : nullptr,
         render_thread_impl ? render_thread_impl->GetRendererScheduler()
                            : nullptr);
+    widget_input_handler_manager_->Init();
   }
 
   show_callback_ = show_callback;
@@ -2427,6 +2428,11 @@ blink::WebInputMethodController* RenderWidget::GetInputMethodController()
   }
   return static_cast<blink::WebFrameWidget*>(GetWebWidget())
       ->GetActiveWebInputMethodController();
+}
+
+void RenderWidget::GetWidgetInputHandler(
+    mojom::WidgetInputHandlerRequest request) {
+  widget_input_handler_manager_->AddInterface(std::move(request));
 }
 
 void RenderWidget::SetWidgetBinding(mojom::WidgetRequest request) {

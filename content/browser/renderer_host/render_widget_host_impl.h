@@ -30,7 +30,7 @@
 #include "components/viz/service/display_embedder/shared_bitmap_allocation_notifier_impl.h"
 #include "content/browser/renderer_host/event_with_latency_info.h"
 #include "content/browser/renderer_host/input/input_disposition_handler.h"
-#include "content/browser/renderer_host/input/input_router_client.h"
+#include "content/browser/renderer_host/input/input_router_impl.h"
 #include "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.h"
 #include "content/browser/renderer_host/input/render_widget_host_latency_tracker.h"
 #include "content/browser/renderer_host/input/synthetic_gesture.h"
@@ -102,7 +102,7 @@ struct TextInputState;
 // embedders of content, and adds things only visible to content.
 class CONTENT_EXPORT RenderWidgetHostImpl
     : public RenderWidgetHost,
-      public InputRouterClient,
+      public InputRouterImplClient,
       public InputDispositionHandler,
       public TouchEmulatorClient,
       public NON_EXPORTED_BASE(SyntheticGestureController::Delegate),
@@ -215,7 +215,6 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void DragSourceSystemDragEnded() override;
   void FilterDropData(DropData* drop_data) override;
   void SetCursor(const CursorInfo& cursor_info) override;
-  mojom::WidgetInputHandler* GetWidgetInputHandler();
 
   // Notification that the screen info has changed.
   void NotifyScreenInfoChanged();
@@ -592,6 +591,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // there are any queued messages belonging to it, they will be processed.
   void DidProcessFrame(uint32_t frame_token);
 
+  void SetWidgetInputHandler(
+      mojom::WidgetInputHandlerAssociatedPtr widget_input_handler);
+  mojom::WidgetInputHandler* GetWidgetInputHandler() override;
   void SetWidget(mojom::WidgetPtr widget);
 
  protected:
@@ -766,6 +768,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // viz::SharedBitmapAllocationObserver implementation.
   void DidAllocateSharedBitmap(
       uint32_t last_shared_bitmap_sequence_number) override;
+  void SetupInputRouter();
 
 #if defined(OS_MACOSX)
   device::mojom::WakeLock* GetWakeLock();
@@ -1003,7 +1006,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
     uint32_t max_shared_bitmap_sequence_number = 0;
   } saved_frame_;
 
-  std::unique_ptr<LegacyIPCWidgetInputHandler> legacy_widget_input_handler_;
+  mojom::WidgetInputHandlerAssociatedPtr associated_widget_input_handler_;
+  mojom::WidgetInputHandlerPtr widget_input_handler_;
+  std::unique_ptr<mojom::WidgetInputHandler> legacy_widget_input_handler_;
 
   base::WeakPtrFactory<RenderWidgetHostImpl> weak_factory_;
 
