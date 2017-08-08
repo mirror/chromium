@@ -4,6 +4,7 @@
 
 #include "ui/ozone/common/gl_ozone_osmesa.h"
 
+#include "build/build_config.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_context_osmesa.h"
@@ -31,12 +32,20 @@ bool GLOzoneOSMesa::InitializeStaticGLBindings(
 }
 
 void GLOzoneOSMesa::InitializeDebugGLBindings() {
+#if !defined(OS_FUCHSIA)
+  // TODO(fuchsia): Revisit this when HW accelerated GL is available.
+  // (crbug.com/750943)
   gl::InitializeDebugGLBindingsGL();
+#endif
   gl::InitializeDebugGLBindingsOSMESA();
 }
 
 void GLOzoneOSMesa::ShutdownGL() {
+#if !defined(OS_FUCHSIA)
+  // TODO(fuchsia): Revisit this when HW accelerated GL is available.
+  // (crbug.com/750943)
   gl::ClearBindingsGL();
+#endif
   gl::ClearBindingsOSMESA();
 }
 
