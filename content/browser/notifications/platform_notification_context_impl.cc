@@ -55,52 +55,13 @@ PlatformNotificationContextImpl::~PlatformNotificationContextImpl() {
 
 void PlatformNotificationContextImpl::Initialize() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  PlatformNotificationService* service =
-      GetContentClient()->browser()->GetPlatformNotificationService();
-  if (!service) {
-    auto displayed_notifications = base::MakeUnique<std::set<std::string>>();
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::Bind(&PlatformNotificationContextImpl::InitializeOnIO, this,
-                   base::Passed(&displayed_notifications), false));
-    return;
-  }
-
-  service->GetDisplayedNotifications(
-      browser_context_,
-      base::Bind(&PlatformNotificationContextImpl::DidGetNotificationsOnUI,
-                 this));
-}
-
-void PlatformNotificationContextImpl::DidGetNotificationsOnUI(
-    std::unique_ptr<std::set<std::string>> displayed_notifications,
-    bool supports_synchronization) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(&PlatformNotificationContextImpl::InitializeOnIO, this,
-                 base::Passed(&displayed_notifications),
-                 supports_synchronization));
+      base::Bind(&PlatformNotificationContextImpl::InitializeOnIO, this));
 }
 
-void PlatformNotificationContextImpl::InitializeOnIO(
-    std::unique_ptr<std::set<std::string>> displayed_notifications,
-    bool supports_synchronization) {
+void PlatformNotificationContextImpl::InitializeOnIO() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  // Synchronize the notifications stored in the database with the set of
-  // displaying notifications in |displayed_notifications|. This is necessary
-  // because flakiness may cause a platform to inform Chrome of a notification
-  // that has since been closed, or because the platform does not support
-  // notifications that exceed the lifetime of the browser process.
-
-  // TODO(peter): Synchronizing the actual notifications will be done when the
-  // persistent notification ids are stable. For M44 we need to support the
-  // case where there may be no notifications after a Chrome restart.
-
-  if (supports_synchronization && displayed_notifications->empty()) {
-    prune_database_on_open_ = true;
-  }
 
   // |service_worker_context_| may be NULL in tests.
   if (service_worker_context_)
@@ -502,18 +463,6 @@ void PlatformNotificationContextImpl::OpenDatabase(
 
   UMA_HISTOGRAM_ENUMERATION("Notifications.Database.OpenResult", status,
                             NotificationDatabase::STATUS_COUNT);
-
-  // TODO(peter): Do finer-grained synchronization here.
-  if (prune_database_on_open_) {
-    prune_database_on_open_ = false;
-    DestroyDatabase();
-
-    database_.reset(new NotificationDatabase(GetDatabasePath()));
-    status = database_->Open(true /* create_if_missing */);
-
-    // TODO(peter): Find the appropriate UMA to cover in regards to
-    // synchronizing notifications after the implementation is complete.
-  }
 
   // When the database could not be opened due to corruption, destroy it, blow
   // away the contents of the directory and try re-opening the database.

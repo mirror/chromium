@@ -100,12 +100,7 @@ class CONTENT_EXPORT PlatformNotificationContextImpl
 
   ~PlatformNotificationContextImpl() override;
 
-  void DidGetNotificationsOnUI(
-      std::unique_ptr<std::set<std::string>> displayed_notifications,
-      bool supports_synchronization);
-  void InitializeOnIO(
-      std::unique_ptr<std::set<std::string>> displayed_notifications,
-      bool supports_synchronization);
+  void InitializeOnIO();
   void ShutdownOnIO();
   void CreateServiceOnIO(
       int render_process_id,
@@ -201,9 +196,6 @@ class CONTENT_EXPORT PlatformNotificationContextImpl
   std::unique_ptr<NotificationDatabase> database_;
 
   NotificationIdGenerator notification_id_generator_;
-
-  // Indicates whether the database should be pruned when it's opened.
-  bool prune_database_on_open_ = false;
 
   // The notification services are owned by the platform context, and will be
   // removed when either this class is destroyed or the Mojo pipe disconnects.
