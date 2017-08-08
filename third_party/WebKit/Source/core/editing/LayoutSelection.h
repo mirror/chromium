@@ -109,6 +109,9 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
   void OnDocumentShutdown();
 
   DECLARE_TRACE();
+#if DCHECK_IS_ON()
+  bool IsLayoutObjectReferred(LayoutObject*) const;
+#endif
 
  private:
   LayoutSelection(FrameSelection&);

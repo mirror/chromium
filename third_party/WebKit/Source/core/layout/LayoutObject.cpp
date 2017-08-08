@@ -2827,6 +2827,12 @@ void LayoutObject::DestroyAndCleanupAnonymousWrappers() {
 
 void LayoutObject::Destroy() {
   WillBeDestroyed();
+#if DCHECK_IS_ON()
+  // FrameSelection refers LayoutObject for selection invalidation.
+  // We should release its reference appropreately.
+  DCHECK(DocumentBeingDestroyed() || !GetFrame() ||
+         !GetFrame()->Selection().IsLayoutObjectReferred(this));
+#endif
   delete this;
 }
 
