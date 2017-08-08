@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3f53dc1_3acefed5",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-08T19:55:33Z",
+      "side": 1,
+      "message": "Please follow Coding Guidelines for Cocoa convention for Objective-C names:\n\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-1001803-BCIDAIJE\n\nAnd please add comments.",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 29
+      },
+      "revId": "32f0274897143c6f714a63b7acf04ac966411e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac24efa_56907bb4",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-08T19:55:33Z",
+      "side": 1,
+      "message": "From Google\u0027s Unit Testing Best Practices: \"Test code using real APIs - don’t define back doors only for tests.\"\n\ngo/unit-test-practices#public-apis",
+      "range": {
+        "startLine": 365,
+        "startChar": 17,
+        "endLine": 365,
+        "endChar": 24
+      },
+      "revId": "32f0274897143c6f714a63b7acf04ac966411e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
