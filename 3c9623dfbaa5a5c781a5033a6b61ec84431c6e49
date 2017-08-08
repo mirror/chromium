@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0e1fa97_a0ce224d",
+        "filename": "chrome/browser/safe_browsing/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-08T21:47:36Z",
+      "side": 1,
+      "message": "drop db here also?",
+      "range": {
+        "startLine": 251,
+        "startChar": 57,
+        "endLine": 251,
+        "endChar": 60
+      },
+      "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7972e85_0b9713b5",
+        "filename": "components/safe_browsing/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-08T21:47:36Z",
+      "side": 1,
+      "message": "safe_browsing_mobile?",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 30
+      },
+      "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d6318e_8609dc95",
+        "filename": "components/safe_browsing_db/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-08T21:47:36Z",
+      "side": 1,
+      "message": "this should also be moved.",
+      "range": {
+        "startLine": 115,
+        "startChar": 16,
+        "endLine": 115,
+        "endChar": 46
+      },
+      "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4183ffe2_76027c23",
+        "filename": "components/safe_browsing_db/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-08T21:47:36Z",
+      "side": 1,
+      "message": "this one too",
+      "range": {
+        "startLine": 457,
+        "startChar": 12,
+        "endLine": 457,
+        "endChar": 29
+      },
+      "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da12ff07_b810bfe7",
+        "filename": "components/safe_browsing_db/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-08T21:47:36Z",
+      "side": 1,
+      "message": "remove jni?",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 7
+      },
+      "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a45a4a_267fe868",
+        "filename": "components/safe_browsing_db/remote_database_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-08T21:47:36Z",
+      "side": 1,
+      "message": "This file is used only on Android so it should also be moved to the new location",
+      "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
