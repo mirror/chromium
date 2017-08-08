@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd73bac7_92a51290",
+        "filename": "base/process/process_handle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-08T21:04:23Z",
+      "side": 1,
+      "message": "I thought if you use d or u is just a display thing. I\u0027d say `if defined(os_win) || defined(os_fuchsia)` instead of using a different signedness in pid prints on fuchsia. (\"PRId\" means \"PRInt decimal\", so the u version of this macro would be called CrPRIuPid)",
+      "range": {
+        "startLine": 53,
+        "startChar": 18,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "6b8aa4a4d45007dd341c4eab15e5f58c632529e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
