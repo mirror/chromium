@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2a2b39d6_29ecd206",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-08T00:15:34Z",
+      "side": 1,
+      "message": "Nit: Use GURL directly here and in other places in this CL instead of value_type.  This makes it clear what kind of a thing we\u0027re passing around, since |popup| alone is non-obvious.  This also suggests the param should be named |popup_url|.\n\n(I realize that value_type is more future-proof if we want to change the map here without touching people who use this, but the truth is other people end up encoding in code that this is a URL, so all this does is disguise the type dependency.)",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bbc3288_578c2cee",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
         "patchSetId": 4
@@ -13,6 +30,92 @@
       "writtenOn": "2017-08-07T12:03:53Z",
       "side": 1,
       "message": "I\u0027m not sure it\u0027s okay to leave this here as it is. Or should I add PopupblockerTabHelper::Observer::BlockedContentsRemoved? If so, we can\u0027t know |index| and need to recalc index, but maybe more robust. Please give me your opinion.",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc7a663_3002e1fa",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-08T00:15:34Z",
+      "side": 1,
+      "message": "The main question is whether the tab helper can remove a blocked popup other than by the user clicking.  Maybe if script on the page programmatically window.close()s one of the popups?\n\nIf so, then we need such a call anyway.  And once we have it, then yeah, it wouldn\u0027t make sense to me to do this a different way here.\n\nBut if this is the only way blocked popups can disappear from the list, this is probably fine.",
+      "parentUuid": "5bbc3288_578c2cee",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e3c1f2_8eca3225",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-08T00:15:34Z",
+      "side": 1,
+      "message": "Nit: I would use a ScopedObserver member instead of this manual remove call, it\u0027s safer.\n\nThough this also makes me wonder what destruction orders we can have.  Can the tab helper go away before this model?",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2af1355_f66ef1f5",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1659,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-08T00:15:34Z",
+      "side": 1,
+      "message": "Nit: Why not get the item directly?\n\n  const auto\u0026 item \u003d bubble_content_.list_items[index];\n  ... use |item|",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89015019_422b63c2",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-08T00:15:34Z",
+      "side": 1,
+      "message": "Nit: Why have this param if we don\u0027t care about it?",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117dca34_44c37965",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-08T00:15:34Z",
+      "side": 1,
+      "message": "Don\u0027t we need a corresponding remove on destruction?  Or is the model guaranteed to be torn down before this object?",
       "revId": "02c622d518cb6160ff156b03057da889a34d1547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
