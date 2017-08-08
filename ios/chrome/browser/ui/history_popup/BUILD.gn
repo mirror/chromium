@@ -7,6 +7,8 @@ source_set("history_popup") {
   sources = [
     "tab_history_cell.h",
     "tab_history_cell.mm",
+    "tab_history_constants.h",
+    "tab_history_constants.mm",
     "tab_history_popup_controller.h",
     "tab_history_popup_controller.mm",
     "tab_history_view_controller.h",
@@ -23,6 +25,23 @@ source_set("history_popup") {
     "//ios/web",
     "//ui/gfx",
     "//url",
+  ]
+}
+
+source_set("coordinator") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  sources = [
+    "tab_history_coordinator.h",
+    "tab_history_coordinator.mm",
+  ]
+  deps = [
+    ":history_popup",
+    "//base",
+    "//ios/chrome/browser",
+    "//ios/chrome/browser/tabs",
+    "//ios/chrome/browser/ui/commands",
+    "//ios/chrome/browser/ui/history_popup/requirements",
+    "//ios/shared/chrome/browser/ui/commands",
   ]
 }
 

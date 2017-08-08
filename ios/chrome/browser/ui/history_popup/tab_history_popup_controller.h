@@ -17,7 +17,7 @@
 
 // Initializes the popup to display |items| with the given |origin| that is
 // relevant to the |parent|'s coordinate system.
-// |entries| is an array of CRWSessionEntries.
+// |items| is an array of NavigationItem's.
 - (id)initWithOrigin:(CGPoint)origin
           parentView:(UIView*)parent
                items:(const web::NavigationItemList&)items

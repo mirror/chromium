@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ios/chrome/browser/ui/history_popup/requirements/tab_history_positioner.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_popup_positioner.h"
 #include "ios/chrome/browser/ui/qr_scanner/qr_scanner_view_controller.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller.h"
@@ -84,6 +85,7 @@ extern const CGFloat kiPhoneOmniboxPlaceholderColorBrightness;
 @interface WebToolbarController
     : ToolbarController<OmniboxFocuser,
                         QRScannerViewControllerDelegate,
+                        TabHistoryPositioner,
                         VoiceSearchControllerDelegate>
 
 @property(nonatomic, weak) id<WebToolbarDelegate> delegate;
@@ -150,19 +152,14 @@ extern const CGFloat kiPhoneOmniboxPlaceholderColorBrightness;
 // if it is up to date.
 - (UIImage*)snapshotWithWidth:(CGFloat)width;
 
-// Shows the tab history popup inside |view|.
-- (void)showTabHistoryPopupInView:(UIView*)view
-                        withItems:(const web::NavigationItemList&)items
-                   forBackHistory:(BOOL)isBackHistory;
-
-// Dismisses the tab history popup.
-- (void)dismissTabHistoryPopup;
-
 // Returns whether omnibox is a first responder.
 - (BOOL)isOmniboxFirstResponder;
 
 // Returns whether the omnibox popup is currently displayed.
 - (BOOL)showingOmniboxPopup;
+
+// Updates the UI to reflect the dismissal of the TabHistory popup.
+- (void)tabHistoryWasDismissed;
 
 - (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection;
 
