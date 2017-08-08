@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7b9f0d50_6330b499",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-08T20:26:59Z",
+      "side": 1,
+      "message": "Does this mean we\u0027ll now activate the overscroll glow with keyboard? Also, could you please explain how this follows from the rest of the CL? I don\u0027t see what change caused this.",
+      "range": {
+        "startLine": 456,
+        "startChar": 15,
+        "endLine": 456,
+        "endChar": 19
+      },
+      "revId": "bc84dc93ea9137f6ccca0a5741d6b63ea746e155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d18dc26_87cc81d9",
         "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
         "patchSetId": 3
@@ -49,6 +72,24 @@
       "side": 1,
       "message": "As discussed offline, I think the keyboard scroll delta will appear too large in the top-controls case due to double-application, although it may not have been immediately apparent.\n\nRather than fixing the problem explicitly, I suggested sharing more code by having KeyboardEventManager::DefaultArrowEventHandler create an appropriate ScrollStateData and calling ScrollManager::CustomizedScroll instead of LogicalScroll.",
       "parentUuid": "0ecc23a6_bc6ff72d",
+      "revId": "bc84dc93ea9137f6ccca0a5741d6b63ea746e155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2cfb9f_102fc96d",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-08T20:26:59Z",
+      "side": 1,
+      "message": "Is the scroll line size configurable on Android as it is on desktop? i.e. can the user make the wheel tick distance small? That could be problematic for consuming delta since the controls won\u0027t cross the hide/show threshold so they might be snapping on each tick between half shown without actually changing state. If it\u0027s not and the default line size is big enough then this isn\u0027t an issue.",
+      "parentUuid": "effbfe73_052da7e8",
       "revId": "bc84dc93ea9137f6ccca0a5741d6b63ea746e155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
