@@ -192,7 +192,6 @@ void RasterWithAlpha(const PaintOp* op,
   M(DrawLineOp)       \
   M(DrawOvalOp)       \
   M(DrawPathOp)       \
-  M(DrawPosTextOp)    \
   M(DrawRecordOp)     \
   M(DrawRectOp)       \
   M(DrawRRectOp)      \
@@ -373,8 +372,6 @@ std::string PaintOpTypeToString(PaintOpType type) {
       return "DrawOval";
     case PaintOpType::DrawPath:
       return "DrawPath";
-    case PaintOpType::DrawPosText:
-      return "DrawPosText";
     case PaintOpType::DrawRecord:
       return "DrawRecord";
     case PaintOpType::DrawRect:
@@ -589,20 +586,6 @@ size_t DrawPathOp::Serialize(const PaintOp* base_op,
   return helper.size();
 }
 
-size_t DrawPosTextOp::Serialize(const PaintOp* base_op,
-                                void* memory,
-                                size_t size,
-                                const SerializeOptions& options) {
-  auto* op = static_cast<const DrawPosTextOp*>(base_op);
-  PaintOpWriter helper(memory, size);
-  helper.Write(op->flags);
-  helper.Write(op->count);
-  helper.Write(op->bytes);
-  helper.WriteArray(op->count, op->GetArray());
-  helper.WriteData(op->bytes, op->GetData());
-  return helper.size();
-}
-
 size_t DrawRecordOp::Serialize(const PaintOp* op,
                                void* memory,
                                size_t size,
@@ -763,6 +746,7 @@ PaintOp* ClipDeviceRectOp::Deserialize(const void* input,
                                        size_t input_size,
                                        void* output,
                                        size_t output_size) {
+  CHECK_GE(output_size, sizeof(ClipDeviceRectOp));
   return SimpleDeserialize<ClipDeviceRectOp>(input, input_size, output,
                                              output_size);
 }
@@ -791,6 +775,7 @@ PaintOp* ClipRectOp::Deserialize(const void* input,
                                  size_t input_size,
                                  void* output,
                                  size_t output_size) {
+  CHECK_GE(output_size, sizeof(ClipRectOp));
   return SimpleDeserialize<ClipRectOp>(input, input_size, output, output_size);
 }
 
@@ -798,6 +783,7 @@ PaintOp* ClipRRectOp::Deserialize(const void* input,
                                   size_t input_size,
                                   void* output,
                                   size_t output_size) {
+  CHECK_GE(output_size, sizeof(ClipRRectOp));
   return SimpleDeserialize<ClipRRectOp>(input, input_size, output, output_size);
 }
 
@@ -805,6 +791,7 @@ PaintOp* ConcatOp::Deserialize(const void* input,
                                size_t input_size,
                                void* output,
                                size_t output_size) {
+  CHECK_GE(output_size, sizeof(ConcatOp));
   return SimpleDeserialize<ConcatOp>(input, input_size, output, output_size);
 }
 
@@ -853,6 +840,7 @@ PaintOp* DrawColorOp::Deserialize(const void* input,
                                   size_t input_size,
                                   void* output,
                                   size_t output_size) {
+  CHECK_GE(output_size, sizeof(DrawColorOp));
   return SimpleDeserialize<DrawColorOp>(input, input_size, output, output_size);
 }
 
@@ -991,40 +979,6 @@ PaintOp* DrawPathOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* DrawPosTextOp::Deserialize(const void* input,
-                                    size_t input_size,
-                                    void* output,
-                                    size_t output_size) {
-  // TODO(enne): This is a bit of a weird condition, but to avoid the code
-  // complexity of every Deserialize function being able to (re)allocate
-  // an aligned buffer of the right size, this function asserts that it
-  // will have enough size for the extra data.  It's guaranteed that any extra
-  // memory is at most |input_size| so that plus the op size is an upper bound.
-  // The caller has to awkwardly do this allocation though, sorry.
-  CHECK_GE(output_size, sizeof(DrawPosTextOp) + input_size);
-  DrawPosTextOp* op = new (output) DrawPosTextOp;
-
-  PaintOpReader helper(input, input_size);
-  helper.Read(&op->flags);
-  helper.Read(&op->count);
-  helper.Read(&op->bytes);
-  if (helper.valid()) {
-    helper.ReadArray(op->count, op->GetArray());
-    helper.ReadData(op->bytes, op->GetData());
-  }
-  if (!helper.valid() || !op->IsValid()) {
-    op->~DrawPosTextOp();
-    return nullptr;
-  }
-
-  op->type = static_cast<uint8_t>(PaintOpType::DrawPosText);
-  op->skip = MathUtil::UncheckedRoundUp(
-      sizeof(DrawPosTextOp) + op->bytes + sizeof(SkPoint) * op->count,
-      PaintOpBuffer::PaintOpAlign);
-
-  return op;
-}
-
 PaintOp* DrawRecordOp::Deserialize(const void* input,
                                    size_t input_size,
                                    void* output,
@@ -1094,6 +1048,7 @@ PaintOp* NoopOp::Deserialize(const void* input,
                              size_t input_size,
                              void* output,
                              size_t output_size) {
+  CHECK_GE(output_size, sizeof(NoopOp));
   return SimpleDeserialize<NoopOp>(input, input_size, output, output_size);
 }
 
@@ -1101,6 +1056,7 @@ PaintOp* RestoreOp::Deserialize(const void* input,
                                 size_t input_size,
                                 void* output,
                                 size_t output_size) {
+  CHECK_GE(output_size, sizeof(RestoreOp));
   return SimpleDeserialize<RestoreOp>(input, input_size, output, output_size);
 }
 
@@ -1108,6 +1064,7 @@ PaintOp* RotateOp::Deserialize(const void* input,
                                size_t input_size,
                                void* output,
                                size_t output_size) {
+  CHECK_GE(output_size, sizeof(RotateOp));
   return SimpleDeserialize<RotateOp>(input, input_size, output, output_size);
 }
 
@@ -1115,6 +1072,7 @@ PaintOp* SaveOp::Deserialize(const void* input,
                              size_t input_size,
                              void* output,
                              size_t output_size) {
+  CHECK_GE(output_size, sizeof(SaveOp));
   return SimpleDeserialize<SaveOp>(input, input_size, output, output_size);
 }
 
@@ -1140,6 +1098,7 @@ PaintOp* SaveLayerAlphaOp::Deserialize(const void* input,
                                        size_t input_size,
                                        void* output,
                                        size_t output_size) {
+  CHECK_GE(output_size, sizeof(SaveLayerAlphaOp));
   return SimpleDeserialize<SaveLayerAlphaOp>(input, input_size, output,
                                              output_size);
 }
@@ -1148,6 +1107,8 @@ PaintOp* ScaleOp::Deserialize(const void* input,
                               size_t input_size,
                               void* output,
                               size_t output_size) {
+  CHECK_GE(output_size, sizeof(ScaleOp));
+
   return SimpleDeserialize<ScaleOp>(input, input_size, output, output_size);
 }
 
@@ -1155,6 +1116,7 @@ PaintOp* SetMatrixOp::Deserialize(const void* input,
                                   size_t input_size,
                                   void* output,
                                   size_t output_size) {
+  CHECK_GE(output_size, sizeof(SetMatrixOp));
   return SimpleDeserialize<SetMatrixOp>(input, input_size, output, output_size);
 }
 
@@ -1162,6 +1124,7 @@ PaintOp* TranslateOp::Deserialize(const void* input,
                                   size_t input_size,
                                   void* output,
                                   size_t output_size) {
+  CHECK_GE(output_size, sizeof(TranslateOp));
   return SimpleDeserialize<TranslateOp>(input, input_size, output, output_size);
 }
 
@@ -1359,14 +1322,6 @@ void DrawPathOp::RasterWithFlags(const DrawPathOp* op,
                                  const PlaybackParams& params) {
   SkPaint paint = flags->ToSkPaint();
   canvas->drawPath(op->path, paint);
-}
-
-void DrawPosTextOp::RasterWithFlags(const DrawPosTextOp* op,
-                                    const PaintFlags* flags,
-                                    SkCanvas* canvas,
-                                    const PlaybackParams& params) {
-  SkPaint paint = flags->ToSkPaint();
-  canvas->drawPosText(op->GetData(), op->bytes, op->GetArray(), paint);
 }
 
 void DrawRecordOp::Raster(const DrawRecordOp* op,
@@ -1585,8 +1540,6 @@ bool PaintOp::GetBounds(const PaintOp* op, SkRect* rect) {
       rect->sort();
       return true;
     }
-    case PaintOpType::DrawPosText:
-      return false;
     case PaintOpType::DrawRect: {
       auto* rect_op = static_cast<const DrawRectOp*>(op);
       *rect = rect_op->rect;
@@ -1716,15 +1669,6 @@ bool DrawImageRectOp::HasDiscardableImages() const {
 }
 
 DrawImageRectOp::~DrawImageRectOp() = default;
-
-DrawPosTextOp::DrawPosTextOp() = default;
-
-DrawPosTextOp::DrawPosTextOp(size_t bytes,
-                             size_t count,
-                             const PaintFlags& flags)
-    : PaintOpWithArray(flags, bytes, count) {}
-
-DrawPosTextOp::~DrawPosTextOp() = default;
 
 DrawRecordOp::DrawRecordOp() = default;
 
@@ -1968,11 +1912,10 @@ void PaintOpBuffer::ReallocBuffer(size_t new_size) {
   reserved_ = new_size;
 }
 
-std::pair<void*, size_t> PaintOpBuffer::AllocatePaintOp(size_t sizeof_op,
-                                                        size_t bytes) {
+std::pair<void*, size_t> PaintOpBuffer::AllocatePaintOp(size_t sizeof_op) {
   // Compute a skip such that all ops in the buffer are aligned to the
   // maximum required alignment of all ops.
-  size_t skip = MathUtil::UncheckedRoundUp(sizeof_op + bytes, PaintOpAlign);
+  size_t skip = MathUtil::UncheckedRoundUp(sizeof_op, PaintOpAlign);
   DCHECK_LT(skip, PaintOp::kMaxSkip);
   if (used_ + skip > reserved_) {
     // Start reserved_ at kInitialBufferSize and then double.
