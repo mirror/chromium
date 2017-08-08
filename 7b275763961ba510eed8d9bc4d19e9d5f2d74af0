@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c3ad8ce_a79ee5d9",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-08T23:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebf4e34f_b9367d3f",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 30
+      },
+      "revId": "7b275763961ba510eed8d9bc4d19e9d5f2d74af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "308c6906_7a4504d1",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "7b275763961ba510eed8d9bc4d19e9d5f2d74af0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082ca87c_1ff89934",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-08T23:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "308c6906_7a4504d1",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 34
+      },
+      "revId": "7b275763961ba510eed8d9bc4d19e9d5f2d74af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c4784d7a_54b0afaf",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-08T23:20:11Z",
+      "side": 1,
+      "message": "This is just a wrapper for the DCHECKs. I don\u0027t want to just remove the original DCHECK, which provides extra guarantee.",
+      "parentUuid": "b3f66725_7f6fcb2d",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 25
+      },
+      "revId": "7b275763961ba510eed8d9bc4d19e9d5f2d74af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84d20118_f73e9b3d",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-08T22:49:52Z",
       "side": 1,
       "message": "EventType is too generic.",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 16
+      },
+      "revId": "7b275763961ba510eed8d9bc4d19e9d5f2d74af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca17f20f_a1e61e30",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-08T23:20:11Z",
+      "side": 1,
+      "message": "I agree. But I cannot think of another better name. SessionType? Any suggestion?",
+      "parentUuid": "84d20118_f73e9b3d",
       "range": {
         "startLine": 30,
         "startChar": 7,
