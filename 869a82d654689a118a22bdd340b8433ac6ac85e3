@@ -16,6 +16,24 @@
       "revId": "869a82d654689a118a22bdd340b8433ac6ac85e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27becbd3_436fa32c",
+        "filename": "ios/chrome/common/app_group/app_group_constants.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-08T15:38:34Z",
+      "side": 0,
+      "message": "It is only transient.\nAnd should an old value be present (due to a crash, or something), the dictionary is considered invalid after 15 seconds.",
+      "parentUuid": "74f7ed43_83ed902d",
+      "revId": "869a82d654689a118a22bdd340b8433ac6ac85e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
