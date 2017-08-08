@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0c3a1fa3_fb860a08",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-08T17:35:32Z",
+      "side": 1,
+      "message": "I was going to implement the Android side in another CL, since some of the plugin stuff in both the navigation throttle and the test shouldn\u0027t be done on Android.",
+      "parentUuid": "5f28e9a4_27179d2a",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5dfe1808_d42f63a0",
         "filename": "chrome/browser/plugins/chrome_plugin_service_filter.h",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d58101bd_32e23b6c",
+        "filename": "chrome/browser/plugins/chrome_plugin_service_filter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-08T17:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dfe1808_d42f63a0",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa7baa52_4890a441",
         "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2e6125_396a65f3",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-08T17:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa7baa52_4890a441",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "765405b4_a7e2b3d0",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-08T17:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab57949b_cb2bea4a",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94dde728_8c6f238b",
         "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
         "patchSetId": 9
@@ -90,6 +168,24 @@
       "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3abd0f_2bb50c23",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-08T17:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94dde728_8c6f238b",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "828e4046_9c05a632",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-08T17:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f602c6d_ce2087dd",
+      "range": {
+        "startLine": 21,
+        "startChar": 39,
+        "endLine": 21,
+        "endChar": 46
+      },
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b418cff5_beb39434",
         "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
         "patchSetId": 9
@@ -168,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "e8cb3e62_eb51d09c",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-08T17:35:32Z",
+      "side": 1,
+      "message": "Each test case starts with this setting being off.",
+      "parentUuid": "b418cff5_beb39434",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb73dca5_e26d1437",
         "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
         "patchSetId": 9
@@ -179,6 +317,24 @@
       "writtenOn": "2017-08-07T18:54:00Z",
       "side": 1,
       "message": "Isn\u0027t this going to get destroyed at the end of SetUp(), before the body of the test actually has a chance to run?",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8b75ee_3a1c2d13",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-08T17:35:32Z",
+      "side": 1,
+      "message": "Yes. Actually, I realized that this isn\u0027t necessary anyway since we\u0027re testing the navigation throttle class directly, not through ChromeContentBrowserClient.",
+      "parentUuid": "fb73dca5_e26d1437",
       "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -208,6 +364,30 @@
     },
     {
       "key": {
+        "uuid": "41238a8b_c1b30d68",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-08T17:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60d9f036_a24c998a",
+      "range": {
+        "startLine": 55,
+        "startChar": 14,
+        "endLine": 55,
+        "endChar": 18
+      },
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d40d746d_38c8e7b4",
         "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
         "patchSetId": 9
@@ -222,6 +402,24 @@
       "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77951eae_0b30ed5a",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-08T17:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d40d746d_38c8e7b4",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +454,24 @@
       "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf4f0ba_0c14fed8",
+        "filename": "chrome/browser/printing/print_preview_dialog_controller_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-08T17:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30db418d_b2a92642",
+      "revId": "9f0fb640a5650a8624adfbf7c4ec1f967366db2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
