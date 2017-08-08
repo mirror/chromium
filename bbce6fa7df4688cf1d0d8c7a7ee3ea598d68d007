@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "594262b3_bca1808d",
+        "filename": "ui/events/gesture_detection/touch_disposition_gesture_filter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-08T17:42:56Z",
+      "side": 1,
+      "message": "Hmm, I am having a second thought about these functions that share quite a bit of code with existing functions. For example, is it possible to have an util function in anonymous namespace, both OnWhiteListedTouchAction() and OnTouchEventAck() calls it, and OnTouchEventAck() will just discard the return value.\n\nSame suggest applies to the rest of functions in this file.",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 61
+      },
+      "revId": "bbce6fa7df4688cf1d0d8c7a7ee3ea598d68d007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8667f480_fa8fc495",
+        "filename": "ui/events/gesture_detection/touch_disposition_gesture_filter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-08T17:42:56Z",
+      "side": 1,
+      "message": "Maybe this part can be in a helper function shared with SendAckedEvents()?",
+      "range": {
+        "startLine": 251,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 78
+      },
+      "revId": "bbce6fa7df4688cf1d0d8c7a7ee3ea598d68d007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
