@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a13ca24_fd3787c1",
+        "filename": "chrome/installer/zucchini/type_win_pe.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-08T00:42:58Z",
+      "side": 1,
+      "message": "Gets replaced by ImageDOSHeader.",
+      "range": {
+        "startLine": 136,
+        "startChar": 17,
+        "endLine": 136,
+        "endChar": 39
+      },
+      "revId": "753c6fa8cb4583766808fddbaf55f90dd874fa0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1a2a7a8_2ce32adc",
+        "filename": "chrome/installer/zucchini/type_win_pe.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-08T00:42:58Z",
+      "side": 1,
+      "message": "This is actually part of WINNT.h",
+      "range": {
+        "startLine": 137,
+        "startChar": 17,
+        "endLine": 137,
+        "endChar": 45
+      },
+      "revId": "753c6fa8cb4583766808fddbaf55f90dd874fa0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
