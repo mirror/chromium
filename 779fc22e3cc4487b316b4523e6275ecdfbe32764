@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efa0ceaa_64f9ce1a",
+        "filename": "components/autofill/content/browser/content_autofill_driver_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-08T14:14:23Z",
+      "side": 0,
+      "message": "why is this test no longer relevant?",
+      "range": {
+        "startLine": 330,
+        "startChar": 34,
+        "endLine": 330,
+        "endChar": 57
+      },
+      "revId": "779fc22e3cc4487b316b4523e6275ecdfbe32764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
