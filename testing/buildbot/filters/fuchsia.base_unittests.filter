@@ -24,7 +24,6 @@
 -FileProxyTest.SetTimes
 -FileUtilProxyTest.Touch
 -FileUtilTest.FileToFILE
--LoggingTest.CheckCausesDistinctBreakpoints
 -NativeLibraryTest.LoadLibrary
 -NativeLibraryTest.LoadLibraryPreferOwnSymbols
 -PathServiceTest.Get
