@@ -8,6 +8,7 @@
 #include "core/dom/Text.h"
 #include "core/editing/iterators/TextIteratorBehavior.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
@@ -25,6 +26,7 @@ class TextIteratorTextNodeHandler {
  public:
   TextIteratorTextNodeHandler(const TextIteratorBehavior&,
                               TextIteratorTextState*);
+  ~TextIteratorTextNodeHandler();
 
   Text* GetNode() const { return text_node_; }
 
@@ -54,6 +56,8 @@ class TextIteratorTextNodeHandler {
   size_t RestoreCollapsedTrailingSpace(InlineTextBox* next_text_box,
                                        size_t subrun_end);
 
+  void HandleTextNodeWithLayoutNG();
+
   // Used when the visibility of the style should not affect text gathering.
   bool IgnoresStyleVisibility() const {
     return behavior_.IgnoresStyleVisibility();
@@ -73,6 +77,9 @@ class TextIteratorTextNodeHandler {
   Member<Text> text_node_;
   unsigned offset_ = 0;
   unsigned end_offset_ = 0;
+
+  // Indicates if the text node is laid out with LayoutNG.
+  bool uses_layout_ng_ = false;
 
   InlineTextBox* text_box_ = nullptr;
 
