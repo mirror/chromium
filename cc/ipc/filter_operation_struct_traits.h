@@ -132,8 +132,7 @@ struct StructTraits<cc::mojom::FilterOperationDataView, cc::FilterOperation> {
     if (operation.type() != cc::FilterOperation::COLOR_MATRIX)
       return FilterOperationMatrix();
     constexpr size_t MATRIX_SIZE = 20;
-    return {MATRIX_SIZE, MATRIX_SIZE,
-            const_cast<float*>(&operation.matrix()[0])};
+    return {MATRIX_SIZE, const_cast<float*>(&operation.matrix()[0])};
   }
 
   static int32_t zoom_inset(const cc::FilterOperation& operation) {
@@ -187,8 +186,7 @@ struct StructTraits<cc::mojom::FilterOperationDataView, cc::FilterOperation> {
         constexpr size_t MATRIX_SIZE = 20;
         float matrix_buffer[MATRIX_SIZE];
         memset(&matrix_buffer[0], 0, sizeof(matrix_buffer));
-        FilterOperationMatrix matrix = {MATRIX_SIZE, MATRIX_SIZE,
-                                        &matrix_buffer[0]};
+        FilterOperationMatrix matrix = {MATRIX_SIZE, &matrix_buffer[0]};
         if (!data.ReadMatrix(&matrix))
           return false;
         out->set_matrix(matrix_buffer);
