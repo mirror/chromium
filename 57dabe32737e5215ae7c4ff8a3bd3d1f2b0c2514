@@ -1,0 +1,307 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "262081b0_c7b69d76",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "nit: you already include these in chrome_virtual_keyboard_delegate.h",
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c34d2b_04c17e4b",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "BindOnce?",
+      "range": {
+        "startLine": 95,
+        "startChar": 26,
+        "endLine": 95,
+        "endChar": 30
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada11b80_4c1d6a36",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "nit: I\u0027d rename this to something like FireConfigChangedEvent, or DispatchConfigChangeEvent",
+      "range": {
+        "startLine": 235,
+        "startChar": 36,
+        "endLine": 235,
+        "endChar": 63
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c4518d1_59296229",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "nit: I don\u0027t see a good reason to change these.",
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de1d129_c42b0543",
+        "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/src/background.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "should we omit flags for handwriting in this case and let the app choose the default setting?",
+      "range": {
+        "startLine": 81,
+        "startChar": 46,
+        "endLine": 81,
+        "endChar": 65
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb687b4e_a8fed4f6",
+        "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/src/background.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "I think this would be cleaner approach:\n\nchrome.test.listenOnce(\n    chrome.virtualKeyboardPrivate.onKeyboardConfigChanged,\n    function(config) {\n       ...\n    });",
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516af91f_433b0e5d",
+        "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/src/background.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "you can omit function() {}",
+      "range": {
+        "startLine": 105,
+        "startChar": 33,
+        "endLine": 105,
+        "endChar": 46
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e043d6f_bd16e461",
+        "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/src/manifest.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "nit: virtual",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 2,
+        "endChar": 33
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662bc70b_8d7985bc",
+        "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/update.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure we should be adding this here..\n\nAt least it should be better documented",
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b2b49f_73525de8",
+        "filename": "extensions/browser/api/virtual_keyboard/virtual_keyboard_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this helps readability that much",
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2407d93b_6c0ae04e",
+        "filename": "extensions/browser/extension_event_histogram_value.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "run this",
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bce3850_1f475cfd",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "Let\u0027s not do this - use --whitelisted-extension-id flag in tests instead",
+      "range": {
+        "startLine": 649,
+        "startChar": 7,
+        "endLine": 649,
+        "endChar": 47
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f58b4b_2327bb7f",
+        "filename": "extensions/test/data/api_test/virtual_keyboard/test.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "can you undo the formatting change?\nI think the original one was better",
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890b0af0_5b6a9f49",
+        "filename": "extensions/test/data/api_test/virtual_keyboard/test.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "this can probably be\nchrome.test.callbackPass(function(featuresEnabled) {\n  chrome.test.asssertEq(\u0027false\u0027, featuresEnabled);\n})",
+      "range": {
+        "startLine": 34,
+        "startChar": 35,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6368855e_cce7d660",
+        "filename": "extensions/test/data/api_test/virtual_keyboard/test.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 1,
+      "message": "nit: not needed",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

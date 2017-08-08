@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9f3d221_5a00998c",
+        "filename": "chrome/browser/chromeos/input_method/input_method_engine_browsertests.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 0,
+      "message": "is removal of this assert intentional?\nSeems like the requirement for the extension background page running did not change by this cl.",
+      "revId": "b8218917eb25640ddf0d37c8b7d36102a79737d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7193f19c_dabb813d",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 0,
+      "message": "this changed behavior of DisableVoiceInput flag - if the flag is not needed, please remove it in a separate patch.",
+      "range": {
+        "startLine": 219,
+        "startChar": 51,
+        "endLine": 219,
+        "endChar": 70
+      },
+      "revId": "b8218917eb25640ddf0d37c8b7d36102a79737d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c15895a_f1dafda4",
+        "filename": "chrome/browser/ui/ash/keyboard_end_to_end_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 0,
+      "message": "can this be done in a separately - it seems orthogonal to this change.",
+      "revId": "b8218917eb25640ddf0d37c8b7d36102a79737d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46cab67d_e35dba4f",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-08T11:32:49Z",
+      "side": 0,
+      "message": "Are you sure this is OK?\nHotrod app shell might rely on this behaviour.",
+      "revId": "b8218917eb25640ddf0d37c8b7d36102a79737d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
