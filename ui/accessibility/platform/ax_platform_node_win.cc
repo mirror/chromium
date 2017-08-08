@@ -1278,6 +1278,7 @@ STDMETHODIMP AXPlatformNodeWin::get_indexInParent(LONG* index_in_parent) {
 
 STDMETHODIMP AXPlatformNodeWin::get_nRelations(LONG* n_relations) {
   COM_OBJECT_VALIDATE_1_ARG(n_relations);
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_RELATIONS);
   NotifyAXModeChanged(kScreenReaderAndHTMLAccessibilityModes);
   *n_relations = static_cast<LONG>(relations_.size());
   return S_OK;
@@ -1286,6 +1287,7 @@ STDMETHODIMP AXPlatformNodeWin::get_nRelations(LONG* n_relations) {
 STDMETHODIMP AXPlatformNodeWin::get_relation(LONG relation_index,
                                              IAccessibleRelation** relation) {
   COM_OBJECT_VALIDATE_1_ARG(relation);
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_RELATION);
   NotifyAXModeChanged(kScreenReaderAndHTMLAccessibilityModes);
   if (relation_index < 0 ||
       relation_index >= static_cast<long>(relations_.size())) {
@@ -1301,6 +1303,7 @@ STDMETHODIMP AXPlatformNodeWin::get_relations(LONG max_relations,
                                               IAccessibleRelation** relations,
                                               LONG* n_relations) {
   COM_OBJECT_VALIDATE_2_ARGS(relations, n_relations);
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_RELATIONS);
   NotifyAXModeChanged(kScreenReaderAndHTMLAccessibilityModes);
 
   long count = static_cast<long>(relations_.size());
