@@ -43,6 +43,7 @@
 #include "storage/common/blob_storage/blob_handle.h"
 #include "storage/common/storage_histograms.h"
 #include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom.h"
+#include "third_party/WebKit/public/platform/modules/fetch/fetch_response_type.mojom.h"
 
 namespace content {
 

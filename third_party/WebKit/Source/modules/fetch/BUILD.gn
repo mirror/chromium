@@ -51,4 +51,8 @@ blink_modules_sources("fetch") {
     # linker/compiler. https://crbug.com/739340
     jumbo_excluded_sources = [ "Body.cpp" ]
   }
+
+  deps = [
+    "//third_party/WebKit/public:fetch_response_type",
+  ]
 }

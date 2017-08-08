@@ -36,6 +36,7 @@
 #include "net/url_request/url_request_status.h"
 #include "storage/common/blob_storage/blob_storage_constants.h"
 #include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom.h"
+#include "third_party/WebKit/public/platform/modules/fetch/fetch_response_type.mojom.h"
 #include "url/gurl.h"
 
 namespace net {

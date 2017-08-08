@@ -40,6 +40,7 @@
 #include "public/platform/WebString.h"
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
+#include "public/platform/modules/fetch/fetch_response_type.mojom-shared.h"
 
 namespace blink {
 

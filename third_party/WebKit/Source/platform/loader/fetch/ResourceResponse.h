@@ -41,6 +41,7 @@
 #include "platform/wtf/text/CString.h"
 #include "public/platform/WebURLResponse.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-blink.h"
+#include "public/platform/modules/fetch/fetch_response_type.mojom-blink.h"
 
 namespace blink {
 

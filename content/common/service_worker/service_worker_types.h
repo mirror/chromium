@@ -21,6 +21,7 @@
 #include "content/public/common/service_worker_modes.h"
 #include "third_party/WebKit/public/platform/WebPageVisibilityState.h"
 #include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom.h"
+#include "third_party/WebKit/public/platform/modules/fetch/fetch_response_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerClientType.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponseError.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerState.h"

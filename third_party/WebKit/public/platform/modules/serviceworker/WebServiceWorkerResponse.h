@@ -13,6 +13,7 @@
 #include "public/platform/WebURL.h"
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-blink.h"
+#include "public/platform/modules/fetch/fetch_response_type.mojom-blink.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponseError.h"
 
 #if INSIDE_BLINK

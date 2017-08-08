@@ -755,7 +755,6 @@ mojom("mojo_bindings") {
   visibility_blink = [
     "//content/common:mojo_bindings_blink",
     "//third_party/WebKit/Source/platform",
-    "//third_party/WebKit/Source/platform/loader",
   ]
   sources = [
     "platform/display_mode.mojom",
@@ -903,6 +902,16 @@ group("generate_mojo_bindings") {
 mojom("web_feature_mojo_bindings") {
   sources = [
     "platform/web_feature.mojom",
+  ]
+}
+
+# fetch_response_type probably shouldn't be its own target but it couldn't be
+# added easily to mojo_bindings or blink_headers without causing build errors
+# due to the other files in those targets and possibly circular dependencies.
+# It was just easier to split it out: crbug.com/750883
+mojom("fetch_response_type") {
+  sources = [
+    "platform/modules/fetch/fetch_response_type.mojom",
   ]
 }
 

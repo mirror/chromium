@@ -99,13 +99,13 @@ source_set("loader") {
     "//components/link_header_util:link_header_util",
     "//mojo/public/cpp/system:system",
     "//storage/public/interfaces:interfaces_blink__generator",
-    "//third_party/WebKit/public:mojo_bindings_blink",
   ]
 
   public_deps = [
     "//base",
     "//net",
     "//skia",
+    "//third_party/WebKit/public:fetch_response_type_blink",
     "//third_party/icu",
     "//v8",
   ]
