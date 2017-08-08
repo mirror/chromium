@@ -86,4 +86,15 @@ TEST(BMPImageDecoderTest, mergeBuffer) {
   TestMergeBuffer(&CreateDecoder, bmp_file);
 }
 
+// Verify that decoding this image does not crash.
+TEST(BMPImageDecoderTest, crbug752898) {
+  const char* bmp_file = "/LayoutTests/images/resources/crbug752898.bmp";
+  RefPtr<SharedBuffer> data = ReadFile(bmp_file);
+  ASSERT_TRUE(data.Get());
+
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
+  decoder->SetData(data.Get(), true);
+  decoder->FrameBufferAtIndex(0);
+}
+
 }  // namespace blink
