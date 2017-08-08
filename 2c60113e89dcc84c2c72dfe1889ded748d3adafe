@@ -16,6 +16,23 @@
       "revId": "2c60113e89dcc84c2c72dfe1889ded748d3adafe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84b476cf_0bdc9725",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T16:14:56Z",
+      "side": 1,
+      "message": "…come to think of it, this whole function is basically a @media query…",
+      "revId": "2c60113e89dcc84c2c72dfe1889ded748d3adafe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
