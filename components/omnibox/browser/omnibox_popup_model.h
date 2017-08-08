@@ -11,7 +11,8 @@
 #include "base/observer_list.h"
 #include "components/omnibox/browser/autocomplete_controller.h"
 #include "components/omnibox/browser/autocomplete_result.h"
-#include "components/omnibox/browser/omnibox_edit_model.h"
+#include "components/omnibox/browser/omnibox_client.h"
+#include "components/omnibox/browser/omnibox_popup_model_delegate.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 
 class OmniboxPopupModelObserver;
@@ -29,7 +30,10 @@ class OmniboxPopupModel {
     KEYWORD
   };
 
-  OmniboxPopupModel(OmniboxPopupView* popup_view, OmniboxEditModel* edit_model);
+  OmniboxPopupModel(OmniboxPopupView* popup_view,
+                    OmniboxPopupModelDelegate* delegate,
+                    OmniboxClient* client,
+                    AutocompleteController* const autocomplete_controller);
   ~OmniboxPopupModel();
 
   // Computes the maximum width, in pixels, that can be allocated for the two
@@ -61,7 +65,7 @@ class OmniboxPopupModel {
 
   // Returns the AutocompleteController used by this popup.
   AutocompleteController* autocomplete_controller() const {
-    return edit_model_->autocomplete_controller();
+    return autocomplete_controller_;
   }
 
   const AutocompleteResult& result() const {
@@ -149,7 +153,11 @@ class OmniboxPopupModel {
 
   OmniboxPopupView* view_;
 
-  OmniboxEditModel* edit_model_;
+  OmniboxPopupModelDelegate* delegate_;
+
+  OmniboxClient* client_;
+
+  AutocompleteController* const autocomplete_controller_;
 
   // The line that's currently hovered.  If we're not drawing a hover rect,
   // this will be kNoMatch, even if the cursor is over the popup contents.

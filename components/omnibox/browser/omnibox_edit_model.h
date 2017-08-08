@@ -19,6 +19,7 @@
 #include "components/omnibox/browser/autocomplete_input.h"
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "components/omnibox/browser/omnibox_controller.h"
+#include "components/omnibox/browser/omnibox_popup_model_delegate.h"
 #include "components/omnibox/browser/omnibox_view.h"
 #include "components/omnibox/common/omnibox_focus_state.h"
 #include "ui/base/window_open_disposition.h"
@@ -48,7 +49,7 @@ enum class KeywordModeEntryMethod {
   NUM_ITEMS,
 };
 
-class OmniboxEditModel {
+class OmniboxEditModel : public OmniboxPopupModelDelegate {
  public:
   // Did the Omnibox focus originate via the user clicking on the Omnibox or on
   // the Fakebox?
@@ -306,24 +307,6 @@ class OmniboxEditModel {
   // negative for moving up, positive for moving down.
   virtual void OnUpOrDownKeyPressed(int count);
 
-  // Called when any relevant data changes.  This rolls together several
-  // separate pieces of data into one call so we can update all the UI
-  // efficiently:
-  //   |text| is either the new temporary text from the user manually selecting
-  //     a different match, or the inline autocomplete text.  We distinguish by
-  //     checking if |destination_for_temporary_text_change| is NULL.
-  //   |destination_for_temporary_text_change| is NULL (if temporary text should
-  //     not change) or the pre-change destination URL (if temporary text should
-  //     change) so we can save it off to restore later.
-  //   |keyword| is the keyword to show a hint for if |is_keyword_hint| is true,
-  //     or the currently selected keyword if |is_keyword_hint| is false (see
-  //     comments on keyword_ and is_keyword_hint_).
-  void OnPopupDataChanged(
-      const base::string16& text,
-      GURL* destination_for_temporary_text_change,
-      const base::string16& keyword,
-      bool is_keyword_hint);
-
   // Called by the OmniboxView after something changes, with details about what
   // state changes occured.  Updates internal state, updates the popup if
   // necessary, and returns true if any significant changes occurred.  Note that
@@ -341,6 +324,13 @@ class OmniboxEditModel {
 
   // Name of the histogram tracking cut or copy omnibox commands.
   static const char kCutOrCopyAllTextHistogram[];
+
+  // OmniboxPopupModelDelegate overrides.
+
+  void OnPopupDataChanged(const base::string16& text,
+                          GURL* destination_for_temporary_text_change,
+                          const base::string16& keyword,
+                          bool is_keyword_hint) override;
 
  private:
   friend class OmniboxControllerTest;
