@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c55bc4f8_138a4af3",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T16:13:28Z",
+      "side": 1,
+      "message": "Note: it\u0027s possible to read them from JS:\n\n    window.getComputedStyle(document.documentElement).getPropertyValue(\"--tile-width\")\n\n(\u003d\u003e \" 154px\") so we could do away with this duplication in the future.",
+      "revId": "2c60113e89dcc84c2c72dfe1889ded748d3adafe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
