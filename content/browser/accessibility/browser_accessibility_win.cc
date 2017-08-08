@@ -4,6 +4,7 @@
 
 #include "content/browser/accessibility/browser_accessibility_win.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
+#include "content/browser/accessibility/browser_accessibility_state_impl.h"
 
 #include "ui/base/win/atl_module.h"
 
@@ -24,10 +25,15 @@ BrowserAccessibilityWin::BrowserAccessibilityWin() {
 
   // Set the delegate to us
   browser_accessibility_com_->Init(this);
+
+  // Listen to accessibility mode changes
+  browser_accessibility_com_->AddAXModeObserver(this);
 }
 
 BrowserAccessibilityWin::~BrowserAccessibilityWin() {
   if (browser_accessibility_com_) {
+    browser_accessibility_com_->RemoveAXModeObserver(this);
+
     browser_accessibility_com_->Destroy();
     browser_accessibility_com_ = nullptr;
   }
@@ -71,6 +77,10 @@ ui::AXPlatformNode* BrowserAccessibilityWin::GetFromNodeID(int32_t id) {
 
   auto* accessibility_win = ToBrowserAccessibilityWin(accessibility);
   return accessibility_win->GetCOM();
+}
+
+void BrowserAccessibilityWin::OnAXModeChanged(ui::AXMode mode) {
+  BrowserAccessibilityStateImpl::GetInstance()->AddAccessibilityModeFlags(mode);
 }
 
 BrowserAccessibilityComWin* BrowserAccessibilityWin::GetCOM() const {

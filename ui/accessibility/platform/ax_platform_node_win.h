@@ -692,6 +692,8 @@ class AX_EXPORT __declspec(uuid("26f5641a-246d-457b-a96d-07f3fae6acf2"))
   void AddAlertTarget();
   void RemoveAlertTarget();
 
+  void NotifyAXModeChanged(ui::AXMode mode_flags);
+
   // Return the text to use for IAccessibleText.
   base::string16 TextForIAccessibleText();
 

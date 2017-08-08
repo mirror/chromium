@@ -69,6 +69,14 @@ AXPlatformNodeDelegate* AXPlatformNodeBase::GetDelegate() const {
   return delegate_;
 }
 
+void AXPlatformNodeBase::AddAXModeObserver(AXModeObserver* observer) {
+  ax_mode_observers_.AddObserver(observer);
+}
+
+void AXPlatformNodeBase::RemoveAXModeObserver(AXModeObserver* observer) {
+  ax_mode_observers_.RemoveObserver(observer);
+}
+
 // Helpers.
 
 AXPlatformNodeBase* AXPlatformNodeBase::GetPreviousSibling() {
