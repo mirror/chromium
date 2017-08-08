@@ -1,0 +1,272 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "937118ab_5d4603c3",
+        "filename": "content/browser/cache_storage/cache_storage.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T00:24:58Z",
+      "side": 1,
+      "message": "This should be ResetManager and implemented in cc file. Only accessors are allowed to be inlined.",
+      "range": {
+        "startLine": 125,
+        "startChar": 7,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab76b56_1fd4b0fc",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T00:24:58Z",
+      "side": 1,
+      "message": "style: missing {} around two-lines if body.",
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c1b0c5_51e42ee0",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T00:24:58Z",
+      "side": 1,
+      "message": "If you call this synchronously, it might as well be a synchronous method without callback.",
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe034dc5_8b396499",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T00:24:58Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cce9eec_f00fadc7",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T00:24:58Z",
+      "side": 1,
+      "message": "Did you mean \"if (frontend_)\" instead? You can assume it\u0027s always there - no need to check at all.",
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404559e3_a9aef486",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T00:24:58Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cdf7021_769028c3",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T00:24:58Z",
+      "side": 1,
+      "message": "nit: I\u0027d inline this into StorageHandler::TrackOrigin to reduce the number of hops for the reader, but that\u0027s up to you.",
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8315afdd_19fee350",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T00:24:58Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49860e80_9c297f54",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T00:24:58Z",
+      "side": 1,
+      "message": "We usually name this with \"it\" for \"iterator\", e.g. |it| or |it_origin|.",
+      "range": {
+        "startLine": 286,
+        "startChar": 7,
+        "endLine": 286,
+        "endChar": 14
+      },
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ab6a734_9f5b5a82",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T00:24:58Z",
+      "side": 1,
+      "message": "These could be private if they are only called from CacheStorageObserver inner class. Actually, you can just inline it to observer, since it can access private frontend_ member.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 36
+      },
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562b6894_bc6a1da7",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T00:24:58Z",
+      "side": 1,
+      "message": "You can just forward-declare this class in a header and move definition to cc file. Makes reading header much easier without extra implementation details.",
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05ab17a5_d42cedd2",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T00:24:58Z",
+      "side": 1,
+      "message": "I think the convention is to name this |weak_ptr_factory_|.",
+      "range": {
+        "startLine": 93,
+        "startChar": 39,
+        "endLine": 93,
+        "endChar": 51
+      },
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb9ddab_0ed6d216",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 4749,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T00:24:58Z",
+      "side": 1,
+      "message": "nit: unregisters",
+      "range": {
+        "startLine": 4749,
+        "startChar": 32,
+        "endLine": 4749,
+        "endChar": 43
+      },
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b281608b_22497269",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-08T00:24:58Z",
+      "side": 1,
+      "message": "You can just use ServiceWorkerCacheModel for this. Make it \"@implements {Protocol.StorageDispatcher}\". Also, you have to call\ntarget.registerStorageDispatcher(dispatcher) in constructor of ServiceWorkerCacheModel.",
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
