@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c9b0a87_c2a147ff",
+        "filename": "third_party/WebKit/Source/devtools/front_end/protocol/InspectorBackend.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-08T23:51:39Z",
+      "side": 1,
+      "message": "Using a map in case doing console.context(...) too often is slow",
+      "revId": "7a23c2bd8b864dbac577f9a2be943dc95930c3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
