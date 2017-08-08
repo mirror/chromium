@@ -36,6 +36,7 @@ namespace payments {
 class AddressNormalizer;
 class AutofillPaymentInstrument;
 class CurrencyFormatter;
+class IOSPaymentInstrument;
 }  // namespace payments
 
 namespace ios {
