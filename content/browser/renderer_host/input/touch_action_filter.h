@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "cc/input/touch_action.h"
 #include "content/common/content_export.h"
+#include "ui/events/gesture_detection/touch_disposition_gesture_filter.h"
 
 namespace blink {
 class WebGestureEvent;
@@ -19,7 +20,8 @@ namespace content {
 // events according to the CSS touch-action values the renderer has sent for
 // each touch point.
 // For details see the touch-action design doc at http://goo.gl/KcKbxQ.
-class CONTENT_EXPORT TouchActionFilter {
+class CONTENT_EXPORT TouchActionFilter
+    : public ui::WhiteListedTouchDispositionGestureFilter {
  public:
   TouchActionFilter();
 
@@ -28,6 +30,11 @@ class CONTENT_EXPORT TouchActionFilter {
   // the event's directional parameters to make the event compatible with
   // the effective touch-action.
   bool FilterGestureEvent(blink::WebGestureEvent* gesture_event);
+
+  // ui::WhiteListedTouchDispositionGestureFilter implementation. Changes
+  // GestureEventData to a WebGestureEvent and calls and returns the result of
+  // FilterGestureEvent(blink::WebGestureEvent*).
+  bool FilterGestureEvent(const ui::GestureEventData& event) override;
 
   // Called when a set-touch-action message is received from the renderer
   // for a touch start event that is currently in flight.
@@ -49,6 +56,9 @@ class CONTENT_EXPORT TouchActionFilter {
   void OnSetWhiteListedTouchAction(cc::TouchAction white_listed_touch_action);
 
   cc::TouchAction allowed_touch_action() const { return allowed_touch_action_; }
+  cc::TouchAction white_listed_touch_action() const {
+    return white_listed_touch_action_;
+  }
 
  private:
   bool ShouldSuppressManipulation(const blink::WebGestureEvent&);

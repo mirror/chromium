@@ -33,6 +33,11 @@ class MockInputDispositionHandler : public InputDispositionHandler {
   void OnGestureEventAck(const GestureEventWithLatencyInfo& event,
                          InputEventAckState ack_result) override;
   void OnUnexpectedEventAck(UnexpectedEventAckType type) override;
+  bool OnWhiteListedTouchAction(
+      ui::WhiteListedTouchDispositionGestureFilter&
+          white_listed_touch_disposition_gesture_filter,
+      uint32_t unique_touch_event_id,
+      InputEventAckState ack_result) override;
 
   size_t GetAndResetAckCount();
 
