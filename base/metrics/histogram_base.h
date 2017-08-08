@@ -153,6 +153,8 @@ class BASE_EXPORT HistogramBase {
 
   virtual HistogramType GetHistogramType() const = 0;
 
+  bool IsExpired() const;
+
   // Whether the histogram has construction arguments as parameters specified.
   // For histograms that don't have the concept of minimum, maximum or
   // bucket_count, this function always returns false.
