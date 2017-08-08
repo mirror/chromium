@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e79c32aa_808e5af1",
+        "filename": "tools/perf/benchmarks/service_worker.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-08T16:42:58Z",
+      "side": 0,
+      "message": "We can probably get rid of this since its only for ref builds. We dont care as much when ref builds fail as we use to.",
+      "revId": "ac52dfae0506a18df0c1ccaa6cda19fcc502e658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
