@@ -79,8 +79,20 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
    * @param {!Protocol.Runtime.ObjectPreview} preview
    */
   _appendObjectPropertiesPreview(parentElement, preview) {
+    var primitiveValue = getInternalProperty('[[PrimitiveValue]]');
+    if (primitiveValue) {
+      parentElement.appendChild(this._renderPropertyPreviewOrAccessor([primitiveValue]));
+      return;
+    }
+
+    var internalProperties = /** @type {!Array<!Protocol.Runtime.PropertyPreview>} */ ([]);
+    addInternalProperty('[[PromiseStatus]]', Common.UIString('status'));
+    addInternalProperty('[[PromiseValue]]', Common.UIString('value'));
+    addInternalProperty('[[GeneratorStatus]]', Common.UIString('status'));
+
     var properties = preview.properties.filter(p => p.type !== 'accessor')
                          .stableSort(ObjectUI.RemoteObjectPreviewFormatter._objectPropertyComparator);
+    properties = internalProperties.concat(properties);
     for (var i = 0; i < properties.length; ++i) {
       if (i > 0)
         parentElement.createTextChild(', ');
@@ -89,6 +101,36 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
       parentElement.appendChild(this._renderDisplayName(property.name));
       parentElement.createTextChild(': ');
       parentElement.appendChild(this._renderPropertyPreviewOrAccessor([property]));
+    }
+
+    /**
+     * @param {string} propertyName
+     * @return {?Protocol.Runtime.PropertyPreview}
+     */
+    function getInternalProperty(propertyName) {
+      if (!preview.internalProperties)
+        return null;
+      return preview.internalProperties.find(prop => prop.name === propertyName) || null;
+    }
+
+    /**
+     * @param {string} propertyName
+     * @param {string} overrideName
+     */
+    function addInternalProperty(propertyName, overrideName) {
+      if (!preview.internalProperties)
+        return;
+      var internalProperty = preview.internalProperties.find(prop => prop.name === propertyName);
+      if (!internalProperty)
+        return;
+      var property = {
+        name: overrideName,
+        type: internalProperty.type,
+        value: internalProperty.value,
+        valuePreview: internalProperty.valuePreview,
+        subtype: internalProperty.subtype
+      };
+      internalProperties.push(property);
     }
   }
 
@@ -208,6 +250,11 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
    */
   _renderPropertyPreviewOrAccessor(propertyPath) {
     var property = propertyPath.peekLast();
+    if (property.valuePreview) {
+      var result = createElement('span');
+      this.appendObjectPreview(result, property.valuePreview, false /* isEntry */);
+      return result;
+    }
     return this.renderPropertyPreview(property.type, /** @type {string} */ (property.subtype), property.value);
   }
 
