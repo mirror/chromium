@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "d23d9742_aed0f8aa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-08T00:51:18Z",
+      "side": 1,
+      "message": "I\u0027m curious, which part of the new approach prevents this inheritance?",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca2c25d_7208f0fd",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-08T00:51:18Z",
+      "side": 1,
+      "message": "Is there a reason these tests live in the chrome/ layer?  Most of the implementation seems to be within content.",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5c48f83_20c37307",
         "filename": "chrome/browser/chrome_navigation_browsertest.cc",
         "patchSetId": 11
@@ -129,6 +163,24 @@
     },
     {
       "key": {
+        "uuid": "dbc763de_ace91093",
+        "filename": "content/browser/child_process_security_policy_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-08T00:51:18Z",
+      "side": 1,
+      "message": "I thought that we did end up committing the error URL in normal processes, right?  Won\u0027t that be a problem if CanCommitURL returns false for it?",
+      "parentUuid": "19c19ce5_0135a8d3",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecefeb96_bb6595e0",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 11
@@ -158,6 +210,23 @@
       "side": 1,
       "message": "Should we also consider this a bad message and terminate the renderer process?",
       "parentUuid": "ecefeb96_bb6595e0",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7632ab6e_69ae2c9e",
+        "filename": "content/common/url_schemes.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-08T00:51:18Z",
+      "side": 1,
+      "message": "Does this scheme bypass CSP for some other reason?",
       "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
