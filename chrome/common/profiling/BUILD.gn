@@ -10,8 +10,8 @@ if (enable_oop_heap_profiling) {
     sources = [
       "memlog_allocator_shim.cc",
       "memlog_allocator_shim.h",
-      "memlog_sender.cc",
-      "memlog_sender.h",
+      "memlog_client.cc",
+      "memlog_client.h",
       "memlog_sender_pipe.h",
       "memlog_sender_pipe_posix.cc",
       "memlog_sender_pipe_posix.h",
@@ -28,6 +28,7 @@ if (enable_oop_heap_profiling) {
       "//base",
       "//base:debugging_flags",
       "//chrome/common:constants",
+      "//mojo/common:common_custom_types",
     ]
   }
 
@@ -35,6 +36,7 @@ if (enable_oop_heap_profiling) {
     sources = [
       "constants.mojom",
       "memlog.mojom",
+      "memlog_client.mojom",
     ]
   }
 } else {
