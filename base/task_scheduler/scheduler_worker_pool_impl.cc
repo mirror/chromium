@@ -13,6 +13,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/lazy_instance.h"
+#include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
 #include "base/sequence_token.h"
@@ -30,6 +31,8 @@
 
 namespace base {
 namespace internal {
+
+constexpr TimeDelta SchedulerWorkerPoolImpl::kBlockedWorkersPollPeriod;
 
 namespace {
 
@@ -247,7 +250,9 @@ SchedulerWorkerPoolImpl::SchedulerWorkerPoolImpl(
   DCHECK(delayed_task_manager_);
 }
 
-void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
+void SchedulerWorkerPoolImpl::Start(
+    const SchedulerWorkerPoolParams& params,
+    scoped_refptr<TaskRunner> service_thread_task_runner) {
   AutoSchedulerLock auto_lock(lock_);
 
   DCHECK(workers_.empty());
@@ -256,6 +261,8 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
   initial_worker_capacity_ = worker_capacity_;
   suggested_reclaim_time_ = params.suggested_reclaim_time();
   backward_compatibility_ = params.backward_compatibility();
+
+  service_thread_task_runner_ = service_thread_task_runner;
 
   // The initial number of workers is |num_wake_ups_before_start_|, plus
   // one to try to keep one at least one standby thread at all times.
@@ -669,6 +676,9 @@ void SchedulerWorkerPoolImpl::WakeUpOneWorkerAssertLockAcquired() {
   if (worker)
     worker->WakeUp();
 
+  if (!HasAvailableIdleWorker() && !polling_worker_capacity_)
+    PostAdjustWorkerCapacityPollingTask();
+
   MaintainAtLeastOneIdleWorker();
 }
 
@@ -769,6 +779,42 @@ TimeDelta SchedulerWorkerPoolImpl::BlockedThreshold() const {
   if (maximum_blocked_threshold_.IsSet())
     return TimeDelta::Max();
   return TimeDelta::FromMilliseconds(10);
+}
+
+bool SchedulerWorkerPoolImpl::HasAvailableIdleWorker() {
+  lock_.AssertAcquired();
+
+  // If we're under-capacity, |workers_.size()| - |worker_capacity_| can be
+  // negative, but there'd actually be 0 suspended workers. This value indicates
+  // the number of workers that should be suspended.
+  size_t num_suspended_workers =
+      std::max<int>(0, workers_.size() - worker_capacity_);
+
+  return idle_workers_stack_.Size() > num_suspended_workers;
+}
+
+void SchedulerWorkerPoolImpl::PostAdjustWorkerCapacityPollingTask() {
+  lock_.AssertAcquired();
+
+  polling_worker_capacity_ = true;
+
+  service_thread_task_runner_->PostDelayedTask(
+      FROM_HERE,
+      base::BindOnce(
+          [](SchedulerWorkerPoolImpl* worker_pool) {
+            worker_pool->AdjustWorkerCapacity();
+
+            AutoSchedulerLock auto_lock(worker_pool->lock_);
+            DCHECK(worker_pool->polling_worker_capacity_);
+
+            if (worker_pool->HasAvailableIdleWorker())
+              worker_pool->polling_worker_capacity_ = false;
+            else
+              worker_pool->PostAdjustWorkerCapacityPollingTask();
+
+          },
+          Unretained(this)),
+      kBlockedWorkersPollPeriod);
 }
 
 }  // namespace internal

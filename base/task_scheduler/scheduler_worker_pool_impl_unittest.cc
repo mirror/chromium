@@ -88,7 +88,8 @@ class TaskSchedulerWorkerPoolImplTest
   void StartWorkerPool(TimeDelta suggested_reclaim_time, size_t num_workers) {
     ASSERT_TRUE(worker_pool_);
     worker_pool_->Start(
-        SchedulerWorkerPoolParams(num_workers, suggested_reclaim_time));
+        SchedulerWorkerPoolParams(num_workers, suggested_reclaim_time),
+        service_thread_.task_runner());
   }
 
   void CreateAndStartWorkerPool(TimeDelta suggested_reclaim_time,
@@ -778,11 +779,14 @@ TEST_F(TaskSchedulerWorkerPoolHistogramTest, NumTasksBeforeCleanup) {
 TEST(TaskSchedulerWorkerPoolStandbyPolicyTest, InitOne) {
   TaskTracker task_tracker;
   DelayedTaskManager delayed_task_manager;
-  delayed_task_manager.Start(make_scoped_refptr(new TestSimpleTaskRunner));
+  scoped_refptr<TestSimpleTaskRunner> service_task_runner =
+      MakeRefCounted<TestSimpleTaskRunner>();
+  delayed_task_manager.Start(service_task_runner);
   auto worker_pool = MakeUnique<SchedulerWorkerPoolImpl>(
       "OnePolicyWorkerPool", ThreadPriority::NORMAL, &task_tracker,
       &delayed_task_manager);
-  worker_pool->Start(SchedulerWorkerPoolParams(8U, TimeDelta::Max()));
+  worker_pool->Start(SchedulerWorkerPoolParams(8U, TimeDelta::Max()),
+                     service_task_runner);
   ASSERT_TRUE(worker_pool);
   EXPECT_EQ(1U, worker_pool->NumberOfWorkersForTesting());
   worker_pool->JoinForTesting();
@@ -795,12 +799,15 @@ TEST(TaskSchedulerWorkerPoolStandbyPolicyTest, VerifyStandbyThread) {
 
   TaskTracker task_tracker;
   DelayedTaskManager delayed_task_manager;
-  delayed_task_manager.Start(MakeRefCounted<TestSimpleTaskRunner>());
+  scoped_refptr<TestSimpleTaskRunner> service_task_runner =
+      MakeRefCounted<TestSimpleTaskRunner>();
+  delayed_task_manager.Start(service_task_runner);
   auto worker_pool = MakeUnique<SchedulerWorkerPoolImpl>(
       "StandbyThreadWorkerPool", ThreadPriority::NORMAL, &task_tracker,
       &delayed_task_manager);
   worker_pool->Start(
-      SchedulerWorkerPoolParams(worker_capacity, kReclaimTimeForCleanupTests));
+      SchedulerWorkerPoolParams(worker_capacity, kReclaimTimeForCleanupTests),
+      service_task_runner);
   ASSERT_TRUE(worker_pool);
   EXPECT_EQ(1U, worker_pool->NumberOfWorkersForTesting());
 
@@ -885,10 +892,27 @@ class TaskSchedulerWorkerPoolBlockedUnblockedTest
   // Unblocks tasks posted by SaturateWithBlockingTasks().
   void UnblockTasks() { blocking_thread_continue_.Signal(); }
 
-  // Returns how long we can  expect a change to |worker_capacity_| to occur
+  // Returns how long we can expect a change to |worker_capacity_| to occur
   // after a task has become blocked.
   TimeDelta GetWorkerCapacityChangeSleepTime() {
-    return worker_pool_->BlockedThreshold() + TestTimeouts::tiny_timeout();
+    return std::max(SchedulerWorkerPoolImpl::kBlockedWorkersPollPeriod,
+                    worker_pool_->BlockedThreshold()) +
+           TestTimeouts::tiny_timeout();
+  }
+
+  // Waits up to some amount of time until |worker_pool_|'s worker capacity
+  // reaches |expected_worker_capacity|.
+  void ExpectWorkerCapacityAfterDelay(size_t expected_worker_capacity) {
+    constexpr int kMaxAttempts = 4;
+    for (int i = 0;
+         i < kMaxAttempts && worker_pool_->GetWorkerCapacityForTesting() !=
+                                 expected_worker_capacity;
+         ++i) {
+      PlatformThread::Sleep(GetWorkerCapacityChangeSleepTime());
+    }
+
+    EXPECT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
+              expected_worker_capacity);
   }
 
   scoped_refptr<TaskRunner> task_runner_;
@@ -908,15 +932,10 @@ TEST_F(TaskSchedulerWorkerPoolBlockedUnblockedTest, ThreadBlockedUnblocked) {
 
   SaturateWithBlockingTasks();
   ASSERT_EQ(worker_pool_->NumberOfWorkersForTesting(), kNumWorkersInWorkerPool);
-  PlatformThread::Sleep(GetWorkerCapacityChangeSleepTime());
-  worker_pool_->AdjustWorkerCapacity();
-  EXPECT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
-            2 * kNumWorkersInWorkerPool);
 
+  ExpectWorkerCapacityAfterDelay(2 * kNumWorkersInWorkerPool);
   UnblockTasks();
-  task_tracker_.Flush();
-  EXPECT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
-            kNumWorkersInWorkerPool);
+  ExpectWorkerCapacityAfterDelay(kNumWorkersInWorkerPool);
 
   TaskSchedulerWorkerPoolImplTest::TearDown();
 }
@@ -927,14 +946,15 @@ TEST_F(TaskSchedulerWorkerPoolBlockedUnblockedTest, TaskBlockUnblockPremature) {
   ASSERT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
             kNumWorkersInWorkerPool);
 
+  TimeDelta worker_capacity_change_sleep = GetWorkerCapacityChangeSleepTime();
   worker_pool_->MaximizeBlockedThresholdForTesting();
 
   SaturateWithBlockingTasks();
   ASSERT_EQ(worker_pool_->NumberOfWorkersForTesting(), kNumWorkersInWorkerPool);
-
   EXPECT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
             kNumWorkersInWorkerPool);
-  worker_pool_->AdjustWorkerCapacity();
+
+  PlatformThread::Sleep(worker_capacity_change_sleep);
   EXPECT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
             kNumWorkersInWorkerPool);
 
@@ -954,10 +974,8 @@ TEST_F(TaskSchedulerWorkerPoolBlockedUnblockedTest,
             kNumWorkersInWorkerPool);
 
   SaturateWithBlockingTasks();
-  PlatformThread::Sleep(GetWorkerCapacityChangeSleepTime());
-  worker_pool_->AdjustWorkerCapacity();
-  EXPECT_EQ(worker_pool_->GetWorkerCapacityForTesting(),
-            2 * kNumWorkersInWorkerPool);
+
+  ExpectWorkerCapacityAfterDelay(2 * kNumWorkersInWorkerPool);
   EXPECT_EQ(worker_pool_->NumberOfWorkersForTesting(),
             kNumWorkersInWorkerPool + 1);
 
