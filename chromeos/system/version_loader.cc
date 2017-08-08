@@ -8,6 +8,7 @@
 
 #include <vector>
 
+#include "base/bind.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/location.h"
@@ -16,6 +17,8 @@
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
 #include "base/time/time.h"
+#include "chromeos/dbus/cryptohome_client.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
 
 namespace chromeos {
 namespace version_loader {
@@ -38,6 +41,14 @@ const char kFirmwarePrefix[] = "version";
 // File to look for firmware number in.
 const char kPathFirmware[] = "/var/log/bios_info.txt";
 
+void TpmGetVersionCallback(
+    base::Callback<void(const std::string&)> callback,
+    chromeos::DBusMethodCallStatus call_status,
+    const std::string& tpm_version) {
+  std::string version = GetVersion(VERSION_FULL);
+  callback.Run(version + "\n" + tpm_version);
+}
+
 }  // namespace
 
 std::string GetVersion(VersionFormat format) {
@@ -59,6 +70,11 @@ std::string GetVersion(VersionFormat format) {
   }
 
   return version;
+}
+
+void GetVersionWithTpm(base::Callback<void(const std::string&)> callback) {
+  chromeos::DBusThreadManager::Get()->GetCryptohomeClient()->TpmGetVersion(
+      base::Bind(&TpmGetVersionCallback, callback));
 }
 
 std::string GetARCVersion() {
