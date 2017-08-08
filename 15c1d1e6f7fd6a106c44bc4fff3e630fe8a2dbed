@@ -115,6 +115,30 @@
       "revId": "15c1d1e6f7fd6a106c44bc4fff3e630fe8a2dbed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e7df34_cb0207e9",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-08T17:25:31Z",
+      "side": 1,
+      "message": "I believe events go to ui/wm/core/AcceleratorFilter first (before views FocusManager). Ash installs an AcceleratorDelegate on the AcceleratorFilter (ash/accelerators/AcceleratorDelegate) so that it can route to Ash\u0027s accelerator handling.",
+      "parentUuid": "cad48aad_4e0fc030",
+      "range": {
+        "startLine": 56,
+        "startChar": 23,
+        "endLine": 56,
+        "endChar": 40
+      },
+      "revId": "15c1d1e6f7fd6a106c44bc4fff3e630fe8a2dbed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
