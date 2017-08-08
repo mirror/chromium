@@ -41,6 +41,8 @@ URLLoaderFactoryImpl::URLLoaderFactoryImpl(
   DCHECK((requester_info_->IsRenderer() && requester_info_->filter()) ||
          requester_info_->IsNavigationPreload());
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
+  bindings_.set_connection_error_handler(base::Bind(
+      &URLLoaderFactoryImpl::OnConnectionError, base::Unretained(this)));
 }
 
 URLLoaderFactoryImpl::~URLLoaderFactoryImpl() {
@@ -68,6 +70,10 @@ void URLLoaderFactoryImpl::SyncLoad(int32_t routing_id,
                                     SyncLoadCallback callback) {
   SyncLoad(requester_info_.get(), routing_id, request_id, url_request,
            std::move(callback));
+}
+
+void URLLoaderFactoryImpl::Clone(mojom::URLLoaderFactoryRequest request) {
+  bindings_.AddBinding(this, std::move(request));
 }
 
 // static
@@ -105,13 +111,21 @@ void URLLoaderFactoryImpl::SyncLoad(ResourceRequesterInfo* requester_info,
       base::Bind(&DispatchSyncLoadResult, base::Passed(&callback)));
 }
 
+// static
 void URLLoaderFactoryImpl::Create(
     scoped_refptr<ResourceRequesterInfo> requester_info,
-    mojo::InterfaceRequest<mojom::URLLoaderFactory> request,
+    mojom::URLLoaderFactoryRequest request,
     const scoped_refptr<base::SingleThreadTaskRunner>& io_thread_runner) {
-  mojo::MakeStrongBinding(base::WrapUnique(new URLLoaderFactoryImpl(
-                              std::move(requester_info), io_thread_runner)),
-                          std::move(request));
+  // URLLoaderFactoryImpl is effectively reference counted by the number of
+  // pipes currently in its binding set.
+  auto* impl =
+      new URLLoaderFactoryImpl(std::move(requester_info), io_thread_runner);
+  impl->Clone(std::move(request));
+}
+
+void URLLoaderFactoryImpl::OnConnectionError() {
+  if (bindings_.empty())
+    delete this;
 }
 
 }  // namespace content

@@ -107,6 +107,10 @@ void ResourceMessageFilter::SyncLoad(int32_t routing_id,
                                  url_request, std::move(callback));
 }
 
+void ResourceMessageFilter::Clone(mojom::URLLoaderFactoryRequest request) {
+  bindings_.AddBinding(this, std::move(request));
+}
+
 int ResourceMessageFilter::child_id() const {
   return requester_info_->child_id();
 }

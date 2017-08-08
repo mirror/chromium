@@ -64,6 +64,8 @@ class BlobURLLoaderFactory
                 const ResourceRequest& request,
                 SyncLoadCallback callback) override;
 
+  void Clone(mojom::URLLoaderFactoryRequest request) override;
+
  private:
   friend class base::DeleteHelper<BlobURLLoaderFactory>;
   friend struct BrowserThread::DeleteOnThread<BrowserThread::IO>;

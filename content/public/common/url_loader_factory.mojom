@@ -35,4 +35,7 @@ interface URLLoaderFactory {
                   int32 request_id,
                   URLRequest request)
       => (URLSyncLoadResult result);
+
+  // Connects a new pipe to this instance of the URLLoaderFactory interface.
+  Clone(URLLoaderFactory& factory);
 };
