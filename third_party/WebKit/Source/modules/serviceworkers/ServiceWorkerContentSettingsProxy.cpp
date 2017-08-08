@@ -2,31 +2,32 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/workers/SharedWorkerContentSettingsProxy.h"
+#include "modules/serviceworkers/ServiceWorkerContentSettingsProxy.h"
 
 #include <memory>
-#include <utility>
+#include <string>
 
 namespace blink {
 
-SharedWorkerContentSettingsProxy::SharedWorkerContentSettingsProxy(
+ServiceWorkerContentSettingsProxy::ServiceWorkerContentSettingsProxy(
     SecurityOrigin* security_origin,
     mojom::blink::WorkerContentSettingsProxyPtrInfo host_info)
     : security_origin_(security_origin->IsolatedCopy()),
       host_info_(std::move(host_info)) {}
-SharedWorkerContentSettingsProxy::~SharedWorkerContentSettingsProxy() = default;
 
-bool SharedWorkerContentSettingsProxy::AllowIndexedDB(
-    const WebString& name,
-    const WebSecurityOrigin& origin) {
-  bool result = false;
-  GetService()->AllowIndexedDB(security_origin_, name, &result);
-  return result;
+ServiceWorkerContentSettingsProxy::~ServiceWorkerContentSettingsProxy() =
+    default;
+
+bool ServiceWorkerContentSettingsProxy::RequestFileSystemAccessSync() {
+  NOTREACHED();
+  return false;
 }
 
-bool SharedWorkerContentSettingsProxy::RequestFileSystemAccessSync() {
+bool ServiceWorkerContentSettingsProxy::AllowIndexedDB(
+    const blink::WebString& name,
+    const blink::WebSecurityOrigin&) {
   bool result = false;
-  GetService()->RequestFileSystemAccessSync(security_origin_, &result);
+  GetService()->AllowIndexedDB(security_origin_, name, &result);
   return result;
 }
 
@@ -34,7 +35,7 @@ bool SharedWorkerContentSettingsProxy::RequestFileSystemAccessSync() {
 // destructed on worker thread.
 // Each worker has a dedicated thread so this is safe.
 mojom::blink::WorkerContentSettingsProxyPtr&
-SharedWorkerContentSettingsProxy::GetService() {
+ServiceWorkerContentSettingsProxy::GetService() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
       ThreadSpecific<mojom::blink::WorkerContentSettingsProxyPtr>,
       content_setting_instance_host, ());

@@ -49,6 +49,7 @@
 #include "core/workers/WorkerScriptLoader.h"
 #include "modules/indexeddb/IndexedDBClient.h"
 #include "modules/serviceworkers/ServiceWorkerContainerClient.h"
+#include "modules/serviceworkers/ServiceWorkerContentSettingsProxy.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeClient.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeProxy.h"
 #include "modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h"
@@ -63,7 +64,6 @@
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
-#include "public/platform/WebContentSettingsClient.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebWorkerFetchContext.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
@@ -79,10 +79,15 @@ std::unique_ptr<WebEmbeddedWorker> WebEmbeddedWorker::Create(
     std::unique_ptr<WebServiceWorkerContextClient> client,
     std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
         installed_scripts_manager,
-    std::unique_ptr<WebContentSettingsClient> content_settings_client) {
+    WebURL origin_url,
+    mojo::ScopedMessagePipeHandle content_settings_handle) {
   return WTF::MakeUnique<WebEmbeddedWorkerImpl>(
       std::move(client), std::move(installed_scripts_manager),
-      std::move(content_settings_client));
+      WTF::MakeUnique<ServiceWorkerContentSettingsProxy>(
+          &*SecurityOrigin::Create(KURL(origin_url)),
+          // Chrome doesn't use interface versioning.
+          mojom::blink::WorkerContentSettingsProxyPtrInfo(
+              std::move(content_settings_handle), 0u)));
 }
 
 WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
