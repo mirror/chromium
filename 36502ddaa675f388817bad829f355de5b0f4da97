@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24e984cb_f4136ce9",
+        "filename": "extensions/common/api/app_runtime.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-08-08T17:53:22Z",
+      "side": 1,
+      "message": "I am concerned about us using launch data for propagating settings to apps.\nFor M61, I think this is fine - but let\u0027s have a larger discussion later about how these values should be given to apps in the future.",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 44
+      },
+      "revId": "36502ddaa675f388817bad829f355de5b0f4da97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
