@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "1c6f4a80_1cd1ecf9",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-08T01:49:28Z",
+      "side": 1,
+      "message": "OK, removed SendEvents and added methods of updating properties of DataOffer. When DataDevice updates the properties of DataOffer, DataOffer sends events to the client.",
+      "parentUuid": "344d71dd_9b95d67a",
+      "revId": "26d741fb202ec3cfc669092224f712918952ba61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc102bdd_29e5d8ef",
         "filename": "components/exo/data_offer.h",
         "patchSetId": 5
