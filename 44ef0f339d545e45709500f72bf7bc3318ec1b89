@@ -16,6 +16,24 @@
       "revId": "44ef0f339d545e45709500f72bf7bc3318ec1b89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cd36e5_23b7f115",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-08T05:06:08Z",
+      "side": 1,
+      "message": "This is DataDeviceDelegate which is implemented by server.cc. So here is the implementation.\nhttps://cs.chromium.org/chromium/src/components/exo/wayland/server.cc?rcl\u003df552ae48cd2725ebcb2b5811e74699e376b32bab\u0026l\u003d2850\n\nThe weak pointer was needed because the lifetime of data_offer_ is managed by client. Maybe we can add some callback to get notified when DataOffer is destroyed, to remove the weak pointer?",
+      "parentUuid": "60d77eae_566a0073",
+      "revId": "44ef0f339d545e45709500f72bf7bc3318ec1b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
