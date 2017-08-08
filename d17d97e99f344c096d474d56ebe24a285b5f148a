@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9d9a426_bcd34b82",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-08-08T21:29:08Z",
+      "side": 1,
+      "message": "Could use MakeUnique, some of the newer code below does it.",
+      "revId": "d17d97e99f344c096d474d56ebe24a285b5f148a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

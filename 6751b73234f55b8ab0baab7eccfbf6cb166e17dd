@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd2fbed2_53793983",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-08-08T21:29:08Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 3
+      },
+      "revId": "6751b73234f55b8ab0baab7eccfbf6cb166e17dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14f2aece_06d1feee",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-08-08T21:29:08Z",
+      "side": 1,
+      "message": "l is a pretty bad name for a variable, that\u0027s why some people prefer ll. Maybe use something else. May also want to add a comment to document what the function does.",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 9
+      },
+      "revId": "6751b73234f55b8ab0baab7eccfbf6cb166e17dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f15a0c_a8280780",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-08-08T21:29:08Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 12
+      },
+      "revId": "6751b73234f55b8ab0baab7eccfbf6cb166e17dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321c170f_3fb037d2",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-08-08T21:29:08Z",
+      "side": 1,
+      "message": "is there a reason we want to deduce proto as a pointer specifically?",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 10
+      },
+      "revId": "6751b73234f55b8ab0baab7eccfbf6cb166e17dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
