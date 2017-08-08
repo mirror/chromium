@@ -527,6 +527,24 @@
     },
     {
       "key": {
+        "uuid": "4b5ed6b3_5b68ad42",
+        "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T16:19:00Z",
+      "side": 1,
+      "message": "Actually, it seems like this does work correctly... I must have tested wrong.",
+      "parentUuid": "618c703d_5a22e58e",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "274439f6_9c19fef1",
         "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
         "patchSetId": 8
