@@ -248,6 +248,12 @@ class ScriptURLLoaderFactory : public mojom::URLLoaderFactory {
     NOTREACHED();
   }
 
+  void Clone(mojom::URLLoaderFactoryRequest request) override {
+    // This method is required to support synchronous requests which are not
+    // performed during installation.
+    NOTREACHED();
+  }
+
  private:
   bool ShouldHandleScriptRequest(const ResourceRequest& resource_request) {
     if (!context_ || !provider_host_)

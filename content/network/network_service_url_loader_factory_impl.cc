@@ -5,6 +5,7 @@
 #include "content/network/network_service_url_loader_factory_impl.h"
 
 #include "base/logging.h"
+#include "content/network/network_context.h"
 #include "content/network/url_loader_impl.h"
 #include "content/public/common/resource_request.h"
 
@@ -43,6 +44,11 @@ void NetworkServiceURLLoaderFactoryImpl::SyncLoad(
   SyncLoadResult result;
   result.error_code = net::ERR_NOT_IMPLEMENTED;
   std::move(callback).Run(result);
+}
+
+void NetworkServiceURLLoaderFactoryImpl::Clone(
+    mojom::URLLoaderFactoryRequest request) {
+  context_->CreateURLLoaderFactory(std::move(request), process_id_);
 }
 
 }  // namespace content

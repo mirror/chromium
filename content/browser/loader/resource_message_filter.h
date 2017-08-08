@@ -84,6 +84,9 @@ class CONTENT_EXPORT ResourceMessageFilter
                 int32_t request_id,
                 const ResourceRequest& request,
                 SyncLoadCallback callback) override;
+
+  void Clone(mojom::URLLoaderFactoryRequest request) override;
+
   int child_id() const;
 
   ResourceRequesterInfo* requester_info_for_test() {
@@ -103,6 +106,11 @@ class CONTENT_EXPORT ResourceMessageFilter
 
   bool is_channel_closed_;
   scoped_refptr<ResourceRequesterInfo> requester_info_;
+
+  // An additional set of non-associated bindings (beyond those held by the
+  // BrowserAssociatedInterface parent class) of pipes to this object's
+  // URLLoaderFactory interface.
+  mojo::BindingSet<mojom::URLLoaderFactory> bindings_;
 
   // Task runner for the IO thead.
   scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner_;
