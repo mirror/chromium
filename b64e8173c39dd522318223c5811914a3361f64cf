@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "108cd78d_4f75331e",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-08T20:43:02Z",
+      "side": 1,
+      "message": "Is this necessary? I thought the fact that it\u0027s ALL_PREFIXES meant you could just stick with RegisterComponentSuccess.",
+      "range": {
+        "startLine": 102,
+        "startChar": 54,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "b64e8173c39dd522318223c5811914a3361f64cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131c48f6_7c642612",
+        "filename": "chrome/browser/component_updater/cros_component_installer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-08T20:43:02Z",
+      "side": 1,
+      "message": "More descriptive names would be good.",
+      "range": {
+        "startLine": 82,
+        "startChar": 59,
+        "endLine": 82,
+        "endChar": 60
+      },
+      "revId": "b64e8173c39dd522318223c5811914a3361f64cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
