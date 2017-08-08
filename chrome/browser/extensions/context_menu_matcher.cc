@@ -160,6 +160,37 @@ bool ContextMenuMatcher::IsCommandIdChecked(int command_id) const {
   return item->checked();
 }
 
+bool ContextMenuMatcher::IsCommandIdVisible(int command_id) const {
+  MenuItem* item = GetExtensionMenuItem(command_id);
+
+  // The context menu code creates a top-level menu item that is a container of
+  // an extension's menu items. This top-level extension menu item is not added
+  // to the context menu, so checking its visibility is a special case handled
+  // below.
+  if (command_id == IDC_EXTENSIONS_CONTEXT_CUSTOM_FIRST && !item) {
+    int index = menu_model_->GetIndexOfCommandId(command_id);
+    ui::MenuModel* model = menu_model_->GetSubmenuModelAt(index);
+    for (int i = 0; i < model->GetItemCount(); i++) {
+      item = GetExtensionMenuItem(model->GetCommandIdAt(i));
+      if (IsItemVisible(*item))
+        return true;
+    }
+    return false;
+  }
+  if (!item)
+    return false;
+  return IsItemVisible(*item);
+}
+
+bool ContextMenuMatcher::IsItemVisible(const MenuItem& item) const {
+  MenuItem::Id* parent_id = item.parent_id();
+  if (!parent_id)
+    return item.visible();
+  MenuManager* manager = MenuManager::Get(browser_context_);
+  MenuItem* parent = manager->GetItemById(*parent_id);
+  return IsItemVisible(*parent) && item.visible();
+}
+
 bool ContextMenuMatcher::IsCommandIdEnabled(int command_id) const {
   MenuItem* item = GetExtensionMenuItem(command_id);
   if (!item)
