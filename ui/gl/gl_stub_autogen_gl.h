@@ -121,6 +121,7 @@ void glClearStencilFn(GLint s) override {}
 GLenum glClientWaitSyncFn(GLsync sync,
                           GLbitfield flags,
                           GLuint64 timeout) override;
+void glClipControlMESAXFn(GLenum origin, GLenum depth) override {}
 void glColorMaskFn(GLboolean red,
                    GLboolean green,
                    GLboolean blue,

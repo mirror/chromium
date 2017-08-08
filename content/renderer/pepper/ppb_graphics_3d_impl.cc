@@ -49,6 +49,7 @@ PPB_Graphics3D_Impl::PPB_Graphics3D_Impl(PP_Instance instance)
       bound_to_instance_(false),
       commit_pending_(false),
       has_alpha_(false),
+      is_flipped_(false),
       use_image_chromium_(
           !base::CommandLine::ForCurrentProcess()->HasSwitch(
               switches::kDisablePepper3DImageChromium) &&
@@ -146,6 +147,10 @@ bool PPB_Graphics3D_Impl::BindToInstance(bool bind) {
 }
 
 bool PPB_Graphics3D_Impl::IsOpaque() { return !has_alpha_; }
+
+bool PPB_Graphics3D_Impl::IsFlipped() {
+  return is_flipped_;
+}
 
 void PPB_Graphics3D_Impl::ViewInitiatedPaint() {
   commit_pending_ = false;
@@ -266,6 +271,8 @@ bool PPB_Graphics3D_Impl::InitRaw(
     return false;
 
   command_buffer_->SetGpuControlClient(this);
+
+  is_flipped_ = !command_buffer_->GetCapabilities().flips_vertically;
 
   if (shared_state_handle)
     *shared_state_handle = command_buffer_->GetSharedStateHandle();

@@ -380,6 +380,16 @@
 #define GL_MAX_DUAL_SOURCE_DRAW_BUFFERS_EXT 0x88FC
 #endif /* GL_EXT_blend_func_extended */
 
+#ifndef GL_MESAX_clip_control
+#define GL_MESAX_clip_control 1
+#define GL_LOWER_LEFT_MESAX 0x8CA1
+#define GL_UPPER_LEFT_MESAX 0x8CA2
+#define GL_NEGATIVE_ONE_TO_ONE_MESAX 0x935E
+#define GL_ZERO_TO_ONE_MESAX 0x935F
+#define GL_CLIP_ORIGIN_MESAX 0x935C
+#define GL_CLIP_DEPTH_MODE_MESAX 0x935D
+#endif /* GL_MESAX_clip_control */
+
 #define GL_GLEXT_PROTOTYPES 1
 
 #if defined(OS_WIN)

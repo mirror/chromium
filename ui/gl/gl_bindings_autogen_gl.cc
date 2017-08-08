@@ -77,6 +77,7 @@ void DriverGL::InitializeStaticBindings() {
   fn.glClearStencilFn =
       reinterpret_cast<glClearStencilProc>(GetGLProcAddress("glClearStencil"));
   fn.glClientWaitSyncFn = 0;
+  fn.glClipControlMESAXFn = 0;
   fn.glColorMaskFn =
       reinterpret_cast<glColorMaskProc>(GetGLProcAddress("glColorMask"));
   fn.glCompileShaderFn = reinterpret_cast<glCompileShaderProc>(
@@ -662,6 +663,8 @@ void DriverGL::InitializeDynamicBindings(
   ext.b_GL_KHR_debug = extensions.find("GL_KHR_debug ") != std::string::npos;
   ext.b_GL_KHR_robustness =
       extensions.find("GL_KHR_robustness ") != std::string::npos;
+  ext.b_GL_MESAX_clip_control =
+      extensions.find("GL_MESAX_clip_control ") != std::string::npos;
   ext.b_GL_NV_blend_equation_advanced =
       extensions.find("GL_NV_blend_equation_advanced ") != std::string::npos;
   ext.b_GL_NV_fence = extensions.find("GL_NV_fence ") != std::string::npos;
@@ -864,6 +867,11 @@ void DriverGL::InitializeDynamicBindings(
       ext.b_GL_ARB_sync) {
     fn.glClientWaitSyncFn = reinterpret_cast<glClientWaitSyncProc>(
         GetGLProcAddress("glClientWaitSync"));
+  }
+
+  if (ext.b_GL_MESAX_clip_control) {
+    fn.glClipControlMESAXFn = reinterpret_cast<glClipControlMESAXProc>(
+        GetGLProcAddress("glClipControlMESAX"));
   }
 
   if (ext.b_GL_CHROMIUM_copy_compressed_texture ||
@@ -2726,6 +2734,10 @@ GLenum GLApiBase::glClientWaitSyncFn(GLsync sync,
                                      GLbitfield flags,
                                      GLuint64 timeout) {
   return driver_->fn.glClientWaitSyncFn(sync, flags, timeout);
+}
+
+void GLApiBase::glClipControlMESAXFn(GLenum origin, GLenum depth) {
+  driver_->fn.glClipControlMESAXFn(origin, depth);
 }
 
 void GLApiBase::glColorMaskFn(GLboolean red,
@@ -5412,6 +5424,11 @@ GLenum TraceGLApi::glClientWaitSyncFn(GLsync sync,
                                       GLuint64 timeout) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::glClientWaitSync")
   return gl_api_->glClientWaitSyncFn(sync, flags, timeout);
+}
+
+void TraceGLApi::glClipControlMESAXFn(GLenum origin, GLenum depth) {
+  TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::glClipControlMESAX")
+  gl_api_->glClipControlMESAXFn(origin, depth);
 }
 
 void TraceGLApi::glColorMaskFn(GLboolean red,
@@ -8593,6 +8610,13 @@ GLenum DebugGLApi::glClientWaitSyncFn(GLsync sync,
   GLenum result = gl_api_->glClientWaitSyncFn(sync, flags, timeout);
   GL_SERVICE_LOG("GL_RESULT: " << result);
   return result;
+}
+
+void DebugGLApi::glClipControlMESAXFn(GLenum origin, GLenum depth) {
+  GL_SERVICE_LOG("glClipControlMESAX"
+                 << "(" << GLEnums::GetStringEnum(origin) << ", "
+                 << GLEnums::GetStringEnum(depth) << ")");
+  gl_api_->glClipControlMESAXFn(origin, depth);
 }
 
 void DebugGLApi::glColorMaskFn(GLboolean red,
@@ -12654,6 +12678,13 @@ GLenum NoContextGLApi::glClientWaitSyncFn(GLsync sync,
       << "Trying to call glClientWaitSync() without current GL context";
   LOG(ERROR) << "Trying to call glClientWaitSync() without current GL context";
   return static_cast<GLenum>(0);
+}
+
+void NoContextGLApi::glClipControlMESAXFn(GLenum origin, GLenum depth) {
+  NOTREACHED()
+      << "Trying to call glClipControlMESAX() without current GL context";
+  LOG(ERROR)
+      << "Trying to call glClipControlMESAX() without current GL context";
 }
 
 void NoContextGLApi::glColorMaskFn(GLboolean red,
