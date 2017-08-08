@@ -60,9 +60,8 @@ ChromeIdentity* GetFakeIdentity1() {
 // TODO(crbug.com/638674): Evaluate if this can move to shared code.
 void OpenSignInFromSettings() {
   [ChromeEarlGreyUI openSettingsMenu];
-  id<GREYMatcher> matcher =
-      grey_allOf(grey_accessibilityID(kSettingsSignInCellId),
-                 grey_sufficientlyVisible(), nil);
+  id<GREYMatcher> matcher = grey_allOf(chrome_test_util::SignInMenuButton(),
+                                       grey_sufficientlyVisible(), nil);
   [[EarlGrey selectElementWithMatcher:matcher] performAction:grey_tap()];
 }
 
