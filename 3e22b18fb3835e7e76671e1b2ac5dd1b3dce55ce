@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d9fcec63_a3a3ad9f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-08T13:08:56Z",
+      "side": 1,
+      "message": "Yeah, the fragment produced by the NGInlineNode doesn\u0027t have border \u0026 padding at the moment. We can change this if it becomes really necessary.",
+      "parentUuid": "999730b7_f0853eb5",
+      "range": {
+        "startLine": 479,
+        "startChar": 6,
+        "endLine": 479,
+        "endChar": 28
+      },
+      "revId": "3e22b18fb3835e7e76671e1b2ac5dd1b3dce55ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bcb7521_31adb6cc",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.h",
         "patchSetId": 4
