@@ -16,6 +16,24 @@
       "revId": "676aabc07aceecccf290384c8cd2ed85fe3aec0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195d9ce9_299f4cce",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-08-08T18:50:30Z",
+      "side": 1,
+      "message": "There\u0027s probably a better way. I kept it like this to keep all onSafeBrowsingHit parameters together. We can revisit later to look for an advantageous refactor.",
+      "parentUuid": "af0f6d4a_2ad38c17",
+      "revId": "676aabc07aceecccf290384c8cd2ed85fe3aec0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
