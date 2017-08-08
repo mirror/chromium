@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97326bed_233fe729",
+        "filename": "ui/webui/resources/js/cr/ui/context_menu_handler.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-08T16:08:13Z",
+      "side": 1,
+      "message": "I think this is not good, because it\u0027ll also affect other parts of the UI, like the directory tree.",
+      "range": {
+        "startLine": 208,
+        "startChar": 14,
+        "endLine": 208,
+        "endChar": 52
+      },
+      "revId": "d8603ee201f40cb07387675229d7441c293e2999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
