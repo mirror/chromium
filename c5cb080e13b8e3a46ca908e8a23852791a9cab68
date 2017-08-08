@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "176d9361_789b12b3",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-08T18:28:04Z",
+      "side": 1,
+      "message": "given that the network service was configured by the browser, I think we should be able to deduce this without adding extra data to URLLoaderClient\n\nSince this flag is only used for testing, I think it\u0027s fine that we just have the appcache code directly check command_line.HasSwitch(switches::kIgnoreCertificateErrors)) and remove this virtual method",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
