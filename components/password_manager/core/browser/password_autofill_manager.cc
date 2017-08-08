@@ -269,7 +269,7 @@ void PasswordAutofillManager::OnShowPasswordSuggestions(
 
     autofill::Suggestion all_saved_passwords(
         l10n_util::GetStringUTF8(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK),
-        std::string(), "showAllSavedPasswords",
+        std::string(), std::string(),
         autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY);
     suggestions.push_back(all_saved_passwords);
   }
@@ -309,7 +309,7 @@ void PasswordAutofillManager::OnShowManualFallbackSuggestion(
   std::vector<autofill::Suggestion> suggestions;
   autofill::Suggestion all_saved_passwords(
       l10n_util::GetStringUTF8(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK),
-      std::string(), "showAllSavedPasswords",
+      std::string(), std::string(),
       autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY);
   suggestions.push_back(all_saved_passwords);
   autofill_client_->ShowAutofillPopup(bounds, text_direction, suggestions,

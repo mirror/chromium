@@ -225,11 +225,6 @@ gfx::ImageSkia AutofillPopupLayoutModel::GetIconImage(size_t index) const {
                                  gfx::kGoogleRed700);
   }
 
-  if (icon_str == base::ASCIIToUTF16("showAllSavedPasswords")) {
-    return gfx::CreateVectorIcon(kOpenInNewIcon, kIconSize,
-                                 gfx::kChromeIconGrey);
-  }
-
   // For other suggestion entries, get icon from PNG files.
   int icon_id = GetIconResourceID(icon_str);
   DCHECK_NE(-1, icon_id);
