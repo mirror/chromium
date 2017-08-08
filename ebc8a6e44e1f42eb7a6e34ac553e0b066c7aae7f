@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54d11b08_ea3ba8ea",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorTraceEvents.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-08T22:26:31Z",
+      "side": 1,
+      "message": "These other two trace event constructors seemed to only be called during measurement when the source size was not readily available and another subsequent PaintImage event was about to be recorded. Please correct me if I\u0027m wrong and should add the data there too :)",
+      "revId": "ebc8a6e44e1f42eb7a6e34ac553e0b066c7aae7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
