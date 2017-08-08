@@ -298,6 +298,11 @@ void BrowserNonClientFrameView::OnProfileAvatarChanged(
   UpdateProfileIcons();
 }
 
+void BrowserNonClientFrameView::OnProfileHighResAvatarLoaded(
+    const base::FilePath& profile_path) {
+  UpdateTaskbarDecoration();
+}
+
 const ui::ThemeProvider*
 BrowserNonClientFrameView::GetThemeProviderForProfile() const {
   // Because the frame's accessor reads the ThemeProvider from the profile and
