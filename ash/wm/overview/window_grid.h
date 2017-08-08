@@ -123,6 +123,10 @@ class ASH_EXPORT WindowGrid : public aura::WindowObserver,
     return window_list_;
   }
 
+  void set_ignored_item(WindowSelectorItem* ignored_item) {
+    ignored_item_ = ignored_item;
+  }
+
   // aura::WindowObserver:
   void OnWindowDestroying(aura::Window* window) override;
   // TODO(flackr): Handle window bounds changed in WindowSelectorItem.
@@ -200,6 +204,10 @@ class ASH_EXPORT WindowGrid : public aura::WindowObserver,
 
   // This WindowGrid's total bounds in screen coordinates.
   gfx::Rect bounds_;
+
+  // If not null and a member of |window_list_|, do not position this
+  // WindowSelectorItem.
+  WindowSelectorItem* ignored_item_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(WindowGrid);
 };

@@ -469,7 +469,8 @@ void WindowSelector::WindowClosing(WindowSelectorItem* window) {
   grid_list_[selected_grid_index_]->WindowClosing(window);
 }
 
-void WindowSelector::SetBoundsForWindowGridsInScreen(const gfx::Rect& bounds) {
+void WindowSelector::SetBoundsForWindowGridsInScreen(const gfx::Rect& bounds,
+                                                     WindowSelectorItem* item) {
   for (std::unique_ptr<WindowGrid>& grid : grid_list_)
     grid->SetBoundsAndUpdatePositions(bounds);
 }
@@ -513,6 +514,11 @@ void WindowSelector::CompleteDrag(WindowSelectorItem* item) {
 void WindowSelector::PositionWindows(bool animate) {
   for (std::unique_ptr<WindowGrid>& grid : grid_list_)
     grid->PositionWindows(animate);
+}
+
+void WindowSelector::SetIgnoredItem(WindowSelectorItem* ignored_item) {
+  for (std::unique_ptr<WindowGrid>& grid : grid_list_)
+    grid->set_ignored_item(ignored_item);
 }
 
 bool WindowSelector::HandleKeyEvent(views::Textfield* sender,
