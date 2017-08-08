@@ -52,6 +52,24 @@
       "revId": "72faf0cf69773f66c097d4ab0496b3a813b6f82c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7789afb_926860c9",
+        "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-08T16:58:28Z",
+      "side": 1,
+      "message": "It might make sense to add this constant alongside this one[1] but at the same time, it depends on the icon. I also just updated a USB notification icon and to maintain the amount of negative space the designer originally spec\u0027d, I had to use 64dip for the icon. I think the discrepancy is because this icon is a solid circle and that one is just a few strokes, i.e. they have different visual weight at the same size.\n\n[1] https://cs.chromium.org/chromium/src/ui/message_center/message_center_style.h?rcl\u003df48183740edfb5d13266d34f2471cb7fb4a58deb\u0026l\u003d25",
+      "parentUuid": "cbf0daca_334827e4",
+      "revId": "72faf0cf69773f66c097d4ab0496b3a813b6f82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
