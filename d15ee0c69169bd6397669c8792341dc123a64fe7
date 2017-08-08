@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7299da7_5b8c4647",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseChromiumAndroidJUnitRunner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-08T00:28:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a81ac14_621c2d05",
+      "revId": "d15ee0c69169bd6397669c8792341dc123a64fe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "965f4518_6badd7ce",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseChromiumAndroidJUnitRunner.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d15ee0c69169bd6397669c8792341dc123a64fe7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004033cb_34336524",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseChromiumAndroidJUnitRunner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-08T00:28:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "965f4518_6badd7ce",
+      "revId": "d15ee0c69169bd6397669c8792341dc123a64fe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "d15ee0c69169bd6397669c8792341dc123a64fe7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b90324b_35e2f611",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseJUnit4ClassRunner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-08T00:28:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "066b399b_738ca265",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 140,
+        "endChar": 23
+      },
+      "revId": "d15ee0c69169bd6397669c8792341dc123a64fe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
