@@ -65,6 +65,14 @@ class ServiceWorkerContextWatcher
       ServiceWorkerRegistrationInfo::DeleteFlag delete_flag);
   void SendVersionInfo(const ServiceWorkerVersionInfo& version);
 
+  void RunWorkerRegistrationUpdatedCallback(
+      std::vector<ServiceWorkerRegistrationInfo> registrations);
+  void RunWorkerVersionUpdatedCallback(
+      std::vector<ServiceWorkerVersionInfo> versions);
+  void RunWorkerErrorReportedCallback(int64_t registration_id,
+                                      int64_t version_id,
+                                      ErrorInfo error_info);
+
   // ServiceWorkerContextCoreObserver implements
   void OnNewLiveRegistration(int64_t registration_id,
                              const GURL& pattern) override;
@@ -110,6 +118,10 @@ class ServiceWorkerContextWatcher
   WorkerRegistrationUpdatedCallback registration_callback_;
   WorkerVersionUpdatedCallback version_callback_;
   WorkerErrorReportedCallback error_callback_;
+  // Should be used on UI thread only.
+  bool stop_called_ = false;
+  // Should be used on IO thread only.
+  bool is_stopped_ = false;
 };
 
 }  // namespace content
