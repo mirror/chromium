@@ -52,6 +52,24 @@
       "revId": "f280242d2ce5678e3c960d33e5e69bae3d0eca26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93110cf1_d35bcaa9",
+        "filename": "tools/v8_context_snapshot/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-08T08:43:45Z",
+      "side": 1,
+      "message": "PS3 is a change to achieve my suggestion in the private mail thread, to introduce a GN variable use_icf. I confirmed it with a local build.\n\nWhat do you think for it?",
+      "parentUuid": "ce94175c_2112ea8a",
+      "revId": "f280242d2ce5678e3c960d33e5e69bae3d0eca26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
