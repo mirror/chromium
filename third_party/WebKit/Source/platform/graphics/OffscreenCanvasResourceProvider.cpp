@@ -161,9 +161,6 @@ void OffscreenCanvasResourceProvider::
   resource.read_lock_fences_enabled = false;
   resource.is_software = false;
 
-  // TODO(junov): crbug.com/725919 Recycle mailboxes for this code path. This is
-  // hard to do because the texture associated with the mailbox gets recycled
-  // through skia and skia does not store mailbox names.
   std::unique_ptr<FrameResource> frame_resource =
       CreateOrRecycleFrameResource();
   frame_resource->image_ = std::move(image);
