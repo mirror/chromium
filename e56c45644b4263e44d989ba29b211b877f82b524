@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20f5f198_ac6e0a41",
+        "filename": "content/browser/renderer_host/dwrite_font_proxy_message_filter_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T12:52:02Z",
+      "side": 1,
+      "message": "This dynamic cast is suspicious, isn\u0027t *message already of the right type? I think you want base::ConstRef(*message)?",
+      "revId": "e56c45644b4263e44d989ba29b211b877f82b524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
