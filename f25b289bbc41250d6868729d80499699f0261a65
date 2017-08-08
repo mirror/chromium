@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9a1d351b_6cf07141",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1001564
+      },
+      "writtenOn": "2017-08-08T00:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1144d12d_f7ecbbba",
+      "revId": "f25b289bbc41250d6868729d80499699f0261a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6cf4d07_3c991cd6",
         "filename": "ui/events/ozone/evdev/touch_event_converter_evdev_unittest.cc",
         "patchSetId": 1
@@ -148,6 +166,30 @@
       "side": 1,
       "message": "It should be fine, each move event should be understood to mean\n\n\"at time T, the position of the finger is X,Y with pressure P .. etc .. and barrel button state B\"\n\nWhich, given the device report containing only a button change, is a true statement and won\u0027t break any sane event handling code.",
       "parentUuid": "9d1e730f_9800d73f",
+      "range": {
+        "startLine": 1218,
+        "startChar": 16,
+        "endLine": 1218,
+        "endChar": 20
+      },
+      "revId": "f25b289bbc41250d6868729d80499699f0261a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa037cf_aac68fc0",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1001564
+      },
+      "writtenOn": "2017-08-08T00:18:14Z",
+      "side": 1,
+      "message": "The problem is that the button press is registered before the touch is down. So we would generate a sequence such as:\n\nTOUCH_MOVE (button down)\nTOUCH_PRESSED\nTOUCH_MOVE (movement while pen is down)\nTOUCH_RELEASED\nTOUCH_MOVE (button released)\n\ngenerating touch move events when pressed has not been sent seems like an inconsistent event stream to me. It seems to work, the MOVE events are just filtered somewhere at the higher level before passing it into chrome UI. If that\u0027s the route you would like to go please let me know, it seems rather hacky to me. \n\nEither way, I updated the code to set the touch slot state to dirty. That will at least force  a TOUCH_MOVE event when the pen is already down, but did not move in the same SYN report.",
+      "parentUuid": "2f3c3b48_57f12c2a",
       "range": {
         "startLine": 1218,
         "startChar": 16,
