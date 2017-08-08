@@ -32,6 +32,7 @@ class AshFocusManagerFactory : public views::FocusManagerFactory {
 
     // views::FocusManagerDelegate overrides:
     bool ProcessAccelerator(const ui::Accelerator& accelerator) override;
+    bool HasPriorityHandler(const ui::Accelerator& accelerator) override;
   };
 
   DISALLOW_COPY_AND_ASSIGN(AshFocusManagerFactory);

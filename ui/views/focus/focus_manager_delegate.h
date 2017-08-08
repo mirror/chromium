@@ -25,6 +25,9 @@ class VIEWS_EXPORT FocusManagerDelegate {
   // target, and so on.
   // Returns true if an accelerator was activated.
   virtual bool ProcessAccelerator(const ui::Accelerator& accelerator) = 0;
+
+  // Returns true if there is a priority handler for the accelerator.
+  virtual bool HasPriorityHandler(const ui::Accelerator& accelerator) = 0;
 };
 
 }  // namespace views
