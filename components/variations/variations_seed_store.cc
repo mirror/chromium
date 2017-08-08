@@ -13,7 +13,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "build/build_config.h"
 #include "components/prefs/pref_registry_simple.h"
-#include "components/prefs/pref_service.h"
+#include "components/prefs/simple_pref_service.h"
 #include "components/variations/pref_names.h"
 #include "components/variations/proto/variations_seed.pb.h"
 #include "crypto/signature_verifier.h"
@@ -105,7 +105,7 @@ UpdateSeedDateResult GetSeedDateChangeState(
 
 }  // namespace
 
-VariationsSeedStore::VariationsSeedStore(PrefService* local_state)
+VariationsSeedStore::VariationsSeedStore(SimplePrefService* local_state)
     : local_state_(local_state) {}
 
 VariationsSeedStore::~VariationsSeedStore() {
