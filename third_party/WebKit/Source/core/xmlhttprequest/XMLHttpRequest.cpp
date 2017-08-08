@@ -65,7 +65,7 @@
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/blob/BlobData.h"
-#include "platform/loader/fetch/CrossOriginAccessControl.h"
+#include "platform/exported/WrappedResourceResponse.h"
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/ResourceError.h"
@@ -81,6 +81,7 @@
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/text/CString.h"
+#include "public/platform/WebCrossOriginAccessControl.h"
 #include "public/platform/WebURLRequest.h"
 
 namespace blink {
@@ -1413,9 +1414,9 @@ String XMLHttpRequest::getAllResponseHeaders() const {
 
   StringBuilder string_builder;
 
-  HTTPHeaderSet access_control_expose_header_set;
-  CrossOriginAccessControl::ExtractCorsExposedHeaderNamesList(
-      response_, access_control_expose_header_set);
+  WebCrossOriginAccessControl::HTTPHeaderSet access_control_expose_header_set;
+  WebCrossOriginAccessControl::ExtractCorsExposedHeaderNamesList(
+      WrappedResourceResponse(response_), access_control_expose_header_set);
 
   HTTPHeaderMap::const_iterator end = response_.HttpHeaderFields().end();
   for (HTTPHeaderMap::const_iterator it = response_.HttpHeaderFields().begin();
@@ -1430,7 +1431,7 @@ String XMLHttpRequest::getAllResponseHeaders() const {
       continue;
 
     if (!same_origin_request_ &&
-        !CrossOriginAccessControl::IsOnAccessControlResponseHeaderWhitelist(
+        !WebCrossOriginAccessControl::IsOnAccessControlResponseHeaderWhitelist(
             it->key) &&
         !access_control_expose_header_set.Contains(it->key))
       continue;
@@ -1459,12 +1460,12 @@ const AtomicString& XMLHttpRequest::getResponseHeader(
     return g_null_atom;
   }
 
-  HTTPHeaderSet access_control_expose_header_set;
-  CrossOriginAccessControl::ExtractCorsExposedHeaderNamesList(
-      response_, access_control_expose_header_set);
+  WebCrossOriginAccessControl::HTTPHeaderSet access_control_expose_header_set;
+  WebCrossOriginAccessControl::ExtractCorsExposedHeaderNamesList(
+      WrappedResourceResponse(response_), access_control_expose_header_set);
 
   if (!same_origin_request_ &&
-      !CrossOriginAccessControl::IsOnAccessControlResponseHeaderWhitelist(
+      !WebCrossOriginAccessControl::IsOnAccessControlResponseHeaderWhitelist(
           name) &&
       !access_control_expose_header_set.Contains(name)) {
     LogConsoleError(GetExecutionContext(),

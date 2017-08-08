@@ -135,7 +135,8 @@ TEST_F(FetchResponseDataTest,
 TEST_F(FetchResponseDataTest, CORSFilterWithEmptyHeaderSet) {
   FetchResponseData* internal_response = CreateInternalResponse();
   FetchResponseData* cors_response_data =
-      internal_response->CreateCORSFilteredResponse(HTTPHeaderSet());
+      internal_response->CreateCORSFilteredResponse(
+          WebCrossOriginAccessControl::HTTPHeaderSet());
 
   EXPECT_EQ(internal_response, cors_response_data->InternalResponse());
 
@@ -157,7 +158,8 @@ TEST_F(FetchResponseDataTest,
                                           "set-cookie, bar");
 
   FetchResponseData* cors_response_data =
-      internal_response->CreateCORSFilteredResponse(HTTPHeaderSet());
+      internal_response->CreateCORSFilteredResponse(
+          WebCrossOriginAccessControl::HTTPHeaderSet());
 
   EXPECT_EQ(internal_response, cors_response_data->InternalResponse());
 
@@ -174,7 +176,7 @@ TEST_F(FetchResponseDataTest,
 
 TEST_F(FetchResponseDataTest, CORSFilterWithExplicitHeaderSet) {
   FetchResponseData* internal_response = CreateInternalResponse();
-  HTTPHeaderSet exposed_headers;
+  WebCrossOriginAccessControl::HTTPHeaderSet exposed_headers;
   exposed_headers.insert("set-cookie");
   exposed_headers.insert("bar");
 

@@ -37,11 +37,11 @@
 #include "platform/bindings/SharedPersistent.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/AccessControlStatus.h"
-#include "platform/loader/fetch/CrossOriginAccessControl.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/TextPosition.h"
+#include "public/platform/WebCrossOriginAccessControl.h"
 #include "v8/include/v8.h"
 
 namespace blink {
