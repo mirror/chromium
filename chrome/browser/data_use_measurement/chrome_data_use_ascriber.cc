@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/memory/ptr_util.h"
+#include "build/build_config.h"
 #include "chrome/browser/data_use_measurement/chrome_data_use_recorder.h"
 #include "components/data_use_measurement/content/content_url_request_classifier.h"
 #include "components/data_use_measurement/core/data_use_recorder.h"
@@ -168,6 +169,10 @@ void ChromeDataUseAscriber::OnUrlRequestCompleted(
     bool started) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
+#if defined(OS_MACOSX)
+  return;
+#endif
+
   ChromeDataUseRecorder* recorder = GetDataUseRecorder(request);
 
   if (!recorder)
@@ -192,6 +197,10 @@ void ChromeDataUseAscriber::OnUrlRequestCompleted(
 
 void ChromeDataUseAscriber::OnUrlRequestDestroyed(net::URLRequest* request) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+#if defined(OS_MACOSX)
+  return;
+#endif
 
   // TODO(rajendrant): GetDataUseRecorder is sufficient and
   // GetOrCreateDataUseRecorderEntry is not needed. The entry gets created in
