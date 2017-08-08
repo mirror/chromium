@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7bc70310_ba9c77ee",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T13:00:26Z",
+      "side": 1,
+      "message": "\u003e Should the transition be on #logo?\n\nNo, #logo-default is correct. If we show a doodle instead of the default logo, the doodle will be a different child of #logo. #logo exists to handle the common positioning of #logo and #logo-ddl.\n\n(I\u0027ve been updating the \"injecting\" part of the design doc, though I\u0027m not convinced I\u0027ve got it correct yet)",
+      "parentUuid": "1c98ec64_ccd0e929",
+      "range": {
+        "startLine": 56,
+        "startChar": 28,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "1a5aa28c4db0ce30ddb691355ea5c94415f1f0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de549104_ad84291f",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-08T12:04:07Z",
       "side": 1,
       "message": "Hm, feels slightly weird that \"header\" is inside of \"contents\", but I can\u0027t think of better names. If you can\u0027t either, then this is okay.",
+      "revId": "1a5aa28c4db0ce30ddb691355ea5c94415f1f0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36b404b_23bdf63a",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T13:00:26Z",
+      "side": 1,
+      "message": "Proposals: #dse #search #google ?\n\nThe logo and fakebox are features of the default search engine (specifically Google, since we don\u0027t show them for non-Google DSEs) whereas the tiles below are a Chrome feature that\u0027s DSE-agnostic.",
+      "parentUuid": "de549104_ad84291f",
       "revId": "1a5aa28c4db0ce30ddb691355ea5c94415f1f0bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -109,6 +151,30 @@
       "revId": "1a5aa28c4db0ce30ddb691355ea5c94415f1f0bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d742684_994188fe",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T13:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e991a71_b09c4fe7",
+      "range": {
+        "startLine": 416,
+        "startChar": 6,
+        "endLine": 416,
+        "endChar": 25
+      },
+      "revId": "1a5aa28c4db0ce30ddb691355ea5c94415f1f0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
