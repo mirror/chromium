@@ -22,6 +22,20 @@ namespace net {
 // Chrome specific packet writer which uses a datagram Socket for writing data.
 class NET_EXPORT_PRIVATE QuicChromiumPacketWriter : public QuicPacketWriter {
  public:
+  class NET_EXPORT_PRIVATE ReusableIOBuffer : public IOBuffer {
+   public:
+    explicit ReusableIOBuffer(size_t capacity);
+
+    size_t capacity() const { return capacity_; }
+    size_t size() const { return size_; }
+
+    void Set(const char* buffer, size_t buf_len);
+
+   private:
+    ~ReusableIOBuffer() override;
+    size_t capacity_;
+    size_t size_;
+  };
   // Delegate interface which receives notifications on socket write events.
   class NET_EXPORT_PRIVATE Delegate {
    public:
@@ -30,8 +44,9 @@ class NET_EXPORT_PRIVATE QuicChromiumPacketWriter : public QuicPacketWriter {
     // packet to a different socket. An implementation must return the
     // return value from the rewrite attempt if there is one, and
     // |error_code| otherwise.
-    virtual int HandleWriteError(int error_code,
-                                 scoped_refptr<StringIOBuffer> last_packet) = 0;
+    virtual int HandleWriteError(
+        int error_code,
+        scoped_refptr<ReusableIOBuffer> last_packet) = 0;
 
     // Called to propagate the final write error to the delegate.
     virtual void OnWriteError(int error_code) = 0;
@@ -51,7 +66,7 @@ class NET_EXPORT_PRIVATE QuicChromiumPacketWriter : public QuicPacketWriter {
   void set_write_blocked(bool write_blocked) { write_blocked_ = write_blocked; }
 
   // Writes |packet| to the socket and returns the error code from the write.
-  WriteResult WritePacketToSocket(scoped_refptr<StringIOBuffer> packet);
+  WriteResult WritePacketToSocket(scoped_refptr<ReusableIOBuffer> packet);
 
   // QuicPacketWriter
   WriteResult WritePacket(const char* buffer,
@@ -68,11 +83,12 @@ class NET_EXPORT_PRIVATE QuicChromiumPacketWriter : public QuicPacketWriter {
   void OnWriteComplete(int rv);
 
  private:
+  void SetPacket(const char* buffer, size_t buf_len);
   DatagramClientSocket* socket_;  // Unowned.
   Delegate* delegate_;  // Unowned.
-  // When a write returns asynchronously, |packet_| stores the written
-  // packet until OnWriteComplete is called.
-  scoped_refptr<StringIOBuffer> packet_;
+  // Reused for every packet write for the lifetime of the writer.  Is
+  // tossed out to the new writer in the case of migration.
+  scoped_refptr<ReusableIOBuffer> packet_;
 
   // Whether a write is currently in flight.
   bool write_blocked_;
