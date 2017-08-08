@@ -73,6 +73,7 @@ public class BookmarkItemRow extends BookmarkRow implements LargeIconCallback {
         mUrl = item.getUrl();
         mIconImageView.setImageDrawable(null);
         mTitleView.setText(item.getTitle());
+        mDescriptionView.setText(item.getDomain());
         mDelegate.getLargeIconBridge().getLargeIconForUrl(mUrl, mMinIconSize, this);
         return item;
     }

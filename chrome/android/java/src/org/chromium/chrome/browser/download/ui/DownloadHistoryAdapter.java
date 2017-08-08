@@ -32,7 +32,6 @@ import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadIte
 import org.chromium.chrome.browser.widget.DateDividedAdapter;
 import org.chromium.chrome.browser.widget.displaystyle.MarginResizer;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
-import org.chromium.chrome.browser.widget.selection.SelectableListLayout;
 import org.chromium.chrome.browser.widget.selection.SelectionDelegate;
 import org.chromium.components.offline_items_collection.ContentId;
 import org.chromium.content_public.browser.DownloadState;
@@ -343,8 +342,7 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
         if (mUiConfig != null) {
             MarginResizer.createAndAttach(viewHolder.itemView, mUiConfig,
                     parent.getResources().getDimensionPixelSize(R.dimen.list_item_default_margin),
-                    SelectableListLayout.getDefaultListItemLateralShadowSizePx(
-                            parent.getResources()));
+                    0);
         }
         return viewHolder;
     }
@@ -383,13 +381,11 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
      */
     void generateHeaderItems() {
         mSpaceDisplay = new SpaceDisplay(null, this);
-        View view = mSpaceDisplay.getView();
+        View view = mSpaceDisplay.getViewContainer();
         registerAdapterDataObserver(mSpaceDisplay);
         if (mUiConfig != null) {
-            MarginResizer.createAndAttach(view, mUiConfig,
-                    view.getResources().getDimensionPixelSize(R.dimen.list_item_default_margin),
-                    SelectableListLayout.getDefaultListItemLateralShadowSizePx(
-                            view.getResources()));
+            MarginResizer.createAndAttach(mSpaceDisplay.getView(), mUiConfig,
+                    view.getResources().getDimensionPixelSize(R.dimen.list_item_default_margin), 0);
         }
         mSpaceDisplayHeaderItem = new HeaderItem(0, view);
     }

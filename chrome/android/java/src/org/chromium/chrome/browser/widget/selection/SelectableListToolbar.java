@@ -133,7 +133,6 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
 
     private UiConfig mUiConfig;
     private int mDefaultTitleMarginStartPx;
-    private int mWideDisplayLateralOffsetPx;
     private int mWideDisplayEndOffsetPx;
     private int mWideDisplayNavButtonOffsetPx;
     private int mOriginalContentInsetStart;
@@ -458,12 +457,9 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
      * UiConfig#WIDE_DISPLAY_STYLE_MIN_WIDTH_DP, the toolbar contents will be visually centered by
      * adding padding to both sides.
      *
-     * @param wideDisplayLateralOffsetPx The offset to use for the lateral padding when in
-     *                                   {@link HorizontalDisplayStyle#WIDE}.
      * @param uiConfig The UiConfig used to observe display style changes.
      */
-    public void configureWideDisplayStyle(int wideDisplayLateralOffsetPx, UiConfig uiConfig) {
-        mWideDisplayLateralOffsetPx = wideDisplayLateralOffsetPx;
+    public void configureWideDisplayStyle(UiConfig uiConfig) {
         mDefaultTitleMarginStartPx = getTitleMarginStart();
         mWideDisplayNavButtonOffsetPx =
                 getResources().getDimensionPixelSize(R.dimen.toolbar_wide_display_nav_icon_offset);
@@ -487,8 +483,6 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
         int contentInsetEndWithActions = mOriginalContentInsetEndWithActions;
 
         if (newDisplayStyle.horizontal == HorizontalDisplayStyle.WIDE) {
-            paddingStartOffset = mWideDisplayLateralOffsetPx;
-
             // The title and nav buttons are inset in the normal display style. In the wide display
             // style they should be aligned with the starting edge of the list elements.
             if (mIsSearching || mIsSelectionEnabled
@@ -500,7 +494,7 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
 
             // The end button is also inset in the normal display. In the wide display it should be
             // aligned with the ending edge of the list elements.
-            paddingEndOffset = mWideDisplayLateralOffsetPx + mWideDisplayEndOffsetPx;
+            paddingEndOffset = mWideDisplayEndOffsetPx;
 
             contentInsetStart = 0;
             contentInsetStartWithNavigation = 0;

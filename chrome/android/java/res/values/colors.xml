@@ -145,6 +145,7 @@
 
     <!-- Theme colors. Also used for toolbar background -->
     <color name="incognito_primary_color">#505050</color>
+    <color name="modern_primary_color">#FFFFFF</color>
 
     <!-- LocationBar colors -->
     <color name="locationbar_dark_hint_text">@color/black_alpha_54</color>
@@ -209,5 +210,6 @@
     <color name="selectable_list_item_highlight_color">#804281f4</color>
     <color name="media_viewer_bg">#000000</color>
     <color name="image_viewer_bg">#0e0e0e</color>
+    <color name="modern_toolbar_bg">#E6FFFFFF</color>
 
 </resources>
