@@ -22,6 +22,30 @@
       "revId": "ec3d93f95d4dd04e0ba7dd825261286a8c62aea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7761353_8e7d0a60",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ProfileDataCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-08T09:59:18Z",
+      "side": 1,
+      "message": "If bitmap is null croppedAvatar will be set to mPlaceholderImage because of the check on lines 234-235. Null check inside makeRoundAvatar is necessary for the external users (e.g., AccountChooserDialog).",
+      "parentUuid": "df18a01f_b9280e2e",
+      "range": {
+        "startLine": 239,
+        "startChar": 41,
+        "endLine": 239,
+        "endChar": 54
+      },
+      "revId": "ec3d93f95d4dd04e0ba7dd825261286a8c62aea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
