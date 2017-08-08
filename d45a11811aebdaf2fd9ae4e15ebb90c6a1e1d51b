@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "b3f11c82_cb9bee98",
+        "filename": "cc/ipc/filter_operation_struct_traits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-08T18:24:36Z",
+      "side": 1,
+      "message": "You\u0027re right that this should be equivalent to CArray\u003cconst float\u003e. I guess in terms of readability it\u0027s easier to read/write ConstCArray\u003cfloat\u003e, but maybe it\u0027s as simple as\n\ntemplate\u003ctypename T\u003e\nusing ConstCArray \u003d CArray\u003cconst T\u003e;\n\n?",
+      "range": {
+        "startLine": 131,
+        "startChar": 9,
+        "endLine": 131,
+        "endChar": 20
+      },
+      "revId": "d45a11811aebdaf2fd9ae4e15ebb90c6a1e1d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9c24da0_b1a6008f",
         "filename": "components/arc/bitmap/bitmap_struct_traits.h",
         "patchSetId": 11
@@ -30,6 +53,29 @@
       "writtenOn": "2017-08-08T14:35:24Z",
       "side": 1,
       "message": "I don\u0027t suppose we\u0027ll have something like a MakeSpan which could infer the data type? i.e.\n\n\n  return mojo::MakeCArray(static_cast\u003cuint8_t*\u003e(...), ...);\n\nNot a huge win, but one less data type to type when typing data types. :)",
+      "revId": "d45a11811aebdaf2fd9ae4e15ebb90c6a1e1d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b15acc9_8ab180f2",
+        "filename": "mojo/public/cpp/bindings/array_traits_carray.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-08T18:24:36Z",
+      "side": 1,
+      "message": "We can DCHECK that pos \u003c size_ and pos + count \u003c size_, no? Or do you mean some other DCHECK here? Or is it the constexpr that isn\u0027t playing nice?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 18
+      },
       "revId": "d45a11811aebdaf2fd9ae4e15ebb90c6a1e1d51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
