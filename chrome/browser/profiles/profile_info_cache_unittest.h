@@ -56,6 +56,8 @@ class ProfileInfoCacheTest : public testing::Test {
   base::FilePath GetProfilePath(const std::string& base_name);
   void ResetCache();
 
+  void RunTasksUntilIdle();
+
  private:
   // TestBrowserThreadBundle needs to be up through the destruction of the
   // TestingProfileManager below.
@@ -67,6 +69,7 @@ class ProfileInfoCacheTest : public testing::Test {
  private:
   ProfileNameVerifierObserver name_observer_;
   base::ScopedPathOverride user_data_dir_override_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
 #endif  // CHROME_BROWSER_PROFILES_PROFILE_INFO_CACHE_UNITTEST_H_
