@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fffb8050_8c88cd9a",
+        "filename": "base/metrics/persistent_histogram_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T18:36:17Z",
+      "side": 1,
+      "message": "constexpr subtle::AtomicWord kHistogramUnderConstruction \u003d 1;\n\nto match https://cs.chromium.org/chromium/src/base/lazy_instance.h?rcl\u003dbbe5cb1a8c2c0d01eadecd2510e054efe91fb898\u0026l\u003d120",
+      "revId": "ef6b504591068494016df0ad5776a1a8fb89f1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04f8433_eb573717",
+        "filename": "base/metrics/persistent_histogram_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T18:36:17Z",
+      "side": 1,
+      "message": "Should this refer to the LazyInstance impl?",
+      "revId": "ef6b504591068494016df0ad5776a1a8fb89f1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
