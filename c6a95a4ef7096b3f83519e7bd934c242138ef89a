@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1503cb46_8b15a117",
+        "filename": "components/offline_pages/core/offline_page_model_query.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-08T00:16:40Z",
+      "side": 1,
+      "message": "I would still rather have CountMatchingURLs so that strip_fragment can apply here.  We should find a code shape that allows the current behavior to remain without special-case behavior.  After all, this is a generic query object.  It will be much harder to convert this to SQL if we have a lot of subtle differences like this.",
+      "range": {
+        "startLine": 260,
+        "startChar": 23,
+        "endLine": 260,
+        "endChar": 28
+      },
+      "revId": "c6a95a4ef7096b3f83519e7bd934c242138ef89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
