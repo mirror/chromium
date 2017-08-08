@@ -523,6 +523,24 @@
     },
     {
       "key": {
+        "uuid": "e31210b5_5be24f76",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T14:56:00Z",
+      "side": 1,
+      "message": "The ObjC style guide puts class methods first: https://google.github.io/styleguide/objcguide.xml#Example",
+      "parentUuid": "7e32ae3f_bd28e5dc",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55bdef9f_dbad59c8",
         "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
         "patchSetId": 10
@@ -626,6 +644,30 @@
       "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422c18dd_22918abe",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T14:56:00Z",
+      "side": 1,
+      "message": "Ack. Just to make sure, I mean letting it crash on its own (i.e. with an unrecognized selector error) if the contract is broken.",
+      "parentUuid": "8f63f209_a2122dc7",
+      "range": {
+        "startLine": 181,
+        "startChar": 14,
+        "endLine": 181,
+        "endChar": 25
+      },
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
