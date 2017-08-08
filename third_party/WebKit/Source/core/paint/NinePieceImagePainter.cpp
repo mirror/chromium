@@ -97,8 +97,10 @@ bool NinePieceImagePainter::Paint(GraphicsContext& graphics_context,
       graphics_context.ImageInterpolationQuality();
   graphics_context.SetImageInterpolationQuality(interpolation_quality);
 
-  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("devtools.timeline"), "PaintImage",
-               "data", InspectorPaintImageEvent::Data(node, *style_image));
+  TRACE_EVENT1(
+      TRACE_DISABLED_BY_DEFAULT("devtools.timeline"), "PaintImage", "data",
+      InspectorPaintImageEvent::Data(node, *style_image, IntRect(image->Rect()),
+                                     IntRect(border_image_rect)));
 
   PaintPieces(graphics_context, border_image_rect, style, nine_piece_image,
               image.Get(), image_size, op);
