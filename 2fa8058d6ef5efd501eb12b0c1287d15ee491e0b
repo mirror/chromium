@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "901dfa9d_a9a8bb5e",
+        "filename": "chrome/browser/resources/settings/appearance_page/fonts_browser_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-08T19:38:13Z",
+      "side": 1,
+      "message": "Bonus: for..of has better type coverage than normal for, therefore this change is necessary to fix the following compile error:\n\n## src/chrome/browser/resources/settings/appearance_page/appearance_fonts_page.js:121: ERROR - actual parameter 1 of $jscomp.makeIterator does not match formal parameter\n## found   : (Array\u003c{\n##   0: string,\n##   1: (string|undefined),\n##   2: (string|undefined)\n## }\u003e|null)\n## required: (Arguments\u003c{\n##   0: string,\n##   1: (string|undefined),\n##   2: (string|undefined)\n## }\u003e|Iterable\u003c{\n##   0: string,\n##   1: (string|undefined),\n##   2: (string|undefined)\n## }\u003e|Iterator\u003c{\n##   0: string,\n##   1: (string|undefined),\n##   2: (string|undefined)\n## }\u003e|string)\n##     for (var fontData of response.fontList) {\n##                          ^^^^^^^^^^^^^^^^^",
+      "revId": "2fa8058d6ef5efd501eb12b0c1287d15ee491e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
