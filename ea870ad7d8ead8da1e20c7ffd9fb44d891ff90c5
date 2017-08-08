@@ -52,6 +52,24 @@
       "revId": "ea870ad7d8ead8da1e20c7ffd9fb44d891ff90c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b326c2_45f272a3",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/wrapper_class_declaration.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-08T19:50:08Z",
+      "side": 1,
+      "message": "Patch sets 3 and above have a diff for mojo/public/tools/bindings/generators/cpp_templates/wrapper_union_class_declaration.tmpl\n\nSorry, it seems like I might have misunderstood the feedback. Can you please point me to the file you\u0027d like me to change?",
+      "parentUuid": "20be8fa4_f40732cd",
+      "revId": "ea870ad7d8ead8da1e20c7ffd9fb44d891ff90c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
