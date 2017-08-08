@@ -32,7 +32,8 @@ public class MultiActivityTestRule implements TestRule, MultiActivityTestCommonC
         return mTestCommon.mContext;
     }
 
-    public void waitForFullLoad(final ChromeActivity activity, final String expectedTitle) {
+    public void waitForFullLoad(final ChromeActivity activity, final String expectedTitle)
+            throws Exception {
         mTestCommon.waitForFullLoad(activity, expectedTitle);
     }
 

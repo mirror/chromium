@@ -47,7 +47,8 @@ public abstract class MultiActivityTestBase extends InstrumentationTestCase
     /**
      * See {@link #waitForFullLoad(ChromeActivity,String,boolean)}.
      */
-    protected void waitForFullLoad(final ChromeActivity activity, final String expectedTitle) {
+    protected void waitForFullLoad(final ChromeActivity activity, final String expectedTitle)
+            throws Exception {
         mTestCommon.waitForFullLoad(activity, expectedTitle);
     }
 }
