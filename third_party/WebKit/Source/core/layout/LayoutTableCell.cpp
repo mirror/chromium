@@ -1099,6 +1099,20 @@ LayoutUnit LayoutTableCell::BorderAfter() const {
              : LayoutBlockFlow::BorderAfter();
 }
 
+bool LayoutTableCell::IsCellColumnCollapsed() const {
+  if (!RuntimeEnabledFeatures::VisibilityCollapseEnabled())
+    return false;
+  if (!HasSetAbsoluteColumnIndex())
+    return false;
+  LayoutTableCol* col =
+      Table()->ColElementAtAbsoluteColumn(AbsoluteColumnIndex()).col;
+  LayoutTableCol* colgroup =
+      Table()->ColElementAtAbsoluteColumn(AbsoluteColumnIndex()).colgroup;
+  return (col && col->Style()->Visibility() == EVisibility::kCollapse) ||
+         (colgroup &&
+          colgroup->Style()->Visibility() == EVisibility::kCollapse);
+}
+
 void LayoutTableCell::Paint(const PaintInfo& paint_info,
                             const LayoutPoint& paint_offset) const {
   TableCellPainter(*this).Paint(paint_info, paint_offset);

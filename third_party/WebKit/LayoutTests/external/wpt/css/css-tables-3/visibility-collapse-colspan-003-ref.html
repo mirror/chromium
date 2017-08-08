@@ -1,0 +1,33 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>CSS Test Reference: Overflow clipping in cells that span columns</title>
+<link rel='stylesheet' href='support/base.css' />
+<link rel="author" title="Joy Yu" href="mailto:joysyu@mit.edu">
+<link rel="help" href="https://drafts.csswg.org/css-tables-3/#visibility-collapse-cell-rendering">
+<main>
+    <h1>Visibility collapse</h1>
+    <table id="one">
+      <col style="background-color:red;">
+      <col style="background-color: blue; visibility:collapse;">
+      <col style="background-color: green;">
+      <tr>
+        <td>Row 1 Col 1</td>
+        <td id="secondColumn">Row 1 Col 2</td>
+        <td>Row 1 Col 3</td>
+      </tr>
+      <tr>
+        <td>Row 2 Col 1</td>
+        <td>Row 2 Col 2</td>
+        <td>Row 2 Col 3</td>
+      </tr>
+      <tr>
+        <td>Row 3 Col 1</td>
+        <td>Row 3 Col 2</td>
+        <td>Row 3 Col 3</td>
+      </tr>
+      <tr>
+        <td colspan="3">superlongwordsuperloong</td>
+      </tr>
+    </table>
+</main>
+</html>

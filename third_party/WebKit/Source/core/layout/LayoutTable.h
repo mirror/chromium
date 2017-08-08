@@ -520,6 +520,7 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
                      SubtreeLayoutScope&,
                      LayoutUnit logical_left,
                      TableHeightChangingValue);
+  void LayoutCollapsedColumns();
 
   // Return the logical height based on the height, min-height and max-height
   // properties from CSS. Will return 0 if auto.
@@ -553,6 +554,9 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
   // There is no direct relationship between the size of and index into this
   // vector and those of m_effectiveColumns because they hold different things.
   mutable Vector<LayoutTableCol*> column_layout_objects_;
+
+  // Holds how much width is collapsed in each column.
+  Vector<int> col_collapsed_width_;
 
   mutable LayoutTableSection* head_;
   mutable LayoutTableSection* foot_;
@@ -588,6 +592,7 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
 
   bool column_logical_width_changed_ : 1;
   mutable bool column_layout_objects_valid_ : 1;
+  bool is_any_col_collapsed_ : 1;
   mutable unsigned no_cell_colspan_at_least_;
   unsigned CalcNoCellColspanAtLeast() const {
     for (unsigned c = 0; c < NumEffectiveColumns(); c++) {
