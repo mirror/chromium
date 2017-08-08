@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "74832728_41a3531d",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-08T01:28:23Z",
+      "side": 1,
+      "message": "This is getting complicated as later we do a wallpaper \u0027reparent\u0027 [1], so we probably shouldn\u0027t use SetCacheRenderSurface here yet but wait until the container has been changed. I noticed here [2] that \u0027The code that sets this flag would be responsible to unset it\u0027, but given the current implementation this cannot be easily met (the codes will be ugly at best), is there a workaround? At least I think we need a |GetCacheRenderSurface|. Nevertheless, I\u0027ll try my best to have a caching CL ready by tomorrow after landing this CL.\n\n[1] https://cs.chromium.org/chromium/src/ash/wallpaper/wallpaper_controller.cc?q\u003dwallpapercontroller\u0026l\u003d305\n[2] https://cs.chromium.org/chromium/src/ui/compositor/layer.cc?type\u003dcs\u0026q\u003dSetCacheRenderSurface\u0026l\u003d667",
+      "parentUuid": "2e5b13f3_80d21992",
+      "revId": "392d6c31f24dd2556826aac4f1cdd53ba6350190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b89b497_137abd30",
         "filename": "ash/wallpaper/wallpaper_view.cc",
         "patchSetId": 6
