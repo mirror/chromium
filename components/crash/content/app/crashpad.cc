@@ -240,6 +240,17 @@ bool GetUploadsEnabled() {
   return false;
 }
 
+Report::Report() {}
+
+Report::Report(const Report& other) {
+  local_id = other.local_id;
+  capture_time = other.capture_time;
+  remote_id = other.remote_id;
+  upload_time = other.upload_time;
+  state = other.state;
+  file_path = other.file_path;
+}
+
 void GetReports(std::vector<Report>* reports) {
   reports->clear();
 
@@ -266,6 +277,7 @@ void GetReports(std::vector<Report>* reports) {
     report.local_id = completed_report.uuid.ToString();
     report.capture_time = completed_report.creation_time;
     report.remote_id = completed_report.id;
+    report.file_path = completed_report.file_path;
     if (completed_report.uploaded) {
       report.upload_time = completed_report.last_upload_attempt_time;
       report.state = ReportUploadState::Uploaded;
@@ -282,6 +294,7 @@ void GetReports(std::vector<Report>* reports) {
     report.local_id = pending_report.uuid.ToString();
     report.capture_time = pending_report.creation_time;
     report.upload_time = 0;
+    report.file_path = pending_report.file_path;
     report.state = pending_report.upload_explicitly_requested
                        ? ReportUploadState::Pending_UserRequested
                        : report.state = ReportUploadState::Pending;

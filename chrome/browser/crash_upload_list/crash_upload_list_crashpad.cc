@@ -105,6 +105,7 @@ std::vector<UploadList::UploadInfo> CrashUploadListCrashpad::LoadUploadList() {
     uploads.push_back(
         UploadInfo(report.remote_id, base::Time::FromTimeT(report.upload_time),
                    report.local_id, base::Time::FromTimeT(report.capture_time),
+                   report.file_path,
                    ReportUploadStateToUploadInfoState(report.state)));
   }
   return uploads;

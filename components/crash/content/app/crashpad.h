@@ -97,6 +97,10 @@ struct Report {
   std::string remote_id;
   time_t upload_time;
   ReportUploadState state;
+  base::FilePath file_path;
+
+  Report();
+  Report(const Report& other);
 };
 
 // Obtains a list of reports uploaded to the collection server. This function
