@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4385a863_7e1b57ec",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-08T20:09:52Z",
+      "side": 1,
+      "message": "nit: Ditto for the calls wit \u0027true\u0027 as well (here and elsewhere).",
+      "range": {
+        "startLine": 227,
+        "startChar": 44,
+        "endLine": 227,
+        "endChar": 48
+      },
+      "revId": "5802fe2c2239506c598c551d9e03f5c444b8e702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
