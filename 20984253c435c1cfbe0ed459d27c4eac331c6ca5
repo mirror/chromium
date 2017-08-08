@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b264a96_b6b14638",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T05:58:00Z",
+      "side": 1,
+      "message": "How about below to simplify if-condition?\n\nif (ignore_visibility)\n  return false;\nreturn layout_object-\u003eStyle()-\u003eVisibility() !\u003d EVisibility::kVisible;",
+      "revId": "20984253c435c1cfbe0ed459d27c4eac331c6ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f125d93f_aa445a2e",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T05:58:00Z",
+      "side": 1,
+      "message": "Q: Can we write {0u, 0u}? Sorry, I\u0027m not sure. But worth to try.",
+      "revId": "20984253c435c1cfbe0ed459d27c4eac331c6ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260392c3_9e0c9303",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T05:58:00Z",
+      "side": 1,
+      "message": "Could you add parameter name for ||unsigned|?\ne.g. unsigned run_end_in_DOM\nor unsigned run_end and add a function comment to specify |run_end| is\noffset in Text node.",
+      "revId": "20984253c435c1cfbe0ed459d27c4eac331c6ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d14999_a95bdc56",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T05:58:00Z",
+      "side": 1,
+      "message": "Is is possible to have this change to another CL?\n(I\u0027m not sure)",
+      "revId": "20984253c435c1cfbe0ed459d27c4eac331c6ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
