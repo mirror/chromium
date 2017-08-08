@@ -3,4 +3,6 @@ markusheintz@chromium.org
 msramek@chromium.org
 raymes@chromium.org
 
+per-file *client_hints*=tbansal@chromium.org
+
 # COMPONENT: Internals>Permissions>Model
