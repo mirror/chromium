@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf165bbd_622ddab7",
+        "filename": "chrome/browser/ui/android/tab_model/tab_model_selector_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-08T20:04:44Z",
+      "side": 1,
+      "message": "Do we still need this?  I thought we added automatic JNI registration",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 47
+      },
+      "revId": "089982199dc9cc8ccb2745e6c47e7784329e7b51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
