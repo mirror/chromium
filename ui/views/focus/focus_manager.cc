@@ -52,6 +52,12 @@ bool FocusManager::OnKeyEvent(const ui::KeyEvent& event) {
 
   ui::Accelerator accelerator(event);
 
+  // If delegate has priority handler, let it handle the key event.
+  if (delegate_ && delegate_->HasPriorityHandler(accelerator) &&
+      delegate_->ProcessAccelerator(accelerator)) {
+    return false;
+  }
+
   if (event.type() == ui::ET_KEY_PRESSED) {
     // If the focused view wants to process the key event as is, let it be.
     if (focused_view_ && focused_view_->SkipDefaultKeyEventProcessing(event) &&
