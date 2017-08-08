@@ -70,7 +70,7 @@ namespace bluez {
 BluetoothAdvertisementBlueZ::BluetoothAdvertisementBlueZ(
     std::unique_ptr<device::BluetoothAdvertisement::Data> data,
     scoped_refptr<BluetoothAdapterBlueZ> adapter)
-    : adapter_path_(adapter->object_path()) {
+    : adapter_path_(adapter->object_path()), weak_ptr_factory_(this) {
   // Generate a new object path - make sure that we strip any -'s from the
   // generated GUID string since object paths can only contain alphanumeric
   // characters and _ characters.
@@ -91,14 +91,14 @@ BluetoothAdvertisementBlueZ::BluetoothAdvertisementBlueZ(
 }
 
 void BluetoothAdvertisementBlueZ::Register(
-    const base::Closure& success_callback,
+    base::OnceClosure success_callback,
     const device::BluetoothAdapter::AdvertisementErrorCallback&
         error_callback) {
   DCHECK(bluez::BluezDBusManager::Get());
   bluez::BluezDBusManager::Get()
       ->GetBluetoothLEAdvertisingManagerClient()
       ->RegisterAdvertisement(
-          adapter_path_, provider_->object_path(), success_callback,
+          adapter_path_, provider_->object_path(), std::move(success_callback),
           base::Bind(&RegisterErrorCallbackConnector, error_callback));
 }
 

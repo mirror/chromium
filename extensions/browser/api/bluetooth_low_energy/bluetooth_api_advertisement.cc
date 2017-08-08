@@ -24,8 +24,9 @@ ApiResourceManager<BluetoothApiAdvertisement>::GetFactoryInstance() {
 
 BluetoothApiAdvertisement::BluetoothApiAdvertisement(
     const std::string& owner_extension_id,
-    scoped_refptr<device::BluetoothAdvertisement> advertisement)
-    : ApiResource(owner_extension_id), advertisement_(advertisement) {
+    std::unique_ptr<device::BluetoothAdvertisement> advertisement)
+    : ApiResource(owner_extension_id),
+      advertisement_(std::move(advertisement)) {
   DCHECK_CURRENTLY_ON(kThreadId);
 }
 
