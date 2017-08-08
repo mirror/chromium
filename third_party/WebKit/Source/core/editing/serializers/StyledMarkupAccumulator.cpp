@@ -232,9 +232,7 @@ void StyledMarkupAccumulator::PushMarkup(const String& str) {
 }
 
 void StyledMarkupAccumulator::AppendInterchangeNewline() {
-  DEFINE_STATIC_LOCAL(const String, interchange_newline_string,
-                      ("<br class=\"" AppleInterchangeNewline "\">"));
-  result_.Append(interchange_newline_string);
+  result_.Append("<br>");
 }
 
 }  // namespace blink
