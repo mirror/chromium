@@ -78,7 +78,7 @@ SharedWorkerHost::~SharedWorkerHost() {
 }
 
 void SharedWorkerHost::Start(bool pause_on_start) {
-  blink::mojom::SharedWorkerContentSettingsProxyPtrInfo content_settings;
+  blink::mojom::WorkerContentSettingsProxyPtrInfo content_settings;
   SharedWorkerContentSettingsProxyImpl::Create(
       weak_factory_.GetWeakPtr(), mojo::MakeRequest(&content_settings));
 
