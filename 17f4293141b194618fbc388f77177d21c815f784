@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03234856_305d48a7",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2356,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T23:38:24Z",
+      "side": 1,
+      "message": "s/l0/dummy_root/",
+      "revId": "17f4293141b194618fbc388f77177d21c815f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33b7b93_2ac00627",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2357,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T23:38:24Z",
+      "side": 1,
+      "message": "s/l1/content_layer/",
+      "revId": "17f4293141b194618fbc388f77177d21c815f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ac8344_284c489f",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2358,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T23:38:24Z",
+      "side": 1,
+      "message": "s/l2/mask_layer/",
+      "revId": "17f4293141b194618fbc388f77177d21c815f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8dcb5db_98acf975",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T23:38:24Z",
+      "side": 1,
+      "message": "Check if we can remove l0? Add a TODO if so.",
+      "revId": "17f4293141b194618fbc388f77177d21c815f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3f640b_67043137",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2369,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T23:38:24Z",
+      "side": 1,
+      "message": "s/e_c1_1_id/isolation_effect_id/",
+      "revId": "17f4293141b194618fbc388f77177d21c815f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b35dbc_bdc2b7be",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2370,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T23:38:24Z",
+      "side": 1,
+      "message": "Check the blend mode of cc_e_c1_1?",
+      "revId": "17f4293141b194618fbc388f77177d21c815f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df99954_72717281",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2377,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T23:38:24Z",
+      "side": 1,
+      "message": "s/e_c1_1m_id mask_effect_id/",
+      "revId": "17f4293141b194618fbc388f77177d21c815f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50b02c6_501ff9f4",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2415,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T23:38:24Z",
+      "side": 1,
+      "message": "Same comments here and in other tests, if you agree - rename for clarity.",
+      "revId": "17f4293141b194618fbc388f77177d21c815f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9158d54d_3ff52be7",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2429,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T23:38:24Z",
+      "side": 1,
+      "message": "Check the transform node of the layer under it.",
+      "revId": "17f4293141b194618fbc388f77177d21c815f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa61b602_9e3d9a7a",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T23:38:24Z",
+      "side": 1,
+      "message": "How about factoring this for loop into a static helper method with\nthis name:\n\n// Exit the loop if there are no more synthetic clips below |ancestor|.\nIsClipBetweenInclusive(ancestor, pre_exit_clip, current_clip_);",
+      "revId": "17f4293141b194618fbc388f77177d21c815f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7fc3092_a2f14689",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T23:38:24Z",
+      "side": 1,
+      "message": "Needs a comment.\n\nPerhaps this is a good place to explain the overall strategy:\n\nWhen entering rounded clips, emit their isolation effect nodes. When exiting, emit\nthe mask effect node with DstIn and the mask layer as second parameter. The nice\nascii diagram you have in the CL description would also be great to put in a code\ncomment.",
+      "revId": "17f4293141b194618fbc388f77177d21c815f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
