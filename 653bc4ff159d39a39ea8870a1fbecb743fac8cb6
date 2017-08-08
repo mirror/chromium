@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf75bd4c_0c476361",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-08T22:41:05Z",
+      "side": 1,
+      "message": "Although VP9 720p has small regression, I think NV12 is much better thna BGRX because\n* VP9 4k and H.264 4k has ~10% power saving.\n* H.264 720p has 5% power saving.\n* 4 to 1.5 memory saving.\n* NV12 overlay will be supported soon.",
+      "revId": "653bc4ff159d39a39ea8870a1fbecb743fac8cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
