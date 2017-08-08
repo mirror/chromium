@@ -112,6 +112,8 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
     return grid_list_;
   }
 
+  void SetIgnoredItem(WindowSelectorItem* ignored_item);
+
   // display::DisplayObserver:
   void OnDisplayAdded(const display::Display& display) override;
   void OnDisplayRemoved(const display::Display& display) override;
