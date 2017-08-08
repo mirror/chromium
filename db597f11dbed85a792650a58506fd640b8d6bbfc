@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "91168688_c28f7d89",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-08T23:40:58Z",
+      "side": 1,
+      "message": "Fair point, I think would be further cleaner if you move(parsed_rule-\u003econdition.url_filter) to Parse and let Parse do deal with null checks and such.",
+      "parentUuid": "57e4f25b_0b280556",
+      "range": {
+        "startLine": 307,
+        "startChar": 36,
+        "endLine": 307,
+        "endChar": 42
+      },
+      "revId": "db597f11dbed85a792650a58506fd640b8d6bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a98f1580_d1674c6d",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule_unittest.cc",
         "patchSetId": 14

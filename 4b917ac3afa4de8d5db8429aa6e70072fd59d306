@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "36d13641_9bc42ba3",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-08T23:40:58Z",
+      "side": 1,
+      "message": "There are 41 usages of flat_rule and 24 usages of dnr_api in this file. Using url_pattern_index::flat and api::declarative_net_request introduces a lot of verbosity.\n\nSince these aliases are not exposed as part of the public API and are an implementation detail, think this should be fine? \n-\u003e I\u0027m fine with this to reduce verbosity.\n\n\nWe already have multiple precedents in extensions code where we alias to a different name (e.g. \n-\u003e Ya I know, and that is not something I\u0027m not a big fan of \u003dP\n\nI understand the point of added verbosity, so the shortened namespace lgtm.",
+      "parentUuid": "bf0b5468_21ddbfd8",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ff3e481_1a050182",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
         "patchSetId": 13
