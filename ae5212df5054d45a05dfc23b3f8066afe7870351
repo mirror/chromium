@@ -52,6 +52,24 @@
       "revId": "ae5212df5054d45a05dfc23b3f8066afe7870351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c0ff48_72bf56dc",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-08T22:17:06Z",
+      "side": 1,
+      "message": "it\u0027s definitely in the \"implementation of the web platform\" case.\n\n1) the thing that initiates persistent video (chrome/PictureInPictureManager) and DialogOverlayImpl are in the browser.  i suppose that i could have it look up AndroidOverlayProviderImpl, and tell it that it\u0027s about to notify its WebContents about persistent video.  however, the notification seems more like an implementation detail of content/, so maybe better if PiPM didn\u0027t need to know about it.\n\n2) this seems closer to what i was trying to do.  but, how would the WC route a message through the RFHs?  seems more direct for the overlays to regiter on the WC somehow, even if it\u0027s not an observer.\n\nfor context, there will be an IsPersistentVideoAllowed call that also needs to be handled in a later CL.  the reason is that L1 content can\u0027t fall back to non-overlay, so it has to prevent persistent video.",
+      "parentUuid": "af291f09_f2b5ff35",
+      "revId": "ae5212df5054d45a05dfc23b3f8066afe7870351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
