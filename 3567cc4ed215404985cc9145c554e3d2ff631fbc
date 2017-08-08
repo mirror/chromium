@@ -22,6 +22,30 @@
       "revId": "3567cc4ed215404985cc9145c554e3d2ff631fbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8190911f_88a7d26a",
+        "filename": "chrome/browser/ui/views/payments/payment_request_completion_status_metrics_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-08T19:31:54Z",
+      "side": 1,
+      "message": "Added the two missing events.",
+      "parentUuid": "f814e25c_d8aeea89",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 14
+      },
+      "revId": "3567cc4ed215404985cc9145c554e3d2ff631fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
