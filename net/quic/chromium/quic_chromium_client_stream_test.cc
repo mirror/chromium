@@ -13,7 +13,7 @@
 #include "net/base/net_errors.h"
 #include "net/base/test_completion_callback.h"
 #include "net/quic/chromium/quic_chromium_client_session.h"
-#include "net/quic/core/quic_client_session_base.h"
+#include "net/quic/core/quic_spdy_client_session_base.h"
 #include "net/quic/core/quic_utils.h"
 #include "net/quic/core/spdy_utils.h"
 #include "net/quic/platform/api/quic_ptr_util.h"
@@ -38,7 +38,7 @@ namespace {
 
 const QuicStreamId kTestStreamId = 5u;
 
-class MockQuicClientSessionBase : public QuicClientSessionBase {
+class MockQuicClientSessionBase : public QuicSpdyClientSessionBase {
  public:
   explicit MockQuicClientSessionBase(QuicConnection* connection,
                                      QuicClientPushPromiseIndex* index);
@@ -142,7 +142,7 @@ class MockQuicClientSessionBase : public QuicClientSessionBase {
 MockQuicClientSessionBase::MockQuicClientSessionBase(
     QuicConnection* connection,
     QuicClientPushPromiseIndex* push_promise_index)
-    : QuicClientSessionBase(connection,
+    : QuicSpdyClientSessionBase(connection,
                             push_promise_index,
                             DefaultQuicConfig()) {
   crypto_stream_.reset(new MockQuicCryptoStream(this));

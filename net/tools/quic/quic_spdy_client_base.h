@@ -17,7 +17,7 @@
 #include "net/quic/platform/api/quic_socket_address.h"
 #include "net/quic/platform/api/quic_string_piece.h"
 #include "net/tools/quic/quic_client_base.h"
-#include "net/tools/quic/quic_client_session.h"
+#include "net/tools/quic/quic_spdy_client_session.h"
 #include "net/tools/quic/quic_spdy_client_stream.h"
 
 namespace net {
@@ -102,8 +102,8 @@ class QuicSpdyClientBase : public QuicClientBase,
   QuicSpdyClientStream* CreateClientStream();
 
   // Returns a the session used for this client downcasted to a
-  // QuicClientSession.
-  QuicClientSession* client_session();
+  // QuicSpdyClientSession.
+  QuicSpdyClientSession* client_session();
 
   QuicClientPushPromiseIndex* push_promise_index() {
     return &push_promise_index_;
@@ -138,7 +138,7 @@ class QuicSpdyClientBase : public QuicClientBase,
   int GetNumReceivedServerConfigUpdatesFromSession() override;
 
   // Takes ownership of |connection|.
-  std::unique_ptr<QuicClientSession> CreateQuicClientSession(
+  std::unique_ptr<QuicSpdyClientSession> CreateQuicSpdyClientSession(
       QuicConnection* connection) override;
 
   // If the crypto handshake has not yet been confirmed, adds the data to the

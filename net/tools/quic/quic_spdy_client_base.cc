@@ -52,8 +52,8 @@ QuicSpdyClientBase::~QuicSpdyClientBase() {
   ResetSession();
 }
 
-QuicClientSession* QuicSpdyClientBase::client_session() {
-  return static_cast<QuicClientSession*>(QuicClientBase::session());
+QuicSpdyClientSession* QuicSpdyClientBase::client_session() {
+  return static_cast<QuicSpdyClientSession*>(QuicClientBase::session());
 }
 
 void QuicSpdyClientBase::InitializeSession() {
@@ -89,11 +89,11 @@ void QuicSpdyClientBase::OnClose(QuicSpdyStream* stream) {
   }
 }
 
-std::unique_ptr<QuicClientSession> QuicSpdyClientBase::CreateQuicClientSession(
-    QuicConnection* connection) {
-  return QuicMakeUnique<QuicClientSession>(*config(), connection, server_id(),
-                                           crypto_config(),
-                                           &push_promise_index_);
+std::unique_ptr<QuicSpdyClientSession>
+QuicSpdyClientBase::CreateQuicSpdyClientSession(QuicConnection* connection) {
+  return QuicMakeUnique<QuicSpdyClientSession>(*config(), connection,
+                                               server_id(), crypto_config(),
+                                               &push_promise_index_);
 }
 
 void QuicSpdyClientBase::SendRequest(const SpdyHeaderBlock& headers,

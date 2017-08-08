@@ -114,7 +114,7 @@ void QuicClientBase::StartConnect() {
     UpdateStats();
   }
 
-  session_ = CreateQuicClientSession(new QuicConnection(
+  session_ = CreateQuicSpdyClientSession(new QuicConnection(
       GetNextConnectionId(), server_address(), helper(), alarm_factory(),
       writer,
       /* owns_writer= */ false, Perspective::IS_CLIENT, supported_versions()));

@@ -21,12 +21,12 @@
 #include "net/base/ip_endpoint.h"
 #include "net/quic/core/crypto/aes_128_gcm_12_encrypter.h"
 #include "net/quic/core/crypto/null_encrypter.h"
-#include "net/quic/core/quic_client_session_base.h"
 #include "net/quic/core/quic_framer.h"
 #include "net/quic/core/quic_packet_creator.h"
 #include "net/quic/core/quic_packets.h"
 #include "net/quic/core/quic_server_id.h"
 #include "net/quic/core/quic_session.h"
+#include "net/quic/core/quic_spdy_client_session_base.h"
 #include "net/quic/core/quic_utils.h"
 #include "net/quic/platform/api/quic_flags.h"
 #include "net/quic/platform/api/quic_logging.h"
@@ -2407,7 +2407,7 @@ class ServerStreamThatSendsHugeResponseFactory
 // A test client stream that drops all received body.
 class ClientStreamThatDropsBody : public QuicSpdyClientStream {
  public:
-  ClientStreamThatDropsBody(QuicStreamId id, QuicClientSession* session)
+  ClientStreamThatDropsBody(QuicStreamId id, QuicSpdyClientSession* session)
       : QuicSpdyClientStream(id, session) {}
   ~ClientStreamThatDropsBody() override {}
 
@@ -2427,18 +2427,18 @@ class ClientStreamThatDropsBody : public QuicSpdyClientStream {
   }
 };
 
-class ClientSessionThatDropsBody : public QuicClientSession {
+class ClientSessionThatDropsBody : public QuicSpdyClientSession {
  public:
   ClientSessionThatDropsBody(const QuicConfig& config,
                              QuicConnection* connection,
                              const QuicServerId& server_id,
                              QuicCryptoClientConfig* crypto_config,
                              QuicClientPushPromiseIndex* push_promise_index)
-      : QuicClientSession(config,
-                          connection,
-                          server_id,
-                          crypto_config,
-                          push_promise_index) {}
+      : QuicSpdyClientSession(config,
+                              connection,
+                              server_id,
+                              crypto_config,
+                              push_promise_index) {}
 
   ~ClientSessionThatDropsBody() override {}
 
@@ -2465,7 +2465,7 @@ class MockableQuicClientThatDropsBody : public MockableQuicClient {
                            epoll_server) {}
   ~MockableQuicClientThatDropsBody() override {}
 
-  std::unique_ptr<QuicClientSession> CreateQuicClientSession(
+  std::unique_ptr<QuicSpdyClientSession> CreateQuicSpdyClientSession(
       QuicConnection* connection) override {
     return QuicMakeUnique<ClientSessionThatDropsBody>(
         *config(), connection, server_id(), crypto_config(),

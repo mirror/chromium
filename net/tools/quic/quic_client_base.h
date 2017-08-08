@@ -16,7 +16,7 @@
 #include "net/quic/core/quic_config.h"
 #include "net/quic/platform/api/quic_socket_address.h"
 #include "net/quic/platform/api/quic_string_piece.h"
-#include "net/tools/quic/quic_client_session.h"
+#include "net/tools/quic/quic_spdy_client_session.h"
 #include "net/tools/quic/quic_spdy_client_stream.h"
 
 namespace net {
@@ -206,9 +206,9 @@ class QuicClientBase {
  protected:
   // TODO(rch): Move GetNumSentClientHellosFromSession and
   // GetNumReceivedServerConfigUpdatesFromSession into a new/better
-  // QuicClientSession class. The current inherits dependencies from
+  // QuicSpdyClientSession class. The current inherits dependencies from
   // Spdy. When that happens this class and all its subclasses should
-  // work with QuicClientSession instead of QuicSession.
+  // work with QuicSpdyClientSession instead of QuicSession.
   // That will obviate the need for the pure virtual functions below.
 
   // Extract the number of sent client hellos from the session.
@@ -229,7 +229,7 @@ class QuicClientBase {
   // you probably want to call ResetSession() in your destructor.
   // TODO(rch): Change the connection parameter to take in a
   // std::unique_ptr<QuicConnection> instead.
-  virtual std::unique_ptr<QuicClientSession> CreateQuicClientSession(
+  virtual std::unique_ptr<QuicSpdyClientSession> CreateQuicSpdyClientSession(
       QuicConnection* connection) = 0;
 
   // Creates a packet writer to be used for the next connection.
@@ -276,7 +276,7 @@ class QuicClientBase {
 
   // Subclasses may need to explicitly clear the session on destruction
   // if they create it with objects that will be destroyed before this is.
-  // You probably want to call this if you override CreateQuicClientSession.
+  // You probably want to call this if you override CreateQuicSpdyClientSession.
   void ResetSession() { session_.reset(); }
 
  private:
@@ -310,7 +310,7 @@ class QuicClientBase {
   std::unique_ptr<QuicPacketWriter> writer_;
 
   // Session which manages streams.
-  std::unique_ptr<QuicSession> session_;
+  std::unique_ptr<QuicSpdyClientSession> session_;
 
   // This vector contains QUIC versions which we currently support.
   // This should be ordered such that the highest supported version is the first
