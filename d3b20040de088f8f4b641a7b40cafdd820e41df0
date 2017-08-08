@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bca3eaac_b574e88b",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 3032,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-08T22:16:15Z",
+      "side": 1,
+      "message": "No longer changing TestExpectations, since a V8 CL is no longer a dependent CL.\n\nThere are other cases in this file where we seem to do this for \u0027feature-related test failures\u0027, e.g. see \u0027crbug.com/v8/6529\u0027 above.",
+      "parentUuid": "1c4890f5_8f04ff83",
+      "range": {
+        "startLine": 3032,
+        "startChar": 17,
+        "endLine": 3032,
+        "endChar": 33
+      },
+      "revId": "d3b20040de088f8f4b641a7b40cafdd820e41df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "856ad405_b5bdd49a",
         "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-08T20:22:21Z",
       "side": 1,
       "message": "Per our offline discussion lets:\n\n* Inline most of this.\n* Move this conversions into a map.\n* Add the special promotion of these properties into the sorting function.\n* Use a symbol to add the special names to the properties.",
+      "revId": "d3b20040de088f8f4b641a7b40cafdd820e41df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15e1795_deb2448e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-08T22:16:15Z",
+      "side": 1,
+      "message": "After changing the corresponding V8 CL, \u0027preview\u0027 will no longer have \u0027preview.internalProperties\u0027.  Instead, we can assume V8 provided \u0027preview.properties\u0027 will always have internal properties at the beginning, and we will not distinguish them from user-defined properties with the same name.\n\nMap, done.\n\nActually, there\u0027s only one place when I need to convert internal names to display names, so I think the symbol isn\u0027t needed.",
+      "parentUuid": "856ad405_b5bdd49a",
       "revId": "d3b20040de088f8f4b641a7b40cafdd820e41df0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
