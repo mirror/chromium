@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6639ad98_ea749227",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 11628,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-08T18:50:49Z",
+      "side": 1,
+      "message": "Move this test to core/layout/ScrollbarsTest.cpp and make it a SimTest (follow the pattern in that file).",
+      "range": {
+        "startLine": 11628,
+        "startChar": 7,
+        "endLine": 11628,
+        "endChar": 53
+      },
+      "revId": "03a47e862723d6bb6eeae97a3b4928c2ebb6b433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe64f39_f7ea1ea7",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 11671,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-08T18:50:49Z",
+      "side": 1,
+      "message": "Would this work if you defined the \u003cstyle\u003e in the HTML file but simply applied it in code? e.g.:\n\nHTML:\n\n\u003cstyle\u003e\n  .noscrollbars::-webkit-scrollbar { display: none; }\n\u003c/style\u003e\n\u003cdiv id\u003d\"a\"\u003e\u003c/div\u003e\n\nTest C++:\ndocument-\u003egetElementById(\"a\")-\u003esetAttribute(HTMLNames::classAttr, \"noscrollbars\");",
+      "range": {
+        "startLine": 11671,
+        "startChar": 9,
+        "endLine": 11671,
+        "endChar": 22
+      },
+      "revId": "03a47e862723d6bb6eeae97a3b4928c2ebb6b433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e10050_aa9e68f9",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 11689,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-08T18:50:49Z",
+      "side": 1,
+      "message": "I think the scrollbar\u0027s frameRect should be 0 size with display: none, that would be better to check than doing a hit test.",
+      "range": {
+        "startLine": 11689,
+        "startChar": 2,
+        "endLine": 11689,
+        "endChar": 69
+      },
+      "revId": "03a47e862723d6bb6eeae97a3b4928c2ebb6b433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
