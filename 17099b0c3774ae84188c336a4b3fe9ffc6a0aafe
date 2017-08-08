@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b910ed21_1985c9ee",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-08T23:26:48Z",
+      "side": 1,
+      "message": "Future work: perhaps instead of deleting, convert into a stringified form (such as a unique CSS selector string) here?",
+      "revId": "17099b0c3774ae84188c336a4b3fe9ffc6a0aafe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
