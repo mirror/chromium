@@ -25,6 +25,154 @@
     },
     {
       "key": {
+        "uuid": "0bcfa0c1_e5b88328",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-08T22:53:52Z",
+      "side": 1,
+      "message": "Should this go in the anonymous namespace?",
+      "range": {
+        "startLine": 114,
+        "startChar": 1,
+        "endLine": 114,
+        "endChar": 24
+      },
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e082409_b4d14e05",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-08T22:53:52Z",
+      "side": 1,
+      "message": "Maybe I\u0027m weird but I don\u0027t like to name variables \"tmp\"; all variables are temporary, so naming one \"tmp\" is like naming it \"variable\".  How about \"seed\"?",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcebf202_9fca70e0",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-08T22:53:52Z",
+      "side": 1,
+      "message": "It looks like this file has a particular format, which this code depends on. Is this format documented in the comments anywhere?",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfdbad13_73759a4a",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-08T22:53:52Z",
+      "side": 1,
+      "message": "Our code should never crash, no matter how corrupted the file is. It might not have the number of tokens you expect, which could crash this code. If you could add some sanity checks about the contents of these tokens, that would also help.",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a534d5_ffe75dbd",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-08T22:53:52Z",
+      "side": 1,
+      "message": "I don\u0027t understand this bit. Is this to prevent WebView\u0027s JobService from fetching again, to prevent some other Finch code somewhere from fetching again? If the latter, this seems a hacky (and possibly racy?) way to do it.",
+      "range": {
+        "startLine": 165,
+        "startChar": 24,
+        "endLine": 165,
+        "endChar": 61
+      },
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c0db14_ab1aa489",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-08T22:53:52Z",
+      "side": 1,
+      "message": "This duplicates the check in aw_metrics_service_client. Someone is likely to change one without knowing about the other, which would be a bug. Instead, ask aw_metrics_service_client to make this decision.",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df3b544_1c3db612",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-08T22:53:52Z",
+      "side": 1,
+      "message": "What are variation_ids and unforceable_field_trials for? If we don\u0027t need them, maybe SetupFieldTrials should accept nulls instead?",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9237ccfc_b0d2a5ab",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-08T22:53:52Z",
+      "side": 1,
+      "message": "These names are getting confusing; GetClientID returns it but GetOrCreateGUID doesn\u0027t; is a client ID the same as a GUID? What do you think of these names:\n\nGetClientID → GetClientId (that capitalization style seems more common in chromium)\nGetOrCreateGUID → LoadOrCreateClientId (so it makes sense that that version doesn\u0027t return it)\ng_client_id_guid → g_client_id (less redundant)\nInitializeWithGUID → InitializeWithClientId",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8910fcef_09d05fd5",
         "filename": "android_webview/browser/aw_metrics_service_client.h",
         "patchSetId": 7
@@ -42,6 +190,40 @@
         "endLine": 47,
         "endChar": 45
       },
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77129f58_ac7c5547",
+        "filename": "android_webview/browser/aw_metrics_service_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-08T22:53:52Z",
+      "side": 1,
+      "message": "It\u0027s not obvious that this may do file I/O, and should be avoided on the UI thread, unless we\u0027re certain the client ID has been previously cached. (If you only intend to call this when it\u0027s already cached, then it should instead assert that.)",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c78c7b_309b7a7b",
+        "filename": "android_webview/browser/aw_variations_service_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-08T22:53:52Z",
+      "side": 1,
+      "message": "Is this intentional? If you need the actual channel, you can get it from AwMetricsServiceClient::GetChannel (see how that gets it from the Monochrome package name; if you need to get the channel before AwMetricsServiceClient is initialized, you\u0027ll have to do some refactoring). Note that we don\u0027t know the channel in stand-alone WebView.",
       "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
