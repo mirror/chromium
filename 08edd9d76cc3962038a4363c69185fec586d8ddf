@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4105c602_569c3638",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T17:18:47Z",
+      "side": 1,
+      "message": "You don\u0027t need this barrier. Just post BindOnce(\u0026DoNothing) below.\n\nIn general, write the minimum amount of code to test what you want.",
+      "range": {
+        "startLine": 447,
+        "startChar": 2,
+        "endLine": 448,
+        "endChar": 67
+      },
+      "revId": "08edd9d76cc3962038a4363c69185fec586d8ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f07c84c_59ba35b1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T17:18:47Z",
+      "side": 1,
+      "message": "constexpr size_t kNumTasksPosted",
+      "range": {
+        "startLine": 452,
+        "startChar": 2,
+        "endLine": 452,
+        "endChar": 25
+      },
+      "revId": "08edd9d76cc3962038a4363c69185fec586d8ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1e808f_f180d953",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T17:18:47Z",
+      "side": 1,
+      "message": "Do not multiply by 2 here. You already multiplied by 2 above.",
+      "range": {
+        "startLine": 453,
+        "startChar": 25,
+        "endLine": 453,
+        "endChar": 45
+      },
+      "revId": "08edd9d76cc3962038a4363c69185fec586d8ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d16bbf_fb4f3285",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T17:18:47Z",
+      "side": 1,
+      "message": "Add:\nEXPECT_EQ(kNumWorkersInWorkerPool, worker_pool_-\u003eGetWorkerCapacityForTesting());",
+      "revId": "08edd9d76cc3962038a4363c69185fec586d8ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd2c025_41618362",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T17:18:47Z",
+      "side": 1,
+      "message": "This ensures that all tasks run before the end of this scope. If you have BindOnce(\u0026DoNothing) tasks, it doesn\u0027t matter if tasks run after the end of this scope. You can therefore remove this line.",
+      "range": {
+        "startLine": 467,
+        "startChar": 2,
+        "endLine": 467,
+        "endChar": 24
+      },
+      "revId": "08edd9d76cc3962038a4363c69185fec586d8ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
