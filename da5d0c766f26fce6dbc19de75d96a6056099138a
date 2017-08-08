@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5431bd9_19561944",
+        "filename": "tools/perf/benchmarks/smoothness.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-08T16:45:00Z",
+      "side": 0,
+      "message": "This benchmark will still be disabled everywhere because of this line.",
+      "revId": "da5d0c766f26fce6dbc19de75d96a6056099138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
