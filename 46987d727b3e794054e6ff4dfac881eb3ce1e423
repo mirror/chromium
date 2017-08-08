@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d55bdd18_c251ddc9",
+        "filename": "chrome/browser/resources/settings/site_settings/category_default_setting.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-08-08T03:26:29Z",
+      "side": 1,
+      "message": "It looks right as is to me.",
+      "parentUuid": "fe7c2ff1_9d9ceac4",
+      "revId": "46987d727b3e794054e6ff4dfac881eb3ce1e423",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f91d867c_5eb76dcf",
         "filename": "chrome/test/data/webui/settings/category_default_setting_tests.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-07T23:41:43Z",
       "side": 1,
       "message": "browserProxy.whenCalled(\u0027setDefaultValueForContentType\u0027).then(assertNotReached);",
+      "revId": "46987d727b3e794054e6ff4dfac881eb3ce1e423",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1faf369c_50cfce6b",
+        "filename": "chrome/test/data/webui/settings/category_default_setting_tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-08-08T03:26:29Z",
+      "side": 1,
+      "message": "This doesn\u0027t actually work because JS is weird (it fails with an unrelated assertion), but I changed it to use an arrow function.",
+      "parentUuid": "f91d867c_5eb76dcf",
       "revId": "46987d727b3e794054e6ff4dfac881eb3ce1e423",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "46987d727b3e794054e6ff4dfac881eb3ce1e423",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac37131a_c0a0246b",
+        "filename": "chrome/test/data/webui/settings/category_default_setting_tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-08-08T03:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e30aaab_6602ec04",
+      "revId": "46987d727b3e794054e6ff4dfac881eb3ce1e423",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
