@@ -199,6 +199,30 @@
       "revId": "a4b197bf539b2da547c5dac60749643b868addf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ab3d2c_19327709",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-08T17:39:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0e7e7168_afeb2cdd",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "a4b197bf539b2da547c5dac60749643b868addf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
