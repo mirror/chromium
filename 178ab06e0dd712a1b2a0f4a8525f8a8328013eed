@@ -998,6 +998,24 @@
     },
     {
       "key": {
+        "uuid": "9a7c4728_d4151b6b",
+        "filename": "chrome/common/profiling/memlog_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T01:37:09Z",
+      "side": 1,
+      "message": "What about making it a Binding and just closing it if it was previously bound?\n\nTo me, BindingSet conceptually indicates that multiple things can connect at one time.",
+      "parentUuid": "2c77553e_c93005ac",
+      "revId": "178ab06e0dd712a1b2a0f4a8525f8a8328013eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e580dda_4ec243a5",
         "filename": "chrome/profiling/memlog_connection_manager.h",
         "patchSetId": 13
