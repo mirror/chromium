@@ -363,8 +363,7 @@ WebContents* WebContents::FromFrameTreeNodeId(int frame_tree_node_id) {
   return WebContentsImpl::FromFrameTreeNode(frame_tree_node);
 }
 
-void WebContents::SetScreenOrientationDelegate(
-    ScreenOrientationDelegate* delegate) {
+void WebContentsScreenOrientationDelegate(ScreenOrientationDelegate* delegate) {
   ScreenOrientationProvider::SetDelegate(delegate);
 }
 
@@ -1490,12 +1489,14 @@ base::TimeTicks WebContentsImpl::GetLastHiddenTime() const {
 void WebContentsImpl::WasShown() {
   controller_.SetActive(true);
 
-  for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree()) {
+  if (auto* view = GetRenderWidgetHostView()) {
     view->Show();
 #if defined(OS_MACOSX)
     view->SetActive(true);
 #endif
   }
+
+  SetVisibilityForChildViews(true);
 
   SendPageMessage(new PageMsg_WasShown(MSG_ROUTING_NONE));
 
@@ -1517,8 +1518,10 @@ void WebContentsImpl::WasHidden() {
     // removes the |GetRenderViewHost()|; then when we actually destroy the
     // window, OnWindowPosChanged() notices and calls WasHidden() (which
     // calls us).
-    for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
+    if (auto* view = GetRenderWidgetHostView())
       view->Hide();
+
+    SetVisibilityForChildViews(false);
 
     SendPageMessage(new PageMsg_WasHidden(MSG_ROUTING_NONE));
   }
@@ -5962,6 +5965,16 @@ void WebContentsImpl::MediaMutedStatusChanged(
     bool muted) {
   for (auto& observer : observers_)
     observer.MediaMutedStatusChanged(id, muted);
+}
+
+void WebContentsImpl::SetVisibilityForChildViews(bool visible) {
+  GetMainFrame()->ForEachImmediateLocalRoot(base::Bind(
+      [](bool is_visible, RenderFrameHostImpl* local_root) {
+        if (auto* view = local_root->GetView()) {
+          return is_visible ? view->Show() : view->Hide();
+        }
+      },
+      visible));
 }
 
 }  // namespace content
