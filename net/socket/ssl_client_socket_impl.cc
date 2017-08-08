@@ -749,6 +749,10 @@ int64_t SSLClientSocketImpl::GetTotalReceivedBytes() const {
   return transport_->socket()->GetTotalReceivedBytes();
 }
 
+void SSLClientSocketImpl::Tag(const SocketTag& tag) {
+  return transport_->socket()->Tag(tag);
+}
+
 void SSLClientSocketImpl::DumpMemoryStats(SocketMemoryStats* stats) const {
   if (transport_adapter_)
     stats->buffer_size = transport_adapter_->GetAllocationSize();

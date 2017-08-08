@@ -14,9 +14,11 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.net.TrafficStats;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.ParcelFileDescriptor;
 import android.security.KeyChain;
 import android.security.NetworkSecurityPolicy;
 import android.telephony.TelephonyManager;
@@ -26,9 +28,15 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.CalledByNativeUnchecked;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.SocketException;
+import java.net.SocketImpl;
 import java.net.URLConnection;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -290,5 +298,73 @@ class AndroidNetworkLibrary {
             dnsServers[i] = dnsServersList.get(i).getAddress();
         }
         return dnsServers;
+    }
+
+    // Socket that exists only to provide a file descriptor when queried.
+    private static class SocketFd extends Socket {
+        SocketFd(int fd) throws IOException {
+            super(new SocketImplFd(fd));
+        }
+    }
+    // SocketImpl that exists only to provide a file descriptor when queried.
+    private static class SocketImplFd extends SocketImpl {
+        SocketImplFd(int fd) {
+            this.fd = ParcelFileDescriptor.adoptFd(fd).getFileDescriptor();
+        }
+        protected void accept(SocketImpl s) {
+            throw new RuntimeException("accept not implemented");
+        }
+        protected int available() {
+            throw new RuntimeException("accept not implemented");
+        }
+        protected void bind(InetAddress host, int port) {
+            throw new RuntimeException("accept not implemented");
+        }
+        protected void close() {}
+        protected void connect(InetAddress address, int port) {
+            throw new RuntimeException("connect not implemented");
+        }
+        protected void connect(SocketAddress address, int timeout) {
+            throw new RuntimeException("connect not implemented");
+        }
+        protected void connect(String host, int port) {
+            throw new RuntimeException("connect not implemented");
+        }
+        protected void create(boolean stream) {
+            throw new RuntimeException("create not implemented");
+        }
+        protected InputStream getInputStream() {
+            throw new RuntimeException("getInputStream not implemented");
+        }
+        protected OutputStream getOutputStream() {
+            throw new RuntimeException("getOutputStream not implemented");
+        }
+        protected void listen(int backlog) {
+            throw new RuntimeException("listen not implemented");
+        }
+        protected void sendUrgentData(int data) {
+            throw new RuntimeException("sendUrgentData not implemented");
+        }
+        public Object getOption(int optID) {
+            throw new RuntimeException("getOption not implemented");
+        }
+        public void setOption(int optID, Object value) {
+            throw new RuntimeException("setOption not implemented");
+        }
+    }
+
+    @CalledByNative
+    private static void tagSocket(int fd, int uid, int tag) throws IOException {
+        // TODO: tag with uid
+        int oldTag = TrafficStats.getThreadStatsTag();
+        if (tag != oldTag) {
+            TrafficStats.setThreadStatsTag(tag);
+        }
+        SocketFd s = new SocketFd(fd);
+        TrafficStats.tagSocket(s);
+        s.close(); // Avoid leak detection false positives.
+        if (tag != oldTag) {
+            TrafficStats.setThreadStatsTag(oldTag);
+        }
     }
 }

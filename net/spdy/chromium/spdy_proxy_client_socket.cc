@@ -191,6 +191,11 @@ int64_t SpdyProxyClientSocket::GetTotalReceivedBytes() const {
   return 0;
 }
 
+void SpdyProxyClientSocket::Tag(const SocketTag& tag) {
+  // TODO(pauljensen): is this impossible?
+  NOTIMPLEMENTED();
+}
+
 int SpdyProxyClientSocket::Read(IOBuffer* buf, int buf_len,
                                 const CompletionCallback& callback) {
   DCHECK(read_callback_.is_null());

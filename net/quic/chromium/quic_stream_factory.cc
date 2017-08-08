@@ -588,6 +588,7 @@ QuicStreamRequest::~QuicStreamRequest() {
 int QuicStreamRequest::Request(const HostPortPair& destination,
                                QuicVersion quic_version,
                                PrivacyMode privacy_mode,
+                               const SocketTag& socket_tag,
                                int cert_verify_flags,
                                const GURL& url,
                                QuicStringPiece method,
@@ -596,7 +597,8 @@ int QuicStreamRequest::Request(const HostPortPair& destination,
   DCHECK_NE(quic_version, QUIC_VERSION_UNSUPPORTED);
   DCHECK(callback_.is_null());
   DCHECK(factory_);
-  server_id_ = QuicServerId(HostPortPair::FromURL(url), privacy_mode);
+  server_id_ =
+      QuicServerId(HostPortPair::FromURL(url), privacy_mode, socket_tag);
 
   int rv = factory_->Create(server_id_, destination, quic_version,
                             cert_verify_flags, url, method, net_log, this);

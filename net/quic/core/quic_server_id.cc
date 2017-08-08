@@ -16,27 +16,39 @@ namespace net {
 QuicServerId::QuicServerId() : privacy_mode_(PRIVACY_MODE_DISABLED) {}
 
 QuicServerId::QuicServerId(const HostPortPair& host_port_pair,
-                           PrivacyMode privacy_mode)
-    : host_port_pair_(host_port_pair), privacy_mode_(privacy_mode) {}
-
-QuicServerId::QuicServerId(const string& host, uint16_t port)
-    : host_port_pair_(host, port), privacy_mode_(PRIVACY_MODE_DISABLED) {}
+                           PrivacyMode privacy_mode,
+                           const SocketTag& socket_tag)
+    : host_port_pair_(host_port_pair),
+      privacy_mode_(privacy_mode),
+      socket_tag_(socket_tag) {}
 
 QuicServerId::QuicServerId(const string& host,
                            uint16_t port,
-                           PrivacyMode privacy_mode)
-    : host_port_pair_(host, port), privacy_mode_(privacy_mode) {}
+                           const SocketTag& socket_tag)
+    : host_port_pair_(host, port),
+      privacy_mode_(PRIVACY_MODE_DISABLED),
+      socket_tag_(socket_tag) {}
+
+QuicServerId::QuicServerId(const string& host,
+                           uint16_t port,
+                           PrivacyMode privacy_mode,
+                           const SocketTag& socket_tag)
+    : host_port_pair_(host, port),
+      privacy_mode_(privacy_mode),
+      socket_tag_(socket_tag) {}
 
 QuicServerId::~QuicServerId() {}
 
 bool QuicServerId::operator<(const QuicServerId& other) const {
-  return std::tie(host_port_pair_, privacy_mode_) <
-         std::tie(other.host_port_pair_, other.privacy_mode_);
+  return std::tie(host_port_pair_, privacy_mode_, socket_tag_) <
+         std::tie(other.host_port_pair_, other.privacy_mode_,
+                  other.socket_tag_);
 }
 
 bool QuicServerId::operator==(const QuicServerId& other) const {
   return privacy_mode_ == other.privacy_mode_ &&
-         host_port_pair_.Equals(other.host_port_pair_);
+         host_port_pair_.Equals(other.host_port_pair_) &&
+         socket_tag_ == other.socket_tag_;
 }
 
 string QuicServerId::ToString() const {

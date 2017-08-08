@@ -209,6 +209,10 @@ int64_t HttpProxyClientSocket::GetTotalReceivedBytes() const {
   return transport_->socket()->GetTotalReceivedBytes();
 }
 
+void HttpProxyClientSocket::Tag(const SocketTag& tag) {
+  return transport_->socket()->Tag(tag);
+}
+
 int HttpProxyClientSocket::Read(IOBuffer* buf, int buf_len,
                                 const CompletionCallback& callback) {
   DCHECK(user_callback_.is_null());

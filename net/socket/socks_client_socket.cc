@@ -175,6 +175,10 @@ int64_t SOCKSClientSocket::GetTotalReceivedBytes() const {
   return transport_->socket()->GetTotalReceivedBytes();
 }
 
+void SOCKSClientSocket::Tag(const SocketTag& tag) {
+  return transport_->socket()->Tag(tag);
+}
+
 // Read is called by the transport layer above to read. This can only be done
 // if the SOCKS handshake is complete.
 int SOCKSClientSocket::Read(IOBuffer* buf, int buf_len,
