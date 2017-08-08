@@ -119,6 +119,9 @@ namespace chromecast {
 
 bool GetSwitchValueBoolean(const std::string& switch_string,
                            const bool default_value) {
+  if (!base::CommandLine::InitializedForCurrentProcess()) {
+    return default_value;
+  }
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
   if (command_line->HasSwitch(switch_string)) {
@@ -139,6 +142,9 @@ bool GetSwitchValueBoolean(const std::string& switch_string,
 }
 
 int GetSwitchValueInt(const std::string& switch_name, const int default_value) {
+  if (!base::CommandLine::InitializedForCurrentProcess()) {
+    return default_value;
+  }
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
   if (!command_line->HasSwitch(switch_name)) {
