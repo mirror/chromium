@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f814e25c_d8aeea89",
+        "filename": "chrome/browser/ui/views/payments/payment_request_completion_status_metrics_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-08T18:43:04Z",
+      "side": 1,
+      "message": "nit: assert no other events were recorded?",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 14
+      },
+      "revId": "3567cc4ed215404985cc9145c554e3d2ff631fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
