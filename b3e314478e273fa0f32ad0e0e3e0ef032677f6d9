@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "49dae31a_525c9afd",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-08T21:11:33Z",
+      "side": 1,
+      "message": "Yep, I thought network_handler was owned by IO. I fixed accordingly.",
+      "parentUuid": "63b6ddbb_eda51a0a",
+      "range": {
+        "startLine": 169,
+        "startChar": 24,
+        "endLine": 169,
+        "endChar": 39
+      },
+      "revId": "b3e314478e273fa0f32ad0e0e3e0ef032677f6d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f7aa92e_1ee8d8a1",
         "filename": "content/browser/devtools/protocol/network_handler.h",
         "patchSetId": 5
@@ -69,6 +93,30 @@
       "revId": "b3e314478e273fa0f32ad0e0e3e0ef032677f6d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8d4ffa_03ff29c0",
+        "filename": "content/browser/devtools/protocol/network_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-08T21:11:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5f7aa92e_1ee8d8a1",
+      "range": {
+        "startLine": 128,
+        "startChar": 58,
+        "endLine": 128,
+        "endChar": 65
+      },
+      "revId": "b3e314478e273fa0f32ad0e0e3e0ef032677f6d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
