@@ -22,6 +22,30 @@
       "revId": "8a99d4d8f246216e379f8f8be756a3d4a3dab816",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5958465_8f4830bf",
+        "filename": "ui/events/event_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1225834
+      },
+      "writtenOn": "2017-08-08T22:20:31Z",
+      "side": 1,
+      "message": "Agreed. Wrote a more verbose comment. Also renamed the flag and variable something more appropriate.",
+      "parentUuid": "4556d19f_9e996efe",
+      "range": {
+        "startLine": 39,
+        "startChar": 34,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "8a99d4d8f246216e379f8f8be756a3d4a3dab816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
