@@ -46,6 +46,30 @@
       "revId": "31eb20b167ee3379009357d83edd8d79a3574ed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd2b164_2678e5fb",
+        "filename": "third_party/WebKit/Source/core/events/Event.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-08T14:07:03Z",
+      "side": 1,
+      "message": "Ah, I see.  Got it.\n\nIIUC, the key point of the spec is that IDL attributes shouldn\u0027t return a \"copy\" of their value.  However, Blink has been returning a copy anyway, then avoiding a sequence doesn\u0027t make much sense...  Sigh.\n\nAnyway, this looks okay to me.",
+      "parentUuid": "c2f9e882_b46ba934",
+      "range": {
+        "startLine": 58,
+        "startChar": 67,
+        "endLine": 58,
+        "endChar": 73
+      },
+      "revId": "31eb20b167ee3379009357d83edd8d79a3574ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
