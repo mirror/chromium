@@ -37,6 +37,7 @@
 
 #include "base/mac/sdk_forward_declarations.h"
 #include "base/strings/string_util.h"
+#include "build/build_config.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
 #include "ui/events/blink/blink_event_util.h"
@@ -247,6 +248,44 @@ blink::WebKeyboardEvent WebKeyboardEventBuilder::Build(NSEvent* event) {
   return result;
 }
 
+// WebMouseEventFromTouchEvent -------------------------------------------------
+#if defined(OS_MACOSX)
+blink::WebMouseEvent WebMouseEventBuilder::BuildFromTouchEvent(
+    NSEvent* theEvent,
+    NSView* view,
+    blink::WebInputEvent::Type webInputEvent,
+    blink::WebInputEvent::Modifiers webInputEventModifier) {
+  blink::WebMouseEvent::Button button = blink::WebMouseEvent::Button::kLeft;
+  blink::WebInputEvent::Type event_type = webInputEvent;
+
+  blink::WebMouseEvent event(event_type, webInputEventModifier,
+                             [theEvent timestamp]);
+  event.click_count = 1;
+  event.button = button;
+
+  event.pointer_type = blink::WebPointerProperties::PointerType::kMouse;
+  event.id = [theEvent deviceID];
+
+  if (@available(macOS 10.12.2, *)) {
+    // Get the touch location in the touch bar view from the NSEvent.
+    NSSet* touches =
+        [theEvent touchesMatchingPhase:NSTouchPhaseBegan inView:view];
+    NSTouch* touch = (NSTouch*)[(touches.allObjects) objectAtIndex:0];
+    NSPoint touch_location = [touch locationInView:view];
+
+    event.SetPositionInScreen(touch_location.x, touch_location.y);
+    event.SetPositionInWidget(touch_location.x, touch_location.y);
+  } else {
+    // Chrome cannot call this method from an API version lower than 10.12.2.
+    NOTIMPLEMENTED();
+  }
+
+  event.movement_x = [theEvent deltaX];
+  event.movement_y = [theEvent deltaY];
+
+  return event;
+}
+#endif
 // WebMouseEvent --------------------------------------------------------------
 
 blink::WebMouseEvent WebMouseEventBuilder::Build(
