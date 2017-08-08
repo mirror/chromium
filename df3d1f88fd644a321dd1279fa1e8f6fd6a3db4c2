@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3eb699d_d4696fe3",
+        "filename": "tools/perf/benchmarks/smoothness.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-08T16:51:31Z",
+      "side": 1,
+      "message": "THis can be removed",
+      "revId": "df3d1f88fd644a321dd1279fa1e8f6fd6a3db4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
