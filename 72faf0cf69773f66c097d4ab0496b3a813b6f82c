@@ -16,6 +16,24 @@
       "revId": "72faf0cf69773f66c097d4ab0496b3a813b6f82c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94d35a8_07ff353f",
+        "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-08T03:07:45Z",
+      "side": 1,
+      "message": "The old icon had 40dip worth of padding built in, which was unnecessary because the image would have been centered without that padding. I did not find a constant we could reuse.",
+      "parentUuid": "b8082b2a_70767a13",
+      "revId": "72faf0cf69773f66c097d4ab0496b3a813b6f82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
