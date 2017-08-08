@@ -129,6 +129,29 @@
     },
     {
       "key": {
+        "uuid": "72089a81_3362c34a",
+        "filename": "net/http/http_network_transaction.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T18:52:00Z",
+      "side": 1,
+      "message": "Maybe add a comment that this excludes retries on reused sockets, since a well behaved server may well time those out, and the number of times we can retry a request on reused sockets is limited?",
+      "range": {
+        "startLine": 409,
+        "startChar": 41,
+        "endLine": 409,
+        "endChar": 46
+      },
+      "revId": "384b610b6f8700614747bc67d7c1146e87fae32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6115179_18c34db4",
         "filename": "net/http/http_network_transaction.h",
         "patchSetId": 2
