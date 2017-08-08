@@ -239,6 +239,24 @@
       "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e4e1a0_f7c7f598",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-08T04:59:58Z",
+      "side": 1,
+      "message": "Fair enough.",
+      "parentUuid": "662dbe7f_67803c9b",
+      "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
