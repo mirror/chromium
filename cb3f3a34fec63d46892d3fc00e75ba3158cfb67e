@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cc2dee7_b83b05fd",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/app_window_metrics_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-08T22:18:07Z",
+      "side": 1,
+      "message": "nit: I think with enum histograms these days you don\u0027t need the static_cast.",
+      "revId": "cb3f3a34fec63d46892d3fc00e75ba3158cfb67e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3902b2_c9125fb4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1720,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-08T22:18:07Z",
+      "side": 1,
+      "message": "nit: Please add something like: Logged upon leaving that state.\n\nquestion:\nWhy for the total suffix is this guarded by\nif (state_ !\u003d State::kLaunchRequested \u0026\u0026 state_ !\u003d State::kWindowCreated) {\n\nDoes that restrict the data being collected?  I.e., does it need explaining?",
+      "revId": "cb3f3a34fec63d46892d3fc00e75ba3158cfb67e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
