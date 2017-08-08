@@ -411,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "3b58ebfe_58bda336",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsSeedFetchService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-08T22:00:22Z",
+      "side": 1,
+      "message": "If not ignore, then what should be done if we fail to delete a file?",
+      "parentUuid": "6cafb89f_f554549f",
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52d32791_cb8ad248",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsSeedFetchService.java",
         "patchSetId": 19
