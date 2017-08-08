@@ -540,11 +540,13 @@ TEST_F(SupervisedUserServiceExtensionTest,
     EXPECT_TRUE(error_2.empty());
 
     base::string16 error_3;
-    Extension::DisableReason reason = Extension::DISABLE_NONE;
+    extensions::ExtensionDisableReason reason =
+        extensions::EXTENSION_DISABLE_NONE;
     EXPECT_TRUE(supervised_user_service->MustRemainDisabled(extension.get(),
                                                             &reason,
                                                             &error_3));
-    EXPECT_EQ(Extension::DISABLE_CUSTODIAN_APPROVAL_REQUIRED, reason);
+    EXPECT_EQ(extensions::EXTENSION_DISABLE_CUSTODIAN_APPROVAL_REQUIRED,
+              reason);
     EXPECT_FALSE(error_3.empty());
 
     base::string16 error_4;
@@ -568,11 +570,12 @@ TEST_F(SupervisedUserServiceExtensionTest,
     EXPECT_FALSE(error_2.empty());
 
     base::string16 error_3;
-    Extension::DisableReason reason = Extension::DISABLE_NONE;
+    extensions::ExtensionDisableReason reason =
+        extensions::EXTENSION_DISABLE_NONE;
     EXPECT_FALSE(supervised_user_service->MustRemainDisabled(extension.get(),
                                                              &reason,
                                                              &error_3));
-    EXPECT_EQ(Extension::DISABLE_NONE, reason);
+    EXPECT_EQ(extensions::EXTENSION_DISABLE_NONE, reason);
     EXPECT_TRUE(error_3.empty());
 
     base::string16 error_4;

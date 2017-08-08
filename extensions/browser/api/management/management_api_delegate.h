@@ -90,7 +90,7 @@ class ManagementAPIDelegate {
   virtual void DisableExtension(
       content::BrowserContext* context,
       const std::string& extension_id,
-      Extension::DisableReason disable_reason) const = 0;
+      ExtensionDisableReason disable_reason) const = 0;
 
   // Used to show a confirmation dialog when uninstalling |target_extension|.
   virtual std::unique_ptr<UninstallDialogDelegate> UninstallFunctionDelegate(

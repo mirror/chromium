@@ -446,7 +446,7 @@ ExtensionFunction::ResponseAction ManagementSetEnabledFunction::Run() {
       return RespondLater();
     }
     if (prefs->GetDisableReasons(extension_id_) &
-            Extension::DISABLE_UNSUPPORTED_REQUIREMENT) {
+        EXTENSION_DISABLE_UNSUPPORTED_REQUIREMENT) {
       // Recheck the requirements.
       requirements_checker_ = base::MakeUnique<RequirementsChecker>(extension);
       requirements_checker_->Start(
@@ -457,7 +457,7 @@ ExtensionFunction::ResponseAction ManagementSetEnabledFunction::Run() {
     delegate->EnableExtension(browser_context(), extension_id_);
   } else if (currently_enabled && !params->enabled) {
     delegate->DisableExtension(browser_context(), extension_id_,
-                               Extension::DISABLE_USER_ACTION);
+                               EXTENSION_DISABLE_USER_ACTION);
   }
 
   return RespondNow(NoArguments());
