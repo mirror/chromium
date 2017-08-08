@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "518cf8c3_33490c25",
+        "filename": "chrome/browser/task_manager/providers/child_process_task.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-08T20:57:58Z",
+      "side": 1,
+      "message": "Remove this TODO",
+      "range": {
+        "startLine": 107,
+        "startChar": 38,
+        "endLine": 107,
+        "endChar": 46
+      },
+      "revId": "0006a91fe2588ab9dd3298c546df652f22a49987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca218faf_f44a533a",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-08T20:57:58Z",
+      "side": 1,
+      "message": "Would this be clearer phrasing? --\n\n\"Tasks from the primary subprovider are always shown in the Task Manager.  Tasks from the secondary subprovider are only shown when no primary task exists for that process.\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "0006a91fe2588ab9dd3298c546df652f22a49987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
