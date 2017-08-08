@@ -103,7 +103,7 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback,
     private boolean mSupportsVideoCapture;
     private boolean mSupportsAudioCapture;
 
-    private SelectFileDialog(long nativeSelectFileDialog) {
+    public SelectFileDialog(long nativeSelectFileDialog) {
         mNativeSelectFileDialog = nativeSelectFileDialog;
     }
 
@@ -611,8 +611,10 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback,
         return count;
     }
 
-    private class GetDisplayNameTask extends AsyncTask<Uri, Void, String[]> {
-        String[] mFilePaths;
+    // TODO(xueqing): Remove public once SelectFileDialogTest's package
+    // is same with SelectFileDialog.
+    public class GetDisplayNameTask extends AsyncTask<Uri, Void, String[]> {
+        public String[] mFilePaths;
         final Context mContext;
         final boolean mIsMultiple;
 
@@ -622,12 +624,21 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback,
         }
 
         @Override
-        protected String[] doInBackground(Uri...uris) {
+        public String[] doInBackground(Uri...uris) {
             mFilePaths = new String[uris.length];
             String[] displayNames = new String[uris.length];
             try {
                 for (int i = 0; i < uris.length; i++) {
-                    mFilePaths[i] = uris[i].toString();
+                    // child_process_security_policy_impl.cc : HasPermissionsForFile
+                    // return false if file path was not absolute, which will fire
+                    // bad message by RFH_CAN_ACCESS_FILES_OF_PAGE_STATE and
+                    // render process will be terminated.
+                    // See: https://crbug.com/752834
+                    if (ContentResolver.SCHEME_FILE.equals(uris[i].getScheme())) {
+                        mFilePaths[i] = uris[i].getSchemeSpecificPart();
+                    } else {
+                        mFilePaths[i] = uris[i].toString();
+                    }
                     displayNames[i] = ContentUriUtils.getDisplayName(
                             uris[i], mContext, MediaStore.MediaColumns.DISPLAY_NAME);
                 }

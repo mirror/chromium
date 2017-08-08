@@ -7,6 +7,7 @@ package org.chromium.chrome.browser;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.test.filters.MediumTest;
@@ -17,6 +18,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.DisabledTest;
@@ -200,5 +202,22 @@ public class SelectFileDialogTest {
         });
         mActivityWindowAndroidForTest.lastCallback = null;
         mActivityWindowAndroidForTest.lastIntent = null;
+    }
+
+    @Test
+    @MediumTest
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+    public void testMultipleFileSelectorWithFileUris() throws Throwable {
+        SelectFileDialog selectFileDialog = new SelectFileDialog(0);
+        SelectFileDialog.GetDisplayNameTask task =
+                selectFileDialog.new GetDisplayNameTask(ContextUtils.getApplicationContext(), true);
+        Uri[] filePathArray = new Uri[] {
+                Uri.parse("file:///storage/emulated/0/DCIM/Camera/IMG_0.jpg"),
+                Uri.parse("file:///storage/emulated/0/DCIM/Camera/IMG_1.jpg")};
+        task.doInBackground(filePathArray);
+        Assert.assertEquals(task.mFilePaths[0].toString(),
+                "///storage/emulated/0/DCIM/Camera/IMG_0.jpg");
+        Assert.assertEquals(task.mFilePaths[1].toString(),
+                "///storage/emulated/0/DCIM/Camera/IMG_1.jpg");
     }
 }
