@@ -92,6 +92,12 @@ static const CGFloat kHeightPercentage = 0.85;
     CGFloat popupWidth = [[self class] popupWidthForItems:items];
     [self setOptimalSize:CGSizeMake(popupWidth, optimalHeight)
                 atOrigin:newOrigin];
+
+    // Fade in the popup.
+    CGRect containerFrame = [[self popupContainer] frame];
+    CGPoint destination = CGPointMake(CGRectGetLeadingEdge(containerFrame),
+                                      CGRectGetMinY(containerFrame));
+    [self fadeInPopupFromSource:origin toDestination:destination];
   }
   return self;
 }
