@@ -20,10 +20,6 @@
 #include "url/gurl.h"
 #include "url/origin.h"
 
-namespace net {
-class URLRequestContext;
-}
-
 namespace content {
 
 class AppCacheUpdateJob::UpdateRequestBase {
@@ -32,8 +28,9 @@ class AppCacheUpdateJob::UpdateRequestBase {
 
   // Creates an instance of the AppCacheUpdateRequestBase subclass.
   static std::unique_ptr<UpdateRequestBase> Create(
-      net::URLRequestContext* request_context,
+      AppCacheServiceImpl* appcache_service,
       const GURL& url,
+      int buffer_size,
       URLFetcher* fetcher);
 
   // This method is called to start the request.
@@ -47,11 +44,6 @@ class AppCacheUpdateJob::UpdateRequestBase {
 
   // Returns the request URL.
   virtual GURL GetURL() const = 0;
-
-  // Returns the original URL of the request. The original url is the url used
-  // to initialize the request, and it may differ from the url if the request
-  // was redirected.
-  virtual GURL GetOriginalURL() const = 0;
 
   // Sets flags which control the request load. e.g. if it can be loaded
   // from cache, etc.
@@ -80,22 +72,26 @@ class AppCacheUpdateJob::UpdateRequestBase {
   virtual int GetResponseCode() const = 0;
 
   // Get the HTTP response info in its entirety.
-  virtual net::HttpResponseInfo GetResponseInfo() const = 0;
+  virtual const net::HttpResponseInfo& GetResponseInfo() const = 0;
 
-  // Used to specify the context (cookie store, cache) for this request.
-  virtual const net::URLRequestContext* GetRequestContext() const = 0;
-
-  // Initiates an asynchronous read. Could return net::ERR_IO_PENDING or the
-  // number of bytes read.
-  virtual int Read(net::IOBuffer* buf, int max_bytes) = 0;
+  // Initiates an asynchronous read. Multiple concurrent reads are not
+  // supported.
+  virtual void Read() = 0;
 
   // This method may be called at any time after Start() has been called to
   // cancel the request.
   // Returns net::ERR_ABORTED or any applicable net error.
   virtual int Cancel() = 0;
 
+  // Returns true if the http stack is configured to ignore certificate errors.
+  virtual bool ShouldIgnoreCertificateErrors() const = 0;
+
  protected:
   UpdateRequestBase();
+
+  // Returns the traffic annotation information to be used for the outgoing
+  // request.
+  net::NetworkTrafficAnnotationTag GetTrafficAnnotation() const;
 };
 
 }  // namespace content
