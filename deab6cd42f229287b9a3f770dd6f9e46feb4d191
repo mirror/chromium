@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4180f49_9f76b423",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-08T03:45:11Z",
+      "side": 1,
+      "message": "Nice!",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 56
+      },
+      "revId": "deab6cd42f229287b9a3f770dd6f9e46feb4d191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a934f1af_77369259",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-08T03:45:11Z",
+      "side": 1,
+      "message": "Nit: Would http://www.chromium.org/ work here?",
+      "range": {
+        "startLine": 103,
+        "startChar": 55,
+        "endLine": 103,
+        "endChar": 70
+      },
+      "revId": "deab6cd42f229287b9a3f770dd6f9e46feb4d191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98fec297_5e3556bc",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 2115,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-08T03:45:11Z",
+      "side": 1,
+      "message": "Add this to the existing deps list.",
+      "range": {
+        "startLine": 2115,
+        "startChar": 6,
+        "endLine": 2115,
+        "endChar": 69
+      },
+      "revId": "deab6cd42f229287b9a3f770dd6f9e46feb4d191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
