@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0769db72_c62f82ff",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/2dcontext/drawing-images-to-the-canvas/2d.drawImage.zerosource.image.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1236435
+      },
+      "writtenOn": "2017-08-08T12:43:13Z",
+      "side": 1,
+      "message": "All of the changes in 2dcontext/ will be overwritten next time the tests are regenerated unless https://github.com/w3c/web-platform-tests/blob/86cad3f2ef6f0ef288d47bf2de3d69b3033ba029/2dcontext/tools/gentestutils.py#L230-L236 is updated.",
+      "revId": "0bd269a26e94f70da7d349e8f65753cdaa00906f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
