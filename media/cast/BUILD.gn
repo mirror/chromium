@@ -265,6 +265,10 @@ static_library("test_support") {
     "//ui/gfx:test_support",
   ]
 
+  public_deps = [
+    "//media/filters",
+  ]
+
   # FFMPEG software video decoders are not available on Android and/or
   # Chromecast content_shell builds.
   #
@@ -342,7 +346,7 @@ test("cast_unittests") {
     "//base",
     "//base/test:run_all_unittests",
     "//base/test:test_support",
-    "//media",
+    "//media:shared_memory_support",
     "//media/base:test_support",
     "//net",
     "//testing/gmock",
