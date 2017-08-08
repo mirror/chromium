@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7dc04e7e_87b758dd",
+        "filename": "components/password_manager/content/browser/content_credential_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-08T10:55:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "318d494c_6bde35f1",
+      "range": {
+        "startLine": 128,
+        "startChar": 14,
+        "endLine": 128,
+        "endChar": 38
+      },
+      "revId": "4cbea23fbfaf85b15cf59af265bf94c4312db279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8525d8c_22d87b0b",
         "filename": "components/password_manager/content/browser/content_credential_manager_unittest.cc",
         "patchSetId": 15
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-07T15:41:11Z",
       "side": 1,
       "message": "Do we use anything from that base class?",
+      "range": {
+        "startLine": 176,
+        "startChar": 53,
+        "endLine": 176,
+        "endChar": 78
+      },
+      "revId": "4cbea23fbfaf85b15cf59af265bf94c4312db279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48fdd658_a3fea124",
+        "filename": "components/password_manager/content/browser/content_credential_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-08T10:55:01Z",
+      "side": 1,
+      "message": "SetUp, NavigateAndCommit, TearDown, scoped_task_environment",
+      "parentUuid": "c8525d8c_22d87b0b",
       "range": {
         "startLine": 176,
         "startChar": 53,
@@ -68,6 +116,30 @@
       "revId": "4cbea23fbfaf85b15cf59af265bf94c4312db279",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5105956a_be876a28",
+        "filename": "components/password_manager/content/browser/content_credential_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-08T10:55:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "609aa627_ce0b0a41",
+      "range": {
+        "startLine": 187,
+        "startChar": 12,
+        "endLine": 187,
+        "endChar": 51
+      },
+      "revId": "4cbea23fbfaf85b15cf59af265bf94c4312db279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
