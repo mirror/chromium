@@ -25,8 +25,11 @@ class SafeBrowsingUIHandler : public content::WebUIMessageHandler {
   void GetExperiments(const base::ListValue* args);
   void GetPrefs(const base::ListValue* args);
   void GetDatabaseManagerInfo(const base::ListValue* args);
+  void GetThreatDetails(const base::ListValue* args);
 
   void RegisterMessages() override;
+  bool recording_threat_details_;
+  std::vector<std::string> old_threat_details;
 
  private:
   content::BrowserContext* browser_context_;

@@ -16,6 +16,7 @@ cr.define('safe_browsing', function() {
     cr.sendWithPromise('getPrefs', []).then((prefs) => addPrefs(prefs));
     cr.sendWithPromise('getDatabaseManagerInfo', []).then(
         (databaseState) => addDatabaseManagerInfo(databaseState));
+    cr.sendWithPromise('getThreatDetails', []).then((prefs) => addPrefs(prefs));
   }
 
   function addExperiments(result) {
@@ -41,16 +42,17 @@ cr.define('safe_browsing', function() {
   }
 
 
-  function addDatabaseManagerInfo(result) {
-      var resLength = result.length;
-      var preferencesListFormatted = "";
-
-      for (var i = 0; i < resLength; i += 2) {
-        preferencesListFormatted += "<div><b>" + result[i] + "</b>: " +
-            result[i+1] + "</div>";
-      }
-      $('database-info-list').innerHTML = preferencesListFormatted;
+  function addThreatDetailsInfo(result) {
+     var logDiv = $('threat-details-list');
+  if (!logDiv)
+    return;
+  logDiv.appendChild(document.createElement('hr'));
+  var textDiv = document.createElement('div');
+  textDiv.innerText = result;
+  logDiv.appendChild(textDiv);
   }
+
+
 
   return {
     initialize: initialize,

@@ -131,9 +131,11 @@ SafeBrowsingUI::SafeBrowsingUI(content::WebUI* web_ui)
 SafeBrowsingUI::~SafeBrowsingUI() {}
 
 SafeBrowsingUIHandler::SafeBrowsingUIHandler(content::BrowserContext* context)
-    : browser_context_(context) {}
+    : recording_threat_details_(true), browser_context_(context) {}
 
-SafeBrowsingUIHandler::~SafeBrowsingUIHandler() = default;
+SafeBrowsingUIHandler::~SafeBrowsingUIHandler() {
+  recording_threat_details_ = false;
+}
 
 void SafeBrowsingUIHandler::GetExperiments(const base::ListValue* args) {
   AllowJavascript();
@@ -151,6 +153,16 @@ void SafeBrowsingUIHandler::GetPrefs(const base::ListValue* args) {
                                 user_prefs::UserPrefs::Get(browser_context_)));
 }
 
+void SafeBrowsingUIHandler::GetThreatDetails(const base::ListValue* args) {
+  AllowJavascript();
+  std::string callback_id;
+  args->GetString(0, &callback_id);
+  ResolveJavascriptCallback(base::Value(callback_id),
+                            safe_browsing::GetSafeBrowsingPreferencesList(
+                                user_prefs::UserPrefs::Get(browser_context_)));
+}
+
+void SafeBrowsingUIHandler::AddThreatDetail(std::string threat_detail) {}
 void SafeBrowsingUIHandler::GetDatabaseManagerInfo(
     const base::ListValue* args) {
   base::ListValue database_manager_info;
@@ -194,6 +206,9 @@ void SafeBrowsingUIHandler::RegisterMessages() {
       "getDatabaseManagerInfo",
       base::Bind(&SafeBrowsingUIHandler::GetDatabaseManagerInfo,
                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "getThreatDetails", base::Bind(&SafeBrowsingUIHandler::GetThreatDetails,
+                                     base::Unretained(this)));
 }
 
 }  // namespace safe_browsing
