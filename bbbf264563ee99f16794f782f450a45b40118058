@@ -22,6 +22,30 @@
       "revId": "bbbf264563ee99f16794f782f450a45b40118058",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "642613cb_35866914",
+        "filename": "ui/gfx/color_transform.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-08-08T18:34:32Z",
+      "side": 1,
+      "message": "How is the comment \"Extending the function via point symmetry is performed by the caller\"?\n\nSign-extend means different things than what I meant here.",
+      "parentUuid": "75bb7fd6_55fd0830",
+      "range": {
+        "startLine": 445,
+        "startChar": 26,
+        "endLine": 445,
+        "endChar": 35
+      },
+      "revId": "bbbf264563ee99f16794f782f450a45b40118058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
