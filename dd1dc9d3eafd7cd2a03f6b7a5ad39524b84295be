@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96e4cd63_9579da63",
+        "filename": "tools/perf/scripts_smoke_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-08-08T13:30:41Z",
+      "side": 1,
+      "message": "do you think we should add --isolated-script-test-chartjson-output so it runs all code paths in that file?",
+      "range": {
+        "startLine": 64,
+        "startChar": 39,
+        "endLine": 64,
+        "endChar": 45
+      },
+      "revId": "dd1dc9d3eafd7cd2a03f6b7a5ad39524b84295be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
