@@ -34,6 +34,24 @@
       "revId": "73fefef94f6e1c67a2790fef823aad3f84d767a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd3849c_e396a3ae",
+        "filename": "testing/scripts/run_telemetry_benchmark_as_googletest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-08-08T12:39:07Z",
+      "side": 1,
+      "message": "I just want to make sure I understand what will happen here on an exception.  \n\nThis will print the exception to standard out right?  so you would have to ssh into the bot to see this?  Because this script is actually run on the swarming bot.  \n\nIs there a way to surface this back in buildbot? or somehow attach it so we can move it into SOM which we are aiming to be our central source of debugging info?",
+      "parentUuid": "44574eec_6c6d2359",
+      "revId": "73fefef94f6e1c67a2790fef823aad3f84d767a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
