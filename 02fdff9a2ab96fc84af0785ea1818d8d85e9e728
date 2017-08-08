@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "aa8baa27_bf536b97",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2885,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-08T17:30:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec82ba62_8a31b702",
+      "range": {
+        "startLine": 2885,
+        "startChar": 7,
+        "endLine": 2885,
+        "endChar": 26
+      },
+      "revId": "02fdff9a2ab96fc84af0785ea1818d8d85e9e728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aed47001_186eece7",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 9
@@ -248,6 +272,30 @@
       "side": 1,
       "message": "I copied from the original code\nhttps://codesearch.chromium.org/chromium/src/ui/views/win/hwnd_message_handler.cc?q\u003dhwnd_message_handler.cc\u0026dr\u0026l\u003d2912\n\nI thought maybe we only care about the latency of touch events.",
       "parentUuid": "aed47001_186eece7",
+      "range": {
+        "startLine": 2894,
+        "startChar": 5,
+        "endLine": 2894,
+        "endChar": 25
+      },
+      "revId": "02fdff9a2ab96fc84af0785ea1818d8d85e9e728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9134ad_94c9e845",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2894,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-08T17:30:34Z",
+      "side": 1,
+      "message": "Some events add the latency info component in the ctor of the aura event. But I agree it should be added here.",
+      "parentUuid": "4f4b6097_767d75f5",
       "range": {
         "startLine": 2894,
         "startChar": 5,
