@@ -16,6 +16,24 @@
       "revId": "ea870ad7d8ead8da1e20c7ffd9fb44d891ff90c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36bcd24_a4f38bed",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/wrapper_class_declaration.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-08T19:16:22Z",
+      "side": 1,
+      "message": "Done.\n\nThank you very much for noticing!",
+      "parentUuid": "c059eae3_1eb2a881",
+      "revId": "ea870ad7d8ead8da1e20c7ffd9fb44d891ff90c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
