@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e28d07a0_e1bcda31",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-08T16:50:59Z",
+      "side": 1,
+      "message": "how are these these accelerators different than kReservedAccelerators? Should kReservedAccelerators instead be marked as priority accelerators?",
+      "revId": "7e71c0565db2079adb2ab819e5c31ac7a4c494d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
