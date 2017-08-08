@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e570fd19_ef40e432",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T06:17:22Z",
+      "side": 1,
+      "message": "nit: s/DomTree/DOMTree/",
+      "revId": "b304a05fb8d881c749053a719bda4fe07699744b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
