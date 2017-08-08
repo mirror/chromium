@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ce69633_a14a530d",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115988
+      },
+      "writtenOn": "2017-08-08T20:07:35Z",
+      "side": 1,
+      "message": "I moved the local and renamed it. What would it look like to remove the local altogether?",
+      "parentUuid": "a2bbbe92_2da040e9",
+      "revId": "5234572aee0c0935363e1c8fb0f9846774e0e2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83fbc621_134f79fb",
         "filename": "content/browser/appcache/appcache_dispatcher_host.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-08T00:42:39Z",
       "side": 1,
       "message": "I think the start_update and swap_cache callbacks could use the similar treatment. If you want to lay down tracks in parallel for this in the CL, go for it, or not as you see fit.",
+      "revId": "5234572aee0c0935363e1c8fb0f9846774e0e2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f38548_ce6a7875",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115988
+      },
+      "writtenOn": "2017-08-08T20:07:35Z",
+      "side": 1,
+      "message": "I will, but in separate CLs",
+      "parentUuid": "83fbc621_134f79fb",
       "revId": "5234572aee0c0935363e1c8fb0f9846774e0e2d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
