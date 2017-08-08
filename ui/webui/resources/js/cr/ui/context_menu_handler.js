@@ -205,7 +205,8 @@ cr.define('cr.ui', function() {
           break;
 
         case 'contextmenu':
-          if ((!this.menu || !this.menu.contains(e.target)) &&
+          if (!e.sourceCapabilities.firesTouchEvents &&
+              (!this.menu || !this.menu.contains(e.target)) &&
               (!this.hideTimestamp_ || Date.now() - this.hideTimestamp_ > 50))
             this.showMenu(e, e.currentTarget.contextMenu);
           e.preventDefault();
