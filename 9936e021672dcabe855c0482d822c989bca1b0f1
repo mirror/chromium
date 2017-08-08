@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0997f36_c585e17e",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/bmp/BMPImageReader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-08-08T23:14:06Z",
+      "side": 1,
+      "message": "I went through a few iterations of how to handle the paletted data. In patch set 1, it updates decoded_offset_ after reading the entire run. This matches the old behavior, and is arguably the simplest change, but it makes this branch different from the RGB branch. The second patch set updates decoded_offset_ after each call to ReadUint8, so the two branches are consistent. And this one drops the variable |byte|, which was only used for iterating. I lean towards patch set 3, but let me know if you prefer one of the other options (or something else).",
+      "range": {
+        "startLine": 782,
+        "startChar": 18,
+        "endLine": 782,
+        "endChar": 28
+      },
+      "revId": "9936e021672dcabe855c0482d822c989bca1b0f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
