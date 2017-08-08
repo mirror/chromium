@@ -283,6 +283,14 @@ class PasswordFormManager : public FormFetcher::Consumer {
     return metrics_recorder_.get();
   }
 
+  const base::string16& username_edited_in_prompt() {
+    return username_edited_in_prompt_;
+  }
+  void set_username_edited_in_prompt(
+      const base::string16& username_edited_in_prompt) {
+    username_edited_in_prompt_ = username_edited_in_prompt;
+  }
+
   // Create a copy of |*this| which can be passed to the code handling
   // save-password related UI. This omits some parts of the internal data, so
   // the result is not identical to the original.
@@ -579,6 +587,11 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // Takes care of recording metrics and events for this PasswordFormManager.
   // Make sure to call Init before using |*this|, to ensure it is not null.
   scoped_refptr<PasswordFormMetricsRecorder> metrics_recorder_;
+
+  // Set if the user has edited |username_value| in prompt. The value of this
+  // variable is the |field->name| of the corresponding |username_value|. If the
+  // variable is empty, we did not find a match in |other_possible_usernames|.
+  base::string16 username_edited_in_prompt_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordFormManager);
 };

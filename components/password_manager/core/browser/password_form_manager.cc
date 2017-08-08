@@ -466,6 +466,21 @@ void PasswordFormManager::UpdateUsername(const base::string16& new_username) {
   // Check if the username already exists.
   const PasswordForm* match = FindBestSavedMatch(&pending_credentials_);
   is_new_login_ = !match || match->is_public_suffix_match;
+  // Search for the corresponding |username_element|. For this
+  // |username_element|, we send username vote type |USERNAME_EDITED| in
+  // |UploadPasswordVote|.
+  base::string16 trimmed_username_value;
+  base::TrimString(new_username, base::ASCIIToUTF16(" \t"),
+                   &trimmed_username_value);
+  for (size_t i = 0; i < pending_credentials_.other_possible_usernames.size();
+       ++i) {
+    if (pending_credentials_.other_possible_usernames[i].first ==
+            trimmed_username_value &&
+        !trimmed_username_value.empty()) {
+      set_username_edited_in_prompt(
+          pending_credentials_.other_possible_usernames[i].second);
+    }
+  }
 }
 
 void PasswordFormManager::PresaveGeneratedPassword(
@@ -865,6 +880,11 @@ bool PasswordFormManager::UploadPasswordVote(
       field_types[form_to_upload.username_element] = autofill::USERNAME;
       username_vote_type =
           autofill::AutofillUploadContents::Field::CREDENTIALS_REUSED;
+    }
+    if (!username_edited_in_prompt().empty()) {
+      field_types[username_edited_in_prompt()] = autofill::USERNAME;
+      username_vote_type =
+          autofill::AutofillUploadContents::Field::USERNAME_EDITED;
     }
   } else {  // User overwrites username.
     field_types[form_to_upload.username_element] = autofill::USERNAME;

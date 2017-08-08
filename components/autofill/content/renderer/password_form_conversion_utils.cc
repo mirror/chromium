@@ -371,8 +371,13 @@ void FindVisiblePasswordAndVisibleUsernameBeforePassword(
 
 autofill::PossibleUsernamePair MakePossibleUsernamePair(
     const blink::WebInputElement& input) {
-  return autofill::PossibleUsernamePair(input.Value().Utf16(),
-                                        input.NameForAutofill().Utf16());
+  base::string16 trimmed_input_value, trimmed_input_autofill;
+  TrimString(input.Value().Utf16(), base::ASCIIToUTF16(" \t"),
+             &trimmed_input_value);
+  TrimString(input.NameForAutofill().Utf16(), base::ASCIIToUTF16(" \t"),
+             &trimmed_input_autofill);
+  return autofill::PossibleUsernamePair(trimmed_input_value,
+                                        trimmed_input_autofill);
 }
 
 // Get information about a login form encapsulated in a PasswordForm struct.
