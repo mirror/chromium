@@ -22,6 +22,30 @@
       "revId": "f4d9fcf34e54b78c84769d877fc33fa2bdec790c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca818d8_528bde97",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-08T22:16:58Z",
+      "side": 1,
+      "message": "Thanks for the GetModuleHandleEx() pointer. I\u0027ve gone with that solution. Every notification is bounced to a blocking sequence so nothing happens in the loader notification hook.",
+      "parentUuid": "da0dbfe9_d7b8a311",
+      "range": {
+        "startLine": 189,
+        "startChar": 8,
+        "endLine": 189,
+        "endChar": 28
+      },
+      "revId": "f4d9fcf34e54b78c84769d877fc33fa2bdec790c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
