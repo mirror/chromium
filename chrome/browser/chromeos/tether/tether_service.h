@@ -127,8 +127,33 @@ class TetherService : public KeyedService,
 
  private:
   friend class TetherServiceTest;
+  FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestSuspend);
+  FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestBleAdvertisingNotSupported);
+  FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestScreenLock);
   FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestFeatureFlagEnabled);
+  FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestNoTetherHosts);
+  FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestProhibitedByPolicy);
+  FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestIsBluetoothPowered);
+  FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestCellularIsUnavailable);
+  FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestCellularIsAvailable);
+  FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestDisabled);
+  FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestEnabled);
   FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestBluetoothNotification);
+
+  // Reflects InstantTethering_TechnologyStateAndReason enum in enums.xml. Do
+  // not rearrange.
+  enum TetherFeatureState {
+    OTHER_OR_UNKNOWN = 0,
+    BLE_ADVERTISING_NOT_SUPPORTED = 1,
+    SCREEN_LOCKED = 2,
+    NO_AVAILABLE_HOSTS = 3,
+    CELLULAR_DISABLED = 4,
+    PROHIBITED = 5,
+    BLUETOOTH_DISABLED = 6,
+    USER_PREFERENCE_DISABLED = 7,
+    ENABLED = 8,
+    TETHER_FEATURE_STATE_MAX
+  };
 
   void OnBluetoothAdapterFetched(
       scoped_refptr<device::BluetoothAdapter> adapter);
@@ -154,8 +179,10 @@ class TetherService : public KeyedService,
   // current conditions.
   bool CanEnableBluetoothNotificationBeShown();
 
-  // Record to UMA Tether's current TechnologyStat.
-  void RecordTetherTechnologyState();
+  TetherFeatureState GetTetherFeatureState();
+
+  // Record to UMA Tether's current feature state.
+  void RecordTetherFeatureState();
 
   void SetInitializerDelegateForTest(
       std::unique_ptr<InitializerDelegate> initializer_delegate);
