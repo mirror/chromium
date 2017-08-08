@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "96fec90d_6d9b1ad8",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T01:03:25Z",
+      "side": 1,
+      "message": "Is it OK to use |uint32_t|? I remember tag value is passed to Java as |int|.\nWhat should we do at tag \u003e MAX_INT32 case?",
+      "revId": "d1cb1cf40ec31381b6b02e3e06faba5a211f3d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b1c7e65_c7990b15",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
         "patchSetId": 4
@@ -42,6 +59,23 @@
         "endLine": 37,
         "endChar": 24
       },
+      "revId": "d1cb1cf40ec31381b6b02e3e06faba5a211f3d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a6ae1b_e99bed25",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T01:03:25Z",
+      "side": 1,
+      "message": "It is better to use std::find_if()",
       "revId": "d1cb1cf40ec31381b6b02e3e06faba5a211f3d06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
