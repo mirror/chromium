@@ -80,6 +80,10 @@ class MOJO_CPP_BINDINGS_EXPORT MultiplexRouter
                   bool set_interface_id_namespace_bit,
                   scoped_refptr<base::SequencedTaskRunner> runner);
 
+  // Adds a MessageReceiver which can filter a message after validation but
+  // before dispatch.
+  void AddFilter(std::unique_ptr<MessageReceiver> filter);
+
   // Sets the master interface name for this router. Only used when reporting
   // message header or control message validation errors.
   // |name| must be a string literal.
