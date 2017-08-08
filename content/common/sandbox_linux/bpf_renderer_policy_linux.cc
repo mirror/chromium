@@ -69,6 +69,12 @@ ResultExpr RendererProcessPolicy::EvaluateSyscall(int sysno) const {
 #if defined(__i386__) || defined(__x86_64__) || defined(__mips__) || \
     defined(__aarch64__)
     case __NR_getrlimit:
+    case __NR_setrlimit:
+// We allow setrlimit to dynamically adjust the address space limit as
+// needed for WebAssembly memory objects (https://crbug.com/750378). Even
+// with setrlimit being allowed, we cannot raise rlim_max once it's
+// lowered. Thus we generally have the same protection because we normally
+// set rlim_max and rlim_cur together.
 #endif
 #if defined(__i386__) || defined(__arm__)
     case __NR_ugetrlimit:
