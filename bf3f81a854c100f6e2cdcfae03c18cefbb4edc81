@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "445cf16d_a2389894",
+        "filename": "chrome/android/java/res/drawable-hdpi/ic_videocam_white_24dp.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 1,
+      "message": "They seem only available in 24dp. I tried infobar_camera or permission_camera but they are visually smaller and not fully centered (Screenshots in WIP folder). If this is acceptable, I think 24dp asset can be removed. How about the 36dp?",
+      "parentUuid": "aca3f30d_62566bdd",
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38e1da1c_0c862f5f",
         "filename": "chrome/android/java/res/layout/bottom_sheet_bottom_nav.xml",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f0ecce_2b690618",
+        "filename": "chrome/android/java/res/layout/bottom_sheet_bottom_nav.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38e1da1c_0c862f5f",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 5
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e79d68c6_2b1cd577",
+        "filename": "chrome/android/java/res/layout/download_item_view.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5d8f6c6_0f7ffca9",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 4
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e115aff_27dab298",
         "filename": "chrome/android/java/res/layout/history_clear_browsing_data_header.xml",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-08T17:09:13Z",
       "side": 1,
       "message": "0dp should be the default, so this line and line 21 shouldn\u0027t be necessary.",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3fca322_1b229d51",
+        "filename": "chrome/android/java/res/layout/history_clear_browsing_data_header.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 1,
+      "message": "I added this because in landscape mode, there seems to be some default padding in the button. I tried to set the minWidth to 0dp but that doesn\u0027t work, so I ended up setting the padding.",
+      "parentUuid": "6e115aff_27dab298",
       "range": {
         "startLine": 22,
         "startChar": 32,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "d7d03bd2_89b38834",
+        "filename": "chrome/android/java/res/layout/selectable_list_layout.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 1,
+      "message": "I\u0027ll upload screenshots!!",
+      "parentUuid": "6f6ffd57_a06f11e5",
+      "range": {
+        "startLine": 12,
+        "startChar": 34,
+        "endLine": 12,
+        "endChar": 47
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f75f0e7d_41501f9e",
         "filename": "chrome/android/java/res/values-v17/styles.xml",
         "patchSetId": 1
@@ -122,6 +236,30 @@
       "writtenOn": "2017-08-08T17:09:13Z",
       "side": 1,
       "message": "What do we keep from this parent style? It\u0027s probably simpler to define a text style without a parent and set the specific attributes that we care about. textStyle \u003d normal should be teh default, so we likely don\u0027t need to set that if we drop the parent.  I think that sans-serif is also the default.",
+      "range": {
+        "startLine": 558,
+        "startChar": 45,
+        "endLine": 558,
+        "endChar": 90
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea956d54_4be67bbc",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 1,
+      "message": "It looks fine not to inherit from the parent, but it looks strange if I override textAppearance, so I set color and textSize separately.",
+      "parentUuid": "f75f0e7d_41501f9e",
       "range": {
         "startLine": 558,
         "startChar": 45,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "12d4a275_b08b1020",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 1,
+      "message": "Yes we can just use that one instead.",
+      "parentUuid": "5d4ff64a_c52a9c36",
+      "range": {
+        "startLine": 610,
+        "startChar": 17,
+        "endLine": 610,
+        "endChar": 26
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bed104a_f67556a6",
         "filename": "chrome/android/java/res/values-v17/styles.xml",
         "patchSetId": 1
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "dd437092_b602fa08",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bed104a_f67556a6",
+      "range": {
+        "startLine": 659,
+        "startChar": 38,
+        "endLine": 659,
+        "endChar": 42
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e61173_1ef77682",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkFolderSelectActivity.java",
         "patchSetId": 1
@@ -191,6 +377,30 @@
       "writtenOn": "2017-08-08T17:09:13Z",
       "side": 1,
       "message": "Can this padding be set in the XML containing R.id.bookmark_folder_list rather than setting it programatically here?",
+      "range": {
+        "startLine": 142,
+        "startChar": 63,
+        "endLine": 142,
+        "endChar": 93
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "accb8515_f9e642c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkFolderSelectActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 1,
+      "message": "I think we discussed on this earlier that since it uses the attribute actionBar size in paddingTop, we can\u0027t just simply add the 8dp above the list view to paddingTop, unless we make the actionBar size a constant dimen.",
+      "parentUuid": "45e61173_1ef77682",
       "range": {
         "startLine": 142,
         "startChar": 63,
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "fe14ed67_eafceefc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 1,
+      "message": "It has the format domain - size in RTL. Screenshot uploaded in the WIP folder.",
+      "parentUuid": "cb32267c_a9add2be",
+      "range": {
+        "startLine": 167,
+        "startChar": 64,
+        "endLine": 167,
+        "endChar": 73
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d27cfa17_9d6922cc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryItemView.java",
         "patchSetId": 1
@@ -246,6 +480,30 @@
       "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfae568a_e3fc940c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d27cfa17_9d6922cc",
+      "range": {
+        "startLine": 85,
+        "startChar": 29,
+        "endLine": 85,
+        "endChar": 33
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "096a3259_6b8d07a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 1,
+      "message": "It\u0027s not needed:)",
+      "parentUuid": "779c894e_7c73b8c4",
+      "range": {
+        "startLine": 179,
+        "startChar": 30,
+        "endLine": 179,
+        "endChar": 59
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5467da80_ee4f834c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListLayout.java",
         "patchSetId": 1
@@ -286,6 +568,24 @@
       "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69df5bed_839e1aab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 1,
+      "message": "The recycler view actually has no margin, and the top padding is kept to ensure the translucent toolbar effect. However, this might be a issue if the actionBarSize is different from 56dp, the top padding stays as actionBarSize. Do you think I should change the padding when chrome home is enabled? Currently without the changing the padding, it looks alright.",
+      "parentUuid": "5467da80_ee4f834c",
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

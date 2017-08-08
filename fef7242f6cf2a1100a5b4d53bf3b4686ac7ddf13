@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1100a6f2_7f858f94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "d1928270_6c62762e",
+      "range": {
+        "startLine": 210,
+        "startChar": 8,
+        "endLine": 210,
+        "endChar": 45
+      },
+      "revId": "fef7242f6cf2a1100a5b4d53bf3b4686ac7ddf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46ec2432_67978cd8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryItemView.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-08T17:09:13Z",
       "side": 0,
       "message": "#isFirstInGroup() is coming from DateDividedAdapter\u0027s TimedItem#isFirstInGroup(). Those methods were added exclusively for determining which 9-patch background to use. Now that we\u0027re not using 9-patches, we should clean up TimedItem/DateDividedAdapter to remove the un-used methods and logic.\n\nThis CL where I added list item shadows and width constrained styling is a good reference for this that can be dropped or need to be modified in this visual refresh: https://codereview.chromium.org/2654193002",
+      "range": {
+        "startLine": 204,
+        "startChar": 26,
+        "endLine": 204,
+        "endChar": 40
+      },
+      "revId": "fef7242f6cf2a1100a5b4d53bf3b4686ac7ddf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6401a3b0_9871e6a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 0,
+      "message": "Sure, thanks for the reference.",
+      "parentUuid": "46ec2432_67978cd8",
       "range": {
         "startLine": 204,
         "startChar": 26,
@@ -68,6 +116,30 @@
       "revId": "fef7242f6cf2a1100a5b4d53bf3b4686ac7ddf13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d96d8ed1_8d32899f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-08T22:59:22Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "2392bae2_b3cc981b",
+      "range": {
+        "startLine": 62,
+        "startChar": 22,
+        "endLine": 62,
+        "endChar": 55
+      },
+      "revId": "fef7242f6cf2a1100a5b4d53bf3b4686ac7ddf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
