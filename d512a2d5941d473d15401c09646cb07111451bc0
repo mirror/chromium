@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d304562e_2c4f7e72",
+        "filename": "content/browser/accessibility/browser_accessibility_state_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-08T21:01:47Z",
+      "side": 1,
+      "message": "This is a semantic mismatch. OnAXModeChanged implies we can\nadd or remove flags, but AddAccessibilityModeFlags only adds\nnew flags.\n\nEither OnAXModeChanged needs to be more like OnAXModeFlagsAdded,\nor AddAccessibilityModeFlags needs to be more like SetAXMode.",
+      "revId": "d512a2d5941d473d15401c09646cb07111451bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
