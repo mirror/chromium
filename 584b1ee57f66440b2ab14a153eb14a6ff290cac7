@@ -87,6 +87,115 @@
     },
     {
       "key": {
+        "uuid": "378d7a09_239668ec",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-08T00:38:34Z",
+      "side": 1,
+      "message": "Can this just be base::StringToUint(service_data[\"ca\"], \u0026extra_data.capabilities) ?",
+      "range": {
+        "startLine": 72,
+        "startChar": 22,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "584b1ee57f66440b2ab14a153eb14a6ff290cac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8084e238_39f947af",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-08T00:38:34Z",
+      "side": 1,
+      "message": "nit: this DCHECK is not needed.",
+      "revId": "584b1ee57f66440b2ab14a153eb14a6ff290cac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c300dc1a_fba766ad",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-08T00:38:34Z",
+      "side": 1,
+      "message": "No need for static.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 6
+      },
+      "revId": "584b1ee57f66440b2ab14a153eb14a6ff290cac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b943e8_3e7af05f",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-08T00:38:34Z",
+      "side": 1,
+      "message": "const ref here and below",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "584b1ee57f66440b2ab14a153eb14a6ff290cac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00aae6a6_81326de2",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-08T00:38:34Z",
+      "side": 1,
+      "message": "Where is this called?",
+      "range": {
+        "startLine": 181,
+        "startChar": 53,
+        "endLine": 181,
+        "endChar": 0
+      },
+      "revId": "584b1ee57f66440b2ab14a153eb14a6ff290cac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c9caea1_2fe5315d",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
         "patchSetId": 4
