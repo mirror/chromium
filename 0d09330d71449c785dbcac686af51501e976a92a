@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1c4ae2c_328003d5",
+        "filename": "media/audio/alsa/alsa_input.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-08T01:57:37Z",
+      "side": 1,
+      "message": "Should this Now() call be made up on L207? I ask just in case there are locks or other significant time-consuming operations.\n\nAlso, it seems this loop could call OnData() multiple times. Should |capture_time| be incremented for each loop, like you did for the other platform glue?",
+      "range": {
+        "startLine": 221,
+        "startChar": 24,
+        "endLine": 221,
+        "endChar": 46
+      },
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2019da_fd7d60dc",
+        "filename": "media/audio/audio_io.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-08T01:57:37Z",
+      "side": 1,
+      "message": "For exactness, can we state that this is the time at which the first sample in the |source| bus was received? (And, are we actually doing that in the platform impls?)",
+      "range": {
+        "startLine": 123,
+        "startChar": 43,
+        "endLine": 123,
+        "endChar": 57
+      },
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9175cb2f_6e670e61",
+        "filename": "media/audio/cras/cras_input.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-08T01:57:37Z",
+      "side": 1,
+      "message": "nit: As I\u0027ve been cleaning up time code elsewhere in the code base (recent fixits), I\u0027ve been adding a comment and DCHECK() when we assume a platform timestamp is from the same clock as TimeTicks\u0027, mostly for documentative purposes. Example: https://cs.chromium.org/chromium/src/ui/ozone/platform/drm/gpu/drm_device.cc?rcl\u003d9cd680e72a411c5a565098251d42863c43aef17f\u0026l\u003d100\n\nIMHO, this is not an issue in Win/Mac code since base::TimeTicks provides a QPC/MachAbsoluteTime converter for that; and using those methods makes the code self-documented.",
+      "range": {
+        "startLine": 301,
+        "startChar": 26,
+        "endLine": 301,
+        "endChar": 67
+      },
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2935730_d6be0e67",
+        "filename": "media/base/audio_parameters.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-08T01:57:37Z",
+      "side": 1,
+      "message": "Thinking a bit about this: What happens if you use base::TimeTicks instead of the int64_t here? I could be misunderstanding something, but since these are direct read/writes on shared memory, it should \"just work\" right? This would save you from having to convert in AudioInputSyncWriter.\n\nGranted, I can see a concern about whether base::TimeTicks\u0027 internal representation is changed to something other than POD in the future (e.g., a pointer to some other struct), which could break this code. Either way, I\u0027ll need to consider this serialization use case in my fixit crbug (getting rid of To/FromInternalValue()).",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 22
+      },
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
