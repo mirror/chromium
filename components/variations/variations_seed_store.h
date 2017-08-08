@@ -12,9 +12,10 @@
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "components/prefs/simple_pref_service.h"
 #include "components/variations/metrics.h"
 
-class PrefService;
+class SimplePrefService;
 class PrefRegistrySimple;
 
 namespace variations {
@@ -25,7 +26,7 @@ class VariationsSeed;
 // seed from Local State.
 class VariationsSeedStore {
  public:
-  explicit VariationsSeedStore(PrefService* local_state);
+  explicit VariationsSeedStore(SimplePrefService* local_state);
   virtual ~VariationsSeedStore();
 
   // Loads the variations seed data from local state into |seed|. If there is a
@@ -71,9 +72,9 @@ class VariationsSeedStore {
   // Registers Local State prefs used by this class.
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
-  PrefService* local_state() { return local_state_; }
+  SimplePrefService* local_state() { return local_state_; }
 
-  const PrefService* local_state() const { return local_state_; }
+  const SimplePrefService* local_state() const { return local_state_; }
 
  protected:
   // Whether signature verification is enabled. Overridable for tests.
@@ -113,7 +114,7 @@ class VariationsSeedStore {
                               std::string* output) WARN_UNUSED_RESULT;
 
   // The pref service used to persist the variations seed.
-  PrefService* local_state_;
+  SimplePrefService* local_state_;
 
   // Cached serial number from the most recently fetched variations seed.
   std::string variations_serial_number_;
