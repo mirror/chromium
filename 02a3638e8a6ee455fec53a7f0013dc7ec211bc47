@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5136119_a88a078d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-08T05:02:57Z",
+      "side": 1,
+      "message": "Please add bug 753240 here too (which I just filed for this specific issue).",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "02a3638e8a6ee455fec53a7f0013dc7ec211bc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f8af208_54e8a941",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-08T05:02:57Z",
+      "side": 1,
+      "message": "This could also check for PAGE_TRANSITION_RELOAD which would solve https://crbug.com/753239 as well.\n\nActually, looking at that list of transitions [1], I feel like a whitelist (rather than blacklist) would be more appropriate. Most of those look like they shouldn\u0027t open the app. Very roughly, I think the following transition types should stay within the browser:\n\n- TYPED\n- AUTO_SUBFRAME\n- MANUAL_SUBFRAME\n- GENERATED (Omnibox suggestions)\n- AUTO_TOPLEVEL ???\n- FORM_SUBMIT\n- RELOAD\n- KEYWORD\n- KEYWORD_GENERATED\n\nThe only remaining ones are LINK and AUTO_BOOKMARK. So I think positively check for those instead.\n\n[1] https://cs.chromium.org/chromium/src/ui/base/page_transition_types.h",
+      "range": {
+        "startLine": 43,
+        "startChar": 37,
+        "endLine": 43,
+        "endChar": 58
+      },
+      "revId": "02a3638e8a6ee455fec53a7f0013dc7ec211bc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
