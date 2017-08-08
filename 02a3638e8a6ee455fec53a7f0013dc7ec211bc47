@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad77e4fc_2c7258b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-08T07:20:56Z",
+      "side": 1,
+      "message": "Thanks! I was planning on just using the main issue. Should I err on the side of a new issue per spreadsheet row or rows when appropriate?",
+      "parentUuid": "e5136119_a88a078d",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "02a3638e8a6ee455fec53a7f0013dc7ec211bc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f8af208_54e8a941",
         "filename": "chrome/browser/apps/app_url_redirector.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "02a3638e8a6ee455fec53a7f0013dc7ec211bc47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fdd0f12_798b6a63",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-08T07:20:56Z",
+      "side": 1,
+      "message": "\u003e This could also check for PAGE_TRANSITION_RELOAD which would solve https://crbug.com/753239 as well.\n\u003e \n\nHa. If you look at earlier versions of the patch I actually did that as well (I even wrote a test!). But then decided to just keep it to one change at a time.\n\n\u003e Actually, looking at that list of transitions [1], I feel like a whitelist (rather than blacklist) would be more appropriate. Most of those look like they shouldn\u0027t open the app. Very roughly, I think the following transition types should stay within the browser:\n\u003e \n\u003e - TYPED\n\u003e - AUTO_SUBFRAME\n\u003e - MANUAL_SUBFRAME\n\u003e - GENERATED (Omnibox suggestions)\n\u003e - AUTO_TOPLEVEL ???\n\u003e - FORM_SUBMIT\n\u003e - RELOAD\n\u003e - KEYWORD\n\u003e - KEYWORD_GENERATED\n\u003e \n\u003e The only remaining ones are LINK and AUTO_BOOKMARK. So I think positively check for those instead.\n\u003e \n\u003e [1] https://cs.chromium.org/chromium/src/ui/base/page_transition_types.h\n\nMakes sense. Done. Also we probably want tests for all the remaining types. I have a WIP patch that reduces the size of tests quite a bit and I would like to land that before writing ~10 new tests. Is that OK?",
+      "parentUuid": "1f8af208_54e8a941",
+      "range": {
+        "startLine": 43,
+        "startChar": 37,
+        "endLine": 43,
+        "endChar": 58
+      },
+      "revId": "02a3638e8a6ee455fec53a7f0013dc7ec211bc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
