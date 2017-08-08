@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85601b04_97c0f73b",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-08T11:29:19Z",
+      "side": 1,
+      "message": "It matters for close button.",
+      "parentUuid": "1385e8d9_ed58e0d2",
+      "range": {
+        "startLine": 1200,
+        "startChar": 6,
+        "endLine": 1200,
+        "endChar": 28
+      },
+      "revId": "37d073051bed6e31bbba58c15cd7cd0cbfbc4b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94f83c1f_89e2534c",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-07T14:28:58Z",
       "side": 1,
       "message": "Any idea what the consequence of this is?",
+      "range": {
+        "startLine": 606,
+        "startChar": 4,
+        "endLine": 606,
+        "endChar": 12
+      },
+      "revId": "37d073051bed6e31bbba58c15cd7cd0cbfbc4b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad57632_81bbbe6e",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-08T11:29:19Z",
+      "side": 1,
+      "message": "Bad password did not show any error.",
+      "parentUuid": "94f83c1f_89e2534c",
       "range": {
         "startLine": 606,
         "startChar": 4,
@@ -68,6 +116,30 @@
       "revId": "37d073051bed6e31bbba58c15cd7cd0cbfbc4b52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e501af_b099caa1",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-08T11:29:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c1683b9_643a61a1",
+      "range": {
+        "startLine": 607,
+        "startChar": 3,
+        "endLine": 625,
+        "endChar": 51
+      },
+      "revId": "37d073051bed6e31bbba58c15cd7cd0cbfbc4b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
