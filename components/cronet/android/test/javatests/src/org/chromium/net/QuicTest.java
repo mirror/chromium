@@ -4,13 +4,23 @@
 
 package org.chromium.net;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.filters.SmallTest;
 
 import org.json.JSONObject;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.chromium.base.Log;
 import org.chromium.base.annotations.SuppressFBWarnings;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 import org.chromium.net.MetricsTestUtil.TestRequestFinishedListener;
@@ -25,19 +35,22 @@ import java.util.concurrent.Executors;
 /**
  * Tests making requests using QUIC.
  */
-public class QuicTest extends CronetTestBase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class QuicTest {
+    @Rule
+    public CronetTestRule mTestRule = new CronetTestRule();
+
     private static final String TAG = QuicTest.class.getSimpleName();
     private static final String QUIC_PROTOCOL_STRING_PREFIX = "http/2+quic/";
     private ExperimentalCronetEngine.Builder mBuilder;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         // Load library first, since we need the Quic test server's URL.
         System.loadLibrary("cronet_tests");
-        QuicTestServer.startQuicTestServer(getContext());
+        QuicTestServer.startQuicTestServer(InstrumentationRegistry.getTargetContext());
 
-        mBuilder = new ExperimentalCronetEngine.Builder(getContext());
+        mBuilder = new ExperimentalCronetEngine.Builder(InstrumentationRegistry.getTargetContext());
         mBuilder.enableNetworkQualityEstimator(true).enableQuic(true);
         mBuilder.addQuicHint(QuicTestServer.getServerHost(), QuicTestServer.getServerPort(),
                 QuicTestServer.getServerPort());
@@ -56,18 +69,19 @@ public class QuicTest extends CronetTestBase {
                                                  .put("QUIC", quicParams)
                                                  .put("HostResolverRules", hostResolverParams);
         mBuilder.setExperimentalOptions(experimentalOptions.toString());
-        mBuilder.setStoragePath(getTestStorage(getContext()));
+        mBuilder.setStoragePath(
+                CronetTestRule.getTestStorage(InstrumentationRegistry.getTargetContext()));
         mBuilder.enableHttpCache(CronetEngine.Builder.HTTP_CACHE_DISK_NO_HTTP, 1000 * 1024);
         CronetTestUtil.setMockCertVerifierForTesting(
                 mBuilder, QuicTestServer.createMockCertVerifier());
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         QuicTestServer.shutdownQuicTestServer();
-        super.tearDown();
     }
 
+    @Test
     @LargeTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -111,8 +125,9 @@ public class QuicTest extends CronetTestBase {
 
         // Make another request using a new context but with no QUIC hints.
         ExperimentalCronetEngine.Builder builder =
-                new ExperimentalCronetEngine.Builder(getContext());
-        builder.setStoragePath(getTestStorage(getContext()));
+                new ExperimentalCronetEngine.Builder(InstrumentationRegistry.getTargetContext());
+        builder.setStoragePath(
+                CronetTestRule.getTestStorage(InstrumentationRegistry.getTargetContext()));
         builder.enableHttpCache(CronetEngine.Builder.HTTP_CACHE_DISK, 1000 * 1024);
         builder.enableQuic(true);
         JSONObject hostResolverParams = CronetTestUtil.generateHostResolverRules();
@@ -139,7 +154,9 @@ public class QuicTest extends CronetTestBase {
     // Returns whether a file contains a particular string.
     @SuppressFBWarnings("OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE")
     private boolean fileContainsString(String filename, String content) throws IOException {
-        File file = new File(getTestStorage(getContext()) + "/prefs/" + filename);
+        File file =
+                new File(CronetTestRule.getTestStorage(InstrumentationRegistry.getTargetContext())
+                        + "/prefs/" + filename);
         FileInputStream fileInputStream = new FileInputStream(file);
         byte[] data = new byte[(int) file.length()];
         fileInputStream.read(data);
@@ -150,6 +167,7 @@ public class QuicTest extends CronetTestBase {
     /**
      * Tests that the network quality listeners are propoerly notified when QUIC is enabled.
      */
+    @Test
     @LargeTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -229,6 +247,7 @@ public class QuicTest extends CronetTestBase {
         cronetEngine.shutdown();
     }
 
+    @Test
     @SmallTest
     @OnlyRunNativeCronet
     @Feature({"Cronet"})
@@ -280,6 +299,7 @@ public class QuicTest extends CronetTestBase {
 
     // Helper method to assert that the request is negotiated over QUIC.
     private void assertIsQuic(UrlResponseInfo responseInfo) {
-        assertTrue(responseInfo.getNegotiatedProtocol().startsWith(QUIC_PROTOCOL_STRING_PREFIX));
+        assertTrue(
+                responseInfo.getNegotiatedProtocol().startsWith(QUIC_PROTOCOL_STRING_PREFIX));
     }
 }
