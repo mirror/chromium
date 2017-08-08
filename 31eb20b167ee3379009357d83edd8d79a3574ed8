@@ -22,6 +22,30 @@
       "revId": "31eb20b167ee3379009357d83edd8d79a3574ed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f9e882_b46ba934",
+        "filename": "third_party/WebKit/Source/core/events/Event.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-08T13:24:48Z",
+      "side": 1,
+      "message": "We can\u0027t, as sequences cannot be used as attribute types.",
+      "parentUuid": "473d3952_606bab65",
+      "range": {
+        "startLine": 58,
+        "startChar": 67,
+        "endLine": 58,
+        "endChar": 73
+      },
+      "revId": "31eb20b167ee3379009357d83edd8d79a3574ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
