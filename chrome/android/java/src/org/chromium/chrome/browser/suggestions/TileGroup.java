@@ -143,10 +143,11 @@ public class TileGroup implements MostVisitedSites.Observer {
     }
 
     // TODO(dgn) should be generated from C++ enum. Remove when https://crrev.com/c/593651 lands.
-    @IntDef({TileSectionType.PERSONALIZED})
+    @IntDef({TileSectionType.PERSONALIZED, TileSectionType.OTHER})
     @Retention(RetentionPolicy.SOURCE)
     @interface TileSectionType {
         int PERSONALIZED = 0;
+        int OTHER = 1;
     }
 
     private final SuggestionsUiDelegate mUiDelegate;
@@ -320,8 +321,6 @@ public class TileGroup implements MostVisitedSites.Observer {
      * @param parent The layout to render the tile views into.
      */
     public void renderTiles(ViewGroup parent) {
-        // TODO(dgn, galinap): Support extra sections in the UI.
-        assert mTileSections.size() == 1;
         assert mTileSections.keyAt(0) == TileSectionType.PERSONALIZED;
 
         for (int i = 0; i < mTileSections.size(); ++i) {
@@ -336,6 +335,10 @@ public class TileGroup implements MostVisitedSites.Observer {
         List<Tile> tiles = new ArrayList<>();
         for (int i = 0; i < mTileSections.size(); ++i) tiles.addAll(mTileSections.valueAt(i));
         return tiles;
+    }
+
+    public SparseArray<List<Tile>> getTileSections() {
+        return mTileSections;
     }
 
     public boolean hasReceivedData() {
