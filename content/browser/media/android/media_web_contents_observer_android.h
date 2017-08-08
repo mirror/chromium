@@ -27,7 +27,7 @@ class BrowserSurfaceViewManager;
 class CONTENT_EXPORT MediaWebContentsObserverAndroid
     : public MediaWebContentsObserver {
  public:
-  explicit MediaWebContentsObserverAndroid(WebContents* web_contents);
+  explicit MediaWebContentsObserverAndroid(WebContentsImpl* web_contents_impl);
   ~MediaWebContentsObserverAndroid() override;
 
   // Returns the android specific observer for a given web contents.

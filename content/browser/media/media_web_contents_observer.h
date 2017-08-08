@@ -13,6 +13,7 @@
 
 #include "base/macros.h"
 #include "content/browser/media/session/media_session_controllers_manager.h"
+#include "content/browser/web_contents/web_contents_impl_observer.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "services/device/public/interfaces/wake_lock.mojom.h"
@@ -31,13 +32,16 @@ class Size;
 
 namespace content {
 
+class WebContentsImpl;
+
 // This class manages all RenderFrame based media related managers at the
 // browser side. It receives IPC messages from media RenderFrameObservers and
 // forwards them to the corresponding managers. The managers are responsible
 // for sending IPCs back to the RenderFrameObservers at the render side.
-class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver {
+class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver,
+                                                public WebContentsImplObserver {
  public:
-  explicit MediaWebContentsObserver(WebContents* web_contents);
+  explicit MediaWebContentsObserver(WebContentsImpl* web_contents_impl);
   ~MediaWebContentsObserver() override;
 
   // Called by WebContentsImpl when the audible state may have changed.
@@ -58,11 +62,12 @@ class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver {
   void WasShown() override;
   void WasHidden() override;
 
+  // WebContentsImplObserver
   // TODO(zqzhang): this method is temporarily in MediaWebContentsObserver as
   // the effectively fullscreen video code is also here. We need to consider
   // merging the logic of effectively fullscreen, hiding media controls and
   // fullscreening video element to the same place.
-  void RequestPersistentVideo(bool value);
+  void PersistentVideoRequested(bool value) override;
 
   bool has_audio_wake_lock_for_testing() const {
     return has_audio_wake_lock_for_testing_;

@@ -29,8 +29,10 @@ AudibleMetrics* GetAudibleMetrics() {
 
 }  // anonymous namespace
 
-MediaWebContentsObserver::MediaWebContentsObserver(WebContents* web_contents)
-    : WebContentsObserver(web_contents),
+MediaWebContentsObserver::MediaWebContentsObserver(
+    WebContentsImpl* web_contents_impl)
+    : WebContentsObserver(web_contents_impl),
+      WebContentsImplObserver(web_contents_impl),
       has_audio_wake_lock_for_testing_(false),
       has_video_wake_lock_for_testing_(false),
       session_controllers_manager_(this) {}
@@ -115,7 +117,7 @@ void MediaWebContentsObserver::WasHidden() {
   }
 }
 
-void MediaWebContentsObserver::RequestPersistentVideo(bool value) {
+void MediaWebContentsObserver::PersistentVideoRequested(bool value) {
   if (!fullscreen_player_)
     return;
 

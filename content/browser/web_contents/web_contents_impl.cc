@@ -1827,6 +1827,14 @@ void WebContentsImpl::RemoveObserver(WebContentsObserver* observer) {
   observers_.RemoveObserver(observer);
 }
 
+void WebContentsImpl::AddImplObserver(WebContentsImplObserver* observer) {
+  impl_observers_.AddObserver(observer);
+}
+
+void WebContentsImpl::RemoveImplObserver(WebContentsImplObserver* observer) {
+  impl_observers_.RemoveObserver(observer);
+}
+
 std::set<RenderWidgetHostView*>
 WebContentsImpl::GetRenderWidgetHostViewsInTree() {
   std::set<RenderWidgetHostView*> set;
@@ -5748,7 +5756,8 @@ void WebContentsImpl::SetHasPersistentVideo(bool has_persistent_video) {
 
   has_persistent_video_ = has_persistent_video;
   NotifyPreferencesChanged();
-  media_web_contents_observer()->RequestPersistentVideo(has_persistent_video);
+  for (auto& observer : impl_observers_)
+    observer.PersistentVideoRequested(has_persistent_video);
 }
 
 void WebContentsImpl::BrowserPluginGuestWillDetach() {
