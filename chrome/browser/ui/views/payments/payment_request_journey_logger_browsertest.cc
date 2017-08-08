@@ -44,14 +44,6 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestJourneyLoggerSelectedPaymentInstrumentTest,
   ResetEventObserver(DialogEvent::DIALOG_CLOSED);
   PayWithCreditCardAndWait(base::ASCIIToUTF16("123"));
 
-  histogram_tester.ExpectUniqueSample("PaymentRequest.CheckoutFunnel.Initiated",
-                                      1, 1);
-  histogram_tester.ExpectUniqueSample("PaymentRequest.CheckoutFunnel.Shown", 1,
-                                      1);
-  histogram_tester.ExpectUniqueSample(
-      "PaymentRequest.CheckoutFunnel.PayClicked", 1, 1);
-  histogram_tester.ExpectUniqueSample(
-      "PaymentRequest.CheckoutFunnel.ReceivedInstrumentDetails", 1, 1);
   // Expect a credit card as the selected payment instrument in the metrics.
   histogram_tester.ExpectBucketCount(
       "PaymentRequest.SelectedPaymentMethod",
@@ -101,8 +93,6 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestJourneyLoggerNoSupportedPaymentMethodTest,
   ASSERT_TRUE(content::ExecuteScript(web_contents, click_buy_button_js));
   WaitForObservedEvent();
 
-  histogram_tester.ExpectUniqueSample("PaymentRequest.CheckoutFunnel.Initiated",
-                                      1, 1);
   histogram_tester.ExpectBucketCount(
       "PaymentRequest.CheckoutFunnel.NoShow",
       JourneyLogger::NOT_SHOWN_REASON_NO_SUPPORTED_PAYMENT_METHOD, 1);
@@ -150,18 +140,6 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestJourneyLoggerMultipleShowTest,
   EXPECT_TRUE(
       histogram_tester.GetAllSamples("PaymentRequest.CheckoutFunnel.NoShow")
           .empty());
-
-  // Expect that other metrics were logged correctly.
-  histogram_tester.ExpectUniqueSample("PaymentRequest.CheckoutFunnel.Initiated",
-                                      1, 1);
-  histogram_tester.ExpectUniqueSample("PaymentRequest.CheckoutFunnel.Shown", 1,
-                                      1);
-  histogram_tester.ExpectUniqueSample(
-      "PaymentRequest.CheckoutFunnel.PayClicked", 1, 1);
-  histogram_tester.ExpectUniqueSample(
-      "PaymentRequest.CheckoutFunnel.ReceivedInstrumentDetails", 1, 1);
-  histogram_tester.ExpectUniqueSample("PaymentRequest.CheckoutFunnel.Completed",
-                                      1, 1);
 
   // Make sure the correct events were logged.
   std::vector<base::Bucket> buckets =
@@ -215,19 +193,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestJourneyLoggerMultipleShowTest,
   // Complete the original Payment Request.
   PayWithCreditCardAndWait(base::ASCIIToUTF16("123"), first_dialog_view);
 
-  histogram_tester.ExpectUniqueSample("PaymentRequest.CheckoutFunnel.Initiated",
-                                      1, 2);
-  histogram_tester.ExpectUniqueSample("PaymentRequest.CheckoutFunnel.Shown", 1,
-                                      1);
-  histogram_tester.ExpectUniqueSample(
-      "PaymentRequest.CheckoutFunnel.PayClicked", 1, 1);
-  histogram_tester.ExpectUniqueSample(
-      "PaymentRequest.CheckoutFunnel.ReceivedInstrumentDetails", 1, 1);
-
-  // The metrics should show that the original Payment Request should be
-  // completed and the second one should not have been shown.
-  histogram_tester.ExpectUniqueSample("PaymentRequest.CheckoutFunnel.Completed",
-                                      1, 1);
+  // There is one no show and one shown (verified below).
   histogram_tester.ExpectBucketCount(
       "PaymentRequest.CheckoutFunnel.NoShow",
       JourneyLogger::NOT_SHOWN_REASON_CONCURRENT_REQUESTS, 1);
@@ -628,11 +594,6 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestNotShownTest, OnlyNotShownMetricsLogged) {
   // Navigate away to abort the Payment Request and trigger the logs.
   NavigateTo("/payment_request_email_test.html");
 
-  // Initiated should be logged.
-  histogram_tester.ExpectUniqueSample("PaymentRequest.CheckoutFunnel.Initiated",
-                                      1, 1);
-  // Show should not be logged.
-  histogram_tester.ExpectTotalCount("PaymentRequest.CheckoutFunnel.Shown", 0);
   // Abort should not be logged.
   histogram_tester.ExpectTotalCount("PaymentRequest.CheckoutFunnel.Aborted", 0);
 
