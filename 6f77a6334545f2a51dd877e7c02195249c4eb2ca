@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2f9023ce_d51e6237",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-08T18:54:13Z",
+      "side": 1,
+      "message": "We\u0027re only going to need this as long as it\u0027s possible to have a legacy object contain a LayoutNGBlockFlow. I suppose when that\u0027s no longer possible, LayoutNGBlockFlow can be removed, and this code will automatically disappear? :)",
+      "parentUuid": "01573df6_6ae97173",
+      "revId": "6f77a6334545f2a51dd877e7c02195249c4eb2ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30a750a0_4542dac4",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.h",
         "patchSetId": 2
