@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "876189bb_0c4a17e9",
+        "filename": "net/test/android/javatests/src/org/chromium/net/test/EmbeddedTestServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-08T17:49:46Z",
+      "side": 1,
+      "message": "nit: Can the boolean be an enum instead? (e.g. initializeNative(context, USE_HTTP) vs initializeNative(context, USE_HTTPS))",
+      "range": {
+        "startLine": 134,
+        "startChar": 58,
+        "endLine": 134,
+        "endChar": 63
+      },
+      "revId": "b98a188fc7264d4f71568c053c78fa0d51458d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7813f78_f6386d65",
+        "filename": "net/test/android/javatests/src/org/chromium/net/test/EmbeddedTestServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-08T17:49:46Z",
+      "side": 1,
+      "message": "nit: Move this block before the (https \u0026\u0026 initialized) check, and throw new exceptions in the https block.\n\nif (!initialized) {\n  throw new EmbeddedTestServerFailure(\"Failed to initialize native server.\");\n}\n\nif (https) {\n  try {\n     ...\n  } catch (Exception e) {\n    throw new EmbeddedTestServerFailure(\"Failed to get root certificate from native server.\", e);\n  }\n  ...\n}",
+      "revId": "b98a188fc7264d4f71568c053c78fa0d51458d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6ac6d91_264605a7",
+        "filename": "net/test/embedded_test_server/embedded_test_server.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-08T17:49:46Z",
+      "side": 1,
+      "message": "nit: Should this be an assertion instead?",
+      "range": {
+        "startLine": 60,
+        "startChar": 74,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "b98a188fc7264d4f71568c053c78fa0d51458d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82d4c78f_a75cafbf",
+        "filename": "net/test/embedded_test_server/embedded_test_server.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-08T17:49:46Z",
+      "side": 1,
+      "message": "nit: return base::FilePath(GetTestCertsDirectory()).AppendASCII(\"root_ca_cert.pem\");",
+      "range": {
+        "startLine": 191,
+        "startChar": 51,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "b98a188fc7264d4f71568c053c78fa0d51458d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

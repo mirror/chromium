@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6163fdda_9f5b5def",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-08T17:49:46Z",
+      "side": 1,
+      "message": "Idea: Make EmbeddedTestServer an AutoCloseable, so that it can be used with try-with-resources:\n\ntry (EmbeddedTestServer testServer \u003d EmbeddedTestServer.createAndStartServer(...)){\n\n}\n// no stopAndDestroyServer needed.",
+      "range": {
+        "startLine": 617,
+        "startChar": 12,
+        "endLine": 617,
+        "endChar": 22
+      },
+      "revId": "e00700c2a3f5177306a71af266e357d5526b13c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a603fe3_d541ceac",
         "filename": "net/BUILD.gn",
         "patchSetId": 5
