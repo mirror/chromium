@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fa1e031_cd24e359",
+        "filename": "third_party/WebKit/public/web/WebCompositionUnderline.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-08T20:15:17Z",
+      "side": 1,
+      "message": "I think we should probably be using WebVector and WebString here, but it seems some IPC stuff needs to be added to make that work properly",
+      "revId": "4cd8646ab2873483d1e88337522434b052584f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
