@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb1b26fb_a41913c3",
+        "filename": "content/test/gpu/gpu_tests/pixel_test_pages.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-08T19:12:00Z",
+      "side": 1,
+      "message": "In this CL you\u0027ll also need to temporarily mark these tests as failing in pixel_expectations.py. Otherwise this won\u0027t pass the CQ. Then please follow up with another CL un-marking them as failing, and CQ that one, too. Feel free to TBR\u003d the second CL to me.",
+      "range": {
+        "startLine": 357,
+        "startChar": 6,
+        "endLine": 357,
+        "endChar": 14
+      },
+      "revId": "e3b018171a64263e610137bf576cbad52866651c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
