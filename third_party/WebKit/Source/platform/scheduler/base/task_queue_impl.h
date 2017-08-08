@@ -75,7 +75,10 @@ class PLATFORM_EXPORT TaskQueueImpl {
 
     bool operator<=(const DelayedWakeUp& other) const {
       if (time == other.time) {
+// Debug gcc builds can compare an element against itself.
+#if !defined(__GNUC__) || defined(__clang__)
         DCHECK_NE(sequence_num, other.sequence_num);
+#endif
         return (sequence_num - other.sequence_num) < 0;
       }
       return time < other.time;
