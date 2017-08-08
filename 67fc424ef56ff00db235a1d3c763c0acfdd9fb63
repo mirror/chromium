@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc80e231_8a756de1",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "No particular reason. I\u0027ve added 64-bit handling.",
+      "parentUuid": "9d77b1f4_b4706b63",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 35
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd2d05c6_911bd277",
         "filename": "base/cbor/cbor_writer.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875481ed_c93379a1",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "Uh... yeah. Yeah, let\u0027s say that\u0027s what I meant. :)",
+      "parentUuid": "fd2d05c6_911bd277",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 18
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9688a6ce_5fe74eaf",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "Done, with the exception from the conversion in SetType. I figure it\u0027s okay since it\u0027s guaranteed to be a safe value, being limited to the enums? checked_cast was throwing an error when trying to convert the enum value: \u0027no matching function for call to \"IsValueInRangeForNumericTypes\" \u0027.",
+      "parentUuid": "18644c50_665f0c03",
+      "range": {
+        "startLine": 75,
+        "startChar": 17,
+        "endLine": 75,
+        "endChar": 26
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "596e9755_a484fcd2",
         "filename": "base/cbor/cbor_writer.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a869f23a_4cb1db0a",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "596e9755_a484fcd2",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 1
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a3a60f61_6d9abd8e",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "Done. I had been leveraging a C example and so the style here is a little too c-influenced without me realizing it. :-) Thanks for catching everything.",
+      "parentUuid": "40c1997c_765e00b9",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 7
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59d80d4b_a4b9f1ca",
         "filename": "base/cbor/cbor_writer.h",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "82521708_8cf699fe",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "good catch, thank you!",
+      "parentUuid": "59d80d4b_a4b9f1ca",
+      "range": {
+        "startLine": 22,
+        "startChar": 41,
+        "endLine": 22,
+        "endChar": 67
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b20d2dab_5f20d0d7",
         "filename": "base/cbor/cbor_writer.h",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0378e1d_aef56801",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b20d2dab_5f20d0d7",
+      "range": {
+        "startLine": 32,
+        "startChar": 44,
+        "endLine": 32,
+        "endChar": 45
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,54 @@
     },
     {
       "key": {
+        "uuid": "bd5ac610_73c4d95b",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65135b0a_7e424e0c",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f66dd0b3_888d9734",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "618c703a_d63cf8aa",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9283dfc5_32090730",
         "filename": "base/cbor/cbor_writer.h",
         "patchSetId": 1
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "a70bca1f_8e78a98a",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9283dfc5_32090730",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 16
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa3a9611_434fb1a9",
         "filename": "base/cbor/cbor_writer_unittest.cc",
         "patchSetId": 1
@@ -252,6 +492,30 @@
       "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e056b6d2_043427aa",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "Both of those approaches threw up in cases that included the byte \"\\x00\" - kept interpreting as a null byte. I couldn\u0027t think of anything else to try other than num_bytes.",
+      "parentUuid": "fa3a9611_434fb1a9",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +565,54 @@
     },
     {
       "key": {
+        "uuid": "9cf36f85_4f1de612",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3ebcd71_29b26274",
+      "range": {
+        "startLine": 23,
+        "startChar": 41,
+        "endLine": 23,
+        "endChar": 58
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ba994a7_b68f8ef2",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0155dd9a_f4bc8357",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d3b0b6f_25f5c6f8",
         "filename": "base/cbor/cbor_writer_unittest.cc",
         "patchSetId": 1
@@ -321,6 +633,30 @@
       "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e2f12aa_f29eebb4",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "Unneeded. I removed it.",
+      "parentUuid": "0d3b0b6f_25f5c6f8",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "3604abce_c0f76707",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f190f96e_55e46828",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 45
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0af5ef8_8e4cde08",
         "filename": "base/cbor/cbor_writer_unittest.cc",
         "patchSetId": 1
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "f6afa457_86c5756d",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0af5ef8_8e4cde08",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 54
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be46d02e_2e6d3297",
         "filename": "base/cbor/cbor_writer_unittest.cc",
         "patchSetId": 1
@@ -390,6 +774,30 @@
       "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "505121a4_a0e07364",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-08T20:56:48Z",
+      "side": 1,
+      "message": "I see what you did there :-). Caught \u0026 fixed the bug. Thank you for the additional case.",
+      "parentUuid": "be46d02e_2e6d3297",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 0
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
