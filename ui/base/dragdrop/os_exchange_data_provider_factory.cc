@@ -5,6 +5,7 @@
 #include "ui/base/dragdrop/os_exchange_data_provider_factory.h"
 
 #include "base/memory/ptr_util.h"
+#include "build/build_config.h"
 
 #if defined(USE_X11) && !defined(OS_CHROMEOS)
 #include "ui/base/dragdrop/os_exchange_data_provider_aurax11.h"
@@ -48,6 +49,9 @@ OSExchangeDataProviderFactory::CreateProvider() {
   return ui::BuildOSExchangeDataProviderMac();
 #elif defined(OS_WIN)
   return base::MakeUnique<OSExchangeDataProviderWin>();
+#elif defined(OS_FUCHSIA)
+  NOTIMPLEMENTED();
+  return nullptr;
 #else
 #error "Unknown operating system"
 #endif
