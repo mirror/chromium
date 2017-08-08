@@ -16,6 +16,24 @@
       "revId": "f864f25497a56a0369945de63fceb890411b3a39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569e210b_34a22ea4",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/paint-footer-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-08T10:31:54Z",
+      "side": 1,
+      "message": "Here is what it takes to crash:\n\u003c!DOCTYPE html\u003e\n\u003cdiv style\u003d\"columns:1;\"\u003e\n    \u003cdiv style\u003d\"display:table-footer-group; break-inside:avoid; outline-style:outset;\"\u003e\u003c/div\u003e\n\u003c/div\u003e",
+      "parentUuid": "68d45b9c_36415d07",
+      "revId": "f864f25497a56a0369945de63fceb890411b3a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
