@@ -22,6 +22,30 @@
       "revId": "8495ed2b9597c63e4037af6f7003728e2613b900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5332a5_1e209268",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-08T21:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14a78453_616a7d7f",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 31
+      },
+      "revId": "8495ed2b9597c63e4037af6f7003728e2613b900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
