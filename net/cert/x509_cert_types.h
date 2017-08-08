@@ -44,8 +44,8 @@ struct NET_EXPORT CertPrincipal {
   bool ParseDistinguishedName(const void* ber_name_data, size_t length);
 #endif
 
-  // Returns a name that can be used to represent the issuer.  It tries in this
-  // order: CN, O and OU and returns the first non-empty one found.
+  // Returns a name that can be used to represent the principal.  It tries in
+  // this order: CN, O and OU and returns the first non-empty one found.
   std::string GetDisplayName() const;
 
   // The different attributes for a principal, stored in UTF-8.  They may be "".

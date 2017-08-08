@@ -93,13 +93,8 @@ class TrustStoreNSSTest : public testing::Test {
 
   // Trusts |cert|. Assumes the cert was already imported into NSS.
   void TrustCert(const ParsedCertificate* cert) {
-    SECItem der_cert;
-    der_cert.data = const_cast<uint8_t*>(cert->der_cert().UnsafeData());
-    der_cert.len = base::checked_cast<unsigned>(cert->der_cert().Length());
-    der_cert.type = siDERCertBuffer;
-
-    ScopedCERTCertificate nss_cert(
-        CERT_FindCertByDERCert(CERT_GetDefaultCertDB(), &der_cert));
+    ScopedCERTCertificate nss_cert(x509_util::FindCERTCertificateFromBytes(
+        cert->der_cert().UnsafeData(), cert->der_cert().Length()));
     ASSERT_TRUE(nss_cert);
 
     CERTCertTrust trust = {0};
