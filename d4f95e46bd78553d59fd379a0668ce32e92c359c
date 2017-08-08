@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3f3c0748_765c4b63",
+        "filename": "remoting/host/file_transfer_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-08T22:11:42Z",
+      "side": 1,
+      "message": "I agree having different callbacks for different methods makes sense. The reason that I want to use protocol::FileTransferResponse_ErrorCode here instead of File::Error is to decouple FileTransferMessageHandler from base::FileProxy. If a platform-specific implementation of this wants to use something other than base::FileProxy, then it could. If we are only planning on using base::FileProxy then I could see an argument for changing this to File::Error though.",
+      "parentUuid": "5f7e7f06_45148b47",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "d4f95e46bd78553d59fd379a0668ce32e92c359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5916cea6_65351b0c",
         "filename": "remoting/host/file_transfer_handler.h",
         "patchSetId": 1
@@ -83,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "cf3f80bf_408c79d9",
+        "filename": "remoting/host/file_transfer_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-08T22:11:42Z",
+      "side": 1,
+      "message": "Yes, that is correct. I will document it.",
+      "parentUuid": "5916cea6_65351b0c",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "d4f95e46bd78553d59fd379a0668ce32e92c359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56a24815_74c8f9b8",
         "filename": "remoting/host/file_transfer_manager.h",
         "patchSetId": 1
@@ -103,6 +151,30 @@
       "revId": "d4f95e46bd78553d59fd379a0668ce32e92c359c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a439fd_11884040",
+        "filename": "remoting/host/file_transfer_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-08T22:11:42Z",
+      "side": 1,
+      "message": "See below comment. If this class stays I will add some documentation.",
+      "parentUuid": "56a24815_74c8f9b8",
+      "range": {
+        "startLine": 17,
+        "startChar": 45,
+        "endLine": 17,
+        "endChar": 58
+      },
+      "revId": "d4f95e46bd78553d59fd379a0668ce32e92c359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -135,6 +207,24 @@
       "side": 1,
       "message": "We should be careful not to make this too complex but you would most likely want to use a WeakPtr reference from the Manager to the Handler.  OTOH, if closing the MessagePipe cleans up everything, then you may not need that extra reference at all.",
       "parentUuid": "7957ca85_4857ee56",
+      "revId": "d4f95e46bd78553d59fd379a0668ce32e92c359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb8bbec_26ec57b4",
+        "filename": "remoting/host/file_transfer_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-08T22:11:42Z",
+      "side": 1,
+      "message": "FileTransferManager started out as something that FileTransferMessageHandlers could send file IO requests to which would be platform specific and outlive FileTranferMessageHandlers so they could do file IO after the channel is closed. After coming up with the idea for FileTransferHandler/FileTransferProxy, FileTransferManager only dealt with creating Handlers/Proxies and managing their lifetime. However, if the lifetime of the Handlers/Proxies is tied to the lifetime of FileTransferMessageHandler, then this class is just a factory and could probably be removed just like FileTransferMessageHandlerFactory might be able to be removed. I will have to put some more thought into it, but I think their lifetimes could be put together. After all, that is what I was doing in my prototype. What do you think?",
+      "parentUuid": "8b97a38d_19cf218f",
       "revId": "d4f95e46bd78553d59fd379a0668ce32e92c359c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
