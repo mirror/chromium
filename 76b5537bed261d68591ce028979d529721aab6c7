@@ -52,6 +52,24 @@
       "revId": "76b5537bed261d68591ce028979d529721aab6c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba650366_cef36f88",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-08T16:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "337283b3_fd5fe4b4",
+      "revId": "76b5537bed261d68591ce028979d529721aab6c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
