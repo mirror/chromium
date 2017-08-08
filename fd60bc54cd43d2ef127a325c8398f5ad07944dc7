@@ -120,6 +120,24 @@
     },
     {
       "key": {
+        "uuid": "e5415725_ee27f1dd",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T23:39:37Z",
+      "side": 1,
+      "message": "Sorry I think I gave conflicting advice because I didn\u0027t look at the entire patch in one pass.\n\nI think we generally prefer to use Binding when multiple things can\u0027t be connected at once.\n\nA shorthand to avoid writing out the if (x.is_bound()) { ... } boilerplate is:\n\nframe_broker_binding_ \u003d std::move(request);",
+      "parentUuid": "9ae7fe9b_91e95763",
+      "revId": "fd60bc54cd43d2ef127a325c8398f5ad07944dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b498891_ee2d4df5",
         "filename": "content/public/app/mojo/content_browser_manifest.json",
         "patchSetId": 7
