@@ -24,6 +24,17 @@ class GESTURE_DETECTION_EXPORT TouchDispositionGestureFilterClient {
   virtual void ForwardGestureEvent(const GestureEventData&) = 0;
 };
 
+// This class provides an interface for calls to
+// TouchActionFilter::FilterGestureEvent from TouchDispositionGestureFilter. On
+// receipt of a whitelisted touch action message, this allows us to determine if
+// a gesture event should be filtered or not and if the event should be removed
+// from the gesture queue as soon as we determine what gesture event is
+// associated with the whitelisted touch action.
+class GESTURE_DETECTION_EXPORT WhiteListedTouchDispositionGestureFilter {
+ public:
+  virtual bool FilterGestureEvent(const GestureEventData& gesture_event) = 0;
+};
+
 // Given a stream of touch-derived gesture packets, produces a refined gesture
 // sequence based on the ack dispositions of the generating touch events.
 class GESTURE_DETECTION_EXPORT TouchDispositionGestureFilter {
@@ -49,6 +60,26 @@ class GESTURE_DETECTION_EXPORT TouchDispositionGestureFilter {
   void OnTouchEventAck(uint32_t unique_touch_event_id,
                        bool event_consumed,
                        bool is_source_touch_event_set_non_blocking);
+
+  bool OnWhiteListedTouchAction(
+      WhiteListedTouchDispositionGestureFilter&
+          white_listed_touch_disposition_gesture_filter,
+      uint32_t unique_touch_event_id,
+      bool event_consumed);
+
+  bool CheckWhiteListedTouchAction(
+      WhiteListedTouchDispositionGestureFilter&
+          white_listed_touch_disposition_gesture_filter);
+
+  bool SendWhiteListedTouchEventPacket(
+      WhiteListedTouchDispositionGestureFilter&
+          white_listed_touch_disposition_gesture_filter,
+      const GestureEventDataPacket& packet);
+
+  bool WhiteListedEventReleased(
+      const GestureEventData& event,
+      WhiteListedTouchDispositionGestureFilter&
+          white_listed_touch_disposition_gesture_filter);
 
   // Whether there are any active gesture sequences still queued in the filter.
   bool IsEmpty() const;
