@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "06f4ce86_472189d9",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-08T17:14:26Z",
+      "side": 1,
+      "message": "I think it\u0027s out of the scope of this patch.\n\nMost tests don\u0027t have service manager connection so we just create empty coordinators without connection. In order to bind the |service_| correctly the registry in frame/process host impl must be exposed https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_impl.cc?l\u003d2935, https://cs.chromium.org/chromium/src/content/browser/renderer_host/render_process_host_impl.cc?l\u003d1840",
+      "parentUuid": "dfd2cd6f_33c07635",
+      "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29c3c1c1_d838c479",
         "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.cpp",
         "patchSetId": 24
