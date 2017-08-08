@@ -3047,13 +3047,20 @@
             ],
             "experiments": [
                 {
-                    "name": "Enabled",
+                    "name": "CompactUIEnabled",
                     "enable_features": [
                         "TranslateCompactUI"
+                    ],
+                    "disable_features": [
+                        "TranslateRankerEnforcement",
+                        "TranslateRankerQuery"
                     ]
                 },
                 {
                     "name": "CompactUIAndRanker",
+                    "params": {
+                        "translate-ranker-model-url": "https://www.gstatic.com/chrome/intelligence/assist/ranker/models/translate/2017/03/translate_ranker_model_20170329.pb.bin"
+                    },
                     "enable_features": [
                         "TranslateCompactUI",
                         "TranslateRankerEnforcement",
@@ -3062,6 +3069,9 @@
                 },
                 {
                     "name": "RankerOnly",
+                    "params": {
+                        "translate-ranker-model-url": "https://www.gstatic.com/chrome/intelligence/assist/ranker/models/translate/2017/03/translate_ranker_model_20170329.pb.bin"
+                    },
                     "enable_features": [
                         "TranslateRankerEnforcement",
                         "TranslateRankerQuery"
