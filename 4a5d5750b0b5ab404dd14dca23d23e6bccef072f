@@ -16,6 +16,24 @@
       "revId": "4a5d5750b0b5ab404dd14dca23d23e6bccef072f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2706cc3_61748f6a",
+        "filename": "net/cert/x509_util_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-08T17:06:12Z",
+      "side": 1,
+      "message": "That makes sense for compatibility with how x509_certificate_nss does it. What do you think about once linux switches to x509_certificate_bytes? Then the CertPrincipal::GetDisplayName will be more like on win/mac (uses first CN, doesn\u0027t do the escapeAndQuote thing.)\n\nI guess we could use CERT_GetCommonName here for as long as linux is using x509_certificate_nss, then switch to not using it once it switches to x509_certificate_bytes?\n\nOr do you think we\u0027d need a hack with use_byte_certs to maintain backwards compatibility of GetDisplayName on linux/chromeos? (I\u0027m not aware of anything that would break if there were minor changes in the output, but there certainly could be something buried somewhere that persists or matches on that value.. I didn\u0027t see anything in a quick codesearch though.)",
+      "parentUuid": "2eaa8fdd_b266c74c",
+      "revId": "4a5d5750b0b5ab404dd14dca23d23e6bccef072f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
