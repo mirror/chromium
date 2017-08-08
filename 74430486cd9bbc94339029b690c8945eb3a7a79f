@@ -16,6 +16,24 @@
       "revId": "74430486cd9bbc94339029b690c8945eb3a7a79f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22291acf_34f75e4f",
+        "filename": "ui/views/controls/table/table_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-08T20:32:35Z",
+      "side": 1,
+      "message": "[26874:26874:0808/132656.427206:9779289100832:FATAL:view.cc(2124)] Check failed: !iterating_. \n#0 0x7fd35ce4b14d base::debug::StackTrace::StackTrace()\n#1 0x7fd35ce4951c base::debug::StackTrace::StackTrace()\n#2 0x7fd35ced99da logging::LogMessage::~LogMessage()\n#3 0x7fd35d51feb0 views::View::DoRemoveChildView()\n#4 0x7fd35d51de7e views::View::RemoveChildView()\n#5 0x7fd35d51d3d8 views::View::~View()\n#6 0x7fd35d44e945 views::FocusRing::~FocusRing()\n#7 0x7fd35d44e9e9 views::FocusRing::~FocusRing()\n#8 0x7fd35d44e630 views::FocusRing::Uninstall()\n#9 0x7fd35d495cc2 views::ScrollView::SetHasFocusIndicator()\n#10 0x7fd35d4bbe49 views::TableView::OnBlur()\n#11 0x7fd35d52e459 views::View::Blur()\n#12 0x7fd35d4f60c6 views::FocusManager::SetFocusedViewWithReason()\n#13 0x7fd35d3ee3e2 views::FocusManager::SetFocusedView()\n#14 0x7fd35d4f78bd views::FocusManager::ViewRemoved()\n#15 0x7fd35d5448f6 views::Widget::ViewHierarchyChanged()\n#16 0x7fd35d5401eb views::internal::RootView::ViewHierarchyChanged()\n#17 0x7fd35d521260 views::View::ViewHierarchyChangedImpl()\n#18 0x7fd35d52fee5 views::View::PropagateRemoveNotifications()\n#19 0x7fd35d52fe67 views::View::PropagateRemoveNotifications()\n#20 0x7fd35d52fe67 views::View::PropagateRemoveNotifications()\n#21 0x7fd35d52fe67 views::View::PropagateRemoveNotifications()\n#22 0x7fd35d51fcf5 views::View::DoRemoveChildView()\n#23 0x7fd35d52167d views::View::RemoveAllChildViews()\n#24 0x7fd35d53d4ba views::internal::RootView::~RootView()\n#25 0x7fd35d53d7e9 views::internal::RootView::~RootView()\n#26 0x7fd35d542eb1 views::Widget::DestroyRootView()\n#27 0x7fd35d54290a views::Widget::~Widget()\n#28 0x7fd35d542f39 views::Widget::~Widget()\n#29 0x0000006d5d72 views::TableViewTest::TearDown()\n#30 0x0000008bb7be testing::internal::HandleSehExceptionsInMethodIfSupported\u003c\u003e()\n#31 0x0000008ac582 testing::internal::HandleExceptionsInMethodIfSupported\u003c\u003e()\n#32 0x00000089704b testing::Test::Run()\n#33 0x000000897b5d testing::TestInfo::Run()\n#34 0x0000008985bc testing::TestCase::Run()\n#35 0x0000008a41ec testing::internal::UnitTestImpl::RunAllTests()\n#36 0x0000008bc1de testing::internal::HandleSehExceptionsInMethodIfSupported\u003c\u003e()\n#37 0x0000008adc12 testing::internal::HandleExceptionsInMethodIfSupported\u003c\u003e()\n#38 0x0000008a3e2a testing::UnitTest::Run()\n#39 0x000000b82ba1 RUN_ALL_TESTS()\n#40 0x000000b8072e base::TestSuite::Run()\n#41 0x00000066b12d _ZN4base8internal13FunctorTraitsIMN5views4test18MenuControllerTestEFvvEvE6InvokeIPNS3_43MenuControllerTest_CancelAllDuringDrag_TestEJEEEvS6_OT_DpOT0_\n#42 0x00000066b074 _ZN4base8internal12InvokeHelperILb0EvE8MakeItSoIRKMN5views4test18MenuControllerTestEFvvEJPNS5_43MenuControllerTest_CancelAllDuringDrag_TestEEEEvOT_DpOT0_\n#43 0x000000b6e245 _ZN4base8internal7InvokerINS0_9BindStateIMNS_9TestSuiteEFivEJNS0_17UnretainedWrapperIN5views14ViewsTestSuiteEEEEEEFivEE7RunImplIRKS5_RKNSt3__15tupleIJS9_EEEJLm0EEEEiOT_OT0_NS_13IndexSequenceIJXspT1_EEEE\n#44 0x000000b6e18c _ZN4base8internal7InvokerINS0_9BindStateIMNS_9TestSuiteEFivEJNS0_17UnretainedWrapperIN5views14ViewsTestSuiteEEEEEEFivEE3RunEPNS0_13BindStateBaseE\n#45 0x00000053c49d _ZNKR4base8CallbackIFvvELNS_8internal8CopyModeE1ELNS2_10RepeatModeE1EE3RunEv\n#46 0x000000b84f77 base::(anonymous namespace)::LaunchUnitTestsInternal()\n#47 0x000000b84de5 base::LaunchUnitTests()\n#48 0x000000b6d9db views::ViewsTestSuite::RunTests()\n#49 0x0000004b6b20 main\n#50 0x7fd35778df45 __libc_start_main\n#51 0x0000004b69f4 \u003cunknown\u003e\n\n\nThe issue is that the FocusRing control is inserted into or removed from the parent based on the focused state. This only happens in Material Design mode.\n\nYou are correct that this could happen in other instances, which is why I suggested having some mechanism to determine that the code is currently executing while some parent up the chain is being destroyed.",
+      "parentUuid": "35515a12_40e652d9",
+      "revId": "74430486cd9bbc94339029b690c8945eb3a7a79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
