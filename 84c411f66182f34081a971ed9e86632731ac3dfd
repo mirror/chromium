@@ -16,6 +16,24 @@
       "revId": "84c411f66182f34081a971ed9e86632731ac3dfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d77dc6e_6c9d8787",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T14:36:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a44df3e8_12fa971a",
+      "revId": "84c411f66182f34081a971ed9e86632731ac3dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
