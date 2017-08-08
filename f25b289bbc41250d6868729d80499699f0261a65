@@ -199,6 +199,30 @@
       "revId": "f25b289bbc41250d6868729d80499699f0261a65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f63551_cc61b19b",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-08-08T23:00:04Z",
+      "side": 1,
+      "message": "Hm, good point. I agree that sequence wasn\u0027t possible before and thus might invalidate an assumption somewhere.\n\nSounds reasonable to be conservative initially by only reporting during a touch.",
+      "parentUuid": "1aa037cf_aac68fc0",
+      "range": {
+        "startLine": 1218,
+        "startChar": 16,
+        "endLine": 1218,
+        "endChar": 20
+      },
+      "revId": "f25b289bbc41250d6868729d80499699f0261a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
