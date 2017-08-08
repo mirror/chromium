@@ -741,7 +741,8 @@ cc::AnimationHost* RenderWidgetCompositor::CompositorAnimationHost() {
 
 void RenderWidgetCompositor::SetViewportSize(
     const WebSize& device_viewport_size) {
-  layer_tree_host_->SetViewportSize(device_viewport_size);
+  // This is called only in tests.
+  SetViewportSize(device_viewport_size, viz::LocalSurfaceId());
 }
 
 WebSize RenderWidgetCompositor::GetViewportSize() const {
@@ -1264,9 +1265,10 @@ void RenderWidgetCompositor::SetContentSourceId(uint32_t id) {
   layer_tree_host_->SetContentSourceId(id);
 }
 
-void RenderWidgetCompositor::SetLocalSurfaceId(
+void RenderWidgetCompositor::SetViewportSize(
+    const gfx::Size& device_viewport_size,
     const viz::LocalSurfaceId& local_surface_id) {
-  layer_tree_host_->SetLocalSurfaceId(local_surface_id);
+  layer_tree_host_->SetViewportSize(device_viewport_size, local_surface_id);
 }
 
 void RenderWidgetCompositor::NotifySwapTime(ReportTimeCallback callback) {
