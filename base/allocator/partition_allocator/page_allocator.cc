@@ -13,6 +13,20 @@
 #include "base/logging.h"
 #include "build/build_config.h"
 
+#if defined(OS_ANDROID)
+#include <sys/prctl.h>
+
+// Not defined in Android public API.
+#if !defined(PR_SET_VMA)
+#define PR_SET_VMA 0x53564d41
+#endif
+
+#if !defined(PR_SET_VMA_ANON_NAME)
+#define PR_SET_VMA_ANON_NAME 0
+#endif
+
+#endif  // defined(OS_ANDROID)
+
 #if defined(OS_MACOSX)
 #include <mach/mach.h>
 #endif
@@ -83,6 +97,14 @@ static void* SystemAllocPages(
     ret = 0;
   }
 #endif
+
+#if defined(OS_ANDROID)
+  // On Android, tag our mmap allocation with "partition_alloc" so these
+  // allocations are identifiable via showmap.
+  prctl(PAGE_ALLOCATOR_PR_SET_VMA, PR_SET_VMA_ANON_NAME, ret, length,
+        "partition_alloc");
+#endif  // defined(OS_ANDROID)
+
   return ret;
 }
 
