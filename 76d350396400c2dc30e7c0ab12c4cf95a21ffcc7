@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fb5c475_265acc71",
+        "filename": "ui/events/gesture_detection/gesture_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-08T19:25:06Z",
+      "side": 1,
+      "message": "deltas",
+      "range": {
+        "startLine": 922,
+        "startChar": 19,
+        "endLine": 922,
+        "endChar": 24
+      },
+      "revId": "76d350396400c2dc30e7c0ab12c4cf95a21ffcc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
