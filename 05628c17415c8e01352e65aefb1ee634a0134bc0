@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "4afba009_743761a4",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-08T19:57:46Z",
+      "side": 1,
+      "message": "Ahh, I\u0027m sorry, for some reason I was misreading this line as next_handler_-\u003eOnResponseStarted. Apologies, my fault!\n\nIn any case, thanks for the more detailed explanation.",
+      "parentUuid": "a4051852_12cf8661",
+      "revId": "05628c17415c8e01352e65aefb1ee634a0134bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f9ca3c4_fba5f994",
         "filename": "content/browser/loader/redirect_to_file_resource_handler_unittest.cc",
         "patchSetId": 6
