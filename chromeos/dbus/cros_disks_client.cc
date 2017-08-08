@@ -74,6 +74,23 @@ DeviceType DeviceMediaTypeToDeviceType(uint32_t media_type_uint32) {
   }
 }
 
+bool ReadDiskEntryFromDbus(dbus::MessageReader* reader, DiskEntry* entry) {
+  uint32_t error_code = 0;
+  std::string device_path;
+  std::string label;
+  std::string disk_file_system_type;
+
+  if (!reader->PopUint32(&error_code) || !reader->PopString(&device_path) ||
+      !reader->PopString(&label) ||
+      !reader->PopString(&disk_file_system_type)) {
+    return false;
+  }
+  *entry = DiskEntry(static_cast<FormatError>(error_code), device_path, label,
+                     disk_file_system_type);
+
+  return true;
+}
+
 bool ReadMountEntryFromDbus(dbus::MessageReader* reader, MountEntry* entry) {
   uint32_t error_code = 0;
   std::string source_path;
@@ -417,13 +434,13 @@ class CrosDisksClientImpl : public CrosDisksClient {
   // Handles FormatCompleted signal and calls |handler|.
   void OnFormatCompleted(FormatCompletedHandler handler, dbus::Signal* signal) {
     dbus::MessageReader reader(signal);
-    uint32_t error_code = 0;
-    std::string device_path;
-    if (!reader.PopUint32(&error_code) || !reader.PopString(&device_path)) {
+    DiskEntry entry;
+    if (!ReadDiskEntryFromDbus(&reader, &entry)) {
       LOG(ERROR) << "Invalid signal: " << signal->ToString();
       return;
     }
-    handler.Run(static_cast<FormatError>(error_code), device_path);
+
+    handler.Run(entry);
   }
 
   // Handles the result of signal connection setup.
@@ -561,6 +578,10 @@ DiskInfo::~DiskInfo() {
 //     string "NativePath"
 //     variant       string "/sys/devices/pci0000:00/0000:00:1d.7/usb1/1-4/...
 //   }
+//   dict entry {
+//     string "DiskFileSystemType"
+//     variant       string "vfat"
+//   }
 // ]
 void DiskInfo::InitializeFromResponse(dbus::Response* response) {
   dbus::MessageReader reader(response);
@@ -596,6 +617,8 @@ void DiskInfo::InitializeFromResponse(dbus::Response* response) {
       cros_disks::kDriveModel, &drive_model_);
   properties->GetStringWithoutPathExpansion(cros_disks::kIdLabel, &label_);
   properties->GetStringWithoutPathExpansion(cros_disks::kIdUuid, &uuid_);
+  properties->GetStringWithoutPathExpansion(cros_disks::kDiskFileSystemType,
+                                            &disk_file_system_type_);
 
   // dbus::PopDataAsValue() pops uint64_t as double.
   // The top 11 bits of uint64_t are dropped by the use of double. But, this
@@ -617,6 +640,24 @@ void DiskInfo::InitializeFromResponse(dbus::Response* response) {
                                               &mount_paths))
     mount_paths->GetString(0, &mount_path_);
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// DiskEntry
+
+DiskEntry::DiskEntry() : error_code_(FORMAT_ERROR_UNKNOWN) {}
+
+DiskEntry::DiskEntry(FormatError error_code,
+                     const std::string& device_path,
+                     const std::string& label,
+                     const std::string& disk_file_system_type)
+    : error_code_(error_code),
+      device_path_(device_path),
+      label_(label),
+      disk_file_system_type_(disk_file_system_type) {}
+
+DiskEntry::~DiskEntry() = default;
+
+DiskEntry::DiskEntry(const DiskEntry& diskEntry) = default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // CrosDisksClient

@@ -210,10 +210,15 @@ bool FakeCrosDisksClient::SendMountCompletedEvent(
 
 bool FakeCrosDisksClient::SendFormatCompletedEvent(
     FormatError error_code,
-    const std::string& device_path) {
+    const std::string& device_path,
+    const std::string& label,
+    const std::string& disk_file_system_type) {
   if (format_completed_handler_.is_null())
     return false;
-  format_completed_handler_.Run(error_code, device_path);
+
+  format_completed_handler_.Run(
+      DiskEntry(error_code, device_path, label, disk_file_system_type));
+
   return true;
 }
 
