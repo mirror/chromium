@@ -22,6 +22,30 @@
       "revId": "1a9bfb720ce4d9f6726f1bf7bf8ba7f4dbfd0b46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6596e82b_dfcb88ea",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/InstalledAppTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-08T03:58:14Z",
+      "side": 1,
+      "message": "I don\u0027t think it works for asynchronous code. All the examples I can see of JavaScriptUtils.executeJavaScriptAndWaitForResult are running synchronous code and getting the result of an expression. I can\u0027t see a way to wait for a callback / promise.\n\nThis technique is copied from what we did in Web Share tests (https://cs.chromium.org/chromium/src/chrome/android/javatests/src/org/chromium/chrome/browser/WebShareTest.java) which I think we copied off somewhere else; it seems like a fairly well-established pattern.",
+      "parentUuid": "160af11d_6ed150b5",
+      "range": {
+        "startLine": 106,
+        "startChar": 26,
+        "endLine": 106,
+        "endChar": 55
+      },
+      "revId": "1a9bfb720ce4d9f6726f1bf7bf8ba7f4dbfd0b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
