@@ -62,6 +62,9 @@ class CastPixmap : public gfx::NativePixmap {
   gfx::BufferFormat GetBufferFormat() const override {
     return gfx::BufferFormat::BGRA_8888;
   }
+  gfx::BufferUsage GetBufferUsage() const override {
+    return gfx::BufferUsage::SCANOUT;
+  }
   gfx::Size GetBufferSize() const override { return gfx::Size(); }
 
   bool ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
