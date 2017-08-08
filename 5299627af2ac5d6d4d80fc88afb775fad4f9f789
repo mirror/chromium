@@ -22,6 +22,30 @@
       "revId": "5299627af2ac5d6d4d80fc88afb775fad4f9f789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e5eb01_f814a212",
+        "filename": "ios/chrome/content_widget_extension/most_visited_tile_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-08T09:03:01Z",
+      "side": 1,
+      "message": "To make the view clickable, is it a problem? It acts like a button, so seemed logical to me.",
+      "parentUuid": "c49df251_374735d7",
+      "range": {
+        "startLine": 14,
+        "startChar": 33,
+        "endLine": 14,
+        "endChar": 41
+      },
+      "revId": "5299627af2ac5d6d4d80fc88afb775fad4f9f789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
