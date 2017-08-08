@@ -371,6 +371,7 @@ source_set("blink_headers") {
     "platform/modules/background_fetch/WebBackgroundFetchSettledFetch.h",
     "platform/modules/device_orientation/WebDeviceMotionListener.h",
     "platform/modules/device_orientation/WebDeviceOrientationListener.h",
+    "platform/modules/fetch/fetch_response_type.mojom",
     "platform/modules/indexeddb/WebIDBCallbacks.h",
     "platform/modules/indexeddb/WebIDBCursor.h",
     "platform/modules/indexeddb/WebIDBDatabase.h",

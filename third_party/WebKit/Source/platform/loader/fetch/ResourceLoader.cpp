@@ -49,6 +49,7 @@
 #include "public/platform/WebURLError.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebURLResponse.h"
+#include "public/platform/modules/fetch/fetch_response_type.mojom-blink.h"
 
 namespace blink {
 
