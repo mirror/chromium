@@ -125,6 +125,7 @@ const int64_t kNoTimestamp = std::numeric_limits<int64_t>::min();
 const int kUseDefaultFade = -1;
 const int kMediaDuckFadeMs = 150;
 const int kMediaUnduckFadeMs = 700;
+const int kDefaultFilterFrameAlignment = 256;
 
 int64_t TimespecToMicroseconds(struct timespec time) {
   return static_cast<int64_t>(time.tv_sec) *
@@ -260,6 +261,11 @@ StreamMixerAlsa::StreamMixerAlsa()
   PostProcessingPipelineParser pipeline_parser;
 
   CreatePostProcessors(&pipeline_parser);
+
+  filter_frame_alignment_ = kDefaultFilterFrameAlignment;
+  // TODO(jyw): command line flag for filter frame alignment.
+  DCHECK_EQ(filter_frame_alignment_ & (filter_frame_alignment_ - 1), 0)
+      << "Alignment must be a power of 2.";
 
   // TODO(bshaya): Add support for final mix AudioPostProcessor.
   DefineAlsaParameters();
@@ -853,13 +859,14 @@ bool StreamMixerAlsa::TryWriteFrames() {
   const int min_frames_in_buffer =
       output_samples_per_second_ * kMinBufferedDataMs / 1000;
   int chunk_size =
-      output_samples_per_second_ * kMaxAudioWriteTimeMilliseconds / 1000;
+      (output_samples_per_second_ * kMaxAudioWriteTimeMilliseconds / 1000) &
+      ~(filter_frame_alignment_ - 1);
   bool is_silence = true;
   for (auto&& filter_group : filter_groups_) {
     filter_group->ClearActiveInputs();
   }
   for (auto&& input : inputs_) {
-    int read_size = input->MaxReadSize();
+    int read_size = input->MaxReadSize() & ~(filter_frame_alignment_ - 1);
     if (read_size > 0) {
       DCHECK(input->filter_group());
       input->filter_group()->AddActiveInput(input.get());
@@ -893,9 +900,10 @@ bool StreamMixerAlsa::TryWriteFrames() {
 
   if (is_silence) {
     // No inputs have any data to provide. Push silence to prevent underrun.
-    chunk_size = kPreventUnderrunChunkSize;
+    chunk_size = std::max(kPreventUnderrunChunkSize, filter_frame_alignment_);
   }
 
+  DCHECK_EQ(chunk_size % filter_frame_alignment_, 0);
   // Recursively mix and filter each group.
   linearize_filter_->MixAndFilter(chunk_size);
 
@@ -1091,6 +1099,15 @@ void StreamMixerAlsa::SetPostProcessorConfig(const std::string& name,
   for (auto&& filter_group : filter_groups_) {
     filter_group->SetPostProcessorConfig(name, config);
   }
+}
+
+void StreamMixerAlsa::SetFilterFrameAlignment(int filter_frame_alignment) {
+  RUN_ON_MIXER_THREAD(&StreamMixerAlsa::SetFilterFrameAlignment,
+                      filter_frame_alignment);
+  CHECK((filter_frame_alignment & (filter_frame_alignment - 1)) == 0)
+      << "Frame alignment ( " << filter_frame_alignment
+      << ") is not a power of two";
+  filter_frame_alignment_ = filter_frame_alignment;
 }
 
 }  // namespace media
