@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9f48fc63_635fe713",
+        "filename": "android_webview/apk/java/AndroidManifest.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T21:53:07Z",
+      "side": 1,
+      "message": "are apps supposed to be able to launch this? if not, probably don\u0027t need to export it",
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4271c3ad_8d4556ae",
         "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
         "patchSetId": 19
@@ -19,6 +36,23 @@
         "endLine": 459,
         "endChar": 97
       },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70dbfe25_df2b8ea8",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T21:53:07Z",
+      "side": 1,
+      "message": "looks like unnecessary change to me?",
       "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +152,63 @@
     },
     {
       "key": {
+        "uuid": "cfa423fc_f114a8fd",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T21:53:07Z",
+      "side": 1,
+      "message": "comment what does this protect exactly?",
+      "range": {
+        "startLine": 74,
+        "startChar": 32,
+        "endLine": 74,
+        "endChar": 45
+      },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07290e20_02c4ffbe",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T21:53:07Z",
+      "side": 1,
+      "message": "this is not ok since AwVariationsSeedFetchService is in the same process, so you could be setting this more than once. We should have a global centralized and thread safe place to initialize things for all of our java-only services",
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17436966_80480d66",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T21:53:07Z",
+      "side": 1,
+      "message": "all methods that require lock being held should have \"Locked\" suffix, and assert lock is held, see AwSettings as a pattern",
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6519425a_9b167be6",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
         "patchSetId": 19
@@ -129,6 +220,30 @@
       "writtenOn": "2017-08-08T14:33:11Z",
       "side": 1,
       "message": "(correct me if I\u0027m wrong) there is a bug here:\nin the case where we fetch a seed through the job scheduler, and the seed expires before any WebView app tries to fetch the seed again we will never again schedule a seed-fetching job:\n\n1. [no seed], call handleSeedRequest -\u003e sIsJobRunning \u003d true, scheduleSeedFetchJob().\n2. seed fetching service fetches the seed\n3. the seed expires\n4. call handleSeedRequest -\u003e isSeedExpired() \u003d\u003d true, and sIsJobRunning \u003d true -\u003e scheduleSeedFetchJob() is never called.\n\n\nEither way, could you please add a TODO for adding tests for this logic? (any kind of logic involving multi-threading should be tested as thoroughly as possible).",
+      "range": {
+        "startLine": 103,
+        "startChar": 21,
+        "endLine": 103,
+        "endChar": 34
+      },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6075e96e_9ab92092",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T21:53:07Z",
+      "side": 1,
+      "message": "\u003e (correct me if I\u0027m wrong) there is a bug here:\n\u003e in the case where we fetch a seed through the job scheduler, and the seed expires before any WebView app tries to fetch the seed again we will never again schedule a seed-fetching job:\n\u003e \n\u003e 1. [no seed], call handleSeedRequest -\u003e sIsJobRunning \u003d true, scheduleSeedFetchJob().\n\u003e 2. seed fetching service fetches the seed\n\u003e 3. the seed expires\n\u003e 4. call handleSeedRequest -\u003e isSeedExpired() \u003d\u003d true, and sIsJobRunning \u003d true -\u003e scheduleSeedFetchJob() is never called.\n\u003e \n\u003e \n\u003e Either way, could you please add a TODO for adding tests for this logic? (any kind of logic involving multi-threading should be tested as thoroughly as possible).\n\nSo that\u0027s a bug because job does not inform service it\u0027s done. Like I said in the meeting, Job can just bind to service and pass in the seed when it\u0027s complete. No need to go through the file system and solves a host of other problems like this.\n\nAlso either way, this code does not really guarantee there is only ever one job running, because this process could be killed, but the job is still pending and being scheduled. You have to ask JobScheduler if a job is pending",
+      "parentUuid": "6519425a_9b167be6",
       "range": {
         "startLine": 103,
         "startChar": 21,
@@ -164,6 +279,81 @@
     },
     {
       "key": {
+        "uuid": "1ddcf7c7_44356f78",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T21:53:07Z",
+      "side": 1,
+      "message": "\u003e I would prefer having this method, and the SeedDataReceiver, in a separate class since all of this code is run in the app process (rather than in the WebView process), but I guess that\u0027s a matter of taste, and isn\u0027t really needed in the prototype.\n\n+1\n\nRemember, code is being read more times than being written. Spending the time and clearly delimiting which code runs where makes it so much easier to read afterwards.",
+      "parentUuid": "a418a42c_e95afad8",
+      "range": {
+        "startLine": 197,
+        "startChar": 23,
+        "endLine": 197,
+        "endChar": 46
+      },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea83d19f_858c27ff",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsSeedFetchService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T21:53:07Z",
+      "side": 1,
+      "message": "prefer synchronized over locks in java (and synchronized blocks are also reentrant)",
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48cf1208_7b05ea13",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsSeedFetchService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T21:53:07Z",
+      "side": 1,
+      "message": "not entirely sure what guarantees JobService has, but should make sure there\u0027s at most one pending task, then you don\u0027t need the lock or anything like that",
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a8a304_1c80845e",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsSeedFetchService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T21:53:07Z",
+      "side": 1,
+      "message": "constants at top of class",
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fe06c51_da7526f6",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsSeedFetchService.java",
         "patchSetId": 19
@@ -181,6 +371,40 @@
         "endLine": 131,
         "endChar": 0
       },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9917fa3b_1c72ecdd",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsSeedFetchService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T21:53:07Z",
+      "side": 1,
+      "message": "make sure PathUtils is initialized somewhere and use that here. we should not be creating random top level directories in the data directory. they\u0027ll get missed when we clear webview data in a downgrade",
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cafb89f_f554549f",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsSeedFetchService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T21:53:07Z",
+      "side": 1,
+      "message": "well, it\u0027s not ok to be ignoring them...",
       "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -227,6 +451,23 @@
         "endLine": 237,
         "endChar": 43
       },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83329870_efd242ef",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsSeedFetchService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T21:53:07Z",
+      "side": 1,
+      "message": "Uhh.. not ok just forking another process\n\nUse this:\nhttps://cs.chromium.org/chromium/src/base/android/java/src/org/chromium/base/FileUtils.java?rcl\u003d64e25a27ab028610e6097f6458c749a26eea3050\u0026l\u003d27",
       "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
