@@ -34,6 +34,24 @@
       "revId": "61e2fdf096c6eee13f9aa36f46190d12a811928c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d885c3_c570fa1c",
+        "filename": "third_party/WebKit/Source/core/loader/CookieJar.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T15:58:59Z",
+      "side": 1,
+      "message": "Added you as the primary owner (left myself in because it doesn\u0027t seem entirely fair for me to add a UMA and then say someone else owns it \u003d)",
+      "parentUuid": "b2785e09_668d142c",
+      "revId": "61e2fdf096c6eee13f9aa36f46190d12a811928c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
