@@ -210,6 +210,9 @@ class LocalDeviceEnvironment(environment.Environment):
     if self.trace_output:
       self.DisableTracing()
 
+      with open(self.trace_output, 'a') as trace_output_handle:
+        trace_output_handle.write(']')
+
     if not self._devices:
       return
 
