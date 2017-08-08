@@ -25,6 +25,7 @@ class ImageIndex {
  public:
   ImageIndex(ConstBufferView image,
              std::vector<ReferenceTypeTraits>&& traits_map);
+  ImageIndex(ImageIndex&& that);
   ~ImageIndex();
 
   // Inserts all references of type |type_tag| read from |ref_reader| to this
@@ -140,8 +141,6 @@ class ImageIndex {
 
   std::vector<TypeInfo> types_;
   std::vector<PoolInfo> pools_;
-
-  DISALLOW_COPY_AND_ASSIGN(ImageIndex);
 };
 
 }  // namespace zucchini
