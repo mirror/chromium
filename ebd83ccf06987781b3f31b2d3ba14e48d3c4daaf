@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "fcef4617_fbc43325",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-08T17:09:30Z",
+      "side": 1,
+      "message": "What happens if you have the fake omnibox scrolled up and tap on a most visited icon.  Will this save scroll state?  Do we want that?",
+      "revId": "ebd83ccf06987781b3f31b2d3ba14e48d3c4daaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c92e8708_600ecd81",
         "filename": "ios/web/public/web_state/ui/crw_native_content.h",
         "patchSetId": 3
