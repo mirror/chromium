@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e9fa85a_af50162f",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/MultiActivityTestCommon.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-08T22:52:29Z",
+      "side": 1,
+      "message": "Just wanted it to be less verbose - we\u0027ve got only one callsite (the test this CL is written for) so it is not a problem at this moment. But I agree that the exceptions to throw better be more specific. Done.",
+      "parentUuid": "938a0f1c_6dd73855",
+      "revId": "6ba4fa168c70df9858244b44d0941ea3db0f6f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d198cef0_b82ed183",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/MultiActivityTestCommon.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-08T21:22:38Z",
       "side": 1,
       "message": "Nit: You can probably simplify this to waitForCallback(0) (But I am not particularly picky)",
+      "revId": "6ba4fa168c70df9858244b44d0941ea3db0f6f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75944edb_09328921",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/MultiActivityTestCommon.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-08T22:52:29Z",
+      "side": 1,
+      "message": "You\u0027re not picky but are just helping me do a better job. Done.",
+      "parentUuid": "d198cef0_b82ed183",
       "revId": "6ba4fa168c70df9858244b44d0941ea3db0f6f4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
