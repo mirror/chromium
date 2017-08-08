@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75bb7fd6_55fd0830",
+        "filename": "ui/gfx/color_transform.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-08T17:53:49Z",
+      "side": 1,
+      "message": "how do you do sign extension on a float?\nNot sure this comment makes any sense.",
+      "range": {
+        "startLine": 445,
+        "startChar": 26,
+        "endLine": 445,
+        "endChar": 35
+      },
+      "revId": "bbbf264563ee99f16794f782f450a45b40118058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
