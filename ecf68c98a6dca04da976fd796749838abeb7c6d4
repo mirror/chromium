@@ -46,6 +46,30 @@
       "revId": "ecf68c98a6dca04da976fd796749838abeb7c6d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55bd247c_8567179f",
+        "filename": "media/base/video_frame.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-08T18:35:40Z",
+      "side": 1,
+      "message": "Where do we make this assumption?\nAnd yes, in general, it\u0027s not true.\nLong time ago we tried to add a pixel format (format used to sample out in GL) on top of the video frame format.\nIt was removed later though.",
+      "parentUuid": "4228b2b8_36c100bd",
+      "range": {
+        "startLine": 649,
+        "startChar": 13,
+        "endLine": 649,
+        "endChar": 22
+      },
+      "revId": "ecf68c98a6dca04da976fd796749838abeb7c6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
