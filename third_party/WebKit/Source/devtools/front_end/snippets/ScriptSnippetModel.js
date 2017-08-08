@@ -242,31 +242,30 @@ Snippets.ScriptSnippetModel = class extends Common.Object {
     function compileSnippet() {
       var expression = uiSourceCode.workingCopy();
       Common.console.show();
-      runtimeModel.compileScript(expression, '', true, executionContext.id, compileCallback.bind(this));
+      runtimeModel.compileScript(expression, '', true, executionContext.id).then(compileCallback.bind(this));
     }
 
     /**
-     * @param {!Protocol.Runtime.ScriptId=} scriptId
-     * @param {?Protocol.Runtime.ExceptionDetails=} exceptionDetails
+     * @param {?SDK.RuntimeModel.CompileScriptResult} result
      * @this {Snippets.ScriptSnippetModel}
      */
-    function compileCallback(scriptId, exceptionDetails) {
-      if (mapping.evaluationIndex(uiSourceCode) !== evaluationIndex)
+    function compileCallback(result) {
+      if (!result || mapping.evaluationIndex(uiSourceCode) !== evaluationIndex)
         return;
 
       var script = /** @type {!SDK.Script} */ (
-          debuggerModel.scriptForId(/** @type {string} */ (scriptId || exceptionDetails.scriptId)));
+          debuggerModel.scriptForId(/** @type {string} */ (result.scriptId || result.exceptionDetails.scriptId)));
       mapping._addScript(script, uiSourceCode);
-      if (!scriptId) {
+      if (!result.scriptId) {
         this._printRunOrCompileScriptResultFailure(
-            runtimeModel, /** @type {!Protocol.Runtime.ExceptionDetails} */ (exceptionDetails), evaluationUrl);
+            runtimeModel, /** @type {!Protocol.Runtime.ExceptionDetails} */ (result.exceptionDetails), evaluationUrl);
         return;
       }
 
       var breakpointLocations = this._removeBreakpoints(uiSourceCode);
       this._restoreBreakpoints(uiSourceCode, breakpointLocations);
 
-      this._runScript(scriptId, executionContext, evaluationUrl);
+      this._runScript(script.scriptId, executionContext, evaluationUrl);
     }
   }
 
@@ -277,26 +276,29 @@ Snippets.ScriptSnippetModel = class extends Common.Object {
    */
   _runScript(scriptId, executionContext, sourceURL) {
     var runtimeModel = executionContext.runtimeModel;
-    runtimeModel.runScript(
-        scriptId, executionContext.id, 'console', /* silent */ false, /* includeCommandLineAPI */ true,
-        /* returnByValue */ false, /* generatePreview */ true, /* awaitPromise */ undefined, runCallback.bind(this));
+    runtimeModel
+        .runScript(
+            scriptId, executionContext.id, 'console', /* silent */ false, /* includeCommandLineAPI */ true,
+            /* returnByValue */ false, /* generatePreview */ true)
+        .then(runCallback.bind(this));
 
     /**
-     * @param {?Protocol.Runtime.RemoteObject} result
-     * @param {?Protocol.Runtime.ExceptionDetails=} exceptionDetails
+     * @param {!SDK.RuntimeModel.EvaluationResult} result
      * @this {Snippets.ScriptSnippetModel}
      */
-    function runCallback(result, exceptionDetails) {
-      if (!exceptionDetails)
-        this._printRunScriptResult(runtimeModel, result, scriptId, sourceURL);
+    function runCallback(result) {
+      if (result.error)
+        return;
+      if (!result.exceptionDetails)
+        this._printRunScriptResult(runtimeModel, result.object || null, scriptId, sourceURL);
       else
-        this._printRunOrCompileScriptResultFailure(runtimeModel, exceptionDetails, sourceURL);
+        this._printRunOrCompileScriptResultFailure(runtimeModel, result.exceptionDetails, sourceURL);
     }
   }
 
   /**
    * @param {!SDK.RuntimeModel} runtimeModel
-   * @param {?Protocol.Runtime.RemoteObject} result
+   * @param {?SDK.RemoteObject} result
    * @param {!Protocol.Runtime.ScriptId} scriptId
    * @param {?string=} sourceURL
    */

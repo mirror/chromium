@@ -116,11 +116,11 @@ InspectorTest.evaluateFunctionInOverlay = function(func, callback)
 {
     var expression = "testRunner.evaluateInWebInspectorOverlay(\"(\" + " + func + " + \")()\")";
     var mainContext = InspectorTest.runtimeModel.executionContexts()[0];
-    mainContext.evaluate(expression, "", false, false, true, false, false, wrapCallback);
+    mainContext.evaluate({expression: expression, returnByValue:true}).then(wrapCallback);
 
-    function wrapCallback(result, exceptionDetails)
+    function wrapCallback(result)
     {
-        callback(result.value)
+        callback(result.object.value)
     }
 }
 
