@@ -40,6 +40,8 @@ class ChromePluginServiceFilter : public content::PluginServiceFilter,
 
   static ChromePluginServiceFilter* GetInstance();
 
+  static bool GetPdfPluginInfo(content::WebPluginInfo* info);
+
   // This method should be called on the UI thread.
   void RegisterResourceContext(Profile* profile, const void* context);
 
