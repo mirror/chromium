@@ -22,6 +22,30 @@
       "revId": "49f6ad02d8b389e18e84f3a179e654ad0e738fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e55d3e_8d9c94b5",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-08T17:57:13Z",
+      "side": 1,
+      "message": "Before user session starts all the keyboard shortcuts should be disabled. And login layer will block gesture event on shelf before user session starts.",
+      "parentUuid": "3a8abb5d_de04d40d",
+      "range": {
+        "startLine": 105,
+        "startChar": 20,
+        "endLine": 105,
+        "endChar": 34
+      },
+      "revId": "49f6ad02d8b389e18e84f3a179e654ad0e738fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
