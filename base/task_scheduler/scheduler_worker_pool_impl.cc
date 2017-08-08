@@ -237,9 +237,10 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
   suggested_reclaim_time_ = params.suggested_reclaim_time();
   backward_compatibility_ = params.backward_compatibility();
 
-  // The initial number of workers is |num_wake_ups_before_start_|, plus
-  // one to try to keep one at least one standby thread at all times.
-  const int num_initial_workers = num_wake_ups_before_start_ + 1;
+  // The initial number of workers is |num_wake_ups_before_start_| + 1 to try to
+  // keep one at least one standby thread at all times (capacity permitting).
+  const int num_initial_workers = std::min(num_wake_ups_before_start_ + 1,
+                                           static_cast<int>(worker_capacity_));
   workers_.reserve(num_initial_workers);
 
   for (int index = 0; index < num_initial_workers; ++index) {
@@ -414,6 +415,11 @@ size_t SchedulerWorkerPoolImpl::NumberOfAliveWorkersForTesting() {
       ++num_alive_workers;
   }
   return num_alive_workers;
+}
+
+size_t SchedulerWorkerPoolImpl::GetWorkerCapacityForTesting() {
+  AutoSchedulerLock auto_lock(lock_);
+  return worker_capacity_;
 }
 
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
@@ -618,6 +624,7 @@ scoped_refptr<SchedulerWorker>
 SchedulerWorkerPoolImpl::CreateAndRegisterSchedulerWorker() {
   lock_.AssertAcquired();
 
+  DCHECK(workers_.size() < worker_capacity_);
   // SchedulerWorker needs |lock_| as a predecessor for its thread lock
   // because in WakeUpOneWorker, |lock_| is first acquired and then
   // the thread lock is acquired when WakeUp is called on the worker.

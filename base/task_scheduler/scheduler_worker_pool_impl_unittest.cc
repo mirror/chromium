@@ -441,6 +441,32 @@ TEST_F(TaskSchedulerWorkerPoolImplPostTaskBeforeStartTest,
   task_tracker_.Flush();
 }
 
+// Verify that posting many tasks before Start will cause the number of workers
+// to grow to |worker_capacity_| during Start.
+TEST_F(TaskSchedulerWorkerPoolImplPostTaskBeforeStartTest, PostManyTasks) {
+  WaitableEvent barrier(WaitableEvent::ResetPolicy::MANUAL,
+                        WaitableEvent::InitialState::NOT_SIGNALED);
+
+  scoped_refptr<TaskRunner> task_runner =
+      worker_pool_->CreateTaskRunnerWithTraits({WithBaseSyncPrimitives()});
+  size_t num_tasks_posted = 2 * kNumWorkersInWorkerPool;
+  for (size_t i = 0; i < 2 * num_tasks_posted; ++i) {
+    task_runner->PostTask(
+        FROM_HERE, BindOnce([](WaitableEvent* barrier) { barrier->Wait(); },
+                            Unretained(&barrier)));
+  }
+
+  EXPECT_EQ(0U, worker_pool_->NumberOfAliveWorkersForTesting());
+
+  StartWorkerPool(TimeDelta::Max(), kNumWorkersInWorkerPool);
+  ASSERT_GT(num_tasks_posted, worker_pool_->GetWorkerCapacityForTesting());
+  EXPECT_EQ(worker_pool_->NumberOfAliveWorkersForTesting(),
+            worker_pool_->GetWorkerCapacityForTesting());
+
+  barrier.Signal();
+  task_tracker_.Flush();
+}
+
 namespace {
 
 constexpr size_t kMagicTlsValue = 42;

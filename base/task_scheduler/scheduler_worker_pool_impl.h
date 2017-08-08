@@ -110,6 +110,9 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // change if workers are woken up or detached during this call.
   size_t NumberOfAliveWorkersForTesting();
 
+  // Returns |worker_capacity_|.
+  size_t GetWorkerCapacityForTesting();
+
  private:
   class SchedulerWorkerDelegateImpl;
 
