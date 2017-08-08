@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "673ba348_eaebf067",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T04:01:45Z",
+      "side": 1,
+      "message": "Removed property.",
+      "parentUuid": "6c41d732_5525f41a",
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37036737_88695072",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db4fc8d_600ae07e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2001,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T04:01:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37036737_88695072",
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e4a910c0_b46d0232",
+        "filename": "ios/chrome/browser/ui/bubble/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T04:01:45Z",
+      "side": 1,
+      "message": "I was under the assumption it did because the BubbleViewControllerPresenter unit tests depend on UIKit (because they need to instantiate a UIViewController).",
+      "parentUuid": "a9e3dbd1_040ae651",
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e81c056_96c863ce",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604329e9_f2cdbeaf",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T04:01:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e81c056_96c863ce",
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "f88a9905_c6243675",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T04:01:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ae371e8_53345fce",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 54
+      },
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33ceb724_c6b231d2",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
         "patchSetId": 5
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "f3645626_79fca79f",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T04:01:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33ceb724_c6b231d2",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 37
+      },
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e4941fc_20d2cf20",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
         "patchSetId": 5
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "9fd3a84d_787590f7",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T04:01:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e4941fc_20d2cf20",
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ed86b65_c122a127",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
         "patchSetId": 5
@@ -144,6 +282,24 @@
       "writtenOn": "2017-08-08T01:12:29Z",
       "side": 1,
       "message": "Will anything break if bubbleSize \u003e maxBubbleSize? This can happen if maxBubbleSize is smaller than min size.",
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79df3642_f52de62d",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T04:01:45Z",
+      "side": 1,
+      "message": "Yes, this would cause the bubble to be partially offscreen. Should I clamp |bubbleSize| to |maxBubbleSize| so it can never be greater?",
+      "parentUuid": "2ed86b65_c122a127",
       "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -173,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "d2fe9c57_402ac2a5",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter_unittests.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T04:01:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeb7eec0_49a425de",
+      "range": {
+        "startLine": 44,
+        "startChar": 34,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae1db711_14c28c09",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter_unittests.mm",
         "patchSetId": 5
@@ -187,6 +367,24 @@
       "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac25df2b_60942768",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter_unittests.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T04:01:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae1db711_14c28c09",
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
