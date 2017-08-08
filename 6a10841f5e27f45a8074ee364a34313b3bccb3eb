@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c341de04_e6a75ead",
+        "filename": "net/nqe/network_quality_estimator_params.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-08T17:55:05Z",
+      "side": 1,
+      "message": "Nit maybe: If all the checks are for \u003e0, return 0 as default.",
+      "revId": "6a10841f5e27f45a8074ee364a34313b3bccb3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
