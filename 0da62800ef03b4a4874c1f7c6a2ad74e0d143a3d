@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f951fb88_ad9fe58d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "What do you mean by \"other tree read operations\"?",
+      "parentUuid": "6206c165_63c1dc93",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a06c5c6_365019c3",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fcbf8ab_b4284c06",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a06c5c6_365019c3",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9c7af997_1ab80c00",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3611c7e2_332f47ef",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28e987b8_16f214f5",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560d0423_a4b130cc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28e987b8_16f214f5",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2283e149_4b13d5f3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f94a030_09777f8e",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "197d6a27_0958270c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-rowcol-002.html",
         "patchSetId": 8
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-07T11:41:51Z",
       "side": 1,
       "message": "Hmm, but to test clipping, I suppose you need to write a different type of test, one that compares screenshots?",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c2f999_dde9eded",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-rowcol-002.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "I added another test just for overflowing that compares screenshots :)",
+      "parentUuid": "197d6a27_0958270c",
       "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1ef60c4a_e9985f0f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "281be6e1_2aed60cf",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "205ca473_2906a7e2",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 8
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "baf14a7f_4f77d7cf",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "205ca473_2906a7e2",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b767d294_75c317ef",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 8
@@ -149,6 +293,24 @@
       "writtenOn": "2017-08-07T11:41:51Z",
       "side": 1,
       "message": "Looks like there\u0027s some duplicated code here, because we loop through the columns twice. Would it make sense to loop through it only once, and lazily call col_collapsed_width.resize() when encountering the first collapsed column? Then again, do we really need that vector at all? I mean, we already have the column widths calculated somewhere, right?",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35488c2_bb1c55c3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "I\u0027m calculating column widths here and I don\u0027t know where they\u0027re being calculated anywhere else. Definitely let me know where they\u0027re being calculated elsewhere! \n\nHere there are three loops. The first loop determines whether is_any_col_collapsed_, which decides whether or not the col_collapsed_width_ vector needs to be initialized. If not, we can return here. Then the second loop populates the vector of how much width is collapsed in each column. The third loop updates the column positions based on the results on the second loop. (The repeated loops here are similar to adjusting row height in LayoutTableSection.)\n\nI\u0027m not sure how I\u0027d do less loops because I can\u0027t populate the col_collapsed_width_ vector based on column positions while adjusting column positions; that would result in incorrect values. Does this make sense? Thanks for the comment!",
+      "parentUuid": "b767d294_75c317ef",
       "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "1d074216_7d91064f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "I chose this because I want to update the cell widths after the section has finished laying out the rows. I didn\u0027t want to disturb the laying out until the end, because visibility:collapse still takes in the original cell widths into account when laying everything else out. If I directly set the correct collapsed widths on cells right away, it should have the effect of display:none instead of visiblity:collapse.",
+      "parentUuid": "76d3569a_0e248c42",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21c1ad15_fc404868",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
         "patchSetId": 8
@@ -186,6 +366,24 @@
       "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f697fb6_af9572c7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21c1ad15_fc404868",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "a13d06bf_fbffbc9b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31800d80_cff12978",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1303409d_cfe76eb0",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
         "patchSetId": 8
@@ -220,6 +436,24 @@
       "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0d41c8_c93379e2",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1303409d_cfe76eb0",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "d07d4e4f_5604f0c6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96c13c9e_a258cd5f",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b585d19a_6a3b8b20",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
         "patchSetId": 8
@@ -251,6 +503,24 @@
       "writtenOn": "2017-08-07T11:41:51Z",
       "side": 1,
       "message": "Don\u0027t you have to check both the innermost and the outermost (i.e. both the col and the colgroup, if both exist)?\n\nAnd what about colspanned cells?",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6282b9a4_a2460c0c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Thanks!! So currently, this doesn\u0027t deal with colspanned cells because they aren\u0027t always set to zero-width. Colspanned cells are therefore dealt with in LayoutTableSection::UpdateLogicalWidthForCollapsedCells(). I added a comment in the header file. Does that make sense?",
+      "parentUuid": "b585d19a_6a3b8b20",
       "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "ec9c0a83_c8361837",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "184b2d9b_e56d22e5",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bcf42b7_eb32d4fd",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
         "patchSetId": 8
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "bd00b48c_41b8f17a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bcf42b7_eb32d4fd",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94be36da_6f6faae3",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
         "patchSetId": 8
@@ -302,6 +608,24 @@
       "writtenOn": "2017-08-07T11:41:51Z",
       "side": 1,
       "message": "But wouldn\u0027t it be possible to use this code path in all cases, also when colspan \u003d\u003d 1?",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e79bb60_6791a69c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "When colspan \u003d\u003d 1, I think the first if-statement that checks whether the cell is collapsed is sufficient. When any cell is collapsed, we set its width to 0. When a cell isn\u0027t collapsed, we only need to deal with it if it\u0027s spanning a few columns because one or more of the columns may be collapsed. Do I have a hole in my logic? haha",
+      "parentUuid": "94be36da_6f6faae3",
       "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "6f28cc10_7271ef1d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b41b0d5_ddb13693",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c86f1df9_a4ef7e67",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
         "patchSetId": 8
@@ -339,6 +681,24 @@
       "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209cc5aa_a07d525c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1295,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c86f1df9_a4ef7e67",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -374,6 +734,24 @@
       "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a742ddc_339f5849",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-08T22:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d26f47ec_ad33d390",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
