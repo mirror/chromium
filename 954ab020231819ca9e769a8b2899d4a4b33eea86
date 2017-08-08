@@ -22,6 +22,30 @@
       "revId": "954ab020231819ca9e769a8b2899d4a4b33eea86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd09ba6_eba0ef87",
+        "filename": "ios/chrome/browser/web/progress_indicator_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-08T16:07:17Z",
+      "side": 1,
+      "message": "No, thank you for catching it!",
+      "parentUuid": "6856aa0e_8f4b6be1",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "954ab020231819ca9e769a8b2899d4a4b33eea86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
