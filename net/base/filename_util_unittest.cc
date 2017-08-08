@@ -518,7 +518,7 @@ TEST(FilenameUtilTest, GenerateFileName) {
      "",
      "",
      L"",
-     L"-test.html"},
+     L"_test.html"},
     {__LINE__,
      "http://www.google.com/",
      "attachment; filename=\"..\\test.html\"",
@@ -534,7 +534,7 @@ TEST(FilenameUtilTest, GenerateFileName) {
      "",
      "",
      L"",
-     L"-test.html"},
+     L"_test.html"},
     {// Filename disappears after leading and trailing periods are removed.
      __LINE__,
      "http://www.google.com/",
@@ -802,26 +802,26 @@ TEST(FilenameUtilTest, GenerateFileName) {
     {// Disposition has relative paths, remove directory separators
      __LINE__, "http://www.evil.com/my_download.txt",
      "filename=../../../../././../a_file_name.txt", "", "", "text/plain",
-     L"download", L"-..-..-..-.-.-..-a_file_name.txt"},
+     L"download", L"_.._.._.._._._.._a_file_name.txt"},
     {// Disposition has parent directories, remove directory separators
      __LINE__, "http://www.evil.com/my_download.txt",
      "filename=dir1/dir2/a_file_name.txt", "", "", "text/plain", L"download",
-     L"dir1-dir2-a_file_name.txt"},
+     L"dir1_dir2_a_file_name.txt"},
     {// Disposition has relative paths, remove directory separators
      __LINE__, "http://www.evil.com/my_download.txt",
      "filename=..\\..\\..\\..\\.\\.\\..\\a_file_name.txt", "", "", "text/plain",
-     L"download", L"-..-..-..-.-.-..-a_file_name.txt"},
+     L"download", L"_.._.._.._._._.._a_file_name.txt"},
     {// Disposition has parent directories, remove directory separators
      __LINE__, "http://www.evil.com/my_download.txt",
      "filename=dir1\\dir2\\a_file_name.txt", "", "", "text/plain", L"download",
-     L"dir1-dir2-a_file_name.txt"},
+     L"dir1_dir2_a_file_name.txt"},
     {// No useful information in disposition or URL, use default
      __LINE__, "http://www.truncated.com/path/", "", "", "", "text/plain",
      L"download", L"download" TXT_EXT},
     {// Filename looks like HTML?
      __LINE__, "http://www.evil.com/get/malware/here",
      "filename=\"<blink>Hello kitty</blink>\"", "", "", "text/plain",
-     L"default", L"-blink-Hello kitty--blink-"},
+     L"default", L"_blink_Hello kitty__blink_"},
     {// A normal avi should get .avi and not .avi.avi
      __LINE__, "https://blah.google.com/misc/2.avi", "", "", "",
      "video/x-msvideo", L"download", L"2.avi"},
@@ -881,9 +881,9 @@ TEST(FilenameUtilTest, GenerateFileName) {
     {__LINE__, "http://www.goodguy.com/program.exe", "filename=program.exe", "",
      "", "application/foo-bar", L"download", L"program.exe"},
     {__LINE__, "http://www.evil.com/../foo.txt", "filename=../foo.txt", "", "",
-     "text/plain", L"download", L"-foo.txt"},
+     "text/plain", L"download", L"_foo.txt"},
     {__LINE__, "http://www.evil.com/..\\foo.txt", "filename=..\\foo.txt", "",
-     "", "text/plain", L"download", L"-foo.txt"},
+     "", "text/plain", L"download", L"_foo.txt"},
     {__LINE__, "http://www.evil.com/.hidden", "filename=.hidden", "", "",
      "text/plain", L"download", L"hidden"},
     {__LINE__, "http://www.evil.com/trailing.", "filename=trailing.", "", "",
@@ -1031,7 +1031,7 @@ TEST(FilenameUtilTest, GenerateFileName) {
      __LINE__, "http://www.example.com/image.aspx?id=blargh", "", "", "",
      "image/jpeg", L"download", L"image" JPEG_EXT},
     {__LINE__, "http://www.example.com/image.aspx?id=blargh", "", "", " .foo",
-     "", L"download", L"-.foo"},
+     "", L"download", L"_.foo"},
 
     // Note that the next 4 tests will not fail on all platforms on regression.
     // They only fail if application/[x-]gzip has a default extension, which
