@@ -282,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "86e9bb8f_b29891b0",
+        "filename": "chrome/test/data/webui/extensions/extension_view_manager_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-08T18:06:51Z",
+      "side": 1,
+      "message": "Any thoughts on this?",
+      "parentUuid": "bc7f8228_e292c494",
+      "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db424990_6b7ed933",
         "filename": "chrome/test/data/webui/extensions/extension_view_manager_test.js",
         "patchSetId": 8
@@ -293,6 +311,24 @@
       "writtenOn": "2017-08-04T22:21:00Z",
       "side": 1,
       "message": "Suggestion: A pattern I\u0027ve seen in tests that exercise the sequence of events, is the follows\n\nvar events \u003d [];\n[\n  \u0027view-enter-start\u0027,\n  \u0027view-enter-finish\u0027,\n  \u0027view-exit-start\u0027,\n  \u0027view-exit-finish\u0027,\n].forEach(type \u003d\u003e {\n  viewOne.addEventListeneR(type, e \u003d\u003e events.push(e.type));\n});\n\n...\n// Instead of asserting on individual booleans, assert for the contents of the events array, using assertDeepEquals(), https://cs.chromium.org/chromium/src/chrome/test/data/webui/test_api.js?l\u003d891.",
+      "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a6aa2d_fa95fa91",
+        "filename": "chrome/test/data/webui/extensions/extension_view_manager_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-08T18:06:51Z",
+      "side": 1,
+      "message": "Any thoughts on this ^?",
+      "parentUuid": "db424990_6b7ed933",
       "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

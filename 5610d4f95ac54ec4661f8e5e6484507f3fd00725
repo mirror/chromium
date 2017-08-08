@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c66802b_29ac73f1",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-08T18:06:51Z",
+      "side": 1,
+      "message": "Nit: Maybe add a comment explaining that this is necessary for the iron-list to resize properly?",
+      "revId": "5610d4f95ac54ec4661f8e5e6484507f3fd00725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c4f7e0_4c8d2019",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-08T18:06:51Z",
+      "side": 1,
+      "message": "Let\u0027s move this one to the top with a blank line after (see https://chromium-review.googlesource.com/c/588268).",
+      "revId": "5610d4f95ac54ec4661f8e5e6484507f3fd00725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5108d616_936e573b",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-08T18:06:51Z",
+      "side": 1,
+      "message": "Mention crbug.com/257235",
+      "revId": "5610d4f95ac54ec4661f8e5e6484507f3fd00725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba031c3f_42957b14",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-08T18:06:51Z",
+      "side": 1,
+      "message": "!Promise",
+      "revId": "5610d4f95ac54ec4661f8e5e6484507f3fd00725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fff1755_85e980ae",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-08T18:06:51Z",
+      "side": 1,
+      "message": "Nit (optional) here and below:\n\npromises.push(this.exit_(previousView, exitAnimation || \u0027fade-out\u0027));",
+      "revId": "5610d4f95ac54ec4661f8e5e6484507f3fd00725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "f6601c29_8bd40071",
+        "filename": "chrome/browser/resources/md_extensions/view_manager.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-08T18:06:51Z",
+      "side": 1,
+      "message": "In theory yes, the compiler would complain if a possibly null result is passed to a function that does not accept null. In this case that would be at line 99, where the result of querySelector() is directly passed in this function.\n\nGuessing that because of the if (previousView) {...} block the compiler knows that this can\u0027t be null here (you can try removing the if and see if it complains).",
+      "parentUuid": "b91872c3_2c0fa8b1",
+      "revId": "44e0e05009a0cd68c029318dc26b6976120e2447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae0a29a5_fb700c3b",
         "filename": "chrome/test/data/webui/extensions/cr_extensions_browsertest.js",
         "patchSetId": 10
