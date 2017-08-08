@@ -22,6 +22,30 @@
       "revId": "a54dd782145c832603b69d209e428cf26659ad4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0ba2d3_3f27aac7",
+        "filename": "third_party/WebKit/Source/core/testing/data/composited_selection_bounds_input.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T21:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9585f144_c018de71",
+      "range": {
+        "startLine": 25,
+        "startChar": 39,
+        "endLine": 25,
+        "endChar": 77
+      },
+      "revId": "a54dd782145c832603b69d209e428cf26659ad4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
