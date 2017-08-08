@@ -165,6 +165,12 @@ cc::CompositorFrame CreateDelegatedFrame(float scale_factor,
 }
 
 TEST_F(RenderWidgetHostViewChildFrameTest, VisibilityTest) {
+  // Calling show and hide also needs to be propagated to child frame by the
+  // |frame_connector_| which itself requires a |frame_proxy_in_parent_renderer|
+  // (set to nullptr for MockCrossProcessFrameConnector). To avoid crashing the
+  // test |frame_connector_| is to set to nullptr.
+  view_->SetCrossProcessFrameConnector(nullptr);
+
   view_->Show();
   ASSERT_TRUE(view_->IsShowing());
 
