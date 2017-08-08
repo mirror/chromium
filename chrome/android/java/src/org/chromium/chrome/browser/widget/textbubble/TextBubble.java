@@ -306,6 +306,7 @@ public class TextBubble implements OnTouchListener {
                 mIgnoreDismissal = true;
                 mPopupWindow.dismiss();
                 mPopupWindow.showAtLocation(mRootView, Gravity.TOP | Gravity.START, mX, mY);
+                mPopupWindow.update(mX, mY, mWidth, mHeight);
             } finally {
                 mIgnoreDismissal = false;
             }
