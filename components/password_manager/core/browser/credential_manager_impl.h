@@ -38,19 +38,10 @@ class CredentialManagerImpl
            const std::vector<GURL>& federations,
            GetCallback callback);
 
-  // TODO(tgarbus): Move IsZeroClickAllowed to private once
-  // IsZeroClickAllowed is removed from ContentCredentialManager.
-  // CredentialManagerPendingRequestTaskDelegate:
-  bool IsZeroClickAllowed() const override;
-
-  // TODO(tgarbus): Move GetSynthesizedFormForOrigin to private once
-  // GetSynthesizedFormForOrigin is removed from ContentCredentialManager.
-  // Returns FormDigest for the current URL.
-  PasswordStore::FormDigest GetSynthesizedFormForOrigin() const;
-
  private:
   // CredentialManagerPendingRequestTaskDelegate:
   GURL GetOrigin() const override;
+  bool IsZeroClickAllowed() const override;
   void SendCredential(const SendCredentialCallback& send_callback,
                       const CredentialInfo& info) override;
   void SendPasswordForm(const SendCredentialCallback& send_callback,
@@ -66,6 +57,8 @@ class CredentialManagerImpl
   void OnProvisionalSaveComplete() override;
 
   GURL GetLastCommittedURL() const;
+
+  PasswordStore::FormDigest GetSynthesizedFormForOrigin() const;
 
   PasswordManagerClient* client_;
 
