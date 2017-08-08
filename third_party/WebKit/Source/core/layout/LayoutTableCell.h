@@ -30,9 +30,11 @@
 #include "core/CoreExport.h"
 #include "core/layout/CollapsedBorderValue.h"
 #include "core/layout/LayoutBlockFlow.h"
+#include "core/layout/LayoutTableCol.h"
 #include "core/layout/LayoutTableRow.h"
 #include "core/layout/LayoutTableSection.h"
 #include "platform/LengthFunctions.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/text/WritingModeUtils.h"
 
 namespace blink {
@@ -177,6 +179,9 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
   }
 
   void SetCellLogicalWidth(int constrained_logical_width, SubtreeLayoutScope&);
+
+  // Returns true if a non-column-spanning cell is in a collapsed column.
+  bool IsCellColumnCollapsed() const;
 
   LayoutUnit BorderLeft() const override;
   LayoutUnit BorderRight() const override;

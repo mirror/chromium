@@ -45,6 +45,7 @@
 #include "core/paint/PaintLayer.h"
 #include "core/paint/TablePaintInvalidator.h"
 #include "core/paint/TablePainter.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {
@@ -66,6 +67,7 @@ LayoutTable::LayoutTable(Element* element)
       needs_section_recalc_(false),
       column_logical_width_changed_(false),
       column_layout_objects_valid_(false),
+      is_any_col_collapsed_(false),
       no_cell_colspan_at_least_(0),
       h_spacing_(0),
       v_spacing_(0),
@@ -709,6 +711,9 @@ void LayoutTable::UpdateLayout() {
     state.SetHeightOffsetForTableHeaders(LayoutUnit());
     state.SetHeightOffsetForTableFooters(LayoutUnit());
 
+    // Change layout according to any collapsed columns.
+    LayoutCollapsedColumns();
+
     // Lay out table footer.
     if (LayoutTableSection* section = Footer()) {
       LayoutSection(*section, layouter, section_logical_left,
@@ -736,6 +741,8 @@ void LayoutTable::UpdateLayout() {
          section = SectionBelow(section)) {
       section->SetLogicalTop(logical_offset);
       section->LayoutRows();
+      if (is_any_col_collapsed_)
+        section->UpdateLogicalWidthForCollapsedCells(col_collapsed_width_);
       logical_offset += section->LogicalHeight();
     }
 
@@ -792,6 +799,55 @@ void LayoutTable::UpdateLayout() {
 
   column_logical_width_changed_ = false;
   ClearNeedsLayout();
+}
+
+void LayoutTable::LayoutCollapsedColumns() {
+  if (!RuntimeEnabledFeatures::VisibilityCollapseEnabled())
+    return;
+
+  unsigned n_eff_cols = NumEffectiveColumns();
+
+  for (size_t i = 0; i < n_eff_cols; ++i) {
+    ColAndColGroup colElement =
+        ColElementAtAbsoluteColumn(EffectiveColumnToAbsoluteColumn(i));
+    LayoutTableCol* col = colElement.col;
+    LayoutTableCol* colgroup = colElement.colgroup;
+
+    if ((col && col->Style()->Visibility() == EVisibility::kCollapse) ||
+        (colgroup &&
+         colgroup->Style()->Visibility() == EVisibility::kCollapse)) {
+      is_any_col_collapsed_ = true;
+      col_collapsed_width_.resize(n_eff_cols);
+      break;
+    }
+  }
+
+  if (!is_any_col_collapsed_)
+    return;
+
+  // Update vector of collapsed widths.
+  for (size_t i = 0; i < n_eff_cols; ++i) {
+    LayoutTableCol* col =
+        ColElementAtAbsoluteColumn(EffectiveColumnToAbsoluteColumn(i))
+            .InnermostColOrColGroup();
+
+    if (col && col->Style()->Visibility() == EVisibility::kCollapse) {
+      col_collapsed_width_[i] =
+          EffectiveColumnPositions()[i + 1] - EffectiveColumnPositions()[i];
+    } else {
+      col_collapsed_width_[i] = 0;
+    }
+  }
+
+  // Set column positions according to collapsed widths.
+  int total_collapsed_width = 0;
+  for (size_t i = 0; i < n_eff_cols; ++i) {
+    total_collapsed_width += col_collapsed_width_[i];
+    SetEffectiveColumnPosition(
+        i + 1, EffectiveColumnPositions()[i + 1] - total_collapsed_width);
+  }
+
+  SetLogicalWidth(LogicalWidth() - total_collapsed_width);
 }
 
 void LayoutTable::InvalidateCollapsedBorders() {
