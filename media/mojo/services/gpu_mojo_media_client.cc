@@ -11,8 +11,11 @@
 #include "media/base/audio_decoder.h"
 #include "media/base/cdm_factory.h"
 #include "media/base/video_decoder.h"
+#include "media/cdm/cdm_adapter_factory.h"
+#include "media/filters/decrypting_video_decoder.h"
 #include "media/gpu/features.h"
 #include "media/gpu/ipc/service/media_gpu_channel_manager.h"
+#include "media/mojo/services/mojo_cdm_allocator.h"
 
 #if defined(OS_ANDROID)
 #include "base/memory/ptr_util.h"
@@ -72,6 +75,14 @@ gpu::GpuCommandBufferStub* GetGpuCommandBufferStub(
 #endif  // BUILDFLAG(ENABLE_MEDIA_CODEC_VIDEO_DECODER)
 #endif  // defined(OS_ANDROID)
 
+std::unique_ptr<media::CdmAllocator> CreateCdmAllocator() {
+  return base::MakeUnique<media::MojoCdmAllocator>();
+}
+
+void OnWaitingForKey() {
+  LOG(ERROR) << __func__;
+}
+
 }  // namespace
 
 GpuMojoMediaClient::GpuMojoMediaClient(
@@ -107,7 +118,8 @@ std::unique_ptr<VideoDecoder> GpuMojoMediaClient::CreateVideoDecoder(
           DeviceInfo::GetInstance()->IsSetOutputSurfaceSupported()),
       base::MakeUnique<VideoFrameFactoryImpl>());
 #else
-  return nullptr;
+  return base::MakeUnique<DecryptingVideoDecoder>(task_runner, media_log,
+                                                  base::Bind(&OnWaitingForKey));
 #endif  // BUILDFLAG(ENABLE_MEDIA_CODEC_VIDEO_DECODER)
 }
 
@@ -118,7 +130,7 @@ std::unique_ptr<CdmFactory> GpuMojoMediaClient::CreateCdmFactory(
       base::Bind(&CreateProvisionFetcher, interface_provider),
       base::Bind(&CreateMediaDrmStorage, interface_provider));
 #else
-  return nullptr;
+  return base::MakeUnique<CdmAdapterFactory>(base::Bind(&CreateCdmAllocator));
 #endif  // defined(OS_ANDROID)
 }
 

@@ -98,20 +98,21 @@ void DecoderSelector<StreamType>::SelectDecoder(
   decoders_ = create_decoders_cb_.Run();
   config_ = StreamTraits::GetDecoderConfig(input_stream_);
 
-  // When there is a CDM attached, always try the decrypting decoder or
-  // demuxer-stream first.
-  if (config_.is_encrypted()) {
-    DCHECK(cdm_context_);
-// TODO(xhwang): This if-defined doesn't make a lot of sense. It should be
-// replaced by some better checks.
-#if !defined(OS_ANDROID)
-    InitializeDecryptingDecoder();
-#else
-    InitializeDecryptingDemuxerStream();
-#endif
-    return;
-  }
-
+  /*
+    // When there is a CDM attached, always try the decrypting decoder or
+    // demuxer-stream first.
+    if (config_.is_encrypted()) {
+      DCHECK(cdm_context_);
+  // TODO(xhwang): This if-defined doesn't make a lot of sense. It should be
+  // replaced by some better checks.
+  #if !defined(OS_ANDROID)
+      InitializeDecryptingDecoder();
+  #else
+      InitializeDecryptingDemuxerStream();
+  #endif
+      return;
+    }
+  */
   InitializeDecoder();
 }
 

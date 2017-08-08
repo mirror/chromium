@@ -47,7 +47,7 @@ namespace {
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
-static_assert(BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE), "");
+// static_assert(BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE), "");
 static_assert(BUILDFLAG(ENABLE_MOJO_CDM), "");
 
 std::unique_ptr<media::CdmAllocator> CreateCdmAllocator() {
