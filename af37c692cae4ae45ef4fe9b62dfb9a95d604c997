@@ -16,6 +16,24 @@
       "revId": "af37c692cae4ae45ef4fe9b62dfb9a95d604c997",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faac2fd1_ca3f2556",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-08T22:06:02Z",
+      "side": 1,
+      "message": "Apologies for the delay in response.\n\nApparently when we focus a plugin, e.g., embedded flash and then another frame steals focus using \"window.focus()\" the focused pepper plugin does not change. This is specifically important when the plugin is fullscreen because then even a mouse click does not refocus the frame embedding the full screen plugin.",
+      "parentUuid": "d5941aad_ed470a1a",
+      "revId": "af37c692cae4ae45ef4fe9b62dfb9a95d604c997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
