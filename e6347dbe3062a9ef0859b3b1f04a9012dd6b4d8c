@@ -163,6 +163,24 @@
       "revId": "e6347dbe3062a9ef0859b3b1f04a9012dd6b4d8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152b7109_9e21203c",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T01:14:19Z",
+      "side": 1,
+      "message": "Unfortunately, I do not think you can depend on //components/arc from //ash, so you will have to typemap it using EnumTraits \u003d(\n\nAt least that will move the conversion code out-of-line so it doesn\u0027t look so painful to write in ARC++ code... sorry for the trouble \u003d(",
+      "parentUuid": "207846c5_3807d805",
+      "revId": "e6347dbe3062a9ef0859b3b1f04a9012dd6b4d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
