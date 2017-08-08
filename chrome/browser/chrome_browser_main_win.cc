@@ -174,18 +174,72 @@ void DetectFaultTolerantHeap() {
   UMA_HISTOGRAM_ENUMERATION("FaultTolerantHeap", detected, FTH_FLAGS_COUNT);
 }
 
-// Helper function for getting the time date stamp associated with a module in
-// this process.
-uint32_t GetModuleTimeDateStamp(const void* module_load_address) {
-  base::win::PEImage pe_image(module_load_address);
-  return pe_image.GetNTHeaders()->FileHeader.TimeDateStamp;
+// Wrapper function around GetModuleHandleEx() that uses a load address. It
+// verifies that the module handle refers to the expected one by looking at its
+// path.
+HMODULE GetModuleHandle(const void* module_load_address,
+                        const base::FilePath& expected_path) {
+  HMODULE handle = nullptr;
+  if (!::GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,
+                           reinterpret_cast<LPCWSTR>(module_load_address),
+                           &handle)) {
+    return nullptr;
+  }
+
+  wchar_t module_file_name[MAX_PATH];
+  DWORD length = ::GetModuleFileName(handle, module_file_name, MAX_PATH);
+  if (length != expected_path.value().length() ||
+      expected_path.value() != module_file_name) {
+    ::FreeLibrary(handle);
+    return nullptr;
+  }
+
+  return handle;
 }
 
-// Used as the callback for ModuleWatcher events in this process. Dispatches
-// them to the ModuleDatabase.
-void OnModuleEvent(uint32_t process_id,
-                   uint64_t creation_time,
-                   const ModuleWatcher::ModuleEvent& event) {
+// Helper function for getting the time date stamp associated with a module in
+// this process. It safely handles the possibility that the module unloads
+// before or during this function call.
+bool GetModuleTimeDateStamp(const void* module_load_address,
+                            uint32_t module_size,
+                            const base::FilePath& module_path,
+                            uint32_t* result) {
+  // It is faster to just read the mapped module in memory. Increase the
+  // reference count so that the module doesn't unload at the same time.
+  base::ScopedNativeLibrary handle(
+      GetModuleHandle(module_load_address, module_path));
+  if (handle.is_valid()) {
+    base::win::PEImage pe_image(module_load_address);
+    *result = pe_image.GetNTHeaders()->FileHeader.TimeDateStamp;
+    return true;
+  }
+
+  // If the handle is invalid, we missed our window of opportunity and the
+  // module was already unloaded. Our last resort is to go to disk to get the
+  // TimeDateStamp.
+  uint32_t size_of_image = 0;
+  uint32_t time_date_stamp = 0;
+  bool got_time_date_stamp = GetModuleImageSizeAndTimeDateStamp(
+      module_path, &size_of_image, &time_date_stamp);
+
+  // Simple sanity check.
+  got_time_date_stamp = got_time_date_stamp && size_of_image == module_size;
+  UMA_HISTOGRAM_BOOLEAN("ThirdPartyModules.TimeDateStampObtained",
+                        got_time_date_stamp);
+
+  if (got_time_date_stamp) {
+    *result = time_date_stamp;
+    return true;
+  }
+
+  return false;
+}
+
+// Dispatches the ModuleWatcher events to the ModuleDatabase.
+void HandleModuleEventOnBlockingSequence(
+    uint32_t process_id,
+    uint64_t creation_time,
+    const ModuleWatcher::ModuleEvent& event) {
   auto* module_database = ModuleDatabase::GetInstance();
   uintptr_t load_address =
       reinterpret_cast<uintptr_t>(event.module_load_address);
@@ -193,9 +247,14 @@ void OnModuleEvent(uint32_t process_id,
   switch (event.event_type) {
     case mojom::ModuleEventType::MODULE_ALREADY_LOADED:
     case mojom::ModuleEventType::MODULE_LOADED: {
-      module_database->OnModuleLoad(
-          process_id, creation_time, event.module_path, event.module_size,
-          GetModuleTimeDateStamp(event.module_load_address), load_address);
+      // Drop the load event if it's not possible to get the time date stamp.
+      uint32_t time_date_stamp = 0;
+      if (GetModuleTimeDateStamp(event.module_load_address, event.module_size,
+                                 event.module_path, &time_date_stamp)) {
+        module_database->OnModuleLoad(process_id, creation_time,
+                                      event.module_path, event.module_size,
+                                      time_date_stamp, load_address);
+      }
       return;
     }
 
@@ -204,6 +263,18 @@ void OnModuleEvent(uint32_t process_id,
       return;
     }
   }
+}
+
+// Used as the callback for ModuleWatcher events in this process. Funnels the
+// events to a sequence where blocking is allowed because
+// GetModuleTimeDateStamp() may need to do file IO.
+void OnModuleEvent(scoped_refptr<base::SequencedTaskRunner> task_runner,
+                   uint32_t process_id,
+                   uint64_t creation_time,
+                   const ModuleWatcher::ModuleEvent& event) {
+  task_runner->PostTask(
+      FROM_HERE, base::Bind(&HandleModuleEventOnBlockingSequence, process_id,
+                            creation_time, event));
 }
 
 // Helper function for initializing the module database subsystem. Populates
@@ -225,8 +296,11 @@ void SetupModuleDatabase(std::unique_ptr<ModuleWatcher>* module_watcher) {
   // process a manual notification is sent before wiring up the ModuleWatcher.
   module_database->OnProcessStarted(process_id, creation_time,
                                     content::PROCESS_TYPE_BROWSER);
-  *module_watcher = ModuleWatcher::Create(
-      base::BindRepeating(&OnModuleEvent, process_id, creation_time));
+
+  *module_watcher = ModuleWatcher::Create(base::BindRepeating(
+      &OnModuleEvent,
+      base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()}), process_id,
+      creation_time));
 
   // Enumerate shell extensions and input method editors. It is safe to use
   // base::Unretained() here because the ModuleDatabase is never freed.
