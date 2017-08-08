@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cb24dfe_7fa614b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-08T20:27:17Z",
+      "side": 1,
+      "message": "Do we have to remove these at some point?",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 32
+      },
+      "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b0bcea_495771c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-08T20:27:17Z",
+      "side": 1,
+      "message": "If the entry isn\u0027t active, should we just quit and not start the service?",
+      "range": {
+        "startLine": 81,
+        "startChar": 12,
+        "endLine": 81,
+        "endChar": 57
+      },
+      "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e83786_bf209164",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-08T20:27:17Z",
+      "side": 1,
+      "message": "Should this be something like, \"findInterestingNotification()\"?",
+      "range": {
+        "startLine": 119,
+        "startChar": 27,
+        "endLine": 119,
+        "endChar": 48
+      },
+      "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bef141d_19ab9db4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-08T20:27:17Z",
+      "side": 1,
+      "message": "maybe just startForeground()?",
+      "range": {
+        "startLine": 179,
+        "startChar": 26,
+        "endLine": 179,
+        "endChar": 56
+      },
+      "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ddc6e3_831407b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-08T20:27:17Z",
+      "side": 1,
+      "message": "just call stopForeground()?",
+      "range": {
+        "startLine": 196,
+        "startChar": 22,
+        "endLine": 196,
+        "endChar": 51
+      },
+      "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9fbb63d_2fbe17f9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManagerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-08T20:27:17Z",
+      "side": 1,
+      "message": "Can we add something like testStopBeforeStart() where we just call stop and make sure the service does the right thing?",
+      "range": {
+        "startLine": 201,
+        "startChar": 4,
+        "endLine": 201,
+        "endChar": 44
+      },
+      "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
