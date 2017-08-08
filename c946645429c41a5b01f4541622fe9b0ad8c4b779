@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f37ae29d_682255f1",
+        "filename": "base/metrics/persistent_histogram_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T15:07:58Z",
+      "side": 1,
+      "message": "Don\u0027t need to cast for the conditional, I\u0027d say cast inline for the return value.",
+      "revId": "c946645429c41a5b01f4541622fe9b0ad8c4b779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d49fa80c_81eae7ea",
         "filename": "base/metrics/persistent_histogram_allocator.cc",
         "patchSetId": 1
@@ -37,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "563db38f_a34af2b7",
+        "filename": "base/metrics/persistent_histogram_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T15:07:58Z",
+      "side": 1,
+      "message": "Having to support recursion in a GetOrCreate*() method is weird... why is it re-entered? And why doesn\u0027t the re-entrant call care to get a real value..?",
+      "parentUuid": "42375b0e_926fdaf1",
+      "revId": "c946645429c41a5b01f4541622fe9b0ad8c4b779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1fe6209_c6841e4e",
         "filename": "base/metrics/persistent_histogram_allocator.cc",
         "patchSetId": 1
@@ -66,6 +101,24 @@
       "side": 1,
       "message": "The code could yield the CPU while waiting but it\u0027s not important.  There is a tiny chance we lose one creation result from a report of thousands.",
       "parentUuid": "a1fe6209_c6841e4e",
+      "revId": "c946645429c41a5b01f4541622fe9b0ad8c4b779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eed28a4_c22e8891",
+        "filename": "base/metrics/persistent_histogram_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T15:07:58Z",
+      "side": 1,
+      "message": "Feels like this loss could be biased though (e.g. a specific error case on startup never being caught while all other reported enums make it through, skewing a given histogram). This was also a problem before though but just mentioning FWIW..",
+      "parentUuid": "2f7151a0_f5577192",
       "revId": "c946645429c41a5b01f4541622fe9b0ad8c4b779",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
