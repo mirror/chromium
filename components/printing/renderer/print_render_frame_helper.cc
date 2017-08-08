@@ -1066,6 +1066,8 @@ bool PrintRenderFrameHelper::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(PrintMsg_InitiatePrintPreview, OnInitiatePrintPreview)
     IPC_MESSAGE_HANDLER(PrintMsg_PrintPreview, OnPrintPreview)
     IPC_MESSAGE_HANDLER(PrintMsg_PrintingDone, OnPrintingDone)
+    IPC_MESSAGE_HANDLER(PrintMsg_ClosePrintPreviewDialog,
+                        OnClosePrintPreviewDialog)
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
     IPC_MESSAGE_HANDLER(PrintMsg_SetPrintingEnabled, OnSetPrintingEnabled)
     IPC_MESSAGE_UNHANDLED(handled = false)
@@ -1484,6 +1486,10 @@ void PrintRenderFrameHelper::OnInitiatePrintPreview(bool has_selection) {
                           ? PRINT_PREVIEW_USER_INITIATED_SELECTION
                           : PRINT_PREVIEW_USER_INITIATED_ENTIRE_FRAME);
 }
+
+void PrintRenderFrameHelper::OnClosePrintPreviewDialog() {
+  print_preview_context_.source_frame()->DispatchAfterPrintEvent();
+}
 #endif
 
 bool PrintRenderFrameHelper::IsPrintingEnabled() const {
@@ -1539,15 +1545,19 @@ void PrintRenderFrameHelper::Print(blink::WebLocalFrame* frame,
 
   FrameReference frame_ref(frame);
 
+  frame->DispatchBeforePrintEvent();
   int expected_page_count = 0;
-  if (!CalculateNumberOfPages(frame, node, &expected_page_count)) {
+  if (!frame->View() ||
+      !CalculateNumberOfPages(frame, node, &expected_page_count)) {
     DidFinishPrinting(FAIL_PRINT_INIT);
+    frame->DispatchAfterPrintEvent();
     return;  // Failed to init print page settings.
   }
 
   // Some full screen plugins can say they don't want to print.
   if (!expected_page_count) {
     DidFinishPrinting(FAIL_PRINT);
+    frame->DispatchAfterPrintEvent();
     return;
   }
 
@@ -1570,6 +1580,7 @@ void PrintRenderFrameHelper::Print(blink::WebLocalFrame* frame,
     SetPrintPagesParams(print_settings);
     if (!print_settings.params.dpi || !print_settings.params.document_cookie) {
       DidFinishPrinting(OK);  // Release resources and fail silently on failure.
+      frame->DispatchAfterPrintEvent();
       return;
     }
   }
@@ -1578,6 +1589,7 @@ void PrintRenderFrameHelper::Print(blink::WebLocalFrame* frame,
   if (!RenderPagesForPrint(frame_ref.GetFrame(), node)) {
     LOG(ERROR) << "RenderPagesForPrint failed";
     DidFinishPrinting(FAIL_PRINT);
+    frame->DispatchAfterPrintEvent();
   }
   scripting_throttler_.Reset();
 }
@@ -1627,6 +1639,7 @@ void PrintRenderFrameHelper::DidFinishPrinting(PrintingResult result) {
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
 void PrintRenderFrameHelper::OnFramePreparedForPrintPages() {
   PrintPages();
+  print_preview_context_.source_frame()->DispatchAfterPrintEvent();
   FinishFramePrinting();
 }
 
@@ -2025,6 +2038,9 @@ void PrintRenderFrameHelper::ShowScriptedPrintPreview() {
 }
 
 void PrintRenderFrameHelper::RequestPrintPreview(PrintPreviewRequestType type) {
+  print_preview_context_.source_frame()->DispatchBeforePrintEvent();
+  if (!print_preview_context_.source_frame()->View())
+    return;
   const bool is_modifiable = print_preview_context_.IsModifiable();
   const bool has_selection = print_preview_context_.HasSelection();
   PrintHostMsg_RequestPrintPreview_Params params;
