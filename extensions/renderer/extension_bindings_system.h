@@ -7,6 +7,8 @@
 
 #include <string>
 
+#include "extensions/common/extension_id.h"
+
 namespace base {
 class ListValue;
 }
@@ -61,6 +63,9 @@ class ExtensionBindingsSystem {
   // Returns the associated RequestSender, if any.
   // TODO(devlin): Factor this out.
   virtual RequestSender* GetRequestSender() = 0;
+
+  virtual void OnExtensionRemoved(const ExtensionId& id) {}
+  virtual void OnExtensionPermissionsUpdated(const ExtensionId& id) {}
 
   // Returns true if any portion of the runtime API is available to the given
   // |context|. This is different than just checking features because runtime's

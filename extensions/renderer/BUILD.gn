@@ -106,6 +106,8 @@ source_set("renderer") {
     "extensions_render_frame_observer.h",
     "extensions_renderer_client.cc",
     "extensions_renderer_client.h",
+    "feature_cache.cc",
+    "feature_cache.h",
     "file_system_natives.cc",
     "file_system_natives.h",
     "gc_callback.cc",
