@@ -70,6 +70,30 @@
       "revId": "313ebc1b8a0e9c979f7234fd6d01da17096b56b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5a3b26_552a5978",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/FakeMostVisitedSites.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-08T10:00:58Z",
+      "side": 1,
+      "message": "Awesome thanks! Added a comment.",
+      "parentUuid": "d9b49578_bb79d41d",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 112,
+        "endChar": 39
+      },
+      "revId": "313ebc1b8a0e9c979f7234fd6d01da17096b56b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
