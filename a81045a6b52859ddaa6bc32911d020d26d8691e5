@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7379cc27_b7a0c669",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T19:14:03Z",
+      "side": 1,
+      "message": "I don\u0027t think this comment is needed now that the property has a descriptive name.",
+      "revId": "a81045a6b52859ddaa6bc32911d020d26d8691e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e41a2fbe_6d07d5f2",
         "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
         "patchSetId": 16
@@ -25,6 +42,114 @@
     },
     {
       "key": {
+        "uuid": "e7be2c48_50e1e5fa",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 1996,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T19:14:03Z",
+      "side": 1,
+      "message": "`nil` for ObjC.",
+      "range": {
+        "startLine": 1996,
+        "startChar": 21,
+        "endLine": 1996,
+        "endChar": 28
+      },
+      "revId": "a81045a6b52859ddaa6bc32911d020d26d8691e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8ace94_f946d7ef",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 1997,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T19:14:03Z",
+      "side": 1,
+      "message": "Can FullscreenWithinTabHelper::FromWebContents ever return no? If yes, this roughly makes sense. Otherwise, something like this might be clearer:\n\n  if (WebContents* web_contents \u003d\n          browser_-\u003etab_strip_model()-\u003eGetActiveWebContents())\n    return FullscreenWithinTabHelper::FromWebContents(web_contents)\n        -\u003eseparate_fullscreen_window();\n  return nil;\n\nI\u0027m mainly thrown off by the last line, because it\u0027s not clear whether `helper` can be nil when web_contents is non-nil.",
+      "revId": "a81045a6b52859ddaa6bc32911d020d26d8691e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f25c3d8_139c00bf",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T19:14:03Z",
+      "side": 1,
+      "message": "When will this be null?",
+      "revId": "a81045a6b52859ddaa6bc32911d020d26d8691e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6226b908_fd28233e",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 2048,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T19:14:03Z",
+      "side": 1,
+      "message": "These lines should be inside the `IsContentFullscreenEnabled()` check.",
+      "revId": "a81045a6b52859ddaa6bc32911d020d26d8691e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d0792e_7966c53d",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 2058,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T19:14:03Z",
+      "side": 1,
+      "message": "Declare `activeSeparateFullscreenWindow` here, not above.",
+      "revId": "a81045a6b52859ddaa6bc32911d020d26d8691e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e50c071c_ae96a7cc",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T19:14:03Z",
+      "side": 1,
+      "message": "I don\u0027t follow — when will this happen?",
+      "revId": "a81045a6b52859ddaa6bc32911d020d26d8691e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19dcd0d9_021aa44c",
         "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.mm",
         "patchSetId": 16
@@ -42,6 +167,23 @@
         "endLine": 160,
         "endChar": 73
       },
+      "revId": "a81045a6b52859ddaa6bc32911d020d26d8691e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61caef64_1b98d036",
+        "filename": "chrome/browser/ui/cocoa/separate_fullscreen_window.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T19:14:03Z",
+      "side": 1,
+      "message": "Use camelCase for ObjC (to avoid things like \"setTouch_bar_delegate:\"): https://google.github.io/styleguide/objcguide.xml#Naming",
       "revId": "a81045a6b52859ddaa6bc32911d020d26d8691e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

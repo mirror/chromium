@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c734295_ba392fc9",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-08T19:14:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3581891d_2ab5e323",
+      "revId": "5262140e76c9a7184763c9f291514fe8accabc0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae41fee4_10431f85",
         "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.mm",
         "patchSetId": 14
