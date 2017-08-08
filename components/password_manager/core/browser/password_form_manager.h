@@ -295,6 +295,10 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // origin.
   virtual metrics_util::CredentialSourceType GetCredentialSource();
 
+  // Set if the user has edited |username_value| in prompt. The value of this
+  // variable is the |field->name| of the corresponding |username_value|.
+  base::Optional<base::string16> username_edited_;
+
  protected:
   // FormFetcher::Consumer:
   void ProcessMatches(
