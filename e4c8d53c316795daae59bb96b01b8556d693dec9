@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb33460d_b23a0999",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1463,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-08T22:41:17Z",
+      "side": 1,
+      "message": "Could you put a check here as well that output size is as big as the largest paint op?\n\nAlso, I think the checks could just be dchecks.  I think in general most calling code is going to not pass in buffer for deserializing if it\u0027s too small anyway, so it\u0027s not a thing that will likely ever happen in practice.  Up to you either way, I don\u0027t feel too strongly.",
+      "revId": "e4c8d53c316795daae59bb96b01b8556d693dec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
