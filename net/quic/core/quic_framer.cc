@@ -1319,7 +1319,7 @@ bool QuicFramer::ProcessAckFrame(QuicDataReader* reader,
   }
   QuicPacketNumber first_received =
       ack_frame->largest_observed + 1 - first_block_length;
-  ack_frame->packets.Add(first_received, ack_frame->largest_observed + 1);
+  ack_frame->packets.AddRange(first_received, ack_frame->largest_observed + 1);
 
   if (num_ack_blocks > 0) {
     for (size_t i = 0; i < num_ack_blocks; ++i) {
@@ -1335,8 +1335,8 @@ bool QuicFramer::ProcessAckFrame(QuicDataReader* reader,
       }
       first_received -= (gap + current_block_length);
       if (current_block_length > 0) {
-        ack_frame->packets.Add(first_received,
-                               first_received + current_block_length);
+        ack_frame->packets.AddRange(first_received,
+                                    first_received + current_block_length);
       }
     }
   }

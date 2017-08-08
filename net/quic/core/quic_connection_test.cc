@@ -999,7 +999,7 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
   const QuicAckFrame InitAckFrame(QuicPacketNumber largest_observed) {
     QuicAckFrame frame(MakeAckFrame(largest_observed));
     if (largest_observed > 0) {
-      frame.packets.Add(1, largest_observed + 1);
+      frame.packets.AddRange(1, largest_observed + 1);
     }
     return frame;
   }
@@ -1017,12 +1017,12 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
                                  QuicPacketNumber missing) {
     QuicAckFrame ack_frame;
     if (largest_acked > missing) {
-      ack_frame.packets.Add(1, missing);
-      ack_frame.packets.Add(missing + 1, largest_acked + 1);
+      ack_frame.packets.AddRange(1, missing);
+      ack_frame.packets.AddRange(missing + 1, largest_acked + 1);
       ack_frame.largest_observed = largest_acked;
     }
     if (largest_acked == missing) {
-      ack_frame.packets.Add(1, missing);
+      ack_frame.packets.AddRange(1, missing);
       ack_frame.largest_observed = largest_acked;
     }
     return ack_frame;
@@ -3151,12 +3151,12 @@ TEST_P(QuicConnectionTest, MtuDiscoveryFailed) {
                                                  mtu_discovery_packets.end());
       QuicPacketNumber max_packet = *max_element(mtu_discovery_packets.begin(),
                                                  mtu_discovery_packets.end());
-      ack.packets.Add(1, min_packet);
-      ack.packets.Add(max_packet + 1, creator_->packet_number() + 1);
+      ack.packets.AddRange(1, min_packet);
+      ack.packets.AddRange(max_packet + 1, creator_->packet_number() + 1);
       ack.largest_observed = creator_->packet_number();
 
     } else {
-      ack.packets.Add(1, creator_->packet_number() + 1);
+      ack.packets.AddRange(1, creator_->packet_number() + 1);
       ack.largest_observed = creator_->packet_number();
     }
 

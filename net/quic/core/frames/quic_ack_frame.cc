@@ -160,7 +160,8 @@ void PacketNumberQueue::Add(QuicPacketNumber packet_number) {
   }
 }
 
-void PacketNumberQueue::Add(QuicPacketNumber lower, QuicPacketNumber higher) {
+void PacketNumberQueue::AddRange(QuicPacketNumber lower,
+                                 QuicPacketNumber higher) {
   if (lower >= higher) {
     return;
   }
