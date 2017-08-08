@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8efaeb11_ebc8eca8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T23:33:44Z",
+      "side": 1,
+      "message": "\u003e Not however, so, but.\n\ndropped the last clause.",
+      "parentUuid": "0078b984_2a99fa62",
+      "revId": "cab4387c21881f797576549d87e1f348931329e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60023f45_409a24e7",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-08T15:14:50Z",
       "side": 1,
       "message": "by this what?",
+      "range": {
+        "startLine": 31,
+        "startChar": 32,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "cab4387c21881f797576549d87e1f348931329e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fff674b_a5ebfae4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T23:33:44Z",
+      "side": 1,
+      "message": "\u003e by this what?\n\nby Importance setting :p",
+      "parentUuid": "60023f45_409a24e7",
       "range": {
         "startLine": 31,
         "startChar": 32,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "cf6e2a96_88a7c86a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T23:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06ee101d_c81f9028",
+      "revId": "cab4387c21881f797576549d87e1f348931329e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95b05191_ea86a681",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 9
@@ -70,6 +130,24 @@
       "writtenOn": "2017-08-08T15:14:50Z",
       "side": 1,
       "message": "ii \u003e\u003d 0?",
+      "revId": "cab4387c21881f797576549d87e1f348931329e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2087b5c4_c85bcd12",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3742,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T23:33:44Z",
+      "side": 1,
+      "message": "\u003e ii \u003e\u003d 0?\n\nclang correctly warned that since size_t is unsigned, that check will always be true. but this is hard to read. Gonna make it loop forward and just not have an early out.",
+      "parentUuid": "95b05191_ea86a681",
       "revId": "cab4387c21881f797576549d87e1f348931329e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
