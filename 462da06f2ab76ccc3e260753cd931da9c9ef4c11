@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91796720_3add77f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T21:13:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5c0a040_8af81921",
+      "range": {
+        "startLine": 11,
+        "startChar": 21,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "462da06f2ab76ccc3e260753cd931da9c9ef4c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62c7c07f_728e6b9d",
         "filename": "content/network/url_loader_impl.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-08T19:41:33Z",
       "side": 1,
       "message": "This is almost certainly my lack of knowledge of the code, but shouldn\u0027t something here null pending_write_?",
+      "range": {
+        "startLine": 377,
+        "startChar": 4,
+        "endLine": 377,
+        "endChar": 28
+      },
+      "revId": "462da06f2ab76ccc3e260753cd931da9c9ef4c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e29e37_d194769f",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T21:13:34Z",
+      "side": 1,
+      "message": "You\u0027re right.  I somehow managed not to copy the CompletePendingWrite() here.\n\nThe reason the tests pass is that they all run the  none of them wait for the stream to be closed, despite the fact that\u0027s how this class is actually used (Consumers could just want until amount of data read matches decoded_body_size, but none do, as evidenced by the fact that this code works).  Moreover, all the tests only read bodies after the URLLoaderImpl has been deleted.  I\u0027ve updated tests to catch this, but I think the test fixture really needs to be completely reworked.",
+      "parentUuid": "62c7c07f_728e6b9d",
       "range": {
         "startLine": 377,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e9219271_6cd90d17",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T21:13:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8975e351_51751897",
+      "range": {
+        "startLine": 382,
+        "startChar": 20,
+        "endLine": 382,
+        "endChar": 32
+      },
+      "revId": "462da06f2ab76ccc3e260753cd931da9c9ef4c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac221a0b_3ae1e536",
         "filename": "content/network/url_loader_impl.cc",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-08T19:41:33Z",
       "side": 1,
       "message": "I\u0027m not clear looking at the code how pending_write_buffer_offset_ is used.  It looks like it\u0027s just incremented until we\u0027re done with writing to the pipe (which means this code is correct), but what happens when the consumer signals that they\u0027ve read stuff we\u0027ve written?  It looks like we never re-use space in the pending_buffer_?  \n\n(I\u0027m sure I\u0027m just confused, I just want to be unconfused :-}.)",
+      "range": {
+        "startLine": 460,
+        "startChar": 2,
+        "endLine": 460,
+        "endChar": 22
+      },
+      "revId": "462da06f2ab76ccc3e260753cd931da9c9ef4c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97279da4_2323adbe",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T21:13:34Z",
+      "side": 1,
+      "message": "Reclaiming the buffer is up to Mojo.  The buffer is allocated by Mojo (in  NetToMojoPendingBuffer::BeginWrite), and the Complete() call returns it to the Mojo from whence it came.",
+      "parentUuid": "ac221a0b_3ae1e536",
       "range": {
         "startLine": 460,
         "startChar": 2,
