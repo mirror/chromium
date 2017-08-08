@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53305050_fb179aa9",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-08T23:19:08Z",
+      "side": 1,
+      "message": "Once this CL lands.",
+      "range": {
+        "startLine": 1019,
+        "startChar": 35,
+        "endLine": 1019,
+        "endChar": 53
+      },
+      "revId": "1a66a0be2f81d8d7312bc605a2820575187d0009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
