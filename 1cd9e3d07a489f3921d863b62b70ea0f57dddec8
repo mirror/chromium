@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7305eaa_03270860",
+        "filename": "pdf/pdfium/fuzzers/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-08-08T14:45:44Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "1cd9e3d07a489f3921d863b62b70ea0f57dddec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

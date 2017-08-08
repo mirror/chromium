@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88d7b367_51855bf9",
+        "filename": "pdf/pdfium/fuzzers/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-08-08T14:45:44Z",
+      "side": 0,
+      "message": "Can you please add the corpora instead, just need to add single bmp file from here - https://cs.chromium.org/chromium/src/third_party/afl/src/testcases/images/bmp/not_kitty.bmp?q\u003dnot_kitty\u0026sq\u003dpackage:chromium\u0026dr",
+      "revId": "9e1a9f8ae23839da164e24769eeecf08254ecdea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
