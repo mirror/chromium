@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62480dac_11038fa2",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-08T16:35:59Z",
+      "side": 1,
+      "message": "nit: s/browser-initiated/user-initiated?\n\nBecause constant name is USER_INITIATED",
+      "range": {
+        "startLine": 218,
+        "startChar": 54,
+        "endLine": 218,
+        "endChar": 71
+      },
+      "revId": "a40712d38ecb25505e5c3f96a7008595f174f33a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
