@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20363591_4e8345e3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item_result.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-08T08:41:50Z",
+      "side": 1,
+      "message": "is this able to be also marked as stack allocated?",
+      "revId": "a655bf91692bc714277a818bfef46e423bcef8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3dc0b0d_8addf85e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-08T08:41:50Z",
+      "side": 1,
+      "message": "MutableData should probably be returning a ptr instead to keep consistent with our \"refs \u003d\u003d const\", \"ptrs \u003d\u003d mutable\" rule?",
+      "revId": "a655bf91692bc714277a818bfef46e423bcef8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98bcfdb9_089ff203",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-08T08:41:50Z",
+      "side": 1,
+      "message": "just \u0026data.items_ ?",
+      "range": {
+        "startLine": 458,
+        "startChar": 27,
+        "endLine": 458,
+        "endChar": 32
+      },
+      "revId": "a655bf91692bc714277a818bfef46e423bcef8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09de05ef_7b4e5fae",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-08T08:41:50Z",
+      "side": 1,
+      "message": "ShapeTextForFirstLineIfNeeded ?\nShapeFirstLineTextIfNeeded ?\n\neh. maybe not. up to you. (probably ignore this).",
+      "range": {
+        "startLine": 460,
+        "startChar": 2,
+        "endLine": 460,
+        "endChar": 28
+      },
+      "revId": "a655bf91692bc714277a818bfef46e423bcef8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01854fa8_340a829d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-08T08:41:50Z",
+      "side": 1,
+      "message": "This might be more readable as:\n\nstd::unique_ptr\u003cVector\u003cNGInlineItem\u003e\u003e first_line_items \u003d WTF::MakeUnique\u003cVector\u003cNGInlineItem\u003e\u003e;\n\n/* code below */\n\n// assign at end.\n\ndata.first_line_items_ \u003d std::move(first_line_items);",
+      "range": {
+        "startLine": 498,
+        "startChar": 3,
+        "endLine": 499,
+        "endChar": 29
+      },
+      "revId": "a655bf91692bc714277a818bfef46e423bcef8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d17d44_b992a351",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-08T08:41:50Z",
+      "side": 1,
+      "message": "worth combining with above with default arg? not sure...",
+      "range": {
+        "startLine": 65,
+        "startChar": 36,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "a655bf91692bc714277a818bfef46e423bcef8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2419ac92_625e80a4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node_data.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-08T08:41:50Z",
+      "side": 1,
+      "message": "comment worth it here?",
+      "range": {
+        "startLine": 36,
+        "startChar": 40,
+        "endLine": 36,
+        "endChar": 57
+      },
+      "revId": "a655bf91692bc714277a818bfef46e423bcef8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
