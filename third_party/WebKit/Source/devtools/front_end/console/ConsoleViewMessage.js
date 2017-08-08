@@ -857,21 +857,30 @@ Console.ConsoleViewMessage = class {
   }
 
   /**
+   * @param {!Array<!RegExp>} regexes
    * @return {boolean}
    */
-  matchesFilterRegex(regexObject) {
-    regexObject.lastIndex = 0;
+  matchesFilterRegex(regexes) {
     var text = this.contentElement().deepTextContent();
-    return regexObject.test(text);
+    for (var i = 0; i < regexes.length; i++) {
+      regexes[i].lastIndex = 0;
+      if (!regexes[i].test(text))
+        return false;
+    }
+    return true;
   }
 
   /**
-   * @param {string} filter
+   * @param {!Array<string>} filterTexts
    * @return {boolean}
    */
-  matchesFilterText(filter) {
-    var text = this.contentElement().deepTextContent();
-    return text.toLowerCase().includes(filter.toLowerCase());
+  matchesFilterText(filterTexts) {
+    var text = this.contentElement().deepTextContent().toLowerCase();
+    for (var i = 0; i < filterTexts.length; i++) {
+      if (!text.includes(filterTexts[i].toLowerCase()))
+        return false;
+    }
+    return true;
   }
 
   updateTimestamp() {
