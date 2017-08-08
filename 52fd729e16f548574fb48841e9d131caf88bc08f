@@ -22,6 +22,30 @@
       "revId": "52fd729e16f548574fb48841e9d131caf88bc08f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c9dcc63_30967bc0",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1720,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-08T17:19:28Z",
+      "side": 1,
+      "message": "Oops, thanks.  Fixed.",
+      "parentUuid": "8c67e2b9_2c34c5c3",
+      "range": {
+        "startLine": 1720,
+        "startChar": 12,
+        "endLine": 1720,
+        "endChar": 26
+      },
+      "revId": "52fd729e16f548574fb48841e9d131caf88bc08f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
