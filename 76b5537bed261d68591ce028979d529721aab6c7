@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16f2d8f9_1e04f5b4",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-08T02:59:58Z",
+      "side": 1,
+      "message": "Can you explain why we can\u0027t simply make a clone and give it to threads?",
+      "revId": "76b5537bed261d68591ce028979d529721aab6c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
