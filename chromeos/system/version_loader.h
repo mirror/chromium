@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include "base/callback_forward.h"
 #include "chromeos/chromeos_export.h"
 
 namespace chromeos {
@@ -23,6 +24,11 @@ enum VersionFormat {
 // otherwise it's in short format x.x.xx.x.
 // May block.
 CHROMEOS_EXPORT std::string GetVersion(VersionFormat format);
+
+// Gets the version and adds the TPM version information. Asynchronous, result
+// is passed on to callback as a string.
+CHROMEOS_EXPORT void GetVersionWithTpm(
+    base::Callback<void(const std::string&)> callback);
 
 // Gets the ARC version.
 // May block.
