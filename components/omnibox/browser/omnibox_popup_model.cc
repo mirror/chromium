@@ -28,14 +28,16 @@ const size_t OmniboxPopupModel::kNoMatch = static_cast<size_t>(-1);
 
 OmniboxPopupModel::OmniboxPopupModel(
     OmniboxPopupView* popup_view,
-    OmniboxEditModel* edit_model)
+    OmniboxPopupModelDelegate* delegate,
+    OmniboxClient* client,
+    AutocompleteController* const autocomplete_controller)
     : view_(popup_view),
-      edit_model_(edit_model),
+      delegate_(delegate),
+      client_(client),
+      autocomplete_controller_(autocomplete_controller),
       hovered_line_(kNoMatch),
       selected_line_(kNoMatch),
-      selected_line_state_(NORMAL) {
-  edit_model->set_popup_model(this);
-}
+      selected_line_state_(NORMAL) {}
 
 OmniboxPopupModel::~OmniboxPopupModel() {
 }
@@ -174,15 +176,15 @@ void OmniboxPopupModel::SetSelectedLine(size_t line,
   // eliminated and just become a call to the observer on the edit.
   base::string16 keyword;
   bool is_keyword_hint;
-  TemplateURLService* service = edit_model_->client()->GetTemplateURLService();
+  TemplateURLService* service = client_->GetTemplateURLService();
   match.GetKeywordUIState(service, &keyword, &is_keyword_hint);
 
   if (reset_to_default) {
-    edit_model_->OnPopupDataChanged(match.inline_autocompletion, NULL,
-                                    keyword, is_keyword_hint);
+    delegate_->OnPopupDataChanged(match.inline_autocompletion, NULL, keyword,
+                                  is_keyword_hint);
   } else {
-    edit_model_->OnPopupDataChanged(match.fill_into_edit, &current_destination,
-                                    keyword, is_keyword_hint);
+    delegate_->OnPopupDataChanged(match.fill_into_edit, &current_destination,
+                                  keyword, is_keyword_hint);
   }
 
   // Repaint old and new selected lines immediately, so that the edit doesn't
@@ -257,11 +259,11 @@ void OmniboxPopupModel::TryDeletingCurrentItem() {
 
 gfx::Image OmniboxPopupModel::GetIconIfExtensionMatch(
     const AutocompleteMatch& match) const {
-  return edit_model_->client()->GetIconIfExtensionMatch(match);
+  return client_->GetIconIfExtensionMatch(match);
 }
 
 bool OmniboxPopupModel::IsStarredMatch(const AutocompleteMatch& match) const {
-  BookmarkModel* bookmark_model = edit_model_->client()->GetBookmarkModel();
+  BookmarkModel* bookmark_model = client_->GetBookmarkModel();
   return bookmark_model && bookmark_model->IsBookmarked(match.destination_url);
 }
 
