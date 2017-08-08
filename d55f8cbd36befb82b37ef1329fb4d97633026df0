@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f9d50c1_355b9907",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-08T21:47:04Z",
+      "side": 1,
+      "message": "TLDR: split this function into two: one which returns a heap allocated and populated FieldProblemMap and the other which holds a local static pointer, initialized it with\nthe first functions return value, and then returns a const ref to the result.\n\ni.e.,\n\n\nFieldProblemMap* CreateFieldProblemMap() {\n  allocate ptr to map\n  initialize map\n  return ptr to map\n}\n\nconst FieldProblemMap* GetFilter() {\n  static const auto* filter \u003d CreateFieldProblemMap();\n  return filter;\n}\n\nThe longer version...\n\nThere are a few issues with this function.\n\nRe: static FieldProblemMap filter\n\nThis isn\u0027t allowed by the style guide, as it results in the registration of at-exit code with undefined ordering.\n\nSee:\n  https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables\n  https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Static-variables\n  \nThis is allowed though:\n\n  static FieldProblemMap* filter \u003d new FieldProblemMap();\n\nThat said, I don\u0027t think this code is safe as it is...\n\nRe: the initialization check/loop\n\nIf this function is accessed concurrently, you can end up returning an empty map. Or crash.\n\nThe static initialization of the filter instance is atomic, but the rest of the code isn\u0027t. So if another caller enters this code while initialization is still happening they get returned a copy of a not-fully initialized (for the purposes of this code) filter.\n\nRe: the return value\n\nThis function returns a copy of the FieldProblemMap. In that case, having a static instance isn\u0027t really saving anything, as it has to do the same work to make a deep copy anyway.",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 8
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4121dd6b_2c25f4e3",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-08T21:47:04Z",
+      "side": 1,
+      "message": "take by const ref?",
+      "range": {
+        "startLine": 86,
+        "startChar": 34,
+        "endLine": 86,
+        "endChar": 49
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f6ceca_55aed0ed",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-08T21:47:04Z",
+      "side": 1,
+      "message": "Super-annoying nit: Usually, Chrome comments avoid \"we\" or \"I\" statements because it\u0027s unclear whom/what they refer to.\n\nperhaps:\n  ... because the rules cannot be accessed.\n  ... because it is unclear which, if any, rules should apply.",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 9
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a656af5e_7d32bcc3",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-08T21:47:04Z",
+      "side": 1,
+      "message": "Isn\u0027t this \"else\" the rules-are-available branch?",
+      "range": {
+        "startLine": 132,
+        "startChar": 24,
+        "endLine": 132,
+        "endChar": 37
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71f7db7_811f71a3",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-08T21:47:04Z",
+      "side": 1,
+      "message": "I don\u0027t understand whyc the fields are either UNVALIDATED or INVALID here. Couldn\u0027t the ZIP, for example, be valid while the City is invalid?\n\nOr am I missing something? Is this just setup for the problems loop?",
+      "range": {
+        "startLine": 134,
+        "startChar": 18,
+        "endLine": 134,
+        "endChar": 47
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
