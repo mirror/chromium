@@ -22,6 +22,30 @@
       "revId": "313ebc1b8a0e9c979f7234fd6d01da17096b56b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8303cf18_b671de47",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/FakeMostVisitedSites.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-08T09:36:07Z",
+      "side": 1,
+      "message": "I did it that way because for initialisation, we know we don\u0027t have an observer so no UI will be involved, and we want to just set the initial data of the class. At this point the class is a plain data class that could be initialised statically before we have a UI thread. We risk the thread check to assign the current thread as UI thread, which would cause other problems.\n\nI could add arguments to the constructor to allow specifying initial data, but for flexibility we have various methods taking URLs and SiteSuggestions, so I\u0027m not too keen or also multiply the constructors. What if I add the fact that once we set the observer the suggestions must be set on the UI thread in the doc as contract with the caller?",
+      "parentUuid": "5000700e_bdd2d7c4",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 112,
+        "endChar": 39
+      },
+      "revId": "313ebc1b8a0e9c979f7234fd6d01da17096b56b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
