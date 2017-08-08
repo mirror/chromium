@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "14900fe8_3f300c52",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T14:09:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "75cfeb50_cfb3bb9f",
+      "range": {
+        "startLine": 1260,
+        "startChar": 29,
+        "endLine": 1260,
+        "endChar": 33
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce94d5e0_3ebb2d02",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 3
@@ -331,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "818e5fed_2a29876e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2019,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T14:09:17Z",
+      "side": 1,
+      "message": "CBS (when not incognito) should have a lifetime longer than any of the UI objects -- the BVC doesn\u0027t own the CBS. However, you are correct in that with my suggested change, the code in isolation would provide no guarantees that the tracker still existed. So it\u0027s probably safest to leave it as-is.",
+      "parentUuid": "9f2d2d49_7794ca8c",
+      "range": {
+        "startLine": 2019,
+        "startChar": 42,
+        "endLine": 2019,
+        "endChar": 60
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a4b7c4c_70728a6a",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.h",
         "patchSetId": 3
@@ -460,6 +508,30 @@
       "side": 1,
       "message": "Currently, the dismissal callback is called immediately regardless of whether it is animated or not. The BubbleViewController does not expose a way to determine when the animation completes. Would it be better to update -[BubbleViewController dismissAnimated:] to include a callback run on completion (similar to +[UIView animateWithDuration:]) so the presenter\u0027s |dismissalBlock| is guaranteed to run after the animation is complete (if animated).",
       "parentUuid": "23ffbc56_a5aa038a",
+      "range": {
+        "startLine": 54,
+        "startChar": 3,
+        "endLine": 54,
+        "endChar": 6
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11dbd006_aae48f70",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T14:09:17Z",
+      "side": 1,
+      "message": "I don\u0027t have an opinion one way or the other about the timing of the callback; my main concern is that it\u0027s properly documented. So either in the comments for the init method, or for this method, you should document when the callback is called in both animated and non-animated cases.",
+      "parentUuid": "9f075de4_200fb7de",
       "range": {
         "startLine": 54,
         "startChar": 3,
@@ -657,6 +729,30 @@
       "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd99613_fc6bece3",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T14:09:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "176603ec_9673afad",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 23
+      },
+      "revId": "e563c5b7ca8f30fb82d18a76b6379919211739f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
