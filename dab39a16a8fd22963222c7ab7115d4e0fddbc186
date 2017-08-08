@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e57d3081_b3369232",
+        "filename": "device/gamepad/public/interfaces/gamepad_struct_traits.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T23:10:22Z",
+      "side": 1,
+      "message": "I tried various alternatives.\n- Just using uint16_t breaks down, because WTF::String has a constructor from UChar* that happens to be compatible with the types here.\n- Using a union to layer a wchar_t array on top of the uint16_t array (on Windows) doesn\u0027t help with the WTF issue.\n- Using mojo.common.mojom.String16 (it\u0027s possible get a String16DataView out but it\u0027s not really any nicer, since then you need to extract the uint16_t array from the String16DataView)\n\nSo reinterpret cast without any fancy length inference it is here.",
+      "revId": "dab39a16a8fd22963222c7ab7115d4e0fddbc186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76310de2_77bd4879",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorFilterOperations.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T23:10:22Z",
+      "side": 1,
+      "message": "But I needed to plumb it through here, otherwise it decays to a pointer and can\u0027t be passed through in the implementation in the .cc.",
+      "revId": "dab39a16a8fd22963222c7ab7115d4e0fddbc186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
