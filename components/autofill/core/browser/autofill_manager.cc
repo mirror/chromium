@@ -883,6 +883,7 @@ void AutofillManager::OnHidePopup() {
   if (!IsAutofillEnabled())
     return;
 
+  LOG(ERROR) << "AutofillManager::OnHidePopup";
   autocomplete_history_manager_->CancelPendingQuery();
   client_->HideAutofillPopup();
 }

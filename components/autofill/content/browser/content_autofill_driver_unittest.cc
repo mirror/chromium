@@ -264,7 +264,7 @@ class TestContentAutofillDriver : public ContentAutofillDriver {
     return static_cast<MockAutofillManager*>(autofill_manager());
   }
 
-  using ContentAutofillDriver::DidNavigateFrame;
+  using ContentAutofillDriver::DidNavigateMainFrame;
 };
 
 class ContentAutofillDriverTest : public content::RenderViewHostTestHarness {
@@ -294,16 +294,11 @@ class ContentAutofillDriverTest : public content::RenderViewHostTestHarness {
     content::RenderViewHostTestHarness::TearDown();
   }
 
-  void Navigate(bool main_frame) {
-    content::RenderFrameHost* rfh = main_rfh();
-    content::RenderFrameHostTester* rfh_tester =
-        content::RenderFrameHostTester::For(rfh);
-    if (!main_frame)
-      rfh = rfh_tester->AppendChild("subframe");
+  void Navigate() {
     std::unique_ptr<content::NavigationHandle> navigation_handle =
         content::NavigationHandle::CreateNavigationHandleForTesting(
-            GURL(), rfh, true);
-   driver_->DidNavigateFrame(navigation_handle.get());
+            GURL(), main_rfh(), true);
+    driver_->DidNavigateMainFrame(navigation_handle.get());
   }
 
  protected:
@@ -322,14 +317,9 @@ TEST_F(ContentAutofillDriverTest, GetURLRequestContext) {
   EXPECT_EQ(request_context, expected_request_context);
 }
 
-TEST_F(ContentAutofillDriverTest, NavigatedToDifferentPage) {
+TEST_F(ContentAutofillDriverTest, NavigatedMainFrame) {
   EXPECT_CALL(*driver_->mock_autofill_manager(), Reset());
-  Navigate(true);
-}
-
-TEST_F(ContentAutofillDriverTest, NavigatedWithinSamePage) {
-  EXPECT_CALL(*driver_->mock_autofill_manager(), Reset()).Times(0);
-  Navigate(false);
+  Navigate();
 }
 
 TEST_F(ContentAutofillDriverTest, FormDataSentToRenderer_FillForm) {
