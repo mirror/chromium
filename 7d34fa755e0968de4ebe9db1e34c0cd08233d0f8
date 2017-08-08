@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7da8a365_b1560164",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T19:33:36Z",
+      "side": 1,
+      "message": "Can this happen? If it did previously that was a problem as you would have asked to quit a MessageLoop that wasn\u0027t yours.\n\nShould it DCHECK instead?",
+      "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2897a6f3_52e56567",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T19:33:36Z",
+      "side": 1,
+      "message": "Don\u0027t need to post, run_loop_-\u003eQuitWhenIdle() is equivalent.",
+      "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a970fb1_ce4a065c",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T19:33:36Z",
+      "side": 1,
+      "message": "\u003d nullptr;\n\nMember init inline is less error prone than initializer list",
+      "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46187b87_88dc21fc",
+        "filename": "extensions/shell/browser/shell_desktop_controller_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T19:33:36Z",
+      "side": 1,
+      "message": "Why wouldn\u0027t Mac need to run too?",
+      "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
