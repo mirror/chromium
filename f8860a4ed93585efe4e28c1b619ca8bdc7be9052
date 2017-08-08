@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a56ddcff_0ab13155",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-08T20:13:50Z",
+      "side": 1,
+      "message": "This doesn\u0027t look good.\n\nPlease find a better way to pass it to InsertTextWithoutSendingTextEvent.",
+      "range": {
+        "startLine": 361,
+        "startChar": 7,
+        "endLine": 361,
+        "endChar": 22
+      },
+      "revId": "f8860a4ed93585efe4e28c1b619ca8bdc7be9052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ea3a2c6_df290f11",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.h",
         "patchSetId": 5
@@ -34,6 +57,24 @@
       "revId": "f8860a4ed93585efe4e28c1b619ca8bdc7be9052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22813fee_46f63563",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-08T20:13:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cf66f07f_66e1e131",
+      "revId": "f8860a4ed93585efe4e28c1b619ca8bdc7be9052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "cda0cfae_37fd708b",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-08T20:13:50Z",
+      "side": 1,
+      "message": "We shouldn\u0027t have these layout updates in the formal patch.\n\nSeems that we have to clean up the call sites of SetEnding[Visible]Selection. (And maybe SetStartingSelection as well?)\n\nIdeally we should have the SelectionInUndoStep version as the only version.",
+      "parentUuid": "81c4ddff_d1ba7f36",
+      "revId": "f8860a4ed93585efe4e28c1b619ca8bdc7be9052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79127125_d8394223",
         "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
         "patchSetId": 5
@@ -118,6 +177,29 @@
       "writtenOn": "2017-08-07T19:11:10Z",
       "side": 1,
       "message": "This change seems orthogonal.",
+      "revId": "f8860a4ed93585efe4e28c1b619ca8bdc7be9052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e686210_68c7c50c",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-08T20:13:50Z",
+      "side": 1,
+      "message": "Why do we cache this value? Can it be different from FrameSelection::IsDirectional()?",
+      "range": {
+        "startLine": 206,
+        "startChar": 15,
+        "endLine": 206,
+        "endChar": 30
+      },
       "revId": "f8860a4ed93585efe4e28c1b619ca8bdc7be9052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
