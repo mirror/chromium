@@ -68,6 +68,7 @@ class MockFetcher : public URLFetcher {
                   const std::string& post_data,
                   const net::HttpRequestHeaders& request_headers,
                   ResultListener* result_listener) override {
+    net::LoadTimingInfo load_timing_info;
     // Record the request.
     fetch_request_->SetString("url", url.spec());
     fetch_request_->SetString("method", method);
@@ -108,9 +109,13 @@ class MockFetcher : public URLFetcher {
           base::StringPrintf("%s: %s", it.key().c_str(), value.c_str()));
     }
 
+    // Set the fields needed for tracing, so that we can check
+    // if they are forwarded correctly.
+    load_timing_info.send_start = base::TimeTicks::Now();
+    load_timing_info.receive_headers_end = base::TimeTicks::Now();
     result_listener->OnFetchComplete(
         GURL(final_url), std::move(response_headers), response_data_.c_str(),
-        response_data_.size());
+        response_data_.size(), load_timing_info);
   }
 
  private:
@@ -339,6 +344,9 @@ TEST_F(GenericURLRequestJobTest, BasicRequestContents) {
 
   net::LoadTimingInfo load_timing_info;
   request->GetLoadTimingInfo(&load_timing_info);
+  // Check that the connect_start and receive_headers_end timings are
+  // forwarded correctly, as they are used by tracing.
+  EXPECT_FALSE(load_timing_info.send_start.is_null());
   EXPECT_FALSE(load_timing_info.receive_headers_end.is_null());
 }
 
