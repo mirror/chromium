@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15702286_c1813d50",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-08-08T19:04:40Z",
+      "side": 1,
+      "message": "Is there a better way of doing this? Is instantiating a new empty string every time we paint a text box just in case we need to apply a text-transform on the first line unduly expensive?",
+      "revId": "ffcc80c1698fdb8c139fa4582118c61b8aa215ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
