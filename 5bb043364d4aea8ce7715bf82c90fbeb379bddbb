@@ -87,6 +87,24 @@
       "revId": "5bb043364d4aea8ce7715bf82c90fbeb379bddbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a6e3e0_873412d0",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1904,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-08T06:43:06Z",
+      "side": 1,
+      "message": "OK - Added a TODO w/ bug in settings_strings.grdp.\n\nI think in practice, they are used to mean the same thing, but the string descriptions are slightly different. For example, I\u0027m pretty sure IDS_PAGE_INFO_BUTTON_TEXT_ALLOWED_BY_USER is used for the \u0027Allow\u0027 string when Flash is set to allow via enterprise policy, despite the string description saying \u0027...explicitly set to allow by the user.\u0027\n\nSo I think there are existing problems with the string descriptions already. The equivalent site settings strings are not so generic though - the \u0027Allow\u0027 there just reads \u0027Label for the menu item to allow permission for a particular site.\u0027\n\nProbably the best course of action here is not to delete the Site settings strings, add a new one for \u0027Ask\u0027 (since the Page Info \u0027Ask\u0027 is for a permission set by the user), and when we get around to doing the string consolidation in https://crbug.com/753173, we should use the more generic string descriptions like the ones that exist in settings_strings.grdp already. I went ahead and did this in the next patchset, but feel free to unresolve this comment if you don\u0027t agree.",
+      "parentUuid": "e5038c3f_41d91271",
+      "revId": "5bb043364d4aea8ce7715bf82c90fbeb379bddbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
