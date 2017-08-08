@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba7023f1_e15ab220",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-08T17:21:39Z",
+      "side": 1,
+      "message": "AppShell\u0027s impl will need this.",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "0c3f434797a06a04c07a95577efce4ca1cf07d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
