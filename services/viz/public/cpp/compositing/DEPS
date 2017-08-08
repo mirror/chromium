@@ -1,8 +1,8 @@
 include_rules = [
   "+ui/gfx/ipc",
   "+ui/gfx/mojo",
-  "+ui/gfx/geometry/mojo",
   "+cc",
+  "+ui/gfx/geometry/mojo",
   "+gpu/ipc",
   "+skia/public/interfaces",
   "+ui/latency/mojo",
