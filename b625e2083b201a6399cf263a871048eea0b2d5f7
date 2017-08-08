@@ -37,6 +37,42 @@
     },
     {
       "key": {
+        "uuid": "8d3ac685_f5ef68c4",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T11:55:49Z",
+      "side": 1,
+      "message": "Make InvalidSelectionResetter ctor validate passed selection.",
+      "parentUuid": "708d9655_99f89208",
+      "revId": "b625e2083b201a6399cf263a871048eea0b2d5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79509172_72bcc713",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T11:55:49Z",
+      "side": 1,
+      "message": "Using Base() and Extent() are protected by AssertValid() with DOM tree\nversion, like EphemeralRange. I think we can catch dangerous pattern\nin debug build. Don\u0027t we?",
+      "parentUuid": "2bb171cd_78055968",
+      "revId": "b625e2083b201a6399cf263a871048eea0b2d5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ca2c893_5aaeebc2",
         "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.cpp",
         "patchSetId": 5
@@ -54,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "56a4b098_d1222ce1",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T11:55:49Z",
+      "side": 1,
+      "message": "Done in another patch[1]\n\n[1] http://crrev.com/c/602103: Make SelectionEditor to reset direction cache in SelectionInDOMTree",
+      "parentUuid": "9ca2c893_5aaeebc2",
+      "revId": "b625e2083b201a6399cf263a871048eea0b2d5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e65e6ee2_94708a17",
         "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.cpp",
         "patchSetId": 5
@@ -65,6 +119,24 @@
       "writtenOn": "2017-08-05T21:57:27Z",
       "side": 1,
       "message": "We should reset |direction_| only when the selection is range. Maybe we should wrap it into a |ClearCachedDirection()| function, which can also be used by SelectionEditor.\n\nNote that |IsBaseFirst()| computes |direction_| by comparing base and extent without any checking, which asserts if the selection is null. So we shouldn\u0027t reset |direction_| for null selection.",
+      "revId": "b625e2083b201a6399cf263a871048eea0b2d5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b6a2197_fbed08c2",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T11:55:49Z",
+      "side": 1,
+      "message": "Agree I\u0027ll introduce |ResetDirectionCache()|.\n\nWhen we\u0027re here, selection isn\u0027t null.\nWhen selection is null, |document_| is null and catch at L335.\nAnyway, I add |DCHECK(!selection.IsNone())| for clarity.",
+      "parentUuid": "e65e6ee2_94708a17",
       "revId": "b625e2083b201a6399cf263a871048eea0b2d5f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -91,6 +163,30 @@
       "revId": "b625e2083b201a6399cf263a871048eea0b2d5f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811482e8_0d5bb5fd",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T11:55:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bdbf918_5716d12f",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 33
+      },
+      "revId": "b625e2083b201a6399cf263a871048eea0b2d5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
