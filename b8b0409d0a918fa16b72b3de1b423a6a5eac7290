@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "6d250e38_d0b8115e",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T22:19:43Z",
+      "side": 1,
+      "message": "Nit: \"may not have been synthesized\"",
+      "revId": "b8b0409d0a918fa16b72b3de1b423a6a5eac7290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cdc29f2_d2626a4d",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
         "patchSetId": 8
