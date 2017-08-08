@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c7a3128_27f28dd6",
+        "filename": "chromeos/system/statistics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000239
+      },
+      "writtenOn": "2017-08-08T10:04:40Z",
+      "side": 1,
+      "message": "Can you grab a Lumpy and see if it has serial_number defined (I think so)? If yes, then we should remove this one as well.\n\nBut you have to make sure if it\u0027s having different value from serial_number (for example if Product_S/N is 9 digits while serial_number is 10). I remember there were some discussion that few OEMs may try to setup different SNs for their internal management so the \"SN\" was actually different. In otherwords, I wonder why kSerialNumberKey is not the first priority.",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 44
+      },
+      "revId": "184902680185aee08d0be15da7ecc11f63dc4b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
