@@ -58,6 +58,7 @@ void DecryptingVideoDecoder::Initialize(const VideoDecoderConfig& config,
   output_cb_ = BindToCurrentLoop(output_cb);
   weak_this_ = weak_factory_.GetWeakPtr();
   config_ = config;
+  cdm_context_ = cdm_context;
 
   if (state_ == kUninitialized) {
     if (!cdm_context->GetDecryptor()) {
@@ -187,7 +188,6 @@ void DecryptingVideoDecoder::FinishInitialization(bool success) {
   base::ResetAndReturn(&init_cb_).Run(true);
 }
 
-
 void DecryptingVideoDecoder::DecodePendingBuffer() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK_EQ(state_, kPendingDecode) << state_;
@@ -197,6 +197,17 @@ void DecryptingVideoDecoder::DecodePendingBuffer() {
   int buffer_size = 0;
   if (!pending_buffer_to_decode_->end_of_stream()) {
     buffer_size = pending_buffer_to_decode_->data_size();
+  }
+
+  const DecryptConfig* decrypt_config =
+      pending_buffer_to_decode_->decrypt_config();
+  if (decrypt_config) {
+    DecryptContext* decrypt_context = cdm_context_->GetDecryptContext(
+        pending_buffer_to_decode_->decrypt_config()->key_id());
+    // This is not an error. Just to suppress the error that |decrypt_context|
+    // is not used.
+    // Pass DecryptContext to the hardware decoder......
+    LOG(ERROR) << decrypt_context;
   }
 
   decryptor_->DecryptAndDecodeVideo(

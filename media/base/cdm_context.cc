@@ -12,6 +12,10 @@ CdmContext::~CdmContext() {}
 
 void IgnoreCdmAttached(bool /* success */) {}
 
+DecryptContext* CdmContext::GetDecryptContext(const std::string& key_id) {
+  return nullptr;
+}
+
 void* CdmContext::GetClassIdentifier() const {
   return nullptr;
 }

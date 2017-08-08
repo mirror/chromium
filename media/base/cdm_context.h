@@ -13,6 +13,11 @@ namespace media {
 
 class Decryptor;
 
+struct DecryptContext {
+  int dummy_data_1;
+  int dummy_data_2;
+};
+
 // An interface representing the context that a media player needs from a
 // content decryption module (CDM) to decrypt (and decode) encrypted buffers.
 // This is used to pass the CDM to the media player (e.g. SetCdm()).
@@ -33,6 +38,8 @@ class MEDIA_EXPORT CdmContext {
   // serves as a proxy to the remote one. Returns kInvalidCdmId when remote CDM
   // is not supported (e.g. this CDM is a local CDM).
   virtual int GetCdmId() const = 0;
+
+  virtual DecryptContext* GetDecryptContext(const std::string& key_id);
 
   // Returns a unique class identifier. Some subclasses override and use this
   // method to provide safe down-casting to their type.

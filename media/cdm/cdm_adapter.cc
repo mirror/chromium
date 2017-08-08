@@ -561,6 +561,14 @@ int CdmAdapter::GetCdmId() const {
   return kInvalidCdmId;
 }
 
+DecryptContext* CdmAdapter::GetDecryptContext(const std::string& key_id) {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  // TODO(xhwang): Plumb this through CdmWrapper, library CDM interface, then
+  // call the real library CDM.
+  // return cdm_->GetDecryptContext(key_id);
+  return nullptr;
+}
+
 void CdmAdapter::RegisterNewKeyCB(StreamType stream_type,
                                   const NewKeyCB& key_added_cb) {
   DCHECK(task_runner_->BelongsToCurrentThread());

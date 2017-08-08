@@ -92,6 +92,7 @@ class MEDIA_EXPORT CdmAdapter : public ContentDecryptionModule,
   // CdmContext implementation.
   Decryptor* GetDecryptor() final;
   int GetCdmId() const final;
+  DecryptContext* GetDecryptContext(const std::string& key_id) final;
 
   // Decryptor implementation.
   void RegisterNewKeyCB(StreamType stream_type,

@@ -94,7 +94,7 @@ class MEDIA_EXPORT DecryptingVideoDecoder : public VideoDecoder {
   base::Closure waiting_for_decryption_key_cb_;
 
   VideoDecoderConfig config_;
-
+  CdmContext* cdm_context_ = nullptr;
   Decryptor* decryptor_;
 
   // The buffer that needs decrypting/decoding.
