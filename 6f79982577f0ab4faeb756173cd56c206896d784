@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "28d4d31a_abcead08",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-08T04:26:43Z",
+      "side": 1,
+      "message": "Ack, I will change to BlinkResourceCoordinatorBase.\n\nI cannot use resource_coordinator::IsResourceCoordinatorEnabled() directly because it requires to include services/resource_coordinator/public/cpp/resource_coordinator_features.h in Blink LocalFrame which is not allowed by checkdeps rules.",
+      "parentUuid": "2823a0a7_e7587937",
+      "range": {
+        "startLine": 160,
+        "startChar": 6,
+        "endLine": 160,
+        "endChar": 33
+      },
+      "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaa21fad_5f4bf659",
         "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.cpp",
         "patchSetId": 24
@@ -39,6 +63,24 @@
       "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd2cd6f_33c07635",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-08T04:26:43Z",
+      "side": 1,
+      "message": "Ack. I am trying to find some way to fix the unit test harness.",
+      "parentUuid": "eaa21fad_5f4bf659",
+      "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "2f8b6ef9_fe32a390",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-08T04:26:43Z",
+      "side": 1,
+      "message": "Done. I will remove it. It seems that the class will also do nothing if there is no error handler (mojo/public/cpp/bindings/lib/interface_endpoint_client.cc).",
+      "parentUuid": "29c3c1c1_d838c479",
+      "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8360b1b_d8e3f89d",
         "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.cpp",
         "patchSetId": 24
@@ -70,6 +130,30 @@
       "writtenOn": "2017-08-07T23:55:52Z",
       "side": 1,
       "message": "inline it at call site?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 1
+      },
+      "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde9b241_019f4b6f",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-08T04:26:43Z",
+      "side": 1,
+      "message": "Done. I will remove this for dcheng@ suggestion.",
+      "parentUuid": "e8360b1b_d8e3f89d",
       "range": {
         "startLine": 51,
         "startChar": 0,
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "2fea6038_6c2c2c12",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 2255,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-08T04:26:43Z",
+      "side": 1,
+      "message": "Thank you for the comment! It greatly simplifies the code.",
+      "parentUuid": "e6154b3a_93e7bea7",
+      "range": {
+        "startLine": 2255,
+        "startChar": 43,
+        "endLine": 2255,
+        "endChar": 58
+      },
+      "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2a9b4a0_fde3c537",
         "filename": "third_party/WebKit/public/platform/Platform.h",
         "patchSetId": 24
@@ -116,6 +224,30 @@
       "writtenOn": "2017-08-08T03:50:57Z",
       "side": 1,
       "message": "No std::string here please. Looking at how it\u0027s used, I think you\u0027ll have to use const char*. That being said, it seems like the right long-term plan is for Platform to expose a service_manager::InterfaceProvider as well, right? +rockot, is there any work in progress for that?",
+      "range": {
+        "startLine": 623,
+        "startChar": 10,
+        "endLine": 623,
+        "endChar": 21
+      },
+      "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0f1248_924034e4",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-08T04:26:43Z",
+      "side": 1,
+      "message": "Ack. I will use \"const char*\".",
+      "parentUuid": "b2a9b4a0_fde3c537",
       "range": {
         "startLine": 623,
         "startChar": 10,
