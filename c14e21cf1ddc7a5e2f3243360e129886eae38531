@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fddd7342_4d9d539b",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 6
+      },
+      "lineNbr": 1770,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-08T20:21:00Z",
+      "side": 1,
+      "message": "I tried fixing these invalidations in this patch (https://chromium-review.googlesource.com/c/599226) but it is complex because it involves modifying the pending layer logic which needs a thorough review on its own.",
+      "revId": "c14e21cf1ddc7a5e2f3243360e129886eae38531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
