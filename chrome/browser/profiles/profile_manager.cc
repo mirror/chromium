@@ -993,6 +993,9 @@ void ProfileManager::InitProfileUserPrefs(Profile* profile) {
       g_browser_process->platform_part()
               ->profile_helper()
               ->GetSigninProfileDir() != profile->GetPath() &&
+      g_browser_process->platform_part()
+              ->profile_helper()
+              ->GetLockScreenAppProfilePath() != profile->GetPath() &&
 #endif
       command_line->HasSwitch(switches::kSupervisedUserId);
   if (force_supervised_user_id) {
@@ -1211,8 +1214,8 @@ void ProfileManager::DoFinalInitForServices(Profile* profile,
       chromeos::ProfileHelper::IsSigninProfile(profile)) {
     extensions_enabled = true;
   }
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          chromeos::switches::kEnableLockScreenApps) &&
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          chromeos::switches::kDisableLockScreenApps) &&
       chromeos::ProfileHelper::IsLockScreenAppProfile(profile)) {
     extensions_enabled = true;
   }
