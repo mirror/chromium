@@ -106,6 +106,24 @@
       "revId": "ae5212df5054d45a05dfc23b3f8066afe7870351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb66d56a_a2808345",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-08T23:51:48Z",
+      "side": 1,
+      "message": "\u003e | through mojo, it would be\n\u003e \n\u003e sorry, i understood but i deleted an important part of my reply.  :)\n\u003e \n\u003e true, the renderer could forward the signal via mojo.  my concern, then, is that it\u0027s still an implementation detail of when overlays work.  \"persistent video\" isn\u0027t obviously related to overlays from the client\u0027s point of view.\n\u003e \n\u003e seems a lot simpler for the client if the overlay impl cancels the overlay when needed, similar to the \u0027frame hidden\u0027, etc. cases.\n\u003e \n\u003e | GetAllFrames\n\u003e \n\u003e RFH doesn\u0027t currently know anything about the overlays that use it.  maybe they should.  i\u0027ll think about it more.\n\nYeah, RFH will need to know Overlays. Maybe can just fold OverlayProvider into RFH, and have RFH create Overlays.\n\nI think there is such a thing as mojo interfaces tied to a RFH, but I don\u0027t know see anything using the java code, and I don\u0027t know much about mojo..\n\n\u003e \n\u003e | which direction is that call?\n\u003e \n\u003e it would be a call from PiPM to (something) to ask if a transition is okay.  currently, PiPM asks WebContents whether there\u0027s a full screen video.\n\nAnd WebContents can ask all of its RFHs. Should be ok?",
+      "parentUuid": "518d0d44_10dcf029",
+      "revId": "ae5212df5054d45a05dfc23b3f8066afe7870351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
