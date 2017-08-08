@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75e09ac5_306ca938",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorPendingAnimations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T21:17:18Z",
+      "side": 1,
+      "message": "I think it would be better named PendingAnimations, with a loud comment that this includes\nall animations, main-thread and not. Using \"compositor\" in the name in Blink generally means\nthings that main-thead concepts can ignore.",
+      "parentUuid": "794c0740_6ccf2fd8",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 45
+      },
+      "revId": "7fa1cd1b89ef9c9038c00410db3bf61b744fa3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a00b26c3_fa683b21",
         "filename": "third_party/WebKit/Source/core/animation/DocumentAnimations.h",
         "patchSetId": 1
