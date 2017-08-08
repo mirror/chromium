@@ -174,8 +174,6 @@ class SmoothnessToughWebGLCases(_Smoothness):
     return StoryExpectations()
 
 
-@benchmark.Disabled('win') # http://crbug.com/692663
-@benchmark.Disabled('android-webview')  # http://crbug.com/653933
 @benchmark.Owner(emails=['kbr@chromium.org', 'zmo@chromium.org'])
 class SmoothnessMaps(perf_benchmark.PerfBenchmark):
   page_set = page_sets.MapsPageSet
@@ -191,8 +189,6 @@ class SmoothnessMaps(perf_benchmark.PerfBenchmark):
     return StoryExpectations()
 
 
-@benchmark.Disabled('android',
-                    'mac')     # crbug.com/567802
 @benchmark.Owner(emails=['ssid@chromium.org'])
 class SmoothnessKeyDesktopMoveCases(_Smoothness):
   page_set = page_sets.KeyDesktopMoveCasesPageSet
@@ -240,9 +236,6 @@ class SmoothnessKeyMobileSites(_Smoothness):
     return StoryExpectations()
 
 
-@benchmark.Disabled('android')  # crbug.com/589580
-@benchmark.Disabled('android-reference')  # crbug.com/588786
-@benchmark.Disabled('mac')  # crbug.com/563615
 @benchmark.Owner(emails=['alancutter@chromium.org'])
 class SmoothnessToughAnimationCases(_Smoothness):
   page_set = page_sets.ToughAnimationCasesPageSet
