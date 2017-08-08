@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3325513b_a098e50f",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-08T22:50:00Z",
+      "side": 1,
+      "message": "Thanks for the revisions.",
+      "parentUuid": "8dedb6be_2f7e57c8",
+      "range": {
+        "startLine": 58,
+        "startChar": 23,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "914d6542_703f512d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 15
@@ -316,6 +340,30 @@
       "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13187420_441b3c75",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 71477,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-08T22:50:00Z",
+      "side": 1,
+      "message": "\u003e The honest answer is I\u0027m not sure. What I really wanted was a 2 dimensional UMA (one axis being the depth, the other being the size), but that doesn\u0027t seem practical. So this was a proxy, the idea being that if we still observed really long path names, we could infer if it was because each individual component was long or just because the tree was really deep.\n\nOkay, let\u0027s give it a try.\n\nThere are other options to try to get a two-dimensional UMA.  None are particularly good.  If this doesn\u0027t yield useful data, and you need more info, we can try to switch to another.  Chat with me if you need.",
+      "parentUuid": "190b3e40_683e321b",
+      "range": {
+        "startLine": 71477,
+        "startChar": 74,
+        "endLine": 71477,
+        "endChar": 0
+      },
+      "revId": "be384d8f8d3924e8562198ee1524ecdd4110514e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
