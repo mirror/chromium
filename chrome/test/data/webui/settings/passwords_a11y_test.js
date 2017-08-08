@@ -2,7 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/** @fileoverview Suite of accessibility tests for the passwords page. */
+/**
+ * @fileoverview Define accessibility tests for the MANAGE_PASSWORDS route.
+ */
 
 AccessibilityTest.define({
   /** @override */
@@ -65,6 +67,17 @@ AccessibilityTest.define({
       Polymer.dom.flush();
 
       assertEquals(10, this.passwordsSection.savedPasswords.length);
+    },
+  },
+  violationFilter: {
+    // TODO(quacht): remove this exception once the color contrast issue is
+    // solved.
+    // http://crbug.com/748608
+    'color-contrast': function(nodeResult) {
+      return nodeResult.element.id == 'prompt';
+    },
+   'aria-valid-attr': function(nodeResult) {
+      return nodeResult.element.hasAttribute('aria-active-attribute');
     },
   }
 });
