@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0503f2e2_9eac3173",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-08T21:31:56Z",
+      "side": 0,
+      "message": "Looks like not changed.",
+      "parentUuid": "97229ee7_d180d457",
+      "range": {
+        "startLine": 73,
+        "startChar": 67,
+        "endLine": 73,
+        "endChar": 71
+      },
+      "revId": "ab0745ba2d65b6a800660718c797d673956b6bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9df18689_a3c13926",
         "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-08T00:54:06Z",
       "side": 0,
       "message": "One more accidental change?",
+      "range": {
+        "startLine": 193,
+        "startChar": 68,
+        "endLine": 193,
+        "endChar": 72
+      },
+      "revId": "ab0745ba2d65b6a800660718c797d673956b6bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0157c521_ce7e0b62",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-08T21:31:56Z",
+      "side": 0,
+      "message": "Nope. It looks to me like not changed.",
+      "parentUuid": "9df18689_a3c13926",
       "range": {
         "startLine": 193,
         "startChar": 68,

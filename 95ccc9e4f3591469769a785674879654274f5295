@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bfc7312b_ce8d9e0b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-08T21:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f58fbf_3c4a5ecd",
+      "revId": "95ccc9e4f3591469769a785674879654274f5295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a67b184_7f0d7ec4",
         "filename": "third_party/WebKit/Source/devtools/front_end/event_listeners/EventListenersView.js",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-08T00:54:06Z",
       "side": 1,
       "message": "Why did this change? Was broken before?",
+      "revId": "95ccc9e4f3591469769a785674879654274f5295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4eed62_38cdb222",
+        "filename": "third_party/WebKit/Source/devtools/front_end/event_listeners/EventListenersView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-08T21:31:56Z",
+      "side": 1,
+      "message": "yes, but probability of null is very low.",
+      "parentUuid": "8a67b184_7f0d7ec4",
       "revId": "95ccc9e4f3591469769a785674879654274f5295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "5801ec72_334c8282",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions/ExtensionServer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-08T21:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f54bc246_cc6e9bd9",
+      "range": {
+        "startLine": 433,
+        "startChar": 15,
+        "endLine": 433,
+        "endChar": 23
+      },
+      "revId": "95ccc9e4f3591469769a785674879654274f5295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca564170_99e15d13",
         "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
         "patchSetId": 1
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "d490e333_18b1a2ba",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-08T21:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca564170_99e15d13",
+      "revId": "95ccc9e4f3591469769a785674879654274f5295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81097e2a_6c99e064",
         "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "95ccc9e4f3591469769a785674879654274f5295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4318d4c7_1eeb2597",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-08T21:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81097e2a_6c99e064",
+      "revId": "95ccc9e4f3591469769a785674879654274f5295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "95c765b8_193650da",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-08T21:31:56Z",
+      "side": 1,
+      "message": "By accident it works before, since we used to have result remote object in outer scope.",
+      "parentUuid": "7a1a2a92_c7b537f5",
+      "range": {
+        "startLine": 294,
+        "startChar": 47,
+        "endLine": 294,
+        "endChar": 53
+      },
+      "revId": "95ccc9e4f3591469769a785674879654274f5295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3583a53_721806d9",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
         "patchSetId": 1
@@ -136,6 +256,30 @@
       "revId": "95ccc9e4f3591469769a785674879654274f5295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15755c3f_0846bf3a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-08T21:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3583a53_721806d9",
+      "range": {
+        "startLine": 694,
+        "startChar": 2,
+        "endLine": 694,
+        "endChar": 7
+      },
+      "revId": "95ccc9e4f3591469769a785674879654274f5295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "0664b18b_8903a81b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/RuntimeModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-08T21:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6baf6901_dc72eaea",
+      "range": {
+        "startLine": 451,
+        "startChar": 6,
+        "endLine": 451,
+        "endChar": 12
+      },
+      "revId": "95ccc9e4f3591469769a785674879654274f5295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86f1dced_9edcef70",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptCompiler.js",
         "patchSetId": 1
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "3abbd67b_bb13d8b7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptCompiler.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-08T21:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86f1dced_9edcef70",
+      "range": {
+        "startLine": 66,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 17
+      },
+      "revId": "95ccc9e4f3591469769a785674879654274f5295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f1f2db2_13e14cf7",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/ObjectEventListenersSidebarPane.js",
         "patchSetId": 1
@@ -199,6 +391,24 @@
       "revId": "95ccc9e4f3591469769a785674879654274f5295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f15cc12_d3853304",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/ObjectEventListenersSidebarPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-08T21:31:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f1f2db2_13e14cf7",
+      "revId": "95ccc9e4f3591469769a785674879654274f5295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
