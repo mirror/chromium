@@ -16,6 +16,24 @@
       "revId": "47ffa2a2f08d9c6bb7110f3712868ba621b1e265",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b263dc_a6cd94b7",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-08T22:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47704ca9_1ced1481",
+      "revId": "47ffa2a2f08d9c6bb7110f3712868ba621b1e265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
