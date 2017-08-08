@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ea8bed5_d8ff9bf0",
+        "filename": "tools/perf/benchmarks/smoothness.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-08T16:19:53Z",
+      "side": 1,
+      "message": "This should be removed as well",
+      "revId": "2355226dbc087f3b93bdb2eda4747a6094d57c7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5acc40c6_049dfac4",
+        "filename": "tools/perf/benchmarks/smoothness.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-08T16:19:53Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "2355226dbc087f3b93bdb2eda4747a6094d57c7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
