@@ -92,6 +92,10 @@ const gfx::Size& NotificationSurface::GetContentSize() const {
   return root_surface()->content_size();
 }
 
+void NotificationSurface::FocusOnSurfaceWindow() {
+  return root_surface()->window()->Focus();
+}
+
 void NotificationSurface::OnSurfaceCommit() {
   SurfaceTreeHost::OnSurfaceCommit();
 

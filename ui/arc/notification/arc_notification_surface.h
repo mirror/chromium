@@ -52,6 +52,8 @@ class ArcNotificationSurface {
   // if it doesn't attach to any host.
   virtual views::NativeViewHost* GetAttachedHost() const = 0;
 
+  virtual void FocusOnSurfaceWindow() = 0;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(ArcNotificationSurface);
 };
