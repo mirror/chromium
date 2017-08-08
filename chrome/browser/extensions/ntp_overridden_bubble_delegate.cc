@@ -111,7 +111,7 @@ void NtpOverriddenBubbleDelegate::PerformAction(
     const extensions::ExtensionIdList& list) {
   for (size_t i = 0; i < list.size(); ++i) {
     service()->DisableExtension(list[i],
-                                extensions::Extension::DISABLE_USER_ACTION);
+                                extensions::EXTENSION_DISABLE_USER_ACTION);
   }
 }
 

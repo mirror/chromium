@@ -129,7 +129,7 @@ void EasyUnlockAppManagerImpl::DisableAppIfLoaded() {
     return;
 
   extension_service->DisableExtension(app_id_,
-                                      extensions::Extension::DISABLE_RELOAD);
+                                      extensions::EXTENSION_DISABLE_RELOAD);
 }
 
 void EasyUnlockAppManagerImpl::ReloadApp() {

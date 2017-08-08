@@ -202,7 +202,7 @@ IN_PROC_BROWSER_TEST_F(ChromeAppAPITest, InstallAndRunningState) {
   ExtensionService* service = extensions::ExtensionSystem::Get(
       browser()->profile())->extension_service();
   service->DisableExtension(extension->id(),
-                            Extension::DISABLE_PERMISSIONS_INCREASE);
+                            extensions::EXTENSION_DISABLE_PERMISSIONS_INCREASE);
   ui_test_utils::NavigateToURL(browser(), app_url);
 
   EXPECT_EQ("disabled", InstallStateInMainFrame());

@@ -90,6 +90,7 @@ using content::BrowserThread;
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 using extensions::Extension;
+using extensions::ExtensionDisableReason;
 using extensions::ExtensionPrefs;
 using extensions::ExtensionRegistry;
 using extensions::ExtensionSystem;
@@ -1012,7 +1013,7 @@ bool SupervisedUserService::MustRemainInstalled(const Extension* extension,
 }
 
 bool SupervisedUserService::MustRemainDisabled(const Extension* extension,
-                                               Extension::DisableReason* reason,
+                                               ExtensionDisableReason* reason,
                                                base::string16* error) const {
   DCHECK(ProfileIsSupervised());
   ExtensionState state = GetExtensionState(*extension);
@@ -1029,20 +1030,21 @@ bool SupervisedUserService::MustRemainDisabled(const Extension* extension,
     // We do nothing and we don't add an extra disable reason.
     ExtensionPrefs* extension_prefs = ExtensionPrefs::Get(profile_);
     if (extension_prefs->HasDisableReason(
-            extension->id(), Extension::DISABLE_PERMISSIONS_INCREASE)) {
+            extension->id(),
+            extensions::EXTENSION_DISABLE_PERMISSIONS_INCREASE)) {
       if (reason)
-        *reason = Extension::DISABLE_PERMISSIONS_INCREASE;
+        *reason = extensions::EXTENSION_DISABLE_PERMISSIONS_INCREASE;
       return true;
     }
     if (reason)
-      *reason = Extension::DISABLE_CUSTODIAN_APPROVAL_REQUIRED;
+      *reason = extensions::EXTENSION_DISABLE_CUSTODIAN_APPROVAL_REQUIRED;
     if (base::FeatureList::IsEnabled(
             supervised_users::kSupervisedUserInitiatedExtensionInstall)) {
       // If the Extension isn't pending a custodian approval already, send
       // an approval request.
       if (!extension_prefs->HasDisableReason(
               extension->id(),
-              Extension::DISABLE_CUSTODIAN_APPROVAL_REQUIRED)) {
+              extensions::EXTENSION_DISABLE_CUSTODIAN_APPROVAL_REQUIRED)) {
         // MustRemainDisabled is a const method and hence cannot call
         // AddExtensionInstallRequest directly.
         SupervisedUserService* supervised_user_service =
@@ -1071,7 +1073,7 @@ void SupervisedUserService::OnExtensionInstalled(
   // If an already approved extension is updated without requiring
   // new permissions, we update the approved_version.
   if (!extension_prefs->HasDisableReason(
-          id, Extension::DISABLE_PERMISSIONS_INCREASE) &&
+          id, extensions::EXTENSION_DISABLE_PERMISSIONS_INCREASE) &&
       approved_extensions_map_.count(id) > 0 &&
       approved_extensions_map_[id] < version) {
     approved_extensions_map_[id] = version;
@@ -1137,17 +1139,19 @@ void SupervisedUserService::ChangeExtensionStateIfNecessary(
     case ExtensionState::FORCED:
       break;
     case ExtensionState::REQUIRE_APPROVAL:
-      service->DisableExtension(extension_id,
-                                Extension::DISABLE_CUSTODIAN_APPROVAL_REQUIRED);
+      service->DisableExtension(
+          extension_id,
+          extensions::EXTENSION_DISABLE_CUSTODIAN_APPROVAL_REQUIRED);
       break;
     case ExtensionState::ALLOWED:
       extension_prefs->RemoveDisableReason(
-          extension_id, Extension::DISABLE_CUSTODIAN_APPROVAL_REQUIRED);
+          extension_id,
+          extensions::EXTENSION_DISABLE_CUSTODIAN_APPROVAL_REQUIRED);
       extension_prefs->RemoveDisableReason(
-          extension_id, Extension::DISABLE_PERMISSIONS_INCREASE);
+          extension_id, extensions::EXTENSION_DISABLE_PERMISSIONS_INCREASE);
       // If not disabled for other reasons, enable it.
       if (extension_prefs->GetDisableReasons(extension_id) ==
-          Extension::DISABLE_NONE) {
+          extensions::EXTENSION_DISABLE_NONE) {
         service->EnableExtension(extension_id);
       }
       break;
