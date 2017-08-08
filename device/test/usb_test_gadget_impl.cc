@@ -210,7 +210,7 @@ class UsbGadgetFactory : public UsbService::Observer,
     static uint32_t next_session_id;
     base::ProcessId process_id = base::GetCurrentProcId();
     session_id_ =
-        base::StringPrintf("%" CrPRIdPid "-%d", process_id, next_session_id++);
+        base::StringPrintf("%" CrPRIPid "-%d", process_id, next_session_id++);
 
     observer_.Add(usb_service_);
   }

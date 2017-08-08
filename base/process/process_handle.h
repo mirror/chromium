@@ -44,13 +44,15 @@ const ProcessHandle kNullProcessHandle = 0;
 const ProcessId kNullProcessId = 0;
 #endif  // defined(OS_WIN)
 
-// To print ProcessIds portably use CrPRIdPid (based on PRIuS and friends from
+// To print ProcessIds portably use CrPRIPid (based on PRIuS and friends from
 // C99 and format_macros.h) like this:
-// base::StringPrintf("PID is %" CrPRIdPid ".\n", pid);
+// base::StringPrintf("PID is %" CrPRIPid ".\n", pid);
 #if defined(OS_WIN)
-#define CrPRIdPid "ld"
+#define CrPRIPid "ld"
+#elif defined(OS_FUCHSIA)
+#define CrPRIPid "lu"
 #else
-#define CrPRIdPid "d"
+#define CrPRIPid "d"
 #endif
 
 // Returns the id of the current process.
