@@ -16,6 +16,8 @@
 #include "chrome/installer/zucchini/buffer_view.h"
 #include "chrome/installer/zucchini/crc32.h"
 #include "chrome/installer/zucchini/io_utils.h"
+#include "chrome/installer/zucchini/patch_reader.h"
+#include "chrome/installer/zucchini/patch_writer.h"
 
 namespace {
 
@@ -68,6 +70,10 @@ class MappedFileWriter {
   DISALLOW_COPY_AND_ASSIGN(MappedFileWriter);
 };
 
+/******** Command-line Switches ********/
+
+const char kSwitchRaw[] = "raw";
+
 }  // namespace
 
 zucchini::status::Code MainGen(MainParams params) {
@@ -79,12 +85,29 @@ zucchini::status::Code MainGen(MainParams params) {
   if (!new_image.is_ok())
     return zucchini::status::kStatusFileReadError;
 
-  // TODO(etiennep): Implement.
+  zucchini::EnsemblePatchWriter patch_writer(old_image.region(),
+                                             new_image.region());
+
+  zucchini::status::Code status = zucchini::status::kStatusSuccess;
+  if (params.command_line.HasSwitch(kSwitchRaw))
+    status = zucchini::GenerateRaw(old_image.region(), new_image.region(),
+                                   &patch_writer);
+  else
+    status = zucchini::GenerateEnsemble(old_image.region(), new_image.region(),
+                                        &patch_writer);
+
+  if (status != zucchini::status::kStatusSuccess) {
+    params.out << "Fatal error found when generating patch." << std::endl;
+    return status;
+  }
 
   // Dummy output as placeholder.
-  MappedFileWriter patch(params.file_paths[2], 256);
+  MappedFileWriter patch(params.file_paths[2], patch_writer.SerializedSize());
   if (!patch.is_ok())
     return zucchini::status::kStatusFileWriteError;
+
+  if (!patch_writer.SerializeInto(patch.region()))
+    return zucchini::status::kStatusPatchWriteError;
 
   return zucchini::status::kStatusSuccess;
 }
@@ -98,13 +121,24 @@ zucchini::status::Code MainApply(MainParams params) {
   if (!patch.is_ok())
     return zucchini::status::kStatusFileReadError;
 
-  // TODO(etiennep): Implement.
+  auto patch_reader = zucchini::EnsemblePatchReader::Create(patch.region());
+  if (!patch_reader.has_value()) {
+    params.err << "Error reading patch header." << std::endl;
+    return zucchini::status::kStatusPatchReadError;
+  }
+  zucchini::PatchHeader header = patch_reader->header();
 
   // Dummy output as placeholder.
-  MappedFileWriter new_image(params.file_paths[2], 256);
+  MappedFileWriter new_image(params.file_paths[2], header.new_size);
   if (!new_image.is_ok())
     return zucchini::status::kStatusFileWriteError;
 
+  zucchini::status::Code status =
+      zucchini::Apply(old_image.region(), *patch_reader, new_image.region());
+  if (status != zucchini::status::kStatusSuccess) {
+    params.err << "Fatal error found while applying patch." << std::endl;
+    return status;
+  }
   return zucchini::status::kStatusSuccess;
 }
 
