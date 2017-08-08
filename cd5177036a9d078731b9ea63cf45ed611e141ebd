@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "21df70ab_4931a967",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T15:29:58Z",
+      "side": 1,
+      "message": "Maybe std::max instead of std::min here, to account for skinny layers.",
+      "revId": "cd5177036a9d078731b9ea63cf45ed611e141ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab5f6401_027a3eca",
         "filename": "cc/layers/layer_impl_unittest.cc",
         "patchSetId": 3
