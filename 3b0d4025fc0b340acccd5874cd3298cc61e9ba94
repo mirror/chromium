@@ -16,6 +16,24 @@
       "revId": "3b0d4025fc0b340acccd5874cd3298cc61e9ba94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338f8cc4_1481b23c",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-08T00:06:12Z",
+      "side": 1,
+      "message": "Oh, yes that\u0027s a mistake - sorry, I seem to be doing this a lot lately :/ I\u0027ll try to do a better job of checking it over before sending out. Thanks for always picking them up!! Deleted the duplicate.",
+      "parentUuid": "20b6fd27_6a26192e",
+      "revId": "3b0d4025fc0b340acccd5874cd3298cc61e9ba94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
