@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9f4a9ff_d3192daf",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-08T17:30:33Z",
+      "side": 1,
+      "message": "Maybe a little more detail here about the problem?",
+      "revId": "0b32059d529e12cf911f829674d1eb149bb5a24b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ae29d9_7f618672",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-08T17:30:33Z",
+      "side": 1,
+      "message": "nit: IsFrameSinkRegistered? Makes the code a little easier to read elsewhere:\n\ndata.IsRegistered vs. data.IsFrameSinkRegistered?",
+      "revId": "0b32059d529e12cf911f829674d1eb149bb5a24b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6faeaa4a_6565ffd7",
+        "filename": "components/viz/host/host_frame_sink_manager_unittests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-08T17:30:33Z",
+      "side": 1,
+      "message": "nit: Comment describing the intent of this test (i.e. what it\u0027s testing).",
+      "revId": "0b32059d529e12cf911f829674d1eb149bb5a24b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
