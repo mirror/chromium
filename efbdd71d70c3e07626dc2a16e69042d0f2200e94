@@ -93,6 +93,30 @@
       "revId": "efbdd71d70c3e07626dc2a16e69042d0f2200e94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c1ef0a7_aaf6143d",
+        "filename": "ash/test/ash_test_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-08T22:33:12Z",
+      "side": 1,
+      "message": "Yes, that sounds better to me. It\u0027s pretty unusual for observer functions to take a const object.",
+      "parentUuid": "7cedb7a2_145a79aa",
+      "range": {
+        "startLine": 483,
+        "startChar": 2,
+        "endLine": 483,
+        "endChar": 12
+      },
+      "revId": "efbdd71d70c3e07626dc2a16e69042d0f2200e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
