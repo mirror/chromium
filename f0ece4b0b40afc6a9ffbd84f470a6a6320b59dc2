@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06ad653e_237f6316",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-08T16:18:28Z",
+      "side": 1,
+      "message": "I\u0027m not sure we want to introduce nullability here. As a passive reader, I would assume that since only this property is labelled nullable, all other properties are non-nullable by default.",
+      "revId": "f0ece4b0b40afc6a9ffbd84f470a6a6320b59dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13fdd734_a380f725",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-08T16:18:28Z",
+      "side": 1,
+      "message": "nit: const may not have the intended effect here.",
+      "revId": "f0ece4b0b40afc6a9ffbd84f470a6a6320b59dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c9274d_2d1dedf7",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 2016,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-08T16:18:28Z",
+      "side": 1,
+      "message": "It would be simpler to invert this logic. \nif (strongSelf) { feature_engagement... }",
+      "revId": "f0ece4b0b40afc6a9ffbd84f470a6a6320b59dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33ee6ef_1f857501",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-08T16:18:28Z",
+      "side": 1,
+      "message": "Avoid property accessors in init. Use ivars.",
+      "revId": "f0ece4b0b40afc6a9ffbd84f470a6a6320b59dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5686867b_cb7b52ee",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-08T16:18:28Z",
+      "side": 1,
+      "message": "nit: if (!object)",
+      "revId": "f0ece4b0b40afc6a9ffbd84f470a6a6320b59dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
