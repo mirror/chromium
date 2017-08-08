@@ -16,6 +16,24 @@
       "revId": "f6bf23d73e2bf069fa9ba68bc3c7026404f34a10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8003026_f0d36b82",
+        "filename": "cc/trees/layer_tree_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-08T22:15:42Z",
+      "side": 1,
+      "message": "Most of the uses are in tests, where it doesn\u0027t make a difference. Until it does, I think it makes sense to keep a default value here.",
+      "parentUuid": "e5100fb4_4920dfee",
+      "revId": "f6bf23d73e2bf069fa9ba68bc3c7026404f34a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
