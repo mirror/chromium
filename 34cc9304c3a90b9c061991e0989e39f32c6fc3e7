@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d6a0fd6_7ad722b5",
+        "filename": "chrome/installer/zucchini/type_win_pe.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-08T20:46:42Z",
+      "side": 1,
+      "message": "I don\u0027t think we\u0027ll use this?",
+      "revId": "34cc9304c3a90b9c061991e0989e39f32c6fc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3fe322_36893629",
+        "filename": "chrome/installer/zucchini/type_win_pe.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-08T20:46:42Z",
+      "side": 1,
+      "message": "NIT: 0x3C  (capitalize)",
+      "range": {
+        "startLine": 48,
+        "startChar": 25,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "34cc9304c3a90b9c061991e0989e39f32c6fc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e5228b_d3db3893",
+        "filename": "chrome/installer/zucchini/type_win_pe.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-08T20:46:42Z",
+      "side": 1,
+      "message": "0x10B",
+      "range": {
+        "startLine": 84,
+        "startChar": 28,
+        "endLine": 84,
+        "endChar": 42
+      },
+      "revId": "34cc9304c3a90b9c061991e0989e39f32c6fc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2388904_0fca871a",
+        "filename": "chrome/installer/zucchini/type_win_pe.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-08T20:46:42Z",
+      "side": 1,
+      "message": "0x20B",
+      "range": {
+        "startLine": 121,
+        "startChar": 28,
+        "endLine": 121,
+        "endChar": 42
+      },
+      "revId": "34cc9304c3a90b9c061991e0989e39f32c6fc3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
