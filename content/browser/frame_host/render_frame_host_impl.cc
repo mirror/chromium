@@ -5,6 +5,7 @@
 #include "content/browser/frame_host/render_frame_host_impl.h"
 
 #include <algorithm>
+#include <list>
 #include <utility>
 
 #include "base/bind.h"
@@ -4246,5 +4247,25 @@ void RenderFrameHostImpl::ForwardGetInterfaceToRenderFrame(
   GetRemoteInterfaces()->GetInterface(interface_name, std::move(pipe));
 }
 #endif
+
+void RenderFrameHostImpl::ForEachImmediateLocalRoot(
+    const base::Callback<void(RenderFrameHostImpl*)>& callback) {
+  if (!frame_tree_node_->child_count())
+    return;
+
+  std::list<FrameTreeNode*> queue;
+  for (size_t index = 0; index < frame_tree_node_->child_count(); ++index)
+    queue.push_back(frame_tree_node_->child_at(index));
+  while (queue.size()) {
+    FrameTreeNode* current = queue.front();
+    queue.pop_front();
+    if (current->current_frame_host()->is_local_root()) {
+      callback.Run(current->current_frame_host());
+    } else {
+      for (size_t index = 0; index < current->child_count(); ++index)
+        queue.push_back(current->child_at(index));
+    }
+  }
+}
 
 }  // namespace content
