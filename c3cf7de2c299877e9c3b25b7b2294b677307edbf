@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9711332_785d99e2",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-08T21:20:33Z",
+      "side": 0,
+      "message": "From this CL: https://chromium-review.googlesource.com/c/588847/\nI made a mistake of forward/backward.",
+      "revId": "c3cf7de2c299877e9c3b25b7b2294b677307edbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
