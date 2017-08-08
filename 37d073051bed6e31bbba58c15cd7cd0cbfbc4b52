@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4af23a87_b1fdc203",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-08T11:41:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "85601b04_97c0f73b",
+      "range": {
+        "startLine": 1200,
+        "startChar": 6,
+        "endLine": 1200,
+        "endChar": 28
+      },
+      "revId": "37d073051bed6e31bbba58c15cd7cd0cbfbc4b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94f83c1f_89e2534c",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
         "patchSetId": 2
