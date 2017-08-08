@@ -12,6 +12,42 @@
 
 using std::vector;
 
+#include <windows.h> // Defines macros used by TraceLoggingProvider.h
+#include <TraceLoggingProvider.h>  // The native TraceLogging API
+
+// Work around incompatibility between TraceLoggingProvider.h and /utf-8
+// https://developercommunity.visualstudio.com/content/problem/85934/traceloggingproviderh-is-incompatible-with-utf-8.html
+#undef _TlgPragmaUtf8Begin
+#undef _TlgPragmaUtf8End
+#define _TlgPragmaUtf8Begin
+#define _TlgPragmaUtf8End
+
+// Forward-declare the g_hMyComponentProvider variable that you will use for tracing in this component
+TRACELOGGING_DECLARE_PROVIDER(g_hMyProvider);
+
+// GUID generated with EtwGuid.exe as described here:
+// https://blogs.msdn.microsoft.com/dcook/2015/09/08/etw-provider-names-and-guids/
+// >EtwGuid.exe Chrome.Battor
+// Provider can be recorded using *Chrome.Battor syntax and it will show up in
+// UIforETW's default Randomascii Chrome and Multi Events view.
+TRACELOGGING_DEFINE_PROVIDER(
+    g_hMyProvider,
+    "Chrome.Battor",
+    // {c58f1405-1112-54dc-adf1-b8acb8c050ec}
+    (0xc58f1405, 0x1112, 0x54dc, 0xad, 0xf1, 0xb8, 0xac, 0xb8, 0xc0, 0x50, 0xec));
+
+class TraceLoggingRegistrar {
+ public:
+  TraceLoggingRegistrar() {
+    // Register the provider
+    TraceLoggingRegister(g_hMyProvider);
+  }
+  ~TraceLoggingRegistrar() {
+    // Stop TraceLogging and unregister the provider
+    TraceLoggingUnregister(g_hMyProvider);
+  }
+} g_trace_logging_singleton;
+
 namespace battor {
 
 namespace {
@@ -401,6 +437,7 @@ void BattOrAgent::PerformAction(Action action) {
       return;
     case Action::READ_INIT_ACK:
       connection_->ReadMessage(BATTOR_MESSAGE_TYPE_CONTROL_ACK);
+      TraceLoggingWrite(g_hMyProvider, "Battor started");
       return;
     case Action::SEND_SET_GAIN:
       // Set the BattOr's gain. Setting the gain tells the BattOr the range of
@@ -421,6 +458,7 @@ void BattOrAgent::PerformAction(Action action) {
     case Action::SEND_EEPROM_REQUEST:
       // Read the BattOr's EEPROM to get calibration information that's required
       // to convert the raw samples to accurate ones.
+      TraceLoggingWrite(g_hMyProvider, "Battor stopping");
       SendControlMessage(BATTOR_CONTROL_MESSAGE_TYPE_READ_EEPROM,
                          sizeof(BattOrEEPROM), 0);
       return;
