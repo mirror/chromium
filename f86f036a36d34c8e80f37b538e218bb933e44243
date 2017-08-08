@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "a0c29319_64fc520d",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1228209
+      },
+      "writtenOn": "2017-08-08T21:10:41Z",
+      "side": 1,
+      "message": "What if 256 samples alignment is not required? 6ms of extra latency is not much, but still.",
+      "parentUuid": "6b835664_40ca61a5",
+      "range": {
+        "startLine": 207,
+        "startChar": 7,
+        "endLine": 207,
+        "endChar": 30
+      },
+      "revId": "f86f036a36d34c8e80f37b538e218bb933e44243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0cb37e7_4ffe79c3",
         "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa_input_impl.cc",
         "patchSetId": 1
@@ -92,6 +116,30 @@
       "revId": "f86f036a36d34c8e80f37b538e218bb933e44243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a0bd02_7b041711",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa_input_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1228209
+      },
+      "writtenOn": "2017-08-08T21:10:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9cf7297d_5ab0e072",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 58
+      },
+      "revId": "f86f036a36d34c8e80f37b538e218bb933e44243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
