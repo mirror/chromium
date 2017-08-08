@@ -11,8 +11,7 @@
     android:background="?android:attr/selectableItemBackground"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingBottom="12dp"
-    android:paddingTop="12dp">
+    android:padding="16dp">
 
     <include layout="@layout/signin_promo_view_impl"/>
 
