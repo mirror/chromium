@@ -29,6 +29,7 @@ struct CONTENT_EXPORT SyntheticPointerActionParams {
     PRESS,
     MOVE,
     RELEASE,
+    LEAVE,
     IDLE,
     POINTER_ACTION_TYPE_MAX = IDLE
   };
@@ -85,6 +86,8 @@ struct CONTENT_EXPORT SyntheticPointerActionParams {
       SyntheticPointerActionParams::Button button);
   static blink::WebMouseEvent::Button GetWebMouseEventButton(
       SyntheticPointerActionParams::Button button);
+  static blink::WebMouseEvent::Button GetWebMouseEventButtonFromModifier(
+      unsigned modifiers);
 
  private:
   friend struct IPC::ParamTraits<content::SyntheticPointerActionParams>;
