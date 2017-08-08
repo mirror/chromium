@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c4890f5_8f04ff83",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 3032,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-08T20:22:21Z",
+      "side": 1,
+      "message": "I would not put the bug reference to a feature bug here. This Should only be for test related bugs. IMO.",
+      "range": {
+        "startLine": 3032,
+        "startChar": 17,
+        "endLine": 3032,
+        "endChar": 33
+      },
+      "revId": "d3b20040de088f8f4b641a7b40cafdd820e41df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856ad405_b5bdd49a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-08T20:22:21Z",
+      "side": 1,
+      "message": "Per our offline discussion lets:\n\n* Inline most of this.\n* Move this conversions into a map.\n* Add the special promotion of these properties into the sorting function.\n* Use a symbol to add the special names to the properties.",
+      "revId": "d3b20040de088f8f4b641a7b40cafdd820e41df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
