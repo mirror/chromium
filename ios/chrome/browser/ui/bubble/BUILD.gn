@@ -12,6 +12,8 @@ source_set("bubble") {
     "bubble_view_anchor_point_provider.h",
     "bubble_view_controller.h",
     "bubble_view_controller.mm",
+    "bubble_view_controller_presenter.h",
+    "bubble_view_controller_presenter.mm",
   ]
   deps = [
     "//base",
@@ -26,6 +28,7 @@ source_set("unit_tests") {
   testonly = true
   sources = [
     "bubble_util_unittest.mm",
+    "bubble_view_controller_presenter_unittests.mm",
     "bubble_view_controller_unittest.mm",
   ]
   deps = [
@@ -34,5 +37,8 @@ source_set("unit_tests") {
     "//base:i18n",
     "//testing/gtest",
   ]
-  libs = [ "CoreGraphics.framework" ]
+  libs = [
+    "UIKit.framework",
+    "CoreGraphics.framework",
+  ]
 }
