@@ -88,6 +88,24 @@
       "revId": "ae5212df5054d45a05dfc23b3f8066afe7870351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518d0d44_10dcf029",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-08T23:29:32Z",
+      "side": 1,
+      "message": "| through mojo, it would be\n\nsorry, i understood but i deleted an important part of my reply.  :)\n\ntrue, the renderer could forward the signal via mojo.  my concern, then, is that it\u0027s still an implementation detail of when overlays work.  \"persistent video\" isn\u0027t obviously related to overlays from the client\u0027s point of view.\n\nseems a lot simpler for the client if the overlay impl cancels the overlay when needed, similar to the \u0027frame hidden\u0027, etc. cases.\n\n| GetAllFrames\n\nRFH doesn\u0027t currently know anything about the overlays that use it.  maybe they should.  i\u0027ll think about it more.\n\n| which direction is that call?\n\nit would be a call from PiPM to (something) to ask if a transition is okay.  currently, PiPM asks WebContents whether there\u0027s a full screen video.",
+      "parentUuid": "39ebe1d4_e2fd2282",
+      "revId": "ae5212df5054d45a05dfc23b3f8066afe7870351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
