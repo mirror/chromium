@@ -178,7 +178,6 @@ class ServiceWorkerPerfTest(perf_benchmark.PerfBenchmark):
     return page_sets.ServiceWorkerStoryExpectations()
 
 
-@benchmark.Disabled('android-webview')  # http://crbug.com/653924
 @benchmark.Owner(emails=['horo@chromium.org'])
 class ServiceWorkerMicroBenchmarkPerfTest(perf_benchmark.PerfBenchmark):
   """This test is a microbenchmark of service worker.
