@@ -1,3 +1,5 @@
 include_rules = [
+  "+cc/quads",
+  "+gpu/ipc/common",
   "+ui/gfx/mojo",
 ]
