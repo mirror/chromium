@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a5c56fb_528e4915",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-08T23:42:49Z",
+      "side": 1,
+      "message": "Ah nice catch I forgot you had to cancel it here!",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 52
+      },
+      "revId": "1ac7c187d9739ab9607dcb4ca7e394f30307227e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
