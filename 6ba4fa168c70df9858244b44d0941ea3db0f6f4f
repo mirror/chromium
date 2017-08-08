@@ -16,6 +16,23 @@
       "revId": "6ba4fa168c70df9858244b44d0941ea3db0f6f4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d198cef0_b82ed183",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/MultiActivityTestCommon.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-08T21:22:38Z",
+      "side": 1,
+      "message": "Nit: You can probably simplify this to waitForCallback(0) (But I am not particularly picky)",
+      "revId": "6ba4fa168c70df9858244b44d0941ea3db0f6f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
