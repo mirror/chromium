@@ -135,6 +135,8 @@ DocumentMarkerController::DocumentMarkerController(Document& document)
 void DocumentMarkerController::Clear() {
   markers_.clear();
   possibly_existing_marker_types_ = 0;
+  // Clear() should not be called while suggestion replacement mode is enabled
+  DCHECK(!suggestion_replacement_mode_enabled_);
 }
 
 void DocumentMarkerController::AddSpellingMarker(const EphemeralRange& range,
@@ -447,6 +449,48 @@ DocumentMarker* DocumentMarkerController::FirstMarkerIntersectingOffsetRange(
   return nullptr;
 }
 
+HeapVector<std::pair<Member<Node>, Member<DocumentMarker>>>
+DocumentMarkerController::MarkersIntersectingRange(
+    const EphemeralRangeInFlatTree& range,
+    DocumentMarker::MarkerTypes types) {
+  HeapVector<std::pair<Member<Node>, Member<DocumentMarker>>> node_marker_pairs;
+  if (!PossiblyHasMarkers(types))
+    return node_marker_pairs;
+
+  Node* const range_start_container =
+      range.StartPosition().ComputeContainerNode();
+  const unsigned range_start_offset =
+      range.StartPosition().ComputeOffsetInContainerNode();
+  Node* const range_end_container = range.EndPosition().ComputeContainerNode();
+  const unsigned range_end_offset =
+      range.EndPosition().ComputeOffsetInContainerNode();
+
+  for (Node& node : range.Nodes()) {
+    MarkerLists* const markers = markers_.at(&node);
+    if (!markers)
+      continue;
+
+    for (DocumentMarker::MarkerType type : types) {
+      const DocumentMarkerList* const list = ListForType(markers, type);
+      if (!list)
+        continue;
+
+      const unsigned start_offset =
+          node == range_start_container ? range_start_offset : 0;
+      const unsigned end_offset = node == range_end_container
+                                      ? range_end_offset
+                                      : node.MaxCharacterOffset();
+
+      const DocumentMarkerVector& markers_from_this_list =
+          list->MarkersIntersectingRange(start_offset, end_offset);
+      for (DocumentMarker* marker : markers_from_this_list)
+        node_marker_pairs.push_back(std::make_pair(&node, marker));
+    }
+  }
+
+  return node_marker_pairs;
+}
+
 DocumentMarkerVector DocumentMarkerController::MarkersFor(
     Node* node,
     DocumentMarker::MarkerTypes marker_types) {
@@ -551,6 +595,16 @@ void DocumentMarkerController::InvalidateRectsForAllTextMatchMarkers() {
   }
 }
 
+void DocumentMarkerController::PrepareForSuggestionMarkerReplacement() {
+  DCHECK(!suggestion_replacement_mode_enabled_);
+  suggestion_replacement_mode_enabled_ = true;
+}
+
+void DocumentMarkerController::SuggestionMarkerReplacementFinished() {
+  DCHECK(suggestion_replacement_mode_enabled_);
+  suggestion_replacement_mode_enabled_ = false;
+}
+
 DEFINE_TRACE(DocumentMarkerController) {
   visitor->Trace(markers_);
   visitor->Trace(document_);
@@ -584,6 +638,18 @@ void DocumentMarkerController::RemoveSpellingMarkersUnderWords(
       ToSpellCheckMarkerListImpl(list)->RemoveMarkersUnderWords(
           ToText(node).data(), words);
     }
+  }
+}
+
+void DocumentMarkerController::RemoveSuggestionMarkerByTag(
+    const Node* node,
+    uint32_t marker_tag) {
+  MarkerLists* markers = markers_.at(node);
+  SuggestionMarkerListImpl* const list = ToSuggestionMarkerListImpl(
+      ListForType(markers, DocumentMarker::kSuggestion));
+  if (list->RemoveMarkerByTag(marker_tag)) {
+    node->GetLayoutObject()->SetShouldDoFullPaintInvalidation(
+        PaintInvalidationReason::kDocumentMarker);
   }
 }
 
@@ -789,7 +855,8 @@ void DocumentMarkerController::DidUpdateCharacterData(CharacterData* node,
     if (!list)
       continue;
 
-    if (list->ShiftMarkers(offset, old_length, new_length))
+    if (list->ShiftMarkers(*node, offset, old_length, new_length,
+                           suggestion_replacement_mode_enabled_))
       did_shift_marker = true;
   }
 

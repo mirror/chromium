@@ -34,7 +34,8 @@ class CORE_EXPORT SuggestionMarker final : public StyleableMarker {
   Color SuggestionHighlightColor() const;
 
   // Replace the suggestion at suggestion_index with new_suggestion.
-  void SetSuggestion(unsigned suggestion_index, const String& new_suggestion);
+  void ReplaceSuggestion(unsigned suggestion_index,
+                         const String& new_suggestion);
 
  private:
   static uint32_t NextTag();

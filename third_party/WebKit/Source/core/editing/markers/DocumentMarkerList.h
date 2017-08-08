@@ -11,6 +11,7 @@
 
 namespace blink {
 
+class CharacterData;
 class DocumentMarker;
 
 // This is an interface implemented by classes that DocumentMarkerController
@@ -52,9 +53,11 @@ class CORE_EXPORT DocumentMarkerList
   virtual bool RemoveMarkers(unsigned start_offset, int length) = 0;
 
   // Returns true if at least one marker is shifted or removed, false otherwise
-  virtual bool ShiftMarkers(unsigned offset,
+  virtual bool ShiftMarkers(const CharacterData& node,
+                            unsigned offset,
                             unsigned old_length,
-                            unsigned new_length) = 0;
+                            unsigned new_length,
+                            bool edit_is_suggestion_replacement) = 0;
 
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 

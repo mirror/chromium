@@ -633,8 +633,18 @@ void InlineTextBoxPainter::PaintDocumentMarkers(
   DocumentMarkerVector markers =
       inline_text_box_.GetLineLayoutItem().GetDocument().Markers().MarkersFor(
           inline_text_box_.GetLineLayoutItem().GetNode());
-  DocumentMarkerVector::const_iterator marker_it = markers.begin();
 
+  // We don't want to paint spelling underlines on text marked with a
+  // suggestion marker (the suggestion underline wins). So we make a list of
+  // suggestion markers to check against.
+  DocumentMarkerVector suggestion_markers;
+  std::copy_if(markers.begin(), markers.end(),
+               std::back_inserter(suggestion_markers),
+               [](const DocumentMarker* marker) {
+                 return marker->GetType() == DocumentMarker::kSuggestion;
+               });
+
+  DocumentMarkerVector::const_iterator marker_it = markers.begin();
   // Give any document markers that touch this run a chance to draw before the
   // text has been drawn.  Note end() points at the last char, not one past it
   // like endOffset and ranges do.
@@ -655,12 +665,28 @@ void InlineTextBoxPainter::PaintDocumentMarkers(
 
     // marker intersects this run.  Paint it.
     switch (marker.GetType()) {
-      case DocumentMarker::kSpelling:
+      case DocumentMarker::kSpelling: {
         if (marker_paint_phase == DocumentMarkerPaintPhase::kBackground)
           continue;
+
+        // Don't paint the spelling marker underline if it overlaps a suggestion
+        // marker.
+        const auto intersecting_suggestion_marker_it = std::find_if(
+            suggestion_markers.begin(), suggestion_markers.end(),
+            [&marker](const DocumentMarker* suggestion_marker) {
+              if (marker.EndOffset() <= suggestion_marker->StartOffset())
+                return false;
+              if (marker.StartOffset() >= suggestion_marker->EndOffset())
+                return false;
+              return true;
+            });
+        if (intersecting_suggestion_marker_it != suggestion_markers.end())
+          break;
+
         inline_text_box_.PaintDocumentMarker(paint_info.context, box_origin,
                                              marker, style, font, false);
         break;
+      }
       case DocumentMarker::kGrammar:
         if (marker_paint_phase == DocumentMarkerPaintPhase::kBackground)
           continue;
@@ -676,8 +702,24 @@ void InlineTextBoxPainter::PaintDocumentMarkers(
               paint_info, box_origin, ToTextMatchMarker(marker), style, font);
         }
         break;
-      case DocumentMarker::kComposition:
-      case DocumentMarker::kActiveSuggestion: {
+      case DocumentMarker::kComposition: {
+        // Don't paint the spelling marker underline if it overlaps a suggestion
+        // marker.
+        // TODO: eliminate code duplication
+        const auto intersecting_suggestion_marker_it = std::find_if(
+            suggestion_markers.begin(), suggestion_markers.end(),
+            [&marker](const DocumentMarker* suggestion_marker) {
+              if (marker.EndOffset() <= suggestion_marker->StartOffset())
+                return false;
+              if (marker.StartOffset() >= suggestion_marker->EndOffset())
+                return false;
+              return true;
+            });
+        if (intersecting_suggestion_marker_it != suggestion_markers.end())
+          break;
+      }
+      case DocumentMarker::kActiveSuggestion:
+      case DocumentMarker::kSuggestion: {
         const StyleableMarker& styleable_marker = ToStyleableMarker(marker);
         if (marker_paint_phase == DocumentMarkerPaintPhase::kBackground) {
           PaintSingleMarkerBackgroundRun(paint_info.context, box_origin, style,

@@ -85,6 +85,7 @@ class CORE_EXPORT DocumentMarkerController final
       Node*,
       DocumentMarker::MarkerTypes = DocumentMarker::AllMarkers());
   void RemoveSpellingMarkersUnderWords(const Vector<String>& words);
+  void RemoveSuggestionMarkerByTag(const Node*, uint32_t marker_tag);
   void RepaintMarkers(
       DocumentMarker::MarkerTypes = DocumentMarker::AllMarkers());
   // Returns true if markers within a range are found.
@@ -112,6 +113,13 @@ class CORE_EXPORT DocumentMarkerController final
       unsigned start_offset,
       unsigned end_offset,
       DocumentMarker::MarkerTypes);
+  // Return all markers of the specified types whose interiors have non-empty
+  // overlap with the range [start_offset, end_offset]. Note that the range can
+  // be collapsed, in which case markers containing the offset in their
+  // interiors are returned.
+  HeapVector<std::pair<Member<Node>, Member<DocumentMarker>>>
+  MarkersIntersectingRange(const EphemeralRangeInFlatTree&,
+                           DocumentMarker::MarkerTypes);
   DocumentMarkerVector MarkersFor(
       Node*,
       DocumentMarker::MarkerTypes = DocumentMarker::AllMarkers());
@@ -119,6 +127,12 @@ class CORE_EXPORT DocumentMarkerController final
   Vector<IntRect> LayoutRectsForTextMatchMarkers();
   void InvalidateRectsForAllTextMatchMarkers();
   void InvalidateRectsForTextMatchMarkersInNode(const Node&);
+
+  // Changes the update behavior of suggestion markers to properly handle a
+  // replacement being provided.
+  void PrepareForSuggestionMarkerReplacement();
+  // Undoes the effect of PrepareForSuggestionMarkerReplacement().
+  void SuggestionMarkerReplacementFinished();
 
   DECLARE_TRACE();
 
@@ -156,6 +170,7 @@ class CORE_EXPORT DocumentMarkerController final
   // without going through the map.
   DocumentMarker::MarkerTypes possibly_existing_marker_types_;
   const Member<const Document> document_;
+  bool suggestion_replacement_mode_enabled_ = false;
 };
 
 }  // namespace blink

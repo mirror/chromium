@@ -42,8 +42,8 @@ Color SuggestionMarker::SuggestionHighlightColor() const {
   return suggestion_highlight_color_;
 }
 
-void SuggestionMarker::SetSuggestion(uint32_t suggestion_index,
-                                     const String& new_suggestion) {
+void SuggestionMarker::ReplaceSuggestion(uint32_t suggestion_index,
+                                         const String& new_suggestion) {
   DCHECK_LT(suggestion_index, suggestions_.size());
   suggestions_[suggestion_index] = new_suggestion;
 }

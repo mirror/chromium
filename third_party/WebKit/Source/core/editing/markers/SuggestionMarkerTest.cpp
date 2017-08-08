@@ -42,13 +42,13 @@ TEST_F(SuggestionMarkerTest, ConstructorAndGetters) {
   EXPECT_EQ(marker2->SuggestionHighlightColor(), Color::kBlack);
 }
 
-TEST_F(SuggestionMarkerTest, SetSuggestion) {
+TEST_F(SuggestionMarkerTest, ReplaceSuggestion) {
   Vector<String> suggestions = {"this", "that"};
   SuggestionMarker* marker = new SuggestionMarker(
       0, 1, suggestions, Color::kTransparent, Color::kDarkGray,
       StyleableMarker::Thickness::kThin, Color::kGray);
 
-  marker->SetSuggestion(1, "these");
+  marker->ReplaceSuggestion(1, "these");
 
   EXPECT_EQ(2u, marker->Suggestions().size());
 

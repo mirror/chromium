@@ -31,6 +31,8 @@
 #ifndef WebCompositionUnderline_h
 #define WebCompositionUnderline_h
 
+#include <string>
+#include <vector>
 #include "public/platform/WebColor.h"
 
 namespace blink {
@@ -38,23 +40,44 @@ namespace blink {
 // Class WebCompositionUnderline is intended to be used with WebWidget's
 // setComposition() method.
 struct WebCompositionUnderline {
-  WebCompositionUnderline()
-      : start_offset(0),
-        end_offset(0),
-        color(0),
-        thick(false),
-        background_color(0) {}
+  enum class Type {
+    // Creates a composition marker
+    COMPOSITION,
+    // Creates a suggestion marker that isn't cleared after the user picks a
+    // replacement
+    SUGGESTION,
+    // Creates a suggestion marker that is cleared after the user picks a
+    // replacement
+    MISSPELLING_SUGGESTION
+  };
 
-  WebCompositionUnderline(unsigned s,
-                          unsigned e,
-                          WebColor c,
-                          bool t,
-                          WebColor bc)
-      : start_offset(s),
+  WebCompositionUnderline()
+      : type(Type::COMPOSITION),
+        start_offset(0),
+        end_offset(0),
+        underline_color(0),
+        thick(false),
+        background_color(0),
+        suggestion_highlight_color(0),
+        suggestions(std::vector<std::string>()) {}
+
+  WebCompositionUnderline(
+      Type ty,
+      unsigned s,
+      unsigned e,
+      WebColor uc,
+      bool th,
+      WebColor bc,
+      WebColor shc = 0,
+      const std::vector<std::string>& su = std::vector<std::string>())
+      : type(ty),
+        start_offset(s),
         end_offset(e),
-        color(c),
-        thick(t),
-        background_color(bc) {}
+        underline_color(uc),
+        thick(th),
+        background_color(bc),
+        suggestion_highlight_color(shc),
+        suggestions(su) {}
 
   bool operator<(const WebCompositionUnderline& other) const {
     return start_offset != other.start_offset
@@ -64,11 +87,14 @@ struct WebCompositionUnderline {
 
   // Need to update IPC_STRUCT_TRAITS_BEGIN(blink::WebCompositionUnderline)
   // if members change.
+  Type type;
   unsigned start_offset;
   unsigned end_offset;
-  WebColor color;
+  WebColor underline_color;
   bool thick;
   WebColor background_color;
+  WebColor suggestion_highlight_color;
+  std::vector<std::string> suggestions;
 };
 
 }  // namespace blink
