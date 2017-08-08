@@ -77,6 +77,14 @@ void MockInputDispositionHandler::OnUnexpectedEventAck(
   unexpected_event_ack_called_ = true;
 }
 
+bool MockInputDispositionHandler::OnWhiteListedTouchAction(
+    ui::WhiteListedTouchDispositionGestureFilter&
+        white_listed_touch_disposition_gesture_filter,
+    uint32_t unique_touch_event_id,
+    InputEventAckState ack_result) {
+  return false;
+}
+
 size_t MockInputDispositionHandler::GetAndResetAckCount() {
   size_t ack_count = ack_count_;
   ack_count_ = 0;

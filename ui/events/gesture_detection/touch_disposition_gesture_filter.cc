@@ -214,6 +214,145 @@ void TouchDispositionGestureFilter::OnTouchEventAck(
   }
 }
 
+bool TouchDispositionGestureFilter::OnWhiteListedTouchAction(
+    WhiteListedTouchDispositionGestureFilter&
+        white_listed_touch_disposition_gesture_filter,
+    uint32_t unique_touch_event_id,
+    bool event_consumed) {
+  if (IsEmpty() || (Head().empty() && sequences_.size() == 1))
+    return false;
+
+  if (Head().empty())
+    PopGestureSequence();
+
+  if (!Tail().empty() &&
+      Tail().back().unique_touch_event_id() == unique_touch_event_id) {
+    Tail().back().AckWhiteListed();
+    if (sequences_.size() == 1 && Tail().size() == 1) {
+      return CheckWhiteListedTouchAction(
+          white_listed_touch_disposition_gesture_filter);
+    }
+  } else {
+    DCHECK(!Head().empty());
+    DCHECK_EQ(Head().front().unique_touch_event_id(), unique_touch_event_id);
+    Head().front().AckWhiteListed();
+    return CheckWhiteListedTouchAction(
+        white_listed_touch_disposition_gesture_filter);
+  }
+  return false;
+}
+
+bool TouchDispositionGestureFilter::CheckWhiteListedTouchAction(
+    WhiteListedTouchDispositionGestureFilter&
+        white_listed_touch_disposition_gesture_filter) {
+  // Dispatch all packets that's gesture events are allowed by the whitelisted
+  // touch actions, as well as any pending time-out based packets.
+  while (!IsEmpty() && (!Head().empty() || sequences_.size() != 1)) {
+    if (Head().empty())
+      PopGestureSequence();
+    GestureSequence& sequence = Head();
+
+    DCHECK_NE(sequence.front().gesture_source(),
+              GestureEventDataPacket::UNDEFINED);
+    DCHECK_NE(sequence.front().gesture_source(),
+              GestureEventDataPacket::INVALID);
+
+    GestureEventDataPacket::GestureSource source =
+        sequence.front().gesture_source();
+    GestureEventDataPacket::AckState ack_state = sequence.front().ack_state();
+
+    if (source != GestureEventDataPacket::TOUCH_TIMEOUT) {
+      // We've sent all the packets which aren't pending their ack.
+      if (ack_state == GestureEventDataPacket::AckState::PENDING)
+        break;
+    }
+    // We need to pop the current sequence before sending the packet because
+    // sending the packet could result in this method being re-entered (e.g. on
+    // the packet, we copy the packet before popping it.
+    const GestureEventDataPacket packet = sequence.front();
+    if (SendWhiteListedTouchEventPacket(
+            white_listed_touch_disposition_gesture_filter, packet)) {
+      sequence.pop();
+    } else {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool TouchDispositionGestureFilter::SendWhiteListedTouchEventPacket(
+    WhiteListedTouchDispositionGestureFilter&
+        white_listed_touch_disposition_gesture_filter,
+    const GestureEventDataPacket& packet) {
+  if (packet.gesture_source() == GestureEventDataPacket::TOUCH_SEQUENCE_START) {
+    CancelTapIfNecessary(packet);
+    EndScrollIfNecessary(packet);
+    CancelFlingIfNecessary(packet);
+  } else if (packet.gesture_source() == GestureEventDataPacket::TOUCH_START) {
+    CancelTapIfNecessary(packet);
+  }
+  int gesture_end_index = -1;
+  for (size_t i = 0; i < packet.gesture_count(); ++i) {
+    const GestureEventData& gesture = packet.gesture(i);
+    DCHECK_GE(gesture.details.type(), ET_GESTURE_TYPE_START);
+    DCHECK_LE(gesture.details.type(), ET_GESTURE_TYPE_END);
+    if (state_.Filter(gesture.details.type())) {
+      CancelTapIfNecessary(packet);
+      continue;
+    }
+    if (packet.gesture_source() == GestureEventDataPacket::TOUCH_TIMEOUT) {
+      // Sending a timed gesture could delete |this| so we need to return
+      // directly after the |SendGesture| call.
+      SendGesture(gesture, packet);
+      // We should not have a timeout gesture and other gestures in teh same
+      // packet.
+      DCHECK_EQ(1U, packet.gesture_count());
+      return true;
+    }
+    // Occasionally scroll or tap cancel events are synthesized when a touch
+    // sequence has been canceled or terminated, we want to make sure that
+    // ET_GESTURE_END always happens after them.
+    if (gesture.type() == ET_GESTURE_END) {
+      // Make sure there is at most one ET_GESTURE_END event in each packet.
+      DCHECK_EQ(-1, gesture_end_index);
+      gesture_end_index = static_cast<int>(i);
+      continue;
+    }
+
+    DCHECK(gesture.unique_touch_event_id == packet.unique_touch_event_id());
+    if (!WhiteListedEventReleased(
+            gesture, white_listed_touch_disposition_gesture_filter))
+      return false;
+  }
+  if (packet.gesture_source() ==
+      GestureEventDataPacket::TOUCH_SEQUENCE_CANCEL) {
+    EndScrollIfNecessary(packet);
+    CancelTapIfNecessary(packet);
+  } else if (packet.gesture_source() ==
+             GestureEventDataPacket::TOUCH_SEQUENCE_END) {
+    EndScrollIfNecessary(packet);
+  }
+
+  if (gesture_end_index >= 0) {
+    DCHECK(packet.gesture(gesture_end_index).unique_touch_event_id ==
+           packet.unique_touch_event_id());
+    return WhiteListedEventReleased(
+        packet.gesture(gesture_end_index),
+        white_listed_touch_disposition_gesture_filter);
+  }
+  return true;
+}
+
+bool TouchDispositionGestureFilter::WhiteListedEventReleased(
+    const GestureEventData& event,
+    WhiteListedTouchDispositionGestureFilter&
+        white_listed_touch_disposition_gesture_filter) {
+  if (white_listed_touch_disposition_gesture_filter.FilterGestureEvent(event)) {
+    return false;
+  }
+  return true;
+}
+
 void TouchDispositionGestureFilter::SendAckedEvents() {
   // Dispatch all packets corresponding to ack'ed touches, as well as
   // any pending timeout-based packets.

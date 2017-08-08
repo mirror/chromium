@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
+#include "ui/events/blink/blink_event_util.h"
 
 using blink::WebInputEvent;
 using blink::WebGestureEvent;
@@ -42,6 +43,8 @@ TouchActionFilter::TouchActionFilter()
       white_listed_touch_action_(cc::kTouchActionAuto) {}
 
 bool TouchActionFilter::FilterGestureEvent(WebGestureEvent* gesture_event) {
+  // TODO(hayleyferr): Add functionality that allows us to use this function for
+  // both allowed touch actions and whitelisted touch actions.
   if (gesture_event->source_device != blink::kWebGestureDeviceTouchscreen)
     return false;
 
@@ -149,6 +152,15 @@ bool TouchActionFilter::FilterGestureEvent(WebGestureEvent* gesture_event) {
   }
 
   return false;
+}
+
+bool TouchActionFilter::FilterGestureEvent(const ui::GestureEventData& event) {
+  return true;
+  // TODO(hayleyferr): Change function to...
+  // blink::WebGestureEvent gesture_event =
+  //     ui::CreateWebGestureEventFromGestureEventData(event);
+  // return FilterGestureEvent(&gesture_event)
+  // once FilterGestureEvents works for whitelisted touch actions.
 }
 
 bool TouchActionFilter::FilterManipulationEventAndResetState() {
