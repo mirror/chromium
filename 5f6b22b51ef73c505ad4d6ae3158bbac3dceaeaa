@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c254cf73_25db4000",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/payment-request-update-event-updatewith-method.https-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-08T15:37:45Z",
+      "side": 1,
+      "message": "This is still failed because the supportedMethods is changed from array of DOMString to DOMString.\nBut it\u0027s not related to this change. So, I\u0027ll restore this expected file and update.\n\nPlease see my another patch: https://chromium-review.googlesource.com/c/601649",
+      "revId": "5f6b22b51ef73c505ad4d6ae3158bbac3dceaeaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
