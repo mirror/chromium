@@ -2322,19 +2322,22 @@ TEST_F(PasswordFormManagerTest, TestUpdateNoUsernameTextfieldPresent) {
 }
 
 // Test that when user updates username, the pending credentials is updated
-// accordingly.
+// accordingly. This test also checks if |username_edited_in_prompt| is saved,
+// when user enters as |username_value| one from |other_possible_usernames|.
 TEST_F(PasswordFormManagerTest, TestUpdateUsernameMethod) {
   fake_form_fetcher()->SetNonFederated(std::vector<const PasswordForm*>(), 0u);
 
   // User logs in, edits username.
-  PasswordForm credential(*observed_form());
+  PasswordForm credential(*saved_match());
   credential.username_value = ASCIIToUTF16("oldusername");
   credential.password_value = ASCIIToUTF16("password");
   form_manager()->ProvisionallySave(
       credential, PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
-  form_manager()->UpdateUsername(ASCIIToUTF16("newusername"));
+  form_manager()->UpdateUsername(ASCIIToUTF16(" test2@gmail.com"));
   EXPECT_EQ(form_manager()->pending_credentials().username_value,
-            ASCIIToUTF16("newusername"));
+            ASCIIToUTF16(" test2@gmail.com"));
+  EXPECT_EQ(form_manager()->username_edited_in_prompt(),
+            ASCIIToUTF16("full_name"));
   EXPECT_EQ(form_manager()->pending_credentials().password_value,
             ASCIIToUTF16("password"));
   EXPECT_EQ(form_manager()->IsNewLogin(), true);
@@ -2344,7 +2347,7 @@ TEST_F(PasswordFormManagerTest, TestUpdateUsernameMethod) {
   EXPECT_CALL(MockFormSaver::Get(form_manager()), Save(_, IsEmpty(), nullptr))
       .WillOnce(SaveArg<0>(&saved_result));
   form_manager()->Save();
-  EXPECT_EQ(ASCIIToUTF16("newusername"), saved_result.username_value);
+  EXPECT_EQ(ASCIIToUTF16(" test2@gmail.com"), saved_result.username_value);
   EXPECT_EQ(ASCIIToUTF16("password"), saved_result.password_value);
 }
 
@@ -3138,8 +3141,8 @@ TEST_F(PasswordFormManagerTest, ProbablyAccountCreationUpload) {
                   CheckUploadedAutofillTypesAndSignature(
                       pending_structure.FormSignatureAsStr(), expected_types,
                       false /* expect_generation_vote */,
-                      autofill::AutofillUploadContents::Field::NO_INFORMATION
-                      /* expected_username_vote_type */),
+                      autofill::AutofillUploadContents::Field::
+                          NO_INFORMATION /* expected_username_vote_type */),
                   false, expected_available_field_types, std::string(), true));
 
   form_manager.ProvisionallySave(
