@@ -10,6 +10,11 @@ const SOCKETS_TO_OPEN = 255;
 // which otherwise slows the test down considerably.
 const PARALLELISM = 2;
 
+// TIMEOUT is how long it is expected to take to perform all the
+// connections, in milliseconds. The test is especially slow on Windows debug
+// builds for some reason, so the timeout is set quite long.
+const TIMEOUT = 22000;
+
 var created = 0;
 var connected = 0;
 
@@ -39,5 +44,5 @@ for (var i = 0; i < PARALLELISM; ++i) {
 setTimeout(function() {
   console.log("Got stuck after " + connected + " socket(s) connected");
   document.title = "FAIL";
-}, 11000);
+}, TIMEOUT);
 </script>
