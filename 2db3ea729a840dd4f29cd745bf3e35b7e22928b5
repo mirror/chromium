@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c03d416b_6df41f40",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-08T05:51:13Z",
+      "side": 1,
+      "message": "newline",
+      "range": {
+        "startLine": 273,
+        "startChar": 12,
+        "endLine": 273,
+        "endChar": 13
+      },
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f93a12_263a7e0d",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-08T05:51:13Z",
+      "side": 1,
+      "message": "This isn\u0027t a TODO. Omit \"TODO(): \" prefix",
+      "range": {
+        "startLine": 279,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 11
+      },
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4e6b07_2021241e",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-08T05:51:13Z",
+      "side": 1,
+      "message": "How about renaming module_script -\u003e current_node. PropagateErrorRecursively?",
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346eccc2_01f9e05a",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-08T05:51:13Z",
+      "side": 1,
+      "message": "algorithm",
+      "range": {
+        "startLine": 404,
+        "startChar": 34,
+        "endLine": 404,
+        "endChar": 43
+      },
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6a92e6_7b791bbb",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-08T05:51:13Z",
+      "side": 1,
+      "message": "I feel like found_error_ check part (or the state check part) should be done in CompleteFetchDescendantsForOneModuleScript()\n\nHow about:\nMTL::PropagateError() {\n\nAdvanceState(State::kPropagatingError);\n\nbool result_can_accept_error \u003d result_ \u0026\u0026 !result_-\u003eIsErrored();\nif (!result_can_accept_error) {\n  AdvanceState(State::kFinished);\n  return;\n}\n\nHashSet\u003cKURL\u003e reached_url_set \u003d {result_-\u003eBaseURL()};\nModuleScript* current_node \u003d result_;\nPropagateErrorRecursively(reached_url_set, current_node);\n\nAdvanceState(State::kFinished);\n}",
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e21203_3c5a0150",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-08T05:51:13Z",
+      "side": 1,
+      "message": "Can we have this in the \"State\" rather than separate bool?",
+      "range": {
+        "startLine": 85,
+        "startChar": 28,
+        "endLine": 85,
+        "endChar": 0
+      },
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d2a5025_8dbf02a4",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-08T05:51:13Z",
+      "side": 1,
+      "message": "Yes this makes sense. Let\u0027s simply change the expectation.",
+      "range": {
+        "startLine": 440,
+        "startChar": 29,
+        "endLine": 440,
+        "endChar": 30
+      },
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f42d6dd_0a28e1b3",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-08T05:51:13Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 463,
+        "startChar": 20,
+        "endLine": 463,
+        "endChar": 29
+      },
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
