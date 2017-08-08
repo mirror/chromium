@@ -1276,4 +1276,51 @@ TEST_F(ContentSecurityPolicyTest, IsValidCSPAttrTest) {
   // TODO(andypaicu): when `report-to` is implemented, add tests here.
 }
 
+TEST_F(ContentSecurityPolicyTest, ViolationDataContainerPopulatedCorrectly) {
+  KURL base;
+  execution_context = CreateExecutionContext();
+  execution_context->SetSecurityOrigin(secure_origin);  // https://example.com
+  execution_context->SetURL(secure_url);                // https://example.com
+  csp->BindToExecutionContext(execution_context.Get());
+  csp->DidReceiveHeader("default-src https://example.com",
+                        kContentSecurityPolicyHeaderTypeEnforce,
+                        kContentSecurityPolicyHeaderSourceHTTP);
+  KURL url(NullURL(), "https://not-example.com");
+
+  SecurityViolationEventDataContainer violation_data_container;
+
+  EXPECT_FALSE(
+      csp->AllowRequest(WebURLRequest::kRequestContextScript, url, String(),
+                        IntegrityMetadataSet(), kParserInserted,
+                        ResourceRequest::RedirectStatus::kNoRedirect,
+                        SecurityViolationReportingPolicy::kSuppressReporting,
+                        ContentSecurityPolicy::CheckHeaderType::kCheckAll,
+                        &violation_data_container));
+
+  EXPECT_EQ(0ul, violation_data_container.size());
+  violation_data_container.clear();
+
+  EXPECT_FALSE(
+      csp->AllowRequest(WebURLRequest::kRequestContextScript, url, String(),
+                        IntegrityMetadataSet(), kParserInserted,
+                        ResourceRequest::RedirectStatus::kNoRedirect,
+                        SecurityViolationReportingPolicy::kSuppressOnlyEvent,
+                        ContentSecurityPolicy::CheckHeaderType::kCheckAll,
+                        &violation_data_container));
+
+  EXPECT_EQ(1ul, violation_data_container.size());
+  violation_data_container.clear();
+
+  EXPECT_FALSE(
+      csp->AllowRequest(WebURLRequest::kRequestContextScript, url, String(),
+                        IntegrityMetadataSet(), kParserInserted,
+                        ResourceRequest::RedirectStatus::kNoRedirect,
+                        SecurityViolationReportingPolicy::kReport,
+                        ContentSecurityPolicy::CheckHeaderType::kCheckAll,
+                        &violation_data_container));
+
+  EXPECT_EQ(1ul, violation_data_container.size());
+  violation_data_container.clear();
+}
+
 }  // namespace blink

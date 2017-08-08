@@ -41,6 +41,7 @@
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/fetch/ResourceStatus.h"
 #include "platform/loader/fetch/TextResourceDecoderOptions.h"
+#include "platform/weborigin/SecurityPolicyViolationEventData.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/HashCountedSet.h"
@@ -105,7 +106,6 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   virtual WTF::TextEncoding Encoding() const { return WTF::TextEncoding(); }
   virtual void AppendData(const char*, size_t);
   virtual void FinishAsError(const ResourceError&);
-
   void SetNeedsSynchronousCacheHit(bool needs_synchronous_cache_hit) {
     needs_synchronous_cache_hit_ = needs_synchronous_cache_hit;
   }
@@ -336,6 +336,9 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
         : AutoReset(&resource->is_revalidation_start_forbidden_, true) {}
   };
 
+  void AddViolationData(
+      SecurityViolationEventDataContainer& violation_data_container);
+
  protected:
   Resource(const ResourceRequest&, Type, const ResourceLoaderOptions&);
 
@@ -398,6 +401,9 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   void TriggerNotificationForFinishObservers();
 
   virtual void SetEncoding(const String&) {}
+
+  void TriggerViolationDataHandling();
+  bool TriggerViolationDataHandling(SecurityViolationEventDataContainer&);
 
  private:
   // To allow access to SetCORSStatus
@@ -482,6 +488,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   ResourceRequest resource_request_;
   Member<ResourceLoader> loader_;
   ResourceResponse response_;
+  SecurityViolationEventDataContainer violation_data_container_;
 
   RefPtr<SharedBuffer> data_;
 };

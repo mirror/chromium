@@ -58,7 +58,9 @@ class MockFetchContext : public FetchContext {
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
       FetchParameters::OriginRestriction,
-      ResourceRequest::RedirectStatus redirect_status) const override {
+      ResourceRequest::RedirectStatus redirect_status,
+      SecurityViolationEventDataContainer* violation_data_container =
+          nullptr) const override {
     return ResourceRequestBlockedReason::kNone;
   }
   ResourceRequestBlockedReason CheckCSPForRequest(
@@ -66,7 +68,9 @@ class MockFetchContext : public FetchContext {
       const KURL& url,
       const ResourceLoaderOptions& options,
       SecurityViolationReportingPolicy reporting_policy,
-      ResourceRequest::RedirectStatus redirect_status) const override {
+      ResourceRequest::RedirectStatus redirect_status,
+      SecurityViolationEventDataContainer* violation_data_container =
+          nullptr) const override {
     return ResourceRequestBlockedReason::kNone;
   }
   bool ShouldLoadNewResource(Resource::Type) const override {

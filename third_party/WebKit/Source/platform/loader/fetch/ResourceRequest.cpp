@@ -82,7 +82,8 @@ ResourceRequest::ResourceRequest(const KURL& url)
       is_same_document_navigation_(false),
       input_perf_metric_report_policy_(
           InputToLoadPerfMetricReportPolicy::kNoReport),
-      redirect_status_(RedirectStatus::kNoRedirect) {}
+      redirect_status_(RedirectStatus::kNoRedirect),
+      resource_should_handle_violation_event_(false) {}
 
 ResourceRequest::ResourceRequest(CrossThreadResourceRequestData* data)
     : ResourceRequest(data->url_) {
@@ -123,6 +124,8 @@ ResourceRequest::ResourceRequest(CrossThreadResourceRequestData* data)
   loading_ipc_type_ = data->loading_ipc_type_;
   input_perf_metric_report_policy_ = data->input_perf_metric_report_policy_;
   redirect_status_ = data->redirect_status_;
+  resource_should_handle_violation_event_ =
+      data->resource_should_handle_violation_event_;
 }
 
 ResourceRequest::ResourceRequest(const ResourceRequest&) = default;
@@ -174,6 +177,8 @@ std::unique_ptr<CrossThreadResourceRequestData> ResourceRequest::CopyData()
   data->loading_ipc_type_ = loading_ipc_type_;
   data->input_perf_metric_report_policy_ = input_perf_metric_report_policy_;
   data->redirect_status_ = redirect_status_;
+  data->resource_should_handle_violation_event_ =
+      resource_should_handle_violation_event_;
   return data;
 }
 

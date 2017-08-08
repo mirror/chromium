@@ -336,6 +336,15 @@ class PLATFORM_EXPORT ResourceRequest final {
   }
   bool IsSameDocumentNavigation() const { return is_same_document_navigation_; }
 
+  void SetResourceShouldHandleViolationEvent(
+      bool resource_should_handle_violation_event) {
+    resource_should_handle_violation_event_ =
+        resource_should_handle_violation_event;
+  }
+  bool ResourceShouldHandleViolationEvent() const {
+    return resource_should_handle_violation_event_;
+  }
+
  private:
   const CacheControlHeader& GetCacheControlHeader() const;
 
@@ -388,6 +397,7 @@ class PLATFORM_EXPORT ResourceRequest final {
   static double default_timeout_interval_;
 
   double navigation_start_ = 0;
+  bool resource_should_handle_violation_event_;
 };
 
 // This class is needed to copy a ResourceRequest across threads, because it
@@ -443,6 +453,7 @@ struct CrossThreadResourceRequestData {
   WebURLRequest::LoadingIPCType loading_ipc_type_;
   InputToLoadPerfMetricReportPolicy input_perf_metric_report_policy_;
   ResourceRequest::RedirectStatus redirect_status_;
+  bool resource_should_handle_violation_event_;
 };
 
 }  // namespace blink

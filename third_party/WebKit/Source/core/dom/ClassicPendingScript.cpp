@@ -327,4 +327,9 @@ void ClassicPendingScript::RemoveFromMemoryCache() {
   GetMemoryCache()->Remove(GetResource());
 }
 
+void ClassicPendingScript::HandleViolationEvent(
+    const SecurityViolationEventDataContainer& violation_data_container) {
+  GetElement()->HandleViolationEvent(violation_data_container);
+}
+
 }  // namespace blink

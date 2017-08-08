@@ -28,6 +28,7 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/heap/Handle.h"
+#include "platform/weborigin/SecurityPolicyViolationEventData.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -47,6 +48,8 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
 
   virtual ~ResourceClient() {}
   virtual void NotifyFinished(Resource*) {}
+  virtual void HandleViolationEvent(
+      const SecurityViolationEventDataContainer& violation_data_container) {}
 
   static bool IsExpectedType(ResourceClient*) { return true; }
   virtual ResourceClientType GetResourceClientType() const {

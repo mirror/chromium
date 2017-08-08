@@ -448,6 +448,32 @@ void Resource::FinishAsError(const ResourceError& error) {
   CheckNotify();
 }
 
+void Resource::TriggerViolationDataHandling() {
+  if (TriggerViolationDataHandling(violation_data_container_))
+    violation_data_container_.clear();
+}
+
+bool Resource::TriggerViolationDataHandling(
+    SecurityViolationEventDataContainer& violation_data_container) {
+  if (clients_.size() == 0)
+    return false;
+
+  ResourceClientWalker<ResourceClient> w(clients_);
+  ResourceClient* c = w.Next();
+  c->HandleViolationEvent(violation_data_container_);
+  return true;
+}
+
+void Resource::AddViolationData(
+    SecurityViolationEventDataContainer& violation_data_container) {
+  if (TriggerViolationDataHandling(violation_data_container)) {
+    // we already sent the data to the clients, no point in saving it
+    return;
+  }
+  for (const auto& event_data : violation_data_container)
+    violation_data_container_.push_back(event_data);
+}
+
 void Resource::Finish(double load_finish_time) {
   DCHECK(!is_revalidating_);
   load_finish_time_ = load_finish_time;
@@ -684,6 +710,7 @@ void Resource::AddClient(ResourceClient* client) {
 
   if (is_revalidating_) {
     clients_.insert(client);
+    TriggerViolationDataHandling();
     return;
   }
 
@@ -707,6 +734,7 @@ void Resource::AddClient(ResourceClient* client) {
   }
 
   clients_.insert(client);
+  TriggerViolationDataHandling();
   DidAddClient(client);
   return;
 }
