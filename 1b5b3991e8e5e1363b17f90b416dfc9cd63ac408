@@ -16,6 +16,24 @@
       "revId": "1b5b3991e8e5e1363b17f90b416dfc9cd63ac408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96e8c7f_26e6be08",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T23:35:30Z",
+      "side": 1,
+      "message": "I can\u0027t think of anything obvious here for loading a data URL by itself: the resulting Document has a unique origin.\n\nHowever, I\u0027m not 100% sure that it\u0027s safe to include the URL like this with no escaping: is it possible for this URL to have interesting characters like \" literally embedded? Similarly, is it possible that this could somehow be a javascript: URL?\n\n(Though I guess with the unique origin thing, that should still limit the scope of the breakage...)",
+      "parentUuid": "f03bfb11_bf122702",
+      "revId": "1b5b3991e8e5e1363b17f90b416dfc9cd63ac408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
