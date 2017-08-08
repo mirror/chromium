@@ -22,6 +22,30 @@
       "revId": "c6a95a4ef7096b3f83519e7bd934c242138ef89a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc088b2_60b9f244",
+        "filename": "components/offline_pages/core/offline_page_model_query.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-08T01:22:05Z",
+      "side": 1,
+      "message": "Done.\nI\u0027m not sure but I guess you meant to use CountMatchingUrls with a const false argument passed in for the original_url case.\nI totally agree to have a more unified way to organize the code. However I believe it needs some clarification from the team how the url comparison should be done in all case so that the whole piece of code can be refactored at once (maybe along with going forward with the SQL thing). But it can be a near future patch and this one will be focusing on keep the current behavior.",
+      "parentUuid": "1503cb46_8b15a117",
+      "range": {
+        "startLine": 260,
+        "startChar": 23,
+        "endLine": 260,
+        "endChar": 28
+      },
+      "revId": "c6a95a4ef7096b3f83519e7bd934c242138ef89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
