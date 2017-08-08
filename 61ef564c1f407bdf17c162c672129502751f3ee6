@@ -46,6 +46,30 @@
       "revId": "61ef564c1f407bdf17c162c672129502751f3ee6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b0191a_69145b58",
+        "filename": "gpu/command_buffer/common/gl2_types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-08T23:38:04Z",
+      "side": 1,
+      "message": "Ok, I see that you highlighted the \"(c)\" in your comment. NVM, sorry for the noise.",
+      "parentUuid": "88c24d5e_d1a9ea3f",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "61ef564c1f407bdf17c162c672129502751f3ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
