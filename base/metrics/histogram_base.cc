@@ -6,11 +6,13 @@
 
 #include <limits.h>
 
+#include <algorithm>
 #include <memory>
 #include <utility>
 
 #include "base/json/json_string_value_serializer.h"
 #include "base/logging.h"
+#include "base/metrics/expired_histograms.h"
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_samples.h"
 #include "base/metrics/sparse_histogram.h"
@@ -81,6 +83,13 @@ void HistogramBase::SetFlags(int32_t flags) {
 void HistogramBase::ClearFlags(int32_t flags) {
   HistogramBase::Count old_flags = subtle::NoBarrier_Load(&flags_);
   subtle::NoBarrier_Store(&flags_, old_flags & ~flags);
+}
+
+bool HistogramBase::IsExpired() const {
+  uint64_t hash = name_hash();
+  return std::binary_search(kExpiredHistogramsHashes,
+                            kExpiredHistogramsHashes + kNumExpiredHistograms,
+                            hash);
 }
 
 void HistogramBase::AddTime(const TimeDelta& time) {
