@@ -2026,9 +2026,9 @@ void LocalFrameView::UpdateLayersAndCompositingAfterScrollIfNeeded() {
     if (!layer->AncestorOverflowLayer())
       continue;
 
-    StickyConstraintsMap constraints_map = layer->AncestorOverflowLayer()
-                                               ->GetScrollableArea()
-                                               ->GetStickyConstraintsMap();
+    StickyConstraintsMap& constraints_map = layer->AncestorOverflowLayer()
+                                                ->GetScrollableArea()
+                                                ->GetStickyConstraintsMap();
     if (constraints_map.Contains(layer) &&
         !constraints_map.at(layer).HasAncestorStickyElement()) {
       // TODO(skobes): Resolve circular dependency between scroll offset and
