@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f90c789_57875e15",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-08T10:22:25Z",
+      "side": 1,
+      "message": "Is this doing a binary search? If so, could you use one of Python\u0027s existing binary search methods? e.g. https://docs.python.org/2/library/bisect.html\n\nIf not, since the list is not very long, it\u0027s probably easier to maintain (and might be faster) to just linear search through the array.",
+      "revId": "fe2b27d16225e7d05878b258daadf1ed413f0597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10b0fe3_71b32c1d",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-08T10:22:25Z",
+      "side": 1,
+      "message": "I understand that this algorithm re-evaluates all the rare-non-inherited fields. From the json perspective, it might be a bit confusing, since when I specify a field to be rare-non-inherited, I don\u0027t expect it to be put into another group. I was wondering if in a future patch, we might find a way to resolve this confusion e.g. have something like \"field_group: auto\" or something to say that we want to find the best grouping.\n\nIt\u0027s fine as it is, just a suggestion for the future.",
+      "revId": "fe2b27d16225e7d05878b258daadf1ed413f0597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3132f1a9_ca7cb3c7",
+        "filename": "third_party/WebKit/Source/core/css/CSSPropertiesRanking.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-08T10:22:25Z",
+      "side": 1,
+      "message": "How did you extract the data? Was a simple or did you use a script? If so, could that script be checked in as well? nainar@ WDYT?",
+      "revId": "fe2b27d16225e7d05878b258daadf1ed413f0597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
