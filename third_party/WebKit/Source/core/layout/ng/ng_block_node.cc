@@ -185,12 +185,6 @@ NGLayoutInputNode NGBlockNode::FirstChild() {
 }
 
 bool NGBlockNode::CanUseNewLayout() const {
-  // [Multicol]: for the 1st phase of LayoutNG's multicol implementation we want
-  // to utilize the existing ColumnBalancer class. That's why a multicol block
-  // should be processed by Legacy Layout engine.
-  if (Style().SpecifiesColumns())
-    return false;
-
   if (!box_->IsLayoutNGBlockFlow())
     return false;
 
