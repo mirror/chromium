@@ -141,6 +141,9 @@ class MESSAGE_CENTER_EXPORT RichNotificationData {
 
   // An accessible description of the notification's contents.
   base::string16 accessible_name;
+
+  // Whether enable new style notification.
+  bool enable_md = false;
 };
 
 class MESSAGE_CENTER_EXPORT Notification {
@@ -344,6 +347,9 @@ class MESSAGE_CENTER_EXPORT Notification {
   const base::string16& accessible_name() const {
     return optional_fields_.accessible_name;
   }
+
+  bool enable_md() const { return optional_fields_.enable_md; }
+  void set_enable_md(bool enable_md) { optional_fields_.enable_md = enable_md; }
 
   NotificationDelegate* delegate() const { return delegate_.get(); }
 

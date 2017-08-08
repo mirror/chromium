@@ -478,6 +478,11 @@ Notification PlatformNotificationServiceImpl::CreateNotificationFromData(
       gfx::Image::CreateFrom1xBitmap(notification_resources.badge));
 #endif  // defined(OS_ANDROID)
 
+#if defined(OS_CHROMEOS)
+  // Only enable new style notification in web notification of Chrome OS.
+  notification.set_enable_md(true);
+#endif
+
   // Developer supplied action buttons.
   std::vector<message_center::ButtonInfo> buttons;
   for (size_t i = 0; i < notification_data.actions.size(); ++i) {
