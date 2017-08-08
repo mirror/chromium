@@ -26,6 +26,8 @@ DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(AURA_EXPORT,
                                         aura::client::WindowEmbedType)
 DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(AURA_EXPORT, aura::client::FocusClient*)
 DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(AURA_EXPORT, aura::Window*)
+DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(AURA_EXPORT,
+                                        aura::client::WindowSelectorBehavior)
 
 namespace aura {
 namespace client {
@@ -66,6 +68,9 @@ DEFINE_UI_CLASS_PROPERTY_KEY(int32_t,
 DEFINE_OWNED_UI_CLASS_PROPERTY_KEY(gfx::Rect, kRestoreBoundsKey, nullptr);
 DEFINE_UI_CLASS_PROPERTY_KEY(
     ui::WindowShowState, kShowStateKey, ui::SHOW_STATE_DEFAULT);
+DEFINE_UI_CLASS_PROPERTY_KEY(WindowSelectorBehavior,
+                             kWindowSelectorBehaviorKey,
+                             WindowSelectorBehavior::SHOW);
 DEFINE_OWNED_UI_CLASS_PROPERTY_KEY(base::string16, kTitleKey, nullptr);
 DEFINE_UI_CLASS_PROPERTY_KEY(int, kTopViewInset, 0);
 DEFINE_UI_CLASS_PROPERTY_KEY(SkColor, kTopViewColor, SK_ColorTRANSPARENT);

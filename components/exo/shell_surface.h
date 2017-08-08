@@ -148,6 +148,9 @@ class ShellSurface : public SurfaceTreeHost,
   // Set whether the surface is always on top.
   void SetAlwaysOnTop(bool always_on_top);
 
+  // Set the window's behavior in Alt + Tab and overview.
+  void SetWindowSelectorBehavior(uint32_t behavior);
+
   // Set title for the surface.
   void SetTitle(const base::string16& title);
 
