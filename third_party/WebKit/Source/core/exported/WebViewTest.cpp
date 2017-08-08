@@ -1988,9 +1988,8 @@ bool WebViewTest::TapElement(WebInputEvent::Type type, Element* element) {
           .Center();
 
   WebGestureEvent event(type, WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-
-  event.source_device = kWebGestureDeviceTouchscreen;
+                        WebInputEvent::kTimeStampForTesting,
+                        kWebGestureDeviceTouchscreen);
   event.x = center.X();
   event.y = center.Y();
 
@@ -2023,8 +2022,8 @@ TEST_P(WebViewTest, ClientTapHandling) {
   WebView* web_view =
       web_view_helper_.InitializeAndLoad("about:blank", nullptr, &client);
   WebGestureEvent event(WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+                        WebInputEvent::kTimeStampForTesting,
+                        kWebGestureDeviceTouchscreen);
   event.x = 3;
   event.y = 8;
   web_view->HandleInputEvent(WebCoalescedInputEvent(event));
@@ -2057,8 +2056,8 @@ TEST_P(WebViewTest, ClientTapHandlingNullWebViewClient) {
   blink::WebFrameWidget::Create(&web_widget_client, local_frame);
 
   WebGestureEvent event(WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+                        WebInputEvent::kTimeStampForTesting,
+                        kWebGestureDeviceTouchscreen);
   event.x = 3;
   event.y = 8;
   EXPECT_EQ(WebInputEventResult::kNotHandled,
@@ -2076,10 +2075,9 @@ TEST_P(WebViewTest, LongPressEmptyDiv) {
   web_view->UpdateAllLifecyclePhases();
   RunPendingTasks();
 
-  WebGestureEvent event(WebInputEvent::kGestureLongPress,
-                        WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+  WebGestureEvent event(
+      WebInputEvent::kGestureLongPress, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
   event.x = 250;
   event.y = 150;
 
@@ -2097,10 +2095,9 @@ TEST_P(WebViewTest, LongPressEmptyDivAlwaysShow) {
   web_view->UpdateAllLifecyclePhases();
   RunPendingTasks();
 
-  WebGestureEvent event(WebInputEvent::kGestureLongPress,
-                        WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+  WebGestureEvent event(
+      WebInputEvent::kGestureLongPress, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
   event.x = 250;
   event.y = 150;
 
@@ -2118,10 +2115,9 @@ TEST_P(WebViewTest, LongPressObject) {
   web_view->UpdateAllLifecyclePhases();
   RunPendingTasks();
 
-  WebGestureEvent event(WebInputEvent::kGestureLongPress,
-                        WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+  WebGestureEvent event(
+      WebInputEvent::kGestureLongPress, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
   event.x = 10;
   event.y = 10;
 
@@ -2143,10 +2139,9 @@ TEST_P(WebViewTest, LongPressObjectFallback) {
   web_view->UpdateAllLifecyclePhases();
   RunPendingTasks();
 
-  WebGestureEvent event(WebInputEvent::kGestureLongPress,
-                        WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+  WebGestureEvent event(
+      WebInputEvent::kGestureLongPress, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
   event.x = 10;
   event.y = 10;
 
@@ -2168,10 +2163,9 @@ TEST_P(WebViewTest, LongPressImage) {
   web_view->UpdateAllLifecyclePhases();
   RunPendingTasks();
 
-  WebGestureEvent event(WebInputEvent::kGestureLongPress,
-                        WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+  WebGestureEvent event(
+      WebInputEvent::kGestureLongPress, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
   event.x = 10;
   event.y = 10;
 
@@ -2189,10 +2183,9 @@ TEST_P(WebViewTest, LongPressVideo) {
   web_view->UpdateAllLifecyclePhases();
   RunPendingTasks();
 
-  WebGestureEvent event(WebInputEvent::kGestureLongPress,
-                        WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+  WebGestureEvent event(
+      WebInputEvent::kGestureLongPress, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
   event.x = 10;
   event.y = 10;
 
@@ -2210,10 +2203,9 @@ TEST_P(WebViewTest, LongPressLink) {
   web_view->UpdateAllLifecyclePhases();
   RunPendingTasks();
 
-  WebGestureEvent event(WebInputEvent::kGestureLongPress,
-                        WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+  WebGestureEvent event(
+      WebInputEvent::kGestureLongPress, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
   event.x = 500;
   event.y = 300;
 
@@ -2257,10 +2249,9 @@ TEST_P(WebViewTest, LongPressEmptyEditableSelection) {
   web_view->UpdateAllLifecyclePhases();
   RunPendingTasks();
 
-  WebGestureEvent event(WebInputEvent::kGestureLongPress,
-                        WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+  WebGestureEvent event(
+      WebInputEvent::kGestureLongPress, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
   event.x = 10;
   event.y = 10;
 
@@ -2277,10 +2268,9 @@ TEST_P(WebViewTest, LongPressEmptyNonEditableSelection) {
   web_view->UpdateAllLifecyclePhases();
   RunPendingTasks();
 
-  WebGestureEvent event(WebInputEvent::kGestureLongPress,
-                        WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+  WebGestureEvent event(
+      WebInputEvent::kGestureLongPress, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
   event.x = 300;
   event.y = 300;
   WebLocalFrameImpl* frame = web_view->MainFrameImpl();
@@ -2365,8 +2355,8 @@ TEST_P(WebViewTest, TouchDoesntSelectEmptyTextarea) {
 
   // Double-tap on carriage returns.
   WebGestureEvent event(WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+                        WebInputEvent::kTimeStampForTesting,
+                        kWebGestureDeviceTouchscreen);
   event.x = 100;
   event.y = 25;
   event.data.tap.tap_count = 2;
@@ -2656,10 +2646,9 @@ TEST_P(WebViewTest, ShowPressOnTransformedLink) {
       "highlight</a>",
       base_url);
 
-  WebGestureEvent event(WebInputEvent::kGestureShowPress,
-                        WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
+  WebGestureEvent event(
+      WebInputEvent::kGestureShowPress, WebInputEvent::kNoModifiers,
+      WebInputEvent::kTimeStampForTesting, kWebGestureDeviceTouchscreen);
   event.x = 20;
   event.y = 20;
 

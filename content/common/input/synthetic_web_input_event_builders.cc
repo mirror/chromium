@@ -97,8 +97,8 @@ WebGestureEvent SyntheticWebGestureEventBuilder::Build(
     int modifiers) {
   DCHECK(WebInputEvent::IsGestureEventType(type));
   WebGestureEvent result(type, modifiers,
-                         ui::EventTimeStampToSeconds(ui::EventTimeForNow()));
-  result.source_device = source_device;
+                         ui::EventTimeStampToSeconds(ui::EventTimeForNow()),
+                         source_device);
   if (type == WebInputEvent::kGestureTap ||
       type == WebInputEvent::kGestureTapUnconfirmed ||
       type == WebInputEvent::kGestureDoubleTap) {
