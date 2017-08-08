@@ -16,6 +16,24 @@
       "revId": "95f16dc5127d22a336b37f43ad01dc08c1f231a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58ff5c6_d10a19de",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-08T21:10:33Z",
+      "side": 1,
+      "message": "Done for the static_assert. For the sizes, we allocate glyph_count and it\u0027s what we copy. Skia\u0027s API says that the buffers are large enough to hold glyph_count things or glyph_count * 2 for positions. Unfortunately, I don\u0027t think we can actually check that.",
+      "parentUuid": "72973677_92c8653e",
+      "revId": "95f16dc5127d22a336b37f43ad01dc08c1f231a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
