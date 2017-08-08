@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e916dae2_dc075587",
+        "filename": "content/browser/renderer_host/media/audio_sync_reader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Does this work for bitstream formats?",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d29dcfcc_9e3688a5",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Aren\u0027t we only using this for bitstream right now? Should we DCHECK instead?",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5afca58e_80a47400",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Again just dcheck is bitstream? Otherwise we\u0027d prefer this is float.",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3736191_f4ea723d",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Even if it\u0027s 1.0 you don\u0027t want to call setVolume() with this right?",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7519e843_094bd010",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Instead use the AudioBus methods for doing this.",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00df91c_c9fbe3bc",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Should be DCHECK(callback_) or you\u0027ll need a lock.",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8d9e87_2256d0b3",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Ditto, use AUdioBus methods, but better yet just always use float if this is only going to be used on L+.",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54cbaf58_119cb676",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "I thought there was some new fancy way to not do this anymore?\n\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d749244",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20350349_b472f447",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Seems unnecessary? Is this in case the output bus isn\u0027t filled out? Typically we require that clients fulfill the request. If necessary add a comment why.",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b74673_5c6e8559",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "This needs to trigger an OnError() so clients know to shut down the stream.",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e24d718_5691672b",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Unused return value.",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c7176b_c2499669",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Comment on why 4x.",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566ecef4_8183fc31",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Is this possible? What circumstances might the OS return a track that\u0027s busted like this?",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9150e965_c982e492",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Is this really guaranteed to always generate a 16-byte aligned buffer? Seems like .slice() could create a new array somewhere else if it wants to.",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2e07ec_7970905f",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Do we need to support \u003c LOLLIPOP?",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3955f99f_62bfdb32",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "double?",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5c2927_d40a6580",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Ditto on lollipop.",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca771dd7_d0ef45b8",
+        "filename": "media/base/audio_bus.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "The other methods in this class need an audit to make sure they can actually be called on a bitstream format. Zero() doesn\u0027t really work does it?",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa937dc_4065fbe6",
+        "filename": "media/base/audio_bus.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "size_t",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3273dad_89b269da",
+        "filename": "media/base/audio_parameters.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "Is this true for MP3+AAC, I thought it was only AC3?",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f04eae2_d24b9322",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "These buffers can be pretty long, so I\u0027d instead consider resetting the audio_clock_ to the correct point in time here if buffer-\u003etimestamp !\u003d start_timestamp_. Otherwise video frame timing will be off.",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2622c2ea_b6c9bfac",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "\"Playback rate changes are not supported when output compressed bitstream.\" sounds better I think.",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba2118f_950c1611",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T18:01:42Z",
+      "side": 1,
+      "message": "ERROR/WARNING?",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
