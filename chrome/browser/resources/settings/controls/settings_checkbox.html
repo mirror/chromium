@@ -20,6 +20,12 @@
       }
 
       paper-checkbox {
+        /* Fix overflow of subLabel when it is larger than one line. */
+        align-items: center;
+        display: flex;
+        /* Additional margin in case subLabel needs more than one line. */
+        margin-bottom: 4px;
+        margin-top: 4px;
         width: 100%;
       }
 
@@ -40,7 +46,9 @@
           on-change="notifyChangedByUserInteraction"
           disabled="[[controlDisabled_(disabled, pref.*)]]">
         <div class="label">[[label]] <slot></slot></div>
-        <div class="secondary label">[[subLabel]]</div>
+        <div class="secondary label" inner-h-t-m-l="[[subLabelHtml]]">
+          [[subLabel]]
+        </div>
       </paper-checkbox>
       <template is="dom-if" if="[[pref.controlledBy]]">
         <cr-policy-pref-indicator pref="[[pref]]" icon-aria-label="[[label]]">
