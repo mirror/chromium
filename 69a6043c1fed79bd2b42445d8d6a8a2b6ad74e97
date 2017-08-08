@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "175a4488_7c07a2bf",
+        "filename": "ios/chrome/app/chrome_overlay_window.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-08T18:03:21Z",
+      "side": 1,
+      "message": "My bad. Done.",
+      "parentUuid": "0b715447_3595edfe",
+      "range": {
+        "startLine": 24,
+        "startChar": 25,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "69a6043c1fed79bd2b42445d8d6a8a2b6ad74e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57d71b67_695d8f87",
         "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a3719eb1_ed101d70",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-08T18:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57d71b67_695d8f87",
+      "range": {
+        "startLine": 13,
+        "startChar": 12,
+        "endLine": 13,
+        "endChar": 19
+      },
+      "revId": "69a6043c1fed79bd2b42445d8d6a8a2b6ad74e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7ccb2dc_5214ea2a",
         "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-08T12:26:12Z",
       "side": 1,
       "message": "You will report the histogram multiple times for the same drag event.\nIs that intentional?",
+      "range": {
+        "startLine": 33,
+        "startChar": 33,
+        "endLine": 33,
+        "endChar": 44
+      },
+      "revId": "69a6043c1fed79bd2b42445d8d6a8a2b6ad74e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38da367b_6201c0f0",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-08T18:03:21Z",
+      "side": 1,
+      "message": "Yes.\nAdded comment making this explicit.",
+      "parentUuid": "d7ccb2dc_5214ea2a",
       "range": {
         "startLine": 33,
         "startChar": 33,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6277bc71_34a9a096",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-08T18:03:21Z",
+      "side": 1,
+      "message": "Added comment.\n\nRegarding the \"Is it possible taht the...\", I added a comment addressing this question at line 11 of drag_and_drop_recorder.h:\n// Should be attached to the top most UIWindow to not miss any event.",
+      "parentUuid": "84d66172_b1eb3553",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 11
+      },
+      "revId": "69a6043c1fed79bd2b42445d8d6a8a2b6ad74e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aee47c57_a8e14ebf",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -105,6 +201,24 @@
       "writtenOn": "2017-08-08T12:26:12Z",
       "side": 1,
       "message": "Is it iOS only?",
+      "revId": "69a6043c1fed79bd2b42445d8d6a8a2b6ad74e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f8585fd_adc3a879",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15743,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-08T18:03:21Z",
+      "side": 1,
+      "message": "Could be used on macOS.\nDon\u0027t know about the other platforms.",
+      "parentUuid": "aee47c57_a8e14ebf",
       "revId": "69a6043c1fed79bd2b42445d8d6a8a2b6ad74e97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
