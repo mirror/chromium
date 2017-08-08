@@ -60,12 +60,108 @@ FileTableList.prototype.mergeItems = function(beginIndex, endIndex) {
   if (this.onMergeItems_) {
     this.onMergeItems_(beginIndex, endIndex);
   }
-}
+};
 
 /** @override */
 FileTableList.prototype.createSelectionController = function(sm) {
   return new FileListSelectionController(assert(sm));
+};
+
+/**
+ * Processes touch events and calls back upon tap, longpress and longtap.
+ * @constructor
+ */
+function FileTapHandler() {
+  /**
+   * Whether the pointer is currently down and at the same place as the initial
+   * position.
+   * @type {boolean}
+   * @private
+   */
+  this.tapStarted_ = false;
+
+  /**
+   * @type {boolean}
+   */
+  this.isLongTap_ = false;
+
+  /**
+   * @type {boolean}
+   */
+  this.hasLongPressProcessed_ = false;
+
+  /**
+   * @type {?number}
+   */
+  this.longTapDetectorTimeout_ = null;
 }
+
+/**
+ * @type {number}
+ * @const
+ */
+FileTapHandler.LONG_PRESS_THRESHOLD_MILLISECONDS = 500;
+
+/**
+ * @enum {string}
+ * @const
+ */
+FileTapHandler.TapEvent = {
+  TAP: 'tap',
+  LONG_PRESS: 'longpress',
+  LONG_TAP: 'longtap'
+};
+
+/**
+ * Handles touch events.
+ * The propagation of the |event| will be cancelled if the |callback| takes any
+ * action, so as to avoid receiving mouse click events for the tapping and
+ * processing them duplicatedly.
+ * @param {!Event} event a touch event.
+ * @param {number} index of the target item in the file list.
+ * @param {function(!Event, number, !FileTapHandler.TapEvent)} callback called
+ *     when a tap event is detected. Should return ture if it has taken any
+ *     action, and false if it ignroes the event.
+ */
+FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
+  switch (event.type) {
+    case 'touchstart':
+      this.tapStarted_ = true;
+      this.isLongTap_ = false;
+      this.hasLongPressProcessed_ = false;
+      this.longTapDetectorTimeout_ = setTimeout(function() {
+        this.isLongTap_ = true;
+        this.longTapDetectorTimeout_ = null;
+        if (callback(event, index, FileTapHandler.TapEvent.LONG_PRESS)) {
+          this.hasLongPressProcessed_ = true;
+          // Prevent opening context menu.
+          event.preventDefault();
+        }
+      }.bind(this), FileTapHandler.LONG_PRESS_THRESHOLD_MILLISECONDS);
+      break;
+    case 'touchmove':
+      // If the pointer is slided, it is a drag. It is no longer a tap.
+      this.tapStarted_ = false;
+      break;
+    case 'touchend':
+      if (this.longTapDetectorTimeout_ != null) {
+        clearTimeout(this.longTapDetectorTimeout_);
+      }
+      if (!this.tapStarted_)
+        break;
+      if (this.isLongTap_) {
+        if (this.hasLongPressProcessed_ ||
+            callback(event, index, FileTapHandler.TapEvent.LONG_TAP)) {
+          event.preventDefault();
+        }
+      } else {
+        if (callback(event, index, FileTapHandler.TapEvent.TAP)) {
+          event.preventDefault();
+        }
+      }
+      break;
+  }
+};
 
 /**
  * Selection controller for the file table list.
@@ -77,6 +173,20 @@ FileTableList.prototype.createSelectionController = function(sm) {
  */
 function FileListSelectionController(selectionModel) {
   cr.ui.ListSelectionController.call(this, selectionModel);
+
+  /**
+   * Whether to allow touch-specific interaction.
+   * @type {boolean}
+   */
+  this.enableTouchMode_ = false;
+  util.isTouchModeEnabled(function(enabled) {
+    this.enableTouchMode_ = enabled;
+  }.bind(this));
+
+  /**
+   * @type {!FileTapHandler}
+   */
+  this.tapHandler_ = new FileTapHandler();
 }
 
 FileListSelectionController.prototype = /** @struct */ {
@@ -86,6 +196,13 @@ FileListSelectionController.prototype = /** @struct */ {
 /** @override */
 FileListSelectionController.prototype.handlePointerDownUp = function(e, index) {
   filelist.handlePointerDownUp.call(this, e, index);
+};
+
+/** @override */
+FileListSelectionController.prototype.handleTouchEvents = function(e, index) {
+  if (!this.enableTouchMode_)
+    return;
+  this.tapHandler_.handleTouchEvents(e, index, filelist.handleTap.bind(this));
 };
 
 /** @override */
@@ -194,6 +311,51 @@ filelist.updateListItemExternalProps = function(li, externalProps) {
 
   if (li.classList.contains('directory'))
     iconDiv.classList.toggle('shared', !!externalProps.shared);
+};
+
+/**
+ * Handles touchend/touchstart events on file list to change the selection
+ * state.
+ *
+ * @param {!Event} e The browser mouse event.
+ * @param {number} index The index that was under the mouse pointer, -1 if
+ *     none.
+ * @param {!FileTapHandler.TapEvent} event_type
+ * @return True if conducted any action. False when if did nothing special for
+ *     tap.
+ * @this {cr.ui.ListSelectionController}
+ */
+filelist.handleTap = function(e, index, event_type) {
+  if (index == -1) {
+    return false;
+  }
+  var sm = /** @type {!FileListSelectionModel|!FileListSingleSelectionModel} */
+      (this.selectionModel);
+  var isTap = event_type == FileTapHandler.TapEvent.TAP ||
+      event_type == FileTapHandler.TapEvent.LONG_TAP;
+  if (sm.multiple && sm.getCheckSelectMode() && isTap && !e.shiftKey) {
+    // toggle item selection. Equivalent to mouse click on checkbox.
+    sm.beginChange();
+    sm.setIndexSelected(index, !sm.getIndexSelected(index));
+    // Toggle the current one and make it anchor index.
+    sm.leadIndex = index;
+    sm.anchorIndex = index;
+    sm.endChange();
+    return true;
+  } else if (sm.multiple) {
+    if (event_type == FileTapHandler.TapEvent.LONG_PRESS) {
+      if (!sm.getIndexSelected(index)) {
+        sm.beginChange();
+        sm.setIndexSelected(index, true);
+        sm.setCheckSelectMode(true);
+        sm.endChange();
+        return true;
+      } else {
+        // Do nothing, so as to avoid unselecting before drag.
+      }
+    }
+  }
+  return false;
 };
 
 /**
