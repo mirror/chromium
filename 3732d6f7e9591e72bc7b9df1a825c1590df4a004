@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aade6c93_38d78fef",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-08T23:17:56Z",
+      "side": 1,
+      "message": "Yep, much better that way -- done.",
+      "parentUuid": "af64c820_677a6cbd",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 71
+      },
+      "revId": "3732d6f7e9591e72bc7b9df1a825c1590df4a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d544e4e_6cde8aa9",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "3732d6f7e9591e72bc7b9df1a825c1590df4a004",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5179c8_bbaf3aea",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-08T23:17:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d544e4e_6cde8aa9",
+      "range": {
+        "startLine": 190,
+        "startChar": 20,
+        "endLine": 190,
+        "endChar": 41
+      },
+      "revId": "3732d6f7e9591e72bc7b9df1a825c1590df4a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "df42d8c2_e52a6c09",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-08T23:17:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57ee1c09_03569764",
+      "range": {
+        "startLine": 197,
+        "startChar": 15,
+        "endLine": 197,
+        "endChar": 16
+      },
+      "revId": "3732d6f7e9591e72bc7b9df1a825c1590df4a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4894244_a2019c53",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "3732d6f7e9591e72bc7b9df1a825c1590df4a004",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35633c2f_cbbb36e3",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-08T23:17:56Z",
+      "side": 1,
+      "message": "As discussed offline, the initial default needs to be true, because if the user logs in with Bluetooth off, TetherTechnologyState will be unavailable instead of the desired uninitialized if is_ble_advertising_supported_ defaults to false.\n\nThis unfortunately creates an issue for devices which actually cannot support BLE advertising, such as link, in that Tether will briefly seem available, until the user enables Bluetooth and the Mobile Data section disappears. This is a small enough edge case to be acceptable, and I\u0027ve added a pref that remembers if BLE advertising is supported so that future logins are not affected by this. Given that Bluetooth is now enabled by default for new logins, this edge case should manifest even less. \n\nI\u0027ve also added documentation covering all of this.",
+      "parentUuid": "e4894244_a2019c53",
+      "range": {
+        "startLine": 280,
+        "startChar": 15,
+        "endLine": 280,
+        "endChar": 39
+      },
+      "revId": "3732d6f7e9591e72bc7b9df1a825c1590df4a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b8de116f_d6081ca2",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-08T23:17:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ece2222_8e3e646f",
+      "range": {
+        "startLine": 295,
+        "startChar": 43,
+        "endLine": 295,
+        "endChar": 44
+      },
+      "revId": "3732d6f7e9591e72bc7b9df1a825c1590df4a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b58fec6_27ff798f",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 7
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "376ded41_05d22cfb",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-08T23:17:56Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1b58fec6_27ff798f",
+      "range": {
+        "startLine": 348,
+        "startChar": 0,
+        "endLine": 348,
+        "endChar": 42
+      },
+      "revId": "3732d6f7e9591e72bc7b9df1a825c1590df4a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e16711b_7705ba65",
         "filename": "chrome/browser/chromeos/tether/tether_service.h",
         "patchSetId": 7
@@ -160,6 +304,30 @@
       "revId": "3732d6f7e9591e72bc7b9df1a825c1590df4a004",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d9893f4_e647b619",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-08T23:17:56Z",
+      "side": 1,
+      "message": "Moved this method to the subsequent CL.",
+      "parentUuid": "4e16711b_7705ba65",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 51
+      },
+      "revId": "3732d6f7e9591e72bc7b9df1a825c1590df4a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
