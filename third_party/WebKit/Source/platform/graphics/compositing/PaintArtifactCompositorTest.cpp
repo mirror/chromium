@@ -154,6 +154,17 @@ class PaintArtifactCompositorTestWithPropertyTrees
         id, CompositorElementIdNamespace::kScroll);
   }
 
+  size_t SynthesizedClipLayerCount() {
+    return paint_artifact_compositor_->GetExtraDataForTesting()
+        ->synthesized_clip_layers.size();
+  }
+
+  cc::Layer* SynthesizedClipLayerAt(unsigned index) {
+    return paint_artifact_compositor_->GetExtraDataForTesting()
+        ->synthesized_clip_layers[index]
+        .get();
+  }
+
   void AddSimpleRectChunk(TestPaintArtifact& artifact) {
     artifact
         .Chunk(TransformPaintPropertyNode::Root(),
@@ -190,6 +201,17 @@ class PaintArtifactCompositorTestWithPropertyTrees
   base::ThreadTaskRunnerHandle task_runner_handle_;
   std::unique_ptr<WebLayerTreeViewWithLayerTreeFrameSink> web_layer_tree_view_;
 };
+
+// Convenient shorthands.
+const TransformPaintPropertyNode* t0() {
+  return TransformPaintPropertyNode::Root();
+}
+const ClipPaintPropertyNode* c0() {
+  return ClipPaintPropertyNode::Root();
+}
+const EffectPaintPropertyNode* e0() {
+  return EffectPaintPropertyNode::Root();
+}
 
 TEST_F(PaintArtifactCompositorTestWithPropertyTrees, EmptyPaintArtifact) {
   PaintArtifact empty_artifact;
@@ -2307,4 +2329,504 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees,
   }
 }
 
+TEST_F(PaintArtifactCompositorTestWithPropertyTrees, SynthesizedClipSimple) {
+  // This tests the simplist case that a single layer needs to be clipped
+  // by a single composited rounded clip.
+  FloatSize corner(5, 5);
+  FloatRoundedRect rrect(FloatRect(50, 50, 300, 200), corner, corner, corner,
+                         corner);
+  RefPtr<ClipPaintPropertyNode> c1 = ClipPaintPropertyNode::Create(
+      c0(), t0(), rrect, kCompositingReasonWillChangeCompositingHint);
+
+  TestPaintArtifact artifact;
+  artifact.Chunk(t0(), c1, e0())
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  Update(artifact.Build());
+
+  // Expectation in effect stack diagram:
+  //             l2
+  //      l1 [ e_c1_1m ]
+  // (l0) [   e_c1_1   ]
+  // [       e0        ]
+  // One content layer, one dummy, one clip mask.
+  ASSERT_EQ(3u, RootLayer()->children().size());
+  ASSERT_EQ(1u, ContentLayerCount());
+  ASSERT_EQ(1u, SynthesizedClipLayerCount());
+
+  const cc::Layer* l0 = RootLayer()->children()[0].get();
+  const cc::Layer* l1 = RootLayer()->children()[1].get();
+  const cc::Layer* l2 = RootLayer()->children()[2].get();
+
+  constexpr int e0_id = 1;
+
+  // l0 is the dummy layer for c1.
+  int c1_id = l0->clip_tree_index();
+  const cc::ClipNode& cc_c1 = *GetPropertyTrees().clip_tree.Node(c1_id);
+  ASSERT_EQ(gfx::RectF(50, 50, 300, 200), cc_c1.clip);
+
+  EXPECT_EQ(ContentLayerAt(0), l1);
+  EXPECT_EQ(c1_id, l1->clip_tree_index());
+  int e_c1_1_id = l1->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_1 =
+      *GetPropertyTrees().effect_tree.Node(e_c1_1_id);
+  ASSERT_EQ(e0_id, cc_e_c1_1.parent_id);
+
+  EXPECT_EQ(SynthesizedClipLayerAt(0), l2);
+  EXPECT_EQ(gfx::Size(300, 200), l2->bounds());
+  EXPECT_EQ(c1_id, l2->clip_tree_index());
+  int e_c1_1m_id = l2->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_1m =
+      *GetPropertyTrees().effect_tree.Node(e_c1_1m_id);
+  ASSERT_EQ(e_c1_1_id, cc_e_c1_1m.parent_id);
+  EXPECT_EQ(SkBlendMode::kDstIn, cc_e_c1_1m.blend_mode);
+}
+
+TEST_F(PaintArtifactCompositorTestWithPropertyTrees,
+       SynthesizedClipContiguous) {
+  // This tests the case that a two back-to-back composited layers having
+  // the same composited rounded clip can share the synthesized mask.
+  RefPtr<TransformPaintPropertyNode> t1 = TransformPaintPropertyNode::Create(
+      t0(), TransformationMatrix(), FloatPoint3D(), false, 0,
+      kCompositingReasonWillChangeCompositingHint);
+
+  FloatSize corner(5, 5);
+  FloatRoundedRect rrect(FloatRect(50, 50, 300, 200), corner, corner, corner,
+                         corner);
+  RefPtr<ClipPaintPropertyNode> c1 = ClipPaintPropertyNode::Create(
+      c0(), t0(), rrect, kCompositingReasonWillChangeCompositingHint);
+
+  TestPaintArtifact artifact;
+  artifact.Chunk(t0(), c1, e0())
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  artifact.Chunk(t1, c1, e0())
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  Update(artifact.Build());
+
+  // Expectation in effect stack diagram:
+  //                     l4
+  //      l1 (l2) l3 [ e_c1_1m ]
+  // (l0) [       e_c1_1       ]
+  // [           e0            ]
+  // Two content layers, two dummy, one clip mask.
+  ASSERT_EQ(5u, RootLayer()->children().size());
+  ASSERT_EQ(2u, ContentLayerCount());
+  ASSERT_EQ(1u, SynthesizedClipLayerCount());
+
+  const cc::Layer* l0 = RootLayer()->children()[0].get();
+  const cc::Layer* l1 = RootLayer()->children()[1].get();
+  // l2 is the dummy layer for t1. Not interested.
+  const cc::Layer* l3 = RootLayer()->children()[3].get();
+  const cc::Layer* l4 = RootLayer()->children()[4].get();
+
+  constexpr int e0_id = 1;
+
+  // l0 is the dummy layer for c1.
+  int c1_id = l0->clip_tree_index();
+  const cc::ClipNode& cc_c1 = *GetPropertyTrees().clip_tree.Node(c1_id);
+  ASSERT_EQ(gfx::RectF(50, 50, 300, 200), cc_c1.clip);
+
+  EXPECT_EQ(ContentLayerAt(0), l1);
+  EXPECT_EQ(c1_id, l1->clip_tree_index());
+  int e_c1_1_id = l1->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_1 =
+      *GetPropertyTrees().effect_tree.Node(e_c1_1_id);
+  ASSERT_EQ(e0_id, cc_e_c1_1.parent_id);
+
+  EXPECT_EQ(ContentLayerAt(1), l3);
+  EXPECT_EQ(c1_id, l3->clip_tree_index());
+  EXPECT_EQ(e_c1_1_id, l3->effect_tree_index());
+
+  EXPECT_EQ(SynthesizedClipLayerAt(0), l4);
+  EXPECT_EQ(gfx::Size(300, 200), l4->bounds());
+  EXPECT_EQ(c1_id, l4->clip_tree_index());
+  int e_c1_1m_id = l4->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_1m =
+      *GetPropertyTrees().effect_tree.Node(e_c1_1m_id);
+  ASSERT_EQ(e_c1_1_id, cc_e_c1_1m.parent_id);
+  EXPECT_EQ(SkBlendMode::kDstIn, cc_e_c1_1m.blend_mode);
+}
+
+TEST_F(PaintArtifactCompositorTestWithPropertyTrees,
+       SynthesizedClipDiscontiguous) {
+  // This tests the case that a two composited layers having the same
+  // composited rounded clip cannot share the synthesized mask if there is
+  // another layer in the middle.
+  RefPtr<TransformPaintPropertyNode> t1 = TransformPaintPropertyNode::Create(
+      t0(), TransformationMatrix(), FloatPoint3D(), false, 0,
+      kCompositingReasonWillChangeCompositingHint);
+
+  FloatSize corner(5, 5);
+  FloatRoundedRect rrect(FloatRect(50, 50, 300, 200), corner, corner, corner,
+                         corner);
+  RefPtr<ClipPaintPropertyNode> c1 = ClipPaintPropertyNode::Create(
+      c0(), t0(), rrect, kCompositingReasonWillChangeCompositingHint);
+
+  TestPaintArtifact artifact;
+  artifact.Chunk(t0(), c1, e0())
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  artifact.Chunk(t1, c0(), e0())
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  artifact.Chunk(t0(), c1, e0())
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  Update(artifact.Build());
+
+  // Expectation in effect stack diagram:
+  //                  l3                l6
+  //      l1 (l2) [ e_c1_1m ]    l5 [ e_c1_2m ]
+  // (l0) [     e_c1_1      ] l4 [   e_c1_2   ]
+  // [                  e0                    ]
+  // Three content layers, two dummy, two clip mask.
+  ASSERT_EQ(7u, RootLayer()->children().size());
+  ASSERT_EQ(3u, ContentLayerCount());
+  ASSERT_EQ(2u, SynthesizedClipLayerCount());
+
+  const cc::Layer* l0 = RootLayer()->children()[0].get();
+  const cc::Layer* l1 = RootLayer()->children()[1].get();
+  // l2 is the dummy layer for t1. Not interested.
+  const cc::Layer* l3 = RootLayer()->children()[3].get();
+  const cc::Layer* l4 = RootLayer()->children()[4].get();
+  const cc::Layer* l5 = RootLayer()->children()[5].get();
+  const cc::Layer* l6 = RootLayer()->children()[6].get();
+
+  constexpr int c0_id = 1;
+  constexpr int e0_id = 1;
+
+  // l0 is the dummy layer for c1.
+  int c1_id = l0->clip_tree_index();
+  const cc::ClipNode& cc_c1 = *GetPropertyTrees().clip_tree.Node(c1_id);
+  ASSERT_EQ(gfx::RectF(50, 50, 300, 200), cc_c1.clip);
+
+  EXPECT_EQ(ContentLayerAt(0), l1);
+  EXPECT_EQ(c1_id, l1->clip_tree_index());
+  int e_c1_1_id = l1->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_1 =
+      *GetPropertyTrees().effect_tree.Node(e_c1_1_id);
+  ASSERT_EQ(e0_id, cc_e_c1_1.parent_id);
+
+  EXPECT_EQ(SynthesizedClipLayerAt(0), l3);
+  EXPECT_EQ(gfx::Size(300, 200), l3->bounds());
+  EXPECT_EQ(c1_id, l3->clip_tree_index());
+  int e_c1_1m_id = l3->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_1m =
+      *GetPropertyTrees().effect_tree.Node(e_c1_1m_id);
+  ASSERT_EQ(e_c1_1_id, cc_e_c1_1m.parent_id);
+  EXPECT_EQ(SkBlendMode::kDstIn, cc_e_c1_1m.blend_mode);
+
+  EXPECT_EQ(ContentLayerAt(1), l4);
+  EXPECT_EQ(c0_id, l4->clip_tree_index());
+  EXPECT_EQ(e0_id, l4->effect_tree_index());
+
+  EXPECT_EQ(ContentLayerAt(2), l5);
+  EXPECT_EQ(c1_id, l5->clip_tree_index());
+  int e_c1_2_id = l5->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_2 =
+      *GetPropertyTrees().effect_tree.Node(e_c1_2_id);
+  EXPECT_NE(e_c1_1_id, e_c1_2_id);
+  ASSERT_EQ(e0_id, cc_e_c1_2.parent_id);
+
+  EXPECT_EQ(SynthesizedClipLayerAt(1), l6);
+  EXPECT_EQ(gfx::Size(300, 200), l6->bounds());
+  EXPECT_EQ(c1_id, l6->clip_tree_index());
+  int e_c1_2m_id = l6->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_2m =
+      *GetPropertyTrees().effect_tree.Node(e_c1_2m_id);
+  ASSERT_EQ(e_c1_2_id, cc_e_c1_2m.parent_id);
+  EXPECT_EQ(SkBlendMode::kDstIn, cc_e_c1_2m.blend_mode);
+}
+
+TEST_F(PaintArtifactCompositorTestWithPropertyTrees,
+       SynthesizedClipAcrossChildEffect) {
+  // This tests the case that an effect having the same output clip as the
+  // layers before and after it can share the synthesized mask.
+  FloatSize corner(5, 5);
+  FloatRoundedRect rrect(FloatRect(50, 50, 300, 200), corner, corner, corner,
+                         corner);
+  RefPtr<ClipPaintPropertyNode> c1 = ClipPaintPropertyNode::Create(
+      c0(), t0(), rrect, kCompositingReasonWillChangeCompositingHint);
+
+  RefPtr<EffectPaintPropertyNode> e1 = EffectPaintPropertyNode::Create(
+      e0(), t0(), c1, ColorFilter(), CompositorFilterOperations(), 1,
+      SkBlendMode::kSrcOver, kCompositingReasonWillChangeCompositingHint);
+
+  TestPaintArtifact artifact;
+  artifact.Chunk(t0(), c1, e0())
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  artifact.Chunk(t0(), c1, e1)
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  artifact.Chunk(t0(), c1, e0())
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  Update(artifact.Build());
+
+  // Expectation in effect stack diagram:
+  //         (l2) l3        l5
+  //      l1 [ e1  ] l4 [ e_c1_1m ]
+  // (l0) [        e_c1_1         ]
+  // [            e0              ]
+  // Three content layers, two dummy, one clip mask.
+  ASSERT_EQ(6u, RootLayer()->children().size());
+  ASSERT_EQ(3u, ContentLayerCount());
+  ASSERT_EQ(1u, SynthesizedClipLayerCount());
+
+  const cc::Layer* l0 = RootLayer()->children()[0].get();
+  const cc::Layer* l1 = RootLayer()->children()[1].get();
+  const cc::Layer* l2 = RootLayer()->children()[2].get();
+  const cc::Layer* l3 = RootLayer()->children()[3].get();
+  const cc::Layer* l4 = RootLayer()->children()[4].get();
+  const cc::Layer* l5 = RootLayer()->children()[5].get();
+
+  constexpr int e0_id = 1;
+
+  // l0 is the dummy layer for c1.
+  int c1_id = l0->clip_tree_index();
+  const cc::ClipNode& cc_c1 = *GetPropertyTrees().clip_tree.Node(c1_id);
+  ASSERT_EQ(gfx::RectF(50, 50, 300, 200), cc_c1.clip);
+
+  EXPECT_EQ(ContentLayerAt(0), l1);
+  EXPECT_EQ(c1_id, l1->clip_tree_index());
+  int e_c1_1_id = l1->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_1 =
+      *GetPropertyTrees().effect_tree.Node(e_c1_1_id);
+  ASSERT_EQ(e0_id, cc_e_c1_1.parent_id);
+
+  // l2 is the dummy layer for e1.
+  int e1_id = l2->effect_tree_index();
+  const cc::EffectNode& cc_e1 = *GetPropertyTrees().effect_tree.Node(e1_id);
+  ASSERT_EQ(e_c1_1_id, cc_e1.parent_id);
+
+  EXPECT_EQ(ContentLayerAt(1), l3);
+  EXPECT_EQ(c1_id, l3->clip_tree_index());
+  EXPECT_EQ(e1_id, l3->effect_tree_index());
+
+  EXPECT_EQ(ContentLayerAt(2), l4);
+  EXPECT_EQ(c1_id, l4->clip_tree_index());
+  EXPECT_EQ(e_c1_1_id, l4->effect_tree_index());
+
+  EXPECT_EQ(SynthesizedClipLayerAt(0), l5);
+  EXPECT_EQ(gfx::Size(300, 200), l5->bounds());
+  EXPECT_EQ(c1_id, l5->clip_tree_index());
+  int e_c1_1m_id = l5->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_1m =
+      *GetPropertyTrees().effect_tree.Node(e_c1_1m_id);
+  ASSERT_EQ(e_c1_1_id, cc_e_c1_1m.parent_id);
+  EXPECT_EQ(SkBlendMode::kDstIn, cc_e_c1_1m.blend_mode);
+}
+
+TEST_F(PaintArtifactCompositorTestWithPropertyTrees,
+       SynthesizedClipRespectOutputClip) {
+  // This tests the case that a layer cannot share the synthesized mask despite
+  // having the same composited rounded clip if it's enclosed by an effect not
+  // clipped by the common clip.
+  FloatSize corner(5, 5);
+  FloatRoundedRect rrect(FloatRect(50, 50, 300, 200), corner, corner, corner,
+                         corner);
+  RefPtr<ClipPaintPropertyNode> c1 = ClipPaintPropertyNode::Create(
+      c0(), t0(), rrect, kCompositingReasonWillChangeCompositingHint);
+
+  CompositorFilterOperations non_trivial_filter;
+  non_trivial_filter.AppendBlurFilter(5);
+  RefPtr<EffectPaintPropertyNode> e1 = EffectPaintPropertyNode::Create(
+      e0(), t0(), c0(), ColorFilter(), non_trivial_filter, 1,
+      SkBlendMode::kSrcOver, kCompositingReasonWillChangeCompositingHint);
+
+  TestPaintArtifact artifact;
+  artifact.Chunk(t0(), c1, e0())
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  artifact.Chunk(t0(), c1, e1)
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  artifact.Chunk(t0(), c1, e0())
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  Update(artifact.Build());
+
+  // Expectation in effect stack diagram:
+  //                                 l5
+  //             l2           l4 [ e_c1_2m ]        l7
+  //      l1 [ e_c1_1m ] (l3) [   e_c1_2   ] l6 [ e_c1_3m ]
+  // (l0) [   e_c1_1   ][        e1        ][   e_c1_3    ]
+  // [                         e0                         ]
+  // Three content layers, two dummy, three clip mask.
+  ASSERT_EQ(8u, RootLayer()->children().size());
+  ASSERT_EQ(3u, ContentLayerCount());
+  ASSERT_EQ(3u, SynthesizedClipLayerCount());
+
+  const cc::Layer* l0 = RootLayer()->children()[0].get();
+  const cc::Layer* l1 = RootLayer()->children()[1].get();
+  const cc::Layer* l2 = RootLayer()->children()[2].get();
+  const cc::Layer* l3 = RootLayer()->children()[3].get();
+  const cc::Layer* l4 = RootLayer()->children()[4].get();
+  const cc::Layer* l5 = RootLayer()->children()[5].get();
+  const cc::Layer* l6 = RootLayer()->children()[6].get();
+  const cc::Layer* l7 = RootLayer()->children()[7].get();
+
+  constexpr int e0_id = 1;
+
+  // l0 is the dummy layer for c1.
+  int c1_id = l0->clip_tree_index();
+  const cc::ClipNode& cc_c1 = *GetPropertyTrees().clip_tree.Node(c1_id);
+  ASSERT_EQ(gfx::RectF(50, 50, 300, 200), cc_c1.clip);
+
+  EXPECT_EQ(ContentLayerAt(0), l1);
+  EXPECT_EQ(c1_id, l1->clip_tree_index());
+  int e_c1_1_id = l1->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_1 =
+      *GetPropertyTrees().effect_tree.Node(e_c1_1_id);
+  ASSERT_EQ(e0_id, cc_e_c1_1.parent_id);
+
+  EXPECT_EQ(SynthesizedClipLayerAt(0), l2);
+  EXPECT_EQ(gfx::Size(300, 200), l2->bounds());
+  EXPECT_EQ(c1_id, l2->clip_tree_index());
+  int e_c1_1m_id = l2->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_1m =
+      *GetPropertyTrees().effect_tree.Node(e_c1_1m_id);
+  ASSERT_EQ(e_c1_1_id, cc_e_c1_1m.parent_id);
+  EXPECT_EQ(SkBlendMode::kDstIn, cc_e_c1_1m.blend_mode);
+
+  // l3 is the dummy layer for e1.
+  int e1_id = l3->effect_tree_index();
+  const cc::EffectNode& cc_e1 = *GetPropertyTrees().effect_tree.Node(e1_id);
+  ASSERT_EQ(e0_id, cc_e1.parent_id);
+
+  EXPECT_EQ(ContentLayerAt(1), l4);
+  EXPECT_EQ(c1_id, l4->clip_tree_index());
+  int e_c1_2_id = l4->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_2 =
+      *GetPropertyTrees().effect_tree.Node(e_c1_2_id);
+  EXPECT_NE(e_c1_1_id, e_c1_2_id);
+  ASSERT_EQ(e1_id, cc_e_c1_2.parent_id);
+
+  EXPECT_EQ(SynthesizedClipLayerAt(1), l5);
+  EXPECT_EQ(gfx::Size(300, 200), l5->bounds());
+  EXPECT_EQ(c1_id, l5->clip_tree_index());
+  int e_c1_2m_id = l5->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_2m =
+      *GetPropertyTrees().effect_tree.Node(e_c1_2m_id);
+  ASSERT_EQ(e_c1_2_id, cc_e_c1_2m.parent_id);
+  EXPECT_EQ(SkBlendMode::kDstIn, cc_e_c1_2m.blend_mode);
+
+  EXPECT_EQ(ContentLayerAt(2), l6);
+  EXPECT_EQ(c1_id, l6->clip_tree_index());
+  int e_c1_3_id = l6->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_3 =
+      *GetPropertyTrees().effect_tree.Node(e_c1_3_id);
+  EXPECT_NE(e_c1_1_id, e_c1_3_id);
+  EXPECT_NE(e_c1_2_id, e_c1_3_id);
+  ASSERT_EQ(e0_id, cc_e_c1_3.parent_id);
+
+  EXPECT_EQ(SynthesizedClipLayerAt(2), l7);
+  EXPECT_EQ(gfx::Size(300, 200), l7->bounds());
+  EXPECT_EQ(c1_id, l7->clip_tree_index());
+  int e_c1_3m_id = l7->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_3m =
+      *GetPropertyTrees().effect_tree.Node(e_c1_3m_id);
+  ASSERT_EQ(e_c1_3_id, cc_e_c1_3m.parent_id);
+  EXPECT_EQ(SkBlendMode::kDstIn, cc_e_c1_3m.blend_mode);
+}
+
+TEST_F(PaintArtifactCompositorTestWithPropertyTrees,
+       SynthesizedClipDelegateBlending) {
+  // This tests the case that an effect with exotic blending cannot share
+  // the synthesized mask with its siblings because its blending has to be
+  // applied by the outermost mask.
+  FloatSize corner(5, 5);
+  FloatRoundedRect rrect(FloatRect(50, 50, 300, 200), corner, corner, corner,
+                         corner);
+  RefPtr<ClipPaintPropertyNode> c1 = ClipPaintPropertyNode::Create(
+      c0(), t0(), rrect, kCompositingReasonWillChangeCompositingHint);
+
+  RefPtr<EffectPaintPropertyNode> e1 = EffectPaintPropertyNode::Create(
+      e0(), t0(), c1, ColorFilter(), CompositorFilterOperations(), 1,
+      SkBlendMode::kMultiply, kCompositingReasonWillChangeCompositingHint);
+
+  TestPaintArtifact artifact;
+  artifact.Chunk(t0(), c1, e0())
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  artifact.Chunk(t0(), c1, e1)
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  artifact.Chunk(t0(), c1, e0())
+      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kBlack);
+  Update(artifact.Build());
+
+  // Expectation in effect stack diagram:
+  //             l2     (l3) l4     l5               l7
+  //      l1 [ e_c1_1m ][ e1  ][   e_c1_2m   ] l6 [ e_c1_3m ]
+  // (l0) [   e_c1_1   ][       e_c1_2       ][   e_c1_3    ]
+  // [                          e0                          ]
+  // Three content layers, two dummy, three clip mask.
+  ASSERT_EQ(8u, RootLayer()->children().size());
+  ASSERT_EQ(3u, ContentLayerCount());
+  ASSERT_EQ(3u, SynthesizedClipLayerCount());
+
+  const cc::Layer* l0 = RootLayer()->children()[0].get();
+  const cc::Layer* l1 = RootLayer()->children()[1].get();
+  const cc::Layer* l2 = RootLayer()->children()[2].get();
+  const cc::Layer* l3 = RootLayer()->children()[3].get();
+  const cc::Layer* l4 = RootLayer()->children()[4].get();
+  const cc::Layer* l5 = RootLayer()->children()[5].get();
+  const cc::Layer* l6 = RootLayer()->children()[6].get();
+  const cc::Layer* l7 = RootLayer()->children()[7].get();
+
+  constexpr int e0_id = 1;
+
+  // l0 is the dummy layer for c1.
+  int c1_id = l0->clip_tree_index();
+  const cc::ClipNode& cc_c1 = *GetPropertyTrees().clip_tree.Node(c1_id);
+  ASSERT_EQ(gfx::RectF(50, 50, 300, 200), cc_c1.clip);
+
+  EXPECT_EQ(ContentLayerAt(0), l1);
+  EXPECT_EQ(c1_id, l1->clip_tree_index());
+  int e_c1_1_id = l1->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_1 =
+      *GetPropertyTrees().effect_tree.Node(e_c1_1_id);
+  ASSERT_EQ(e0_id, cc_e_c1_1.parent_id);
+
+  EXPECT_EQ(SynthesizedClipLayerAt(0), l2);
+  EXPECT_EQ(gfx::Size(300, 200), l2->bounds());
+  EXPECT_EQ(c1_id, l2->clip_tree_index());
+  int e_c1_1m_id = l2->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_1m =
+      *GetPropertyTrees().effect_tree.Node(e_c1_1m_id);
+  ASSERT_EQ(e_c1_1_id, cc_e_c1_1m.parent_id);
+  EXPECT_EQ(SkBlendMode::kDstIn, cc_e_c1_1m.blend_mode);
+
+  // l3 is the dummy layer for e1.
+  int e1_id = l3->effect_tree_index();
+  const cc::EffectNode& cc_e1 = *GetPropertyTrees().effect_tree.Node(e1_id);
+  EXPECT_EQ(SkBlendMode::kSrcOver, cc_e1.blend_mode);
+  int e_c1_2_id = cc_e1.parent_id;
+  const cc::EffectNode& cc_e_c1_2 =
+      *GetPropertyTrees().effect_tree.Node(e_c1_2_id);
+  EXPECT_NE(e_c1_1_id, e_c1_2_id);
+  ASSERT_EQ(e0_id, cc_e_c1_2.parent_id);
+  EXPECT_EQ(SkBlendMode::kMultiply, cc_e_c1_2.blend_mode);
+
+  EXPECT_EQ(ContentLayerAt(1), l4);
+  EXPECT_EQ(c1_id, l4->clip_tree_index());
+  EXPECT_EQ(e1_id, l4->effect_tree_index());
+
+  EXPECT_EQ(SynthesizedClipLayerAt(1), l5);
+  EXPECT_EQ(gfx::Size(300, 200), l5->bounds());
+  EXPECT_EQ(c1_id, l5->clip_tree_index());
+  int e_c1_2m_id = l5->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_2m =
+      *GetPropertyTrees().effect_tree.Node(e_c1_2m_id);
+  ASSERT_EQ(e_c1_2_id, cc_e_c1_2m.parent_id);
+  EXPECT_EQ(SkBlendMode::kDstIn, cc_e_c1_2m.blend_mode);
+
+  EXPECT_EQ(ContentLayerAt(2), l6);
+  EXPECT_EQ(c1_id, l6->clip_tree_index());
+  int e_c1_3_id = l6->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_3 =
+      *GetPropertyTrees().effect_tree.Node(e_c1_3_id);
+  EXPECT_NE(e_c1_1_id, e_c1_3_id);
+  EXPECT_NE(e_c1_2_id, e_c1_3_id);
+  ASSERT_EQ(e0_id, cc_e_c1_3.parent_id);
+
+  EXPECT_EQ(SynthesizedClipLayerAt(2), l7);
+  EXPECT_EQ(gfx::Size(300, 200), l7->bounds());
+  EXPECT_EQ(c1_id, l7->clip_tree_index());
+  int e_c1_3m_id = l7->effect_tree_index();
+  const cc::EffectNode& cc_e_c1_3m =
+      *GetPropertyTrees().effect_tree.Node(e_c1_3m_id);
+  ASSERT_EQ(e_c1_3_id, cc_e_c1_3m.parent_id);
+  EXPECT_EQ(SkBlendMode::kDstIn, cc_e_c1_3m.blend_mode);
+}
 }  // namespace blink
