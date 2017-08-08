@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1431f1f9_4b5e9a36",
+        "filename": "net/quic/core/frames/quic_ack_frame.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-08T22:18:08Z",
+      "side": 1,
+      "message": "There are several size_t related changes to this file that do not appear to have been back ported. As a result, subsequent changes are experiencing merge conflicts. Did you intend to merge these changes?",
+      "range": {
+        "startLine": 131,
+        "startChar": 12,
+        "endLine": 131,
+        "endChar": 23
+      },
+      "revId": "d654e49c79144d2f354c54e713080a2e2af9dfbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
