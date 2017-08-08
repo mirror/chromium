@@ -16,6 +16,24 @@
       "revId": "a85e2f6a695d401bbe539d96598f3636973bed1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b56765_92b55545",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-08T15:15:14Z",
+      "side": 1,
+      "message": "Could you briefly tell me what circular dependency it creates / what error message you\u0027d get if you add this to mojo bindings or blink headers?\n\nSince we anyway need to update these... would it work better if we move this file into WebKit/common, where is the new home for things that are referenced both from the browser and renderer code?",
+      "parentUuid": "2eb98de5_c553b565",
+      "revId": "a85e2f6a695d401bbe539d96598f3636973bed1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
