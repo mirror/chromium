@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2c2ceb2_0c545c7d",
+        "filename": "ui/gfx/native_widget_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-08T19:49:09Z",
+      "side": 0,
+      "message": "So we don\u0027t need these now?",
+      "revId": "175a953ca82fbbf6bd787ea0213103d65d9d61ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c79fc8f_524bc7df",
+        "filename": "ui/gfx/native_widget_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-08T19:49:09Z",
+      "side": 0,
+      "message": "And this was dead code because USE_OZONE above now got picked?",
+      "revId": "175a953ca82fbbf6bd787ea0213103d65d9d61ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
