@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2bbbe92_2da040e9",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-08T00:42:39Z",
+      "side": 1,
+      "message": "Since this is a local, the trailing \u0027_\u0027 should be removed and it can be moved down into the \"if (appcache)\" scope. Better yet would be to invoke base::Bind right here and not have the local at all, then the std::move call would not be needed at all either.",
+      "revId": "5234572aee0c0935363e1c8fb0f9846774e0e2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83fbc621_134f79fb",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-08T00:42:39Z",
+      "side": 1,
+      "message": "I think the start_update and swap_cache callbacks could use the similar treatment. If you want to lay down tracks in parallel for this in the CL, go for it, or not as you see fit.",
+      "revId": "5234572aee0c0935363e1c8fb0f9846774e0e2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a286182_3d4d0682",
+        "filename": "content/browser/appcache/appcache_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-08T00:42:39Z",
+      "side": 1,
+      "message": "optional nit: I\u0027d vote to not have a data member if we\u0027re going to clear it on each call to GetStatusWithCallback. If there was a second call get GetStatusWithCallback() in any given test, the second call wouldn\u0027t work. I don\u0027t think this is an issue in practical terms because no tests have two calls to the method, but...\n\nA method to CreateStatusCallback that returned a newly created BindOnce might make sense.",
+      "revId": "5234572aee0c0935363e1c8fb0f9846774e0e2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
