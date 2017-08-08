@@ -356,6 +356,24 @@
       "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26f47ec_ad33d390",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-08T06:48:55Z",
+      "side": 1,
+      "message": "UpdateLogicalWidthForCollapsedCells perhaps?",
+      "parentUuid": "6ad8744a_4637f5da",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
