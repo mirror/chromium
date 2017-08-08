@@ -393,6 +393,11 @@ const base::Feature kSyzyasanDeferredFree{"SyzyasanDeferredFree",
                                           base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
 
+#if defined(OS_MACOSX)
+const base::Feature kTouchbarDinoGame{"TouchbarDinoGame",
+                                      base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
 // Enables using the local NTP if Google is the default search engine.
 const base::Feature kUseGoogleLocalNtp{"UseGoogleLocalNtp",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
