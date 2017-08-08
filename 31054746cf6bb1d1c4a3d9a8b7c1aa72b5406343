@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dc8fff8_48dbbfc2",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1774,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-08-08T15:28:44Z",
+      "side": 1,
+      "message": "Should this all be moved to OnLeftMouseDown() for consistency?",
+      "revId": "31054746cf6bb1d1c4a3d9a8b7c1aa72b5406343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
