@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "62770a32_7f0cbab2",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-08T17:39:37Z",
+      "side": 1,
+      "message": "Just to clarify, -willMoveToSuperview and -updateConstraints should be mutually exclusive in this case. We can move -activateConstraints to -willMoveToSuperview and only activate it once there. This still solves our original problem of not calling instance methods from init.",
+      "parentUuid": "179688cc_b0f69733",
+      "revId": "4b2acde8e495cdfc76957b93b41228c5c5f55612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fbe6253_92e3e6c0",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.h",
         "patchSetId": 9
