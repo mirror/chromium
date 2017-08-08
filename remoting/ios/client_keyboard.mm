@@ -15,6 +15,7 @@
 
 @interface ClientKeyboard () {
   UIView* _inputView;
+  BOOL _translatesResignFirstResponderToHideKeyboard;
 }
 @end
 
@@ -39,6 +40,7 @@
     _autocorrectionType = UITextAutocorrectionTypeNo;
     _keyboardType = UIKeyboardTypeDefault;
     _spellCheckingType = UITextSpellCheckingTypeNo;
+    _translatesResignFirstResponderToHideKeyboard = YES;
 
     self.showsSoftKeyboard = NO;
   }
@@ -62,6 +64,22 @@
 #pragma mark - UIResponder
 
 - (BOOL)canBecomeFirstResponder {
+  return YES;
+}
+
+- (BOOL)canResignFirstResponder {
+  if (_translatesResignFirstResponderToHideKeyboard && self.showsSoftKeyboard) {
+    // This translates the action of resigning first responder when the keyboard
+    // is showing into hiding the soft keyboard while keeping the view first
+    // responder. This is to allow the hide keyboard button on the soft keyboard
+    // to work properly with ClientKeyboard's soft keyboard logic, which calls
+    // resignFirstResponder.
+    // This may cause weird behavior if the superview has multiple responders
+    // (text views).
+
+    self.showsSoftKeyboard = NO;
+    return NO;
+  }
   return YES;
 }
 
@@ -89,7 +107,10 @@
 
   if (self.isFirstResponder) {
     // Cause the app to reload inputView.
+
+    _translatesResignFirstResponderToHideKeyboard = NO;
     [self resignFirstResponder];
+    _translatesResignFirstResponderToHideKeyboard = YES;
     [self becomeFirstResponder];
   }
 }
