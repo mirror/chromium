@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1077837_1012b4e0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-08T22:57:37Z",
+      "side": 1,
+      "message": "nit: aDisplayName/bDisplayName",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "e58d7df4b2192d9ce785dc91690d5617a31e94e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50da3540_edde653a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-08T22:57:37Z",
+      "side": 1,
+      "message": "lets use: ObjectUI.RemoteObjectPreviewFormatter._internalPropertyDisplayName.has instead.",
+      "range": {
+        "startLine": 14,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 86
+      },
+      "revId": "e58d7df4b2192d9ce785dc91690d5617a31e94e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710396ca_f6d16cbc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-08T22:57:37Z",
+      "side": 1,
+      "message": "I am a tiny bit worried about the speed here. We are O(n) to find the item above, then O(n) again to get the non-accessors.\n\nMaybe move this into a for loop and do the if check that\u0027s above inside it, then sort? Then the logic is always one O(n).\n\nAlthough, this may be overkill, so up to you.",
+      "revId": "e58d7df4b2192d9ce785dc91690d5617a31e94e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b26dc29_6124e681",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-08T22:57:37Z",
+      "side": 1,
+      "message": "What do you think about moving this logic inside _renderDisplayName?",
+      "revId": "e58d7df4b2192d9ce785dc91690d5617a31e94e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9551827_743a39f5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-08T22:57:37Z",
+      "side": 1,
+      "message": "Not applicable much to this patch, but propertyPath is always being passed in as an array with one item. Can we consider just passing the propertyPreview without wrapping it in an array in another patch?",
+      "revId": "e58d7df4b2192d9ce785dc91690d5617a31e94e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8bb6b91_474f6d8b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-08T22:57:37Z",
+      "side": 1,
+      "message": "nit:\nif (!property.valuePreview)\n  return this.renderPropertyPreview(property.type, /** @type {string} */ (property.subtype), property.value);\nvar result \u003d createElement(\u0027span\u0027);\nthis.appendObjectPreview(result, property.valuePreview, false /* isEntry */);\nreturn result;",
+      "revId": "e58d7df4b2192d9ce785dc91690d5617a31e94e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8fa4e3_235d5719",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-08T22:57:37Z",
+      "side": 1,
+      "message": "_friendlyDisplayNameForName or something?",
+      "range": {
+        "startLine": 285,
+        "startChar": 38,
+        "endLine": 285,
+        "endChar": 66
+      },
+      "revId": "e58d7df4b2192d9ce785dc91690d5617a31e94e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d13ebfc5_215007bb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-08T22:57:37Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "e58d7df4b2192d9ce785dc91690d5617a31e94e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
