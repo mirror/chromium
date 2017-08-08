@@ -382,6 +382,19 @@ class AppControllerProfileObserver : public ProfileAttributesStorage::Observer {
     if (customizeItem)
       [viewMenu removeItem:customizeItem];
   }
+
+  // Remove the item to enable/disable Javascript in apple events if the
+  // feature is disabled.
+  if (!base::FeatureList::IsEnabled(
+          features::kAppleScriptExecuteJavaScriptMenuItem)) {
+    NSMenu* mainMenu = [NSApp mainMenu];
+    NSMenu* viewMenu = [[mainMenu itemWithTag:IDC_VIEW_MENU] submenu];
+    NSMenu* devMenu = [[viewMenu itemWithTag:IDC_DEVELOPER_MENU] submenu];
+    NSMenuItem* javascriptAppleEventItem =
+        [devMenu itemWithTag:IDC_TOGGLE_JAVASCRIPT_APPLE_EVENTS];
+    if (javascriptAppleEventItem)
+      [devMenu removeItem:javascriptAppleEventItem];
+  }
 }
 
 - (void)applicationWillHide:(NSNotification*)notification {
