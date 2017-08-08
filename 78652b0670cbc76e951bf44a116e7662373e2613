@@ -300,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "108fe842_c70a2fef",
+        "filename": "chrome/test/data/webui/extensions/extension_view_manager_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-08T20:48:56Z",
+      "side": 1,
+      "message": "Done, but slightly adjusted - note that the last param of util.isVisible is \u0027checkInLightDom\u0027. The boolean it return always identifies whether or not the element IS visible.",
+      "parentUuid": "86e9bb8f_b29891b0",
+      "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db424990_6b7ed933",
         "filename": "chrome/test/data/webui/extensions/extension_view_manager_test.js",
         "patchSetId": 8
@@ -329,6 +347,24 @@
       "side": 1,
       "message": "Any thoughts on this ^?",
       "parentUuid": "db424990_6b7ed933",
+      "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111fa6e3_b29bd8b1",
+        "filename": "chrome/test/data/webui/extensions/extension_view_manager_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-08T20:48:56Z",
+      "side": 1,
+      "message": "I like the first part to simplify adding of the listeners.\n\nFor the latter suggestion, my original intention of checking individual booleans is so that I can check the -start/-finish is fired *specifically* before/after the animation promise (and not just the order of firing), so I think I\u0027ll need to keep it as is to achieve that.",
+      "parentUuid": "b3a6aa2d_fa95fa91",
       "revId": "78652b0670cbc76e951bf44a116e7662373e2613",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
