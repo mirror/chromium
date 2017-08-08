@@ -85,3 +85,7 @@ void WebNotificationDelegate::ButtonClickWithReply(
       notification_id_, button_index,
       base::NullableString16(reply, false /* is_null */));
 }
+
+bool WebNotificationDelegate::HasClickedListener() {
+  return true;
+}
