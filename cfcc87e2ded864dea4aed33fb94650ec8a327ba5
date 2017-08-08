@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7e3d1edf_2e65d32c",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09229254_3e5d8f89",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc2c049f_c13c5fbe",
         "filename": "ash/public/cpp/shelf_prefs.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-08T01:49:10Z",
       "side": 1,
       "message": "Does this need to skip BOTTOM_LOCKED, like the old code, or is that not possible? DCHECK it?",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6e916b_26eeb15a",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "This already skips BOTTOM_LOCKED (AlignmentToPref returns null and we bail below).",
+      "parentUuid": "bc2c049f_c13c5fbe",
       "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cca70ed6_24d602cd",
+        "filename": "ash/public/cpp/shelf_prefs.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed23bed1_a2d3336b",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b807353_030e09ed",
         "filename": "ash/public/interfaces/session_controller.mojom",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ea748bfe_aa80a0d2",
+        "filename": "ash/public/interfaces/session_controller.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Done, it seems like it supports web kiosk, Chrome apps, and ARC apps:\nhttps://cs.chromium.org/chromium/src/chrome/browser/app_mode/app_mode_utils.cc?l\u003d45",
+      "parentUuid": "6b807353_030e09ed",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4af608b7_bbbf1047",
         "filename": "ash/session/session_controller_unittest.cc",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-08T01:49:10Z",
       "side": 1,
       "message": "nit: Default this to true, since that\u0027s more like the default behavior, and flip test expectations.",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516bde23_8443e9ee",
+        "filename": "ash/session/session_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Did you mean \"Default this to false?\" if so, you\u0027re right, done.",
+      "parentUuid": "4af608b7_bbbf1047",
       "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "5e263029_e80914a7",
+        "filename": "ash/shelf/shelf_alignment_menu.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a3b6854_03f52974",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b15c3045_b730a281",
         "filename": "ash/shelf/shelf_controller.cc",
         "patchSetId": 8
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-08T01:49:10Z",
       "side": 1,
       "message": "Is it possible GetShelfForDisplay() could return null here? Does Ctrl-Alt-D display disconnect work OK?",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9825a1c8_59e51ddc",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Done; it handles that possibility now. Ctrl-Shift-D works.",
+      "parentUuid": "b15c3045_b730a281",
       "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "d24dd7cd_819251f0",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5f81e2c_3b451bdf",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e830cfb1_6b7fef67",
         "filename": "ash/shelf/shelf_controller.cc",
         "patchSetId": 8
@@ -149,6 +293,24 @@
       "writtenOn": "2017-08-08T01:49:10Z",
       "side": 1,
       "message": "I know this is in the old code, but it makes me nervous. It feels like a hack. Do we still read and apply shelf preferences correctly when a display is attached at the lock screen? Maybe that works because the prefs are applied on unlock?",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35bdd50_38d6ed66",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Yes, unlock should attach the profile and load prefs then... Testing Ctrl-Shift-D during login with --login-manager seems to do the right thing. I\u0027m unsure if this is still needed, but I probably shouldn\u0027t remove it in this CL.",
+      "parentUuid": "e830cfb1_6b7fef67",
       "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "cf16f45c_82969b7b",
+        "filename": "ash/shelf/shelf_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Public it is, no real reason for private, just following CLC:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/ash/launcher/chrome_launcher_controller.h?l\u003d70",
+      "parentUuid": "a7f8808a_d1e58440",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ca55591_9ad9b8f4",
         "filename": "ash/shelf/shelf_controller_unittest.cc",
         "patchSetId": 8
@@ -183,6 +363,24 @@
       "writtenOn": "2017-08-08T01:49:10Z",
       "side": 1,
       "message": "I like it. That\u0027s one way to get attention when the test code changes. :-)",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14cc27ae_a6b0768f",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Haha, yup!",
+      "parentUuid": "2ca55591_9ad9b8f4",
       "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "4ef9bc94_8bc2ef6a",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "035a3fd8_3a29098b",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "683268ec_67e869de",
         "filename": "ash/shelf/shelf_controller_unittest.cc",
         "patchSetId": 8
@@ -217,6 +433,24 @@
       "writtenOn": "2017-08-08T01:49:10Z",
       "side": 1,
       "message": "optional: You could delete 251-259 without hurting the test",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c704f439_b2978301",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Nothing else tests this... might as well do so here?",
+      "parentUuid": "683268ec_67e869de",
       "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "e5195207_898d6c9d",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fe6afa0_7835f723",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "126d361f_1f76437d",
         "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
         "patchSetId": 8
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "618c703d_5a22e58e",
+        "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Hmm, I would also guess that this should work, but my local testing seems to show that this feature is broken in ToT and with my changes... I have a --login-manager --user-data-dir\u003d\u003ca\u003e storing left+auto-hide, but every time i bring up a new --user-data-dir and log into the same test account, this feature always seems to load \u0027Bottom\u0027+\u0027Never\u0027 when the prefs start to sync... I suggest testing this with actual devices and then filing a bug to follow up separately if it\u0027s indeed broken on ToT...",
+      "parentUuid": "126d361f_1f76437d",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "274439f6_9c19fef1",
         "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
         "patchSetId": 8
@@ -268,6 +538,24 @@
       "writtenOn": "2017-08-08T01:49:10Z",
       "side": 1,
       "message": "Thanks for fixing all these.",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5271dcf0_3dce033e",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T15:29:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "274439f6_9c19fef1",
       "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
