@@ -16,6 +16,24 @@
       "revId": "dcb342ccea284dbe47804514190d2baa113690b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b29936f_ee859242",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-08T08:44:32Z",
+      "side": 1,
+      "message": "I saw that article too :) Personally I don\u0027t mind if folks can detect headless chrome, the main thing we want to do is make sure exiting pages render properly in the server environment that is mocking a mobile device.",
+      "parentUuid": "e14672dc_376df3e4",
+      "revId": "dcb342ccea284dbe47804514190d2baa113690b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
