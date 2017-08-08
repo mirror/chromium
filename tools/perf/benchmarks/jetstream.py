@@ -97,5 +97,8 @@ class Jetstream(perf_benchmark.PerfBenchmark):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # http://browserbench.org/JetStream/ not disabled.
+        self.DisableStory(
+            'http://browserbench.org/JetStream/',
+            [story.expectations.ANDROID_NEXUS6, story.expectations.ANDROID_ONE],
+            'crbug.com/753480')
     return StoryExpectations()
