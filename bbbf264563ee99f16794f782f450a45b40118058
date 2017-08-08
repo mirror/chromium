@@ -46,6 +46,30 @@
       "revId": "bbbf264563ee99f16794f782f450a45b40118058",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a2b6a9_72ab9c63",
+        "filename": "ui/gfx/color_transform.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-08-08T18:35:10Z",
+      "side": 1,
+      "message": "Or better, \"Extending the function to negative values via point symmetry is performed by the caller\"",
+      "parentUuid": "642613cb_35866914",
+      "range": {
+        "startLine": 445,
+        "startChar": 26,
+        "endLine": 445,
+        "endChar": 35
+      },
+      "revId": "bbbf264563ee99f16794f782f450a45b40118058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
