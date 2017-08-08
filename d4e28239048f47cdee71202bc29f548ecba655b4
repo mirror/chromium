@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8b656a7_ad2b4587",
+        "filename": "base/files/scoped_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-08T20:39:26Z",
+      "side": 1,
+      "message": "I could also just unconditionally enable this. I suppose there\u0027s OS_OPENBSD or OS_AIX or whatever else we have. Dunno if we care enough about auditing each one\u0027s error close behavior. Which do you prefer?",
+      "revId": "d4e28239048f47cdee71202bc29f548ecba655b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
