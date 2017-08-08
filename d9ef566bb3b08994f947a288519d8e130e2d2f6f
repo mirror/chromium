@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8aff62ce_7bcca24c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T23:33:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffd3a52e_39f7846b",
+      "range": {
+        "startLine": 264,
+        "startChar": 58,
+        "endLine": 264,
+        "endChar": 83
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c72d807b_f0b10176",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb616d47_f40af7ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T23:33:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c72d807b_f0b10176",
+      "range": {
+        "startLine": 181,
+        "startChar": 51,
+        "endLine": 181,
+        "endChar": 52
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "adc160b1_ad6264d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T23:33:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6313d270_60ba0d8a",
+      "range": {
+        "startLine": 187,
+        "startChar": 7,
+        "endLine": 187,
+        "endChar": 8
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2945779a_0a4af87d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-08T20:57:25Z",
       "side": 1,
       "message": "Is this to effectively get the shape vertical padding?",
+      "range": {
+        "startLine": 188,
+        "startChar": 18,
+        "endLine": 188,
+        "endChar": 51
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dccb813_b6796957",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T23:33:31Z",
+      "side": 1,
+      "message": "It\u0027s to make sure that the anonymizing layer doesn\u0027t draw over the edges of the background. It\u0027s calculated below using the location bar background corner radius and lateral inset. I updated the comment.\n\nScreenshots of what the anonymize layer ends up looking like (colored so it\u0027s obvious):https://drive.google.com/open?id\u003d0B8YGYtFin7saVkZDenViX1ZnczA",
+      "parentUuid": "2945779a_0a4af87d",
       "range": {
         "startLine": 188,
         "startChar": 18,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c52b2d79_9b86174b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T23:33:31Z",
+      "side": 1,
+      "message": "It\u0027s the left margin (rather than start). The value changes below based on RTL or not. Renamed to mLocationBarExtraFocusedLeftMargin.",
+      "parentUuid": "8de272b0_2daca00f",
+      "range": {
+        "startLine": 194,
+        "startChar": 40,
+        "endLine": 194,
+        "endChar": 46
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61a45eaa_1adfd757",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9bdfcea3_5d90be3e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T23:33:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61a45eaa_1adfd757",
+      "range": {
+        "startLine": 398,
+        "startChar": 53,
+        "endLine": 398,
+        "endChar": 59
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e3e6a92_05894d58",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2017-08-08T20:57:25Z",
       "side": 1,
       "message": "Would it make more sense to query this inside ColorUtils instead of passing it in?  I guess we can\u0027t check BottomSheet !\u003d null though.",
+      "range": {
+        "startLine": 176,
+        "startChar": 56,
+        "endLine": 176,
+        "endChar": 71
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f91ed9_0900b09d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T23:33:31Z",
+      "side": 1,
+      "message": "useModernDesign is calculated differently in a couple of different places depending on whether the calling class has access to the BottomSheet or ChromeFullscreenManager.java. The check for CHROME_HOME_MODERN_LAYOUT is very temporary - there are a set of changes we\u0027d like to conditionally roll flip on together so Dev users don\u0027t have an incoherent experience, but as soon as all of the changes are in we\u0027ll remove the flag and make use of the \"modern\" design solely conditional on whether Chrome Home is enabled.",
+      "parentUuid": "1e3e6a92_05894d58",
       "range": {
         "startLine": 176,
         "startChar": 56,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "304e2cba_0f278219",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T23:33:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bab083a_363c1f2d",
+      "range": {
+        "startLine": 213,
+        "startChar": 13,
+        "endLine": 213,
+        "endChar": 14
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8e57935_6030efcf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
         "patchSetId": 3
@@ -197,6 +389,30 @@
       "writtenOn": "2017-08-08T20:20:37Z",
       "side": 1,
       "message": "the previous RTL variable was check the RTL state of the toolbar and not the location bar.  I think they might have been updated so they are always in sync, but it used to be where the location bar would have the rtl state changed based on the text shown and the toolbar reflected the system language.",
+      "range": {
+        "startLine": 948,
+        "startChar": 12,
+        "endLine": 948,
+        "endChar": 28
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74834ba3_3a35e39e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-08T23:33:31Z",
+      "side": 1,
+      "message": "The location bar RTL state is still dependent on the text shown and the toolbar is dependent on the system language.\n\nThe ToT use of the #isLayoutRtl(this) here is actually incorrect. In Chrome Stable, if you change the device language to RTL, then type in an LTR URL and focus the omnibox, the omnibox text is too close to the left edge of the screen. I think this bug was introduced a long time ago, but with the new omnibox background it\u0027s much more obvious.\n\nScreenshot of Stable:\nhttps://drive.google.com/open?id\u003d0B8YGYtFin7saR2JmanN3MlNBbnM\n\nScreenshot w/ this change:\nhttps://drive.google.com/open?id\u003d0B8YGYtFin7saOFYxdWM2VXVFNk0",
+      "parentUuid": "e8e57935_6030efcf",
       "range": {
         "startLine": 948,
         "startChar": 12,
