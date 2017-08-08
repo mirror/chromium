@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99d7ae1f_39f2490f",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1207509
+      },
+      "writtenOn": "2017-08-08T18:00:11Z",
+      "side": 1,
+      "message": "Move to initialization list.",
+      "range": {
+        "startLine": 265,
+        "startChar": 2,
+        "endLine": 265,
+        "endChar": 57
+      },
+      "revId": "f86f036a36d34c8e80f37b538e218bb933e44243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b835664_40ca61a5",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1207509
+      },
+      "writtenOn": "2017-08-08T18:00:11Z",
+      "side": 1,
+      "message": "Should this be SetFilterFrameAlignmentForTest? (are there reasons to call it in production code?)",
+      "range": {
+        "startLine": 207,
+        "startChar": 7,
+        "endLine": 207,
+        "endChar": 30
+      },
+      "revId": "f86f036a36d34c8e80f37b538e218bb933e44243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cb37e7_4ffe79c3",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa_input_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1207509
+      },
+      "writtenOn": "2017-08-08T18:00:11Z",
+      "side": 1,
+      "message": "(value + (multiple -1)) \u0026 ~(multiple - 1) ?",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 58
+      },
+      "revId": "f86f036a36d34c8e80f37b538e218bb933e44243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e2f71c_0582129b",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1207509
+      },
+      "writtenOn": "2017-08-08T18:00:11Z",
+      "side": 1,
+      "message": "Why not 1? Then we don\u0027t need to change any old tests.",
+      "range": {
+        "startLine": 557,
+        "startChar": 33,
+        "endLine": 557,
+        "endChar": 34
+      },
+      "revId": "f86f036a36d34c8e80f37b538e218bb933e44243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
