@@ -353,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "4b9c4374_c0497ca1",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-08T17:10:16Z",
+      "side": 1,
+      "message": "That was indeed broken, and removing the condition here fixes that. The original bug cited here is moot (you can no longer create supervised users, they\u0027re being deprecated as per crbug.com/736035). I tested for a similar defect by changing rotation in the lock screen and in an active session with and without a secondary display, and with the external display designated as the primary display. I believe it is safe to remove this workaround, but please let me know if you have any concerns or thoughts for testing.",
+      "parentUuid": "5d82d95a_74588185",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7f8808a_d1e58440",
         "filename": "ash/shelf/shelf_controller.h",
         "patchSetId": 8
