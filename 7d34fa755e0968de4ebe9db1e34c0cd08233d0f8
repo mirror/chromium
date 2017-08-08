@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "80422c53_b68186e0",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-08T22:05:43Z",
+      "side": 1,
+      "message": "Apart from the discussion allowing its use, the most relevant thread I\u0027ve found:\n\nhttps://groups.google.com/a/chromium.org/d/topic/chromium-dev/BrOCGoGXQpY/discussion\n\nSeems like people generally prefer in-class initializers but there\u0027s no rule for it. I\u0027ll go ahead and do that here.",
+      "parentUuid": "056516a2_2605ad7d",
+      "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46187b87_88dc21fc",
         "filename": "extensions/shell/browser/shell_desktop_controller_mac.mm",
         "patchSetId": 2
@@ -172,6 +190,24 @@
       "side": 1,
       "message": "Well if you\u0027re not going to support Run() that\u0027s pretty broken isn\u0027t it..? I\u0027d at least add NOTIMPLEMENTED() but probably even NOTREACHED() with a comment explaining why... And at that point might as well just scratch the Mac impl..",
       "parentUuid": "586521fc_bc91ee49",
+      "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ef6370_14174ab1",
+        "filename": "extensions/shell/browser/shell_desktop_controller_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-08T22:05:43Z",
+      "side": 1,
+      "message": "I did add the RunLoop here in patch 3 :-) I just meant it\u0027s unclear to me how the program quits on Mac, although I know that on Windows the OnHostCloseRequested method isn\u0027t called when exiting the application so ShellDesktopControllerAura doesn\u0027t call QuitWhenIdle(). There must be some quit signal that can end a RunLoop, right?",
+      "parentUuid": "41945701_2585f850",
       "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
