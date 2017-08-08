@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "794c0740_6ccf2fd8",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorPendingAnimations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-08T20:03:18Z",
+      "side": 1,
+      "message": "Again I\u0027m not sure after further research (summarized in comment above) whether renaming this class is warranted. If we were to rename perhaps we should just call it \u0027PendingAnimations\u0027.\n\nBut, in fact, it is considering all animations \"in the light of\" whether they need something related to the compositor to be taken into account.\n\nIt is just that, it considers all animations, not just those that actually *do* have some compositor interaction needed. So that can be surprising to an eng depending on how they read/interpret the class name.",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 45
+      },
+      "revId": "7fa1cd1b89ef9c9038c00410db3bf61b744fa3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00b26c3_fa683b21",
+        "filename": "third_party/WebKit/Source/core/animation/DocumentAnimations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-08T20:03:18Z",
+      "side": 1,
+      "message": "My conclusion on review is that UpdateAnimations is not necessarily a misnomer, but that enhancing the comment above is sufficient.\n\nWhen we looked at this yesterday one of our realizations was that this method claims to update all animations, but actually does not currently include UpdateCompositorScrollAnimations.\n\nWe have separate TODO for that in LocalFrameView added in https://chromium-review.googlesource.com/c/604716\n\nIt could be that we choose to address that TODO by adding a call to UpdateCompositorScrollAnimations in here somewhere.\n\nLet me know if you think a rename or further clarification is warranted.",
+      "range": {
+        "startLine": 52,
+        "startChar": 14,
+        "endLine": 52,
+        "endChar": 30
+      },
+      "revId": "7fa1cd1b89ef9c9038c00410db3bf61b744fa3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
