@@ -1197,6 +1197,7 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
       var adAuthUI = this.getSigninFrame_();
       adAuthUI.setUser(username);
       adAuthUI.setInvalid(errorState);
+      this.authCompleted_ = false;
       this.loading = false;
       Oobe.getInstance().headerHidden = false;
     }
