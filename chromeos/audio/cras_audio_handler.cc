@@ -648,6 +648,7 @@ CrasAudioHandler::CrasAudioHandler(
       hdmi_rediscover_grace_period_duration_in_ms_(
           kHDMIRediscoverGracePeriodDurationInMs),
       hdmi_rediscovering_(false),
+      buffer_size_(512),
       weak_ptr_factory_(this) {
   if (!audio_pref_handler.get())
     return;
@@ -897,6 +898,7 @@ void CrasAudioHandler::InitializeAudioAfterCrasServiceAvailable(
 
   cras_service_available_ = true;
   GetNodes();
+  GetBufferSizeInternal();
 }
 
 void CrasAudioHandler::ApplyAudioPolicy() {
@@ -982,6 +984,18 @@ void CrasAudioHandler::GetNodes() {
                  weak_ptr_factory_.GetWeakPtr()),
       base::Bind(&CrasAudioHandler::HandleGetNodesError,
                  weak_ptr_factory_.GetWeakPtr()));
+}
+
+void CrasAudioHandler::GetBufferSizeInternal() {
+  LOG(WARNING) << __func__;
+  GetCrasAudioClient()->GetBufferSize(
+      base::Bind(&CrasAudioHandler::HandleGetBufferSize,
+                 weak_ptr_factory_.GetWeakPtr()));
+}
+
+void CrasAudioHandler::GetBufferSize(int *buffer_size) const {
+  LOG(WARNING) << __func__ << ": size=" << buffer_size_;
+  *buffer_size = buffer_size_;
 }
 
 bool CrasAudioHandler::ChangeActiveDevice(
@@ -1402,6 +1416,17 @@ void CrasAudioHandler::HandleGetNodes(const chromeos::AudioNodeList& node_list,
   UpdateDevicesAndSwitchActive(node_list);
   for (auto& observer : observers_)
     observer.OnAudioNodesChanged();
+}
+
+void CrasAudioHandler::HandleGetBufferSize(int buffer_size,
+                                      bool success) {
+  LOG(WARNING) << __func__ << ": buffer_size=" << buffer_size << ", success=" << success;
+  if (!success) {
+    LOG_IF(ERROR, log_errors_) << "Failed to retrieve audio nodes data";
+    return;
+  }
+
+  buffer_size_ = buffer_size;
 }
 
 void CrasAudioHandler::HandleGetNodesError(const std::string& error_name,

@@ -68,6 +68,8 @@ class CHROMEOS_EXPORT CrasAudioClient : public DBusClient {
   // |success| which indicates whether or not the request succeeded.
   typedef base::Callback<void(const AudioNodeList&, bool)> GetNodesCallback;
 
+  typedef base::Callback<void(int, bool)> GetBufferSizeCallback;
+
   // ErrorCallback is used for cras dbus method error response. It receives 2
   // arguments, |error_name| indicates the dbus error name, and |error_message|
   // contains the detailed dbus error message.
@@ -83,6 +85,8 @@ class CHROMEOS_EXPORT CrasAudioClient : public DBusClient {
   // Gets an array of audio input and output nodes.
   virtual void GetNodes(const GetNodesCallback& callback,
                         const ErrorCallback& error_callback) = 0;
+
+  virtual void GetBufferSize(const GetBufferSizeCallback& callback) = 0;
 
   // Sets output volume of the given |node_id| to |volume|, in the rage of
   // [0, 100].
