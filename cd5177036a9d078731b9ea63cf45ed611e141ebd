@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab5f6401_027a3eca",
+        "filename": "cc/layers/layer_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-08T02:15:19Z",
+      "side": 1,
+      "message": "I know you just mean \"extremely large\" here, but could you pick another word other than \"crazy\" as a descriptor here, as it\u0027s ableist language.",
+      "revId": "cd5177036a9d078731b9ea63cf45ed611e141ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
