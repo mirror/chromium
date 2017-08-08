@@ -16,6 +16,24 @@
       "revId": "947cadcc955016ff51abeeb6cb2eddd3a6d6e70d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f08dcc4_fc77740d",
+        "filename": "chrome/app/theme/default_200_percent/legacy/info_small.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-08T03:18:05Z",
+      "side": 1,
+      "message": "The legacy/ directory is a temporary holding pen for icons that should be updated to vector equivalents on Cocoa; it\u0027s supposed to make it easier for whoever does update Cocoa to find which raster icons are obsolete.",
+      "parentUuid": "0396e43e_fc57a2d0",
+      "revId": "947cadcc955016ff51abeeb6cb2eddd3a6d6e70d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
