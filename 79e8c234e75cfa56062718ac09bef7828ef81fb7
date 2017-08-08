@@ -16,6 +16,24 @@
       "revId": "79e8c234e75cfa56062718ac09bef7828ef81fb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4627d9fd_afd1b1c5",
+        "filename": "ash/shell/app_list.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-08T22:49:55Z",
+      "side": 1,
+      "message": "Thanks. Removed this include because it is declared in the app_list_view_delegate.h.",
+      "parentUuid": "640e9358_3bf83e1d",
+      "revId": "79e8c234e75cfa56062718ac09bef7828ef81fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
