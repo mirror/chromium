@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7ba001e_efba988c",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-08T01:05:12Z",
+      "side": 1,
+      "message": "You can remove the else\u0027s if there\u0027s a return above it. Same below.",
+      "range": {
+        "startLine": 128,
+        "startChar": 4,
+        "endLine": 128,
+        "endChar": 8
+      },
+      "revId": "065ff1e855ded4dba4432fb62d68f014dd3e10e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
