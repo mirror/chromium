@@ -22,6 +22,30 @@
       "revId": "da5d0c766f26fce6dbc19de75d96a6056099138a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d273d6_e55c9a58",
+        "filename": "tools/perf/benchmarks/media.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-08T17:01:18Z",
+      "side": 0,
+      "message": "Our plan is to see if its completely flaky, or if only one or two stories are flaky. I am going to follow up with this CL tomorrow, and disable everything that makes sense to disable.\n\nI can also just make it not run at all on A1 devices if you know that all stories will fail. Whichever path forward you want to do works for me. I\u0027ll drop from CQ+2 to CQ+1 until you respond.",
+      "parentUuid": "c8c88091_6a20e978",
+      "range": {
+        "startLine": 86,
+        "startChar": 11,
+        "endLine": 86,
+        "endChar": 41
+      },
+      "revId": "da5d0c766f26fce6dbc19de75d96a6056099138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
