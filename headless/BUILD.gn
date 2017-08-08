@@ -785,6 +785,12 @@ static_library("headless_shell_lib") {
   }
 }
 
+if (is_fuchsia) {
+  fuchsia_executable_runner("headless_shell_fuchsia") {
+    exe_name = "headless_shell"
+  }
+}
+
 executable("headless_shell") {
   sources = [
     "app/headless_shell_main.cc",
@@ -797,6 +803,10 @@ executable("headless_shell") {
 
   if (is_win) {
     deps += [ "//build/win:default_exe_manifest" ]
+  }
+
+  if (is_fuchsia) {
+    deps += [ ":headless_shell_fuchsia" ]
   }
 }
 
