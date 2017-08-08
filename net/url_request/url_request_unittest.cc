@@ -8096,9 +8096,8 @@ TEST_F(URLRequestTestHTTP, Redirect301Tests) {
 
   HTTPRedirectOriginHeaderTest(url, "GET", "GET", url.GetOrigin().spec());
   HTTPRedirectOriginHeaderTest(https_redirect_url, "GET", "GET", "null");
-  HTTPRedirectOriginHeaderTest(url, "POST", "GET", std::string());
-  HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET",
-                               std::string());
+  HTTPRedirectOriginHeaderTest(url, "POST", "GET", url.GetOrigin().spec());
+  HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET", "null");
 }
 
 TEST_F(URLRequestTestHTTP, Redirect302Tests) {
@@ -8114,9 +8113,8 @@ TEST_F(URLRequestTestHTTP, Redirect302Tests) {
 
   HTTPRedirectOriginHeaderTest(url, "GET", "GET", url.GetOrigin().spec());
   HTTPRedirectOriginHeaderTest(https_redirect_url, "GET", "GET", "null");
-  HTTPRedirectOriginHeaderTest(url, "POST", "GET", std::string());
-  HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET",
-                               std::string());
+  HTTPRedirectOriginHeaderTest(url, "POST", "GET", url.GetOrigin().spec());
+  HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET", "null");
 }
 
 TEST_F(URLRequestTestHTTP, Redirect303Tests) {
@@ -8132,9 +8130,8 @@ TEST_F(URLRequestTestHTTP, Redirect303Tests) {
 
   HTTPRedirectOriginHeaderTest(url, "GET", "GET", url.GetOrigin().spec());
   HTTPRedirectOriginHeaderTest(https_redirect_url, "GET", "GET", "null");
-  HTTPRedirectOriginHeaderTest(url, "POST", "GET", std::string());
-  HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET",
-                               std::string());
+  HTTPRedirectOriginHeaderTest(url, "POST", "GET", url.GetOrigin().spec());
+  HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET", "null");
 }
 
 TEST_F(URLRequestTestHTTP, Redirect307Tests) {
