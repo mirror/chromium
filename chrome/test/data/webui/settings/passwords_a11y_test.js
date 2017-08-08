@@ -76,7 +76,7 @@ AccessibilityTest.define({
     'color-contrast': function(nodeResult) {
       return nodeResult.element.id == 'prompt';
     },
-   'aria-valid-attr': function(nodeResult) {
+    'aria-valid-attr': function(nodeResult) {
       return nodeResult.element.hasAttribute('aria-active-attribute');
     },
   }

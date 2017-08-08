@@ -112,6 +112,7 @@ AccessibilityTest.filterViolations_ = function(violations, filter) {
  */
 AccessibilityTest.define = function(test) {
   var axeOptions = test.axeOptions || {};
+  var setup = test.setup || function() {};
   // Maintain a list of tests to define.
   var tests = [test];
 
@@ -122,8 +123,12 @@ AccessibilityTest.define = function(test) {
     for (let ruleId of AccessibilityTest.ruleIds) {
       var newTestDefinition = Object.assign({}, test);
       newTestDefinition.name += '_' + ruleId;
+      newTestDefinition.setup = setup;
       newTestDefinition.axeOptions = Object.assign({}, axeOptions);
-      newTestDefinition.axeOptions.runOnly = {type: 'rule', values: [ruleId]};
+      newTestDefinition.axeOptions.runOnly = {
+        type: 'rule',
+        values: [ruleId]
+      };
 
       tests.push(newTestDefinition)
     }
