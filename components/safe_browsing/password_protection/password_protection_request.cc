@@ -20,6 +20,9 @@
 
 using content::BrowserThread;
 using content::WebContents;
+using sync_pb::UserEventSpecifics;
+using PasswordReuseLookup =
+    UserEventSpecifics::SyncPasswordReuseEvent::PasswordReuseLookup;
 
 namespace safe_browsing {
 
@@ -282,6 +285,8 @@ void PasswordProtectionRequest::Finish(
   } else if (is_sync_password) {
     UMA_HISTOGRAM_ENUMERATION(kSyncPasswordEntryRequestOutcomeHistogramName,
                               outcome, PasswordProtectionService::MAX_OUTCOME);
+    password_protection_service_->MaybeLogPasswordReuseLookup(
+        web_contents_, outcome, response.get());
   } else {
     UMA_HISTOGRAM_ENUMERATION(kPasswordEntryRequestOutcomeHistogramName,
                               outcome, PasswordProtectionService::MAX_OUTCOME);
@@ -313,7 +318,6 @@ void PasswordProtectionRequest::Finish(
     }
   }
 
-  DCHECK(password_protection_service_);
   password_protection_service_->RequestFinished(
       this, outcome == PasswordProtectionService::RESPONSE_ALREADY_CACHED,
       std::move(response));

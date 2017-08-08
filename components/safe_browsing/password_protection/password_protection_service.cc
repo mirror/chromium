@@ -419,9 +419,11 @@ void PasswordProtectionService::MaybeStartProtectedPasswordEntryRequest(
     const std::string& saved_domain,
     bool password_field_exists) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  VLOG(1) << __FUNCTION__;
   if (CanSendPing(
           kProtectedPasswordEntryPinging, main_frame_url,
           saved_domain == std::string(password_manager::kSyncPasswordDomain))) {
+    VLOG(1) << __FUNCTION__;
     StartRequest(web_contents, main_frame_url, GURL(), GURL(), saved_domain,
                  LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
                  password_field_exists);
@@ -431,6 +433,7 @@ void PasswordProtectionService::MaybeStartProtectedPasswordEntryRequest(
 bool PasswordProtectionService::CanSendPing(const base::Feature& feature,
                                             const GURL& main_frame_url,
                                             bool is_sync_password) {
+  return true;
   RequestOutcome request_outcome = URL_NOT_VALID_FOR_REPUTATION_COMPUTING;
   if (IsPingingEnabled(feature, &request_outcome) &&
       CanGetReputationOfURL(main_frame_url)) {

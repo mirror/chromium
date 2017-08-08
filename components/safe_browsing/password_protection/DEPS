@@ -3,6 +3,7 @@ include_rules = [
   "+components/history/core/browser",
   "+components/password_manager/core/browser/password_reuse_detector.h",
   "+components/sync_preferences/testing_pref_service_syncable.h",
+  "+components/sync/protocol",
   "+content/public/test",
   "+net",
 ]

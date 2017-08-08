@@ -9,6 +9,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/task/cancelable_task_tracker.h"
 #include "components/safe_browsing/password_protection/password_protection_service.h"
+#include "components/sync/protocol/user_event_specifics.pb.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
@@ -84,6 +85,17 @@ class PasswordProtectionRequest : public base::RefCountedThreadSafe<
       content::BrowserThread::UI>;
   friend class base::DeleteHelper<PasswordProtectionRequest>;
   ~PasswordProtectionRequest() override;
+
+  void LogPasswordReuseLookupResult(
+      sync_pb::UserEventSpecifics::SyncPasswordReuseEvent::PasswordReuseLookup::
+          LookupResult result);
+
+  void LogPasswordReuseLookupResultWithVerdict(
+      sync_pb::UserEventSpecifics::SyncPasswordReuseEvent::PasswordReuseLookup::
+          LookupResult result,
+      sync_pb::UserEventSpecifics::SyncPasswordReuseEvent::PasswordReuseLookup::
+          ReputationVerdict verdict,
+      const std::string& verdict_token);
 
   // Start checking the whitelist.
   void CheckWhitelist();
