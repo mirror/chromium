@@ -89,4 +89,61 @@ double WebContentsCoordinationUnitImpl::CalculateCPUUsage() {
   return cpu_usage;
 }
 
+bool WebContentsCoordinationUnitImpl::CalculateExpectedTaskQueueingDuration(
+    double* output) {
+  // Calculate the EQT for the process of the main frame only because
+  // the smoothness of the main frame may affect the users the most.
+  CoordinationUnitImpl* main_frame_cu = GetMainFrameCoordinationUnit();
+  if (!main_frame_cu)
+    return false;
+
+  auto associated_processes =
+      main_frame_cu->GetAssociatedCoordinationUnitsOfType(
+          CoordinationUnitType::kProcess);
+
+  size_t num_processes_per_frame = associated_processes.size();
+  // A frame should not belong to more than 1 process.
+  DCHECK_LE(num_processes_per_frame, 1u);
+
+  if (num_processes_per_frame == 0)
+    return false;
+
+  base::Value process_eqt_value =
+      (*associated_processes.begin())
+          ->GetProperty(mojom::PropertyType::kExpectedTaskQueueingDuration);
+  DCHECK(process_eqt_value.is_double());
+  *output = process_eqt_value.GetDouble();
+  return true;
+}
+
+void WebContentsCoordinationUnitImpl::RecalculateProperty(
+    const mojom::PropertyType property_type) {
+  switch (property_type) {
+    case mojom::PropertyType::kCPUUsage: {
+      SetProperty(mojom::PropertyType::kCPUUsage,
+                  base::MakeUnique<base::Value>(CalculateCPUUsage()));
+      break;
+    }
+    case mojom::PropertyType::kExpectedTaskQueueingDuration: {
+      double eqt;
+      if (CalculateExpectedTaskQueueingDuration(&eqt))
+        SetProperty(property_type, base::MakeUnique<base::Value>(eqt));
+      break;
+    }
+    default:
+      NOTREACHED();
+  }
+}
+
+CoordinationUnitImpl*
+WebContentsCoordinationUnitImpl::GetMainFrameCoordinationUnit() {
+  for (auto* cu :
+       GetAssociatedCoordinationUnitsOfType(CoordinationUnitType::kFrame)) {
+    if (ToFrameCoordinationUnit(cu)->IsMainFrame())
+      return cu;
+  }
+
+  return nullptr;
+}
+
 }  // namespace resource_coordinator
