@@ -63,16 +63,7 @@ int EditingAlgorithm<Traversal>::LastOffsetForEditing(const Node* node) {
   if (Traversal::HasChildren(*node))
     return Traversal::CountChildren(*node);
 
-  // FIXME: Try return 0 here.
-
-  if (!EditingIgnoresContent(*node))
-    return 0;
-
-  // editingIgnoresContent uses the same logic in
-  // isEmptyNonEditableNodeInEditable (EditingUtilities.cpp). We don't
-  // understand why this function returns 1 even when the node doesn't have
-  // children.
-  return 1;
+  return 0;
 }
 
 template <typename Strategy>
