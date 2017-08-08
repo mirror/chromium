@@ -325,6 +325,14 @@ bool LayoutListItem::UpdateMarkerLocation() {
   if (marker_parent != line_box_parent) {
     marker_->Remove();
     line_box_parent->AddChild(marker_, FirstNonMarkerChild(line_box_parent));
+    if (line_box_parent == this) {
+      marker_parent = marker_->Parent();
+      // Make marker_parent height:0px; So that there's no line separate.
+      // FIXME: Need to fix the height of ListItem with zero height content,
+      // e.g. <li><div><div></li>.
+      if (marker_parent && marker_parent->IsAnonymous())
+        marker_parent->MutableStyleRef().SetHeight(Length(kFixed));
+    }
     // TODO(rhogan): lineBoxParent and markerParent may be deleted by addChild,
     // so they are not safe to reference here.
     // Once we have a safe way of referencing them delete markerParent if it is
