@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c94dd8f8_009e5866",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-08T22:28:05Z",
+      "side": 1,
+      "message": "Can we remove this empty line?",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 2
+      },
+      "revId": "f78602693295c5fb9b64d930b2c59864e41c741e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb7bc83_a8e5a210",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-08T22:28:05Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 2
+      },
+      "revId": "f78602693295c5fb9b64d930b2c59864e41c741e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567e0f14_c5f76f22",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-08T22:28:05Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 2
+      },
+      "revId": "f78602693295c5fb9b64d930b2c59864e41c741e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d720de_ddfde45b",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-08T22:28:05Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 2
+      },
+      "revId": "f78602693295c5fb9b64d930b2c59864e41c741e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6429aad5_45e0e03f",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-08T22:28:05Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 2
+      },
+      "revId": "f78602693295c5fb9b64d930b2c59864e41c741e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e95642f_06251a27",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-08T22:28:05Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 2
+      },
+      "revId": "f78602693295c5fb9b64d930b2c59864e41c741e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086cf12c_7c8ea6a4",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-08T22:28:05Z",
+      "side": 1,
+      "message": "Lines wrapped too early. Perhaps you can use auto-wrap from the editor?",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 2
+      },
+      "revId": "f78602693295c5fb9b64d930b2c59864e41c741e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d06c72a_a313ee9c",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-08T22:28:05Z",
+      "side": 1,
+      "message": "Redundant empty lines. Early line wrapping.",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 2
+      },
+      "revId": "f78602693295c5fb9b64d930b2c59864e41c741e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
