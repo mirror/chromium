@@ -875,6 +875,30 @@
     },
     {
       "key": {
+        "uuid": "43090006_b3d60b7c",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-08T23:25:16Z",
+      "side": 1,
+      "message": "Renamed to CancelAllOverlaysForWebState().",
+      "parentUuid": "693ee46d_efda7598",
+      "range": {
+        "startLine": 61,
+        "startChar": 15,
+        "endLine": 61,
+        "endChar": 39
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82379d32_459a371e",
         "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service.h",
         "patchSetId": 3
