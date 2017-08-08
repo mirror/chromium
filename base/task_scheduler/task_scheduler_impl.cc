@@ -133,9 +133,10 @@ std::vector<const HistogramBase*> TaskSchedulerImpl::GetHistograms() const {
   return histograms;
 }
 
-int TaskSchedulerImpl::GetMaxConcurrentTasksWithTraitsDeprecated(
+int TaskSchedulerImpl::GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
     const TaskTraits& traits) const {
-  return GetWorkerPoolForTraits(traits)->GetMaxConcurrentTasksDeprecated();
+  return GetWorkerPoolForTraits(traits)
+      ->GetMaxConcurrentNonBlockedTasksDeprecated();
 }
 
 void TaskSchedulerImpl::Shutdown() {
