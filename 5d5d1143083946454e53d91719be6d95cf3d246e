@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bffab8b_0807ba3c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/SwipableOverlayView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-08T20:24:48Z",
+      "side": 1,
+      "message": "nit: maybe a better method name \u0026 description to match it.",
+      "revId": "5d5d1143083946454e53d91719be6d95cf3d246e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9f87cd_2bb45771",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/SwipableOverlayView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-08T20:24:48Z",
+      "side": 1,
+      "message": "nit: a better name for one of these translationY variables since there\u0027s 3 of them.",
+      "revId": "5d5d1143083946454e53d91719be6d95cf3d246e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "822af21e_3ef75545",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-08T20:24:48Z",
+      "side": 1,
+      "message": "is this guaranteed to always be not null?",
+      "revId": "5d5d1143083946454e53d91719be6d95cf3d246e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
