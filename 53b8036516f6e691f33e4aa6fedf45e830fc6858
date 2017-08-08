@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18156010_ce0da89a",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-08T17:52:52Z",
+      "side": 0,
+      "message": "I don\u0027t think we really needed this to be separate from |icon_in_front_of_text| previously, that said I like the |icon_in_front_of_text| name better than |is_http_warning| just because the logic flows below are easier to read that way (the fact that the icon is in front of the text is more obviously relevant to the x coordinate calculations).",
+      "range": {
+        "startLine": 154,
+        "startChar": 13,
+        "endLine": 154,
+        "endChar": 28
+      },
+      "revId": "53b8036516f6e691f33e4aa6fedf45e830fc6858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
