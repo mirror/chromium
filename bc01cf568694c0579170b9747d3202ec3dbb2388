@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7616397_2457e7d0",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-08-08T14:47:33Z",
+      "side": 1,
+      "message": "please update this bug id",
+      "revId": "bc01cf568694c0579170b9747d3202ec3dbb2388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
