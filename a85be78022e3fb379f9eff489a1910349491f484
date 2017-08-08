@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac7d467a_0ad6563e",
+        "filename": "services/viz/public/cpp/compositing/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-08T22:34:31Z",
+      "side": 1,
+      "message": "My other CL that landed has already added cc.",
+      "parentUuid": "a0f60d9a_be5aa6a6",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 3,
+        "endChar": 7
+      },
+      "revId": "a85be78022e3fb379f9eff489a1910349491f484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "239b9ff3_6242d359",
         "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "a85be78022e3fb379f9eff489a1910349491f484",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9efaed6d_39ba304e",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-08T22:34:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "239b9ff3_6242d359",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 13
+      },
+      "revId": "a85be78022e3fb379f9eff489a1910349491f484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
