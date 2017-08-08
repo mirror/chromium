@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.Callback;
+import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.RetryOnFailure;
@@ -357,6 +358,47 @@ public class OfflinePageBridgeTest {
         Assert.assertEquals(
                 "The offline ID of the page saved in an alternate namespace does not match.",
                 offlineIdToIgnore, asyncPages.get(0).getOfflineId());
+    }
+
+    @Test
+    @SmallTest
+    @RetryOnFailure
+    public void testDownloadPage() throws Exception {
+        final OfflinePageOrigin origin =
+                new OfflinePageOrigin("abc.xyz", new String[] {"deadbeef"});
+        mActivityTestRule.loadUrl(mTestPage);
+        final String originString = origin.encodeAsJsonString();
+        final Semaphore semaphore = new Semaphore(0);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                Assert.assertNotNull(
+                        "Tab is null", mActivityTestRule.getActivity().getActivityTab());
+                Assert.assertEquals("URL does not match requested.", mTestPage,
+                        mActivityTestRule.getActivity().getActivityTab().getUrl());
+                Assert.assertNotNull("WebContents is null",
+                        mActivityTestRule.getActivity().getActivityTab().getWebContents());
+
+                Log.e("OfflinePageBridgeTest.testDownloadPage", "Starting observer");
+
+                mOfflinePageBridge.addObserver(new OfflinePageModelObserver() {
+                    @Override
+                    public void offlinePageAdded(OfflinePageItem newPage) {
+                        mOfflinePageBridge.removeObserver(this);
+                        semaphore.release();
+                    }
+                });
+
+                mOfflinePageBridge.scheduleDownload(
+                        mActivityTestRule.getActivity().getActivityTab().getWebContents(),
+                        "download", mTestPage, 0, origin);
+            }
+        });
+        Assert.assertTrue("Sempaphore acquire failed. Timed out.",
+                semaphore.tryAcquire(TIMEOUT_MS, TimeUnit.MILLISECONDS));
+
+        List<OfflinePageItem> pages = getAllPages();
+        Assert.assertEquals(originString, pages.get(0).getRequestOrigin());
     }
 
     // Returns offline ID.
