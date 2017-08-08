@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "105d3141_586bcc38",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T16:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06ad653e_237f6316",
+      "revId": "f0ece4b0b40afc6a9ffbd84f470a6a6320b59dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13fdd734_a380f725",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-08T16:18:28Z",
       "side": 1,
       "message": "nit: const may not have the intended effect here.",
+      "revId": "f0ece4b0b40afc6a9ffbd84f470a6a6320b59dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31d18d4_529dfedd",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T16:39:26Z",
+      "side": 1,
+      "message": "I believe const is required because the the base::Feature will be declared as const, so any method accepting it as a parameter must mark it as const. This could be solved by removing the reference and passing it by value, but this would create a copy, which is undesired because base::Feature objects are compared by their addresses (which only works with references so they refer to the same memory).",
+      "parentUuid": "13fdd734_a380f725",
       "revId": "f0ece4b0b40afc6a9ffbd84f470a6a6320b59dc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a604b996_01f6457a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 2016,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T16:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0c9274d_2d1dedf7",
+      "revId": "f0ece4b0b40afc6a9ffbd84f470a6a6320b59dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d33ee6ef_1f857501",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ab6dca00_09a2b557",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T16:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d33ee6ef_1f857501",
+      "revId": "f0ece4b0b40afc6a9ffbd84f470a6a6320b59dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5686867b_cb7b52ee",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
         "patchSetId": 6
@@ -84,6 +156,24 @@
       "revId": "f0ece4b0b40afc6a9ffbd84f470a6a6320b59dc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c393bc_e08a7e32",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-08T16:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5686867b_cb7b52ee",
+      "revId": "f0ece4b0b40afc6a9ffbd84f470a6a6320b59dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
