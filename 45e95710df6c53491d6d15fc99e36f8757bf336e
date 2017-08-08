@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ed47734_5377f14b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-08T21:10:53Z",
+      "side": 1,
+      "message": "From looking at Yaron\u0027s CL https://codereview.chromium.org/2939083002/diff/1/chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkDisclosureNotificationManager.java#newcode41\n\nShould you use NotificationBuilderFactory#createChromeNotificationBuilder() instead? StandardNotificationBuilder is a fancy wrapper around ChromeNotificationBuilder. More places use NotificationBuilderFactory#createChromeNotificationBuilder() than StandardNotificationBuilder.",
+      "revId": "45e95710df6c53491d6d15fc99e36f8757bf336e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
