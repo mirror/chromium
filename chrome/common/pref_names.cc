@@ -147,8 +147,10 @@ const char kSessionExitedCleanly[] = "profile.exited_cleanly";
 // shutdown. Used to determine the exit type the last time the profile was open.
 const char kSessionExitType[] = "profile.exit_type";
 
-// Stores the total amount of active session time for the user.
-const char kSessionTimeTotal[] = "profile.total_time";
+// Stores the total amount of observed active session time for the user.
+// Observed time is active session time that ellapses while there is a
+// FeatureTracker whose active session time requirement has not been satisfied.
+const char kObservedSessionTime[] = "profile.observed_time";
 
 // The last time that the site engagement service recorded an engagement event
 // for this profile for any URL. Recorded only during shutdown. Used to prevent
