@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67b9c14f_142e25a0",
+        "filename": "remoting/ios/client_keyboard.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-08T00:44:09Z",
+      "side": 1,
+      "message": "Maybe you should call\n[super resignFirstResponder]\nbefore returning NO here?\nSee https://developer.apple.com/documentation/uikit/uiresponder/1621097-resignfirstresponder",
+      "revId": "52a88bb16a6591deb9cb354b3188775c6450dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f670a37_0888abc5",
+        "filename": "remoting/ios/client_keyboard.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-08T00:44:09Z",
+      "side": 1,
+      "message": "Maybe this change is not needed if you call [super] in resignFirstResponder above?",
+      "revId": "52a88bb16a6591deb9cb354b3188775c6450dcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
