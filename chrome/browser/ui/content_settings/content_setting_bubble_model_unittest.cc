@@ -17,6 +17,7 @@
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h"
 #include "chrome/browser/ui/content_settings/content_setting_bubble_model.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
@@ -944,6 +945,37 @@ TEST_F(ContentSettingBubbleModelTest, SubresourceFilter) {
   EXPECT_EQ(bubble_content.manage_text,
             l10n_util::GetStringUTF16(IDS_ALLOW_ADS));
   EXPECT_EQ(0U, bubble_content.media_menus.size());
+}
+
+TEST_F(ContentSettingBubbleModelTest, PopupBubbleModelListItems) {
+  WebContentsTester::For(web_contents())
+      ->NavigateAndCommit(GURL("https://www.example.com"));
+  TabSpecificContentSettings* content_settings =
+      TabSpecificContentSettings::FromWebContents(web_contents());
+  content_settings->OnContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS);
+
+  PopupBlockerTabHelper::CreateForWebContents(web_contents());
+  std::unique_ptr<ContentSettingBubbleModel> content_setting_bubble_model(
+      ContentSettingBubbleModel::CreateContentSettingBubbleModel(
+          NULL, web_contents(), profile(), CONTENT_SETTINGS_TYPE_POPUPS));
+  const auto& bubble_content = content_setting_bubble_model->bubble_content();
+  EXPECT_EQ(bubble_content.list_items.size(), 0U);
+
+  PopupBlockerTabHelper* popup_blocker =
+      PopupBlockerTabHelper::FromWebContents(web_contents());
+  EXPECT_NE(popup_blocker, nullptr);
+
+  BlockedWindowParams params(
+      GURL("about:blank"), content::Referrer(), "",
+      WindowOpenDisposition::NEW_POPUP,
+      blink::mojom::WindowFeatures(0, false, 0, false, 0, false, 0, false, true,
+                                   false, false, true),
+      false, true);
+  constexpr size_t item_count = 3;
+  for (size_t i = 0; i < item_count; i++) {
+    popup_blocker->AddBlockedPopup(params);
+    EXPECT_EQ(bubble_content.list_items.size(), i + 1);
+  }
 }
 
 TEST_F(ContentSettingBubbleModelTest, ValidUrl) {

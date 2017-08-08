@@ -11,6 +11,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "chrome/browser/ui/content_settings/content_setting_bubble_model.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/media_stream_request.h"
@@ -20,8 +21,6 @@
 #include "ui/views/controls/button/checkbox.h"
 #include "ui/views/controls/combobox/combobox_listener.h"
 #include "ui/views/controls/link_listener.h"
-
-class ContentSettingBubbleModel;
 
 namespace chrome {
 class ContentSettingBubbleViewsBridge;
@@ -42,11 +41,13 @@ class LabelButton;
 // the blocking settings for the current site, a close button, and a link to
 // get to a more comprehensive settings management dialog.  A few types have
 // more or fewer controls than this.
-class ContentSettingBubbleContents : public content::WebContentsObserver,
-                                     public views::BubbleDialogDelegateView,
-                                     public views::ButtonListener,
-                                     public views::LinkListener,
-                                     public views::ComboboxListener {
+class ContentSettingBubbleContents
+    : public content::WebContentsObserver,
+      public views::BubbleDialogDelegateView,
+      public views::ButtonListener,
+      public views::LinkListener,
+      public views::ComboboxListener,
+      public ContentSettingBubbleModel::Observer {
  public:
   ContentSettingBubbleContents(
       ContentSettingBubbleModel* content_setting_bubble_model,
@@ -57,6 +58,11 @@ class ContentSettingBubbleContents : public content::WebContentsObserver,
 
   // views::BubbleDialogDelegateView:
   gfx::Size CalculatePreferredSize() const override;
+
+  // ContentSettingBubbleModel::Observer:
+  void OnListItemAdded(
+      const ContentSettingBubbleModel::ListItem& item) override;
+  void OnListItemWillBeRemovedAt(int index) override;
 
  protected:
   // views::BubbleDialogDelegateView:
