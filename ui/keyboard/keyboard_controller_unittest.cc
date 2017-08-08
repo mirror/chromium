@@ -247,8 +247,11 @@ class KeyboardControllerTest : public testing::TestWithParam<bool>,
   }
 
   void TearDown() override {
-    if (controller())
+    if (controller()) {
+      controller()->HideKeyboardSynchronous(
+          KeyboardController::HideReason::HIDE_REASON_AUTOMATIC);
       controller()->RemoveObserver(this);
+    }
     controller_.reset();
     focus_controller_.reset();
     aura_test_helper_->TearDown();
@@ -684,6 +687,21 @@ TEST_P(KeyboardControllerTest, DisplayChangeShouldNotifyBoundsChange) {
   EXPECT_EQ(2, number_of_calls());
   MockRotateScreen();
   EXPECT_EQ(3, number_of_calls());
+}
+
+// Tests the keyboard visibility after calling HideKeyboardSynchronous without
+// calling RunAnimationForLayer.
+TEST_P(KeyboardControllerAnimationTest, HideKeyboardSynchronous) {
+  ui::Layer* layer = keyboard_container()->layer();
+  ShowKeyboard();
+  RunAnimationForLayer(layer);
+
+  controller()->HideKeyboardSynchronous(
+      KeyboardController::HIDE_REASON_AUTOMATIC);
+
+  EXPECT_FALSE(keyboard_container()->IsVisible());
+  EXPECT_FALSE(contents_window()->IsVisible());
+  EXPECT_EQ(gfx::Transform(), layer->transform());
 }
 
 }  // namespace keyboard
