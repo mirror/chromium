@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "999730b7_f0853eb5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-08T08:40:19Z",
+      "side": 1,
+      "message": "We can create a correct ComputedStyle and attach to the anonymous fragment if that makes us easier. The anonymous fragment is smaller than its parent by padding IIRC, so it may need a special code to handle it?",
+      "parentUuid": "87702090_ca7b232a",
+      "range": {
+        "startLine": 479,
+        "startChar": 6,
+        "endLine": 479,
+        "endChar": 28
+      },
+      "revId": "3e22b18fb3835e7e76671e1b2ac5dd1b3dce55ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bcb7521_31adb6cc",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.h",
         "patchSetId": 4
