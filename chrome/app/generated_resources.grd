@@ -5409,7 +5409,12 @@ the Bookmarks menu.">
         Reset to default zoom level
       </message>
 
-      <!-- Feature Engagement Tracker strings -->
+      <!-- Accessibility permission -->
+      <message name="IDS_ACCESSIBILITY_EVENTS_PERMISSION_FRAGMENT" desc="Permission request shown if the user is visiting a site that wants to respond to accessibility events, for example if the user is using a screen reader and the site has custom accessibility features. Follows a prompt: 'This site would like to:'">
+        Respond to Accessibility Events
+      </message>
+
+      <!-- Feature Enagagement Tracker strings -->
       <message name="IDS_NEWTAB_PROMO_0" desc="Variations option 1. Text shown on promotional UI appearing next to the New Tab button, which encourages users to use it.">
         Open a new tab with one click
       </message>

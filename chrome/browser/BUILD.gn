@@ -1799,6 +1799,8 @@ split_static_library("browser") {
     sources += [
       "accessibility/accessibility_extension_api.cc",
       "accessibility/accessibility_extension_api.h",
+      "accessibility/accessibility_permission_context.cc",
+      "accessibility/accessibility_permission_context.h",
       "accessibility/animation_policy_prefs.cc",
       "accessibility/animation_policy_prefs.h",
       "autocomplete/keyword_extensions_delegate_impl.cc",

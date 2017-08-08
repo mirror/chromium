@@ -93,6 +93,8 @@ PermissionRequest::IconId PermissionRequestImpl::GetIconId() const {
       return vector_icons::kMicrophoneIcon;
     case CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA:
       return vector_icons::kVideocamIcon;
+    case CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS:
+      return vector_icons::kAccessibilityIcon;
     default:
       NOTREACHED();
       return kExtensionIcon;
@@ -160,6 +162,9 @@ base::string16 PermissionRequestImpl::GetMessageTextFragment() const {
       break;
     case CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA:
       message_id = IDS_MEDIA_CAPTURE_VIDEO_ONLY_PERMISSION_FRAGMENT;
+      break;
+    case CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS:
+      message_id = IDS_ACCESSIBILITY_EVENTS_PERMISSION_FRAGMENT;
       break;
     default:
       NOTREACHED();
