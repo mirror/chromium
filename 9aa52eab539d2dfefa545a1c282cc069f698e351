@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2589590f_629bf562",
+        "filename": "cc/ipc/filter_operation_struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T09:27:49Z",
+      "side": 1,
+      "message": "We could make this infer the array size if matrix() returned an array reference.\n\nI\u0027m not sure if that\u0027s too horrible to consider though \u003d)",
+      "revId": "9aa52eab539d2dfefa545a1c282cc069f698e351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1b4803_1b9f3a9e",
+        "filename": "device/gamepad/public/interfaces/gamepad_struct_traits.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T09:27:49Z",
+      "side": 1,
+      "message": "A bit of a drive-by fix, but it was bugging me.",
+      "revId": "9aa52eab539d2dfefa545a1c282cc069f698e351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0982334_3fff6582",
+        "filename": "device/gamepad/public/interfaces/gamepad_struct_traits.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T09:27:49Z",
+      "side": 1,
+      "message": "I guess we\u0027ll need to serialize the lengths as well. I\u0027ll have that in the next PS.",
+      "revId": "9aa52eab539d2dfefa545a1c282cc069f698e351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1a48af_cf6fe142",
+        "filename": "mojo/public/cpp/bindings/array_traits_carray.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T09:27:49Z",
+      "side": 1,
+      "message": "I flipped the argument order to better match conventions that we expect STL to use.",
+      "revId": "9aa52eab539d2dfefa545a1c282cc069f698e351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15aff690_7095640f",
+        "filename": "mojo/public/cpp/bindings/array_traits_carray.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T09:27:49Z",
+      "side": 1,
+      "message": "As well as an autodeducing overload for statically sized arrays (gsl::Span has this)",
+      "revId": "9aa52eab539d2dfefa545a1c282cc069f698e351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

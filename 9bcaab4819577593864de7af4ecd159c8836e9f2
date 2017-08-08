@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4bf9efd_566f459b",
+        "filename": "cc/ipc/filter_operation_struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T09:27:49Z",
+      "side": 0,
+      "message": "Based on the guidelines around constructor syntax, I changed these to explicit calls rather than using braced initialization.",
+      "range": {
+        "startLine": 135,
+        "startChar": 11,
+        "endLine": 136,
+        "endChar": 55
+      },
+      "revId": "9bcaab4819577593864de7af4ecd159c8836e9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
