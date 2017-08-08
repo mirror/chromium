@@ -70,6 +70,30 @@
       "revId": "22062b1c09b8287de160db72013a9c0ce91b4d5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d157cefc_31d84920",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBufferTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-08T17:54:50Z",
+      "side": 1,
+      "message": "I think it is fine to keep what you have as PS#5, but in DrawingBufferTestHelpers.h, at line 401, the draw_buffer could be a nullptr after your change, then we should do a null check at least.",
+      "parentUuid": "59555710_d988fc72",
+      "range": {
+        "startLine": 737,
+        "startChar": 6,
+        "endLine": 737,
+        "endChar": 25
+      },
+      "revId": "22062b1c09b8287de160db72013a9c0ce91b4d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
