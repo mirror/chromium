@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "640e9358_3bf83e1d",
+        "filename": "ash/shell/app_list.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-08T20:58:37Z",
+      "side": 1,
+      "message": "just forward decl is enough?",
+      "revId": "79e8c234e75cfa56062718ac09bef7828ef81fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
