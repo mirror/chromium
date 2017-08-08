@@ -212,4 +212,11 @@ TEST(LockTest, MutexFourThreads) {
   EXPECT_EQ(4 * 40, value);
 }
 
+TEST(LockTest, TryTwice) {
+  Lock lock;
+  ASSERT_TRUE(lock.Try());
+  ASSERT_FALSE(lock.Try());
+  lock.Release();
+}
+
 }  // namespace base
