@@ -5,6 +5,7 @@
 #include "ui/ozone/platform/drm/common/drm_util.h"
 
 #include <drm_fourcc.h>
+#include <gbm.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <sys/mman.h>

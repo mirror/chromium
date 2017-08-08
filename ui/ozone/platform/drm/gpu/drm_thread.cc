@@ -45,7 +45,9 @@ class GbmBufferGenerator : public ScanoutBufferGenerator {
                                       const gfx::Size& size) override {
     scoped_refptr<GbmDevice> gbm(static_cast<GbmDevice*>(drm.get()));
     // TODO(dcastagna): Use GBM_BO_USE_MAP modifier once minigbm exposes it.
-    return GbmBuffer::CreateBuffer(gbm, format, size, GBM_BO_USE_SCANOUT);
+    return GbmBuffer::CreateBuffer(gbm, size,
+                                   GetBufferFormatFromFourCCFormat(format),
+                                   gfx::BufferUsage::SCANOUT);
   }
 
  protected:
@@ -114,38 +116,22 @@ void DrmThread::CreateBuffer(gfx::AcceleratedWidget widget,
       static_cast<GbmDevice*>(device_manager_->GetDrmDevice(widget).get());
   DCHECK(gbm);
 
-  uint32_t flags = 0;
-  switch (usage) {
-    case gfx::BufferUsage::GPU_READ:
-      flags = GBM_BO_USE_TEXTURING;
-      break;
-    case gfx::BufferUsage::SCANOUT:
-      flags = GBM_BO_USE_RENDERING | GBM_BO_USE_SCANOUT | GBM_BO_USE_TEXTURING;
-      break;
-    case gfx::BufferUsage::SCANOUT_CPU_READ_WRITE:
-      flags = GBM_BO_USE_LINEAR | GBM_BO_USE_SCANOUT | GBM_BO_USE_TEXTURING;
-      break;
-    case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE:
-    case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT:
-      flags = GBM_BO_USE_LINEAR | GBM_BO_USE_TEXTURING;
-      break;
-  }
-
   DrmWindow* window = screen_manager_->GetWindow(widget);
   std::vector<uint64_t> modifiers;
-
-  uint32_t fourcc_format = ui::GetFourCCFormatFromBufferFormat(format);
 
   // TODO(hoegsberg): We shouldn't really get here without a window,
   // but it happens during init. Need to figure out why.
   if (window && window->GetController())
-    modifiers = window->GetController()->GetFormatModifiers(fourcc_format);
+    modifiers = window->GetController()->GetFormatModifiers(
+        GetFourCCFormatFromBufferFormat(format));
 
-  if (modifiers.size() > 0 && !(flags & GBM_BO_USE_LINEAR))
-    *buffer = GbmBuffer::CreateBufferWithModifiers(gbm, fourcc_format, size,
-                                                   flags, modifiers);
+  bool scanout = usage == gfx::BufferUsage::SCANOUT ||
+                 usage == gfx::BufferUsage::SCANOUT_CPU_READ_WRITE;
+  if (modifiers.size() > 0 && !scanout)
+    *buffer = GbmBuffer::CreateBufferWithModifiers(gbm, size, format, usage,
+                                                   modifiers);
   else
-    *buffer = GbmBuffer::CreateBuffer(gbm, fourcc_format, size, flags);
+    *buffer = GbmBuffer::CreateBuffer(gbm, size, format, usage);
 }
 
 void DrmThread::CreateBufferFromFds(
