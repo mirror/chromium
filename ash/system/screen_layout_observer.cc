@@ -12,6 +12,7 @@
 #include "ash/metrics/user_metrics_action.h"
 #include "ash/metrics/user_metrics_recorder.h"
 #include "ash/resources/grit/ash_resources.h"
+#include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -333,17 +334,20 @@ void ScreenLayoutObserver::CreateOrUpdateNotification(
     return;
   }
 
-  ui::ResourceBundle& bundle = ui::ResourceBundle::GetSharedInstance();
-  std::unique_ptr<Notification> notification(new Notification(
-      message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId, message,
-      additional_message, bundle.GetImageNamed(IDR_AURA_NOTIFICATION_DISPLAY),
-      base::string16(),  // display_source
-      GURL(),
-      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                 system_notifier::kNotifierDisplay),
-      message_center::RichNotificationData(),
-      new message_center::HandleNotificationClickedDelegate(
-          base::Bind(&OpenSettingsFromNotification))));
+  std::unique_ptr<Notification> notification =
+      Notification::CreateSystemNotification(
+          message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId, message,
+          additional_message, gfx::Image(),
+          base::string16(),  // display_source
+          GURL(),
+          message_center::NotifierId(
+              message_center::NotifierId::SYSTEM_COMPONENT,
+              system_notifier::kNotifierDisplay),
+          message_center::RichNotificationData(),
+          new message_center::HandleNotificationClickedDelegate(
+              base::Bind(&OpenSettingsFromNotification)),
+          kNotificationScreenIcon,
+          message_center::SystemNotificationWarningLevel::NORMAL);
 
   Shell::Get()->metrics()->RecordUserMetricsAction(
       UMA_STATUS_AREA_DISPLAY_NOTIFICATION_CREATED);
