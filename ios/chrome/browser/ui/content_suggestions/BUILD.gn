@@ -96,6 +96,7 @@ source_set("eg_tests") {
     "//base/test:test_support",
     "//components/keyed_service/ios",
     "//components/ntp_snippets",
+    "//components/ntp_snippets:test_support",
     "//components/reading_list/core",
     "//ios/chrome/app/strings",
     "//ios/chrome/browser",
@@ -110,6 +111,7 @@ source_set("eg_tests") {
     "//ios/testing/earl_grey:earl_grey_support",
     "//ios/third_party/earl_grey",
     "//ios/web/public/test/http_server",
+    "//testing/gmock",
     "//ui/strings",
   ]
   libs = [
