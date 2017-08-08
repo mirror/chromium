@@ -41,7 +41,7 @@ void FakeBluetoothLEAdvertisingManagerClient::RemoveObserver(
 void FakeBluetoothLEAdvertisingManagerClient::RegisterAdvertisement(
     const dbus::ObjectPath& manager_object_path,
     const dbus::ObjectPath& advertisement_object_path,
-    const base::Closure& callback,
+    base::OnceClosure callback,
     const ErrorCallback& error_callback) {
   VLOG(1) << "RegisterAdvertisment: " << advertisement_object_path.value();
 
@@ -60,7 +60,8 @@ void FakeBluetoothLEAdvertisingManagerClient::RegisterAdvertisement(
                        "Maximum advertisements reached");
   } else {
     currently_registered_.push_back(advertisement_object_path);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  std::move(callback));
   }
 }
 

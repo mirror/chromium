@@ -247,7 +247,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapter
   using CreateServiceErrorCallback =
       base::Callback<void(const std::string& message)>;
   using CreateAdvertisementCallback =
-      base::Callback<void(scoped_refptr<BluetoothAdvertisement>)>;
+      base::Callback<void(std::unique_ptr<BluetoothAdvertisement>)>;
   using AdvertisementErrorCallback =
       base::Callback<void(BluetoothAdvertisement::ErrorCode)>;
 

@@ -57,7 +57,7 @@ void BleAdvertiser::IndividualAdvertisement::OnAdvertisementRegistered(
     base::WeakPtr<BleAdvertiser::IndividualAdvertisement>
         individual_advertisement,
     const std::string& associated_device_id,
-    scoped_refptr<device::BluetoothAdvertisement> advertisement) {
+    std::unique_ptr<device::BluetoothAdvertisement> advertisement) {
   // It's possible that the IndividualAdvertisement that registered this
   // BluetoothAdvertisement has been destroyed before being able to own the
   // BluetoothAdvertisement. If the IndividualAdvertisement still exists, simply
@@ -65,7 +65,8 @@ void BleAdvertiser::IndividualAdvertisement::OnAdvertisementRegistered(
   // BluetoothAdvertisement, because otherwise it will remain registered
   // forever.
   if (individual_advertisement.get()) {
-    individual_advertisement->OnAdvertisementRegisteredCallback(advertisement);
+    individual_advertisement->OnAdvertisementRegisteredCallback(
+        std::move(advertisement));
   } else {
     PA_LOG(WARNING) << "BluetoothAdvertisement registered, but the "
                     << "IndividualAdvertisement which registered it no longer "
@@ -166,10 +167,10 @@ void BleAdvertiser::IndividualAdvertisement::AdvertiseIfPossible() {
 }
 
 void BleAdvertiser::IndividualAdvertisement::OnAdvertisementRegisteredCallback(
-    scoped_refptr<device::BluetoothAdvertisement> advertisement) {
+    std::unique_ptr<device::BluetoothAdvertisement> advertisement) {
   is_initializing_advertising_ = false;
 
-  advertisement_ = advertisement;
+  advertisement_ = std::move(advertisement);
   advertisement_->AddObserver(this);
   active_advertisement_device_ids_set_->insert(device_id_);
 

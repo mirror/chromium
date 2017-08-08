@@ -1246,9 +1246,9 @@ void ArcBluetoothBridge::SearchService(mojom::BluetoothAddressPtr remote_addr) {
 
 void ArcBluetoothBridge::OnStartLEListenDone(
     const StartLEListenCallback& callback,
-    scoped_refptr<BluetoothAdvertisement> advertisement) {
+    std::unique_ptr<BluetoothAdvertisement> advertisement) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  advertisment_ = advertisement;
+  advertisment_ = std::move(advertisement);
   callback.Run(mojom::BluetoothGattStatus::GATT_SUCCESS);
 }
 
@@ -1863,7 +1863,7 @@ void ArcBluetoothBridge::OnReadyToRegisterAdvertisement(
 void ArcBluetoothBridge::OnRegisterAdvertisementDone(
     const BroadcastAdvertisementCallback& callback,
     int32_t adv_handle,
-    scoped_refptr<BluetoothAdvertisement> advertisement) {
+    std::unique_ptr<BluetoothAdvertisement> advertisement) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   advertisements_[adv_handle] = std::move(advertisement);
   callback.Run(mojom::BluetoothGattStatus::GATT_SUCCESS);
