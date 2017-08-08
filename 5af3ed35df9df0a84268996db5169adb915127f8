@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64f918e0_2b694c75",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestCommon.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-08T16:41:08Z",
+      "side": 1,
+      "message": "can you please bring back the comments?",
+      "revId": "5af3ed35df9df0a84268996db5169adb915127f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd72f3d_63405315",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestCommon.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-08T16:41:08Z",
+      "side": 1,
+      "message": "can you add a comment here?  I don\u0027t understand what this is for.",
+      "revId": "5af3ed35df9df0a84268996db5169adb915127f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f76962_97f0f314",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestRule.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-08T16:41:08Z",
+      "side": 1,
+      "message": "why do we expose a static function that wraps another static function?  why not just call the wrapped function directly?",
+      "revId": "5af3ed35df9df0a84268996db5169adb915127f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2468dae_b349d8cd",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/urlconnection/CronetChunkedOutputStreamTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-08T16:41:08Z",
+      "side": 1,
+      "message": "should these changes be in the other CL?",
+      "range": {
+        "startLine": 66,
+        "startChar": 9,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "5af3ed35df9df0a84268996db5169adb915127f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
