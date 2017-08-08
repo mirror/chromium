@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56483d59_0c580832",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-08T20:48:37Z",
+      "side": 1,
+      "message": "Nit: The if and else parts have different indentation. Could you please make them the same? Thanks.",
+      "revId": "71fde0856caac61613c1994ac71fa7f15db02b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
