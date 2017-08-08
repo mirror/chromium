@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4dc0ec1e_1c5f65f8",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1862,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-08T20:50:16Z",
+      "side": 1,
+      "message": "We could, but it seems redundant to expose two public GetPendingItem() APIs.\n\nWhat do you think about moving this to NavigationManager::LoadURLWithParams, and change all calls to |-loadWithParams:| to self.navigationManager-\u003eLoadURLWithParams()?\n\nToday, LegacyNavigationManagerImpl::LoadURLWithParams() calls WebStateImpl::LoadURLWithParams() which calls |-loadWithParams:| on CRWWebController. Since the bulk of this method is navigation, maybe we can break it down into three parts:\n\nMove lines 1843-1845 to |-prepareLoadURLWithParams|\nMove lines 1847-1882 to NavigationManagerImpl::LoadURLWithParams\nKeep lines 1883-1887 in |-loadWithParams|\n\nNavigationManagerImpl::LoadURLWithParams() will have three parts:\n1) call |-prepareLoadURLWithParams|\n2) run lines 1847-1882\n3) call |-loadWithParams| via NavigationManagerDelegate::LoadURLWithParams\n\nThis way, even if the experiment fails, we\u0027ve refactored a bit more navigation related code from CRWWebController to NavigationManagerImpl.",
+      "parentUuid": "beb12ca2_71ec1839",
+      "range": {
+        "startLine": 1862,
+        "startChar": 27,
+        "endLine": 1862,
+        "endChar": 38
+      },
+      "revId": "7f8ab92fd07c0a86dce6ffadc1e3e38d3a7da400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b986cb2_adeea0d0",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 1
