@@ -63,8 +63,12 @@ VideoFrameExternalResources::ResourceType ResourceTypeForVideoFrame(
     case media::PIXEL_FORMAT_NV12:
       switch (video_frame->mailbox_holder(0).texture_target) {
         case GL_TEXTURE_EXTERNAL_OES:
-        case GL_TEXTURE_2D:
-          return VideoFrameExternalResources::YUV_RESOURCE;
+        case GL_TEXTURE_2D: {
+          bool is_dual_gmb = video_frame->mailbox_holder(1).texture_target ==
+                             video_frame->mailbox_holder(0).texture_target;
+          return is_dual_gmb ? VideoFrameExternalResources::YUV_RESOURCE
+                             : VideoFrameExternalResources::RGB_RESOURCE;
+        }
         case GL_TEXTURE_RECTANGLE_ARB:
           return VideoFrameExternalResources::RGB_RESOURCE;
         default:
