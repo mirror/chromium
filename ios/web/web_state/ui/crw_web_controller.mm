@@ -346,11 +346,6 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
   GURL _defaultURL;
   // Show overlay view, don't reload web page.
   BOOL _overlayPreviewMode;
-  // The URL of an expected future recreation of the |webView|. Valid
-  // only if the web view was discarded for non-user-visible reasons, such that
-  // if the next load request is for that URL, it should be treated as a
-  // reconstruction that should use cache aggressively.
-  GURL _expectedReconstructionURL;
   // Whether the web page is currently performing window.history.pushState or
   // window.history.replaceState
   // Set to YES on window.history.willChangeState message. To NO on
@@ -540,9 +535,8 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // Wraps the web view in a CRWWebViewContentView and adds it to the container
 // view.
 - (void)displayWebView;
-// Removes webView, optionally tracking the URL of the evicted
-// page for later cache-based reconstruction.
-- (void)removeWebViewAllowingCachedReconstruction:(BOOL)allowCache;
+// Removes webView.
+- (void)removeWebView;
 // Called when web view process has been terminated.
 - (void)webViewWebProcessDidCrash;
 // Returns the WKWebViewConfigurationProvider associated with the web
@@ -1110,7 +1104,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
       // Don't create the web view; let it be lazy created as needed.
     } else {
       [self clearTransientContentView];
-      [self removeWebViewAllowingCachedReconstruction:YES];
+      [self removeWebView];
       _touchTrackingRecognizer.get().touchTrackingDelegate = nil;
       _touchTrackingRecognizer.reset();
       [self resetContainerView];
@@ -1119,7 +1113,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 }
 
 - (void)requirePageReconstruction {
-  [self removeWebViewAllowingCachedReconstruction:NO];
+  [self removeWebView];
 }
 
 - (void)requirePageReload {
@@ -1133,7 +1127,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 
 - (void)reinitializeWebViewAndReload:(BOOL)reload {
   if (_webView) {
-    [self removeWebViewAllowingCachedReconstruction:NO];
+    [self removeWebView];
     if (reload) {
       [self loadCurrentURLInWebView];
     } else {
@@ -1203,7 +1197,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   _isBeingDestroyed = YES;
 
   // Remove the web view now. Otherwise, delegate callbacks occur.
-  [self removeWebViewAllowingCachedReconstruction:NO];
+  [self removeWebView];
 
   // Explicitly reset content to clean up views and avoid dangling KVO
   // observers.
@@ -1784,7 +1778,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (void)loadErrorInNativeView:(NSError*)error
             navigationContext:(web::NavigationContextImpl*)context {
-  [self removeWebViewAllowingCachedReconstruction:NO];
+  [self removeWebView];
   web::NavigationItem* item = self.currentNavItem;
   const GURL currentURL = item ? item->GetVirtualURL() : GURL::EmptyGURL();
 
@@ -1811,7 +1805,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 // provider.
 - (void)loadCurrentURLInNativeView {
   // Free the web view.
-  [self removeWebViewAllowingCachedReconstruction:NO];
+  [self removeWebView];
 
   web::NavigationItem* item = self.currentNavItem;
   const GURL targetURL = item ? item->GetURL() : GURL::EmptyGURL();
@@ -1931,10 +1925,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
   } else {
     [self loadCurrentURLInWebView];
   }
-
-  // Once a URL has been loaded, any cached-based reconstruction state has
-  // either been handled or obsoleted.
-  _expectedReconstructionURL = GURL();
 }
 
 - (GURL)webURLWithTrustLevel:(web::URLVerificationTrustLevel*)trustLevel {
@@ -3113,7 +3103,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
           [_delegate controllerForUnhandledContentAtURL:errorGURL];
       if (controller) {
         [self loadCompleteWithSuccess:NO forNavigation:navigation];
-        [self removeWebViewAllowingCachedReconstruction:NO];
+        [self removeWebView];
         [self setNativeController:controller];
         [self loadNativeViewWithSuccess:YES
                       navigationContext:navigationContext];
@@ -4086,18 +4076,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
   [_containerView displayWebViewContentView:webViewContentView];
 }
 
-- (void)removeWebViewAllowingCachedReconstruction:(BOOL)allowCache {
+- (void)removeWebView {
   if (!_webView)
     return;
 
   _webStateImpl->CancelDialogs();
-
-  web::NavigationItem* item = self.currentNavItem;
-  if (allowCache && item) {
-    _expectedReconstructionURL = item->GetVirtualURL();
-  } else {
-    _expectedReconstructionURL = GURL::EmptyGURL();
-  }
 
   [self abortLoad];
   [_webView removeFromSuperview];
@@ -5211,7 +5194,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 #pragma mark Testing-Only Methods
 
 - (void)injectWebViewContentView:(CRWWebViewContentView*)webViewContentView {
-  [self removeWebViewAllowingCachedReconstruction:NO];
+  [self removeWebView];
 
   _lastRegisteredRequestURL = _defaultURL;
   [_containerView displayWebViewContentView:webViewContentView];
