@@ -12,7 +12,13 @@
         android:paddingBottom="6dp"
         android:orientation="vertical" >
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/space_widget_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
             android:id="@+id/size_downloaded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,8 +27,8 @@
             android:textColor="@color/google_blue_500"
             android:textSize="16sp" />
 
-    <!-- The progress bar uses 20dp of space, vertically, including spacing. -->
-    <org.chromium.chrome.browser.widget.MaterialProgressBar
+        <!-- The progress bar uses 20dp of space, vertically, including spacing. -->
+        <org.chromium.chrome.browser.widget.MaterialProgressBar
             android:id="@+id/space_bar"
             android:layout_width="match_parent"
             android:layout_height="4dp"
@@ -32,7 +38,7 @@
             chrome:colorProgress="@color/google_blue_500"
             chrome:colorSecondaryProgress="@color/black_alpha_87" />
 
-    <TextView
+        <TextView
             android:id="@+id/size_other_apps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,12 +46,18 @@
             android:textColor="@color/black_alpha_87"
             android:textSize="14sp" />
 
-    <TextView
+        <TextView
             android:id="@+id/size_free"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textColor="@color/black_alpha_54"
             android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <View
+        style="@style/Separator"
+        android:layout_marginTop="@dimen/list_item_default_margin"/>
 
 </LinearLayout>

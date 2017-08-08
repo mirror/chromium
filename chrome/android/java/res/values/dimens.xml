@@ -359,6 +359,7 @@
     <dimen name="bookmark_item_popup_width">140dp</dimen>
     <dimen name="bookmark_folder_item_left">16dp</dimen>
     <dimen name="bookmark_minimum_dialog_size_tablet">500dp</dimen>
+    <dimen name="bookmark_list_view_padding_top">8dp</dimen>
 
     <!-- Bookmark widget dimensions -->
     <dimen name="bookmark_widget_min_width">64dp</dimen>
@@ -448,8 +449,9 @@
     <dimen name="downloads_item_icon_size">48dp</dimen>
 
     <!-- SelectableListLayout dimensions -->
-    <dimen name="selectable_list_layout_row_end_padding">16dp</dimen>
-    <dimen name="selectable_list_layout_start_icon_width">56dp</dimen>
+    <dimen name="selectable_list_layout_row_padding">16dp</dimen>
+    <dimen name="selectable_list_layout_start_icon_width">36dp</dimen>
+    <dimen name="selectable_list_layout_end_icon_width">56dp</dimen>
     <dimen name="toolbar_wide_display_nav_icon_offset">-18dp</dimen>
     <dimen name="toolbar_wide_display_end_offset">-14dp</dimen>
 
@@ -478,7 +480,7 @@
     <dimen name="action_bar_shadow_height">10dp</dimen>
     <dimen name="card_corner_radius">2dp</dimen>
     <dimen name="list_item_corner_radius">3dp</dimen>
-    <dimen name="list_item_lateral_padding">1dp</dimen>
+    <dimen name="list_item_lateral_padding">17dp</dimen>
     <dimen name="list_item_default_margin">16dp</dimen>
     <dimen name="signin_and_sync_view_padding">16dp</dimen>
     <dimen name="sad_tab_bullet_gap">12dp</dimen>

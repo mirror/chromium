@@ -154,18 +154,6 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         assert section == mFolderSection || section == mBookmarkSection;
         section.remove(toSectionPosition(position));
         notifyItemRemoved(position);
-
-        if (section == mBookmarkSection && !mBookmarkSection.isEmpty()) {
-            for (BookmarkRow row : mBookmarkRows) {
-                BookmarkId id = row.getItem();
-                setBackgroundResourceForBookmarkRow(row, id);
-            }
-        } else if (!mFolderSection.isEmpty()) {
-            for (BookmarkRow row : mFolderRows) {
-                BookmarkId id = row.getItem();
-                setBackgroundResourceForFolderRow(row, id);
-            }
-        }
     }
 
     // RecyclerView.Adapter implementation.
@@ -239,11 +227,9 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 break;
             case FOLDER_VIEW:
                 ((BookmarkRow) holder.itemView).setBookmarkId(id);
-                setBackgroundResourceForFolderRow(((BookmarkRow) holder.itemView), id);
                 break;
             case BOOKMARK_VIEW:
                 ((BookmarkRow) holder.itemView).setBookmarkId(id);
-                setBackgroundResourceForBookmarkRow((BookmarkRow) holder.itemView, id);
                 break;
             default:
                 assert false : "View type not supported!";
@@ -371,15 +357,5 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @VisibleForTesting
     public BookmarkDelegate getDelegateForTesting() {
         return mDelegate;
-    }
-
-    private void setBackgroundResourceForBookmarkRow(BookmarkRow row, BookmarkId id) {
-        row.setBackgroundResourceForGroupPosition(id.equals(mBookmarkSection.get(0)),
-                id.equals(mBookmarkSection.get(mBookmarkSection.size() - 1)));
-    }
-
-    private void setBackgroundResourceForFolderRow(BookmarkRow row, BookmarkId id) {
-        row.setBackgroundResourceForGroupPosition(id.equals(mFolderSection.get(0)),
-                id.equals(mFolderSection.get(mFolderSection.size() - 1)));
     }
 }

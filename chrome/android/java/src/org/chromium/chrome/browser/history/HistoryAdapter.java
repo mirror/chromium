@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Space;
 import android.widget.TextView;
 
 import org.chromium.base.VisibleForTesting;
@@ -56,7 +55,7 @@ public class HistoryAdapter extends DateDividedAdapter implements BrowsingHistor
     private TextView mSignedInNotSyncedTextView;
     private TextView mSignedInSyncedTextView;
     private TextView mOtherFormsOfBrowsingHistoryTextView;
-    private Space mPrivacyDisclaimerBottomSpace;
+    private View mPrivacyDisclaimerBottomSpace;
     private Button mClearBrowsingDataButton;
     private HeaderItem mPrivacyDisclaimerHeaderItem;
     private HeaderItem mClearBrowsingDataButtonHeaderItem;
@@ -181,12 +180,6 @@ public class HistoryAdapter extends DateDividedAdapter implements BrowsingHistor
      */
     public void removeItems() {
         mHistoryProvider.removeItems();
-
-        // TODO(twellington): this could be optimized by only setting the background for item views
-        //                    in a group that has changed.
-        for (HistoryItemView itemView : mItemViews) {
-            itemView.setBackgroundResourceForGroupPosition();
-        }
     }
 
     /**
@@ -272,12 +265,6 @@ public class HistoryAdapter extends DateDividedAdapter implements BrowsingHistor
 
         loadItems(items);
 
-        if (lastHistoryItemView != null) {
-            // When loading more items, the last item's background needs to be reset since it may
-            // now be in the middle of an ItemGroup.
-            lastHistoryItemView.setBackgroundResourceForGroupPosition();
-        }
-
         mIsLoadingItems = false;
         mHasMorePotentialItems = hasMorePotentialMatches;
         if (items.size() > 0) {
@@ -358,7 +345,7 @@ public class HistoryAdapter extends DateDividedAdapter implements BrowsingHistor
                 SelectableListLayout.getDefaultListItemLateralShadowSizePx(resources));
 
         mPrivacyDisclaimerBottomSpace =
-                (Space) privacyDisclaimers.findViewById(R.id.privacy_disclaimer_bottom_space);
+                privacyDisclaimers.findViewById(R.id.privacy_disclaimer_bottom_space);
 
         ViewGroup clearBrowsingDataButtonContainer =
                 (ViewGroup) View.inflate(mHistoryManager.getSelectableListLayout().getContext(),
@@ -372,9 +359,9 @@ public class HistoryAdapter extends DateDividedAdapter implements BrowsingHistor
                 mHistoryManager.openClearBrowsingDataPreference();
             }
         });
-        MarginResizer.createAndAttach(clearBrowsingDataButtonContainer,
+        MarginResizer.createAndAttach(mClearBrowsingDataButton,
                 mHistoryManager.getSelectableListLayout().getUiConfig(),
-                SelectableListLayout.getDefaultListItemLateralMarginPx(resources), 0);
+                getDefaultTextMargin(resources), 0);
 
         mPrivacyDisclaimerHeaderItem = new HeaderItem(0, privacyDisclaimers);
         mClearBrowsingDataButtonHeaderItem = new HeaderItem(1, clearBrowsingDataButtonContainer);

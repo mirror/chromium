@@ -57,7 +57,7 @@ public class HistoryItemView extends SelectableItemView<HistoryItem> implements 
         mIconGenerator = new RoundedIconGenerator(mDisplayedIconSize , mDisplayedIconSize,
                 mCornerRadius, iconColor, textSize);
         mEndPadding = context.getResources().getDimensionPixelSize(
-                R.dimen.selectable_list_layout_row_end_padding);
+                R.dimen.selectable_list_layout_row_padding);
     }
 
     @Override
@@ -82,9 +82,7 @@ public class HistoryItemView extends SelectableItemView<HistoryItem> implements 
     public void setItem(HistoryItem item) {
         if (getItem() == item) {
             // If the item is being set again, it means the HistoryAdapter contents have likely
-            // changed. This item may have changed group positions, so the background should be
-            // updated.
-            setBackgroundResourceForGroupPosition();
+            // changed. This item may have changed group positions.
             return;
         }
 
@@ -110,8 +108,6 @@ public class HistoryItemView extends SelectableItemView<HistoryItem> implements 
             mTitle.setTextColor(
                     ApiCompatibilityUtils.getColor(getResources(), R.color.default_text_color));
         }
-
-        setBackgroundResourceForGroupPosition();
     }
 
     /**
@@ -194,13 +190,5 @@ public class HistoryItemView extends SelectableItemView<HistoryItem> implements 
         ApiCompatibilityUtils.setPaddingRelative(mContentView,
                 ApiCompatibilityUtils.getPaddingStart(mContentView),
                 mContentView.getPaddingTop(), endPadding, mContentView.getPaddingBottom());
-    }
-
-    /**
-     * Sets the background resource for this view using the item's positioning in its group.
-     */
-    public void setBackgroundResourceForGroupPosition() {
-        setBackgroundResourceForGroupPosition(
-                getItem().isFirstInGroup(), getItem().isLastInGroup());
     }
 }

@@ -16,7 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.AdapterDataObserver;
 import android.support.v7.widget.RecyclerView.ItemAnimator;
-import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar.OnMenuItemClickListener;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -196,12 +195,6 @@ public class SelectableListLayout<E>
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addOnScrollListener(new OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                setToolbarShadowVisibility();
-            }
-        });
 
         mItemAnimator = mRecyclerView.getItemAnimator();
 
@@ -342,8 +335,7 @@ public class SelectableListLayout<E>
 
         // The top margin for the content and shadow needs to be removed now that the toolbar
         // has been removed.
-        View content = findViewById(R.id.list_content);
-        ((MarginLayoutParams) content.getLayoutParams()).topMargin = 0;
+        ((MarginLayoutParams) mRecyclerView.getLayoutParams()).topMargin = 0;
         ((MarginLayoutParams) mToolbarShadow.getLayoutParams()).topMargin = 0;
 
         return mToolbar;
@@ -387,7 +379,7 @@ public class SelectableListLayout<E>
     private void setToolbarShadowVisibility() {
         if (mToolbar == null || mRecyclerView == null) return;
 
-        boolean showShadow = mRecyclerView.canScrollVertically(-1) || mToolbar.isSearching()
+        boolean showShadow = mToolbar.isSearching()
                 || (mToolbar.getSelectionDelegate().isSelectionEnabled() && mShowShadowOnSelection);
         mToolbarShadow.setVisibility(showShadow ? View.VISIBLE : View.GONE);
     }

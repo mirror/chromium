@@ -383,10 +383,10 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
      */
     void generateHeaderItems() {
         mSpaceDisplay = new SpaceDisplay(null, this);
-        View view = mSpaceDisplay.getView();
+        View view = mSpaceDisplay.getViewContainer();
         registerAdapterDataObserver(mSpaceDisplay);
         if (mUiConfig != null) {
-            MarginResizer.createAndAttach(view, mUiConfig,
+            MarginResizer.createAndAttach(mSpaceDisplay.getView(), mUiConfig,
                     view.getResources().getDimensionPixelSize(R.dimen.list_item_default_margin),
                     SelectableListLayout.getDefaultListItemLateralShadowSizePx(
                             view.getResources()));
