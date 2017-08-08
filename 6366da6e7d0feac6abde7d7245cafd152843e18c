@@ -16,6 +16,24 @@
       "revId": "6366da6e7d0feac6abde7d7245cafd152843e18c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "409ad26b_a8a5aa22",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-08T18:56:56Z",
+      "side": 1,
+      "message": "I think no. The text broken occurred in samus before. I flashed samus using ToT build with this patch, the issue does not occur. It seems someone fixed the issue outside app list.",
+      "parentUuid": "01075b8c_8cd77028",
+      "revId": "6366da6e7d0feac6abde7d7245cafd152843e18c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
