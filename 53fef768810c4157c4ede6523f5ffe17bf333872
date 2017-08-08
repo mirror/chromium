@@ -46,6 +46,30 @@
       "revId": "53fef768810c4157c4ede6523f5ffe17bf333872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04bf8988_ed40fe6d",
+        "filename": "cc/paint/paint_canvas.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-08T20:17:55Z",
+      "side": 1,
+      "message": "Hmm.. I\u0027m on the side of preferring a minimalistic API (ie if you can do it using existing functions, then there you go :P). But it\u0027s not a strong opinion. Maybe a TODO is a good middle ground (ie punt deciding!)",
+      "parentUuid": "148e2fe8_f97ded3e",
+      "range": {
+        "startLine": 118,
+        "startChar": 7,
+        "endLine": 118,
+        "endChar": 17
+      },
+      "revId": "53fef768810c4157c4ede6523f5ffe17bf333872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
