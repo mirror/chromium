@@ -16,6 +16,24 @@
       "revId": "26180ecfdd5e13dbdce4e3b58a771696071a9dbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9bab600_10bacd07",
+        "filename": "content/renderer/pepper/pepper_webplugin_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-08-08T16:45:27Z",
+      "side": 1,
+      "message": "That\u0027s actually what I had originally, but Lei had asked me to move the checks into the individual commands because checking \"name \u003d\u003d ...\" is less expensive than checking CanEditText() initially.",
+      "parentUuid": "95a982eb_eb72d608",
+      "revId": "26180ecfdd5e13dbdce4e3b58a771696071a9dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
