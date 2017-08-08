@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "901657b2_22e64534",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T16:19:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ed6e916b_26eeb15a",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed23bed1_a2d3336b",
         "filename": "ash/public/cpp/shelf_prefs.h",
         "patchSetId": 8
@@ -317,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "5d82d95a_74588185",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T16:19:09Z",
+      "side": 1,
+      "message": "Can you also try it manually at the lock screen (not login)?",
+      "parentUuid": "b35bdd50_38d6ed66",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7f8808a_d1e58440",
         "filename": "ash/shelf/shelf_controller.h",
         "patchSetId": 8
@@ -454,6 +490,24 @@
       "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d38635_e6e1e999",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T16:19:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c704f439_b2978301",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
