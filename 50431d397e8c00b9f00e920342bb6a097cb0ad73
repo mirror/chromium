@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d0facf3_17c190ab",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2814,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-08T16:56:51Z",
+      "side": 1,
+      "message": "As you\u0027re touching all this code, can you please make sure to fix the reentrancy bug we have now. This should just mean incorporating https://chromium-review.googlesource.com/c/596428 .",
+      "range": {
+        "startLine": 2814,
+        "startChar": 19,
+        "endLine": 2814,
+        "endChar": 33
+      },
+      "revId": "50431d397e8c00b9f00e920342bb6a097cb0ad73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
