@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0528983c_d61d3360",
+        "filename": "ios/clean/chrome/app/application_state.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T13:50:16Z",
+      "side": 1,
+      "message": "The pragma isn\u0027t accurate any more, so it can just be removed.",
+      "revId": "79b89fc11d8f7facd2241df6f14b331d8f7f8dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee571bb_df6586c0",
+        "filename": "ios/clean/chrome/app/steps/application_step.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T13:50:16Z",
+      "side": 1,
+      "message": "The new architecture banners can be removed.",
+      "revId": "79b89fc11d8f7facd2241df6f14b331d8f7f8dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7307ca82_18da24bd",
+        "filename": "ios/clean/chrome/app/steps/step_features.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T13:50:16Z",
+      "side": 1,
+      "message": "we should probably standardize on the casing -- skewer case (\u0027main-window\u0027) would be consistent with the preceding values, but camel case is more ObjC-ish.",
+      "range": {
+        "startLine": 20,
+        "startChar": 32,
+        "endLine": 20,
+        "endChar": 42
+      },
+      "revId": "79b89fc11d8f7facd2241df6f14b331d8f7f8dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7aacf87_6627390a",
+        "filename": "ios/clean/chrome/browser/ui/root/root_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T13:50:16Z",
+      "side": 1,
+      "message": "I\u0027d prefer that the startup code take care of this instead of it being something the root coordinator cares about.\n\nviewController is a public property on all coordinators, so nothing\u0027s needed to be able to move this code out of here.",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 17
+      },
+      "revId": "79b89fc11d8f7facd2241df6f14b331d8f7f8dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
