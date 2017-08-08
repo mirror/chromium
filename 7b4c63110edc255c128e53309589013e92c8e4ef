@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92e54416_a47c6f3e",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-08T17:42:23Z",
+      "side": 1,
+      "message": "Nice! I like this!",
+      "revId": "7b4c63110edc255c128e53309589013e92c8e4ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c440d1b2_f8aa596e",
+        "filename": "services/viz/public/interfaces/compositing/returned_resource.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-08T17:42:23Z",
+      "side": 1,
+      "message": "See components/viz/common/resources/returned_resource.h",
+      "revId": "7b4c63110edc255c128e53309589013e92c8e4ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
