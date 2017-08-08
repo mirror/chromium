@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09229254_3e5d8f89",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "super-nit: I know you didn\u0027t write these comments, but could you add an example in the comment, like (e.g. \"Bottom\") and (e.g. \"Never\")? I find examples super-helpful.",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc2c049f_c13c5fbe",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "Does this need to skip BOTTOM_LOCKED, like the old code, or is that not possible? DCHECK it?",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed23bed1_a2d3336b",
+        "filename": "ash/public/cpp/shelf_prefs.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "super-nit: blank line above or new comment above, due to unfortunate wrapping of line 29",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b807353_030e09ed",
+        "filename": "ash/public/interfaces/session_controller.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "optional: Do you know if it\u0027s packaged app, ARC app, or both? If so, add to comment. If not, this is fine.",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af608b7_bbbf1047",
+        "filename": "ash/session/session_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "nit: Default this to true, since that\u0027s more like the default behavior, and flip test expectations.",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a3b6854_03f52974",
+        "filename": "ash/shelf/shelf_alignment_menu.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "nit: add a comment about why it could be null",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15c3045_b730a281",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "Is it possible GetShelfForDisplay() could return null here? Does Ctrl-Alt-D display disconnect work OK?",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f81e2c_3b451bdf",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "super-nit: Add a pointer to the other comment that explains why some are synced and some are not.",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e830cfb1_6b7fef67",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "I know this is in the old code, but it makes me nervous. It feels like a hack. Do we still read and apply shelf preferences correctly when a display is attached at the lock screen? Maybe that works because the prefs are applied on unlock?",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f8808a_d1e58440",
+        "filename": "ash/shelf/shelf_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "Style guide doesn\u0027t like private inheritance:\nhttps://google.github.io/styleguide/cppguide.html#Inheritance\n\nWhy do you need it here? Is there another way?",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca55591_9ad9b8f4",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "I like it. That\u0027s one way to get attention when the test code changes. :-)",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035a3fd8_3a29098b",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "Nice tests, simple and easy to read.",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "683268ec_67e869de",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "optional: You could delete 251-259 without hurting the test",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe6afa0_7835f723",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "super-nit: blank line above",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126d361f_1f76437d",
+        "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "Q: Do you know if HasUserSetting works correctly with mojo pref service and the pref being remote? I\u0027m guessing yes, but does it seem to work in practice?",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274439f6_9c19fef1",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-08T01:49:10Z",
+      "side": 1,
+      "message": "Thanks for fixing all these.",
+      "revId": "cfcc87e2ded864dea4aed33fb94650ec8a327ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
