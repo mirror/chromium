@@ -83,6 +83,54 @@
     },
     {
       "key": {
+        "uuid": "9d6003db_b4e76a39",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-08T23:02:38Z",
+      "side": 1,
+      "message": "Prefer not to elaborate on the definition of \"enumerable\" here. One can look the (more detailed but also more lengthy) documentation at https://developer.mozilla.org/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties.",
+      "parentUuid": "9c88e6bc_c7b59d39",
+      "range": {
+        "startLine": 438,
+        "startChar": 69,
+        "endLine": 438,
+        "endChar": 70
+      },
+      "revId": "2fa8058d6ef5efd501eb12b0c1287d15ee491e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "298f9e6b_b4c7bc33",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-08T23:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1855539d_cee950eb",
+      "range": {
+        "startLine": 438,
+        "startChar": 50,
+        "endLine": 438,
+        "endChar": 58
+      },
+      "revId": "2fa8058d6ef5efd501eb12b0c1287d15ee491e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "821bdcd0_ac774bd4",
         "filename": "docs/es6_chromium.md",
         "patchSetId": 4
@@ -103,6 +151,30 @@
       "revId": "2fa8058d6ef5efd501eb12b0c1287d15ee491e0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe9b4ba_24d51b75",
+        "filename": "docs/es6_chromium.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-08T23:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "821bdcd0_ac774bd4",
+      "range": {
+        "startLine": 443,
+        "startChar": 31,
+        "endLine": 443,
+        "endChar": 32
+      },
+      "revId": "2fa8058d6ef5efd501eb12b0c1287d15ee491e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
