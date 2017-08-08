@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1658adac_12ff7c8f",
+        "filename": "services/ui/ws/window_manager_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-08T13:40:09Z",
+      "side": 1,
+      "message": "I think dispatching to the root here would end up doing client-side hit-testing again in ash. It\u0027s probably OK for now since we know there\u0027s a modal window, but maybe we should introduce some kind of flag to the event? I guess that\u0027s what the TODO is about?",
+      "revId": "db1aa9c32df742102021c6bc442ca3342483ecd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
