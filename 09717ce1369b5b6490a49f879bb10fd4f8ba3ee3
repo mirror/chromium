@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "091fdc3b_42ca0d6d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2169,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-08T20:16:37Z",
+      "side": 1,
+      "message": "You are sure we don\u0027t want aggregate stats for non-extension renderer processes?",
+      "range": {
+        "startLine": 2169,
+        "startChar": 2,
+        "endLine": 2169,
+        "endChar": 26
+      },
+      "revId": "09717ce1369b5b6490a49f879bb10fd4f8ba3ee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5689e061_dbcb75b6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2204,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-08T20:16:37Z",
+      "side": 1,
+      "message": "This should ideally not occur. When Chrome is the content client, we set the process type right as soon as the render thread is created. Let me know if you think this should be handled differently.",
+      "range": {
+        "startLine": 2204,
+        "startChar": 30,
+        "endLine": 2204,
+        "endChar": 38
+      },
+      "revId": "09717ce1369b5b6490a49f879bb10fd4f8ba3ee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ffdb44_32b50c39",
+        "filename": "third_party/WebKit/public/platform/scheduler/renderer_process_type.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-08T20:16:37Z",
+      "side": 1,
+      "message": "I see some header files named in Pascal case (RenderProcessType.h). Is it a convention in blink?",
+      "revId": "09717ce1369b5b6490a49f879bb10fd4f8ba3ee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b5632a6_e1552174",
+        "filename": "content/public/renderer/render_thread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-08T20:16:37Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "ce47a2c4_4e013252",
+      "revId": "ff4e2e98aba258a2bbbf1d22f6b90a6b5655ae03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc035828_a62e9d17",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
         "patchSetId": 3
