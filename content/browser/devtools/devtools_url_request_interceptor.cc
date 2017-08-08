@@ -5,6 +5,7 @@
 #include "content/browser/devtools/devtools_url_request_interceptor.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/strings/pattern.h"
 #include "base/strings/stringprintf.h"
 #include "base/supports_user_data.h"
 #include "content/browser/devtools/devtools_agent_host_impl.h"
@@ -123,6 +124,7 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
     MaybeCreateDevToolsURLInterceptorRequestJob(
         net::URLRequest* request,
         net::NetworkDelegate* network_delegate) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   // Bail out if we're not intercepting anything.
   if (intercepted_render_frames_.empty()) {
     DCHECK(intercepted_frame_tree_nodes_.empty());
@@ -160,6 +162,16 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
 
   // We don't want to intercept our own sub requests.
   if (sub_requests_.find(request) != sub_requests_.end())
+    return nullptr;
+
+  bool matchFound = false;
+  for (const std::string& pattern : patterns_) {
+    if (base::MatchPattern(request->url().spec(), pattern)) {
+      matchFound = true;
+      break;
+    }
+  }
+  if (!matchFound)
     return nullptr;
 
   bool is_redirect;
@@ -242,18 +254,19 @@ void DevToolsURLRequestInterceptor::State::StopInterceptingRequestsInternal(
 
 void DevToolsURLRequestInterceptor::State::StartInterceptingRequests(
     WebContents* web_contents,
-    base::WeakPtr<protocol::NetworkHandler> network_handler) {
+    base::WeakPtr<protocol::NetworkHandler> network_handler,
+    std::vector<std::string> patterns) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // WebContents methods are UI thread only.
   for (RenderFrameHost* render_frame_host : web_contents->GetAllFrames()) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&DevToolsURLRequestInterceptor::State::
-                           StartInterceptingRequestsInternal,
+                           StartInterceptingRequestsWithPatternsInternal,
                        this, render_frame_host->GetRoutingID(),
                        render_frame_host->GetFrameTreeNodeId(),
                        render_frame_host->GetProcess()->GetID(), web_contents,
-                       network_handler));
+                       network_handler, patterns));
   }
 
   // Listen for future updates.
@@ -275,6 +288,7 @@ void DevToolsURLRequestInterceptor::State::StopInterceptingRequests(
 void DevToolsURLRequestInterceptor::State::StopInterceptingRequestsOnIoThread(
     WebContents* web_contents) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  patterns_.clear();
   // Remove any intercepted render frames associated with |web_contents|.
   base::flat_map<std::pair<int, int>, InterceptedPage>
       remaining_intercepted_render_frames;
