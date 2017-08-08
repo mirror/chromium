@@ -356,6 +356,10 @@ public abstract class DownloadHistoryItemWrapper extends TimedItem {
         public boolean remove() {
             // Tell the DownloadManager to remove the file from history.
             mBackendProvider.getDownloadDelegate().removeDownload(getId(), isOffTheRecord());
+            if (mBackendProvider.getThumbnailProvider() instanceof ThumbnailProviderImpl) {
+                return ((ThumbnailProviderImpl) mBackendProvider.getThumbnailProvider())
+                        .removeThumbnailsFromDisk(getId());
+            }
             return false;
         }
 

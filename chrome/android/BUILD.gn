@@ -180,6 +180,7 @@ android_library("chrome_java") {
     ":chrome_public_apk_template_resources",
     ":document_tab_model_info_proto_java",
     ":partner_location_descriptor_proto_java",
+    ":thumbnail_cache_entry_proto_java",
     "//base:base_java",
     "//chrome/android/webapk/libs/client:client_java",
     "//chrome/android/webapk/libs/common:common_java",
@@ -350,6 +351,13 @@ proto_java_library("partner_location_descriptor_proto_java") {
   proto_path = "java/src/org/chromium/chrome/browser/omnibox/geo"
   sources = [
     "$proto_path/partner_location_descriptor.proto",
+  ]
+}
+
+proto_java_library("thumbnail_cache_entry_proto_java") {
+  proto_path = "java/src/org/chromium/chrome/browser/download/ui"
+  sources = [
+    "$proto_path/thumbnail_cache_entry.proto",
   ]
 }
 
