@@ -1,0 +1,11 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//components/arc/common/video_decode_accelerator.mojom"
+public_headers = [ "//ui/gfx/geometry/rect.h" ]
+traits_headers = [ "//components/arc/video_accelerator/video_decode_accelerator_struct_traits.h" ]
+sources = [
+  "//components/arc/video_accelerator/video_decode_accelerator_struct_traits.cc",
+]
+type_mappings = [ "arc.mojom.CropRect=gfx::Rect" ]
