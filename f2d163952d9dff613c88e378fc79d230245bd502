@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4ee6724_91aa085e",
+        "filename": "remoting/host/file_transfer_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-08T21:33:57Z",
+      "side": 1,
+      "message": "There\u0027s nothing in the ErrorCode enum to signify success (I think because I asked you to remove it in another CL...) For protobufs, it\u0027s unnecessary because the field containing the error code is marked optional. Here, I think you need to be more explicit; either use base::Optional, or add an explicit enum member (zero, ideally) to signify success.",
+      "range": {
+        "startLine": 19,
+        "startChar": 22,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "f2d163952d9dff613c88e378fc79d230245bd502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4f125f_6375dc42",
+        "filename": "remoting/host/file_transfer_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-08T21:33:57Z",
+      "side": 1,
+      "message": "Consider swapping the order of these params. The buffer is the most important thing, as it contains the data you want to write; the callback is only there to return an error code async.",
+      "range": {
+        "startLine": 26,
+        "startChar": 70,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "f2d163952d9dff613c88e378fc79d230245bd502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
