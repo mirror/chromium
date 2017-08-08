@@ -3756,7 +3756,12 @@ void GLApiBase::glGetQueryObjectui64vRobustANGLEFn(GLuint id,
 }
 
 void GLApiBase::glGetQueryObjectuivFn(GLuint id, GLenum pname, GLuint* params) {
+  base::TimeTicks start = base::TimeTicks::Now();
   driver_->fn.glGetQueryObjectuivFn(id, pname, params);
+  base::TimeTicks end = base::TimeTicks::Now();
+  if (end - start > base::TimeDelta::FromMilliseconds(10)) {
+    LOG(INFO) << __FUNCTION__ << ";;; SLOW_WARNING call took " << (end - start).InMillisecondsF() << "ms";
+  }
 }
 
 void GLApiBase::glGetQueryObjectuivRobustANGLEFn(GLuint id,
@@ -10191,7 +10196,12 @@ void DebugGLApi::glGetQueryObjectuivFn(GLuint id,
   GL_SERVICE_LOG("glGetQueryObjectuiv"
                  << "(" << id << ", " << GLEnums::GetStringEnum(pname) << ", "
                  << static_cast<const void*>(params) << ")");
+  base::TimeTicks start = base::TimeTicks::Now();
   gl_api_->glGetQueryObjectuivFn(id, pname, params);
+  base::TimeTicks end = base::TimeTicks::Now();
+  if (end - start > base::TimeDelta::FromMilliseconds(10)) {
+    LOG(INFO) << __FUNCTION__ << ";;; SLOW_WARNING call took " << (end - start).InMillisecondsF() << "ms";
+  }
 }
 
 void DebugGLApi::glGetQueryObjectuivRobustANGLEFn(GLuint id,
