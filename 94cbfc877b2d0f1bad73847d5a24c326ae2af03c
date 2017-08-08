@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "7a653628_4733060d",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 14
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-08T18:30:02Z",
+      "side": 1,
+      "message": "nit: extra period",
+      "range": {
+        "startLine": 23,
+        "startChar": 42,
+        "endLine": 23,
+        "endChar": 43
+      },
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9d41e3_f2eb7e2a",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-08T18:30:02Z",
+      "side": 1,
+      "message": "nit: TLS",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac37d6e4_1ec6305b",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 14
@@ -157,6 +203,162 @@
       "side": 1,
       "message": "Just now catching up on this conversation! Lucas is totally right, we\u0027re looking at the common name of the issuer for the leaf certificates, and we chose this field because it was the most consistently used across the different MITM certificates.\n\nThere\u0027s no reason we can\u0027t look at more than one field however! We could do something like:\n\nreturn (organization exists \u0026\u0026 organization matches) || (common name exists \u0026\u0026 common name matches)",
       "parentUuid": "2fce9124_5a127e62",
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4496c05_917ac210",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-08T18:30:02Z",
+      "side": 1,
+      "message": "Yeah, that suggestion sgtm. Also I think you can then remove the TODO on line 408.",
+      "parentUuid": "dc498b9e_f32cb5e6",
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb233d1b_9b980168",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-08T18:30:02Z",
+      "side": 1,
+      "message": "nit: ssl_error_ -\u003e ssl_info",
+      "range": {
+        "startLine": 947,
+        "startChar": 40,
+        "endLine": 947,
+        "endChar": 50
+      },
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569b5e40_b0d946b1",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-08T18:30:02Z",
+      "side": 1,
+      "message": "nit: when referencing variable names in comments, format them like this: |error_code_| (same on line 939)",
+      "range": {
+        "startLine": 949,
+        "startChar": 8,
+        "endLine": 949,
+        "endChar": 19
+      },
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce3ef80_04926111",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-08T18:30:02Z",
+      "side": 1,
+      "message": "Instead of a static class method, could this be a helper function in the anonymous namespace above? i.e. instead of appearing in the header file as a private class method, you could just define it in the `namespace {}` section above.",
+      "range": {
+        "startLine": 950,
+        "startChar": 22,
+        "endLine": 950,
+        "endChar": 37
+      },
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375ec8ea_274c175d",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-08T18:30:02Z",
+      "side": 1,
+      "message": "As discussed on chat, it would be great to add a comment here with the commands you ran to generate these certs.",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce739f2_467ab44e",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-08T18:30:02Z",
+      "side": 1,
+      "message": "nit: ASSERT_FALSE(certs.empty())",
+      "range": {
+        "startLine": 388,
+        "startChar": 4,
+        "endLine": 388,
+        "endChar": 15
+      },
+      "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a750b4_4f9182fb",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-08T18:30:02Z",
+      "side": 1,
+      "message": "nice test coverage!",
+      "range": {
+        "startLine": 1161,
+        "startChar": 7,
+        "endLine": 1161,
+        "endChar": 28
+      },
       "revId": "94cbfc877b2d0f1bad73847d5a24c326ae2af03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
