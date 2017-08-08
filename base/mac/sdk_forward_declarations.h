@@ -221,6 +221,10 @@ BASE_EXPORT extern NSString* const CIDetectorTypeText;
 @property(class) BOOL allowsAutomaticWindowTabbing;
 @end
 
+@interface NSTextField (SierraSDK)
++ (instancetype)labelWithString:(NSString*)stringValue;
+@end
+
 #endif  // MAC_OS_X_VERSION_10_12
 
 // Once Chrome no longer supports OSX 10.12.0, everything within this

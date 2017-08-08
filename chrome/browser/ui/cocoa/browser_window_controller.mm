@@ -62,6 +62,7 @@
 #import "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h"
 #import "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_visibility_lock_controller.h"
 #include "chrome/browser/ui/cocoa/fullscreen_low_power_coordinator.h"
+#include "chrome/browser/ui/cocoa/fullscreen_placeholder_view.h"
 #import "chrome/browser/ui/cocoa/fullscreen_window.h"
 #import "chrome/browser/ui/cocoa/infobars/infobar_container_controller.h"
 #include "chrome/browser/ui/cocoa/l10n_util.h"
@@ -88,6 +89,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model_delegate.h"
 #include "chrome/browser/ui/translate/translate_bubble_model_impl.h"
 #include "chrome/browser/ui/window_sizer/window_sizer.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/command.h"
 #include "chrome/common/pref_names.h"
@@ -111,6 +113,7 @@
 #include "ui/display/screen.h"
 #import "ui/gfx/mac/coordinate_conversion.h"
 #include "ui/gfx/mac/scoped_cocoa_disable_screen_updates.h"
+#include "ui/gfx/scrollbar_size.h"
 
 using bookmarks::BookmarkModel;
 using bookmarks::BookmarkNode;
@@ -1999,6 +2002,46 @@ willAnimateFromState:(BookmarkBar::State)oldState
   // that the other monitors won't blank out.
   display::Screen* screen = display::Screen::GetScreen();
   BOOL hasMultipleMonitors = screen && screen->GetNumDisplays() > 1;
+
+  if (base::FeatureList::IsEnabled(features::kContentFullscreen)) {
+    // Getting the current's window view and its boundaries.
+    NSWindow* window = [self window];
+    WebContents* contents = browser_->tab_strip_model()->GetActiveWebContents();
+    NSView* view = contents->GetNativeView();
+    NSRect windowFrame = window.frame;
+    NSRect viewFrame = [view convertRect:view.bounds toView:nil];
+
+    // Calcuting the new coordinates to move the origin from the lower-left
+    // corner to the upper-left corner of the view and cropping out the
+    // scrollbar.
+    int headerHeight = windowFrame.size.height - viewFrame.size.height;
+    if ([self isDownloadShelfVisible]) {
+      // The download shelf is part of the windowFrame
+      headerHeight = headerHeight - [downloadShelfController_ height];
+    }
+    viewFrame.origin.y = viewFrame.origin.y + headerHeight;
+    if ([self isDownloadShelfVisible]) {
+      viewFrame.origin.y =
+          viewFrame.origin.y - [downloadShelfController_ height];
+    }
+    int scrollbar_width = gfx::scrollbar_size();
+    viewFrame.size.width = viewFrame.size.width - scrollbar_width;
+
+    // Taking a screenshot of the view and creating the custom view to display
+    CGImageRef windowScreenshot = (CGImageRef)[(id)CGWindowListCreateImage(
+        CGRectZero, kCGWindowListOptionIncludingWindow, [window windowNumber],
+        kCGWindowImageBoundsIgnoreFraming) autorelease];
+    CGImageRef viewScreenshot = (CGImageRef)[(id)CGImageCreateWithImageInRect(
+        windowScreenshot, viewFrame) autorelease];
+    FullscreenPlaceholderView* screenshotView =
+        [[[FullscreenPlaceholderView alloc]
+            initWithFrame:[[self tabContentArea] bounds]
+                    image:viewScreenshot] autorelease];
+    screenshotView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+
+    [[self tabContentArea] addSubview:screenshotView];
+  }
+
   if (base::mac::IsAtLeastOS10_10() &&
       !(hasMultipleMonitors && ![NSScreen screensHaveSeparateSpaces])) {
     [self enterAppKitFullscreen];
