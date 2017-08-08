@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "4b53304d_ce2f9de7",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-08T14:33:11Z",
+      "side": 1,
+      "message": "Yeah, if this is just an UMA metric we can update that later :)",
+      "parentUuid": "736be9e9_54608452",
+      "range": {
+        "startLine": 70,
+        "startChar": 29,
+        "endLine": 70,
+        "endChar": 46
+      },
+      "revId": "2f49a235aaa043cebf257f914ba888252e3fe8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2638fabd_424a712f",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
         "patchSetId": 14

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53c3bc79_6da31bea",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-08T14:33:11Z",
+      "side": 1,
+      "message": "\"is a bound service that shares the Finch seed with all the WebViews on the system\"",
+      "range": {
+        "startLine": 50,
+        "startChar": 36,
+        "endLine": 50,
+        "endChar": 66
+      },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c56a2f_f7a028db",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-08T14:33:11Z",
+      "side": 1,
+      "message": "Apologies for being a bit strict - if you have time, could you please add comments for all the class variables here explaining what they are used for?",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 54
+      },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6519425a_9b167be6",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-08T14:33:11Z",
+      "side": 1,
+      "message": "(correct me if I\u0027m wrong) there is a bug here:\nin the case where we fetch a seed through the job scheduler, and the seed expires before any WebView app tries to fetch the seed again we will never again schedule a seed-fetching job:\n\n1. [no seed], call handleSeedRequest -\u003e sIsJobRunning \u003d true, scheduleSeedFetchJob().\n2. seed fetching service fetches the seed\n3. the seed expires\n4. call handleSeedRequest -\u003e isSeedExpired() \u003d\u003d true, and sIsJobRunning \u003d true -\u003e scheduleSeedFetchJob() is never called.\n\n\nEither way, could you please add a TODO for adding tests for this logic? (any kind of logic involving multi-threading should be tested as thoroughly as possible).",
+      "range": {
+        "startLine": 103,
+        "startChar": 21,
+        "endLine": 103,
+        "endChar": 34
+      },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a418a42c_e95afad8",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-08T14:33:11Z",
+      "side": 1,
+      "message": "I would prefer having this method, and the SeedDataReceiver, in a separate class since all of this code is run in the app process (rather than in the WebView process), but I guess that\u0027s a matter of taste, and isn\u0027t really needed in the prototype.",
+      "range": {
+        "startLine": 197,
+        "startChar": 23,
+        "endLine": 197,
+        "endChar": 46
+      },
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
