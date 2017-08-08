@@ -194,6 +194,7 @@
 #include "core/loader/FrameLoader.h"
 #include "core/loader/NavigationScheduler.h"
 #include "core/loader/PrerendererClient.h"
+#include "core/loader/TextResourceDecoderBuilder.h"
 #include "core/loader/appcache/ApplicationCacheHost.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/EventWithHitTestResults.h"
@@ -1433,7 +1434,7 @@ String Document::SuggestedMIMEType() const {
     return "text/html";
 
   if (DocumentLoader* document_loader = Loader())
-    return document_loader->ResponseMIMEType();
+    return document_loader->MimeType();
   return String();
 }
 
@@ -2921,6 +2922,14 @@ void Document::CancelParsing() {
   SetParsingState(kFinishedParsing);
   SetReadyState(kComplete);
   SuppressLoadEvent();
+}
+
+void Document::OpenForNavigation(ParserSynchronizationPolicy parser_sync_policy,
+                                 const AtomicString& mime_type,
+                                 const AtomicString& encoding) {
+  ImplicitOpen(parser_sync_policy);
+  if (parser_->NeedsDecoder())
+    parser_->SetDecoder(BuildTextResourceDecoderFor(this, mime_type, encoding));
 }
 
 DocumentParser* Document::ImplicitOpen(
