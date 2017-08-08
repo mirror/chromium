@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5e62f761_ea4468f9",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T04:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cdbf582_90eaf56f",
+      "range": {
+        "startLine": 261,
+        "startChar": 13,
+        "endLine": 261,
+        "endChar": 17
+      },
+      "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc482bf4_40bc540e",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "fc76d9c2_58041ede",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T04:53:55Z",
+      "side": 1,
+      "message": "Good idea. Done.\n\nA little strange that the ctor passes the dispatcher and the dtor calls a getter, but still seems cleaner.",
+      "parentUuid": "cc482bf4_40bc540e",
+      "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25fca02a_b5dd444f",
         "filename": "content/child/service_worker/service_worker_provider_context.h",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-07T07:22:33Z",
       "side": 1,
       "message": "Could |thread_safe_sender_| be removed since it seems to be used only for calling ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance()?",
+      "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a85106d_3b413573",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T04:53:55Z",
+      "side": 1,
+      "message": "I like it. Done.",
+      "parentUuid": "25fca02a_b5dd444f",
       "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -94,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "19bf752a_73b506fe",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T04:53:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a7f9549c_19381039",
+      "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e959b7fc_519d4a91",
         "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 4
@@ -111,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "79fe2766_5f6b1f00",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T04:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e959b7fc_519d4a91",
+      "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd77037f_a05d7653",
         "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 4
@@ -122,6 +218,24 @@
       "writtenOn": "2017-08-07T07:22:33Z",
       "side": 1,
       "message": "IIRC, you can use just nullptr as a null request.",
+      "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662dbe7f_67803c9b",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T04:53:55Z",
+      "side": 1,
+      "message": "Ah I see. But I slightly prefer writing out the type: it documents what the nullptr is being passed for.",
+      "parentUuid": "cd77037f_a05d7653",
       "revId": "aab1216ef4d43f9810416213a0135036583a8ffe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
