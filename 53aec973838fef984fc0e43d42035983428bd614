@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c227a572_6d5fe2d6",
+        "filename": "ash/shell/app_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-08T17:29:53Z",
+      "side": 1,
+      "message": "Not any more. Will delete.",
+      "parentUuid": "57839498_84dbc373",
+      "revId": "53aec973838fef984fc0e43d42035983428bd614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45bea03a_218e5fef",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-07T18:14:39Z",
       "side": 1,
       "message": "Sorry for the drive-by. You should only need to check the is_fullscreen_app_list_enabled switch.",
+      "revId": "53aec973838fef984fc0e43d42035983428bd614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9af9ce_0f7d2f45",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-08T17:29:53Z",
+      "side": 1,
+      "message": "There is a chance when AppListView::OnWallpaperColorsChanged called from AppListViewDelegate and the app_list_background_shield_ is not init.",
+      "parentUuid": "45bea03a_218e5fef",
       "revId": "53aec973838fef984fc0e43d42035983428bd614",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
