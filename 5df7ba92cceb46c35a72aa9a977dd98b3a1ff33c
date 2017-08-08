@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "42d1ce54_39c2ae13",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-08T00:18:39Z",
+      "side": 1,
+      "message": "Unfortunately we can\u0027t do this because archive.final_archived_url could be left empty which will then make url empty.",
+      "parentUuid": "07ffdfa4_a5156c69",
+      "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e322d17b_8e5a23c9",
         "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96724096_f5e46d53",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-08T00:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e322d17b_8e5a23c9",
+      "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "77492ee8_38fb27b8",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-08T00:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75e6e447_9b2a4a23",
+      "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d572bc6_515c3339",
         "filename": "components/offline_pages/core/prefetch/import_archive_task.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-07T22:06:02Z",
       "side": 1,
       "message": "This has a different model than most classes, only handling import of one file at a time (i.e. \"LIMIT 1\", rather than handling all the files in a given state.\n\nCan you help me understand why this is?",
+      "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820ea481_3c9fb840",
+        "filename": "components/offline_pages/core/prefetch/import_archive_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-08T00:18:39Z",
+      "side": 1,
+      "message": "With more thought, I changed it to process all items in DOWNLOADED state.",
+      "parentUuid": "6d572bc6_515c3339",
       "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8e7e778d_b68f18fc",
+        "filename": "components/offline_pages/core/prefetch/import_archive_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-08T00:18:39Z",
+      "side": 1,
+      "message": "Not longer needed.",
+      "parentUuid": "dc51e454_e7548a37",
+      "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab09ce2b_c87b61fe",
         "filename": "components/offline_pages/core/prefetch/import_archive_task.h",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-07T22:06:02Z",
       "side": 1,
       "message": "I don\u0027t see this class being used anywhere.  If it\u0027s still TODO to integrate, consider moving this class into a future patch to reduce reviewers load by making this patch smaller.  Or maybe I\u0027m just missing it?",
+      "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb39c4c1_a6b468b2",
+        "filename": "components/offline_pages/core/prefetch/import_archive_task.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-08T00:18:39Z",
+      "side": 1,
+      "message": "Added one in PrefetchDispatcherImpl::QueueActionTasks.",
+      "parentUuid": "ab09ce2b_c87b61fe",
       "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "09f5214e_e0a2a8d4",
+        "filename": "components/offline_pages/core/prefetch/import_archive_task_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-08T00:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc3fb76f_3f0d785b",
+      "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d247e2b5_629ac645",
         "filename": "components/offline_pages/core/prefetch/import_completed_task_unittest.cc",
         "patchSetId": 5
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "e40a7003_5ff86650",
+        "filename": "components/offline_pages/core/prefetch/import_completed_task_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-08T00:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d247e2b5_629ac645",
+      "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e123d0d5_243e42a2",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 5
@@ -149,6 +293,24 @@
       "writtenOn": "2017-08-07T22:06:02Z",
       "side": 1,
       "message": "Does this provide enough information to the user of chrome://offline-internals?",
+      "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6456b9_4d652c44",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-08T00:18:39Z",
+      "side": 1,
+      "message": "|download_result| also contains file_path and file_size when success is true. Exposing file_path seems not to be that useful. So I added file_size.",
+      "parentUuid": "e123d0d5_243e42a2",
       "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "a0a84c6f_d0bc4086",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-08T00:18:39Z",
+      "side": 1,
+      "message": "The Android file size limit is 4GB. Even considering cross-platform, the file over 4GB is not likely. But to be safe, I changed this to fail the download if the size is that big.",
+      "parentUuid": "63a1b435_100a5b73",
+      "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ce6cfc1_789f259a",
         "filename": "components/offline_pages/core/prefetch/prefetch_importer.h",
         "patchSetId": 5
@@ -183,6 +363,24 @@
       "writtenOn": "2017-08-07T22:06:02Z",
       "side": 1,
       "message": "What is the purpose of implementing this in the base class?",
+      "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879f2138_684316eb",
+        "filename": "components/offline_pages/core/prefetch/prefetch_importer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-08T00:18:39Z",
+      "side": 1,
+      "message": "The derived class can call this instead of exposing dispatcher_ and talking to it.",
+      "parentUuid": "0ce6cfc1_789f259a",
       "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "a56e6993_f8df55b7",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-08T00:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "debe28f6_3eb884e3",
+      "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3bd64c4_4cf9930e",
         "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
         "patchSetId": 5
@@ -217,6 +433,24 @@
       "writtenOn": "2017-08-07T22:06:02Z",
       "side": 1,
       "message": "nit: Maybe mention that if this default changes, the default in the SQL table should change as well.",
+      "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80844ad1_63469abe",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-08T00:18:39Z",
+      "side": 1,
+      "message": "I don\u0027t think it is worth the comment since almost all other fields have the implicit default values which we do not comment.",
+      "parentUuid": "f3bd64c4_4cf9930e",
       "revId": "5df7ba92cceb46c35a72aa9a977dd98b3a1ff33c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
