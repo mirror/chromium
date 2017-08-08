@@ -49,6 +49,8 @@ const ProcessId kNullProcessId = 0;
 // base::StringPrintf("PID is %" CrPRIdPid ".\n", pid);
 #if defined(OS_WIN)
 #define CrPRIdPid "ld"
+#elif defined(OS_FUCHSIA)
+#define CrPRIdPid "lu"
 #else
 #define CrPRIdPid "d"
 #endif
