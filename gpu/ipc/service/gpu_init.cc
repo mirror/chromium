@@ -89,6 +89,11 @@ void GetGpuInfoFromCommandLine(gpu::GPUInfo& gpu_info,
 void CollectGraphicsInfo(gpu::GPUInfo& gpu_info) {
   TRACE_EVENT0("gpu,startup", "Collect Graphics Info");
 
+#if defined(OS_FUCHSIA)
+  // KM: Punt.
+  NOTIMPLEMENTED();
+  return;
+#else
   gpu::CollectInfoResult result = gpu::CollectContextGraphicsInfo(&gpu_info);
   switch (result) {
     case gpu::kCollectInfoFatalFailure:
@@ -114,6 +119,7 @@ void CollectGraphicsInfo(gpu::GPUInfo& gpu_info) {
     gpu_info.hdr = true;
   }
 #endif  // defined(OS_WIN)
+#endif  // defined(OS_FUCHSIA)
 }
 #endif  // defined(OS_MACOSX)
 

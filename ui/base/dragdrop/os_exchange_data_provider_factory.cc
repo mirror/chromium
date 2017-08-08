@@ -48,6 +48,9 @@ OSExchangeDataProviderFactory::CreateProvider() {
   return ui::BuildOSExchangeDataProviderMac();
 #elif defined(OS_WIN)
   return base::MakeUnique<OSExchangeDataProviderWin>();
+#elif defined(OS_FUCHSIA)
+  NOTIMPLEMENTED();
+  return nullptr;
 #else
 #error "Unknown operating system"
 #endif

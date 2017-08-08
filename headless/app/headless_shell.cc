@@ -601,8 +601,12 @@ int HeadlessShellMain(int argc, const char** argv) {
 #endif  // defined(OS_WIN)
   HeadlessShell shell;
 
-  const base::CommandLine& command_line(
-      *base::CommandLine::ForCurrentProcess());
+#if defined(OS_FUCHSIA)
+  // TODO(fuchsia): Remove this when GPU accelerated compositing is ready.
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(::switches::kDisableGpu);
+#endif
+
+  const base::CommandLine& command_line(*base::CommandLine::ForCurrentProcess());
   if (!ValidateCommandLine(command_line))
     return EXIT_FAILURE;
 
