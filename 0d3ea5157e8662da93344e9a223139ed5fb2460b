@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cf7faa2e_86fb8084",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-08T22:22:42Z",
+      "side": 1,
+      "message": "As per in-person chat, added WritePacketToSocketImpl() to avoid the double std::move in the WritePacket() case.",
+      "parentUuid": "3c4b31c0_dec04368",
+      "range": {
+        "startLine": 82,
+        "startChar": 58,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "0d3ea5157e8662da93344e9a223139ed5fb2460b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c51e916f_c5d6a9df",
         "filename": "net/quic/chromium/quic_chromium_packet_writer.h",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "0d3ea5157e8662da93344e9a223139ed5fb2460b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bff25a3_2bffd5db",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-08T22:22:42Z",
+      "side": 1,
+      "message": "discussed in person.",
+      "parentUuid": "66481885_1d207611",
+      "range": {
+        "startLine": 90,
+        "startChar": 5,
+        "endLine": 90,
+        "endChar": 11
+      },
+      "revId": "0d3ea5157e8662da93344e9a223139ed5fb2460b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
