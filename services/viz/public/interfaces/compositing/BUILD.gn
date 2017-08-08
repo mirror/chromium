@@ -8,10 +8,12 @@ mojom("compositing") {
   sources = [
     "compositor_frame_sink.mojom",
     "resource_settings.mojom",
+    "returned_resource.mojom",
   ]
 
   public_deps = [
     "//cc/ipc:interfaces",
+    "//gpu/ipc/common:interfaces",
     "//ui/gfx/geometry/mojo",
     "//ui/gfx/mojo",
   ]
