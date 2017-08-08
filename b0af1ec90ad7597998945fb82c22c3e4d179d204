@@ -336,6 +336,24 @@
       "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b74343c9_af3b6a9c",
+        "filename": "third_party/WebKit/Source/core/css/CSSPropertiesRanking.json5",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-08T00:19:24Z",
+      "side": 1,
+      "message": "okay, I think this should be a script to update the list but we dont have to run it everytime we compile if we want a more stable compilation for benchmark on other features. It should run when we want to run it.",
+      "parentUuid": "27687338_d009afae",
+      "revId": "b0af1ec90ad7597998945fb82c22c3e4d179d204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
