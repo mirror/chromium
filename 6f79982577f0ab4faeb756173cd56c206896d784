@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "eaa21fad_5f4bf659",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T03:50:57Z",
+      "side": 1,
+      "message": "Can we fix the unit test harness?",
+      "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c3c1c1_d838c479",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T03:50:57Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this is needed; can it just be removed?",
+      "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8360b1b_d8e3f89d",
         "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.cpp",
         "patchSetId": 24
@@ -41,6 +75,52 @@
         "startChar": 0,
         "endLine": 54,
         "endChar": 1
+      },
+      "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6154b3a_93e7bea7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 2255,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T03:50:57Z",
+      "side": 1,
+      "message": "Maybe just use InMilliseconds()? Then no cast is needed.",
+      "range": {
+        "startLine": 2255,
+        "startChar": 43,
+        "endLine": 2255,
+        "endChar": 58
+      },
+      "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a9b4a0_fde3c537",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T03:50:57Z",
+      "side": 1,
+      "message": "No std::string here please. Looking at how it\u0027s used, I think you\u0027ll have to use const char*. That being said, it seems like the right long-term plan is for Platform to expose a service_manager::InterfaceProvider as well, right? +rockot, is there any work in progress for that?",
+      "range": {
+        "startLine": 623,
+        "startChar": 10,
+        "endLine": 623,
+        "endChar": 21
       },
       "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
