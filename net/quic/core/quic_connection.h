@@ -960,6 +960,9 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   AckMode ack_mode_;
   // The max delay in fraction of min_rtt to use when sending decimated acks.
   float ack_decimation_delay_;
+  // When true, removes ack decimation's max number of packets(10) before
+  // sending an ack.
+  bool unlimited_ack_decimation_;
 
   // Indicates the retransmit alarm is going to be set by the
   // ScopedRetransmitAlarmDelayer
