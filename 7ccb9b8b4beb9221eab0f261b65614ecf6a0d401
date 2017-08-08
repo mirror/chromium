@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58475f6e_fbd89a0a",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-08-08T22:59:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5375a8c7_db20d482",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "7ccb9b8b4beb9221eab0f261b65614ecf6a0d401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10cb1fbd_f6d3da5a",
         "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "de8c318f_bbf534fd",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-08-08T22:59:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10cb1fbd_f6d3da5a",
+      "range": {
+        "startLine": 30,
+        "startChar": 12,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "7ccb9b8b4beb9221eab0f261b65614ecf6a0d401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "968ff420_fd72b9ba",
         "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "7ccb9b8b4beb9221eab0f261b65614ecf6a0d401",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecaebd8c_d99af5e6",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-08-08T22:59:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968ff420_fd72b9ba",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 15
+      },
+      "revId": "7ccb9b8b4beb9221eab0f261b65614ecf6a0d401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
