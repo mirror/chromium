@@ -135,6 +135,30 @@
     },
     {
       "key": {
+        "uuid": "32c979e9_2e9cddbf",
+        "filename": "chrome/browser/media/android/cdm/media_drm_license_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-08T20:53:44Z",
+      "side": 1,
+      "message": "I see. Then feel free to keep it without the typedef. But please document it here.\n\nIn the future we might want to introduce a callback type and consolidate all filter related code to use the new type, which IMHO will make the coder easier to read.",
+      "parentUuid": "b173e7c7_0e82e456",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 13
+      },
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3aad5c09_337d469a",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 3
