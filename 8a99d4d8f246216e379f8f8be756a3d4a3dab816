@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4556d19f_9e996efe",
+        "filename": "ui/events/event_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-08T20:50:13Z",
+      "side": 1,
+      "message": "This could use a bit more of a description. Maybe have it state that this allows for debugging of platform events received, by serializing them. And that it is for writing tests?",
+      "range": {
+        "startLine": 39,
+        "startChar": 34,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "8a99d4d8f246216e379f8f8be756a3d4a3dab816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
