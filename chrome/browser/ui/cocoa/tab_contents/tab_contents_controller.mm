@@ -16,6 +16,7 @@
 #import "chrome/browser/themes/theme_service.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
 #import "chrome/browser/ui/cocoa/web_textfield_touch_bar_controller.h"
+#include "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/grit/theme_resources.h"
 #include "content/public/browser/render_view_host.h"
@@ -254,6 +255,19 @@ class FullscreenObserver : public WebContentsObserver {
   } else {
     isEmbeddingFullscreenWidget_ = NO;
     contentsNativeView = contents_->GetNativeView();
+  }
+
+  // In Improved Content Fullscreen, we don't want to retrieve
+  // WebContentsViewCocoa to the main window when it's being displayed in the
+  // SeparateFullscreenWindow, so use a placeholder view instead.
+  if (FullscreenWithinTabHelper::IsContentFullscreenEnabled() &&
+      FullscreenWithinTabHelper::FromWebContents(contents_) &&
+      FullscreenWithinTabHelper::FromWebContents(contents_)
+          ->is_fullscreen_or_pending()) {
+    // TODO(erickzul): Add the place holder view to be displayed.
+    NSView* placeholderView =
+        [[NSView alloc] initWithFrame:[self frameForContentsViewIn:superview]];
+    contentsNativeView = placeholderView;
   }
 
   if ([self shouldResizeContentView])
