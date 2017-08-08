@@ -87,7 +87,7 @@ media::mojom::MediaEngagementScoreDetailsPtr
 MediaEngagementScore::GetScoreDetails() const {
   return media::mojom::MediaEngagementScoreDetails::New(
       origin_, GetTotalScore(), visits(), media_playbacks(),
-      last_media_playback_time().ToJsTime());
+      last_media_playback_time().ToJsTime(), is_high_);
 }
 
 MediaEngagementScore::~MediaEngagementScore() = default;
