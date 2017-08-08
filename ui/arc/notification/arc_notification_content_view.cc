@@ -61,7 +61,7 @@ class ArcNotificationContentView::EventForwarder : public ui::EventHandler {
     // TODO(yoshiki): Use a better tigger (eg. focusing EditText on
     // notification) than clicking (crbug.com/697379).
     if (event->type() == ui::ET_MOUSE_PRESSED)
-      owner_->ActivateToast();
+      owner_->Activate();
 
     views::Widget* widget = owner_->GetWidget();
     if (!widget)
@@ -336,7 +336,7 @@ void ArcNotificationContentView::SetSurface(ArcNotificationSurface* surface) {
     DCHECK(surface_->GetWindow());
     DCHECK(surface_->GetContentWindow());
     surface_->GetContentWindow()->AddObserver(this);
-    surface_->GetWindow()->AddPreTargetHandler(event_forwarder_.get());
+    surface_->GetWindow()->PrependPreTargetHandler(event_forwarder_.get());
 
     if (GetWidget()) {
       // Force to detach the surface.
@@ -555,12 +555,20 @@ void ArcNotificationContentView::OnBlur() {
   static_cast<ArcNotificationView*>(parent())->OnContentBlured();
 }
 
-void ArcNotificationContentView::ActivateToast() {
-  if (message_center::ToastContentsView::kViewClassName ==
-      parent()->parent()->GetClassName()) {
-    static_cast<message_center::ToastContentsView*>(parent()->parent())
-        ->ActivateToast();
-  }
+void ArcNotificationContentView::Activate() {
+  DCHECK(parent());
+  DCHECK(parent()->parent());
+  LOG(ERROR) << parent()->parent()->GetClassName();
+
+  LOG(ERROR) << "ACTI)!00";
+  GetWidget()->widget_delegate()->set_can_activate(true);
+  LOG(ERROR) << "ACTI)!01";
+  GetWidget()->Activate();
+  LOG(ERROR) << "ACTI)!02";
+  // surface_->GetContentWindow()->Focus();
+  LOG(ERROR) << "ACTI)!03";
+  surface_->FocusOnSurfaceWindow();
+  LOG(ERROR) << "ACTI)!04";
 }
 
 views::FocusTraversable* ArcNotificationContentView::GetFocusTraversable() {
