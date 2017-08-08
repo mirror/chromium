@@ -347,6 +347,13 @@ NGInlineNode::NGInlineNode(LayoutNGBlockFlow* block)
     block->ResetNGInlineNodeData();
 }
 
+const Vector<NGInlineItem>& NGInlineNode::Items(bool is_first_line) const {
+  const NGInlineNodeData& data = Data();
+  if (!is_first_line || !data.first_line_items_)
+    return data.items_;
+  return *data.first_line_items_;
+}
+
 NGInlineItemRange NGInlineNode::Items(unsigned start, unsigned end) {
   return NGInlineItemRange(&MutableData().items_, start, end);
 }
@@ -444,13 +451,21 @@ void NGInlineNode::SegmentText() {
 
 void NGInlineNode::ShapeText() {
   // TODO(eae): Add support for shaping latin-1 text?
-  MutableData().text_content_.Ensure16Bit();
-  const String& text_content = Data().text_content_;
+  NGInlineNodeData& data = MutableData();
+  data.text_content_.Ensure16Bit();
+  const String& text_content = data.text_content_;
+  Vector<NGInlineItem>& items = data.items_;
+  ShapeText(text_content, &items);
 
+  ShapeTextFirstLineIfNeeded();
+}
+
+void NGInlineNode::ShapeText(const String& text_content,
+                             Vector<NGInlineItem>* items) {
   // Shape each item with the full context of the entire node.
   HarfBuzzShaper shaper(text_content.Characters16(), text_content.length());
   ShapeResultSpacing<String> spacing(text_content);
-  for (auto& item : MutableData().items_) {
+  for (auto& item : *items) {
     if (item.Type() != NGInlineItem::kText)
       continue;
 
@@ -462,6 +477,40 @@ void NGInlineNode::ShapeText() {
       shape_result->ApplySpacing(spacing, item.Direction());
 
     item.shape_result_ = std::move(shape_result);
+  }
+}
+
+// Create Vector<NGInlineItem> with :first-line rules applied if needed.
+void NGInlineNode::ShapeTextFirstLineIfNeeded() {
+  // First check if the document has any :first-line rules.
+  NGInlineNodeData& data = MutableData();
+  DCHECK(!data.first_line_items_);
+  LayoutObject* layout_object = GetLayoutObject();
+  if (!layout_object->GetDocument().GetStyleEngine().UsesFirstLineRules())
+    return;
+
+  // Check if :first-line rules make any differences in the style.
+  const ComputedStyle* block_style = layout_object->Style();
+  const ComputedStyle* first_line_style = layout_object->FirstLineStyle();
+  if (block_style == first_line_style)
+    return;
+
+  std::unique_ptr<Vector<NGInlineItem>>& first_line_items =
+      data.first_line_items_;
+  first_line_items = WTF::MakeUnique<Vector<NGInlineItem>>();
+  first_line_items->AppendVector(data.items_);
+  for (auto& item : *first_line_items) {
+    if (item.style_) {
+      DCHECK(item.layout_object_);
+      item.style_ = item.layout_object_->FirstLineStyle();
+    }
+  }
+
+  // Re-shape if the font is different.
+  const Font& font = block_style->GetFont();
+  const Font& first_line_font = first_line_style->GetFont();
+  if (&font != &first_line_font && font != first_line_font) {
+    ShapeText(data.text_content_, first_line_items.get());
   }
 }
 
@@ -622,6 +671,7 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
         baseline - line_metrics.ascent, baseline + line_metrics.descent,
         line_top, baseline + max_with_leading.descent);
 
+    line_info.SetFirstLine(false);
     bidi_runs.DeleteRuns();
     positions_for_bidi_runs.clear();
     positions.clear();

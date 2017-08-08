@@ -33,6 +33,8 @@ struct CORE_EXPORT NGInlineNodeData {
   String text_content_;
   Vector<NGInlineItem> items_;
 
+  std::unique_ptr<Vector<NGInlineItem>> first_line_items_;
+
   // The DOM to text content offset mapping of this inline node.
   std::unique_ptr<NGOffsetMappingResult> offset_mapping_;
 
