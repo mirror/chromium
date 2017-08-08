@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beb12ca2_71ec1839",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1862,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-08T20:12:03Z",
+      "side": 1,
+      "message": "How about adding |NavigationItemImpl* NavigationManagerImpl::GetPendingItem() API|? This code will stay even if the nav experiment is unsuccessful.",
+      "range": {
+        "startLine": 1862,
+        "startChar": 27,
+        "endLine": 1862,
+        "endChar": 38
+      },
+      "revId": "7f8ab92fd07c0a86dce6ffadc1e3e38d3a7da400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b986cb2_adeea0d0",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 5195,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-08T20:12:03Z",
+      "side": 1,
+      "message": "Extra semicoloc",
+      "range": {
+        "startLine": 5195,
+        "startChar": 3,
+        "endLine": 5195,
+        "endChar": 0
+      },
+      "revId": "7f8ab92fd07c0a86dce6ffadc1e3e38d3a7da400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
