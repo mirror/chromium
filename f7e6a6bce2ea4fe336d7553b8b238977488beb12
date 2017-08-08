@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "5f4a8bdf_42a72acc",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-08T19:51:04Z",
+      "side": 1,
+      "message": "Daisy is a far better javascript person than I ever hope to be, so I\u0027m happy to defer to her judgement here, but I would like to say I disagree with this.  To me this seems like a generic cancel hook which we use for logging the cancel event; I don\u0027t know that specifying *what* we do in the cancel hook at this level is a good idea.  (I\u0027d suggest changing the comment instead).",
+      "parentUuid": "f0970fa1_d1a9c409",
+      "revId": "f7e6a6bce2ea4fe336d7553b8b238977488beb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0d4b4d_dfb99181",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-08T19:51:04Z",
+      "side": 1,
+      "message": "I know it\u0027s not new to this change, exactly, butI \u0027m not entirely clear whether CHECK here is appropriate.  I\u0027m always a little leery when thi ngs-going-wrong-in-javascript can crash the browser.\n\nMaybe consider changing this to\n\nbool DictToPrinter(const ... printer_dict, chromeos::Printer* printer);\n\nand doing something less drastic than crashing the browser if the conversion fails?  What do you think?",
+      "revId": "f7e6a6bce2ea4fe336d7553b8b238977488beb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d920f93_5bade495",
         "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
         "patchSetId": 5
@@ -30,6 +65,29 @@
       "writtenOn": "2017-08-08T16:31:16Z",
       "side": 1,
       "message": "assertGT(manufacturer.length, 0)?",
+      "revId": "f7e6a6bce2ea4fe336d7553b8b238977488beb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79cd592c_481a1910",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-08T19:51:04Z",
+      "side": 1,
+      "message": "cancellation",
+      "range": {
+        "startLine": 192,
+        "startChar": 22,
+        "endLine": 192,
+        "endChar": 33
+      },
       "revId": "f7e6a6bce2ea4fe336d7553b8b238977488beb12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
