@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5375a8c7_db20d482",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-08T17:49:06Z",
+      "side": 1,
+      "message": "Line break after namespace {",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "7ccb9b8b4beb9221eab0f261b65614ecf6a0d401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10cb1fbd_f6d3da5a",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-08T17:49:06Z",
+      "side": 1,
+      "message": "Please file a bug to further investigate this, and add a TODO here (linking to that bug).",
+      "range": {
+        "startLine": 30,
+        "startChar": 12,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "7ccb9b8b4beb9221eab0f261b65614ecf6a0d401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968ff420_fd72b9ba",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-08T17:49:06Z",
+      "side": 1,
+      "message": "Line break before } namespace",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 15
+      },
+      "revId": "7ccb9b8b4beb9221eab0f261b65614ecf6a0d401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
