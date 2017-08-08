@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b112d8bd_6209d0c9",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-08T20:25:51Z",
+      "side": 1,
+      "message": "Thanks Justin! I don\u0027t have strong opinion on this one. This function name gives me an impression that we will do some cleanup work or revert something back in C++ side, but actually we only log the cancel event in the function. That\u0027s why I thought it might be better to rename it at the first place. But your suggestion also makes sense to me.",
+      "parentUuid": "5f4a8bdf_42a72acc",
+      "revId": "f7e6a6bce2ea4fe336d7553b8b238977488beb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc0d4b4d_dfb99181",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 5
