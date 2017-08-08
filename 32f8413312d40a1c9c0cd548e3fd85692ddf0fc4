@@ -22,6 +22,30 @@
       "revId": "32f8413312d40a1c9c0cd548e3fd85692ddf0fc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0730dbff_5493bfce",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-08T23:26:36Z",
+      "side": 1,
+      "message": "After std::move(packet_), packet_ will be nullptr.   In SetPacket() a new buffer will be assigned to packet_ if it is nullptr, i.e. if somehow WritePacket is called after a write error case.  That\u0027s not expected though, the expectation is that writer will be destroyed after a write error.   \n\nI\u0027ve added DCHECK(packet_ \u003d\u003d nullptr) to help clarify.",
+      "parentUuid": "9c2f64fd_77c6fce1",
+      "range": {
+        "startLine": 144,
+        "startChar": 51,
+        "endLine": 144,
+        "endChar": 58
+      },
+      "revId": "32f8413312d40a1c9c0cd548e3fd85692ddf0fc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
