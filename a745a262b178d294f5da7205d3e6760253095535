@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f43c7478_9a44401f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T18:29:38Z",
+      "side": 1,
+      "message": "Add comment as understanding this method is not trivial:\n\n// Wake up a worker per pending sequence, new |worker_capacity_| permitting.",
+      "revId": "a745a262b178d294f5da7205d3e6760253095535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907329f3_e056b924",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T18:29:38Z",
+      "side": 1,
+      "message": "Remove this. It\u0027s already called at the end of WakeUpOneWorkerAssertLockAcquired();",
+      "range": {
+        "startLine": 387,
+        "startChar": 2,
+        "endLine": 387,
+        "endChar": 33
+      },
+      "revId": "a745a262b178d294f5da7205d3e6760253095535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb6c601_aa7a033a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T18:29:38Z",
+      "side": 1,
+      "message": "Remove TODO.",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 391,
+        "endChar": 35
+      },
+      "revId": "a745a262b178d294f5da7205d3e6760253095535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9056bb90_45f775f1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T18:29:38Z",
+      "side": 1,
+      "message": "Remove empty line.",
+      "revId": "a745a262b178d294f5da7205d3e6760253095535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f047d778_3d2f87d3",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T18:29:38Z",
+      "side": 1,
+      "message": "To make short ScopedMayBlock instantiatiations cheaper, you could only acquire |outer-\u003elock_| when required:\n\nbool local_increased_worker_capacity_since_blocked;\n{\n  AutoSchedulerLock blocked_auto_lock(blocked_lock_);\n  DCHECK(!blocked_start_time_.is_null());\n  local_increased_worker_capacity_since_blocked \u003d\n      increased_worker_capacity_since_blocked_;\n  blocked_start_time_ \u003d TimeTicks();\n}\nif (local_increased_worker_capacity) {\n  AutoSchedulerLock pool_auto_lock(outer_-\u003elock_);\n  --outer_-\u003eworker_capacity_;\n}",
+      "revId": "a745a262b178d294f5da7205d3e6760253095535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d99dd3_0ec36a9f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T18:29:38Z",
+      "side": 1,
+      "message": "Update this comment if you change ThreadUnblocked().\n\nNote: the predecessor is also required for IncreaseWorkerCapacityIfNeeded().",
+      "range": {
+        "startLine": 731,
+        "startChar": 5,
+        "endLine": 733,
+        "endChar": 16
+      },
+      "revId": "a745a262b178d294f5da7205d3e6760253095535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473d5b34_394fac97",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T18:29:38Z",
+      "side": 1,
+      "message": "Nice check to add:\n\nDCHECK_LE(workers_.size(), worker_capacity_);",
+      "revId": "a745a262b178d294f5da7205d3e6760253095535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e42b72_d53ecf16",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T18:29:38Z",
+      "side": 1,
+      "message": "can get work from GetWork().\n\nA worker is always allowed to \"check for work\" by calling GetWork().",
+      "range": {
+        "startLine": 174,
+        "startChar": 30,
+        "endLine": 174,
+        "endChar": 62
+      },
+      "revId": "a745a262b178d294f5da7205d3e6760253095535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289a825e_e03c9dd7",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-08T18:29:38Z",
+      "side": 1,
+      "message": "You can probably keep the base TearDown(), and call task_tracker_.Flush() at the end of tests that use local variables to make sure that all tasks run before these variables go out of scope.",
+      "range": {
+        "startLine": 859,
+        "startChar": 2,
+        "endLine": 862,
+        "endChar": 29
+      },
+      "revId": "a745a262b178d294f5da7205d3e6760253095535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
