@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44889dda_36078d02",
+        "filename": "components/leveldb_proto/proto_database_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-08T14:59:46Z",
+      "side": 1,
+      "message": "The style guide says (see https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md):\n\n\u003e “Chromium” is the name of the project, not the product, and should never appear in code, variable names, API names etc. Use “Chrome” instead.\n\nI don\u0027t know whether this applies to file names or not. If it does, then I guess this name is in violation of the style guide and should instead be env_chrome.h. Not sure, though, so not blocking the CL on that.",
+      "range": {
+        "startLine": 27,
+        "startChar": 36,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "c13bf6f731b3cb2a20644d7e2a84f8ddb3c8618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
