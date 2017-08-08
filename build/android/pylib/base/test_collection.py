@@ -77,4 +77,4 @@ class TestCollection(object):
   def test_names(self):
     """Return a list of the names of the tests currently in the collection."""
     with self._lock:
-      return list(t.test for t in self._tests)
+      return list(self._tests)

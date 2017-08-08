@@ -209,6 +209,11 @@ def CheckOutputDirectory():
                       'has been set')
 
 
+def TestInfoCachePath():
+  """File path to store test information such as expected test runtimes."""
+  return os.path.join(GetOutDirectory(), 'test_info.json')
+
+
 # TODO(jbudorick): Convert existing callers to AdbWrapper.GetAdbPath() and
 # remove this.
 def GetAdbPath():

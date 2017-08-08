@@ -9,6 +9,7 @@ import os
 import re
 
 from pylib import constants
+from pylib import logging_ext
 from pylib.results.flakiness_dashboard import results_uploader
 
 
@@ -95,12 +96,14 @@ def LogFull(results, test_type, test_package, annotation=None,
     logging.critical('*' * 80)
     for line in results.GetLogs().splitlines():
       logging.critical(line)
-  logging.critical('*' * 80)
-  logging.critical('Summary')
-  logging.critical('*' * 80)
+  logging_func = (logging_ext.test_pass if results.DidRunPass()
+                  else logging_ext.test_fail)
+  logging_func('*' * 80)
+  logging_func('Summary')
+  logging_func('*' * 80)
   for line in results.GetGtestForm().splitlines():
-    logging.critical(line)
-  logging.critical('*' * 80)
+    logging_func(line)
+  logging_func('*' * 80)
 
   if os.environ.get('BUILDBOT_BUILDERNAME'):
     # It is possible to have multiple buildbot steps for the same
