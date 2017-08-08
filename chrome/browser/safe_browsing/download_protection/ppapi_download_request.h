@@ -1,0 +1,223 @@
+// Copyright (c) 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
+// Helper class which handles communication with the SafeBrowsing servers for
+// improved binary download protection.
+
+#ifndef CHROME_BROWSER_SAFE_BROWSING_DOWNLOAD_PROTECTION_PPAPI_DOWNLOAD_REQUEST_H_
+#define CHROME_BROWSER_SAFE_BROWSING_DOWNLOAD_PROTECTION_PPAPI_DOWNLOAD_REQUEST_H_
+
+#include <stddef.h>
+
+#include <memory>
+
+#include "base/bind.h"
+#include "base/callback_helpers.h"
+#include "base/command_line.h"
+#include "base/compiler_specific.h"
+#include "base/format_macros.h"
+#include "base/macros.h"
+#include "base/memory/ptr_util.h"
+#include "base/memory/weak_ptr.h"
+#include "base/metrics/field_trial.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/metrics/sparse_histogram.h"
+#include "base/scoped_observer.h"
+#include "base/sequenced_task_runner_helpers.h"
+#include "base/sha1.h"
+#include "base/stl_util.h"
+#include "base/strings/string_number_conversions.h"
+#include "base/strings/string_split.h"
+#include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
+#include "base/threading/sequenced_worker_pool.h"
+#include "base/time/time.h"
+#include "build/build_config.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/history/history_service_factory.h"
+#include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
+#include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/safe_browsing/download_protection/download_feedback_service.h"
+#include "chrome/browser/safe_browsing/download_protection/download_protection_util.h"
+#include "chrome/browser/safe_browsing/safe_browsing_service.h"
+#include "chrome/browser/sessions/session_tab_helper.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_list.h"
+#include "chrome/common/pref_names.h"
+#include "chrome/common/safe_browsing/archive_analyzer_results.h"
+#include "chrome/common/safe_browsing/download_protection_util.h"
+#include "chrome/common/safe_browsing/file_type_policies.h"
+#include "chrome/common/url_constants.h"
+#include "components/data_use_measurement/core/data_use_user_data.h"
+#include "components/google/core/browser/google_util.h"
+#include "components/prefs/pref_service.h"
+#include "components/safe_browsing/common/safe_browsing_prefs.h"
+#include "components/safe_browsing/common/safebrowsing_switches.h"
+#include "components/safe_browsing/common/utils.h"
+#include "components/safe_browsing/csd.pb.h"
+#include "content/public/browser/browser_thread.h"
+#include "content/public/browser/download_item.h"
+#include "content/public/browser/page_navigator.h"
+#include "google_apis/google_api_keys.h"
+#include "net/base/escape.h"
+#include "net/base/load_flags.h"
+#include "net/base/url_util.h"
+#include "net/cert/x509_cert_types.h"
+#include "net/cert/x509_certificate.h"
+#include "net/http/http_status_code.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
+#include "net/url_request/url_fetcher.h"
+#include "net/url_request/url_fetcher_delegate.h"
+#include "net/url_request/url_request_status.h"
+
+using content::BrowserThread;
+
+namespace safe_browsing {
+
+// A request for checking whether a PPAPI initiated download is safe.
+//
+// These are considered different from DownloadManager mediated downloads
+// because:
+//
+// * The download bytes are produced by the PPAPI plugin *after* the check
+//   returns due to architectural constraints.
+//
+// * Since the download bytes are produced by the PPAPI plugin, there's no
+//   reliable network request information to associate with the download.
+//
+// PPAPIDownloadRequest objects are owned by the DownloadProtectionService
+// indicated by |service|.
+class PPAPIDownloadRequest : public net::URLFetcherDelegate {
+ public:
+  // The outcome of the request. These values are used for UMA. New values
+  // should only be added at the end.
+  enum class RequestOutcome : int {
+    UNKNOWN,
+    REQUEST_DESTROYED,
+    UNSUPPORTED_FILE_TYPE,
+    TIMEDOUT,
+    WHITELIST_HIT,
+    REQUEST_MALFORMED,
+    FETCH_FAILED,
+    RESPONSE_MALFORMED,
+    SUCCEEDED
+  };
+
+  PPAPIDownloadRequest(
+      const GURL& requestor_url,
+      const GURL& initiating_frame_url,
+      content::WebContents* web_contents,
+      const base::FilePath& default_file_path,
+      const std::vector<base::FilePath::StringType>& alternate_extensions,
+      Profile* profile,
+      const CheckDownloadCallback& callback,
+      DownloadProtectionService* service,
+      scoped_refptr<SafeBrowsingDatabaseManager> database_manager);
+
+  ~PPAPIDownloadRequest() override;
+
+  // Start the process of checking the download request. The callback passed as
+  // the |callback| parameter to the constructor will be invoked with the result
+  // of the check at some point in the future.
+  //
+  // From the this point on, the code is arranged to follow the most common
+  // workflow.
+  //
+  // Note that |this| should be added to the list of pending requests in the
+  // associated DownloadProtectionService object *before* calling Start().
+  // Otherwise a synchronous Finish() call may result in leaking the
+  // PPAPIDownloadRequest object. This is enforced via a DCHECK in
+  // DownloadProtectionService.
+  void Start();
+
+  // Returns the URL that will be used for download requests.
+  static GURL GetDownloadRequestUrl();
+
+ private:
+  static const char kDownloadRequestUrl[];
+
+  friend class DownloadProtectionService;
+
+  // Whitelist checking needs to the done on the IO thread.
+  static void CheckWhitelistsOnIOThread(
+      const GURL& requestor_url,
+      scoped_refptr<SafeBrowsingDatabaseManager> database_manager,
+      base::WeakPtr<PPAPIDownloadRequest> download_request);
+
+  void WhitelistCheckComplete(bool was_on_whitelist);
+
+  void SendRequest();
+
+  // net::URLFetcherDelegate
+  void OnURLFetchComplete(const net::URLFetcher* source) override;
+
+  void OnRequestTimedOut();
+
+  void Finish(RequestOutcome reason, DownloadCheckResult response);
+
+  static DownloadCheckResult DownloadCheckResultFromClientDownloadResponse(
+      ClientDownloadResponse::Verdict verdict);
+
+  // Given a |default_file_path| and a list of |alternate_extensions|,
+  // constructs a FilePath with each possible extension and returns one that
+  // satisfies IsCheckedBinaryFile(). If none are supported, returns an
+  // empty FilePath.
+  static base::FilePath GetSupportedFilePath(
+      const base::FilePath& default_file_path,
+      const std::vector<base::FilePath::StringType>& alternate_extensions);
+
+  std::unique_ptr<net::URLFetcher> fetcher_;
+  std::string client_download_request_data_;
+
+  // URL of document that requested the PPAPI download.
+  const GURL requestor_url_;
+
+  // URL of the frame that hosts the PPAPI plugin.
+  const GURL initiating_frame_url_;
+
+  // URL of the tab that contains the initialting_frame.
+  const GURL initiating_main_frame_url_;
+
+  // Tab id that associated with the PPAPI plugin, computed by
+  // SessionTabHelper::IdForTab().
+  int tab_id_;
+
+  // If the user interacted with this PPAPI plugin to trigger the download.
+  bool has_user_gesture_;
+
+  // Default download path requested by the PPAPI plugin.
+  const base::FilePath default_file_path_;
+
+  // List of alternate extensions provided by the PPAPI plugin. Each extension
+  // must begin with a leading extension separator.
+  const std::vector<base::FilePath::StringType> alternate_extensions_;
+
+  // Callback to invoke with the result of the PPAPI download request check.
+  CheckDownloadCallback callback_;
+
+  DownloadProtectionService* service_;
+  const scoped_refptr<SafeBrowsingDatabaseManager> database_manager_;
+
+  // Time request was started.
+  const base::TimeTicks start_time_;
+
+  // A download path that is supported by SafeBrowsing. This is determined by
+  // invoking GetSupportedFilePath(). If non-empty,
+  // IsCheckedBinaryFile(supported_path_) is always true. This
+  // path is therefore used as the download target when sending the SafeBrowsing
+  // ping.
+  const base::FilePath supported_path_;
+
+  bool is_extended_reporting_;
+
+  base::WeakPtrFactory<PPAPIDownloadRequest> weakptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(PPAPIDownloadRequest);
+};
+
+}  // namespace safe_browsing
+
+#endif  // CHROME_BROWSER_SAFE_BROWSING_DOWNLOAD_PROTECTION_PPAPI_DOWNLOAD_REQUEST_H_
