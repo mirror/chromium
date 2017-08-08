@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a25c170_fd3a5999",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-08T20:27:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35bd0599_a4c2d11a",
+      "range": {
+        "startLine": 110,
+        "startChar": 49,
+        "endLine": 110,
+        "endChar": 50
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89b6f5d0_c2687c11",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "d7646eca145db69faed29e6f237d08822155fe73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab829036_be7a2302",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-08T20:27:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89b6f5d0_c2687c11",
+      "range": {
+        "startLine": 249,
+        "startChar": 57,
+        "endLine": 249,
+        "endChar": 58
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "22c4a4a9_02145a80",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-08T20:27:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88235ffb_2e82524f",
+      "range": {
+        "startLine": 252,
+        "startChar": 9,
+        "endLine": 252,
+        "endChar": 16
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b309ba36_12d5f505",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
         "patchSetId": 10
@@ -112,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "f5dac58a_c16bba86",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-08T20:27:41Z",
+      "side": 1,
+      "message": "Talked with Tim. This came from the old spec and we won\u0027t need that here.",
+      "parentUuid": "b309ba36_12d5f505",
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c8e40bc_19682696",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
         "patchSetId": 10
@@ -123,6 +213,30 @@
       "writtenOn": "2017-08-04T17:06:27Z",
       "side": 1,
       "message": "we also need wpt tests for each of these scenarios",
+      "range": {
+        "startLine": 422,
+        "startChar": 2,
+        "endLine": 422,
+        "endChar": 3
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a852526_033f9ddd",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-08T20:27:41Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "6c8e40bc_19682696",
       "range": {
         "startLine": 422,
         "startChar": 2,
@@ -158,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "f5622cf1_bac02eff",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-08T20:27:41Z",
+      "side": 1,
+      "message": "This function or class doesn\u0027t have knowledge of when it will be called. I think it\u0027s ok to delete this comment, because this assumption isn\u0027t a prerequisite for \"AddLongTaskTiming\" itself to execute correctly.",
+      "parentUuid": "fb2c8e46_6268c6c2",
+      "range": {
+        "startLine": 450,
+        "startChar": 5,
+        "endLine": 451,
+        "endChar": 16
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d94d3b6f_e41c8e8c",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.h",
         "patchSetId": 10
@@ -175,6 +313,47 @@
         "endLine": 106,
         "endChar": 0
       },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebcdc83f_4879bf5e",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-08T20:27:41Z",
+      "side": 1,
+      "message": "This is called by performanceObserver, which is not a friend of performanceBase.",
+      "parentUuid": "d94d3b6f_e41c8e8c",
+      "range": {
+        "startLine": 106,
+        "startChar": 61,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d0794b_98539937",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceObserver.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-08T20:27:41Z",
+      "side": 1,
+      "message": "I assumed we need to prepend the buffered entries to follow the chronological order.",
       "revId": "d7646eca145db69faed29e6f237d08822155fe73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -204,6 +383,30 @@
     },
     {
       "key": {
+        "uuid": "647d4280_7a092732",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceObserver.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-08T20:27:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4caf67f_e3054de5",
+      "range": {
+        "startLine": 106,
+        "startChar": 15,
+        "endLine": 106,
+        "endChar": 16
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "293195d0_784ab49f",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceObserver.cpp",
         "patchSetId": 10
@@ -224,6 +427,30 @@
       "revId": "d7646eca145db69faed29e6f237d08822155fe73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89979eb_38068e4c",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceObserver.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-08T20:27:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "293195d0_784ab49f",
+      "range": {
+        "startLine": 107,
+        "startChar": 37,
+        "endLine": 107,
+        "endChar": 0
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
