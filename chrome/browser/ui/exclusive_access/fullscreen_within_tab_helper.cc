@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h"
 
+#include "base/macros.h"
+
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(FullscreenWithinTabHelper);
 
 FullscreenWithinTabHelper::FullscreenWithinTabHelper(
@@ -11,6 +13,12 @@ FullscreenWithinTabHelper::FullscreenWithinTabHelper(
     : is_fullscreen_for_captured_tab_(false) {}
 
 FullscreenWithinTabHelper::~FullscreenWithinTabHelper() {}
+
+#if defined(OS_MACOSX)
+bool FullscreenWithinTabHelper::IsContentFullscreenEnabled() {
+  return base::FeatureList::IsEnabled(features::kContentFullscreen);
+}
+#endif
 
 // static
 void FullscreenWithinTabHelper::RemoveForWebContents(
