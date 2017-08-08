@@ -46,6 +46,30 @@
       "revId": "05628c17415c8e01352e65aefb1ee634a0134bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb7707a_3d5a17ba",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-08T00:52:25Z",
+      "side": 1,
+      "message": "See MockResourceLoader::OnResponseCompletedFromExternalOutOfBandCancel, which should be called instead of OnResponseCompleted in this case.\n\nAlso, you should be checking here that the mock_handler_ has seen the error.",
+      "parentUuid": "d7f56655_ae5204a6",
+      "range": {
+        "startLine": 328,
+        "startChar": 28,
+        "endLine": 328,
+        "endChar": 0
+      },
+      "revId": "05628c17415c8e01352e65aefb1ee634a0134bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
