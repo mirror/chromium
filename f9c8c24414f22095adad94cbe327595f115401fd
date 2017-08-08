@@ -447,6 +447,24 @@
     },
     {
       "key": {
+        "uuid": "bd24dfc6_fd07ff4d",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsSeedFetchService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-08T22:20:25Z",
+      "side": 1,
+      "message": "\u003e fail loudly\n\nHow loudly? Logcat would be fine, but the user definitely shouldn\u0027t see it. The user doesn\u0027t care about Finch.\n\n\u003e log a uma\n\nWe should only add UMA logs if we have a plan to watch them (should we set up an alerting system?) and if the results are actionable (what would we do in response to a spike in such an error? It probably wouldn\u0027t represent a WebView bug.)\n\n\u003e crash\n\nI certainly hope not! :) Finch is not critical to WebView\u0027s functioning. That\u0027d be like a car failing to start because the windshield wipers are broken.",
+      "parentUuid": "c24442b8_fa9038c7",
+      "revId": "f9c8c24414f22095adad94cbe327595f115401fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52d32791_cb8ad248",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsSeedFetchService.java",
         "patchSetId": 19
