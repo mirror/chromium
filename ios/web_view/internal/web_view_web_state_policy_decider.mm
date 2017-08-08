@@ -14,11 +14,12 @@ WebViewWebStatePolicyDecider::WebViewWebStatePolicyDecider(
     CWVWebView* web_view)
     : web::WebStatePolicyDecider(web_state), web_view_(web_view) {}
 
-bool WebViewWebStatePolicyDecider::ShouldAllowRequest(NSURLRequest* request) {
+bool WebViewWebStatePolicyDecider::ShouldAllowRequest(
+    WKNavigationAction* action) {
   id<CWVNavigationDelegate> delegate = web_view_.navigationDelegate;
   if ([delegate
-          respondsToSelector:@selector(webView:shouldStartLoadWithRequest:)]) {
-    return [delegate webView:web_view_ shouldStartLoadWithRequest:request];
+          respondsToSelector:@selector(webView:shouldStartLoadWithAction:)]) {
+    return [delegate webView:web_view_ shouldStartLoadWithAction:action];
   }
   return true;
 }

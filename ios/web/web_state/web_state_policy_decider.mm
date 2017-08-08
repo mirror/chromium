@@ -25,7 +25,7 @@ WebStatePolicyDecider::~WebStatePolicyDecider() {
   }
 }
 
-bool WebStatePolicyDecider::ShouldAllowRequest(NSURLRequest* request) {
+bool WebStatePolicyDecider::ShouldAllowRequest(WKNavigationAction* action) {
   return true;
 }
 

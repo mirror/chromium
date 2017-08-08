@@ -13,6 +13,8 @@
 #include <string>
 #include <vector>
 
+#import <WebKit/WebKit.h>
+
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/observer_list.h"
@@ -162,7 +164,7 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
 
   // Returns whether the navigation corresponding to |request| should be allowed
   // to continue by asking its policy deciders. Defaults to true.
-  bool ShouldAllowRequest(NSURLRequest* request);
+  bool ShouldAllowRequest(WKNavigationAction* action);
   // Returns whether the navigation corresponding to |response| should be
   // allowed to continue by asking its policy deciders. Defaults to true.
   bool ShouldAllowResponse(NSURLResponse* response);

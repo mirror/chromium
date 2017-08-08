@@ -6,6 +6,7 @@
 #define IOS_WEB_PUBLIC_WEB_STATE_WEB_STATE_POLICY_DECIDER_H_
 
 #import <Foundation/Foundation.h>
+#import <WebKit/WebKit.h>
 
 #include "base/macros.h"
 
@@ -21,7 +22,7 @@ class WebStatePolicyDecider {
 
   // Asks the decider whether the navigation corresponding to |request| should
   // be allowed to continue. Defaults to true if not overriden.
-  virtual bool ShouldAllowRequest(NSURLRequest* request);
+  virtual bool ShouldAllowRequest(WKNavigationAction* action);
 
   // Asks the decider whether the navigation corresponding to |response| should
   // be allowed to continue. Defaults to true if not overriden.

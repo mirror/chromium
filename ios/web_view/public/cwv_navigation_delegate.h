@@ -6,6 +6,7 @@
 #define IOS_WEB_VIEW_PUBLIC_CWV_NAVIGATION_DELEGATE_H_
 
 #import <Foundation/Foundation.h>
+#import <WebKit/WebKit.h>
 
 #import "cwv_export.h"
 
@@ -20,8 +21,9 @@ CWV_EXPORT
 
 // Asks delegate if WebView should start the load. WebView will
 // load the request if this method is not implemented.
+// TODO: Wrap WKNavigationAction instead of exposing it directly.
 - (BOOL)webView:(CWVWebView*)webView
-    shouldStartLoadWithRequest:(NSURLRequest*)request;
+    shouldStartLoadWithAction:(WKNavigationAction*)action;
 
 // Asks delegate if WebView should continue the load. WebView
 // will load the response if this method is not implemented.

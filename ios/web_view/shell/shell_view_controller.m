@@ -424,8 +424,8 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 #pragma mark CWVNavigationDelegate methods
 
 - (BOOL)webView:(CWVWebView*)webView
-    shouldStartLoadWithRequest:(NSURLRequest*)request {
-  NSLog(@"shouldStartLoadWithRequest");
+    shouldStartLoadWithAction:(WKNavigationAction*)action {
+  NSLog(@"shouldStartLoadWithAction: %@", action);
   return YES;
 }
 
