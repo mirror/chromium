@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1350de82_f19ec1bb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-08T02:26:15Z",
+      "side": 1,
+      "message": "Why do we pass violation event to only the first ResourceClient?",
+      "range": {
+        "startLine": 463,
+        "startChar": 26,
+        "endLine": 463,
+        "endChar": 51
+      },
+      "revId": "92f8760de65279fa992d1e5ee869da63ddeff7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5acd29a8_fbd588ad",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-08T02:26:15Z",
+      "side": 1,
+      "message": "From a quick scan, I see this if () { container.Reset(new container); } blocks repeated.\nWould it be possible to tidy this up?",
+      "revId": "92f8760de65279fa992d1e5ee869da63ddeff7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
