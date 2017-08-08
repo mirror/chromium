@@ -70,6 +70,52 @@
     },
     {
       "key": {
+        "uuid": "59ae529e_d8c199d5",
+        "filename": "content/browser/presentation/presentation_service_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-08T22:36:20Z",
+      "side": 1,
+      "message": "nit: receiver",
+      "range": {
+        "startLine": 83,
+        "startChar": 57,
+        "endLine": 83,
+        "endChar": 63
+      },
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef04b050_01984e6c",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-08T22:36:20Z",
+      "side": 1,
+      "message": "Shall we remove these two lines and just use receiver_-\u003eInitIfNeeded() instead of ConnectToPresentationServiceIfNeeded() in PresentationDispatcher::SetReceiver() and PresentationDispatcher::DidFinishDocumentLoad()?\n\nPresentationReceiver holds a presentation_service_ now and it seems no need to init receiver frame\u0027s PresentationDispatcher::presentation_service_.",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 400,
+        "endChar": 30
+      },
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0554cd60_f066aa8a",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 12
@@ -104,6 +150,24 @@
     },
     {
       "key": {
+        "uuid": "1eeca27a_4b609c49",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-08T22:36:20Z",
+      "side": 1,
+      "message": "It is a little confusing...\n\nDidClose() // local call, change current connection\u0027s state to \u0027Closed\u0027\nOnClose() // mojo call, invoked by remote connection\nDoClose() // local call, invoke PresentationServicePtr::CloseConnection() and communiate with MRP.",
+      "parentUuid": "9f9f6adf_c78e8e2a",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c49455ab_7e29f26a",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 12
@@ -132,6 +196,24 @@
       "writtenOn": "2017-08-08T18:35:31Z",
       "side": 1,
       "message": "Note that receiver connections must be TERMINATED before the receiver document is unloaded.  I think this should go in DoTerminate().\n\nhttps://w3c.github.io/presentation-api/#terminating-a-presentation-in-a-receiving-browsing-context\n\nI am not 100% sure the layout or web platform tests cover this.  Hmmm...",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b99961_92fbf635",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-08T22:36:20Z",
+      "side": 1,
+      "message": "It seems fine to leave it here.\n\nThis function is invoked by PresentationDispatcher::WidgetWillClose() when receiver window goes away, either because receiver calls terminate() or other reasons (e.g. receiver may call window.close()). If we move it to DoTerminate(), state_ wont be changed to \u0027TERMINATED\u0027 if receiver calls windows.close().\n\npresentation-receiver-terminate-connection.html covers receiver calls connection.terminate().",
+      "parentUuid": "c79c3585_e29f477e",
       "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
