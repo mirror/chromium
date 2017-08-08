@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47704ca9_1ced1481",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-08T18:20:54Z",
+      "side": 1,
+      "message": "sorry i didn\u0027t mention it before, but we probably don\u0027t need either of these c\u0027tors and can just use {}-style initialization instead, right?",
+      "revId": "47ffa2a2f08d9c6bb7110f3712868ba621b1e265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
