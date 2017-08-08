@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73f68aa2_ae218355",
+        "filename": "chrome/browser/printing/printing_message_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-08T21:36:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ae89c0d_e33ddbdc",
+      "revId": "fa9f4468097a2b8fa434aee95fd1ffc0de341288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ca43237_3721513e",
         "filename": "chrome/browser/printing/printing_message_filter.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "fa9f4468097a2b8fa434aee95fd1ffc0de341288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8969abe3_8b2f15d6",
+        "filename": "chrome/browser/printing/printing_message_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-08T21:36:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ca43237_3721513e",
+      "revId": "fa9f4468097a2b8fa434aee95fd1ffc0de341288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ea81efb6_3b1d3730",
+        "filename": "chrome/browser/printing/printing_message_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-08T21:36:30Z",
+      "side": 1,
+      "message": "I don\u0027t think so.\n\nPrintingMessageFilter::OnScriptedPrint is triggered by a PrintHostMsg_ScriptedPrint message, which is only sent by the PrintRenderFrameHelper in GetPrintSettingsForUser, which is called from \"Print\". Turns out that can be triggered by\n(1) Direct context menu print, when print preview is disabled\n(2) Scripted print when print preview is disabled\n(3) PrintMsg_PrintPages from the headless print manager\n(4) PrintMsg_PrintForSystemDialog from the print preview handler, but there is no way to trigger this message on Windows, since on Windows we never send the JS message that triggers it (see https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/print_preview.js?l\u003d633)",
+      "parentUuid": "a110d7c8_1fdeb834",
+      "revId": "fa9f4468097a2b8fa434aee95fd1ffc0de341288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6533da13_7eba2e6f",
         "filename": "chrome/browser/printing/printing_message_filter.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "fa9f4468097a2b8fa434aee95fd1ffc0de341288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a004fb9_ede369a0",
+        "filename": "chrome/browser/printing/printing_message_filter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-08T21:36:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6533da13_7eba2e6f",
+      "revId": "fa9f4468097a2b8fa434aee95fd1ffc0de341288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
