@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a00cbedd_a94f0a29",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T16:59:43Z",
+      "side": 1,
+      "message": "Hmm, we\u0027ll have to watch smoothness results with this. Software decoding is occurring on this thread and may block rendering. You might instead get as task runner from base::PostTask that has the right traits for UI, no-blocking, etc.",
+      "revId": "81035890f01b11e868ae2e3c3621d3e1c03fd837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9faa470f_0890a51e",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-08T16:59:43Z",
+      "side": 1,
+      "message": "Try to avoid using WaitableEvents like this. Instead prefer an async setup path.",
+      "revId": "81035890f01b11e868ae2e3c3621d3e1c03fd837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
