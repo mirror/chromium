@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e41dafc_36919f83",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T01:06:35Z",
+      "side": 1,
+      "message": "I\u0027m trying to look at this from a user\u0027s point of view (rather than my own); and without using my \u0027insider-knowledge\u0027, I think I\u0027d find this string confusing.\n\nThis text brings questions to my mind such as: Which sites? Does it sign me out right now, or won\u0027t sign me in automatically next time I go there (err, it reads like \"right now\", but iiuc it means \"next time I go there\")? Is this all that this choice does (is signing out the primary use of this option)?",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0073b2b_8b92eb1b",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T01:06:35Z",
+      "side": 1,
+      "message": "s/you/your/\n\nIf I have multiple google accounts, will all of them remain or just the one I\u0027m signed into now?\nIf they will all stay, maybe change \"Account\" to \"Accounts\".\nIf only this account will stay, maybe say something about what will happen to other Google accounts stored on this machine.",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bfcc23_6f0602cf",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T01:06:35Z",
+      "side": 1,
+      "message": "WDYT of:\n\ndesc\u003d\"subtext explaining clear browsing history.\"\n\nOr, (here  and other desc\u003d below) replace \"A text\" with something like \"subtext\", \"secondary text\", \"description\", or similar. Mentioning that it\u0027s \"A text\" seems redundant for a line of text in a translation file, so the idea is to say something more about how the text is used.",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd00333_19c0a316",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T01:06:35Z",
+      "side": 1,
+      "message": "nit: lines 903 to 905 up to line 888 to keep IDS_SETTINGS_CLEAR_DATA_* together.",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3861cbab_ac21240a",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T01:06:35Z",
+      "side": 1,
+      "message": "Please prefix comment continuation lines with *\n\n        /* Fixed height to allow multiple tabs with different height.\n         * The last entry in the advanced tab should show half an entry.\n         * crbug.com/652027 */",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89a09cd_cda1c02c",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T01:06:35Z",
+      "side": 1,
+      "message": "Can we move these variables up to a common file (such as \nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings_vars_css.html?q\u003dsettings_vars_css\u0026dr \nOr \nhttps://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/shared_style_css.html?q\u003dcr-shared\u0026dr\u003dC\u0026l\u003d8\n) and remove the entries in https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/certificate_manager_page/certificate_manager_page.html?type\u003dcs\u0026q\u003dfile:settings+file:certificate+file:html\u0026l\u003d1 so that they use the same values.\n\n\n\nOR, if there\u0027s a reason that won\u0027t work, then:\n\nCan we set a value for this height (maybe --tab-height) and use it here and in\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/certificate_manager_page/certificate_manager_page.html?type\u003dcs\u0026q\u003dfile:settings+file:certificate+file:html\u0026l\u003d1\n\ne.g.\n\n        height: var(--tab-height);\n\nIt looks like the certificate manager uses 40px and this uses 42px; either is okay with me, I\u0027m just saying they should be the same and use a css variable.",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392a96d3_41624460",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T01:06:35Z",
+      "side": 1,
+      "message": "This can wait until later: Please use $i18nPolymer rather than loading the strings using loadTimeData. Example at https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/internet_page/internet_subpage.html?type\u003dcs\u0026q\u003di18nPolymer\u0026l\u003d55\n\nIf you\u0027d rather deal with this bit of it in a later, follow-up CL, that\u0027s ok with me. This should work as-is (there\u0027s just newer/improved ways to use the i18n strings).",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebbc0879_2707c19e",
+        "filename": "chrome/browser/resources/settings/controls/settings_boolean_control_behavior.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T01:06:35Z",
+      "side": 1,
+      "message": "Please consider making the changes to settings_boolean_control_behavior and settings_checkbox a separate (pre-) CL.",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f76fea4_e8f53b63",
+        "filename": "chrome/browser/resources/settings/controls/settings_boolean_control_behavior.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T01:06:35Z",
+      "side": 1,
+      "message": "Could this be private?",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940c5c3a_b51c3960",
+        "filename": "chrome/browser/resources/settings/controls/settings_boolean_control_behavior.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T01:06:35Z",
+      "side": 1,
+      "message": "suggestion: \n\nsubLabelHtml: String,\n\nis shorter and generally preferred, but not a big deal imo. I just wanted to suggest it.",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4da9690_2aa5d489",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T01:06:35Z",
+      "side": 1,
+      "message": "The indentation looks incorrect. Please try running \ngit cl format",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa648b20_26607d0a",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T01:06:35Z",
+      "side": 1,
+      "message": "Please consider making a the cr_dialog changes a separate (pre-) CL.",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9612ea36_ea9eaeba",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T01:06:35Z",
+      "side": 1,
+      "message": "Is line 14 intending to add a default value, if so please del line 14 and change line 30 to:\n\nheight: var(--cr-dialog-content-wrapper-height, auto);",
+      "revId": "2dfa1d60e1a90831b7d8a1a1a96dad6f6adddc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
