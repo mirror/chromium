@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ddd5e48_953cfa20",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-08T00:24:40Z",
+      "side": 1,
+      "message": "missing:\n// static\nbool ...",
+      "range": {
+        "startLine": 658,
+        "startChar": 0,
+        "endLine": 658,
+        "endChar": 4
+      },
+      "revId": "d32eb9b2839033a50ca24042bcf5fe796170367b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
