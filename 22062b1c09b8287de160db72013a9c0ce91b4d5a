@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c5242c1_db952ce7",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBufferTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-08T16:55:35Z",
+      "side": 1,
+      "message": "Hmm, does it hit the DCHECK(context_provider) if you pass std::move(provider)?",
+      "range": {
+        "startLine": 737,
+        "startChar": 6,
+        "endLine": 737,
+        "endChar": 25
+      },
+      "revId": "22062b1c09b8287de160db72013a9c0ce91b4d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
