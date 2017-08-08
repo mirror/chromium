@@ -16,6 +16,24 @@
       "revId": "db1aa9c32df742102021c6bc442ca3342483ecd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6ec1b0_8f4be767",
+        "filename": "services/ui/ws/window_manager_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-08T16:38:50Z",
+      "side": 1,
+      "message": "Exactly.",
+      "parentUuid": "1658adac_12ff7c8f",
+      "revId": "db1aa9c32df742102021c6bc442ca3342483ecd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
