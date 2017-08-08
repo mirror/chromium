@@ -65,6 +65,46 @@
         ]
     },
     {
+        "domain": "Performance",
+        "experimental": true,
+        "types": [
+            {
+                "id": "Metric",
+                "type": "object",
+                "properties": [
+                    { "name": "name", "type": "string", "description": "Metric name." },
+                    { "name": "value", "type": "number", "description": "Metric value." }
+                ],
+                "description": "Run-time execution metric as key value pair."
+            }
+        ],
+        "commands": [
+            {
+                "name": "enableMetrics",
+                "parameters": [
+                    { "name": "metrics", "type": "array", "items": { "type": "string" }, "description": "List of metric names to enable." }
+                ],
+                "description": "Enable collecting and reporting specified metrics."
+            },
+            {
+                "name": "getMetrics",
+                "returns": [
+                    { "name": "metrics", "type": "array", "items": { "$ref": "Metric" }, "description": "Current values for enabled Run-time metrics." }
+                ],
+                "description": "Retrieve current values for enabled Run-time metrics."
+            }
+        ],
+        "events": [
+            {
+                "name": "metrics",
+                "parameters": [
+                    { "name": "metrics", "type": "object", "description": "Run-time execution metrics as key value pairs." }
+                ],
+                "description": "The event is fired upon a request invoked from the user code."
+            }
+        ]
+    },
+    {
         "domain": "Page",
         "description": "Actions and events related to the inspected page belong to the page domain.",
         "dependencies": ["Debugger", "DOM", "Network"],

@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "core/frame/PerformanceMonitor.h"
+
 #include "bindings/core/v8/ScheduledAction.h"
 #include "bindings/core/v8/ScriptEventListener.h"
 #include "bindings/core/v8/SourceLocation.h"
@@ -295,6 +296,16 @@ void PerformanceMonitor::InnerReportGenericViolation(
     if (it.value < time)
       it.key->ReportGenericViolation(violation, text, time, location.get());
   }
+}
+
+// static
+void PerformanceMonitor::IncrementCounter(LocalFrame* frame, MetricsType type) {
+  ++frame->GetPerformanceMonitor()->metric_values_[type];
+}
+
+// static
+void PerformanceMonitor::DecrementCounter(LocalFrame* frame, MetricsType type) {
+  --frame->GetPerformanceMonitor()->metric_values_[type];
 }
 
 DEFINE_TRACE(PerformanceMonitor) {
