@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3b9caf9_532771a7",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-08T17:25:55Z",
+      "side": 1,
+      "message": "C++ functions should either start capital and be camelcase, or be all lowercase with underscores: BubbleColor() or bubble_color(). \n\nhttps://google.github.io/styleguide/cppguide.html#Function_Names",
+      "revId": "4b2acde8e495cdfc76957b93b41228c5c5f55612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179688cc_b0f69733",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-08T17:25:55Z",
+      "side": 1,
+      "message": "I think my direction here was confusing. I\u0027ll speak with you in person about this.",
+      "revId": "4b2acde8e495cdfc76957b93b41228c5c5f55612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fbe6253_92e3e6c0",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-08T17:25:55Z",
+      "side": 1,
+      "message": "I feel that this name should mirror -dismissAnimated:. How about:\n- (void)presentAnimated:(BOOL)animated?",
+      "revId": "4b2acde8e495cdfc76957b93b41228c5c5f55612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03353575_a4d2e8d1",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-08T17:25:55Z",
+      "side": 1,
+      "message": "For completeness, set [self.view setHidden:YES] at completion.",
+      "revId": "4b2acde8e495cdfc76957b93b41228c5c5f55612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
