@@ -47,7 +47,6 @@
 -SysInfoTest.AmountOfFreeDiskSpace
 -SysInfoTest.AmountOfMem
 -SysInfoTest.AmountOfTotalDiskSpace
--TrackedObjectsTest.ReuseRetiredThreadData
 -VerifyPathControlledByUserTest.BadPaths
 -VerifyPathControlledByUserTest.GroupWriteTest
 -VerifyPathControlledByUserTest.OwnershipChecks
