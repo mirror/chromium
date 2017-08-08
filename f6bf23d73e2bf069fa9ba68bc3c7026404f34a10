@@ -34,6 +34,23 @@
       "revId": "f6bf23d73e2bf069fa9ba68bc3c7026404f34a10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c65e88b_d5c53b12",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-08T23:07:32Z",
+      "side": 1,
+      "message": "Hmm, is that so, interesting. This is the version that overrides WebLayerTreeView. From looking at the code, it looks WebLayerTreeView::SetViewportSize is only called from blink test code, and that only uses WebLayerTreeViewImplForTesting. So I think we could actually remove WebLayerTreeView::SetViewportSize. The reason I mention this is that it would remove the ugly overload.\nWDYT?",
+      "revId": "f6bf23d73e2bf069fa9ba68bc3c7026404f34a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
