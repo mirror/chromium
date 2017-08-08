@@ -265,6 +265,7 @@ extern const char kLaunchPaletteOnEjectEvent[];
 extern const char kNoteTakingAppId[];
 extern const char kNoteTakingAppEnabledOnLockScreen[];
 extern const char kNoteTakingAppsLockScreenWhitelist[];
+extern const char kNoteTakingAppRestoresLastNote[];
 extern const char kSessionUserActivitySeen[];
 extern const char kSessionStartTime[];
 extern const char kSessionLengthLimit[];
