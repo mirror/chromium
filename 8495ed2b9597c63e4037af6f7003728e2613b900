@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14a78453_616a7d7f",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-08T21:33:37Z",
+      "side": 1,
+      "message": "This seems like something to compute in CreateSensorCallback.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 31
+      },
+      "revId": "8495ed2b9597c63e4037af6f7003728e2613b900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
