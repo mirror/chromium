@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "30eeb42d_8f214414",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-08T13:34:21Z",
+      "side": 1,
+      "message": "Just to add a little bit, the reason I suggested it is that rockot@ suggested using a test interface was unfortunate and we should do this instead. See this thread in on chromium-mojo: https://groups.google.com/a/chromium.org/d/msg/chromium-mojo/_m5qIDZgAf8/PP0Kng-JBQAJ",
+      "parentUuid": "c08304f5_26dd2134",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 1
+      },
+      "revId": "bbcc0c66a9db1fee4926356e435c8d07f0a617ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf6a4535_af0a5598",
         "filename": "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom",
         "patchSetId": 4
