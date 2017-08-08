@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "744dfcd4_052d29fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-08T00:45:56Z",
+      "side": 1,
+      "message": "For now only the index of the spannable string matters because we delete and add a new one in each IME operation. Ted\u0027s suggestion on EXCLUSIVE_EXCLUSIVE flag seems to fix the issue, so I removed this part..",
+      "parentUuid": "643f9d52_22cf2142",
+      "revId": "dd2fbc3e26c1ce167694eadb1cc3b82cabe6eea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d2dac1a_4d6ba10e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 1
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "88d19c4a_b5480dc3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-08T00:45:56Z",
+      "side": 1,
+      "message": "Ted\u0027s suggestion on EXCLUSIVE_EXCLUSIVE flag seems to fix the issue, so I removed this part.",
+      "parentUuid": "7d2dac1a_4d6ba10e",
+      "revId": "dd2fbc3e26c1ce167694eadb1cc3b82cabe6eea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ab337a0_c00927be",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 1
@@ -65,6 +101,30 @@
       "writtenOn": "2017-08-07T23:59:24Z",
       "side": 1,
       "message": "I\u0027m still a bit confused what is happening.  Why is getSpanStart not returning the right thing?  Is it because text is being inserted and the span is being manipulated outside of what we expect?\n\nIf we used a different type of span, i.e. SPAN_EXCLUSIVE_EXCLUSIVE, instead of SPAN_INTERMEDIATE, would that show the same issues?",
+      "range": {
+        "startLine": 327,
+        "startChar": 16,
+        "endLine": 327,
+        "endChar": 27
+      },
+      "revId": "dd2fbc3e26c1ce167694eadb1cc3b82cabe6eea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4938f91e_6395e194",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-08T00:45:56Z",
+      "side": 1,
+      "message": "Wow... You\u0027re right. SPAN_EXCLUSIVE_EXCLUSIVE fixed it.",
+      "parentUuid": "7ab337a0_c00927be",
       "range": {
         "startLine": 327,
         "startChar": 16,
