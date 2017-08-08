@@ -16,6 +16,24 @@
       "revId": "04a6fc88fd5c6bd2887db757c0e62f09061553a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6139b918_a43f07eb",
+        "filename": "remoting/ios/client_keyboard.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-08T18:38:32Z",
+      "side": 1,
+      "message": "I just implemented a resignFirstResponderForced: method for handling everything. I think it\u0027s fine not calling [super resignFirstResponder] when it returns NO. There is example in the code base:\nhttp://google3/googlemac/iPhone/Bigtop/Source/ComposeTokenField.m?l\u003d278\u0026rcl\u003d161104554",
+      "parentUuid": "07749b88_978ff719",
+      "revId": "04a6fc88fd5c6bd2887db757c0e62f09061553a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
