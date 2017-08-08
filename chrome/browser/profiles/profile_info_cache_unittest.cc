@@ -29,7 +29,6 @@
 #include "components/prefs/testing_pref_service.h"
 #include "components/signin/core/common/profile_management_switches.h"
 #include "components/sync_preferences/pref_service_syncable.h"
-#include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -96,8 +95,9 @@ ProfileInfoCache* ProfileNameVerifierObserver::GetCache() {
 ProfileInfoCacheTest::ProfileInfoCacheTest()
     : testing_profile_manager_(TestingBrowserProcess::GetGlobal()),
       name_observer_(&testing_profile_manager_),
-      user_data_dir_override_(chrome::DIR_USER_DATA) {
-}
+      user_data_dir_override_(chrome::DIR_USER_DATA),
+      scoped_task_environment_(
+          base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
 
 ProfileInfoCacheTest::~ProfileInfoCacheTest() {
 }
@@ -110,7 +110,7 @@ void ProfileInfoCacheTest::SetUp() {
 void ProfileInfoCacheTest::TearDown() {
   // Drain the UI thread to make sure all tasks are completed. This prevents
   // memory leaks.
-  base::RunLoop().RunUntilIdle();
+  RunTasksUntilIdle();
 }
 
 ProfileInfoCache* ProfileInfoCacheTest::GetCache() {
@@ -125,6 +125,10 @@ base::FilePath ProfileInfoCacheTest::GetProfilePath(
 
 void ProfileInfoCacheTest::ResetCache() {
   testing_profile_manager_.DeleteProfileInfoCache();
+}
+
+void ProfileInfoCacheTest::RunTasksUntilIdle() {
+  scoped_task_environment_.RunUntilIdle();
 }
 
 TEST_F(ProfileInfoCacheTest, AddProfiles) {
@@ -441,7 +445,7 @@ TEST_F(ProfileInfoCacheTest, PersistGAIAPicture) {
   GetCache()->SetGAIAPictureOfProfileAtIndex(0, &gaia_image);
 
   // Make sure everything has completed, and the file has been written to disk.
-  base::RunLoop().RunUntilIdle();
+  RunTasksUntilIdle();
 
   EXPECT_TRUE(gfx::test::AreImagesEqual(
       gaia_image, *GetCache()->GetGAIAPictureOfProfileAtIndex(0)));
@@ -450,7 +454,7 @@ TEST_F(ProfileInfoCacheTest, PersistGAIAPicture) {
   // Try to get the GAIA picture. This should return NULL until the read from
   // disk is done.
   EXPECT_EQ(NULL, GetCache()->GetGAIAPictureOfProfileAtIndex(0));
-  base::RunLoop().RunUntilIdle();
+  RunTasksUntilIdle();
 
   EXPECT_TRUE(gfx::test::AreImagesEqual(
     gaia_image, *GetCache()->GetGAIAPictureOfProfileAtIndex(0)));
@@ -510,9 +514,8 @@ TEST_F(ProfileInfoCacheTest, CreateSupervisedTestingProfile) {
               GetCache()->GetSupervisedUserIdOfProfileAtIndex(i));
   }
 
-  // Supervised profiles have a custom theme, which needs to be deleted on the
-  // FILE thread. Reset the profile manager now so everything is deleted while
-  // we still have a FILE thread.
+  // Supervised profiles have a custom theme, which needs to be deleted. Reset
+  // the profile manager now so everything is deleted.
   TestingBrowserProcess::GetGlobal()->SetProfileManager(NULL);
 }
 
@@ -656,7 +659,7 @@ TEST_F(ProfileInfoCacheTest, DownloadHighResAvatarTest) {
   profile_info_cache.AddProfileToCache(path_1, ASCIIToUTF16("name_1"),
       std::string(), base::string16(), kIconIndex, std::string());
   EXPECT_EQ(1U, profile_info_cache.GetNumberOfProfiles());
-  base::RunLoop().RunUntilIdle();
+  RunTasksUntilIdle();
 
   // We haven't downloaded any high-res avatars yet.
   EXPECT_EQ(0U, profile_info_cache.cached_avatar_images_.size());
@@ -696,7 +699,7 @@ TEST_F(ProfileInfoCacheTest, DownloadHighResAvatarTest) {
       profile_info_cache.GetHighResAvatarOfProfileAtIndex(0));
 
   // Make sure everything has completed, and the file has been written to disk.
-  base::RunLoop().RunUntilIdle();
+  RunTasksUntilIdle();
 
   // Clean up.
   EXPECT_NE(std::string::npos, icon_path.MaybeAsASCII().find(file_name));
@@ -719,7 +722,7 @@ TEST_F(ProfileInfoCacheTest, NothingToDownloadHighResAvatarTest) {
                                        std::string(), base::string16(),
                                        kIconIndex, std::string());
   EXPECT_EQ(1U, profile_info_cache.GetNumberOfProfiles());
-  base::RunLoop().RunUntilIdle();
+  RunTasksUntilIdle();
 
   // We haven't tried to download any high-res avatars as the specified icon is
   // just a placeholder.

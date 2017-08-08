@@ -9,9 +9,9 @@
 
 #include "base/macros.h"
 #include "base/test/scoped_path_override.h"
+#include "base/test/scoped_task_environment.h"
 #include "chrome/browser/profiles/profile_info_cache_observer.h"
 #include "chrome/test/base/testing_profile_manager.h"
-#include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 class ProfileInfoCache;
@@ -56,10 +56,7 @@ class ProfileInfoCacheTest : public testing::Test {
   base::FilePath GetProfilePath(const std::string& base_name);
   void ResetCache();
 
- private:
-  // TestBrowserThreadBundle needs to be up through the destruction of the
-  // TestingProfileManager below.
-  content::TestBrowserThreadBundle thread_bundle_;
+  void RunTasksUntilIdle();
 
  protected:
   TestingProfileManager testing_profile_manager_;
@@ -67,6 +64,7 @@ class ProfileInfoCacheTest : public testing::Test {
  private:
   ProfileNameVerifierObserver name_observer_;
   base::ScopedPathOverride user_data_dir_override_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
 #endif  // CHROME_BROWSER_PROFILES_PROFILE_INFO_CACHE_UNITTEST_H_
