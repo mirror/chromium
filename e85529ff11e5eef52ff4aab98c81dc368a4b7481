@@ -16,6 +16,24 @@
       "revId": "e85529ff11e5eef52ff4aab98c81dc368a4b7481",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa76659_67c60e52",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-08T17:58:41Z",
+      "side": 1,
+      "message": "it compiles bc \"const auto\" on the for, so maybe it just can guarantee the constness?\nDone.",
+      "parentUuid": "d93c1940_7dd3ee01",
+      "revId": "e85529ff11e5eef52ff4aab98c81dc368a4b7481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
