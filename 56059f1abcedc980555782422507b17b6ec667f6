@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "de903c2a_e6832ae4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-08-08T23:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20b8cd1c_d983b020",
+      "revId": "56059f1abcedc980555782422507b17b6ec667f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e42cbda4_9b022770",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-08-08T23:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad4b17ee_24483744",
+      "range": {
+        "startLine": 9,
+        "startChar": 41,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "56059f1abcedc980555782422507b17b6ec667f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2b6242d_03e0bedd",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -62,6 +104,30 @@
       "revId": "56059f1abcedc980555782422507b17b6ec667f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bcae9ce_38dbf4f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-08-08T23:31:33Z",
+      "side": 1,
+      "message": "I guess this is the relevant bug. See c#5 ?",
+      "parentUuid": "e2b6242d_03e0bedd",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "56059f1abcedc980555782422507b17b6ec667f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
