@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8ed7ce9_258b0688",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-08T13:09:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93e74034_4b4ce9b9",
+      "revId": "92f8760de65279fa992d1e5ee869da63ddeff7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1350de82_f19ec1bb",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-08T02:26:15Z",
       "side": 1,
       "message": "Why do we pass violation event to only the first ResourceClient?",
+      "range": {
+        "startLine": 463,
+        "startChar": 26,
+        "endLine": 463,
+        "endChar": 51
+      },
+      "revId": "92f8760de65279fa992d1e5ee869da63ddeff7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "058d20fc_b55076f3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-08T13:09:04Z",
+      "side": 1,
+      "message": "I wanted to avoid firing the same event multiple times. I did not investigate how/when it\u0027s possible for a resource to have multiple clients, if someone that knows more about this tells me that it makes more sense to send it to all clients I\u0027ll do it.\n\nI did consider briefly the alternative (of having it sent to all clients and sending it to new clients when they are added) but it seemed likely to cause duplicate event firing.",
+      "parentUuid": "1350de82_f19ec1bb",
       "range": {
         "startLine": 463,
         "startChar": 26,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "af298343_4394607a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-08T13:09:04Z",
+      "side": 1,
+      "message": "I can\u0027t really tell what you mean here. Do you think it\u0027s worth putting this statement in a function of some sort?\n\nThe logic in these blocks makes sure that the pointer we send through is nullptr if the resource does not handle the event and a valid pointer if the resource handles the event.",
+      "parentUuid": "5acd29a8_fbd588ad",
+      "revId": "92f8760de65279fa992d1e5ee869da63ddeff7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9b77c41_1e8c805e",
         "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
         "patchSetId": 3
@@ -70,6 +130,24 @@
       "writtenOn": "2017-08-08T04:21:33Z",
       "side": 1,
       "message": "So just to make sure, the reason we have this separately from SecurityPolicyViolationEventInit is to work around the layering? (As EventInit is in core/)",
+      "revId": "92f8760de65279fa992d1e5ee869da63ddeff7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6a9c39_d46b4528",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-08T13:09:04Z",
+      "side": 1,
+      "message": "Yes, it\u0027s work around layering. From what I understood previously we don\u0027t want platform to know about core.",
+      "parentUuid": "c9b77c41_1e8c805e",
       "revId": "92f8760de65279fa992d1e5ee869da63ddeff7da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -90,6 +168,24 @@
       "revId": "92f8760de65279fa992d1e5ee869da63ddeff7da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d250663_864ef5c3",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-08T13:09:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbc0eb90_881616b0",
+      "revId": "92f8760de65279fa992d1e5ee869da63ddeff7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
