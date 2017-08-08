@@ -159,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "dcfbaeec_48a12c31",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T01:17:16Z",
+      "side": 1,
+      "message": "Ah. This deserves a comment to explain for future generations.",
+      "parentUuid": "38009d72_b3d3b0b1",
+      "revId": "cb2fbf4616ce4093d0be513bc42a9b886fa9bb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5f3bed1_481b530c",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.h",
         "patchSetId": 4

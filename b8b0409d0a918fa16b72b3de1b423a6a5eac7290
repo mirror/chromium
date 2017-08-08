@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec128f71_adb412fd",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T01:17:16Z",
+      "side": 1,
+      "message": "Please name these ids as mask isolation and mask, or similar.",
+      "revId": "b8b0409d0a918fa16b72b3de1b423a6a5eac7290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a100a6c4_2e2daef8",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T01:17:16Z",
+      "side": 1,
+      "message": "It\u0027s weird to set mask_target\u0027s stable id here, since it is not allocated in this method..",
+      "revId": "b8b0409d0a918fa16b72b3de1b423a6a5eac7290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cdc29f2_d2626a4d",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T01:17:16Z",
+      "side": 1,
+      "message": "Why would exiting a cc effect lead to a clip which is a child of current_clip_?\nDid you mean to compare to target_clip?",
+      "revId": "b8b0409d0a918fa16b72b3de1b423a6a5eac7290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "295c587a_fc901a43",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-08T01:17:16Z",
+      "side": 1,
+      "message": "Add a comment explaining this effect node.",
+      "revId": "b8b0409d0a918fa16b72b3de1b423a6a5eac7290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
