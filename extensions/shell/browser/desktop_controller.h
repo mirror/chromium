@@ -38,6 +38,9 @@ class DesktopController {
   // typically be full-screen.
   virtual gfx::Size GetWindowSize() = 0;
 
+  // Runs the desktop and quits when finished.
+  virtual void Run() = 0;
+
   // Creates a new app window and adds it to the desktop. The desktop maintains
   // ownership of the window. The window must be closed before |extension| is
   // destroyed.

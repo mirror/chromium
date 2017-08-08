@@ -29,6 +29,8 @@ gfx::Size ShellDesktopControllerMac::GetWindowSize() {
   return display::Screen::GetScreen()->GetPrimaryDisplay().bounds().size();
 }
 
+void ShellDesktopControllerMac::Run() {}
+
 AppWindow* ShellDesktopControllerMac::CreateAppWindow(
     content::BrowserContext* context,
     const Extension* extension) {
