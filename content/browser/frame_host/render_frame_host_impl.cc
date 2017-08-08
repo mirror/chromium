@@ -2849,6 +2849,10 @@ void RenderFrameHostImpl::RunCreateWindowCompleteCallback(
 }
 
 void RenderFrameHostImpl::RegisterMojoInterfaces() {
+  registry_->AddInterface(
+      base::Bind(&RenderFrameHostImpl::CreateFrameBrokerService,
+                 weak_ptr_factory_.GetWeakPtr()));
+
 #if !defined(OS_ANDROID)
   // The default (no-op) implementation of InstalledAppProvider. On Android, the
   // real implementation is provided in Java.
@@ -3707,6 +3711,10 @@ void RenderFrameHostImpl::GetInterfaceProvider(
                               std::move(interfaces), std::move(provider));
 }
 
+void RenderFrameHostImpl::OnFirstPaint(base::TimeDelta time_to_first_paint) {
+  delegate_->OnFirstPaintInFrame(this, time_to_first_paint);
+}
+
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 #if defined(OS_MACOSX)
 
@@ -4257,5 +4265,10 @@ void RenderFrameHostImpl::ForwardGetInterfaceToRenderFrame(
   GetRemoteInterfaces()->GetInterface(interface_name, std::move(pipe));
 }
 #endif
+
+void RenderFrameHostImpl::CreateFrameBrokerService(
+    blink::mojom::FrameBrokerRequest request) {
+  frame_broker_binding_.AddBinding(this, std::move(request));
+}
 
 }  // namespace content
