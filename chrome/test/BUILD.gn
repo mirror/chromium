@@ -4919,6 +4919,7 @@ test("unit_tests") {
     if (use_aura) {
       sources += [
         "../browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "../browser/ui/views/desktop_capture/desktop_media_picker_views_browsertest.cc",
 
         # Get these compiling on Mac - see http://crbug.com/657883.
         "../browser/ui/views/crypto_module_password_dialog_view_unittest.cc",
