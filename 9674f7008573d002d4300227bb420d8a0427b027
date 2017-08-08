@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f56a339_e26f27ef",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2933,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-08T22:43:28Z",
+      "side": 1,
+      "message": "DocumentWriter deferred this until the first append/end call. Given that one or the other should always happen immediately after creating the parser, I think it\u0027s fine to do it more greedily.",
+      "revId": "9674f7008573d002d4300227bb420d8a0427b027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31fc642_22e02870",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-08T22:43:28Z",
+      "side": 1,
+      "message": "This is called where DocumentWriter::Create() would have been before.",
+      "range": {
+        "startLine": 581,
+        "startChar": 7,
+        "endLine": 581,
+        "endChar": 24
+      },
+      "revId": "9674f7008573d002d4300227bb420d8a0427b027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24097cb0_3536fb46",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-08T22:43:28Z",
+      "side": 1,
+      "message": "DocumentWriter::Encoding() was alwasys set to response_TextEncodingName. There was a method to clear the encoding, but it\u0027s unused.",
+      "revId": "9674f7008573d002d4300227bb420d8a0427b027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d10207a_516a42ec",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-08T22:43:28Z",
+      "side": 1,
+      "message": "This is probably a clearer name than EnsureWriter() anyway, but Writer really doesn\u0027t make sense without a class named DocumentWriter.",
+      "revId": "9674f7008573d002d4300227bb420d8a0427b027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d861e92_44faef42",
+        "filename": "third_party/WebKit/Source/core/loader/TextResourceDecoderBuilder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-08T22:43:28Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me that this factory method deserves its own file, but I don\u0027t immediately see a better place for it. It\u0027s complex enough that making it an alternate Create() mode on TextResourceDecoder seems wrong.",
+      "revId": "9674f7008573d002d4300227bb420d8a0427b027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

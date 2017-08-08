@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e0f6357_f249763a",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-08T22:43:28Z",
+      "side": 0,
+      "message": "This parameter appears to have been added (but never used) recently.",
+      "revId": "b6018356b662d5a88cd30f906e4f041c68c8c3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4d5094_f4a9dc6c",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-08T22:43:28Z",
+      "side": 0,
+      "message": "DocumentWriter::MimeType() was the archive main resource for MHTML archives, and the response_ mime type for everything else. Implement that explicitly here.",
+      "revId": "b6018356b662d5a88cd30f906e4f041c68c8c3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a86f720_5c978ad1",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-08T22:43:28Z",
+      "side": 0,
+      "message": "ResponseMimeType() usage replaced with MimeType(). The only difference will be for MHTML archives, where before ResponseMimeType() would report the MHTML mime type (\"multipart/related\"), but MimeType() will report the mime type of the main resource contained in the archive.",
+      "range": {
+        "startLine": 123,
+        "startChar": 22,
+        "endLine": 123,
+        "endChar": 38
+      },
+      "revId": "b6018356b662d5a88cd30f906e4f041c68c8c3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04635f5e_000bc87c",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentWriter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-08T22:43:28Z",
+      "side": 0,
+      "message": "This has been effectively unchanged since 2006. I can\u0027t see why it\u0027s necessary, and all the tests pass without it, so dropping it :)",
+      "revId": "b6018356b662d5a88cd30f906e4f041c68c8c3f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
