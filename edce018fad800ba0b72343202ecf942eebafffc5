@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "179795f0_e38375f5",
+        "filename": "ui/base/dragdrop/os_exchange_data_provider_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-08T18:52:27Z",
+      "side": 1,
+      "message": "tracking bug, TODO(fuchsia)",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 19
+      },
+      "revId": "edce018fad800ba0b72343202ecf942eebafffc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
