@@ -30,7 +30,6 @@
 
 using std::string;
 using testing::_;
-using testing::Invoke;
 
 namespace net {
 namespace test {
@@ -329,7 +328,7 @@ ssize_t QuicTestClient::GetOrCreateStreamAndSendRequest(
     if (headers) {
       new_headers.reset(new SpdyHeaderBlock(headers->Clone()));
     }
-    std::unique_ptr<QuicClientBase::QuicDataToResend> data_to_resend(
+    std::unique_ptr<QuicSpdyClientBase::QuicDataToResend> data_to_resend(
         new TestClientDataToResend(std::move(new_headers), body, fin, this,
                                    ack_listener));
     client()->MaybeAddQuicDataToResend(std::move(data_to_resend));

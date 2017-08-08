@@ -54,7 +54,7 @@ QuicClient::QuicClient(QuicSocketAddress server_address,
                        const QuicConfig& config,
                        EpollServer* epoll_server,
                        std::unique_ptr<ProofVerifier> proof_verifier)
-    : QuicClientBase(
+    : QuicSpdyClientBase(
           server_id,
           supported_versions,
           config,

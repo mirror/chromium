@@ -23,6 +23,8 @@
 #include "net/tools/quic/quic_client_session.h"
 #include "net/tools/quic/quic_packet_reader.h"
 #include "net/tools/quic/quic_process_packet_interface.h"
+#include "net/tools/quic/quic_client_base.h"
+#include "net/tools/quic/quic_spdy_client_base.h"
 
 namespace net {
 
@@ -32,7 +34,7 @@ namespace test {
 class QuicClientPeer;
 }  // namespace test
 
-class QuicClient : public QuicClientBase,
+class QuicClient : public QuicSpdyClientBase,
                    public EpollCallbackInterface,
                    public ProcessPacketInterface {
  public:

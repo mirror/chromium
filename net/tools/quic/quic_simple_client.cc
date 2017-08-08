@@ -37,12 +37,12 @@ QuicSimpleClient::QuicSimpleClient(
     const QuicServerId& server_id,
     const QuicVersionVector& supported_versions,
     std::unique_ptr<ProofVerifier> proof_verifier)
-    : QuicClientBase(server_id,
-                     supported_versions,
-                     QuicConfig(),
-                     CreateQuicConnectionHelper(),
-                     CreateQuicAlarmFactory(),
-                     std::move(proof_verifier)),
+    : QuicSpdyClientBase(server_id,
+                         supported_versions,
+                         QuicConfig(),
+                         CreateQuicConnectionHelper(),
+                         CreateQuicAlarmFactory(),
+                         std::move(proof_verifier)),
       initialized_(false),
       packet_reader_started_(false),
       weak_factory_(this) {

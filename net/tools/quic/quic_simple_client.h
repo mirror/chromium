@@ -23,7 +23,7 @@
 #include "net/quic/core/quic_config.h"
 #include "net/quic/core/quic_spdy_stream.h"
 #include "net/quic/platform/impl/quic_chromium_clock.h"
-#include "net/tools/quic/quic_client_base.h"
+#include "net/tools/quic/quic_spdy_client_base.h"
 
 namespace net {
 
@@ -36,7 +36,7 @@ namespace test {
 class QuicClientPeer;
 }  // namespace test
 
-class QuicSimpleClient : public QuicClientBase,
+class QuicSimpleClient : public QuicSpdyClientBase,
                          public QuicChromiumPacketReader::Visitor {
  public:
   // Create a quic client, which will have events managed by the message loop.

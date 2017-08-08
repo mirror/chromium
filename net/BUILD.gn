@@ -3280,6 +3280,8 @@ source_set("simple_quic_tools") {
     "tools/quic/quic_simple_server_session_helper.h",
     "tools/quic/quic_simple_server_stream.cc",
     "tools/quic/quic_simple_server_stream.h",
+    "tools/quic/quic_spdy_client_base.cc",
+    "tools/quic/quic_spdy_client_base.h",
     "tools/quic/quic_spdy_client_stream.cc",
     "tools/quic/quic_spdy_client_stream.h",
     "tools/quic/quic_spdy_server_stream_base.cc",
