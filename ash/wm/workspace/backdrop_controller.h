@@ -62,6 +62,8 @@ class BackdropController : public ShellObserver, public AccessibilityObserver {
   void OnOverviewModeEnded() override;
   void OnSplitViewModeStarting() override;
   void OnSplitViewModeEnded() override;
+  void OnAppListVisibilityChanged(bool shown,
+                                  aura::Window* root_window) override;
 
   // AccessibilityObserver:
   void OnAccessibilityModeChanged(

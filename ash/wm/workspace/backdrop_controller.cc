@@ -158,6 +158,12 @@ void BackdropController::OnSplitViewModeEnded() {
   UpdateBackdrop();
 }
 
+void BackdropController::OnAppListVisibilityChanged(bool shown,
+                                                    aura::Window* root_window) {
+  force_hidden_ = shown;
+  force_hidden_ ? Hide() : UpdateBackdrop();
+}
+
 void BackdropController::OnAccessibilityModeChanged(
     AccessibilityNotificationVisibility notify) {
   UpdateBackdrop();
