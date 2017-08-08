@@ -37,6 +37,15 @@ Polymer({
       },
     },
 
+    showChangePassword: {
+      type: Boolean,
+      value: function() {
+        return true;
+        /*loadTimeData.valueExists('changePasswordEnabled') &&
+            loadTimeData.getBoolean('changePasswordEnabled');*/
+      },
+    },
+
     /**
      * Dictionary defining page visibility.
      * @type {!GuestModePageVisibility}

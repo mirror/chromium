@@ -79,6 +79,15 @@ ChromePasswordProtectionService::~ChromePasswordProtectionService() {
   }
 }
 
+// static
+bool ChromePasswordProtectionService::ShouldShowChangePasswordSettingUI(
+    Profile* profile) {
+  LOG(ERROR) << "ShouldShowChangePasswordSettingUI";
+  return true;
+  /*return profile->GetPrefs()->GetBoolean(
+      kSafeBrowsingChangePasswordInSettingsEnabled);*/
+}
+
 void ChromePasswordProtectionService::FillReferrerChain(
     const GURL& event_url,
     int event_tab_id,
