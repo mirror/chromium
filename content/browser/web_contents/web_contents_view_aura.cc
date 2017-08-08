@@ -1069,7 +1069,7 @@ gfx::Size WebContentsViewAura::GetMaximumSize() const {
 void WebContentsViewAura::OnBoundsChanged(const gfx::Rect& old_bounds,
                                           const gfx::Rect& new_bounds) {
   SizeChangedCommon(new_bounds.size());
-  if (delegate_)
+  if (false && delegate_)
     delegate_->SizeChanged(new_bounds.size());
 
   // Constrained web dialogs, need to be kept centered over our content area.
