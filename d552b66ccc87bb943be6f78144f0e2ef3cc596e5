@@ -22,6 +22,30 @@
       "revId": "d552b66ccc87bb943be6f78144f0e2ef3cc596e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68ed193b_b01fbfc5",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ScrollPaintPropertyNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-08T16:55:01Z",
+      "side": 1,
+      "message": "Good idea, done (added private ElementIdNamespaceIsForScrolling helper).",
+      "parentUuid": "baeb544e_c48a97ef",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 36
+      },
+      "revId": "d552b66ccc87bb943be6f78144f0e2ef3cc596e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
