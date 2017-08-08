@@ -16,6 +16,24 @@
       "revId": "ce91cb3d13f9e2f17ecc8a8f70e746f3c79f507e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b52c1fc0_1e938d45",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-08T00:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "075a6ab2_31011e39",
+      "revId": "ce91cb3d13f9e2f17ecc8a8f70e746f3c79f507e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

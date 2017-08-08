@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "85a6eddb_e0e44897",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 4
+      },
+      "lineNbr": 1586,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-08T00:05:45Z",
+      "side": 1,
+      "message": "Yes these are subpixel differences. They are existing failures, just re-categorized.\n(I only looked through tests with name *rounded* and *radius*. It may not be comprehensive.)",
+      "parentUuid": "54d798f2_f6f052bc",
+      "revId": "cb2fbf4616ce4093d0be513bc42a9b886fa9bb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b6c34cf_06dabd06",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
         "patchSetId": 4
@@ -50,6 +68,24 @@
       "revId": "cb2fbf4616ce4093d0be513bc42a9b886fa9bb15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d0a650_399de26b",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-08T00:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b6c34cf_06dabd06",
+      "revId": "cb2fbf4616ce4093d0be513bc42a9b886fa9bb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "c105d6c2_ed62493e",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-08T00:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1021dd5c_2a95b7bb",
+      "revId": "cb2fbf4616ce4093d0be513bc42a9b886fa9bb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "578f8f8d_98fb1b8b",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
         "patchSetId": 4
@@ -81,6 +135,24 @@
       "writtenOn": "2017-08-05T02:07:41Z",
       "side": 1,
       "message": "Why does the blend mode have to be applied by the outermost synthesized\nclip?",
+      "revId": "cb2fbf4616ce4093d0be513bc42a9b886fa9bb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38009d72_b3d3b0b1",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-08T00:05:45Z",
+      "side": 1,
+      "message": "Because otherwise the blend operation won\u0027t see the backdrop from the parent effect, but the backdrop from the synthetic effect (which will be blank).",
+      "parentUuid": "578f8f8d_98fb1b8b",
       "revId": "cb2fbf4616ce4093d0be513bc42a9b886fa9bb15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "c5742a8c_6a899458",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-08T00:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5f3bed1_481b530c",
+      "revId": "cb2fbf4616ce4093d0be513bc42a9b886fa9bb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecab222b_2a859a0b",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.h",
         "patchSetId": 4
@@ -115,6 +205,24 @@
       "writtenOn": "2017-08-05T02:07:41Z",
       "side": 1,
       "message": "Add a note that |clip| is non-null only for kRoundedClip.\nAlso, rename |clip| to rounded_clip",
+      "revId": "cb2fbf4616ce4093d0be513bc42a9b886fa9bb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be15fc23_73a0813c",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-08T00:05:45Z",
+      "side": 1,
+      "message": "Actually this is always non-null. It will be the output clip of an effect if kEffect, otherwise the clip that\u0027s synthesized if kSynthesizedClip (renamed from kRoundedClip because non-orthogonal clip needs to be synthesized too.). Added this fact to comments.",
+      "parentUuid": "ecab222b_2a859a0b",
       "revId": "cb2fbf4616ce4093d0be513bc42a9b886fa9bb15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
