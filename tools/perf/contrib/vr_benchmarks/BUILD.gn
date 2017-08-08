@@ -8,11 +8,18 @@ group("vr_perf_tests") {
   testonly = true
   data = [
     "./__init__.py",
+    "./fps_metric.py",
     "./run_benchmark",
+    "./vr_benchmark.py",
     "./vr_config.py",
-    "benchmarks/",
+    "./webvr_pagesets.py",
+    "//build/android/pylib/",
     "//chrome/android/shared_preference_files/test/",
+    "//testing/scripts/",
+    "//testing/test_env.py",
+    "//testing/xvfb.py",
     "//third_party/gvr-android-sdk/test-apks/vr_services/vr_services_current.apk",
+    "//third_party/catapult/devil/bin/deps/linux2/",
   ]
   data_deps = [
     "//chrome/android:vr_nfc_simulator_apk",
