@@ -62,6 +62,7 @@ class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
   void OnResponseBodyStreamReady(MojoResult result);
   void DeleteIfNeeded();
   void SendResponseToClient();
+  void CompletePendingWrite();
 
   NetworkContext* context_;
   int32_t options_;
@@ -81,6 +82,9 @@ class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
   // finished.
   scoped_refptr<ResourceResponse> response_;
   mojo::ScopedDataPipeConsumerHandle consumer_handle_;
+
+  // Total amount of data sent to the renderer so far.
+  uint64_t written_body_length_ = 0;
 
   base::WeakPtrFactory<URLLoaderImpl> weak_ptr_factory_;
 
