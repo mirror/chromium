@@ -93,6 +93,30 @@
       "revId": "02a3638e8a6ee455fec53a7f0013dc7ec211bc47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "885b71e5_c3428a7b",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-08T07:28:42Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s fine. But could you also use TEST_P for this so you just generate a test for each possible transition type?",
+      "parentUuid": "1fdd0f12_798b6a63",
+      "range": {
+        "startLine": 43,
+        "startChar": 37,
+        "endLine": 43,
+        "endChar": 58
+      },
+      "revId": "02a3638e8a6ee455fec53a7f0013dc7ec211bc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
