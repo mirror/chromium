@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "929be5ff_27cd0760",
+        "filename": "ash/test/ash_test_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-08T19:26:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "809b581a_9f0084e2",
+      "range": {
+        "startLine": 472,
+        "startChar": 5,
+        "endLine": 472,
+        "endChar": 17
+      },
+      "revId": "efbdd71d70c3e07626dc2a16e69042d0f2200e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af378d14_295de482",
         "filename": "ash/test/ash_test_base.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-08T17:03:49Z",
       "side": 1,
       "message": "ick! But this is test code, so, ok.",
+      "range": {
+        "startLine": 483,
+        "startChar": 2,
+        "endLine": 483,
+        "endChar": 12
+      },
+      "revId": "efbdd71d70c3e07626dc2a16e69042d0f2200e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cedb7a2_145a79aa",
+        "filename": "ash/test/ash_test_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-08T19:26:45Z",
+      "side": 1,
+      "message": "Yep. Do you think it\u0027d make sense to update the WindowTreeHostObserver interfaces to take in non-const pointers?",
+      "parentUuid": "af378d14_295de482",
       "range": {
         "startLine": 483,
         "startChar": 2,
