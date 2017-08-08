@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5c0a040_8af81921",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-08T19:41:33Z",
+      "side": 1,
+      "message": "I think of commit messages as normally describing the functionality that\u0027s been implemented in the commit, not of describing what used to be true.  Since this paragraph doesn\u0027t explicitly say \"The old behavior is ...\" I think that makes it subject to misinterpretation.  I\u0027d suggest you instead say \"On an sync read error, transmit the error instead of a successful completion.  On an async read error, transmit the error instead of just closing the pipe.\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 21,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "462da06f2ab76ccc3e260753cd931da9c9ef4c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c7c07f_728e6b9d",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-08T19:41:33Z",
+      "side": 1,
+      "message": "This is almost certainly my lack of knowledge of the code, but shouldn\u0027t something here null pending_write_?",
+      "range": {
+        "startLine": 377,
+        "startChar": 4,
+        "endLine": 377,
+        "endChar": 28
+      },
+      "revId": "462da06f2ab76ccc3e260753cd931da9c9ef4c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8975e351_51751897",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-08T19:41:33Z",
+      "side": 1,
+      "message": "Worth putting in a comment here that |*this| may have been deleted?  (Also at other calls to NotifyCompleted.)",
+      "range": {
+        "startLine": 382,
+        "startChar": 20,
+        "endLine": 382,
+        "endChar": 32
+      },
+      "revId": "462da06f2ab76ccc3e260753cd931da9c9ef4c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac221a0b_3ae1e536",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-08T19:41:33Z",
+      "side": 1,
+      "message": "I\u0027m not clear looking at the code how pending_write_buffer_offset_ is used.  It looks like it\u0027s just incremented until we\u0027re done with writing to the pipe (which means this code is correct), but what happens when the consumer signals that they\u0027ve read stuff we\u0027ve written?  It looks like we never re-use space in the pending_buffer_?  \n\n(I\u0027m sure I\u0027m just confused, I just want to be unconfused :-}.)",
+      "range": {
+        "startLine": 460,
+        "startChar": 2,
+        "endLine": 460,
+        "endChar": 22
+      },
+      "revId": "462da06f2ab76ccc3e260753cd931da9c9ef4c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
