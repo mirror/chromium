@@ -64,6 +64,9 @@ void AppListPresenterImpl::Show(int64_t display_id) {
   }
 
   if (view_) {
+    if (is_fullscreen_app_list_enabled_) {
+      view_->SetState(AppListView::PEEKING);
+    }
     ScheduleAnimation();
   } else {
     presenter_delegate_ = factory_->GetDelegate(this);
