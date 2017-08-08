@@ -26,6 +26,7 @@
         /* Keep max-height within viewport, and flex content accordingly. */
         display: flex;
         flex-direction: column;
+        height: var(--cr-dialog-content-wrapper-height, auto);
         max-height: 100vh;
         overflow: auto;
       }
@@ -57,6 +58,11 @@
         padding: 16px 16px;
       }
 
+      :host([has-tabs]) ::slotted([slot=title]) {
+        /** Less padding due to the tab bar */
+        padding-bottom: 8px;
+      }
+
       :host ::slotted([slot=button-container]) {
         display: flex;
         justify-content: flex-end;
@@ -78,6 +84,7 @@
 
         display: flex;
         flex-direction: column;
+        flex-grow: 1;
         min-height: 60px; /* Minimum reasonably usable height. */
         overflow: auto;
 
@@ -96,6 +103,10 @@
         align-items: flex-start;
         display: flex;
         min-height: 47px;
+      }
+
+      :host([has-tabs]) .top-container {
+        min-height: 42px;
       }
 
       .title-container {
@@ -127,6 +138,7 @@
             on-keypress="onCloseKeypress_">
         </button>
       </div>
+      <slot name="tab-bar"></slot>
       <div class="body-container">
         <span id="bodyTopMarker"></span>
         <slot name="body"></slot>

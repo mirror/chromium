@@ -31,6 +31,14 @@ Polymer({
     },
 
     /**
+     * True if the dialog shows a tab-bar.
+     */
+    hasTabs: {
+      type: Boolean,
+      value: false,
+    },
+
+    /**
      * True if the dialog should ignore 'Enter' keypresses.
      */
     ignoreEnterKey: {
