@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "441b30a8_74669fed",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-08T18:05:44Z",
+      "side": 1,
+      "message": "Maybe...\n\nGiven that DOM may change, the immutability of a SelectionTemplate doesn\u0027t sound as strong as before. Any client should be aware of and prepared for DOM change.\n\nThe question is how we should document the class in a proper way so that other people using SelectionTemplate won\u0027t be confused.",
+      "parentUuid": "8d3ac685_f5ef68c4",
+      "revId": "b625e2083b201a6399cf263a871048eea0b2d5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ca2c893_5aaeebc2",
         "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.cpp",
         "patchSetId": 5
