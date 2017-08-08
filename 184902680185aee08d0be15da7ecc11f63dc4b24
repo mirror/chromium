@@ -70,6 +70,30 @@
       "revId": "184902680185aee08d0be15da7ecc11f63dc4b24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c58737d2_89640063",
+        "filename": "chromeos/system/statistics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-08-08T12:20:31Z",
+      "side": 1,
+      "message": "Good catch! I\u0027ve checked celes, lumpy, pit and winky and it was always the same:\nProduct_S/N\u003d[serial without checksum]\nserial_number\u003d[serial with checksum]\nback of device\u003d[serial with checksum]\n\nThis means we\u0027re reporting the wrong serial number for all Samsung devices! And there\u0027s no way to fix it because existing devices might have used the serial number for enterprise enrollment and thus we cannot change it.\n\nTo my mind the easiest fix would be if Samsung stopped writing \"Product_S/N\" to the VPD. Could we add a factory test that ensures \"Product_S/N\" doesn\u0027t exist?",
+      "parentUuid": "c0e633dd_6fe41472",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 44
+      },
+      "revId": "184902680185aee08d0be15da7ecc11f63dc4b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
