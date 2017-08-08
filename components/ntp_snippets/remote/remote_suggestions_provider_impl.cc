@@ -287,11 +287,8 @@ RemoteSuggestionsProviderImpl::RemoteSuggestionsProviderImpl(
     observer->OnCategoryStatusChanged(this, entry.first, entry.second.status);
   }
 
-  if (breaking_news_raw_data_provider_) {
-    breaking_news_raw_data_provider_->StartListening(
-        base::Bind(&RemoteSuggestionsProviderImpl::PrependArticleSuggestion,
-                   base::Unretained(this)));
-  }
+  // We subscribe for breaking news in EnterStateReady, when it is known that
+  // suggestions are not disabled.
 
   if (database_->IsErrorState()) {
     EnterState(State::ERROR_OCCURRED);
@@ -311,7 +308,8 @@ RemoteSuggestionsProviderImpl::RemoteSuggestionsProviderImpl(
 }
 
 RemoteSuggestionsProviderImpl::~RemoteSuggestionsProviderImpl() {
-  if (breaking_news_raw_data_provider_) {
+  if (breaking_news_raw_data_provider_ &&
+      breaking_news_raw_data_provider_->IsListening()) {
     breaking_news_raw_data_provider_->StopListening();
   }
 }
@@ -1085,10 +1083,21 @@ void RemoteSuggestionsProviderImpl::EnterStateReady() {
       UpdateCategoryStatus(category, CategoryStatus::AVAILABLE);
     }
   }
+
+  if (breaking_news_raw_data_provider_) {
+    DCHECK(!breaking_news_raw_data_provider_->IsListening());
+    breaking_news_raw_data_provider_->StartListening(
+        base::Bind(&RemoteSuggestionsProviderImpl::PrependArticleSuggestion,
+                   base::Unretained(this)));
+  }
 }
 
 void RemoteSuggestionsProviderImpl::EnterStateDisabled() {
   ClearSuggestions();
+  if (breaking_news_raw_data_provider_ &&
+      breaking_news_raw_data_provider_->IsListening()) {
+    breaking_news_raw_data_provider_->StopListening();
+  }
 }
 
 void RemoteSuggestionsProviderImpl::EnterStateError() {
