@@ -31,7 +31,7 @@
 #include "content/public/browser/web_contents.h"
 #include "ui/accessibility/platform/ax_snapshot_node_android_platform.h"
 #include "ui/aura/window.h"
-#include "ui/compositor/dip_util.h"
+#include "ui/aura/window_tree_host.h"
 #include "ui/snapshot/snapshot.h"
 #include "ui/wm/public/activation_client.h"
 #include "url/gurl.h"
@@ -174,11 +174,17 @@ void ArcVoiceInteractionArcHomeService::GetVoiceInteractionStructure(
     return;
   }
 
-  web_contents->RequestAXTreeSnapshot(base::Bind(
-      &RequestVoiceInteractionStructureCallback, callback,
-      ui::ConvertRectToPixel(browser->window()->GetNativeWindow()->layer(),
-                             browser->window()->GetBounds()),
-      web_contents->GetLastCommittedURL().spec()));
+  auto transform = browser->window()
+                       ->GetNativeWindow()
+                       ->GetRootWindow()
+                       ->GetHost()
+                       ->GetRootTransform();
+  auto rect = gfx::RectF(browser->window()->GetBounds());
+  transform.TransformRect(&rect);
+  web_contents->RequestAXTreeSnapshot(
+      base::Bind(&RequestVoiceInteractionStructureCallback, callback,
+                 gfx::Rect(rect.x(), rect.y(), rect.width(), rect.height()),
+                 web_contents->GetLastCommittedURL().spec()));
 }
 
 void ArcVoiceInteractionArcHomeService::OnVoiceInteractionOobeSetupComplete() {
