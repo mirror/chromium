@@ -2230,10 +2230,10 @@ public class ChromeTabbedActivity
                 FeatureEngagementTrackerFactory.getFeatureEngagementTrackerForProfile(
                         Profile.getLastUsedProfile());
         tracker.notifyEvent(EventConstants.SCREENSHOT_TAKEN_CHROME_IN_FOREGROUND);
-        maybeShowFeatureEngagementTextBubbleForDownloadPage(tracker);
+        maybeShowFeatureEngagementTextBubbleForDownloadPageScreenshot(tracker);
     }
 
-    private void maybeShowFeatureEngagementTextBubbleForDownloadPage(
+    private void maybeShowFeatureEngagementTextBubbleForDownloadPageScreenshot(
             final FeatureEngagementTracker tracker) {
         if (!tracker.shouldTriggerHelpUI(FeatureConstants.DOWNLOAD_PAGE_SCREENSHOT_FEATURE)) return;
 
