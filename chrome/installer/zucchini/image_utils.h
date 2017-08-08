@@ -145,6 +145,8 @@ struct Element {
   bool FitsIn(offset_t total_size) const {
     return offset <= total_size && total_size - offset >= length;
   }
+
+  BufferRegion region() const { return {offset, length}; }
 };
 
 // A matched pair of Elements.
