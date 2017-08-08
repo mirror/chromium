@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "6ebfd203_cb80ca6a",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-08T22:48:52Z",
+      "side": 1,
+      "message": "Sure. I rewrote the comment to be more comprehensive.",
+      "parentUuid": "dcfbaeec_48a12c31",
+      "revId": "cb2fbf4616ce4093d0be513bc42a9b886fa9bb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5f3bed1_481b530c",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.h",
         "patchSetId": 4

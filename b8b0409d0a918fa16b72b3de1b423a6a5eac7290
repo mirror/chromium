@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "356547c9_ec58935e",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-08T22:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec128f71_adb412fd",
+      "revId": "b8b0409d0a918fa16b72b3de1b423a6a5eac7290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a100a6c4_2e2daef8",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-08T01:17:16Z",
       "side": 1,
       "message": "It\u0027s weird to set mask_target\u0027s stable id here, since it is not allocated in this method..",
+      "revId": "b8b0409d0a918fa16b72b3de1b423a6a5eac7290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f01dafa_2d35e413",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-08T22:48:52Z",
+      "side": 1,
+      "message": "Agreed. But since the two IDs are managed by the same entity requested from external source, it has to be assigned one place or the other. I added a cross-ref comment between the place of creation and ID assignment.",
+      "parentUuid": "a100a6c4_2e2daef8",
       "revId": "b8b0409d0a918fa16b72b3de1b423a6a5eac7290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "be0e50e1_293a4840",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-08T22:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d250e38_d0b8115e",
+      "revId": "b8b0409d0a918fa16b72b3de1b423a6a5eac7290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cdc29f2_d2626a4d",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-08T01:17:16Z",
       "side": 1,
       "message": "Why would exiting a cc effect lead to a clip which is a child of current_clip_?\nDid you mean to compare to target_clip?",
+      "revId": "b8b0409d0a918fa16b72b3de1b423a6a5eac7290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1bfa01_98d4d73d",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-08T22:48:52Z",
+      "side": 1,
+      "message": "This loops over all clip nodes between the clip states before and after exiting the synthsized clip, and see if \u0027ancestor\u0027 has been ran past. It may be easier to read written this way:\n\nconst auto* pre_exit_clip \u003d current_clip_;\nCloseCcEffect();\nfor (const auto* exited_clip \u003d pre_exit_clip; exited_clip !\u003d current_clip; exited_clip \u003d exited_clip-\u003eParent())",
+      "parentUuid": "4cdc29f2_d2626a4d",
       "revId": "b8b0409d0a918fa16b72b3de1b423a6a5eac7290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "b8b0409d0a918fa16b72b3de1b423a6a5eac7290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae73568_89a35345",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-08T22:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "295c587a_fc901a43",
+      "revId": "b8b0409d0a918fa16b72b3de1b423a6a5eac7290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
