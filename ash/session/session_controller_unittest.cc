@@ -76,7 +76,7 @@ class SessionControllerTest : public testing::Test {
 
   // testing::Test:
   void SetUp() override {
-    controller_ = base::MakeUnique<SessionController>();
+    controller_ = base::MakeUnique<SessionController>(nullptr);
     controller_->AddObserver(&observer_);
   }
 

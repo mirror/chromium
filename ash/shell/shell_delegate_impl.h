@@ -46,7 +46,6 @@ class ShellDelegateImpl : public ShellDelegate {
   GPUSupport* CreateGPUSupport() override;
   base::string16 GetProductName() const override;
   gfx::Image GetDeprecatedAcceleratorImage() const override;
-  PrefService* GetActiveUserPrefService() const override;
   PrefService* GetLocalStatePrefService() const override;
   bool IsTouchscreenEnabledInPrefs(bool use_local_state) const override;
   void SetTouchscreenEnabledInPrefs(bool enabled,

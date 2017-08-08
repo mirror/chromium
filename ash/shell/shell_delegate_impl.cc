@@ -141,10 +141,6 @@ gfx::Image ShellDelegateImpl::GetDeprecatedAcceleratorImage() const {
   return gfx::Image();
 }
 
-PrefService* ShellDelegateImpl::GetActiveUserPrefService() const {
-  return nullptr;
-}
-
 PrefService* ShellDelegateImpl::GetLocalStatePrefService() const {
   return nullptr;
 }

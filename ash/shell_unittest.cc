@@ -554,42 +554,73 @@ class ShellPrefsTest : public NoSessionAshTestBase {
   ShellPrefsTest() = default;
   ~ShellPrefsTest() override = default;
 
-  // testing::Test:
-  void SetUp() override {
-    NoSessionAshTestBase::SetUp();
-    Shell::RegisterProfilePrefs(pref_service1_.registry());
-    Shell::RegisterProfilePrefs(pref_service2_.registry());
-  }
-
-  // Must outlive Shell.
-  TestingPrefServiceSimple pref_service1_;
-  TestingPrefServiceSimple pref_service2_;
-
  private:
   DISALLOW_COPY_AND_ASSIGN(ShellPrefsTest);
 };
 
 // Verifies that ShellObserver is notified for PrefService changes.
 TEST_F(ShellPrefsTest, Observer) {
+  constexpr char kUser1[] = "user1@test.com";
+  constexpr char kUser2[] = "user2@test.com";
+  const AccountId kUserAccount1 = AccountId::FromUserEmail(kUser1);
+  const AccountId kUserAccount2 = AccountId::FromUserEmail(kUser2);
+
   TestShellObserver observer;
   Shell::Get()->AddShellObserver(&observer);
 
   // Setup 2 users.
   TestSessionControllerClient* session = GetSessionControllerClient();
-  session->AddUserSession("user1@test.com");
-  session->AddUserSession("user2@test.com");
+  // Disable auto-provision of PrefService for each user.
+  session->AddUserSession(kUser1, user_manager::USER_TYPE_REGULAR, true, false);
+  session->AddUserSession(kUser2, user_manager::USER_TYPE_REGULAR, true, false);
 
   // Login notifies observers of the user pref service.
-  ash_test_helper()->test_shell_delegate()->set_active_user_pref_service(
-      &pref_service1_);
-  session->SwitchActiveUser(AccountId::FromUserEmail("user1@test.com"));
-  EXPECT_EQ(&pref_service1_, observer.last_pref_service_);
+  session->SwitchActiveUser(kUserAccount1);
+  EXPECT_EQ(nullptr, observer.last_pref_service_);
 
-  // Switching users notifies observers of the new user pref service.
-  ash_test_helper()->test_shell_delegate()->set_active_user_pref_service(
-      &pref_service2_);
-  session->SwitchActiveUser(AccountId::FromUserEmail("user2@test.com"));
-  EXPECT_EQ(&pref_service2_, observer.last_pref_service_);
+  auto pref_service = base::MakeUnique<TestingPrefServiceSimple>();
+  Shell::RegisterProfilePrefs(pref_service->registry());
+  Shell::Get()->session_controller()->ProvideUserPrefServiceForTest(
+      kUserAccount1, std::move(pref_service));
+  EXPECT_EQ(Shell::Get()->session_controller()->GetUserPrefServiceForUser(
+                kUserAccount1),
+            observer.last_pref_service_);
+  EXPECT_EQ(Shell::Get()->session_controller()->GetUserPrefServiceForUser(
+                kUserAccount1),
+            Shell::Get()->GetActiveUserPrefService());
+
+  observer.last_pref_service_ = nullptr;
+
+  // Switching to a user for which prefs are not ready does not notify and
+  // returns the old PrefService.
+  session->SwitchActiveUser(AccountId::FromUserEmail(kUser2));
+  EXPECT_EQ(nullptr, observer.last_pref_service_);
+  EXPECT_EQ(Shell::Get()->session_controller()->GetUserPrefServiceForUser(
+                kUserAccount1),
+            Shell::Get()->GetActiveUserPrefService());
+
+  session->SwitchActiveUser(AccountId::FromUserEmail(kUser1));
+  EXPECT_EQ(Shell::Get()->session_controller()->GetUserPrefServiceForUser(
+                kUserAccount1),
+            observer.last_pref_service_);
+  EXPECT_EQ(Shell::Get()->session_controller()->GetUserPrefServiceForUser(
+                kUserAccount1),
+            Shell::Get()->GetActiveUserPrefService());
+
+  observer.last_pref_service_ = nullptr;
+  pref_service = base::MakeUnique<TestingPrefServiceSimple>();
+  Shell::RegisterProfilePrefs(pref_service->registry());
+  Shell::Get()->session_controller()->ProvideUserPrefServiceForTest(
+      kUserAccount2, std::move(pref_service));
+  EXPECT_EQ(nullptr, observer.last_pref_service_);
+
+  session->SwitchActiveUser(AccountId::FromUserEmail(kUser2));
+  EXPECT_EQ(Shell::Get()->session_controller()->GetUserPrefServiceForUser(
+                kUserAccount2),
+            observer.last_pref_service_);
+  EXPECT_EQ(Shell::Get()->session_controller()->GetUserPrefServiceForUser(
+                kUserAccount2),
+            Shell::Get()->GetActiveUserPrefService());
 
   Shell::Get()->RemoveShellObserver(&observer);
 }

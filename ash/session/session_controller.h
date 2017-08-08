@@ -21,6 +21,11 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 
 class AccountId;
+class PrefService;
+
+namespace service_manager {
+class Connector;
+}
 
 namespace ash {
 
@@ -32,7 +37,7 @@ class SessionObserver;
 class ASH_EXPORT SessionController
     : NON_EXPORTED_BASE(public mojom::SessionController) {
  public:
-  SessionController();
+  explicit SessionController(service_manager::Connector* connector);
   ~SessionController() override;
 
   base::TimeDelta session_length_limit() const { return session_length_limit_; }
@@ -113,6 +118,9 @@ class ASH_EXPORT SessionController
   // Show the multi-profile login UI to add another user to this session.
   void ShowMultiProfileLogin();
 
+  PrefService* GetUserPrefServiceForUser(const AccountId& account_id);
+  PrefService* GetLastActiveUserPrefService();
+
   void AddObserver(SessionObserver* observer);
   void RemoveObserver(SessionObserver* observer);
 
@@ -139,6 +147,8 @@ class ASH_EXPORT SessionController
   void ClearUserSessionsForTest();
   void FlushMojoForTest();
   void LockScreenAndFlushForTest();
+  void ProvideUserPrefServiceForTest(const AccountId& account_id,
+                                     std::unique_ptr<PrefService> pref_service);
 
  private:
   void SetSessionState(session_manager::SessionState state);
@@ -157,6 +167,10 @@ class ASH_EXPORT SessionController
   // when post lock animation finishes and ash is fully locked. It would then
   // run |start_lock_callback_| to indicate ash is locked successfully.
   void OnLockAnimationFinished();
+
+  void OnProfilePrefServiceInitialized(
+      const AccountId& account_id,
+      std::unique_ptr<PrefService> pref_service);
 
   // Bindings for mojom::SessionController interface.
   mojo::BindingSet<mojom::SessionController> bindings_;
@@ -199,6 +213,11 @@ class ASH_EXPORT SessionController
   base::TimeTicks session_start_time_;
 
   base::ObserverList<ash::SessionObserver> observers_;
+
+  service_manager::Connector* connector_;
+
+  std::map<AccountId, std::unique_ptr<PrefService>> per_user_prefs_;
+  PrefService* last_active_user_prefs_;
 
   base::WeakPtrFactory<SessionController> weak_ptr_factory_;
 

@@ -659,6 +659,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   void OnSessionStateChanged(session_manager::SessionState state) override;
   void OnLoginStatusChanged(LoginStatus login_status) override;
   void OnLockStateChanged(bool locked) override;
+  void OnActiveUserSessionPrefServiceInitialized(
+      PrefService* pref_service) override;
 
   // Finalizes the shelf state. Called after the user session is active and
   // the profile is available.
@@ -667,9 +669,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   // Registers preferences owned by other services (e.g. chrome). Used in mash.
   static void RegisterForeignPrefs(PrefRegistrySimple* registry);
 
-  // Callbacks for prefs::ConnectToPrefService.
-  void OnProfilePrefServiceInitialized(
-      std::unique_ptr<::PrefService> pref_service);
+  // Callback for prefs::ConnectToPrefService.
   void OnLocalStatePrefServiceInitialized(
       std::unique_ptr<::PrefService> pref_service);
 
@@ -734,9 +734,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<app_list::AppList> app_list_;
 
   // Only initialized for mash. Can be null in ash_standalone (when chrome is
-  // not running) or when reconnecting to the mojo pref service after
-  // multiuser profile switch.
-  std::unique_ptr<::PrefService> profile_pref_service_;
+  // not running).
   std::unique_ptr<::PrefService> local_state_;
 
   std::unique_ptr<views::corewm::TooltipController> tooltip_controller_;

@@ -81,6 +81,7 @@ void LogoutButtonTray::OnActiveUserPrefServiceChanged(PrefService* prefs) {
   pref_change_registrar_.reset();
   if (!prefs)  // Null during startup, user switch and tests.
     return;
+
   pref_change_registrar_ = base::MakeUnique<PrefChangeRegistrar>();
   pref_change_registrar_->Init(prefs);
   pref_change_registrar_->Add(

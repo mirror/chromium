@@ -135,10 +135,6 @@ gfx::Image TestShellDelegate::GetDeprecatedAcceleratorImage() const {
   return gfx::Image();
 }
 
-PrefService* TestShellDelegate::GetActiveUserPrefService() const {
-  return active_user_pref_service_;
-}
-
 PrefService* TestShellDelegate::GetLocalStatePrefService() const {
   return local_state_pref_service_;
 }

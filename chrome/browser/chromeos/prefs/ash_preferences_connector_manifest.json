@@ -1,11 +1,11 @@
 {
-  "name": "preferences_forwarder",
-  "display_name": "Preferences Forwarder",
+  "name": "ash_preferences_connector",
+  "display_name": "Ash Preferences Forwarder",
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {
-        "pref_client": [
-          "prefs::mojom::PrefStoreConnector"
+        "pref_connector": [
+          "ash::mojom::PrefConnector"
         ]
       },
       "requires": {
