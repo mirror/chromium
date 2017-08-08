@@ -447,11 +447,6 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
 
         private boolean onEndImeCommand() {
             if (DEBUG) Log.i(TAG, "onEndImeCommand: " + (mBatchEditNestCount - 1));
-            if (mBatchEditNestCount > 1) {
-                String diff = mCurrentState.getBackwardDeletedTextFrom(mPreBatchEditState);
-                if (diff == null) setAutocompleteSpan();
-                return decrementBatchEditCount();
-            }
 
             String diff = mCurrentState.getBackwardDeletedTextFrom(mPreBatchEditState);
             if (diff != null) {

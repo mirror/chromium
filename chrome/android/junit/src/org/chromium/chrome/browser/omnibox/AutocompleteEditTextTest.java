@@ -429,7 +429,7 @@ public class AutocompleteEditTextTest {
         // User deletes 'o'.
         assertTrue(mInputConnection.setComposingText("hell", 1));
         mInOrder.verify(mVerifier).onUpdateSelection(4, 4);
-        // We restore 'o', and clears autocomplete text instead.
+        // We restore 'o', and clear autocomplete text instead.
         mInOrder.verify(mVerifier).onUpdateSelection(5, 5);
         assertTrue(mAutocomplete.isCursorVisible());
         mInOrder.verify(mVerifier).onAutocompleteTextStateChanged(false);
@@ -443,6 +443,45 @@ public class AutocompleteEditTextTest {
         mInOrder.verifyNoMoreInteractions();
         assertFalse(mAutocomplete.shouldAutocomplete());
         assertTexts("hello", "");
+    }
+
+    @Test
+    @Features(@Features.Register(
+            value = ChromeFeatureList.SPANNABLE_INLINE_AUTOCOMPLETE, enabled = true))
+    public void testDelete_SetComposingTextInBatchEditWithSpannableModel() {
+        // User types "hello".
+        assertTrue(mInputConnection.setComposingText("hello", 1));
+
+        mInOrder.verify(mVerifier).onUpdateSelection(5, 5);
+        mInOrder.verify(mVerifier).onAutocompleteTextStateChanged(false);
+        mInOrder.verifyNoMoreInteractions();
+        assertTrue(mAutocomplete.shouldAutocomplete());
+        // The controller kicks in.
+        mAutocomplete.setAutocompleteText("hello", " world");
+        assertFalse(mAutocomplete.isCursorVisible());
+        assertTexts("hello", " world");
+        mInOrder.verifyNoMoreInteractions();
+
+        // User deletes 'o' in a batch edit.
+        assertTrue(mInputConnection.beginBatchEdit());
+        assertTrue(mInputConnection.setComposingText("hell", 1));
+
+        // We restore 'o', and clear autocomplete text instead.
+        assertTrue(mAutocomplete.isCursorVisible());
+        assertFalse(mAutocomplete.shouldAutocomplete());
+        assertTexts("hello", "");
+
+        // Keyboard app checks the current state.
+        assertEquals("hello", mInputConnection.getTextBeforeCursor(10, 0));
+        assertTrue(mAutocomplete.isCursorVisible());
+        assertFalse(mAutocomplete.shouldAutocomplete());
+        assertTexts("hello", "");
+
+        mInOrder.verifyNoMoreInteractions();
+
+        assertTrue(mInputConnection.endBatchEdit());
+        mInOrder.verify(mVerifier).onAutocompleteTextStateChanged(false);
+        assertFalse(mAutocomplete.shouldAutocomplete());
     }
 
     @Test
