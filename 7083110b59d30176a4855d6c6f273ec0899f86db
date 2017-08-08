@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33b18c18_eb4e4d52",
+        "filename": "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_cocoa_interactive_uitest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-08-08T17:23:49Z",
+      "side": 1,
+      "message": "const",
+      "revId": "7083110b59d30176a4855d6c6f273ec0899f86db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
