@@ -19,9 +19,9 @@ class SchedulerWorker;
 
 // A stack of SchedulerWorkers. Supports removal of arbitrary SchedulerWorkers.
 // DCHECKs when a SchedulerWorker is inserted multiple times. SchedulerWorkers
-// are not owned by the stack. Push() is amortized O(1). Pop(), Peek(), Size()
-// and Empty() are O(1). Contains() and Remove() are O(n).
-// This class is NOT thread-safe.
+// are not owned by the stack. Push() is amortized O(1). Pop(), Peek(),
+// Size(), and Empty() are O(1). Contains() and Remove() are O(n).
+// ContainsAtBottom is O(min(n, m)); This class is NOT thread-safe.
 class BASE_EXPORT SchedulerWorkerStack {
  public:
   SchedulerWorkerStack();
@@ -40,6 +40,10 @@ class BASE_EXPORT SchedulerWorkerStack {
 
   // Returns true if |worker| is already on the stack.
   bool Contains(const SchedulerWorker* worker) const;
+
+  // Returns true iff |worker| is within |m| spots from the bottom of the stack.
+  // Returns false if |worker| is not within this region.
+  bool ContainsAtBottom(const SchedulerWorker* worker, int m) const;
 
   // Removes |worker| from the stack.
   void Remove(const SchedulerWorker* worker);
