@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f8c58e5_a29d502e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T06:52:34Z",
+      "side": 1,
+      "message": "s/mofdified/Modified/\nPlease starts an uppercase letter in Summary line.\n\ns/assert_selection.js/assert_selection()/\nThis patch changes *function* |assert_selecction()| instead of *file*\n\"assert_selection.js\".\n\nPlease describe what your change is:\n - what changes\n - why? fixing bug, improving speed, code health, etc.\n\nFor example:\nThis patch changes |assert_selection()| to take an Array as input sample\nand expectation in addition to string to simplify common pattern by\nremoving |.join(\u0027\u0027)|:\n assert_selection([\u0027foo\u0027, \u0027bar\u0027, \u0027baz\u0027].join(\u0027\u0027), ...)\nto\n assert_selection([\u0027foo\u0027, \u0027bar\u0027, \u0027baz\u0027], ...)\nfor ease of writing test script.\n\nNote: Please format description in 80 chars per line. Summary line (first\nline of description is OK to have more than 80 chars)",
+      "revId": "7938bb707833e537d419dc93e914aa5a17c3b1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a708326a_a189860e",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T06:52:34Z",
+      "side": 1,
+      "message": "nit: s/inputText/passedInputText/\n\nThis is type annotation for Closure compiler[1].\n\nYou can validate type annotation with following command:\n$ java -jar third_party/closure_compiler/compiler/compiler.jar  -O ADVANCED third_party/WebKit/LayoutTests/editing/assert_selection.js\n\n\n[1] https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler.",
+      "revId": "7938bb707833e537d419dc93e914aa5a17c3b1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
