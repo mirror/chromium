@@ -75,6 +75,7 @@ public abstract class AppHooks {
      * @param callback Callback that should receive the results of the AndroidEdu device check.
      */
     public void checkIsAndroidEduDevice(final AndroidEduOwnerCheckCallback callback) {
+        // Adding a random comment to kill https://chromium-review.googlesource.com/c/606996
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
