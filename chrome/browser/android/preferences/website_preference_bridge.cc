@@ -177,6 +177,24 @@ void GetOrigins(JNIEnv* env,
                     jembedder);
     }
   }
+
+  // Add the DSE origin if it allows geolocation.
+  if (content_type == CONTENT_SETTINGS_TYPE_GEOLOCATION) {
+    SearchGeolocationService* search_helper =
+        SearchGeolocationService::Factory::GetForBrowserContext(
+            GetActiveUserProfile(false /* is_incognito */));
+    if (search_helper) {
+      const url::Origin& dse_origin = search_helper->GetDSEOriginIfEnabled();
+      if (!dse_origin.unique()) {
+        std::string dse_origin_string = dse_origin.Serialize();
+        if (!base::ContainsValue(seen_origins, dse_origin_string)) {
+          insertionFunc(env, list,
+                        ConvertOriginToJavaString(env, dse_origin_string),
+                        jembedder);
+        }
+      }
+    }
+  }
 }
 
 ContentSetting GetSettingForOrigin(JNIEnv* env,
