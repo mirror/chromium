@@ -45,5 +45,5 @@ GeneratedPasswordSavedInfoBarDelegateAndroid::GetIdentifier() const {
 }
 
 int GeneratedPasswordSavedInfoBarDelegateAndroid::GetIconId() const {
-  return IDR_INFOBAR_SAVE_PASSWORD;
+  return IDR_ANDROID_INFOBAR_SAVE_PASSWORD;
 }
