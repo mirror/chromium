@@ -9,6 +9,7 @@
 
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "build/build_config.h"
 #include "components/data_use_measurement/core/data_use_recorder.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/common/browser_side_navigation_policy.h"
@@ -92,6 +93,8 @@ class ChromeDataUseAscriberTest : public testing::Test {
   net::TestURLRequestContext context_;
   std::unique_ptr<content::MockResourceContext> resource_context_;
 };
+
+#ifndef OS_MACOSX
 
 TEST_F(ChromeDataUseAscriberTest, NoRecorderWithoutFrame) {
   std::unique_ptr<net::URLRequest> request = CreateNewRequest(
@@ -455,5 +458,7 @@ TEST_F(ChromeDataUseAscriberTest, PageLoadObserverNotified) {
 
   EXPECT_EQ(0u, recorders().size());
 }
+
+#endif
 
 }  // namespace data_use_measurement
