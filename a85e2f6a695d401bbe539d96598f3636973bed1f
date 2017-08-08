@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eb98de5_c553b565",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T08:44:37Z",
+      "side": 1,
+      "message": "I hope this is acceptable. I\u0027ve sunk a lot of time trying to add this file to mojo_bindings or blink_headers. I think there is some complex circular dependencies caused by all the typemaps  for Fetch API stuff. In the end it\u0027s easier to just make a new target.\n\nOnion souping seems really difficult if this isn\u0027t acceptable...",
+      "revId": "a85e2f6a695d401bbe539d96598f3636973bed1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
