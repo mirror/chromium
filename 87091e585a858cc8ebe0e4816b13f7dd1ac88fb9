@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "5e74705b_959533a0",
+        "filename": "chrome/browser/ui/views/sad_tab_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "Hm. The implementation of these in WebContentsViewAura is identical:\n\nvoid WebContentsViewAura::GetContainerBounds(gfx::Rect *out) const {\n  *out \u003d window_-\u003eGetBoundsInScreen();\n}\n\ngfx::Rect WebContentsViewAura::GetViewBounds() const {\n  return window_-\u003eGetBoundsInScreen();\n}\n\nand Mac is currently NOTIMPLEMENTED(). Which suggests to me that one of these should be deleted (see later comments)",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad0696ed_888c73c7",
         "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
         "patchSetId": 2
@@ -42,6 +59,280 @@
         "endLine": 1,
         "endChar": 16
       },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e686fe43_20b3f111",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "no (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa165d7_2abc9c48",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "We can not just copy an entire file like this - it makes horrible maintenance problems since we have to fix bugs in two places. I think we can inherit from ChromeWebContentsViewDelegateMac. We just need to wrap things. Something like\n\n\n// chrome_web_contents_view_delegate_mac.mm\n\n#if !BUILDFLAG(MAC_VIEWS_BROWSER)\n\ncontent::WebContentsViewDelegate* CreateWebContentsViewDelegate(\n    content::WebContents* web_contents) {\n  return new ChromeWebContentsViewDelegateMac(web_contents);\n}\n\n#endif  // MAC_VIEWS_BROWSER\n\n\n// chrome_web_contents_view_delegate_views_mac.mm (only compiled with mac_views_browser \u003d true)\n\ncontent::WebContentsViewDelegate* CreateWebContentsViewDelegate(\n    content::WebContents* web_contents) {\n  return new ChromeWebContentsViewDelegateViewsMac(web_contents);\n}",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d047167a_c992ea9a",
+        "filename": "content/browser/web_contents/web_contents_view_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "It kinda feels as though `GetViewBounds` just happened to be conveniently floating around and NOTIMPLEMENTED() and so it\u0027s now being used to implement \"GetViewBoundsToUseInSadTabViewOnMac()\". Can we try implementing in terms of GetContainerBounds.size(), same as Aura? (i.e. remove the #if from sad_tab_view.cc).\n\nThe trick may be to fix views::Widget::ReparentNativeView so that it shifts the SadTab\u0027s Widget bounds origin to be relative to the new parent native view.",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb8bbd3_2c44e1f0",
+        "filename": "content/browser/web_contents/web_contents_view_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "webContentsView_ needs to be checked as well - it\u0027s not guaranteed to be non-null. (e.g. via clearWebContentsView)",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a460c31e_85e32e37",
+        "filename": "content/browser/web_contents/web_contents_view_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "Is there coverage for this? It does certainly look like SizeChanged has never been invoked on Mac.. ideally that means there\u0027s a test failing when we compile with mac_views_browser \u003d true which is fixed by adding this line. However, I suspect the reality is that that is not the case.\n\nAnother way to check - commenting out the SizeChanged() call in web_contents_view_aura.cc should cause a test to fail .. let\u0027s see if that happens :) - https://chromium-review.googlesource.com/604970\n\n(so we should at least file a bug that tests are missing. Ideally we add tests to ensure Sad Tabs are resized appropriately when the parent window size changes.)",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4060d62f_76f703d6",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "reparent_origin -\u003e reparentOrigin (since we\u0027re between @foo/@end). Or perhaps just |offset|",
+      "range": {
+        "startLine": 627,
+        "startChar": 15,
+        "endLine": 627,
+        "endChar": 30
+      },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96c66e7_e538e39f",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "Comparing widths seems strange here. I think only works since with the assumption that at least one corner of |self frame| is at the same screen location as |window frame|.\n\nIf this is still required after tweaking views::Widget::ReparentNativeView, it should be done with  -[NSView convertPoint:fromView:]",
+      "range": {
+        "startLine": 628,
+        "startChar": 19,
+        "endLine": 628,
+        "endChar": 73
+      },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfeaf997_36588644",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "I think this comment can be omitted. It makes sense that contentRectForFrameRect: is only consulted when its the contentView that\u0027s changing.",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace52425_6e48f698",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "However, I think this needs a test. In particular, the \"extend over titlebar\" stuff is a hack that we want to remove (and use NSFullSizeContentViewWindowMask instead), we need to ensure this code you\u0027re adding does not regress.",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7c8fbc_7bd1aff8",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "Implementing this means we need to enable the tests, e.g. view_unittest.cc\n\n\n// No ReparentNativeView on Mac. See http://crbug.com/514920.\n#if defined(OS_MACOSX) \u0026\u0026 !defined(USE_AURA)\n#define MAYBE_NativeViewHierarchyChanged DISABLED_NativeViewHierarchyChanged\n#else\n#define MAYBE_NativeViewHierarchyChanged NativeViewHierarchyChanged\n#endif",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59d3a61_39ca3b7c",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "is still necessay -\u003e must remain visible",
+      "range": {
+        "startLine": 746,
+        "startChar": 35,
+        "endLine": 746,
+        "endChar": 52
+      },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e61204_b7dd8824",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "of layer -\u003e and visibility of the ui::Layer",
+      "range": {
+        "startLine": 747,
+        "startChar": 12,
+        "endLine": 747,
+        "endChar": 20
+      },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60a216d_9701d9f5",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "BridgedContentView currently makes lots of assumptions about it being the only one of its kind in the NSWindow (and that it occupies the entire ContentView).",
+      "range": {
+        "startLine": 748,
+        "startChar": 62,
+        "endLine": 749,
+        "endChar": 36
+      },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87ff615_629eac22",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T04:07:17Z",
+      "side": 1,
+      "message": "This alone tends to cause problems since the window can still intercept mouse events. [native_window setIgnoresMouseEvents:YES] may help.\n\nAnd I think a better approach would be to link this property with Widget::InitParams::TYPE_CONTROL, and set it where we already check for TYPE_CONTROL in BridgedNativeWidget::Init()",
       "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
