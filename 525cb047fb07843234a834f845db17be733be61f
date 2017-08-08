@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcd3f435_6e92d89d",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-08T00:32:14Z",
+      "side": 1,
+      "message": "nit: could this just be\n\n  mHasRenderTestFeature \u003d (features !\u003d null \u0026\u0026 Arrays.asList(features.value()).contains(\"RenderTest\"))\n\n?",
+      "revId": "525cb047fb07843234a834f845db17be733be61f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
