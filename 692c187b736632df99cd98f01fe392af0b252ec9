@@ -75,6 +75,30 @@
       "revId": "692c187b736632df99cd98f01fe392af0b252ec9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def31f42_13537eb6",
+        "filename": "ios/chrome/app/chrome_app_startup_parameters.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-08T11:41:13Z",
+      "side": 1,
+      "message": "Range is about 0-10.\nSo used COUNTS_100",
+      "parentUuid": "a12a19ba_32bcd02e",
+      "range": {
+        "startLine": 329,
+        "startChar": 4,
+        "endLine": 329,
+        "endChar": 24
+      },
+      "revId": "692c187b736632df99cd98f01fe392af0b252ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
