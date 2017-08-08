@@ -1,0 +1,289 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b57c70e2_2f664cd1",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "Why the thread jumps? Can\u0027t we just bind the CookieStoreImpl directly on the IO thread avoiding these extra thread hops? Afaict ChildProcessSecurityPolicy is supposed to be usable from any thread?",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a32345b_6d361342",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "If you somehow do need the thread hops, I don\u0027t see how base::Unretained(this) is safe here? I don\u0027t think mojo::StrongBinding guarantees that it will keep the implementation alive as long as there are outstanding callbacks (i.e. if the connection is disconnected it\u0027ll just delete the implementation, regardless of outstanding callbacks)",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d789c93_4a61a921",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "same here, I don\u0027t think base::Unretained is safe",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9154b307_a2bccfb7",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "Is this any different from just base::BindOnce(std::move(callback), std::move(result)) ?",
+      "range": {
+        "startLine": 135,
+        "startChar": 17,
+        "endLine": 140,
+        "endChar": 60
+      },
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727b0f0a_3c93ad9b",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "nit: some comment about what this class is for and ownership/lifetime/thread-safety/etc?",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49d002ea_0bc4512a",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "nit: browser_context?",
+      "range": {
+        "startLine": 29,
+        "startChar": 34,
+        "endLine": 29,
+        "endChar": 50
+      },
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24218f23_d04b27ce",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "copy-paste error?",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93f1b8d_5b619d91",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2994,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "nit: no need for the content::, this is already in the content namespace",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91572bd_a21ff114",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieListItem.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "this might be my lack of familiarity with cookies, but when would a null name or null value be used?",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a8ab7b_b6377709",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "huh? why does this need two options dictionaries?",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7aa7aa9_412c5b10",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "it seems odd that setting would not require a name?",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee49633_1aa0d8ee",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "the explainer seems to call this \"delete\" rather than \"remove\"?",
+      "range": {
+        "startLine": 31,
+        "startChar": 55,
+        "endLine": 31,
+        "endChar": 61
+      },
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315a80b6_12cf3899",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreGetOptions.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "is this valid? If \u0027null\u0027 should be the default value, shouldn\u0027t name be null-able? Or otherwise just not have a default value and let it be undefined if it isn\u0027t specified?",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d57768a_5e27dd09",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreSetOptions.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "same here, null is not a valid DOMString value",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bddc934_3c6ef052",
+        "filename": "third_party/WebKit/public/platform/modules/cookie_store/cookie_store.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-08T16:40:44Z",
+      "side": 1,
+      "message": "Any reason you\u0027re not using base::Time/mojo.common.mojom.Time here?",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
