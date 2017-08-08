@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "648e5ddc_5ad880e2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 27764,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-08T14:20:07Z",
+      "side": 1,
+      "message": "Mention when these are logged. On foreground - or something else?",
+      "range": {
+        "startLine": 27764,
+        "startChar": 18,
+        "endLine": 27764,
+        "endChar": 0
+      },
+      "revId": "369333bd094b3948efcd7c49804d17a3a9a002a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
