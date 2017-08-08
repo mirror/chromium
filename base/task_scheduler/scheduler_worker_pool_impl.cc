@@ -387,9 +387,7 @@ void SchedulerWorkerPoolImpl::AdjustWorkerCapacity() {
   MaintainAtLeastOneIdleWorker();
 }
 
-// TODO(jeffreyhe): Add and return an |initial_worker_capacity_| member when
-// worker capacity becomes dynamic.
-int SchedulerWorkerPoolImpl::GetMaxConcurrentTasksDeprecated() const {
+int SchedulerWorkerPoolImpl::GetMaxConcurrentNonBlockedTasksDeprecated() const {
 #if DCHECK_IS_ON()
   AutoSchedulerLock auto_lock(lock_);
 
