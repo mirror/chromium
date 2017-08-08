@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e970ff61_6dda4d86",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T21:27:12Z",
+      "side": 1,
+      "message": "can remove this",
+      "range": {
+        "startLine": 202,
+        "startChar": 1,
+        "endLine": 203,
+        "endChar": 66
+      },
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d2908d3_df36630c",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T21:27:12Z",
+      "side": 1,
+      "message": "OnDiskCacheCleanupComplete().",
+      "range": {
+        "startLine": 812,
+        "startChar": 23,
+        "endLine": 812,
+        "endChar": 49
+      },
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86783bc4_589b247d",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T21:27:12Z",
+      "side": 1,
+      "message": "\"used in\"?",
+      "range": {
+        "startLine": 812,
+        "startChar": 13,
+        "endLine": 812,
+        "endChar": 22
+      },
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3c083f_b025c68b",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T21:27:12Z",
+      "side": 1,
+      "message": "can reuse the comment from AppCache: \"// Won\u0027t get a callback about cleanup being done, so call it ourselves.\"",
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24295f1_13ca7dfa",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1911,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T21:27:12Z",
+      "side": 1,
+      "message": "can you elaborate on what this means? i.e., why were these traits chosen and why are they suspect?",
+      "range": {
+        "startLine": 1911,
+        "startChar": 32,
+        "endLine": 1911,
+        "endChar": 68
+      },
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736d46c5_62b4318e",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T21:27:12Z",
+      "side": 1,
+      "message": "Can you help me understand the difference between OnDiskCacheCleanupComplete() and DidDeleteDiskCache()? Could we have comments explaining it as well?",
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e0bcf0_10131485",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T21:27:12Z",
+      "side": 1,
+      "message": "DeleteAndStartOver()",
+      "range": {
+        "startLine": 561,
+        "startChar": 48,
+        "endLine": 561,
+        "endChar": 66
+      },
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579a95ce_21b4f5bd",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T21:27:12Z",
+      "side": 1,
+      "message": "\"cache backend\" is \"disk cache\" right? may as well just say \"disk cache cleanup phase\" ?",
+      "range": {
+        "startLine": 561,
+        "startChar": 17,
+        "endLine": 561,
+        "endChar": 30
+      },
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8db5e8e_b63ad8be",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-08T21:27:12Z",
+      "side": 1,
+      "message": "It seems to me that this is true whenever we have a non-memory-backed disk cache, may be nice for the comment to say that also.",
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
