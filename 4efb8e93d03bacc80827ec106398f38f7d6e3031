@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f74b9b8_35500299",
+        "filename": "services/device/generic_sensor/absolute_orientation_euler_angles_fusion_algorithm_using_accelerometer_and_magnetometer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-08-08T09:01:05Z",
+      "side": 1,
+      "message": "Can reporting mode be cached? GetReportingMode() goes through all sensors and resulting mode should not change during fusion sensor\u0027s lifecycle.",
+      "revId": "4efb8e93d03bacc80827ec106398f38f7d6e3031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
