@@ -27,8 +27,8 @@ static void SuspendAllMediaPlayersInRenderFrame(
 }
 
 MediaWebContentsObserverAndroid::MediaWebContentsObserverAndroid(
-    WebContents* web_contents)
-    : MediaWebContentsObserver(web_contents) {}
+    WebContentsImpl* web_contents_impl)
+    : MediaWebContentsObserver(web_contents_impl) {}
 
 MediaWebContentsObserverAndroid::~MediaWebContentsObserverAndroid() {}
 

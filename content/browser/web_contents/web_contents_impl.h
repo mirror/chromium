@@ -32,6 +32,7 @@
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/wake_lock/wake_lock_context_host.h"
+#include "content/browser/web_contents/web_contents_impl_observer.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/color_chooser.h"
 #include "content/public/browser/download_url_parameters.h"
@@ -903,6 +904,7 @@ class CONTENT_EXPORT WebContentsImpl
 #endif
 
  private:
+  friend class WebContentsImplObserver;
   friend class WebContentsObserver;
   friend class WebContents;  // To implement factory methods.
 
@@ -1019,6 +1021,10 @@ class CONTENT_EXPORT WebContentsImpl
   // sure to remove the observer before they go away.
   void AddObserver(WebContentsObserver* observer);
   void RemoveObserver(WebContentsObserver* observer);
+
+  // Add and remove observers for persistent video updates.
+  void AddImplObserver(WebContentsImplObserver* observer);
+  void RemoveImplObserver(WebContentsImplObserver* observer);
 
   // Clears a pending contents that has been closed before being shown.
   void OnWebContentsDestroyed(WebContentsImpl* web_contents);
@@ -1345,6 +1351,9 @@ class CONTENT_EXPORT WebContentsImpl
   // latter might cause RenderViewHost's destructor to call us and we might use
   // the observer list then.
   base::ObserverList<WebContentsObserver> observers_;
+
+  // A list of observers for impl observers.
+  base::ObserverList<WebContentsImplObserver> impl_observers_;
 
   // Associated interface binding sets attached to this WebContents.
   std::map<std::string, WebContentsBindingSet*> binding_sets_;

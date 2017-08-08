@@ -11,22 +11,26 @@
 #include "base/unguessable_token.h"
 #include "content/browser/android/content_view_core.h"
 #include "content/browser/android/content_view_core_observer.h"
+#include "content/browser/web_contents/web_contents_impl_observer.h"
 #include "content/public/browser/web_contents_observer.h"
 
 namespace content {
+
+class WebContentsImpl;
 
 // Native counterpart to DialogOverlayImpl java class.  This is created by the
 // java side.  When the ContentViewCore for the provided token is attached or
 // detached from a WindowAndroid, we get the Android window token and notify the
 // java side.
 class DialogOverlayImpl : public ContentViewCoreObserver,
-                          public WebContentsObserver {
+                          public WebContentsObserver,
+                          public WebContentsImplObserver {
  public:
   // This may not call back into |obj| directly, but must post.  This is because
   // |obj| is still being initialized.
   DialogOverlayImpl(const base::android::JavaParamRef<jobject>& obj,
                     RenderFrameHostImpl* rfhi,
-                    WebContents* web_contents,
+                    WebContentsImpl* web_contents_impl,
                     ContentViewCore* cvc);
   ~DialogOverlayImpl() override;
 
@@ -57,6 +61,9 @@ class DialogOverlayImpl : public ContentViewCoreObserver,
   void RenderFrameDeleted(RenderFrameHost* render_frame_host) override;
   void RenderFrameHostChanged(RenderFrameHost* old_host,
                               RenderFrameHost* new_host) override;
+
+  // WebContentsImplObserver
+  void PersistentVideoRequested(bool want_persistent_video) override;
 
   // Unregister for tokens if we're registered, and clear |cvc_|.
   void UnregisterForTokensIfNeeded();
