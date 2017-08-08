@@ -22,6 +22,8 @@ SyntheticPointerActionParams::PointerActionType ToSyntheticPointerActionType(
     return SyntheticPointerActionParams::PointerActionType::MOVE;
   if (action_type == "pointerUp")
     return SyntheticPointerActionParams::PointerActionType::RELEASE;
+  if (action_type == "pointerLeave")
+    return SyntheticPointerActionParams::PointerActionType::LEAVE;
   if (action_type == "pause")
     return SyntheticPointerActionParams::PointerActionType::IDLE;
   return SyntheticPointerActionParams::PointerActionType::NOT_INITIALIZED;
@@ -252,6 +254,7 @@ bool ActionsParser::ParseAction(
     case SyntheticPointerActionParams::PointerActionType::RELEASE:
       action_param.set_button(button);
       break;
+    case SyntheticPointerActionParams::PointerActionType::LEAVE:
     case SyntheticPointerActionParams::PointerActionType::IDLE:
     case SyntheticPointerActionParams::PointerActionType::NOT_INITIALIZED:
       break;

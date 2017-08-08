@@ -48,4 +48,18 @@ SyntheticPointerActionParams::GetWebMouseEventButton(
   return blink::WebMouseEvent::Button::kNoButton;
 }
 
+// static
+blink::WebMouseEvent::Button
+SyntheticPointerActionParams::GetWebMouseEventButtonFromModifier(
+    unsigned modifiers) {
+  blink::WebMouseEvent::Button button = blink::WebMouseEvent::Button::kNoButton;
+  if (modifiers & blink::WebMouseEvent::kLeftButtonDown)
+    button = blink::WebMouseEvent::Button::kLeft;
+  if (modifiers & blink::WebMouseEvent::kMiddleButtonDown)
+    button = blink::WebMouseEvent::Button::kMiddle;
+  if (modifiers & blink::WebMouseEvent::kRightButtonDown)
+    button = blink::WebMouseEvent::Button::kRight;
+  return button;
+}
+
 }  // namespace content

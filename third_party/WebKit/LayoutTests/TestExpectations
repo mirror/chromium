@@ -1253,9 +1253,6 @@ crbug.com/613672 [ Mac ] external/wpt/pointerevents/pointerevent_touch-action-in
 crbug.com/613672 [ Mac ] fast/events/synthetic-events/tap-on-scaled-screen.html  [ Skip ]
 crbug.com/613672 [ Mac ] virtual/scalefactor150/fast/events/synthetic-events/tap-on-scaled-screen.html  [ Skip ]
 
-# We should send PointerLeave events for stylus devices.
-crbug.com/583413 external/wpt/pointerevents/pointerevent_pointerleave_pen-manual.html  [ Failure ]
-
 # Chrome touch-action computation ignores div transforms.
 crbug.com/715148 external/wpt/pointerevents/pointerevent_touch-action-rotated-divs_touch-manual.html  [ Skip ]
 
