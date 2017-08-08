@@ -129,6 +129,29 @@
     },
     {
       "key": {
+        "uuid": "9459c77a_b38b7d32",
+        "filename": "net/http/http_network_transaction.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-08T19:32:05Z",
+      "side": 1,
+      "message": "nit: I\u0027d make this method name more \"verb\"-y. Perhaps HasExeededMaxRetries()? Or reverse polarity to CanRetry()",
+      "range": {
+        "startLine": 252,
+        "startChar": 7,
+        "endLine": 252,
+        "endChar": 25
+      },
+      "revId": "384b610b6f8700614747bc67d7c1146e87fae32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72089a81_3362c34a",
         "filename": "net/http/http_network_transaction.h",
         "patchSetId": 2
