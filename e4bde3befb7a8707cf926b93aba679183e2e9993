@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3db3fde8_6ac8d716",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/captiveportal/CaptivePortalLoginLauncher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1238096
+      },
+      "writtenOn": "2017-08-08T01:19:59Z",
+      "side": 1,
+      "message": "It is also missing the EXTRA_CAPTIVE_PORTAL_URL and EXTRA_CAPTIVE_PORTAL_USER_AGENT\n\nWithout EXTRA_CAPTIVE_PORTAL_URL the login app will fallback on the default http probe url given by getCaptivePortalServerUrl().\n\nWithout EXTRA_CAPTIVE_PORTAL_USER_AGENT the user-agent header is unset. This can break the portal app for some portals where the user agent is needed to prevent the portal from detecting the non-user probe.\n\ni.e if there is no user-agent, the portal sees probes sent again by the app (after the system sends its own probes) and unhelpfully replies with a 204 which makes the app thinks the portal is appeased and login completed successfully.\n\nFrom where you are in this code, wouldn\u0027t it be easy to patch in the Chrome user-agent ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 15
+      },
+      "revId": "e4bde3befb7a8707cf926b93aba679183e2e9993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
