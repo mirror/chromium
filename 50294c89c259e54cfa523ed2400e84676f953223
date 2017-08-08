@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e978925_3e43c987",
+        "filename": "third_party/WebKit/Source/core/editing/serializers/MarkupFormatter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-08T01:09:19Z",
+      "side": 1,
+      "message": "Wow, good catch!",
+      "revId": "50294c89c259e54cfa523ed2400e84676f953223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
