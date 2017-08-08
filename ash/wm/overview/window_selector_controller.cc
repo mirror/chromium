@@ -17,6 +17,7 @@
 #include "ash/wm/splitview/split_view_controller.h"
 #include "ash/wm/window_state.h"
 #include "base/metrics/histogram_macros.h"
+#include "ui/aura/client/aura_constants.h"
 
 namespace ash {
 
@@ -57,6 +58,20 @@ bool WindowSelectorController::ToggleOverview() {
                        std::not1(std::ptr_fun(&WindowSelector::IsSelectable)));
     windows.resize(end - windows.begin());
 
+    std::vector<aura::Window*> hide_windows;
+    for (auto* window : windows) {
+      if (window->GetProperty(aura::client::kWindowSelectorBehaviorKey) ==
+          aura::client::WindowSelectorBehavior::HIDDEN)
+        hide_windows.push_back(window);
+    }
+
+    end = std::remove_if(
+        windows.begin(), windows.end(), [&hide_windows](aura::Window* window) {
+          return std::find(hide_windows.begin(), hide_windows.end(), window) !=
+                 hide_windows.end();
+        });
+    windows.resize(end - windows.begin());
+
     if (!Shell::Get()->IsSplitViewModeActive()) {
       // Don't enter overview with no window if the split view mode is inactive.
       if (windows.empty())
@@ -82,7 +97,7 @@ bool WindowSelectorController::ToggleOverview() {
 
     Shell::Get()->NotifyOverviewModeStarting();
     window_selector_.reset(new WindowSelector(this));
-    window_selector_->Init(windows);
+    window_selector_->Init(windows, hide_windows);
     OnSelectionStarted();
   }
   return true;

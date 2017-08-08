@@ -890,6 +890,25 @@ TEST_F(WindowSelectorTest, FullscreenWindow) {
   EXPECT_TRUE(wm::GetWindowState(window1.get())->IsFullscreen());
 }
 
+TEST_F(WindowSelectorTest, SkipOverviewWindow) {
+  gfx::Rect bounds(0, 0, 400, 400);
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
+
+  window2->SetProperty(aura::client::kWindowSelectorBehaviorKey,
+                       aura::client::WindowSelectorBehavior::HIDDEN);
+
+  // Enter overview.
+  ToggleOverview();
+  EXPECT_TRUE(window1->IsVisible());
+  EXPECT_FALSE(window2->IsVisible());
+
+  // Exit overview.
+  ToggleOverview();
+  EXPECT_TRUE(window1->IsVisible());
+  EXPECT_TRUE(window2->IsVisible());
+}
+
 // Tests that entering overview when a fullscreen window is active in maximized
 // mode correctly applies the transformations to the window and correctly
 // updates the window bounds on exiting overview mode: http://crbug.com/401664.

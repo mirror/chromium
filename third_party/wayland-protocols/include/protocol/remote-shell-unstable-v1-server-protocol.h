@@ -403,6 +403,30 @@ enum zcr_remote_surface_v1_orientation {
 };
 #endif /* ZCR_REMOTE_SURFACE_V1_ORIENTATION_ENUM */
 
+#ifndef ZCR_REMOTE_SURFACE_V1_WINDOW_SELECTOR_BEHAVIOR_ENUM
+#define ZCR_REMOTE_SURFACE_V1_WINDOW_SELECTOR_BEHAVIOR_ENUM
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ * the window selector behavior
+ *
+ * Defines how a client should behave in window selector.
+ */
+enum zcr_remote_surface_v1_window_selector_behavior {
+  /**
+   * window is present in overview list
+   */
+  ZCR_REMOTE_SURFACE_V1_WINDOW_SELECTOR_BEHAVIOR_SHOW = 0,
+  /**
+   * window is not visible in window selector
+   */
+  ZCR_REMOTE_SURFACE_V1_WINDOW_SELECTOR_BEHAVIOR_HIDDEN = 1,
+  /**
+   * window is not present in overview list but visible in window selector
+   */
+  ZCR_REMOTE_SURFACE_V1_WINDOW_SELECTOR_BEHAVIOR_SKIP = 2,
+};
+#endif /* ZCR_REMOTE_SURFACE_V1_WINDOW_SELECTOR_BEHAVIOR_ENUM */
+
 /**
  * @ingroup iface_zcr_remote_surface_v1
  * @struct zcr_remote_surface_v1_interface
@@ -732,15 +756,27 @@ struct zcr_remote_surface_v1_interface {
 	 */
 	void (*move)(struct wl_client *client,
 		     struct wl_resource *resource);
-	/**
-	 * set orientation
-	 *
-	 * Set an orientation for the surface.
-	 * @since 6
-	 */
-	void (*set_orientation)(struct wl_client *client,
-				struct wl_resource *resource,
-				int32_t orientation);
+        /**
+         * send window flags to server
+         *
+         * Request that defines window behavior in overview mode.
+         *
+         * Such behavior is just a hint and the compositor may ignore the
+         * request.
+         * @since 5
+         */
+        void (*set_window_selector_behavior)(struct wl_client* client,
+                                             struct wl_resource* resource,
+                                             uint32_t window_selector_behavior);
+        /**
+         * set orientation
+         *
+         * Set an orientation for the surface.
+         * @since 6
+         */
+        void (*set_orientation)(struct wl_client* client,
+                                struct wl_resource* resource,
+                                int32_t orientation);
 };
 
 #define ZCR_REMOTE_SURFACE_V1_CLOSE 0
@@ -856,6 +892,10 @@ struct zcr_remote_surface_v1_interface {
  * @ingroup iface_zcr_remote_surface_v1
  */
 #define ZCR_REMOTE_SURFACE_V1_MOVE_SINCE_VERSION 5
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ */
+#define ZCR_REMOTE_SURFACE_V1_SET_WINDOW_SELECTOR_BEHAVIOR_SINCE_VERSION 5
 /**
  * @ingroup iface_zcr_remote_surface_v1
  */

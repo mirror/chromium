@@ -462,6 +462,30 @@ enum zcr_remote_surface_v1_orientation {
 };
 #endif /* ZCR_REMOTE_SURFACE_V1_ORIENTATION_ENUM */
 
+#ifndef ZCR_REMOTE_SURFACE_V1_WINDOW_SELECTOR_BEHAVIOR_ENUM
+#define ZCR_REMOTE_SURFACE_V1_WINDOW_SELECTOR_BEHAVIOR_ENUM
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ * the window selector behavior
+ *
+ * Defines how a client should behave in window selector.
+ */
+enum zcr_remote_surface_v1_window_selector_behavior {
+  /**
+   * window is present in overview list
+   */
+  ZCR_REMOTE_SURFACE_V1_WINDOW_SELECTOR_BEHAVIOR_SHOW = 0,
+  /**
+   * window is not visible in window selector
+   */
+  ZCR_REMOTE_SURFACE_V1_WINDOW_SELECTOR_BEHAVIOR_HIDDEN = 1,
+  /**
+   * window is not present in overview list but visible in window selector
+   */
+  ZCR_REMOTE_SURFACE_V1_WINDOW_SELECTOR_BEHAVIOR_SKIP = 2,
+};
+#endif /* ZCR_REMOTE_SURFACE_V1_WINDOW_SELECTOR_BEHAVIOR_ENUM */
+
 /**
  * @ingroup iface_zcr_remote_surface_v1
  * @struct zcr_remote_surface_v1_listener
@@ -559,7 +583,8 @@ zcr_remote_surface_v1_add_listener(struct zcr_remote_surface_v1 *zcr_remote_surf
 #define ZCR_REMOTE_SURFACE_V1_UNSET_ALWAYS_ON_TOP 21
 #define ZCR_REMOTE_SURFACE_V1_ACK_CONFIGURE 22
 #define ZCR_REMOTE_SURFACE_V1_MOVE 23
-#define ZCR_REMOTE_SURFACE_V1_SET_ORIENTATION 24
+#define ZCR_REMOTE_SURFACE_V1_SET_WINDOW_SELECTOR_BEHAVIOR 24
+#define ZCR_REMOTE_SURFACE_V1_SET_ORIENTATION 25
 
 /**
  * @ingroup iface_zcr_remote_surface_v1
@@ -670,6 +695,10 @@ zcr_remote_surface_v1_add_listener(struct zcr_remote_surface_v1 *zcr_remote_surf
  * @ingroup iface_zcr_remote_surface_v1
  */
 #define ZCR_REMOTE_SURFACE_V1_MOVE_SINCE_VERSION 5
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ */
+#define ZCR_REMOTE_SURFACE_V1_SET_WINDOW_SELECTOR_BEHAVIOR_SINCE_VERSION 5
 /**
  * @ingroup iface_zcr_remote_surface_v1
  */
@@ -1099,6 +1128,21 @@ zcr_remote_surface_v1_move(struct zcr_remote_surface_v1 *zcr_remote_surface_v1)
 {
 	wl_proxy_marshal((struct wl_proxy *) zcr_remote_surface_v1,
 			 ZCR_REMOTE_SURFACE_V1_MOVE);
+}
+
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ *
+ * Request that defines window behavior in overview mode.
+ *
+ * Such behavior is just a hint and the compositor may ignore the request.
+ */
+static inline void zcr_remote_surface_v1_set_window_selector_behavior(
+    struct zcr_remote_surface_v1* zcr_remote_surface_v1,
+    uint32_t window_selector_behavior) {
+  wl_proxy_marshal((struct wl_proxy*)zcr_remote_surface_v1,
+                   ZCR_REMOTE_SURFACE_V1_SET_WINDOW_SELECTOR_BEHAVIOR,
+                   window_selector_behavior);
 }
 
 /**
