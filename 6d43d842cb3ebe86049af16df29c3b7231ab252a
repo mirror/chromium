@@ -117,6 +117,23 @@
     },
     {
       "key": {
+        "uuid": "22d40ea9_283c4ca0",
+        "filename": "ios/chrome/browser/ui/history_popup/tab_history_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-08T12:08:28Z",
+      "side": 1,
+      "message": "This can go in a followup CL, but I\u0027d argue that we should get rid of these notifications too, because they\u0027re acting as public API for the component.\n\nWe could rewrite these notifications as two methods in a new observer protocol, and for now BVC could pass in an array of observers or something.",
+      "revId": "6d43d842cb3ebe86049af16df29c3b7231ab252a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "592fd359_0b2ceaad",
         "filename": "ios/chrome/browser/ui/history_popup/tab_history_coordinator.mm",
         "patchSetId": 2
@@ -203,6 +220,23 @@
         "endLine": 20,
         "endChar": 42
       },
+      "revId": "6d43d842cb3ebe86049af16df29c3b7231ab252a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d6c110_57aca74f",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-08T12:08:28Z",
+      "side": 1,
+      "message": "I\u0027d argue that this piece of code does not belong in a method that claims to simply return a bubble origin point.  (In other words, this is an unexpected side effect.)\n\nI think both this and the tabHistoryWasDismissed method below should be captured as another requirement of the historypopup, and not as side effects or public API on the toolbar.",
       "revId": "6d43d842cb3ebe86049af16df29c3b7231ab252a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
