@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "3f481e9c_0dd3619b",
+        "filename": "remoting/host/installer/linux/debian/postinst",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-08T01:09:36Z",
+      "side": 1,
+      "message": "OK, that makes sense. Can leave Python script as-is.",
+      "parentUuid": "88570e85_1c6d0de3",
+      "revId": "cbffe7225cbe8e46b2c973f044303f6ca2e58951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38b32264_a85a632b",
         "filename": "remoting/host/installer/linux/debian/postinst",
         "patchSetId": 1
