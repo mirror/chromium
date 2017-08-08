@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47fb57a2_007ef989",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-08T23:50:20Z",
+      "side": 1,
+      "message": "Done.\nGood to know. Thanks!",
+      "parentUuid": "e397f309_47f53e44",
+      "revId": "1d761430d0e6375135fc6f7da12cd86832b8d154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30be8dcc_65e400d8",
         "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "1d761430d0e6375135fc6f7da12cd86832b8d154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1906752f_52bd77e7",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-08T23:50:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30be8dcc_65e400d8",
+      "revId": "1d761430d0e6375135fc6f7da12cd86832b8d154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1c82b69a_58b1a92c",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-08T23:50:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f572147d_99f55c4b",
+      "revId": "1d761430d0e6375135fc6f7da12cd86832b8d154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34a3755b_4e713c43",
         "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "1d761430d0e6375135fc6f7da12cd86832b8d154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d894094e_35fa95ca",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-08T23:50:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34a3755b_4e713c43",
+      "revId": "1d761430d0e6375135fc6f7da12cd86832b8d154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
