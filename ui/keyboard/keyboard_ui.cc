@@ -43,6 +43,7 @@ void KeyboardUI::EnsureCaretInWorkArea() {
   TRACE_EVENT0("vk", "EnsureCaretInWorkArea");
 
   const aura::Window* contents_window = GetContentsWindow();
+
   const gfx::Rect keyboard_bounds_in_screen =
       contents_window->IsVisible() ? contents_window->GetBoundsInScreen()
                                    : gfx::Rect();
@@ -57,8 +58,10 @@ void KeyboardUI::EnsureCaretInWorkArea() {
   if (new_vk_behavior) {
     GetInputMethod()->SetOnScreenKeyboardBounds(keyboard_bounds_in_screen);
   } else if (GetInputMethod()->GetTextInputClient()) {
-    GetInputMethod()->GetTextInputClient()->EnsureCaretNotInRect(
-        keyboard_bounds_in_screen);
+    if (!keyboard_bounds_in_screen.IsEmpty()) {
+      GetInputMethod()->GetTextInputClient()->EnsureCaretNotInRect(
+          keyboard_bounds_in_screen);
+    }
   }
 }
 

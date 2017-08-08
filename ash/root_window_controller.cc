@@ -624,7 +624,7 @@ void RootWindowController::DeactivateKeyboard(
     DCHECK(parent);
     // Virtual keyboard may be deactivated while still showing, hide the
     // keyboard before removing it from view hierarchy.
-    keyboard_controller->HideKeyboard(
+    keyboard_controller->HideKeyboardSynchronous(
         keyboard::KeyboardController::HIDE_REASON_AUTOMATIC);
     parent->RemoveChild(keyboard_container);
     Shell::Get()->NotifyVirtualKeyboardActivated(false, GetRootWindow());

@@ -247,8 +247,11 @@ class KeyboardControllerTest : public testing::TestWithParam<bool>,
   }
 
   void TearDown() override {
-    if (controller())
+    if (controller()) {
+      controller()->HideKeyboardSynchronous(
+          KeyboardController::HideReason::HIDE_REASON_AUTOMATIC);
       controller()->RemoveObserver(this);
+    }
     controller_.reset();
     focus_controller_.reset();
     aura_test_helper_->TearDown();
