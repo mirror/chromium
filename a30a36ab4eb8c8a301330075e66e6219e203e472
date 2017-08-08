@@ -285,6 +285,24 @@
     },
     {
       "key": {
+        "uuid": "97f0ff08_7a6e9646",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-08T19:56:30Z",
+      "side": 1,
+      "message": "See main comment: 1. glue in WebKit/platform or 2. mojo service to give out the policy to any who asks.",
+      "parentUuid": "81d06c95_1a363f17",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a70c736_63362266",
         "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
         "patchSetId": 2
@@ -407,6 +425,24 @@
       "writtenOn": "2017-08-01T13:28:20Z",
       "side": 1,
       "message": "Was this something missed in earlier code reviews, or is it a new dependency because of the move?",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf44534_b12c2b5b",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-08T19:56:30Z",
+      "side": 1,
+      "message": "I don\u0027t remember the details, but essentially, build_config was included implicitly, i don\u0027t remember if there was a lint warning to tell me to include it, or if it was just getting #ifdef-ed out in the new location.",
+      "parentUuid": "c9435258_3758afe6",
       "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
