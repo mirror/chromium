@@ -2847,9 +2847,7 @@ class WaylandDataDeviceDelegate : public DataDeviceDelegate {
     return surface &&
            wl_resource_get_client(GetSurfaceResource(surface)) == client_;
   }
-  class DataOffer* OnDataOffer(const std::vector<std::string>& mime_types,
-                               const base::flat_set<DndAction>& source_actions,
-                               DndAction dnd_action) override {
+  class DataOffer* OnDataOffer() override {
     wl_resource* data_offer_resource =
         wl_resource_create(client_, &wl_data_offer_interface, 1, 0);
     std::unique_ptr<DataOffer> data_offer = base::MakeUnique<DataOffer>(
