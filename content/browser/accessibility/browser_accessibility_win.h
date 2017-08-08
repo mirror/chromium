@@ -11,6 +11,7 @@
 #include "content/browser/accessibility/browser_accessibility.h"
 #include "content/browser/accessibility/browser_accessibility_com_win.h"
 #include "content/common/content_export.h"
+#include "ui/accessibility/ax_mode_observer.h"
 
 namespace content {
 
