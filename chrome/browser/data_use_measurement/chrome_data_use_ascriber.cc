@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/memory/ptr_util.h"
+#include "build/build_config.h"
 #include "chrome/browser/data_use_measurement/chrome_data_use_recorder.h"
 #include "components/data_use_measurement/content/content_url_request_classifier.h"
 #include "components/data_use_measurement/core/data_use_recorder.h"
@@ -23,6 +24,20 @@
 #include "net/url_request/url_request.h"
 
 namespace data_use_measurement {
+
+namespace {
+
+bool IsDisabledPlatform() {
+#if defined(OS_MACOSX)
+  // TODO(rajendrant): Fix mac os specific race conditions and enable.
+  // crbug.com/753559
+  return true;
+#else
+  return false;
+#endif
+}
+
+}  // namespace
 
 // static
 const void* const
@@ -168,6 +183,9 @@ void ChromeDataUseAscriber::OnUrlRequestCompleted(
     bool started) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
+  if (IsDisabledPlatform())
+    return;
+
   ChromeDataUseRecorder* recorder = GetDataUseRecorder(request);
 
   if (!recorder)
@@ -192,6 +210,9 @@ void ChromeDataUseAscriber::OnUrlRequestCompleted(
 
 void ChromeDataUseAscriber::OnUrlRequestDestroyed(net::URLRequest* request) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  if (IsDisabledPlatform())
+    return;
 
   // TODO(rajendrant): GetDataUseRecorder is sufficient and
   // GetOrCreateDataUseRecorderEntry is not needed. The entry gets created in
