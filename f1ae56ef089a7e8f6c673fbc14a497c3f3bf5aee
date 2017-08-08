@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd7b2a37_ec092c2b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptController.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-08T10:40:44Z",
+      "side": 1,
+      "message": "Did we need this include at all?",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4401c721_17b98cd3",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-08T10:40:44Z",
+      "side": 1,
+      "message": "Hrm. Why did we need to drop the const attribute?",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8c606e_dc19a272",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheStorage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-08T10:40:44Z",
+      "side": 1,
+      "message": "Why did you need this?",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d0cb72_40a78f69",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchParameters.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-08T10:40:44Z",
+      "side": 1,
+      "message": "Is this used in the file?",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a58e95_22838e13",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-08T10:40:44Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07201ef_88cf3f1a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-08T10:40:44Z",
+      "side": 1,
+      "message": "I thought this conversion (here and elsewhere) would happen automatically (as the constructor isn\u0027t marked `explicit`).",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb47c2b_524f8b91",
+        "filename": "third_party/WebKit/public/platform/WebCrossOriginAccessControl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-08T10:40:44Z",
+      "side": 1,
+      "message": "I wonder if we should take the opportunity to rename this to something like `WebCORS`.",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
