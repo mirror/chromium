@@ -4,13 +4,14 @@
 
 #include "core/editing/markers/SuggestionMarkerListImpl.h"
 
+#include "core/editing/EditingTestBase.h"
 #include "core/editing/markers/SuggestionMarker.h"
 #include "platform/heap/Handle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class SuggestionMarkerListImplTest : public ::testing::Test {
+class SuggestionMarkerListImplTest : public EditingTestBase {
  protected:
   SuggestionMarkerListImplTest()
       : marker_list_(new SuggestionMarkerListImpl()) {}
@@ -20,6 +21,10 @@ class SuggestionMarkerListImplTest : public ::testing::Test {
                                 Color::kTransparent, Color::kTransparent,
                                 StyleableMarker::Thickness::kThin,
                                 Color::kTransparent);
+  }
+
+  Text& CreateTextNode(const String& text) {
+    return *Text::CreateEditingText(GetDocument(), text);
   }
 
   Persistent<SuggestionMarkerListImpl> marker_list_;
@@ -254,14 +259,16 @@ TEST_F(SuggestionMarkerListImplTest, RemoveMarkersOneCharacterIntoInterior) {
   EXPECT_EQ(50u, markers[1]->EndOffset());
 }
 
-TEST_F(SuggestionMarkerListImplTest, ShiftMarkers) {
+TEST_F(SuggestionMarkerListImplTest, ShiftMarkersForSuggestionReplacement) {
   marker_list_->Add(CreateMarker(30, 40));
   marker_list_->Add(CreateMarker(40, 50));
   marker_list_->Add(CreateMarker(10, 20));
   marker_list_->Add(CreateMarker(0, 10));
   marker_list_->Add(CreateMarker(20, 30));
 
-  EXPECT_TRUE(marker_list_->ShiftMarkers(15, 20, 0));
+  // Text node is ignored for suggestion replacement, so we can just use an
+  // empty string
+  EXPECT_TRUE(marker_list_->ShiftMarkers(CreateTextNode(""), 15, 20, 0, true));
 
   DocumentMarkerVector markers = marker_list_->GetMarkers();
   std::sort(markers.begin(), markers.end(), compare_markers);
@@ -279,6 +286,102 @@ TEST_F(SuggestionMarkerListImplTest, ShiftMarkers) {
 
   EXPECT_EQ(20u, markers[3]->StartOffset());
   EXPECT_EQ(30u, markers[3]->EndOffset());
+}
+
+TEST_F(SuggestionMarkerListImplTest,
+       ShiftMarkersForNonSuggestionEditingOperation_DeleteFromMiddle) {
+  marker_list_->Add(CreateMarker(0, 5));
+
+  EXPECT_TRUE(
+      marker_list_->ShiftMarkers(CreateTextNode("hello"), 2, 1, 0, false));
+
+  DocumentMarkerVector markers = marker_list_->GetMarkers();
+  EXPECT_EQ(0u, markers.size());
+}
+
+TEST_F(SuggestionMarkerListImplTest,
+       ShiftMarkersForNonSuggestionEditingOperation_InsertIntoMiddle) {
+  marker_list_->Add(CreateMarker(0, 5));
+
+  EXPECT_TRUE(
+      marker_list_->ShiftMarkers(CreateTextNode("hello"), 2, 0, 1, false));
+
+  DocumentMarkerVector markers = marker_list_->GetMarkers();
+  EXPECT_EQ(0u, markers.size());
+}
+
+TEST_F(SuggestionMarkerListImplTest,
+       ShiftMarkersForNonSuggestionEditingOperation_PrependLetter) {
+  marker_list_->Add(CreateMarker(0, 5));
+
+  EXPECT_TRUE(
+      marker_list_->ShiftMarkers(CreateTextNode("ahello"), 0, 0, 1, false));
+
+  DocumentMarkerVector markers = marker_list_->GetMarkers();
+  EXPECT_EQ(0u, markers.size());
+}
+
+TEST_F(SuggestionMarkerListImplTest,
+       ShiftMarkersForNonSuggestionEditingOperation_PrependDigit) {
+  marker_list_->Add(CreateMarker(0, 5));
+
+  EXPECT_TRUE(
+      marker_list_->ShiftMarkers(CreateTextNode("0hello"), 0, 0, 1, false));
+
+  DocumentMarkerVector markers = marker_list_->GetMarkers();
+  EXPECT_EQ(0u, markers.size());
+}
+
+TEST_F(SuggestionMarkerListImplTest,
+       ShiftMarkersForNonSuggestionEditingOperation_PrependPunctuation) {
+  marker_list_->Add(CreateMarker(0, 5));
+
+  EXPECT_TRUE(
+      marker_list_->ShiftMarkers(CreateTextNode(".hello"), 0, 0, 1, false));
+
+  DocumentMarkerVector markers = marker_list_->GetMarkers();
+
+  EXPECT_EQ(1u, markers.size());
+
+  EXPECT_EQ(1u, markers[0]->StartOffset());
+  EXPECT_EQ(6u, markers[0]->EndOffset());
+}
+
+TEST_F(SuggestionMarkerListImplTest,
+       ShiftMarkersForNonSuggestionEditingOperation_AppendLetter) {
+  marker_list_->Add(CreateMarker(0, 5));
+
+  EXPECT_TRUE(
+      marker_list_->ShiftMarkers(CreateTextNode("helloa"), 5, 0, 1, false));
+
+  DocumentMarkerVector markers = marker_list_->GetMarkers();
+  EXPECT_EQ(0u, markers.size());
+}
+
+TEST_F(SuggestionMarkerListImplTest,
+       ShiftMarkersForNonSuggestionEditingOperation_AppendDigit) {
+  marker_list_->Add(CreateMarker(0, 5));
+
+  EXPECT_TRUE(
+      marker_list_->ShiftMarkers(CreateTextNode("hello0"), 5, 0, 1, false));
+
+  DocumentMarkerVector markers = marker_list_->GetMarkers();
+  EXPECT_EQ(0u, markers.size());
+}
+
+TEST_F(SuggestionMarkerListImplTest,
+       ShiftMarkersForNonSuggestionEditingOperation_AppendPunctuation) {
+  marker_list_->Add(CreateMarker(0, 5));
+
+  EXPECT_FALSE(
+      marker_list_->ShiftMarkers(CreateTextNode("hello."), 5, 0, 1, false));
+
+  DocumentMarkerVector markers = marker_list_->GetMarkers();
+
+  EXPECT_EQ(1u, markers.size());
+
+  EXPECT_EQ(0u, markers[0]->StartOffset());
+  EXPECT_EQ(5u, markers[0]->EndOffset());
 }
 
 }  // namespace blink

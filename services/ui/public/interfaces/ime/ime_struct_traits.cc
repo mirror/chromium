@@ -46,11 +46,16 @@ bool StructTraits<ui::mojom::CompositionUnderlineDataView,
          ui::CompositionUnderline* out) {
   if (data.is_null())
     return false;
+  if (!data.ReadType(&out->type))
+    return false;
   out->start_offset = data.start_offset();
   out->end_offset = data.end_offset();
-  out->color = data.color();
+  out->underline_color = data.underline_color();
   out->thick = data.thick();
   out->background_color = data.background_color();
+  out->suggestion_highlight_color = data.suggestion_highlight_color();
+  if (!data.ReadSuggestions(&out->suggestions))
+    return false;
   return true;
 }
 
@@ -60,6 +65,39 @@ bool StructTraits<ui::mojom::CompositionTextDataView, ui::CompositionText>::
   return !data.is_null() && data.ReadText(&out->text) &&
          data.ReadUnderlines(&out->underlines) &&
          data.ReadSelection(&out->selection);
+}
+
+// static
+ui::mojom::CompositionUnderlineType EnumTraits<
+    ui::mojom::CompositionUnderlineType,
+    ui::CompositionUnderline::Type>::ToMojom(ui::CompositionUnderline::Type
+                                                 composition_underline_type) {
+  switch (composition_underline_type) {
+    case ui::CompositionUnderline::Type::COMPOSITION:
+      return ui::mojom::CompositionUnderlineType::kComposition;
+    case ui::CompositionUnderline::Type::SUGGESTION:
+      return ui::mojom::CompositionUnderlineType::kSuggestion;
+    case ui::CompositionUnderline::Type::MISSPELLING_SUGGESTION:
+      return ui::mojom::CompositionUnderlineType::kMisspellingSuggestion;
+  }
+}
+
+// static
+bool EnumTraits<ui::mojom::CompositionUnderlineType,
+                ui::CompositionUnderline::Type>::
+    FromMojom(ui::mojom::CompositionUnderlineType type,
+              ui::CompositionUnderline::Type* out) {
+  switch (type) {
+    case ui::mojom::CompositionUnderlineType::kComposition:
+      *out = ui::CompositionUnderline::Type::COMPOSITION;
+      return true;
+    case ui::mojom::CompositionUnderlineType::kSuggestion:
+      *out = ui::CompositionUnderline::Type::SUGGESTION;
+      return true;
+    case ui::mojom::CompositionUnderlineType::kMisspellingSuggestion:
+      *out = ui::CompositionUnderline::Type::MISSPELLING_SUGGESTION;
+      return true;
+  }
 }
 
 // static

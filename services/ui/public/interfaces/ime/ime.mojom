@@ -56,14 +56,24 @@ struct CandidateWindowEntry {
   string description_body;
 };
 
+// See comments for ui::CompositionUnderline::Type for more details.
+enum CompositionUnderlineType {
+  kComposition,
+  kSuggestion,
+  kMisspellingSuggestion,
+};
+
 // Represents an underlined segment of text currently composed by IME.
 // Corresponds to ui::CompositionUnderline.
 struct CompositionUnderline {
+  CompositionUnderlineType type;
   uint32 start_offset;
   uint32 end_offset;
+  uint32 underline_color;
   bool thick;
-  uint32 color;
   uint32 background_color;
+  uint32 suggestion_highlight_color;
+  array<string> suggestions;
 };
 
 // Represents a text currently being composed by IME. Corresponds to
@@ -167,7 +177,7 @@ interface TextInputClient {
   // Sets composition text and attributes. See comments for
   // ui::TextInputClient::SetCompositionText() for more details.
   SetCompositionText(CompositionText composition);
-  
+
   // Converts current composition text into final content.
   ConfirmCompositionText();
 

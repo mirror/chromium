@@ -86,8 +86,35 @@ void AppendBackgroundColorSpan(JNIEnv*,
   std::vector<ui::CompositionUnderline>* underlines =
       reinterpret_cast<std::vector<ui::CompositionUnderline>*>(underlines_ptr);
   underlines->push_back(ui::CompositionUnderline(
+      ui::CompositionUnderline::Type::COMPOSITION, static_cast<unsigned>(start),
+      static_cast<unsigned>(end), static_cast<unsigned>(background_color),
+      false, SK_ColorTRANSPARENT, SK_ColorTRANSPARENT,
+      std::vector<std::string>()));
+}
+
+// Callback from Java to convert SuggestionSpan data to a
+// blink::WebCompositionUnderline instance, and append it to |underlines_ptr|.
+void AppendSuggestionSpan(JNIEnv* env,
+                          const JavaParamRef<jclass>&,
+                          jlong underlines_ptr,
+                          jint start,
+                          jint end,
+                          jint underline_color,
+                          jint suggestion_highlight_color,
+                          const JavaParamRef<jobjectArray>& suggestions) {
+  DCHECK_GE(start, 0);
+  DCHECK_GE(end, 0);
+
+  std::vector<blink::WebCompositionUnderline>* underlines =
+      reinterpret_cast<std::vector<blink::WebCompositionUnderline>*>(
+          underlines_ptr);
+  std::vector<std::string> suggestions_vec;
+  AppendJavaStringArrayToStringVector(env, suggestions, &suggestions_vec);
+  underlines->push_back(blink::WebCompositionUnderline(
+      blink::WebCompositionUnderline::Type::SUGGESTION,
       static_cast<unsigned>(start), static_cast<unsigned>(end),
-      SK_ColorTRANSPARENT, false, static_cast<unsigned>(background_color)));
+      static_cast<unsigned>(underline_color), true, SK_ColorTRANSPARENT,
+      static_cast<unsigned>(suggestion_highlight_color), suggestions_vec));
 }
 
 // Callback from Java to convert UnderlineSpan data to a
@@ -102,8 +129,9 @@ void AppendUnderlineSpan(JNIEnv*,
   std::vector<ui::CompositionUnderline>* underlines =
       reinterpret_cast<std::vector<ui::CompositionUnderline>*>(underlines_ptr);
   underlines->push_back(ui::CompositionUnderline(
-      static_cast<unsigned>(start), static_cast<unsigned>(end), SK_ColorBLACK,
-      false, SK_ColorTRANSPARENT));
+      ui::CompositionUnderline::Type::COMPOSITION, static_cast<unsigned>(start),
+      static_cast<unsigned>(end), SK_ColorBLACK, false, SK_ColorTRANSPARENT,
+      SK_ColorTRANSPARENT, std::vector<std::string>()));
 }
 
 ImeAdapterAndroid::ImeAdapterAndroid(JNIEnv* env,
@@ -216,7 +244,9 @@ void ImeAdapterAndroid::SetComposingText(JNIEnv* env,
   // Default to plain underline if we didn't find any span that we care about.
   if (underlines.empty()) {
     underlines.push_back(ui::CompositionUnderline(
-        0, text16.length(), SK_ColorBLACK, false, SK_ColorTRANSPARENT));
+        ui::CompositionUnderline::Type::COMPOSITION, 0, text16.length(),
+        SK_ColorBLACK, false, SK_ColorTRANSPARENT, SK_ColorTRANSPARENT,
+        std::vector<std::string>()));
   }
 
   // relative_cursor_pos is as described in the Android API for
@@ -337,8 +367,10 @@ void ImeAdapterAndroid::SetComposingRegion(JNIEnv*,
     return;
 
   std::vector<ui::CompositionUnderline> underlines;
-  underlines.push_back(ui::CompositionUnderline(0, end - start, SK_ColorBLACK,
-                                                false, SK_ColorTRANSPARENT));
+  underlines.push_back(ui::CompositionUnderline(
+      ui::CompositionUnderline::Type::COMPOSITION, 0, end - start,
+      SK_ColorBLACK, false, SK_ColorTRANSPARENT, SK_ColorTRANSPARENT,
+      std::vector<std::string>()));
 
   rfh->GetFrameInputHandler()->SetCompositionFromExistingText(start, end,
                                                               underlines);

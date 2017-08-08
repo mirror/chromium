@@ -76,16 +76,30 @@ struct StructTraits<ui::mojom::CandidateWindowEntryDataView,
 template <>
 struct StructTraits<ui::mojom::CompositionUnderlineDataView,
                     ui::CompositionUnderline> {
+  static ui::CompositionUnderline::Type type(
+      const ui::CompositionUnderline& c) {
+    return c.type;
+  }
   static uint32_t start_offset(const ui::CompositionUnderline& c) {
     return c.start_offset;
   }
   static uint32_t end_offset(const ui::CompositionUnderline& c) {
     return c.end_offset;
   }
-  static uint32_t color(const ui::CompositionUnderline& c) { return c.color; }
+  static uint32_t underline_color(const ui::CompositionUnderline& c) {
+    return c.underline_color;
+  }
   static uint32_t thick(const ui::CompositionUnderline& c) { return c.thick; }
   static uint32_t background_color(const ui::CompositionUnderline& c) {
     return c.background_color;
+  }
+  static uint32_t suggestion_highlight_color(
+      const ui::CompositionUnderline& c) {
+    return c.suggestion_highlight_color;
+  }
+  static std::vector<std::string> suggestions(
+      const ui::CompositionUnderline& c) {
+    return c.suggestions;
   }
   static bool Read(ui::mojom::CompositionUnderlineDataView data,
                    ui::CompositionUnderline* out);
@@ -104,6 +118,15 @@ struct StructTraits<ui::mojom::CompositionTextDataView, ui::CompositionText> {
   }
   static bool Read(ui::mojom::CompositionTextDataView data,
                    ui::CompositionText* out);
+};
+
+template <>
+struct EnumTraits<ui::mojom::CompositionUnderlineType,
+                  ui::CompositionUnderline::Type> {
+  static ui::mojom::CompositionUnderlineType ToMojom(
+      ui::CompositionUnderline::Type composition_underline_type);
+  static bool FromMojom(ui::mojom::CompositionUnderlineType input,
+                        ui::CompositionUnderline::Type* out);
 };
 
 template <>

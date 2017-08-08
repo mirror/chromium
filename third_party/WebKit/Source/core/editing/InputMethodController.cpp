@@ -492,11 +492,20 @@ void InputMethodController::AddCompositionUnderlines(
     if (ephemeral_line_range.IsNull())
       continue;
 
-    GetDocument().Markers().AddCompositionMarker(
-        ephemeral_line_range, underline.GetColor(),
-        underline.Thick() ? StyleableMarker::Thickness::kThick
-                          : StyleableMarker::Thickness::kThin,
-        underline.BackgroundColor());
+    if (underline.GetType() == CompositionUnderline::Type::kComposition) {
+      GetDocument().Markers().AddCompositionMarker(
+          ephemeral_line_range, underline.UnderlineColor(),
+          underline.Thick() ? StyleableMarker::Thickness::kThick
+                            : StyleableMarker::Thickness::kThin,
+          underline.BackgroundColor());
+    } else {
+      GetDocument().Markers().AddSuggestionMarker(
+          ephemeral_line_range, underline.Suggestions(),
+          underline.SuggestionHighlightColor(), underline.UnderlineColor(),
+          underline.Thick() ? StyleableMarker::Thickness::kThick
+                            : StyleableMarker::Thickness::kThin,
+          underline.BackgroundColor());
+    }
   }
 }
 

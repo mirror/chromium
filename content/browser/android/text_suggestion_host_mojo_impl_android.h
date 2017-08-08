@@ -27,6 +27,11 @@ class TextSuggestionHostMojoImplAndroid final
       double caret_y,
       const std::string& marked_text,
       std::vector<blink::mojom::SpellCheckSuggestionPtr> suggestions) final;
+  void ShowTextSuggestionMenu(
+      double caret_x,
+      double caret_y,
+      const std::string& marked_text,
+      std::vector<blink::mojom::TextSuggestionPtr> suggestions) final;
 
  private:
   TextSuggestionHostAndroid* const text_suggestion_host_;
