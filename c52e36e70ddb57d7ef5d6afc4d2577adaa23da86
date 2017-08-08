@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58cb4b99_eeb8eea0",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-08T17:56:58Z",
+      "side": 1,
+      "message": "Actually, I realized this timeout is caused by trying to use JSON.stringify on the results (which contained elements with circular references). I\u0027ve edited the printViolations function to remove all HTML elements from the object before trying to print results to the console.",
+      "parentUuid": "0775129a_4e66b18f",
+      "range": {
+        "startLine": 50,
+        "startChar": 61,
+        "endLine": 50,
+        "endChar": 79
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d48c217_4c8e5ce5",
         "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-08T00:11:37Z",
       "side": 1,
       "message": "This is debatable - skip links are really more for keyboard users than for screen reader users in my experience, and keyboard users may appreciate a way to skip large numbers of tab stops (https://a11ywins.tumblr.com/post/116335338923/nytimescoms-skip-link-design has a discussion of a nice skip link design pattern). \n\nHowever, if there isn\u0027t a large number of tab stops before the main content then a skip link is indeed unnecessary.\n\nThat said, perhaps it should be enabled/disabled on a per-page basis, unless the design is such that this is true of all pages covered by these tests?",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 61
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa7a322_a81ccfd5",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-08T17:56:58Z",
+      "side": 1,
+      "message": "This makes sense. Currently, there isn\u0027t a large number of tabs stops as long as the user isn\u0027t tabbing and trying to navigate using the burger/navigation menu on the left of Chrome Settings. I think it\u0027s a good idea to have this rule enabled/disabled on a per-page basis--especially if we\u0027re considering the potential use of the for testing other WebUI. I will do this in a separate CL (where I am adding a new test for a different route)",
+      "parentUuid": "2d48c217_4c8e5ce5",
       "range": {
         "startLine": 51,
         "startChar": 8,
@@ -71,6 +119,54 @@
     },
     {
       "key": {
+        "uuid": "4dca786f_c65963a6",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-08T17:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "671d0c25_d89101a8",
+      "range": {
+        "startLine": 38,
+        "startChar": 38,
+        "endLine": 38,
+        "endChar": 46
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce2b68d2_378922c2",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-08T17:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "671d0c25_d89101a8",
+      "range": {
+        "startLine": 38,
+        "startChar": 38,
+        "endLine": 38,
+        "endChar": 46
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9bb2a64_8ddff8d3",
         "filename": "chrome/test/data/webui/settings/accessibility_test.js",
         "patchSetId": 7
@@ -91,6 +187,54 @@
       "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "becd1fd7_1b8fd541",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-08T17:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9bb2a64_8ddff8d3",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 26
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9f4dcf8_ae046911",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-08T17:56:58Z",
+      "side": 1,
+      "message": "Thanks for the catch!",
+      "parentUuid": "e9bb2a64_8ddff8d3",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 26
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "79c83fd4_09186664",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-08T17:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2b130cf_5f776992",
+      "range": {
+        "startLine": 90,
+        "startChar": 48,
+        "endLine": 90,
+        "endChar": 58
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46f76bde_14f0a750",
         "filename": "chrome/test/data/webui/settings/accessibility_test.js",
         "patchSetId": 7
@@ -140,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "17d22c14_74105b3f",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-08T17:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46f76bde_14f0a750",
+      "range": {
+        "startLine": 95,
+        "startChar": 18,
+        "endLine": 95,
+        "endChar": 34
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "771685eb_1793a520",
         "filename": "chrome/test/data/webui/settings/accessibility_test.js",
         "patchSetId": 7
@@ -160,6 +352,30 @@
       "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5cfaec_cebd6074",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-08T17:56:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "771685eb_1793a520",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 112,
+        "endChar": 12
+      },
+      "revId": "c52e36e70ddb57d7ef5d6afc4d2577adaa23da86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
