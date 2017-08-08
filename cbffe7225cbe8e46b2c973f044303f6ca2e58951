@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "88570e85_1c6d0de3",
+        "filename": "remoting/host/installer/linux/debian/postinst",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-08T00:51:54Z",
+      "side": 1,
+      "message": "It is, as far as I can tell, the preferred way to add a group from a postinst script, but I\u0027m not sure about more generally. I left the code in the Python script for now because it doesn\u0027t hurt anything and it will recreate the group if the group somehow gets deleted. I can take it out, though, if you\u0027d prefer.",
+      "parentUuid": "f45c428b_f21ee91d",
+      "revId": "cbffe7225cbe8e46b2c973f044303f6ca2e58951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38b32264_a85a632b",
         "filename": "remoting/host/installer/linux/debian/postinst",
         "patchSetId": 1
