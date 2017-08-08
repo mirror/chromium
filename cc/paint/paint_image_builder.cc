@@ -22,11 +22,15 @@ PaintImageBuilder::~PaintImageBuilder() = default;
 PaintImage PaintImageBuilder::TakePaintImage() const {
 #if DCHECK_IS_ON()
   DCHECK(id_set_);
-  // TODO(khushalsagar): Expand this for decoder backed images.
   if (paint_image_.sk_image_) {
     DCHECK(!paint_image_.paint_record_);
+    DCHECK(!paint_image_.paint_image_generator_);
   } else if (paint_image_.paint_record_) {
     DCHECK(!paint_image_.sk_image_);
+    DCHECK(!paint_image_.paint_image_generator_);
+  } else if (paint_image_.paint_image_generator_) {
+    DCHECK(!paint_image_.sk_image_);
+    DCHECK(!paint_image_.paint_record_);
   }
 #endif
   return std::move(paint_image_);
