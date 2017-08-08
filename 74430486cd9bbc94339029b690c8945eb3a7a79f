@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35515a12_40e652d9",
+        "filename": "ui/views/controls/table/table_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-08T19:53:06Z",
+      "side": 1,
+      "message": "I think this is the wrong place for the fix. I am sure it is easy to run into this scenario in other places (in tests, and possibly in production code too). So we should find a better fix here. (e.g. ~Widget or ~RootView maybe could do this?)\n\nIs there a backtrace from the crash?",
+      "revId": "74430486cd9bbc94339029b690c8945eb3a7a79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
