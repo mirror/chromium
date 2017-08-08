@@ -9,6 +9,7 @@
 #include "ash/new_window_controller.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
+#include "ash/system/tray/system_tray_controller.h"
 #include "ash/wallpaper/wallpaper_controller.h"
 #include "base/memory/singleton.h"
 #include "base/memory/weak_ptr.h"
@@ -103,6 +104,12 @@ void ArcIntentHelperBridge::OnOpenDownloads() {
 
 void ArcIntentHelperBridge::OnOpenUrl(const std::string& url) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  // If the url is for system settings, show the settings in ai system tray
+  // window instead of a browser tab.
+  if (url == "about:settings") {
+    ash::Shell::Get()->system_tray_controller()->ShowSettings();
+    return;
+  }
   ash::Shell::Get()->shell_delegate()->OpenUrlFromArc(GURL(url));
 }
 
