@@ -16,6 +16,23 @@
       "revId": "31b69dd5f3bcd48606acc60eac092b4dcab62751",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b170fb_1cdd99dc",
+        "filename": "ui/message_center/views/notification_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-08T10:51:22Z",
+      "side": 1,
+      "message": "This is forcing shadows for the view on Linux and Windows without Aero, is that significant for the test?",
+      "revId": "31b69dd5f3bcd48606acc60eac092b4dcab62751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
