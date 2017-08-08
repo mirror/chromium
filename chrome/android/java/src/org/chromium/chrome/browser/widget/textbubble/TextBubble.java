@@ -28,6 +28,9 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.util.AccessibilityUtil;
 import org.chromium.chrome.browser.util.MathUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * UI component that handles showing a text callout bubble.  Positioning this bubble happens through
  * calls to {@link #setAnchorRect(Rect)}.  This should be called at least once before the
@@ -39,6 +42,12 @@ public class TextBubble implements OnTouchListener {
      * @see #setAutoDismissTimeout(long)
      */
     public static final long NO_TIMEOUT = 0;
+
+    /**
+     * A list of bubbles which are active at this moment. This list can be used to dismiss the
+     * bubbles on a back press event.
+     */
+    private static final List<TextBubble> sBubbles = new ArrayList<>();
 
     // Cache Rect objects for querying View and Screen coordinate APIs.
     private final Rect mCachedPaddingRect = new Rect();
@@ -141,6 +150,7 @@ public class TextBubble implements OnTouchListener {
         // Set predefined styles for the TextBubble.
         mDrawable.setBubbleColor(
                 ApiCompatibilityUtils.getColor(mContext.getResources(), R.color.google_blue_500));
+        sBubbles.add(this);
     }
 
     /** Shows the bubble. Will have no effect if the bubble is already showing. */
@@ -162,6 +172,16 @@ public class TextBubble implements OnTouchListener {
      */
     public void dismiss() {
         mPopupWindow.dismiss();
+    }
+
+    /**
+     * Dismisses the active bubbles if user has pressed the back button.
+     */
+    public static void onBackPressed() {
+        for (TextBubble bubble : sBubbles) {
+            bubble.dismiss();
+        }
+        sBubbles.clear();
     }
 
     /**
