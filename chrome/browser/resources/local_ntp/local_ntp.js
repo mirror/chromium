@@ -414,10 +414,7 @@ function updateContentWidth() {
   // We add an extra pixel because rounding errors on different zooms can
   // make the width shorter than it should be.
   var tilesContainerWidth = Math.ceil(numColumnsShown * tileRequiredWidth) + 1;
-  $(IDS.TILES).style.width = tilesContainerWidth + 'px';
-  // -2 to account for border.
-  var fakeboxWidth = (tilesContainerWidth - NTP_DESIGN.tileMargin - 2);
-  $(IDS.FAKEBOX).style.width = fakeboxWidth + 'px';
+  $(IDS.NTP_CONTENTS).style.width = tilesContainerWidth + 'px';
   return true;
 }
 
