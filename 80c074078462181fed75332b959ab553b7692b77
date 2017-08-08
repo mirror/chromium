@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18ddf177_099594db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-08T22:31:58Z",
+      "side": 1,
+      "message": "should this use getTimeSinceLastBackgroundedMs?",
+      "range": {
+        "startLine": 846,
+        "startChar": 13,
+        "endLine": 846,
+        "endChar": 35
+      },
+      "revId": "80c074078462181fed75332b959ab553b7692b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da3a00f_7e87536d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-08T22:31:58Z",
+      "side": 1,
+      "message": "Does this work on cold start?\n\nI am wondering why we need to use mDelayedInitialTabBehaviorDuringUiInit for creating the NTP in other places and this works here.  FWIW, I\u0027m very happy to have this work like this, but it would be good to figure out why the discrepancy.  Maybe the other path relies more on the layout manager being fully initialized?",
+      "range": {
+        "startLine": 871,
+        "startChar": 16,
+        "endLine": 871,
+        "endChar": 27
+      },
+      "revId": "80c074078462181fed75332b959ab553b7692b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

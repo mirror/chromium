@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19a0b5d3_72deda52",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-08T22:31:58Z",
+      "side": 0,
+      "message": "I think we probably want to keep Tabbed in the name as we specifically only want to track tabbed mode.",
+      "range": {
+        "startLine": 212,
+        "startChar": 13,
+        "endLine": 212,
+        "endChar": 33
+      },
+      "revId": "b2cf2248018da319ffe557f8c709f138b6577f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
