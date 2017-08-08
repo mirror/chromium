@@ -46,6 +46,8 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
     MetricsReportRecord();
     void Reset();
     bool first_audible_after_backgrounded_reported;
+    bool main_frame_first_audible_after_backgrounded_reported;
+    bool child_frame_first_audible_after_backgrounded_reported;
   };
 
   struct FrameData {
@@ -63,10 +65,18 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
     ukm::SourceId ukm_source_id = -1;
   };
 
+  void ReportUMAIfNeeded(bool* reported,
+                         const char* histogram_name,
+                         base::TimeDelta duration);
   bool IsCollectingCPUUsageForUkm(const CoordinationUnitID& web_contents_cu_id);
   void RecordCPUUsageForUkm(const CoordinationUnitID& web_contents_cu_id,
                             double cpu_usage,
                             size_t num_coresident_tabs);
+  void ReportAudibilityUKMIfNeeded(
+      const WebContentsCoordinationUnitImpl* web_contents_cu,
+      bool is_main_frame,
+      bool* reported,
+      base::TimeDelta duration);
   void UpdateUkmSourceIdForWebContents(
       const CoordinationUnitID& web_contents_cu_id,
       ukm::SourceId ukm_source_id);

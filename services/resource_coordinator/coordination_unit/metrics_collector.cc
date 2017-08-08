@@ -98,11 +98,18 @@ void MetricsCollector::OnFramePropertyChanged(
           metrics_report_record_map_[web_contents_coordination_unit->id()];
       const WebContentsData web_contents_data =
           web_contents_data_map_[web_contents_coordination_unit->id()];
-      if (!record.first_audible_after_backgrounded_reported) {
-        HEURISTICS_HISTOGRAM(kTabFromBackgroundedToFirstAudioStartsUMA,
-                             now - web_contents_data.last_invisible_time);
-        record.first_audible_after_backgrounded_reported = true;
-      }
+      auto duration = now - web_contents_data.last_invisible_time;
+
+      ReportUMAIfNeeded(&record.first_audible_after_backgrounded_reported,
+                        kTabFromBackgroundedToFirstAudioStartsUMA, duration);
+
+      bool is_main_frame = frame_coordination_unit->IsMainFrame();
+      ReportAudibilityUKMIfNeeded(
+          web_contents_coordination_unit, is_main_frame,
+          is_main_frame
+              ? &record.main_frame_first_audible_after_backgrounded_reported
+              : &record.child_frame_first_audible_after_backgrounded_reported,
+          duration);
     }
   }
 }
@@ -134,6 +141,15 @@ void MetricsCollector::OnWebContentsPropertyChanged(
   }
 }
 
+void MetricsCollector::ReportUMAIfNeeded(bool* reported,
+                                         const char* histogram_name,
+                                         base::TimeDelta duration) {
+  if (*reported)
+    return;
+  HEURISTICS_HISTOGRAM(histogram_name, duration);
+  *reported = true;
+}
+
 bool MetricsCollector::IsCollectingCPUUsageForUkm(
     const CoordinationUnitID& web_contents_cu_id) {
   UkmCPUUsageCollectionState& state =
@@ -155,6 +171,25 @@ void MetricsCollector::RecordCPUUsageForUkm(
       .SetCPUUsage(cpu_usage)
       .SetNumberOfCoresidentTabs(num_coresident_tabs)
       .Record(coordination_unit_manager().ukm_recorder());
+}
+
+void MetricsCollector::ReportAudibilityUKMIfNeeded(
+    const WebContentsCoordinationUnitImpl* web_contents,
+    bool is_main_frame,
+    bool* reported,
+    base::TimeDelta duration) {
+  if (*reported)
+    return;
+  int64_t ukm_source_id = -1;
+  if (!web_contents->GetProperty(mojom::PropertyType::kUKMSourceId,
+                                 &ukm_source_id)) {
+    return;
+  }
+  ukm::builders::TabManager_Heuristics_FromBackgroundedToFirstAudioStarts(
+      ukm_source_id)
+      .SetIsMainFrame(is_main_frame)
+      .SetDuration(duration.InMilliseconds());
+  *reported = true;
 }
 
 void MetricsCollector::UpdateUkmSourceIdForWebContents(
@@ -186,10 +221,14 @@ void MetricsCollector::ResetMetricsReportRecord(CoordinationUnitID cu_id) {
 }
 
 MetricsCollector::MetricsReportRecord::MetricsReportRecord()
-    : first_audible_after_backgrounded_reported(false) {}
+    : first_audible_after_backgrounded_reported(false),
+      main_frame_first_audible_after_backgrounded_reported(false),
+      child_frame_first_audible_after_backgrounded_reported(false) {}
 
 void MetricsCollector::MetricsReportRecord::Reset() {
   first_audible_after_backgrounded_reported = false;
+  main_frame_first_audible_after_backgrounded_reported = false;
+  child_frame_first_audible_after_backgrounded_reported = false;
 }
 
 }  // namespace resource_coordinator
