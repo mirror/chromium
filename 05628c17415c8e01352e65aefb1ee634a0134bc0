@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b0466f13_04155444",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-08T19:32:44Z",
+      "side": 1,
+      "message": "Sorry if I\u0027m misunderstanding, but it seems to me that this is needed in that case?",
+      "parentUuid": "3cc81e0a_baeccb5c",
+      "revId": "05628c17415c8e01352e65aefb1ee634a0134bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f9ca3c4_fba5f994",
         "filename": "content/browser/loader/redirect_to_file_resource_handler_unittest.cc",
         "patchSetId": 6
