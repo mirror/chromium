@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "9a53b1da_fd0e14b6",
+        "filename": "third_party/WebKit/Source/core/paint/SVGRootPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1230841
+      },
+      "writtenOn": "2017-08-08T05:17:10Z",
+      "side": 1,
+      "message": "Probably a good idea. But in that case, I should write the tests you suggested earlier, because this will have to live longer than just a few weeks, and will need to be changed by others. This too is a useful thing to learn: Web Observatory should preserve patches for later reuse or evolution, without committing them to the Chromium repo.\n\nWe\u0027ll talk more on VC.",
+      "parentUuid": "65c26317_372af4d9",
+      "revId": "06ce5125319ad51a3525817c8dec688f2fdb5ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63ba209f_69ef0135",
         "filename": "third_party/WebKit/Source/core/paint/SVGRootPainter.cpp",
         "patchSetId": 2
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "I meant to suggest MapToVisualRectInAncestorSpace as a starting point but it still needs to be tested. For example, it will incorrectly say the following svg is off-screen:\n\u003cdiv style\u003d\"position: absolute; top: 100px; left: 500px;\"\u003e\n  \u003csvg width\u003d\"100\" height\u003d\"100\"\u003e\n    \u003crect width\u003d\"100\" height\u003d\"100\" fill\u003d\"blue\"/\u003e\n  \u003c/svg\u003e\n\u003c/div\u003e",
       "parentUuid": "d7c62874_d8f5a192",
+      "revId": "06ce5125319ad51a3525817c8dec688f2fdb5ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf289bd5_aac06a5a",
+        "filename": "third_party/WebKit/Source/core/paint/SVGRootPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1230841
+      },
+      "writtenOn": "2017-08-08T05:17:10Z",
+      "side": 1,
+      "message": "Very interesting. I tried it and you are correct. It\u0027s painted, but no output.",
+      "parentUuid": "852ea13b_46f72c9d",
       "revId": "06ce5125319ad51a3525817c8dec688f2fdb5ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
