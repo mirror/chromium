@@ -11,6 +11,7 @@
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/shell_test_api.h"
+#include "ash/system/tray/system_tray.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/wm_event.h"
@@ -1043,6 +1044,42 @@ TEST_F(ShellSurfaceTest, CompositorLockInRotation) {
   surface->Commit();
 
   EXPECT_FALSE(compositor->IsLocked());
+}
+
+// System tray should be activated if user presses tab key while shell surface
+// is active.
+TEST_F(ShellSurfaceTest, KeyboardNavigationWithSystemTray) {
+  const gfx::Size buffer_size(800, 600);
+  std::unique_ptr<Buffer> buffer(
+      new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
+  std::unique_ptr<Surface> surface(new Surface());
+  std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(
+      surface.get(), nullptr, ShellSurface::BoundsMode::CLIENT, gfx::Point(),
+      true, false, ash::kShellWindowId_DefaultContainer));
+
+  surface->Attach(buffer.get());
+  surface->Commit();
+
+  EXPECT_TRUE(shell_surface->GetWidget()->IsActive());
+
+  // Show system tray.
+  ash::SystemTray* system_tray = GetPrimarySystemTray();
+  system_tray->ShowDefaultView(ash::BUBBLE_CREATE_NEW);
+  ASSERT_TRUE(system_tray->GetWidget());
+
+  // Confirm that system tray is not active at this time.
+  EXPECT_TRUE(shell_surface->GetWidget()->IsActive());
+  EXPECT_FALSE(
+      system_tray->GetSystemBubble()->bubble_view()->GetWidget()->IsActive());
+
+  // Send tab key event.
+  ui::KeyEvent tab_key_pressed(ui::ET_KEY_PRESSED, ui::VKEY_TAB, ui::EF_NONE);
+  shell_surface->GetWidget()->OnKeyEvent(&tab_key_pressed);
+
+  // Confirm that system tray is activated.
+  EXPECT_FALSE(shell_surface->GetWidget()->IsActive());
+  EXPECT_TRUE(
+      system_tray->GetSystemBubble()->bubble_view()->GetWidget()->IsActive());
 }
 
 }  // namespace

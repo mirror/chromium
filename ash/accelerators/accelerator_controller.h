@@ -66,12 +66,20 @@ class ASH_EXPORT AcceleratorController
   void Register(const std::vector<ui::Accelerator>& accelerators,
                 ui::AcceleratorTarget* target);
 
+  // Registers global keyboard accelerators with high priority.
+  void RegisterPriorityHandlers(
+      const std::vector<ui::Accelerator>& accelerators,
+      ui::AcceleratorTarget* target);
+
   // Unregisters the specified keyboard accelerator for the specified target.
   void Unregister(const ui::Accelerator& accelerator,
                   ui::AcceleratorTarget* target);
 
   // Unregisters all keyboard accelerators for the specified target.
   void UnregisterAll(ui::AcceleratorTarget* target);
+
+  // Returns true if there is a global keyboard accelerator with high priority.
+  bool HasPriorityHandler(const ui::Accelerator& accelerator);
 
   // Returns true if there is an action for |accelerator| and it is enabled.
   bool IsActionForAcceleratorEnabled(const ui::Accelerator& accelerator) const;
