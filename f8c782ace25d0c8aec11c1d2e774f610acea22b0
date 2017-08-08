@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cf75730_610b0a71",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-08T23:02:31Z",
+      "side": 1,
+      "message": "Nit: newline above this one.",
+      "range": {
+        "startLine": 540,
+        "startChar": 26,
+        "endLine": 540,
+        "endChar": 33
+      },
+      "revId": "f8c782ace25d0c8aec11c1d2e774f610acea22b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
