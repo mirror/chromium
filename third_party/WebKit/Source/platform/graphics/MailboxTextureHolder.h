@@ -25,7 +25,7 @@ class PLATFORM_EXPORT MailboxTextureHolder final : public TextureHolder {
   bool IsValid() const final;
 
   gpu::Mailbox GetMailbox() final { return mailbox_; }
-  gpu::SyncToken GetSyncToken() final { return sync_token_; }
+  gpu::SyncToken& GetSyncToken() final { return sync_token_; }
   void UpdateSyncToken(gpu::SyncToken sync_token) final {
     sync_token_ = sync_token;
   }

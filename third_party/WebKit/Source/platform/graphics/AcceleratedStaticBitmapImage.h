@@ -68,7 +68,7 @@ class PLATFORM_EXPORT AcceleratedStaticBitmapImage final
 
   void EnsureMailbox() final;
   gpu::Mailbox GetMailbox() final { return texture_holder_->GetMailbox(); }
-  gpu::SyncToken GetSyncToken() final {
+  gpu::SyncToken& GetSyncToken() final {
     return texture_holder_->GetSyncToken();
   }
   void UpdateSyncToken(gpu::SyncToken) final;

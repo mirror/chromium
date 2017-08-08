@@ -56,4 +56,10 @@ RefPtr<StaticBitmapImage> StaticBitmapImage::ConvertToColorSpace(
                                    ContextProviderWrapper());
 }
 
+gpu::SyncToken& StaticBitmapImage::GetSyncToken() {
+  NOTREACHED();
+  static gpu::SyncToken token = gpu::SyncToken();
+  return token;
+}
+
 }  // namespace blink
