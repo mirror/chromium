@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "d3b04616_70c0b43f",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-08T23:29:00Z",
+      "side": 1,
+      "message": "DCHECK provides debug information with assertion, not guarantee. I would suggest using DCHECK((type \u003d\u003d kSessionRestore \u0026\u0026 is_session_restore_loading_tabs_) || (kBackgroundTabOpen \u0026\u0026 tab_manager_-\u003eIsLoadingBackgroundTabs())) directly instead of a method.",
+      "parentUuid": "c4784d7a_54b0afaf",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 25
+      },
+      "revId": "7b275763961ba510eed8d9bc4d19e9d5f2d74af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84d20118_f73e9b3d",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
         "patchSetId": 3
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "I agree. But I cannot think of another better name. SessionType? Any suggestion?",
       "parentUuid": "84d20118_f73e9b3d",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 16
+      },
+      "revId": "7b275763961ba510eed8d9bc4d19e9d5f2d74af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a61a59_ae4f3972",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-08T23:29:00Z",
+      "side": 1,
+      "message": ":( I racked my brain and couldn\u0027t figure out a better name, waiting help from other reviewers.",
+      "parentUuid": "ca17f20f_a1e61e30",
       "range": {
         "startLine": 30,
         "startChar": 7,
