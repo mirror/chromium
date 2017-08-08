@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecbf1987_cbb9163d",
+        "filename": "chrome/browser/plugins/chrome_plugin_service_filter.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-08T20:44:15Z",
+      "side": 1,
+      "message": "This is a convenient spot, but it doesn\u0027t really belong with ChromePluginServiceFilter. I can\u0027t think of a better spot either. Since there\u0027s only 1 non-test caller, maybe just write out the 2 statement implementation in PDFIFrameNavigationThrottle::MaybeCreateThrottleFor() and leave print_preview_dialog_controller_browsertest.cc alone?",
+      "revId": "c77bd272c730ed54a5359cd44fabd56ceb99c53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
