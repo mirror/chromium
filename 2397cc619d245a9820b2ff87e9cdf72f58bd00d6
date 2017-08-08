@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62446fee_cfd5b742",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-08T13:18:02Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 266,
+        "startChar": 16,
+        "endLine": 266,
+        "endChar": 41
+      },
+      "revId": "2397cc619d245a9820b2ff87e9cdf72f58bd00d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
