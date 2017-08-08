@@ -11,10 +11,14 @@ namespace base {
 class Value;
 }
 
+class Profile;
+
 namespace chrome {
 namespace mac {
 
 NSAppleEventDescriptor* ValueToAppleEventDescriptor(const base::Value* value);
+
+bool IsJavaScriptEnabledForProfile(Profile* profile);
 
 }  // namespace mac
 }  // namespace chrome

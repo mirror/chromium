@@ -430,6 +430,12 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
     case IDC_TOGGLE_FULLSCREEN_TOOLBAR:
       chrome::ToggleFullscreenToolbar(browser_);
       break;
+    case IDC_TOGGLE_JAVASCRIPT_APPLE_EVENTS: {
+      PrefService* prefs = profile()->GetPrefs();
+      prefs->SetBoolean(prefs::kAllowJavascriptAppleEvents,
+                        !prefs->GetBoolean(prefs::kAllowJavascriptAppleEvents));
+      break;
+    }
 #endif
     case IDC_EXIT:
       Exit();
@@ -1004,6 +1010,8 @@ void BrowserCommandController::UpdateCommandsForDevTools() {
   command_updater_.UpdateCommandEnabled(IDC_DEV_TOOLS_INSPECT,
                                         dev_tools_enabled);
   command_updater_.UpdateCommandEnabled(IDC_DEV_TOOLS_TOGGLE,
+                                        dev_tools_enabled);
+  command_updater_.UpdateCommandEnabled(IDC_TOGGLE_JAVASCRIPT_APPLE_EVENTS,
                                         dev_tools_enabled);
 }
 
