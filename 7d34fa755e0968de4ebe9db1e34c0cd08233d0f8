@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "056516a2_2605ad7d",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T21:17:11Z",
+      "side": 1,
+      "message": "Interesting, first time I hear this, I believe firmly that all POD types should be initialized as members when at all possible. Of course if there are existing POD types in the initializer list, new ones should follow for consistency (or migrate all to C++11 in precursor CL). I\u0027m happy to debate this in a public forum if you can point me to dissenting opinions.",
+      "parentUuid": "9f317eb4_c4383bdb",
+      "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46187b87_88dc21fc",
         "filename": "extensions/shell/browser/shell_desktop_controller_mac.mm",
         "patchSetId": 2
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "I suppose it does. I\u0027m not sure how it ever quits, though.... (we don\u0027t target Mac so we\u0027re just trying to leave this code in a relatively unbroken state).",
       "parentUuid": "46187b87_88dc21fc",
+      "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41945701_2585f850",
+        "filename": "extensions/shell/browser/shell_desktop_controller_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T21:17:11Z",
+      "side": 1,
+      "message": "Well if you\u0027re not going to support Run() that\u0027s pretty broken isn\u0027t it..? I\u0027d at least add NOTIMPLEMENTED() but probably even NOTREACHED() with a comment explaining why... And at that point might as well just scratch the Mac impl..",
+      "parentUuid": "586521fc_bc91ee49",
       "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
