@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cbf6e8f_9bd1d595",
+        "filename": "ui/android/java/src/org/chromium/ui/base/SelectFileDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-08T10:10:03Z",
+      "side": 1,
+      "message": "Could you add a comment to explain why this check is necessary?",
+      "revId": "20cf1c678d1f6ada50ece8e15182476492c6eb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a8d8b2_58a4cce8",
+        "filename": "ui/android/java/src/org/chromium/ui/base/SelectFileDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-08T10:10:03Z",
+      "side": 1,
+      "message": "There\u0027s SelectFileDialogTest.java, could you add a small test to verify the normalization behaviour you\u0027re adding here? If we were to make GetDisplayNameTask package visible (i.e. remove `private`) you could instantiate it and just call doInBackground, after which you can read mFilePaths (which already is package visible).",
+      "revId": "20cf1c678d1f6ada50ece8e15182476492c6eb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
