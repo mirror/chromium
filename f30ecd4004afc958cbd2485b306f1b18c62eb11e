@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d8272d4_86a4db9d",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-08T21:06:21Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f30ecd4004afc958cbd2485b306f1b18c62eb11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e54d8d2_dc898f95",
+        "filename": "content/browser/blob_storage/blob_url_loader_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-08T21:06:21Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f30ecd4004afc958cbd2485b306f1b18c62eb11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c66da9_be68cf54",
+        "filename": "content/browser/loader/resource_message_filter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-08T21:06:21Z",
+      "side": 1,
+      "message": "ditto, also remove blank line on 82",
+      "revId": "f30ecd4004afc958cbd2485b306f1b18c62eb11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a149d5a8_199be223",
+        "filename": "content/browser/loader/url_loader_factory_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-08T21:06:21Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f30ecd4004afc958cbd2485b306f1b18c62eb11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1cefa29_5c9d3783",
+        "filename": "content/child/loader/cors_url_loader_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-08T21:06:21Z",
+      "side": 1,
+      "message": "ditto re blank line, and also remove one above",
+      "revId": "f30ecd4004afc958cbd2485b306f1b18c62eb11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c812fef8_985b2ad6",
+        "filename": "content/child/sync_load_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-08T21:06:21Z",
+      "side": 1,
+      "message": "nit: please document this class and the public methods below",
+      "revId": "f30ecd4004afc958cbd2485b306f1b18c62eb11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f9953ec_b0f93a34",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-08T21:06:21Z",
+      "side": 1,
+      "message": "nit: \"block on a waitable\"?",
+      "range": {
+        "startLine": 678,
+        "startChar": 30,
+        "endLine": 678,
+        "endChar": 31
+      },
+      "revId": "f30ecd4004afc958cbd2485b306f1b18c62eb11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bbc6860_06b96731",
+        "filename": "content/network/network_service_url_loader_factory_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-08T21:06:21Z",
+      "side": 1,
+      "message": "nit: no blank line",
+      "revId": "f30ecd4004afc958cbd2485b306f1b18c62eb11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
