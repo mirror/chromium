@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9cba5b41_cb3007c3",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-08T12:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68f65092_bd07cf5d",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 5
+      },
+      "revId": "a4b197bf539b2da547c5dac60749643b868addf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a9c6bfd_c8ad98d4",
         "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "a4b197bf539b2da547c5dac60749643b868addf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7aa0295_7903b9e9",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-08T12:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a9c6bfd_c8ad98d4",
+      "revId": "a4b197bf539b2da547c5dac60749643b868addf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -124,6 +166,30 @@
       "writtenOn": "2017-08-07T16:55:23Z",
       "side": 1,
       "message": "Would this leak since dbus::ObjectProxy::SignalCallback does not take ownership of the pased-in signal ?",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "a4b197bf539b2da547c5dac60749643b868addf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7e7168_afeb2cdd",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-08T12:17:53Z",
+      "side": 1,
+      "message": "No, get() does not release ownership. So it\u0027s destroyed after the signal_callback.Run(...).",
+      "parentUuid": "55ff0dae_5c073736",
       "range": {
         "startLine": 76,
         "startChar": 6,
