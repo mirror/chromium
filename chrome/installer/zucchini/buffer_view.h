@@ -13,6 +13,13 @@
 #include "base/logging.h"
 
 namespace zucchini {
+
+// Describes a region within a buffer, with starting offset and size.
+struct BufferRegion {
+  size_t offset;
+  size_t size;
+};
+
 namespace internal {
 
 // BufferViewBase should not be used directly; it is an implementation used for
@@ -42,6 +49,9 @@ class BufferViewBase {
       : first_(first), last_(first_ + size) {
     DCHECK_GE(last_, first_);
   }
+  template <class U>
+  explicit BufferViewBase(const BufferViewBase<U>& that)
+      : first_(that.begin()), last_(that.end()) {}
 
   BufferViewBase(const BufferViewBase&) = default;
   BufferViewBase& operator=(const BufferViewBase&) = default;
@@ -54,6 +64,8 @@ class BufferViewBase {
   const_iterator cend() const { return end(); }
 
   // Element access
+
+  BufferRegion region() const { return BufferRegion{0, size()}; }
 
   // Returns the raw value at specified location |pos|.
   // If |pos| is not within the range of the buffer, the process is terminated.
