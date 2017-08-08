@@ -345,7 +345,7 @@ IN_PROC_BROWSER_TEST_F(WebstoreInlineInstallerTest,
   ExtensionService* extension_service =
       ExtensionSystem::Get(browser()->profile())->extension_service();
   extension_service->DisableExtension(kTestExtensionId,
-                                      Extension::DISABLE_USER_ACTION);
+                                      EXTENSION_DISABLE_USER_ACTION);
   EXPECT_TRUE(registry->disabled_extensions().GetByID(kTestExtensionId));
 
   // Revisit the inline install site and reinstall the extension. It should
@@ -361,7 +361,7 @@ IN_PROC_BROWSER_TEST_F(WebstoreInlineInstallerTest,
 
   // Disable the extension due to a permissions increase.
   extension_service->DisableExtension(kTestExtensionId,
-                                      Extension::DISABLE_PERMISSIONS_INCREASE);
+                                      EXTENSION_DISABLE_PERMISSIONS_INCREASE);
   EXPECT_TRUE(registry->disabled_extensions().GetByID(kTestExtensionId));
   ui_test_utils::NavigateToURL(
       browser(), GenerateTestServerUrl(kAppDomain, "install.html"));
