@@ -67,4 +67,8 @@ const std::string& ArcNotificationSurfaceImpl::GetNotificationKey() const {
   return surface_->notification_key();
 }
 
+void ArcNotificationSurfaceImpl::FocusSurfaceWindow() {
+  return surface_->FocusSurfaceWindow();
+}
+
 }  // namespace arc

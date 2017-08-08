@@ -30,6 +30,12 @@ class NotificationSurface : public SurfaceTreeHost, public SurfaceObserver {
 
   const std::string& notification_key() const { return notification_key_; }
 
+  // Focus the surface window manually to handle key events for notification.
+  // Message center is unactivatable by default, but we make it activatable when
+  // user is about to use Direct Reply. In that case, we also need to focus the
+  // surface window manually to send events to Android.
+  void FocusSurfaceWindow();
+
   // Overridden from SurfaceDelegate:
   void OnSurfaceCommit() override;
 
