@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6208ed0b_3f298690",
+        "filename": "base/test/launcher/unit_test_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-08T08:56:16Z",
+      "side": 1,
+      "message": "Nice! I\u0027m glad we can just use that.",
+      "range": {
+        "startLine": 381,
+        "startChar": 8,
+        "endLine": 381,
+        "endChar": 25
+      },
+      "revId": "e4d27a928c06792c2c2146b1b2c136129536b30f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92ea60b_b510a15b",
+        "filename": "base/test/launcher/unit_test_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-08T08:56:16Z",
+      "side": 1,
+      "message": "Since we\u0027d have 0 or 1 elements there (and we can modify condition such that we execute special case for exactly 1 element, and otherwise do the _above_ branch which already has a loop), I\u0027d prefer to directly dereference the 1 element, rather than having a loop.",
+      "range": {
+        "startLine": 383,
+        "startChar": 6,
+        "endLine": 383,
+        "endChar": 9
+      },
+      "revId": "e4d27a928c06792c2c2146b1b2c136129536b30f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "222cbae6_c6d342b6",
+        "filename": "base/test/launcher/unit_test_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-08T08:56:16Z",
+      "side": 1,
+      "message": "I\u0027m hesitating to allow reporting a success when the test failed to produce machine-readable result. It is a sign something went wrong, and can mask real issues.\n\nCould you put this branch last, and still return something else than TEST_SUCCESS? Also let\u0027s add a comment to the code to explain above rationale.",
+      "range": {
+        "startLine": 390,
+        "startChar": 48,
+        "endLine": 390,
+        "endChar": 55
+      },
+      "revId": "e4d27a928c06792c2c2146b1b2c136129536b30f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
