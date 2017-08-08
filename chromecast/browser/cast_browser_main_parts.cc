@@ -21,7 +21,6 @@
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
-#include "cc/base/switches.h"
 #include "chromecast/base/cast_constants.h"
 #include "chromecast/base/cast_features.h"
 #include "chromecast/base/cast_paths.h"
@@ -264,7 +263,7 @@ const DefaultCommandLineSwitch kDefaultSwitches[] = {
     // TODO(halliwell): Remove after fixing b/35422666.
     {switches::kEnableUseZoomForDSF, "false"},
     // TODO(halliwell): Revert after fix for b/63101386.
-    {cc::switches::kDisallowNonExactResourceReuse, ""},
+    {switches::kDisallowNonExactResourceReuse, ""},
 };
 
 void AddDefaultCommandLineSwitches(base::CommandLine* command_line) {
