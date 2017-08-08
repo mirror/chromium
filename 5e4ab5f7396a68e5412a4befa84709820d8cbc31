@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "848957e0_3278a159",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-08T18:01:28Z",
+      "side": 1,
+      "message": "What do you think about turning this into an array\u003cRemoteDeviceCapability\u003e instead? And adding a new entry for MOBILE_HOTSPOT_ENABLED?",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 31
+      },
+      "revId": "5e4ab5f7396a68e5412a4befa84709820d8cbc31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44342314_5af3d55f",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-08T18:01:28Z",
+      "side": 1,
+      "message": "We should rename this to IsFeaturePromotable and add a new Feature enum, e.g.\nFEATURE { EASY_UNLOCK, SMS_SYNC, ... }\n\nEssentially, this API tells the caller if the *local* device is promotable, not the remote device. We shouldn\u0027t overload the RemoteDeviceCapability enum for this API.",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 24
+      },
+      "revId": "5e4ab5f7396a68e5412a4befa84709820d8cbc31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
