@@ -264,6 +264,11 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // |NOT_SIGNED_IN|.
   virtual SyncAccountType GetSyncAccountType() = 0;
 
+  virtual void MaybeLogPasswordReuseLookup(
+      content::WebContents* web_contents,
+      PasswordProtectionService::RequestOutcome,
+      const LoginReputationClientResponse*) = 0;
+
   void CheckCsdWhitelistOnIOThread(const GURL& url, bool* check_result);
 
   virtual void UpdateSecurityState(safe_browsing::SBThreatType threat_type,
