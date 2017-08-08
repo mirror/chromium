@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d01178a_584ee066",
+        "filename": "ios/chrome/browser/drag_and_drop/drop_and_navigate_interaction.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-08T19:02:04Z",
+      "side": 1,
+      "message": "I forget if we still care about the year, fyi: 2017 here and remaining files",
+      "revId": "8d2bfdd9d8d5fc8636716461f92d08b41fe8e0b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
