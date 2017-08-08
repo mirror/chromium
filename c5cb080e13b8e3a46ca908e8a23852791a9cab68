@@ -2,6 +2,97 @@
   "comments": [
     {
       "key": {
+        "uuid": "14c6fed4_70e2ab99",
+        "filename": "content/browser/appcache/appcache_update_request_base.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-08T18:40:49Z",
+      "side": 1,
+      "message": "(Please see my comments in appcache_update_url_fetcher.cc for this method.)",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7655e051_80283351",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-08T18:40:49Z",
+      "side": 1,
+      "message": "request_-\u003eRead() posts a task even if there is already data available, so this could be less efficient than the original code, right?",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55dbd53_62fc349d",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-08T18:40:49Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28049df_303383d2",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-08T18:40:49Z",
+      "side": 1,
+      "message": "Please use kURLLoadOptionNone",
+      "range": {
+        "startLine": 19,
+        "startChar": 47,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf428a3_b14a4569",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-08T18:40:49Z",
+      "side": 1,
+      "message": "Is it possible to return a const\u0026 instead?",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "176d9361_789b12b3",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 20
@@ -31,6 +122,125 @@
       "side": 1,
       "message": "Thanks. Would it be better to just check the command line here?. The urlrequest subclass uses URLRequestContext to get this info. This would ensure that we retain current behavior.",
       "parentUuid": "176d9361_789b12b3",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7885921d_17534a17",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-08T18:40:49Z",
+      "side": 1,
+      "message": "nit: invoked \"by\"",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64098c5e_0b470ec3",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-08T18:40:49Z",
+      "side": 1,
+      "message": "We shouldn\u0027t get MOJO_RESULT_BUSY so it could be a DCHECK. (If we do hit MOJO_RESULT_BUSY, the current code will silently stop watching and never complete.)",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3790641_ebabcece",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-08T18:40:49Z",
+      "side": 1,
+      "message": "DCHECK_EQ?",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99585c0_6db8c07a",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-08T18:40:49Z",
+      "side": 1,
+      "message": "nit: it seems easier to read to call fetcher_-\u003eOnResponseCompleted() directly?",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18df12e_0b33b2b2",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-08T18:40:49Z",
+      "side": 1,
+      "message": "This kind of comments don\u0027t contain any extra information than the member declarations themselves, please remove them.",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3fb72ad_a158bfab",
+        "filename": "content/common/net_adapters.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-08T18:40:49Z",
+      "side": 1,
+      "message": "I understand the reason why you would like to split CompleteRead/ReleaseHandle. But it is less consistent with NetToMojoPendingBuffer. Both APIs are a little awkward, unfortunately. :/",
+      "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76871d2b_95c0b27d",
+        "filename": "content/common/net_adapters.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-08T18:40:49Z",
+      "side": 1,
+      "message": "Did you restore the version removed by https://codereview.chromium.org/1873463003?\n\nI think it is not exactly the same. Did you make some changes in this CL?\nIf yes usually it is nice to upload original/modified version so that reviewers could look at the difference.",
       "revId": "c5cb080e13b8e3a46ca908e8a23852791a9cab68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
