@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48aaa5f8_1db22ce0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T11:37:35Z",
+      "side": 1,
+      "message": "It\u0027s fixed now; improved from the previous state, even.\n\nYou might still want to see the new super-narrow behavior; I can demonstrate, if you want, since it\u0027s easier to understand in motion. (\"super-narrow\" is only possible when zoom is \u003e100%; at 100%, the NTP has always handled everything down to the minimum window width, as far as I can tell)\n\nWe might want to remove body\u0027s overflow-x: hidden.",
+      "parentUuid": "6f383deb_7f4a7627",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "6dd5bd5538eaf8a07c9e034648c850df5aa631e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d20dc0fb_7b03cb49",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-08T08:13:45Z",
       "side": 1,
       "message": ":-/\nI don\u0027t suppose there\u0027s a way around this? I know we do the same thing for the fakebox, but there I don\u0027t think it can be avoided. IIUC, here it\u0027s just to center the logo, and it seems that should be possible to achieve without JS?\nAlso, what if the logo is wider than the fakebox - do things still work?",
+      "range": {
+        "startLine": 35,
+        "startChar": 47,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "6dd5bd5538eaf8a07c9e034648c850df5aa631e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16505f5_98277791",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T11:37:35Z",
+      "side": 1,
+      "message": "\u003e :-/\n\u003e I don\u0027t suppose there\u0027s a way around this? I know we do the same thing for the fakebox, but there I don\u0027t think it can be avoided. IIUC, here it\u0027s just to center the logo, and it seems that should be possible to achieve without JS?\n\nI found a better solution. Instead of setting a width for each element (logo, fakebox, tiles) I set a single width on #ntp-contents\n\n\u003e Also, what if the logo is wider than the fakebox - do things still work?\n\nYes, it can extend beyond the width of its container and stays center.\n\nIf it expands beyond the width of the window, it\u0027s cropped on both sides, but stays centered. I\u0027m not sure what the expected behavior is in that case; that sounds fine to me.",
+      "parentUuid": "d20dc0fb_7b03cb49",
       "range": {
         "startLine": 35,
         "startChar": 47,
@@ -80,6 +128,24 @@
       "revId": "6dd5bd5538eaf8a07c9e034648c850df5aa631e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07daf3f_0c73c5ee",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T11:37:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc73a9ef_a3a8b321",
+      "revId": "6dd5bd5538eaf8a07c9e034648c850df5aa631e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
