@@ -11,6 +11,7 @@ struct GLWorkarounds {
   // glClearColor does not always work on Intel 6xxx Mac drivers. See
   // crbug.com/710443.
   bool clear_to_zero_or_one_broken = false;
+  bool reset_teximage2d_base_level = false;
 };
 
 }  // namespace gl

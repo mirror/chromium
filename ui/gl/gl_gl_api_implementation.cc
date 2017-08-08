@@ -356,8 +356,21 @@ void RealGLApi::glTexImage2DFn(GLenum target,
       GetTexInternalFormat(version_.get(), internalformat, format, type);
   GLenum gl_format = GetTexFormat(version_.get(), format);
   GLenum gl_type = GetTexType(version_.get(), type);
-  GLApiBase::glTexImage2DFn(target, level, gl_internal_format, width, height,
-                            border, gl_format, gl_type, pixels);
+
+  if (gl_workarounds_.reset_teximage2d_base_level == true &&
+      target == GL_TEXTURE_2D) {
+    GLint base_level;
+    GLApiBase::glGetTexParameterivFn(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL,
+                                     &base_level);
+    GLApiBase::glTexParameteriFn(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+    GLApiBase::glTexImage2DFn(target, level, gl_internal_format, width, height,
+                              border, gl_format, gl_type, pixels);
+    GLApiBase::glTexParameteriFn(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL,
+                                 base_level);
+  } else {
+    GLApiBase::glTexImage2DFn(target, level, gl_internal_format, width, height,
+                              border, gl_format, gl_type, pixels);
+  }
 }
 
 void RealGLApi::glTexSubImage2DFn(GLenum target,
