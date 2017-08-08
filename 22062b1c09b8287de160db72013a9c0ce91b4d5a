@@ -46,6 +46,30 @@
       "revId": "22062b1c09b8287de160db72013a9c0ce91b4d5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59555710_d988fc72",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBufferTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-08T17:48:53Z",
+      "side": 1,
+      "message": "Hmm, but ASAN complain is at the DrawingBufferTest::Init() function, which is getting called even in your latest patch.",
+      "parentUuid": "8222e0a0_1a68e7aa",
+      "range": {
+        "startLine": 737,
+        "startChar": 6,
+        "endLine": 737,
+        "endChar": 25
+      },
+      "revId": "22062b1c09b8287de160db72013a9c0ce91b4d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
