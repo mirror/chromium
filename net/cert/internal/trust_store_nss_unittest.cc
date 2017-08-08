@@ -14,6 +14,7 @@
 #include "net/cert/internal/test_helpers.h"
 #include "net/cert/scoped_nss_types.h"
 #include "net/cert/x509_certificate.h"
+#include "net/cert/x509_util_nss.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace net {
@@ -60,8 +61,8 @@ class TrustStoreNSSTest : public testing::Test {
   void AddCertToNSS(const ParsedCertificate* cert) {
     std::string nickname = GetUniqueNickname();
     ScopedCERTCertificate nss_cert(
-        X509Certificate::CreateOSCertHandleFromBytesWithNickname(
-            cert->der_cert().AsStringPiece().data(), cert->der_cert().Length(),
+        x509_util::CreateCERTCertificateFromBytesWithNickname(
+            cert->der_cert().UnsafeData(), cert->der_cert().Length(),
             nickname.c_str()));
     ASSERT_TRUE(nss_cert);
     SECStatus srv =
@@ -96,13 +97,8 @@ class TrustStoreNSSTest : public testing::Test {
 
   // Trusts |cert|. Assumes the cert was already imported into NSS.
   void TrustCert(const ParsedCertificate* cert) {
-    SECItem der_cert;
-    der_cert.data = const_cast<uint8_t*>(cert->der_cert().UnsafeData());
-    der_cert.len = base::checked_cast<unsigned>(cert->der_cert().Length());
-    der_cert.type = siDERCertBuffer;
-
-    ScopedCERTCertificate nss_cert(
-        CERT_FindCertByDERCert(CERT_GetDefaultCertDB(), &der_cert));
+    ScopedCERTCertificate nss_cert(x509_util::FindCERTCertificateFromBytes(
+        cert->der_cert().UnsafeData(), cert->der_cert().Length()));
     ASSERT_TRUE(nss_cert);
 
     CERTCertTrust trust = {0};
@@ -248,8 +244,8 @@ class TrustStoreNSSTestDelegate {
     ASSERT_TRUE(test_nssdb_.is_open());
     std::string nickname = GetUniqueNickname();
     ScopedCERTCertificate nss_cert(
-        X509Certificate::CreateOSCertHandleFromBytesWithNickname(
-            cert->der_cert().AsStringPiece().data(), cert->der_cert().Length(),
+        x509_util::CreateCERTCertificateFromBytesWithNickname(
+            cert->der_cert().UnsafeData(), cert->der_cert().Length(),
             nickname.c_str()));
     ASSERT_TRUE(nss_cert);
     SECStatus srv =
