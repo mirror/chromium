@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79844906_0db5b4f0",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-08T18:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96e3b188_be66f3b2",
+      "range": {
+        "startLine": 47,
+        "startChar": 19,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "d1025a9370bccd2972f2d5f93e0618ccfbeaf87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5ab6e72_be670cff",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-08T17:12:47Z",
       "side": 1,
       "message": "Maybe OnTaskUnresponsive(), to match the other two? Logically these three methods are the interface from SubproviderSource back here, so it makes sense to model them consistently.",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "d1025a9370bccd2972f2d5f93e0618ccfbeaf87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d48cb2d3_bd1ee53b",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-08T18:58:11Z",
+      "side": 1,
+      "message": "Changed",
+      "parentUuid": "e5ab6e72_be670cff",
       "range": {
         "startLine": 46,
         "startChar": 7,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "9ecb7049_5a493d81",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-08T18:58:11Z",
+      "side": 1,
+      "message": "Added a comment in this section explaining what each one is for.",
+      "parentUuid": "60342fe3_a69d1b37",
+      "revId": "d1025a9370bccd2972f2d5f93e0618ccfbeaf87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b59b421a_97e62e71",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
         "patchSetId": 8
@@ -79,6 +145,24 @@
       "revId": "d1025a9370bccd2972f2d5f93e0618ccfbeaf87d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8eec79f_36b8d9a2",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-08T18:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b59b421a_97e62e71",
+      "revId": "d1025a9370bccd2972f2d5f93e0618ccfbeaf87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
