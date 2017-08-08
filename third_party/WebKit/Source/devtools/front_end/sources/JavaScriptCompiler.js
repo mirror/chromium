@@ -48,22 +48,24 @@ Sources.JavaScriptCompiler = class {
 
     this._compiling = true;
     var code = this._sourceFrame.textEditor.text();
-    runtimeModel.compileScript(code, '', false, currentExecutionContext.id, compileCallback.bind(this));
+    runtimeModel.compileScript(code, '', false, currentExecutionContext.id).then(compileCallback.bind(this));
 
     /**
-     * @param {!Protocol.Runtime.ScriptId=} scriptId
-     * @param {?Protocol.Runtime.ExceptionDetails=} exceptionDetails
+     * @param {?SDK.RuntimeModel.CompileScriptResult} result
      * @this {Sources.JavaScriptCompiler}
      */
-    function compileCallback(scriptId, exceptionDetails) {
+    function compileCallback(result) {
+      if (!result)
+        return;
       this._compiling = false;
       if (this._recompileScheduled) {
         delete this._recompileScheduled;
         this.scheduleCompile();
         return;
       }
-      if (!exceptionDetails)
+      if (!result || !result.exceptionDetails)
         return;
+      var exceptionDetails = result.exceptionDetails;
       var text = SDK.RuntimeModel.simpleTextFromException(exceptionDetails);
       this._sourceFrame.uiSourceCode().addLineMessage(
           Workspace.UISourceCode.Message.Level.Error, text, exceptionDetails.lineNumber, exceptionDetails.columnNumber);

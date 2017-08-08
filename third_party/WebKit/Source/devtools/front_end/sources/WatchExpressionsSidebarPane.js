@@ -227,7 +227,7 @@ Sources.WatchExpression = class extends Common.Object {
     this._editing = false;
     this._linkifier = linkifier;
 
-    this._createWatchExpression(null);
+    this._createWatchExpression();
     this.update();
   }
 
@@ -248,9 +248,12 @@ Sources.WatchExpression = class extends Common.Object {
   update() {
     var currentExecutionContext = UI.context.flavor(SDK.ExecutionContext);
     if (currentExecutionContext && this._expression) {
-      currentExecutionContext.evaluate(
-          this._expression, Sources.WatchExpression._watchObjectGroupId, false, true, false, false, false,
-          this._createWatchExpression.bind(this));
+      currentExecutionContext
+          .evaluate(
+              this._expression, Sources.WatchExpression._watchObjectGroupId, /* includeCommandLineAPI */ false,
+              /* silent */ true, /* returnByValue */ false, /* generatePreview */ false, /* userGesture */ false,
+              /* awaitPromise */ false)
+          .then(result => this._createWatchExpression(result.result, result.exceptionDetails));
     }
   }
 
@@ -320,11 +323,11 @@ Sources.WatchExpression = class extends Common.Object {
   }
 
   /**
-   * @param {?SDK.RemoteObject} result
+   * @param {!SDK.RemoteObject=} result
    * @param {!Protocol.Runtime.ExceptionDetails=} exceptionDetails
    */
   _createWatchExpression(result, exceptionDetails) {
-    this._result = result;
+    this._result = result || null;
 
     var headerElement = createElementWithClass('div', 'watch-expression-header');
     var deleteButton = headerElement.createChild('button', 'watch-expression-delete-button');

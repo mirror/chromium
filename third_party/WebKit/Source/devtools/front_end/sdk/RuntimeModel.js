@@ -245,9 +245,9 @@ SDK.RuntimeModel = class extends SDK.SDKModel {
    * @param {string} sourceURL
    * @param {boolean} persistScript
    * @param {number} executionContextId
-   * @param {function(!Protocol.Runtime.ScriptId=, ?Protocol.Runtime.ExceptionDetails=)=} callback
+   * @return {?Promise<!SDK.RuntimeModel.CompileScriptResult>}
    */
-  async compileScript(expression, sourceURL, persistScript, executionContextId, callback) {
+  async compileScript(expression, sourceURL, persistScript, executionContextId) {
     var response = await this._agent.invoke_compileScript({
       expression: expression,
       sourceURL: sourceURL,
@@ -257,10 +257,9 @@ SDK.RuntimeModel = class extends SDK.SDKModel {
 
     if (response[Protocol.Error]) {
       console.error(response[Protocol.Error]);
-      return;
+      return null;
     }
-    if (callback)
-      callback(response.scriptId, response.exceptionDetails);
+    return {scriptId: response.scriptId, exceptionDetails: response.exceptionDetails};
   }
 
   /**
@@ -272,11 +271,11 @@ SDK.RuntimeModel = class extends SDK.SDKModel {
    * @param {boolean=} returnByValue
    * @param {boolean=} generatePreview
    * @param {boolean=} awaitPromise
-   * @param {function(?Protocol.Runtime.RemoteObject, ?Protocol.Runtime.ExceptionDetails=)=} callback
+   * @return {!Promise<!SDK.RuntimeModel.EvaluationResult>}
    */
   async runScript(
       scriptId, executionContextId, objectGroup, silent, includeCommandLineAPI, returnByValue, generatePreview,
-      awaitPromise, callback) {
+      awaitPromise) {
     var response = await this._agent.invoke_runScript({
       scriptId,
       executionContextId,
@@ -288,12 +287,12 @@ SDK.RuntimeModel = class extends SDK.SDKModel {
       awaitPromise
     });
 
-    if (response[Protocol.Error]) {
-      console.error(response[Protocol.Error]);
-      return;
+    var error = response[Protocol.Error];
+    if (error) {
+      console.error(error);
+      return {error: error};
     }
-    if (callback)
-      callback(response.result, response.exceptionDetails);
+    return {result: this.createRemoteObject(response.result), exceptionDetails: response.exceptionDetails};
   }
 
   /**
@@ -440,6 +439,21 @@ SDK.RuntimeModel.Events = {
 
 /** @typedef {{timestamp: number, details: !Protocol.Runtime.ExceptionDetails}} */
 SDK.RuntimeModel.ExceptionWithTimestamp;
+
+/** @typedef {{
+ *    scriptId: (Protocol.Runtime.ScriptId|undefined),
+ *    exceptionDetails: (!Protocol.Runtime.ExceptionDetails|undefined)
+ *  }}
+ */
+SDK.RuntimeModel.CompileScriptResult;
+
+/** @typedef {{
+ *    result: (!SDK.RemoteObject|undefined),
+ *    exceptionDetails: (!Protocol.Runtime.ExceptionDetails|undefined),
+ *    error: (!Protocol.Error|undefined)}
+ *  }}
+ */
+SDK.RuntimeModel.EvaluationResult;
 
 /**
  * @typedef {{
@@ -597,34 +611,29 @@ SDK.ExecutionContext = class {
    * @param {boolean} returnByValue
    * @param {boolean} generatePreview
    * @param {boolean} userGesture
-   * @param {function(?SDK.RemoteObject, !Protocol.Runtime.ExceptionDetails=, string=)} callback
+   * @param {boolean} awaitPromise
+   * @return {!Promise<!SDK.RuntimeModel.EvaluationResult>}
    */
   evaluate(
-      expression,
-      objectGroup,
-      includeCommandLineAPI,
-      silent,
-      returnByValue,
-      generatePreview,
-      userGesture,
-      callback) {
+      expression, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview, userGesture,
+      awaitPromise) {
     // FIXME: It will be moved to separate ExecutionContext.
     if (this.debuggerModel.selectedCallFrame()) {
-      this.debuggerModel.evaluateOnSelectedCallFrame(
-          expression, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview, callback);
-      return;
+      return this.debuggerModel.evaluateOnSelectedCallFrame(
+          expression, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview);
     }
-    this._evaluateGlobal(
-        expression, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview, userGesture, callback);
+    return this._evaluateGlobal(
+        expression, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview, userGesture,
+        awaitPromise);
   }
 
   /**
    * @param {string} objectGroup
    * @param {boolean} generatePreview
-   * @param {function(?SDK.RemoteObject, !Protocol.Runtime.ExceptionDetails=, string=)} callback
+   * @return {!Promise<!SDK.RuntimeModel.EvaluationResult>}
    */
-  globalObject(objectGroup, generatePreview, callback) {
-    this._evaluateGlobal('this', objectGroup, false, true, false, generatePreview, false, callback);
+  globalObject(objectGroup, generatePreview) {
+    return this._evaluateGlobal('this', objectGroup, false, true, false, generatePreview, false, false);
   }
 
   /**
@@ -635,10 +644,12 @@ SDK.ExecutionContext = class {
    * @param {boolean} returnByValue
    * @param {boolean} generatePreview
    * @param {boolean} userGesture
-   * @param {function(?SDK.RemoteObject, !Protocol.Runtime.ExceptionDetails=, string=)} callback
+   * @param {boolean} awaitPromise
+   * @return {!Promise<!SDK.RuntimeModel.EvaluationResult>}
    */
   async _evaluateGlobal(
-      expression, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview, userGesture, callback) {
+      expression, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview, userGesture,
+      awaitPromise) {
     if (!expression) {
       // There is no expression, so the completion should happen against global properties.
       expression = 'this';
@@ -653,16 +664,15 @@ SDK.ExecutionContext = class {
       returnByValue: returnByValue,
       generatePreview: generatePreview,
       userGesture: userGesture,
-      awaitPromise: false
+      awaitPromise: awaitPromise
     });
 
     var error = response[Protocol.Error];
     if (error) {
       console.error(error);
-      callback(null, undefined, error);
-      return;
+      return {error: error};
     }
-    callback(this.runtimeModel.createRemoteObject(response.result), response.exceptionDetails);
+    return {result: this.runtimeModel.createRemoteObject(response.result), exceptionDetails: response.exceptionDetails};
   }
 
   /**

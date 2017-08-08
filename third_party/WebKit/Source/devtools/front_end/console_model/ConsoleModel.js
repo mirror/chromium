@@ -133,23 +133,29 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
     this.addMessage(commandMessage);
 
     /**
-     * @param {?SDK.RemoteObject} result
-     * @param {!Protocol.Runtime.ExceptionDetails=} exceptionDetails
+     * @param {?SDK.RuntimeModel.EvaluationResult} result
      * @this {ConsoleModel.ConsoleModel}
      */
-    function printResult(result, exceptionDetails) {
+    function printResult(result) {
       if (!result)
         return;
 
       Common.console.showPromise().then(() => {
-        this.dispatchEventToListeners(
-            ConsoleModel.ConsoleModel.Events.CommandEvaluated,
-            {result: result, text: requestedText, commandMessage: commandMessage, exceptionDetails: exceptionDetails});
+        this.dispatchEventToListeners(ConsoleModel.ConsoleModel.Events.CommandEvaluated, {
+          result: result.result,
+          text: requestedText,
+          commandMessage: commandMessage,
+          exceptionDetails: result.exceptionDetails
+        });
       });
     }
 
     text = SDK.RuntimeModel.wrapObjectLiteralExpressionIfNeeded(text);
-    executionContext.evaluate(text, 'console', useCommandLineAPI, false, false, true, true, printResult.bind(this));
+    executionContext
+        .evaluate(
+            text, 'console', useCommandLineAPI, /* silent */ false, /* returnByValue */ false,
+            /* generatePreview */ true, /* userGesture */ true, /* awaitPromise */ false)
+        .then(printResult.bind(this));
     Host.userMetrics.actionTaken(Host.UserMetrics.Action.ConsoleEvaluated);
   }
 

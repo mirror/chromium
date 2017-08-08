@@ -70,15 +70,18 @@ ObjectUI.JavaScriptAutocomplete._mapCompletions = function(text, query) {
   var clippedExpression = ObjectUI.JavaScriptAutocomplete._clipExpression(text.substring(0, mapMatch.index));
   var fulfill;
   var promise = new Promise(x => fulfill = x);
-  executionContext.evaluate(clippedExpression, 'completion', true, true, false, false, false, evaluated);
+  executionContext
+      .evaluate(
+          clippedExpression, 'completion', /* includeCommandLineAPI */ true, /* silent */ true,
+          /* returnByValue */ false, /* generatePreview */ false, /* userGesture */ false, /* awaitPromise */ false)
+      .then(evaluated);
   return promise;
 
   /**
-   * @param {?SDK.RemoteObject} result
-   * @param {!Protocol.Runtime.ExceptionDetails=} exceptionDetails
+   * @param {!SDK.RuntimeModel.EvaluationResult} result
    */
-  function evaluated(result, exceptionDetails) {
-    if (!result || !!exceptionDetails || result.subtype !== 'map') {
+  function evaluated(result) {
+    if (result.error || !!result.exceptionDetails || result.result.subtype !== 'map') {
       fulfill([]);
       return;
     }
@@ -187,18 +190,22 @@ ObjectUI.JavaScriptAutocomplete.completionsForExpression = function(expressionSt
   var fulfill;
   var promise = new Promise(x => fulfill = x);
   var selectedFrame = executionContext.debuggerModel.selectedCallFrame();
-  if (!expressionString && selectedFrame)
+  if (!expressionString && selectedFrame) {
     variableNamesInScopes(selectedFrame, receivedPropertyNames);
-  else
-    executionContext.evaluate(expressionString, 'completion', true, true, false, false, false, evaluated);
+  } else {
+    executionContext
+        .evaluate(
+            expressionString, 'completion', /* includeCommandLineAPI */ true, /* silent */ true,
+            /* returnByValue */ false, /* generatePreview */ false, /* userGesture */ false, /* awaitPromise */ false)
+        .then(evaluated);
+  }
 
   return promise;
   /**
-   * @param {?SDK.RemoteObject} result
-   * @param {!Protocol.Runtime.ExceptionDetails=} exceptionDetails
+   * @param {!SDK.RuntimeModel.EvaluationResult} result
    */
-  function evaluated(result, exceptionDetails) {
-    if (!result || !!exceptionDetails) {
+  function evaluated(result) {
+    if (result.error || !!result.exceptionDetails || !result.result) {
       fulfill([]);
       return;
     }
@@ -282,13 +289,16 @@ ObjectUI.JavaScriptAutocomplete.completionsForExpression = function(expressionSt
         object.callFunctionJSON(
             getCompletions, [SDK.RemoteObject.toCallArgument(object.subtype)], receivedPropertyNames);
       } else if (object.type === 'string' || object.type === 'number' || object.type === 'boolean') {
-        executionContext.evaluate(
-            '(' + getCompletions + ')("' + result.type + '")', 'completion', false, true, true, false, false,
-            receivedPropertyNamesFromEval);
+        executionContext
+            .evaluate(
+                '(' + getCompletions + ')("' + object.type + '")', 'completion', /* includeCommandLineAPI */ false,
+                /* silent */ true, /* returnByValue */ true, /* generatePreview */ false, /* userGesture */ false,
+                /* awaitPromise */ false)
+            .then(receivedPropertyNamesFromEval);
       }
     }
 
-    extractTarget(result).then(completionsForObject);
+    extractTarget(result.result).then(completionsForObject);
   }
 
   /**
@@ -323,13 +333,12 @@ ObjectUI.JavaScriptAutocomplete.completionsForExpression = function(expressionSt
   }
 
   /**
-   * @param {?SDK.RemoteObject} result
-   * @param {!Protocol.Runtime.ExceptionDetails=} exceptionDetails
+   * @param {!SDK.RuntimeModel.EvaluationResult} result
    */
-  function receivedPropertyNamesFromEval(result, exceptionDetails) {
+  function receivedPropertyNamesFromEval(result) {
     executionContext.runtimeModel.releaseObjectGroup('completion');
-    if (result && !exceptionDetails)
-      receivedPropertyNames(/** @type {!Object} */ (result.value));
+    if (result.result && !result.exceptionDetails)
+      receivedPropertyNames(/** @type {!Object} */ (result.result.value));
     else
       fulfill([]);
   }

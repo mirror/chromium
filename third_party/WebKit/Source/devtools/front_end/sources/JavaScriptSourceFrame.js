@@ -459,8 +459,9 @@ Sources.JavaScriptSourceFrame = class extends SourceFrame.UISourceCodeFrame {
         var resolvedText = await Sources.SourceMapNamesResolver.resolveExpression(
             /** @type {!SDK.DebuggerModel.CallFrame} */ (selectedCallFrame), evaluationText, this._debuggerSourceCode,
             lineNumber, startHighlight, endHighlight);
-        var remoteObject = await selectedCallFrame.evaluatePromise(
-            resolvedText || evaluationText, 'popover', false, true, false, false);
+        var remoteObject = await selectedCallFrame.evaluate(
+            resolvedText || evaluationText, 'popover', /* includeCommandLineAPI */ false, /* silent */ true,
+            /* returnByValue */ false, /* generatePreview */ false);
         if (!remoteObject)
           return false;
         objectPopoverHelper = await ObjectUI.ObjectPopoverHelper.buildObjectPopover(remoteObject, popover);

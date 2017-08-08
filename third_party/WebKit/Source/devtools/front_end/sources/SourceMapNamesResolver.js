@@ -306,20 +306,19 @@ Sources.SourceMapNamesResolver.resolveThisObject = function(callFrame) {
       return Promise.resolve(callFrame.thisObject());
 
     var thisMapping = thisMappings.valuesArray()[0];
-    var callback;
-    var promise = new Promise(fulfill => callback = fulfill);
-    callFrame.evaluate(thisMapping, 'backtrace', false, true, false, true, onEvaluated.bind(null, callback));
-    return promise;
+    return callFrame
+        .evaluate(
+            thisMapping, 'backtrace', /* includeCommandLineAPI */ false, /* silent */ true, /* returnByValue */ false,
+            /* generatePreview */ true)
+        .then(onEvaluated);
   }
 
   /**
-   * @param {function(!SDK.RemoteObject)} callback
-   * @param {?Protocol.Runtime.RemoteObject} evaluateResult
+   * @param {!SDK.RuntimeModel.EvaluationResult} result
+   * @return {?SDK.RemoteObject}
    */
-  function onEvaluated(callback, evaluateResult) {
-    var remoteObject = evaluateResult ? callFrame.debuggerModel.runtimeModel().createRemoteObject(evaluateResult) :
-                                        callFrame.thisObject();
-    callback(/** @type {!SDK.RemoteObject} */ (remoteObject));
+  function onEvaluated(result) {
+    return !result.exceptionDetails && result.result ? result.result : callFrame.thisObject();
   }
 };
 

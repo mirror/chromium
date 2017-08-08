@@ -31,14 +31,16 @@ EventListeners.EventListenersView = class extends UI.VBox {
   }
 
   /**
-   * @param {!Array<!SDK.RemoteObject>} objects
+   * @param {!Array<?SDK.RemoteObject>} objects
    * @return {!Promise<undefined>}
    */
   addObjects(objects) {
     this.reset();
     var promises = [];
-    for (var object of objects)
-      promises.push(this._addObject(object));
+    for (var object of objects) {
+      if (object)
+        promises.push(this._addObject(object));
+    }
     return Promise.all(promises)
         .then(this.addEmptyHolderIfNeeded.bind(this))
         .then(this._eventListenersArrivedForTest.bind(this));

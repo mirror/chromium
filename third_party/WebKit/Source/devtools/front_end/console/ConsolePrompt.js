@@ -169,17 +169,17 @@ Console.ConsolePrompt = class extends UI.Widget {
       this._appendCommand(str, true);
       return;
     }
-    currentExecutionContext.runtimeModel.compileScript(
-        str, '', false, currentExecutionContext.id, compileCallback.bind(this));
+    currentExecutionContext.runtimeModel.compileScript(str, '', false, currentExecutionContext.id)
+        .then(compileCallback.bind(this));
 
     /**
-     * @param {!Protocol.Runtime.ScriptId=} scriptId
-     * @param {?Protocol.Runtime.ExceptionDetails=} exceptionDetails
+     * @param {?SDK.RuntimeModel.CompileScriptResult} result
      * @this {Console.ConsolePrompt}
      */
-    function compileCallback(scriptId, exceptionDetails) {
+    function compileCallback(result) {
       if (str !== this.text())
         return;
+      var exceptionDetails = result.exceptionDetails;
       if (exceptionDetails &&
           (exceptionDetails.exception.description.startsWith('SyntaxError: Unexpected end of input') ||
            exceptionDetails.exception.description.startsWith('SyntaxError: Unterminated template literal'))) {

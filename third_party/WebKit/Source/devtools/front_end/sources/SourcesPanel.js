@@ -905,12 +905,11 @@ Sources.SourcesPanel = class extends UI.Panel {
     if (!currentExecutionContext)
       return;
 
-    currentExecutionContext.globalObject('', false, didGetGlobalObject);
+    currentExecutionContext.globalObject(/* objectGroup */ '', /* generatePreview */ false).then(didGetGlobalObject);
     /**
-     * @param {?SDK.RemoteObject} global
-     * @param {!Protocol.Runtime.ExceptionDetails=} exceptionDetails
+     * @param {!SDK.RuntimeModel.EvaluationResult} result
      */
-    function didGetGlobalObject(global, exceptionDetails) {
+    function didGetGlobalObject(result) {
       /**
        * @suppressReceiverCheck
        * @this {Window}
@@ -925,11 +924,11 @@ Sources.SourcesPanel = class extends UI.Panel {
         return name;
       }
 
-      if (!!exceptionDetails || !global) {
-        failedToSave(global);
+      if (!!result.exceptionDetails || !result.result) {
+        failedToSave(result.result || null);
       } else {
-        global.callFunction(
-            remoteFunction, [SDK.RemoteObject.toCallArgument(remoteObject)], didSave.bind(null, global));
+        result.result.callFunction(
+            remoteFunction, [SDK.RemoteObject.toCallArgument(remoteObject)], didSave.bind(null, result.result));
       }
     }
 

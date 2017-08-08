@@ -429,18 +429,18 @@ Extensions.ExtensionServer = class extends Common.Object {
   _onEvaluateOnInspectedPage(message, port) {
     /**
      * @param {?Protocol.Error} error
-     * @param {?SDK.RemoteObject} remoteObject
+     * @param {?SDK.RemoteObject} object
      * @param {boolean=} wasThrown
      * @this {Extensions.ExtensionServer}
      */
-    function callback(error, remoteObject, wasThrown) {
+    function callback(error, object, wasThrown) {
       var result;
-      if (error || !remoteObject)
+      if (error || !object)
         result = this._status.E_PROTOCOLERROR(error.toString());
       else if (wasThrown)
-        result = {isException: true, value: remoteObject.description};
+        result = {isException: true, value: object.description};
       else
-        result = {value: remoteObject.value};
+        result = {value: object.value};
 
       this._dispatchCallback(message.requestId, port, result);
     }
@@ -954,19 +954,21 @@ Extensions.ExtensionServer = class extends Common.Object {
         return this._status.E_FAILED(frame.url + ' has no execution context');
     }
 
-    context.evaluate(expression, 'extension', exposeCommandLineAPI, true, returnByValue, false, false, onEvaluate);
+    context
+        .evaluate(
+            expression, 'extension', exposeCommandLineAPI, /* silent */ true, returnByValue,
+            /* generatePreview */ false, /* userGesture */ false, /* awaitPromise */ false)
+        .then(onEvaluate);
 
     /**
-     * @param {?SDK.RemoteObject} result
-     * @param {!Protocol.Runtime.ExceptionDetails=} exceptionDetails
-     * @param {string=} error
+     * @param {!SDK.RuntimeModel.EvaluationResult} result
      */
-    function onEvaluate(result, exceptionDetails, error) {
-      if (error) {
-        callback(error, null, !!exceptionDetails);
+    function onEvaluate(result) {
+      if (result.error) {
+        callback(result.error, null, false);
         return;
       }
-      callback(null, result, !!exceptionDetails);
+      callback(null, result.result || null, !!result.exceptionDetails);
     }
   }
 };
