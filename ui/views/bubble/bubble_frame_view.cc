@@ -144,7 +144,7 @@ Button* BubbleFrameView::CreateCloseButton(ButtonListener* listener) {
 
 gfx::Rect BubbleFrameView::GetBoundsForClientView() const {
   gfx::Rect client_bounds = GetContentsBounds();
-  client_bounds.Inset(GetInsets());
+  client_bounds.Inset(GetInsetsForClientWidth(client_bounds.width()));
   if (footnote_container_) {
     client_bounds.set_height(client_bounds.height() -
                              footnote_container_->height());
@@ -161,7 +161,7 @@ gfx::Rect BubbleFrameView::GetWindowBoundsForClientBounds(
 bool BubbleFrameView::GetClientMask(const gfx::Size& size,
                                     gfx::Path* path) const {
   const int radius = bubble_border_->GetBorderCornerRadius();
-  gfx::Insets content_insets = GetInsets();
+  gfx::Insets content_insets = GetInsetsForClientWidth(size.width());
   // If the client bounds don't touch the edges, no need to mask.
   if (std::min({content_insets.top(), content_insets.left(),
                 content_insets.bottom(), content_insets.right()}) > radius) {
@@ -270,20 +270,8 @@ const char* BubbleFrameView::GetClassName() const {
 }
 
 gfx::Insets BubbleFrameView::GetInsets() const {
-  gfx::Insets insets = content_margins_;
-
-  const int icon_height = title_icon_->GetPreferredSize().height();
-  const int label_height = title()->GetPreferredSize().height();
-  const bool has_title = icon_height > 0 || label_height > 0;
-  const int title_padding = has_title ? title_margins_.height() : 0;
-  const int title_height = std::max(icon_height, label_height) + title_padding;
-  const int close_height =
-      GetWidget()->widget_delegate()->ShouldShowCloseButton()
-          ? close_->height() + LayoutProvider::Get()->GetDistanceMetric(
-                                   DISTANCE_CLOSE_BUTTON_MARGIN)
-          : 0;
-  insets += gfx::Insets(std::max(title_height, close_height), 0, 0, 0);
-  return insets;
+  return GetInsetsForClientWidth(
+      GetWidget()->client_view()->GetPreferredSize().width());
 }
 
 gfx::Size BubbleFrameView::CalculatePreferredSize() const {
@@ -351,6 +339,11 @@ void BubbleFrameView::Layout() {
       title_icon_pref_size.width() > 0 ? title_margins_.left() : 0;
   const int title_label_x =
       bounds.x() + title_icon_pref_size.width() + title_icon_padding;
+
+  DCHECK_EQ(GetTitleLabelInsets().left(), title_label_x);
+  DCHECK_EQ(GetTitleLabelInsets().right(),
+            GetLocalBounds().width() - title_label_right);
+
   const int title_available_width =
       std::max(1, title_label_right - title_label_x);
   const int title_preferred_height =
@@ -556,15 +549,15 @@ gfx::Size BubbleFrameView::GetSizeForClientSize(
   // Accommodate the width of the title bar elements.
   int title_bar_width = title_margins_.width() + border()->GetInsets().width();
   gfx::Size title_icon_size = title_icon_->GetPreferredSize();
-  gfx::Size title_label_size = title()->GetPreferredSize();
-  if (title_icon_size.width() > 0 && title_label_size.width() > 0)
+  int title_width = GetTitleWidthForClientWidth(client_size.width());
+  if (title_icon_size.width() > 0 && title_width > 0)
     title_bar_width += title_margins_.left();
   title_bar_width += title_icon_size.width();
   if (close_->visible())
     title_bar_width += close_->width() + 1;
 
   gfx::Size size(client_size);
-  gfx::Insets client_insets = GetInsets();
+  gfx::Insets client_insets = GetInsetsForClientWidth(client_size.width());
   size.Enlarge(client_insets.width(), client_insets.height());
   size.SetToMax(gfx::Size(title_bar_width, 0));
 
@@ -577,6 +570,48 @@ gfx::Size BubbleFrameView::GetSizeForClientSize(
     size.set_width(LayoutProvider::Get()->GetSnappedDialogWidth(size.width()));
 
   return size;
+}
+
+gfx::Insets BubbleFrameView::GetTitleLabelInsets() const {
+  const gfx::Insets border_insets =
+      border() ? border()->GetInsets() : gfx::Insets();
+  int insets_right = border_insets.right() + title_margins_.right();
+  if (close_->visible()) {
+    const int close_margin =
+        LayoutProvider::Get()->GetDistanceMetric(DISTANCE_CLOSE_BUTTON_MARGIN);
+    insets_right = std::max(insets_right, 2 * close_margin + close_->width());
+  }
+
+  const gfx::Size title_icon_pref_size = title_icon_->GetPreferredSize();
+  const int title_icon_padding =
+      title_icon_pref_size.width() > 0 ? title_margins_.left() : 0;
+  const int insets_left = border_insets.left() + title_margins_.left() +
+                          title_icon_pref_size.width() + title_icon_padding;
+  return gfx::Insets(title_margins_.top(), insets_left, title_margins_.bottom(),
+                     insets_right);
+}
+
+int BubbleFrameView::GetTitleWidthForClientWidth(int client_width) const {
+  return std::max(1, client_width + content_margins_.width() -
+                         GetTitleLabelInsets().width());
+}
+
+gfx::Insets BubbleFrameView::GetInsetsForClientWidth(int client_width) const {
+  gfx::Insets insets = content_margins_;
+
+  const int icon_height = title_icon_->GetPreferredSize().height();
+  const int label_height =
+      title()->GetHeightForWidth(GetTitleWidthForClientWidth(client_width));
+  const bool has_title = icon_height > 0 || label_height > 0;
+  const int title_padding = has_title ? title_margins_.height() : 0;
+  const int title_height = std::max(icon_height, label_height) + title_padding;
+  const int close_height =
+      GetWidget()->widget_delegate()->ShouldShowCloseButton()
+          ? close_->height() + LayoutProvider::Get()->GetDistanceMetric(
+                                   DISTANCE_CLOSE_BUTTON_MARGIN)
+          : 0;
+  insets += gfx::Insets(std::max(title_height, close_height), 0, 0, 0);
+  return insets;
 }
 
 }  // namespace views

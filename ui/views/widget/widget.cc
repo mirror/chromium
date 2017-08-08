@@ -349,9 +349,10 @@ void Widget::Init(const InitParams& in_params) {
 
     // Initialize the window's icon and title before setting the window's
     // initial bounds; the frame view's preferred height may depend on the
-    // presence of an icon or a title.
+    // presence of an icon or a title. But don't layout, since that's pointless
+    // before setting the initial bounds.
     UpdateWindowIcon();
-    UpdateWindowTitle();
+    UpdateWindowTitle(false);
     non_client_view_->ResetWindowControls();
     SetInitialBounds(params.bounds);
 
@@ -825,7 +826,7 @@ void* Widget::GetNativeWindowProperty(const char* name) const {
   return native_widget_->GetNativeWindowProperty(name);
 }
 
-void Widget::UpdateWindowTitle() {
+void Widget::UpdateWindowTitle(bool do_layout) {
   if (!non_client_view_)
     return;
 
@@ -839,7 +840,8 @@ void Widget::UpdateWindowTitle() {
 
   // If the non-client view is rendering its own title, it'll need to relayout
   // now and to get a paint update later on.
-  non_client_view_->Layout();
+  if (do_layout)
+    non_client_view_->Layout();
 }
 
 void Widget::UpdateWindowIcon() {
