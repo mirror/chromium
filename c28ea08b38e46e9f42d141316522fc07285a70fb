@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8b8209b2_17f1fd39",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-08T23:34:02Z",
+      "side": 1,
+      "message": "Ah, thanks.  Maybe it\u0027s worth mentioning in the test comment that it\u0027s here because error pages are only fully defined in chrome/.",
+      "parentUuid": "f2bd52c8_c7cf2d53",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5c48f83_20c37307",
         "filename": "chrome/browser/chrome_navigation_browsertest.cc",
         "patchSetId": 11
@@ -295,6 +313,24 @@
     },
     {
       "key": {
+        "uuid": "62451c5e_4ca76db2",
+        "filename": "content/browser/child_process_security_policy_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-08T23:34:02Z",
+      "side": 1,
+      "message": "I see.  Ok, we can revisit later if it becomes a problem.",
+      "parentUuid": "ad3df566_99ed55f0",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecefeb96_bb6595e0",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 11
@@ -342,6 +378,24 @@
       "side": 1,
       "message": "I considered this - I think in the common case though, this is probably not a sign of an exploited renderer, but rather someone typing in \"location\u003d\u0027chrome-error://chromewebdata\u0027\" in DevTools, after finding out that this is what \"location.href\" returns on an error page.  I didn\u0027t think this was worth killing the process for, but if you feel it\u0027s worth it, I can add it.",
       "parentUuid": "49682e23_2591fdf7",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fde9562_9b52591e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2289,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-08T23:34:02Z",
+      "side": 1,
+      "message": "Yeah, given that the renderer doesn\u0027t block pages from doing it, we probably shouldn\u0027t kill the renderer if it happens.",
+      "parentUuid": "ae08cc93_3dcd9b2c",
       "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -398,6 +452,24 @@
       "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a906c16_535e7487",
+        "filename": "content/common/url_schemes.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-08T23:34:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "91ff8d9c_ace3d212",
+      "revId": "c28ea08b38e46e9f42d141316522fc07285a70fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
