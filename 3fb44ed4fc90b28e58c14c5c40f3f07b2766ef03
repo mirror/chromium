@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "908ee79d_dab757eb",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-08T13:42:18Z",
+      "side": 1,
+      "message": "nit: i prefer indices, but i\u0027m a self-diagnosed pedant, so maybe just ignore me. :-)",
+      "range": {
+        "startLine": 63,
+        "startChar": 9,
+        "endLine": 63,
+        "endChar": 16
+      },
+      "revId": "3fb44ed4fc90b28e58c14c5c40f3f07b2766ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfba472f_ac4285a0",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-08T13:42:18Z",
+      "side": 1,
+      "message": "nit: this is repeated three times. maybe it could be defined as kIndexMarkBitPosition or something?",
+      "range": {
+        "startLine": 66,
+        "startChar": 19,
+        "endLine": 66,
+        "endChar": 43
+      },
+      "revId": "3fb44ed4fc90b28e58c14c5c40f3f07b2766ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46415055_3a67fc65",
+        "filename": "chrome/installer/zucchini/label_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-08T13:42:18Z",
+      "side": 1,
+      "message": "use of std algorithms is generally more efficient since they can peek under the covers of iterators and pick the best way to do work. is this equivalent:\n  auto it \u003d std::find(labels_.begin() + gap_idx_, labels_.end(), kUnusedIndex);\n  if (it !\u003d labels_.end()) {\n    gap_idx_ \u003d it - labels_.begin();\n    *it \u003d offset;\n  } else {\n    gap_idx_ \u003d labels_.size();\n    labels_.push_back(offset);\n  }\n  labels_map_[offset] \u003d static_cast\u003coffset_t\u003e(gap_idx_);",
+      "revId": "3fb44ed4fc90b28e58c14c5c40f3f07b2766ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86cf0de9_d3ba32f0",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-08T13:42:18Z",
+      "side": 1,
+      "message": "fyi: there\u0027s a \"pronouns considered harmful\" meme in chromium. i subscribe to the stance that comments can often be more clear and succinct without them (https://groups.google.com/a/chromium.org/d/msg/chromium-dev/NH-S6KCkr2M/BYMa_EGhjIIJ).",
+      "range": {
+        "startLine": 25,
+        "startChar": 67,
+        "endLine": 25,
+        "endChar": 69
+      },
+      "revId": "3fb44ed4fc90b28e58c14c5c40f3f07b2766ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e4533a_eeaf4b71",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-08T13:42:18Z",
+      "side": 1,
+      "message": "nit: \"decode stored indexes\"?",
+      "range": {
+        "startLine": 31,
+        "startChar": 30,
+        "endLine": 31,
+        "endChar": 44
+      },
+      "revId": "3fb44ed4fc90b28e58c14c5c40f3f07b2766ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad52b0c_43e2427c",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-08T13:42:18Z",
+      "side": 1,
+      "message": "polymorphism is unused, yet you\u0027re carrying the weight of vtables. i haven\u0027t thought about how significant this is, but if polymorphism isn\u0027t used, is there an advantage to using inheritance over some other paradigm?",
+      "range": {
+        "startLine": 41,
+        "startChar": 42,
+        "endLine": 41,
+        "endChar": 64
+      },
+      "revId": "3fb44ed4fc90b28e58c14c5c40f3f07b2766ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c3739d_dc74ff3c",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-08T13:42:18Z",
+      "side": 1,
+      "message": "there\u0027s a static_assert ensuring that kUnusedIndex is never marked, so why check here?",
+      "range": {
+        "startLine": 51,
+        "startChar": 11,
+        "endLine": 51,
+        "endChar": 49
+      },
+      "revId": "3fb44ed4fc90b28e58c14c5c40f3f07b2766ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "545e1548_a096b075",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-08T13:42:18Z",
+      "side": 1,
+      "message": "nit: if the common case is that |offset_or_marked_index| is not kUnusedIndex, swap the conditions here so that IsMarked is evaluated first.",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 49
+      },
+      "revId": "3fb44ed4fc90b28e58c14c5c40f3f07b2766ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3cd541_0c2dfda9",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-08T13:42:18Z",
+      "side": 1,
+      "message": "should there be a DCHECK in here (and below) that |index| really is not marked?",
+      "range": {
+        "startLine": 61,
+        "startChar": 29,
+        "endLine": 61,
+        "endChar": 39
+      },
+      "revId": "3fb44ed4fc90b28e58c14c5c40f3f07b2766ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb70a080_045d4b2c",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-08T13:42:18Z",
+      "side": 1,
+      "message": "nit: \"associated with\"\n(meme: \"prepositions: how do they work?\" -- n.b. i am learning a new language and find its prepositions nearly impenetrable!)",
+      "range": {
+        "startLine": 66,
+        "startChar": 63,
+        "endLine": 66,
+        "endChar": 76
+      },
+      "revId": "3fb44ed4fc90b28e58c14c5c40f3f07b2766ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f12fddb_c3ff4b0a",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-08T13:42:18Z",
+      "side": 1,
+      "message": "is this a \"large table where you expect a lot of lookups\"? if no, is base::flat_map (https://chromium.googlesource.com/chromium/src/+/442c83f4287fb69f00674494a62caef366f316ad/base/containers/README.md#base_flat_map-and-base_flat_set) appropriate?",
+      "range": {
+        "startLine": 147,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 20
+      },
+      "revId": "3fb44ed4fc90b28e58c14c5c40f3f07b2766ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
