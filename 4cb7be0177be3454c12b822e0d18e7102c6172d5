@@ -33,6 +33,24 @@
       "revId": "4cb7be0177be3454c12b822e0d18e7102c6172d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643ea205_c463cbc5",
+        "filename": "ui/views/cocoa/native_widget_mac_nswindow.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-08T07:38:00Z",
+      "side": 1,
+      "message": "I\u0027m not that familiar with Narrator, but I tried it out in Windows 10. I couldn\u0027t elicit any repeating properties, so I\u0027m not sure what I\u0027d be trying to fix there. Certainly the bug I\u0027m fixing here doesn\u0027t seem to impact Windows - I documented my findings on http://crbug.com/753274 \n\nI did consider ways this could be made more general -- I agree that the extra views::RootView mirroring the window frame, and nested within it, is the root cause here and a bit weird. The problem I had was that as soon as I diverged far from the properties that the NSWindow provided, VoiceOver would just lose track of the window completely and announce nothing. That seems like a risky path to follow, so I don\u0027t think I can generalise this easily -- Mac will always want this extra NSWindow layer so that it\u0027s not completely alien to VoiceOver. I did try mimicking a bunch of extra properties and roles that NSWindow exposes (e.g., using a window role rather than a dialog role, changing the role mappings in AXPlatformNodeMac, and forwarding more properties in accessibilityAttributeValue:), but it ended up very fragile.\n\nSo, since this approach still has effectively two layers, I looked into whether I\u0027d need to hide RootView from Mac, but it doesn\u0027t seem necessary. That is, it might make sense for RootView::GetAccessibleNodeData(ui::AXNodeData) to set an IGNORED role so that it\u0027s hidden from the a11y tree on Mac. But VoiceOver and AccessibilityInspector don\u0027t seem to be confused by this, so I left it alone.",
+      "parentUuid": "d2aaa017_79bbb1b6",
+      "revId": "4cb7be0177be3454c12b822e0d18e7102c6172d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
