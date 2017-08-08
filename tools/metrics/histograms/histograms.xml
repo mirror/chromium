@@ -80122,6 +80122,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="TabManager.BackgroundTabOpen.SwitchToTab"
+    enum="TabLoadingState">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The loading state of a tab at the time the user switches to it when the
+    browser is loading background tabs. The metric is only recorded when a tab
+    is switched to from another tab within the same tabstrip. As a result, the
+    case when switching between different windows is not included, either
+    between two tabs in different browser windows, or when switching to a
+    different application and switching back to the browser.
+  </summary>
+</histogram>
+
 <histogram name="TabManager.Discarding.DiscardCount" units="Discards">
   <owner>georgesak@chromium.org</owner>
   <summary>

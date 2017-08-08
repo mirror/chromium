@@ -71,10 +71,15 @@ TabManagerStatsCollector::~TabManagerStatsCollector() {
 
 void TabManagerStatsCollector::RecordSwitchToTab(
     content::WebContents* contents) const {
+  auto* data = TabManager::WebContentsData::FromWebContents(contents);
+  DCHECK(data);
+
   if (tab_manager_->IsSessionRestoreLoadingTabs()) {
-    auto* data = TabManager::WebContentsData::FromWebContents(contents);
-    DCHECK(data);
     UMA_HISTOGRAM_ENUMERATION("TabManager.SessionRestore.SwitchToTab",
+                              data->tab_loading_state(), TAB_LOADING_STATE_MAX);
+  }
+  if (tab_manager_->IsLoadingBackgroundTabs()) {
+    UMA_HISTOGRAM_ENUMERATION("TabManager.BackgroundTabOpen.SwitchToTab",
                               data->tab_loading_state(), TAB_LOADING_STATE_MAX);
   }
 }
