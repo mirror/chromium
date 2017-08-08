@@ -1432,6 +1432,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 
 - (id<CRWWebViewNavigationProxy>)webViewNavigationProxy {
   DCHECK(
+      !self.webView ||
       [self.webView conformsToProtocol:@protocol(CRWWebViewNavigationProxy)]);
   return static_cast<id<CRWWebViewNavigationProxy>>(self.webView);
 }
