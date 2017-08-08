@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "93e74034_4b4ce9b9",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-08T04:21:33Z",
+      "side": 1,
+      "message": "nit: it looks it\u0027s enough to pass a const ref for most of the method chain up to this",
+      "revId": "92f8760de65279fa992d1e5ee869da63ddeff7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1350de82_f19ec1bb",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 3
@@ -36,6 +53,40 @@
       "writtenOn": "2017-08-08T02:26:15Z",
       "side": 1,
       "message": "From a quick scan, I see this if () { container.Reset(new container); } blocks repeated.\nWould it be possible to tidy this up?",
+      "revId": "92f8760de65279fa992d1e5ee869da63ddeff7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b77c41_1e8c805e",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-08T04:21:33Z",
+      "side": 1,
+      "message": "So just to make sure, the reason we have this separately from SecurityPolicyViolationEventInit is to work around the layering? (As EventInit is in core/)",
+      "revId": "92f8760de65279fa992d1e5ee869da63ddeff7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc0eb90_881616b0",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-08T04:21:33Z",
+      "side": 1,
+      "message": "nit: snake_case",
       "revId": "92f8760de65279fa992d1e5ee869da63ddeff7da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
