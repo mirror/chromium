@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a24287f_a5938938",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-08T00:38:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "025e2cb6_ab21bf0f",
+      "revId": "a83c8ca6bd5512f75076f3313e62b8ad02c46853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09a3f9ca_2c3c22d4",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "a83c8ca6bd5512f75076f3313e62b8ad02c46853",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f17bb21_87504aae",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-08T00:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09a3f9ca_2c3c22d4",
+      "revId": "a83c8ca6bd5512f75076f3313e62b8ad02c46853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4e447be7_f44163ac",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-08T00:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "676fd041_d01cd3d5",
+      "revId": "a83c8ca6bd5512f75076f3313e62b8ad02c46853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4e0d226_ab8a7998",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c2a910a3_7cb120eb",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-08T00:38:10Z",
+      "side": 1,
+      "message": "Perhaps a client does not need all the metrics.",
+      "parentUuid": "b4e0d226_ab8a7998",
+      "revId": "a83c8ca6bd5512f75076f3313e62b8ad02c46853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54613a73_7e964562",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 9
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-04T19:22:50Z",
       "side": 1,
       "message": "When is this triggered?",
+      "revId": "a83c8ca6bd5512f75076f3313e62b8ad02c46853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ccbf54_0cdb6bbf",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-08T00:38:10Z",
+      "side": 1,
+      "message": "console.reportMetrics()\nThere\u0027s V8 patch.",
+      "parentUuid": "54613a73_7e964562",
       "revId": "a83c8ca6bd5512f75076f3313e62b8ad02c46853",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
