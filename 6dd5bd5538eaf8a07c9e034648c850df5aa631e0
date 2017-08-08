@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "6f383deb_7f4a7627",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-08T08:13:45Z",
+      "side": 1,
+      "message": "I have a hard time picturing this. Do you have screenshots? Or maybe just demonstrate live.",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "6dd5bd5538eaf8a07c9e034648c850df5aa631e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d20dc0fb_7b03cb49",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-08T08:13:45Z",
+      "side": 1,
+      "message": ":-/\nI don\u0027t suppose there\u0027s a way around this? I know we do the same thing for the fakebox, but there I don\u0027t think it can be avoided. IIUC, here it\u0027s just to center the logo, and it seems that should be possible to achieve without JS?\nAlso, what if the logo is wider than the fakebox - do things still work?",
+      "range": {
+        "startLine": 35,
+        "startChar": 47,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "6dd5bd5538eaf8a07c9e034648c850df5aa631e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a30728b6_82a322ce",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
         "patchSetId": 3
@@ -13,6 +59,24 @@
       "writtenOn": "2017-08-07T17:05:20Z",
       "side": 1,
       "message": "I tried to find the CSS transition that the current Doodle code uses, but failed. Do you know?\n\n(it\u0027s also not strictly related to this CL, so I can remove it)",
+      "revId": "6dd5bd5538eaf8a07c9e034648c850df5aa631e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc73a9ef_a3a8b321",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-08T08:13:45Z",
+      "side": 1,
+      "message": "I think it\u0027s \"transition: opacity 130ms;\". Search for \"jslayout/newtab.css\".",
+      "parentUuid": "a30728b6_82a322ce",
       "revId": "6dd5bd5538eaf8a07c9e034648c850df5aa631e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
