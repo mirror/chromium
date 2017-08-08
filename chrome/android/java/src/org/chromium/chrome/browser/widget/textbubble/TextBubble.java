@@ -317,11 +317,17 @@ public class TextBubble implements OnTouchListener {
     private void createContentView() {
         if (mPopupWindow.getContentView() != null) return;
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.textbubble_text, null);
+        final View view = LayoutInflater.from(mContext).inflate(R.layout.textbubble_text, null);
         ((TextView) view)
                 .setText(AccessibilityUtil.isAccessibilityEnabled() ? mAccessibilityStringId
                                                                     : mStringId);
         mPopupWindow.setContentView(view);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                view.announceForAccessibility(mContext.getString(mAccessibilityStringId));
+            }
+        });
 
         // On some versions of Android, the LayoutParams aren't set until after the popup window
         // is shown. Explicitly set the LayoutParams to avoid crashing. See crbug.com/713759.
