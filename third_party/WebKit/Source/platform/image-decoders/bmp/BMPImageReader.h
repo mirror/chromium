@@ -200,16 +200,15 @@ class PLATFORM_EXPORT BMPImageReader final {
   }
 
   // Returns the pixel data for the current X coordinate in a uint32_t.
-  // Assumes decoded_offset has been set to the beginning of the current
-  // row.
+  // Assumes decoded_offset_ has been set to the beginning of the current
+  // pixel (i.e. coord_).
   // NOTE: Only as many bytes of the return value as are needed to hold
   // the pixel data will actually be set.
   inline uint32_t ReadCurrentPixel(int bytes_per_pixel) const {
-    // We need at most 4 bytes, starting at decoded_offset_ + offset.
+    // We need at most 4 bytes, starting at decoded_offset_.
     char buffer[4];
-    const int offset = coord_.X() * bytes_per_pixel;
     const char* encoded_pixel = fast_reader_.GetConsecutiveData(
-        decoded_offset_ + offset, bytes_per_pixel, buffer);
+        decoded_offset_, bytes_per_pixel, buffer);
     switch (bytes_per_pixel) {
       case 2:
         return ReadUint16(encoded_pixel);

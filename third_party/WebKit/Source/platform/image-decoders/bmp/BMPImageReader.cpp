@@ -806,6 +806,7 @@ BMPImageReader::ProcessingResult BMPImageReader::ProcessNonRLEData(
           pixel_data <<= info_header_.bi_bit_count;
         }
       }
+      decoded_offset_ += padded_num_bytes;
     } else {
       // RGB data.  Decode pixels one at a time, left to right.
       while (coord_.X() < end_x) {
@@ -835,11 +836,12 @@ BMPImageReader::ProcessingResult BMPImageReader::ProcessNonRLEData(
 
         SetRGBA(GetComponent(pixel, 0), GetComponent(pixel, 1),
                 GetComponent(pixel, 2), alpha);
+        decoded_offset_ += bytes_per_pixel;
       }
+      decoded_offset_ += (padded_num_bytes - unpadded_num_bytes);
     }
 
     // Success, keep going.
-    decoded_offset_ += padded_num_bytes;
     if (in_rle)
       return kSuccess;
     MoveBufferToNextRow();
