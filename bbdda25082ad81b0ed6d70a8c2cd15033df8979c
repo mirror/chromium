@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6b000bf_6ecc703a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4104,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T11:51:49Z",
+      "side": 0,
+      "message": "This looks like it shouldn\u0027t be deleted?",
+      "range": {
+        "startLine": 4104,
+        "startChar": 8,
+        "endLine": 4104,
+        "endChar": 23
+      },
+      "revId": "bbdda25082ad81b0ed6d70a8c2cd15033df8979c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

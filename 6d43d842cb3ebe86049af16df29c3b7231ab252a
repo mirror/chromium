@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d70d220a_6f2a490c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 5023,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T11:51:49Z",
+      "side": 1,
+      "message": "nit: name the actual protocol whose methods are here -- TabHistoryPresenter",
+      "range": {
+        "startLine": 5023,
+        "startChar": 26,
+        "endLine": 5023,
+        "endChar": 38
+      },
+      "revId": "6d43d842cb3ebe86049af16df29c3b7231ab252a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e843b40_88d2991f",
+        "filename": "ios/chrome/browser/ui/history_popup/requirements/tab_history_positioner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T11:51:49Z",
+      "side": 1,
+      "message": "nit: You can remove one of the \u0027from\u0027s (either one) from this sentence.",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 15
+      },
+      "revId": "6d43d842cb3ebe86049af16df29c3b7231ab252a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09124532_cbe9120e",
+        "filename": "ios/chrome/browser/ui/history_popup/requirements/tab_history_presentation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T11:51:49Z",
+      "side": 1,
+      "message": "Prefer: \"Tells the receiver the Tab History popup will be presented\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "6d43d842cb3ebe86049af16df29c3b7231ab252a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3d6ab2_3dc008cf",
+        "filename": "ios/chrome/browser/ui/history_popup/requirements/tab_history_presentation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T11:51:49Z",
+      "side": 1,
+      "message": "\"Tells the receiver the Tab History popup was dismissed\"",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 9
+      },
+      "revId": "6d43d842cb3ebe86049af16df29c3b7231ab252a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c10509_3be6a183",
+        "filename": "ios/chrome/browser/ui/history_popup/tab_history_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T11:51:49Z",
+      "side": 1,
+      "message": "Seems like this should go into requirements/, too, since it\u0027s part of the public API.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 56
+      },
+      "revId": "6d43d842cb3ebe86049af16df29c3b7231ab252a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592fd359_0b2ceaad",
+        "filename": "ios/chrome/browser/ui/history_popup/tab_history_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T11:51:49Z",
+      "side": 1,
+      "message": "Rather than pass around views for this purpose, we\u0027re instead adopting the general rule that origin points passed like this are first converted into UIWindow coordinates. Receiving code can then convert back to local coordinates from there.\n\nSee https://chromium-review.googlesource.com/c/567146.",
+      "range": {
+        "startLine": 82,
+        "startChar": 23,
+        "endLine": 82,
+        "endChar": 70
+      },
+      "revId": "6d43d842cb3ebe86049af16df29c3b7231ab252a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91467fa0_fc813ac3",
+        "filename": "ios/chrome/browser/ui/history_popup/tab_history_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T11:51:49Z",
+      "side": 1,
+      "message": "Cast to id\u003cSomeProtocol\u003e",
+      "range": {
+        "startLine": 109,
+        "startChar": 33,
+        "endLine": 109,
+        "endChar": 35
+      },
+      "revId": "6d43d842cb3ebe86049af16df29c3b7231ab252a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7123bf18_d37b7c3a",
+        "filename": "ios/chrome/browser/ui/history_popup/tab_history_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T11:51:49Z",
+      "side": 1,
+      "message": "rename this to tempController.",
+      "range": {
+        "startLine": 131,
+        "startChar": 37,
+        "endLine": 131,
+        "endChar": 45
+      },
+      "revId": "6d43d842cb3ebe86049af16df29c3b7231ab252a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aae01bb_2c8d9413",
+        "filename": "ios/chrome/browser/ui/history_popup/tab_history_popup_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-08T11:51:49Z",
+      "side": 1,
+      "message": "nit: no apostrophe.\n\nExcept I think you can just remove this whole line -- |items| isn\u0027t an array at all; it\u0027s a web::NavigationItemList.",
+      "range": {
+        "startLine": 20,
+        "startChar": 26,
+        "endLine": 20,
+        "endChar": 42
+      },
+      "revId": "6d43d842cb3ebe86049af16df29c3b7231ab252a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
