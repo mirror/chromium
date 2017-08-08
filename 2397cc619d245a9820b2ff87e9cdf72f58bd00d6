@@ -22,6 +22,30 @@
       "revId": "2397cc619d245a9820b2ff87e9cdf72f58bd00d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0550270f_cd63e629",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-08T13:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62446fee_cfd5b742",
+      "range": {
+        "startLine": 266,
+        "startChar": 16,
+        "endLine": 266,
+        "endChar": 41
+      },
+      "revId": "2397cc619d245a9820b2ff87e9cdf72f58bd00d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
