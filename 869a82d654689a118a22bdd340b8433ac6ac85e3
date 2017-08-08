@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74f7ed43_83ed902d",
+        "filename": "ios/chrome/common/app_group/app_group_constants.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-08T15:27:00Z",
+      "side": 0,
+      "message": "This key is only used in a transient manner?  It\u0027s never persisted or read across cold starts of the app?\n\nDo we have any code that would delete the old \"Parameter\" key from the appgroup datastore, or will it live on forever?",
+      "revId": "869a82d654689a118a22bdd340b8433ac6ac85e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
