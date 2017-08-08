@@ -8855,6 +8855,9 @@ void GLES2DecoderImpl::DoSetDrawRectangleCHROMIUM(GLint x,
   if (!surface_->SetDrawRectangle(rect)) {
     LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glSetDrawRectangleCHROMIUM",
                        "failed on surface");
+    LOG(ERROR) << "Context lost because SetDrawRectangleCHROMIUM failed.";
+    MarkContextLost(error::kUnknown);
+    group_->LoseContexts(error::kUnknown);
   }
   OnFboChanged();
 }
