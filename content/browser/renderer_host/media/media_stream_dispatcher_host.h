@@ -13,8 +13,6 @@
 #include "content/common/content_export.h"
 #include "content/common/media/media_stream.mojom.h"
 #include "content/common/media/media_stream_options.h"
-#include "content/public/browser/browser_associated_interface.h"
-#include "content/public/browser/browser_message_filter.h"
 
 namespace url {
 class Origin;
@@ -28,14 +26,18 @@ class MediaStreamManager;
 // MediaStreamImpl.  There is one MediaStreamDispatcherHost per
 // RenderProcessHost, the former owned by the latter.
 class CONTENT_EXPORT MediaStreamDispatcherHost
-    : public BrowserMessageFilter,
-      public BrowserAssociatedInterface<mojom::MediaStreamDispatcherHost>,
-      public mojom::MediaStreamDispatcherHost,
+    : public mojom::MediaStreamDispatcherHost,
       public MediaStreamRequester {
  public:
+  static void Create(int render_process_id,
+                     const std::string& salt,
+                     MediaStreamManager* media_stream_manager,
+                     mojom::MediaStreamDispatcherHostRequest request);
+
   MediaStreamDispatcherHost(int render_process_id,
                             const std::string& salt,
                             MediaStreamManager* media_stream_manager);
+  ~MediaStreamDispatcherHost() override;
 
   // MediaStreamRequester implementation.
   void StreamGenerated(int render_frame_id,
@@ -54,18 +56,13 @@ class CONTENT_EXPORT MediaStreamDispatcherHost
                     const std::string& label,
                     const StreamDeviceInfo& video_device) override;
 
-  // BrowserMessageFilter implementation.
-  bool OnMessageReceived(const IPC::Message& message) override;
-  void OnChannelClosing() override;
+  void OnConnectionError();
 
   void SetMediaStreamDispatcherForTesting(
       int render_frame_id,
       mojom::MediaStreamDispatcherPtr dispatcher) {
     dispatchers_[render_frame_id] = std::move(dispatcher);
   }
-
- protected:
-  ~MediaStreamDispatcherHost() override;
 
  private:
   friend class MockMediaStreamDispatcherHost;
