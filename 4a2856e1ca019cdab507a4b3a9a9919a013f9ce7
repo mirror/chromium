@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41a0ff4e_cb74cd03",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T12:28:01Z",
+      "side": 1,
+      "message": "This is the same DCHECK as the previous one.",
+      "revId": "4a2856e1ca019cdab507a4b3a9a9919a013f9ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ffda580_a6aed253",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T12:28:01Z",
+      "side": 1,
+      "message": "Is this necessary? I thought .WillRepeatedly() means .Times(AnyNumber()) if you don\u0027t specify any .Times().",
+      "revId": "4a2856e1ca019cdab507a4b3a9a9919a013f9ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93cc8648_81f641ad",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T12:28:01Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a reason for this comment to be here. It would be normal to expect that a constructor doesn\u0027t do work like this.",
+      "revId": "4a2856e1ca019cdab507a4b3a9a9919a013f9ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaff1759_c1e970ef",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T12:28:01Z",
+      "side": 1,
+      "message": "I find it counterproductive to set expectations here if we don\u0027t know what the test is actually going to do. Mocks are for behavior verification: if we\u0027re not verifying behavior, we shouldn\u0027t use them (e.g. use a stub or dummy instead).",
+      "revId": "4a2856e1ca019cdab507a4b3a9a9919a013f9ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6619f263_99519040",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3154,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-08T12:28:01Z",
+      "side": 1,
+      "message": "I find this really confusing. MSPWI() sets some expectations on this mock, but are they ever actually used?\n\nInstead of making it the responsibility of MSPWI() to initialize the mock, can you create it in the constructor? I\u0027m imagining something like:\n\n  constructor:\n    : mock_breaking_news_listener_unique_ptr_(MakeUnique\u003c…\u003e(…)),\n      mock_breaking_news_listener_(mock_…_.get())\n\n  MSPWI():\n    if (use_mock_remote_suggestions_status_service) {\n      breaking_news_listener \u003d std::unique_ptr\u003cBreakingNewsListener\u003e(\n          mock_breaking_news_listener_.release());\n    }\n\n  here:\n    EXPECT_CALL(mock_breaking_news_listener(), IsListening());\n    auto provider \u003d MakeSuggestionsProvider(false, true, true);\n\nYou don\u0027t even really need the constructor to create it; that might be a convenience, but it would be even clearer if you created the mock here in this function and passed it to MakeSuggestionsProvider() (and passed nullptr in other tests).\n\n\nOr to take another line of thinking: all these EXPECT_CALL(IsListening()) statements suggest to me that you don\u0027t actually want to use mocks and behavior verification.\n\nIt might be easier to have a fake that just has a bool is_listening_ that StartListening() and StopListening() toggle. Then you can do state verification instead.",
+      "revId": "4a2856e1ca019cdab507a4b3a9a9919a013f9ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
