@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe5fceab_4f75066d",
+        "filename": "components/arc/arc_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1238208
+      },
+      "writtenOn": "2017-08-08T23:19:20Z",
+      "side": 1,
+      "message": "Yep, this is great for now. In the longer run we will probably remove webstore search completely.\n\nThank you!",
+      "parentUuid": "3bb63735_af73d465",
+      "revId": "d870c0e98d5d1d0c63a4445b332114d93237ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f949f9e7_f4c92031",
         "filename": "components/arc/arc_util.h",
         "patchSetId": 4
