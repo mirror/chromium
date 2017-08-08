@@ -16,6 +16,24 @@
       "revId": "76b5537bed261d68591ce028979d529721aab6c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832c34a6_9f2212f6",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-08T04:06:13Z",
+      "side": 1,
+      "message": "We can\u0027t do that because we can\u0027t share AtomicStrings between thread. So an AtomicString created on the main thread can\u0027t be used on the workers. That\u0027s why we can\u0027t even copy them on the workers.",
+      "parentUuid": "16f2d8f9_1e04f5b4",
+      "revId": "76b5537bed261d68591ce028979d529721aab6c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
