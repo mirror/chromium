@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "942dff4b_40612a81",
+        "filename": "gpu/command_buffer/common/gl2_types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-08T23:10:53Z",
+      "side": 1,
+      "message": "nit: remove this (current chromium style guide says not to include copyright in new files).",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "61ef564c1f407bdf17c162c672129502751f3ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
