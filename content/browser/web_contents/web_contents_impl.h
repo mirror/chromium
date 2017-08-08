@@ -32,6 +32,7 @@
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/wake_lock/wake_lock_context_host.h"
+#include "content/browser/web_contents_importance.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/color_chooser.h"
 #include "content/public/browser/download_url_parameters.h"
@@ -295,6 +296,13 @@ class CONTENT_EXPORT WebContentsImpl
   std::vector<WebContentsImpl*> GetWebContentsAndAllInner();
 
   void NotifyManifestUrlChanged(const base::Optional<GURL>& manifest_url);
+
+  // Set importance of WebContents that's independent from visibility.
+  //
+  // Note this is only used by and implemented on Android which exposes this API
+  // through public java code. If this useful on other platforms, then this
+  // can be moved to the public class.
+  void SetImportance(WebContentsImportance importance);
 
   // WebContents ------------------------------------------------------
   WebContentsDelegate* GetDelegate() override;
@@ -1308,6 +1316,9 @@ class CONTENT_EXPORT WebContentsImpl
   // an IPC to all the renderer process associated with this WebContents.
   void NotifyPreferencesChanged();
 
+  // Send current importance to all views.
+  void UpdateWebContentsImportance();
+
   // Format of |headers| is a new line separated list of key value pairs:
   // "<key1>: <value1>\r\n<key2>: <value2>".
   static DownloadUrlParameters::RequestHeadersType ParseDownloadHeaders(
@@ -1449,6 +1460,8 @@ class CONTENT_EXPORT WebContentsImpl
   // |should_normally_be_visible_|. Ensures WasShown() will trigger when first
   // becoming visible to the user, and prevents premature unloading.
   bool did_first_set_visible_;
+
+  WebContentsImportance importance_ = WebContentsImportance::NORMAL;
 
   // See getter above.
   bool is_being_destroyed_;
