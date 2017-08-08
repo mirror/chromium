@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d49fa80c_81eae7ea",
+        "filename": "base/metrics/persistent_histogram_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T13:56:40Z",
+      "side": 1,
+      "message": "I thought we\u0027d agreed a LazyInstance\u003cHistogramBase\u003e would result in essentially the same logic but re-using existing subtle:: code instead of rolling your own)?",
+      "revId": "c946645429c41a5b01f4541622fe9b0ad8c4b779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1fe6209_c6841e4e",
+        "filename": "base/metrics/persistent_histogram_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-08T13:56:40Z",
+      "side": 1,
+      "message": "This didn\u0027t use to return nullptr when racing to create (fixed when using LazyInstance)",
+      "revId": "c946645429c41a5b01f4541622fe9b0ad8c4b779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
