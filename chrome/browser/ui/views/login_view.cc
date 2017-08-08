@@ -50,14 +50,16 @@ LoginView::LoginView(const base::string16& authority,
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
   // Initialize the Grid Layout Manager used for this dialog box.
-  GridLayout* layout = GridLayout::CreatePanel(this);
+  GridLayout* layout = new GridLayout(this);
+  SetLayoutManager(layout);
   views::ColumnSet* column_set = layout->AddColumnSet(kHeaderColumnSetId);
   column_set->AddColumn(GridLayout::FILL, GridLayout::FILL, kStretchy,
                         GridLayout::FIXED, kMessageWidth, 0);
   AddHeaderLabel(layout, authority, views::style::STYLE_PRIMARY);
   AddHeaderLabel(layout, explanation, STYLE_SECONDARY);
-  layout->AddPaddingRow(kFixed, provider->GetDistanceMetric(
-                                    DISTANCE_UNRELATED_CONTROL_VERTICAL_LARGE));
+  layout->AddPaddingRow(
+      kFixed,
+      provider->GetDistanceMetric(views::DISTANCE_UNRELATED_CONTROL_VERTICAL));
 
   ConfigureTextfieldStack(layout, kFieldsColumnSetId);
   username_field_ = AddFirstTextfieldRow(
@@ -68,11 +70,6 @@ LoginView::LoginView(const base::string16& authority,
       kFieldsColumnSetId);
   password_field_->SetTextInputType(ui::TEXT_INPUT_TYPE_PASSWORD);
 
-  if (provider->UseExtraDialogPadding()) {
-    layout->AddPaddingRow(kFixed,
-                          provider->GetDistanceMetric(
-                              views::DISTANCE_UNRELATED_CONTROL_VERTICAL));
-  }
 
   if (login_model_data) {
     login_model_->AddObserverAndDeliverCredentials(this,

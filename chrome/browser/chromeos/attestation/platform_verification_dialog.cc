@@ -87,10 +87,6 @@ PlatformVerificationDialog::PlatformVerificationDialog(
       callback_(callback) {
   SetLayoutManager(new views::FillLayout());
 
-  gfx::Insets dialog_insets = ChromeLayoutProvider::Get()->GetInsetsMetric(
-      views::INSETS_DIALOG_CONTENTS);
-  SetBorder(views::CreateEmptyBorder(0, dialog_insets.left(), 0,
-                                     dialog_insets.right()));
   const base::string16 learn_more = l10n_util::GetStringUTF16(IDS_LEARN_MORE);
   std::vector<size_t> offsets;
   base::string16 headline = l10n_util::GetStringFUTF16(

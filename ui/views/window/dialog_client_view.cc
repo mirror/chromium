@@ -77,9 +77,7 @@ class DialogClientView::ButtonRowContainer : public View {
 // DialogClientView, public:
 
 DialogClientView::DialogClientView(Widget* owner, View* contents_view)
-    : ClientView(owner, contents_view),
-      button_row_insets_(
-          LayoutProvider::Get()->GetInsetsMetric(INSETS_DIALOG_BUTTON_ROW)) {
+    : ClientView(owner, contents_view) {
   // Doing this now ensures this accelerator will have lower priority than
   // one set by the contents view.
   AddAccelerator(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));

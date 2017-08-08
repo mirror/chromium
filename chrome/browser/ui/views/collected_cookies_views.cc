@@ -65,7 +65,6 @@ const int kTreeViewWidth = 400;
 const int kTreeViewHeight = 125;
 
 // Spacing constants used with non-Harmony dialogs.
-const int kTabbedPaneTopPadding = 14;
 const int kCookieInfoBottomPadding = 4;
 
 // Adds a ColumnSet to |layout| to hold two buttons with padding between.
@@ -211,6 +210,7 @@ CollectedCookiesViews::CollectedCookiesViews(content::WebContents* web_contents)
       cookie_info_view_(NULL),
       infobar_(NULL),
       status_changed_(false) {
+  ClearHorizontalContentMargins();
   TabSpecificContentSettings* content_settings =
       TabSpecificContentSettings::FromWebContents(web_contents);
   registrar_.Add(this, chrome::NOTIFICATION_COLLECTED_COOKIES_SHOWN,
@@ -315,10 +315,6 @@ void CollectedCookiesViews::Init() {
 
   GridLayout* layout = new GridLayout(this);
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-  if (provider->UseExtraDialogPadding()) {
-    SetBorder(
-        views::CreateEmptyBorder(gfx::Insets(kTabbedPaneTopPadding, 0, 0, 0)));
-  }
   SetLayoutManager(layout);
 
   const int single_column_layout_id = 0;
@@ -387,10 +383,13 @@ views::View* CollectedCookiesViews::CreateAllowedPane() {
   using views::GridLayout;
 
   views::View* pane = new views::View();
-  GridLayout* layout = GridLayout::CreatePanel(pane);
+  const ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
+  pane->SetBorder(views::CreateEmptyBorder(
+      provider->GetInsetsMetric(views::INSETS_DIALOG)));
+  GridLayout* layout = new GridLayout(pane);
+  pane->SetLayoutManager(layout);
   int unrelated_vertical_distance =
-      ChromeLayoutProvider::Get()->GetDistanceMetric(
-          views::DISTANCE_UNRELATED_CONTROL_VERTICAL);
+      provider->GetDistanceMetric(views::DISTANCE_UNRELATED_CONTROL_VERTICAL);
 
   const int single_column_layout_id = 0;
   views::ColumnSet* column_set = layout->AddColumnSet(single_column_layout_id);
@@ -451,10 +450,13 @@ views::View* CollectedCookiesViews::CreateBlockedPane() {
   using views::GridLayout;
 
   views::View* pane = new views::View();
-  GridLayout* layout = GridLayout::CreatePanel(pane);
+  const ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
+  pane->SetBorder(views::CreateEmptyBorder(
+      provider->GetInsetsMetric(views::INSETS_DIALOG)));
+  GridLayout* layout = new GridLayout(pane);
+  pane->SetLayoutManager(layout);
   int unrelated_vertical_distance =
-      ChromeLayoutProvider::Get()->GetDistanceMetric(
-          views::DISTANCE_UNRELATED_CONTROL_VERTICAL);
+      provider->GetDistanceMetric(views::DISTANCE_UNRELATED_CONTROL_VERTICAL);
 
   const int single_column_layout_id = 0;
   views::ColumnSet* column_set = layout->AddColumnSet(single_column_layout_id);

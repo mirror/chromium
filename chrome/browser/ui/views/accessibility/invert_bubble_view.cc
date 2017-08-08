@@ -21,6 +21,7 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/window_open_disposition.h"
 #include "ui/gfx/color_utils.h"
+#include "ui/views/border.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/link.h"
@@ -108,7 +109,10 @@ void InvertBubbleView::Init() {
   close_->SetFontList(original_font_list);
   close_->set_listener(this);
 
-  views::GridLayout* layout = views::GridLayout::CreatePanel(this);
+  SetBorder(views::CreateEmptyBorder(
+      ChromeLayoutProvider::Get()->GetInsetsMetric(views::INSETS_DIALOG)));
+  views::GridLayout* layout = new views::GridLayout(this);
+  SetLayoutManager(layout);
 
   views::ColumnSet* columns = layout->AddColumnSet(0);
   for (int i = 0; i < 4; i++) {

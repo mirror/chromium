@@ -65,11 +65,7 @@ ChromeCleanerDialog::ChromeCleanerDialog(
   DCHECK(dialog_controller_);
   DCHECK(cleaner_controller_);
 
-  SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kVertical,
-                           ChromeLayoutProvider::Get()->GetInsetsMetric(
-                               views::INSETS_DIALOG_CONTENTS),
-                           0));
+  SetLayoutManager(new views::BoxLayout(views::BoxLayout::kVertical));
   views::Label* label = new views::Label(
       l10n_util::GetStringUTF16(IDS_CHROME_CLEANUP_PROMPT_EXPLANATION));
   label->SetMultiLine(true);
@@ -129,17 +125,11 @@ views::View* ChromeCleanerDialog::GetInitiallyFocusedView() {
 views::View* ChromeCleanerDialog::CreateFootnoteView() {
   DCHECK(!logs_permission_checkbox_);
   DCHECK(dialog_controller_);
-
-  views::View* footnote_view = new views::View();
-  footnote_view->SetLayoutManager(new views::BoxLayout(
-      views::BoxLayout::kVertical, ChromeLayoutProvider::Get()->GetInsetsMetric(
-                                       views::INSETS_DIALOG_CONTENTS)));
   logs_permission_checkbox_ = new views::Checkbox(
       l10n_util::GetStringUTF16(IDS_CHROME_CLEANUP_LOGS_PERMISSION));
   logs_permission_checkbox_->SetChecked(dialog_controller_->LogsEnabled());
   logs_permission_checkbox_->set_listener(this);
-  footnote_view->AddChildView(logs_permission_checkbox_);
-  return footnote_view;
+  return logs_permission_checkbox_;
 }
 
 base::string16 ChromeCleanerDialog::GetDialogButtonLabel(

@@ -32,7 +32,7 @@ MediaGalleryCheckboxView::MediaGalleryCheckboxView(
   SetLayoutManager(new views::BoxLayout(views::BoxLayout::kHorizontal));
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
   const gfx::Insets border_margin =
-      provider->GetInsetsMetric(views::INSETS_BUBBLE_CONTENTS);
+      provider->GetInsetsMetric(views::INSETS_DIALOG);
   SetBorder(views::CreateEmptyBorder(
       0, border_margin.left(), trailing_vertical_space, border_margin.right()));
   if (menu_controller)

@@ -35,9 +35,13 @@ class GFX_EXPORT Insets {
       : top_(top), left_(left), bottom_(bottom), right_(right) {}
 
   constexpr int top() const { return top_; }
+  void set_top(int top) { top_ = top; }
   constexpr int left() const { return left_; }
+  void set_left(int left) { left_ = left; }
   constexpr int bottom() const { return bottom_; }
+  void set_bottom(int bottom) { bottom_ = bottom; }
   constexpr int right() const { return right_; }
+  void set_right(int right) { right_ = right; }
 
   // Returns the total width taken up by the insets, which is the sum of the
   // left and right insets.

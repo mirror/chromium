@@ -61,7 +61,7 @@ FeaturePromoBubbleView::FeaturePromoBubbleView(views::View* anchor_view,
   AddChildView(new views::Label(l10n_util::GetStringUTF16(string_specifier)));
 
   views::Widget* widget = views::BubbleDialogDelegateView::CreateBubble(this);
-  UseCompactMargins();
+  set_margins(gfx::Insets(6));
   widget->Show();
   StartAutoCloseTimer(kDelayDefault);
 }

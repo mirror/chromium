@@ -106,7 +106,8 @@ void CreateChromeApplicationShortcutView::InitControls() {
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
   // Layout controls
-  views::GridLayout* layout = views::GridLayout::CreatePanel(this);
+  views::GridLayout* layout = new views::GridLayout(this);
+  SetLayoutManager(layout);
 
   static const int kHeaderColumnSetId = 0;
   views::ColumnSet* column_set = layout->AddColumnSet(kHeaderColumnSetId);
