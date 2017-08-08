@@ -26,7 +26,7 @@ const int kCaptionButtonHeight = 18;
 const int kExtraCaption = 2;
 
 // Default extra spacing between individual window caption buttons.
-const int kCaptionButtonSpacing = 2;
+// const int kCaptionButtonSpacing = 2;
 #else
 const int kExtraCaption = 0;
 const int kCaptionButtonSpacing = 0;
@@ -81,7 +81,8 @@ OpaqueBrowserFrameViewLayout::OpaqueBrowserFrameViewLayout(
       has_leading_buttons_(false),
       has_trailing_buttons_(false),
       extra_caption_y_(kExtraCaption),
-      window_caption_spacing_(kCaptionButtonSpacing),
+      // window_caption_spacing_(kCaptionButtonSpacing),
+      window_caption_spacing_(6),
       minimize_button_(nullptr),
       maximize_button_(nullptr),
       restore_button_(nullptr),
@@ -395,6 +396,7 @@ void OpaqueBrowserFrameViewLayout::ConfigureButton(
     views::FrameButton button_id,
     ButtonAlignment alignment,
     int caption_y) {
+  caption_y = 0;
   switch (button_id) {
     case views::FRAME_BUTTON_MINIMIZE: {
       minimize_button_->SetVisible(true);
@@ -573,9 +575,9 @@ void OpaqueBrowserFrameViewLayout::SetView(int id, views::View* view) {
 
 void OpaqueBrowserFrameViewLayout::Layout(views::View* host) {
   // Reset all our data so that everything is invisible.
-  int thickness = FrameBorderThickness(false);
-  leading_button_start_ = thickness;
-  trailing_button_start_ = thickness;
+  // int thickness = FrameBorderThickness(false);
+  leading_button_start_ = 6;   // thickness;
+  trailing_button_start_ = 6;  // thickness;
   minimum_size_for_buttons_ = leading_button_start_ + trailing_button_start_;
   has_leading_buttons_ = false;
   has_trailing_buttons_ = false;
