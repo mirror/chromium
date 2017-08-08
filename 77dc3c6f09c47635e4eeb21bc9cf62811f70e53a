@@ -1,0 +1,192 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c41d732_5525f41a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-08T01:12:29Z",
+      "side": 1,
+      "message": "If you keep this property, comment is needed.",
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37036737_88695072",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2001,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-08T01:12:29Z",
+      "side": 1,
+      "message": "Also add to clearPresentedStateWithCompletion",
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e3dbd1_040ae651",
+        "filename": "ios/chrome/browser/ui/bubble/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-08T01:12:29Z",
+      "side": 1,
+      "message": "Is this required?",
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e81c056_96c863ce",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-08T01:12:29Z",
+      "side": 1,
+      "message": "Should import block_types.h here again, to follow include what you use.",
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae371e8_53345fce",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-08T01:12:29Z",
+      "side": 1,
+      "message": "Don\u0027t need this section.",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 54
+      },
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ceb724_c6b231d2",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-08T01:12:29Z",
+      "side": 1,
+      "message": "Better to have a comment explaining that timer is initialized when bubble appears, instead of here.",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 37
+      },
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4941fc_20d2cf20",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-08T01:12:29Z",
+      "side": 1,
+      "message": "Comment explaining why this is required would be good.",
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed86b65_c122a127",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-08T01:12:29Z",
+      "side": 1,
+      "message": "Will anything break if bubbleSize \u003e maxBubbleSize? This can happen if maxBubbleSize is smaller than min size.",
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb7eec0_49a425de",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter_unittests.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-08T01:12:29Z",
+      "side": 1,
+      "message": "Add comma.",
+      "range": {
+        "startLine": 44,
+        "startChar": 34,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1db711_14c28c09",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter_unittests.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-08T01:12:29Z",
+      "side": 1,
+      "message": "You could add unit tests to validate existence of timers after presentation, and what state they should have immediately after dismissal.",
+      "revId": "77dc3c6f09c47635e4eeb21bc9cf62811f70e53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
