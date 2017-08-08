@@ -700,6 +700,7 @@ void SSLErrorHandler::StartHandlingError() {
   // - the only certificate error is CERT_STATUS_AUTHORITY_INVALID
   // - the certificate contains a string that indicates it was issued by a
   //   MITM software
+  LOG(ERROR) << "Starting MITM software check...";
   if (IsMITMSoftwareInterstitialEnabled() && !delegate_->IsErrorOverridable() &&
       IsOnlyCertError(net::CERT_STATUS_AUTHORITY_INVALID) &&
       g_config.Pointer()->CertContainsMITMSoftwareString(ssl_info_)) {
