@@ -271,10 +271,10 @@ void InputHandlerProxy::HandleInputEventWithLatencyInfo(
   if (has_ongoing_compositor_scroll_fling_pinch_) {
     const auto& gesture_event = ToWebGestureEvent(event_with_callback->event());
     bool is_from_set_non_blocking_touch =
-        gesture_event.source_device == blink::kWebGestureDeviceTouchscreen &&
+        gesture_event.SourceDevice() == blink::kWebGestureDeviceTouchscreen &&
         gesture_event.is_source_touch_event_set_non_blocking;
     bool is_scroll_end_from_wheel =
-        gesture_event.source_device == blink::kWebGestureDeviceTouchpad &&
+        gesture_event.SourceDevice() == blink::kWebGestureDeviceTouchpad &&
         gesture_event.GetType() == blink::WebGestureEvent::kGestureScrollEnd;
     if (is_from_set_non_blocking_touch || is_scroll_end_from_wheel) {
       // Gesture events was already delayed by blocking events in rAF aligned
@@ -400,7 +400,7 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleInputEvent(
       DCHECK(!gesture_pinch_on_impl_thread_);
       const WebGestureEvent& gesture_event =
           static_cast<const WebGestureEvent&>(event);
-      if (gesture_event.source_device == blink::kWebGestureDeviceTouchpad &&
+      if (gesture_event.SourceDevice() == blink::kWebGestureDeviceTouchpad &&
           input_handler_->GetEventListenerProperties(
               cc::EventListenerClass::kMouseWheel) !=
               cc::EventListenerProperties::kNone) {
@@ -805,23 +805,23 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureScrollBegin(
         cc::MainThreadScrollingReason::kContinuingMainThreadScroll;
   } else if (gesture_event.data.scroll_begin.target_viewport) {
     scroll_status = input_handler_->RootScrollBegin(
-        &scroll_state, GestureScrollInputType(gesture_event.source_device));
+        &scroll_state, GestureScrollInputType(gesture_event.SourceDevice()));
   } else if (ShouldAnimate(gesture_event.data.scroll_begin.delta_hint_units !=
                            blink::WebGestureEvent::ScrollUnits::kPixels)) {
     DCHECK(!scroll_state.is_in_inertial_phase());
     scroll_status = input_handler_->ScrollAnimatedBegin(&scroll_state);
   } else {
     scroll_status = input_handler_->ScrollBegin(
-        &scroll_state, GestureScrollInputType(gesture_event.source_device));
+        &scroll_state, GestureScrollInputType(gesture_event.SourceDevice()));
   }
   UMA_HISTOGRAM_ENUMERATION("Renderer4.CompositorScrollHitTestResult",
                             scroll_status.thread,
                             cc::InputHandler::LAST_SCROLL_STATUS + 1);
 
-  RecordMainThreadScrollingReasons(gesture_event.source_device,
+  RecordMainThreadScrollingReasons(gesture_event.SourceDevice(),
                                    scroll_status.main_thread_scrolling_reasons);
 
-  RecordScrollingThreadStatus(gesture_event.source_device,
+  RecordScrollingThreadStatus(gesture_event.SourceDevice(),
                               scroll_status.main_thread_scrolling_reasons);
 
   InputHandlerProxy::EventDisposition result = DID_NOT_HANDLE;
@@ -892,7 +892,7 @@ InputHandlerProxy::HandleGestureScrollUpdate(
 
   if (!scroll_result.did_scroll &&
       input_handler_->ScrollingShouldSwitchtoMainThread() &&
-      gesture_event.source_device == blink::kWebGestureDeviceTouchpad &&
+      gesture_event.SourceDevice() == blink::kWebGestureDeviceTouchpad &&
       touchpad_and_wheel_scroll_latching_enabled_) {
     gesture_scroll_on_impl_thread_ = false;
     client_->GenerateScrollBeginAndSendToMainThread(gesture_event);
@@ -946,7 +946,7 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureFlingStart(
   cc::InputHandler::ScrollStatus scroll_status;
   scroll_status.main_thread_scrolling_reasons =
       cc::MainThreadScrollingReason::kNotScrollingOnMain;
-  switch (gesture_event.source_device) {
+  switch (gesture_event.SourceDevice()) {
     case blink::kWebGestureDeviceTouchpad:
       if (gesture_event.data.fling_start.target_viewport) {
         scroll_status = input_handler_->RootScrollBegin(
@@ -979,7 +979,7 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureFlingStart(
   switch (scroll_status.thread) {
     case cc::InputHandler::SCROLL_ON_IMPL_THREAD: {
       if (!touchpad_and_wheel_scroll_latching_enabled_ &&
-          gesture_event.source_device == blink::kWebGestureDeviceTouchpad) {
+          gesture_event.SourceDevice() == blink::kWebGestureDeviceTouchpad) {
         scroll_state.set_is_ending(true);
         input_handler_->ScrollEnd(&scroll_state);
       }
@@ -989,7 +989,8 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureFlingStart(
       current_fling_velocity_ = gfx::Vector2dF(vx, vy);
       DCHECK(!current_fling_velocity_.IsZero());
       fling_curve_ = client_->CreateFlingAnimationCurve(
-          gesture_event.source_device, WebFloatPoint(vx, vy), blink::WebSize());
+          gesture_event.SourceDevice(), WebFloatPoint(vx, vy),
+          blink::WebSize());
       disallow_horizontal_fling_scroll_ = !vx;
       disallow_vertical_fling_scroll_ = !vy;
       TRACE_EVENT_ASYNC_BEGIN2("input,benchmark,rail",
@@ -1004,7 +1005,7 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureFlingStart(
       fling_parameters_.global_point =
           WebPoint(gesture_event.global_x, gesture_event.global_y);
       fling_parameters_.modifiers = gesture_event.GetModifiers();
-      fling_parameters_.source_device = gesture_event.source_device;
+      fling_parameters_.source_device = gesture_event.SourceDevice();
       RequestAnimation();
       return DID_HANDLE;
     }
@@ -1024,7 +1025,7 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureFlingStart(
           "InputHandlerProxy::HandleGestureFling::ignored",
           TRACE_EVENT_SCOPE_THREAD);
       gesture_scroll_on_impl_thread_ = false;
-      if (gesture_event.source_device == blink::kWebGestureDeviceTouchpad) {
+      if (gesture_event.SourceDevice() == blink::kWebGestureDeviceTouchpad) {
         // We still pass the curve to the main thread if there's nothing
         // scrollable, in case something
         // registers a handler before the curve is over.
@@ -1195,7 +1196,7 @@ bool InputHandlerProxy::FilterInputEventForFlingBoosting(
     return false;
 
   // Gestures from a different source should immediately interrupt the fling.
-  if (gesture_event.source_device != fling_parameters_.source_device) {
+  if (gesture_event.SourceDevice() != fling_parameters_.source_device) {
     CancelCurrentFling();
     return false;
   }
@@ -1246,7 +1247,7 @@ bool InputHandlerProxy::FilterInputEventForFlingBoosting(
       return true;
 
     case WebInputEvent::kGestureFlingStart: {
-      DCHECK_EQ(fling_parameters_.source_device, gesture_event.source_device);
+      DCHECK_EQ(fling_parameters_.source_device, gesture_event.SourceDevice());
 
       bool fling_boosted =
           fling_parameters_.modifiers == gesture_event.GetModifiers() &&
@@ -1269,7 +1270,7 @@ bool InputHandlerProxy::FilterInputEventForFlingBoosting(
       disallow_vertical_fling_scroll_ = !velocity.y;
       last_fling_boost_event_ = WebGestureEvent();
       fling_curve_ = client_->CreateFlingAnimationCurve(
-          gesture_event.source_device, velocity, blink::WebSize());
+          gesture_event.SourceDevice(), velocity, blink::WebSize());
       fling_parameters_.start_time = gesture_event.TimeStampSeconds();
       fling_parameters_.delta = velocity;
       fling_parameters_.point = WebPoint(gesture_event.x, gesture_event.y);
