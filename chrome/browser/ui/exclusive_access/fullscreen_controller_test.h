@@ -48,6 +48,7 @@ class FullscreenControllerTest : public InProcessBrowserTest {
 
   void RequestToLockMouse(bool user_gesture,
                           bool last_unlocked_by_target);
+  void SetWebContentsWithSilentMouseLockPermission();
   void LostMouseLock();
   bool SendEscapeToFullscreenController();
   bool IsFullscreenForBrowser();
