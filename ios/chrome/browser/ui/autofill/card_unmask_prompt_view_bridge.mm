@@ -34,6 +34,8 @@
 NSString* const kCardUnmaskPromptCollectionViewAccessibilityID =
     @"kCardUnmaskPromptCollectionViewAccessibilityID";
 
+using base::SysUTF16ToNSString;
+
 namespace {
 
 const CGFloat kTitleVerticalSpacing = 2.0f;
