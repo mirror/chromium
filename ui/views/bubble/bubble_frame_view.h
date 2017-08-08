@@ -123,6 +123,17 @@ class VIEWS_EXPORT BubbleFrameView : public NonClientFrameView,
   // Calculates the size needed to accommodate the given client area.
   gfx::Size GetSizeForClientSize(const gfx::Size& client_size) const;
 
+  // The insets of the text portion of the title, based on |title_margins_| and
+  // whether there is an icon and/or close button.
+  gfx::Insets GetTitleLabelInsets() const;
+
+  // The width of the text portion of the title for the given |client_width|.
+  int GetTitleWidthForClientWidth(int client_width) const;
+
+  // The frame insets for the given |client_width| after accounting for any
+  // wrapping of the dialog title.
+  gfx::Insets GetInsetsForClientWidth(int client_width) const;
+
   // The bubble border.
   BubbleBorder* bubble_border_;
 
