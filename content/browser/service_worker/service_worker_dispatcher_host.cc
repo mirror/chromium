@@ -666,7 +666,6 @@ void ServiceWorkerDispatcherHost::OnEnableNavigationPreload(
         this, bad_message::SWDH_ENABLE_NAVIGATION_PRELOAD_BAD_REGISTRATION_ID);
     return;
   }
-  // The spec discussion consensus is to reject if there is no active worker:
   // https://github.com/w3c/ServiceWorker/issues/920#issuecomment-262212670
   // TODO(falken): Remove this comment when the spec is updated.
   if (!registration->active_version()) {
