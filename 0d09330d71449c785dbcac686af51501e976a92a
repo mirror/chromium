@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a8ff5cae_fefc9ff2",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-08T15:22:59Z",
+      "side": 1,
+      "message": "nit: As a parameter |capture_time| is passed after |key_pressed| everywhere. It would be easier on the eyes if the member order in the struct matches the parameter order. (Up to you)",
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1c4ae2c_328003d5",
         "filename": "media/audio/alsa/alsa_input.cc",
         "patchSetId": 4
@@ -19,6 +36,23 @@
         "endLine": 221,
         "endChar": 46
       },
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4c642b_ae191095",
+        "filename": "media/audio/audio_input_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-08T15:22:59Z",
+      "side": 1,
+      "message": "DCHECK_GE(base::TimeTicks::Now(), capture_time)?",
       "revId": "0d09330d71449c785dbcac686af51501e976a92a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -48,6 +82,23 @@
     },
     {
       "key": {
+        "uuid": "b7188f36_6d638dba",
+        "filename": "media/audio/audio_io.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-08T15:22:59Z",
+      "side": 1,
+      "message": "Is |capture_time| guaranteed to be monotonic? Could you add that to the comment?",
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9175cb2f_6e670e61",
         "filename": "media/audio/cras/cras_input.cc",
         "patchSetId": 4
@@ -71,6 +122,40 @@
     },
     {
       "key": {
+        "uuid": "ce942fc8_7f5f5233",
+        "filename": "media/audio/mac/audio_low_latency_input_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-08T15:22:59Z",
+      "side": 1,
+      "message": "This is very helpful!",
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f77c98_6c738de1",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-08T15:22:59Z",
+      "side": 1,
+      "message": "So, we do not have a guarantee that |capture_time| is monotonic?",
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2935730_d6be0e67",
         "filename": "media/base/audio_parameters.h",
         "patchSetId": 4
@@ -88,6 +173,23 @@
         "endLine": 38,
         "endChar": 22
       },
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428dd993_f8b59e4a",
+        "filename": "media/base/audio_parameters.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-08T15:22:59Z",
+      "side": 1,
+      "message": "|capture_time_microseconds| is a bit ugly but much more informative, and would help to avoid/catch bugs when wrong precision is used.",
       "revId": "0d09330d71449c785dbcac686af51501e976a92a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
