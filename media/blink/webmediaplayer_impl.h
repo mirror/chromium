@@ -52,9 +52,11 @@
 #endif
 
 namespace blink {
+class WebLayerTreeView;
 class WebLocalFrame;
 class WebMediaPlayerClient;
 class WebMediaPlayerEncryptedMediaClient;
+class WebVideoFrameSubmitter;
 }
 
 namespace base {
@@ -90,6 +92,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
       public NON_EXPORTED_BASE(WebMediaPlayerDelegate::Observer),
       public NON_EXPORTED_BASE(Pipeline::Client),
       public MediaObserverClient,
+      public blink::WebSurfaceLayerBridgeObserver,
       public base::SupportsWeakPtr<WebMediaPlayerImpl> {
  public:
   // Constructs a WebMediaPlayer implementation using Chromium's media stack.
@@ -101,8 +104,12 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
       WebMediaPlayerDelegate* delegate,
       std::unique_ptr<RendererFactorySelector> renderer_factory_selector,
       UrlIndex* url_index,
-      std::unique_ptr<WebMediaPlayerParams> params);
+      std::unique_ptr<WebMediaPlayerParams> params,
+      blink::WebLayerTreeView* layer_tree_view);
   ~WebMediaPlayerImpl() override;
+
+  // WebSurfaceLayerBridgeObserver implementation.
+  void OnWebLayerReplaced() override;
 
   void Load(LoadType load_type,
             const blink::WebMediaPlayerSource& source,
@@ -634,8 +641,12 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   UrlIndex* url_index_;
 
   // Video rendering members.
-  scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner_;
-  VideoFrameCompositor* compositor_;  // Deleted on |compositor_task_runner_|.
+  // The |compositor| runs on the compositor thread, or if
+  // kEnableSurfaceLayerForVideo is enabled, the media thread. This task runner
+  // posts tasks for the |compositor_| on the correct thread.
+  scoped_refptr<base::SingleThreadTaskRunner> vfc_task_runner_;
+  VideoFrameCompositor* compositor_;  // Deleted on |vfc_task_runner_|.
+  blink::WebVideoFrameSubmitter* submitter_; // Deleted on |vfc_task_runner_|.
   SkCanvasVideoRenderer skcanvas_video_renderer_;
 
   // The compositor layer for displaying the video content when using composited

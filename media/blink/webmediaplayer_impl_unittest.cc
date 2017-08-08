@@ -254,7 +254,7 @@ class WebMediaPlayerImplTest : public testing::Test {
             RequestRoutingTokenCallback(), nullptr,
             kMaxKeyframeDistanceToDisableBackgroundVideo,
             kMaxKeyframeDistanceToDisableBackgroundVideoMSE, false, false,
-            provider_.get()));
+            provider_.get()), nullptr);
   }
 
   ~WebMediaPlayerImplTest() override {
@@ -877,7 +877,7 @@ TEST_F(WebMediaPlayerImplTest, InfiniteDuration) {
 class WebMediaPlayerImplBackgroundBehaviorTest
     : public WebMediaPlayerImplTest,
       public ::testing::WithParamInterface<
-          std::tuple<bool, bool, int, int, bool, bool, bool>> {
+          std::tuple<bool, bool, int, int, bool, bool, bool, bool>> {
  public:
   // Indices of the tuple parameters.
   static const int kIsMediaSuspendEnabled = 0;
@@ -887,6 +887,7 @@ class WebMediaPlayerImplBackgroundBehaviorTest
   static const int kIsResumeBackgroundVideoEnabled = 4;
   static const int kIsMediaSource = 5;
   static const int kIsBackgroundPauseEnabled = 6;
+  static const int kIsUseSurfaceLayerForVideoEnabled = 7;
 
   void SetUp() override {
     WebMediaPlayerImplTest::SetUp();
@@ -921,6 +922,16 @@ class WebMediaPlayerImplBackgroundBehaviorTest
       disabled_features += kResumeBackgroundVideo.name;
     }
 
+    if (IsUseSurfaceLayerForVideoEnabled()) {
+      if (!enabled_features.empty())
+        enabled_features += ",";
+      enabled_features += kUseSurfaceLayerForVideo.name;
+    } else {
+      if (!disabled_features.empty())
+        disabled_features += ",";
+      disabled_features += kUseSurfaceLayerForVideo.name;
+    }
+
     feature_list_.InitFromCommandLine(enabled_features, disabled_features);
 
     InitializeWebMediaPlayerImpl();
@@ -945,6 +956,10 @@ class WebMediaPlayerImplBackgroundBehaviorTest
 
   bool IsBackgroundOptimizationOn() {
     return std::get<kIsBackgroundOptimizationEnabled>(GetParam());
+  }
+
+  bool IsUseSurfaceLayerForVideoEnabled() {
+    return std::get<kIsUseSurfaceLayerForVideoEnabled>(GetParam());
   }
 
   bool IsResumeBackgroundVideoEnabled() {
@@ -1046,6 +1061,7 @@ INSTANTIATE_TEST_CASE_P(BackgroundBehaviorTestInstances,
                                            ::testing::Bool(),
                                            ::testing::Values(5, 300),
                                            ::testing::Values(5, 100),
+                                           ::testing::Bool(),
                                            ::testing::Bool(),
                                            ::testing::Bool(),
                                            ::testing::Bool()));
