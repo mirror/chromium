@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "fe92edc4_3e22d016",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-08T18:56:19Z",
+      "side": 1,
+      "message": "We don\u0027t need to expose RFH/RPH; we just need to make sure the various test objects have a fake InterfaceProvider set up accordingly.\n\n(I\u0027m OK with doing this in a followup patch, but the proliferation of \"this only happens in tests\" makes code hard to understand. Not addressing it now just increases the amount of technical debt that needs to be addressed later)",
+      "parentUuid": "06f4ce86_472189d9",
+      "revId": "6f79982577f0ab4faeb756173cd56c206896d784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29c3c1c1_d838c479",
         "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.cpp",
         "patchSetId": 24
