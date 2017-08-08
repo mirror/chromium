@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f2978ae_eddb51a3",
+        "filename": "ui/views/widget/widget.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-08T16:48:49Z",
+      "side": 1,
+      "message": "Is there any real harm in doing the layout? It would be nice to not have to have the some what confusing default argument to UpdateWindowTitle if possible.",
+      "range": {
+        "startLine": 355,
+        "startChar": 5,
+        "endLine": 355,
+        "endChar": 20
+      },
+      "revId": "0b968ee9aa6d5d9194804a2587938640c9bb9ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
