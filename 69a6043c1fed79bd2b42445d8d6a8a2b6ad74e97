@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b715447_3595edfe",
+        "filename": "ios/chrome/app/chrome_overlay_window.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-08T12:26:12Z",
+      "side": 1,
+      "message": "Why do you remove teh reference to iPad?",
+      "range": {
+        "startLine": 24,
+        "startChar": 25,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "69a6043c1fed79bd2b42445d8d6a8a2b6ad74e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d71b67_695d8f87",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-08T12:26:12Z",
+      "side": 1,
+      "message": "Comment that this is used in metrics.",
+      "range": {
+        "startLine": 13,
+        "startChar": 12,
+        "endLine": 13,
+        "endChar": 19
+      },
+      "revId": "69a6043c1fed79bd2b42445d8d6a8a2b6ad74e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ccb2dc_5214ea2a",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-08T12:26:12Z",
+      "side": 1,
+      "message": "You will report the histogram multiple times for the same drag event.\nIs that intentional?",
+      "range": {
+        "startLine": 33,
+        "startChar": 33,
+        "endLine": 33,
+        "endChar": 44
+      },
+      "revId": "69a6043c1fed79bd2b42445d8d6a8a2b6ad74e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d66172_b1eb3553",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-08T12:26:12Z",
+      "side": 1,
+      "message": "You always return NO? Add a comment to state this is intentional (you only report metrics and don\u0027t intercept event).\n\nIs it possible that the actual handler is called before, returns yes, and this method is never called?",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 11
+      },
+      "revId": "69a6043c1fed79bd2b42445d8d6a8a2b6ad74e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee47c57_a8e14ebf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15743,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-08T12:26:12Z",
+      "side": 1,
+      "message": "Is it iOS only?",
+      "revId": "69a6043c1fed79bd2b42445d8d6a8a2b6ad74e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
