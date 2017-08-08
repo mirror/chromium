@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9a2be5f_58b28b05",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-08T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ef762cb_c4b21dde",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 50
+      },
+      "revId": "b825026e873b589a452bfee5dd185554691c2a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd55fb3d_7cf2358f",
         "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b825026e873b589a452bfee5dd185554691c2a67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0ca02d_1f644c16",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-08T23:19:02Z",
+      "side": 1,
+      "message": "It\u0027s defined in https://chromium-review.googlesource.com/c/604515/2/tools/metrics/ukm/ukm.xml#1081, script will process this xml and generate classes.",
+      "parentUuid": "bd55fb3d_7cf2358f",
+      "range": {
+        "startLine": 186,
+        "startChar": 19,
+        "endLine": 186,
+        "endChar": 75
+      },
+      "revId": "b825026e873b589a452bfee5dd185554691c2a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
