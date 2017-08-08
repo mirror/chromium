@@ -155,15 +155,15 @@ const CGFloat widgetCompactHeightIOS9 = 110;
       base::SysUTF8ToNSString(app_group::kChromeAppGroupCommandAppPreference);
   NSString* commandPrefKey = base::SysUTF8ToNSString(
       app_group::kChromeAppGroupCommandCommandPreference);
-  NSString* paramPrefKey = base::SysUTF8ToNSString(
-      app_group::kChromeAppGroupCommandParameterPreference);
+  NSString* URLPrefKey =
+      base::SysUTF8ToNSString(app_group::kChromeAppGroupCommandURLPreference);
 
   NSDictionary* commandDict = @{
     timePrefKey : [NSDate date],
-    appPrefKey : @"TodayExtension",
+    appPrefKey : app_group::kOpenCommandSourceContentExtension,
     commandPrefKey :
         base::SysUTF8ToNSString(app_group::kChromeAppGroupOpenURLCommand),
-    paramPrefKey : URL,
+    URLPrefKey : URL,
   };
 
   [sharedDefaults setObject:commandDict forKey:defaultsKey];
