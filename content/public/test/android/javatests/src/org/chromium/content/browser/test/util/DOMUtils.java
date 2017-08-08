@@ -463,12 +463,9 @@ public class DOMUtils {
      * @return the click target of the node in the form of a [ x, y ] array.
      */
     private static int[] getClickTargetForBounds(ContentViewCore viewCore, Rect bounds) {
-        int browserControlsLayoutHeight = viewCore.doBrowserControlsShrinkBlinkSize()
-                ? viewCore.getTopControlsHeightPix()
-                : 0;
         int clickX = (int) viewCore.getRenderCoordinates().fromLocalCssToPix(bounds.exactCenterX());
         int clickY = (int) viewCore.getRenderCoordinates().fromLocalCssToPix(bounds.exactCenterY())
-                + browserControlsLayoutHeight;
+                + viewCore.getBrowserControlsLayoutHeightPix();
         return new int[] { clickX, clickY };
     }
 

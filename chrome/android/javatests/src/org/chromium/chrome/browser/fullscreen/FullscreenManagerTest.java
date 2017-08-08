@@ -413,7 +413,7 @@ public class FullscreenManagerTest {
         float dragX = 50f;
         // Use a larger scroll range than the height of the browser controls to ensure we overcome
         // the delay in a scroll start being sent.
-        float dragStartY = browserControlsHeight * 3;
+        float dragStartY = browserControlsHeight * 4;
         float dragEndY = dragStartY - browserControlsHeight * 2;
         float expectedPosition = -browserControlsHeight;
         if (show) {

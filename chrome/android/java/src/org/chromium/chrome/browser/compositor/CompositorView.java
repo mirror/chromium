@@ -277,7 +277,20 @@ public class CompositorView
         IntentWithGesturesHandler.getInstance().clear();
     }
 
+    void onSizeChanged(WebContents webContents, int w, int h) {
+        if (webContents == null) return;
+        nativeOnSizeChanged(mNativeCompositorView, webContents, w, h);
+    }
+
+    void setControlsHeight(
+            WebContents webContents, int topControlsHeight, int bottomControlsHeight) {
+        if (webContents == null) return;
+        nativeSetControlsHeight(
+                mNativeCompositorView, webContents, topControlsHeight, bottomControlsHeight);
+    }
+
     void onPhysicalBackingSizeChanged(WebContents webContents, int width, int height) {
+        if (webContents == null) return;
         nativeOnPhysicalBackingSizeChanged(mNativeCompositorView, webContents, width, height);
     }
 
@@ -413,8 +426,12 @@ public class CompositorView
     private native void nativeSurfaceDestroyed(long nativeCompositorView);
     private native void nativeSurfaceChanged(
             long nativeCompositorView, int format, int width, int height, Surface surface);
+    private native void nativeOnSizeChanged(
+            long nativeCompositorView, WebContents webContents, int w, int h);
     private native void nativeOnPhysicalBackingSizeChanged(
             long nativeCompositorView, WebContents webContents, int width, int height);
+    private native void nativeSetControlsHeight(long nativeCompositorView, WebContents webContents,
+            int topControlsHeight, int bottomControlsHeight);
     private native void nativeFinalizeLayers(long nativeCompositorView);
     private native void nativeSetNeedsComposite(long nativeCompositorView);
     private native void nativeSetLayoutBounds(long nativeCompositorView);

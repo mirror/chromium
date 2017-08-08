@@ -340,6 +340,9 @@ public class OverlayPanelContent {
                 mNativeOverlayPanelContentPtr, mInterceptNavigationDelegate, panelWebContents);
 
         mContentDelegate.onContentViewCreated(mContentViewCore);
+        if (mContentViewWidth != 0 && mContentViewHeight != 0) {
+            onSizeChanged(mContentViewWidth, mContentViewHeight);
+        }
     }
 
     /**
@@ -479,15 +482,14 @@ public class OverlayPanelContent {
         return mContentViewCore;
     }
 
-    void onSizeChanged(int width, int height) {
-        mContentViewCore.onSizeChanged(width, height, mContentViewCore.getViewportWidthPix(),
-                mContentViewCore.getViewportHeightPix());
+    private WebContents getWebContents() {
+        return mContentViewCore != null ? mContentViewCore.getWebContents() : null;
     }
 
-    void onPhysicalBackingSizeChanged(int width, int height) {
-        if (mContentViewCore != null && mContentViewCore.getWebContents() != null) {
-            nativeOnPhysicalBackingSizeChanged(mNativeOverlayPanelContentPtr,
-                    mContentViewCore.getWebContents(), width, height);
+    void onSizeChanged(int width, int height) {
+        WebContents webContents = getWebContents();
+        if (webContents != null) {
+            nativeOnSizeChanged(mNativeOverlayPanelContentPtr, webContents, width, height);
         }
     }
 
@@ -521,7 +523,7 @@ public class OverlayPanelContent {
     private native void nativeDestroy(long nativeOverlayPanelContent);
     private native void nativeRemoveLastHistoryEntry(
             long nativeOverlayPanelContent, String historyUrl, long urlTimeMs);
-    private native void nativeOnPhysicalBackingSizeChanged(
+    private native void nativeOnSizeChanged(
             long nativeOverlayPanelContent, WebContents webContents, int width, int height);
     private native void nativeSetWebContents(long nativeOverlayPanelContent,
             WebContents webContents, WebContentsDelegateAndroid delegate);
