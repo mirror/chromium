@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "1c98ec64_ccd0e929",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-08T12:04:07Z",
+      "side": 1,
+      "message": "Should the transition be on #logo?",
+      "range": {
+        "startLine": 56,
+        "startChar": 28,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "1a5aa28c4db0ce30ddb691355ea5c94415f1f0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de549104_ad84291f",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-08T12:04:07Z",
+      "side": 1,
+      "message": "Hm, feels slightly weird that \"header\" is inside of \"contents\", but I can\u0027t think of better names. If you can\u0027t either, then this is okay.",
+      "revId": "1a5aa28c4db0ce30ddb691355ea5c94415f1f0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "def63153_966b8bce",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 6
@@ -18,6 +58,53 @@
         "startChar": 74,
         "endLine": 416,
         "endChar": 78
+      },
+      "revId": "1a5aa28c4db0ce30ddb691355ea5c94415f1f0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5429f289_d2149782",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-08T12:04:07Z",
+      "side": 1,
+      "message": "As discussed: Yes please, in a separate CL :)",
+      "parentUuid": "def63153_966b8bce",
+      "range": {
+        "startLine": 416,
+        "startChar": 74,
+        "endLine": 416,
+        "endChar": 78
+      },
+      "revId": "1a5aa28c4db0ce30ddb691355ea5c94415f1f0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e991a71_b09c4fe7",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-08T12:04:07Z",
+      "side": 1,
+      "message": "contentsWidth?",
+      "range": {
+        "startLine": 416,
+        "startChar": 6,
+        "endLine": 416,
+        "endChar": 25
       },
       "revId": "1a5aa28c4db0ce30ddb691355ea5c94415f1f0bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
