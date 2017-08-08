@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e397f309_47f53e44",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T21:20:57Z",
+      "side": 1,
+      "message": "The naming for js message handling functions is \"Handle\" + message_name so \ns/OnChangePasswordPageShown/HandleOnChangePasswordPageShown/\nThough it\u0027s also unusual to have Handle and On together. Maybe drop \"On\"?",
+      "revId": "1d761430d0e6375135fc6f7da12cd86832b8d154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30be8dcc_65e400d8",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T21:20:57Z",
+      "side": 1,
+      "message": "s/ChangePasswordHandler::ChangePassword/ChangePasswordHandler::HandleChangePassword/",
+      "revId": "1d761430d0e6375135fc6f7da12cd86832b8d154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f572147d_99f55c4b",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T21:20:57Z",
+      "side": 1,
+      "message": "Please document nullptr, e.g.\n\n/*web_contents\u003d*/nullptr,",
+      "revId": "1d761430d0e6375135fc6f7da12cd86832b8d154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a3755b_4e713c43",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-08T21:20:57Z",
+      "side": 1,
+      "message": "Please document booleans, e.g.\n\nui::PAGE_TRANSITION_LINK, /*is_renderer_initiated\u003d*/false);\n\n(note no spaces in or after /**/ comment).",
+      "revId": "1d761430d0e6375135fc6f7da12cd86832b8d154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
