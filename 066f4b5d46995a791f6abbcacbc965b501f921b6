@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82404b00_7eefad78",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2294,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-08T15:51:13Z",
+      "side": 1,
+      "message": "is this logic needed on non-mac? it\u0027s new \u0026 seems like it will break window creation on other platforms",
+      "range": {
+        "startLine": 2294,
+        "startChar": 7,
+        "endLine": 2294,
+        "endChar": 33
+      },
+      "revId": "066f4b5d46995a791f6abbcacbc965b501f921b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1886708_29d41a7b",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1537,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-08T15:51:13Z",
+      "side": 1,
+      "message": "#if defined(OS_MACOSX) to match the header",
+      "revId": "066f4b5d46995a791f6abbcacbc965b501f921b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b0e87c_30eefdcb",
+        "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-08T15:51:13Z",
+      "side": 1,
+      "message": "DCHECK(kTouchBarDino is on)?",
+      "range": {
+        "startLine": 426,
+        "startChar": 48,
+        "endLine": 426,
+        "endChar": 52
+      },
+      "revId": "066f4b5d46995a791f6abbcacbc965b501f921b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5b53e8_af50ee14",
+        "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-08T15:51:13Z",
+      "side": 1,
+      "message": "huh, I never knew this existed :) neat!",
+      "revId": "066f4b5d46995a791f6abbcacbc965b501f921b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82998d4_b227da98",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-08T15:51:13Z",
+      "side": 1,
+      "message": "these are now handled by the touchbar manager, which is attached via SetUserData(), right? if so we don\u0027t need to store them here",
+      "range": {
+        "startLine": 1516,
+        "startChar": 33,
+        "endLine": 1516,
+        "endChar": 39
+      },
+      "revId": "066f4b5d46995a791f6abbcacbc965b501f921b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da9c04b_2e492808",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-08T15:51:13Z",
+      "side": 1,
+      "message": "this also is not needed any more I think",
+      "revId": "066f4b5d46995a791f6abbcacbc965b501f921b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
