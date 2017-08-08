@@ -211,6 +211,10 @@
 #include "ui/gfx/geometry/point.h"
 #include "ui/shell_dialogs/selected_file_info.h"
 
+#if defined(OS_MACOSX)
+#include "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h"
+#endif
+
 #if defined(OS_WIN)
 #include <windows.h>
 #include <shellapi.h>
@@ -985,6 +989,12 @@ void Browser::TabInsertedAt(TabStripModel* tab_strip_model,
 void Browser::TabClosingAt(TabStripModel* tab_strip_model,
                            WebContents* contents,
                            int index) {
+#if defined(OS_MACOSX)
+  if (TouchbarWebContentsManager::FromWebContents(contents)
+          ->GetPopupContents()) {
+    TouchbarWebContentsManager::FromWebContents(contents)->GetPopupContents();
+  }
+#endif
   exclusive_access_manager_->OnTabClosing(contents);
   SessionService* session_service =
       SessionServiceFactory::GetForProfile(profile_);
@@ -1119,6 +1129,13 @@ void Browser::ActiveTabChanged(WebContents* old_contents,
     instant_controller_->ActiveTabChanged();
 
   SearchTabHelper::FromWebContents(new_contents)->OnTabActivated();
+
+#if defined(OS_MACOSX)
+  // The touchbar needs to observe the correct WebContents to be able to set
+  // the popup_contents_ and is_error_page_ via the observer.
+  if (!TouchbarWebContentsManager::FromWebContents(new_contents))
+    TouchbarWebContentsManager::CreateForWebContents(new_contents);
+#endif
 }
 
 void Browser::TabMoved(WebContents* contents,
@@ -1517,12 +1534,26 @@ void Browser::VisibleSecurityStateChanged(WebContents* source) {
   helper->VisibleSecurityStateChanged();
 }
 
+void Browser::DisplayWebContentsInTouchbar(content::WebContents* contents) {
+  window()->DisplayWebContentsInTouchbar(contents);
+}
+
 void Browser::AddNewContents(WebContents* source,
                              WebContents* new_contents,
                              WindowOpenDisposition disposition,
                              const gfx::Rect& initial_rect,
                              bool user_gesture,
                              bool* was_blocked) {
+#if defined(OS_MACOSX)
+  if (TouchbarWebContentsManager::FromWebContents(source)->ShouldHidePopup(
+          disposition)) {
+    // Hide the currently created popup.
+    disposition = WindowOpenDisposition::IGNORE_ACTION;
+    // Display the popup's WebContents in the touchbar.
+    TouchbarWebContentsManager::FromWebContents(source)
+        ->DisplayWebContentsInTouchbar(new_contents);
+  }
+#endif
   chrome::AddWebContents(this, source, new_contents, disposition, initial_rect,
                          user_gesture, was_blocked);
 }

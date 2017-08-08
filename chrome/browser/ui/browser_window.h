@@ -171,6 +171,11 @@ class BrowserWindow : public ui::BaseWindow {
   // inconsistent state) if this fails.
   virtual void SetFocusToLocationBar(bool select_all) = 0;
 
+#if defined(OS_MACOSX)
+  // Sends the |contents| view to BrowserWindowController
+  virtual void DisplayWebContentsInTouchbar(content::WebContents* contents) = 0;
+#endif
+
   // Informs the view whether or not a load is in progress for the current tab.
   // The view can use this notification to update the reload/stop button.
   virtual void UpdateReloadStopState(bool is_loading, bool force) = 0;

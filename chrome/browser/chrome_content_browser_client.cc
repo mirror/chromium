@@ -100,6 +100,7 @@
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/chrome_select_file_policy.h"
+#include "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h"
 #include "chrome/browser/ui/sync/sync_promo_ui.h"
 #include "chrome/browser/ui/tab_contents/chrome_web_contents_view_delegate.h"
 #include "chrome/browser/ui/webui/chrome_web_ui_controller_factory.h"
@@ -2270,6 +2271,29 @@ bool ChromeContentBrowserClient::CanCreateWindow(
       Profile::FromBrowserContext(web_contents->GetBrowserContext());
   DCHECK(profile);
   *no_javascript_access = false;
+
+#if defined(OS_MACOSX)
+  if (TouchbarWebContentsManager::FromWebContents(web_contents) &&
+      TouchbarWebContentsManager::FromWebContents(web_contents)
+          ->IsErrorPage()) {
+    // Both the touch bar and offline dino game feature flags must be activated
+    // to be able to create poup WebContents which are drawn in the TouchBar's
+    // WebContents's view.
+    if (!base::FeatureList::IsEnabled(features::kTouchbarDinoGame) ||
+        !base::FeatureList::IsEnabled(features::kBrowserTouchBar))
+      return false;
+    // We don't want another popup created to be redirected to the touchbar's
+    // WebContents view.
+    if (TouchbarWebContentsManager::FromWebContents(web_contents)
+            ->GetPopupContents())
+      return false;
+  }
+#else
+  // Pop-ups can't be created in the error page. The browser shouldn't show the
+  // popup that is treated as the touch bar's WebContents in non OS_MACOSX.
+  if (!TouchbarWebContentsManager::FromWebContents(web_contents))
+    return false;
+#endif
 
   // If the opener is trying to create a background window but doesn't have
   // the appropriate permission, fail the attempt.

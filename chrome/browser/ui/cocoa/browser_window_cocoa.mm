@@ -62,10 +62,13 @@
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
+#include "content/public/browser/render_widget_host.h"
+#include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/common/constants.h"
+#include "ui/base/cocoa/remote_layer_api.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/events/keycodes/keyboard_codes.h"
@@ -414,6 +417,22 @@ LocationBar* BrowserWindowCocoa::GetLocationBar() const {
 
 void BrowserWindowCocoa::SetFocusToLocationBar(bool select_all) {
   [controller_ focusLocationBar:select_all ? YES : NO];
+}
+
+void BrowserWindowCocoa::DisplayWebContentsInTouchbar(
+    content::WebContents* contents) {
+  if (contents) {
+    NSView* view = contents->GetRenderWidgetHostView()->GetNativeView();
+    // when the feature kTouchBarDino is on, we want webContentsView_
+    // that is displayed on the Touch Bar to receive Touch Events.
+    // When this property is set to YES, content_layer receives
+    // Touch Events instead of the webContentsView_, which is why it is
+    // set to NO here
+    [(CALayerHost*)[view layer] setAllowsHitTesting:NO];
+    [controller_ displayViewInTouchbar:view];
+  } else {
+    [controller_ displayViewInTouchbar:nil];
+  }
 }
 
 void BrowserWindowCocoa::UpdateReloadStopState(bool is_loading, bool force) {
