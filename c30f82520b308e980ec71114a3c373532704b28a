@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d60f65a_ea31e208",
+        "filename": "sandbox/linux/services/resource_limits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-08T20:49:45Z",
+      "side": 1,
+      "message": "Could you consider choosing a different name for this overload to avoid confusing it with the one above? https://google.github.io/styleguide/cppguide.html#Function_Overloading\n\nOr, maybe rename |limit| to |soft_limit| and |max| to |hard_limit|?",
+      "range": {
+        "startLine": 24,
+        "startChar": 14,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "c30f82520b308e980ec71114a3c373532704b28a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ceb58ed_f22719ae",
+        "filename": "sandbox/linux/services/resource_limits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-08T20:49:45Z",
+      "side": 1,
+      "message": "Please document any failure scenarios, like returning false if the change would exceed the hard limit of |resource|.",
+      "range": {
+        "startLine": 25,
+        "startChar": 23,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "c30f82520b308e980ec71114a3c373532704b28a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
