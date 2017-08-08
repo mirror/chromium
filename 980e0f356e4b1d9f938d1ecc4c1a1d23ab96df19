@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c55da8a_56ed8ba9",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-08-08T18:39:38Z",
+      "side": 1,
+      "message": "Do confirm that registering without flags does register them as non-sync\u0027ed prefs.",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "980e0f356e4b1d9f938d1ecc4c1a1d23ab96df19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdcd8177_770c4328",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-08-08T18:39:38Z",
+      "side": 1,
+      "message": "Then why listen to prefs that will never change? Should we not just do,\nif (ActiveUser() !\u003d PrimaryUser) {\n  StopWatchingUserPrefs();\n  return;\n}\n\nor something similar?",
+      "range": {
+        "startLine": 104,
+        "startChar": 64,
+        "endLine": 105,
+        "endChar": 41
+      },
+      "revId": "980e0f356e4b1d9f938d1ecc4c1a1d23ab96df19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c29d631_50733e0b",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-08-08T18:39:38Z",
+      "side": 1,
+      "message": "Why? Non-GAIA users can have local user preferences, no? Can\u0027t they be primary users?",
+      "range": {
+        "startLine": 109,
+        "startChar": 42,
+        "endLine": 109,
+        "endChar": 63
+      },
+      "revId": "980e0f356e4b1d9f938d1ecc4c1a1d23ab96df19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e00c2d23_695c9ddc",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-08-08T18:39:38Z",
+      "side": 1,
+      "message": "Where is this used?",
+      "range": {
+        "startLine": 104,
+        "startChar": 23,
+        "endLine": 104,
+        "endChar": 49
+      },
+      "revId": "980e0f356e4b1d9f938d1ecc4c1a1d23ab96df19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
