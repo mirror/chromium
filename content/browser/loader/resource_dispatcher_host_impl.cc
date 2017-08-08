@@ -2278,16 +2278,6 @@ void ResourceDispatcherHostImpl::OnRequestResourceWithMojo(
                             std::move(url_loader_client), traffic_annotation);
 }
 
-void ResourceDispatcherHostImpl::OnSyncLoadWithMojo(
-    ResourceRequesterInfo* requester_info,
-    int routing_id,
-    int request_id,
-    const ResourceRequest& request_data,
-    const SyncLoadResultCallback& result_handler) {
-  BeginRequest(requester_info, request_id, request_data, result_handler,
-               routing_id, nullptr, nullptr, kTrafficAnnotation);
-}
-
 // static
 int ResourceDispatcherHostImpl::CalculateApproximateMemoryCost(
     net::URLRequest* request) {
