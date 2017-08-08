@@ -57,6 +57,7 @@
 #include "third_party/skia/include/core/SkSurface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "third_party/skia/include/gpu/gl/GrGLTypes.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -87,6 +88,13 @@ PassRefPtr<DrawingBuffer> DrawingBuffer::Create(
     g_should_fail_drawing_buffer_creation_for_testing = false;
     return nullptr;
   }
+
+  CheckedNumeric<int> data_size = color_params.BytesPerPixel();
+  data_size *= size.Width();
+  data_size *= size.Height();
+  if (!data_size.IsValid() ||
+      data_size.ValueOrDie() > v8::TypedArray::kMaxLength)
+    return nullptr;
 
   std::unique_ptr<Extensions3DUtil> extensions_util =
       Extensions3DUtil::Create(context_provider->ContextGL());
