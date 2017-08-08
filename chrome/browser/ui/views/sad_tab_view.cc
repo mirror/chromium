@@ -159,8 +159,14 @@ SadTabView::SadTabView(content::WebContents* web_contents,
 
   views::Widget::ReparentNativeView(sad_tab->GetNativeView(),
                                     web_contents->GetNativeView());
+#if defined(OS_MACOSX)
+  // Macview reparents the native view, not the native window. So, the widget
+  // has bounds relative to the original parent widget not the new native view.
+  sad_tab->SetBounds(web_contents->GetViewBounds());
+#else
   gfx::Rect bounds = web_contents->GetContainerBounds();
   sad_tab->SetBounds(gfx::Rect(bounds.size()));
+#endif
 }
 
 SadTabView::~SadTabView() {
