@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa3684fa_37dd01e7",
+        "filename": "cc/ipc/filter_operation_struct_traits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-08T14:35:24Z",
+      "side": 1,
+      "message": "Delete this?",
+      "revId": "d45a11811aebdaf2fd9ae4e15ebb90c6a1e1d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c24da0_b1a6008f",
+        "filename": "components/arc/bitmap/bitmap_struct_traits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-08T14:35:24Z",
+      "side": 1,
+      "message": "I don\u0027t suppose we\u0027ll have something like a MakeSpan which could infer the data type? i.e.\n\n\n  return mojo::MakeCArray(static_cast\u003cuint8_t*\u003e(...), ...);\n\nNot a huge win, but one less data type to type when typing data types. :)",
+      "revId": "d45a11811aebdaf2fd9ae4e15ebb90c6a1e1d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d2c9ba_16e24a87",
+        "filename": "mojo/public/cpp/bindings/array_traits_carray.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-08T14:35:24Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is even necessary. It should be sufficient to fail unless size \u003d\u003d input.size() shouldn\u0027t it? It\u0027s only used in Deserialize and it should always be possible for a caller to know the exact storage size they need.\n\nWe could use the check as-is for convenient max-length enforcement but it would probably make traits impls which rely on it slightly harder to understand than if there were an explicit bounds check.",
+      "revId": "d45a11811aebdaf2fd9ae4e15ebb90c6a1e1d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
