@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc2699cf_45a4108c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-08T19:54:25Z",
+      "side": 1,
+      "message": "Set?",
+      "range": {
+        "startLine": 50,
+        "startChar": 25,
+        "endLine": 50,
+        "endChar": 29
+      },
+      "revId": "8d0a976d3df354a83dc1f85b2158a74e7c5a582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c840905d_d21d6537",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-08T19:54:25Z",
+      "side": 1,
+      "message": "Add this in show?",
+      "range": {
+        "startLine": 153,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 27
+      },
+      "revId": "8d0a976d3df354a83dc1f85b2158a74e7c5a582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bab681d_0365c0c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-08T19:54:25Z",
+      "side": 1,
+      "message": "Copy the list first so you don\u0027t get concurrent modification exceptions",
+      "range": {
+        "startLine": 181,
+        "startChar": 33,
+        "endLine": 181,
+        "endChar": 41
+      },
+      "revId": "8d0a976d3df354a83dc1f85b2158a74e7c5a582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07334394_b5068b82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-08T19:54:25Z",
+      "side": 1,
+      "message": "Should we remove these in OnDismissListener#onDismiss()?",
+      "range": {
+        "startLine": 184,
+        "startChar": 8,
+        "endLine": 184,
+        "endChar": 25
+      },
+      "revId": "8d0a976d3df354a83dc1f85b2158a74e7c5a582e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
