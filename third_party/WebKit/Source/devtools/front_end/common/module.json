@@ -10,6 +10,7 @@
         "Color.js",
         "Console.js",
         "ContentProvider.js",
+        "FilterBuilder.js",
         "ParsedURL.js",
         "Progress.js",
         "ResourceType.js",

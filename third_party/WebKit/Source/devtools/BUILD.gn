@@ -111,6 +111,7 @@ all_devtools_files = [
   "front_end/common/Color.js",
   "front_end/common/Console.js",
   "front_end/common/ContentProvider.js",
+  "front_end/common/FilterBuilder.js",
   "front_end/common/module.json",
   "front_end/common/ModuleExtensionInterfaces.js",
   "front_end/common/Object.js",
