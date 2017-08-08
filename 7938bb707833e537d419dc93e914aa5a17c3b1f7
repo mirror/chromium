@@ -33,6 +33,24 @@
       "revId": "7938bb707833e537d419dc93e914aa5a17c3b1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247733a3_5fbc195a",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-08-08T07:12:56Z",
+      "side": 1,
+      "message": "Thank you for the comment, and I\u0027ll fix this on another patch!",
+      "parentUuid": "a708326a_a189860e",
+      "revId": "7938bb707833e537d419dc93e914aa5a17c3b1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
