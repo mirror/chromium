@@ -138,9 +138,7 @@ void TabLayer::SetProperties(int id,
                              int close_button_color,
                              bool anonymize_toolbar,
                              bool show_tab_title,
-                             int toolbar_textbox_resource_id,
                              int toolbar_textbox_background_color,
-                             float toolbar_textbox_alpha,
                              float toolbar_alpha,
                              float toolbar_y_offset,
                              float side_border_scale,
@@ -230,19 +228,12 @@ void TabLayer::SetProperties(int id,
   //--------------------------------------------------------------------------
 
   // TODO(kkimlabs): Tab switcher doesn't show the progress bar.
-  toolbar_layer_->PushResource(toolbar_resource_id,
-                               toolbar_background_color,
+  toolbar_layer_->PushResource(toolbar_resource_id, toolbar_background_color,
                                anonymize_toolbar,
-                               toolbar_textbox_background_color,
-                               toolbar_textbox_resource_id,
-                               toolbar_textbox_alpha,
-                               view_height,
+                               toolbar_textbox_background_color, view_height,
                                // TODO(mdjones): Feels odd to pass 0 here when
                                // we have access to toolbar_y_offset.
-                               0,
-                               false,
-                               false,
-                               browser_controls_at_bottom);
+                               0, false, false, browser_controls_at_bottom);
   toolbar_layer_->UpdateProgressBar(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
   float toolbar_impact_height = 0;

@@ -31,8 +31,6 @@ void ToolbarLayer::PushResource(
     int toolbar_background_color,
     bool anonymize,
     int toolbar_textbox_background_color,
-    int url_bar_background_resource_id,
-    float url_bar_alpha,
     float window_height,
     float y_offset,
     bool show_debug,
@@ -70,29 +68,6 @@ void ToolbarLayer::PushResource(
   toolbar_background_layer_->SetPosition(
       gfx::PointF(resource->toolbar_rect().origin()));
   toolbar_background_layer_->SetBackgroundColor(toolbar_background_color);
-
-  bool url_bar_visible = (resource->location_bar_content_rect().width() != 0);
-  url_bar_background_layer_->SetHideLayerAndSubtree(!url_bar_visible);
-  if (url_bar_visible) {
-    ui::NinePatchResource* url_bar_background_resource =
-        ui::NinePatchResource::From(resource_manager_->GetResource(
-            ui::ANDROID_RESOURCE_TYPE_STATIC, url_bar_background_resource_id));
-
-    gfx::Size draw_size(url_bar_background_resource->DrawSize(
-        resource->location_bar_content_rect().size()));
-    gfx::Rect border(url_bar_background_resource->Border(draw_size));
-    gfx::PointF position(url_bar_background_resource->DrawPosition(
-        resource->location_bar_content_rect().origin()));
-
-    url_bar_background_layer_->SetBounds(draw_size);
-    url_bar_background_layer_->SetPosition(position);
-    url_bar_background_layer_->SetBorder(border);
-    url_bar_background_layer_->SetAperture(
-        url_bar_background_resource->aperture());
-    url_bar_background_layer_->SetUIResourceId(
-        url_bar_background_resource->ui_resource()->id());
-    url_bar_background_layer_->SetOpacity(url_bar_alpha);
-  }
 
   bitmap_layer_->SetUIResourceId(resource->ui_resource()->id());
   bitmap_layer_->SetBounds(resource->size());
@@ -162,7 +137,6 @@ ToolbarLayer::ToolbarLayer(ui::ResourceManager* resource_manager)
       layer_(cc::Layer::Create()),
       toolbar_root_(cc::Layer::Create()),
       toolbar_background_layer_(cc::SolidColorLayer::Create()),
-      url_bar_background_layer_(cc::NinePatchLayer::Create()),
       bitmap_layer_(cc::UIResourceLayer::Create()),
       progress_bar_layer_(cc::SolidColorLayer::Create()),
       progress_bar_background_layer_(cc::SolidColorLayer::Create()),
@@ -172,10 +146,6 @@ ToolbarLayer::ToolbarLayer(ui::ResourceManager* resource_manager)
 
   toolbar_background_layer_->SetIsDrawable(true);
   toolbar_root_->AddChild(toolbar_background_layer_);
-
-  url_bar_background_layer_->SetIsDrawable(true);
-  url_bar_background_layer_->SetFillCenter(true);
-  toolbar_root_->AddChild(url_bar_background_layer_);
 
   bitmap_layer_->SetIsDrawable(true);
   toolbar_root_->AddChild(bitmap_layer_);
