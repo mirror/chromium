@@ -56,6 +56,15 @@ var SettingsBooleanControlBehaviorImpl = {
     },
 
     /**
+     * Alternative source for the sub-label that can contain html markup.
+     * Only use with trusted input.
+     */
+    subLabelHtml: {
+      type: String,
+      value: '',
+    },
+
+    /**
      * For numeric prefs only, the integer value equivalent to the unchecked
      * state. This is the value sent to prefs if the user unchecks the control.
      * During initialization, the control is unchecked if and only if the pref
@@ -69,6 +78,7 @@ var SettingsBooleanControlBehaviorImpl = {
 
   observers: [
     'prefValueChanged_(pref.value)',
+    'subLabelHtmlChanged_(subLabelHtml)',
   ],
 
   notifyChangedByUserInteraction: function() {
@@ -103,6 +113,19 @@ var SettingsBooleanControlBehaviorImpl = {
    */
   prefValueChanged_: function(prefValue) {
     this.checked = this.getNewValue_(prefValue);
+  },
+
+  /**
+   * Don't let clicks on a link inside the secondary label reach the checkbox.
+   * @private
+   */
+  subLabelHtmlChanged_: function() {
+    var link = this.$$('.secondary.label a');
+    if (link) {
+      link.addEventListener('tap', function(event) {
+        event.stopPropagation();
+      });
+    }
   },
 
   /**
