@@ -11,6 +11,7 @@
 #include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/session_types.h"
+#include "ash/session/session_controller.h"
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
@@ -116,11 +117,14 @@ class NightLightTest : public AshTestBase {
   NightLightTest() = default;
   ~NightLightTest() override = default;
 
-  TestingPrefServiceSimple* user1_pref_service() {
-    return &user1_pref_service_;
+  PrefService* user1_pref_service() {
+    return Shell::Get()->session_controller()->GetUserPrefServiceForUser(
+        AccountId::FromUserEmail(kUser1Email));
   }
-  TestingPrefServiceSimple* user2_pref_service() {
-    return &user2_pref_service_;
+
+  PrefService* user2_pref_service() {
+    return Shell::Get()->session_controller()->GetUserPrefServiceForUser(
+        AccountId::FromUserEmail(kUser2Email));
   }
 
   TestDelegate* delegate() const { return delegate_; }
@@ -133,11 +137,16 @@ class NightLightTest : public AshTestBase {
 
     AshTestBase::SetUp();
     CreateTestUserSessions();
-    Shell::RegisterProfilePrefs(user1_pref_service_.registry());
-    Shell::RegisterProfilePrefs(user2_pref_service_.registry());
+    auto user1_pref_service = base::MakeUnique<TestingPrefServiceSimple>();
+    auto user2_pref_service = base::MakeUnique<TestingPrefServiceSimple>();
+    Shell::RegisterProfilePrefs(user1_pref_service->registry());
+    Shell::RegisterProfilePrefs(user2_pref_service->registry());
+    Shell::Get()->session_controller()->ProvideUserPrefServiceForTest(
+        AccountId::FromUserEmail(kUser1Email), std::move(user1_pref_service));
+    Shell::Get()->session_controller()->ProvideUserPrefServiceForTest(
+        AccountId::FromUserEmail(kUser2Email), std::move(user2_pref_service));
 
     // Simulate user 1 login.
-    InjectTestPrefService(&user1_pref_service_);
     SwitchActiveUser(kUser1Email);
 
     delegate_ = new TestDelegate;
@@ -155,19 +164,12 @@ class NightLightTest : public AshTestBase {
         AccountId::FromUserEmail(email));
   }
 
-  void InjectTestPrefService(PrefService* pref_service) {
-    ash_test_helper()->test_shell_delegate()->set_active_user_pref_service(
-        pref_service);
-  }
-
   void SetNightLightEnabled(bool enabled) {
     GetController()->SetEnabled(
         enabled, NightLightController::AnimationDuration::kShort);
   }
 
  private:
-  TestingPrefServiceSimple user1_pref_service_;
-  TestingPrefServiceSimple user2_pref_service_;
 
   TestDelegate* delegate_ = nullptr;
 
@@ -250,7 +252,6 @@ TEST_F(NightLightTest, TestUserSwitchAndSettingsPersistence) {
   EXPECT_TRUE(TestLayersTemperature(user1_temperature));
 
   // Switch to user 2, and expect NightLight to be disabled.
-  InjectTestPrefService(user2_pref_service());
   SwitchActiveUser(kUser2Email);
   EXPECT_FALSE(controller->GetEnabled());
   // Changing user_2's color temperature shouldn't affect user_1's settings.
@@ -264,7 +265,6 @@ TEST_F(NightLightTest, TestUserSwitchAndSettingsPersistence) {
 
   // Switch back to user 1, to find NightLight is still enabled, and the same
   // user's color temperature are re-applied.
-  InjectTestPrefService(user1_pref_service());
   SwitchActiveUser(kUser1Email);
   EXPECT_TRUE(controller->GetEnabled());
   EXPECT_EQ(user1_temperature, controller->GetColorTemperature());
