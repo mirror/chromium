@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "282822b6_64f2f6b7",
+        "filename": "base/test/launcher/unit_test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-08T15:04:07Z",
+      "side": 1,
+      "message": "nit: Use {} for a multi-line (with comments) block.",
+      "range": {
+        "startLine": 387,
+        "startChar": 6,
+        "endLine": 387,
+        "endChar": 10
+      },
+      "revId": "c964a6ede5421186f8e547cb7316f57cc4208f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a51353c7_254477f7",
+        "filename": "base/test/launcher/unit_test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-08T15:04:07Z",
+      "side": 1,
+      "message": "nit: is",
+      "range": {
+        "startLine": 395,
+        "startChar": 15,
+        "endLine": 395,
+        "endChar": 18
+      },
+      "revId": "c964a6ede5421186f8e547cb7316f57cc4208f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81398c5a_b4e13f2c",
+        "filename": "base/test/launcher/unit_test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-08T15:04:07Z",
+      "side": 1,
+      "message": "nit: than",
+      "range": {
+        "startLine": 395,
+        "startChar": 24,
+        "endLine": 395,
+        "endChar": 28
+      },
+      "revId": "c964a6ede5421186f8e547cb7316f57cc4208f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
