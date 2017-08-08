@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "720e5970_9de2d1a3",
+        "filename": "chrome/browser/vr/elements/transience_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-08T14:35:21Z",
+      "side": 1,
+      "message": "Just nuke Show and Hide now?  I think they were added in support of the calls now being removed.",
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0519aaf4_6c566819",
+        "filename": "chrome/browser/vr/elements/transience_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-08T14:35:21Z",
+      "side": 1,
+      "message": "These test cases work because opacity isn\u0027t animated, right?  Should there be a second, simpler test that verifies state in the animated case?  Ie. that an element appears immediately when enabled, but disappears over a period of time after the timeout?  Thoughts?",
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31eda2e2_4b010cf5",
+        "filename": "chrome/browser/vr/elements/transient_url_bar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-08T14:35:21Z",
+      "side": 1,
+      "message": "Possible good spot for ternary (optionally of course).",
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954eec37_4684084a",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-08T14:35:21Z",
+      "side": 1,
+      "message": "I thought \"enabled\" was staying separate - basically a gate for visibility, whatever state visibility happens to be in.  Am I remembering wrong?  :)  As is, why not ditch the method completely, as it\u0027s now sugar for sugar?",
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e95d06_78b8fabf",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-08T14:35:21Z",
+      "side": 1,
+      "message": "As simple setter/getters, it\u0027s correct that these don\u0027t have docs.  But it\u0027s inconsistent with others around it.  Consider removing the duplicate docs on neighbouring simple methods.",
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc90416_d3b8a953",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-08T14:35:21Z",
+      "side": 1,
+      "message": "Why not set\u003cTargetProperty\u003e?",
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c00c367_9921ade2",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-08T14:35:21Z",
+      "side": 1,
+      "message": "Incomplete doc sentence.",
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d546bab8_1dde9b6e",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-08T14:35:21Z",
+      "side": 1,
+      "message": "Why not 1000 ms like others earlier?",
+      "range": {
+        "startLine": 301,
+        "startChar": 22,
+        "endLine": 301,
+        "endChar": 24
+      },
+      "revId": "ddf195d153f0183b0abe85ac284a0064ebaf5c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
