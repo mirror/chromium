@@ -9,7 +9,6 @@
 #include <limits>
 
 #include "content/public/browser/browser_thread.h"
-#include "extensions/browser/api/storage/backend_task_runner.h"
 #include "extensions/browser/api/storage/weak_unlimited_settings_storage.h"
 #include "extensions/browser/value_store/value_store_factory.h"
 #include "extensions/common/api/storage.h"
@@ -40,13 +39,13 @@ LocalValueStoreCache::LocalValueStoreCache(
 }
 
 LocalValueStoreCache::~LocalValueStoreCache() {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 }
 
 void LocalValueStoreCache::RunWithValueStoreForExtension(
     const StorageCallback& callback,
     scoped_refptr<const Extension> extension) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   ValueStore* storage = GetStorage(extension.get());
 
@@ -62,7 +61,7 @@ void LocalValueStoreCache::RunWithValueStoreForExtension(
 }
 
 void LocalValueStoreCache::DeleteStorageSoon(const std::string& extension_id) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   storage_map_.erase(extension_id);
   storage_factory_->DeleteSettings(settings_namespace::LOCAL,
                                    ValueStoreFactory::ModelType::APP,
