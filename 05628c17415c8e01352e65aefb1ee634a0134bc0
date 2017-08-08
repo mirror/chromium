@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3cc81e0a_baeccb5c",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-08T18:16:37Z",
+      "side": 1,
+      "message": "Good question - it\u0027s used here:\nhttps://cs.chromium.org/chromium/src/content/browser/loader/async_resource_handler.cc?l\u003d205\n\nAnd it\u0027s also registered in PendingRequestInfo in the renderer, which calls the ReleaseDownloadedFile API.\n\nI could re-architect that whole area, but that\u0027s a much larger change that I\u0027d like to avoid, since it\u0027s going to be removed anyways for mojo network stack.",
+      "parentUuid": "f1b4025d_a35fc54c",
+      "revId": "05628c17415c8e01352e65aefb1ee634a0134bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f9ca3c4_fba5f994",
         "filename": "content/browser/loader/redirect_to_file_resource_handler_unittest.cc",
         "patchSetId": 6
