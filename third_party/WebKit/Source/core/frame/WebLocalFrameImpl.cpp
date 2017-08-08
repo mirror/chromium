@@ -1032,8 +1032,12 @@ bool WebLocalFrameImpl::ExecuteCommand(const WebString& name) {
   if (command[command.length() - 1] == UChar(':'))
     command = command.Substring(0, command.length() - 1);
 
+  bool known_plugin_command = name == "Copy" || name == "Cut" ||
+                              name == "Paste" || name == "PasteAndMatchStyle";
+
   Node* plugin_lookup_context_node =
-      context_menu_node_ && name == "Copy" ? context_menu_node_ : nullptr;
+      context_menu_node_ && known_plugin_command ? context_menu_node_ : nullptr;
+
   WebPluginContainerImpl* plugin_container =
       GetFrame()->GetWebPluginContainer(plugin_lookup_context_node);
   if (plugin_container && plugin_container->ExecuteEditCommand(name))
