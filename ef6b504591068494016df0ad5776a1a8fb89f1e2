@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6261dcc8_2ddd5f11",
+        "filename": "base/metrics/persistent_histogram_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-08T19:09:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fffb8050_8c88cd9a",
+      "revId": "ef6b504591068494016df0ad5776a1a8fb89f1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b04f8433_eb573717",
         "filename": "base/metrics/persistent_histogram_allocator.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-08T18:36:17Z",
       "side": 1,
       "message": "Should this refer to the LazyInstance impl?",
+      "revId": "ef6b504591068494016df0ad5776a1a8fb89f1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0f9c58_70f2b67c",
+        "filename": "base/metrics/persistent_histogram_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-08T19:09:43Z",
+      "side": 1,
+      "message": "I guess it is more like that that the other, now.",
+      "parentUuid": "b04f8433_eb573717",
       "revId": "ef6b504591068494016df0ad5776a1a8fb89f1e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
