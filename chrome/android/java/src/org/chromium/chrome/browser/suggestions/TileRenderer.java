@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
@@ -192,5 +193,14 @@ public class TileRenderer {
         tile.setIcon(new BitmapDrawable(mContext.getResources(), icon));
         tile.setType(
                 isFallbackColorDefault ? TileVisualType.ICON_DEFAULT : TileVisualType.ICON_COLOR);
+    }
+
+    /** Layout that holds {@link TileView}s. */
+    public interface TileGroupLayout {
+        /**
+         * @return A tile view associated to the provided data, or {@code null} if none is found.
+         */
+        @Nullable
+        TileView getTileView(SiteSuggestion suggestion);
     }
 }

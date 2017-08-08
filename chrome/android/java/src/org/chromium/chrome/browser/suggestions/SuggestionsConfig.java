@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.suggestions;
 
 import android.content.res.Resources;
+import android.support.annotation.LayoutRes;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
@@ -35,6 +36,15 @@ public final class SuggestionsConfig {
      */
     public static boolean useModern() {
         return ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT);
+    }
+
+    public static boolean useExplore() {
+        return false; // TODO(dgn) use the feature flag
+    }
+
+    @LayoutRes
+    public static int getTileGroupLayout() {
+        return useExplore() ? R.layout.site_explore_view : R.layout.suggestions_site_tile_grid;
     }
 
     /**
