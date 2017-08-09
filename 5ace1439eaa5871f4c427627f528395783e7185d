@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39aaba8b_828c88e4",
+        "filename": "base/process/launch.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T03:54:45Z",
+      "side": 1,
+      "message": "It seems it will be really easy to get these backwards since mx_handle_t is int32_t. Could I impose upon you to add a little struct here to give them a .id and .handle name rather than .first and .second?",
+      "range": {
+        "startLine": 43,
+        "startChar": 30,
+        "endLine": 43,
+        "endChar": 38
+      },
+      "revId": "5ace1439eaa5871f4c427627f528395783e7185d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a06fbb_77b1a709",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T03:54:45Z",
+      "side": 1,
+      "message": "the pipe",
+      "range": {
+        "startLine": 754,
+        "startChar": 14,
+        "endLine": 754,
+        "endChar": 19
+      },
+      "revId": "5ace1439eaa5871f4c427627f528395783e7185d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b7af2b_265545b9",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T03:54:45Z",
+      "side": 1,
+      "message": "... the write end of the pipe.",
+      "range": {
+        "startLine": 772,
+        "startChar": 51,
+        "endLine": 772,
+        "endChar": 65
+      },
+      "revId": "5ace1439eaa5871f4c427627f528395783e7185d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
