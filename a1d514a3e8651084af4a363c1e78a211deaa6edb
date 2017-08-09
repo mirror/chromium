@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5505f2bb_d4e3e605",
+        "filename": "ios/chrome/browser/google/google_logo_service.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-09T15:52:30Z",
+      "side": 0,
+      "message": "How does decoding work now?  Previously this required it\u0027s own implementation since the shared impl didn\u0027t work on iOS",
+      "revId": "a1d514a3e8651084af4a363c1e78a211deaa6edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
