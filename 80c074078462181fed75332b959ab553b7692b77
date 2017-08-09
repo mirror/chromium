@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d06094be_aa679620",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-09T20:48:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18ddf177_099594db",
+      "range": {
+        "startLine": 846,
+        "startChar": 13,
+        "endLine": 846,
+        "endChar": 35
+      },
+      "revId": "80c074078462181fed75332b959ab553b7692b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6da3a00f_7e87536d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 9
@@ -93,6 +117,30 @@
       "revId": "80c074078462181fed75332b959ab553b7692b77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18da5254_5de1eb9c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-09T20:48:04Z",
+      "side": 1,
+      "message": "Changing this to an assert because bottomSheet shouldn\u0027t be null here, as discussed in person.",
+      "parentUuid": "a5a0d0b3_c8c1ead5",
+      "range": {
+        "startLine": 871,
+        "startChar": 16,
+        "endLine": 871,
+        "endChar": 27
+      },
+      "revId": "80c074078462181fed75332b959ab553b7692b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
