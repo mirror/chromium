@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5c160464_fffa7628",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryItemWrapper.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T12:57:40Z",
+      "side": 1,
+      "message": "Remove the cast now?",
+      "range": {
+        "startLine": 360,
+        "startChar": 24,
+        "endLine": 360,
+        "endChar": 48
+      },
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70951403_d4844c14",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
         "patchSetId": 13
@@ -104,6 +127,29 @@
       "writtenOn": "2017-08-09T06:53:20Z",
       "side": 1,
       "message": "shouldCacheToDisk() returns true? And other than test, all places that implements shouldCacheToDisk() returns true, maybe we don\u0027t need that function anymore?",
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0ca09a_c45759ed",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorageTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T12:57:40Z",
+      "side": 1,
+      "message": "Nit: Return just a Set\u003c\u003e?",
+      "range": {
+        "startLine": 324,
+        "startChar": 16,
+        "endLine": 324,
+        "endChar": 19
+      },
       "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
