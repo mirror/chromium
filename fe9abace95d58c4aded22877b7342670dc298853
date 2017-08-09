@@ -46,6 +46,30 @@
       "revId": "fe9abace95d58c4aded22877b7342670dc298853",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b954189d_f1ab5d77",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-09T20:30:39Z",
+      "side": 1,
+      "message": "The clang_arm one is probalby used for iOS builds. I didn\u0027t know about the clang_x86 one, looks like it\u0027s new-ish https://codereview.chromium.org/2607323002 -- apparently used for v8. We don\u0027t use it in chrome builds.",
+      "parentUuid": "5adc31b2_b2be34c9",
+      "range": {
+        "startLine": 213,
+        "startChar": 4,
+        "endLine": 213,
+        "endChar": 19
+      },
+      "revId": "fe9abace95d58c4aded22877b7342670dc298853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
