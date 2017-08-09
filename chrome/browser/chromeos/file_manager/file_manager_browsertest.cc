@@ -35,10 +35,13 @@ class FileManagerBrowserTest :
   const char* GetTestCaseNameParam() const override {
     return std::tr1::get<1>(GetParam());
   }
+
+ public:
+  void ForwardStartTest() { StartTest(); }
 };
 
 IN_PROC_BROWSER_TEST_P(FileManagerBrowserTest, Test) {
-  StartTest();
+  ForwardStartTest();
 }
 
 // Test fixture class for tests that rely on deprecated event dispatch that send
