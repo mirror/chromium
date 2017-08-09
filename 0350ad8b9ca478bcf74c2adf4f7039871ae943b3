@@ -699,6 +699,24 @@
       "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "842c6d76_5f7c6e0a",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-09T23:44:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5653736f_641bbd10",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
