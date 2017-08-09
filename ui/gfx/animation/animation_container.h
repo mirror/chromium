@@ -5,8 +5,9 @@
 #ifndef UI_GFX_ANIMATION_ANIMATION_CONTAINER_H_
 #define UI_GFX_ANIMATION_ANIMATION_CONTAINER_H_
 
-#include <set>
+#include <utility>
 
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
@@ -55,7 +56,7 @@ class ANIMATION_EXPORT AnimationContainer
  private:
   friend class base::RefCounted<AnimationContainer>;
 
-  typedef std::set<AnimationContainerElement*> Elements;
+  typedef base::flat_set<AnimationContainerElement*> Elements;
 
   ~AnimationContainer();
 
@@ -65,8 +66,9 @@ class ANIMATION_EXPORT AnimationContainer
   // Sets min_timer_interval_ and restarts the timer.
   void SetMinTimerInterval(base::TimeDelta delta);
 
-  // Returns the min timer interval of all the timers.
-  base::TimeDelta GetMinInterval();
+  // Returns the min timer interval of all the timers, and the count of timers
+  // at that interval.
+  std::pair<base::TimeDelta, size_t> GetMinIntervalAndCount();
 
   // Represents one of two possible values:
   // . If only a single animation has been started and the timer hasn't yet
@@ -77,8 +79,14 @@ class ANIMATION_EXPORT AnimationContainer
   // Set of elements (animations) being managed.
   Elements elements_;
 
-  // Minimum interval the timers run at.
+  // Minimum interval the timers run at, plus the number of timers that have
+  // been seen at that interval. The most common case is for all of the
+  // animations to run at 60Hz, in which case all of the intervals are the same.
+  // This acts as a cache of size 1, and when an animation stops and is removed
+  // it means that the linear scan for the new minimum timer can almost always
+  // be avoided.
   base::TimeDelta min_timer_interval_;
+  size_t min_timer_interval_count_;
 
   base::RepeatingTimer timer_;
 
