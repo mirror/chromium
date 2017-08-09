@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f8972ef_a8d1d97c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-09T02:50:26Z",
+      "side": 1,
+      "message": "is end \u003d\u003d length ok?",
+      "range": {
+        "startLine": 154,
+        "startChar": 76,
+        "endLine": 154,
+        "endChar": 78
+      },
+      "revId": "87873c40028a65647b1f5986bb8020db11d91808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
