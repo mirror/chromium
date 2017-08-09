@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13eb3c87_73282528",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-08-09T04:56:05Z",
+      "side": 1,
+      "message": "This is tricky.\nI believe you should name this \"IsUserEligibleForBluetoothControl()\", because AD users do not have Gaia IDs.",
+      "revId": "349bb9cbef8f3eb57bac9897cd585f7b4e3492a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
