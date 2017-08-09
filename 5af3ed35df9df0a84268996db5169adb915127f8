@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c94f0f34_5aff8728",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestRule.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-09T11:55:52Z",
+      "side": 1,
+      "message": "Why do we have the transitional phase?  why not just switch right to J4?",
+      "parentUuid": "6d84e40a_af293601",
+      "revId": "5af3ed35df9df0a84268996db5169adb915127f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2468dae_b349d8cd",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/urlconnection/CronetChunkedOutputStreamTest.java",
         "patchSetId": 12

@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "361acd52_121baf9a",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestBase.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-09T11:55:52Z",
+      "side": 1,
+      "message": "do we still need this now that the code calling GC is in another function?",
+      "range": {
+        "startLine": 43,
+        "startChar": 90,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "e2d1c7d2b7faf8dccf6db0d60945c926a8ec6b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576cb6f2_5cb787de",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestRule.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-09T11:55:52Z",
+      "side": 1,
+      "message": "extra line",
+      "revId": "e2d1c7d2b7faf8dccf6db0d60945c926a8ec6b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397f146e_4c84b218",
+        "filename": "components/cronet/android/test/proguard.cfg",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-09T11:55:52Z",
+      "side": 1,
+      "message": "same comment as line 37",
+      "range": {
+        "startLine": 15,
+        "startChar": 26,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "e2d1c7d2b7faf8dccf6db0d60945c926a8ec6b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a963589_955b41bf",
+        "filename": "components/cronet/android/test/proguard.cfg",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-09T11:55:52Z",
+      "side": 1,
+      "message": "can we make this more specific?  this defeats proguard for Cronet which means we\u0027re not testing our proguard files.",
+      "revId": "e2d1c7d2b7faf8dccf6db0d60945c926a8ec6b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0667a8c0_54280dac",
+        "filename": "components/cronet/android/test/src/org/chromium/net/Http2TestServer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-09T11:55:52Z",
+      "side": 1,
+      "message": "why is this necessary?",
+      "revId": "e2d1c7d2b7faf8dccf6db0d60945c926a8ec6b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
