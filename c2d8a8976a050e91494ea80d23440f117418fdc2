@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "108a87ec_144dcdeb",
+        "filename": "components/password_manager/core/browser/credential_manager_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-09T15:32:40Z",
+      "side": 1,
+      "message": "Mention that it\u0027s exposed publicly for testing",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 12
+      },
+      "revId": "c2d8a8976a050e91494ea80d23440f117418fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0820a03_b52f0edd",
+        "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-09T15:32:40Z",
+      "side": 1,
+      "message": "Comment that it\u0027s needed to cleanup the password store asynchronously",
+      "range": {
+        "startLine": 243,
+        "startChar": 4,
+        "endLine": 243,
+        "endChar": 22
+      },
+      "revId": "c2d8a8976a050e91494ea80d23440f117418fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944bf6f1_c2755810",
+        "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-09T15:32:40Z",
+      "side": 1,
+      "message": "I don\u0027t think you need it.",
+      "range": {
+        "startLine": 325,
+        "startChar": 29,
+        "endLine": 325,
+        "endChar": 43
+      },
+      "revId": "c2d8a8976a050e91494ea80d23440f117418fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173d7ba7_a939477b",
+        "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-09T15:32:40Z",
+      "side": 1,
+      "message": "Here you are supposed to return \"http://127.0.0.1:8000/\" as a current URL",
+      "range": {
+        "startLine": 1448,
+        "startChar": 7,
+        "endLine": 1448,
+        "endChar": 32
+      },
+      "revId": "c2d8a8976a050e91494ea80d23440f117418fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc097e3_8ac9867c",
+        "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-09T15:32:40Z",
+      "side": 1,
+      "message": "Rename the test to ZeroClickOnLocalhost",
+      "range": {
+        "startLine": 1448,
+        "startChar": 34,
+        "endLine": 1448,
+        "endChar": 55
+      },
+      "revId": "c2d8a8976a050e91494ea80d23440f117418fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
