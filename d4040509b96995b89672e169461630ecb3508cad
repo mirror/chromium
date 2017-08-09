@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43f0dfa8_a1543555",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-09T18:01:52Z",
+      "side": 1,
+      "message": "/** @private {?settings.Route} */\nlastRoute_: null,",
+      "revId": "d4040509b96995b89672e169461630ecb3508cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8e933b_cc5a5232",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-09T18:01:52Z",
+      "side": 1,
+      "message": "Per JS styleguide variables are namedLikeThis.",
+      "revId": "d4040509b96995b89672e169461630ecb3508cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8a3fb6_9f16b63e",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-09T18:01:52Z",
+      "side": 1,
+      "message": "Why do you need this? currentRouteChanged() already provides current and previous route, see https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/route.js?l\u003d434.",
+      "revId": "d4040509b96995b89672e169461630ecb3508cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
