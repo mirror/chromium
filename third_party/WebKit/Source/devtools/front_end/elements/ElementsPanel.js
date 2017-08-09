@@ -50,9 +50,10 @@ Elements.ElementsPanel = class extends UI.Panel {
     var stackElement = this._searchableView.element;
 
     this._contentElement = createElement('div');
-    var crumbsContainer = createElement('div');
+    var footer = createElement('div');
+    footer.id = 'elements-footer';
     stackElement.appendChild(this._contentElement);
-    stackElement.appendChild(crumbsContainer);
+    stackElement.appendChild(footer);
 
     this._splitWidget.setMainWidget(this._searchableView);
     /** @type {?Elements.ElementsPanel._splitMode} */
@@ -64,10 +65,19 @@ Elements.ElementsPanel = class extends UI.Panel {
       this._contentElement.classList.add('elements-wrap');
     Common.moduleSetting('domWordWrap').addChangeListener(this._domWordWrapSettingChanged.bind(this));
 
+    var crumbsContainer = footer.createChild('div');
     crumbsContainer.id = 'elements-crumbs';
     this._breadcrumbs = new Elements.ElementsBreadcrumbs();
     this._breadcrumbs.show(crumbsContainer);
     this._breadcrumbs.addEventListener(Elements.ElementsBreadcrumbs.Events.NodeSelected, this._crumbNodeSelected, this);
+
+    if (Runtime.experiments.isEnabled('DOMFlagsAndAnnotations')) {
+      var analysisModel = SDK.targetManager.mainTarget().model(SDK.AnalysisModel);
+      if (analysisModel) {
+        this._counter = new ConsoleCounters.DOMWarningErrorCounter(analysisModel);
+        footer.appendChild(this._counter.item().element);
+      }
+    }
 
     this._stylesWidget = new Elements.StylesSidebarPane();
     this._computedStyleWidget = new Elements.ComputedStyleWidget();

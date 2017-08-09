@@ -37,27 +37,62 @@ SDK.AnalysisModel = class extends SDK.SDKModel {
    */
   constructor(target) {
     super(target);
-
-    /** @type {!Map<!SDK.DOMNode, !Array<!SDK.AnalysisModel.Flag>>} */
-    this._flags = new Map();
-    /** @type {!Map<!SDK.DOMNode, !Set<!SDK.DOMNode>>} */
-    this._descendants = new Map();
+    this._reset();
   }
 
   /**
    * Formats the content of the flag label and appends it to the node.
+   * @param {!SDK.DOMModel} domModel
    * @param {!SDK.AnalysisModel.Flag} flag
    * @param {!Element} node
+   * @param {boolean} detailed
    */
-  static appendFlagContentToNode(flag, node) {
+  static appendFlagContentToNode(domModel, flag, node, detailed) {
     var icon = UI.Icon.create(`smallicon-${flag.level}`, 'element-icon force-color');
     node.appendChild(icon);
 
-    var code = false;
-    for (var segment of flag.label.split('`')) {
-      (!code ? node : node.createChild('code')).createTextChild(segment);
-      code = !code;
+    var content = flag.label;
+    if (!detailed)
+      content = content.replace(/\[(.*?)\]/g, detailed ? '$1' : '');
+
+    var details = false;
+    for (var segments of content.split(/\[|\]/)) {
+      var section = node.createChild('span');
+      if (details)
+        section.classList.add('detail');
+      var code = false;
+      for (var segment of segments.split('`')) {
+        var links = (segment.match(/##\d+/g) || []).map(match => domModel.nodeForId(match.substr(2)));
+        for (var subsegment of segment.split(/##\d+/)) {
+          var container = !code ? section : section.createChild('code');
+          container.createTextChild(subsegment);
+          var link = links.shift();
+          if (link) {
+            var anchor = container.createChild('a');
+            anchor.createTextChild(link.nodeName().toLowerCase());
+            anchor.addEventListener('click', revealNode.bind(null, link));
+          }
+        }
+        code = !code;
+      }
+      details = !details;
     }
+
+    function revealNode(link, event) {
+      event.stopPropagation();
+      Common.Revealer.reveal(link);
+    }
+  }
+
+  _reset() {
+    /** @type {!Map<!SDK.DOMNode, !Array<!SDK.AnalysisModel.Flag>>} */
+    this._flags = new Map();
+    /** @type {!Array<!SDK.DOMNode>} */
+    this._groups = [];
+    /** @type {!Map<!SDK.DOMNode, !Set<!SDK.DOMNode>>} */
+    this._descendants = new Map();
+    /** @type {!Map<string, number>} */
+    this._counts = new Map();
   }
 
   /**
@@ -68,15 +103,18 @@ SDK.AnalysisModel = class extends SDK.SDKModel {
   }
 
   /**
-   * @param {!SDK.DOMNode} node
-   * @return {!Array<!SDK.AnalysisModel.Flag>}
+   * @return {!Array<!SDK.DOMNode>}
    */
-  flagsForDescendants(node) {
-    var descendants = this._descendants.get(node);
-    if (!descendants)
-      return [];
+  flagGroups() {
+    return this._groups;
+  }
 
-    return Array.from(descendants).reduce((flags, descendant) => flags.concat(this._flags.get(descendant) || []), []);
+  /**
+   * @param {string} level
+   * @return {number}
+   */
+  flagCount(level) {
+    return this._counts.get(level) || 0;
   }
 
   /**
@@ -95,28 +133,82 @@ SDK.AnalysisModel = class extends SDK.SDKModel {
 
   /**
    * @param {!SDK.DOMNode} node
+   * @return {!Array<!SDK.AnalysisModel.Flag>}
+   */
+  flagsForDescendants(node) {
+    var descendants = this._descendants.get(node);
+    if (!descendants)
+      return [];
+
+    return Array.from(descendants).reduce((flags, descendant) => flags.concat(this._flags.get(descendant) || []), []);
+  }
+
+  /**
+   * @param {!SDK.DOMNode} node
    * @param {!Array<!SDK.AnalysisModel.Flag>} flags
    */
   nodeFlagged(node, flags) {
+    var previous = this._flags.get(node);
+    if (previous) {
+      for (var flag of previous)
+        this._counts.set(flag.level, this._counts.get(flag.level) - 1);
+    }
+    for (var flag of flags)
+      this._counts.set(flag.level, (this._counts.get(flag.level) || 0) + 1);
     this._flags.set(node, flags);
     var parent = node;
     while ((parent = parent.parentNode) !== null)
       this._modifyDescendant(parent, node, flags.length !== 0);
+    this.dispatchEventToListeners(SDK.AnalysisModel.Events.NodeFlagged, {node: node, flags: flags});
+  }
+
+  /**
+   * @param {!SDK.DOMNode} node
+   */
+  addFlagGroup(node) {
+    this._groups.push(node);
+    this.dispatchEventToListeners(SDK.AnalysisModel.Events.FlagGroup, node);
+  }
+
+  clearFlags() {
+    this._reset();
+    this.dispatchEventToListeners(SDK.AnalysisModel.Events.ClearFlags);
+  }
+
+  /**
+   * @param {!SDK.DOMNode} node
+   * @return {!Set<!SDK.DOMNode>}
+   */
+  nodeCleared(node) {
+    var descendants = new Set(this._descendants.get(node));
+    this.nodeFlagged(node, []);
+    if (descendants)
+      descendants.forEach(descendant => this.nodeFlagged(descendant, []));
+    return descendants;
   }
 };
 
 SDK.SDKModel.register(SDK.AnalysisModel, SDK.Target.Capability.DOM, true);
+
+/** @enum {symbol} */
+SDK.AnalysisModel.Events = {
+  NodeFlagged: Symbol('NodeFlagged'),
+  FlagGroup: Symbol('FlagGroup'),
+  ClearFlags: Symbol('ClearFlags'),
+};
 
 /**
  * @unrestricted
  */
 SDK.AnalysisModel.Flag = class {
   /**
+   * @param {!SDK.AnalysisModel.FlagsDelegate} delegate
    * @param {string} level
    * @param {string} label
    * @param {!Array<!SDK.AnalysisModel.Annotation>=} annotations
    */
-  constructor(level, label, annotations) {
+  constructor(delegate, level, label, annotations) {
+    this.delegate = delegate;
     this.level = level;
     this.label = label;
     this.annotations = annotations || [];
@@ -140,4 +232,18 @@ SDK.AnalysisModel.Annotation = class {
 /** @enum {symbol} */
 SDK.AnalysisModel.Annotation.Types = {
   Attribute: Symbol('Annotation.Types.Attribute'),
+};
+
+/**
+ * @interface
+ */
+SDK.AnalysisModel.FlagsDelegate = function() {};
+
+SDK.AnalysisModel.FlagsDelegate.prototype = {
+  /**
+   * @param {!SDK.DOMNode} node
+   */
+  highlightFlag(node) {},
+
+  unhighlightFlags() {}
 };

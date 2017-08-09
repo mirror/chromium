@@ -489,21 +489,24 @@ SDK.DOMNode = class {
    * @param {string} selectors
    * @return {!Promise<?SDK.DOMNode>}
    */
-  querySelector(selectors) {
-    return this._domModel ? this._domModel.querySelector(this.id, selectors) : Promise.resolve(null);
+  async querySelector(selectors) {
+    if (this._domModel) {
+      var nodeId = await this._domModel.querySelector(this.id, selectors);
+      return nodeId !== null ? this._domModel.nodeForId(nodeId) : null;
+    }
+    return null;
   }
 
   /**
    * @param {string} selectors
    * @return {!Promise<!Array<!Protocol.DOM.NodeId>>}
    */
-  querySelectorAll(selectors) {
+  async querySelectorAll(selectors) {
     if (this._domModel) {
-      var domModel = this._domModel;
-      return this._domModel.querySelectorAll(this.id, selectors)
-          .then(nodeIds => (nodeIds || []).map(domModel.nodeForId.bind(domModel)));
+      var nodeIds = await this._domModel.querySelectorAll(this.id, selectors);
+      return (nodeIds || []).map(this._domModel.nodeForId.bind(this._domModel));
     }
-    return Promise.resolve([]);
+    return [];
   }
 
   /**
@@ -537,9 +540,10 @@ SDK.DOMNode = class {
 
   /**
    * @param {function(?Protocol.Error, !Protocol.DOM.NodeId=)=} callback
+   * @return {!Promise}
    */
   removeNode(callback) {
-    this._agent.invoke_removeNode({nodeId: this.id}).then(response => {
+    return this._agent.invoke_removeNode({nodeId: this.id}).then(response => {
       if (!response[Protocol.Error])
         this._domModel.markUndoableState();
       if (callback)

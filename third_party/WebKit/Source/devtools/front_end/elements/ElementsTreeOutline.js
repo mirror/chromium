@@ -29,6 +29,7 @@
  */
 
 /**
+ * @implements {SDK.AnalysisModel.FlagsDelegate}
  * @unrestricted
  */
 Elements.ElementsTreeOutline = class extends UI.TreeOutline {
@@ -391,6 +392,9 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
       }
     }
 
+    var analysisModel = SDK.targetManager.mainTarget().model(SDK.AnalysisModel);
+    if (analysisModel)
+      analysisModel.clearFlags();
     this._updateFlagsForNode(this.rootDOMNode, true);
 
     if (selectedNode)
@@ -406,13 +410,25 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
    * @return {!Promise}
    */
   async _updateFlagsForNode(node, flagChildren, flags) {
+    if (!Runtime.experiments.isEnabled('DOMFlagsAndAnnotations'))
+      return;
     if (!node)
-      return Promise.resolve();
+      return;
     var analysisModel = SDK.targetManager.mainTarget().model(SDK.AnalysisModel);
     if (node.nodeType() === Node.ELEMENT_NODE && analysisModel) {
-      flags = mergeFlagMaps(await this._flagsForNode(node, analysisModel, flagChildren), flags || []);
-      analysisModel.nodeFlagged(/** @type {!SDK.DOMNode} */ (node), flags.get(node));
-      flags.delete(node);
+      var inDOM = (await node.domModel().requestDocumentPromise()).isAncestor(node);
+      if (inDOM) {
+        analysisModel.addFlagGroup(/** @type {!SDK.DOMNode} */ (node));
+        flags = mergeFlagMaps(
+            await this._flagsForNode(/** @type {!SDK.DOMNode} */ (node), analysisModel, flagChildren), flags || []);
+        analysisModel.nodeFlagged(/** @type {!SDK.DOMNode} */ (node), flags.get(node));
+      } else {
+        var descendants = analysisModel.nodeCleared(/** @type {!SDK.DOMNode} */ (node));
+        this._clearFlagDependencies(/** @type {!SDK.DOMNode} */ (node));
+        descendants.forEach(this._clearFlagDependencies.bind(this));
+      }
+      if (flags)
+        flags.delete(node);
     }
     if (flagChildren) {
       // Recursively update the flags for all of the node's children before resolving.
@@ -454,8 +470,11 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
     if (id !== undefined) {
       var doc = await node.domModel().requestDocumentPromise();
       var nodes = await doc.querySelectorAll(`#${id}`);
-      if (nodes.length > 1)
-        nodeFlags.push(new SDK.AnalysisModel.Flag('error', 'The `id` attribute must be unique'));
+      if (nodes.length > 1) {
+        var conflicts = nodes.filter(other => other !== node).map(other => `\`##${other.id}\``).join(', ');
+        nodeFlags.push(new SDK.AnalysisModel.Flag(
+            this, 'error', `The \`id\` attribute must be unique[ (\`#${id}\` shared with ${conflicts})]`));
+      }
       this._updateFlagDependency(node, 'id', id, !!preventPropagation);
     }
 
@@ -469,49 +488,115 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
       }
       if (parent === null) {
         if (node.getAttribute('type') === 'password')
-          nodeFlags.push(new SDK.AnalysisModel.Flag('warning', 'Password fields should have associated `form`s'));
+          nodeFlags.push(new SDK.AnalysisModel.Flag(this, 'warning', 'Password fields should have associated `form`s'));
       } else if (!preventPropagation) {
-        await inferAutocompleteValuesForForm(parent);
+        await inferAutocompleteValuesForForm.call(this, parent);
       }
     }
 
     // Missing autocomplete attributes.
     if (name === 'form')
-      await inferAutocompleteValuesForForm(node);
+      await inferAutocompleteValuesForForm.call(this, node);
 
     return flags;
 
     /**
      * Attempt to deduce the intended usage of the input elements within the form and provide a sensible autocomplete
      * attribute value for each of them.
+     * @this Elements.ElementsTreeOutline
      * @param {!SDK.DOMNode} form
      */
     async function inferAutocompleteValuesForForm(form) {
-      var passwordFields = await form.querySelectorAll('input[type="password"]:not([autocomplete])');
-      if (passwordFields.length >= 1 && passwordFields.length <= 3) {
-        var textTypes = ['text', 'email', 'tel'];
-        var selectors = textTypes.map(type => `input[type="${type}"]:not([autocomplete])`).join();
+      if (!flags.has(form))
+        flags.set(form, []);
+      var formFlags = flags.get(form);
+      var textTypes = ['text', 'email', 'tel'];
+      var passwordFields =
+          (await form.querySelectorAll('input[type="password"]:not([autocomplete])')).filter(fieldAccessible);
+      var selectors;
+
+      selectors =
+          textTypes.map(type => `input[type="password"] ~ input[type="${type}"] ~ input[type="password"]`).join();
+      if (passwordFields.length > 3 || (await form.querySelector(selectors))) {
+        formFlags.push(
+            new SDK.AnalysisModel.Flag(this, 'warning', '`form`s should not contain multiple distinct forms'));
+      } else if (passwordFields.length >= 1 && passwordFields.length <= 3) {
+        selectors = textTypes.map(type => `input[type="${type}"]:not([autocomplete])`).join();
         // Find the first text field preceding the first password field in the form.
-        var textFields =
-            (await form.querySelectorAll(selectors)).filter(node => nodePrecedes(form, node, passwordFields[0]));
-        var textField = textFields[textFields.length - 1];
-        if (textField)
-          inferAutocompleteValuesForInput(textField, 'username');
+        var textFields = (await form.querySelectorAll(selectors))
+                             .filter(fieldAccessible)
+                             .filter(node => nodePrecedes(form, node, passwordFields[0]));
+        var usernameField = await identifyUsernameField(textFields);
+        if (usernameField)
+          inferAutocompleteValuesForInput.call(this, usernameField, 'username');
         switch (passwordFields.length) {
           case 3:
-            inferAutocompleteValuesForInput(passwordFields[0], 'current-password');
+            inferAutocompleteValuesForInput.call(this, passwordFields[0], 'current-password');
           // Fall-through here to match the last two password fields.
           case 2:
-            inferAutocompleteValuesForInput(passwordFields[passwordFields.length - 2], 'new-password');
-            inferAutocompleteValuesForInput(passwordFields[passwordFields.length - 1], 'new-password');
+            inferAutocompleteValuesForInput.call(this, passwordFields[passwordFields.length - 2], 'new-password');
+            inferAutocompleteValuesForInput.call(this, passwordFields[passwordFields.length - 1], 'new-password');
             break;
           case 1:
-            inferAutocompleteValuesForInput(passwordFields[0], textField ? 'current-password' : 'new-password');
+            inferAutocompleteValuesForInput.call(
+                this, passwordFields[0], usernameField ? 'current-password' : 'new-password');
             break;
         }
       }
 
+      selectors = textTypes.map(type => `input[type="${type}"]`).join();
+      if ((await form.querySelector('input[type="password"]')) && !(await form.querySelector(selectors))) {
+        formFlags.push(new SDK.AnalysisModel.Flag(
+            this, 'warning', 'Password forms should have username fields for accessibility'));
+      }
+
       /**
+       * @param {!SDK.DOMNode} field
+       * @return {boolean}
+       */
+      function fieldAccessible(field) {
+        var hidden = field.getAttribute('hidden') !== undefined;
+        var ariaHidden = field.getAttribute('aria-hidden') === 'true';
+        var typeHidden = field.getAttribute('type') === 'hidden';
+        return !hidden && !ariaHidden && !typeHidden;
+      }
+
+      /**
+       * Given an array of potentially valid text fields for the username, attempt to work out which field is most
+       * likely to correspond to the username (or user identification: e.g. an email address).
+       * @param {!Array<!SDK.DOMNode>} fields
+       * @return {!Promise<?SDK.DOMNode>}
+       */
+      async function identifyUsernameField(fields) {
+        var keywords = [/^user(name)?|login$/, /^email( address)?$/];
+        /** @type {!Map<!RegExp, !Array<?RegExp>>} */
+        var matches = new Map(keywords.map(keyword => [keyword, null]));
+        for (var field of fields) {
+          var id = field.getAttribute('id');
+          if (id !== undefined) {
+            var labels = await form.querySelectorAll(`label[for="${id}"]`);
+            for (var label of labels) {
+              for (var keyword of keywords) {
+                var labelText = await getLabelText(label);
+                if (keyword.test(labelText.replace(/[^\w ]/g, '').toLowerCase()))
+                  matches.set(keyword, field);
+              }
+            }
+          }
+        }
+        return matches.get(keywords.find(keyword => matches.get(keyword))) || fields[fields.length - 1];
+
+        /**
+         * @param {!SDK.DOMNode} label
+         * @return {!Promise<string>}
+         */
+        async function getLabelText(label) {
+          return (await label.getChildNodesPromise() || []).map(child => child.nodeValue()).join('');
+        }
+      }
+
+      /**
+       * @this Elements.ElementsTreeOutline
        * @param {!SDK.DOMNode} descendant
        * @param {string} autocompleteValue
        */
@@ -521,18 +606,34 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
         var annotation = new SDK.AnalysisModel.Annotation(
             SDK.AnalysisModel.Annotation.Types.Attribute, {text: `autocomplete="${autocompleteValue}"`});
         var flag = new SDK.AnalysisModel.Flag(
-            'warning', 'Adding an `autocomplete` attribute enhances the user experience', [annotation]);
+            this, 'warning', 'Adding an `autocomplete` attribute enhances the user experience', [annotation]);
         flags.get(descendant).push(flag);
       }
 
       /**
-       * @param {!SDK.DOMNode} parent
+       * @param {!SDK.DOMNode} ancestor
        * @param {!SDK.DOMNode} first
        * @param {!SDK.DOMNode} second
        * @return {boolean}
        */
-      function nodePrecedes(parent, first, second) {
-        // Assumes that both first and second are children of the parent.
+      function nodePrecedes(ancestor, first, second) {
+        // Assumes that both first and second are children of the ancestor.
+        var parent = ancestor;
+        /** @type {!Set<!SDK.DOMNode>} */
+        var ancestors = new Set();
+        var node = first;
+        while (node.parentNode !== ancestor) {
+          node = node.parentNode;
+          ancestors.add(node);
+        }
+        node = second;
+        while (node.parentNode !== ancestor) {
+          node = node.parentNode;
+          if (ancestors.has(node)) {
+            parent = node;
+            break;
+          }
+        }
         return nodeAncestorChildIndex(first) < nodeAncestorChildIndex(second);
 
         /**
@@ -546,6 +647,21 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
         }
       }
     }
+  }
+
+  /**
+   * @override
+   * @param {!SDK.DOMNode} node
+   */
+  highlightFlag(node) {
+    this.setHoverEffect(this.findTreeElement(node));
+  }
+
+  /**
+   * @override
+   */
+  unhighlightFlags() {
+    this.setHoverEffect(null);
   }
 
   /**
@@ -577,6 +693,17 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
         this._updateFlagsForNode(dependant);
     }
     set.add(node);
+  }
+
+  /**
+   * @param {!SDK.DOMNode} node
+   */
+  _clearFlagDependencies(node) {
+    var attributes = this._nodeAttributeMap.get(node);
+    if (!attributes)
+      return;
+    for (var attribute of attributes.keys())
+      this._updateFlagDependency(node, attribute, undefined, true);
   }
 
   /**

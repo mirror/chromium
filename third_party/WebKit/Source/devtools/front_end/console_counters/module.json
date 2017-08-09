@@ -2,7 +2,7 @@
   "extensions": [
     {
       "type": "@UI.ToolbarItem.Provider",
-      "className": "ConsoleCounters.WarningErrorCounter",
+      "className": "ConsoleCounters.ConsoleWarningErrorCounter",
       "order": 1,
       "location": "main-toolbar-right"
     }

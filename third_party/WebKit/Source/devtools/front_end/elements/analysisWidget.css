@@ -1,0 +1,52 @@
+/*
+ * Copyright 2017 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+.flag-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.flag-list .flag {
+  display: inline-block;
+  width: 100%;
+  padding: 4px 2px 2px 8px;
+  cursor: pointer;
+  font-size: 11px;
+  color: hsl(39, 100%, 18%);
+}
+
+.flag-list .flag:hover {
+  text-decoration: underline;
+}
+
+.flag-list a:hover {
+  font-weight: bold;
+}
+
+.flag-list .detail {
+  opacity: 0.7;
+}
+
+.flag-list .flag [is=ui-icon] {
+  margin-right: 6px;
+}
+
+.flag-list .error {
+  border: 1px solid hsl(0, 100%, 92%);
+  background-color: hsl(0, 100%, 97%);
+}
+
+.flag-list .warning {
+  border: 1px solid hsl(50, 100%, 88%);
+  background-color: hsl(50, 100%, 95%);
+}
+
+.flag-list .error, .flag-list .warning {
+  border-left: none;
+  border-right: none;
+  margin-top: -1px;
+}

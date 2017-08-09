@@ -21,7 +21,3 @@
 .counter-item label {
     cursor: inherit;
 }
-
-.counter-item.counter-item-first {
-    margin-left: 0;
-}

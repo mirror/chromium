@@ -49,6 +49,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
 
     this._elementCloseTag = elementCloseTag;
     this._flagElement = null;
+    this._annotationsElement = null;
 
     if (this._node.nodeType() === Node.ELEMENT_NODE && !elementCloseTag)
       this._canAddAttributes = true;
@@ -348,7 +349,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
    */
   ondelete() {
     var startTagTreeElement = this.treeOutline.findTreeElement(this._node);
-    startTagTreeElement ? startTagTreeElement.remove() : this.remove();
+    (startTagTreeElement ? startTagTreeElement.remove() : this.remove()).then(this._updateFlags.bind(this));
     return true;
   }
 
@@ -1386,7 +1387,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
           tagElement.createTextChild(' ');
           this._buildAttributeDOM(tagElement, attr.name, attr.value, updateRecord, false, node);
         }
-        this.addAnnotations(tagElement);
+        this._annotationsElement = tagElement.createChild('span');
       }
       if (updateRecord) {
         var hasUpdates = updateRecord.hasRemovedAttributes() || updateRecord.hasRemovedChildren();
@@ -1554,7 +1555,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
     return titleDOM;
   }
 
-  remove() {
+  async remove() {
     if (this._node.pseudoType())
       return;
     var parentElement = this.parent;
@@ -1563,7 +1564,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
 
     if (!this._node.parentNode || this._node.parentNode.nodeType() === Node.DOCUMENT_NODE)
       return;
-    this._node.removeNode();
+    return this._node.removeNode();
   }
 
   /**
@@ -1663,11 +1664,11 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
     var analysisModel = SDK.targetManager.mainTarget().model(SDK.AnalysisModel);
     var flags = analysisModel.flags().get(node);
 
-    if (flags !== undefined && flags.length > 0) {
+    if (analysisModel && flags !== undefined && flags.length > 0) {
       // The flags are sorted by severity, so displaying the first element on top should be a reasonable decision.
       var topFlag = flags[0];
       this._flagElement = this.listItemElement.createChild('div', 'element-flag');
-      SDK.AnalysisModel.appendFlagContentToNode(topFlag, this._flagElement);
+      SDK.AnalysisModel.appendFlagContentToNode(node.domModel(), topFlag, this._flagElement, false);
       this.listItemElement.classList.add(topFlag.level);
       // Any remaining flags are displayed in a dropdown.
       if (flags.length > 1) {
@@ -1677,9 +1678,11 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
         var additional = this._flagElement.createChild('div', 'element-flags-additional');
         for (var flag of flags.slice(1)) {
           var line = additional.createChild('div', `element-flag-additional ${flag.level}`);
-          SDK.AnalysisModel.appendFlagContentToNode(flag, line);
+          SDK.AnalysisModel.appendFlagContentToNode(node.domModel(), flag, line, false);
         }
       }
+
+      this.addAnnotations(analysisModel);
 
       // Flags highlight the line of the node, which makes use of the selection fill.
       this._createSelection();
@@ -1704,21 +1707,20 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
 
   /**
    * Add attribute annotations to the tag if it is inferred that the attribute is intended or required.
-   * @param {!Element} tagElement
+   * @param {!SDK.AnalysisModel} analysisModel
    */
-  addAnnotations(tagElement) {
+  addAnnotations(analysisModel) {
     var node = this._node;
-    var analysisModel = SDK.targetManager.mainTarget().model(SDK.AnalysisModel);
-    if (analysisModel) {
-      var flags = analysisModel.flags().get(node);
-      if (flags !== undefined && flags.length > 0) {
-        for (var flag of flags) {
-          for (var annotation of flag.annotations) {
-            switch (annotation.type) {
-              case SDK.AnalysisModel.Annotation.Types.Attribute:
-                addAttributeAnnotation.call(this, `${annotation.data.text}`);
-                break;
-            }
+    var annotationsElement = this._annotationsElement;
+    annotationsElement.removeChildren();
+    var flags = analysisModel.flags().get(node);
+    if (flags !== undefined && flags.length > 0) {
+      for (var flag of flags) {
+        for (var annotation of flag.annotations) {
+          switch (annotation.type) {
+            case SDK.AnalysisModel.Annotation.Types.Attribute:
+              addAttributeAnnotation.call(this, `${annotation.data.text}`);
+              break;
           }
         }
       }
@@ -1729,8 +1731,8 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
      * @param {string} content
      */
     function addAttributeAnnotation(content) {
-      var space = tagElement.createTextChild(' ');
-      var placeholder = tagElement.createChild('span', 'placeholder-attribute');
+      var space = annotationsElement.createTextChild(' ');
+      var placeholder = annotationsElement.createChild('span', 'placeholder-attribute');
       placeholder.title = Common.UIString('Double-click to add the attribute');
       placeholder.createChild('code').createTextChild(content);
       placeholder.addEventListener('dblclick', () => {
