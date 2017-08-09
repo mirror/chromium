@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c6c560e1_772913c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-09T01:40:43Z",
+      "side": 1,
+      "message": "I think the reason is to keep the native side simple. As discussed, keep it as it is.",
+      "parentUuid": "5d6220cc_9a82dbe2",
+      "range": {
+        "startLine": 107,
+        "startChar": 23,
+        "endLine": 107,
+        "endChar": 26
+      },
+      "revId": "459cb752ba07e39215a01278fc8f7c0b1d7d621e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71f13000_8d449479",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "459cb752ba07e39215a01278fc8f7c0b1d7d621e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9fea96_4b516983",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-09T01:40:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71f13000_8d449479",
+      "revId": "459cb752ba07e39215a01278fc8f7c0b1d7d621e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
