@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f900700_664fbac4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T18:18:36Z",
+      "side": 1,
+      "message": "I\u0027m probably missing something. Did Eli requested for this value to be increased?",
+      "range": {
+        "startLine": 64,
+        "startChar": 59,
+        "endLine": 64,
+        "endChar": 61
+      },
+      "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46bf6735_14ec1d27",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T18:18:36Z",
+      "side": 1,
+      "message": "I think this condition can indirectly lead to NullPointerException.\n\n1. User is signed in.\n2. BookmarkPromoHeader is created, but shouldShowPromo returns false.\n3. mSigninPromoController is null.\n4. User is signed out (e.g., account is removed from device).\n5. setupSigninPromo throws NPE.\n\nThis is very unlikely, though. I think it can be easily solved by checking ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_SIGNIN_PROMOS) here.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 88
+      },
+      "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8002c31b_1daf1310",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T18:18:36Z",
+      "side": 1,
+      "message": "Is it possible to avoid this duplication? You already get a list of accounts and call setAccountName in setupSigninPromo. Can we record impressions there as well (you would need boolean flag for this, but it shouldn\u0027t be an issue).",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 74
+      },
+      "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c7dc949_60eecf85",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T18:18:36Z",
+      "side": 1,
+      "message": "This condition can cause leaks.\n\n1. User is signed out.\n2. BookmarkPromoHeader is created, but shouldShowPromo returns true.\n3. Observers added to AccountManagerFacade and ProfileDataCache.\n4. User clicks \u0027Continue as\u0027 and signs in.\n5. Bookmarks activity will become active again as soon as AccountSigninActivity is finished.\n6. User closes Bookmark activity, BookmarkPromoHeader.destroy is invoked.\n7. shouldShowPromo returns false (user is signed in) and observers are not removed.\n8. BookmarkPromoHeader leaks along with activity.",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 88
+      },
+      "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "611d0445_34147c1e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T18:18:36Z",
+      "side": 1,
+      "message": "I think there\u0027s a minuscule chance of getting ClassCastException:\n1. User is signed in, but sync is turned off.\n2. createHolder is invoked and it creates SigninAndSyncView.\n3. User is signed out (e.g., because account was removed from device).\n4. bindHolder is invoked.\n5. shouldShowNewSigninPromo returns true (user is signed out).\n6. Line 150 attempts to cast SigninAndSyncView to SigninPromoView.\n\nThis is extremelly unlikely, but using instanceof could probably help here. Since it\u0027s all confined inside BookmarkPromoHeader, it should be fine. Other option is to create two subclasses of ViewHolder.",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 9
+      },
+      "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94c973e_59c67b9c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T18:18:36Z",
+      "side": 1,
+      "message": "Could you please extract this condition into a separate function (I\u0027m not sure about the name, but something like calculateShouldShow should work). This way you could clarify this condition a bit:\n\nprivate boolean calculateShouldShow() {\n    if (!AndroidSyncSettings.isMasterSyncEnabled(mContext)) return false;\n\n    // ...\n}",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 275,
+        "endChar": 9
+      },
+      "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
