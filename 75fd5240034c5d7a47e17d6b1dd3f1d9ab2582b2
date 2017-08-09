@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04377310_00971104",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T02:19:02Z",
+      "side": 1,
+      "message": "Would it be useful to create [ChromeEarlGrey showJSAlertWithText:] method?",
+      "range": {
+        "startLine": 305,
+        "startChar": 16,
+        "endLine": 305,
+        "endChar": 45
+      },
+      "revId": "75fd5240034c5d7a47e17d6b1dd3f1d9ab2582b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418269e6_6713bef8",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T02:19:02Z",
+      "side": 1,
+      "message": "Would it be useful to create GetCurrentStackCard() function?",
+      "range": {
+        "startLine": 311,
+        "startChar": 22,
+        "endLine": 311,
+        "endChar": 41
+      },
+      "revId": "75fd5240034c5d7a47e17d6b1dd3f1d9ab2582b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467749f9_a6be19cb",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T02:19:02Z",
+      "side": 1,
+      "message": "Would it be useful to create [ChromeEarlGrey waitForJSAlertWithText:] method?",
+      "range": {
+        "startLine": 328,
+        "startChar": 18,
+        "endLine": 328,
+        "endChar": 30
+      },
+      "revId": "75fd5240034c5d7a47e17d6b1dd3f1d9ab2582b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab44840a_6bdbdd9a",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_panel_cell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T02:19:02Z",
+      "side": 1,
+      "message": "s/label/identifier",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "75fd5240034c5d7a47e17d6b1dd3f1d9ab2582b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8174b1_7f78a308",
+        "filename": "ios/web/public/test/http_server/blank_page_response_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T02:19:02Z",
+      "side": 1,
+      "message": "Menglu is working on deprecating web::HttpServer. With that we should not add more helpers, because we will not reuse them. Inlining html is fine.",
+      "range": {
+        "startLine": 17,
+        "startChar": 24,
+        "endLine": 17,
+        "endChar": 25
+      },
+      "revId": "75fd5240034c5d7a47e17d6b1dd3f1d9ab2582b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
