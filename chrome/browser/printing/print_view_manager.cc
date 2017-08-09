@@ -132,6 +132,10 @@ void PrintViewManager::PrintPreviewDone() {
   if (print_preview_state_ == NOT_PREVIEWING)
     return;
 
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+  print_preview_rfh_->Send(
+      new PrintMsg_ClosePrintPreviewDialog(print_preview_rfh_->GetRoutingID()));
+#endif
   if (print_preview_state_ == SCRIPTED_PREVIEW) {
     auto& map = g_scripted_print_preview_closure_map.Get();
     auto it = map.find(scripted_print_preview_rph_);

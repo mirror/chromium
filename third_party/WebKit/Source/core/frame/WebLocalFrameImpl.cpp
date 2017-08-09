@@ -1367,6 +1367,14 @@ WebPlugin* WebLocalFrameImpl::FocusedPluginIfInputMethodSupported() {
   return 0;
 }
 
+void WebLocalFrameImpl::DispatchBeforePrintEvent() {
+  // TODO(tkent): Implement this. crbug.com/218205
+}
+
+void WebLocalFrameImpl::DispatchAfterPrintEvent() {
+  // TODO(tkent): Implement this. crbug.com/218205
+}
+
 int WebLocalFrameImpl::PrintBegin(const WebPrintParams& print_params,
                                   const WebNode& constrain_to_node) {
   DCHECK(!GetFrame()->GetDocument()->IsFrameSet());
