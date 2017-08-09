@@ -128,7 +128,7 @@ class MockWebStatePolicyDecider : public WebStatePolicyDecider {
       : WebStatePolicyDecider(web_state) {}
   virtual ~MockWebStatePolicyDecider() {}
 
-  MOCK_METHOD1(ShouldAllowRequest, bool(NSURLRequest* request));
+  MOCK_METHOD1(ShouldAllowRequest, bool(WKNavigationAction* action));
   MOCK_METHOD1(ShouldAllowResponse, bool(NSURLResponse* response));
   MOCK_METHOD0(WebStateDestroyed, void());
 };
