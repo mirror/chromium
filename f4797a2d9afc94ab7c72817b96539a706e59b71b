@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3a016ed_362ceccb",
+        "filename": "ui/views/bubble/bubble_frame_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-09T07:59:31Z",
+      "side": 1,
+      "message": "(Here\u0027s the alternative to the Widget change.)",
+      "revId": "f4797a2d9afc94ab7c72817b96539a706e59b71b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
