@@ -325,4 +325,14 @@ TEST_F(RuntimeCallStatsTest, TestScopeWithOptionalMacroWithCallStatsEnabled) {
   EXPECT_EQ(25, counter->GetTime().InMilliseconds());
 }
 
+TEST_F(RuntimeCallStatsTest, TestTheMap) {
+  RuntimeCallStats stats;
+  RuntimeCallCounter* counter = stats.GetCounter("kWindowDocument");
+  EXPECT_EQ(0, strcmp("kWindowDocument", counter->GetName()));
+  counter->IncrementAndAddTime(TimeDelta::FromMicroseconds(2));
+  counter = stats.GetCounter("kWindowDocument");
+  EXPECT_EQ(1ul, counter->GetCount());
+  EXPECT_EQ(TimeDelta::FromMicroseconds(2), counter->GetTime());
+}
+
 }  // namespace blink

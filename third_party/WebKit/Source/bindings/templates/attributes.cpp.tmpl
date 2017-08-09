@@ -270,6 +270,7 @@ v8::Local<v8::Private> {{v8_class_or_partial}}::{{attribute.name}}CachedProperty
 {##############################################################################}
 {% macro constructor_getter_callback(attribute, world_suffix) %}
 void {{v8_class_or_partial}}::{{attribute.name}}ConstructorGetterCallback{{world_suffix}}(v8::Local<v8::Name> property, const v8::PropertyCallbackInfo<v8::Value>& info) {
+  {{ runtime_timer_scope(attribute.runtime_call_stats.constructor_getter_callback_counter) }}
   {% if attribute.deprecate_as %}
   Deprecation::CountDeprecation(CurrentExecutionContext(info.GetIsolate()), WebFeature::k{{attribute.deprecate_as}});
   {% endif %}

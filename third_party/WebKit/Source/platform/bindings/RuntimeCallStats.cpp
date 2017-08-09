@@ -23,7 +23,7 @@ namespace {
 RuntimeCallStats* g_runtime_call_stats_for_testing = nullptr;
 }
 
-void RuntimeCallCounter::Dump(TracedValue& value) {
+void RuntimeCallCounter::Dump(TracedValue& value) const {
   value.BeginArray(name_);
   value.PushDouble(count_);
   value.PushDouble(time_.InMicroseconds());
@@ -74,12 +74,19 @@ void RuntimeCallStats::Reset() {
   for (int i = 0; i < number_of_counters_; i++) {
     counters_[i].Reset();
   }
+  for (RuntimeCallCounter* counter : CounterMapToSortedArray()) {
+    counter->Reset();
+  }
 }
 
-void RuntimeCallStats::Dump(TracedValue& value) {
+void RuntimeCallStats::Dump(TracedValue& value) const {
   for (int i = 0; i < number_of_counters_; i++) {
     if (counters_[i].GetCount() > 0)
       counters_[i].Dump(value);
+  }
+  for (const RuntimeCallCounter* counter : CounterMapToSortedConstArray()) {
+    if (counter->GetCount() > 0)
+      counter->Dump(value);
   }
 }
 
@@ -95,7 +102,51 @@ String RuntimeCallStats::ToString() const {
                                   counter->GetName(), counter->GetCount(),
                                   counter->GetTime().InMillisecondsF()));
   }
+  AddCounterMapStatsToBuilder(builder);
   return builder.ToString();
+}
+
+Vector<const RuntimeCallCounter*>
+RuntimeCallStats::CounterMapToSortedConstArray() const {
+  Vector<const RuntimeCallCounter*> counters;
+  for (const std::unique_ptr<RuntimeCallCounter>& counter :
+       counter_map_.Values()) {
+    counters.push_back(counter.get());
+  }
+  auto comparator = [](const RuntimeCallCounter* a,
+                       const RuntimeCallCounter* b) {
+    return a->GetCount() == b->GetCount()
+               ? strcmp(a->GetName(), b->GetName()) < 0
+               : a->GetCount() < b->GetCount();
+  };
+  std::sort(counters.begin(), counters.end(), comparator);
+  return counters;
+}
+
+Vector<RuntimeCallCounter*> RuntimeCallStats::CounterMapToSortedArray() const {
+  Vector<RuntimeCallCounter*> counters;
+  for (const std::unique_ptr<RuntimeCallCounter>& counter :
+       counter_map_.Values()) {
+    counters.push_back(counter.get());
+  }
+  auto comparator = [](RuntimeCallCounter* a, RuntimeCallCounter* b) {
+    return a->GetCount() == b->GetCount()
+               ? strcmp(a->GetName(), b->GetName()) < 0
+               : a->GetCount() < b->GetCount();
+  };
+  std::sort(counters.begin(), counters.end(), comparator);
+  return counters;
+}
+
+void RuntimeCallStats::AddCounterMapStatsToBuilder(
+    StringBuilder& builder) const {
+  builder.Append(String::Format("\nNumber of counters in map: %u\n\n",
+                                counter_map_.size()));
+  for (const RuntimeCallCounter* counter : CounterMapToSortedConstArray()) {
+    builder.Append(String::Format("%-50s  %8" PRIu64 "  %9.3f\n",
+                                  counter->GetName(), counter->GetCount(),
+                                  counter->GetTime().InMillisecondsF()));
+  }
 }
 
 // static

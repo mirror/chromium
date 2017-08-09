@@ -67,6 +67,7 @@ namespace TestInterfaceCustomConstructorV8Internal {
 } // namespace TestInterfaceCustomConstructorV8Internal
 
 void V8TestInterfaceCustomConstructor::constructorCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  RUNTIME_CALL_TIMER_SCOPE(info.GetIsolate(), "Blink_TestInterfaceCustomConstructor_Constructor");
   if (!info.IsConstructCall()) {
     V8ThrowException::ThrowTypeError(info.GetIsolate(), ExceptionMessages::ConstructorNotCallableAsFunction("TestInterfaceCustomConstructor"));
     return;

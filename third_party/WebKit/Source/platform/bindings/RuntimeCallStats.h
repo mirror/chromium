@@ -40,7 +40,7 @@ class PLATFORM_EXPORT RuntimeCallCounter {
     count_ = 0;
   }
 
-  void Dump(TracedValue&);
+  void Dump(TracedValue&) const;
 
  private:
   RuntimeCallCounter() {}
@@ -222,6 +222,11 @@ class PLATFORM_EXPORT RuntimeCallStats {
     current_timer_ = timer;
   }
 
+  void Enter(RuntimeCallTimer* timer, const char* id) {
+    timer->Start(GetCounter(id), current_timer_);
+    current_timer_ = timer;
+  }
+
   // Exits the current recording scope, by stopping <timer> (and updating the
   // counter associated with <timer>) and resuming the timer that was paused
   // before entering the current scope.
@@ -234,7 +239,7 @@ class PLATFORM_EXPORT RuntimeCallStats {
   // Reset all the counters.
   void Reset();
 
-  void Dump(TracedValue&);
+  void Dump(TracedValue&) const;
 
   bool InUse() const { return in_use_; }
   void SetInUse(bool in_use) { in_use_ = in_use; }
@@ -248,12 +253,27 @@ class PLATFORM_EXPORT RuntimeCallStats {
   static void SetRuntimeCallStatsForTesting();
   static void ClearRuntimeCallStatsForTesting();
 
+  typedef HashMap<const char*, std::unique_ptr<RuntimeCallCounter>> CounterMap;
+
+  RuntimeCallCounter* GetCounter(const char* id) {
+    CounterMap::iterator it = counter_map_.find(id);
+    if (it != counter_map_.end())
+      return it->value.get();
+    return counter_map_.insert(id, WTF::MakeUnique<RuntimeCallCounter>(id))
+        .stored_value->value.get();
+  }
+
  private:
+  void AddCounterMapStatsToBuilder(StringBuilder&) const;
+  Vector<const RuntimeCallCounter*> CounterMapToSortedConstArray() const;
+  Vector<RuntimeCallCounter*> CounterMapToSortedArray() const;
+
   RuntimeCallTimer* current_timer_ = nullptr;
   bool in_use_ = false;
   RuntimeCallCounter counters_[static_cast<int>(CounterId::kNumberOfCounters)];
   static const int number_of_counters_ =
       static_cast<int>(CounterId::kNumberOfCounters);
+  CounterMap counter_map_;
 };
 
 // A utility class that creates a RuntimeCallTimer and uses it with
@@ -265,6 +285,10 @@ class PLATFORM_EXPORT RuntimeCallTimerScope {
                         RuntimeCallStats::CounterId counter)
       : call_stats_(stats) {
     call_stats_->Enter(&timer_, counter);
+  }
+  RuntimeCallTimerScope(RuntimeCallStats* stats, const char* counterId)
+      : call_stats_(stats) {
+    call_stats_->Enter(&timer_, counterId);
   }
   ~RuntimeCallTimerScope() { call_stats_->Leave(&timer_); }
 

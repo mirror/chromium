@@ -109,6 +109,17 @@ def use_local_result(method):
             idl_type.is_explicit_nullable)
 
 
+def runtime_stats_context(interface, method):
+    if True or 'RuntimeCallStatsCounter' in method.extended_attributes:
+        rcs_counter = 'Blink_' + v8_utilities.cpp_name(interface) + '_' + method.name
+        includes.add('platform/bindings/RuntimeCallStats.h')
+    else:
+        rcs_counter = ''
+    return {
+        'method_counter': rcs_counter,
+        'origin_safe_method_getter': rcs_counter + '_OriginSafeMethodGetter'
+    }
+
 def method_context(interface, method, is_visible=True):
     arguments = method.arguments
     extended_attributes = method.extended_attributes
@@ -159,12 +170,6 @@ def method_context(interface, method, is_visible=True):
 
     if 'LenientThis' in extended_attributes:
         raise Exception('[LenientThis] is not supported for operations.')
-
-    if 'RuntimeCallStatsCounter' in extended_attributes:
-        rcs_counter = 'k' + extended_attributes['RuntimeCallStatsCounter']
-        includes.add('platform/bindings/RuntimeCallStats.h')
-    else:
-        rcs_counter = ''
 
     argument_contexts = [
         argument_context(interface, method, argument, index, is_visible=is_visible)
@@ -229,7 +234,7 @@ def method_context(interface, method, is_visible=True):
         'origin_trial_feature_name': v8_utilities.origin_trial_feature_name(method),  # [OriginTrialEnabled]
         'property_attributes': property_attributes(interface, method),
         'returns_promise': method.returns_promise,
-        'rcs_counter': rcs_counter,
+        'runtime_stats': runtime_stats_context(interface, method),
         'runtime_enabled_feature_name': v8_utilities.runtime_enabled_feature_name(method),  # [RuntimeEnabled]
         'secure_context_test': v8_utilities.secure_context(method, interface),  # [SecureContext]
         'use_output_parameter_for_result': idl_type.use_output_parameter_for_result,

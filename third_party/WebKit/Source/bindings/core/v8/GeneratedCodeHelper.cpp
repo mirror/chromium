@@ -12,6 +12,8 @@ namespace blink {
 void V8ConstructorAttributeGetter(
     v8::Local<v8::Name> property_name,
     const v8::PropertyCallbackInfo<v8::Value>& info) {
+  RuntimeCallTimerScope(RuntimeCallStats::From(info.GetIsolate()),
+                        "Blink_V8ConstructorAttributeGetter");
   v8::Local<v8::Value> data = info.Data();
   DCHECK(data->IsExternal());
   V8PerContextData* per_context_data =

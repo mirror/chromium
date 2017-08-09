@@ -198,7 +198,7 @@ def attribute_context(interface, attribute, interfaces):
         setter_context(interface, attribute, interfaces, context)
 
     # [RuntimeCallStatsCounter]
-    runtime_call_stats_context(context, extended_attributes)
+    runtime_call_stats_context(attribute, interface, extended_attributes, context)
 
     # [CrossOrigin] is incompatible with a number of other attributes, so check
     # for them here.
@@ -213,14 +213,15 @@ def attribute_context(interface, attribute, interfaces):
     return context
 
 
-def runtime_call_stats_context(context, extended_attributes):
+def runtime_call_stats_context(attribute, interface, extended_attributes, context):
     counter = ''
-    if 'RuntimeCallStatsCounter' in extended_attributes:
+    if True or 'RuntimeCallStatsCounter' in extended_attributes:
         includes.add('platform/bindings/RuntimeCallStats.h')
-        counter = extended_attributes['RuntimeCallStatsCounter']
+        counter = 'Blink_' + v8_utilities.cpp_name(interface) + '_' + attribute.name
     runtime_call_stats = {
-        'getter_counter': 'k%s_Getter' % counter if counter else '',
-        'setter_counter': 'k%s_Setter' % counter if counter else ''
+        'getter_counter': '%s_Getter' % counter if counter else '',
+        'setter_counter': '%s_Setter' % counter if counter else '',
+        'constructor_getter_callback_counter': '%s_ConstructorGetterCallback' % counter if counter else '',
     }
     context.update({
         'runtime_call_stats': runtime_call_stats
