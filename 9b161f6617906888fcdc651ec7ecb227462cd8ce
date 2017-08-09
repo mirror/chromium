@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42368326_018a978b",
+        "filename": "components/metrics/metrics_state_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T17:41:16Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think these comments are needed since there\u0027s a comment about this on the round function.",
+      "range": {
+        "startLine": 74,
+        "startChar": 33,
+        "endLine": 74,
+        "endChar": 45
+      },
+      "revId": "9b161f6617906888fcdc651ec7ecb227462cd8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "299bc781_0c0de4cf",
+        "filename": "components/metrics/metrics_state_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T17:41:16Z",
+      "side": 1,
+      "message": "Nit: Make a helper function for this for consistency with install date.",
+      "range": {
+        "startLine": 76,
+        "startChar": 38,
+        "endLine": 76,
+        "endChar": 71
+      },
+      "revId": "9b161f6617906888fcdc651ec7ecb227462cd8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304a1e09_d68e1008",
+        "filename": "components/metrics/metrics_state_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T17:41:16Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN()",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "9b161f6617906888fcdc651ec7ecb227462cd8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c83c61_ce4faffc",
+        "filename": "components/metrics/metrics_state_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T17:41:16Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "9b161f6617906888fcdc651ec7ecb227462cd8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c715fad_7e1cc981",
+        "filename": "ios/chrome/today_extension/today_metrics_logger.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T17:41:16Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN()",
+      "range": {
+        "startLine": 177,
+        "startChar": 24,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "9b161f6617906888fcdc651ec7ecb227462cd8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9eaadb_d94ae97a",
+        "filename": "ios/chrome/today_extension/today_metrics_logger.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T17:41:16Z",
+      "side": 1,
+      "message": "Seems unfortunate to duplicate this. Could it be a class in components/metrics that this code could just instantiate? (And have the metrics state manager code re-use it.)",
+      "range": {
+        "startLine": 183,
+        "startChar": 27,
+        "endLine": 183,
+        "endChar": 34
+      },
+      "revId": "9b161f6617906888fcdc651ec7ecb227462cd8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

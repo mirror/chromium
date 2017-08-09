@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12174033_fc1836b6",
+        "filename": "components/metrics/metrics_log_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T17:41:16Z",
+      "side": 0,
+      "message": "Why are we removing this test coverage?",
+      "range": {
+        "startLine": 266,
+        "startChar": 60,
+        "endLine": 266,
+        "endChar": 65
+      },
+      "revId": "bfeb34d89aee3431835ffb388b73d7bb6fd649fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
