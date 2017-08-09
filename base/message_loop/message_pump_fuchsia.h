@@ -42,8 +42,7 @@ class BASE_EXPORT MessagePumpFuchsia : public MessagePump {
    public:
     explicit MxHandleWatchController(
         const tracked_objects::Location& from_here);
-    // Deleting the Controller implicitly calls StopWatchingMxHandle.
-    virtual ~MxHandleWatchController();
+    ~MxHandleWatchController();  // Implicitly calls StopWatchingMxHandle.
 
     // Stop watching the handle, always safe to call.  No-op if there's nothing
     // to do.
@@ -63,11 +62,11 @@ class BASE_EXPORT MessagePumpFuchsia : public MessagePump {
     // and is set to true in ~MxHandleWatchController() to handle this case.
     bool* was_destroyed_ = nullptr;
 
-   protected:
+   private:
     friend class MessagePumpFuchsia;
 
     // Start watching the handle.
-    virtual bool WaitBegin();
+    bool WaitBegin();
 
     // Called by MessagePumpFuchsia when the handle is signalled. Accepts the
     // set of signals that fired, and returns the intersection with those the
@@ -105,15 +104,12 @@ class BASE_EXPORT MessagePumpFuchsia : public MessagePump {
                             public MxHandleWatcher {
    public:
     explicit FdWatchController(const tracked_objects::Location& from_here);
-    ~FdWatchController() override;
+    ~FdWatchController();  // Implicitly calls StopWatchingFileDescriptor.
 
     bool StopWatchingFileDescriptor();
 
    private:
     friend class MessagePumpFuchsia;
-
-    // Determines the desires signals, and begins waiting on the handle.
-    virtual bool WaitBegin() override;
 
     // MxHandleWatcher interface.
     void OnMxHandleSignalled(mx_handle_t handle, mx_signals_t signals) override;
@@ -121,7 +117,6 @@ class BASE_EXPORT MessagePumpFuchsia : public MessagePump {
     // Set directly from the inputs to WatchFileDescriptor.
     FdWatcher* watcher_ = nullptr;
     int fd_ = -1;
-    uint32_t desired_events_ = 0;
 
     // Set by WatchFileDescriptor to hold a reference to the descriptor's mxio.
     mxio_t* io_ = nullptr;
