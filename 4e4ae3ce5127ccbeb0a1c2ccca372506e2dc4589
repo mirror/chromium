@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e681856_bf6569ac",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-08-09T22:22:46Z",
+      "side": 1,
+      "message": "One thing I\u0027d like confirmation on is that location should equal root_location to events which are to be sent to ProcessEvent(). Every place which which makes synthetic events and passes them to ProcessEvent() seems to have these set the same...except all that code is unit test code and might not be representative of real runs.",
+      "range": {
+        "startLine": 86,
+        "startChar": 27,
+        "endLine": 86,
+        "endChar": 62
+      },
+      "revId": "4e4ae3ce5127ccbeb0a1c2ccca372506e2dc4589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
