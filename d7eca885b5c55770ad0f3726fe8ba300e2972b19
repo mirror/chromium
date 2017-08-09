@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "6ee3208f_2c443051",
+        "filename": "services/network/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-09T17:31:10Z",
+      "side": 1,
+      "message": "yes please add everyone from tokyo working on loading to that file :)",
+      "parentUuid": "6640f284_28a1b9a8",
+      "revId": "d7eca885b5c55770ad0f3726fe8ba300e2972b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf99e9a6_7f8f593e",
+        "filename": "services/network/public/interfaces/fetch_api.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-09T17:31:10Z",
+      "side": 1,
+      "message": "Why does this need to be in services/network? It seems to be not used by loader code in content/browser/loader (i.e. so it would need to be temporarily moved to services/network as part of moving ResourceRequest), unless I\u0027m misreading the code?\n\nThe goal is that services/network shouldn\u0027t know anything about service worker or any web platform feature.",
+      "revId": "d7eca885b5c55770ad0f3726fe8ba300e2972b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "470d6b58_08922129",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h",
         "patchSetId": 4
