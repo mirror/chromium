@@ -105,6 +105,24 @@
       "revId": "e7bb5db607212c772e21b907850526f0278ae0d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d5848c_1e12817a",
+        "filename": "mojo/public/cpp/bindings/array_traits_carray.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T18:17:40Z",
+      "side": 1,
+      "message": "(Also, I\u0027m planning on combining CArray and ConstCArray in a followup)",
+      "parentUuid": "5d475592_1981a1d1",
+      "revId": "e7bb5db607212c772e21b907850526f0278ae0d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
