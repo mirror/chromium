@@ -42,6 +42,19 @@ AccessibilityTest.ViolationFilter;
 AccessibilityTest.Definition;
 
 /**
+ * @param {string} auditRuleId aXe-core audit rule ID of the rule to except
+ * @param {!function(axe.NodeResult)} selector Function that returns true when
+ *    given axe.NodeResult should be excluded from the list of violation nodes.
+ * @constructor
+ */
+AccessibilityTest.Exception = function(auditRuleId, selector) {
+  return {
+    auditRuleId: auditRuleId,
+    selector: selector
+  }
+};
+
+/**
  * Run aXe-core accessibility audit, print console-friendly representation
  * of violations to console, and fail the test.
  * @param {!AccessibilityTest.Definition} testDef Object configuring the audit.
@@ -104,47 +117,45 @@ AccessibilityTest.filterViolations_ = function(violations, filter) {
 };
 
 /**
- * Define a different test for each audit rule, unless overridden by
+ * Define a GTest unit test for each audit rule, unless overridden by
  * |test.options.runOnly|.
- * @param {AccessibilityTestDefinition} test Object configuring the test.
+ * @param {string} testFixture Name of test fixture associated with the test.
+ * @param {AccessibilityTestDefinition} testDef Object configuring the test.
  * @constructor
  */
-AccessibilityTest.define = function(test) {
-  var axeOptions = test.axeOptions || {};
-  // Maintain a list of tests to define.
-  var tests = [test];
+AccessibilityTest.define = function(testFixture, testDef) {
+  var axeOptions = testDef.axeOptions || {};
+  testDef.setup = testDef.setup || (() => {});
 
-  // This option override should go first b/c it creates multiple test targets.
-  if (!axeOptions.runOnly) {
-    tests = [];
-    // Define a test for each audit rule separately.
-    for (let ruleId of AccessibilityTest.ruleIds) {
-      var newTestDefinition = Object.assign({}, test);
-      newTestDefinition.name += '_' + ruleId;
-      newTestDefinition.axeOptions = Object.assign({}, axeOptions);
-      newTestDefinition.axeOptions.runOnly = {type: 'rule', values: [ruleId]};
+  // Define a test for each audit rule separately.
+  let rules = axeOptions.runOnly ?
+      axeOptions.runOnly.values : AccessibilityTest.ruleIds;
+  for (let ruleId of rules) {
+    // Skip rules disabled in axeOptions.
+    if (ruleId in axeOptions.rules && !axeOptions.rules[ruleId].enabled)
+      continue;
 
-      tests.push(newTestDefinition)
-    }
-  }
+    var newTestDef = Object.assign({}, testDef);
+    newTestDef.name += '_' + ruleId;
+    newTestDef.axeOptions = Object.assign({}, axeOptions);
+    newTestDef.axeOptions.runOnly = {
+      type: 'rule',
+      values: [ruleId]
+    };
 
-  // Define the mocha tests.
-  AccessibilityTest.defineAccessibilityTestSuite_(tests);
-}
-
-/**
- * Define mocha suite(s) testing accessibility for each test definition in
- * given list.
- * @param {Array<AccessibilityTestDefinition>} List of test definitions.
- */
-AccessibilityTest.defineAccessibilityTestSuite_ = function(tests) {
-  for (let testDef of tests) {
-    suite(testDef.name, () => {
-      setup(testDef.setup.bind(testDef));
-      for (var testMember in testDef.tests) {
-        test(testMember, AccessibilityTest.getMochaTest_(testMember, testDef));
-      }
-    });
+  // Replace hyphens, which break the build.
+  TEST_F(testFixture, newTestDef.name.replace(new RegExp('-', 'g'), '_'),
+      () => {
+        // Define the mocha tests
+        suite(newTestDef.name, () => {
+          setup(newTestDef.setup.bind(newTestDef));
+          for (var testMember in newTestDef.tests) {
+            test(testMember, AccessibilityTest.getMochaTest_(
+                testMember, newTestDef));
+          }
+        });
+        mocha.grep(newTestDef.name).run();
+      });
   }
 }
 
