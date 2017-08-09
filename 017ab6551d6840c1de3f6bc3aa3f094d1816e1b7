@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "06d5c846_5c01954c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T06:58:14Z",
+      "side": 1,
+      "message": "WebCORS",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d49edb_31b1bf14",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T06:58:14Z",
+      "side": 1,
+      "message": "now we can remove StringBuilder",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6900eb2d_262a0d2d",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T06:58:14Z",
+      "side": 1,
+      "message": "same as kinuko@ said",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "886e6730_43d70355",
         "filename": "third_party/WebKit/public/platform/WebCORS.h",
         "patchSetId": 4
@@ -36,6 +87,74 @@
     },
     {
       "key": {
+        "uuid": "360ae01e_a946bc5e",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T06:58:14Z",
+      "side": 1,
+      "message": "Strictly speaking, this violates the DEPS rule. But it\u0027s ok. I can fix it soon by making HandleRedirect() not depending on ResourceLoaderOptions.",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a728872_91f785ac",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T06:58:14Z",
+      "side": 1,
+      "message": "we need WTFString instead?",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6643141b_954e2892",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T06:58:14Z",
+      "side": 1,
+      "message": "can this be kept to be a forward declaration?",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3522c9f8_fb4f1168",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T06:58:14Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a2911c3_4afc5d6e",
         "filename": "third_party/WebKit/public/platform/WebCORS.h",
         "patchSetId": 4
@@ -64,6 +183,57 @@
       "writtenOn": "2017-08-09T04:27:37Z",
       "side": 1,
       "message": "Ditto, CheckPreflight()",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8ebd09_143a0a0d",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T06:58:14Z",
+      "side": 1,
+      "message": "let\u0027s fix these too (fooBar -\u003e FooBar) using this opportunity.",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fcba32_0a1446b0",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T06:58:14Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f6e256_1809a1a2",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T06:58:14Z",
+      "side": 1,
+      "message": "ditto",
       "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
