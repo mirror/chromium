@@ -358,7 +358,12 @@ public class ImageFetcher {
         }
 
         @Override
-        public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
+        public String getContentId() {
+            return mSuggestion.getAssetDownloadGuid();
+        }
+
+        @Override
+        public void onThumbnailRetrieved(String contentId, Bitmap thumbnail) {
             mThumbnailReceivedPromise.fulfill(thumbnail);
         }
 
