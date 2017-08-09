@@ -87,6 +87,24 @@
       "revId": "e7bb5db607212c772e21b907850526f0278ae0d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d475592_1981a1d1",
+        "filename": "mojo/public/cpp/bindings/array_traits_carray.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T18:06:01Z",
+      "side": 1,
+      "message": "Honestly... don\u0027t remember, I think I might have been trying to use this for deserialization at some point. I\u0027m happy to remove this in a followup, but given the tryjobs are mostly green, I\u0027d like to try to get this landed.",
+      "parentUuid": "6c2a290e_fcc34782",
+      "revId": "e7bb5db607212c772e21b907850526f0278ae0d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
