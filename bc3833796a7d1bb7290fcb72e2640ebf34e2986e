@@ -19,6 +19,167 @@
     },
     {
       "key": {
+        "uuid": "827927d7_175d1827",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-09T21:52:08Z",
+      "side": 1,
+      "message": "when are we expecting PCM? I thought this was bitstream only? Sorry if I\u0027m overlooking something",
+      "range": {
+        "startLine": 157,
+        "startChar": 9,
+        "endLine": 157,
+        "endChar": 12
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dcf8496_7934de55",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-09T21:52:08Z",
+      "side": 1,
+      "message": "Nit: make this name more clear - getNumFrames()\n\nSame for getSize -\u003e getBytesSize() or getNumBytes()",
+      "range": {
+        "startLine": 31,
+        "startChar": 19,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10725d59_58a419f5",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-09T21:52:08Z",
+      "side": 1,
+      "message": "I think Dale suggested just 3x. Do we need 4x? Am I right that making this bigger incurs cost on playback startup time?",
+      "range": {
+        "startLine": 163,
+        "startChar": 15,
+        "endLine": 163,
+        "endChar": 17
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01282b0f_4dfaf674",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-09T21:52:08Z",
+      "side": 1,
+      "message": "In the other review, you mention \"Good catch! It does not work for bitstream output\" -- I\u0027m confused. This output stream is pretty much exclusive to bitstream output, right? When/why do we expect this method to (not) work? Do we document those expectations somewhere? \n\nHow do we expect to set volume for bitstream cases?",
+      "range": {
+        "startLine": 245,
+        "startChar": 9,
+        "endLine": 245,
+        "endChar": 18
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db663b4_2b788bd4",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-09T21:52:08Z",
+      "side": 1,
+      "message": "carrying over my comment from original review - docs state that this should be interpretted as unsigned and that it will periodically overflow. Please interpret as unsigned and consider remedies for overflow. \"It will wrap (overflow) ... once every 27:03:11 hours:minutes:seconds at 44.1 kHz\" - that seems like a limit we may expect to hit with television use cases.\n\nhttps://cs.chromium.org/chromium/src/third_party/android_tools/sdk/sources/android-25/android/media/AudioTrack.java?type\u003dcs\u0026q\u003dgetPlaybackHeadPosition\u0026sq\u003dpackage:chromium\u0026l\u003d1235",
+      "range": {
+        "startLine": 269,
+        "startChar": 35,
+        "endLine": 269,
+        "endChar": 58
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c643cd_417ffc3e",
+        "filename": "media/base/audio_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-09T21:52:08Z",
+      "side": 1,
+      "message": "How do we know we have enough room in dest for the copy?",
+      "range": {
+        "startLine": 263,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 53
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ec4c33_7838580b",
+        "filename": "media/base/audio_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-09T21:52:08Z",
+      "side": 1,
+      "message": "The Trim*(...) methods need to be updated if we\u0027re going the route discussed in your previous CL\nhttps://codereview.chromium.org/2466463005/diff/20001/media/base/audio_splicer.cc#newcode186\n\nAlso, when this is done we should probably log a warning to media-internals. Trimming at the granularity of a whole compressed frame (hundreds of PCM samples) could be ok, but it depends on the sample rate and how often this is done. If users ask for lots of trimming (not expected), and/or if sample rate is low (e.g. 8khz -\u003e 576 PCM frames \u003d 72 msec), then the imprecision with this trimming solution can cause av sync drift. \n\nTrimming is not used a lot, so its not enough of a concern to block you. But emitting a warning when its done will help the rare user that attempts it to be informed. \n\nThis class doesn\u0027t have access to a media_log_ object. Dale, any objections to adding media log plumbing here? Alternatively, you can instead put the log warning in frame_processor.cc whenever \"append windows\" are such that we end up setting some discard padding on the stream parser buffer containing (e)ac3. See FrameProcessor::HandlePartialAppendWindowTrimming",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 67
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fec5bdc4_af5589b3",
         "filename": "media/base/audio_bus.cc",
         "patchSetId": 8
@@ -30,6 +191,52 @@
       "writtenOn": "2017-08-09T21:23:38Z",
       "side": 1,
       "message": "Comment about why we allow this and what it does to a bitstream...",
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c7e305_46edddc7",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-09T21:52:08Z",
+      "side": 1,
+      "message": "nit: would make this more clear.\n\n\"Cannot add delay for compressed audio bitstream foramt. Requested delay: ... \"",
+      "range": {
+        "startLine": 919,
+        "startChar": 25,
+        "endLine": 919,
+        "endChar": 33
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "842b6516_47fccd61",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-09T21:52:08Z",
+      "side": 1,
+      "message": "can you add a comment for why this is done (and why its ok to do)",
+      "range": {
+        "startLine": 925,
+        "startChar": 25,
+        "endLine": 925,
+        "endChar": 39
+      },
       "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
