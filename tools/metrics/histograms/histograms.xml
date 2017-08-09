@@ -80984,6 +80984,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="TabStats.NumberOfTabsOnResume" units="count">
+  <owner>sebmarchand@chromium.org</owner>
+  <summary>
+    The number of tabs total at resume from sleep/hibernate.
+  </summary>
+</histogram>
+
 <histogram name="TaskScheduler.BlockShutdownTasksPostedDuringShutdown"
     units="tasks">
   <owner>fdoray@chromium.org</owner>
