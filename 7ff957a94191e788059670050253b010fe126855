@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "657255fb_0b0d0c9e",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-09T05:56:48Z",
+      "side": 1,
+      "message": "This is needed to make sure we\u0027re not sitting on a blank URL",
+      "range": {
+        "startLine": 226,
+        "startChar": 4,
+        "endLine": 226,
+        "endChar": 21
+      },
+      "revId": "7ff957a94191e788059670050253b010fe126855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3fef910_3122736c",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-09T05:56:48Z",
+      "side": 1,
+      "message": "Since we\u0027re not on a blank URL anymore we have a favicon here.",
+      "range": {
+        "startLine": 344,
+        "startChar": 2,
+        "endLine": 344,
+        "endChar": 14
+      },
+      "revId": "7ff957a94191e788059670050253b010fe126855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
