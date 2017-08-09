@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "266ef77c_3af2f908",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-09T16:33:39Z",
+      "side": 1,
+      "message": "Hmm. They are *currently* still using MessageLoop::QuitWhenIdleClosure():\n\nIn //src,\n$ git grep MessageLoop\\:\\:QuitWhenIdleClosure | wc\n--\u003e 187 occurrences (24 in //media, the rest outside //media)\n\nFixing those occurrences seems out of scope of this CL, which is meant mainly to unblock things like the crashing media_pipeline_integration_fuzzer, which started about a week ago circa https://chromium-review.googlesource.com/586915.\n\nSince the implementation (https://cs.chromium.org/chromium/src/base/message_loop/message_loop.cc?rcl\u003d006ce0fc4b4a125da6411b9a271c09b8b3ee87e8\u0026l\u003d230) immediately chains to the static RunLoop::QuitCurrentWhenIdleDeprecated(), I\u0027ll update the CL description to mention both.",
+      "parentUuid": "56c3b291_5d824de9",
+      "revId": "286e8d2a938c402005e78b9e7d2a9934422db53d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac092c7d_50455beb",
         "filename": "base/test/scoped_task_environment.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "286e8d2a938c402005e78b9e7d2a9934422db53d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9bcede_bb3990f9",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-09T16:33:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac092c7d_50455beb",
+      "range": {
+        "startLine": 160,
+        "startChar": 39,
+        "endLine": 160,
+        "endChar": 40
+      },
+      "revId": "286e8d2a938c402005e78b9e7d2a9934422db53d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
