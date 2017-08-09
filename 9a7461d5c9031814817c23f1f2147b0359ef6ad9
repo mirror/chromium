@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79233b30_7f64cb0e",
+        "filename": "chrome/test/data/webui/settings/settings_toggle_button_tests.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-09T03:01:46Z",
+      "side": 1,
+      "message": "nit: new code should use arrow functions over anonymous functions.\nSame for the new tests listeners below.",
+      "range": {
+        "startLine": 47,
+        "startChar": 45,
+        "endLine": 47,
+        "endChar": 55
+      },
+      "revId": "9a7461d5c9031814817c23f1f2147b0359ef6ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
