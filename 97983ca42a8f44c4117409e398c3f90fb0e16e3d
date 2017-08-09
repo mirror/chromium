@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b83886af_f8fb4040",
+        "filename": "content/child/sync_load_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-09T03:42:43Z",
+      "side": 1,
+      "message": "nit: slightly prefer MakeUnique here and just std::move below",
+      "revId": "97983ca42a8f44c4117409e398c3f90fb0e16e3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54526ff6_3ae0134d",
+        "filename": "content/child/sync_load_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-09T03:42:43Z",
+      "side": 1,
+      "message": "nit: Just passing mojo::ScopedDataPipeConsumerHandle() would be fine",
+      "revId": "97983ca42a8f44c4117409e398c3f90fb0e16e3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd721b78_03bb4c9c",
+        "filename": "content/child/sync_load_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-09T03:42:43Z",
+      "side": 1,
+      "message": "This creates a cyclic reference, but should be fine...",
+      "revId": "97983ca42a8f44c4117409e398c3f90fb0e16e3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3378cc80_b67e4a6a",
+        "filename": "content/child/sync_load_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-09T03:42:43Z",
+      "side": 1,
+      "message": "Remove this before submitting?",
+      "revId": "97983ca42a8f44c4117409e398c3f90fb0e16e3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fdc2dc0_310f9e71",
+        "filename": "content/child/sync_load_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-09T03:42:43Z",
+      "side": 1,
+      "message": "Can you add a short comment to note that this will eventually call resource_dispatcher_-\u003eRemovePendingRequest, which will indirectly cause this object to be deleted?",
+      "revId": "97983ca42a8f44c4117409e398c3f90fb0e16e3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

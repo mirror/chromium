@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce68e3fa_44007698",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2288,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-09T03:42:43Z",
+      "side": 0,
+      "message": "We\u0027ll be able to do subsequent cleanups around this, that feels great :)",
+      "revId": "8f84787922eed2f1dcc4122226d07e41d4c22654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
