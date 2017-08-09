@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce05900c_aa812d5a",
+        "filename": "content/browser/renderer_host/media/audio_sync_reader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "You are right.\nI thought it tries to mute audio for testing only, and the zeroed buffers won\u0027t generate audio for bitstream formats, either. However, it would cause incorrect playback time, since zeroed buffers may be discarded immediately by the bitstream sink.\nI added a bitstream format check here.",
+      "parentUuid": "e916dae2_dc075587",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d29dcfcc_9e3688a5",
         "filename": "media/audio/android/audio_track_output_stream.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae3f3a2_c9524501",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "AudioTrackOutputStream is only used for bitstream formats for now. Since it\u0027s a wrapper for AudioTrack, it should be valid to support PCM, too.\nIn fact, we are investigating tunneled mode HDR playback[1], and it requires to use AudioTrack to play 16-bit PCM format on SONY TVs.\n\n[1] https://source.android.com/devices/tech/display/hdr",
+      "parentUuid": "d29dcfcc_9e3688a5",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ec402889_e5ad10cf",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "For tunneled mode HDR playback on SONY TVs, it requires 16-bit PCM format. It seems that 16-bit PCM format has better support on Android devices.",
+      "parentUuid": "5afca58e_80a47400",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3736191_f4ea723d",
         "filename": "media/audio/android/audio_track_output_stream.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88bbf125_3282245b",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "c3736191_f4ea723d",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0f9e41d5_23bbb9d8",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "7519e843_094bd010",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b00df91c_c9fbe3bc",
         "filename": "media/audio/android/audio_track_output_stream.cc",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8fb54e_a8eb6663",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "b00df91c_c9fbe3bc",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "fc32bff5_dcb4969b",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "0d8d9e87_2256d0b3",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54cbaf58_119cb676",
         "filename": "media/audio/android/audio_track_output_stream.cc",
         "patchSetId": 7
@@ -132,6 +258,24 @@
       "writtenOn": "2017-08-08T18:01:42Z",
       "side": 1,
       "message": "I thought there was some new fancy way to not do this anymore?\n\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d749244",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bb05f7f_3a86b950",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "Good to know. It seems the cleanup has not applied to //media/base/android yet, right?",
+      "parentUuid": "54cbaf58_119cb676",
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "c26cb301_3ca0bc18",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "Done. Just wanted to be safe. It should be fine to remove it.",
+      "parentUuid": "20350349_b472f447",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b74673_5c6e8559",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 7
@@ -169,6 +331,24 @@
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b20268c_b4fd0093",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "Done. Thanks a lot for pointing it out.",
+      "parentUuid": "07b74673_5c6e8559",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "f8e0e21c_99190e42",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "0e24d718_5691672b",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18c7176b_c2499669",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 7
@@ -203,6 +401,24 @@
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc5cf34_553d1177",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "18c7176b_c2499669",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "30228639_ae8b06ad",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "https://developer.android.com/reference/android/media/AudioTrack.html#STATE_UNINITIALIZED\n\"State of an AudioTrack that was not successfully initialized upon creation.\"\n\nhttps://cs.corp.google.com/aosp-master/frameworks/base/media/java/android/media/AudioTrack.java?l\u003d522\nI think it\u0027s in UNINITIALIZED state when you give unsupported configurations. For example, create a AC3 bitstream AudioTrack while connected audio sink does not support AC3.",
+      "parentUuid": "566ecef4_8183fc31",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9150e965_c982e492",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 7
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "ff43b7e9_c2ab3361",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "https://developer.android.com/reference/java/nio/ByteBuffer.html#slice()\nBoth |buffer| and |buffer.slice()| are pointing to the same array.",
+      "parentUuid": "9150e965_c982e492",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b2e07ec_7970905f",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 7
@@ -251,6 +503,24 @@
       "writtenOn": "2017-08-08T18:01:42Z",
       "side": 1,
       "message": "Do we need to support \u003c LOLLIPOP?",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5933073_ea202a79",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "I thought Clank wants to support API level 16+. Has it changed?",
+      "parentUuid": "8b2e07ec_7970905f",
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "0e110225_b8781723",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "https://developer.android.com/reference/android/media/AudioTrack.html#setStereoVolume(float, float)\nThe API requires float.",
+      "parentUuid": "3955f99f_62bfdb32",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc5c2927_d40a6580",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 7
@@ -285,6 +573,24 @@
       "writtenOn": "2017-08-08T18:01:42Z",
       "side": 1,
       "message": "Ditto on lollipop.",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397a804d_42a3a6d9",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "Please let me know if we only need to support API level 20+. I will be happy to remove unnecessary code.",
+      "parentUuid": "cc5c2927_d40a6580",
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "e038be58_7431a87a",
+        "filename": "media/base/audio_bus.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "I added DCHECK() on several methods.\nIt seems that we do need Zero(): https://cs.chromium.org/chromium/src/content/browser/renderer_host/media/audio_sync_reader.cc?l\u003d157",
+      "parentUuid": "ca771dd7_d0ef45b8",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa937dc_4065fbe6",
         "filename": "media/base/audio_bus.h",
         "patchSetId": 7
@@ -322,6 +646,24 @@
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d676c2_fc9e2b59",
+        "filename": "media/base/audio_bus.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "1aa937dc_4065fbe6",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "86ec9c6d_f0266dfd",
+        "filename": "media/base/audio_parameters.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "One MP3 frame contains 1152 PCM frames.\nOne AAC frame contains 1024 PCM frames.\nOne EAC3 frame contains up to 1536 PCM frames.",
+      "parentUuid": "f3273dad_89b269da",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f04eae2_d24b9322",
         "filename": "media/renderers/audio_renderer_impl.cc",
         "patchSetId": 7
@@ -356,6 +716,24 @@
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeed8949_b4bd7af0",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "1f04eae2_d24b9322",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -376,6 +754,24 @@
     },
     {
       "key": {
+        "uuid": "053f38b5_af836080",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "2622c2ea_b6c9bfac",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eba2118f_950c1611",
         "filename": "media/renderers/audio_renderer_impl.cc",
         "patchSetId": 7
@@ -390,6 +786,24 @@
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6663c2_3d94d85f",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-09T01:10:10Z",
+      "side": 1,
+      "message": "MEDIA_LOG() does not support WARNING[1], right? I changed it to ERROR.\n\n[1] https://cs.chromium.org/chromium/src/media/base/media_log.h?l\u003d28",
+      "parentUuid": "eba2118f_950c1611",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
