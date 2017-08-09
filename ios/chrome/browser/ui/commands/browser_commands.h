@@ -72,6 +72,9 @@ class NavigationItem;
 // Preloads voice search on the current BVC.
 - (void)preloadVoiceSearch;
 
+// Dismisses the TabSwitcher UI.
+- (void)dismissTabSwitcher;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_COMMANDS_BROWSER_COMMANDS_H_

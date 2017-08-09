@@ -69,6 +69,10 @@ const CGFloat kBackgroundViewColorAlpha = 0.95;
 
     [_stackViewToolbar addSubview:_openNewTabButton];
     [self.view addSubview:_stackViewToolbar];
+
+    [[self stackButton] addTarget:_dispatcher
+                           action:@selector(dismissTabSwitcher)
+                 forControlEvents:UIControlEventTouchDown];
   }
   return self;
 }

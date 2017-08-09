@@ -2730,6 +2730,12 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
                         transition:ui::PAGE_TRANSITION_TYPED];
 }
 
+- (void)dismissTabSwitcher {
+  [self dismissWithSelectedTabAnimation];
+}
+
+#pragma mark - ChromeExecuteCommand
+
 - (IBAction)chromeExecuteCommand:(id)sender {
   int command = [sender tag];
 
@@ -2744,9 +2750,6 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
     case IDC_CLOSE_ALL_INCOGNITO_TABS:
       DCHECK([self isCurrentSetIncognito]);
       [self removeAllCardsFromSet:_activeCardSet];
-      break;
-    case IDC_TOGGLE_TAB_SWITCHER:
-      [self dismissWithSelectedTabAnimation];
       break;
     default:
       [super chromeExecuteCommand:sender];
