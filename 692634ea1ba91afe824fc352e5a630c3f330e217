@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88ad0a7f_f51bc05e",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-09T14:25:29Z",
+      "side": 1,
+      "message": "After a chat with Chris, I\u0027d like to suggest something completely different (https://www.youtube.com/watch?v\u003dZk-kQSz-Qv0). In the load notification handler, probe and grab the time datestamp from inside an SEH (__try handler).\nEven the GetModuleHandle trick has side effects that will cause crashing, as you my end up with the last reference, and the module will unload and uninitialize on FreeLibrary.",
+      "range": {
+        "startLine": 177,
+        "startChar": 11,
+        "endLine": 177,
+        "endChar": 20
+      },
+      "revId": "692634ea1ba91afe824fc352e5a630c3f330e217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
