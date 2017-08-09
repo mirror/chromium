@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6015a251_8616f7b1",
+        "filename": "chrome/browser/resources/settings/controls/settings_checkbox.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-09T21:03:11Z",
+      "side": 1,
+      "message": "Consider using a word like \"Handle\" or \"Layout\" rather than \"Fix\". (Not a big deal though, you can ignore this suggestion).",
+      "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7560e7c_55fcbe73",
+        "filename": "chrome/browser/resources/settings/controls/settings_checkbox.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-09T21:03:11Z",
+      "side": 1,
+      "message": "Please check that this renders nothing when subLabelHtml is not set.\n(I\u0027ve made bugs before where something similar to this would leave a few pixels of blank space which would throw off the spacing of subLabel, for example. Just trying to help ya avoid a mistake I\u0027ve made).",
+      "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
