@@ -482,6 +482,8 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
     var isContentScript = false;
     if (executionContextAuxData && ('isDefault' in executionContextAuxData))
       isContentScript = !executionContextAuxData['isDefault'];
+    if (executionContextAuxData && ('isWorklet' in executionContextAuxData))
+      isContentScript |= !executionContextAuxData['isWorklet'];
     // Support file URL for node.js.
     if (this.target().isNodeJS() && sourceURL && sourceURL.startsWith('/')) {
       var nodeJSPath = sourceURL;

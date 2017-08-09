@@ -4,13 +4,9 @@
 <script src="../../http/tests/inspector/console-test.js"></script>
 <script src="../../http/tests/inspector/debugger-test.js"></script>
 
-<script id="code" type="text/worklet">
-  registerPaint('foo', class { paint() { } });
-</script>
 <script>
 function setup() {
-  var blob = new Blob([code.textContent], {type: 'text/javascript'});
-  return paintWorklet.addModule(URL.createObjectURL(blob));
+  return paintWorklet.addModule('resources/paintworklet-console-selector.js');
 }
 
 async function test()
