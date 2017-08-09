@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "04dde42e_f2074bb8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-09T07:30:35Z",
+      "side": 1,
+      "message": "Better to have:\nChange assert_selection() to take an array for expected text.\n\nwe can assume \"()\" implies a function.",
+      "parentUuid": "4dab36f5_5f5c1e1f",
+      "revId": "84aed8c633ab00817c87a992d0820cee78c785ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "052d0f10_ec792a40",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
