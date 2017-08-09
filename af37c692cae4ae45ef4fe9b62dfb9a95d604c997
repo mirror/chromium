@@ -52,6 +52,24 @@
       "revId": "af37c692cae4ae45ef4fe9b62dfb9a95d604c997",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37543a35_591a21ba",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T18:24:24Z",
+      "side": 1,
+      "message": "I would suggest putting this in a comment \u003d)",
+      "parentUuid": "c9f1ea0e_f9c07453",
+      "revId": "af37c692cae4ae45ef4fe9b62dfb9a95d604c997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
