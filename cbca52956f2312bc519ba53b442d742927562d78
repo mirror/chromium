@@ -52,6 +52,24 @@
       "revId": "cbca52956f2312bc519ba53b442d742927562d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1934ffdf_5a8867eb",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2214,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-09T20:30:05Z",
+      "side": 1,
+      "message": "Hey I wish I could give you a peer bonus for that! Kudos for the cleanup! It looks like even after your second patch LayoutView still go back and forth between the default style and adjusted style. Is it possible to fix that as well?\n\nYes I think it is the best if we can use regular style-diff logic... That\u0027s what I tried a year ago but broke random fragile things. Maybe the code base is healthier now I should try that again.",
+      "parentUuid": "8ed92f84_1f30d235",
+      "revId": "cbca52956f2312bc519ba53b442d742927562d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
