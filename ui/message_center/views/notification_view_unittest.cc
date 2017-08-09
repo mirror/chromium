@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/skia/include/core/SkCanvas.h"
@@ -238,8 +239,21 @@ void NotificationViewTest::SetUp() {
   notification_->set_image(CreateTestImage(320, 240));
 
   // Then create a new NotificationView with that single notification.
-  notification_view_.reset(static_cast<NotificationView*>(
-      MessageViewFactory::Create(this, *notification_, true)));
+  notification_view_.reset(new NotificationView(this, *notification_));
+
+  // It depends on platform whether shadows are added.
+  // See MessageViewFactory::Create.
+  bool is_nested = true;
+#if defined(OS_LINUX)
+  is_nested = false;
+#endif
+#if defined(OS_WIN)
+  if (!ui::win::IsAeroGlassEnabled())
+    is_nested = false;
+#endif
+  if (is_nested)
+    notification_view_->SetIsNested();
+
   notification_view_->set_owned_by_client();
 
   views::Widget::InitParams init_params(
