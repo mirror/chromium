@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3e8a3ad3_690b60a1",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-09T16:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83d477d1_eb78f483",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a458bb0_453328da",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "28695645_221b68c2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-09T16:26:37Z",
+      "side": 1,
+      "message": "It does seem that my original idea of only sending it to the first one is flawed based on the comments. I\u0027ve reworked the logic based on your other comment which neatly also solved this.",
+      "parentUuid": "1a458bb0_453328da",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd1441c9_03e6d303",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc26723_4a90795e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-09T16:26:37Z",
+      "side": 1,
+      "message": "This has been reworked now.",
+      "parentUuid": "bd1441c9_03e6d303",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "f117e2b0_c83d64c1",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-09T16:26:37Z",
+      "side": 1,
+      "message": "This has been reworked now.",
+      "parentUuid": "ae6e6438_0bf82d76",
+      "range": {
+        "startLine": 463,
+        "startChar": 26,
+        "endLine": 463,
+        "endChar": 51
+      },
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7921c621_be99f1c8",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 5
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "812270b6_25918ab3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-09T16:26:37Z",
+      "side": 1,
+      "message": "Indeed, thank you for bearing with me on all of this.",
+      "parentUuid": "7921c621_be99f1c8",
+      "range": {
+        "startLine": 468,
+        "startChar": 4,
+        "endLine": 468,
+        "endChar": 39
+      },
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c7029a3_ef859e57",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 5
@@ -113,6 +215,24 @@
       "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e2657ed_254ba6d6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-09T16:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c7029a3_ef859e57",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "80ebd97b_aedf7380",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-09T16:26:37Z",
+      "side": 1,
+      "message": "Yes this is a very good idea and it also neatly solved the other issue you commented on.",
+      "parentUuid": "d1a8502c_d2b55c1a",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ac1905d_8abaa561",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceRequest.h",
         "patchSetId": 5
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "a2c9e47d_624ee46e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceRequest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-09T16:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ac1905d_8abaa561",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c851e3a2_6c50e703",
         "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
         "patchSetId": 5
@@ -161,6 +317,24 @@
       "writtenOn": "2017-08-09T07:00:32Z",
       "side": 1,
       "message": "LICENSE",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8308fc6_49b98e32",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-09T16:26:37Z",
+      "side": 1,
+      "message": "This is the first time I add a copyright notice I thought it was just a matter of copying over from another file. I\u0027ve modified the year to 2017. Is there some other process for this? I couldn\u0027t find anything on this.",
+      "parentUuid": "c851e3a2_6c50e703",
       "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "f2ea4871_bea91db0",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-09T16:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47d8483c_a219a332",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa4e654f_3fa70e18",
         "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
         "patchSetId": 5
@@ -198,6 +390,24 @@
       "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0134156b_428ba6fa",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-09T16:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa4e654f_3fa70e18",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -218,6 +428,24 @@
     },
     {
       "key": {
+        "uuid": "f8fc46b2_5d1d2c10",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-09T16:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f3d0b33_29087212",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e290433b_f7a22cee",
         "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
         "patchSetId": 5
@@ -232,6 +460,24 @@
       "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2019072a_6deef700",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-09T16:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e290433b_f7a22cee",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
