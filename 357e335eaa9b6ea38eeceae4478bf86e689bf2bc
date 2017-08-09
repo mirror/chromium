@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e1413fc_c32b99b5",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-09T12:13:39Z",
+      "side": 1,
+      "message": "I think we will ultimately want to have a separate coordinator for the header view; every other view controller has its own coordinator. There\u0027s clearly stuff in the header VC we will factor out into the mediator layer, and the coordinator also provides a place for stub command implementations.",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 22
+      },
+      "revId": "357e335eaa9b6ea38eeceae4478bf86e689bf2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
