@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f73f9f59_d36f3842",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-09T19:42:26Z",
+      "side": 1,
+      "message": "nit: Maybe this should be viz_presubmit_checks.py just to be less ambiguous?",
+      "revId": "c826b2d97f19c3fc125a218e5c7a1ecc62b22aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
