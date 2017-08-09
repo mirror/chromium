@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70951403_d4844c14",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-09T06:53:20Z",
+      "side": 1,
+      "message": "fix the javadoc here",
+      "range": {
+        "startLine": 150,
+        "startChar": 6,
+        "endLine": 150,
+        "endChar": 7
+      },
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1680e67_06b20334",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-09T06:53:20Z",
+      "side": 1,
+      "message": "move TODO into the comment block above.",
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "319ceebd_d7a51c72",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-09T06:53:20Z",
+      "side": 1,
+      "message": "If we clear bitmap of all sizes tied to contentId, why do we still need sIconSizesMap? seems the map should contain only 1 entry for a particular contentId.",
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8d147c_9e9dd7d8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-09T06:53:20Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed, this is only used for assert (which doesn\u0027t work for relese build), and it is very wierd that mNativeThumbnailGenerator can be both -1 and 0 if not initialized.",
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b814ca25_5a5a0135",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-09T06:53:20Z",
+      "side": 1,
+      "message": "use 0",
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6520b2_58feadaa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-09T06:53:20Z",
+      "side": 1,
+      "message": "shouldCacheToDisk() returns true? And other than test, all places that implements shouldCacheToDisk() returns true, maybe we don\u0027t need that function anymore?",
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58b4e2d9_cb0eea4a",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-09T06:53:20Z",
+      "side": 1,
+      "message": "unused? move it to cc file?",
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
