@@ -22,6 +22,30 @@
       "revId": "82ddcdc75b24e5beeacb892beb872c399272d4b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9d3932_be27ce82",
+        "filename": "components/payments/core/journey_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T17:54:51Z",
+      "side": 1,
+      "message": "Yes I\u0027ve started a discussion about this.",
+      "parentUuid": "2b292756_39895265",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 19
+      },
+      "revId": "82ddcdc75b24e5beeacb892beb872c399272d4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
