@@ -220,7 +220,7 @@ class QuicStreamFactoryTestBase {
         idle_connection_timeout_seconds_, reduced_ping_timeout_seconds_,
         migrate_sessions_on_network_change_, migrate_sessions_early_,
         allow_server_migration_, force_hol_blocking_, race_cert_verification_,
-        estimate_initial_rtt_, QuicTagVector(),
+        estimate_initial_rtt_, QuicTagVector(), QuicTagVector(),
         /*enable_token_binding*/ false));
     factory_->set_require_confirmation(false);
   }
