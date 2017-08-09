@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a1fffff_24456c93",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-09T17:24:20Z",
+      "side": 1,
+      "message": "Should this BLOCK_SHUTDOWN? https://cs.chromium.org/chromium/src/base/task_scheduler/task_traits.h?sq\u003dpackage:chromium\u0026l\u003d43\n\nCan you lose user data if Chrome shuts down in the middle of a file write?",
+      "revId": "839b81a0319a4e5cec663e7c7312fc72a51f9c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65d35d0_bb26a801",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-09T17:24:20Z",
+      "side": 1,
+      "message": "Nit: Seems like |convert_values| may be more consistent with other code",
+      "revId": "839b81a0319a4e5cec663e7c7312fc72a51f9c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91fd940_cf3b3404",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 9
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-09T17:24:20Z",
+      "side": 1,
+      "message": "Is that what UI wants? \"Export to JSON\" seems more usual?",
+      "revId": "839b81a0319a4e5cec663e7c7312fc72a51f9c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
