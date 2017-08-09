@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a603378_062248bb",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "Done.\n\nI missed the AddInterface form that takes a custom task runner. Thanks, this simplified things a lot!",
+      "parentUuid": "b57c70e2_2f664cd1",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a32345b_6d361342",
         "filename": "content/browser/cookie_store/cookie_store_impl.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ac23a418_feeb6eb8",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "Done.\n\nNo thread hopping needed in this case. The case below does still need it though.",
+      "parentUuid": "1a32345b_6d361342",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d789c93_4a61a921",
         "filename": "content/browser/cookie_store/cookie_store_impl.cc",
         "patchSetId": 11
@@ -50,6 +86,24 @@
       "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6536dd_ff1c7f47",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "Done.\n\nThanks for pointing this out! I incorrectly assumed that the strong binding would keep this alive until all requests are served.\n\nI used weak pointers to fix the lifecycle bug. My intention is that processing stops when the mojo connection goes away. Please let me know if I got it wrong.",
+      "parentUuid": "4d789c93_4a61a921",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "d1753cfb_35389299",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "Done. Also fixed below.\n\nThis is great, thank you!!\n\nI tried something like this and didn\u0027t get it to compile earlier. That was mostly due to other mismatching type issues, and I incorrectly concluded that I wouldn\u0027t be able to just get away with this.",
+      "parentUuid": "9154b307_a2bccfb7",
+      "range": {
+        "startLine": 135,
+        "startChar": 17,
+        "endLine": 140,
+        "endChar": 60
+      },
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "727b0f0a_3c93ad9b",
         "filename": "content/browser/cookie_store/cookie_store_impl.h",
         "patchSetId": 11
@@ -90,6 +168,24 @@
       "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f1eb5de_91d8de34",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "I tried to piece something together. Can you please point me to an example that covers all the issues I should tackle?",
+      "parentUuid": "727b0f0a_3c93ad9b",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "8f0e88ce_0da07adf",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "Done.\n\nThank you very much for noticing!",
+      "parentUuid": "49d002ea_0bc4512a",
+      "range": {
+        "startLine": 29,
+        "startChar": 34,
+        "endLine": 29,
+        "endChar": 50
+      },
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24218f23_d04b27ce",
         "filename": "content/browser/cookie_store/cookie_store_impl.h",
         "patchSetId": 11
@@ -130,6 +250,24 @@
       "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d184c39b_90dd92d0",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "Done.\n\nThanks for catching!",
+      "parentUuid": "24218f23_d04b27ce",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "2ec894f0_160aa5d9",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2994,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "Done.\n\nThanks for catching!",
+      "parentUuid": "b93f1b8d_5b619d91",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c91572bd_a21ff114",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieListItem.idl",
         "patchSetId": 11
@@ -164,6 +320,24 @@
       "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30340b41_6b7486ec",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieListItem.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "Done.\n\nI removed them. I don\u0027t know either, I didn\u0027t question the IDL I was given :)\n\nThis particular bit was at https://chromium-review.googlesource.com/c/550902/1/third_party/WebKit/Source/modules/cookies/CookieListItem.idl",
+      "parentUuid": "c91572bd_a21ff114",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +364,30 @@
     },
     {
       "key": {
+        "uuid": "4faae286_59a3d157",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "Done.\n\nRemoved. The original intent was to allow passing in a previous result of get/getAll, and add new options on top. We agreed that any dictionary merging should be done in JS.",
+      "parentUuid": "68a8ab7b_b6377709",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7aa7aa9_412c5b10",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.idl",
         "patchSetId": 11
@@ -210,6 +408,30 @@
       "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94949f5f_d75bbb3d",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "I assume the intent is to be able to specify name / value as positional arguments, or as keyword arguments in CookieStoreSetOptions. I changed the IDL to reflect my guess.",
+      "parentUuid": "b7aa7aa9_412c5b10",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +458,30 @@
     },
     {
       "key": {
+        "uuid": "6bfe287f_4d31135c",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "I created https://github.com/WICG/async-cookies-api/issues/46 - I think remove is a better choice than delete.",
+      "parentUuid": "6ee49633_1aa0d8ee",
+      "range": {
+        "startLine": 31,
+        "startChar": 55,
+        "endLine": 31,
+        "endChar": 61
+      },
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "315a80b6_12cf3899",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreGetOptions.idl",
         "patchSetId": 11
@@ -250,6 +496,24 @@
       "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7eeb52_77fe60fd",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreGetOptions.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "Done.\n\nI need to read up on WebIDL :)",
+      "parentUuid": "315a80b6_12cf3899",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -270,6 +534,24 @@
     },
     {
       "key": {
+        "uuid": "fac98ec1_f54ec8bf",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreSetOptions.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3d57768a_5e27dd09",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bddc934_3c6ef052",
         "filename": "third_party/WebKit/public/platform/modules/cookie_store/cookie_store.mojom",
         "patchSetId": 11
@@ -284,6 +566,24 @@
       "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ebefe7f_f4964f4a",
+        "filename": "third_party/WebKit/public/platform/modules/cookie_store/cookie_store.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T23:37:14Z",
+      "side": 1,
+      "message": "Done.\n\nThe examples I saw didn\u0027t use it, so I avoided it. Thanks for implicitly telling me it\u0027s OK to use it :D",
+      "parentUuid": "3bddc934_3c6ef052",
+      "revId": "7cd6b0c13c6e838d7345a1517326d7d47439f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
