@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "base/optional.h"
+#include "chrome/installer/zucchini/buffer_view.h"
 #include "chrome/installer/zucchini/typed_value.h"
 
 namespace zucchini {
@@ -133,6 +134,12 @@ enum ExecutableType : uint32_t {
 // |exe_type| can be kExeTypeNoOp, in which case the Element descibes a region
 // of raw data.
 struct Element {
+  Element() = default;
+  constexpr Element(ExecutableType exe_type, offset_t offset, offset_t length)
+      : exe_type(exe_type), offset(offset), length(length) {}
+  constexpr explicit Element(const BufferRegion& region)
+      : exe_type(kExeTypeNoOp), offset(region.offset), length(region.size) {}
+
   ExecutableType exe_type;
   offset_t offset;
   offset_t length;
