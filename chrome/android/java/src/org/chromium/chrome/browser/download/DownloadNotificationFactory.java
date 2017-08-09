@@ -222,6 +222,8 @@ public final class DownloadNotificationFactory {
                                 downloadUpdate.getContentId().namespace);
                         intent.putExtra(NotificationConstants.EXTRA_NOTIFICATION_ID,
                                 downloadUpdate.getNotificationId());
+                        DownloadUtils.setOriginalUrlAndReferralExtraToIntent(intent,
+                                downloadUpdate.getOriginalUrl(), downloadUpdate.getReferrer());
                     } else {
                         intent = buildActionIntent(context, ACTION_DOWNLOAD_OPEN,
                                 downloadUpdate.getContentId(), false);
@@ -269,7 +271,9 @@ public final class DownloadNotificationFactory {
                     downloadUpdate.getFileName(), MAX_FILE_NAME_LENGTH));
         }
         if (downloadUpdate.getIcon() != null) builder.setLargeIcon(downloadUpdate.getIcon());
-        if (!downloadUpdate.getIsTransient() && downloadUpdate.getNotificationId() != -1) {
+        if (!downloadUpdate.getIsTransient() && downloadUpdate.getNotificationId() != -1
+                && downloadStatus != DownloadStatus.SUCCESSFUL
+                && downloadStatus != DownloadStatus.FAILED) {
             Intent downloadHomeIntent =
                     buildActionIntent(context, ACTION_NOTIFICATION_CLICKED, null, false);
             builder.setContentIntent(
