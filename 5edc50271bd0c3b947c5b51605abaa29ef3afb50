@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "00b27b75_c1c99b39",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-09T18:56:51Z",
+      "side": 1,
+      "message": "I would like to apply the origin rules in another CL as this CL getting big.",
+      "parentUuid": "9c55a05e_5ad0aaf1",
+      "range": {
+        "startLine": 254,
+        "startChar": 79,
+        "endLine": 254,
+        "endChar": 80
+      },
+      "revId": "5edc50271bd0c3b947c5b51605abaa29ef3afb50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f40cab4e_1fad5603",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.cpp",
         "patchSetId": 10
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0584234a_8cd82963",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-09T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f40cab4e_1fad5603",
+      "range": {
+        "startLine": 48,
+        "startChar": 56,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "5edc50271bd0c3b947c5b51605abaa29ef3afb50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b6c33a2_4ddee4b0",
         "filename": "third_party/WebKit/Source/core/timing/TaskAttributionTiming.idl",
         "patchSetId": 10
@@ -92,6 +140,30 @@
       "revId": "5edc50271bd0c3b947c5b51605abaa29ef3afb50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dafa3f1e_c9324eca",
+        "filename": "third_party/WebKit/Source/core/timing/TaskAttributionTiming.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-09T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b6c33a2_4ddee4b0",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 1
+      },
+      "revId": "5edc50271bd0c3b947c5b51605abaa29ef3afb50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
