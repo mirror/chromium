@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "470d6b58_08922129",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-09T05:34:00Z",
+      "side": 1,
+      "message": "I think this is was a mishap in the original CL, as this header file can be included by //content it should use -shared not -blink, right?",
+      "range": {
+        "startLine": 15,
+        "startChar": 61,
+        "endLine": 15,
+        "endChar": 72
+      },
+      "revId": "d7eca885b5c55770ad0f3726fe8ba300e2972b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
