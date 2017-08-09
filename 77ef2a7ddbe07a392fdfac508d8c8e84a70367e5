@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4593a7b_58ec8d40",
+        "filename": "chrome/test/data/webui/settings/edit_dictionary_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-09T23:36:33Z",
+      "side": 1,
+      "message": "👏👏👏",
+      "revId": "77ef2a7ddbe07a392fdfac508d8c8e84a70367e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4efe84c3_dc33b43c",
+        "filename": "chrome/test/data/webui/settings/edit_dictionary_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-09T23:36:33Z",
+      "side": 1,
+      "message": "Generally a good idea to use \u003d\u003d\u003d for equality as a habit in JS unless you explicitly want non-strict comparison. Not that it could happen in this case, but `0 \u003d\u003d \u0027\u0027` returns true.",
+      "range": {
+        "startLine": 37,
+        "startChar": 23,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "77ef2a7ddbe07a392fdfac508d8c8e84a70367e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d91cef0_3d20ce75",
+        "filename": "chrome/test/data/webui/settings/edit_dictionary_a11y_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-09T23:36:33Z",
+      "side": 1,
+      "message": "Maybe this should be `node.classList.contains(\u0027icon-expand-more\u0027)`, in case it has more than one class?",
+      "revId": "77ef2a7ddbe07a392fdfac508d8c8e84a70367e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cafcd82d_7f5a6ae8",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-09T23:36:33Z",
+      "side": 0,
+      "message": "overzealous text editor?",
+      "revId": "16f73f458a388aa43c766568103dbf5445675890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
