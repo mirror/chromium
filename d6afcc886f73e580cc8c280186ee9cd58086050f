@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5b1fc4aa_9d121b43",
+        "filename": "ios/chrome/browser/ui/reading_list/number_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-09T16:35:12Z",
+      "side": 1,
+      "message": "Thanks for cleaning up small things like this.",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ba03d93_521c456a",
         "filename": "ios/chrome/browser/ui/reading_list/number_badge_view.mm",
         "patchSetId": 1
@@ -64,6 +81,23 @@
       "writtenOn": "2017-08-09T15:59:10Z",
       "side": 1,
       "message": "How do you feel about inverting this logic to didAddSubviews? It initializes to false, and seems more analogous to terms like \"didLoad\".",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21221a5_991c1690",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-09T16:35:12Z",
+      "side": 1,
+      "message": "Consolidate the two lines above.",
       "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "bb869a40_f6db493d",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-09T16:35:12Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "9e429ad0_a264aff0",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea653c20_476bde9c",
         "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
         "patchSetId": 1
@@ -183,6 +235,23 @@
       "writtenOn": "2017-08-09T06:46:03Z",
       "side": 1,
       "message": "Should this be greater than/equal to, as it was before, or is this an intentional change?",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a62a34_611be3e7",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-09T16:35:12Z",
+      "side": 1,
+      "message": "Why is PriorityHigh not used here?",
       "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
