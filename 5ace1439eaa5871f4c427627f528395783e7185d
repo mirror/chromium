@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c49976c6_1dd307a5",
+        "filename": "base/process/launch.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-09T16:44:18Z",
+      "side": 1,
+      "message": "I\u0027m actually not sure that that will help, since the caller can still instantiate a struct { int id, mx_handle handle } with { my_handle, my_id } by mistake. I suppose it at least provides the _option_ of safety, though, so OK.\n\nI\u0027d ideally like to turn LaunchProcess into a ProcessLauncher class, which can then accept a set of { id, ScopedMxHandle } pairs, providing both safe move semantics and type safety.",
+      "parentUuid": "39aaba8b_828c88e4",
+      "range": {
+        "startLine": 43,
+        "startChar": 30,
+        "endLine": 43,
+        "endChar": 38
+      },
+      "revId": "5ace1439eaa5871f4c427627f528395783e7185d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25a06fbb_77b1a709",
         "filename": "base/process/process_util_unittest.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a43f2c8b_505c907b",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-09T16:44:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25a06fbb_77b1a709",
+      "range": {
+        "startLine": 754,
+        "startChar": 14,
+        "endLine": 754,
+        "endChar": 19
+      },
+      "revId": "5ace1439eaa5871f4c427627f528395783e7185d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12b7af2b_265545b9",
         "filename": "base/process/process_util_unittest.cc",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "5ace1439eaa5871f4c427627f528395783e7185d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f066b2_7e545f5e",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-09T16:44:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12b7af2b_265545b9",
+      "range": {
+        "startLine": 772,
+        "startChar": 51,
+        "endLine": 772,
+        "endChar": 65
+      },
+      "revId": "5ace1439eaa5871f4c427627f528395783e7185d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
