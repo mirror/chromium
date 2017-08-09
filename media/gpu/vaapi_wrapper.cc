@@ -77,6 +77,8 @@ uint32_t BufferFormatToVAFourCC(gfx::BufferFormat fmt) {
       return VA_FOURCC_UYVY;
     case gfx::BufferFormat::YVU_420:
       return VA_FOURCC_YV12;
+    case gfx::BufferFormat::YUV_420_BIPLANAR:
+      return VA_FOURCC_NV12;
     default:
       NOTREACHED();
       return 0;
@@ -91,6 +93,7 @@ uint32_t BufferFormatToVARTFormat(gfx::BufferFormat fmt) {
     case gfx::BufferFormat::BGRA_8888:
       return VA_RT_FORMAT_RGB32;
     case gfx::BufferFormat::YVU_420:
+    case gfx::BufferFormat::YUV_420_BIPLANAR:
       return VA_RT_FORMAT_YUV420;
     default:
       NOTREACHED();
@@ -651,7 +654,7 @@ scoped_refptr<VASurface> VaapiWrapper::CreateVASurfaceForPixmap(
   va_attrib_extbuf.buffers = fds.data();
   va_attrib_extbuf.num_buffers = fds.size();
 
-  va_attrib_extbuf.flags = 0;
+  va_attrib_extbuf.flags = VA_SURFACE_EXTBUF_DESC_ENABLE_TILING;
   va_attrib_extbuf.private_data = NULL;
 
   std::vector<VASurfaceAttrib> va_attribs(2);

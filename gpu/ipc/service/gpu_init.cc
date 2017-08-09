@@ -24,6 +24,7 @@
 #include "ui/gl/init/gl_factory.h"
 
 #if defined(USE_OZONE)
+#include "ui/ozone/public/client_native_pixmap_factory_ozone.h"
 #include "ui/ozone/public/ozone_platform.h"
 #endif
 
@@ -220,6 +221,11 @@ bool GpuInit::InitializeAndStartSandbox(const base::CommandLine& command_line) {
   ui::OzonePlatform::InitParams params;
   params.single_process = false;
   ui::OzonePlatform::InitializeForGPU(params);
+
+  std::unique_ptr<gfx::ClientNativePixmapFactory> client_native_pixmap_factory =
+      ui::CreateClientNativePixmapFactoryOzone();
+  gfx::ClientNativePixmapFactory::SetInstance(
+      client_native_pixmap_factory.release());
 #endif
 
   // Load and initialize the GL implementation and locate the GL entry points if
