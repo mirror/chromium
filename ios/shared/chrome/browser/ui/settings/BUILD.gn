@@ -15,6 +15,6 @@ source_set("settings") {
     # "//ios/chrome/browser",
     # "//ios/chrome/browser/browser_state",
     # "//ios/chrome/browser/tabs:tabs_internal",
-    # "//ios/shared/chrome/browser/ui/browser_list",
+    # "//ios/chrome/browser/ui/browser_list",
   ]
 }
