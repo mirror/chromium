@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "7dcf7d72_2c42379d",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-09T01:01:22Z",
+      "side": 1,
+      "message": "To avoid future discussion about signed/unsigned overflow, it is better\nto use |int32_t| here and add a comment that it is passed to Java int(32-bit) and usage is opaque.",
+      "parentUuid": "8a6f38ed_8ff4537d",
+      "revId": "d1cb1cf40ec31381b6b02e3e06faba5a211f3d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b1c7e65_c7990b15",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
         "patchSetId": 4
