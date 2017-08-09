@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72563d44_a87a38c6",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-09T19:22:44Z",
+      "side": 1,
+      "message": "Okay, I understand the comment in the .h now. It could be rewritten to be clearer (ie, since distinguishing between background and session restore tabs is difficult, this always returns false during an active session restore).\n\n(It shouldn\u0027t be that hard to distinguish these two cases if we really want to, though. Is there some reason why we don\u0027t want to do that?)",
+      "range": {
+        "startLine": 607,
+        "startChar": 17,
+        "endLine": 607,
+        "endChar": 0
+      },
+      "revId": "681ba0bb7861c611a877d98ebb1546a6b7d2b2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55169d7d_0d501f37",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-09T19:22:44Z",
+      "side": 1,
+      "message": "This comment is confusing. It does not include session restore? Which means we can tell session restore loading tabs from non-session restore loading tabs? Which means the comment about it being hard to do so doesn\u0027t make sense?",
+      "range": {
+        "startLine": 230,
+        "startChar": 20,
+        "endLine": 232,
+        "endChar": 28
+      },
+      "revId": "681ba0bb7861c611a877d98ebb1546a6b7d2b2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
