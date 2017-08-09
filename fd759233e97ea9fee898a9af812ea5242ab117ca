@@ -46,6 +46,30 @@
       "revId": "fd759233e97ea9fee898a9af812ea5242ab117ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d6b5c14_eb1f7a35",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-08-09T15:28:45Z",
+      "side": 1,
+      "message": "Updated go/clank-renderer-oom, see heading \"Bucketing and Reason for Increase (3-4%)\".",
+      "parentUuid": "363ef22e_3d3d4d16",
+      "range": {
+        "startLine": 121,
+        "startChar": 28,
+        "endLine": 121,
+        "endChar": 38
+      },
+      "revId": "fd759233e97ea9fee898a9af812ea5242ab117ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
