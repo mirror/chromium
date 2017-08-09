@@ -22,6 +22,30 @@
       "revId": "e7bb5db607212c772e21b907850526f0278ae0d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be64863_b934a8b4",
+        "filename": "mojo/public/cpp/bindings/array_traits_carray.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T17:28:43Z",
+      "side": 1,
+      "message": "I might be missing something, but isn\u0027t https://github.com/Microsoft/GSL/blob/master/include/gsl/span#L470 precisely this?\n\n(It\u0027s also mentioned in the proposal)",
+      "parentUuid": "75fad2e7_c1ab71bb",
+      "range": {
+        "startLine": 51,
+        "startChar": 24,
+        "endLine": 51,
+        "endChar": 31
+      },
+      "revId": "e7bb5db607212c772e21b907850526f0278ae0d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
