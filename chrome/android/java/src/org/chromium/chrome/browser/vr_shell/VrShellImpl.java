@@ -65,6 +65,10 @@ import org.chromium.ui.display.VirtualDisplayAndroid;
 @JNINamespace("vr_shell")
 public class VrShellImpl
         extends GvrLayout implements VrShell, SurfaceHolder.Callback, WindowAndroidProvider {
+    static {
+        System.loadLibrary("gvr_audio");
+    }
+
     private static final String TAG = "VrShellImpl";
 
     // TODO(mthiesse): These values work well for Pixel/Pixel XL in VR, but we need to come up with

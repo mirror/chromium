@@ -93,6 +93,36 @@ gfx::Vector3dF GetForwardVector(const gfx::Transform& head_pose) {
                         -head_pose.matrix().get(2, 2));
 }
 
+void OnKeyboardEvent(void*, int32_t event) {
+  LOG(ERROR) << "VK: ON KEYBOARD EVENT";
+  switch (event) {
+    case GVR_KEYBOARD_ERROR_UNKNOWN:
+      LOG(ERROR) << ("GVR_KEYBOARD_ERROR_UNKNOWN");
+      break;
+    case GVR_KEYBOARD_ERROR_SERVICE_NOT_CONNECTED:
+      LOG(ERROR) << ("GVR_KEYBOARD_ERROR_SERVICE_NOT_CONNECTED");
+      break;
+    case GVR_KEYBOARD_ERROR_NO_LOCALES_FOUND:
+      LOG(ERROR) << ("GVR_KEYBOARD_ERROR_NO_LOCALES_FOUND");
+      break;
+    case GVR_KEYBOARD_ERROR_SDK_LOAD_FAILED:
+      LOG(ERROR) << ("GVR_KEYBOARD_ERROR_SDK_LOAD_FAILED");
+      break;
+    case GVR_KEYBOARD_SHOWN:
+      LOG(ERROR) << ("GVR_KEYBOARD_SHOWN");
+      break;
+    case GVR_KEYBOARD_HIDDEN:
+      LOG(ERROR) << ("GVR_KEYBOARD_HIDDEN");
+      break;
+    case GVR_KEYBOARD_TEXT_UPDATED: {
+      LOG(ERROR) << "GVR_KEYBOARD_TEXT_UPDATED: ";
+    } break;
+    case GVR_KEYBOARD_TEXT_COMMITTED: {
+      LOG(ERROR) << ("GVR_KEYBOARD_TEXT_COMMITTED");
+    } break;
+  }
+}
+
 gfx::Transform PerspectiveMatrixFromView(const gvr::Rectf& fov,
                                          float z_near,
                                          float z_far) {
@@ -408,6 +438,7 @@ void VrShellGl::GvrInit(gvr_context* gvr_api) {
 
 void VrShellGl::InitializeRenderer() {
   gvr_api_->InitializeGl();
+  CreateKeyboard();
   gfx::Transform head_pose;
   device::GvrDelegate::GetGvrPoseWithNeckModel(gvr_api_.get(), &head_pose);
   webvr_head_pose_.assign(kPoseRingBufferSize, head_pose);
@@ -702,6 +733,8 @@ void VrShellGl::HandleControllerAppButtonActivity(
   }
   if (controller_->ButtonUpHappened(
           gvr::ControllerButton::GVR_CONTROLLER_BUTTON_APP)) {
+    LOG(ERROR) << "lolk appbutton press";
+    keyboard_enabled_ = true;
     // A gesture is a movement of the controller while holding the App button.
     // If the angle of the movement is within a threshold, the action is
     // considered a regular click
@@ -724,6 +757,17 @@ void VrShellGl::HandleControllerAppButtonActivity(
     if (direction == vr::UiInterface::NONE)
       browser_->AppButtonClicked();
   }
+}
+
+void VrShellGl::CreateKeyboard() {
+  gvr_keyboard_ = gvr_keyboard_create(nullptr, OnKeyboardEvent);
+  if (gvr_keyboard_ == nullptr)
+    LOG(ERROR) << "VK: keyboard is null";
+
+  gvr_mat4f matrix;
+  gvr_keyboard_get_recommended_world_from_keyboard_matrix(2.0f, &matrix);
+  gvr_keyboard_set_world_from_keyboard_matrix(gvr_keyboard_, &matrix);
+  gvr_keyboard_show(gvr_keyboard_);
 }
 
 void VrShellGl::SendGestureToContent(
@@ -816,6 +860,9 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
     DrawWebVr();
   }
 
+  gvr::ClockTimePoint target_time = gvr::GvrApi::GetTimePointNow();
+  target_time.monotonic_system_time_nanos += 50000000;
+
   // When using async reprojection, we need to know which pose was
   // used in the WebVR app for drawing this frame and supply it when
   // submitting. Technically we don't need a pose if not reprojecting,
@@ -890,6 +937,67 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
     // Continue with submit immediately.
     DrawFrameSubmitWhenReady(frame_index, frame.release(),
                              render_info_primary_.head_pose, nullptr);
+  }
+  if (keyboard_enabled_) {
+    glDisable(GL_SCISSOR_TEST);
+    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+    glDepthMask(GL_TRUE);
+    glStencilMask(~0);
+
+    gvr::Mat4f mat;
+    TransformToGvrMat(render_info_primary_.head_pose, &mat);
+    DrawKeyboard(mat, render_size_primary_, kViewportListPrimaryOffset,
+                 target_time);
+  }
+}
+
+void VrShellGl::DrawKeyboard(const gvr::Mat4f& head_pose,
+                             const gfx::Size& render_size,
+                             int viewport_offset,
+                             gvr::ClockTimePoint target_time) {
+  std::lock_guard<std::mutex> lock(mutex_);
+  if (gvr_keyboard_) {
+    bool pressed = controller_->ButtonUpHappened(
+        gvr::ControllerButton::GVR_CONTROLLER_BUTTON_CLICK);
+    gvr_keyboard_update_button_state(
+        gvr_keyboard_, gvr::ControllerButton::GVR_CONTROLLER_BUTTON_CLICK,
+        pressed);
+    // Init Ray
+    gvr_vec3f start;
+    start.x = 0;
+    start.y = 0;
+    start.z = 0;
+    gvr_vec3f end;
+    gfx::Point3F target_point = controller_info_.target_point;
+    end.x = target_point.x();
+    end.y = target_point.y();
+    end.z = target_point.z();
+    gvr_vec3f hit;
+    gvr_keyboard_update_controller_ray(gvr_keyboard_, &start, &end, &hit);
+    gvr_keyboard_set_frame_time(gvr_keyboard_, &target_time);
+    gvr_keyboard_advance_frame(gvr_keyboard_);
+
+    for (auto eye : {GVR_LEFT_EYE, GVR_RIGHT_EYE}) {
+      vr::RenderInfo::EyeInfo& eye_info =
+          (eye == GVR_LEFT_EYE) ? render_info_primary_.left_eye_info
+                                : render_info_primary_.right_eye_info;
+      gvr::Mat4f view_matrix;
+      TransformToGvrMat(eye_info.view_matrix, &view_matrix);
+      gvr_keyboard_set_eye_from_world_matrix(gvr_keyboard_, eye, &view_matrix);
+
+      gvr::Mat4f proj_matrix;
+      TransformToGvrMat(eye_info.proj_matrix, &proj_matrix);
+      gvr_keyboard_set_projection_matrix(gvr_keyboard_, eye, &proj_matrix);
+
+      gfx::Rect viewport_rect = eye_info.viewport;
+      const gvr::Recti viewport = {static_cast<int>(viewport_rect.x()),
+                                   static_cast<int>(viewport_rect.right()),
+                                   static_cast<int>(viewport_rect.bottom()),
+                                   static_cast<int>(viewport_rect.y())};
+      gvr_keyboard_set_viewport(gvr_keyboard_, eye, &viewport);
+
+      gvr_keyboard_render(gvr_keyboard_, GVR_LEFT_EYE);
+    }
   }
 }
 

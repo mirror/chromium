@@ -1,0 +1,189 @@
+#!/bin/bash
+set -e
+
+# Usage examples
+#   <script> build
+#   <script> test
+#   <script> load
+#   <script> build load test
+#   <script> trace
+
+SRC_DIR="/usr/local/google/home/ymalik/clankium/src"
+OBJ="out/Debug_vr"
+RELEASE_OBJ="out/Release_vr"
+
+# TODO(vollick): pull from adb devices
+DEVICE="HT71P0201913"
+DEVICE_6P="84B5T15A29023610"
+
+decode_stack()
+{
+  echo Decoding most recent device crash...
+  adb logcat -d | tac | sed '/Fatal signal/q' | tac | head -50 > /tmp/crash_log.txt &&
+  third_party/android_platform/development/scripts/stack \
+    --output-directory $OBJ /tmp/crash_log.txt
+}
+
+use_6p=
+build=
+load=
+unittest=
+trace=
+run_gn=
+make_tags=
+dev_build=
+screen_capture=
+sync_master=
+sync_revision=
+closure_compiler=
+release=
+
+#for arg in "$@"; do
+while (( "$#" )); do
+  case $1 in
+    sync)
+      sync_master=1
+      if [ "$#" -gt 1 ]; then
+        sync_revision=$2
+        shift
+      fi
+    ;;
+    rbuild)
+      build=1
+      release=1
+    ;;
+    build)
+      build=1
+    ;;
+    rload)
+      load=1
+      release=1
+    ;;
+    load)
+      load=1
+    ;;
+    test)
+      unittest=1
+    ;;
+    trace)
+      trace=1
+    ;;
+    6p)
+      use_6p=1
+    ;;
+    rgn)
+      run_gn=1
+      release=1
+    ;;
+    gn)
+      run_gn=1
+    ;;
+    dev)
+      dev_build=1
+    ;;
+    tags)
+      make_tags=1
+    ;;
+    screen)
+      screen_capture=1
+    ;;
+    closure)
+      closure_compiler=1
+    ;;
+    *)
+      echo Unknown argument: $arg
+      exit 1
+    ;;
+  esac
+  shift
+done
+
+#GN_ARGS='enable_vr_shell=true'
+#GN_ARGS+=' enable_webvr=true'
+#GN_ARGS+=' target_os="android"'
+GN_ARGS=' target_os="android"'
+GN_ARGS+=' use_goma=true'
+GN_ARGS+=' is_component_build=true'
+GN_ARGS+=' disable_incremental_isolated_processes=true'
+GN_ARGS+=' is_clang=true'
+
+cd $SRC_DIR
+
+if [ "$release" ]; then
+  echo "setting OBJ to $RELEASE_OBJ..."
+  OBJ=$RELEASE_OBJ
+fi
+
+if [ "$sync_master" ]; then
+  if [ $(git rev-parse --abbrev-ref HEAD) != "master" ]; then
+    echo Not on master branch!
+    exit
+  fi
+  if [ "$sync_revision" ]; then
+    echo "Syncing to explicit revision..."
+    git fetch && gclient sync -t -D -r src@$sync_revision
+  else
+    echo "Syncing to master..."
+    #git fetch && gclient sync -t -D -r src@origin/lkgr
+    git fetch && gclient sync -t -D -r src@origin/master
+  fi
+fi
+
+if [ "$make_tags" ]; then
+  echo Building tags...
+  cscope -r
+fi
+
+if [ "$screen_capture" ]; then
+  echo Taking screen capture...
+  adb -s $DEVICE shell screencap -p /sdcard/screen.png && \
+    adb pull /sdcard/screen.png /tmp/temp.png && \
+    eog /tmp/temp.png
+fi
+
+if [ "$use_6p" ]; then
+  DEVICE="$DEVICE_6P"
+fi
+
+if [ "$closure_compiler" ]; then
+  third_party/closure_compiler/run_compiler vr_shell_ui
+fi
+
+if [ "$trace" ]; then
+  decode_stack
+fi
+
+if [ "$dev_build" ]; then
+  GN_ARGS+=' enable_vr_shell_ui_dev=true'
+fi
+
+if [ "$run_gn" ]; then
+  gn gen --args="$GN_ARGS" $OBJ
+fi
+
+if [ "$unittest" ]; then
+  echo Building and loading VrShell unit tests...
+  nice ninja -C $OBJ -j500 -l32 vr_common_unittests &&
+  $OBJ/bin/run_vr_common_unittests -d $DEVICE
+fi
+
+if [ "$build" ]; then
+  if ! pgrep compiler_proxy > /dev/null; then
+    echo Starting GOMA proxy...
+    GOMA_DIR=${HOME}/goma
+    ${GOMA_DIR}/goma_ctl.py ensure_start
+  fi
+  echo Building APK...
+  nice ninja -C $OBJ -j500 -l32 chrome_public_apk
+fi
+
+if [ "$load" ]; then
+  echo "Loading APK on ${DEVICE} from ${OBJ}"
+  DBG_FLAG="--debug"
+  if [ "$release" ]; then
+    DBG_FLAG=""
+  fi
+  build/android/adb_install_apk.py $DBG_FLAG --keep_data \
+    -d $DEVICE $OBJ/apks/ChromePublic.apk
+fi
+
