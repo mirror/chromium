@@ -227,9 +227,10 @@ class TabManager : public TabStripModelObserver,
   bool IsTabRestoredInForeground(content::WebContents* web_contents) const;
 
   // Return whether it is loading background tabs. This does not include session
-  // restore cases, because it is hard to tell if TabManager is loading
-  // background tabs initiated from session restore or other user action like
-  // ctrl-click a few links.
+  // restore, in order to avoid the case where session restore and background
+  // tab open triggered by user action happen at the same time, for example,
+  // a user ctrl-clicks links during session restore. In such case, it is hard
+  // to get meaningful metrics.
   bool IsLoadingBackgroundTabs() const;
 
  private:
