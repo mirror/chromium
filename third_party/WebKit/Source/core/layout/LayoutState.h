@@ -34,6 +34,7 @@
 namespace blink {
 
 class LayoutBox;
+class LayoutBoxModelObject;
 class LayoutFlowThread;
 class LayoutObject;
 class LayoutView;
@@ -104,6 +105,10 @@ class LayoutState {
 
   LayoutObject& GetLayoutObject() const { return layout_object_; }
 
+  LayoutBoxModelObject* NearestAncestorOverflow() const {
+    return nearest_ancestor_overflow_;
+  }
+
  private:
   // Do not add anything apart from bitfields until after m_flowThread. See
   // https://bugs.webkit.org/show_bug.cgi?id=100173
@@ -125,6 +130,8 @@ class LayoutState {
   LayoutUnit height_offset_for_table_headers_;
 
   LayoutObject& layout_object_;
+
+  LayoutBoxModelObject* nearest_ancestor_overflow_;
 };
 
 }  // namespace blink

@@ -64,6 +64,7 @@
 #include "core/html/HTMLSelectElement.h"
 #include "core/html/TextControlElement.h"
 #include "core/input/EventHandler.h"
+#include "core/layout/LayoutBoxModelObject.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutFlexibleBox.h"
 #include "core/layout/LayoutScrollbar.h"
@@ -923,6 +924,22 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
   Node* node = Box().GetNode();
   if (isHTMLSelectElement(node))
     toHTMLSelectElement(node)->ScrollToOptionAfterLayout(*this);
+
+  LOG(INFO) << "Start loop";
+  for (const LayoutBoxModelObject* sticky_element : registered_stickys_) {
+    // LOG(INFO) << "Would compute constraints for "
+    //          << sticky_element->DebugName();
+    sticky_element->UpdateStickyPositionConstraints();
+
+    // Sticky position constraints and ancestor overflow scroller affect
+    // the sticky layer position, so we need to update it again here.
+    // TODO(flackr): This should be refactored in the future to be clearer
+    // (i.e. update layer position and ancestor inputs updates in the
+    // same walk)
+    sticky_element->Layer()->UpdateLayerPosition();
+  }
+  LOG(INFO) << "Done with loop";
+  registered_stickys_.clear();
 }
 
 void PaintLayerScrollableArea::ClampScrollOffsetAfterOverflowChange() {
@@ -1639,6 +1656,10 @@ void PaintLayerScrollableArea::UpdateResizerStyle() {
     resizer_->Destroy();
     resizer_ = nullptr;
   }
+}
+
+void PaintLayerScrollableArea::RegisterStickyElement(LayoutBoxModelObject* o) {
+  registered_stickys_.insert(o);
 }
 
 void PaintLayerScrollableArea::InvalidateAllStickyConstraints() {

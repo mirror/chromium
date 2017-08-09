@@ -417,6 +417,19 @@ void LayoutBlock::UpdateLayout() {
 
   LayoutAnalyzer::Scope analyzer(*this);
 
+  // Register ourselves if we're sticky.
+  LayoutState* state = View()->GetLayoutState();
+  if (IsStickyPositioned() && state->NearestAncestorOverflow()) {
+    LOG(INFO) << DebugName() << ": registered on "
+              << state->NearestAncestorOverflow();
+    // HACK(smcgruer): We can do this at style time.
+    Layer()->UpdateAncestorOverflowLayer(
+        state->NearestAncestorOverflow()->Layer());
+    state->NearestAncestorOverflow()
+        ->GetScrollableArea()
+        ->RegisterStickyElement(this);
+  }
+
   bool needs_scroll_anchoring =
       HasOverflowClip() && GetScrollableArea()->ShouldPerformScrollAnchoring();
   if (needs_scroll_anchoring)
