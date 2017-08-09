@@ -34,7 +34,6 @@
 #include <memory>
 #include "core/CoreExport.h"
 #include "core/fileapi/FileError.h"
-#include "core/loader/ThreadableLoaderClient.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/Forward.h"
@@ -50,9 +49,8 @@ class DOMArrayBuffer;
 class ExecutionContext;
 class FileReaderLoaderClient;
 class TextResourceDecoder;
-class ThreadableLoader;
 
-class CORE_EXPORT FileReaderLoader final : public ThreadableLoaderClient {
+class CORE_EXPORT FileReaderLoader {
   USING_FAST_MALLOC(FileReaderLoader);
 
  public:
@@ -66,24 +64,13 @@ class CORE_EXPORT FileReaderLoader final : public ThreadableLoaderClient {
 
   // If client is given, do the loading asynchronously. Otherwise, load
   // synchronously.
-  static std::unique_ptr<FileReaderLoader> Create(
-      ReadType read_type,
-      FileReaderLoaderClient* client) {
-    return WTF::WrapUnique(new FileReaderLoader(read_type, client));
-  }
+  static std::unique_ptr<FileReaderLoader> Create(ReadType,
+                                                  FileReaderLoaderClient*);
 
-  ~FileReaderLoader() override;
+  virtual ~FileReaderLoader();
 
-  void Start(ExecutionContext*, RefPtr<BlobDataHandle>);
+  virtual void Start(ExecutionContext*, RefPtr<BlobDataHandle>) = 0;
   void Cancel();
-
-  // ThreadableLoaderClient
-  void DidReceiveResponse(unsigned long,
-                          const ResourceResponse&,
-                          std::unique_ptr<WebDataConsumerHandle>) override;
-  void DidReceiveData(const char*, unsigned) override;
-  void DidFinishLoading(unsigned long, double) override;
-  void DidFail(const ResourceError&) override;
 
   DOMArrayBuffer* ArrayBufferResult();
   String StringResult();
@@ -108,27 +95,30 @@ class CORE_EXPORT FileReaderLoader final : public ThreadableLoaderClient {
   void SetEncoding(const String&);
   void SetDataType(const String& data_type) { data_type_ = data_type; }
 
- private:
+ protected:
   FileReaderLoader(ReadType, FileReaderLoaderClient*);
 
-  void Cleanup();
+  virtual void Cleanup();
+  void Failed(FileError::ErrorCode);
+
+  void OnStartLoading(long long total_bytes);
+  void OnReceivedData(const char* data, unsigned data_length);
+  void OnFinishLoading();
+
+  bool IsSyncLoad() const { return !client_; }
+
+ private:
   void AdjustReportedMemoryUsageToV8(int64_t usage);
   void UnadjustReportedMemoryUsageToV8();
 
-  void Failed(FileError::ErrorCode);
   String ConvertToText();
   String ConvertToDataURL();
   void SetStringResult(const String&);
-
-  static FileError::ErrorCode HttpStatusCodeToErrorCode(int);
 
   ReadType read_type_;
   FileReaderLoaderClient* client_;
   WTF::TextEncoding encoding_;
   String data_type_;
-
-  KURL url_for_reading_;
-  Persistent<ThreadableLoader> loader_;
 
   std::unique_ptr<ArrayBufferBuilder> raw_data_;
   bool is_raw_data_converted_ = false;
