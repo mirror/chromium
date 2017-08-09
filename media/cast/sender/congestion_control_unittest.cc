@@ -56,7 +56,7 @@ class CongestionControlTest : public ::testing::Test {
       congestion_control_->SendFrameToTransport(
           frame_id_, frame_size, testing_clock_.NowTicks());
       task_runner_->PostDelayedTask(FROM_HERE,
-                                    base::Bind(&CongestionControlTest::AckFrame,
+                                    base::BindOnce(&CongestionControlTest::AckFrame,
                                                base::Unretained(this),
                                                frame_id_),
                                     ack_time);

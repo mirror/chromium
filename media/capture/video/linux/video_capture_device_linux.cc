@@ -65,7 +65,7 @@ void VideoCaptureDeviceLinux::AllocateAndStart(
   }
   v4l2_thread_.task_runner()->PostTask(
       FROM_HERE,
-      base::Bind(&V4L2CaptureDelegate::AllocateAndStart,
+      base::BindOnce(&V4L2CaptureDelegate::AllocateAndStart,
                  capture_impl_->GetWeakPtr(),
                  params.requested_format.frame_size.width(),
                  params.requested_format.frame_size.height(),
@@ -80,7 +80,7 @@ void VideoCaptureDeviceLinux::StopAndDeAllocate() {
   if (!v4l2_thread_.IsRunning())
     return;  // Wrong state.
   v4l2_thread_.task_runner()->PostTask(
-      FROM_HERE, base::Bind(&V4L2CaptureDelegate::StopAndDeAllocate,
+      FROM_HERE, base::BindOnce(&V4L2CaptureDelegate::StopAndDeAllocate,
                             capture_impl_->GetWeakPtr()));
   v4l2_thread_.task_runner()->DeleteSoon(FROM_HERE, capture_impl_.release());
   v4l2_thread_.Stop();
@@ -130,7 +130,7 @@ void VideoCaptureDeviceLinux::SetPhotoOptions(
 void VideoCaptureDeviceLinux::SetRotation(int rotation) {
   if (v4l2_thread_.IsRunning()) {
     v4l2_thread_.task_runner()->PostTask(
-        FROM_HERE, base::Bind(&V4L2CaptureDelegate::SetRotation,
+        FROM_HERE, base::BindOnce(&V4L2CaptureDelegate::SetRotation,
                               capture_impl_->GetWeakPtr(), rotation));
   }
 }

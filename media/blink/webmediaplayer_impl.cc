@@ -631,7 +631,7 @@ void WebMediaPlayerImpl::DoSeek(base::TimeDelta time, bool time_updated) {
     // ready state change to eventually happen.
     if (old_state == kReadyStateHaveEnoughData) {
       main_task_runner_->PostTask(
-          FROM_HERE, base::Bind(&WebMediaPlayerImpl::OnBufferingStateChange,
+          FROM_HERE, base::BindOnce(&WebMediaPlayerImpl::OnBufferingStateChange,
                                 AsWeakPtr(), BUFFERING_HAVE_ENOUGH));
     }
     return;
@@ -711,7 +711,7 @@ void WebMediaPlayerImpl::SetSinkId(
       media::ConvertToOutputDeviceStatusCB(web_callback);
   media_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&SetSinkIdOnMediaThread, audio_source_provider_,
+      base::BindOnce(&SetSinkIdOnMediaThread, audio_source_provider_,
                  sink_id.Utf8(), static_cast<url::Origin>(security_origin),
                  callback));
 }
@@ -1298,7 +1298,7 @@ void WebMediaPlayerImpl::OnMemoryPressure(
   // base::Unretained is safe, since chunk_demuxer_ is actually owned by
   // |this| via this->demuxer_.
   media_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&ChunkDemuxer::OnMemoryPressure,
+      FROM_HERE, base::BindOnce(&ChunkDemuxer::OnMemoryPressure,
                             base::Unretained(chunk_demuxer_),
                             base::TimeDelta::FromSecondsD(CurrentTime()),
                             memory_pressure_level, force_instant_gc));
@@ -1657,7 +1657,7 @@ void WebMediaPlayerImpl::OnFrameShown() {
                    AsWeakPtr(), base::TimeTicks::Now()));
     compositor_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&VideoFrameCompositor::SetOnNewProcessedFrameCallback,
+        base::BindOnce(&VideoFrameCompositor::SetOnNewProcessedFrameCallback,
                    base::Unretained(compositor_),
                    BindToCurrentLoop(frame_time_report_cb_.callback())));
   }
@@ -2096,7 +2096,7 @@ scoped_refptr<VideoFrame> WebMediaPlayerImpl::GetCurrentFrameFromCompositor()
                             base::WaitableEvent::InitialState::NOT_SIGNALED);
   compositor_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&GetCurrentFrameAndSignal, base::Unretained(compositor_),
+      base::BindOnce(&GetCurrentFrameAndSignal, base::Unretained(compositor_),
                  &video_frame, &event));
   event.Wait();
 

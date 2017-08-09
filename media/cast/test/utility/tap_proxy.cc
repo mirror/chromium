@@ -213,7 +213,7 @@ void CheckByteCounters() {
   }
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&CheckByteCounters),
+      base::BindOnce(&CheckByteCounters),
       base::TimeDelta::FromMilliseconds(100));
 }
 

@@ -24,7 +24,7 @@ void MojoProvisionFetcher::Retrieve(const std::string& default_url,
   DVLOG(1) << __func__;
   provision_fetcher_ptr_->Retrieve(
       default_url, request_data,
-      base::Bind(&MojoProvisionFetcher::OnResponse, weak_factory_.GetWeakPtr(),
+      base::BindOnce(&MojoProvisionFetcher::OnResponse, weak_factory_.GetWeakPtr(),
                  response_cb));
 }
 

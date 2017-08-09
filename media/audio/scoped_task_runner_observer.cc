@@ -34,7 +34,7 @@ void ScopedTaskRunnerObserver::ObserveLoopDestruction(
     base::WaitableEvent event(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                               base::WaitableEvent::InitialState::NOT_SIGNALED);
     if (task_runner_->PostTask(FROM_HERE,
-            base::Bind(&ScopedTaskRunnerObserver::ObserveLoopDestruction,
+            base::BindOnce(&ScopedTaskRunnerObserver::ObserveLoopDestruction,
                        base::Unretained(this), enable, &event))) {
       event.Wait();
     } else {

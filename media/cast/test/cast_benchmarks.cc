@@ -656,7 +656,7 @@ class CastBenchmark {
           ->message_loop()
           ->task_runner()
           ->PostTask(FROM_HERE,
-                     base::Bind(&CastBenchmark::BinarySearch,
+                     base::BindOnce(&CastBenchmark::BinarySearch,
                                 base::Unretained(this), v, accuracy));
     } else {
       skip *= 2;
@@ -684,7 +684,7 @@ class CastBenchmark {
       a.latency.grade = 1.0;
       a.packet_drop.grade = 1.0;
       threads[0]->message_loop()->task_runner()->PostTask(
-          FROM_HERE, base::Bind(base::IgnoreResult(&CastBenchmark::RunOnePoint),
+          FROM_HERE, base::BindOnce(base::IgnoreResult(&CastBenchmark::RunOnePoint),
                                 base::Unretained(this), a, 1.0));
     } else {
       SearchVector a, b, c;

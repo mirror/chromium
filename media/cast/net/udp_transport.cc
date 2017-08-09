@@ -153,7 +153,7 @@ void UdpTransport::ScheduleReceiveNextPacket() {
   if (!packet_receiver_.is_null() && !receive_pending_) {
     receive_pending_ = true;
     io_thread_proxy_->PostTask(FROM_HERE,
-                               base::Bind(&UdpTransport::ReceiveNextPacket,
+                               base::BindOnce(&UdpTransport::ReceiveNextPacket,
                                           weak_factory_.GetWeakPtr(),
                                           net::ERR_IO_PENDING));
   }

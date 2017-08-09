@@ -354,7 +354,7 @@ void RendererImpl::InitializeAudioRenderer() {
       media_resource_->GetFirstStream(DemuxerStream::AUDIO);
   if (!audio_stream) {
     audio_renderer_.reset();
-    task_runner_->PostTask(FROM_HERE, base::Bind(done_cb, PIPELINE_OK));
+    task_runner_->PostTask(FROM_HERE, base::BindOnce(done_cb, PIPELINE_OK));
     return;
   }
 
@@ -404,7 +404,7 @@ void RendererImpl::InitializeVideoRenderer() {
       media_resource_->GetFirstStream(DemuxerStream::VIDEO);
   if (!video_stream) {
     video_renderer_.reset();
-    task_runner_->PostTask(FROM_HERE, base::Bind(done_cb, PIPELINE_OK));
+    task_runner_->PostTask(FROM_HERE, base::BindOnce(done_cb, PIPELINE_OK));
     return;
   }
 
@@ -720,7 +720,7 @@ bool RendererImpl::HandleRestartedStreamBufferingChanges(
                               " resuming playback.";
       task_runner_->PostTask(
           FROM_HERE,
-          base::Bind(&RendererImpl::OnStreamRestartCompleted, weak_this_));
+          base::BindOnce(&RendererImpl::OnStreamRestartCompleted, weak_this_));
       if (state_ == STATE_PLAYING &&
           !deferred_video_underflow_cb_.IsCancelled()) {
         // If deferred_video_underflow_cb_ wasn't triggered, then audio should
@@ -767,7 +767,7 @@ bool RendererImpl::HandleRestartedStreamBufferingChanges(
       PausePlayback();
       task_runner_->PostTask(
           FROM_HERE,
-          base::Bind(&RendererImpl::OnStreamRestartCompleted, weak_this_));
+          base::BindOnce(&RendererImpl::OnStreamRestartCompleted, weak_this_));
     }
   }
   return false;

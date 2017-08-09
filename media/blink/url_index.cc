@@ -151,7 +151,7 @@ bool UrlData::ValidateDataOrigin(const GURL& origin) {
 void UrlData::OnEmpty() {
   DCHECK(thread_checker_.CalledOnValidThread());
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&UrlIndex::RemoveUrlDataIfEmpty, url_index_,
+      FROM_HERE, base::BindOnce(&UrlIndex::RemoveUrlDataIfEmpty, url_index_,
                             scoped_refptr<UrlData>(this)));
 }
 

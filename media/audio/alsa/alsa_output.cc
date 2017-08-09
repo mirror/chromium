@@ -542,7 +542,7 @@ void AlsaPcmOutputStream::ScheduleNextWrite(bool source_exhausted) {
 
   task_runner_->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&AlsaPcmOutputStream::WriteTask, weak_factory_.GetWeakPtr()),
+      base::BindOnce(&AlsaPcmOutputStream::WriteTask, weak_factory_.GetWeakPtr()),
       next_fill_time);
 }
 

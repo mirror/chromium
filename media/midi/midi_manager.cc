@@ -94,7 +94,7 @@ void MidiManager::Shutdown() {
         shutdown_synchronously = true;
       } else {
         session_thread_runner_->PostTask(
-            FROM_HERE, base::Bind(&MidiManager::ShutdownOnSessionThread,
+            FROM_HERE, base::BindOnce(&MidiManager::ShutdownOnSessionThread,
                                   base::Unretained(this)));
       }
       session_thread_runner_ = nullptr;
@@ -207,7 +207,7 @@ void MidiManager::CompleteInitialization(Result result) {
         complete_asynchronously = true;
       } else {
         session_thread_runner_->PostTask(
-            FROM_HERE, base::Bind(&MidiManager::CompleteInitializationInternal,
+            FROM_HERE, base::BindOnce(&MidiManager::CompleteInitializationInternal,
                                   base::Unretained(this), result));
       }
     }

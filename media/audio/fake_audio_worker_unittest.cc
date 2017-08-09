@@ -48,7 +48,7 @@ class FakeAudioWorkerTest : public testing::Test {
     // should end up with only a single callback being run.
     message_loop_.task_runner()->PostTask(
         FROM_HERE,
-        base::Bind(&FakeAudioWorkerTest::EndTest, base::Unretained(this), 1));
+        base::BindOnce(&FakeAudioWorkerTest::EndTest, base::Unretained(this), 1));
   }
 
   void StopStartOnAudioThread() {
@@ -69,7 +69,7 @@ class FakeAudioWorkerTest : public testing::Test {
     if (seen_callbacks_ < callbacks) {
       message_loop_.task_runner()->PostDelayedTask(
           FROM_HERE,
-          base::Bind(&FakeAudioWorkerTest::TimeCallbacksOnAudioThread,
+          base::BindOnce(&FakeAudioWorkerTest::TimeCallbacksOnAudioThread,
                      base::Unretained(this), callbacks),
           time_between_callbacks_ / 2);
     } else {
@@ -102,7 +102,7 @@ class FakeAudioWorkerTest : public testing::Test {
 // Ensure the worker runs on the audio thread and fires callbacks.
 TEST_F(FakeAudioWorkerTest, FakeBasicCallback) {
   message_loop_.task_runner()->PostTask(
-      FROM_HERE, base::Bind(&FakeAudioWorkerTest::RunOnceOnAudioThread,
+      FROM_HERE, base::BindOnce(&FakeAudioWorkerTest::RunOnceOnAudioThread,
                             base::Unretained(this)));
   base::RunLoop().Run();
 }
@@ -110,7 +110,7 @@ TEST_F(FakeAudioWorkerTest, FakeBasicCallback) {
 // Ensure the time between callbacks is sane.
 TEST_F(FakeAudioWorkerTest, TimeBetweenCallbacks) {
   message_loop_.task_runner()->PostTask(
-      FROM_HERE, base::Bind(&FakeAudioWorkerTest::TimeCallbacksOnAudioThread,
+      FROM_HERE, base::BindOnce(&FakeAudioWorkerTest::TimeCallbacksOnAudioThread,
                             base::Unretained(this), kTestCallbacks));
   base::RunLoop().Run();
 
@@ -132,13 +132,13 @@ TEST_F(FakeAudioWorkerTest, TimeBetweenCallbacks) {
 // http://crbug.com/159049.
 TEST_F(FakeAudioWorkerTest, StartStopClearsCallbacks) {
   message_loop_.task_runner()->PostTask(
-      FROM_HERE, base::Bind(&FakeAudioWorkerTest::TimeCallbacksOnAudioThread,
+      FROM_HERE, base::BindOnce(&FakeAudioWorkerTest::TimeCallbacksOnAudioThread,
                             base::Unretained(this), kTestCallbacks));
 
   // Issue a Stop() / Start() in between expected callbacks to maximize the
   // chance of catching the worker doing the wrong thing.
   message_loop_.task_runner()->PostDelayedTask(
-      FROM_HERE, base::Bind(&FakeAudioWorkerTest::StopStartOnAudioThread,
+      FROM_HERE, base::BindOnce(&FakeAudioWorkerTest::StopStartOnAudioThread,
                             base::Unretained(this)),
       time_between_callbacks_ / 2);
 

@@ -116,7 +116,7 @@ void AudioInputDevice::Start() {
   DCHECK(callback_) << "Initialize hasn't been called";
   DVLOG(1) << "Start()";
   task_runner()->PostTask(FROM_HERE,
-      base::Bind(&AudioInputDevice::StartUpOnIOThread, this));
+      base::BindOnce(&AudioInputDevice::StartUpOnIOThread, this));
 }
 
 void AudioInputDevice::Stop() {
@@ -129,7 +129,7 @@ void AudioInputDevice::Stop() {
   }
 
   task_runner()->PostTask(FROM_HERE,
-      base::Bind(&AudioInputDevice::ShutDownOnIOThread, this));
+      base::BindOnce(&AudioInputDevice::ShutDownOnIOThread, this));
 }
 
 void AudioInputDevice::SetVolume(double volume) {
@@ -139,13 +139,13 @@ void AudioInputDevice::SetVolume(double volume) {
   }
 
   task_runner()->PostTask(FROM_HERE,
-      base::Bind(&AudioInputDevice::SetVolumeOnIOThread, this, volume));
+      base::BindOnce(&AudioInputDevice::SetVolumeOnIOThread, this, volume));
 }
 
 void AudioInputDevice::SetAutomaticGainControl(bool enabled) {
   DVLOG(1) << "SetAutomaticGainControl(enabled=" << enabled << ")";
   task_runner()->PostTask(FROM_HERE,
-      base::Bind(&AudioInputDevice::SetAutomaticGainControlOnIOThread,
+      base::BindOnce(&AudioInputDevice::SetAutomaticGainControlOnIOThread,
           this, enabled));
 }
 
@@ -342,7 +342,7 @@ void AudioInputDevice::CheckIfInputStreamIsAlive() {
 void AudioInputDevice::SetLastCallbackTimeToNow() {
   task_runner()->PostTask(
       FROM_HERE,
-      base::Bind(&AudioInputDevice::SetLastCallbackTimeToNowOnIOThread, this));
+      base::BindOnce(&AudioInputDevice::SetLastCallbackTimeToNowOnIOThread, this));
 }
 
 void AudioInputDevice::SetLastCallbackTimeToNowOnIOThread() {

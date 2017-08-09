@@ -371,7 +371,7 @@ TEST_P(AudioOutputDeviceTest, AuthorizationTimedOut) {
   // Request device info on another thread.
   thread.task_runner()->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&AudioOutputDeviceTest::CheckDeviceStatus,
+      base::BindOnce(&AudioOutputDeviceTest::CheckDeviceStatus,
                  base::Unretained(this), OUTPUT_DEVICE_STATUS_ERROR_TIMED_OUT),
       event.GetClosure());
 

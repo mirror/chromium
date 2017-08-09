@@ -407,9 +407,9 @@ void ClearKeyCdm::CreateSessionAndGenerateRequest(
 
   std::unique_ptr<media::NewSessionCdmPromise> promise(
       new media::CdmCallbackPromise<std::string>(
-          base::Bind(&ClearKeyCdm::OnSessionCreated, base::Unretained(this),
+          base::BindOnce(&ClearKeyCdm::OnSessionCreated, base::Unretained(this),
                      promise_id),
-          base::Bind(&ClearKeyCdm::OnPromiseFailed, base::Unretained(this),
+          base::BindOnce(&ClearKeyCdm::OnPromiseFailed, base::Unretained(this),
                      promise_id)));
   cdm_->CreateSessionAndGenerateRequest(
       ConvertSessionType(session_type), ConvertInitDataType(init_data_type),
@@ -441,9 +441,9 @@ void ClearKeyCdm::LoadSession(uint32_t promise_id,
 
   std::unique_ptr<media::NewSessionCdmPromise> promise(
       new media::CdmCallbackPromise<std::string>(
-          base::Bind(&ClearKeyCdm::OnSessionCreated, base::Unretained(this),
+          base::BindOnce(&ClearKeyCdm::OnSessionCreated, base::Unretained(this),
                      promise_id),
-          base::Bind(&ClearKeyCdm::OnPromiseFailed, base::Unretained(this),
+          base::BindOnce(&ClearKeyCdm::OnPromiseFailed, base::Unretained(this),
                      promise_id)));
   cdm_->LoadSession(ConvertSessionType(session_type), web_session_str,
                     std::move(promise));
@@ -459,9 +459,9 @@ void ClearKeyCdm::UpdateSession(uint32_t promise_id,
 
   std::unique_ptr<media::SimpleCdmPromise> promise(
       new media::CdmCallbackPromise<>(
-          base::Bind(&ClearKeyCdm::OnUpdateSuccess, base::Unretained(this),
+          base::BindOnce(&ClearKeyCdm::OnUpdateSuccess, base::Unretained(this),
                      promise_id, web_session_str),
-          base::Bind(&ClearKeyCdm::OnPromiseFailed, base::Unretained(this),
+          base::BindOnce(&ClearKeyCdm::OnPromiseFailed, base::Unretained(this),
                      promise_id)));
   cdm_->UpdateSession(web_session_str,
                       std::vector<uint8_t>(response, response + response_size),
@@ -498,9 +498,9 @@ void ClearKeyCdm::CloseSession(uint32_t promise_id,
 
   std::unique_ptr<media::SimpleCdmPromise> promise(
       new media::CdmCallbackPromise<>(
-          base::Bind(&ClearKeyCdm::OnPromiseResolved, base::Unretained(this),
+          base::BindOnce(&ClearKeyCdm::OnPromiseResolved, base::Unretained(this),
                      promise_id),
-          base::Bind(&ClearKeyCdm::OnPromiseFailed, base::Unretained(this),
+          base::BindOnce(&ClearKeyCdm::OnPromiseFailed, base::Unretained(this),
                      promise_id)));
   cdm_->CloseSession(web_session_str, std::move(promise));
 }
@@ -513,9 +513,9 @@ void ClearKeyCdm::RemoveSession(uint32_t promise_id,
 
   std::unique_ptr<media::SimpleCdmPromise> promise(
       new media::CdmCallbackPromise<>(
-          base::Bind(&ClearKeyCdm::OnPromiseResolved, base::Unretained(this),
+          base::BindOnce(&ClearKeyCdm::OnPromiseResolved, base::Unretained(this),
                      promise_id),
-          base::Bind(&ClearKeyCdm::OnPromiseFailed, base::Unretained(this),
+          base::BindOnce(&ClearKeyCdm::OnPromiseFailed, base::Unretained(this),
                      promise_id)));
   cdm_->RemoveSession(web_session_str, std::move(promise));
 }
@@ -526,9 +526,9 @@ void ClearKeyCdm::SetServerCertificate(uint32_t promise_id,
   DVLOG(1) << __func__;
   std::unique_ptr<media::SimpleCdmPromise> promise(
       new media::CdmCallbackPromise<>(
-          base::Bind(&ClearKeyCdm::OnPromiseResolved, base::Unretained(this),
+          base::BindOnce(&ClearKeyCdm::OnPromiseResolved, base::Unretained(this),
                      promise_id),
-          base::Bind(&ClearKeyCdm::OnPromiseFailed, base::Unretained(this),
+          base::BindOnce(&ClearKeyCdm::OnPromiseFailed, base::Unretained(this),
                      promise_id)));
   cdm_->SetServerCertificate(
       std::vector<uint8_t>(

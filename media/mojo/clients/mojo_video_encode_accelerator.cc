@@ -163,7 +163,7 @@ void MojoVideoEncodeAccelerator::Encode(const scoped_refptr<VideoFrame>& frame,
   // the former alive until the remote end is actually finished.
   DCHECK(vea_.is_bound());
   vea_->Encode(mojo_frame, force_keyframe,
-               base::Bind(&KeepVideoFrameAlive, frame));
+               base::BindOnce(&KeepVideoFrameAlive, frame));
 }
 
 void MojoVideoEncodeAccelerator::UseOutputBitstreamBuffer(

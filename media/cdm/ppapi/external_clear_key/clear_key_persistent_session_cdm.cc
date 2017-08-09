@@ -138,7 +138,7 @@ void ClearKeyPersistentSessionCdm::LoadSession(
   CdmFileAdapter* file_ref = file.get();
   file_ref->Open(
       session_id,
-      base::Bind(&ClearKeyPersistentSessionCdm::OnFileOpenedForLoadSession,
+      base::BindOnce(&ClearKeyPersistentSessionCdm::OnFileOpenedForLoadSession,
                  weak_factory_.GetWeakPtr(), session_id, base::Passed(&file),
                  base::Passed(std::move(promise))));
 }
@@ -156,7 +156,7 @@ void ClearKeyPersistentSessionCdm::OnFileOpenedForLoadSession(
   }
 
   CdmFileAdapter* file_reader = file.get();
-  file_reader->Read(base::Bind(
+  file_reader->Read(base::BindOnce(
       &ClearKeyPersistentSessionCdm::OnFileReadForLoadSession,
       weak_factory_.GetWeakPtr(), session_id, base::Passed(std::move(file)),
       base::Passed(std::move(promise))));
@@ -232,7 +232,7 @@ void ClearKeyPersistentSessionCdm::UpdateSession(
   CdmFileAdapter* file_ref = file.get();
   file_ref->Open(
       session_id,
-      base::Bind(&ClearKeyPersistentSessionCdm::OnFileOpenedForUpdateSession,
+      base::BindOnce(&ClearKeyPersistentSessionCdm::OnFileOpenedForUpdateSession,
                  weak_factory_.GetWeakPtr(), session_id, key_added,
                  base::Passed(&file), base::Passed(std::move(promise))));
 }
@@ -255,7 +255,7 @@ void ClearKeyPersistentSessionCdm::OnFileOpenedForUpdateSession(
   CdmFileAdapter* file_writer = file.get();
   file_writer->Write(
       std::vector<uint8_t>(current_state.begin(), current_state.end()),
-      base::Bind(&ClearKeyPersistentSessionCdm::OnFileWrittenForUpdateSession,
+      base::BindOnce(&ClearKeyPersistentSessionCdm::OnFileWrittenForUpdateSession,
                  weak_factory_.GetWeakPtr(), session_id, key_added,
                  base::Passed(std::move(file)),
                  base::Passed(std::move(promise))));
@@ -298,7 +298,7 @@ void ClearKeyPersistentSessionCdm::RemoveSession(
   CdmFileAdapter* file_ref = file.get();
   file_ref->Open(
       session_id,
-      base::Bind(&ClearKeyPersistentSessionCdm::OnFileOpenedForRemoveSession,
+      base::BindOnce(&ClearKeyPersistentSessionCdm::OnFileOpenedForRemoveSession,
                  weak_factory_.GetWeakPtr(), session_id, base::Passed(&file),
                  base::Passed(std::move(promise))));
 }
@@ -318,7 +318,7 @@ void ClearKeyPersistentSessionCdm::OnFileOpenedForRemoveSession(
   CdmFileAdapter* file_writer = file.get();
   file_writer->Write(
       std::vector<uint8_t>(),
-      base::Bind(&ClearKeyPersistentSessionCdm::OnFileWrittenForRemoveSession,
+      base::BindOnce(&ClearKeyPersistentSessionCdm::OnFileWrittenForRemoveSession,
                  weak_factory_.GetWeakPtr(), session_id,
                  base::Passed(std::move(file)),
                  base::Passed(std::move(promise))));

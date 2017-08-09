@@ -59,7 +59,7 @@ class MojoAudioDecoderTest : public ::testing::Test {
     mojom::AudioDecoderPtr remote_audio_decoder;
     service_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&MojoAudioDecoderTest::ConnectToService,
+        base::BindOnce(&MojoAudioDecoderTest::ConnectToService,
                    base::Unretained(this),
                    base::Passed(mojo::MakeRequest(&remote_audio_decoder))));
     mojo_audio_decoder_.reset(new MojoAudioDecoder(

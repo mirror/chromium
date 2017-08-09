@@ -248,7 +248,7 @@ TEST_P(AudioDebugFileWriterBehavioralTest,
 
   file_thread_.task_runner()->PostTask(
       FROM_HERE,
-      base::Bind(&base::WaitableEvent::Wait, base::Owned(wait_for_deletion)));
+      base::BindOnce(&base::WaitableEvent::Wait, base::Owned(wait_for_deletion)));
 
   debug_writer_->Start(file_path);
 

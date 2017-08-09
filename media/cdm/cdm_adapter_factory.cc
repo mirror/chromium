@@ -33,7 +33,7 @@ void CdmAdapterFactory::Create(
   if (!security_origin.is_valid()) {
     LOG(ERROR) << "Invalid Origin: " << security_origin;
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(cdm_created_cb, nullptr, "Invalid origin."));
+        FROM_HERE, base::BindOnce(cdm_created_cb, nullptr, "Invalid origin."));
     return;
   }
 
@@ -41,7 +41,7 @@ void CdmAdapterFactory::Create(
   if (!cdm_allocator) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
-        base::Bind(cdm_created_cb, nullptr, "CDM allocator creation failed."));
+        base::BindOnce(cdm_created_cb, nullptr, "CDM allocator creation failed."));
     return;
   }
 
