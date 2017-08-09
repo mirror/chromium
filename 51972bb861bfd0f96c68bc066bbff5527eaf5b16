@@ -16,6 +16,41 @@
       "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a382ad_78363682",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-09T21:27:16Z",
+      "side": 1,
+      "message": "I think the goal is to do depth-first recursion, rather than iterate the entire subtree. I don\u0027t think NodeRange provides a way to dynamically exclude certain subtrees within the main subtree.",
+      "parentUuid": "04c3e031_c1cdec58",
+      "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a683b5f5_5f9f2251",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-09T21:27:16Z",
+      "side": 1,
+      "message": "Is there any reason to put this here rather than in FrameTree?\n\nAlso, it would be nice if we could generalize this a bit and unify it WebContentsImpl::GetRenderWidgetHostViewsInTree(), since these functions end up looking very similar.",
+      "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
