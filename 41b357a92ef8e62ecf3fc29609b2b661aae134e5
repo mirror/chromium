@@ -34,6 +34,24 @@
       "revId": "41b357a92ef8e62ecf3fc29609b2b661aae134e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb8abd6_9c946009",
+        "filename": "url/gurl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-09T03:07:25Z",
+      "side": 1,
+      "message": "I think you are supposed to (in general) have either blank lines between paragraphs or wrap them (don\u0027t arbitrarily insert newlines in a paragraph without a blank line).\n\nIn this case it just means wrap Line 190 up onto Line 189, or add a blank line.",
+      "parentUuid": "fd923024_e18c915e",
+      "revId": "41b357a92ef8e62ecf3fc29609b2b661aae134e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
