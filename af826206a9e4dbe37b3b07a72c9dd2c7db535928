@@ -16,6 +16,24 @@
       "revId": "af826206a9e4dbe37b3b07a72c9dd2c7db535928",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5241ae74_47e95693",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-09T19:55:59Z",
+      "side": 1,
+      "message": "Good catch, deleted.",
+      "parentUuid": "65ebcc05_bd476a19",
+      "revId": "af826206a9e4dbe37b3b07a72c9dd2c7db535928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
