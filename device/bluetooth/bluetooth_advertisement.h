@@ -15,7 +15,6 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
-#include "base/memory/ref_counted.h"
 #include "base/observer_list.h"
 #include "build/build_config.h"
 #include "device/bluetooth/bluetooth_export.h"
@@ -24,9 +23,11 @@ namespace device {
 
 // BluetoothAdvertisement represents an advertisement which advertises over the
 // LE channel during its lifetime.
-class DEVICE_BLUETOOTH_EXPORT BluetoothAdvertisement
-    : public base::RefCounted<BluetoothAdvertisement> {
+class DEVICE_BLUETOOTH_EXPORT BluetoothAdvertisement {
  public:
+  // The destructor will unregister this advertisement.
+  virtual ~BluetoothAdvertisement();
+
   // Possible types of error raised while registering or unregistering
   // advertisements.
   enum ErrorCode {
@@ -134,12 +135,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdvertisement
                           const ErrorCallback& error_callback) = 0;
 
  protected:
-  friend class base::RefCounted<BluetoothAdvertisement>;
-
   BluetoothAdvertisement();
-
-  // The destructor will unregister this advertisement.
-  virtual ~BluetoothAdvertisement();
 
   // List of observers interested in event notifications from us. Objects in
   // |observers_| are expected to outlive a BluetoothAdvertisement object.

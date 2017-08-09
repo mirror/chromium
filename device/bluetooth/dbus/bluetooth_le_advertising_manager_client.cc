@@ -60,7 +60,7 @@ class BluetoothAdvertisementManagerClientImpl
   // BluetoothAdvertisementManagerClient override.
   void RegisterAdvertisement(const dbus::ObjectPath& manager_object_path,
                              const dbus::ObjectPath& advertisement_object_path,
-                             const base::Closure& callback,
+                             base::OnceClosure callback,
                              const ErrorCallback& error_callback) override {
     dbus::MethodCall method_call(
         bluetooth_advertising_manager::kBluetoothAdvertisingManagerInterface,
@@ -79,8 +79,8 @@ class BluetoothAdvertisementManagerClientImpl
         object_manager_->GetObjectProxy(manager_object_path);
     object_proxy->CallMethodWithErrorCallback(
         &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
-        base::Bind(&BluetoothAdvertisementManagerClientImpl::OnSuccess,
-                   weak_ptr_factory_.GetWeakPtr(), callback),
+        base::BindOnce(&BluetoothAdvertisementManagerClientImpl::OnSuccess,
+                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)),
         base::Bind(&BluetoothAdvertisementManagerClientImpl::OnError,
                    weak_ptr_factory_.GetWeakPtr(), error_callback));
   }
@@ -181,9 +181,9 @@ class BluetoothAdvertisementManagerClientImpl
   }
 
   // Called when a response for successful method call is received.
-  void OnSuccess(const base::Closure& callback, dbus::Response* response) {
+  void OnSuccess(base::OnceClosure callback, dbus::Response* response) {
     DCHECK(response);
-    callback.Run();
+    std::move(callback).Run();
   }
 
   // Called when a response for a failed method call is received.
