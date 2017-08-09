@@ -217,7 +217,6 @@ void URLLoaderImpl::Cleanup() {
 void URLLoaderImpl::FollowRedirect() {
   if (!url_request_) {
     NotifyCompleted(net::ERR_UNEXPECTED);
-    // |this| may have been deleted.
     return;
   }
 
@@ -252,7 +251,6 @@ void URLLoaderImpl::OnResponseStarted(net::URLRequest* url_request,
 
   if (net_error != net::OK) {
     NotifyCompleted(net_error);
-    // |this| may have been deleted.
     return;
   }
 
@@ -331,8 +329,8 @@ void URLLoaderImpl::ReadMore() {
     // Close body pipe.
     response_body_stream_.reset();
 
+    // This call may delete |this|.
     NotifyCompleted(url_request_->status().ToNetError());
-    // |this| may have been deleted.
     return;
   }
 }
@@ -377,14 +375,10 @@ void URLLoaderImpl::OnReadCompleted(net::URLRequest* url_request,
 
   if (!url_request->status().is_success()) {
     writable_handle_watcher_.Cancel();
-    CompletePendingWrite();
-
     // This closes the data pipe.
     // TODO(mmenke): Should NotifyCompleted close the data pipe itself instead?
     response_body_stream_.reset();
-
     NotifyCompleted(url_request_->status().ToNetError());
-    // |this| may have been deleted.
     return;
   }
 

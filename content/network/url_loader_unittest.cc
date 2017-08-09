@@ -138,20 +138,9 @@ class URLLoaderImplTest : public testing::Test {
     ASSERT_TRUE(test_server_.Start());
   }
 
-  void Load(const GURL& url) {
-    EXPECT_EQ(net::OK, LoadWithError(url, nullptr, 0));
-  }
+  void Load(const GURL& url) { EXPECT_EQ(net::OK, LoadWithError(url)); }
 
-  // Attempts to load |url| and returns the resulting error code. If |data| is
-  // non-NULL, also attempts to read a response body of |expected_body_size|.
-  // The advantage of using |data| instead of calling ReadData() after
-  // LoadWithError is that it will load the resposne body before the URLLoader
-  // is destroyed, so pipes may still be open.
-  //
-  // TODO(mmenke): Come up with a better test fixture.
-  int LoadWithError(const GURL& url,
-                    std::string* data,
-                    size_t expected_body_size) {
+  int LoadWithError(const GURL& url) {
     DCHECK(!ran_);
     mojom::URLLoaderPtr loader;
 
@@ -170,10 +159,6 @@ class URLLoaderImplTest : public testing::Test {
     client_.RunUntilComplete();
     DCHECK(!ran_);
     ran_ = true;
-
-    if (data)
-      *data = ReadData(expected_body_size);
-
     return client_.completion_status().error_code;
   }
 
@@ -191,7 +176,7 @@ class URLLoaderImplTest : public testing::Test {
     Load(test_server()->GetURL(std::string("/") + path));
     EXPECT_EQ(expected, ReadData(expected.size()));
     // The file isn't compressed, so both encoded and decoded body lengths
-    // should match the read body length.
+    // should match the body length.
     EXPECT_EQ(
         expected.size(),
         static_cast<size_t>(client()->completion_status().decoded_body_length));
@@ -200,9 +185,8 @@ class URLLoaderImplTest : public testing::Test {
         static_cast<size_t>(client()->completion_status().encoded_body_length));
     // Over the wire length should include headers, so should be longer.
     // TODO(mmenke): Worth adding better tests for encoded_data_length?
-    EXPECT_LT(
-        expected.size(),
-        static_cast<size_t>(client()->completion_status().encoded_data_length));
+    EXPECT_LT(client()->completion_status().encoded_body_length,
+              client()->completion_status().encoded_data_length);
   }
 
   void LoadPackets(std::list<std::string> packets) {
@@ -225,9 +209,10 @@ class URLLoaderImplTest : public testing::Test {
     LoadPackets(std::move(packets));
     std::string expected = first + second;
     EXPECT_EQ(expected, ReadData(expected.size()));
+    EXPECT_LE(0, client_.completion_status().decoded_body_length);
     EXPECT_EQ(
         expected.size(),
-        static_cast<size_t>(client()->completion_status().decoded_body_length));
+        static_cast<size_t>(client_.completion_status().decoded_body_length));
   }
 
   net::EmbeddedTestServer* test_server() { return &test_server_; }
@@ -271,11 +256,6 @@ class URLLoaderImplTest : public testing::Test {
                           MOJO_READ_DATA_FLAG_ALL_OR_NONE),
              MOJO_RESULT_OK);
     CHECK_EQ(num_bytes, static_cast<uint32_t>(size));
-
-    // No more data should remain on the pipe.
-    CHECK_EQ(MojoReadData(consumer, buffer.data(), &num_bytes,
-                          MOJO_READ_DATA_FLAG_ALL_OR_NONE),
-             MOJO_RESULT_FAILED_PRECONDITION);
 
     return std::string(buffer.data(), buffer.size());
   }
@@ -341,28 +321,24 @@ TEST_F(URLLoaderImplTest, GzipTest) {
 
 TEST_F(URLLoaderImplTest, ErrorBeforeHeaders) {
   EXPECT_EQ(net::ERR_EMPTY_RESPONSE,
-            LoadWithError(test_server()->GetURL("/close-socket"), nullptr, 0));
+            LoadWithError(test_server()->GetURL("/close-socket")));
   EXPECT_FALSE(client()->response_body().is_valid());
 }
 
 TEST_F(URLLoaderImplTest, SyncErrorWhileReadingBody) {
-  std::string body;
   EXPECT_EQ(
       net::ERR_FAILED,
       LoadWithError(net::URLRequestFailedJob::GetMockHttpUrlWithFailurePhase(
-                        net::URLRequestFailedJob::READ_SYNC, net::ERR_FAILED),
-                    &body, 0));
-  EXPECT_EQ("", body);
+          net::URLRequestFailedJob::READ_SYNC, net::ERR_FAILED)));
+  EXPECT_EQ("", ReadData(0));
 }
 
 TEST_F(URLLoaderImplTest, AsyncErrorWhileReadingBody) {
-  std::string body;
   EXPECT_EQ(
       net::ERR_FAILED,
       LoadWithError(net::URLRequestFailedJob::GetMockHttpUrlWithFailurePhase(
-                        net::URLRequestFailedJob::READ_ASYNC, net::ERR_FAILED),
-                    &body, 0));
-  EXPECT_EQ("", body);
+          net::URLRequestFailedJob::READ_ASYNC, net::ERR_FAILED)));
+  EXPECT_EQ("", ReadData(0));
 }
 
 TEST_F(URLLoaderImplTest, DestroyContextWithLiveRequest) {
