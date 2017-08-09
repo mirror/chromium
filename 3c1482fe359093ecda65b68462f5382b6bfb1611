@@ -70,6 +70,30 @@
       "revId": "3c1482fe359093ecda65b68462f5382b6bfb1611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13cbaf5_d6fdc9b4",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-08-09T19:10:38Z",
+      "side": 1,
+      "message": "Hm, I think you are actually right that this call is only for Android. Definitely a bit confusing as that the names are the same as the ozone ones.",
+      "parentUuid": "22e1928a_4472196d",
+      "range": {
+        "startLine": 1089,
+        "startChar": 9,
+        "endLine": 1089,
+        "endChar": 14
+      },
+      "revId": "3c1482fe359093ecda65b68462f5382b6bfb1611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
