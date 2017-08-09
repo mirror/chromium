@@ -50,8 +50,10 @@ const int kTraceEventBrowserProcessSortIndex = -6;
 
 HeadlessContentMainDelegate* g_current_headless_content_main_delegate = nullptr;
 
+#if !defined(OS_FUCHSIA)
 base::LazyInstance<HeadlessCrashReporterClient>::Leaky g_headless_crash_client =
     LAZY_INSTANCE_INITIALIZER;
+#endif
 
 const char kLogFileName[] = "CHROME_LOG_FILE";
 }  // namespace
@@ -165,8 +167,14 @@ void HeadlessContentMainDelegate::InitLogging(
   DCHECK(success);
 }
 
+
 void HeadlessContentMainDelegate::InitCrashReporter(
     const base::CommandLine& command_line) {
+#if defined(OS_FUCHSIA)
+  // TODO(fuchsia): Implement this when crash reporting/Breakpad are available
+  // in Fuchsia. (crbug.com/753619)
+  NOTIMPLEMENTED();
+#else
   const std::string process_type =
       command_line.GetSwitchValueASCII(switches::kProcessType);
   crash_reporter::SetCrashReporterClient(g_headless_crash_client.Pointer());
@@ -189,7 +197,9 @@ void HeadlessContentMainDelegate::InitCrashReporter(
   crash_reporter::InitializeCrashpadWithEmbeddedHandler(process_type.empty(),
                                                         process_type, "");
 #endif  // defined(HEADLESS_USE_BREAKPAD)
+#endif  // defined(OS_FUCHSIA)
 }
+
 
 void HeadlessContentMainDelegate::PreSandboxStartup() {
   const base::CommandLine& command_line(
@@ -202,6 +212,7 @@ void HeadlessContentMainDelegate::PreSandboxStartup() {
   if (command_line.HasSwitch(switches::kEnableLogging))
     InitLogging(command_line);
 #endif  // defined(OS_WIN)
+
   InitCrashReporter(command_line);
   InitializeResourceBundle();
 }

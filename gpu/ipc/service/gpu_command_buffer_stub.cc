@@ -706,6 +706,10 @@ bool GpuCommandBufferStub::Initialize(
             gl::GLSurfaceFormat::COLOR_SPACE_DISPLAY_P3);
         break;
     }
+#if defined(OS_FUCHSIA)
+    // KM: punt
+    NOTIMPLEMENTED();
+#else
     surface_ = ImageTransportSurface::CreateNativeSurface(
         AsWeakPtr(), surface_handle_, surface_format);
     if (!surface_ || !surface_->Initialize(surface_format)) {
@@ -713,6 +717,7 @@ bool GpuCommandBufferStub::Initialize(
       DLOG(ERROR) << "Failed to create surface.";
       return false;
     }
+#endif  // defined(OS_FUCHSIA)
   }
 
   if (context_group_->gpu_preferences().use_passthrough_cmd_decoder) {

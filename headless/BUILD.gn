@@ -223,7 +223,7 @@ js_library("js_devtools_bindings_lib") {
   extra_deps = [ ":gen_devtools_client_api" ]
 }
 
-if (headless_fontconfig_utils) {
+if (headless_fontconfig_utils && !is_fuchsia) {
   static_library("headless_fontconfig_utils") {
     sources = [
       "public/util/fontconfig.cc",
@@ -404,6 +404,13 @@ component("headless") {
     }
   }
 
+  if (is_fuchsia) {
+    sources -= [
+      "lib/headless_crash_reporter_client.cc",
+      "lib/headless_crash_reporter_client.h",
+    ]
+  }
+
   if (is_mac) {
     deps += [ ":mac_helpers" ]
   } else {
@@ -515,6 +522,10 @@ test("headless_unittests") {
   if (enable_basic_printing) {
     sources += [ "lib/browser/headless_printing_unittest.cc" ]
     deps += [ "//components/printing/browser" ]
+  }
+
+  if (is_fuchsia) {
+    deps -= [ "//components/crash/content/browser" ]
   }
 }
 
@@ -664,6 +675,10 @@ test("headless_browsertests") {
       "//pdf",
     ]
   }
+
+  if (is_fuchsia) {
+    deps -= [ "//components/crash/content/browser" ]
+  }
 }
 
 if (is_win) {
@@ -783,6 +798,16 @@ static_library("headless_shell_lib") {
       "//sandbox",
     ]
   }
+
+  if (is_fuchsia) {
+    deps -= [ "//components/crash/content/browser" ]
+  }
+}
+
+if (is_fuchsia) {
+  fuchsia_executable_runner("headless_shell_fuchsia") {
+    exe_name = "headless_shell"
+  }
 }
 
 executable("headless_shell") {
@@ -797,6 +822,10 @@ executable("headless_shell") {
 
   if (is_win) {
     deps += [ "//build/win:default_exe_manifest" ]
+  }
+
+  if (is_fuchsia) {
+    deps += [ ":headless_shell_fuchsia" ]
   }
 }
 

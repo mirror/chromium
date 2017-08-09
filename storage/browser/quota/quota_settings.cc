@@ -79,6 +79,8 @@ base::Optional<storage::QuotaSettings> CalculateNominalDynamicSettings(
       1000 * kMBytes;
 #elif defined(OS_CHROMEOS)
       1000 * kMBytes;
+#elif defined(OS_FUCHSIA)
+      1000 * kMBytes;
 #elif defined(OS_WIN) || defined(OS_LINUX) || defined(OS_MACOSX)
       10000 * kMBytes;
 #else

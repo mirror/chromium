@@ -474,7 +474,9 @@ blink_core_sources("layout") {
   }
 
   if (is_fuchsia) {
-    sources += [ "LayoutThemeFuchsia.cpp" ]
+    sources += [
+      "LayoutThemeFuchsia.cpp",
+    ]
   }
 
   configs += [

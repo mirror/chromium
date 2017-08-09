@@ -51,11 +51,11 @@ class HEADLESS_EXPORT HeadlessContentMainDelegate
  private:
   friend class HeadlessBrowserTest;
 
+  static void InitializeResourceBundle();
+  static HeadlessContentMainDelegate* GetInstance();
+
   void InitLogging(const base::CommandLine& command_line);
   void InitCrashReporter(const base::CommandLine& command_line);
-  static void InitializeResourceBundle();
-
-  static HeadlessContentMainDelegate* GetInstance();
 
   std::unique_ptr<content::ContentRendererClient> renderer_client_;
   std::unique_ptr<content::ContentBrowserClient> browser_client_;

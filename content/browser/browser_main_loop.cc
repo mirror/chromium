@@ -230,6 +230,7 @@
 namespace content {
 namespace {
 
+#if !defined(OS_FUCHSIA)
 bool IsUsingMus() {
 #if defined(USE_AURA)
   return aura::Env::GetInstance()->mode() == aura::Env::Mode::MUS;
@@ -237,8 +238,10 @@ bool IsUsingMus() {
   return false;
 #endif
 }
+#endif
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
+#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
+    !defined(OS_FUCHSIA)
 void SetupSandbox(const base::CommandLine& parsed_command_line) {
   TRACE_EVENT0("startup", "SetupSandbox");
   // RenderSandboxHostLinux needs to be initialized even if the sandbox and
@@ -547,7 +550,8 @@ void BrowserMainLoop::Init() {
 void BrowserMainLoop::EarlyInitialization() {
   TRACE_EVENT0("startup", "BrowserMainLoop::EarlyInitialization");
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
+#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
+    !defined(OS_FUCHSIA)
   // No thread should be created before this call, as SetupSandbox()
   // will end-up using fork().
   SetupSandbox(parsed_command_line_);
@@ -818,7 +822,9 @@ int BrowserMainLoop::PreCreateThreads() {
       command_line->GetSwitchValueASCII(switches::kEnableFeatures),
       command_line->GetSwitchValueASCII(switches::kDisableFeatures));
 
+#if !defined(OS_FUCHSIA)
   InitializeMemoryManagementComponent();
+#endif
 
 #if defined(OS_MACOSX)
   if (base::CommandLine::InitializedForCurrentProcess() &&
@@ -1428,7 +1434,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   memory_instrumentation::ClientProcessImpl::CreateInstance(config);
 
 #if defined(USE_AURA)
-  if (IsUsingMus()) {
+  if (service_manager::ServiceManagerIsRemote()) {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kIsRunningInMash);
   }
@@ -1464,7 +1470,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   established_gpu_channel = true;
   if (!GpuDataManagerImpl::GetInstance()->CanUseGpuBrowserCompositor() ||
       parsed_command_line_.HasSwitch(switches::kDisableGpuEarlyInit) ||
-      IsUsingMus()) {
+      service_manager::ServiceManagerIsRemote()) {
     established_gpu_channel = always_uses_gpu = false;
   }
   gpu::GpuChannelEstablishFactory* factory =
@@ -1474,7 +1480,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
     factory = BrowserGpuChannelHostFactory::instance();
   }
 #if !defined(OS_ANDROID)
-  if (!IsUsingMus()) {
+  if (!service_manager::ServiceManagerIsRemote()) {
     // TODO(kylechar): Remove flag along with surface sequences.
     // See https://crbug.com/676384.
     auto surface_lifetime_type =
@@ -1596,7 +1602,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   // ChildProcess instance which is created by the renderer thread.
   if (GpuDataManagerImpl::GetInstance()->GpuAccessAllowed(NULL) &&
       !established_gpu_channel && always_uses_gpu && !UsingInProcessGpu() &&
-      !IsUsingMus()) {
+      !service_manager::ServiceManagerIsRemote()) {
     TRACE_EVENT_INSTANT0("gpu", "Post task to launch GPU process",
                          TRACE_EVENT_SCOPE_THREAD);
     BrowserThread::PostTask(
