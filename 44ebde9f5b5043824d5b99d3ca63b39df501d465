@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cf3dd8f1_220100dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "This needs a BUG\u003d link to a bug.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 4
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be6bf392_3199f9a5",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 20
@@ -19,6 +42,138 @@
     },
     {
       "key": {
+        "uuid": "43ce351a_55c9ae74",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2285,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "What is the scenario that you\u0027re worried about here? We\u0027re already within the if() block that ensures that we\u0027re at an error page, so this is a worry about one error page\u0027s popup overwriting the other?",
+      "range": {
+        "startLine": 2285,
+        "startChar": 21,
+        "endLine": 2285,
+        "endChar": 42
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ee7c9f_c89ecb96",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "I don\u0027t understand this entire block. GetPopupContents() returns a pointer that is then ignored?",
+      "range": {
+        "startLine": 992,
+        "startChar": 0,
+        "endLine": 997,
+        "endChar": 6
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404e958e_2a5bef6f",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "Hm. At the end of Browser::ActiveTabChanged, we always create a TouchbarWebContentsManager?\n\nEither:\n- create the TouchbarWebContentsManager for exactly the tabs that need it, if the tabs needing it are few, or\n- create the TouchbarWebContentsManager for every tab by adding it as a line in AttachTabHelpers().\n\nThe advantage of attaching it everywhere is that you don\u0027t have to litter \"if (TouchbarWebContentsManager::FromWebContents())\" if you know that you\u0027re working on a WebContents that\u0027s a tab.",
+      "range": {
+        "startLine": 1137,
+        "startChar": 4,
+        "endLine": 1137,
+        "endChar": 52
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbfe2b2a_9f63103a",
+        "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "When",
+      "range": {
+        "startLine": 433,
+        "startChar": 7,
+        "endLine": 433,
+        "endChar": 11
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e441936_b33dfad1",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "At this level, it doesn\u0027t know about error pages. Make the comment more general, something like \"show |view| in the touch bar\".",
+      "range": {
+        "startLine": 288,
+        "startChar": 0,
+        "endLine": 288,
+        "endChar": 68
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4210c0e2_b89fe77e",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "This part of the code doesn\u0027t know about the error page. All it knows is, \"hey, I was given a view to show in the touch bar so I\u0027ll show it!\"\n\nRemove the part in the comment about the error page.",
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e3baecc_72f2b62f",
         "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
         "patchSetId": 20
@@ -30,6 +185,132 @@
       "writtenOn": "2017-08-09T19:27:04Z",
       "side": 1,
       "message": "Why is this duplicated?",
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ee51f5_cdfdcb2b",
+        "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "Isn\u0027t this going to be the same WebContents* as web_contents(), the WebContents that this tab helper is attached to? If so, why find the parent in this manner rather than just calling web_contents()?",
+      "range": {
+        "startLine": 28,
+        "startChar": 26,
+        "endLine": 28,
+        "endChar": 32
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99071833_fcc0e6f3",
+        "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "popup_contents_ is a unique_ptr. Do not initialize unique_ptrs from raw pointers if possible. If SetPopupContents\u0027s sole job is to take ownership (which is looks like it is), make SetPopupContents take a unique_ptr as well to make the ownership transfer clear.",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 38
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb314a5_b96e7721",
+        "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "\"Do not use Namespace aliases at namespace scope in header files\"\n\nhttps://google.github.io/styleguide/cppguide.html#Namespaces\n\nThis pulls the type out of the namespace for everyone who includes this file.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429ee874_7de2d28b",
+        "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "blank line before this comment to visually space it",
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834adfb6_7c3abd44",
+        "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "blank line before this comment to visually space it",
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458ab2b5_0bda0dee",
+        "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "This maintains this state in more than one place.\n\nYou can ask a WebContents if it is an error page:\ncontents-\u003eGetController.GetLastCommittedEntry()-\u003eGetPageType() \u003d\u003d content::PAGE_TYPE_ERROR\n\nPlease access existing places that keep the data you want rather than keep it in your own state.",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 21
+      },
       "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +345,121 @@
       "writtenOn": "2017-08-09T19:27:04Z",
       "side": 1,
       "message": "Guard the whole function with API_AVAILABLE.",
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aca81b2_579d83c7",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "Is this the allowedTouchTypes on NSGestureRecognizer? I\u0027m not sure from context where |self| is getting it from. If so, that\u0027s 10.12.1+ which should be covered by the @available block. Not sure how the -respondsToSelector helps.",
+      "range": {
+        "startLine": 1768,
+        "startChar": 45,
+        "endLine": 1768,
+        "endChar": 66
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09414c6a_81767105",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 2476,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "auto\u0026? otherwise I think we\u0027re making copies of the events as we iterate over them.",
+      "range": {
+        "startLine": 2476,
+        "startChar": 11,
+        "endLine": 2476,
+        "endChar": 15
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc139b29_9f5f29aa",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "Comments are full sentences and end with a period.",
+      "range": {
+        "startLine": 119,
+        "startChar": 74,
+        "endLine": 119,
+        "endChar": 78
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7433cfa_ad716d1e",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "macOS",
+      "range": {
+        "startLine": 119,
+        "startChar": 15,
+        "endLine": 119,
+        "endChar": 21
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb6d0e3_490c8cf1",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T20:32:44Z",
+      "side": 1,
+      "message": "I don\u0027t like this. This is a very specific instance that we\u0027re special-casing in content. Can we find a different way to achieve this?\n\nBTW, I\u0027m trying to work through the same issue with my JavaScript dialog tab helper. How do we get to access the Browser containing the tab from a tab helper? 🤔",
+      "range": {
+        "startLine": 120,
+        "startChar": 15,
+        "endLine": 120,
+        "endChar": 43
+      },
       "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
