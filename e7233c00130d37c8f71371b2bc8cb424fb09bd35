@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15d929df_c56d57aa",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-09T18:46:48Z",
+      "side": 1,
+      "message": "Nit: Can you please add a space here?",
+      "range": {
+        "startLine": 99,
+        "startChar": 69,
+        "endLine": 99,
+        "endChar": 70
+      },
+      "revId": "e7233c00130d37c8f71371b2bc8cb424fb09bd35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8486d43_674d7290",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-09T18:46:48Z",
+      "side": 1,
+      "message": "What\u0027s the rationale behind storing it here?",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 44
+      },
+      "revId": "e7233c00130d37c8f71371b2bc8cb424fb09bd35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
