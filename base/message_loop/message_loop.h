@@ -132,11 +132,11 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   // Returns the MessageLoop object for the current thread, or null if none.
   static MessageLoop* current();
 
-  typedef std::unique_ptr<MessagePump>(MessagePumpFactory)();
+  using MessagePumpFactory = std::unique_ptr<MessagePump> (*)();
   // Uses the given base::MessagePumpForUIFactory to override the default
   // MessagePump implementation for 'TYPE_UI'. Returns true if the factory
   // was successfully registered.
-  static bool InitMessagePumpForUIFactory(MessagePumpFactory* factory);
+  static bool InitMessagePumpForUIFactory(MessagePumpFactory factory);
 
   // Creates the default MessagePump based on |type|. Caller owns return
   // value.
@@ -558,22 +558,21 @@ class BASE_EXPORT MessageLoopForIO : public MessageLoop {
 #if !defined(OS_NACL_SFI)
 
 #if defined(OS_WIN)
-  typedef MessagePumpForIO::IOHandler IOHandler;
-  typedef MessagePumpForIO::IOContext IOContext;
+  using IOHandler = MessagePumpForIO::IOHandler;
+  using IOContext = MessagePumpForIO::IOContext;
 #elif defined(OS_FUCHSIA)
-  typedef MessagePumpFuchsia::FdWatcher Watcher;
-  typedef MessagePumpFuchsia::FdWatchController FileDescriptorWatcher;
+  using Watcher = MessagePumpFuchsia::FdWatcher;
+  using FileDescriptorWatcher = MessagePumpFuchsia::FdWatchController;
 
   enum Mode{WATCH_READ = MessagePumpFuchsia::WATCH_READ,
             WATCH_WRITE = MessagePumpFuchsia::WATCH_WRITE,
             WATCH_READ_WRITE = MessagePumpFuchsia::WATCH_READ_WRITE};
 
-  typedef MessagePumpFuchsia::MxHandleWatchController MxHandleWatchController;
-  typedef MessagePumpFuchsia::MxHandleWatcher MxHandleWatcher;
+  using MxHandleWatchController = MessagePumpFuchsia::MxHandleWatchController;
+  using MxHandleWatcher = MessagePumpFuchsia::MxHandleWatcher;
 #elif defined(OS_IOS)
-  typedef MessagePumpIOSForIO::Watcher Watcher;
-  typedef MessagePumpIOSForIO::FileDescriptorWatcher
-      FileDescriptorWatcher;
+  using Watcher = MessagePumpIOSForIO::Watcher;
+  using FileDescriptorWatcher = MessagePumpIOSForIO::FileDescriptorWatcher;
 
   enum Mode {
     WATCH_READ = MessagePumpIOSForIO::WATCH_READ,
@@ -581,9 +580,8 @@ class BASE_EXPORT MessageLoopForIO : public MessageLoop {
     WATCH_READ_WRITE = MessagePumpIOSForIO::WATCH_READ_WRITE
   };
 #elif defined(OS_POSIX)
-  typedef MessagePumpLibevent::Watcher Watcher;
-  typedef MessagePumpLibevent::FileDescriptorWatcher
-      FileDescriptorWatcher;
+  using Watcher = MessagePumpLibevent::Watcher Watcher;
+  using FileDescriptorWatcher = MessagePumpLibevent::FileDescriptorWatcher;
 
   enum Mode {
     WATCH_READ = MessagePumpLibevent::WATCH_READ,
