@@ -16,6 +16,24 @@
       "revId": "28d54f776a46573f8c127f81b6af78678b6dbc70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cff48ef_fbd39c96",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-09T04:09:32Z",
+      "side": 1,
+      "message": "I believe it\u0027s correct as written; I don\u0027t care about markers touching each other, only markers that actually intersect.",
+      "parentUuid": "1aa97b0e_8e988324",
+      "revId": "28d54f776a46573f8c127f81b6af78678b6dbc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
