@@ -9,6 +9,7 @@ mojom("compositing") {
     "compositor_frame.mojom",
     "compositor_frame_sink.mojom",
     "resource_settings.mojom",
+    "surface_sequence.mojom",
   ]
 
   public_deps = [
