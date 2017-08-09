@@ -15,5 +15,8 @@ const char kGoogleDoodleUrl[] = "google-doodle-url";
 // Example: https://www.google.com/branding/logo.png
 const char kSearchProviderLogoURL[] = "search-provider-logo-url";
 
+// Overrides the doodle URL to use for third-party search engines.
+const char kThirdPartyDoodleURL[] = "third-party-doodle-url";
+
 }  // namespace switches
 }  // namespace search_provider_logos
