@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "473366f6_6e389ae3",
+        "filename": "chromeos/system/version_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-09T08:55:31Z",
+      "side": 1,
+      "message": "Hm should I typedef this maybe?\n\nusing StringCallback \u003d base::Callback\u003cvoid(const std::string\u0026)\u003e;",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 44
+      },
+      "revId": "a6baf3408f8ae042e2fba832c4fd04fa9d89c473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
