@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d1c34dc9_539ad447",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-09T07:38:21Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "8f6403c1_0cd31327",
+      "revId": "77c57eae2ab1a66ff36b68aa45d92b4c9fbe1e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ea7af20_a2658bc4",
         "filename": "content/browser/devtools/protocol/network_handler.cc",
         "patchSetId": 6
