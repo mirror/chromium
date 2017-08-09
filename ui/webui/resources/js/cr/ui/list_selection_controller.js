@@ -160,7 +160,7 @@ cr.define('cr.ui', function() {
           // Right click for a context menu needs to not clear the selection.
           var isRightClick = e.button == 2;
 
-          // If the index is selected this is handled in mouseup.
+          // If the index is selected this is handled in poitnerup.
           var indexSelected = sm.getIndexSelected(index);
           if ((indexSelected && !isDown || !indexSelected && isDown) &&
               !(indexSelected && isRightClick)) {
