@@ -93,6 +93,11 @@ class NET_EXPORT_PRIVATE NtlmBufferWriter {
   //     uint32 - |offset| Offset from start of message
   bool WriteSecurityBuffer(SecurityBuffer sec_buf) WARN_UNUSED_RESULT;
 
+  bool WriteAvPairHeader(ntlm::TargetInfoAvId avid,
+                         uint16_t avlen) WARN_UNUSED_RESULT;
+
+  bool WriteAvPairTerminator() WARN_UNUSED_RESULT;
+
   // Writes a string of 8 bit characters to the buffer.
   //
   // When Unicode was not negotiated only the hostname string will go through
