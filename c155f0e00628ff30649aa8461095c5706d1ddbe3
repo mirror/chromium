@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "853d13e4_e690d5d9",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-09T04:52:15Z",
+      "side": 1,
+      "message": "why 4 times?\n\nAre we saying the selection changed 4 times here?  Is that a good thing?  Shouldn\u0027t we only be saying it a single time?",
+      "range": {
+        "startLine": 243,
+        "startChar": 44,
+        "endLine": 243,
+        "endChar": 45
+      },
+      "revId": "c155f0e00628ff30649aa8461095c5706d1ddbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8abc14a_49788304",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-09T04:52:15Z",
+      "side": 1,
+      "message": "same comment, why 2 times?  Should we be suppressing this to one internally?",
+      "range": {
+        "startLine": 255,
+        "startChar": 39,
+        "endLine": 255,
+        "endChar": 44
+      },
+      "revId": "c155f0e00628ff30649aa8461095c5706d1ddbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
