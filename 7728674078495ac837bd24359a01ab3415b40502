@@ -56,6 +56,30 @@
       "revId": "7728674078495ac837bd24359a01ab3415b40502",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9977ca3e_8cb4c429",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-09T20:20:40Z",
+      "side": 1,
+      "message": "I don\u0027t think so. I need to skip only any kind of function declaration, since I\u0027m looking for await expression which is part of top-level function and isn\u0027t a part of any nested async function.\nThere is probability that in ESNext we\u0027ll get some kind of class variables which can contain initialization [1], initialization can contain await expression and in this case we shouldn\u0027t skip classes.\n\n[1] https://github.com/tc39/proposal-class-fields",
+      "parentUuid": "97cb3689_86cfa7da",
+      "range": {
+        "startLine": 195,
+        "startChar": 22,
+        "endLine": 195,
+        "endChar": 32
+      },
+      "revId": "7728674078495ac837bd24359a01ab3415b40502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
