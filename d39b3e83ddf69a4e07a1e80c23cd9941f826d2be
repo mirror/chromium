@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb104e11_6cf911dd",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-09T21:39:03Z",
+      "side": 1,
+      "message": "nit: same, unused?",
+      "revId": "d39b3e83ddf69a4e07a1e80c23cd9941f826d2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19fefb1_6086d140",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-09T21:39:03Z",
+      "side": 1,
+      "message": "nit: unused?",
+      "revId": "d39b3e83ddf69a4e07a1e80c23cd9941f826d2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d0c000_315307a3",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-09T21:39:03Z",
+      "side": 1,
+      "message": "same",
+      "revId": "d39b3e83ddf69a4e07a1e80c23cd9941f826d2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
