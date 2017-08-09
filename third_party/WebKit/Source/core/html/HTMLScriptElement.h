@@ -96,6 +96,8 @@ class CORE_EXPORT HTMLScriptElement final : public HTMLElement,
                                const WTF::OrdinalNumber&,
                                const String& script_content,
                                ContentSecurityPolicy::InlineType) override;
+  void HandleViolationEvent(const SecurityViolationEventDataContainer&
+                                violation_data_container) override;
   AtomicString InitiatorName() const override;
   void DispatchLoadEvent() override;
   void DispatchErrorEvent() override;

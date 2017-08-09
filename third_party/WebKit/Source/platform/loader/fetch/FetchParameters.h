@@ -172,6 +172,11 @@ class PLATFORM_EXPORT FetchParameters {
     options_.cache_aware_loading_enabled = cache_aware_loading_enabled;
   }
 
+  void SetResourceShouldHandleViolationEvent(
+      bool resource_should_handle_violation_event) {
+    options_.resource_should_handle_violation_event =
+        resource_should_handle_violation_event;
+  }
   void MakeSynchronous();
 
   PlaceholderImageRequestType GetPlaceholderImageRequestType() const {

@@ -40,6 +40,7 @@
 #include "platform/loader/fetch/ResourceLoadPriority.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
+#include "platform/weborigin/SecurityPolicyViolationEventData.h"
 #include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Noncopyable.h"
@@ -165,7 +166,9 @@ class PLATFORM_EXPORT FetchContext
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
       FetchParameters::OriginRestriction,
-      ResourceRequest::RedirectStatus) const {
+      ResourceRequest::RedirectStatus,
+      SecurityViolationEventDataContainer* violation_data_container =
+          nullptr) const {
     return ResourceRequestBlockedReason::kOther;
   }
   virtual ResourceRequestBlockedReason CheckCSPForRequest(
@@ -173,7 +176,9 @@ class PLATFORM_EXPORT FetchContext
       const KURL&,
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
-      ResourceRequest::RedirectStatus) const {
+      ResourceRequest::RedirectStatus,
+      SecurityViolationEventDataContainer* violation_data_container =
+          nullptr) const {
     return ResourceRequestBlockedReason::kOther;
   }
 

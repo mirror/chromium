@@ -28,6 +28,7 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/heap/Handle.h"
+#include "platform/weborigin/SecurityPolicyViolationEventData.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/text/WTFString.h"
 

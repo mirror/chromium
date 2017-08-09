@@ -448,6 +448,11 @@ void Resource::FinishAsError(const ResourceError& error) {
   CheckNotify();
 }
 
+void Resource::AddViolationData(
+    const SecurityViolationEventDataContainer& violation_data_container) {
+  violation_data_container_.AppendVector(violation_data_container);
+}
+
 void Resource::Finish(double load_finish_time) {
   DCHECK(!is_revalidating_);
   load_finish_time_ = load_finish_time;

@@ -58,7 +58,7 @@ bool SubresourceFilter::AllowLoad(
   WebDocumentSubresourceFilter::LoadPolicy load_policy =
       subresource_filter_->GetLoadPolicy(resource_url, request_context);
 
-  if (reporting_policy == SecurityViolationReportingPolicy::kReport)
+  if (reporting_policy != SecurityViolationReportingPolicy::kSuppressReporting)
     ReportLoad(resource_url, load_policy);
   return load_policy != WebDocumentSubresourceFilter::kDisallow;
 }
