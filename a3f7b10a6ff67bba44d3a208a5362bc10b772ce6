@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a1715af_5b67e109",
+        "filename": "third_party/harfbuzz-ng/src/hb-fallback-shape.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-09T08:35:04Z",
+      "side": 1,
+      "message": "The fact that are these uncommented now is causing compile failures. Am I missing any new compile flags?",
+      "revId": "a3f7b10a6ff67bba44d3a208a5362bc10b772ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
