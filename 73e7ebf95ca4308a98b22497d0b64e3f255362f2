@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce5318e6_e365d521",
+        "filename": "docs/security/faq.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-09T19:10:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b43be7b7_b1ef5c3e",
+      "revId": "73e7ebf95ca4308a98b22497d0b64e3f255362f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e95f2d2_8992f742",
         "filename": "docs/security/faq.md",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "73e7ebf95ca4308a98b22497d0b64e3f255362f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b3dee5_ef075dcb",
+        "filename": "docs/security/faq.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-09T19:10:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e95f2d2_8992f742",
+      "revId": "73e7ebf95ca4308a98b22497d0b64e3f255362f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
