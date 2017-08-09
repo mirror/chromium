@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1aabb4b_d7e2440b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5033,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-09T09:44:14Z",
+      "side": 1,
+      "message": "super nit: no space ...",
+      "range": {
+        "startLine": 5033,
+        "startChar": 25,
+        "endLine": 5033,
+        "endChar": 26
+      },
+      "revId": "2c4ab675439bd0eb82d6d96e84de5a029c5a2429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -272,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "cf633ca2_9bf2b6ae",
+        "filename": "ios/chrome/browser/ui/history_popup/tab_history_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-09T09:44:14Z",
+      "side": 1,
+      "message": "Yeah, I think after boxing and getting rid of commands, cleaning up notifications is another refactoring step that we need to take.",
+      "parentUuid": "4fac86e5_63ff6a32",
+      "revId": "6d43d842cb3ebe86049af16df29c3b7231ab252a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "592fd359_0b2ceaad",
         "filename": "ios/chrome/browser/ui/history_popup/tab_history_coordinator.mm",
         "patchSetId": 2
