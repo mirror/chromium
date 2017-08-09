@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "123427fa_23739ee3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T03:53:21Z",
+      "side": 1,
+      "message": "Thanks for these comments! I forgot to change the test description from the default, which was just a list of my Git commits. Let me know if it looks any better now!",
+      "parentUuid": "c1f9a924_e7e60c39",
+      "revId": "cb9564163df3969f0fcf96a1123f787950c627ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8fe298f_757173ef",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "5bd8a7c4_de13fbd6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T03:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8fe298f_757173ef",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "cb9564163df3969f0fcf96a1123f787950c627ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62874a32_f2c91a5e",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "cb9564163df3969f0fcf96a1123f787950c627ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4951d8ba_60aa3ae2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T03:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62874a32_f2c91a5e",
+      "revId": "cb9564163df3969f0fcf96a1123f787950c627ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "e25341c4_b453fbda",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T03:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf22ebdf_3ded3096",
+      "revId": "cb9564163df3969f0fcf96a1123f787950c627ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7091e642_369dcac9",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
         "patchSetId": 5
@@ -90,6 +168,24 @@
       "revId": "cb9564163df3969f0fcf96a1123f787950c627ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2229946b_7b4dddcb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T03:53:21Z",
+      "side": 1,
+      "message": "Got it! It\u0027s been removed.",
+      "parentUuid": "7091e642_369dcac9",
+      "revId": "cb9564163df3969f0fcf96a1123f787950c627ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "4a44f92b_076324e7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T03:53:21Z",
+      "side": 1,
+      "message": "Good point! I got rid of it.",
+      "parentUuid": "46734c48_dc52b366",
+      "revId": "cb9564163df3969f0fcf96a1123f787950c627ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88e6b152_f92eb665",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
         "patchSetId": 5
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "cefa2613_95833737",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T03:53:21Z",
+      "side": 1,
+      "message": "I don\u0027t know why that was there! I\u0027ve attempted to take out all the unnecessary parts of this test. Let me know if I missed anything!",
+      "parentUuid": "88e6b152_f92eb665",
+      "revId": "cb9564163df3969f0fcf96a1123f787950c627ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3f6f2a5_befe6664",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
         "patchSetId": 5
@@ -141,6 +273,24 @@
       "revId": "cb9564163df3969f0fcf96a1123f787950c627ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe44e37e_24e69eba",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T03:53:21Z",
+      "side": 1,
+      "message": "All right, I\u0027ve adjusted the tests to run without those variables. Let me know if there\u0027s anything else I can do. Thanks for the input!",
+      "parentUuid": "e3f6f2a5_befe6664",
+      "revId": "cb9564163df3969f0fcf96a1123f787950c627ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
