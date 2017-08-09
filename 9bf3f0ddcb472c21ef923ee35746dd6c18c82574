@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25be03d0_a81f107a",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-09T18:35:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "356e2379_c2a86fbe",
+      "revId": "9bf3f0ddcb472c21ef923ee35746dd6c18c82574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "194562ac_ef2fd6a1",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "9bf3f0ddcb472c21ef923ee35746dd6c18c82574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302a5718_11655bee",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-09T18:35:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "194562ac_ef2fd6a1",
+      "revId": "9bf3f0ddcb472c21ef923ee35746dd6c18c82574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f779c687_b1ad4fe6",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-09T18:35:03Z",
+      "side": 1,
+      "message": "I used ash unittest since that\u0027s what its going to end up (since we want to move it to ash eventually) and seems like ash unittest are pretty common anyways in chrome/browser/chromeos. Done.",
+      "parentUuid": "0eda670d_54b823ba",
+      "revId": "9bf3f0ddcb472c21ef923ee35746dd6c18c82574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d20cb1f6_64f0ab25",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "9bf3f0ddcb472c21ef923ee35746dd6c18c82574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97cdef6d_700f3b47",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-09T18:35:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d20cb1f6_64f0ab25",
+      "revId": "9bf3f0ddcb472c21ef923ee35746dd6c18c82574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
