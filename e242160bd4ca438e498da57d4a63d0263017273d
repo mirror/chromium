@@ -16,6 +16,24 @@
       "revId": "e242160bd4ca438e498da57d4a63d0263017273d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cdfea89_7906e1af",
+        "filename": "net/nqe/effective_connection_type.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-09T22:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ead861f1_d6c7dfae",
+      "revId": "e242160bd4ca438e498da57d4a63d0263017273d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
