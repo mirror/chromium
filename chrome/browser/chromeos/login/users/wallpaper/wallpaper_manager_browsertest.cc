@@ -626,12 +626,8 @@ class TestObserver : public WallpaperManager::Observer {
   DISALLOW_COPY_AND_ASSIGN(TestObserver);
 };
 
-#if defined(OS_CHROMEOS) && defined(USE_OZONE)
-#define MAYBE_DisplayChange DISABLED_DisplayChange
-#else
-#define MAYBE_DisplayChange DisplayChange
-#endif
-IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTest, MAYBE_DisplayChange) {
+// TODO: test is flaky. http://crbug.com/691548.
+IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTest, DISABLED_DisplayChange) {
   TestObserver observer(WallpaperManager::Get());
 
   // Set the wallpaper to ensure that UpdateWallpaper() will be called when the
