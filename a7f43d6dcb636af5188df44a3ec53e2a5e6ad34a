@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "124fe2db_344ec66e",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-09T10:07:39Z",
+      "side": 1,
+      "message": "I think this is OK for now, but this class shouldn\u0027t have any dependencies on a specific toolbar implementation.",
+      "range": {
+        "startLine": 86,
+        "startChar": 21,
+        "endLine": 86,
+        "endChar": 44
+      },
+      "revId": "a7f43d6dcb636af5188df44a3ec53e2a5e6ad34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
