@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1fbb438_3d682375",
+        "filename": "content/shell/browser/layout_test/layout_test_message_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T21:19:47Z",
+      "side": 1,
+      "message": "Assuming I got the precondidion right, can you DCHECK(quota \u003e\u003d 0 || quota \u003d\u003d kDefaultQuota) before the if?",
+      "revId": "19b1dd9473c4a37d061c96a164003c5a3eb80a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29dcfdc8_7082e31b",
+        "filename": "content/shell/test_runner/test_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T21:19:47Z",
+      "side": 1,
+      "message": "nit: Would it make sense to pull the -1 into a constant like kDefaultQuota?",
+      "revId": "19b1dd9473c4a37d061c96a164003c5a3eb80a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
