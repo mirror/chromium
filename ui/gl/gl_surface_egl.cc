@@ -1079,11 +1079,15 @@ bool NativeViewGLSurfaceEGL::CommitAndClearPendingOverlays() {
   if (pending_overlays_.empty())
     return true;
 
+#if defined(OS_ANDROID)
   bool success = true;
   for (const auto& overlay : pending_overlays_)
     success &= overlay.ScheduleOverlayPlane(window_);
   pending_overlays_.clear();
   return success;
+#else
+  return false;
+#endif
 }
 
 PbufferGLSurfaceEGL::PbufferGLSurfaceEGL(const gfx::Size& size)
