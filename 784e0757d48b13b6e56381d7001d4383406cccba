@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "062f23d7_e4ef95de",
+        "filename": "content/browser/renderer_host/input/input_disposition_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-09T20:48:34Z",
+      "side": 1,
+      "message": "Describe what the return value means.",
+      "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c620d5c6_38c21b0d",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-09T20:48:34Z",
+      "side": 1,
+      "message": "Is this a duplicate of FilterGestureEvent? We could parameterize it. Alternately we could set the allowed_touch_action and have a separate bool for if its a whitelist or the true value since we should never have both and then handle the return value from FilterGestureEvent as appropriate.",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 49
+      },
+      "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d4fe601_d8e028b7",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 7
@@ -53,6 +93,23 @@
       "writtenOn": "2017-08-09T17:14:22Z",
       "side": 1,
       "message": "Remove TODO",
+      "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bbaeac7_7d3c5b9a",
+        "filename": "ui/events/gesture_detection/gesture_event_data_packet.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-09T20:48:34Z",
+      "side": 1,
+      "message": "Does whitelisted acking need to be special if it does the same thing as non-whitelisted acking?",
       "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
