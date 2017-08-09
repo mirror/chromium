@@ -52,6 +52,24 @@
       "revId": "8f51b9de091614f73bf63e53be547a12d980508c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "258e599b_1369c81b",
+        "filename": "chrome/browser/permissions/permission_request_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-09T05:30:01Z",
+      "side": 0,
+      "message": "Also, my understanding is that ClearAllVariationParams() is useful for unit tests, but we should be careful to use it in browser tests. Everyone assumes the finch configuration is not changed dynamically, but this test function changes it. Maybe it would be better to allow using this only in TearDown?",
+      "parentUuid": "f29fca01_c4957915",
+      "revId": "8f51b9de091614f73bf63e53be547a12d980508c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
