@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51daeb0e_70fe96ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:53:41Z",
+      "side": 1,
+      "message": "Please have a bit more descriptive title.",
+      "range": {
+        "startLine": 7,
+        "startChar": 23,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "79026f32cc78a439d7d46668dcc2bc9e3dd5b15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08de3728_66e84039",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-star.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:53:41Z",
+      "side": 1,
+      "message": "Just FYI, testharness has \"test\" function for sync tests.",
+      "revId": "79026f32cc78a439d7d46668dcc2bc9e3dd5b15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
