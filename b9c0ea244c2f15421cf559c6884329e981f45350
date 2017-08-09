@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15883985_fb71ddc7",
+        "filename": "mojo/edk/system/core.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-09T20:49:18Z",
+      "side": 1,
+      "message": "Correct",
+      "parentUuid": "b38dfecc_036043b9",
+      "revId": "b9c0ea244c2f15421cf559c6884329e981f45350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47c45b84_41bd4061",
         "filename": "mojo/edk/system/user_message_impl.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-09T20:22:20Z",
       "side": 1,
       "message": "I noticed that handles are used to populate fields in this event message in the \"Attach\" and \"Commit\" stage, but not the \"Extend\" stage. What is the reason to do it this way? For example, why not only doing it in the \"Commit\" stage?",
+      "revId": "b9c0ea244c2f15421cf559c6884329e981f45350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244bea39_5738a22b",
+        "filename": "mojo/edk/system/user_message_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-09T20:49:18Z",
+      "side": 1,
+      "message": "This is so that if a caller is able to provide all handles up front during Attach, they may avoid any additional allocation later during commit.",
+      "parentUuid": "47c45b84_41bd4061",
       "revId": "b9c0ea244c2f15421cf559c6884329e981f45350",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1597c632_33bfd4b0",
+        "filename": "mojo/public/c/system/message_pipe.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-09T20:49:18Z",
+      "side": 1,
+      "message": "The user can in fact use all available space, but we will only transmit up to the final payload size. This is a way for us to allow callers to dynamically expand their message payload without having to explicitly request new bytes for every individual operation.\n\ni.e. say I\u0027m serializing a struct and I first decide I need 8 bytes for the header. I allocate 8 bytes, then work through each field, allocating X bytes, Y bytes, etc. in succession. I don\u0027t want a MESMP call for each of those operations.\n\nInstead you ask for some space and you get *at least* that much (but usually much more), and you can continue to write past the designated payload size, up to the designated buffer size. This allows the caller to do their own efficient bookkeeping and only making explicit MESMP calls  out of buffer space or an explicit MCSMC call when ready to freeze the message.\n\nI\u0027ve updated the documentation here to clarify.",
+      "parentUuid": "338b8663_dc705a2c",
+      "revId": "b9c0ea244c2f15421cf559c6884329e981f45350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a5c2078_869e90db",
         "filename": "mojo/public/c/system/message_pipe.h",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "181f70c2_4654ee8a",
+        "filename": "mojo/public/c/system/message_pipe.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-09T20:49:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a5c2078_869e90db",
+      "revId": "b9c0ea244c2f15421cf559c6884329e981f45350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc522737_8d8be04d",
         "filename": "mojo/public/c/system/message_pipe.h",
         "patchSetId": 4
@@ -81,6 +153,30 @@
       "writtenOn": "2017-08-09T20:22:20Z",
       "side": 1,
       "message": "[optional, just for discussion] So it is illegal to allocate a big buffer and at the end only commit part of it. I don\u0027t have any existing use case in mind, but it seems a reasonable way to use the API.",
+      "range": {
+        "startLine": 378,
+        "startChar": 50,
+        "endLine": 378,
+        "endChar": 64
+      },
+      "revId": "b9c0ea244c2f15421cf559c6884329e981f45350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ddfc72d_706cdbde",
+        "filename": "mojo/public/c/system/message_pipe.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-09T20:49:18Z",
+      "side": 1,
+      "message": "Yes. The idea is that you should only ever ask for what you know you\u0027ll need, and the implementation will take care of allocation details for you, like allocating a reasonably large default buffer on your behalf.\n\nWe could revisit this later of course, as it\u0027s not really complex to support payload shrinkage.",
+      "parentUuid": "fc522737_8d8be04d",
       "range": {
         "startLine": 378,
         "startChar": 50,
