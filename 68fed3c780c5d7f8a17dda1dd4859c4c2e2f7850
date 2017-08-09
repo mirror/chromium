@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a3d8f7f_eefae5fe",
+        "filename": "components/sync_bookmarks/bookmark_model_type_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-09T20:25:41Z",
+      "side": 1,
+      "message": "Did you mean to leave this in?",
+      "revId": "68fed3c780c5d7f8a17dda1dd4859c4c2e2f7850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a98030_f20d67c6",
+        "filename": "components/sync_bookmarks/bookmark_model_type_processor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-09T20:25:41Z",
+      "side": 1,
+      "message": "I like this test. You didn\u0027t add a similar test for the controller, was that on purpose?",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 37
+      },
+      "revId": "68fed3c780c5d7f8a17dda1dd4859c4c2e2f7850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

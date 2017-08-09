@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ffd109c_f7306a8f",
+        "filename": "components/sync/driver/proxy_data_type_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-09T20:25:41Z",
+      "side": 0,
+      "message": "You told me offline that you\u0027re going to move it to be non-virtual and implemented in the base DTC, which sounds good assuming that happens.",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 16
+      },
+      "revId": "baca1a8cf2f9382857ba94863d94e333674526b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
