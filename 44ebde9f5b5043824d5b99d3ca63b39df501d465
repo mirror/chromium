@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be6bf392_3199f9a5",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2284,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-09T19:27:04Z",
+      "side": 1,
+      "message": "`return false` doesn\u0027t look right. This should all be skipped and preserve the existing behavior when the feature is off.",
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3baecc_72f2b62f",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-09T19:27:04Z",
+      "side": 1,
+      "message": "Why is this duplicated?",
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4fe9b3c_637ac273",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-09T19:27:04Z",
+      "side": 1,
+      "message": "This does not seem to be guarded by the flag, so all Macs will try to do it.",
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4660985_724d7856",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-09T19:27:04Z",
+      "side": 1,
+      "message": "Guard the whole function with API_AVAILABLE.",
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
