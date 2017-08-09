@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "73966c0f_250ee34f",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-09T17:22:56Z",
+      "side": 1,
+      "message": "I think it depends on how Android implements it. In case Android cares about i18n in this scenario, you can use UnicodeIcu.h\u0027s IsAlphanumeric and ICU\u0027s U16_GET() to implement it.",
+      "parentUuid": "10a0a05b_8b8b1d3d",
+      "revId": "adaa1b7df247c2fb561c69309eb6ee51113e7415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c72b0e7a_b74c2542",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.h",
         "patchSetId": 3
