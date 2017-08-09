@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e823a4a3_e8d40635",
+        "filename": "chrome/browser/extensions/api/proxy/proxy_apitest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-09T23:13:48Z",
+      "side": 1,
+      "message": "Uncomment :)",
+      "revId": "8dce03487a9b512a92d08865b95e309ec5b44a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1023326_bc2bd703",
+        "filename": "chrome/browser/extensions/api/proxy/proxy_apitest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-09T23:13:48Z",
+      "side": 1,
+      "message": "Hmm... why are the settings always the same with and without the extension?",
+      "revId": "8dce03487a9b512a92d08865b95e309ec5b44a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
