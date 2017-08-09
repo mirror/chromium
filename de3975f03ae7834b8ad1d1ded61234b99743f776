@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ebb614e_a5091fa2",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_misc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-09T08:13:15Z",
+      "side": 1,
+      "message": "No because the function takes base::Callback, not base::OnceCallback.",
+      "parentUuid": "d2f39dc4_cff9f440",
+      "range": {
+        "startLine": 756,
+        "startChar": 12,
+        "endLine": 756,
+        "endChar": 16
+      },
+      "revId": "de3975f03ae7834b8ad1d1ded61234b99743f776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab23a688_6b2b9115",
         "filename": "extensions/browser/extension_function_histogram_value.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "de3975f03ae7834b8ad1d1ded61234b99743f776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca761480_6355c10a",
+        "filename": "extensions/browser/extension_function_histogram_value.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-09T08:13:15Z",
+      "side": 1,
+      "message": "Oops, thanks for catching. Done.",
+      "parentUuid": "ab23a688_6b2b9115",
+      "range": {
+        "startLine": 1249,
+        "startChar": 2,
+        "endLine": 1249,
+        "endChar": 35
+      },
+      "revId": "de3975f03ae7834b8ad1d1ded61234b99743f776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
