@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d02d970_c4ae3431",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateDataFetcher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T15:39:43Z",
+      "side": 1,
+      "message": "This can be removed now?",
+      "revId": "bdaf742993f4f2cb1bd4df13187ca5948ab052be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a1162c9_65663f59",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T15:39:43Z",
+      "side": 1,
+      "message": "- We should have a comment for this variable\n\n- We should probably make this 30 seconds. Users stay in a WebAPK on average 30 seconds according to WebApk.Session.TotalDuration (https://uma.googleplex.com/p/chrome/histograms/?endDate\u003d20170807\u0026dayCount\u003d1\u0026histograms\u003dWebApk.Session.TotalDuration\u0026fixupData\u003dtrue\u0026showMax\u003dtrue\u0026filters\u003disofficial%2Ceq%2CTrue\u0026implicitFilters\u003disofficial)\n\nIt looks like when we look at the histogram splitting by unique users that the average is higher. However, I cannot verify. https://uma.googleplex.com/p/chrome/histograms/?endDate\u003d20170802\u0026dayCount\u003d1\u0026histograms\u003dWebApk.Session.TotalDuration\u0026fixupData\u003dtrue\u0026uniqueUsers\u003dtrue\u0026showMax\u003dtrue\u0026filters\u003disofficial%2Ceq%2CTrue\u0026implicitFilters\u003disofficial",
+      "revId": "bdaf742993f4f2cb1bd4df13187ca5948ab052be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "738537cd_a903258f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T15:39:43Z",
+      "side": 1,
+      "message": "Nits:\nwthin -\u003e within\nWebapk -\u003e WebAPK (within comments)\n          WebApk (within .java method names and variable names)",
+      "revId": "bdaf742993f4f2cb1bd4df13187ca5948ab052be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34fae9c8_c2fc9bb0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T15:39:43Z",
+      "side": 1,
+      "message": "Can we remove this function and make the caller of onWebManifestForInitialUrlNotWebApkCompatible() call \n\nonGotManifestData(null, null, null);",
+      "revId": "bdaf742993f4f2cb1bd4df13187ca5948ab052be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9fd7478_7d9581c4",
+        "filename": "chrome/browser/android/webapk/webapk_update_data_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T15:39:43Z",
+      "side": 1,
+      "message": "This variable seems unused now",
+      "revId": "bdaf742993f4f2cb1bd4df13187ca5948ab052be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
