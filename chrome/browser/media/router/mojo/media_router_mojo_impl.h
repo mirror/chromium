@@ -148,10 +148,7 @@ class MediaRouterMojoImpl : public MediaRouterBase,
                              const std::string& search_input,
                              const std::string& domain,
                              MediaSinkSearchResponseCallback sink_callback);
-  virtual void DoCreateMediaRouteController(
-      const MediaRoute::Id& route_id,
-      mojom::MediaControllerRequest mojo_media_controller_request,
-      mojom::MediaStatusObserverPtr mojo_observer);
+  virtual void DoCreateMediaRouteController(MediaRouteController* controller);
   virtual void DoProvideSinks(const std::string& provider_name,
                               std::vector<MediaSinkInternal> sinks);
   virtual void DoUpdateMediaSinks(const MediaSource::Id& source_id);
@@ -167,6 +164,10 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // discovery on sink queries an opportunity to update discovery results
   // even if the MRP SinkAvailability is marked UNAVAILABLE.
   void UpdateMediaSinks(const MediaSource::Id& source_id);
+
+  // Stores route controllers that can be used to send media commands to the
+  // extension.
+  std::unordered_map<MediaRoute::Id, MediaRouteController*> route_controllers_;
 
   // Mojo proxy object for the Media Route Provider Manager.
   // Set to null initially, and later set to the Provider Manager proxy object
@@ -341,10 +342,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
 
   // The last reported sink availability from the media route provider manager.
   mojom::MediaRouter::SinkAvailability availability_;
-
-  // Stores route controllers that can be used to send media commands to the
-  // extension.
-  std::unordered_map<MediaRoute::Id, MediaRouteController*> route_controllers_;
 
   // Media sink service for DIAL devices.
   scoped_refptr<DialMediaSinkServiceProxy> dial_media_sink_service_proxy_;

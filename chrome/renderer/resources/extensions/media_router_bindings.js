@@ -95,7 +95,12 @@ define('media_router_bindings', [
       // Begin newly added properties, followed by the milestone they were
       // added.  The guard should be safe to remove N+2 milestones later.
       'supports_media_route_controller':
-          !!route.supportsMediaRouteController  // M61
+          !!route.supportsMediaRouteController,  // M61
+      'controller_type':                         // M62
+          route.controllerType ||
+              (!!route.supportsMediaRouteController ?
+                  mediaRouterMojom.RouteControllerType.GENERIC :
+                  mediaRouterMojom.RouteControllerType.NONE)
     });
   }
 

@@ -40,6 +40,16 @@ Polymer({
     },
 
     /**
+     * True if the Hangout route is currently using local present mode.
+     * Valid for Hangout routes only.
+     * @private {boolean}
+     */
+    hangoutLocalPresent_: {
+      type: Boolean,
+      value: false,
+    },
+
+    /**
      * The timestamp for when the initial media status was loaded.
      * @private {number}
      */
@@ -215,6 +225,14 @@ Polymer({
   },
 
   /**
+   * @param {!{target: !PaperCheckboxElement}} e
+   */
+  onHangoutLocalPresentChange_: function(e) {
+    console.log('Checkbox: ' + e.target.checked);
+    media_router.browserApi.setHangoutLocalPresent(e.target.checked);
+  },
+
+  /**
    * Called when the user toggles the mute status of the media. Sends a mute or
    * unmute command to the browser.
    * @private
@@ -265,6 +283,8 @@ Polymer({
     } else {
       this.stopIncrementingCurrentTime_();
     }
+    this.hangoutLocalPresent_ = newRouteStatus.hangoutExtraData &&
+        newRouteStatus.hangoutExtraData.localPresent;
   },
 
   /**
