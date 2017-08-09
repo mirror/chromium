@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1a0a20d_39659871",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-09T19:17:09Z",
+      "side": 1,
+      "message": "NOTIMPLEMENTED()? or, perhaps, have this not be present on iOS - that way uses of it will fail at compile time instead of runtime.",
+      "range": {
+        "startLine": 750,
+        "startChar": 2,
+        "endLine": 750,
+        "endChar": 7
+      },
+      "revId": "79633ecb45b90d944a2e9a08b84ad589221751a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
