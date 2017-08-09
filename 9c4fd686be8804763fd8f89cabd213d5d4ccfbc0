@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32688abd_3b44772d",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-08-09T08:21:08Z",
+      "side": 1,
+      "message": "This is a temporary fix per https://bugs.chromium.org/p/chromium/issues/detail?id\u003d701723#c13, right? If so, could you leave a comment about your plan?",
+      "revId": "9c4fd686be8804763fd8f89cabd213d5d4ccfbc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
