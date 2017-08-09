@@ -51,6 +51,18 @@ ConsoleMessage* ConsoleMessage::CreateFromWorker(
   return console_message;
 }
 
+// static
+ConsoleMessage* ConsoleMessage::CreateWithNodeIds(
+    MessageLevel level,
+    const String& message,
+    std::list<DOMNodeId> node_ids) {
+  ConsoleMessage* console_message =
+      ConsoleMessage::Create(kDOMMessageSource, level,
+                             message /*, SourceLocation::Capture(url, 0, 0)*/);
+  console_message->node_ids_ = node_ids;
+  return console_message;
+}
+
 ConsoleMessage::ConsoleMessage(MessageSource source,
                                MessageLevel level,
                                const String& message,
@@ -66,6 +78,10 @@ ConsoleMessage::~ConsoleMessage() {}
 
 SourceLocation* ConsoleMessage::Location() const {
   return location_.get();
+}
+
+void ConsoleMessage::SetLocation(std::unique_ptr<SourceLocation> location) {
+  location_ = std::move(location);
 }
 
 unsigned long ConsoleMessage::RequestIdentifier() const {
@@ -90,6 +106,10 @@ const String& ConsoleMessage::Message() const {
 
 const String& ConsoleMessage::WorkerId() const {
   return worker_id_;
+}
+
+const std::list<DOMNodeId>& ConsoleMessage::NodeIds() const {
+  return node_ids_;
 }
 
 DEFINE_TRACE(ConsoleMessage) {}

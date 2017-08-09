@@ -255,12 +255,15 @@ Console.ConsoleViewMessage = class {
       } else {
         messageElement = this._format([messageText]);
       }
+    } else if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.DOM) {
+      messageText = Common.UIString('[DOM] %s', messageText);
+      messageElement = this._formatAsDOMMessage(messageText, new Set(this._message.nodeIds));
     } else {
       if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Violation)
         messageText = Common.UIString('[Violation] %s', messageText);
       else if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Intervention)
         messageText = Common.UIString('[Intervention] %s', messageText);
-      if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Deprecation)
+      else if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Deprecation)
         messageText = Common.UIString('[Deprecation] %s', messageText);
       var args = this._message.parameters || [messageText];
       messageElement = this._format(args);
@@ -621,6 +624,32 @@ Console.ConsoleViewMessage = class {
   }
 
   /**
+   * @param {string} text
+   * @param {!Set<number>} nodeIds
+   * @return {!Element}
+   */
+  _formatAsDOMMessage(text, nodeIds) {
+    var formattedResult = createElement('span');
+    formattedResult.appendChild(Console.ConsoleViewMessage._linkifyStringAsFragment(text));
+    this._appendNodeReferences(formattedResult, nodeIds);
+    return formattedResult;
+  }
+
+  /**
+   * @param {!Element} container
+   * @param {!Set<number>} nodeIds
+   */
+  async _appendNodeReferences(container, nodeIds) {
+    var domModel = SDK.targetManager.mainTarget().model(SDK.DOMModel);
+    if (!domModel)
+      return;
+    var nodeIdMap = await domModel.pushNodesByBackendIdsToFrontend(nodeIds);
+    var objects = await Promise.all(Array.from(nodeIdMap.values()).map(node => node.resolveToObject('')));
+    for (var object of objects)
+      container.appendChild(this._formatParameter(object));
+  }
+
+  /**
    * @param {!SDK.RemoteObject} obj
    * @param {!Event} event
    */
@@ -693,7 +722,8 @@ Console.ConsoleViewMessage = class {
     var result = createElement('span');
     var errorSpan = this._tryFormatAsError(output.description || '');
     result.appendChild(
-        errorSpan ? errorSpan : Console.ConsoleViewMessage._linkifyStringAsFragment(output.description || ''));
+        errorSpan ? errorSpan :
+                    Console.ConsoleViewMessage._linkifyStringAsFragment.bind(this)(output.description || ''));
     return result;
   }
 
@@ -1263,12 +1293,13 @@ Console.ConsoleViewMessage = class {
       linkString = linkString[0];
       var linkIndex = string.indexOf(linkString);
       var nonLink = string.substring(0, linkIndex);
+      var linkNode;
+      var title = linkString;
       container.appendChild(createTextNode(nonLink));
 
-      var title = linkString;
       var realURL = (linkString.startsWith('www.') ? 'http://' + linkString : linkString);
       var splitResult = Common.ParsedURL.splitLineAndColumn(realURL);
-      var linkNode;
+
       if (splitResult)
         linkNode = linkifier(title, splitResult.url, splitResult.lineNumber, splitResult.columnNumber);
       else

@@ -6,10 +6,13 @@
 #define ConsoleMessage_h
 
 #include "core/CoreExport.h"
+#include "core/dom/DOMNodeIds.h"
 #include "core/inspector/ConsoleTypes.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/text/WTFString.h"
+
+#include <list>
 
 namespace blink {
 
@@ -42,15 +45,21 @@ class CORE_EXPORT ConsoleMessage final
                                           std::unique_ptr<SourceLocation>,
                                           const String& worker_id);
 
+  static ConsoleMessage* CreateWithNodeIds(MessageLevel,
+                                           const String& message,
+                                           std::list<uint64_t> node_ids);
+
   ~ConsoleMessage();
 
   SourceLocation* Location() const;
+  void SetLocation(std::unique_ptr<SourceLocation>);
   unsigned long RequestIdentifier() const;
   double Timestamp() const;
   MessageSource Source() const;
   MessageLevel Level() const;
   const String& Message() const;
   const String& WorkerId() const;
+  const std::list<uint64_t>& NodeIds() const;
 
   DECLARE_TRACE();
 
@@ -67,6 +76,7 @@ class CORE_EXPORT ConsoleMessage final
   unsigned long request_identifier_;
   double timestamp_;
   String worker_id_;
+  std::list<uint64_t> node_ids_;
 };
 
 }  // namespace blink

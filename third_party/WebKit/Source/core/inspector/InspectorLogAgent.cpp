@@ -48,6 +48,8 @@ String MessageSourceValue(MessageSource source) {
       return protocol::Log::LogEntry::SourceEnum::Violation;
     case kInterventionMessageSource:
       return protocol::Log::LogEntry::SourceEnum::Intervention;
+    case kDOMMessageSource:
+      return protocol::Log::LogEntry::SourceEnum::Dom;
     default:
       return protocol::Log::LogEntry::SourceEnum::Other;
   }
@@ -123,7 +125,16 @@ void InspectorLogAgent::ConsoleMessageAdded(ConsoleMessage* message) {
       message->RequestIdentifier())
     entry->setNetworkRequestId(
         IdentifiersFactory::RequestId(message->RequestIdentifier()));
-
+  if (message->Source() == kDOMMessageSource) {
+    // There is a potential issue, because backend node IDs are stored as
+    // unsigned long, but the protocol expects int. However, the issue is
+    // pervasive and is taken not to be a particular problem here.
+    std::unique_ptr<protocol::Array<int>> node_ids =
+        protocol::Array<int>::create();
+    for (DOMNodeId node_id : message->NodeIds())
+      node_ids->addItem(node_id);
+    entry->setNodeIds(std::move(node_ids));
+  }
   GetFrontend()->entryAdded(std::move(entry));
   GetFrontend()->flush();
 }
