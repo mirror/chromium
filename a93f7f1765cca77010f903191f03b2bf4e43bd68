@@ -16,6 +16,24 @@
       "revId": "a93f7f1765cca77010f903191f03b2bf4e43bd68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59291103_4a24ff2c",
+        "filename": "chrome/browser/chromeos/events/event_rewriter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-09T20:15:35Z",
+      "side": 1,
+      "message": "Changed to 123.",
+      "parentUuid": "a22d226c_3fb7ec71",
+      "revId": "a93f7f1765cca77010f903191f03b2bf4e43bd68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

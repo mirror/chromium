@@ -16,6 +16,24 @@
       "revId": "3a490d6e5c577c67515e609ae753950a2858ba13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c1fd341_d96959d8",
+        "filename": "chrome/browser/chromeos/device_uma.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-09T20:15:35Z",
+      "side": 0,
+      "message": "Good point, done and done.",
+      "parentUuid": "bd7c61ec_ce4bae53",
+      "revId": "3a490d6e5c577c67515e609ae753950a2858ba13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
