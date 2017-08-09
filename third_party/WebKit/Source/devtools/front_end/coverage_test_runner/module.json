@@ -1,12 +1,12 @@
 {
   "dependencies": [
     "test_runner",
-    "data_grid"
+    "integration_test_runner"
   ],
   "scripts": [
-    "DataGridTestRunner.js"
+    "CoverageTestRunner.js"
   ],
   "skip_compilation": [
-    "DataGridTestRunner.js"
+    "CoverageTestRunner.js"
   ]
 }
