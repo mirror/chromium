@@ -26,6 +26,7 @@
 #include "ui/app_list/views/speech_view.h"
 #include "ui/app_list/views/start_page_view.h"
 #include "ui/aura/window.h"
+#include "ui/aura/window_targeter.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/compositor/layer.h"
@@ -85,6 +86,9 @@ constexpr float kSpeechUIAppearingPosition = 12;
 // The animation duration for app list movement.
 constexpr float kAppListAnimationDurationMs = 300;
 
+// The name of app list view.
+constexpr char kAppListView[] = "AppListView";
+
 // This view forwards the focus to the search box widget by providing it as a
 // FocusTraversable when a focus search is provided.
 class SearchBoxFocusHost : public views::View {
@@ -129,6 +133,27 @@ class AppListOverlayView : public views::View {
   const int corner_radius_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListOverlayView);
+};
+
+DEFINE_UI_CLASS_PROPERTY_KEY(bool, kExcludeWindowFromEventHandling, false);
+
+// This targeter prevents routing events to sub-windows, such as
+// RenderHostWindow in order to handle events in context of app list.
+class AppListEventTargeter : public aura::WindowTargeter {
+ public:
+  AppListEventTargeter() = default;
+  ~AppListEventTargeter() override = default;
+
+  // aura::WindowTargeter:
+  bool SubtreeShouldBeExploredForEvent(aura::Window* window,
+                                       const ui::LocatedEvent& event) override {
+    if (window->GetProperty(kExcludeWindowFromEventHandling))
+      return false;
+    return aura::WindowTargeter::SubtreeShouldBeExploredForEvent(window, event);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(AppListEventTargeter);
 };
 
 }  // namespace
@@ -198,6 +223,12 @@ AppListView::~AppListView() {
   animation_observer_.reset();
   // Remove child views first to ensure no remaining dependencies on delegate_.
   RemoveAllChildViews(true);
+}
+
+// static
+void AppListView::ExcludeWindowFromEventHandling(aura::Window* window) {
+  DCHECK(window);
+  window->SetProperty(kExcludeWindowFromEventHandling, true);
 }
 
 void AppListView::Initialize(gfx::NativeView parent,
@@ -309,7 +340,7 @@ void AppListView::OnPaint(gfx::Canvas* canvas) {
 }
 
 const char* AppListView::GetClassName() const {
-  return "AppListView";
+  return kAppListView;
 }
 
 bool AppListView::ShouldHandleSystemCommands() const {
@@ -449,6 +480,8 @@ void AppListView::InitializeFullscreen(gfx::NativeView parent,
   app_list_overlay_view_params.bounds = app_list_overlay_view_bounds;
   app_list_overlay_view_params.layer_type = ui::LAYER_SOLID_COLOR;
   fullscreen_widget_->Init(app_list_overlay_view_params);
+  fullscreen_widget_->GetNativeWindow()->SetEventTargeter(
+      base::MakeUnique<AppListEventTargeter>());
 
   overlay_view_ = new AppListOverlayView(0 /* no corners */);
 }
