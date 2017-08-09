@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36967af5_203ce2e9",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-09T21:57:41Z",
+      "side": 1,
+      "message": "Done\n\nThanks for pointing this out, undo this change.",
+      "parentUuid": "8a99d8b8_d4758a4d",
+      "revId": "7541caf570e3dffaab79cea3ed346f753d68ebe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35694907_22585705",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "7541caf570e3dffaab79cea3ed346f753d68ebe2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25df4e9d_9474e76c",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-09T21:57:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35694907_22585705",
+      "range": {
+        "startLine": 1081,
+        "startChar": 23,
+        "endLine": 1081,
+        "endChar": 53
+      },
+      "revId": "7541caf570e3dffaab79cea3ed346f753d68ebe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
