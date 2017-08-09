@@ -67,13 +67,7 @@ ImageBitmap::ParsedOptions ParseOptions(const ImageBitmapOptions& options,
   }
 
   if (options.colorSpaceConversion() != kImageBitmapOptionNone) {
-    parsed_options.color_canvas_extensions_enabled =
-        RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
-    if (!parsed_options.color_canvas_extensions_enabled) {
-      DCHECK_EQ(options.colorSpaceConversion(), kImageBitmapOptionDefault);
-      parsed_options.color_params.SetCanvasColorSpace(kLegacyCanvasColorSpace);
-      parsed_options.color_canvas_extensions_enabled = true;
-    } else {
+    if (CanvasColorParams::ColorCorrectRenderingInAnyColorSpace()) {
       if (options.colorSpaceConversion() == kImageBitmapOptionDefault ||
           options.colorSpaceConversion() ==
               kSRGBImageBitmapColorSpaceConversion) {
@@ -96,6 +90,12 @@ ImageBitmap::ParsedOptions ParseOptions(const ImageBitmapOptions& options,
             << "Invalid ImageBitmap creation attribute colorSpaceConversion: "
             << options.colorSpaceConversion();
       }
+    } else if (CanvasColorParams::ColorCorrectRenderingInSRGBOnly()) {
+      DCHECK_EQ(options.colorSpaceConversion(), kImageBitmapOptionDefault);
+      parsed_options.color_params.SetCanvasColorSpace(kSRGBCanvasColorSpace);
+    } else {
+      DCHECK_EQ(options.colorSpaceConversion(), kImageBitmapOptionDefault);
+      parsed_options.color_params.SetCanvasColorSpace(kLegacyCanvasColorSpace);
     }
   }
 
@@ -302,39 +302,36 @@ RefPtr<StaticBitmapImage> ScaleImage(RefPtr<StaticBitmapImage>&& image,
 RefPtr<StaticBitmapImage> ApplyColorSpaceConversion(
     RefPtr<StaticBitmapImage>&& image,
     ImageBitmap::ParsedOptions& options) {
-  if (options.color_params.UsesOutputSpaceBlending() &&
-      RuntimeEnabledFeatures::ColorCorrectRenderingEnabled()) {
-    image = image->ConvertToColorSpace(options.color_params.GetSkColorSpace(),
-                                       SkTransferFunctionBehavior::kIgnore);
-  }
+  if (!CanvasColorParams::ColorCorrectRenderingEnabled())
+    return image;
+
+  // If image does not have any color space info and we must color convert to
+  // SRGB, tag the image as SRGB.
+  // This is a slow code path as we cannot use SkImage::makeColorSpace() on
+  // SkImages with no color space to get the image in SRGB.
   sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
-  if (!options.color_canvas_extensions_enabled || !skia_image->colorSpace())
+  DCHECK(skia_image.get());
+  sk_sp<SkColorSpace> dst_color_space = options.color_params.GetSkColorSpace();
+  // if (!skia_image->colorSpace() &&
+  //     (CanvasColorParams::ColorCorrectRenderingInSRGBOnly() ||
+  //      (CanvasColorParams::ColorCorrectRenderingInAnyColorSpace() &&
+  //       SkColorSpace::Equals(dst_color_space.get(),
+  //                            SkColorSpace::MakeSRGB().get())))) {
+  //   RefPtr<Uint8Array> image_pixels = CopyImageData(image);
+  //   if (!image_pixels)
+  //     return image;
+  //   SkImageInfo info = GetSkImageInfo(image.Get());
+  //   info = info.makeColorSpace(SkColorSpace::MakeSRGB());
+  //   return NewImageFromRaster(info, std::move(image_pixels));
+  // }
+
+  if (!CanvasColorParams::ColorCorrectRenderingInAnyColorSpace())
     return image;
 
-  sk_sp<SkColorSpace> dst_color_space =
-      options.color_params.GetSkColorSpaceForSkSurfaces();
-  DCHECK(dst_color_space.get());
-  if (SkColorSpace::Equals(skia_image->colorSpace(), dst_color_space.get()))
-    return image;
-
-  SkImageInfo dst_info =
-      SkImageInfo::Make(skia_image->width(), skia_image->height(),
-                        options.color_params.GetSkColorType(),
-                        skia_image->alphaType(), dst_color_space);
-  size_t size = image->width() * image->height() * dst_info.bytesPerPixel();
-  sk_sp<SkData> dst_data = SkData::MakeUninitialized(size);
-  if (dst_data->size() != size)
-    return image;
-  if (skia_image->readPixels(dst_info, dst_data->writable_data(),
-                             skia_image->width() * dst_info.bytesPerPixel(), 0,
-                             0)) {
-    skia_image = SkImage::MakeRasterData(
-        dst_info, dst_data, skia_image->width() * dst_info.bytesPerPixel());
-    return StaticBitmapImage::Create(skia_image,
-                                     image->ContextProviderWrapper());
-  }
-  NOTREACHED();
-  return image;
+  // Color correct the image. This code path uses SkImage::makeColorSpace(). If
+  // the color space of the source image is nullptr, it will be assumed in SRGB.
+  return image->ConvertToColorSpace(dst_color_space,
+                                    SkTransferFunctionBehavior::kRespect);
 }
 
 RefPtr<StaticBitmapImage> MakeBlankImage(
@@ -474,9 +471,8 @@ ImageBitmap::ImageBitmap(ImageElementBase* image,
   if (!sk_image->isTextureBacked() && !sk_image->peekPixels(&pixmap)) {
     sk_sp<SkColorSpace> dst_color_space = nullptr;
     SkColorType dst_color_type = kN32_SkColorType;
-    if (parsed_options.color_canvas_extensions_enabled ||
-        (parsed_options.color_params.UsesOutputSpaceBlending() &&
-         RuntimeEnabledFeatures::ColorCorrectRenderingEnabled())) {
+    if (CanvasColorParams::ColorCorrectRenderingInAnyColorSpace() ||
+        parsed_options.color_params.ColorCorrectNoColorSpaceToSRGB()) {
       dst_color_space = parsed_options.color_params.GetSkColorSpace();
       dst_color_type = parsed_options.color_params.GetSkColorType();
     }
@@ -656,6 +652,12 @@ ImageBitmap::ImageBitmap(ImageData* data,
       kUnpremul_SkAlphaType,
       cropped_data->GetCanvasColorParams().GetSkColorSpaceForSkSurfaces());
 
+  // If we are in color correct rendering mode but we only color correct to
+  // SRGB, we don't do any color conversion when transferring the pixels from
+  // ImageData to image bitmap to avoid double gamma correction. We tag the
+  // image with SRGB color space later in ApplyColorSpaceConversion().
+  if (CanvasColorParams::ColorCorrectRenderingInSRGBOnly())
+    info = info.makeColorSpace(nullptr);
   image_ = NewImageFromRaster(info, std::move(image_pixels));
 
   // swizzle back
