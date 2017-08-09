@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a95a6f1_7172c546",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 6162,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T21:24:48Z",
+      "side": 1,
+      "message": "I think you won\u0027t need this when going through WebLocalFrame::AddMessageToConsole.",
+      "revId": "04dc90fc08b355db8961662984cf18519a92138d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd53da1_e5110ffb",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 6162,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T21:24:48Z",
+      "side": 1,
+      "message": "Why do you need this?",
+      "revId": "04dc90fc08b355db8961662984cf18519a92138d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4e192d_b2420b31",
+        "filename": "third_party/WebKit/Source/core/inspector/ConsoleMessage.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T21:24:48Z",
+      "side": 1,
+      "message": "Use WTF::Vector\u003cDOMNodeId\u003e instead.",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 11
+      },
+      "revId": "04dc90fc08b355db8961662984cf18519a92138d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6308e766_d9f24aff",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T21:24:48Z",
+      "side": 1,
+      "message": "This is similar to other places, so I don\u0027t think we need this comment at all.",
+      "revId": "04dc90fc08b355db8961662984cf18519a92138d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0354f351_eb506eef",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4769,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T21:24:48Z",
+      "side": 1,
+      "message": "backendNodeIds",
+      "range": {
+        "startLine": 4769,
+        "startChar": 31,
+        "endLine": 4769,
+        "endChar": 38
+      },
+      "revId": "04dc90fc08b355db8961662984cf18519a92138d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc5b867_f3bcbad5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T21:24:48Z",
+      "side": 1,
+      "message": "\u0027console\u0027",
+      "range": {
+        "startLine": 647,
+        "startChar": 100,
+        "endLine": 647,
+        "endChar": 102
+      },
+      "revId": "04dc90fc08b355db8961662984cf18519a92138d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99e06c2_b836364a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T21:24:48Z",
+      "side": 1,
+      "message": "Undo?",
+      "range": {
+        "startLine": 726,
+        "startChar": 71,
+        "endLine": 726,
+        "endChar": 82
+      },
+      "revId": "04dc90fc08b355db8961662984cf18519a92138d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9acdc1_6177f202",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T21:24:48Z",
+      "side": 1,
+      "message": "Let\u0027s revert to what it was before.",
+      "revId": "04dc90fc08b355db8961662984cf18519a92138d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f79f019_91f19b03",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T21:24:48Z",
+      "side": 1,
+      "message": "Just return false if either of two messages have nodeIds.",
+      "revId": "04dc90fc08b355db8961662984cf18519a92138d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

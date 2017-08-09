@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aefb1dd_6c8aa8aa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T21:24:48Z",
+      "side": 0,
+      "message": "Same here.",
+      "revId": "7c7dcc2872d7edd2ca4b9121eadf9ed5a6a664bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
