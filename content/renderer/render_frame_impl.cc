@@ -161,6 +161,7 @@
 #include "media/blink/webmediaplayer_util.h"
 #include "mojo/edk/js/core.h"
 #include "mojo/edk/js/support.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/data_url.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
@@ -1203,15 +1204,8 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
                      base::Bind(&RenderFrameImpl::RequestOverlayRoutingToken,
                                 base::Unretained(this))),
       weak_factory_(this) {
-  service_manager::mojom::InterfaceProviderPtr remote_interfaces;
-  pending_remote_interface_provider_request_ = MakeRequest(&remote_interfaces);
-  remote_interfaces_.reset(new service_manager::InterfaceProvider);
-  remote_interfaces_->Bind(std::move(remote_interfaces));
   blink_interface_registry_.reset(
       new BlinkInterfaceRegistryImpl(registry_.GetWeakPtr()));
-
-  // Must call after binding our own remote interfaces.
-  media_factory_.SetupMojo();
 
   std::pair<RoutingIDFrameMap::iterator, bool> result =
       g_routing_id_frame_map.Get().insert(std::make_pair(routing_id_, this));
@@ -1303,6 +1297,15 @@ void RenderFrameImpl::Initialize() {
                  "id", routing_id_,
                  "parent", parent_id);
   }
+
+  service_manager::mojom::InterfaceProviderPtr interface_provider;
+  GetFrameHost()->BindInterfaceProviderForInitialEmptyDocument(
+      mojo::MakeRequest(&interface_provider));
+  remote_interfaces_ = base::MakeUnique<service_manager::InterfaceProvider>();
+  remote_interfaces_->Bind(std::move(interface_provider));
+
+  // Must call after binding our own remote interfaces.
+  media_factory_.SetupMojo();
 
 #if BUILDFLAG(ENABLE_PLUGINS)
   new PepperBrowserConnection(this);
@@ -1736,13 +1739,9 @@ void RenderFrameImpl::BindMediaEngagement(
 
 void RenderFrameImpl::BindFrame(
     const service_manager::BindSourceInfo& browser_info,
-    mojom::FrameRequest request,
-    mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker) {
+    mojom::FrameRequest request) {
   browser_info_ = browser_info;
   frame_binding_.Bind(std::move(request));
-  frame_host_interface_broker_ = std::move(frame_host_interface_broker);
-  frame_host_interface_broker_->GetInterfaceProvider(
-      std::move(pending_remote_interface_provider_request_));
 }
 
 void RenderFrameImpl::BindFrameBindingsControl(
@@ -2701,6 +2700,7 @@ void RenderFrameImpl::BindLocalInterface(
 }
 
 service_manager::InterfaceProvider* RenderFrameImpl::GetRemoteInterfaces() {
+  DCHECK(remote_interfaces_) << "Initialize() must be completed.";
   return remote_interfaces_.get();
 }
 
@@ -3779,6 +3779,21 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
     }
   }
 
+  service_manager::mojom::InterfaceProviderRequest remote_interfaces_request;
+  if (!navigation_state->WasWithinSameDocument()) {
+    // If we're navigating to a new document, bind a new InterfaceProvider whose
+    // request end will be sent over as part of the commit confirmation.
+    service_manager::mojom::InterfaceProviderPtr provider;
+    remote_interfaces_request = mojo::MakeRequest(&provider);
+
+    // Initialize the local InterfaceProviderImpl with a new working pipe
+    // *before* observers receive DidCommitProvisionalLoad, so they can already
+    // request remote interfaces, and be serviced once the InterfaceProvider is
+    // bound on the browser side).
+    remote_interfaces_->Close();
+    remote_interfaces_->Bind(std::move(provider));
+  }
+
   for (auto& observer : render_view_->observers_)
     observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
   for (auto& observer : observers_) {
@@ -3809,7 +3824,8 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   // new navigation.
   navigation_state->set_request_committed(true);
 
-  SendDidCommitProvisionalLoad(frame_, commit_type);
+  SendDidCommitProvisionalLoad(frame_, commit_type,
+                               std::move(remote_interfaces_request));
 
   // Check whether we have new encoding name.
   UpdateEncoding(frame_, frame_->View()->PageEncoding().Utf8());
@@ -4897,7 +4913,9 @@ const RenderFrameImpl* RenderFrameImpl::GetLocalRoot() const {
 // Tell the embedding application that the URL of the active page has changed.
 void RenderFrameImpl::SendDidCommitProvisionalLoad(
     blink::WebLocalFrame* frame,
-    blink::WebHistoryCommitType commit_type) {
+    blink::WebHistoryCommitType commit_type,
+    service_manager::mojom::InterfaceProviderRequest
+        remote_interfaces_request) {
   DCHECK_EQ(frame_, frame);
   WebDocumentLoader* document_loader = frame->GetDocumentLoader();
   DCHECK(document_loader);
@@ -5108,7 +5126,8 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
   // allowImages(), allowPlugins() is called for the new page, so that when
   // these functions send a ViewHostMsg_ContentBlocked message, it arrives
   // after the FrameHostMsg_DidCommitProvisionalLoad message.
-  GetFrameHost()->DidCommitProvisionalLoad(std::move(params));
+  GetFrameHost()->DidCommitProvisionalLoad(
+      std::move(params), std::move(remote_interfaces_request));
 
   // If we end up reusing this WebRequest (for example, due to a #ref click),
   // we don't want the transition type to persist.  Just clear it.

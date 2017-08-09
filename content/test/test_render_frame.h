@@ -63,6 +63,9 @@ class TestRenderFrame : public RenderFrameImpl {
   std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
   TakeLastCommitParams();
 
+  service_manager::mojom::InterfaceProviderRequest
+  TakeLastInterfaceProviderRequest();
+
  private:
   void BindFrameHost(mojo::ScopedInterfaceEndpointHandle handle);
   explicit TestRenderFrame(const RenderFrameImpl::CreateParams& params);
