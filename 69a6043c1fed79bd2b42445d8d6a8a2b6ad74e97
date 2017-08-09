@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "b8732f81_c08ab09a",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-09T14:35:12Z",
+      "side": 1,
+      "message": "Does it mean that it is not attached to the same view as the DnD handler?",
+      "parentUuid": "6277bc71_34a9a096",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 11
+      },
+      "revId": "69a6043c1fed79bd2b42445d8d6a8a2b6ad74e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aee47c57_a8e14ebf",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
