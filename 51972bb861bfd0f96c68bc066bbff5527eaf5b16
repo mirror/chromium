@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a4a95314_4cc2c2fa",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-09T21:40:03Z",
+      "side": 1,
+      "message": "I see, I understand it now, but I think the code is hard to follow. The children being in the recursion tree and Show() being called through a callback is not easy to read.\n\nPerhaps we could do something like GetRenderWidgetHostViewsInTree(), but for a subtree, and have some way to avoid the unnecessary recursion in RenderWidgetHostViewChildFrame::Show() ?",
+      "parentUuid": "f6a382ad_78363682",
+      "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a683b5f5_5f9f2251",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 12
