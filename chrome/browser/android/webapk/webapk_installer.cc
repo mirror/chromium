@@ -351,6 +351,20 @@ void WebApkInstaller::InstallAsync(const ShortcutInfo& shortcut_info,
   finish_callback_ = finish_callback;
   task_type_ = INSTALL;
 
+  JNIEnv* env = base::android::AttachCurrentThread();
+  base::android::ScopedJavaLocalRef<jstring> java_webapk_package =
+      base::android::ConvertUTF8ToJavaString(env, webapk_package_);
+  base::android::ScopedJavaLocalRef<jstring> java_title =
+      base::android::ConvertUTF16ToJavaString(env, short_name_);
+  base::android::ScopedJavaLocalRef<jstring> java_url =
+      base::android::ConvertUTF8ToJavaString(env, start_url_.spec());
+  base::android::ScopedJavaLocalRef<jobject> java_primary_icon =
+      gfx::ConvertToJavaBitmap(&install_primary_icon_);
+
+  Java_WebApkInstaller_showInstallStartNotification(
+      env, java_ref_, java_webapk_package, java_title, java_url,
+      java_primary_icon);
+
   // We need to take the hash of the bitmap at the icon URL prior to any
   // transformations being applied to the bitmap (such as encoding/decoding
   // the bitmap). The icon hash is used to determine whether the icon that

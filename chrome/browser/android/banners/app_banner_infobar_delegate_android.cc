@@ -8,6 +8,7 @@
 
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
+#include "base/command_line.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/android/shortcut_helper.h"
@@ -20,6 +21,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/ui/android/infobars/app_banner_infobar_android.h"
+#include "chrome/common/chrome_switches.h"
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/rappor_service_impl.h"
 #include "content/public/browser/web_contents.h"
@@ -34,6 +36,21 @@ using base::android::ConvertUTF8ToJavaString;
 using base::android::ConvertUTF16ToJavaString;
 using base::android::JavaParamRef;
 using base::android::ScopedJavaLocalRef;
+
+namespace {
+void OnWebApkInstallFinishedForNewUI(content::WebContents* web_contents,
+                                     const ShortcutInfo& info,
+                                     const SkBitmap& icon_bitmap,
+                                     WebApkInstallResult result,
+                                     bool relax_updates,
+                                     const std::string& webapk_package_name) {
+  if (result != WebApkInstallResult::FAILURE)
+    return;
+
+  ShortcutHelper::AddToLauncherWithSkBitmap(web_contents, info, icon_bitmap);
+}
+
+}  // namespace
 
 namespace banners {
 
@@ -301,6 +318,18 @@ bool AppBannerInfoBarDelegateAndroid::AcceptWebApk(
         shortcut_info_->url.spec(),
         AppBannerSettingsHelper::APP_BANNER_EVENT_DID_ADD_TO_HOMESCREEN,
         AppBannerManager::GetCurrentTime());
+  }
+
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableWebApkNewInstallUI)) {
+    WebApkInstallService::FinishCallback callback =
+        base::Bind(OnWebApkInstallFinishedForNewUI,
+                   InfoBarService::WebContentsFromInfoBar(infobar()),
+                   *shortcut_info_, primary_icon_);
+    ShortcutHelper::InstallWebApkWithSkBitmap(
+        web_contents, *shortcut_info_, primary_icon_, badge_icon_, callback);
+    SendBannerAccepted();
+    return true;
   }
 
   UpdateInstallState(env, nullptr);
