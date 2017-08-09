@@ -10,12 +10,13 @@
 namespace blink {
 
 SelectionForUndoStep SelectionForUndoStep::From(
-    const SelectionInDOMTree& selection) {
+    const SelectionInDOMTree& selection,
+    bool directional) {
   SelectionForUndoStep result;
   result.base_ = selection.Base();
   result.extent_ = selection.Extent();
   result.affinity_ = selection.Affinity();
-  result.is_directional_ = selection.IsDirectional();
+  result.is_directional_ = directional;
   // TODO(editing-dev): We'll use |selection.IsBaseFirst()| once the bug[1]
   // is resolved. [1] http://crbug.com/751945
   result.is_base_first_ =
@@ -42,16 +43,29 @@ SelectionForUndoStep& SelectionForUndoStep::operator=(
   return *this;
 }
 
+bool SelectionForUndoStep::operator==(const SelectionForUndoStep& other) const {
+  if (IsNone())
+    return other.IsNone();
+  if (other.IsNone())
+    return false;
+  return base_ == other.base_ && extent_ == other.extent_ &&
+         affinity_ == other.affinity_ &&
+         is_base_first_ == other.is_base_first_ &&
+         is_directional_ == other.is_directional_;
+}
+
+bool SelectionForUndoStep::operator!=(const SelectionForUndoStep& other) const {
+  return !operator==(other);
+}
+
 SelectionInDOMTree SelectionForUndoStep::AsSelection() const {
   if (IsNone()) {
     return SelectionInDOMTree::Builder()
-        .SetIsDirectional(is_directional_)
         .Build();
   }
   return SelectionInDOMTree::Builder()
       .SetBaseAndExtent(base_, extent_)
       .SetAffinity(affinity_)
-      .SetIsDirectional(is_directional_)
       .Build();
 }
 

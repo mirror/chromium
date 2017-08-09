@@ -25,12 +25,16 @@ class SelectionForUndoStep final {
   // Returns newly constructed |SelectionForUndoStep| from |SelectionInDOMTree|
   // with computing direction of selection by base <= extent. Thus, computation
   // time depends O(depth of tree).
-  static SelectionForUndoStep From(const SelectionInDOMTree&);
+  static SelectionForUndoStep From(const SelectionInDOMTree&,
+                                   bool directional = false);
 
   SelectionForUndoStep(const SelectionForUndoStep&);
   SelectionForUndoStep();
 
   SelectionForUndoStep& operator=(const SelectionForUndoStep&);
+
+  bool operator==(const SelectionForUndoStep&) const;
+  bool operator!=(const SelectionForUndoStep&) const;
 
   TextAffinity Affinity() const { return affinity_; }
   Position Base() const { return base_; }
