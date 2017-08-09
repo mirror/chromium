@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "574bb17b_346ade90",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_grid.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-09T05:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc2a2ec7_faf7868d",
+      "range": {
+        "startLine": 916,
+        "startChar": 12,
+        "endLine": 916,
+        "endChar": 26
+      },
+      "revId": "7a9df424048d984602bc93b82edb7b8b6e2f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4f4c1f8_276c9ba1",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "7a9df424048d984602bc93b82edb7b8b6e2f2eb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ec8ebb_b175def3",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-09T05:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4f4c1f8_276c9ba1",
+      "range": {
+        "startLine": 84,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 20
+      },
+      "revId": "7a9df424048d984602bc93b82edb7b8b6e2f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a7e7953e_f4beefcb",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-09T05:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5599352_32163b08",
+      "range": {
+        "startLine": 335,
+        "startChar": 6,
+        "endLine": 335,
+        "endChar": 17
+      },
+      "revId": "7a9df424048d984602bc93b82edb7b8b6e2f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4736adb_dedc3a4e",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "7a9df424048d984602bc93b82edb7b8b6e2f2eb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e98693_7809f8bf",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-09T05:42:54Z",
+      "side": 1,
+      "message": "LONG_PRESS is intentionally made not to unselect an item because it\u0027d cancel selection beneath the file right after start dragging by touch.\nInstead it is designed to unselect upon LONG_TAP.\n(Though it currently doesn\u0027t as \u0027contextmenu\u0027 event is received instead of \u0027touchend\u0027 when doing a long tap. I\u0027ll tackle this issue separately.)",
+      "parentUuid": "f4736adb_dedc3a4e",
+      "range": {
+        "startLine": 338,
+        "startChar": 4,
+        "endLine": 338,
+        "endChar": 60
+      },
+      "revId": "7a9df424048d984602bc93b82edb7b8b6e2f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
