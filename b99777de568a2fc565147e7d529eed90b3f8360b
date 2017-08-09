@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55048337_d8242609",
+        "filename": "ios/chrome/browser/tabs/tab_model.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-09T14:55:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "761d6239_2da43879",
+      "revId": "b99777de568a2fc565147e7d529eed90b3f8360b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cbfc126_048cd777",
         "filename": "ios/chrome/browser/web_state_list/web_state_list.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "b99777de568a2fc565147e7d529eed90b3f8360b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d619607_f913f28f",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-09T14:55:32Z",
+      "side": 1,
+      "message": "If \"flag\" has more than one bit set (e.g. if it is a combination of multiple flags), using an equality ensure that flagset has all the same bit set as flag, not just a subset. This is not really necessary here because the function is only called with flag with a single bit set, so checking that the value is non-zero would work too.",
+      "parentUuid": "0cbfc126_048cd777",
+      "revId": "b99777de568a2fc565147e7d529eed90b3f8360b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "14e1e5e3_5dbf052e",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-09T14:55:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a6194ef_dcfa3477",
+      "revId": "b99777de568a2fc565147e7d529eed90b3f8360b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af63d6b4_e936444d",
         "filename": "ios/chrome/browser/web_state_list/web_state_list_serialization.mm",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "b99777de568a2fc565147e7d529eed90b3f8360b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b30674_49ca2309",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list_serialization.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-09T14:55:32Z",
+      "side": 1,
+      "message": "The opener relationship is stored as a pointer to the opener WebState. This requires that the opener WebState exists. As the opener of WebState at index n may be at index \u003e n, it is necessary to first recreate all WebState and then update the opener.\n\nThis is done by the call to \"RestoreRelationship()\" below. Do you want me to add a comment explaining this as a followup CL?",
+      "parentUuid": "af63d6b4_e936444d",
+      "revId": "b99777de568a2fc565147e7d529eed90b3f8360b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

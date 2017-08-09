@@ -16,6 +16,24 @@
       "revId": "818432fb1a24697db020f971b38ac94eed025d61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb1b9e1_a4ef6700",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list_order_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-09T14:55:32Z",
+      "side": 0,
+      "message": "This is explained in the CL description.\n\nThere is one location in the code that was calling this method with ui::PAGE_TRANSITION_LINK. All the other location had to call with a different fake transition value. It felt wrong to use an arbitrary value for transition in order to have the proper behaviour from WebStateListOrderController.\n\nInstead, with this CL, the WebStateListOrderController is used iff INSERT_FORCE_INDEX is not set when calling InsertWebState().\n\nSo this change remove:\n1. dependency on ui::PageTransition,\n2. use of arbitrary fake transition value,\n3. leak of an implementation detail.",
+      "parentUuid": "de4d4aae_127f2ca3",
+      "revId": "818432fb1a24697db020f971b38ac94eed025d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
