@@ -28,7 +28,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/test/browser_test_utils.h"
-#include "testing/gtest/include/gtest/gtest.h"
 
 using content::WebContents;
 using content::NavigationHandle;
@@ -58,8 +57,6 @@ class NavigationStartWebContentsObserver : public content::WebContentsObserver {
  private:
   bool is_session_restored_ = false;
   bool is_restored_in_foreground_ = false;
-
-  DISALLOW_COPY_AND_ASSIGN(NavigationStartWebContentsObserver);
 };
 
 class MockSessionRestoreObserver : public SessionRestoreObserver {
@@ -67,7 +64,10 @@ class MockSessionRestoreObserver : public SessionRestoreObserver {
   MockSessionRestoreObserver() { SessionRestore::AddObserver(this); }
   ~MockSessionRestoreObserver() { SessionRestore::RemoveObserver(this); }
 
-  enum class SessionRestoreEvent { kStartedLoadingTabs, kFinishedLoadingTabs };
+  enum class SessionRestoreEvent {
+    STARTED_LOADING_TABS,
+    FINISHED_LOADING_TABS
+  };
 
   const std::vector<SessionRestoreEvent>& session_restore_events() const {
     return session_restore_events_;
@@ -76,11 +76,11 @@ class MockSessionRestoreObserver : public SessionRestoreObserver {
   // SessionRestoreObserver implementation:
   void OnSessionRestoreStartedLoadingTabs() override {
     session_restore_events_.emplace_back(
-        SessionRestoreEvent::kStartedLoadingTabs);
+        SessionRestoreEvent::STARTED_LOADING_TABS);
   }
   void OnSessionRestoreFinishedLoadingTabs() override {
     session_restore_events_.emplace_back(
-        SessionRestoreEvent::kFinishedLoadingTabs);
+        SessionRestoreEvent::FINISHED_LOADING_TABS);
   }
   void OnWillRestoreTab(WebContents* contents) override {
     navigation_start_observers_.emplace(
@@ -103,8 +103,6 @@ class MockSessionRestoreObserver : public SessionRestoreObserver {
 
 class SessionRestoreObserverTest : public InProcessBrowserTest {
  protected:
-  SessionRestoreObserverTest() {}
-
   void SetUpOnMainThread() override {
     SessionStartupPref pref(SessionStartupPref::LAST);
     SessionStartupPref::SetStartupPref(browser()->profile(), pref);
@@ -134,7 +132,7 @@ class SessionRestoreObserverTest : public InProcessBrowserTest {
     for (int i = 0; i < browser->tab_strip_model()->count(); ++i) {
       WebContents* contents = browser->tab_strip_model()->GetWebContentsAt(i);
       contents->GetController().LoadIfNecessary();
-      ASSERT_TRUE(content::WaitForLoadStop(contents));
+      content::WaitForLoadStop(contents);
     }
   }
 
@@ -157,8 +155,6 @@ class SessionRestoreObserverTest : public InProcessBrowserTest {
 
  private:
   MockSessionRestoreObserver mock_observer_;
-
-  DISALLOW_COPY_AND_ASSIGN(SessionRestoreObserverTest);
 };
 
 IN_PROC_BROWSER_TEST_F(SessionRestoreObserverTest, SingleTabSessionRestore) {
@@ -172,13 +168,13 @@ IN_PROC_BROWSER_TEST_F(SessionRestoreObserverTest, SingleTabSessionRestore) {
 
   ASSERT_EQ(1u, number_of_session_restore_events());
   EXPECT_EQ(
-      MockSessionRestoreObserver::SessionRestoreEvent::kStartedLoadingTabs,
+      MockSessionRestoreObserver::SessionRestoreEvent::STARTED_LOADING_TABS,
       session_restore_events()[0]);
 
-  ASSERT_NO_FATAL_FAILURE(WaitForTabsToLoad(new_browser));
+  WaitForTabsToLoad(new_browser);
   ASSERT_EQ(2u, number_of_session_restore_events());
   EXPECT_EQ(
-      MockSessionRestoreObserver::SessionRestoreEvent::kFinishedLoadingTabs,
+      MockSessionRestoreObserver::SessionRestoreEvent::FINISHED_LOADING_TABS,
       session_restore_events()[1]);
 
   // The only restored tab should be in foreground.
@@ -214,13 +210,13 @@ IN_PROC_BROWSER_TEST_F(SessionRestoreObserverTest, MultipleTabSessionRestore) {
 
   ASSERT_EQ(1u, number_of_session_restore_events());
   EXPECT_EQ(
-      MockSessionRestoreObserver::SessionRestoreEvent::kStartedLoadingTabs,
+      MockSessionRestoreObserver::SessionRestoreEvent::STARTED_LOADING_TABS,
       session_restore_events()[0]);
 
-  ASSERT_NO_FATAL_FAILURE(WaitForTabsToLoad(new_browser));
+  WaitForTabsToLoad(new_browser);
   ASSERT_EQ(2u, number_of_session_restore_events());
   EXPECT_EQ(
-      MockSessionRestoreObserver::SessionRestoreEvent::kFinishedLoadingTabs,
+      MockSessionRestoreObserver::SessionRestoreEvent::FINISHED_LOADING_TABS,
       session_restore_events()[1]);
 
   // The first tab should be restored in foreground.

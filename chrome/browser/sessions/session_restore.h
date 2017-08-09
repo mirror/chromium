@@ -125,6 +125,18 @@ class SessionRestore {
                            ConcurrentSessionRestores);
   FRIEND_TEST_ALL_PREFIXES(SessionRestoreObserverTest,
                            TabManagerShouldObserveSessionRestore);
+  FRIEND_TEST_ALL_PREFIXES(SessionRestorePageLoadMetricsObserverTest,
+                           RestoreSingleForegroundTab);
+  FRIEND_TEST_ALL_PREFIXES(SessionRestorePageLoadMetricsObserverTest,
+                           RestoreMultipleForegroundTabs);
+  FRIEND_TEST_ALL_PREFIXES(SessionRestorePageLoadMetricsObserverTest,
+                           RestoreBackgroundTab);
+  FRIEND_TEST_ALL_PREFIXES(SessionRestorePageLoadMetricsObserverTest,
+                           HideTabBeforeFirstPaints);
+  FRIEND_TEST_ALL_PREFIXES(SessionRestorePageLoadMetricsObserverTest,
+                           SwitchInitialRestoredForegroundTab);
+  FRIEND_TEST_ALL_PREFIXES(SessionRestorePageLoadMetricsObserverTest,
+                           MultipleSessionRestores);
 
   // Session restore observer list.
   using SessionRestoreObserverList = base::ObserverList<SessionRestoreObserver>;

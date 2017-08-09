@@ -22,18 +22,18 @@ class SerializedNavigationEntry;
 
 namespace chrome {
 
-// Add a tab with its session history restored from the SessionRestore and
-// TabRestoreService systems. If select is true, the tab is selected.
-// |tab_index| gives the index to insert the tab at. |selected_navigation| is
-// the index of the SerializedNavigationEntry in |navigations| to select. If
-// |extension_app_id| is non-empty the tab is an app tab and |extension_app_id|
-// is the id of the extension. If |pin| is true and |tab_index|/ is the last
-// pinned tab, then the newly created tab is pinned. If |from_last_session| is
-// true, |navigations| are from the previous session. |user_agent_override|
-// contains the string being used as the user agent for all of the tab's
-// navigations when the regular user agent is overridden. If
-// |from_session_restore| is true, the restored tab is created by session
-// restore. Returns the WebContents of the restored tab.
+// Add a tab with its session history restored from the SessionRestore
+// system. If select is true, the tab is selected. |tab_index| gives the index
+// to insert the tab at. |selected_navigation| is the index of the
+// SerializedNavigationEntry in |navigations| to select. If |extension_app_id|
+// is non-empty the tab is an app tab and |extension_app_id| is the id of the
+// extension. If |pin| is true and |tab_index|/ is the last pinned tab, then
+// the newly created tab is pinned. If |from_last_session| is true,
+// |navigations| are from the previous session. |user_agent_override| contains
+// the string being used as the user agent for all of the tab's navigations when
+// the regular user agent is overridden. If |session_restore_initiated| is true,
+// the restored tab is created by session restore. Returns the WebContents of
+// the restored tab.
 content::WebContents* AddRestoredTab(
     Browser* browser,
     const std::vector<sessions::SerializedNavigationEntry>& navigations,
@@ -45,11 +45,11 @@ content::WebContents* AddRestoredTab(
     bool from_last_session,
     content::SessionStorageNamespace* storage_namespace,
     const std::string& user_agent_override,
-    bool from_session_restore);
+    bool session_restore_initiated);
 
 // Replaces the state of the currently selected tab with the session
-// history restored from the SessionRestore and TabRestoreService systems.
-// Returns the WebContents of the restored tab.
+// history restored from the SessionRestore system. Returns the WebContents of
+// the restored tab.
 content::WebContents* ReplaceRestoredTab(
     Browser* browser,
     const std::vector<sessions::SerializedNavigationEntry>& navigations,
@@ -58,7 +58,7 @@ content::WebContents* ReplaceRestoredTab(
     const std::string& extension_app_id,
     content::SessionStorageNamespace* session_storage_namespace,
     const std::string& user_agent_override,
-    bool from_session_restore);
+    bool session_restore_initiated);
 
 }  // namespace chrome
 

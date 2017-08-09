@@ -224,7 +224,8 @@ class SessionRestoreImpl : public content::NotificationObserver {
       DCHECK(!use_new_window);
       web_contents = chrome::ReplaceRestoredTab(
           browser, tab.navigations, selected_index, true, tab.extension_app_id,
-          nullptr, tab.user_agent_override, true /* from_session_restore */);
+          nullptr, tab.user_agent_override,
+          true /* session_restore_initiated */);
     } else {
       int tab_index =
           use_new_window ? 0 : browser->tab_strip_model()->active_index() + 1;
@@ -233,7 +234,7 @@ class SessionRestoreImpl : public content::NotificationObserver {
           tab.extension_app_id,
           disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB,  // selected
           tab.pinned, true, nullptr, tab.user_agent_override,
-          true /* from_session_restore */);
+          true /* session_restore_initiated */);
       // Start loading the tab immediately.
       web_contents->GetController().LoadIfNecessary();
     }
@@ -596,7 +597,7 @@ class SessionRestoreImpl : public content::NotificationObserver {
         browser, tab.navigations, tab_index, selected_index,
         tab.extension_app_id, is_selected_tab, tab.pinned, true,
         session_storage_namespace.get(), tab.user_agent_override,
-        true /* from_session_restore */);
+        true /* session_restore_initiated */);
     // Regression check: if the current tab |is_selected_tab|, it should load
     // immediately, otherwise, tabs should not start loading right away. The
     // focused tab will be loaded by Browser, and TabLoader will load the rest.
