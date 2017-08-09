@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58976ad3_cfb89fdf",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T00:53:20Z",
+      "side": 1,
+      "message": "Seems like it\u0027s worth calling out that there\u0027s a special IDB metadata fetcher task, which is run before all the other tasks, and whose output is passed to all the other tasks.",
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c5a48c_8b95bdc4",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T00:53:20Z",
+      "side": 1,
+      "message": "How about \"Instances of this class are sequence-hostile. Each instance must only be used on the same SequencedTaskRunner.\"",
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a9f5cc_1e840e43",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T00:53:20Z",
+      "side": 1,
+      "message": "Nit-level: completed, for consistency and to avoid having readers mis-parse the word as a verb?\n\nAfter reading the implementation, it seems like this is set when the task queue stops processing tasks. This is true when all tasks are done, but is also true when there\u0027s a timeout. How about having this be \"done\" (which becomes a synonym for stopped), and including exhausting the queue (success) as a reason for stopping (ALL_TASKS_DONE)?\n\nIt seems like the sweeper already uses \"done\" in this way.",
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d20307_5d3afe79",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T00:53:20Z",
+      "side": 1,
+      "message": "Could this go in the constructor?",
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17170644_56e59d12",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T00:53:20Z",
+      "side": 1,
+      "message": "Please don\u0027t forget to remove the logging :)",
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ee7dd2_b2ff4371",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T00:53:20Z",
+      "side": 1,
+      "message": "This is a fairly generic name. How about some comments and/or a better name?",
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96793d89_de9b500a",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T00:53:20Z",
+      "side": 1,
+      "message": "nit: This seems like a reasonable follow-up CL, as we\u0027re still working on the doc.",
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e864f2_f003f7b0",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T00:53:20Z",
+      "side": 1,
+      "message": "us -\u003e this instance?",
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7481979_d89e00f0",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T00:53:20Z",
+      "side": 1,
+      "message": "I have a hunch that making seeds size_t would reduce the amount of casting you have to do. WDYT?",
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c244b3_427f70cc",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T00:53:20Z",
+      "side": 1,
+      "message": "index_it_key or just index_key?",
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b3014a_eaedca57",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T00:53:20Z",
+      "side": 1,
+      "message": "total_ -\u003e seen_ (here and below)?\n\nJust to make sure that it doesn\u0027t seem like the code is counting tombstones in the entire DB. (which is not the case if it stops due to hitting a limit)",
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef59ee8f_d7835691",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-09T00:53:20Z",
+      "side": 1,
+      "message": "round_write_batch or round_deletion_batch?",
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
