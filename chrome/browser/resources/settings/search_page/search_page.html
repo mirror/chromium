@@ -84,8 +84,9 @@
 
         <template is="dom-if" if="[[googleNowAvailable_]]">
           <!-- Google Now cards in the launcher -->
-          <div class="settings-box continuation indented">
+          <div class="settings-box continuation indented" id="googleNowRow">
             <settings-toggle-button id="googleNowEnable" class="start"
+                action-target="[[$$('#googleNowRow')]]"
                 pref="{{prefs.google_now_launcher.enabled}}"
                 label="$i18n{searchEnableGoogleNowLabel}">
             </settings-toggle-button>
@@ -94,8 +95,10 @@
 
         <template is="dom-if" if="[[hotwordInfo_.allowed]]">
           <!-- Hotword (OK Google) -->
-          <div class="settings-box two-line continuation indented">
+          <div class="settings-box two-line continuation indented"
+              id="hotwordSearchRow">
             <settings-toggle-button id="hotwordSearchEnable" class="start"
+                action-target="[[$$('#hotwordSearchRow')]]"
                 pref="{{hotwordSearchEnablePref_}}"
                 label="$i18n{searchOkGoogleLabel}"
                 sub-label="[[getHotwordSearchEnableSubLabel_(
