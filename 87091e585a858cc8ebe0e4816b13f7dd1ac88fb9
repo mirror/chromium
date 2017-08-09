@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0bff7301_df5d5a79",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d57c2c7_48771211",
+      "range": {
+        "startLine": 7,
+        "startChar": 23,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e74705b_959533a0",
         "filename": "chrome/browser/ui/views/sad_tab_view.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-08T04:07:17Z",
       "side": 1,
       "message": "Hm. The implementation of these in WebContentsViewAura is identical:\n\nvoid WebContentsViewAura::GetContainerBounds(gfx::Rect *out) const {\n  *out \u003d window_-\u003eGetBoundsInScreen();\n}\n\ngfx::Rect WebContentsViewAura::GetViewBounds() const {\n  return window_-\u003eGetBoundsInScreen();\n}\n\nand Mac is currently NOTIMPLEMENTED(). Which suggests to me that one of these should be deleted (see later comments)",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88934d99_b0b87ac3",
+        "filename": "chrome/browser/ui/views/sad_tab_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "GetViewBouds() should not return bounds in screen. Anyway, I reverted sad_tab_view.cc following your later comments.",
+      "parentUuid": "5e74705b_959533a0",
       "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +130,54 @@
     },
     {
       "key": {
+        "uuid": "ec6fa26b_6b0d3190",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e686fe43_20b3f111",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "372998f8_bc0d11d1",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad0696ed_888c73c7",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fa165d7_2abc9c48",
         "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
         "patchSetId": 2
@@ -102,6 +192,24 @@
       "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851ccf51_c2af2cde",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fa165d7_2abc9c48",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "ccaca921_9f5fb335",
+        "filename": "content/browser/web_contents/web_contents_view_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d047167a_c992ea9a",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbb8bbd3_2c44e1f0",
         "filename": "content/browser/web_contents/web_contents_view_mac.mm",
         "patchSetId": 2
@@ -136,6 +262,24 @@
       "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0252423_780366ce",
+        "filename": "content/browser/web_contents/web_contents_view_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbb8bbd3_2c44e1f0",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +323,30 @@
     },
     {
       "key": {
+        "uuid": "9a1ed212_ac11a57c",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4060d62f_76f703d6",
+      "range": {
+        "startLine": 627,
+        "startChar": 15,
+        "endLine": 627,
+        "endChar": 30
+      },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e96c66e7_e538e39f",
         "filename": "ui/views/cocoa/bridged_content_view.mm",
         "patchSetId": 2
@@ -190,6 +358,30 @@
       "writtenOn": "2017-08-08T04:07:17Z",
       "side": 1,
       "message": "Comparing widths seems strange here. I think only works since with the assumption that at least one corner of |self frame| is at the same screen location as |window frame|.\n\nIf this is still required after tweaking views::Widget::ReparentNativeView, it should be done with  -[NSView convertPoint:fromView:]",
+      "range": {
+        "startLine": 628,
+        "startChar": 19,
+        "endLine": 628,
+        "endChar": 73
+      },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68120b0d_ea2e5fea",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "done. This is still required after tweaking views::Widget::ReparentNativeView. Reparented view gets mouse events from superview\u0027s window. And the mouse events location has coordinates base on that window.",
+      "parentUuid": "e96c66e7_e538e39f",
       "range": {
         "startLine": 628,
         "startChar": 19,
@@ -219,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "9dc1d25e_3bdbadb8",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfeaf997_36588644",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ace52425_6e48f698",
         "filename": "ui/views/cocoa/bridged_content_view.mm",
         "patchSetId": 2
@@ -236,6 +446,24 @@
     },
     {
       "key": {
+        "uuid": "5bbb4e9d_f4c4dbc1",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "I have no idea how to add a test. Can you give me a hint?",
+      "parentUuid": "ace52425_6e48f698",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd7c8fbc_7bd1aff8",
         "filename": "ui/views/widget/native_widget_mac.mm",
         "patchSetId": 2
@@ -247,6 +475,24 @@
       "writtenOn": "2017-08-08T04:07:17Z",
       "side": 1,
       "message": "Implementing this means we need to enable the tests, e.g. view_unittest.cc\n\n\n// No ReparentNativeView on Mac. See http://crbug.com/514920.\n#if defined(OS_MACOSX) \u0026\u0026 !defined(USE_AURA)\n#define MAYBE_NativeViewHierarchyChanged DISABLED_NativeViewHierarchyChanged\n#else\n#define MAYBE_NativeViewHierarchyChanged NativeViewHierarchyChanged\n#endif",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebacadd_f9c03b48",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "ok. I\u0027ll take a look.",
+      "parentUuid": "dd7c8fbc_7bd1aff8",
       "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -276,6 +522,30 @@
     },
     {
       "key": {
+        "uuid": "ae9d46ef_3de8f9a1",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c59d3a61_39ca3b7c",
+      "range": {
+        "startLine": 746,
+        "startChar": 35,
+        "endLine": 746,
+        "endChar": 52
+      },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54e61204_b7dd8824",
         "filename": "ui/views/widget/native_widget_mac.mm",
         "patchSetId": 2
@@ -296,6 +566,30 @@
       "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf9ce25_e06081b2",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54e61204_b7dd8824",
+      "range": {
+        "startLine": 747,
+        "startChar": 12,
+        "endLine": 747,
+        "endChar": 20
+      },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -322,6 +616,30 @@
     },
     {
       "key": {
+        "uuid": "685b7064_16323278",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e60a216d_9701d9f5",
+      "range": {
+        "startLine": 748,
+        "startChar": 62,
+        "endLine": 749,
+        "endChar": 36
+      },
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b87ff615_629eac22",
         "filename": "ui/views/widget/native_widget_mac.mm",
         "patchSetId": 2
@@ -336,6 +654,24 @@
       "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069b0404_74a8ccab",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-09T02:57:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b87ff615_629eac22",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
