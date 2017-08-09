@@ -10,6 +10,7 @@
 #include "components/signin/core/browser/signin_manager.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/browser/signin/signin_manager_factory.h"
+#import "ios/chrome/browser/ui/authentication/signin_promo_view.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
 #import "ios/chrome/browser/ui/settings/accounts_collection_view_controller.h"
@@ -468,7 +469,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   TapButtonWithLabelId(IDS_IOS_DISCONNECT_DIALOG_CONTINUE_BUTTON_MOBILE);
   AssertAuthenticatedIdentityInActiveProfile(nil);
 
-  TapViewWithAccessibilityId(kSettingsSignInCellId);
+  TapViewWithAccessibilityId(kSigninPromoSecondaryButtonId);
   [ChromeEarlGreyUI signInToIdentityByEmail:identity1.userEmail];
 
   // Open new tab to cancel sign-in.
@@ -525,7 +526,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   [[EarlGrey selectElementWithMatcher:all_bookmarks_matcher]
       performAction:grey_tap()];
 
-  TapButtonWithLabelId(IDS_IOS_BOOKMARK_PROMO_SIGN_IN_BUTTON);
+  TapViewWithAccessibilityId(kSigninPromoSecondaryButtonId);
 
   // Assert sign-in screen was shown.
   id<GREYMatcher> signin_matcher =
@@ -554,7 +555,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   }
   [[EarlGrey selectElementWithMatcher:all_bookmarks_matcher]
       performAction:grey_tap()];
-  TapButtonWithLabelId(IDS_IOS_BOOKMARK_PROMO_SIGN_IN_BUTTON);
+  TapViewWithAccessibilityId(kSigninPromoSecondaryButtonId);
   [[EarlGrey selectElementWithMatcher:signin_matcher]
       assertWithMatcher:grey_sufficientlyVisible()];
 
