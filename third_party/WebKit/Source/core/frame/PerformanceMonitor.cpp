@@ -132,6 +132,11 @@ void PerformanceMonitor::WillExecuteScript(ExecutionContext* context) {
     task_execution_context_ = context;
   else if (task_execution_context_ != context)
     task_has_multiple_contexts_ = true;
+  if (!context || !context->IsDocument() || !ToDocument(context)->GetFrame())
+    return;
+  Frame* culprit_frame = ToDocument(context)->GetFrame();
+  if (culprit_frame == local_root_.Get())
+    task_involves_root_ = true;
 }
 
 void PerformanceMonitor::DidExecuteScript() {
@@ -242,6 +247,7 @@ void PerformanceMonitor::WillProcessTask(double start_time) {
   // as it is needed in ReportTaskTime which occurs after didProcessTask.
   task_execution_context_ = nullptr;
   task_has_multiple_contexts_ = false;
+  task_involves_root_ = false;
 
   if (!enabled_)
     return;
@@ -254,7 +260,7 @@ void PerformanceMonitor::WillProcessTask(double start_time) {
 }
 
 void PerformanceMonitor::DidProcessTask(double start_time, double end_time) {
-  if (!enabled_)
+  if (!enabled_ || !task_involves_root_)
     return;
   double layout_threshold = thresholds_[kLongLayout];
   if (layout_threshold && per_task_style_and_layout_time_ > layout_threshold) {
