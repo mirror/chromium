@@ -34,6 +34,24 @@
       "revId": "cbca52956f2312bc519ba53b442d742927562d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed92f84_1f30d235",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2214,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-09T14:25:41Z",
+      "side": 1,
+      "message": "This is touching on what I\u0027m currently doing for viewport (LayoutView) style propagation. Take a look at:\n\nhttps://chromium-review.googlesource.com/c/606007 (landed)\nhttps://chromium-review.googlesource.com/c/608028\n\nInheriting down from LayoutView style is no longer done.\n\nLayoutBox::StyleWillChange() does paint invalidation for the view when html or body elements change. I think a visual invalidation diff on the LayoutView style should be done instead. Something like you do here, but then also remove the code in LayoutBox::StyleWillChange().",
+      "parentUuid": "1fcd6d9e_c05d554c",
+      "revId": "cbca52956f2312bc519ba53b442d742927562d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
