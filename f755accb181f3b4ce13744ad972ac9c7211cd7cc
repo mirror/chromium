@@ -93,6 +93,30 @@
       "revId": "f755accb181f3b4ce13744ad972ac9c7211cd7cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f67c212d_d7f14525",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-09T16:41:51Z",
+      "side": 1,
+      "message": "According to go/zine-terms, content suggestions are the rich cards, site suggestions the site tiles. I also considered \"Exploration/Explore\" the name of the feature like Chrome Home or Modern are feature names. Hence the above string.\n\nBut to stay in the spirit of your suggestion, how about... \"Show a site exploration UI in the suggestions surface?\"",
+      "parentUuid": "ecd1abad_86d2fe68",
+      "range": {
+        "startLine": 1740,
+        "startChar": 10,
+        "endLine": 1740,
+        "endChar": 46
+      },
+      "revId": "f755accb181f3b4ce13744ad972ac9c7211cd7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
