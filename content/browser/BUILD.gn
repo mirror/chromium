@@ -1570,6 +1570,7 @@ source_set("browser") {
     "web_contents/web_drag_source_mac.mm",
     "web_contents/web_drag_utils_win.cc",
     "web_contents/web_drag_utils_win.h",
+    "web_contents_importance.h",
     "webauth/authenticator_impl.cc",
     "webauth/authenticator_impl.h",
     "websockets/websocket_handshake_request_info_impl.cc",

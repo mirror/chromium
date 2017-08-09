@@ -118,6 +118,13 @@ float RenderWidgetHostViewBase::GetBottomControlsHeight() const {
   return 0.f;
 }
 
+void RenderWidgetHostViewBase::SetImportance(WebContentsImportance importance) {
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(GetRenderWidgetHost());
+  if (host)
+    host->SetImportance(importance);
+}
+
 void RenderWidgetHostViewBase::SelectionChanged(const base::string16& text,
                                                 size_t offset,
                                                 const gfx::Range& range) {
