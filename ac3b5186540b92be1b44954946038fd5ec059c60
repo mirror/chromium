@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bf91f21_4b81b1cd",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2136,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-09T20:25:07Z",
+      "side": 1,
+      "message": "Do we still need this if the document element no longer inherits LayoutView style?",
+      "revId": "ac3b5186540b92be1b44954946038fd5ec059c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7967377f_32442bf8",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2163,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-09T20:25:07Z",
+      "side": 1,
+      "message": "Is it possible to remove #2136 and do this instead?\n} else {\n  GetLayoutViewItem().SetStyle(StyleResolver::StyleForViewport(*this));\n}",
+      "range": {
+        "startLine": 2163,
+        "startChar": 3,
+        "endLine": 2163,
+        "endChar": 0
+      },
+      "revId": "ac3b5186540b92be1b44954946038fd5ec059c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
