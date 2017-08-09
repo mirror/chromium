@@ -16,6 +16,24 @@
       "revId": "8f51b9de091614f73bf63e53be547a12d980508c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c577c39_f0417e81",
+        "filename": "chrome/browser/permissions/permission_request_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-08-09T04:01:32Z",
+      "side": 0,
+      "message": "I don\u0027t fully understand the problem here (I haven\u0027t really used finch before). Is the issue that the ResourceLoadScheduler gets confused as we previously had an experiment but it gets disabled, and this is the only test that happens to run into it? The test change looks OK but it doesn\u0027t seem like we\u0027re currently doing anything that shouldn\u0027t work.",
+      "parentUuid": "cb555a25_d0502b91",
+      "revId": "8f51b9de091614f73bf63e53be547a12d980508c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
