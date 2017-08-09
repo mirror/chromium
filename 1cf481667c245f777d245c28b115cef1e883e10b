@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b96bd664_baa08109",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-09T23:11:51Z",
+      "side": 1,
+      "message": "is",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "1cf481667c245f777d245c28b115cef1e883e10b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b93065_753296c6",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-09T23:11:51Z",
+      "side": 1,
+      "message": "Please add a comment explaining why this is the case.",
+      "range": {
+        "startLine": 482,
+        "startChar": 0,
+        "endLine": 482,
+        "endChar": 28
+      },
+      "revId": "1cf481667c245f777d245c28b115cef1e883e10b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03535da6_4e4b93a4",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-09T23:11:51Z",
+      "side": 1,
+      "message": "nit: Why has this been moved down? If there is no reason to move it down, please leave it where it was to preserve git history.",
+      "range": {
+        "startLine": 476,
+        "startChar": 0,
+        "endLine": 488,
+        "endChar": 3
+      },
+      "revId": "1cf481667c245f777d245c28b115cef1e883e10b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
