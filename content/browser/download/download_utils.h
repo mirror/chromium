@@ -8,14 +8,21 @@
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "net/base/net_errors.h"
 #include "net/cert/cert_status_flags.h"
+#include "net/http/http_response_headers.h"
 
 namespace content {
+
+struct DownloadSaveInfo;
 
 // Handle the url request completion status and return the interrupt reasons.
 // |cert_status| is ignored if error_code is not net::ERR_ABORTED.
 DownloadInterruptReason CONTENT_EXPORT HandleRequestCompletionStatus(
     net::Error error_code, bool has_strong_validators,
     net::CertStatus cert_status, DownloadInterruptReason abort_reason);
+
+DownloadInterruptReason CONTENT_EXPORT
+HandleSuccessfulServerResponse(const net::HttpResponseHeaders& http_headers,
+                               DownloadSaveInfo* save_info);
 
 }  // namespace content
 
