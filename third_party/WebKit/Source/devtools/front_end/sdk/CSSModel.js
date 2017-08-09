@@ -362,14 +362,10 @@ SDK.CSSModel = class extends SDK.SDKModel {
 
   /**
    * @param {number} nodeId
-   * @return {!Promise<?SDK.CSSModel.ContrastInfo>}
+   * @return {!Promise<?Array<string>>}
    */
-  async backgroundColorsPromise(nodeId) {
-    var response = this._agent.invoke_getBackgroundColors({nodeId});
-    if (response[Protocol.Error])
-      return null;
-
-    return response;
+  backgroundColorsPromise(nodeId) {
+    return this._agent.getBackgroundColors(nodeId);
   }
 
   /**
@@ -751,9 +747,6 @@ SDK.SDKModel.register(SDK.CSSModel, SDK.Target.Capability.DOM, true);
 
 /** @typedef {!{range: !Protocol.CSS.SourceRange, styleSheetId: !Protocol.CSS.StyleSheetId, wasUsed: boolean}} */
 SDK.CSSModel.RuleUsage;
-
-/** @typedef {{backgroundColors: ?Array<string>, computedFontSize: string, computedFontWeights: string, computedBodyFontSize: string}} */
-SDK.CSSModel.ContrastInfo;
 
 /** @enum {symbol} */
 SDK.CSSModel.Events = {
