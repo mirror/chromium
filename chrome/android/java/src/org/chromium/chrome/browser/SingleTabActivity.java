@@ -17,6 +17,7 @@ import org.chromium.chrome.browser.tabmodel.TabModel.TabSelectionType;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.document.TabDelegate;
 import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.content_public.browser.WebContentsImportance;
 
 import java.io.File;
 
@@ -66,6 +67,7 @@ public abstract class SingleTabActivity extends ChromeActivity {
         Tab tab = createTab();
         getTabModelSelector().setTab(tab);
         tab.show(TabSelectionType.FROM_NEW);
+        tab.setImportance(WebContentsImportance.MODERATE);
     }
 
     @Override

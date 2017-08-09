@@ -102,6 +102,7 @@ import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.ImeEventObserver;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.WebContents;
+import org.chromium.content_public.browser.WebContentsImportance;
 import org.chromium.content_public.common.BrowserControlsState;
 import org.chromium.content_public.common.Referrer;
 import org.chromium.content_public.common.ResourceRequestBody;
@@ -301,6 +302,8 @@ public class Tab
      * Whether or not the Tab is currently visible to the user.
      */
     private boolean mIsHidden = true;
+
+    private @WebContentsImportance int mImportance = WebContentsImportance.NORMAL;
 
     /** Whether the renderer is currently unresponsive. */
     private boolean mIsRendererUnresponsive;
@@ -1192,6 +1195,14 @@ public class Tab
         }
     }
 
+    public final void setImportance(@WebContentsImportance int importance) {
+        if (mImportance == importance) return;
+        mImportance = importance;
+        WebContents webContents = getWebContents();
+        if (webContents == null) return;
+        webContents.setImportance(mImportance);
+    }
+
     /**
      * Shows the given {@code nativePage} if it's not already showing.
      * @param nativePage The {@link NativePage} to show.
@@ -1648,9 +1659,11 @@ public class Tab
 
             if (mContentViewCore != null) {
                 mContentViewCore.setObscuredByAnotherView(false);
+                mContentViewCore.getWebContents().setImportance(WebContentsImportance.NORMAL);
             }
 
             mContentViewCore = cvc;
+            mContentViewCore.getWebContents().setImportance(mImportance);
             cvc.getContainerView().setOnHierarchyChangeListener(this);
             cvc.getContainerView().setOnSystemUiVisibilityChangeListener(this);
 
