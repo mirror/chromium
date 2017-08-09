@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "aee8d640_eaffd5bd",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-09T17:20:27Z",
+      "side": 1,
+      "message": "Ah, success above doesn\u0027t mean that the address is valid, it just means that the rules were present and were applied.\n\nPlease add a comment to that effect in the SUCCESS case. Something like: The rules were found and applied. Initialize all fields to valid here and update the fields with problems below.",
+      "parentUuid": "d9055d91_18e9f6a7",
+      "range": {
+        "startLine": 132,
+        "startChar": 24,
+        "endLine": 132,
+        "endChar": 37
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a71f7db7_811f71a3",
         "filename": "components/autofill/core/browser/address_validation_util.cc",
         "patchSetId": 25
@@ -231,6 +255,138 @@
         "endLine": 134,
         "endChar": 47
       },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92d991f_8df9210f",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-09T17:20:27Z",
+      "side": 1,
+      "message": "Oh, I wasn\u0027t interpreting SUCCESS correctly.\n\nThanks for clarifying. Maybe capture this in the comments for the next reader of this code.\n\nYou could also (optionally) alter the flow slightly to be something like:\n\n  if (success) {\n     // The validation rules were found and applied\n     init with valid\n  } else {\n     if (!ContainsValue(...)) {\n        // There are no rules for this country.\n        ... return;\n     }\n     Init with invalid\n  }\n  Update with problems.\n\nOr like:\n\n  if (!success \u0026\u0026 !ContainsValue()) {\n    // The validation rules are not available. Because there are\n    // none for this country.\n    ...\n    return;\n  }\n  Init(success ? VALID : INVALID/UNVALIDATED)\n  Update with problems",
+      "parentUuid": "11479a8a_e5ec2632",
+      "range": {
+        "startLine": 134,
+        "startChar": 18,
+        "endLine": 134,
+        "endChar": 47
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a40c5f_7e7b1a5e",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-09T17:20:27Z",
+      "side": 1,
+      "message": "Is there any value in testing with a non-western dataset? I\u0027d love to see some testing that covers RTL and non-latin data.",
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4b04d3_0253079e",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-09T17:20:27Z",
+      "side": 1,
+      "message": "did you mean for this postal code to be lowercase?\n\nalso, in the comment... s/small letter/lowercase letters/",
+      "range": {
+        "startLine": 205,
+        "startChar": 35,
+        "endLine": 205,
+        "endChar": 41
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4e6dc0_6cf7906a",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-09T17:20:27Z",
+      "side": 1,
+      "message": "join the last two lines?",
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678a1bec_6c30e5f6",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-09T17:20:27Z",
+      "side": 1,
+      "message": "nit: maybe reverse these sentences?",
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac78b59e_833a6ef6",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-09T17:20:27Z",
+      "side": 1,
+      "message": "move non-constant member variables to the bottom of the section in which they\u0027re declared.\n\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order\n\nbut not after DISALLOW_COPY_AND_ASSIGN  :)",
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83840424_10eaf682",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-09T17:20:27Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be used?\n\nWhat is the intent here? Note that you get a new AutofillProfileValidatorTest instance for each test invocation, and that each test is a subclass of AutofillPRofileValidatorTest. So, the local Profile instances get destroyed at the end of each test body, leaving this a dangling pointer.",
       "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

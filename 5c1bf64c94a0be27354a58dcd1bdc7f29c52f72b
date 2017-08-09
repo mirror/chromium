@@ -48,6 +48,57 @@
     },
     {
       "key": {
+        "uuid": "be15a201_763836e1",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-09T17:20:27Z",
+      "side": 1,
+      "message": "You can just do an insert instead of find + insert.\n\ninsert is a NOP if the key is already present. It will return the pair {id, true} if the insert really happened, or {it, false} if it\u0027s returning the existing node.\n\nOptionally, consider using emplace instead of insert.",
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "738262bc_62e3a9f9",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-09T17:20:27Z",
+      "side": 1,
+      "message": "does it indicate something has gone wrong if you get a result for an unexpected region_code?",
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a50375_37f757ee",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-09T17:20:27Z",
+      "side": 1,
+      "message": "optional:\n\n  for (auto\u0026 request: it-\u003esecond) {\n    request-\u003eOnRulesLoaded()\n  }",
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d86d5b2_17687748",
         "filename": "components/autofill/core/browser/autofill_profile_validator.h",
         "patchSetId": 26
