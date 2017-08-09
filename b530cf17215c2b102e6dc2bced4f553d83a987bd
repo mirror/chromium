@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b2800500_4fa301ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T11:30:48Z",
+      "side": 1,
+      "message": "Resolved in offline discussion.",
+      "parentUuid": "0cde0d2f_13979ec3",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 64
+      },
+      "revId": "b530cf17215c2b102e6dc2bced4f553d83a987bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb5c1abc_bb404838",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 2
@@ -186,6 +210,30 @@
       "revId": "b530cf17215c2b102e6dc2bced4f553d83a987bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2c3159_9f8362a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T11:30:48Z",
+      "side": 1,
+      "message": "Resolved in offline discussion.",
+      "parentUuid": "fb5c1abc_bb404838",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 66
+      },
+      "revId": "b530cf17215c2b102e6dc2bced4f553d83a987bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
