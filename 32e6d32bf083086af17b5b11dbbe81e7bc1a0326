@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56788d25_bda7a784",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T10:32:12Z",
+      "side": 1,
+      "message": "I don\u0027t like this; IMO it adds more confusion than clarity. Do you know of a better way of giving a name to .pc? If not, maybe a comment is good enough?",
+      "range": {
+        "startLine": 234,
+        "startChar": 65,
+        "endLine": 234,
+        "endChar": 0
+      },
+      "revId": "32e6d32bf083086af17b5b11dbbe81e7bc1a0326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
