@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dc6ba3f_464e15df",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_use_stats_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T20:16:20Z",
+      "side": 1,
+      "message": "consider having this in the base?",
+      "revId": "d2f3dc74ca97195fba0d500b181d884f244b5214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ae0829_a2685940",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_use_stats_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T20:16:20Z",
+      "side": 1,
+      "message": "use the new setUpCreditCard method?",
+      "revId": "d2f3dc74ca97195fba0d500b181d884f244b5214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
