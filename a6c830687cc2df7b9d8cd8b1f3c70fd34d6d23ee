@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3991f5e0_9c967c4f",
+        "filename": "remoting/host/linux/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "Is this the best solution, here? If we don\u0027t copy remoting_user_session, it can\u0027t find the copied/renamed chrome-remote-desktop script, but if we do, we have to set LD_LIBRARY_PATH so in can find the dynamic libraries in a Debug build.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7ee1b8_43d49fb0",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "Where do I find these tests? They will most likely need to be updated for this change.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87095749_adfb987d",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "This CL can lead to a process hierarchy like \"chrome-remote-desktop-\u003euser-session-\u003echrome-remote-desktop\", where we don\u0027t want the child script to bail out because of the parent. Also, no point in bailing if someone\u0027s running the script with the --status flag.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2577ba_a8897af2",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "This ended up being gnarlier than I was hoping it would be, mostly due to sg not being very script-friendly. Unfortunately, it\u0027s the only way I know of to gain access to a newly-added group from within an existing session.\n\nAn alternative might be not to restrict running user-session to the chrome-remote-desktop group, but instead have user-session itself check whether the user is a member of the group.\n\nThat said, I tested the code below, and it seems to properly handle all cases I could think of to throw add it. The main corner case is that if the user has been added to the group since login, the user has no password set, and the chrome-remote-desktop group has a password set or is marked as restricted, then sg will decline to give access. This seems like quite an unlikely scenario, and the workaround is either to run \u0027sudo /etc/init.d/chrome-remote-desktop start\u0027 or to log out and back in before starting the host.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b98acc_d1c2bd60",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "This should probably additionally do 4\u003e\u0026- 5\u003e\u0026- 6\u003e\u0026- so it\u0027s not relying on user-session to close the extra file descriptors. read_fd should also be closed in the child process. I\u0027ll make those changes.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf0b1d8_23022ded",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "The comment here claims that this should check for an existing host running with the same configuration. However, get_daemon_proc only checks whether there is an existing host running under the same user. If the former is the intention, this should be fixed in a future CL. If the latter is the intention, I\u0027ll move this check up to before launching user-session.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aab6afd_6aaf3cb2",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "I ended up changing this. It\u0027s now\nuser-session start [--foreground] [--user user] [-- SCRIPT_ARGS...]\n\nI\u0027ll update the usage comment.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cce298f_baa8b512",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "Message here should be changed.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb9c0a1_95e11a0c",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "script_arg-\u003escript_args",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392265c7_096fb608",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "Comment needs to be updated.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1122868a_f54c37ee",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "Testing shows this might not actually be the case. The Python script seems to exit when the pipe is broken. I doubt this is new behavior, though, so I\u0027ll save figuring that out for a future CL.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c02779_578f5ff8",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "I moved this from the Python script so it doesn\u0027t get lost.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c96d6b1_a88a594d",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "Now that I think about it, it might make more sense to just print an error message here instead of having the Python script handle it specially to print the relevant error message. It can still use a special return code, though, in case the UI ever wants to handle this case specially.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4b6d62_2e4d44dc",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "This is inching its way closer to real command-line parsing, but it\u0027s still much simpler than what CommandLine tries to do.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "350ecd29_822b0ade",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 1,
+      "message": "I swapped the inner and outer conditionals, here, the idea being that it\u0027s easier to tell at a glance that user is always set via FindCurrentUsername if real_uid !\u003d 0. Thus, forgetting the exit on line 768 wouldn\u0027t create a security problem.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

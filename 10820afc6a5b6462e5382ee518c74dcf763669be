@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba062524_f735e3db",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 0,
+      "message": "The four GOOGLE_CLIENT variables are now passed through by user-session. The rest were only needed in fake-environment mode.",
+      "revId": "10820afc6a5b6462e5382ee518c74dcf763669be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da1326a1_ecc32c75",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T19:03:38Z",
+      "side": 0,
+      "message": "Now solely handled by user-session.",
+      "revId": "10820afc6a5b6462e5382ee518c74dcf763669be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
