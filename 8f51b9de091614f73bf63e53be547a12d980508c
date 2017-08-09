@@ -34,6 +34,24 @@
       "revId": "8f51b9de091614f73bf63e53be547a12d980508c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29fca01_c4957915",
+        "filename": "chrome/browser/permissions/permission_request_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-09T05:16:53Z",
+      "side": 0,
+      "message": "Yes, only parameters are cleared by ClearAllVariationParams(), but field study is still activated even after that. That makes ResourceLoadScheduler confused.\n\nResourceLoadScheduler is configured on each frame creation, and check finch parameters only when the field study is activated. But if parameters are cleared here, base::FieldTrialList::GetParamsFromSharedMemory() crashes.\n\nThere are other field studies in Blink that use finch parameters, and potentially they all could crash due to the same reason. But probably just no other study is enabled by variations/fieldtrial_testing_config.json today. This is a configuration file that enables a field study in the waterfall to make sure that the configuration works and is ready to enable on Beta channel.",
+      "parentUuid": "9c577c39_f0417e81",
+      "revId": "8f51b9de091614f73bf63e53be547a12d980508c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
