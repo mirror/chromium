@@ -71,6 +71,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/test/browser_test_utils.h"
+#include "content/public/test/test_navigation_observer.h"
 #include "crypto/sha2.h"
 #include "net/cookies/cookie_store.h"
 #include "net/cookies/cookie_util.h"
@@ -1056,13 +1057,13 @@ IN_PROC_BROWSER_TEST_F(SafeBrowsingServiceTest, SubResourceHitOnFreshTab) {
   content::RenderFrameHost* main_rfh = main_contents->GetMainFrame();
 
   content::WebContentsAddedObserver web_contents_added_observer;
-  main_rfh->ExecuteJavaScriptForTests(
-      base::ASCIIToUTF16("w=window.open();"));
+  content::TestNavigationObserver nav_observer(main_contents);
+  nav_observer.StartWatchingNewWebContents();
+  main_rfh->ExecuteJavaScriptForTests(base::ASCIIToUTF16("w=window.open();"));
+  nav_observer.Wait();
   WebContents* new_tab_contents = web_contents_added_observer.GetWebContents();
   content::RenderFrameHost* new_tab_rfh = new_tab_contents->GetMainFrame();
-  // A fresh WebContents should not have any NavigationEntries yet. (See
-  // https://crbug.com/524208.)
-  EXPECT_EQ(nullptr, new_tab_contents->GetController().GetLastCommittedEntry());
+  EXPECT_TRUE(new_tab_contents->GetController().GetLastCommittedEntry());
   EXPECT_EQ(nullptr, new_tab_contents->GetController().GetPendingEntry());
 
   // Run javascript in the blank new tab to load the malware image.
@@ -1080,8 +1081,8 @@ IN_PROC_BROWSER_TEST_F(SafeBrowsingServiceTest, SubResourceHitOnFreshTab) {
   EXPECT_TRUE(got_hit_report());
   EXPECT_EQ(img_url, hit_report().malicious_url);
   EXPECT_TRUE(hit_report().is_subresource);
-  // Page report URLs should be empty, since there is no URL for this page.
-  EXPECT_EQ(GURL(), hit_report().page_url);
+  // Page report URLs should be about:blank for window.open() with no url.
+  EXPECT_EQ(GURL(url::kAboutBlankURL), hit_report().page_url);
   EXPECT_EQ(GURL(), hit_report().referrer_url);
 
   // Proceed through it.
@@ -2127,12 +2128,13 @@ IN_PROC_BROWSER_TEST_F(V4SafeBrowsingServiceTest, SubResourceHitOnFreshTab) {
   content::RenderFrameHost* main_rfh = main_contents->GetMainFrame();
 
   content::WebContentsAddedObserver web_contents_added_observer;
+  content::TestNavigationObserver nav_observer(main_contents);
+  nav_observer.StartWatchingNewWebContents();
   main_rfh->ExecuteJavaScriptForTests(base::ASCIIToUTF16("w=window.open();"));
+  nav_observer.Wait();
   WebContents* new_tab_contents = web_contents_added_observer.GetWebContents();
   content::RenderFrameHost* new_tab_rfh = new_tab_contents->GetMainFrame();
-  // A fresh WebContents should not have any NavigationEntries yet. (See
-  // https://crbug.com/524208.)
-  EXPECT_EQ(nullptr, new_tab_contents->GetController().GetLastCommittedEntry());
+  EXPECT_TRUE(new_tab_contents->GetController().GetLastCommittedEntry());
   EXPECT_EQ(nullptr, new_tab_contents->GetController().GetPendingEntry());
 
   // Run javascript in the blank new tab to load the malware image.
@@ -2151,8 +2153,8 @@ IN_PROC_BROWSER_TEST_F(V4SafeBrowsingServiceTest, SubResourceHitOnFreshTab) {
   EXPECT_TRUE(got_hit_report());
   EXPECT_EQ(img_url, hit_report().malicious_url);
   EXPECT_TRUE(hit_report().is_subresource);
-  // Page report URLs should be empty, since there is no URL for this page.
-  EXPECT_EQ(GURL(), hit_report().page_url);
+  // Page report URLs should be about:blank for window.open() with no url.
+  EXPECT_EQ(GURL(url::kAboutBlankURL), hit_report().page_url);
   EXPECT_EQ(GURL(), hit_report().referrer_url);
 
   // Proceed through it.
