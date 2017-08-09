@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50737fd6_4fd5b7e6",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-09T22:09:57Z",
+      "side": 1,
+      "message": "The changes in this file ensure that generated items have valid data for the provided state.",
+      "revId": "53badc373b06c085df04eaaac8d8a06f83318630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae1570d3_1b73fb3c",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-09T22:09:57Z",
+      "side": 1,
+      "message": "I am a bit generous in SQL due to the single operation name, one change to make would be to accept two operation names:\noperation_name_to_match\noperation_name_for_update\n\nthen the sql would only match the first, and update to the second (in the case of PENDING) results.",
+      "revId": "53badc373b06c085df04eaaac8d8a06f83318630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
