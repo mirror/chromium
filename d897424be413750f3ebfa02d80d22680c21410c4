@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e21b3a93_2865a5a3",
+        "filename": "content/browser/appcache/appcache_host_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-09T18:46:26Z",
+      "side": 1,
+      "message": "You could also put\n  base::BindOnce(\u0026AppCacheHostTest::StartUpdateCallback, base::Unretained(this))\ninline here and nix the data member. I think the data member is cleared here.\n\nUnless something sneaky is going on here?\n\nDoes this std::move produce a new BindOnce result while leaving the start_update_callback_ unmodified?\n\nI think i asked/wondered about this before, maybe i missed your response, if so sorry for the bothering you again with the question.",
+      "revId": "d897424be413750f3ebfa02d80d22680c21410c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
