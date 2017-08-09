@@ -1648,7 +1648,8 @@ void AddSearchInSettingsStrings(content::WebUIDataSource* html_source) {
 
 void AddSearchStrings(content::WebUIDataSource* html_source) {
   LocalizedString localized_strings[] = {
-    {"searchPageTitle", IDS_SETTINGS_SEARCH},
+    {"searchPageTitle", chromeos::switches::IsVoiceInteractionEnabled() ?
+        IDS_SETTINGS_SEARCH_AND_ASSISTANT : IDS_SETTINGS_SEARCH},
     {"searchEnginesManage", IDS_SETTINGS_SEARCH_MANAGE_SEARCH_ENGINES},
     {"searchOkGoogleLabel", IDS_SETTINGS_SEARCH_OK_GOOGLE_LABEL},
 #if defined(OS_CHROMEOS)
