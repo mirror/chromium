@@ -88,6 +88,9 @@ enum ShelfAction {
 
   // The app list launcher menu was shown.
   SHELF_ACTION_APP_LIST_SHOWN,
+
+  // No direct action was taken, but a context menu should be shown.
+  SHELF_ACTION_SHOW_CONTEXT_MENU,
 };
 
 // The type of a shelf item.
