@@ -18,6 +18,7 @@ import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.preferences.datareduction.DataReductionDataUseItem;
 import org.chromium.chrome.browser.preferences.datareduction.DataReductionPromoUtils;
+import org.chromium.chrome.browser.preferences.datareduction.DataReductionStatsPreference;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -101,6 +102,11 @@ public class DataReductionProxySettings {
             DATA_REDUCTION_ENABLED_PREF, false);
     }
 
+    public static void handlePostNativeInitialization() {
+        reconcileDataReductionProxyEnabledState();
+        DataReductionStatsPreference.initializeDataReductionSiteBreakdownPref();
+    }
+
     /**
      * Reconciles the Java-side data reduction proxy state with the native one.
      *
@@ -110,10 +116,8 @@ public class DataReductionProxySettings {
      * Java preference has to be updated.
      * This method must be called early at startup, but once the native library
      * has been loaded.
-     *
-     * @param context The application context.
      */
-    public static void reconcileDataReductionProxyEnabledState(Context context) {
+    private static void reconcileDataReductionProxyEnabledState() {
         ThreadUtils.assertOnUiThread();
         boolean enabled = getInstance().isDataReductionProxyEnabled();
         ContextUtils.getAppSharedPreferences().edit()
