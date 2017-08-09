@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4fb1681_a17fe54c",
+        "filename": "chrome/browser/extensions/external_registry_loader_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-09T20:35:34Z",
+      "side": 1,
+      "message": "I realized this while filing the bug for ScopedFILE as I looked closely into it...\nThe usage of ScopedFILE is actually on the stack and is not passed around threads/sequences. So this should not require BLOCKING_SHUTDOWN.\nI\u0027ve changed the shutdown behavior to SKIP_ON_SHUTDOWN.",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "1b938119a947bd60f1c8e2073b76b351e3620bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
