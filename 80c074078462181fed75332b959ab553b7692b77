@@ -45,6 +45,30 @@
       "revId": "80c074078462181fed75332b959ab553b7692b77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28cb213_30f4c93c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-09T00:36:37Z",
+      "side": 1,
+      "message": "Ted\u0027s recollection about the layout manager needing to be fully initialized for the NTP is correct. We need to be able to show the tab switcher when the NTP UI is shown, which requires the layout manager to be initialized.\n\nIf we\u0027re just opening the bottom sheet, then we just need to ensure the browser process is fully started so that we have a Profile to use when creating SuggestionsBottomSheetContent (crbug.com/36017)",
+      "parentUuid": "6da3a00f_7e87536d",
+      "range": {
+        "startLine": 871,
+        "startChar": 16,
+        "endLine": 871,
+        "endChar": 27
+      },
+      "revId": "80c074078462181fed75332b959ab553b7692b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
