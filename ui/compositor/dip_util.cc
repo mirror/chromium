@@ -9,7 +9,7 @@
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/compositor/layer.h"
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/rect.h"

@@ -19,7 +19,7 @@
 #include "ui/accelerated_widget_mac/window_resize_helper_mac.h"
 #include "ui/base/layout.h"
 #include "ui/display/screen.h"
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 
 namespace content {
 

@@ -15,7 +15,7 @@
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "ui/accelerated_widget_mac/fullscreen_low_power_coordinator.h"
 #include "ui/base/cocoa/animation_utils.h"
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 #include "ui/gl/scoped_cgl.h"
 
 @interface CALayer (PrivateAPI)

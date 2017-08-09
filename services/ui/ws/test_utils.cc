@@ -25,7 +25,7 @@
 #include "services/ui/ws/window_manager_window_tree_factory.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/cursor/cursor.h"
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 
 namespace ui {
 namespace ws {

@@ -22,7 +22,7 @@
 #include "base/win/windows_version.h"
 #include "ui/base/win/osk_display_observer.h"
 #include "ui/display/win/dpi.h"
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 
 namespace {
 

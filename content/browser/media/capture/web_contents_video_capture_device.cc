@@ -35,7 +35,7 @@
 #include "media/capture/content/video_capture_oracle.h"
 #include "media/capture/video_capture_types.h"
 #include "ui/base/layout.h"
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 #include "ui/gfx/geometry/size_conversions.h"
 
 namespace content {

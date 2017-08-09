@@ -2,18 +2,28 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/point.h"
+#include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/point_f.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/geometry/size_conversions.h"
+#include "ui/gfx/transform.h"
 
 namespace gfx {
+
+float GetScaleFactorUnderTransform(const Transform& transform) {
+  Point3F p1(0, 0, 0);
+  Point3F p2(1, 0, 0);
+  transform.TransformPoint(&p1);
+  transform.TransformPoint(&p2);
+  return (p2 - p1).Length();
+}
 
 Insets ConvertInsetsToDIP(float scale_factor,
                           const gfx::Insets& insets_in_pixel) {

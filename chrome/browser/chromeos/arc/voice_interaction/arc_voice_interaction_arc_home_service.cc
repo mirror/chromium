@@ -31,7 +31,8 @@
 #include "content/public/browser/web_contents.h"
 #include "ui/accessibility/platform/ax_snapshot_node_android_platform.h"
 #include "ui/aura/window.h"
-#include "ui/compositor/dip_util.h"
+#include "ui/aura/window_tree_host.h"
+#include "ui/gfx/dip_util.h"
 #include "ui/snapshot/snapshot.h"
 #include "ui/wm/public/activation_client.h"
 #include "url/gurl.h"
@@ -174,10 +175,15 @@ void ArcVoiceInteractionArcHomeService::GetVoiceInteractionStructure(
     return;
   }
 
+  auto transform = browser->window()
+                       ->GetNativeWindow()
+                       ->GetRootWindow()
+                       ->GetHost()
+                       ->GetRootTransform();
+  float scale_factor = gfx::GetScaleFactorUnderTransform(transform);
   web_contents->RequestAXTreeSnapshot(base::Bind(
       &RequestVoiceInteractionStructureCallback, callback,
-      ui::ConvertRectToPixel(browser->window()->GetNativeWindow()->layer(),
-                             browser->window()->GetBounds()),
+      gfx::ConvertRectToPixel(scale_factor, browser->window()->GetBounds()),
       web_contents->GetLastCommittedURL().spec()));
 }
 

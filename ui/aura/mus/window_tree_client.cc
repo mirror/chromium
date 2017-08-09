@@ -58,7 +58,7 @@
 #include "ui/display/screen.h"
 #include "ui/display/types/display_constants.h"
 #include "ui/events/event.h"
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/size.h"
 

@@ -142,7 +142,7 @@
 
 #if defined(OS_WIN)
 #include "content/browser/renderer_host/dip_util.h"
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 #endif
 
 #if defined(OS_ANDROID)
