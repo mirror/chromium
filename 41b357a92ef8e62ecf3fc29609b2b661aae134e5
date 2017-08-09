@@ -52,6 +52,24 @@
       "revId": "41b357a92ef8e62ecf3fc29609b2b661aae134e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4d79df_0b903d4a",
+        "filename": "url/gurl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-09T07:28:25Z",
+      "side": 1,
+      "message": "Makes sense. Done. Thanks!",
+      "parentUuid": "afb8abd6_9c946009",
+      "revId": "41b357a92ef8e62ecf3fc29609b2b661aae134e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
