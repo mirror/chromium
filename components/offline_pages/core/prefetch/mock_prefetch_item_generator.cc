@@ -35,7 +35,6 @@ PrefetchItem MockPrefetchItemGenerator::CreateItem(PrefetchItemState state) {
 
   // Values set with non prefix based values.
   new_item.state = state;
-  new_item.guid = base::GenerateGUID();
   new_item.offline_id = GenerateTestOfflineId();
   new_item.creation_time = base::Time::Now();
   new_item.freshness_time = new_item.creation_time;
@@ -46,17 +45,24 @@ PrefetchItem MockPrefetchItemGenerator::CreateItem(PrefetchItemState state) {
   new_item.url = GURL(url_prefix_ + base::IntToString(item_counter));
 
   // Values set only if prefixes are not empty.
-  if (final_url_prefix_.length())
-    new_item.final_archived_url =
-        GURL(final_url_prefix_ + base::IntToString(item_counter));
-  if (operation_name_prefix_.length())
+  if (operation_name_prefix_.length() &&
+      state >= PrefetchItemState::AWAITING_GCM) {
     new_item.operation_name =
         operation_name_prefix_ + base::IntToString(item_counter);
-  if (archive_body_name_prefix_.length()) {
+  }
+  if (archive_body_name_prefix_.length() &&
+      state >= PrefetchItemState::RECEIVED_BUNDLE) {
     new_item.archive_body_name =
         archive_body_name_prefix_ + base::IntToString(item_counter);
     new_item.archive_body_length = item_counter * 100;
   }
+  if (final_url_prefix_.length() &&
+      state >= PrefetchItemState::RECEIVED_BUNDLE) {
+    new_item.final_archived_url =
+        GURL(final_url_prefix_ + base::IntToString(item_counter));
+  }
+  if (state >= PrefetchItemState::DOWNLOADING)
+    new_item.guid = base::GenerateGUID();
 
   ++item_counter;
   return new_item;
