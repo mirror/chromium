@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4c9b174_b4b1b535",
+        "filename": "chrome/installer/linux/debian/build.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-09T06:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf6c49ea_3cba2d98",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 9
+      },
+      "revId": "df4767b1bf724c83611899c206e53ee85302bba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ed25c94_a4b481eb",
         "filename": "chrome/installer/linux/rpm/build.sh",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "df4767b1bf724c83611899c206e53ee85302bba9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34fa00a6_fbb87a0a",
+        "filename": "chrome/installer/linux/rpm/build.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-09T06:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed25c94_a4b481eb",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 9
+      },
+      "revId": "df4767b1bf724c83611899c206e53ee85302bba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
