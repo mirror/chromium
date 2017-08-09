@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ea1b973_90d4b347",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-09T23:40:33Z",
+      "side": 1,
+      "message": "i\u0027d avoid using the word \u0027memory\u0027 in this line for clarity, maybe\n\n... is the total data size stored in the database for...",
+      "revId": "d5696767903749238de3cba3920c7656fa2e10a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
