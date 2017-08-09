@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "c00bc884_2cb71dd3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-09T19:48:52Z",
+      "side": 1,
+      "message": "I didn\u0027t add top or bottom padding inside the ShapeDrawable because it makes the location bar background too tall regardless of the size I set for the shape drawable. I\u0027m sure I could muck with the ToolbarPhone.java logic and modify how the location bar background height is calculated to get around this, but calculating the vertical inset seemed simpler (for now, while we\u0027re maintaining both forks).",
+      "parentUuid": "f2d5a6d3_afab8e01",
+      "range": {
+        "startLine": 188,
+        "startChar": 18,
+        "endLine": 188,
+        "endChar": 51
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8de272b0_2daca00f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
         "patchSetId": 3
@@ -258,6 +282,30 @@
       "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f900f8c3_a77d192f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-09T19:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c52b2d79_9b86174b",
+      "range": {
+        "startLine": 194,
+        "startChar": 40,
+        "endLine": 194,
+        "endChar": 46
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
