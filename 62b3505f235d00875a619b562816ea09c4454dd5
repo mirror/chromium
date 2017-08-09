@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "8b180d77_267b2758",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-09T17:30:01Z",
+      "side": 1,
+      "message": "Note that this is an associated interface. Though AssociatedInterfaceProvider does have a similar testing API which I had forgotten about: https://cs.chromium.org/chromium/src/content/public/common/associated_interface_provider.h?rcl\u003d86a2db9c64f749570f77bd9c944d27466511a4e6\u0026l\u003d45",
+      "parentUuid": "eaa539e4_ac6eba41",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89befd0e_2ad9d305",
         "filename": "content/test/did_commit_provisional_load_interceptor.h",
         "patchSetId": 7
