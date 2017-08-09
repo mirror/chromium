@@ -7,6 +7,7 @@
 #include <string.h>
 
 #include "base/logging.h"
+#include "base/md5.h"
 #include "base/strings/utf_string_conversions.h"
 #include "net/ntlm/ntlm.h"
 #include "net/ntlm/ntlm_buffer_reader.h"
@@ -30,6 +31,24 @@ bool ParseChallengeMessage(const Buffer& challenge_message,
          challenge_reader.ReadBytes(server_challenge, kChallengeLen);
 }
 
+// Parses the challenge message and extracts the information necessary to
+// make an NTLMv2 response.
+// |server_challenge| must contain at least 8 bytes.
+bool ParseChallengeMessageV2(const Buffer& challenge_message,
+                             NegotiateFlags* challenge_flags,
+                             uint8_t* server_challenge,
+                             std::vector<AvPair>* av_pairs) {
+  NtlmBufferReader challenge_reader(challenge_message);
+
+  // TODO(!!!): Factor common with above.
+  return challenge_reader.MatchMessageHeader(MessageType::kChallenge) &&
+         challenge_reader.SkipSecurityBufferWithValidation() &&
+         challenge_reader.ReadFlags(challenge_flags) &&
+         challenge_reader.ReadBytes(server_challenge, kChallengeLen) &&
+         challenge_reader.SkipBytes(8) &&
+         challenge_reader.ReadTargetInfoPayload(av_pairs);
+}
+
 bool WriteAuthenticateMessage(NtlmBufferWriter* authenticate_writer,
                               SecurityBuffer lm_payload,
                               SecurityBuffer ntlm_payload,
@@ -46,6 +65,7 @@ bool WriteAuthenticateMessage(NtlmBufferWriter* authenticate_writer,
          authenticate_writer->WriteSecurityBuffer(
              SecurityBuffer(kAuthenticateHeaderLenV1, 0)) &&
          authenticate_writer->WriteFlags(authenticate_flags);
+  // TODO: Version
 }
 
 bool WriteResponsePayloads(NtlmBufferWriter* authenticate_writer,
@@ -57,11 +77,26 @@ bool WriteResponsePayloads(NtlmBufferWriter* authenticate_writer,
          authenticate_writer->WriteBytes(ntlm_response, ntlm_response_len);
 }
 
+bool WriteResponsePayloadsV2(NtlmBufferWriter* authenticate_writer,
+                             uint8_t* lm_response,
+                             size_t lm_payload_length,
+                             uint8_t* v2_proof,
+                             uint8_t* v2_proof_input,
+                             uint8_t* updated_target_info,
+                             size_t updated_target_info_len) {
+  return authenticate_writer->WriteBytes(lm_response, lm_payload_length) &&
+         authenticate_writer->WriteBytes(v2_proof, kNtlmProofLenV2) &&
+         authenticate_writer->WriteBytes(v2_proof_input, kProofInputLenV2) &&
+         authenticate_writer->WriteBytes(updated_target_info,
+                                         updated_target_info_len) &&
+         authenticate_writer->WriteUInt32(0);
+}
+
 bool WriteStringPayloads(NtlmBufferWriter* authenticate_writer,
                          bool is_unicode,
                          const base::string16& domain,
                          const base::string16& username,
-                         const std::string& hostname) {
+                         const std::string hostname) {
   if (is_unicode) {
     return authenticate_writer->WriteUtf16String(domain) &&
            authenticate_writer->WriteUtf16String(username) &&
@@ -96,12 +131,22 @@ size_t GetStringPayloadLength(const std::string& str, bool is_unicode) {
 
 }  // namespace
 
-NtlmClient::NtlmClient() : negotiate_flags_(kNegotiateMessageFlags) {
+NtlmClient::NtlmClient(NtlmVersion version, NtlmFeatures feature_flags)
+    : version_(version),
+      feature_flags_(feature_flags),
+      negotiate_flags_(kNegotiateMessageFlags) {
+  DCHECK(version == NtlmVersion::kNtlmV1 || version == NtlmVersion::kNtlmV2);
+
+  // TODO(zentaro): Optionally allow features to modify message flags.
+
   // Just generate the negotiate message once and hold on to it. It never
   // changes and in a NTLMv2 it's used as an input
-  // to the Message Integrity Check in the Authenticate message.
+  // to the Message Integrity Check (MIC) in the Authenticate message.
   GenerateNegotiateMessage();
 }
+
+NtlmClient::NtlmClient(NtlmVersion version)
+    : NtlmClient(version, kDefaultFeatures) {}
 
 NtlmClient::~NtlmClient() {}
 
@@ -128,6 +173,9 @@ Buffer NtlmClient::GenerateAuthenticateMessage(
     const base::string16& username,
     const base::string16& password,
     const std::string& hostname,
+    const std::string& channel_bindings,
+    const std::string& spn,
+    uint64_t client_time,
     const uint8_t* client_challenge,
     const Buffer& server_challenge_message) const {
   // Limit the size of strings that are accepted. As an absolute limit any
@@ -150,24 +198,68 @@ Buffer NtlmClient::GenerateAuthenticateMessage(
   NegotiateFlags challenge_flags;
   uint8_t server_challenge[kChallengeLen];
 
-  // Read the flags and the server's random challenge from the challenge
-  // message.
-  if (!ParseChallengeMessage(server_challenge_message, &challenge_flags,
-                             server_challenge)) {
-    return Buffer();
-  }
-
-  // Calculate the responses for the authenticate message.
+  // Response fields for NTLMv1
   uint8_t lm_response[kResponseLenV1];
   uint8_t ntlm_response[kResponseLenV1];
+
+  // Response fields only for NTLMv2
+  size_t updated_target_info_len = 0;
+  std::unique_ptr<uint8_t[]> updated_target_info;
+  std::unique_ptr<uint8_t[]> v2_proof_input;
+  uint8_t v2_proof[kNtlmProofLenV2];
+  uint8_t v2_session_key[kSessionKeyLenV2];
+
+  if (IsNtlmV2()) {
+    std::vector<AvPair> av_pairs;
+    if (!ParseChallengeMessageV2(server_challenge_message, &challenge_flags,
+                                 server_challenge, &av_pairs)) {
+      return Buffer();
+    }
+
+    // Verify that the target info properly terminated. Parsing would have
+    // failed if there is not at least one pair.
+    DCHECK(av_pairs.size() > 0);
+    if (av_pairs.back().avid != TargetInfoAvId::EOL ||
+        av_pairs.back().avlen != 0) {
+      return Buffer();
+    }
+
+    // Remove the terminator for simplicity of adding more pairs later.
+    av_pairs.pop_back();
+
+    uint64_t timestamp;
+    GenerateUpdatedTargetInfo(IsMicEnabled(), IsEpaEnabled(), channel_bindings,
+                              spn, av_pairs, &timestamp, &updated_target_info,
+                              &updated_target_info_len);
+
+    memset(lm_response, 0, kResponseLenV1);
+    if (timestamp == UINT64_MAX) {
+      // If the server didn't send a time, then use the clients time.
+      timestamp = client_time;
+    }
+
+    uint8_t v2_hash[kNtlmHashLen];
+    GenerateNtlmHashV2(domain, username, password, v2_hash);
+    GenerateProofInputV2(timestamp, client_challenge, &v2_proof_input);
+    GenerateNtlmProofV2(v2_hash, v2_proof_input.get(), server_challenge,
+                        updated_target_info.get(), updated_target_info_len,
+                        v2_proof);
+    GenerateSessionBaseKeyV2(v2_hash, v2_proof, v2_session_key);
+  } else {
+    if (!ParseChallengeMessage(server_challenge_message, &challenge_flags,
+                               server_challenge)) {
+      return Buffer();
+    }
+
+    // Calculate the responses for the authenticate message.
+    GenerateResponsesV1WithSessionSecurity(password, server_challenge,
+                                           client_challenge, lm_response,
+                                           ntlm_response);
+  }
 
   // Always use extended session security even if the server tries to downgrade.
   NegotiateFlags authenticate_flags = (challenge_flags & negotiate_flags_) |
                                       NegotiateFlags::kExtendedSessionSecurity;
-
-  // Generate the LM and NTLM responses.
-  GenerateResponsesV1WithSessionSecurity(
-      password, server_challenge, client_challenge, lm_response, ntlm_response);
 
   // Calculate all the payload lengths and offsets.
   bool is_unicode = (authenticate_flags & NegotiateFlags::kUnicode) ==
@@ -179,20 +271,48 @@ Buffer NtlmClient::GenerateAuthenticateMessage(
   SecurityBuffer username_info;
   SecurityBuffer hostname_info;
   size_t authenticate_message_len;
-  CalculatePayloadLayout(is_unicode, domain, username, hostname, &lm_info,
-                         &ntlm_info, &domain_info, &username_info,
-                         &hostname_info, &authenticate_message_len);
+
+  CalculatePayloadLayout(is_unicode, domain, username, hostname,
+                         updated_target_info_len, &lm_info, &ntlm_info,
+                         &domain_info, &username_info, &hostname_info,
+                         &authenticate_message_len);
 
   NtlmBufferWriter authenticate_writer(authenticate_message_len);
   bool writer_result = WriteAuthenticateMessage(
       &authenticate_writer, lm_info, ntlm_info, domain_info, username_info,
       hostname_info, authenticate_flags);
   DCHECK(writer_result);
-  DCHECK_EQ(authenticate_writer.GetCursor(), GetAuthenticateHeaderLength());
 
-  writer_result =
-      WriteResponsePayloads(&authenticate_writer, lm_response, lm_info.length,
-                            ntlm_response, ntlm_info.length);
+  if (IsNtlmV2()) {
+    // Write the optional (for V1) Version and MIC fields.
+    // Note that they could also safely be sent in V1.
+    //
+    // Version is not supported so just write zeros and
+    // MIC is a hash calculated over all 3 messages while the MIC is
+    // set to zeros then backfilled at the end with the result.
+    writer_result = authenticate_writer.WriteZeros(kVersionFieldLen) &&
+                    authenticate_writer.WriteZeros(kMicLenV2);
+
+    DCHECK(writer_result);
+  }
+
+  // Verify the location in the payload buffer.
+  DCHECK(authenticate_writer.GetCursor() == GetAuthenticateHeaderLength());
+  DCHECK(GetAuthenticateHeaderLength() == lm_info.offset);
+
+  if (IsNtlmV2()) {
+    // Write the response payloads for V2.
+    writer_result = WriteResponsePayloadsV2(
+        &authenticate_writer, lm_response, lm_info.length, v2_proof,
+        v2_proof_input.get(), updated_target_info.get(),
+        updated_target_info_len);
+  } else {
+    // Write the response payloads.
+    writer_result =
+        WriteResponsePayloads(&authenticate_writer, lm_response, lm_info.length,
+                              ntlm_response, ntlm_info.length);
+  }
+
   DCHECK(writer_result);
   DCHECK_EQ(authenticate_writer.GetCursor(), domain_info.offset);
 
@@ -202,7 +322,20 @@ Buffer NtlmClient::GenerateAuthenticateMessage(
   DCHECK(authenticate_writer.IsEndOfBuffer());
   DCHECK_EQ(authenticate_message_len, authenticate_writer.GetLength());
 
-  return authenticate_writer.Pass();
+  Buffer auth_msg = authenticate_writer.Pass();
+
+  // Backfill the MIC if enabled.
+  if (IsMicEnabled()) {
+    // The MIC has to be generated over all 3 completed messages (with the MIC)
+    // set to zeros. So this has to be backfilled at the end.
+    DCHECK(kMicOffsetV2 + kMicLenV2 < authenticate_message_len);
+
+    uint8_t* mic_ptr = reinterpret_cast<uint8_t*>(&auth_msg[kMicOffsetV2]);
+    GenerateMicV2(v2_session_key, negotiate_message_, server_challenge_message,
+                  auth_msg, mic_ptr);
+  }
+
+  return auth_msg;
 }
 
 void NtlmClient::CalculatePayloadLayout(
@@ -210,6 +343,7 @@ void NtlmClient::CalculatePayloadLayout(
     const base::string16& domain,
     const base::string16& username,
     const std::string& hostname,
+    size_t updated_target_info_len,
     SecurityBuffer* lm_info,
     SecurityBuffer* ntlm_info,
     SecurityBuffer* domain_info,
@@ -223,9 +357,10 @@ void NtlmClient::CalculatePayloadLayout(
   upto += lm_info->length;
 
   ntlm_info->offset = upto;
-  ntlm_info->length = GetNtlmResponseLength();
+  ntlm_info->length = GetNtlmResponseLength(updated_target_info_len);
   upto += ntlm_info->length;
 
+  // TODO: Overflow checking?
   domain_info->offset = upto;
   domain_info->length = GetStringPayloadLength(domain, is_unicode);
   upto += domain_info->length;
@@ -242,10 +377,18 @@ void NtlmClient::CalculatePayloadLayout(
 }
 
 size_t NtlmClient::GetAuthenticateHeaderLength() const {
+  if (IsNtlmV2()) {
+    return kAuthenticateHeaderLenV2;
+  }
+
   return kAuthenticateHeaderLenV1;
 }
 
-size_t NtlmClient::GetNtlmResponseLength() const {
+size_t NtlmClient::GetNtlmResponseLength(size_t updated_target_info_len) const {
+  if (IsNtlmV2()) {
+    return kNtlmResponseHeaderLenV2 + updated_target_info_len + 4;
+  }
+
   return kResponseLenV1;
 }
 
