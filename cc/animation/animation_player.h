@@ -22,6 +22,7 @@ class AnimationDelegate;
 class AnimationEvents;
 class AnimationHost;
 class AnimationTimeline;
+class GroupAnimationPlayer;
 struct AnimationEvent;
 struct PropertyAnimationState;
 
@@ -44,16 +45,25 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   // Parent AnimationHost. AnimationPlayer can be detached from
   // AnimationTimeline.
-  AnimationHost* animation_host() { return animation_host_; }
-  const AnimationHost* animation_host() const { return animation_host_; }
-  void SetAnimationHost(AnimationHost* animation_host);
+  // AnimationHost* animation_host() { return animation_host_; }
+  // const AnimationHost* animation_host() const { return animation_host_; }
+  // void SetAnimationHost(AnimationHost* animation_host);
 
   // Parent AnimationTimeline.
-  AnimationTimeline* animation_timeline() { return animation_timeline_; }
-  const AnimationTimeline* animation_timeline() const {
-    return animation_timeline_;
+  // AnimationTimeline* animation_timeline() { return animation_timeline_; }
+  // const AnimationTimeline* animation_timeline() const {
+  //  return animation_timeline_;
+  //}
+  // void SetAnimationTimeline(AnimationTimeline* timeline);
+
+  // Parent GroupAnimationPlayer.
+  GroupAnimationPlayer* group_animation_player() {
+    return group_animation_player_;
   }
-  void SetAnimationTimeline(AnimationTimeline* timeline);
+  const GroupAnimationPlayer* group_animation_player() const {
+    return group_animation_player_;
+  }
+  void SetGroupAnimationPlayer(GroupAnimationPlayer* group_animation_player);
 
   // ElementAnimations object where this player is listed.
   scoped_refptr<ElementAnimations> element_animations() const {
@@ -73,6 +83,8 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   void AbortAnimation(int animation_id);
   void AbortAnimations(TargetProperty::Type target_property,
                        bool needs_completion);
+
+  void AnimationAdded();
 
   void PushPropertiesTo(AnimationPlayer* player_impl);
 
@@ -99,6 +111,7 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   bool needs_push_properties() const { return needs_push_properties_; }
   void SetNeedsPushProperties();
+  void set_element_animations(scoped_refptr<ElementAnimations>);
 
   bool HasNonDeletedAnimation() const;
 
@@ -183,13 +196,11 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   void SetNeedsCommit();
 
-  void RegisterPlayer();
-  void UnregisterPlayer();
+  // void RegisterPlayer();
+  // void UnregisterPlayer();
 
-  void BindElementAnimations();
-  void UnbindElementAnimations();
-
-  void AnimationAdded();
+  // void BindElementAnimations();
+  // void UnbindElementAnimations();
 
   void MarkAbortedAnimationsForDeletion(
       AnimationPlayer* animation_player_impl) const;
@@ -203,8 +214,9 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   using Animations = std::vector<std::unique_ptr<Animation>>;
   Animations animations_;
 
-  AnimationHost* animation_host_;
-  AnimationTimeline* animation_timeline_;
+  // AnimationHost* animation_host_;
+  // AnimationTimeline* animation_timeline_;
+  GroupAnimationPlayer* group_animation_player_;
   // element_animations isn't null if player attached to an element (layer).
   scoped_refptr<ElementAnimations> element_animations_;
   AnimationDelegate* animation_delegate_;

@@ -9,8 +9,7 @@
 #include "base/stl_util.h"
 #include "cc/animation/animation_delegate.h"
 #include "cc/animation/animation_events.h"
-#include "cc/animation/animation_host.h"
-#include "cc/animation/animation_timeline.h"
+#include "cc/animation/group_animation_player.h"
 #include "cc/animation/scroll_offset_animation_curve.h"
 #include "cc/animation/transform_operations.h"
 #include "cc/trees/property_animation_state.h"
@@ -22,8 +21,9 @@ scoped_refptr<AnimationPlayer> AnimationPlayer::Create(int id) {
 }
 
 AnimationPlayer::AnimationPlayer(int id)
-    : animation_host_(),
-      animation_timeline_(),
+    :  // animation_host_(),
+       // animation_timeline_(),
+      group_animation_player_(),
       element_animations_(),
       animation_delegate_(),
       id_(id),
@@ -35,7 +35,7 @@ AnimationPlayer::AnimationPlayer(int id)
 }
 
 AnimationPlayer::~AnimationPlayer() {
-  DCHECK(!animation_timeline_);
+  DCHECK(!group_animation_player_);
   DCHECK(!element_animations_);
 }
 
@@ -44,24 +44,29 @@ scoped_refptr<AnimationPlayer> AnimationPlayer::CreateImplInstance() const {
   return player;
 }
 
-void AnimationPlayer::SetAnimationHost(AnimationHost* animation_host) {
-  animation_host_ = animation_host;
-}
+// void AnimationPlayer::SetAnimationHost(AnimationHost* animation_host) {
+//  animation_host_ = animation_host;
+//}
+//
+// void AnimationPlayer::SetAnimationTimeline(AnimationTimeline* timeline) {
+//  if (animation_timeline_ == timeline)
+//    return;
+//
+//  // We need to unregister player to manage ElementAnimations and observers
+//  // properly.
+//  if (element_id_ && element_animations_)
+//    UnregisterPlayer();
+//
+//  animation_timeline_ = timeline;
+//
+//  // Register player only if layer AND host attached.
+//  if (element_id_ && animation_host_)
+//    RegisterPlayer();
+//}
 
-void AnimationPlayer::SetAnimationTimeline(AnimationTimeline* timeline) {
-  if (animation_timeline_ == timeline)
-    return;
-
-  // We need to unregister player to manage ElementAnimations and observers
-  // properly.
-  if (element_id_ && element_animations_)
-    UnregisterPlayer();
-
-  animation_timeline_ = timeline;
-
-  // Register player only if layer AND host attached.
-  if (element_id_ && animation_host_)
-    RegisterPlayer();
+void AnimationPlayer::SetGroupAnimationPlayer(
+    GroupAnimationPlayer* group_animation_player) {
+  group_animation_player_ = group_animation_player;
 }
 
 void AnimationPlayer::AttachElement(ElementId element_id) {
@@ -71,60 +76,57 @@ void AnimationPlayer::AttachElement(ElementId element_id) {
   element_id_ = element_id;
 
   // Register player only if layer AND host attached.
-  if (animation_host_)
-    RegisterPlayer();
+  //  if (animation_host_)
+  //    RegisterPlayer();
 }
 
 void AnimationPlayer::DetachElement() {
   DCHECK(element_id_);
 
-  if (animation_host_)
-    UnregisterPlayer();
+  //  if (animation_host_)
+  //    UnregisterPlayer();
 
   element_id_ = ElementId();
 }
 
-void AnimationPlayer::RegisterPlayer() {
-  DCHECK(element_id_);
-  DCHECK(animation_host_);
-  DCHECK(!element_animations_);
-
-  // Create ElementAnimations or re-use existing.
-  animation_host_->RegisterPlayerForElement(element_id_, this);
-  // Get local reference to shared ElementAnimations.
-  BindElementAnimations();
-}
-
-void AnimationPlayer::UnregisterPlayer() {
-  DCHECK(element_id_);
-  DCHECK(animation_host_);
-  DCHECK(element_animations_);
-
-  UnbindElementAnimations();
-  // Destroy ElementAnimations or release it if it's still needed.
-  animation_host_->UnregisterPlayerForElement(element_id_, this);
-}
-
-void AnimationPlayer::BindElementAnimations() {
-  DCHECK(!element_animations_);
-  element_animations_ =
-      animation_host_->GetElementAnimationsForElementId(element_id_);
-  DCHECK(element_animations_);
-
-  if (!animations_.empty())
-    AnimationAdded();
-
-  SetNeedsPushProperties();
-}
-
-void AnimationPlayer::UnbindElementAnimations() {
-  SetNeedsPushProperties();
-  element_animations_ = nullptr;
-}
+// void AnimationPlayer::RegisterPlayer() {
+//  DCHECK(element_id_);
+//  DCHECK(animation_host_);
+//  DCHECK(!element_animations_);
+//
+//  // Create ElementAnimations or re-use existing.
+//  animation_host_->RegisterPlayerForElement(element_id_, this);
+//  // Get local reference to shared ElementAnimations.
+//  BindElementAnimations();
+//}
+//
+// void AnimationPlayer::UnregisterPlayer() {
+//  DCHECK(element_id_);
+//  DCHECK(animation_host_);
+//  DCHECK(element_animations_);
+//
+//  UnbindElementAnimations();
+//  // Destroy ElementAnimations or release it if it's still needed.
+//  animation_host_->UnregisterPlayerForElement(element_id_, this);
+//}
+//
+// void AnimationPlayer::BindElementAnimations() {
+//  DCHECK(!element_animations_);
+//  element_animations_ =
+//      animation_host_->GetElementAnimationsForElementId(element_id_);
+//  DCHECK(element_animations_);
+//
+//}
+//
+// void AnimationPlayer::UnbindElementAnimations() {
+//  SetNeedsPushProperties();
+//  element_animations_ = nullptr;
+//}
 
 void AnimationPlayer::AddAnimation(std::unique_ptr<Animation> animation) {
-  DCHECK(animation->target_property_id() != TargetProperty::SCROLL_OFFSET ||
-         (animation_host_ && animation_host_->SupportsScrollAnimations()));
+  // TODO(yigu): Resume DCHECK
+  //  DCHECK(animation->target_property_id() != TargetProperty::SCROLL_OFFSET ||
+  //         (animation_host_ && animation_host_->SupportsScrollAnimations()));
   DCHECK(!animation->is_impl_only() ||
          animation->target_property_id() == TargetProperty::SCROLL_OFFSET);
 
@@ -313,7 +315,7 @@ void AnimationPlayer::UpdateState(bool start_ready_animations,
 
 void AnimationPlayer::UpdateTickingState(UpdateTickingType type) {
   bool force = type == UpdateTickingType::FORCE;
-  if (animation_host_) {
+  if (group_animation_player_) {
     bool was_ticking = is_ticking_;
     is_ticking_ = HasNonDeletedAnimation();
 
@@ -321,7 +323,7 @@ void AnimationPlayer::UpdateTickingState(UpdateTickingType type) {
         element_animations_->has_element_in_any_list();
 
     if (is_ticking_ && ((!was_ticking && has_element_in_any_list) || force)) {
-      animation_host_->AddToTicking(this);
+      group_animation_player_->AddToTicking(this);
     } else if (!is_ticking_ && (was_ticking || force)) {
       RemoveFromTicking();
     }
@@ -329,12 +331,12 @@ void AnimationPlayer::UpdateTickingState(UpdateTickingType type) {
 }
 
 void AnimationPlayer::RemoveFromTicking() {
-  DCHECK(animation_host_);
+  DCHECK(group_animation_player_);
   // Resetting last_tick_time_ here ensures that calling ::UpdateState
   // before ::Animate doesn't start an animation.
   is_ticking_ = false;
   last_tick_time_ = base::TimeTicks();
-  animation_host_->RemoveFromTicking(this);
+  // group_animation_player_->RemoveFromTicking(this);
 }
 
 bool AnimationPlayer::NotifyAnimationStarted(const AnimationEvent& event) {
@@ -426,15 +428,25 @@ void AnimationPlayer::NotifyAnimationTakeover(const AnimationEvent& event) {
 }
 
 void AnimationPlayer::SetNeedsCommit() {
-  DCHECK(animation_host_);
-  animation_host_->SetNeedsCommit();
+  DCHECK(group_animation_player_);
+  group_animation_player_->SetNeedsCommit();
+}
+
+void AnimationPlayer::set_element_animations(
+    scoped_refptr<ElementAnimations> element_animations) {
+  if (element_animations_ == element_animations)
+    return;
+
+  element_animations_ = element_animations;
+
+  if (element_animations_ && !animations_.empty())
+    AnimationAdded();
+
+  SetNeedsPushProperties();
 }
 
 void AnimationPlayer::SetNeedsPushProperties() {
   needs_push_properties_ = true;
-
-  DCHECK(animation_timeline_);
-  animation_timeline_->SetNeedsPushProperties();
 
   DCHECK(element_animations_);
   element_animations_->SetNeedsPushProperties();

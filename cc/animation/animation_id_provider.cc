@@ -9,6 +9,7 @@ namespace cc {
 
 base::AtomicSequenceNumber g_next_animation_id;
 base::AtomicSequenceNumber g_next_group_id;
+base::AtomicSequenceNumber g_next_group_player_id;
 base::AtomicSequenceNumber g_next_timeline_id;
 base::AtomicSequenceNumber g_next_player_id;
 
@@ -20,6 +21,10 @@ int AnimationIdProvider::NextAnimationId() {
 int AnimationIdProvider::NextGroupId() {
   // Animation group IDs start from 1.
   return g_next_group_id.GetNext() + 1;
+}
+
+int AnimationIdProvider::NextGroupPlayerId() {
+  return g_next_group_player_id.GetNext() + 1;
 }
 
 int AnimationIdProvider::NextTimelineId() {

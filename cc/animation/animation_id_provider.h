@@ -15,6 +15,7 @@ class CC_ANIMATION_EXPORT AnimationIdProvider {
   // These functions each return monotonically increasing values.
   static int NextAnimationId();
   static int NextGroupId();
+  static int NextGroupPlayerId();
   static int NextTimelineId();
   static int NextPlayerId();
 

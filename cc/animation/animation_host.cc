@@ -16,6 +16,7 @@
 #include "cc/animation/animation_player.h"
 #include "cc/animation/animation_timeline.h"
 #include "cc/animation/element_animations.h"
+#include "cc/animation/group_animation_player.h"
 #include "cc/animation/scroll_offset_animation_curve.h"
 #include "cc/animation/scroll_offset_animations.h"
 #include "cc/animation/scroll_offset_animations_impl.h"
@@ -82,7 +83,7 @@ void AnimationHost::ClearMutators() {
 }
 
 void AnimationHost::EraseTimeline(scoped_refptr<AnimationTimeline> timeline) {
-  timeline->ClearPlayers();
+  timeline->ClearGroupPlayers();
   timeline->SetAnimationHost(nullptr);
 }
 
@@ -139,6 +140,7 @@ void AnimationHost::RegisterPlayerForElement(ElementId element_id,
   }
 
   element_animations->AddPlayer(player);
+  player->set_element_animations(element_animations);
 }
 
 void AnimationHost::UnregisterPlayerForElement(ElementId element_id,
@@ -157,7 +159,7 @@ void AnimationHost::UnregisterPlayerForElement(ElementId element_id,
     element_animations->SetAnimationHost(nullptr);
   }
 
-  RemoveFromTicking(player);
+  player->group_animation_player()->RemoveFromTicking(player);
 }
 
 void AnimationHost::SetMutatorHostClient(MutatorHostClient* client) {
@@ -271,7 +273,12 @@ bool AnimationHost::SupportsScrollAnimations() const {
 }
 
 bool AnimationHost::NeedsTickAnimations() const {
-  return !ticking_players_.empty();
+  for (auto& group_animation_player : group_animation_players_) {
+    if (group_animation_player->HasTickingPlayer())
+      return true;
+  }
+
+  return false;
 }
 
 bool AnimationHost::ActivateAnimations() {
@@ -554,18 +561,20 @@ void AnimationHost::ScrollAnimationAbort() {
       false /* needs_completion */);
 }
 
-void AnimationHost::AddToTicking(scoped_refptr<AnimationPlayer> player) {
-  DCHECK(std::find(ticking_players_.begin(), ticking_players_.end(), player) ==
-         ticking_players_.end());
-  ticking_players_.push_back(player);
-}
+// void AnimationHost::AddToTicking(scoped_refptr<AnimationPlayer> player) {
+//  DCHECK(std::find(ticking_players_.begin(), ticking_players_.end(), player)
+//  ==
+//         ticking_players_.end());
+//  ticking_players_.push_back(player);
+//}
 
-void AnimationHost::RemoveFromTicking(scoped_refptr<AnimationPlayer> player) {
-  auto to_erase =
-      std::find(ticking_players_.begin(), ticking_players_.end(), player);
-  if (to_erase != ticking_players_.end())
-    ticking_players_.erase(to_erase);
-}
+// void AnimationHost::RemoveFromTicking(scoped_refptr<AnimationPlayer> player)
+// {
+//  auto to_erase =
+//      std::find(ticking_players_.begin(), ticking_players_.end(), player);
+//  if (to_erase != ticking_players_.end())
+//    ticking_players_.erase(to_erase);
+//}
 
 const AnimationHost::PlayersList& AnimationHost::ticking_players_for_testing()
     const {
