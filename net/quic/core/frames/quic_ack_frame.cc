@@ -196,7 +196,22 @@ void PacketNumberQueue::AddRange(QuicPacketNumber lower,
 
     } else {
       // Iterating through the interval and adding packets one by one
-      for (size_t i = lower; i != higher; i++) {
+      QUIC_BUG << "In the slowpath of AddRange. Adding [" << lower << ", "
+               << higher << "), in a deque of size "
+               << packet_number_deque_.size() << ", whose largest element is "
+               << back.max() << " and smallest " << front.min() << ".\n";
+      // Check if the first and/or the last interval of the deque can be
+      // extended, which would reduce the compexity of the following for loop.
+      if (higher >= back.max()) {
+        packet_number_deque_.back().SetMax(higher);
+        higher = back.min();
+      }
+      if (lower < front.min()) {
+        packet_number_deque_.front().SetMin(lower);
+        lower = front.max() - 1;
+      }
+
+      for (size_t i = lower; i < higher; i++) {
         PacketNumberQueue::Add(i);
       }
     }
