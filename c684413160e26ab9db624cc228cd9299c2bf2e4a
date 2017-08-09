@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5b42340_6de8685a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-09T01:24:38Z",
+      "side": 1,
+      "message": "I added a newline here (see the format in: https://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions)",
+      "revId": "c684413160e26ab9db624cc228cd9299c2bf2e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
