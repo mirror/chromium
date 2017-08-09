@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "317259b9_987363b0",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:50:49Z",
+      "side": 1,
+      "message": "Turning CHECK to DCHECK doesn\u0027t solve the problem, I think.",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 10
+      },
+      "revId": "db448272638500756a80bb47d26b5bea43c1e259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
