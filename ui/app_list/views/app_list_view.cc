@@ -255,6 +255,7 @@ void AppListView::SetDragAndDropHostOfCurrentAppList(
 }
 
 void AppListView::ShowWhenReady() {
+  SetState(app_list_state_);
   app_list_main_view_->ShowAppListWhenReady();
 }
 
