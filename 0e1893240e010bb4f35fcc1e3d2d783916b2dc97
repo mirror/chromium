@@ -16,6 +16,24 @@
       "revId": "0e1893240e010bb4f35fcc1e3d2d783916b2dc97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624e7cc5_1f3abccc",
+        "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-09T16:31:20Z",
+      "side": 1,
+      "message": "Yes, it\u0027s C++11. It\u0027s even allowed in Chromium https://www.chromium.org/developers/coding-style/cpp-dos-and-donts?pli\u003d1#TOC-Variable-initialization",
+      "parentUuid": "f9371284_2236a77e",
+      "revId": "0e1893240e010bb4f35fcc1e3d2d783916b2dc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
