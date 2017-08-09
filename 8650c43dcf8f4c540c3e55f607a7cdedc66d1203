@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b432fb1b_01db8f38",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T18:37:57Z",
+      "side": 1,
+      "message": "Why size_t instead of offset_t? If this is important, then comment should state that this is an adaptor for size_t.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "8650c43dcf8f4c540c3e55f607a7cdedc66d1203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a3d067_2c0a62ea",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T18:37:57Z",
+      "side": 1,
+      "message": "Is this used / will this be used? If not, please delete. If so, please add test.",
+      "range": {
+        "startLine": 65,
+        "startChar": 1,
+        "endLine": 65,
+        "endChar": 2
+      },
+      "revId": "8650c43dcf8f4c540c3e55f607a7cdedc66d1203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6352cf5_528f93a0",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T18:37:57Z",
+      "side": 1,
+      "message": "DCHECK_LE(region.size, size() - region.offset);",
+      "range": {
+        "startLine": 78,
+        "startChar": 14,
+        "endLine": 78,
+        "endChar": 49
+      },
+      "revId": "8650c43dcf8f4c540c3e55f607a7cdedc66d1203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a871f96_fb457df8",
+        "filename": "chrome/installer/zucchini/buffer_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T18:37:57Z",
+      "side": 1,
+      "message": "SubRegion",
+      "range": {
+        "startLine": 69,
+        "startChar": 23,
+        "endLine": 69,
+        "endChar": 38
+      },
+      "revId": "8650c43dcf8f4c540c3e55f607a7cdedc66d1203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2122361c_b1f6d7e8",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T18:37:57Z",
+      "side": 1,
+      "message": "// TODO(huangs): Use BufferRegion.",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 18
+      },
+      "revId": "8650c43dcf8f4c540c3e55f607a7cdedc66d1203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
