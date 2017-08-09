@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f30fc732_d3194b01",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-09T22:44:01Z",
+      "side": 1,
+      "message": "No. CompositingRecorder does not perform any scaling nor does it need a recording size. It only uses the context to access the DisplayItemList to save the alpha.",
+      "parentUuid": "66e8ed7c_87b25b89",
+      "range": {
+        "startLine": 1143,
+        "startChar": 4,
+        "endLine": 1143,
+        "endChar": 27
+      },
+      "revId": "7b1e23ad1a2254445db37e58a394116d3f31689c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e61a62a_76a6ca08",
         "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-09T22:09:43Z",
       "side": 1,
       "message": "Could you instead use PaintInfo::ClonePaintInfo()?",
+      "range": {
+        "startLine": 1158,
+        "startChar": 4,
+        "endLine": 1158,
+        "endChar": 28
+      },
+      "revId": "7b1e23ad1a2254445db37e58a394116d3f31689c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d869f282_8dc06cc7",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-09T22:44:01Z",
+      "side": 1,
+      "message": "ClonePaintInfo() is not needed in this scenario as we do not pass an instance of PaintInfo. We only need to pass the correct paint recording scale to the PaintRecorder() as it is the PaintRecorder() that sets the recording scale on the canvas (https://cs.chromium.org/chromium/src/ui/compositor/paint_recorder.cc?l\u003d48) . \n\nThis is the only constructor that PaintRecroder provides where the recording scale can be passed as an argument.",
+      "parentUuid": "9e61a62a_76a6ca08",
       "range": {
         "startLine": 1158,
         "startChar": 4,
