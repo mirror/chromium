@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "00ef98a4_e5f88a3a",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-09T17:31:06Z",
+      "side": 1,
+      "message": "Nit: How about:\n\nreturn Status::NotFound(\"Metadata not found for \\\"%s\\\".\", UTF16ToUTF8(name));",
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe7dfee_40c9b15b",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-09T17:31:06Z",
+      "side": 1,
+      "message": "Nit: underscore.",
+      "range": {
+        "startLine": 597,
+        "startChar": 6,
+        "endLine": 597,
+        "endChar": 26
+      },
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f16746_c95ba1ff",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-09T17:31:06Z",
+      "side": 1,
+      "message": "Nit: Either remove the \"a\" or make tasks singular.",
+      "range": {
+        "startLine": 127,
+        "startChar": 30,
+        "endLine": 127,
+        "endChar": 31
+      },
+      "revId": "26662a33a2f0ffa24e6d563d7d43f445b242e355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58976ad3_cfb89fdf",
         "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
         "patchSetId": 5
