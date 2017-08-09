@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76108b41_c5e375ef",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-09T10:02:30Z",
+      "side": 1,
+      "message": "I created this getter, because I needed it in the tests. :)",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 286,
+        "endChar": 73
+      },
+      "revId": "3cfa009f6e6f376a38e6ecbed2bd425fa64de830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

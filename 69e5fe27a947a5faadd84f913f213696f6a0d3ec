@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3dfdd5a1_569d2e10",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-09T10:02:30Z",
+      "side": 1,
+      "message": "\u003e base::TrimString?\n\u003e \n\u003e do we need #include for that? the same questions for the second occurrence of TrimString.\n\nYes, it is base::TrimString.\nI think we do not need #include.",
+      "parentUuid": "b18d58d2_21462119",
+      "range": {
+        "startLine": 375,
+        "startChar": 2,
+        "endLine": 375,
+        "endChar": 12
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a66868e_38492afc",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-09T07:05:16Z",
       "side": 1,
       "message": "Let\u0027s remove \u0027\\t\u0027. Tab press will probably move focus out of username field. Remove it here and in |MakePossibleUsernamePair|",
+      "range": {
+        "startLine": 473,
+        "startChar": 54,
+        "endLine": 473,
+        "endChar": 56
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ac2a16_d4d9fe8d",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-09T10:02:30Z",
+      "side": 1,
+      "message": "\u003e Let\u0027s remove \u0027\\t\u0027. Tab press will probably move focus out of username field. Remove it here and in |MakePossibleUsernamePair|\n\nDone.",
+      "parentUuid": "7a66868e_38492afc",
       "range": {
         "startLine": 473,
         "startChar": 54,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cd62d384_3eefb231",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-09T10:02:30Z",
+      "side": 1,
+      "message": "\u003e move it before the loop.\n\nDone.",
+      "parentUuid": "ee442646_54add8ac",
+      "range": {
+        "startLine": 479,
+        "startChar": 9,
+        "endLine": 479,
+        "endChar": 37
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63182070_d6dfcb1e",
         "filename": "components/password_manager/core/browser/password_form_manager.h",
         "patchSetId": 14
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-09T07:05:16Z",
       "side": 1,
       "message": "There is not |username_value| field in PasswordFormManager. Transform it to \"username value\".",
+      "range": {
+        "startLine": 298,
+        "startChar": 32,
+        "endLine": 298,
+        "endChar": 48
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63419156_07a4fd37",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-09T10:02:30Z",
+      "side": 1,
+      "message": "\u003e There is not |username_value| field in PasswordFormManager. Transform it to \"username value\".\n\nDone.",
+      "parentUuid": "63182070_d6dfcb1e",
       "range": {
         "startLine": 298,
         "startChar": 32,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2ba9c536_830afd87",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-09T10:02:30Z",
+      "side": 1,
+      "message": "\u003e Let\u0027s do it a bit better. Let\u0027s explain that it is a match from |PasswordForm.other_possible_usernames|. Otherwise, in the context of PasswordFormManager it is not clear what |field-\u003ename| is.\n\nDone.",
+      "parentUuid": "18174e8d_b71540a3",
+      "range": {
+        "startLine": 299,
+        "startChar": 17,
+        "endLine": 299,
+        "endChar": 72
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08c6b8e4_9ff64a31",
         "filename": "components/password_manager/core/browser/password_form_manager.h",
         "patchSetId": 14
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-08T19:17:08Z",
       "side": 1,
       "message": "the comment is great.\nmove it to private section. \ndo we use underscore for field names in this file?\nthe name is not relevant (it is a field name but not username (value)).",
+      "range": {
+        "startLine": 300,
+        "startChar": 33,
+        "endLine": 300,
+        "endChar": 49
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11fdb22_95e996bb",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-09T10:02:30Z",
+      "side": 1,
+      "message": "\u003e the comment is great.\n\u003e move it to private section. \n\u003e do we use underscore for field names in this file?\n\u003e the name is not relevant (it is a field name but not username (value)).\n\nDone. Yes, we use underscore for all the field names declared in this file.",
+      "parentUuid": "08c6b8e4_9ff64a31",
       "range": {
         "startLine": 300,
         "startChar": 33,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "65d4cb19_2cabc1ed",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2330,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-09T10:02:30Z",
+      "side": 1,
+      "message": "\u003e Let\u0027s clarify this comment. User enters credential in the form.\n\u003e \n\u003e Move \"edits username\" to the line right before |UpdateUsername| and replace with \"User edits username in a prompt\". Fix comments in the next test too.\n\nDone.",
+      "parentUuid": "8352d1a0_d55ee096",
+      "range": {
+        "startLine": 2330,
+        "startChar": 5,
+        "endLine": 2330,
+        "endChar": 17
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45728e40_667b6e46",
         "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
         "patchSetId": 14
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "a6709697_5d44a278",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2336,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-09T10:02:30Z",
+      "side": 1,
+      "message": "\u003e Store it as local variable with appropriate name. It is used three times in this test.\n\nDone.",
+      "parentUuid": "45728e40_667b6e46",
+      "range": {
+        "startLine": 2336,
+        "startChar": 33,
+        "endLine": 2336,
+        "endChar": 65
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "555d4d53_c6d5e9cb",
         "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
         "patchSetId": 14
@@ -197,6 +389,30 @@
       "writtenOn": "2017-08-09T07:05:16Z",
       "side": 1,
       "message": "Add ASSERT to check whether |username_edited_| has value.\n\nFYI, ASSERT vs EXPECT https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/3vE3gbZnLUI https://stackoverflow.com/questions/2565299/using-assert-and-expect-in-googletest",
+      "range": {
+        "startLine": 2339,
+        "startChar": 12,
+        "endLine": 2339,
+        "endChar": 52
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c922d3_4a068347",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2339,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-09T10:02:30Z",
+      "side": 1,
+      "message": "\u003e Add ASSERT to check whether |username_edited_| has value.\n\u003e \n\u003e FYI, ASSERT vs EXPECT https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/3vE3gbZnLUI https://stackoverflow.com/questions/2565299/using-assert-and-expect-in-googletest\n\nDone. Thanks for the links:)",
+      "parentUuid": "555d4d53_c6d5e9cb",
       "range": {
         "startLine": 2339,
         "startChar": 12,
@@ -244,6 +460,54 @@
       "side": 1,
       "message": "\u003e Add expectations to this test as well.\n\nThanks for your attitude and leadership you demonstrated in offline conversation.",
       "parentUuid": "97b5903c_08e92146",
+      "range": {
+        "startLine": 2356,
+        "startChar": 32,
+        "endLine": 2356,
+        "endChar": 60
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3921ce_902eb9db",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2356,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-09T10:02:30Z",
+      "side": 1,
+      "message": "\u003e Add expectations to this test as well.\n\nDone.",
+      "parentUuid": "97b5903c_08e92146",
+      "range": {
+        "startLine": 2356,
+        "startChar": 32,
+        "endLine": 2356,
+        "endChar": 60
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab52e023_bcd17b75",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2356,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-09T10:02:30Z",
+      "side": 1,
+      "message": "\u003e \u003e Add expectations to this test as well.\n\u003e \n\u003e Thanks for your attitude and leadership you demonstrated in offline conversation.\n\nAnd thank you for your prompt answers\u0026comments.",
+      "parentUuid": "04997032_b417b1c9",
       "range": {
         "startLine": 2356,
         "startChar": 32,
