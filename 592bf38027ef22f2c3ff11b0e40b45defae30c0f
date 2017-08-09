@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19412261_c5ab1f15",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T00:58:40Z",
+      "side": 1,
+      "message": "Why size_t instead of offset_t? If this is important, then comment should state that this is an adaptor for size_t.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "592bf38027ef22f2c3ff11b0e40b45defae30c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e427af_20de8694",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T00:58:40Z",
+      "side": 1,
+      "message": "Should this be const or constexpr as well, to go with constexpr??",
+      "range": {
+        "startLine": 140,
+        "startChar": 29,
+        "endLine": 140,
+        "endChar": 41
+      },
+      "revId": "592bf38027ef22f2c3ff11b0e40b45defae30c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b602f5_5c4350ed",
+        "filename": "chrome/installer/zucchini/zucchini.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T00:58:40Z",
+      "side": 1,
+      "message": "ensemble",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 21
+      },
+      "revId": "592bf38027ef22f2c3ff11b0e40b45defae30c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7310f054_ddbe653e",
+        "filename": "chrome/installer/zucchini/zucchini.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T00:58:40Z",
+      "side": 1,
+      "message": "The fact that |new_image| has been preallocated to the expected size should be mentioned.",
+      "range": {
+        "startLine": 45,
+        "startChar": 51,
+        "endLine": 45,
+        "endChar": 60
+      },
+      "revId": "592bf38027ef22f2c3ff11b0e40b45defae30c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781c803a_8e353076",
+        "filename": "chrome/installer/zucchini/zucchini.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T00:58:40Z",
+      "side": 1,
+      "message": "NIT: to?",
+      "range": {
+        "startLine": 45,
+        "startChar": 26,
+        "endLine": 45,
+        "endChar": 28
+      },
+      "revId": "592bf38027ef22f2c3ff11b0e40b45defae30c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2f759d_f12e346c",
+        "filename": "chrome/installer/zucchini/zucchini_apply.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T00:58:40Z",
+      "side": 1,
+      "message": "Is the check guaranteed to fail? If so, maybe state this in comment?",
+      "range": {
+        "startLine": 17,
+        "startChar": 21,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "592bf38027ef22f2c3ff11b0e40b45defae30c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea3b7b7_bfa25c49",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T00:58:40Z",
+      "side": 1,
+      "message": "If you\u0027d like, maybe:\n\nauto generate \u003d params.command_line.HasSwitch(kSwitchRaw) ? GenerateRaw\n                                                          : GenerateEnsemble;\nstatus \u003d generate(old_image.region(), new_image.region(), \u0026patch_writer);",
+      "revId": "592bf38027ef22f2c3ff11b0e40b45defae30c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dacc1af_40fd794b",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T00:58:40Z",
+      "side": 1,
+      "message": "NIT: encountered ?",
+      "range": {
+        "startLine": 100,
+        "startChar": 31,
+        "endLine": 100,
+        "endChar": 36
+      },
+      "revId": "592bf38027ef22f2c3ff11b0e40b45defae30c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e08022_68263482",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T00:58:40Z",
+      "side": 1,
+      "message": "Is comment still relevant?",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 33
+      },
+      "revId": "592bf38027ef22f2c3ff11b0e40b45defae30c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "977e2898_a74601af",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T00:58:40Z",
+      "side": 1,
+      "message": "Is comment still relevant?",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 33
+      },
+      "revId": "592bf38027ef22f2c3ff11b0e40b45defae30c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206cb5b8_11c151db",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T00:58:40Z",
+      "side": 1,
+      "message": "NIT: encountered ?",
+      "range": {
+        "startLine": 139,
+        "startChar": 31,
+        "endLine": 139,
+        "endChar": 36
+      },
+      "revId": "592bf38027ef22f2c3ff11b0e40b45defae30c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9013399b_dbacb8ee",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-09T00:58:40Z",
+      "side": 1,
+      "message": "Optional: Can omit {}\n\nOption: 0 is being hard-coded here. Maybe still keep zucchini::status::Code and check zucchini::status::kStatusSuccess, then return static_cast\u003cint\u003e(status)?",
+      "range": {
+        "startLine": 49,
+        "startChar": 18,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "592bf38027ef22f2c3ff11b0e40b45defae30c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
