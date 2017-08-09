@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c46ee7f2_5faff4a4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-09T23:47:04Z",
+      "side": 1,
+      "message": "See l.181",
+      "parentUuid": "f39be72f_cdda6290",
+      "range": {
+        "startLine": 160,
+        "startChar": 18,
+        "endLine": 160,
+        "endChar": 50
+      },
+      "revId": "c7c49a48e5135885a732b44f28c4405090566ed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66212798_b92ffcf3",
         "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-09T22:48:34Z",
       "side": 1,
       "message": "Should other tests that wait on \u0027playing\u0027 be changed in the same way? I assume this is just an optimization rather than source of flakiness? Tests shouldn\u0027t be taking forever to start playing.",
+      "range": {
+        "startLine": 172,
+        "startChar": 46,
+        "endLine": 172,
+        "endChar": 60
+      },
+      "revId": "c7c49a48e5135885a732b44f28c4405090566ed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7609b099_a29eeb3c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-09T23:47:04Z",
+      "side": 1,
+      "message": "Just an optimization -- it didn\u0027t eliminate all timeouts. Ironically, removing the timeout: 2500 test option lets it use a larger timeout value. I think long ago the default harness timeout was much smaller, and 2500 was larger. Or the test was just flaky all along. I had to thrash my local box pretty hard on a debug build with lots of other busywork going on just to get these flakiness repros to occur at any frequency locally.",
+      "parentUuid": "66212798_b92ffcf3",
       "range": {
         "startLine": 172,
         "startChar": 46,
