@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "7274b8f8_d313179e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/FilterBuilder.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-09T21:28:33Z",
+      "side": 1,
+      "message": "Lets change this to detect regular expressions maybe? so like what dgozman@ said \u0027foo /(bar)+/\u0027 could be used?\n\nI don\u0027t like how it has partial magic instead of no magic or full magic.",
+      "revId": "4aeb1f19beeef5b5b645d80e99f1cc0274e50dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c20d066_56393703",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 2
