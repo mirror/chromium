@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83009e9d_06984c64",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-09T15:15:12Z",
+      "side": 1,
+      "message": "nit: maybe order these cases by the same order that the sensors are listed in the sensor.mojom:\nhttps://cs.chromium.org/chromium/src/services/device/public/interfaces/sensor.mojom?l\u003d12-26\nSo moving linear acceleration before the relative orientation.",
+      "revId": "9f1e025bb9770b2401deaee732c93d9b439343ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
