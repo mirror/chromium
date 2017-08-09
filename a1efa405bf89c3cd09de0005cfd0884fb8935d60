@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47e3a7ce_8124e450",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T18:17:16Z",
+      "side": 0,
+      "message": "Hooray for fewer delegate methods!",
+      "revId": "a1efa405bf89c3cd09de0005cfd0884fb8935d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ebe2d9f_30d296bb",
+        "filename": "ash/system/night_light/night_light_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T18:17:16Z",
+      "side": 0,
+      "message": "It\u0027s nice to see all this per-test setup code going away.",
+      "revId": "a1efa405bf89c3cd09de0005cfd0884fb8935d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
