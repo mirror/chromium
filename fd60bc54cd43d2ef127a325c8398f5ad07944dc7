@@ -138,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "3954146a_765e6f1e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-09T16:30:51Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ve moved back to the old way.\n\nHowever, something like:\nframe_broker_binding_ \u003d std::move(request);\nDoesn\u0027t really work since the Binding cannot be assigned.\n\nI\u0027ve changed it to:\nstd::move(frame_broker_binding_);\nframe_broker_binding_.Bind(std::move(request));\n\nI\u0027m not sure if there\u0027s a better way.",
+      "parentUuid": "e5415725_ee27f1dd",
+      "revId": "fd60bc54cd43d2ef127a325c8398f5ad07944dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b498891_ee2d4df5",
         "filename": "content/public/app/mojo/content_browser_manifest.json",
         "patchSetId": 7
