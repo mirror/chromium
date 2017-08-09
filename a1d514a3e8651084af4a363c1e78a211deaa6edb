@@ -16,6 +16,24 @@
       "revId": "a1d514a3e8651084af4a363c1e78a211deaa6edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a3e4d63_df7c037e",
+        "filename": "ios/chrome/browser/google/google_logo_service.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-09T16:49:32Z",
+      "side": 0,
+      "message": "\u003e How does decoding work now?  Previously this required it\u0027s own implementation since the shared impl didn\u0027t work on iOS\n\nVia an image_fetcher::CreateIOSImageDecoder(). (:40)",
+      "parentUuid": "5505f2bb_d4e3e605",
+      "revId": "a1d514a3e8651084af4a363c1e78a211deaa6edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
