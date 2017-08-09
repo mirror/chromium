@@ -427,9 +427,6 @@ enum class SnapshotViewOption {
 - (IBAction)chromeExecuteCommand:(id)sender {
   int command = [sender tag];
   switch (command) {
-    case IDC_TOGGLE_TAB_SWITCHER:
-      [self tabSwitcherDismissWithCurrentSelectedModel];
-      break;
     default:
       [super chromeExecuteCommand:sender];
       break;

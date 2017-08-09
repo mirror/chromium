@@ -683,6 +683,12 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   }
   [self.view setDelegate:self];
 
+  if (idiom == IPHONE_IDIOM) {
+    [[self stackButton] addTarget:dispatcher
+                           action:@selector(displayTabSwitcher)
+                 forControlEvents:UIControlEventTouchDown];
+  }
+
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
   if (@available(iOS 11, *)) {
     _dropInteraction =
@@ -690,6 +696,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     [self.view addInteraction:_dropInteraction];
   }
 #endif
+
   return self;
 }
 
