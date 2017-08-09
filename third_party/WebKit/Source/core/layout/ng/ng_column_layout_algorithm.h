@@ -8,8 +8,6 @@
 #include "core/layout/ng/ng_block_layout_algorithm.h"
 #include "core/layout/ng/ng_break_token.h"
 #include "core/layout/ng/ng_constraint_space.h"
-#include "core/layout/ng/ng_layout_result.h"
-#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
@@ -21,7 +19,11 @@ class CORE_EXPORT NGColumnLayoutAlgorithm : public NGBlockLayoutAlgorithm {
                           NGConstraintSpace* space,
                           NGBreakToken* break_token = nullptr);
 
-  RefPtr<NGLayoutResult> Layout() override;
+ protected:
+  bool LayoutInterior(NGPreviousInflowPosition*) override;
+
+ private:
+  RefPtr<NGConstraintSpace> CreateConstraintSpaceForColumns() const;
 };
 
 }  // namespace Blink

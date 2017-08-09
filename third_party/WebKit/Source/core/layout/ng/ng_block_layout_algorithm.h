@@ -66,6 +66,16 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   Optional<MinMaxSize> ComputeMinMaxSize() const override;
   virtual RefPtr<NGLayoutResult> Layout() override;
 
+ protected:
+  // Lay out the interior (i.e. the contents or children) of this block.
+  virtual bool LayoutInterior(NGPreviousInflowPosition*);
+
+  NGLogicalSize ChildAvailableSize() const { return child_available_size_; }
+
+  // Propagate the space taken up by some child, expressed as the
+  // inline-end,block-end offset.
+  void PropagateSizeFromChild(const NGLogicalOffset& child_end_offset);
+
  private:
   NGBoxStrut CalculateMargins(NGLayoutInputNode child);
 

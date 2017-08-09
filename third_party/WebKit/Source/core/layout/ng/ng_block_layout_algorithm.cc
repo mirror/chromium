@@ -285,28 +285,10 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
       input_bfc_block_offset, content_size_, input_margin_strut,
       /* empty_block_affected_by_clearance */ false};
 
-  NGBlockChildIterator child_iterator(Node().FirstChild(), BreakToken());
-  for (auto entry = child_iterator.NextChild();
-       NGLayoutInputNode child = entry.node;
-       entry = child_iterator.NextChild()) {
-    NGBreakToken* child_break_token = entry.token;
-
-    if (child.IsOutOfFlowPositioned()) {
-      DCHECK(!child_break_token);
-      HandleOutOfFlowPositioned(previous_inflow_position, ToNGBlockNode(child));
-    } else if (child.IsFloating()) {
-      HandleFloat(previous_inflow_position, ToNGBlockNode(child),
-                  ToNGBlockBreakToken(child_break_token));
-    } else {
-      if (!HandleInflow(child, child_break_token, &previous_inflow_position)) {
-        // We need to abort the layout, as our BFC offset was resolved.
-        container_builder_.SwapUnpositionedFloats(&unpositioned_floats_);
-        return container_builder_.Abort(NGLayoutResult::kBfcOffsetResolved);
-      }
-    }
-
-    if (IsOutOfSpace(ConstraintSpace(), content_size_))
-      break;
+  if (!LayoutInterior(&previous_inflow_position)) {
+    // We need to abort the layout, as our BFC offset was resolved.
+    container_builder_.SwapUnpositionedFloats(&unpositioned_floats_);
+    return container_builder_.Abort(NGLayoutResult::kBfcOffsetResolved);
   }
 
   NGMarginStrut end_margin_strut = previous_inflow_position.margin_strut;
@@ -401,6 +383,51 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   PropagateBaselinesFromChildren();
 
   return container_builder_.ToBoxFragment();
+}
+
+bool NGBlockLayoutAlgorithm::LayoutInterior(
+    NGPreviousInflowPosition* previous_inflow_position) {
+  NGLayoutInputNode first_child = Node().FirstChild();
+  if (Style().SpecifiesColumns()) {
+    // We still have the legacy layout tree structure, which means that a
+    // multicol container will consist of a LayoutFlowThread, followed by zero
+    // or more siblings of type LayoutMultiColumnSet and/or
+    // LayoutMultiColumnSpannerPlaceholder. The actual content is inside the
+    // flow thread. Ignore the rest.
+    if (first_child && first_child.GetLayoutObject()->IsLayoutFlowThread())
+      first_child = ToNGBlockNode(first_child).FirstChild();
+    else
+      first_child = NGLayoutInputNode(nullptr);
+  }
+  NGBlockChildIterator child_iterator(first_child, BreakToken());
+
+  for (auto entry = child_iterator.NextChild();
+       NGLayoutInputNode child = entry.node;
+       entry = child_iterator.NextChild()) {
+    NGBreakToken* child_break_token = entry.token;
+
+    if (child.IsOutOfFlowPositioned()) {
+      DCHECK(!child_break_token);
+      HandleOutOfFlowPositioned(*previous_inflow_position,
+                                ToNGBlockNode(child));
+    } else if (child.IsFloating()) {
+      HandleFloat(*previous_inflow_position, ToNGBlockNode(child),
+                  ToNGBlockBreakToken(child_break_token));
+    } else {
+      if (!HandleInflow(child, child_break_token, previous_inflow_position))
+        return false;
+    }
+
+    if (IsOutOfSpace(ConstraintSpace(), content_size_))
+      break;
+  }
+  return true;
+}
+
+void NGBlockLayoutAlgorithm::PropagateSizeFromChild(
+    const NGLogicalOffset& child_end_offset) {
+  max_inline_size_ = std::max(max_inline_size_, child_end_offset.inline_offset);
+  content_size_ = std::max(content_size_, child_end_offset.block_offset);
 }
 
 void NGBlockLayoutAlgorithm::HandleOutOfFlowPositioned(
