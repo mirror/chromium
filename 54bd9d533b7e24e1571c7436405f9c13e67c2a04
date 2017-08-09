@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d04cebb7_3612af67",
+        "filename": "components/viz/service/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-09T14:53:27Z",
+      "side": 1,
+      "message": "You can just make it \"+services/viz/public/interfaces\" since we\u0027ll need everything there eventually.",
+      "revId": "54bd9d533b7e24e1571c7436405f9c13e67c2a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
