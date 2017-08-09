@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "66e16f27_979331a8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/application_test_runner/ResourceTreeTestRunner.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-09T23:28:01Z",
+      "side": 1,
+      "message": "I see what you\u0027re saying since it\u0027s a bit strange that ApplicationTestRunner depends on Sources but most of these ResourceTree tests are Application-panel related (they include resources-test.js): https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/http/tests/inspector/resource-tree/",
+      "parentUuid": "cd602340_46663e39",
+      "revId": "e9a36c00f34bad1440d08665e63a7a4c760ae77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb664f24_f77ba8ff",
         "filename": "third_party/WebKit/Source/devtools/front_end/application_test_runner/module.json",
         "patchSetId": 7
