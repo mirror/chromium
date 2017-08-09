@@ -61,6 +61,7 @@ enum ResizerHitTestType { kResizerForPointer, kResizerForTouch };
 class ComputedStyle;
 class HitTestResult;
 class LayoutBox;
+class LayoutBoxModelObject;
 class LayoutScrollbarPart;
 class PaintLayer;
 class ScrollingCoordinator;
@@ -494,6 +495,7 @@ class CORE_EXPORT PaintLayerScrollableArea final
     return EnsureRareData().sticky_constraints_map_;
   }
 
+  void RegisterStickyElement(LayoutBoxModelObject*);
   void InvalidateAllStickyConstraints();
   void InvalidateStickyConstraintsFor(PaintLayer*,
                                       bool needs_compositing_update = true);
@@ -606,6 +608,7 @@ class CORE_EXPORT PaintLayerScrollableArea final
   ScrollAnchor scroll_anchor_;
 
   std::unique_ptr<PaintLayerScrollableAreaRareData> rare_data_;
+  HashSet<const LayoutBoxModelObject*> registered_stickys_;
 
   // MainThreadScrollingReason due to the properties of the LayoutObject
   uint32_t non_composited_main_thread_scrolling_reasons_;

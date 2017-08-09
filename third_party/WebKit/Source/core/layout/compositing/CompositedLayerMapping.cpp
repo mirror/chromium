@@ -305,6 +305,9 @@ void CompositedLayerMapping::UpdateStickyConstraints(
       ancestor_overflow_layer->GetScrollableArea()->GetStickyConstraintsMap();
   const StickyPositionScrollingConstraints& constraints =
       constraints_map.at(&owning_layer_);
+  LOG(INFO) << "UpdateStickyConstraints for " << owning_layer_.DebugName()
+            << ", constraints.ScrollContainerRelativeStickyBoxRect() is "
+            << constraints.ScrollContainerRelativeStickyBoxRect().ToString();
 
   web_constraint.is_sticky = true;
   web_constraint.is_anchored_left =

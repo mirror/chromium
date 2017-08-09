@@ -31,7 +31,9 @@
 #include "core/html/HTMLTableCellElement.h"
 #include "core/layout/CollapsedBorderValue.h"
 #include "core/layout/LayoutAnalyzer.h"
+#include "core/layout/LayoutState.h"
 #include "core/layout/LayoutTableCol.h"
+#include "core/layout/LayoutView.h"
 #include "core/layout/SubtreeLayoutScope.h"
 #include "core/paint/ObjectPaintInvalidator.h"
 #include "core/paint/PaintLayer.h"
@@ -326,6 +328,18 @@ void LayoutTableCell::UpdateLayout() {
   SetIntrinsicContentLogicalHeight(ContentLogicalHeight());
 
   SetCellWidthChanged(false);
+
+  // Register ourselves if we're sticky.
+  LayoutState* state = View()->GetLayoutState();
+  if (IsStickyPositioned() && state->NearestAncestorOverflow()) {
+    LOG(INFO) << DebugName() << ": " << state->NearestAncestorOverflow();
+    // HACK(smcgruer): We can do this at style time.
+    Layer()->UpdateAncestorOverflowLayer(
+        state->NearestAncestorOverflow()->Layer());
+    state->NearestAncestorOverflow()
+        ->GetScrollableArea()
+        ->RegisterStickyElement(this);
+  }
 }
 
 LayoutUnit LayoutTableCell::PaddingTop() const {
