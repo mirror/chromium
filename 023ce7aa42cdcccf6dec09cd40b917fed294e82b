@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c26caf01_e1245fc7",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-09T19:57:03Z",
+      "side": 1,
+      "message": "why disable the animation?",
+      "range": {
+        "startLine": 1200,
+        "startChar": 39,
+        "endLine": 1200,
+        "endChar": 65
+      },
+      "revId": "023ce7aa42cdcccf6dec09cd40b917fed294e82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
