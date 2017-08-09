@@ -22,6 +22,46 @@
       "revId": "2c4ab675439bd0eb82d6d96e84de5a029c5a2429",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09bd8cff_6ef07464",
+        "filename": "ios/chrome/browser/ui/history_popup/requirements/tab_history_ui_updater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-09T20:22:55Z",
+      "side": 1,
+      "message": "receiver",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 21
+      },
+      "revId": "2c4ab675439bd0eb82d6d96e84de5a029c5a2429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a155e0df_aea8733f",
+        "filename": "ios/chrome/browser/ui/history_popup/tab_history_coordinator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-09T20:22:55Z",
+      "side": 1,
+      "message": "Nit: blank line after the properties.",
+      "revId": "2c4ab675439bd0eb82d6d96e84de5a029c5a2429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
