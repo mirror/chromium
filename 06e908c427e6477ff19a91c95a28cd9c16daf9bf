@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0628a790_a34ef774",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-08-09T17:46:03Z",
+      "side": 1,
+      "message": "Removed as part of the rebase.",
+      "parentUuid": "123dbbef_a838c9aa",
+      "range": {
+        "startLine": 165,
+        "startChar": 59,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "06e908c427e6477ff19a91c95a28cd9c16daf9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "454c4b75_73fd0483",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 4
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "80aca7fb_cc6f7f9f",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-08-09T17:46:03Z",
+      "side": 1,
+      "message": "This check was part of allowing discovery to override cached addresses if something changes.  There is no pending set after the rebase though.",
+      "parentUuid": "3c31ab3e_25c89376",
+      "range": {
+        "startLine": 217,
+        "startChar": 27,
+        "endLine": 217,
+        "endChar": 55
+      },
+      "revId": "06e908c427e6477ff19a91c95a28cd9c16daf9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa7a572c_93fa264e",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 4
@@ -86,6 +134,24 @@
       "revId": "06e908c427e6477ff19a91c95a28cd9c16daf9bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e5eecf_f999c130",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-08-09T17:46:03Z",
+      "side": 1,
+      "message": "I forgot that emplace will fail if it already exists.  Checking for existence first now.",
+      "parentUuid": "fa7a572c_93fa264e",
+      "revId": "06e908c427e6477ff19a91c95a28cd9c16daf9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -109,6 +175,30 @@
       "revId": "06e908c427e6477ff19a91c95a28cd9c16daf9bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a6b774_ad5aa8ee",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-08-09T17:46:03Z",
+      "side": 1,
+      "message": "No, this update is unnecessary.  It was also removed during the rebase.",
+      "parentUuid": "c9851162_2b546c5a",
+      "range": {
+        "startLine": 308,
+        "startChar": 62,
+        "endLine": 308,
+        "endChar": 0
+      },
+      "revId": "06e908c427e6477ff19a91c95a28cd9c16daf9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
