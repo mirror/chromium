@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "06730627_4bbc1fb6",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-09T17:48:20Z",
+      "side": 1,
+      "message": "Gah, sorry; I miss the \"next change w/ comments\" button that Rietveld had :-/\n\nI\u0027d prefer to use typedef in this CL and do a follow-up that switches the entire file to using in one go, if that\u0027s OK w/ you?",
+      "parentUuid": "9ee48e8f_e1ae31e0",
+      "revId": "167ad6c95a8e35c1780fe33281934cfa55ee004c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85718769_5b67d151",
         "filename": "base/message_loop/message_pump_fuchsia.cc",
         "patchSetId": 4
