@@ -426,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "9a37fc31_5c15cc40",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-09T01:21:50Z",
+      "side": 1,
+      "message": "I don\u0027t think I entirely understand your point here, but I did some things anyways.  :)\n\nFor the enterprise case, the code is not correct, because the id of the printer in the enterprise case is not something we can reliably match enterprise with a discovered/automatic printer.  I don\u0027t actually know that we have any reliable way to do that matching right now (we could use uuid, but then we\u0027re depending on administrators to correctly supply a uuid that matches the uuid we pull at detection time, which seems dicey...).  At any rate, I\u0027ve just removed it for now as it\u0027s a non critical issue and better to omit it than check it in broken. \n\nFor the configured case, the detectors control the ids, so testing what happens based on matching ids is reasonable I think?  \n\nOr is your objection that, instead of calling UpdateConfiguredPrinter() to transition between classes, I do the switch in the fake backends?  I just changed the test to go through the CupsPrintersManager API instead, which is probably a bit better.",
+      "parentUuid": "d70d32a9_afbb8047",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 360,
+        "endChar": 78
+      },
+      "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c30d56e7_d01b6de9",
         "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
         "patchSetId": 3
