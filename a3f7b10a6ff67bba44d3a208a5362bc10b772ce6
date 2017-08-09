@@ -16,6 +16,24 @@
       "revId": "a3f7b10a6ff67bba44d3a208a5362bc10b772ce6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73b723d_08f58de2",
+        "filename": "third_party/harfbuzz-ng/src/hb-fallback-shape.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-09T08:44:09Z",
+      "side": 1,
+      "message": "It works if I add HAVE_FALLBACK in our build flags in BUILD.gn, do I need to add that now? What is the fallback shaper?",
+      "parentUuid": "6a1715af_5b67e109",
+      "revId": "a3f7b10a6ff67bba44d3a208a5362bc10b772ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
