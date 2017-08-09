@@ -21,9 +21,6 @@
                        ContentSuggestionsHeaderProvider,
                        GoogleLandingConsumer>
 
-// Whether the Google logo or doodle is being shown.
-@property(nonatomic, assign) BOOL logoIsShowing;
-
 @property(nonatomic, weak) id<ContentSuggestionsHeaderViewControllerDelegate>
     delegate;
 @property(nonatomic, weak)
@@ -31,6 +28,13 @@
         commandHandler;
 @property(nonatomic, weak) id<ContentSuggestionsCollectionSynchronizing>
     collectionSynchronizer;
+
+// Whether the Google logo or doodle is being shown.
+@property(nonatomic, assign) BOOL logoIsShowing;
+
+// |YES| if its view is visible.  When set to |NO| various UI updates are
+// ignored.
+@property(nonatomic, assign) BOOL isShowing;
 
 @end
 

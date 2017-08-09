@@ -118,8 +118,8 @@
   self.viewController.suggestionsDelegate = self;
   self.viewController.audience = self;
 
-  // TODO: Add the header viewController as child of the collection
-  // viewController.
+  [self.viewController addChildViewController:self.headerViewController];
+  [self.headerViewController didMoveToParentViewController:self.viewController];
 
   self.headerCollectionInteractionHandler =
       [[ContentSuggestionsHeaderSynchronizer alloc]
