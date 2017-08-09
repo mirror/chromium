@@ -100,7 +100,6 @@ void WebApkUpdateDataFetcher::FetchInstallableData() {
   last_fetched_url_ = url;
 
   if (!IsInScope(url, scope_)) {
-    OnWebManifestNotWebApkCompatible();
     return;
   }
 
@@ -142,7 +141,6 @@ void WebApkUpdateDataFetcher::OnDidGetInstallableData(
   if (data.error_code != NO_ERROR_DETECTED || data.manifest.IsEmpty() ||
       web_manifest_url_ != data.manifest_url ||
       !AreWebManifestUrlsWebApkCompatible(data.manifest)) {
-    OnWebManifestNotWebApkCompatible();
     return;
   }
 
@@ -168,7 +166,6 @@ void WebApkUpdateDataFetcher::OnDidGetInstallableData(
 void WebApkUpdateDataFetcher::OnGotPrimaryIconMurmur2Hash(
     const std::string& primary_icon_murmur2_hash) {
   if (primary_icon_murmur2_hash.empty()) {
-    OnWebManifestNotWebApkCompatible();
     return;
   }
 
@@ -192,7 +189,6 @@ void WebApkUpdateDataFetcher::OnDataAvailable(
     bool did_fetch_badge_icon,
     const std::string& badge_icon_murmur2_hash) {
   if (did_fetch_badge_icon && badge_icon_murmur2_hash.empty()) {
-    OnWebManifestNotWebApkCompatible();
     return;
   }
 
@@ -232,12 +228,4 @@ void WebApkUpdateDataFetcher::OnDataAvailable(
       java_primary_icon, java_badge_icon_url, java_badge_icon_murmur2_hash,
       java_badge_icon, java_icon_urls, info_.display, info_.orientation,
       info_.theme_color, info_.background_color);
-}
-
-void WebApkUpdateDataFetcher::OnWebManifestNotWebApkCompatible() {
-  if (!is_initial_fetch_)
-    return;
-
-  Java_WebApkUpdateDataFetcher_onWebManifestForInitialUrlNotWebApkCompatible(
-      base::android::AttachCurrentThread(), java_ref_);
 }

@@ -124,15 +124,6 @@ public class WebApkUpdateDataFetcher extends EmptyTabObserver {
         mObserver.onGotManifestData(info, primaryIconUrl, badgeIconUrl);
     }
 
-    /**
-     * Called when the initial URL load has completed and the page has no Web Manifest or the
-     * Web Manifest is not WebAPK compatible.
-     */
-    @CalledByNative
-    private void onWebManifestForInitialUrlNotWebApkCompatible() {
-        mObserver.onWebManifestForInitialUrlNotWebApkCompatible();
-    }
-
     private native long nativeInitialize(String scope, String webManifestUrl);
     private native void nativeReplaceWebContents(
             long nativeWebApkUpdateDataFetcher, WebContents webContents);
