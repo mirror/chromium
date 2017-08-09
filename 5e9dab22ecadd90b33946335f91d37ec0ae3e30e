@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "346e05e9_a051916a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-09T18:49:19Z",
+      "side": 1,
+      "message": "Can we do not erase here? |current_service_ip_endpoints_| is used to record known device counts (services found by mDNS). It should count devices can or can not open cast channels.",
+      "range": {
+        "startLine": 85,
+        "startChar": 34,
+        "endLine": 85,
+        "endChar": 39
+      },
+      "revId": "5e9dab22ecadd90b33946335f91d37ec0ae3e30e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb9b9be_24e63e06",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-09T18:49:19Z",
+      "side": 1,
+      "message": "nit: maybe a helper function DiscoveryNetworkMonitor::IsNetworkIdUnknownOrDisconnected(network_id)?",
+      "range": {
+        "startLine": 112,
+        "startChar": 20,
+        "endLine": 112,
+        "endChar": 43
+      },
+      "revId": "5e9dab22ecadd90b33946335f91d37ec0ae3e30e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4443ba_735e880a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-09T18:49:19Z",
+      "side": 1,
+      "message": "nit: we may want to limit cache size, e.g. 10 networks. It seems fine though since most people normally have \u003c 5 network I think...",
+      "range": {
+        "startLine": 120,
+        "startChar": 18,
+        "endLine": 120,
+        "endChar": 25
+      },
+      "revId": "5e9dab22ecadd90b33946335f91d37ec0ae3e30e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29319c53_5b0915a8",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-09T18:49:19Z",
+      "side": 1,
+      "message": "Since we are inserting or updating anyway, use\n\nsink_cache_[last_network_id] \u003d std::vector\u003cMediaSinkInternal\u003e(current_sinks_.begin(), current_sinks_.end());\n\nwould make it simpler?",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 5
+      },
+      "revId": "5e9dab22ecadd90b33946335f91d37ec0ae3e30e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47df1923_a64ff1d3",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-09T18:49:19Z",
+      "side": 1,
+      "message": "nit: { not needed for one line statement.",
+      "range": {
+        "startLine": 131,
+        "startChar": 40,
+        "endLine": 131,
+        "endChar": 41
+      },
+      "revId": "5e9dab22ecadd90b33946335f91d37ec0ae3e30e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbe93dc_c939f805",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-09T18:49:19Z",
+      "side": 1,
+      "message": "It seems that we can directly insert sinks into |current_sinks_| instead of calling OpenChannels() (apply to test cases below as well...):\n\n// network change to ETHERNET\nmedia_sink_service_impl_.current_sinks_.insert(sink1);\nmedia_sink_service_impl_.current_sinks_.insert(sink2);\n\n// network change to NONE then to WIFI\nmedia_sink_service_impl_.current_sinks_.clear();\nmedia_sink_service_impl_.current_sinks_.insert(sink3);\n\n// Expect_CALL(xxx, OpenSocketInternal(ip_endpoint1,...);\n// Expect_CALL(xxx, OpenSocketInternal(ip_endpoint2,...);\n// network change to NONT then to ETHERNET",
+      "range": {
+        "startLine": 253,
+        "startChar": 2,
+        "endLine": 273,
+        "endChar": 52
+      },
+      "revId": "5e9dab22ecadd90b33946335f91d37ec0ae3e30e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a09705_2fdf3545",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-09T18:49:19Z",
+      "side": 1,
+      "message": "This test case may not needed if we insert sinks into |current_sinks_| directly. It would be a good browser test case though.",
+      "range": {
+        "startLine": 323,
+        "startChar": 37,
+        "endLine": 323,
+        "endChar": 67
+      },
+      "revId": "5e9dab22ecadd90b33946335f91d37ec0ae3e30e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a505da1_57e0d3cd",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-09T18:49:19Z",
+      "side": 1,
+      "message": "Is it possible to combine this with DisconnectedNoCache case?",
+      "range": {
+        "startLine": 474,
+        "startChar": 37,
+        "endLine": 474,
+        "endChar": 58
+      },
+      "revId": "5e9dab22ecadd90b33946335f91d37ec0ae3e30e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
