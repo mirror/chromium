@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e823ae2c_57a61975",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-09T21:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88ad0a7f_f51bc05e",
+      "range": {
+        "startLine": 177,
+        "startChar": 11,
+        "endLine": 177,
+        "endChar": 20
+      },
+      "revId": "692634ea1ba91afe824fc352e5a630c3f330e217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "604ff655_c299bba2",
         "filename": "chrome/browser/chrome_browser_main_win.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "de591628_482dab19",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-09T21:19:25Z",
+      "side": 1,
+      "message": "No longer applicable since I\u0027ve moved away from GetModuleHandleEx() but the |handle| was of type HMODULE, which should be put in ScopedNativeLibrary instead of ScopedModule. Unfortunately, ScopedNativeLibrary doesn\u0027t support move semantics yet.",
+      "parentUuid": "604ff655_c299bba2",
+      "revId": "692634ea1ba91afe824fc352e5a630c3f330e217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83db2a46_0fdb7e27",
         "filename": "chrome/browser/chrome_browser_main_win.cc",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "692634ea1ba91afe824fc352e5a630c3f330e217",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54457e7d_41605780",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-09T21:19:25Z",
+      "side": 1,
+      "message": "Good question and I don\u0027t have the answer. No longer applicable though since I\u0027m no longer calling GetModuleFileName() so I\u0027m gonna let it slide :)",
+      "parentUuid": "83db2a46_0fdb7e27",
+      "revId": "692634ea1ba91afe824fc352e5a630c3f330e217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
