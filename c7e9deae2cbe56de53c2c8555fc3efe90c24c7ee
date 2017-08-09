@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "264b1572_1404a458",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-09T16:56:29Z",
+      "side": 1,
+      "message": "Lumping these together looks reasonable to me.",
+      "parentUuid": "ef4f457d_528edbb3",
+      "range": {
+        "startLine": 330,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 48
+      },
+      "revId": "c7e9deae2cbe56de53c2c8555fc3efe90c24c7ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ed35ed6_3695210d",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_unittest.cc",
         "patchSetId": 3
