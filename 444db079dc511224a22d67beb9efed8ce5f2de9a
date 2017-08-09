@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fba1cc7c_c82acfa7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-09T16:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2e5fcdc_86f84894",
+      "range": {
+        "startLine": 67,
+        "startChar": 19,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db45352e_a0301784",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 15
@@ -69,6 +93,30 @@
       "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03bb029_912f7476",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-09T16:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db45352e_a0301784",
+      "range": {
+        "startLine": 89,
+        "startChar": 6,
+        "endLine": 89,
+        "endChar": 7
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "afd12766_e77b10a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-09T16:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79b8c0a0_efa6acfc",
+      "range": {
+        "startLine": 91,
+        "startChar": 52,
+        "endLine": 91,
+        "endChar": 53
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab5fc56_1ec30ba4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 15
@@ -115,6 +187,30 @@
       "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "157c7509_98674d1c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-09T16:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab5fc56_1ec30ba4",
+      "range": {
+        "startLine": 156,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 30
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "b448f43a_ef054571",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-09T16:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6233e55_5f28ae56",
+      "range": {
+        "startLine": 392,
+        "startChar": 29,
+        "endLine": 392,
+        "endChar": 47
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c64ade_a29d5dde",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 15
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "31a3d8f0_bd52859a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-09T16:13:06Z",
+      "side": 1,
+      "message": "popWebappInfo() is a good name. I think we need to keep the behavior. If we don\u0027t remove the WebappInfo, we may have it in memory forever in some case. Re-creating the WebappInfo is acceptable.",
+      "parentUuid": "97c64ade_a29d5dde",
+      "range": {
+        "startLine": 393,
+        "startChar": 37,
+        "endLine": 393,
+        "endChar": 43
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51860bff_a204b339",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 15
@@ -184,6 +328,30 @@
       "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad4fe31_e4e9bce5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-09T16:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51860bff_a204b339",
+      "range": {
+        "startLine": 628,
+        "startChar": 8,
+        "endLine": 628,
+        "endChar": 29
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -234,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "d01dc27d_748970b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-09T16:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed41828a_a830f44a",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 29
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22632911_eedd226a",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
         "patchSetId": 15
@@ -257,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "a6b12171_d47d1960",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-09T16:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22632911_eedd226a",
+      "range": {
+        "startLine": 276,
+        "startChar": 76,
+        "endLine": 276,
+        "endChar": 84
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8b1a4b8_851af4bc",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
         "patchSetId": 15
@@ -271,6 +487,24 @@
       "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb033a39_4f76dd47",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-09T16:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8b1a4b8_851af4bc",
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
