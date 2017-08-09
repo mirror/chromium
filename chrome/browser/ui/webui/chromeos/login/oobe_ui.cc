@@ -8,7 +8,7 @@
 
 #include <memory>
 
-#include "ash/wm/screen_dimmer.h"
+#include "ash/shell.h"
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -303,7 +303,8 @@ OobeUI::OobeUI(content::WebUI* web_ui, const GURL& url)
 
   auto signin_screen_handler = base::MakeUnique<SigninScreenHandler>(
       network_state_informer_, error_screen, core_handler_,
-      GetView<GaiaScreenHandler>(), js_calls_container.get());
+      GetView<GaiaScreenHandler>(), js_calls_container.get(),
+      ash::Shell::Get()->wallpaper_controller());
   signin_screen_handler_ = signin_screen_handler.get();
   AddWebUIHandler(std::move(signin_screen_handler));
 
