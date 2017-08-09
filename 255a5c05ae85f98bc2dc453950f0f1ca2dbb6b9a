@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d3127dd_d9316e96",
+        "filename": "content/common/dom_storage/dom_storage_map_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-09T23:47:24Z",
+      "side": 1,
+      "message": "nit: {}\u0027s not needed here and on 128, kind of arbitrary. It\u0027s good to be consistent in a given file about whether {}\u0027s are used or not. Make them all match one way or the other.",
+      "revId": "255a5c05ae85f98bc2dc453950f0f1ca2dbb6b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
