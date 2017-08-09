@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ae0e118_566e4dd5",
+        "filename": "base/allocator/partition_allocator/page_allocator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-09T01:29:30Z",
+      "side": 1,
+      "message": "\"critical memory pressure\" is used in other meanings in the code base.\n\nShall we rename it to NearAddressSpaceOOMCallback?",
+      "revId": "6ef3b30491e6b35f7fb740e597d5e00f1faf7590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
