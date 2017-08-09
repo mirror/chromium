@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2a3bf0a_753e7403",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-09T19:12:22Z",
+      "side": 1,
+      "message": "use_xcode_clang is an ios-only thing, it\u0027s never set if is_mac. is_clang is always true for mac. current_cpu is always x64 for mac. so remove this var, and just check for is_mac in the line below.",
+      "range": {
+        "startLine": 213,
+        "startChar": 4,
+        "endLine": 213,
+        "endChar": 19
+      },
+      "revId": "fe9abace95d58c4aded22877b7342670dc298853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
