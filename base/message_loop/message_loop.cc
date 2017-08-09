@@ -99,14 +99,22 @@ MessageLoop::~MessageLoop() {
   // may be current.
   DCHECK((pump_ && current() == this) || (!pump_ && current() != this));
 
+  bool attaches_to_loop = false;
+#if defined(OS_IOS)
   // iOS just attaches to the loop, it doesn't Run it.
   // TODO(stuartmorgan): Consider wiring up a Detach().
-#if !defined(OS_IOS)
+  attaches_to_loop = true;
+#endif
+#if defined(OS_ANDROID)
+  // UI type loops on Android start the message loop but don't run it,
+  // equivalent to how iOS just 'attaches' to the loop.
+  attaches_to_loop = type_ == TYPE_JAVA;
+#endif
   // There should be no active RunLoops on this thread, unless this MessageLoop
   // isn't bound to the current thread (see other condition at the top of this
   // method).
-  DCHECK((!pump_ && current() != this) || !RunLoop::IsRunningOnCurrentThread());
-#endif
+  DCHECK((!pump_ && current() != this) ||
+         !RunLoop::IsRunningOnCurrentThread() || attaches_to_loop);
 
 #if defined(OS_WIN)
   if (in_high_res_mode_)

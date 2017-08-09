@@ -79,10 +79,13 @@ void JavaHandlerThread::StopThread(JNIEnv* env,
 
 void JavaHandlerThread::StartMessageLoop() {
   static_cast<MessageLoopForUI*>(message_loop_.get())->Start();
+  Init();
 }
 
 void JavaHandlerThread::StopMessageLoop() {
   base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  message_loop_ = nullptr;
+  CleanUp();
 }
 
 } // namespace android

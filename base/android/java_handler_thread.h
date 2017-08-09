@@ -49,6 +49,12 @@ class BASE_EXPORT JavaHandlerThread {
   virtual void StopMessageLoop();
 
  protected:
+  // Called just prior to running the message loop.
+  virtual void Init() {}
+
+  // Called just after the message loop ends.
+  virtual void CleanUp() {}
+
   std::unique_ptr<base::MessageLoop> message_loop_;
 
  private:
