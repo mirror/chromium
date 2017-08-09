@@ -25,13 +25,6 @@
 -ProcessMemoryDumpTest.CountResidentBytes
 -ProcessMemoryDumpTest.CountResidentBytesInSharedMemory
 -ProcessMemoryDumpTest.TakeAllDumpsFrom
--ProcessTest.Terminate
--ProcessTest.TerminateCurrentProcessImmediatelyWithNonZeroExitCode
--ProcessTest.TerminateCurrentProcessImmediatelyWithZeroExitCode
--ProcessTest.WaitForExitWithTimeout
--ProcessUtilTest.GetTerminationStatusCrash
--ProcessUtilTest.GetTerminationStatusSigKill
--ProcessUtilTest.GetTerminationStatusSigTerm
 -SysInfoTest.AmountOfFreeDiskSpace
 -SysInfoTest.AmountOfMem
 -SysInfoTest.AmountOfTotalDiskSpace
@@ -39,6 +32,17 @@
 
 # CancelableSyncSocket tests fail: https://crbug.com/741783
 -CancelableSyncSocket*
+
+# These tests all rely on being able to set the exit code of an externally
+# terminated process, which mx_task_kill() does not support.
+# https://crbug.com/753490.
+-ProcessTest.Terminate
+-ProcessTest.TerminateCurrentProcessImmediatelyWithNonZeroExitCode
+-ProcessTest.TerminateCurrentProcessImmediatelyWithZeroExitCode
+-ProcessTest.WaitForExitWithTimeout
+-ProcessUtilTest.GetTerminationStatusCrash
+-ProcessUtilTest.GetTerminationStatusSigKill
+-ProcessUtilTest.GetTerminationStatusSigTerm
 
 # These tests are occasionally flaking. See https://crbug.com/738275. Please be
 # pretty confident you've fixed their rarely-flakiness before re-enabling.
