@@ -5,6 +5,7 @@
 #include "modules/background_fetch/BackgroundFetchBridge.h"
 
 #include <utility>
+#include "core/workers/WorkerThread.h"
 #include "modules/background_fetch/BackgroundFetchOptions.h"
 #include "modules/background_fetch/BackgroundFetchRegistration.h"
 #include "modules/background_fetch/BackgroundFetchTypeConverters.h"
@@ -110,8 +111,11 @@ SecurityOrigin* BackgroundFetchBridge::GetSecurityOrigin() {
 
 mojom::blink::BackgroundFetchServicePtr& BackgroundFetchBridge::GetService() {
   if (!background_fetch_service_) {
-    Platform::Current()->GetInterfaceProvider()->GetInterface(
-        mojo::MakeRequest(&background_fetch_service_));
+    GetSupplementable()
+        ->GetExecutionContext()
+        ->GetThread()
+        ->GetInterfaceProvider()
+        .GetInterface(mojo::MakeRequest(&background_fetch_service_));
   }
   return background_fetch_service_;
 }

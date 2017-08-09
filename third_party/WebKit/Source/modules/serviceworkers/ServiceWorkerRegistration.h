@@ -11,6 +11,7 @@
 #include "core/events/EventTarget.h"
 #include "modules/serviceworkers/NavigationPreloadManager.h"
 #include "modules/serviceworkers/ServiceWorker.h"
+#include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
 #include "modules/serviceworkers/ServiceWorkerRegistration.h"
 #include "platform/Supplementable.h"
 #include "platform/bindings/ActiveScriptWrappable.h"
@@ -48,8 +49,9 @@ class ServiceWorkerRegistration final
 
   // EventTarget overrides.
   const AtomicString& InterfaceName() const override;
-  ExecutionContext* GetExecutionContext() const override {
-    return ContextLifecycleObserver::GetExecutionContext();
+  ServiceWorkerGlobalScope* GetExecutionContext() const override {
+    return ToServiceWorkerGlobalScope(
+        ContextLifecycleObserver::GetExecutionContext());
   }
 
   // WebServiceWorkerRegistrationProxy overrides.

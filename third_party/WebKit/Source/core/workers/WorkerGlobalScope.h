@@ -123,6 +123,8 @@ class CORE_EXPORT WorkerGlobalScope
   bool IsWorkerGlobalScope() const final { return true; }
   bool IsContextThread() const final;
   String UserAgent() const final { return user_agent_; }
+  // Needed to disambiguate between ActiveScriptWrappable and ExecutionContext.
+  using ExecutionContext::IsContextDestroyed;
 
   DOMTimerCoordinator* Timers() final { return &timers_; }
   SecurityContext& GetSecurityContext() final { return *this; }

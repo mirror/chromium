@@ -67,6 +67,7 @@ ServiceWorkerRegistration* ServiceWorkerRegistration::GetOrCreate(
     ExecutionContext* execution_context,
     std::unique_ptr<WebServiceWorkerRegistration::Handle> handle) {
   DCHECK(handle);
+  DCHECK(execution_context->IsServiceWorkerGlobalScope());
 
   ServiceWorkerRegistration* existing_registration =
       static_cast<ServiceWorkerRegistration*>(handle->Registration()->Proxy());
