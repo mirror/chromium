@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a420712_e944e989",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-09T08:47:15Z",
+      "side": 1,
+      "message": "Let\u0027s use simpler DCHECKs\n\nif (paint_range_.StartLayoutObject() \u003d\u003d paint_range_.EndLayoutObject) {\n  DCHECK_EQ(paint_range_.StartLayoutObject()-\u003eGetSelectionState(), SelectionState::kStartAndEnd);\n} else {\n  DCHECK_EQ(paint_range_.StartLayoutObject()-\u003eGetSelectionState(), SelectionState::kStart);\n  DCHECK_EQ(paint_range_.EndLayoutObject()-\u003eGetSelectionState(), SelectionState::kEnd);\n}",
+      "revId": "2fddadc9cb8a24d0801d5cf29c82b5abbeaf24c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
