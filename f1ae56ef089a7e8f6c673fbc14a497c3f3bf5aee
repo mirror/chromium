@@ -244,6 +244,24 @@
       "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9329c09f_9bd4d663",
+        "filename": "third_party/WebKit/public/platform/WebCrossOriginAccessControl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T03:36:31Z",
+      "side": 1,
+      "message": "Nice. CORS is well known and used in the spec. We don\u0027t need to preserve CrossOriginAccessControl.",
+      "parentUuid": "fb5440c0_ea19cb1c",
+      "revId": "f1ae56ef089a7e8f6c673fbc14a497c3f3bf5aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
