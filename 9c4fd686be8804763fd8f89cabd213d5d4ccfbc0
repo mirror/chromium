@@ -34,6 +34,24 @@
       "revId": "9c4fd686be8804763fd8f89cabd213d5d4ccfbc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9649fa3_c933b1e1",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-08-09T09:07:52Z",
+      "side": 1,
+      "message": "I understood the current situation via offline discussion. The comment seems enough. Thanks.",
+      "parentUuid": "008a921c_ce9e6507",
+      "revId": "9c4fd686be8804763fd8f89cabd213d5d4ccfbc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
