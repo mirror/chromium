@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23c8eedf_a26ae111",
+        "filename": "chrome/app/vector_icons/autologin.icon",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-09T15:56:34Z",
+      "side": 1,
+      "message": "since this is derived from a go/icons icon, please name it after the source (vpn_key.icon). Also it\u0027s more idiomatic to use the 48x48 svg as the source.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 17
+      },
+      "revId": "57b7e5fa3131b8ebd452acccbdc68b994304e628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
