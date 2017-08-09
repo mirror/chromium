@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b9645fa_81eae186",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-09T19:43:58Z",
+      "side": 1,
+      "message": "Of course :D I added this later to the logic, and in rush.",
+      "parentUuid": "8696cacb_b5525d0b",
+      "range": {
+        "startLine": 121,
+        "startChar": 13,
+        "endLine": 124,
+        "endChar": 63
+      },
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba4c25a4_047a859f",
         "filename": "components/autofill/core/browser/address_validation_util.cc",
         "patchSetId": 26
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-09T15:57:26Z",
       "side": 1,
       "message": "I don\u0027t understand this comment... where is MISSING_REQUIRED_FIELD set for example?",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 48
+      },
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18946738_1a69ab86",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-09T19:43:58Z",
+      "side": 1,
+      "message": "Even if rules are not loaded, ValidateAddress would call addressinput::ValidateRequiredFields:https://cs.chromium.org/chromium/src/third_party/libaddressinput/chromium/addressinput_util.cc?dr\u003dC\u0026l\u003d70",
+      "parentUuid": "ba4c25a4_047a859f",
       "range": {
         "startLine": 132,
         "startChar": 4,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "623435e3_5e429970",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-09T19:43:58Z",
+      "side": 1,
+      "message": "The second item in the pair is a vector. Does your statement hold for this case too?",
+      "parentUuid": "be15a201_763836e1",
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "738262bc_62e3a9f9",
         "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
         "patchSetId": 26
@@ -76,6 +142,24 @@
       "writtenOn": "2017-08-09T17:20:27Z",
       "side": 1,
       "message": "does it indicate something has gone wrong if you get a result for an unexpected region_code?",
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b6a66a_62f80fa7",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-09T19:43:58Z",
+      "side": 1,
+      "message": "I don\u0027t think so. According to my understanding, one reason could be a retry by AddressValidator::RulesLoaded. The other is when we call LoadRules for the same country code more than once. By calling AreRulesLoadedForRegion (of that country) for the first time, we handle all the requests at once, and then erase them all. The next call to AreRulesLoadedForRegion would be useless, and will cause it \u003d\u003d pending_requests_.end().",
+      "parentUuid": "738262bc_62e3a9f9",
       "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -96,6 +180,24 @@
       "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b2d6b0_dad81e3a",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-09T19:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8a50375_37f757ee",
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "bafcb54f_32e273a8",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-09T19:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d86d5b2_17687748",
+      "range": {
+        "startLine": 56,
+        "startChar": 23,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbe98571_77a8ba47",
         "filename": "components/autofill/core/browser/autofill_profile_validator.h",
         "patchSetId": 26
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "db689d46_3bc7d895",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-09T19:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbe98571_77a8ba47",
+      "range": {
+        "startLine": 64,
+        "startChar": 61,
+        "endLine": 64,
+        "endChar": 64
+      },
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a5298f5_6fd0df86",
         "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
         "patchSetId": 26
@@ -165,6 +315,30 @@
       "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf3d070_ae4bfdaa",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-09T19:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a5298f5_6fd0df86",
+      "range": {
+        "startLine": 145,
+        "startChar": 58,
+        "endLine": 145,
+        "endChar": 80
+      },
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
