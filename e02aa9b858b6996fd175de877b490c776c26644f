@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "625c04ab_228a08ba",
+        "filename": "chrome/browser/android/preferences/website_preference_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-09T01:10:11Z",
+      "side": 1,
+      "message": "It is probably OK as-is due to the way everything works, but I think for sanity you should add to seen_origins here and around line 191.",
+      "revId": "e02aa9b858b6996fd175de877b490c776c26644f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b658eea0_6f9165a9",
+        "filename": "chrome/browser/android/search_geolocation/search_geolocation_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-09T01:10:11Z",
+      "side": 1,
+      "message": "s/invalid/unique/",
+      "revId": "e02aa9b858b6996fd175de877b490c776c26644f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
