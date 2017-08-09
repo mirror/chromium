@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10e9e948_970a2f66",
+        "filename": "android_webview/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-09T01:02:32Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "fc21f98d2f9c8144cbd1a243cff997056c4caf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "701848ae_ea9a1013",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-09T01:02:32Z",
+      "side": 1,
+      "message": "Do you need to check tokens [0] and [1] for validity (length, format)?",
+      "revId": "fc21f98d2f9c8144cbd1a243cff997056c4caf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf43471_7ba4ad0c",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-09T01:02:32Z",
+      "side": 1,
+      "message": "Nit: put the lode from line 183 to 203 into a separate method, e.g. CreateLocalState() ?",
+      "revId": "fc21f98d2f9c8144cbd1a243cff997056c4caf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a65dd8_4c30ec1c",
+        "filename": "android_webview/browser/aw_browser_main_parts.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-09T01:02:32Z",
+      "side": 1,
+      "message": "Is it used now?",
+      "revId": "fc21f98d2f9c8144cbd1a243cff997056c4caf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
