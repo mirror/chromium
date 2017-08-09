@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68351d8d_6f400044",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-list-items-in-table-cell.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-09T01:08:11Z",
+      "side": 1,
+      "message": "Optional: We can omit \u003d\"true\". just write \u003cdiv contenteditable\u003e",
+      "revId": "e2494b65263d34ac42fb39cae3f624474557aaba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
