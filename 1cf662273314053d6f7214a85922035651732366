@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4d3abdc7_552f00c0",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T20:03:41Z",
+      "side": 1,
+      "message": "Sorry, to AnswerCardSearchProviderTest fields.\n\nWhile it\u0027s prohibited to have global complex objects, having complex fields in classes is OK.\n\nThe example would be creating a field const base::string16 cat_query_ in AnswerCardSearchProviderTest.",
+      "parentUuid": "100cb2d3_9de8f6aa",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 20
+      },
+      "revId": "1cf662273314053d6f7214a85922035651732366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2314cf60_86850b7c",
         "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
         "patchSetId": 3
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "I would prefer reduce using of the same string constants and just use one constexpr char k...",
       "parentUuid": "91e6a305_ac55f13b",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 75
+      },
+      "revId": "1cf662273314053d6f7214a85922035651732366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894c12b9_7b3bca1c",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T20:03:41Z",
+      "side": 1,
+      "message": "What\u0027s the status of this note? I seriously feel that this would make tests worse. Some reviewers use \u0027nit\u0027 to indicate optional comments. It this request optional as well?",
+      "parentUuid": "28d081f2_562a462a",
       "range": {
         "startLine": 234,
         "startChar": 0,
