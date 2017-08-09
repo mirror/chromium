@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "809d016c_a572fd8d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T23:22:23Z",
+      "side": 1,
+      "message": "Thanks for the input! I didn\u0027t change it much, but is it all right now?",
+      "parentUuid": "51daeb0e_70fe96ab",
+      "range": {
+        "startLine": 7,
+        "startChar": 23,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "79026f32cc78a439d7d46668dcc2bc9e3dd5b15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08de3728_66e84039",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-star.htm",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "79026f32cc78a439d7d46668dcc2bc9e3dd5b15d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9846a269_93c232e7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-star.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T23:22:23Z",
+      "side": 1,
+      "message": "Thanks! I\u0027ve made the change.",
+      "parentUuid": "08de3728_66e84039",
+      "revId": "79026f32cc78a439d7d46668dcc2bc9e3dd5b15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
