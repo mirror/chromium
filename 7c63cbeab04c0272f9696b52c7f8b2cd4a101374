@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85cc7772_9e9d0164",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-09T07:18:46Z",
+      "side": 1,
+      "message": "Could you explain more why \u0027k\u0027 is the point.",
+      "revId": "7c63cbeab04c0272f9696b52c7f8b2cd4a101374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
