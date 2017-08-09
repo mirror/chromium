@@ -10,6 +10,7 @@
 #include "components/strings/grit/components_strings.h"
 #include "components/toolbar/toolbar_model.h"
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
+#import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/ntp/google_landing_data_source.h"
 #import "ios/chrome/browser/ui/rtl_geometry.h"
@@ -149,6 +150,10 @@ enum {
     SetA11yLabelAndUiAutomationName(_backButton, IDS_ACCNAME_BACK, @"Back");
     SetA11yLabelAndUiAutomationName(_forwardButton, IDS_ACCNAME_FORWARD,
                                     @"Forward");
+
+    [[self stackButton] addTarget:dispatcher
+                           action:@selector(displayTabSwitcher)
+                 forControlEvents:UIControlEventTouchDown];
   }
   return self;
 }
