@@ -12,6 +12,8 @@
 
 // Text displayed on the badge.
 @property(nonatomic, copy) NSString* text;
+// The margin between the sides of the label and the badge.
+@property(nonatomic, assign) CGFloat labelHorizontalMargin;
 
 // Initialize the text badge with the given display text.
 - (instancetype)initWithText:(NSString*)text NS_DESIGNATED_INITIALIZER;
