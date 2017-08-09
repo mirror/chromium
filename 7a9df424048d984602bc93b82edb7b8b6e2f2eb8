@@ -187,6 +187,30 @@
       "revId": "7a9df424048d984602bc93b82edb7b8b6e2f2eb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cd348f3_7c68dc49",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-09T05:55:55Z",
+      "side": 1,
+      "message": "Sorry, I\u0027ve misunderstood that LONG_TAP can be dispatched after LONG_PRESS. But it wasn\u0027t the case. Got it. Thank you!",
+      "parentUuid": "e5e98693_7809f8bf",
+      "range": {
+        "startLine": 338,
+        "startChar": 4,
+        "endLine": 338,
+        "endChar": 60
+      },
+      "revId": "7a9df424048d984602bc93b82edb7b8b6e2f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
