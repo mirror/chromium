@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d6c16e6_fc0f145d",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notification_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-09T09:05:15Z",
+      "side": 1,
+      "message": "This line has a double negative. I think it would be easier to read as kEnableAutoOptOutDefault \u003d true. Generally, boolean variables should be named positively to avoid such double negatives. I see that Chris specifically asked for this. I disagree, and actually feel somewhat strongly about it. However, I could not find any great references in a style guide or something like that. Just this public page, which is not authoritative but might help provide additional context: https://derickbailey.com/2014/03/27/double-negatives-in-code-dont-not-avoid-double-negative-boolean-logic/",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "8b002dde8b11ee4b222d105b6e6d19680c85f499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
