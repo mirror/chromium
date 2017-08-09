@@ -264,7 +264,7 @@
 - (CGFloat)pinnedOffsetY {
   CGFloat headerHeight = content_suggestions::heightForLogoHeader(
       self.headerViewController.logoIsShowing,
-      [self.suggestionsMediator notificationPromo]->CanShow());
+      [self.suggestionsMediator notificationPromo]->CanShow(), NO);
   CGFloat offsetY =
       headerHeight - ntp_header::kScrolledToTopOmniboxBottomMargin;
   if (!IsIPadIdiom())
@@ -280,7 +280,7 @@
 - (CGFloat)headerHeight {
   return content_suggestions::heightForLogoHeader(
       self.headerViewController.logoIsShowing,
-      [self.suggestionsMediator notificationPromo]->CanShow());
+      [self.suggestionsMediator notificationPromo]->CanShow(), NO);
 }
 
 #pragma mark - ContentSuggestionsViewControllerAudience
