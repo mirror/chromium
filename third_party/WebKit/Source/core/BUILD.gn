@@ -228,6 +228,7 @@ component("core") {
     # This is fixed in MSVC2017.
     configs -= [ "//build/config/win:default_incremental_linking" ]
     configs += [ "//build/config/win:no_incremental_linking" ]
+    ldflags = [ "/redundancyReport:foo" ]
   }
 
   public_configs = [ ":core_include_dirs" ]
