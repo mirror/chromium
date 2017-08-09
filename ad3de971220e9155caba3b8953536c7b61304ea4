@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "f2d742ed_7bf3e1f3",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-09T00:14:45Z",
+      "side": 1,
+      "message": "lgtm",
+      "parentUuid": "bd00bbbe_d3fb5d24",
+      "range": {
+        "startLine": 296,
+        "startChar": 49,
+        "endLine": 297,
+        "endChar": 22
+      },
+      "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "708771a2_b10baf18",
         "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
         "patchSetId": 3
@@ -366,6 +390,30 @@
       "side": 1,
       "message": "I *think* we\u0027re ok here.\n\nWhen a printer transitions from discovered or automatic to configured, it should do so via an UpdateConfiguredPrinter call using the existing detector-sourced Printer structure.  This means we\u0027ll have an id assigned for that printer, and it should be the same as the id that was assigned by the detector (assuming detector-generated ids are stable, which they should be).\n\nDoes that sound sane?  I could be missing something.",
       "parentUuid": "708771a2_b10baf18",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 360,
+        "endChar": 78
+      },
+      "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70d32a9_afbb8047",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-09T00:14:45Z",
+      "side": 1,
+      "message": "Your comment is correct but it does not accurately describe the behavior in the test.  The test does\u0027t call  UpdateConfiguredPrinter, there\u0027s a different test that does.  But it suggests that a printer id showing up in two different sets is de-duplicated.  However, when a printer is detected, it\u0027ll be assigned a unique id so it won\u0027t match any existing printers.  Even if it\u0027s a printer that we\u0027ve seen before.",
+      "parentUuid": "66b25ac4_38a58c73",
       "range": {
         "startLine": 359,
         "startChar": 0,
