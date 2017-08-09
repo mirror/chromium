@@ -4,10 +4,10 @@
 
 #import "ios/clean/chrome/browser/ui/ntp/ntp_home_coordinator.h"
 
+#import "ios/chrome/browser/ui/browser_list/browser.h"
 #import "ios/chrome/browser/ui/ntp/google_landing_mediator.h"
 #import "ios/chrome/browser/ui/ntp/google_landing_view_controller.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_home_mediator.h"
-#import "ios/shared/chrome/browser/ui/browser_list/browser.h"
 #import "ios/shared/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/shared/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 
