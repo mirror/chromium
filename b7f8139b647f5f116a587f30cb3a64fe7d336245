@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e1c1c37_68610a84",
+        "filename": "ash/display/window_tree_host_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-09T00:04:26Z",
+      "side": 0,
+      "message": "Yow, apparently we had the const_casts in production...",
+      "range": {
+        "startLine": 647,
+        "startChar": 11,
+        "endLine": 647,
+        "endChar": 35
+      },
+      "revId": "b7f8139b647f5f116a587f30cb3a64fe7d336245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
