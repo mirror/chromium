@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ee21630f_62b0b8a5",
+        "filename": "net/test/android/javatests/src/org/chromium/net/test/EmbeddedTestServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-09T16:13:52Z",
+      "side": 1,
+      "message": "Done, but only for this public method; I then translated it into a boolean to pass into EmbeddedTestServerImpl because there\u0027s no nice place to define an enum that can be shared about ETS, ETSImpl, and IETSImpl, AFAICT. (Personally I\u0027m fine with having bools instead of enums for private methods anyway.)",
+      "parentUuid": "876189bb_0c4a17e9",
+      "range": {
+        "startLine": 134,
+        "startChar": 58,
+        "endLine": 134,
+        "endChar": 63
+      },
+      "revId": "b98a188fc7264d4f71568c053c78fa0d51458d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7813f78_f6386d65",
         "filename": "net/test/android/javatests/src/org/chromium/net/test/EmbeddedTestServer.java",
         "patchSetId": 9
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7e792f31_6fec14d9",
+        "filename": "net/test/android/javatests/src/org/chromium/net/test/EmbeddedTestServer.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-09T16:13:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7813f78_f6386d65",
+      "revId": "b98a188fc7264d4f71568c053c78fa0d51458d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6ac6d91_264605a7",
         "filename": "net/test/embedded_test_server/embedded_test_server.cc",
         "patchSetId": 9
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-08T17:49:46Z",
       "side": 1,
       "message": "nit: Should this be an assertion instead?",
+      "range": {
+        "startLine": 60,
+        "startChar": 74,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "b98a188fc7264d4f71568c053c78fa0d51458d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04afd82_d4b22b96",
+        "filename": "net/test/embedded_test_server/embedded_test_server.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-09T16:13:52Z",
+      "side": 1,
+      "message": "Changed to a DCHECK, looks like that\u0027s the existing convention in this file.",
+      "parentUuid": "d6ac6d91_264605a7",
       "range": {
         "startLine": 60,
         "startChar": 74,
@@ -85,6 +151,30 @@
       "revId": "b98a188fc7264d4f71568c053c78fa0d51458d63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53548ec6_13957ccb",
+        "filename": "net/test/embedded_test_server/embedded_test_server.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-09T16:13:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82d4c78f_a75cafbf",
+      "range": {
+        "startLine": 191,
+        "startChar": 51,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "b98a188fc7264d4f71568c053c78fa0d51458d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
