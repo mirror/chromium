@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2556a575_bac3d845",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T09:32:42Z",
+      "side": 1,
+      "message": "I guess I was thinking that ClipboardMonitor\u0027s change notification should note whether it\u0027s triggered by Chrome itself. This isn\u0027t really ARC++ specific and should be pretty easy to do just by throwing a scoper object on the stack in ~ScopedClipboardWriter or the like.",
+      "parentUuid": "52405a2d_87adc6b9",
+      "revId": "354542ac52fa39a1b61b700c1b2481ae6c06800e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7555b9d4_ec7083c1",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 15
