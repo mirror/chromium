@@ -2792,6 +2792,10 @@ const char kMultideviceName[] = "Enable multidevice features";
 const char kMultideviceDescription[] =
     "Enables UI for controlling multidevice features.";
 
+const char kMultideviceServiceName[] = "Enables multidevice service";
+const char kMultideviceServiceDescription[] =
+    "Enable service that manages syncing between multiple devices.";
+
 #endif  // defined(OS_CHROMEOS)
 
 }  // namespace flag_descriptions
