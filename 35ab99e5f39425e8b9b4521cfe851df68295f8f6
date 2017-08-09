@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d978510d_d1679cc5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-09T04:47:41Z",
+      "side": 1,
+      "message": "Summary line should be simple, e.g.\nFix bad type annotation in assert_selection.js",
+      "revId": "35ab99e5f39425e8b9b4521cfe851df68295f8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7c1528_0d286f37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-09T04:47:41Z",
+      "side": 1,
+      "message": "Description line should be wrapped in 80 chars.",
+      "revId": "35ab99e5f39425e8b9b4521cfe851df68295f8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeba24ff_ae4c98c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-09T04:47:41Z",
+      "side": 1,
+      "message": "Please remove a trailing whitespace.",
+      "revId": "35ab99e5f39425e8b9b4521cfe851df68295f8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4af3d4c_eb191498",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-09T04:47:41Z",
+      "side": 1,
+      "message": "nit: s/;//",
+      "revId": "35ab99e5f39425e8b9b4521cfe851df68295f8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a5ef4f_25d41227",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-09T04:47:41Z",
+      "side": 1,
+      "message": "nit: s/;//",
+      "revId": "35ab99e5f39425e8b9b4521cfe851df68295f8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f00c82_ea25910c",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-09T04:47:41Z",
+      "side": 1,
+      "message": "nit: s/;//\nnit: s/description/opt_description/",
+      "revId": "35ab99e5f39425e8b9b4521cfe851df68295f8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
