@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a89e2802_e412bcaf",
+        "filename": "content/child/blink_platform_impl.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-09T20:06:00Z",
+      "side": 1,
+      "message": "Why not call this GetBrowserServiceName? There is no NavigationService yet and it isn\u0027t clear how that will look in the future, so I\u0027d prefer if we avoid naming things on something that doesn\u0027t yet exist.",
+      "range": {
+        "startLine": 688,
+        "startChar": 31,
+        "endLine": 688,
+        "endChar": 55
+      },
+      "revId": "b1362513e0871de89cfdf4d4ad5d9900347884cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
