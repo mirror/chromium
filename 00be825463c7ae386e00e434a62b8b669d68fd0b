@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5fea3fce_0fe9a23a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-09T09:31:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c61eee39_def3fb43",
+      "range": {
+        "startLine": 74,
+        "startChar": 17,
+        "endLine": 74,
+        "endChar": 36
+      },
+      "revId": "00be825463c7ae386e00e434a62b8b669d68fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff714bbf_f83b3483",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "00be825463c7ae386e00e434a62b8b669d68fd0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010c85c2_d249a23b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-09T09:31:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff714bbf_f83b3483",
+      "range": {
+        "startLine": 81,
+        "startChar": 29,
+        "endLine": 81,
+        "endChar": 46
+      },
+      "revId": "00be825463c7ae386e00e434a62b8b669d68fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "7fed41c4_a03b6595",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-09T09:31:15Z",
+      "side": 1,
+      "message": "Yeah sorry, I forgot to actually make the change in the second test. \n\nI am not sure that setting the visibility to GONE will help here as the home page TileView will still be a child in the TileGridLayout and will still be moved to the first row.\n\nWhat I did: In the beginning of each test I make a tile at a specific position to be the home page for this test. That allows me to control which tile is a home page and I can play freely with different positions in the different tests.",
+      "parentUuid": "f535818d_092f05ca",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 66
+      },
+      "revId": "00be825463c7ae386e00e434a62b8b669d68fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ae61e40_d7a42c54",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
         "patchSetId": 4
@@ -109,6 +181,24 @@
       "revId": "00be825463c7ae386e00e434a62b8b669d68fd0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecf119a_89e65222",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-09T09:31:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ae61e40_d7a42c54",
+      "revId": "00be825463c7ae386e00e434a62b8b669d68fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -135,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "38959a79_8b68abad",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-09T09:31:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eed32f9_c29dbd86",
+      "range": {
+        "startLine": 118,
+        "startChar": 15,
+        "endLine": 118,
+        "endChar": 27
+      },
+      "revId": "00be825463c7ae386e00e434a62b8b669d68fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93ff9df7_411aea46",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
         "patchSetId": 4
@@ -152,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "026715f0_30c5d920",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-09T09:31:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93ff9df7_411aea46",
+      "revId": "00be825463c7ae386e00e434a62b8b669d68fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7e62728_a66c23c2",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
         "patchSetId": 4
@@ -166,6 +298,24 @@
       "revId": "00be825463c7ae386e00e434a62b8b669d68fd0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3520c2d_a7fb904c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-09T09:31:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7e62728_a66c23c2",
+      "revId": "00be825463c7ae386e00e434a62b8b669d68fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
