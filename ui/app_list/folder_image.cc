@@ -8,6 +8,7 @@
 
 #include "base/macros.h"
 #include "ui/app_list/app_list_constants.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_item.h"
 #include "ui/app_list/app_list_item_list.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -49,6 +50,8 @@ class FolderImageSource : public gfx::CanvasImageSource {
   // gfx::CanvasImageSource overrides:
   void Draw(gfx::Canvas* canvas) override;
 
+  SkColor GetBubbleSkColor();
+
   Icons icons_;
   gfx::Size size_;
 
@@ -84,7 +87,7 @@ void FolderImageSource::Draw(gfx::Canvas* canvas) {
   bubble_center.Offset(0, -kFolderBubbleOffsetY);
   flags.setStyle(cc::PaintFlags::kFill_Style);
   flags.setAntiAlias(true);
-  flags.setColor(kFolderBubbleColor);
+  flags.setColor(GetBubbleSkColor());
   canvas->sk_canvas()->drawCircle(bubble_center.x(), bubble_center.y(),
                                   kFolderBubbleRadius, flags);
 
@@ -99,6 +102,16 @@ void FolderImageSource::Draw(gfx::Canvas* canvas) {
   for (size_t i = 0; i < kNumFolderTopItems && i < icons_.size(); ++i) {
     DrawIcon(canvas, icons_[i], item_icon_size, top_icon_bounds[i].x(),
              top_icon_bounds[i].y());
+  }
+}
+
+SkColor FolderImageSource::GetBubbleSkColor() {
+  if (features::IsFullscreenAppListEnabled()) {
+    return SkColorSetARGB(
+        kFolderBubbleOpacity * SK_AlphaOPAQUE, SkColorGetR(kFolderBubbleColor),
+        SkColorGetG(kFolderBubbleColor), SkColorGetB(kFolderBubbleColor));
+  } else {
+    return kFolderBubbleColor;
   }
 }
 
