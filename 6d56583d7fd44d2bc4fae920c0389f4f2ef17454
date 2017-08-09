@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dfe32074_c2b00dc2",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-09T19:46:45Z",
+      "side": 1,
+      "message": "Done.  Nice spot, I also added std::move inside of HandleWriteError.",
+      "parentUuid": "de94d295_c6365cc5",
+      "range": {
+        "startLine": 1452,
+        "startChar": 20,
+        "endLine": 1452,
+        "endChar": 0
+      },
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef3c97f4_a4487329",
         "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e9a3d0a0_79f8926d",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-09T19:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef3c97f4_a4487329",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12a667fd_1df5419f",
         "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c987bb9_525d421e",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-09T19:46:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "12a667fd_1df5419f",
+      "range": {
+        "startLine": 27,
+        "startChar": 26,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "834f9995_709b24a5",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-09T19:46:45Z",
+      "side": 1,
+      "message": "Done,...if you actually meant class comments rather than CL description?",
+      "parentUuid": "7bb57e35_35a32693",
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db83d10a_3543fd3f",
         "filename": "net/quic/chromium/quic_chromium_packet_writer.h",
         "patchSetId": 4
@@ -131,6 +221,30 @@
       "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6613cfe0_3b38fdc4",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-09T19:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db83d10a_3543fd3f",
+      "range": {
+        "startLine": 25,
+        "startChar": 63,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "be15022f_fb841406",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-09T19:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "502e35a9_d66b9493",
+      "range": {
+        "startLine": 32,
+        "startChar": 49,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26fe4722_78c2f379",
         "filename": "net/quic/chromium/quic_chromium_packet_writer.h",
         "patchSetId": 4
@@ -177,6 +315,30 @@
       "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2405fd99_11539c19",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-09T19:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26fe4722_78c2f379",
+      "range": {
+        "startLine": 91,
+        "startChar": 5,
+        "endLine": 91,
+        "endChar": 11
+      },
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
