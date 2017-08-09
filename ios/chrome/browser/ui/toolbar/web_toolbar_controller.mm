@@ -676,6 +676,12 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   }
   [self.view setDelegate:self];
 
+  if (idiom == IPHONE_IDIOM) {
+    [[self stackButton] addTarget:dispatcher
+                           action:@selector(displayTabSwitcher)
+                 forControlEvents:UIControlEventTouchDown];
+  }
+
   return self;
 }
 
