@@ -450,6 +450,30 @@
     },
     {
       "key": {
+        "uuid": "583adee8_a5812577",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-09T15:57:14Z",
+      "side": 1,
+      "message": "Okay.  I\u0027ve taken a look at how ids are generated for USB printers.  Looks like they\u0027re MD5 sums of the various attributes we read from the device.  So, detected USB devices will generate a consistent id between two detentions.  So, this test is mostly fine as long as everything ends up in configured.\n\nApologies for forgetting how we do USB printer id assignment :/",
+      "parentUuid": "9a37fc31_5c15cc40",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 360,
+        "endChar": 78
+      },
+      "revId": "ad3de971220e9155caba3b8953536c7b61304ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c30d56e7_d01b6de9",
         "filename": "chrome/browser/chromeos/printing/cups_printers_manager_unittest.cc",
         "patchSetId": 3
