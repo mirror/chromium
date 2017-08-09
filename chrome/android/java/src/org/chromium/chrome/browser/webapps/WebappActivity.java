@@ -49,6 +49,7 @@ import org.chromium.net.NetworkChangeNotifier;
 import org.chromium.ui.base.PageTransition;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -63,12 +64,10 @@ public class WebappActivity extends SingleTabActivity {
     private static final int ENTER_IMMERSIVE_MODE_DELAY_MILLIS = 300;
     private static final int RESTORE_IMMERSIVE_MODE_DELAY_MILLIS = 3000;
     private static final int IMMERSIVE_MODE_UI_FLAGS = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
             | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-            | View.SYSTEM_UI_FLAG_LOW_PROFILE
-            | View.SYSTEM_UI_FLAG_IMMERSIVE;
+            | View.SYSTEM_UI_FLAG_LOW_PROFILE | View.SYSTEM_UI_FLAG_IMMERSIVE;
 
     private final WebappDirectoryManager mDirectoryManager;
 
@@ -86,6 +85,13 @@ public class WebappActivity extends SingleTabActivity {
     private Bitmap mLargestFavicon;
 
     private Runnable mSetImmersiveRunnable;
+
+    /** Initialization-on-demand holder. This exists for thread-safe lazy initialization. */
+    private static class Holder {
+        // We load WebappInfo from sWebappInfoMap to mWebappInfo, and use mWebappInfo after that.
+        private static final HashMap<String, WebappInfo> sWebappInfoMap =
+                new HashMap<String, WebappInfo>();
+    }
 
     /**
      * Construct all the variables that shouldn't change.  We do it here both to clarify when the
@@ -107,7 +113,9 @@ public class WebappActivity extends SingleTabActivity {
         if (intent == null) return;
         super.onNewIntent(intent);
 
-        WebappInfo newWebappInfo = createWebappInfo(intent);
+        WebappInfo newWebappInfo = retrieveWebappInfo(WebappInfo.idFromIntent(intent));
+        if (newWebappInfo == null) newWebappInfo = createWebappInfo(intent);
+
         if (newWebappInfo == null) {
             Log.e(TAG, "Failed to parse new Intent: " + intent);
             ApiCompatibilityUtils.finishAndRemoveTask(this);
@@ -143,13 +151,28 @@ public class WebappActivity extends SingleTabActivity {
 
     @Override
     public void preInflationStartup() {
-        WebappInfo info = createWebappInfo(getIntent());
+        Intent intent = getIntent();
+        WebappInfo info = retrieveWebappInfo(WebappInfo.idFromIntent(intent));
+        // When WebappActivity is killed by the Android OS, and an entry stays in "Android Recents"
+        // (The user does not swipe it away), when WebappActivity is relaunched it is relaunched
+        // with the intent stored in WebappActivity#getIntent() at the time that the WebappActivity
+        // was killed. WebappActivity may be relaunched from:
 
-        String id = "";
-        if (info != null) {
-            mWebappInfo = info;
-            id = info.id();
+        // (A) An intent from WebappLauncherActivity (e.g. as a result of a notification or a deep
+        // link). Android drops the intent from WebappLauncherActivity in favor of
+        // WebappActivity#getIntent() at the time that the WebappActivity was killed.
+
+        // (B) The user selecting the WebappActivity in recents. In case (A) we want to use the
+        // intent sent to WebappLauncherActivity and ignore WebappActivity#getSavedInstanceState().
+        // In case (B) we want to restore to saved tab state.
+        if (info == null) {
+            info = createWebappInfo(intent);
+        } else if (info.shouldForceNavigation()) {
+            // Don't restore to previous page, navigate using WebappInfo retrieved from cache.
+            resetSavedInstanceState();
         }
+
+        mWebappInfo = info;
 
         // Initialize the WebappRegistry and warm up the shared preferences for this web app. No-ops
         // if the registry and this web app are already initialized. Must override Strict Mode to
@@ -157,7 +180,7 @@ public class WebappActivity extends SingleTabActivity {
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
         try {
             WebappRegistry.getInstance();
-            WebappRegistry.warmUpSharedPrefsForId(id);
+            WebappRegistry.warmUpSharedPrefsForId(info.id());
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
         }
@@ -252,7 +275,6 @@ public class WebappActivity extends SingleTabActivity {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
 
         if (mSetImmersiveRunnable == null) {
-
             final View decor = getWindow().getDecorView();
 
             mSetImmersiveRunnable = new Runnable() {
@@ -361,6 +383,19 @@ public class WebappActivity extends SingleTabActivity {
      */
     public String getWebappScope() {
         return mWebappInfo.scopeUri().toString();
+    }
+
+    public static void addWebappInfo(String id, WebappInfo info) {
+        Holder.sWebappInfoMap.put(id, info);
+    }
+
+    public static WebappInfo retrieveWebappInfo(String id) {
+        return Holder.sWebappInfoMap.remove(id);
+    }
+
+    @VisibleForTesting
+    public static void clearWebappInfoMap() {
+        Holder.sWebappInfoMap.clear();
     }
 
     private void initializeWebappData() {
@@ -595,8 +630,8 @@ public class WebappActivity extends SingleTabActivity {
             statusBarColor = ColorUtils.getDarkenedColorForStatusBar(mBrandColor);
         }
 
-        ApiCompatibilityUtils.setTaskDescription(this, title, icon,
-                ColorUtils.getOpaqueColor(taskDescriptionColor));
+        ApiCompatibilityUtils.setTaskDescription(
+                this, title, icon, ColorUtils.getOpaqueColor(taskDescriptionColor));
         ApiCompatibilityUtils.setStatusBarColor(getWindow(), statusBarColor);
     }
 

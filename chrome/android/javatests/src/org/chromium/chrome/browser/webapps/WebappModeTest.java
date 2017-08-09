@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 import android.view.View;
@@ -141,6 +142,7 @@ public class WebappModeTest {
 
     @After
     public void tearDown() throws Exception {
+        WebappActivity.clearWebappInfoMap();
         mTestServer.stopAndDestroyServer();
     }
 
@@ -271,6 +273,25 @@ public class WebappModeTest {
         });
     }
 
+    /**
+     * Ensure WebappInfo instances are properly reused in WebappActivities. markmark
+     */
+    @Test
+    @MediumTest
+    @Feature({"Webapps"})
+    public void testWebappInfoReuse() throws Exception {
+        Intent intent = createIntent(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON, true);
+        String id = WebappInfo.idFromIntent(intent);
+        WebappActivity.addWebappInfo(id, WebappInfo.create(intent));
+
+        startWebappActivity(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON);
+
+        Activity lastActivity = ApplicationStatus.getLastTrackedFocusedActivity();
+        WebappActivity lastWebappActivity = (WebappActivity) lastActivity;
+        Uri expectUri = Uri.parse(WEBAPP_1_URL);
+        Assert.assertTrue(lastWebappActivity.getWebappInfo().uri().equals(expectUri));
+    }
+
     /** Test that on first launch {@link WebappDataStorage#hasBeenLaunched()} is set. */
     // Flaky even with RetryOnFailure: http://crbug.com/749375
     @DisabledTest
@@ -281,7 +302,7 @@ public class WebappModeTest {
         WebappDataStorage storage = WebappRegistry.getInstance().getWebappDataStorage(WEBAPP_1_ID);
         Assert.assertFalse(storage.hasBeenLaunched());
 
-        startWebappActivity(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON);
+        startWebappActivity(WEBAPP_1_ID, WEBAPP_2_URL, WEBAPP_1_TITLE, WEBAPP_ICON);
 
         // Use a longer timeout because the DeferredStartupHandler is called after the page has
         // finished loading.
