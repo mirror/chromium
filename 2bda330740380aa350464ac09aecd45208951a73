@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25be691b_7ebff7ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/printing/TabPrinter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-09T09:07:37Z",
+      "side": 1,
+      "message": "nit: does using an assert work to tell find bugs that we know it\u0027s ok? It has the benefit of being more specific than muting a warning for the whole function, which can be problematic if we make it more complex later.",
+      "range": {
+        "startLine": 38,
+        "startChar": 25,
+        "endLine": 38,
+        "endChar": 63
+      },
+      "revId": "2bda330740380aa350464ac09aecd45208951a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7dd4335_cc3e5c52",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-09T09:07:37Z",
+      "side": 1,
+      "message": "nit: Repeating checks like that is not ideal... how about tracking a boolean to know if we should return early? like:\n\nboolean canStartPrint;\nif (mIsBusy) {\n   canStartPrint \u003d false\n   log...\n} else if {\n  ... \n} else {\n   canStartPrint \u003d true\n}\n\nif (!canStartPrint) { ... return;}",
+      "range": {
+        "startLine": 191,
+        "startChar": 49,
+        "endLine": 191,
+        "endChar": 59
+      },
+      "revId": "2bda330740380aa350464ac09aecd45208951a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3080883_289e0b41",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-09T09:07:37Z",
+      "side": 1,
+      "message": "nittiest nit: \"can\u0027t\" in the first part of the log and \"can not\" in the second? consistency please? :D",
+      "range": {
+        "startLine": 197,
+        "startChar": 74,
+        "endLine": 197,
+        "endChar": 77
+      },
+      "revId": "2bda330740380aa350464ac09aecd45208951a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
