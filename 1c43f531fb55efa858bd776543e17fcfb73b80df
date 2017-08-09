@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f2940b0_5d27007e",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-09T01:07:11Z",
+      "side": 1,
+      "message": "A bit of a design suggestion. Can we make set_paint_image_generator return *this like the rest of the setters. Can we also not create a cached_sk_image_ here? The intent of this api is to create a PaintImage. If required, we can add a PaintImage::uniqueImageId() or simply PaintImage-\u003eGetSkImage()-\u003euniqueID() for this, which would naturally create the cached shader.",
+      "revId": "1c43f531fb55efa858bd776543e17fcfb73b80df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
