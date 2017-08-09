@@ -822,6 +822,11 @@ void GpuDataManagerImplPrivate::AppendGpuCommandLine(
   }
 #endif
 
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableOOPRasterization)) {
+    command_line->AppendSwitch(switches::kEnableOOPRasterization);
+  }
+
   // Pass GPU and driver information to GPU process. We try to avoid full GPU
   // info collection at GPU process startup, but we need gpu vendor_id,
   // device_id, driver_vendor, driver_version for deciding whether we need to
