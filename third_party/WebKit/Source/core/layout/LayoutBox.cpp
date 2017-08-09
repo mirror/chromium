@@ -488,6 +488,10 @@ void LayoutBox::UpdateLayout() {
   DCHECK(NeedsLayout());
   LayoutAnalyzer::Scope analyzer(*this);
 
+  LayoutState* layout_state = View()->GetLayoutState();
+  LOG(INFO) << DebugName() << ": "
+            << (layout_state ? layout_state->NearestAncestorOverflow()
+                             : nullptr);
   LayoutObject* child = SlowFirstChild();
   if (!child) {
     ClearNeedsLayout();

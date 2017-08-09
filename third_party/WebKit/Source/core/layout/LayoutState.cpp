@@ -37,7 +37,8 @@ LayoutState::LayoutState(LayoutView& view)
       pagination_state_changed_(false),
       flow_thread_(nullptr),
       next_(nullptr),
-      layout_object_(view) {
+      layout_object_(view),
+      nearest_ancestor_overflow_(nullptr) {
   DCHECK(!view.GetLayoutState());
   view.PushLayoutState(*this);
 }
@@ -54,6 +55,10 @@ LayoutState::LayoutState(LayoutBox& layout_object,
     flow_thread_ = next_->FlowThread();
   pagination_state_changed_ = next_->pagination_state_changed_;
   height_offset_for_table_headers_ = next_->HeightOffsetForTableHeaders();
+  if (layout_object.GetScrollableArea())
+    nearest_ancestor_overflow_ = &layout_object;
+  else
+    nearest_ancestor_overflow_ = next_->NearestAncestorOverflow();
   layout_object.View()->PushLayoutState(*this);
 
   if (layout_object.IsLayoutFlowThread()) {
