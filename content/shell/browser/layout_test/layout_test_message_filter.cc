@@ -118,7 +118,15 @@ void LayoutTestMessageFilter::OnClearAllDatabases() {
 }
 
 void LayoutTestMessageFilter::OnSetDatabaseQuota(int quota) {
-  quota_manager_->SetQuotaSettings(storage::GetHardCodedSettings(quota));
+  if (quota < 0) {
+    // Reset quota to settings with a zero refresh interval to force
+    // QuotaManager to refresh settings immediately.
+    storage::QuotaSettings default_settings;
+    default_settings.refresh_interval = base::TimeDelta();
+    quota_manager_->SetQuotaSettings(default_settings);
+  } else {
+    quota_manager_->SetQuotaSettings(storage::GetHardCodedSettings(quota));
+  }
 }
 
 void LayoutTestMessageFilter::OnSimulateWebNotificationClick(
