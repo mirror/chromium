@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7816774_ce435400",
+        "filename": "ui/webui/resources/cr_elements/cr_tooltip_icon/cr_tooltip_icon.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-09T22:08:48Z",
+      "side": 1,
+      "message": "Could this sort to line 4?",
+      "revId": "0ed8ee64628aa68161e427701f61fd0336c0e38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdabdc0d_75e4b883",
+        "filename": "ui/webui/resources/cr_elements/cr_tooltip_icon/cr_tooltip_icon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-09T22:08:48Z",
+      "side": 1,
+      "message": "WDYT of adding properties for iconAriaLabel, etc. to at least define types?",
+      "revId": "0ed8ee64628aa68161e427701f61fd0336c0e38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d228b024_2e654f1b",
+        "filename": "ui/webui/resources/cr_elements/policy/cr_policy_indicator.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-09T22:08:48Z",
+      "side": 1,
+      "message": "nit: move to line 9",
+      "revId": "0ed8ee64628aa68161e427701f61fd0336c0e38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0389fec_ace30d93",
+        "filename": "ui/webui/resources/cr_elements/policy/cr_policy_network_indicator.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-09T22:08:48Z",
+      "side": 1,
+      "message": "Just curious that the other files in this CL have\nicon-aria-label\u003d\"[[iconAriaLabel]]\"\nand this doesn\u0027t. Is that okay?",
+      "revId": "0ed8ee64628aa68161e427701f61fd0336c0e38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
