@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03cda14e_f9b1bfa2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/FilterBuilder.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T20:44:30Z",
+      "side": 1,
+      "message": "This is just a code move, right? Should we put it under TextUtils instead?",
+      "revId": "4aeb1f19beeef5b5b645d80e99f1cc0274e50dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c20d066_56393703",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T20:44:30Z",
+      "side": 1,
+      "message": "If this succeeds, we should remove the text from this._filterTexts. This is to support\n\"abc /$[^x]*^/\" multi-text queries.",
+      "revId": "4aeb1f19beeef5b5b645d80e99f1cc0274e50dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6055f80_210af774",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T20:44:30Z",
+      "side": 1,
+      "message": "Remove \"else\". We should match both texts and regexes.",
+      "revId": "4aeb1f19beeef5b5b645d80e99f1cc0274e50dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43f8d17_b24a8470",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T20:44:30Z",
+      "side": 1,
+      "message": "Why toLowerCase? Should be exact match.",
+      "range": {
+        "startLine": 1191,
+        "startChar": 26,
+        "endLine": 1191,
+        "endChar": 37
+      },
+      "revId": "4aeb1f19beeef5b5b645d80e99f1cc0274e50dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7ac945_f0201d63",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T20:44:30Z",
+      "side": 1,
+      "message": "If the message does not have url, we should filter it out.",
+      "revId": "4aeb1f19beeef5b5b645d80e99f1cc0274e50dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
