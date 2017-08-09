@@ -32,7 +32,7 @@ class EmulationHandler : public DevToolsDomainHandler,
                                   Maybe<double> accuracy) override;
   Response ClearGeolocationOverride() override;
 
-  Response SetTouchEmulationEnabled(bool enabled,
+  Response SetEmulateTouchFromMouse(bool enabled,
                                     Maybe<std::string> configuration) override;
 
   Response CanEmulate(bool* result) override;
