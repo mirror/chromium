@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2741123_bf74e744",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-09T22:02:14Z",
+      "side": 1,
+      "message": "It looks like ChromeService is created for both a specific profile, and chrome wide. It seems like those should be two separate objects, with the profile specific variant liking taking a profile. Code like you have in Launchable (looking at the active profile) makes sense for the chrome wide variant, but not for the profile specific variant.",
+      "range": {
+        "startLine": 1123,
+        "startChar": 6,
+        "endLine": 1123,
+        "endChar": 32
+      },
+      "revId": "8d0da76205931036542f8d6f5941911c48a1b595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
