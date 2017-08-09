@@ -25,16 +25,35 @@ QUnit.module('ButterBar', {
         set: sinon.stub(),
       }
     };
+    this.currentMessage = '-1';
+    sinon.stub(remoting.Xhr.prototype, 'start', () => {
+      if (this.currentMessage === undefined) {
+        return Promise.resolve({text: undefined});
+      } else {
+        return Promise.resolve({
+          text: `{"index": ${this.currentMessage}, "url": "foo"}`,
+        });
+      }
+    });
+    this.now_ = 0;
+    sinon.stub(remoting.ButterBar, 'now_', () => {
+      return this.now_;
+    });
   },
   afterEach: function() {
-    if (this.clock) {
-      this.clock.restore();
-    }
+    remoting.ButterBar.now_.restore();
+    remoting.Xhr.prototype.start.restore();
   }
 });
 
+QUnit.test('should stay hidden if XHR fails', function(assert) {
+  return this.butterBar.init().then(() => {
+    this.currentMessage = undefined;
+    assert.ok(this.butterBar.root_.hidden == true);
+  });
+});
+
 QUnit.test('should stay hidden if index==-1', function(assert) {
-  this.butterBar.currentMessage_ = -1;
   return this.butterBar.init().then(() => {
     assert.ok(this.butterBar.root_.hidden == true);
   });
@@ -42,7 +61,7 @@ QUnit.test('should stay hidden if index==-1', function(assert) {
 
 QUnit.test('should be shown, yellow and dismissable if index==0',
            function(assert) {
-  this.butterBar.currentMessage_ = 0;
+  this.currentMessage = '0';
   chrome.storage.sync.get.callsArgWith(1, {});
   return this.butterBar.init().then(() => {
     assert.ok(this.butterBar.root_.hidden == false);
@@ -52,8 +71,8 @@ QUnit.test('should be shown, yellow and dismissable if index==0',
 });
 
 QUnit.test('should update storage when shown', function(assert) {
-  this.butterBar.currentMessage_ = 0;
-  this.clock = sinon.useFakeTimers(123);
+  this.currentMessage = '0';
+  this.now_ = 123;
   chrome.storage.sync.get.callsArgWith(1, {});
   return this.butterBar.init().then(() => {
     assert.deepEqual(chrome.storage.sync.set.firstCall.args,
@@ -71,7 +90,7 @@ QUnit.test(
     'should be shown and should not update local storage if it has already ' +
     'shown, the timeout has not elapsed and it has not been dismissed',
     function(assert) {
-  this.butterBar.currentMessage_ = 0;
+  this.currentMessage = '0';
   chrome.storage.sync.get.callsArgWith(1, {
     "message-state": {
       "hidden": false,
@@ -79,7 +98,7 @@ QUnit.test(
       "timestamp": 0,
     }
   });
-  this.clock = sinon.useFakeTimers(remoting.ButterBar.kTimeout_);
+  this.now_ = remoting.ButterBar.kTimeout_;
   return this.butterBar.init().then(() => {
     assert.ok(this.butterBar.root_.hidden == false);
     assert.ok(!chrome.storage.sync.set.called);
@@ -87,7 +106,7 @@ QUnit.test(
 });
 
 QUnit.test('should stay hidden if the timeout has elapsed', function(assert) {
-  this.butterBar.currentMessage_ = 0;
+  this.currentMessage = '0';
   chrome.storage.sync.get.callsArgWith(1, {
     "message-state": {
       "hidden": false,
@@ -95,7 +114,7 @@ QUnit.test('should stay hidden if the timeout has elapsed', function(assert) {
       "timestamp": 0,
     }
   });
-  this.clock = sinon.useFakeTimers(remoting.ButterBar.kTimeout_+ 1);
+  this.now_ = remoting.ButterBar.kTimeout_+ 1;
   return this.butterBar.init().then(() => {
     assert.ok(this.butterBar.root_.hidden == true);
   });
@@ -104,7 +123,7 @@ QUnit.test('should stay hidden if the timeout has elapsed', function(assert) {
 
 QUnit.test('should stay hidden if it was previously dismissed',
            function(assert) {
-  this.butterBar.currentMessage_ = 0;
+  this.currentMessage = '0';
   chrome.storage.sync.get.callsArgWith(1, {
     "message-state": {
       "hidden": true,
@@ -112,7 +131,6 @@ QUnit.test('should stay hidden if it was previously dismissed',
       "timestamp": 0,
     }
   });
-  this.clock = sinon.useFakeTimers(0);
   return this.butterBar.init().then(() => {
     assert.ok(this.butterBar.root_.hidden == true);
   });
@@ -120,7 +138,7 @@ QUnit.test('should stay hidden if it was previously dismissed',
 
 
 QUnit.test('should be shown if the index has increased', function(assert) {
-  this.butterBar.currentMessage_ = 1;
+  this.currentMessage = '1';
   chrome.storage.sync.get.callsArgWith(1, {
     "message-state": {
       "hidden": true,
@@ -128,7 +146,7 @@ QUnit.test('should be shown if the index has increased', function(assert) {
       "timestamp": 0,
     }
   });
-  this.clock = sinon.useFakeTimers(remoting.ButterBar.kTimeout_ + 1);
+  this.now_ = remoting.ButterBar.kTimeout_ + 1;
   return this.butterBar.init().then(() => {
     assert.ok(this.butterBar.root_.hidden == false);
   });
@@ -136,7 +154,7 @@ QUnit.test('should be shown if the index has increased', function(assert) {
 
 QUnit.test('should be red and not dismissable for the final message',
            function(assert) {
-  this.butterBar.currentMessage_ = 3;
+  this.currentMessage = '3';
   chrome.storage.sync.get.callsArgWith(1, {});
   return this.butterBar.init().then(() => {
     assert.ok(this.butterBar.root_.hidden == false);
@@ -146,10 +164,9 @@ QUnit.test('should be red and not dismissable for the final message',
 });
 
 QUnit.test('dismiss button updates local storage', function(assert) {
-  this.butterBar.currentMessage_ = 0;
+  this.currentMessage = '0';
   chrome.storage.sync.get.callsArgWith(1, {});
   return this.butterBar.init().then(() => {
-    this.clock = sinon.useFakeTimers(0);
     this.butterBar.dismiss_.click();
     // The first call is in response to showing the message; the second is in
     // response to dismissing the message.
