@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f30a5271_c913524c",
+        "filename": "components/viz/service/display_embedder/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-09T13:37:00Z",
+      "side": 1,
+      "message": "This is already in components/viz/service/DEPS and shouldn\u0027t be needed.",
+      "revId": "9b467dde69edc1e98b1be7846ee32ec71f540b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5583ef04_2222f37a",
+        "filename": "content/common/render_message_filter.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-09T13:37:00Z",
+      "side": 1,
+      "message": "This import doesn\u0027t appear to be necessary.",
+      "revId": "9b467dde69edc1e98b1be7846ee32ec71f540b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12959b2d_69e55e73",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-09T13:37:00Z",
+      "side": 1,
+      "message": "Keep in alphabetical order.",
+      "revId": "9b467dde69edc1e98b1be7846ee32ec71f540b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
