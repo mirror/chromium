@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c315b7b_060740e9",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1914,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-09T21:47:09Z",
+      "side": 1,
+      "message": "Hm... unless I\u0027m reading the code wrong I think we don\u0027t actually get here from ClearSessionOnlyOrigins(). We\u0027re just deleting the session-only origins from the LevelDB database but not their disk cache entries. DidDeleteDatabase() is only called when the entire database was wiped, which only happens from DeleteAndStartOver() which happens when there was a database error.\n\nWe could keep BLOCK_SHUTDOWN since it does seem safer as it retains the existing behavior according to michaeln. Can you do something like this:\n\n// Delete the disk cache. Use BLOCK_SHUTDOWN to try to avoid things being half-deleted.\n// TODO(falken): Investigate if BLOCK_SHUTDOWN is needed, as the next startup is expected to cleanup the disk cache anyway. Also investigate whether ClearSessionOnlyOrigins() should try to delete relevant entries from the disk cache before shutdown.\n\nWe can at least remove USER_VISIBLE as no JS should be able to trigger this, just a rare database error.",
+      "revId": "5bf197c2b367a61520fc52772162bb4cdb060456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
