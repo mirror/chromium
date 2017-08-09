@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83ab1041_c26d937c",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-09T21:19:25Z",
+      "side": 1,
+      "message": "nit: { is not necessary for one line statement. Maybe \n\nif (!IsNetworkIdUnknownOrDisconnected(last_network_id)) {\n  sink_cache_[last_network_id]....\n}\n\nto avoid two \u0027return\u0027. Fine to leave it...",
+      "range": {
+        "startLine": 120,
+        "startChar": 59,
+        "endLine": 120,
+        "endChar": 60
+      },
+      "revId": "34759d9e55f3f00bc14ce9b570d06f63dab32e78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
