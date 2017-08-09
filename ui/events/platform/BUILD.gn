@@ -11,6 +11,8 @@ component("platform") {
     "../events_export.h",
     "platform_event_dispatcher.h",
     "platform_event_observer.h",
+    "platform_event_recorder.cc",
+    "platform_event_recorder.h",
     "platform_event_source.cc",
     "platform_event_source.h",
     "platform_event_source_stub.cc",
