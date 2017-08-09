@@ -16,6 +16,24 @@
       "revId": "6eeb5730bb81adcf3cf4a2668753c938b8ae0104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6af4d4_5e7b9916",
+        "filename": "net/tools/quic/quic_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-09T22:53:13Z",
+      "side": 1,
+      "message": "Done. (In Final)",
+      "parentUuid": "64816875_30c91820",
+      "revId": "6eeb5730bb81adcf3cf4a2668753c938b8ae0104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
