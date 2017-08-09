@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "916f7597_b032179d",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-09T23:09:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c238861f_7c187b95",
+      "range": {
+        "startLine": 1171,
+        "startChar": 2,
+        "endLine": 1171,
+        "endChar": 34
+      },
+      "revId": "023ce7aa42cdcccf6dec09cd40b917fed294e82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df9db344_c35e5d07",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cd773cf2_15adbaa3",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-09T23:09:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df9db344_c35e5d07",
+      "range": {
+        "startLine": 1199,
+        "startChar": 34,
+        "endLine": 1199,
+        "endChar": 41
+      },
+      "revId": "023ce7aa42cdcccf6dec09cd40b917fed294e82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c26caf01_e1245fc7",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-09T19:57:03Z",
       "side": 1,
       "message": "why disable the animation?",
+      "range": {
+        "startLine": 1200,
+        "startChar": 39,
+        "endLine": 1200,
+        "endChar": 65
+      },
+      "revId": "023ce7aa42cdcccf6dec09cd40b917fed294e82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b3a978_3133a0a4",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-09T23:09:46Z",
+      "side": 1,
+      "message": "If we use the animation here the animation will be weird when the dialog is dismissed.",
+      "parentUuid": "c26caf01_e1245fc7",
       "range": {
         "startLine": 1200,
         "startChar": 39,
