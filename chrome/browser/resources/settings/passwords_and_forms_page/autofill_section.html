@@ -58,8 +58,9 @@
         white-space: nowrap;
       }
     </style>
-    <div class="settings-box first">
+    <div class="settings-box first" id="autofillToggleRow">
       <settings-toggle-button id="autofillToggle" class="start primary-toggle"
+          action-target="[[$$('#autofillToggleRow')]]"
           aria-label="$i18n{autofill}" no-extension-indicator
           label="[[getOnOffLabel_(prefs.autofill.enabled.value)]]"
           pref="{{prefs.autofill.enabled}}">

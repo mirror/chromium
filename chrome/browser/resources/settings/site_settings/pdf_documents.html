@@ -10,8 +10,9 @@
       margin-top: 0;  /* Cancel separation between main and secondary text. */
     }
     </style>
-    <div class="settings-box first two-line">
+    <div class="settings-box first two-line" id="downloadPdfsRow">
       <settings-toggle-button id="toggle" class="start"
+          action-target="[[$$('#downloadPdfsRow')]]"
           label="$i18n{siteSettingsPdfDownloadPdfs}"
           pref="{{prefs.plugins.always_open_pdf_externally}}">
       </settings-toggle-button>
