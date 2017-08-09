@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cd745da8_90dc1879",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/FakeMostVisitedSites.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-09T15:18:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10320871_ef525c83",
+      "range": {
+        "startLine": 102,
+        "startChar": 5,
+        "endLine": 102,
+        "endChar": 22
+      },
+      "revId": "ed1fbc752aeeba869095b6519423e24fcb64732c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08fbae87_85e874c1",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "ed1fbc752aeeba869095b6519423e24fcb64732c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3ac8d3_83361849",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-09T15:18:12Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "08fbae87_85e874c1",
+      "range": {
+        "startLine": 134,
+        "startChar": 17,
+        "endLine": 134,
+        "endChar": 30
+      },
+      "revId": "ed1fbc752aeeba869095b6519423e24fcb64732c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
