@@ -2,6 +2,210 @@
   "comments": [
     {
       "key": {
+        "uuid": "fc220a4c_d4a7d080",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "You can also say \"padding:0\" :)",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3dc1f66_f439a9ba",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "We usually omit the tags HTML, HEAD and BODY, unless there\u0027s need for them. The parser will insert them if they are missing.",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a959dc_da556ac1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-001.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "More base.css to get rid of?",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b77a16_4d898c3e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-002.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "More base.css to get rid of?",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ebb3a0a_2c01b294",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003-ref.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "Maybe I\u0027m blind, but this file looks identical to visibility-collapse-colspan-003, apart from the \u003clink rel\u003d\"match\" href\u003d\"visibility-collapse-colspan-003-ref.html\"\u003e",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9807fa05_6f434fac",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003-ref.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "More base.css to get rid of?",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72bd48ef_e0451d0f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "More base.css to get rid of?",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca472477_010b3d6e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "If you feel like cleaning up, you could remove the ID attributes now.",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b069247c_c84a60a7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "Superduper! But should we also make sure that the cells above get non-uniform widths, for the sake of test evilness? They only differ by numbers, and most fonts give number characters the same width.",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79cbe55_3fa586c0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-rowcol-001.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "More base.css to get rid of?",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f8a194_e1fe566f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-rowcol-002.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "More base.css to get rid of?",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a91bddd2_259c969f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "\"Change logical width [...]\"?",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93db9e83_cb651fc8",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 11
@@ -59,6 +263,108 @@
       "writtenOn": "2017-08-09T00:19:28Z",
       "side": 1,
       "message": "I suspect the 2nd and 3rd loop can be combined and you still get correct values. But let me know if I\u0027m missing something.\n\nfor (size_t i \u003d 0; i \u003c n_eff_cols; ++i) {\n  if (IsEffectiveColumnCollapsed(i)) {\n    total_collapsed_width +\u003d EffectiveColumnPositions()[i + 1] -\n                                     EffectiveColumnPositions()[i];\n  }\n  SetEffectiveColumnPosition(\n      i + 1, EffectiveColumnPositions()[i + 1] - total_collapsed_width);\n}\n\nAnd I think is_any_col_collapsed_ can be updated in UpdateColumnCache()? So you may not need the first loop at all?",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd32b65_aa40c504",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "This one is only used during UpdateLayout(), so it doesn\u0027t seem reasonable to store it permanently on the object. The vector is set up by a method called early in UpdateLayout() and then read by a method called later in UpdateLayout(). Can\u0027t the first one just return the vector and the second one take it as an argument?",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94885503_df4e2355",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "Same as col_collapsed_width_; only used during UpdateLayout().",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "114e5b13_ba667c82",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "I think I\u0027d store the result of Table()-\u003eColElementAtAbsoluteColumn(AbsoluteColumnIndex()) in a local const variable, rather than calling it twice.",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6bacdb_0bda250f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "No longer needed.",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47fa43e8_7da2beb4",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "No longer needed.",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89191d75_0a36159b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "And it always returns false if a cell IS column-spanned? Hmm.. no, it looks to me that it will return true if the first column of the cell is collapsed, and false otherwise. That\u0027s not going to work, is it? If the first column is collapsed, but the second isn\u0027t, callers will be tricked into thinking that there\u0027s nothing to paint/process. Or am I wrong?\n\nI think we need a method that returns true if all columns that the cell spans are collapsed, and false otherwise.",
       "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "10a7f6ac_d2d2809e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "When we\u0027re done with layout (which is a tree write operation - updating sizes, offsets, bounding boxes and what not), we can perform various tree traverse read operations. Painting is one such operation. Hit-testing is another. Those two are probably the most important ones, but then I was thinking that there might be other read operations too, such as text selection. Hmm... I guess there isn\u0027t much we need to worry about for text selection. Hit-testing, on the other hand, needs to be handled. We don\u0027t want to be able to hit things that have been collapsed away.\n\nDavid asked if we only need to worry about hit-testing for visibility:collapse on columns, and not on rows, but I think we need to worry about both. I just forgot to mention it in the row CL, I guess. If collapsing always gives us a clip rectangle, we should be fine, I guess. But the changes you make in TableCellPainter::Paint() (if collapsed, bail) makes me think that we need something similar on the hit-testing side.",
+      "parentUuid": "f951fb88_ad9fe58d",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a06c5c6_365019c3",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
         "patchSetId": 8
@@ -212,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "ec70e7e2_421524ca",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-rowcol-002.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62c2f999_dde9eded",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "281be6e1_2aed60cf",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 8
@@ -317,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "44e84eae_5f50a662",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "Forget what I said about having column widths calculated somewhere. You\u0027re overwriting that information here, by calling SetEffectiveColumnPosition(), so we do need that vector of yours. :)\n\nYeah, three loops, not two. Sorry about that. I was talking about merging the first two loops. \nAs David points out, though, it should be possible to merge with the third loop, too, so that there\u0027ll be only one left.\n\nThe first loop only checks if we have any work to do, and I don\u0027t think we need it. You can merge the first and the second loops. Once you encounter a collapsed column, initialize col_collapsed_width and populate (set to 0) the column entries you have walked past already.\n\nBut as long as we can avoid a lot of code duplication, it\u0027s no problem if you want to keep it.",
+      "parentUuid": "d35488c2_bb1c55c3",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76d3569a_0e248c42",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 8
@@ -346,6 +400,24 @@
       "side": 1,
       "message": "I chose this because I want to update the cell widths after the section has finished laying out the rows. I didn\u0027t want to disturb the laying out until the end, because visibility:collapse still takes in the original cell widths into account when laying everything else out. If I directly set the correct collapsed widths on cells right away, it should have the effect of display:none instead of visiblity:collapse.",
       "parentUuid": "76d3569a_0e248c42",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee7779c_a6f169e5",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right! We cannot set the collapsed widths during layout, because that would shrink the containing block width and thus affect layout.",
+      "parentUuid": "1d074216_7d91064f",
       "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -524,6 +596,24 @@
       "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ad6d35_6d1ae74e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-09T09:55:21Z",
+      "side": 1,
+      "message": "Done (I\u0027ll create new issues in the new patch set if necessary)",
+      "parentUuid": "6282b9a4_a2460c0c",
+      "revId": "0da62800ef03b4a4874c1f7c6a2ad74e0d143a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
