@@ -60,8 +60,9 @@ GLContext::~GLContext() {
 
 GLApi* GLContext::CreateGLApi(DriverGL* driver) {
   real_gl_api_ = new RealGLApi;
-  real_gl_api_->Initialize(driver);
   real_gl_api_->set_gl_workarounds(gl_workarounds_);
+  real_gl_api_->SetDisabledGLExtensions(disabled_gl_extensions_);
+  real_gl_api_->Initialize(driver);
   return real_gl_api_;
 }
 
@@ -212,11 +213,14 @@ void GLContext::SetCurrent(GLSurface* surface) {
 }
 
 void GLContext::SetGLWorkarounds(const GLWorkarounds& workarounds) {
-  DCHECK(IsCurrent(nullptr));
+  DCHECK(!real_gl_api_);
   gl_workarounds_ = workarounds;
-  if (real_gl_api_) {
-    real_gl_api_->set_gl_workarounds(gl_workarounds_);
-  }
+}
+
+void GLContext::SetDisabledGLExtensions(
+    const std::string& disabled_extensions) {
+  DCHECK(!real_gl_api_);
+  disabled_gl_extensions_ = disabled_extensions;
 }
 
 GLStateRestorer* GLContext::GetGLStateRestorer() {
