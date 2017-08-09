@@ -116,6 +116,7 @@ void AppCacheUpdateJob::UpdateURLLoaderRequest::OnReceiveResponse(
 void AppCacheUpdateJob::UpdateURLLoaderRequest::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
     const ResourceResponseHead& response_head) {
+  response_.reset(new ResourceResponseHead());
   *response_ = response_head;
   fetcher_->OnReceivedRedirect(redirect_info);
 }
