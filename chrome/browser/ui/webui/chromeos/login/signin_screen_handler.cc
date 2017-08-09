@@ -286,6 +286,10 @@ SigninScreenHandler::SigninScreenHandler(
     lock_screen_apps_observer_.Add(lock_screen_apps::StateController::Get());
   if (WallpaperManager::HasInstance())
     WallpaperManager::Get()->AddObserver(this);
+  accessibility_status_subscription_ =
+      AccessibilityManager::Get()->RegisterCallback(
+          base::Bind(&SigninScreenHandler::OnAccessibilityStateChanged,
+                     base::Unretained(this)));
 }
 
 SigninScreenHandler::~SigninScreenHandler() {
@@ -1107,6 +1111,19 @@ void SigninScreenHandler::OnLockScreenNoteStateChanged(
                 lock_screen_apps_state);
 }
 
+void SigninScreenHandler::OnAccessibilityStateChanged(
+    const AccessibilityStatusEventDetails& details) {
+  if (details.notification_type != ACCESSIBILITY_PANEL_HEIGHT_CHANGED)
+    return;
+  OnAccessibilityPanelHeightChanged(details.panel_height);
+}
+
+void SigninScreenHandler::OnAccessibilityPanelHeightChanged(
+    int accessibility_panel_height) {
+  CallJSOrDefer("login.AccountPickerScreen.accessibilityPanelHeightChanged",
+                accessibility_panel_height);
+}
+
 bool SigninScreenHandler::ShouldLoadGaia() const {
   // Fetching of the extension is not started before account picker page is
   // loaded because it can affect the loading speed.
@@ -1286,6 +1303,10 @@ void SigninScreenHandler::HandleAccountPickerReady() {
     OnLockScreenNoteStateChanged(
         lock_screen_apps::StateController::Get()->GetLockScreenNoteState());
   }
+
+  OnAccessibilityPanelHeightChanged(
+      AccessibilityManager::Get()->accessibility_panel_height());
+
   if (delegate_)
     delegate_->OnSigninScreenReady();
 }
