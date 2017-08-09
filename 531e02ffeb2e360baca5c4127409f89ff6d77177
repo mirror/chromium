@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e9a8427_a861ae9a",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-09T02:43:54Z",
+      "side": 1,
+      "message": "BackgroundPrintingManager\n\nnote for later: We actually want to get rid of NotificationService eventually, which involves converting notifications to something else. Since NOTIFICATION_PRINT_JOB_RELEASED is only used between here and BackgroundPrintingManager, we can get rid of that eventually and what\u0027s happening according to this comment will become more obvious.",
+      "revId": "531e02ffeb2e360baca5c4127409f89ff6d77177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51176a32_3ba7aa32",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-09T02:43:54Z",
+      "side": 1,
+      "message": "Can this be moved into PrintViewMananger? Then you don\u0027t need to check BUILDFLAG(ENABLE_PRINT_PREVIEW).",
+      "revId": "531e02ffeb2e360baca5c4127409f89ff6d77177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9109940d_df79c380",
+        "filename": "chrome/browser/printing/printing_message_filter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-09T02:43:54Z",
+      "side": 1,
+      "message": "Add a comment to this one, so it\u0027s easy to tell which #if it matches up with.",
+      "revId": "531e02ffeb2e360baca5c4127409f89ff6d77177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
