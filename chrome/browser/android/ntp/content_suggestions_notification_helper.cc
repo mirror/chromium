@@ -30,10 +30,25 @@ namespace ntp_snippets {
 
 namespace {
 
+// Whether auto opt out is disabled. Note that this does not disable collection
+// of data required for auto opt out.
+const bool kDisableAutoOptOutDefault = false;
+const char kDisableAutoOptOutParamName[] = "disable_auto_opt_out";
+
+bool IsAutoOptOutDisabled() {
+  return variations::GetVariationParamByFeatureAsBool(
+      ntp_snippets::kNotificationsFeature, kDisableAutoOptOutParamName,
+      kDisableAutoOptOutDefault);
+}
+
 bool IsDisabledForProfile(Profile* profile) {
   PrefService* prefs = profile->GetPrefs();
   if (!prefs->GetBoolean(prefs::kContentSuggestionsNotificationsEnabled)) {
     return true;
+  }
+
+  if (IsAutoOptOutDisabled()) {
+    return false;
   }
 
   int current =
