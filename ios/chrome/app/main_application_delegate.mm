@@ -245,7 +245,7 @@
 
   BOOL applicationActive =
       [application applicationState] == UIApplicationStateActive;
-  DCHECK(applicationActive || !base::ios::IsRunningOnIOS11OrLater());
+  // DCHECK(applicationActive || !base::ios::IsRunningOnIOS11OrLater());
 
   return [URLOpener openURL:url
           applicationActive:applicationActive
