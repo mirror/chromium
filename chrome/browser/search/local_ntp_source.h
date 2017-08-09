@@ -70,6 +70,8 @@ class LocalNtpSource : public content::URLDataSource,
 
   Profile* const profile_;
 
+  std::string google_base_url_;
+
   OneGoogleBarService* one_google_bar_service_;
 
   ScopedObserver<OneGoogleBarService, OneGoogleBarServiceObserver>
