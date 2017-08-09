@@ -140,6 +140,7 @@
 #include "url/origin.h"
 
 #if defined(OS_ANDROID)
+#include "content/browser/android/dialog_overlay_impl.h"
 #include "content/browser/android/java_interfaces_impl.h"
 #include "content/browser/frame_host/render_frame_host_android.h"
 #include "content/browser/media/android/media_player_renderer.h"
@@ -4253,6 +4254,21 @@ void RenderFrameHostImpl::ForwardGetInterfaceToRenderFrame(
     mojo::ScopedMessagePipeHandle pipe) {
   GetRemoteInterfaces()->GetInterface(interface_name, std::move(pipe));
 }
+
+void RenderFrameHostImpl::AddOverlay(DialogOverlayImpl* overlay) {
+  overlays_.insert(overlay);
+}
+
+void RenderFrameHostImpl::RemoveOverlay(DialogOverlayImpl* overlay) {
+  overlays_.erase(overlay);
+}
+#endif  // defined(OS_ANDROID)
+
+void RenderFrameHostImpl::PersistentVideoRequested(bool want_persistent_video) {
+#if defined(OS_ANDROID)
+  for (DialogOverlayImpl* overlay : overlays_)
+    overlay->PersistentVideoRequested(want_persistent_video);
 #endif
+}
 
 }  // namespace content
