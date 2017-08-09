@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0591acb_2703049e",
+        "filename": "chrome/browser/extensions/extension_icon_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-09T02:09:29Z",
+      "side": 1,
+      "message": "it\u0027s used in production: AppIconWebUIHandler is an observer",
+      "parentUuid": "0f5fb48e_761ee13b",
+      "revId": "4a3f08dd0cb460982f568b8748122b4c2b35276e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a0f6152_100fa810",
         "filename": "chrome/browser/resources/ntp4/apps_page.js",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-09T01:42:41Z",
       "side": 1,
       "message": "optional nit: I\u0027d find\nlet templateId \u003d this.useSmallIcon_ ? \u0027app-small-icon-template\u0027 : \u0027app-large-icon-template\u0027;\nthis.appContents_ \u003d $(templateId).cloneNode(true);\n\nto be slightly clearer/less prone to accidental change, but I\u0027ll leave it up to you.",
+      "revId": "4a3f08dd0cb460982f568b8748122b4c2b35276e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0fb82c9_51a99e58",
+        "filename": "chrome/browser/resources/ntp4/apps_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-09T02:09:29Z",
+      "side": 1,
+      "message": "I am always confused by use-once variables, but I can move the cloneNode outside the ternary.",
+      "parentUuid": "8a0f6152_100fa810",
       "revId": "4a3f08dd0cb460982f568b8748122b4c2b35276e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
