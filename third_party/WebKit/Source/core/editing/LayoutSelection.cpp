@@ -413,10 +413,10 @@ static SelectionMarkingRange CalcSelectionRangeAndSetSelectionState(
 
     if (!start_layout_object) {
       start_layout_object = layout_object;
-      const PositionInFlatTree& offsetInAnchor =
+      const PositionInFlatTree& start_pos =
           selection.StartPosition().ToOffsetInAnchor();
-      if (node == offsetInAnchor.AnchorNode())
-        start_editing_offset = offsetInAnchor.OffsetInContainerNode();
+      if (node == start_pos.AnchorNode() && node.IsTextNode())
+        start_editing_offset = start_pos.OffsetInContainerNode();
       continue;
     }
 
