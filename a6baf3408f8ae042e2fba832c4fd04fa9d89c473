@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "8fa30237_6c57e4d5",
+        "filename": "chromeos/system/version_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-09T09:12:15Z",
+      "side": 1,
+      "message": "make this a constant kVersionSeparator or some such.",
+      "range": {
+        "startLine": 49,
+        "startChar": 25,
+        "endLine": 49,
+        "endChar": 29
+      },
+      "revId": "a6baf3408f8ae042e2fba832c4fd04fa9d89c473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7cf1d0_d0fd1d83",
+        "filename": "chromeos/system/version_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-09T09:12:15Z",
+      "side": 1,
+      "message": "I am not sure this name is very clean what about GetFwAndTpmVersion (or whatever fits Fw better).",
+      "range": {
+        "startLine": 30,
+        "startChar": 21,
+        "endLine": 30,
+        "endChar": 38
+      },
+      "revId": "a6baf3408f8ae042e2fba832c4fd04fa9d89c473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "473366f6_6e389ae3",
         "filename": "chromeos/system/version_loader.h",
         "patchSetId": 2
@@ -13,6 +59,30 @@
       "writtenOn": "2017-08-09T08:55:31Z",
       "side": 1,
       "message": "Hm should I typedef this maybe?\n\nusing StringCallback \u003d base::Callback\u003cvoid(const std::string\u0026)\u003e;",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 44
+      },
+      "revId": "a6baf3408f8ae042e2fba832c4fd04fa9d89c473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18485f42_c5b80ced",
+        "filename": "chromeos/system/version_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-09T09:12:15Z",
+      "side": 1,
+      "message": "If it\u0027s used more than once sounds like a good idea.",
+      "parentUuid": "473366f6_6e389ae3",
       "range": {
         "startLine": 31,
         "startChar": 4,
