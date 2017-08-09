@@ -87,6 +87,58 @@
     },
     {
       "key": {
+        "uuid": "12ee1819_f33c57b5",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T21:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7b98acc_d1c2bd60",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2088ba2b_eb187c15",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T21:29:51Z",
+      "side": 1,
+      "message": "This isn\u0027t actually needed, as the shell will proclaim the same error before we get here.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "597a033e_c2b781a5",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T21:29:51Z",
+      "side": 1,
+      "message": "This error message now lives in user-session.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cf0b1d8_23022ded",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 1
@@ -121,6 +173,24 @@
     },
     {
       "key": {
+        "uuid": "b0c440a8_14b5b29e",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T21:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aab6afd_6aaf3cb2",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cce298f_baa8b512",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 1
@@ -135,6 +205,24 @@
       "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e709385e_d56d34d9",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T21:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cce298f_baa8b512",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +243,24 @@
     },
     {
       "key": {
+        "uuid": "dce99ded_21a13719",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T21:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acb9c0a1_95e11a0c",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "392265c7_096fb608",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 1
@@ -169,6 +275,24 @@
       "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b1b60e_4613b194",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T21:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "392265c7_096fb608",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +344,24 @@
       "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5681a36_51f68e95",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-09T21:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c96d6b1_a88a594d",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
