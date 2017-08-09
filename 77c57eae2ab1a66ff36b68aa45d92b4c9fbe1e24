@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9dc2439_ef72197d",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T00:15:24Z",
+      "side": 1,
+      "message": "Note that actual code should not go into header.",
+      "revId": "77c57eae2ab1a66ff36b68aa45d92b4c9fbe1e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6403c1_0cd31327",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T00:15:24Z",
+      "side": 1,
+      "message": "This should actually go to InterceptedPage, since DevToolsURLRequestInterceptor::State is shared between multiple WebContents and thus multiple NetworkHandlers with different interception parameters.\n\nWhich means it may be more efficient to create InterceptedPage once, and store pointer to it in both flat_maps.",
+      "revId": "77c57eae2ab1a66ff36b68aa45d92b4c9fbe1e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea7af20_a2658bc4",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T00:15:24Z",
+      "side": 1,
+      "message": "nit: I\u0027d merge this with SetRequestInterceptionEnabled. It\u0027s easy to construct a maybe at line 543.",
+      "revId": "77c57eae2ab1a66ff36b68aa45d92b4c9fbe1e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
