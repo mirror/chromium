@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2905df68_651e94a5",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintRenderingContext2D.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-09T18:45:39Z",
+      "side": 1,
+      "message": "The result of the discussion was that we should expose this on the PaintWorkletGlobalScope rather than adding it to the canvas context.",
+      "revId": "526f0f5b07ff0a69803dde326990992ca7dce67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
