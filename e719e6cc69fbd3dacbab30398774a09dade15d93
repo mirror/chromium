@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5008f182_68ea113c",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-09T14:25:24Z",
+      "side": 1,
+      "message": "Woops, done.",
+      "parentUuid": "e970ff61_6dda4d86",
+      "range": {
+        "startLine": 202,
+        "startChar": 1,
+        "endLine": 203,
+        "endChar": 66
+      },
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d2908d3_df36630c",
         "filename": "content/browser/service_worker/service_worker_storage.cc",
         "patchSetId": 4
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "c894f740_a5b42d27",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-09T14:25:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d2908d3_df36630c",
+      "range": {
+        "startLine": 812,
+        "startChar": 23,
+        "endLine": 812,
+        "endChar": 49
+      },
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a545b10f_23d54ec8",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-09T14:25:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86783bc4_589b247d",
+      "range": {
+        "startLine": 812,
+        "startChar": 13,
+        "endLine": 812,
+        "endChar": 22
+      },
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d3c083f_b025c68b",
         "filename": "content/browser/service_worker/service_worker_storage.cc",
         "patchSetId": 4
@@ -85,6 +157,24 @@
       "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70134c67_9ec36088",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-09T14:25:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d3c083f_b025c68b",
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "549ca66b_34453558",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1911,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-09T14:25:24Z",
+      "side": 1,
+      "message": "So I mostly chose BLOCK_SHUTDOWN to avoid things being half-deleted, but that\u0027s not an entirely convincing reason. What the comments about database runner in ServiceWorkerContextWrapper::Init say about ClearSessionOnlyOrigins() is convincing, however, so I\u0027ve copied that comment over here. (Minus the TODO which doesn\u0027t apply here). \n\nThe priority I am honestly not sure of, I was hoping for feedback on review, it was chosen as vaguely \"well, some JS in interactive paths might care, perhaps?\".\n\n(MayBlock() is of course simply needed)",
+      "parentUuid": "c24295f1_13ca7dfa",
+      "range": {
+        "startLine": 1911,
+        "startChar": 32,
+        "endLine": 1911,
+        "endChar": 68
+      },
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "736d46c5_62b4318e",
         "filename": "content/browser/service_worker/service_worker_storage.h",
         "patchSetId": 4
@@ -122,6 +236,24 @@
       "writtenOn": "2017-08-08T21:27:12Z",
       "side": 1,
       "message": "Can you help me understand the difference between OnDiskCacheCleanupComplete() and DidDeleteDiskCache()? Could we have comments explaining it as well?",
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01036151_f9abccc8",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-09T14:25:24Z",
+      "side": 1,
+      "message": "Renamed to a hopefully clearer name, added comments.",
+      "parentUuid": "736d46c5_62b4318e",
       "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -174,6 +306,54 @@
     },
     {
       "key": {
+        "uuid": "eeaa5f70_be934fdc",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-09T14:25:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9e0bcf0_10131485",
+      "range": {
+        "startLine": 561,
+        "startChar": 48,
+        "endLine": 561,
+        "endChar": 66
+      },
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42ab50d2_158a171b",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-09T14:25:24Z",
+      "side": 1,
+      "message": "Rephrased",
+      "parentUuid": "579a95ce_21b4f5bd",
+      "range": {
+        "startLine": 561,
+        "startChar": 17,
+        "endLine": 561,
+        "endChar": 30
+      },
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8db5e8e_b63ad8be",
         "filename": "content/browser/service_worker/service_worker_storage.h",
         "patchSetId": 4
@@ -185,6 +365,24 @@
       "writtenOn": "2017-08-08T21:27:12Z",
       "side": 1,
       "message": "It seems to me that this is true whenever we have a non-memory-backed disk cache, may be nice for the comment to say that also.",
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ced27a_dfec661c",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-09T14:25:24Z",
+      "side": 1,
+      "message": "That\u0027s not the only case when it\u0027s true, so expanded upon it.",
+      "parentUuid": "b8db5e8e_b63ad8be",
       "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
