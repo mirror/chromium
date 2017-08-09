@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "1fb20816_6c7e2a9a",
+        "filename": "chrome/renderer/resources/extensions/platform_keys/subtle_crypto.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-09T23:59:50Z",
+      "side": 1,
+      "message": "lastError.clear?",
+      "range": {
+        "startLine": 22,
+        "startChar": 39,
+        "endLine": 22,
+        "endChar": 48
+      },
+      "revId": "4f6fdceee4124a52ef5fe7bdeeb3bfc247e9582f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "308799ad_64994926",
+        "filename": "chrome/renderer/resources/extensions/platform_keys/subtle_crypto.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-09T23:59:50Z",
+      "side": 1,
+      "message": "I find this pattern subtle enough that we should add some comment around it.\n\nNormally, clearLastError() should turn chrome.runtime.lastError to be undefined? so the next line is surprising.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 18
+      },
+      "revId": "4f6fdceee4124a52ef5fe7bdeeb3bfc247e9582f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90a6036d_d91ee8c7",
         "filename": "chrome/renderer/resources/extensions/platform_keys/subtle_crypto.js",
         "patchSetId": 2
