@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d40457f1_634f7f31",
+        "filename": "services/viz/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-09T15:56:24Z",
+      "side": 1,
+      "message": "It looks like this is done elsewhere by putting the shared functions in their own python file then importing that file?\n\nSee https://cs.chromium.org/chromium/src/chrome/browser/PRESUBMIT.py?l\u003d18\u0026rcl\u003dd6cd2218279c3eab1ceaab4db4c94c00a8af4401 this example.",
+      "revId": "54fc5b7fa3fc14669226f2a93444ab893951850b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
