@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f6924f0_fd12abfd",
+        "filename": "services/device/generic_sensor/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-09T14:44:04Z",
+      "side": 1,
+      "message": "This list of fallbacks makes the table more difficult to understand. I suggest adding simply a \"See below\" to reference the expanded description you provide in the Android section.",
+      "revId": "8455cf23cc75fa118728e86ed972cb9e87b93446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370f764c_87f19f6f",
+        "filename": "services/device/generic_sensor/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-09T14:44:04Z",
+      "side": 1,
+      "message": "Markdown doesn\u0027t support lettered lists. Use a numbered or bulleted list for clarity.",
+      "revId": "8455cf23cc75fa118728e86ed972cb9e87b93446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
