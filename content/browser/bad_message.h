@@ -105,7 +105,7 @@ enum BadMessageReason {
   SWDH_GET_REGISTRATIONS_INVALID_ORIGIN = 81,
   AOAH_UNAUTHORIZED_URL = 82,
   BDH_INVALID_SERVICE_ID = 83,
-  RFH_COMMIT_DESERIALIZATION_FAILED = 84,
+  RFH_COMMIT_DESERIALIZATION_FAILED = 84,  // obsolete; no longer used
   BDH_INVALID_CHARACTERISTIC_ID = 85,
   SWDH_UPDATE_NO_HOST = 86,
   SWDH_UPDATE_BAD_REGISTRATION_ID = 87,
@@ -199,6 +199,7 @@ enum BadMessageReason {
   SWDH_PROVIDER_CREATED_ILLEGAL_TYPE_CONTROLLER = 175,
   SWDH_PROVIDER_CREATED_DUPLICATE_ID = 176,
   SWDH_PROVIDER_CREATED_BAD_ID = 177,
+  RFH_INTERFACE_PROVIDER_MISSING = 178,
 
   // Please add new elements here. The naming convention is abbreviated class
   // name (e.g. RenderFrameHost becomes RFH) plus a unique description of the

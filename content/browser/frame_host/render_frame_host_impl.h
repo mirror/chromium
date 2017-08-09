@@ -119,7 +119,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
     : public RenderFrameHost,
       public base::SupportsUserData,
       NON_EXPORTED_BASE(public mojom::FrameHost),
-      NON_EXPORTED_BASE(public mojom::FrameHostInterfaceBroker),
       public BrowserAccessibilityDelegate,
       public SiteInstanceImpl::Observer,
       public NON_EXPORTED_BASE(service_manager::mojom::InterfaceProvider),
@@ -201,10 +200,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
       blink::WebSuddenTerminationDisablerType disabler_type) override;
 
   bool IsFeatureEnabled(blink::WebFeaturePolicyFeature feature) override;
-
-  // mojom::FrameHostInterfaceBroker
-  void GetInterfaceProvider(
-      service_manager::mojom::InterfaceProviderRequest interfaces) override;
 
   // IPC::Sender
   bool Send(IPC::Message* msg) override;
@@ -838,12 +833,33 @@ class CONTENT_EXPORT RenderFrameHostImpl
                            const gfx::Rect& initial_rect,
                            bool user_gesture);
 
-  // mojom::FrameHost
+  // Binds the |request| end of InterfaceProvider interface, to be used in the
+  // context of the currently active document in the frame.
+  void BindInterfaceProviderForNewDocument(
+      service_manager::mojom::InterfaceProviderRequest request);
+
+  // Takes the |request| end of an InterfaceProvider interface and routes it
+  // through the Service Manager to apply service manifest capability-based
+  // filtering; and returns the request end of an InterfaceProvider interface
+  // to which allowed interface requests will be delivered.
+  //
+  // TODO(rockot): Re-evaluate whether this layer of defense is really
+  // worthwhile. Perhaps it would be better replaced by a similarly declarative
+  // but browser-defined spec exclusively for context-bound interface policy,
+  // leaving the Service Manager out of these decisions entirely.
+  virtual service_manager::mojom::InterfaceProviderRequest
+  RouteThroughCapabilityFilter(
+      service_manager::mojom::InterfaceProviderRequest request);
+
+  // mojom::FrameHost:
   void CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
                        CreateNewWindowCallback callback) override;
+  void BindInterfaceProviderForInitialEmptyDocument(
+      service_manager::mojom::InterfaceProviderRequest request) override;
   void DidCommitProvisionalLoad(
       std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
-          validated_params) override;
+          validated_params,
+      service_manager::mojom::InterfaceProviderRequest request) override;
 
   void RunCreateWindowCompleteCallback(CreateNewWindowCallback callback,
                                        mojom::CreateNewWindowReplyPtr reply,
@@ -1215,8 +1231,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // same Previews status as the top-level frame.
   PreviewsState last_navigation_previews_state_;
 
-  mojo::Binding<mojom::FrameHostInterfaceBroker>
-      frame_host_interface_broker_binding_;
   mojo::AssociatedBinding<mojom::FrameHost> frame_host_associated_binding_;
   mojom::FramePtr frame_;
   mojom::FrameBindingsControlAssociatedPtr frame_bindings_control_;
@@ -1273,8 +1287,15 @@ class CONTENT_EXPORT RenderFrameHostImpl
   std::unique_ptr<JavaInterfaceProvider> java_interface_registry_;
 #endif
 
-  mojo::BindingSet<service_manager::mojom::InterfaceProvider>
-      interface_provider_bindings_;
+  // The InterfaceProvider binding that is re-bound to a newly created message
+  // pipe each time a non-same-document navigation commits.
+  //
+  // GetInterface messages dispatched through this binding are therefore
+  // guaranteed to originate from document corresponding to the last committed
+  // navigation; or from the inital empty document if no real navigation has
+  // ever been committed in the frame.
+  mojo::Binding<service_manager::mojom::InterfaceProvider>
+      document_scoped_interface_provider_binding_;
 
   // IPC-friendly token that represents this host for AndroidOverlays, if we
   // have created one yet.
