@@ -203,6 +203,10 @@ extern const base::Feature kSupervisedUserCreation;
 extern const base::Feature kSyzyasanDeferredFree;
 #endif
 
+#if defined(OS_MACOSX)
+extern const base::Feature kTouchbarDinoGame;
+#endif
+
 extern const base::Feature kTabsInCbd;
 
 extern const base::Feature kUseGoogleLocalNtp;

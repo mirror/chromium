@@ -5,11 +5,13 @@
 #ifndef CONTENT_BROWSER_RENDERER_HOST_INPUT_WEB_INPUT_EVENT_BUILDERS_MAC_H_
 #define CONTENT_BROWSER_RENDERER_HOST_INPUT_WEB_INPUT_EVENT_BUILDERS_MAC_H_
 
+#include "build/build_config.h"
 #include "content/common/content_export.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseWheelEvent.h"
+#include "third_party/WebKit/public/platform/WebTouchEvent.h"
 
 @class NSEvent;
 @class NSView;
@@ -23,6 +25,14 @@ class CONTENT_EXPORT WebKeyboardEventBuilder {
 
 class CONTENT_EXPORT WebMouseEventBuilder {
  public:
+#if defined(OS_MACOSX)
+  static blink::WebMouseEvent BuildFromTouchEvent(
+      NSEvent* theEvent,
+      NSView* view,
+      blink::WebInputEvent::Type webInputEvent,
+      blink::WebInputEvent::Modifiers webInputEventModifier);
+#endif
+
   static blink::WebMouseEvent Build(
       NSEvent* event,
       NSView* view,
