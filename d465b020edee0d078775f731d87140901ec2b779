@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8d08619_7a2af92b",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-09T21:55:35Z",
+      "side": 0,
+      "message": "this wasn\u0027t doing anything AFAICT.",
+      "revId": "d465b020edee0d078775f731d87140901ec2b779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
