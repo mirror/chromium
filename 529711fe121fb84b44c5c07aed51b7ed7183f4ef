@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "407f3715_1426528e",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T22:25:37Z",
+      "side": 1,
+      "message": "Would origin_ and origin ever differ? Maybe this should just use origin_?",
+      "revId": "529711fe121fb84b44c5c07aed51b7ed7183f4ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8046487e_e39d905a",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerContentSettingsProxy.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T22:25:37Z",
+      "side": 1,
+      "message": "Nit: this can be omitted, since the default ctor does this",
+      "range": {
+        "startLine": 14,
+        "startChar": 40,
+        "endLine": 14,
+        "endChar": 66
+      },
+      "revId": "529711fe121fb84b44c5c07aed51b7ed7183f4ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b26af3_5cfbb524",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerContentSettingsProxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T22:25:37Z",
+      "side": 1,
+      "message": "Nit: Mark this constructor explicit",
+      "revId": "529711fe121fb84b44c5c07aed51b7ed7183f4ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37aa58b_8b520329",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T22:25:37Z",
+      "side": 1,
+      "message": "Please remove the blink variant header from the public header",
+      "revId": "529711fe121fb84b44c5c07aed51b7ed7183f4ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76da0112_420fc598",
+        "filename": "third_party/WebKit/public/web/worker_content_settings_proxy.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T22:25:37Z",
+      "side": 1,
+      "message": "Btw, do you mind filing a bug and adding a TODO() to remove the origin parameters here?\n\n(Based on the previous discussion, this is my understanding of what should be possible eventually)",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "529711fe121fb84b44c5c07aed51b7ed7183f4ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
