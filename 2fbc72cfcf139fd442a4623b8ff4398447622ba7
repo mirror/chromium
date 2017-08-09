@@ -16,6 +16,24 @@
       "revId": "2fbc72cfcf139fd442a4623b8ff4398447622ba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d83d5a_66393325",
+        "filename": "components/security_interstitials/core/controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-08-09T18:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d04f64dc_5cbf7c5b",
+      "revId": "2fbc72cfcf139fd442a4623b8ff4398447622ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
