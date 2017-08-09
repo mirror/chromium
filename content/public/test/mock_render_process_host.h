@@ -68,6 +68,8 @@ class MockRenderProcessHost : public RenderProcessHost {
   GetRendererAudioOutputStreamFactoryContext() override;
   void OnAudioStreamAdded() override;
   void OnAudioStreamRemoved() override;
+  void OnVideoCaptureStreamAdded() override;
+  void OnVideoCaptureStreamRemoved() override;
   StoragePartition* GetStoragePartition() const override;
   virtual void AddWord(const base::string16& word);
   bool Shutdown(int exit_code, bool wait) override;
