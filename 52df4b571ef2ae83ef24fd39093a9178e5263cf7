@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae71f769_d6c6ca04",
+        "filename": "components/viz/service/display_embedder/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-09T14:41:12Z",
+      "side": 1,
+      "message": "From offline discussion, can you just add +services/viz/public/interfaces to components/viz/service/DEPS (and preferably clean up any unnecessary DEPS that result from it)?",
+      "revId": "52df4b571ef2ae83ef24fd39093a9178e5263cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
