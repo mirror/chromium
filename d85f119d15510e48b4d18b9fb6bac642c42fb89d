@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "4c096b70_ff063359",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-09T22:22:48Z",
+      "side": 1,
+      "message": "I found it very surprising that a method that, according to its name and documentation simply responds would case a process to terminate. After 15 minutes of digging, I was not able to figure out how it works. I found that the implementation calls base::RunLoop::QuitCurrentWhenIdleDeprecated(), but I am not sure if this is the key.\n\n[1] https://cs.chromium.org/chromium/src/content/public/test/test_service.cc?l\u003d40",
+      "revId": "d85f119d15510e48b4d18b9fb6bac642c42fb89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a49334c_0d193d21",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-09T22:22:48Z",
+      "side": 1,
+      "message": "replace audio -\u003e video",
+      "revId": "d85f119d15510e48b4d18b9fb6bac642c42fb89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59e9b5ee_ef80cca6",
         "filename": "content/browser/renderer_host/render_process_host_impl.h",
         "patchSetId": 3
