@@ -140,6 +140,8 @@ source_set("unit_tests") {
     "cdm/external_clear_key_test_helper.cc",
     "cdm/external_clear_key_test_helper.h",
     "cdm/json_web_key_unittest.cc",
+    "cdm/mock_helpers.cc",
+    "cdm/mock_helpers.h",
     "cdm/simple_cdm_allocator.cc",
     "cdm/simple_cdm_allocator.h",
     "cdm/simple_cdm_allocator_unittest.cc",

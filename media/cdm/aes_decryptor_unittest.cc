@@ -28,8 +28,10 @@
 #include "media/base/mock_filters.h"
 #include "media/cdm/api/content_decryption_module.h"
 #include "media/cdm/cdm_adapter.h"
+#include "media/cdm/cdm_auxiliary_helper.h"
 #include "media/cdm/cdm_file_io.h"
 #include "media/cdm/external_clear_key_test_helper.h"
+#include "media/cdm/mock_helpers.h"
 #include "media/cdm/simple_cdm_allocator.h"
 #include "media/media_features.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -269,10 +271,11 @@ class AesDecryptorTest : public testing::TestWithParam<std::string> {
 
       helper_.reset(new ExternalClearKeyTestHelper());
       std::unique_ptr<CdmAllocator> allocator(new SimpleCdmAllocator());
+      std::unique_ptr<CdmAuxiliaryHelper> cdm_helper(
+          new MockCdmAuxiliaryHelper(std::move(allocator)));
       CdmAdapter::Create(
           helper_->KeySystemName(), helper_->LibraryPath(), cdm_config,
-          std::move(allocator), base::Bind(&AesDecryptorTest::CreateCdmFileIO,
-                                           base::Unretained(this)),
+          std::move(cdm_helper),
           base::Bind(&MockCdmClient::OnSessionMessage,
                      base::Unretained(&cdm_client_)),
           base::Bind(&MockCdmClient::OnSessionClosed,
@@ -466,11 +469,6 @@ class AesDecryptorTest : public testing::TestWithParam<std::string> {
         EXPECT_TRUE(decrypted_text.empty());
         break;
     }
-  }
-
-  std::unique_ptr<CdmFileIO> CreateCdmFileIO(cdm::FileIOClient* client) {
-    ADD_FAILURE() << "Should never be called";
-    return nullptr;
   }
 
   StrictMock<MockCdmClient> cdm_client_;
