@@ -19,6 +19,93 @@
     },
     {
       "key": {
+        "uuid": "1b3892ca_fd064a0c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-09T16:14:27Z",
+      "side": 1,
+      "message": "This is only used for debugging, and the code is actually moved from somewhere else in this file. There is JSONObject on Android, but I don\u0027t have a strong opinion on whether we care or not in this case.",
+      "parentUuid": "f42dda1a_927d70d3",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a38b0d2_d5d749b8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-09T16:14:27Z",
+      "side": 1,
+      "message": "We tend to use -1 for missing values, as 0 can sometimes have a meaning for these metrics. For instance, connection time can be 0 if the response came from the cache.",
+      "range": {
+        "startLine": 983,
+        "startChar": 8,
+        "endLine": 983,
+        "endChar": 13
+      },
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a866636_0dd76d9b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-09T16:14:27Z",
+      "side": 1,
+      "message": "nit: Can this be named differently, instead of overloading the method? Also, webContents is unused here.",
+      "range": {
+        "startLine": 987,
+        "startChar": 12,
+        "endLine": 987,
+        "endChar": 32
+      },
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80589455_0929d42e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-09T16:14:27Z",
+      "side": 1,
+      "message": "Is it OK to forward a number with a potentially unstable meaning over time?",
+      "range": {
+        "startLine": 992,
+        "startChar": 47,
+        "endLine": 992,
+        "endChar": 70
+      },
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3798e50_336ea499",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PageLoadMetrics.java",
         "patchSetId": 1
@@ -36,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "d6947761_5c03256a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PageLoadMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-09T16:14:27Z",
+      "side": 1,
+      "message": "Pretty much none, as these are not documented, even though they are publicly available.\nThe longer term and stable solution is to move the call to the Android support library, at which point this becomes part of the public API.",
+      "parentUuid": "e3798e50_336ea499",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a7159f7_081f58ff",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PageLoadMetrics.java",
         "patchSetId": 1
@@ -47,6 +152,24 @@
       "writtenOn": "2017-08-07T15:36:58Z",
       "side": 1,
       "message": "should we note that this is invoked once per page load, at the time the page load is started?",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726e6306_a0216094",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PageLoadMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-09T16:14:27Z",
+      "side": 1,
+      "message": "I have a question: will this contain meaningful values for the first page load?\nFor CCT, page loads are likely to be the first ones.",
+      "parentUuid": "1a7159f7_081f58ff",
       "revId": "476b04b95bee515c7c172839245835f10e603523",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
