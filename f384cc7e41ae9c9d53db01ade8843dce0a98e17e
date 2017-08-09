@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9b260b6e_c04900ee",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-09T23:42:21Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. That TODO has been fixed, so you can eliminate it altogether, Leslie.",
+      "parentUuid": "6666cd08_527b58e4",
+      "revId": "f384cc7e41ae9c9d53db01ade8843dce0a98e17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72523e41_58267152",
         "filename": "ash/system/network/network_list.h",
         "patchSetId": 3
