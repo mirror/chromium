@@ -138,6 +138,9 @@ public class BookmarkFolderSelectActivity extends SynchronousInitializationActiv
 
         setContentView(R.layout.bookmark_folder_select_activity);
         mBookmarkIdsList = (ListView) findViewById(R.id.bookmark_folder_list);
+        final int paddingTop = mBookmarkIdsList.getPaddingTop()
+                + getResources().getDimensionPixelSize(R.dimen.bookmark_list_view_padding_top);
+        mBookmarkIdsList.setPadding(0, paddingTop, 0, 0);
         mBookmarkIdsList.setOnItemClickListener(this);
         mBookmarkIdsAdapter = new FolderListAdapter(this);
         mBookmarkIdsList.setAdapter(mBookmarkIdsAdapter);
