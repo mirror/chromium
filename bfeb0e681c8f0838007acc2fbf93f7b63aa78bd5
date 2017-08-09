@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4005d9ed_c008fa0a",
+        "filename": "components/payments/core/payments_profile_comparator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T19:49:56Z",
+      "side": 1,
+      "message": "Nice, this will be useful on desktop too",
+      "range": {
+        "startLine": 95,
+        "startChar": 17,
+        "endLine": 95,
+        "endChar": 48
+      },
+      "revId": "bfeb0e681c8f0838007acc2fbf93f7b63aa78bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
