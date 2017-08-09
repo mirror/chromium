@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66e8ed7c_87b25b89",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-09T22:09:43Z",
+      "side": 1,
+      "message": "Does this need to be updated?",
+      "range": {
+        "startLine": 1143,
+        "startChar": 4,
+        "endLine": 1143,
+        "endChar": 27
+      },
+      "revId": "7b1e23ad1a2254445db37e58a394116d3f31689c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e61a62a_76a6ca08",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-09T22:09:43Z",
+      "side": 1,
+      "message": "Could you instead use PaintInfo::ClonePaintInfo()?",
+      "range": {
+        "startLine": 1158,
+        "startChar": 4,
+        "endLine": 1158,
+        "endChar": 28
+      },
+      "revId": "7b1e23ad1a2254445db37e58a394116d3f31689c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
