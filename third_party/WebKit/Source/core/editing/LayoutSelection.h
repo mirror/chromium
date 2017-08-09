@@ -60,7 +60,7 @@ class SelectionPaintRange {
 
    private:
     LayoutObject* current_;
-    const LayoutObject* included_end_;
+    // const LayoutObject* included_end_;
     const LayoutObject* stop_;
   };
   Iterator begin() const { return Iterator(this); };
