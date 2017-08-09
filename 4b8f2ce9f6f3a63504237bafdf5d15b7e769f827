@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5d4a708_3db7c232",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-09T08:32:56Z",
+      "side": 1,
+      "message": "need a link to the code portion.",
+      "range": {
+        "startLine": 46,
+        "startChar": 44,
+        "endLine": 47,
+        "endChar": 39
+      },
+      "revId": "4b8f2ce9f6f3a63504237bafdf5d15b7e769f827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

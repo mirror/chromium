@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17b3fcfb_cc372a25",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-09T08:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a473020_f275cf0c",
+      "revId": "6ee3454b1e02a2f6e5d2871dd35d0f773dac1d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4faa56e2_8cc8cc89",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
         "patchSetId": 10
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "4b7dc98b_f555f353",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-09T08:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0446641c_3be5a88a",
+      "revId": "6ee3454b1e02a2f6e5d2871dd35d0f773dac1d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4b61e25_b9dd8e73",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-09T08:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4faa56e2_8cc8cc89",
+      "range": {
+        "startLine": 99,
+        "startChar": 33,
+        "endLine": 99,
+        "endChar": 37
+      },
+      "revId": "6ee3454b1e02a2f6e5d2871dd35d0f773dac1d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2e0a4b2_09a14e19",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
         "patchSetId": 10
@@ -90,6 +150,24 @@
       "revId": "6ee3454b1e02a2f6e5d2871dd35d0f773dac1d67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2426ee50_c005f687",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-09T08:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2933846a_2bba8c91",
+      "revId": "6ee3454b1e02a2f6e5d2871dd35d0f773dac1d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +228,30 @@
     },
     {
       "key": {
+        "uuid": "080c83d8_84ed15ba",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-09T08:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca9021dc_3d0fd11d",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 151,
+        "endChar": 20
+      },
+      "revId": "6ee3454b1e02a2f6e5d2871dd35d0f773dac1d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c20b5167_bb11d131",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
         "patchSetId": 10
@@ -167,6 +269,24 @@
     },
     {
       "key": {
+        "uuid": "7abb7858_57484af3",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-09T08:32:56Z",
+      "side": 1,
+      "message": "I think those are required for dispatching \u0027change\u0027 events.",
+      "parentUuid": "c20b5167_bb11d131",
+      "revId": "6ee3454b1e02a2f6e5d2871dd35d0f773dac1d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5cd086b_6125cd7f",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
         "patchSetId": 10
@@ -181,6 +301,24 @@
       "revId": "6ee3454b1e02a2f6e5d2871dd35d0f773dac1d67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7912b077_f1649d48",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-09T08:32:56Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "f5cd086b_6125cd7f",
+      "revId": "6ee3454b1e02a2f6e5d2871dd35d0f773dac1d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
