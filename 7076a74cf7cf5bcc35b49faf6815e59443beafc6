@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23a2e182_f0e57e40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-09T21:29:09Z",
+      "side": 1,
+      "message": "Test: seems missing. Please also run \u0027git cl format\u0027 and \u0027git cl lint\u0027 if you haven\u0027t done that yet.",
+      "revId": "7076a74cf7cf5bcc35b49faf6815e59443beafc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed68f3e_cc5731e0",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-09T21:29:09Z",
+      "side": 1,
+      "message": "Skips",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 7
+      },
+      "revId": "7076a74cf7cf5bcc35b49faf6815e59443beafc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f73693c_cb24c2d7",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-09T21:29:09Z",
+      "side": 1,
+      "message": "DCHECK_EQ(kHistogramBuckets, ...);\n\notherwise you won\u0027t see the unexpected value in the log.",
+      "revId": "7076a74cf7cf5bcc35b49faf6815e59443beafc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b0fcfe_0e7b6546",
+        "filename": "components/arc/test/fake_app_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-09T21:29:09Z",
+      "side": 1,
+      "message": "The explicit std::string construction seems redundant. Remove?\n\n::New(\n  \"LauncherIntentUri\",  // ...\n\n(here and elsewhere)",
+      "range": {
+        "startLine": 296,
+        "startChar": 6,
+        "endLine": 296,
+        "endChar": 18
+      },
+      "revId": "7076a74cf7cf5bcc35b49faf6815e59443beafc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
