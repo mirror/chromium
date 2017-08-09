@@ -63,7 +63,7 @@ class COMPONENTS_PREFS_EXPORT PrefMemberBase : public PrefObserver {
     void UpdateValue(base::Value* value,
                      bool is_managed,
                      bool is_user_modifiable,
-                     base::OnceClosure callback) const;
+                     const base::Closure& callback) const;
 
     void MoveToThread(scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 

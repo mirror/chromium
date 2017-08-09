@@ -57,9 +57,13 @@ public class SystemDownloadNotifierTest {
         @Override
         void updateDownloadNotification(
                 final PendingNotificationInfo notificationInfo, final boolean autoRelease) {
-            ThreadUtils.runOnUiThreadBlocking(
-                    () -> MockSystemDownloadNotifier.super.updateDownloadNotification(
-                            notificationInfo, autoRelease));
+            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+                @Override
+                public void run() {
+                    MockSystemDownloadNotifier.super.updateDownloadNotification(
+                            notificationInfo, autoRelease);
+                }
+            });
         }
     }
 
@@ -73,13 +77,16 @@ public class SystemDownloadNotifierTest {
      * Helper method to simulate that the DownloadNotificationService is connected.
      */
     private void onServiceConnected() {
-        ThreadUtils.runOnUiThreadBlocking(() -> {
-            mService = new MockDownloadNotificationService();
-            mService.setContext(
-                    new AdvancedMockContext(InstrumentationRegistry.getInstrumentation()
-                            .getTargetContext()
-                            .getApplicationContext()));
-            mService.onCreate();
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mService = new MockDownloadNotificationService();
+                mService.setContext(
+                        new AdvancedMockContext(InstrumentationRegistry.getInstrumentation()
+                                                        .getTargetContext()
+                                                        .getApplicationContext()));
+                mService.onCreate();
+            }
         });
         mDownloadNotifier.setDownloadNotificationService(mService);
         mDownloadNotifier.handlePendingNotifications();

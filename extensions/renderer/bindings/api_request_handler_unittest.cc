@@ -523,8 +523,7 @@ TEST_F(APIRequestHandlerTest, ThrowExceptionInCallback) {
   // by the exception handler.
   EXPECT_FALSE(outer_try_catch.HasCaught());
   ASSERT_TRUE(logged_error);
-  EXPECT_THAT(*logged_error,
-              testing::StartsWith("Error handling response: Error: hello"));
+  EXPECT_EQ("Error handling response: Uncaught Error: hello", *logged_error);
 }
 
 }  // namespace extensions

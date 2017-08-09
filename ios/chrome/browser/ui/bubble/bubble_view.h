@@ -20,20 +20,17 @@ typedef NS_ENUM(NSInteger, BubbleArrowDirection) {
   BubbleArrowDirectionDown,
 };
 
-// Alignment of the bubble's arrow relative to the rest of the bubble.
+// Alignment of the bubble relative to the arrow.
 typedef NS_ENUM(NSInteger, BubbleAlignment) {
-  // Arrow is aligned to the leading edge of the bubble.
   BubbleAlignmentLeading,
-  // Arrow is center aligned on the bubble.
   BubbleAlignmentCenter,
-  // Arrow is aligned to the trailing edge of the bubble.
   BubbleAlignmentTrailing,
 };
 
 // Speech bubble shaped view that displays a message.
 @interface BubbleView : UIView
 
-// Initialize with the given text, direction that the bubble should point, and
+// Initializes with the given text, direction that the bubble should point, and
 // alignment of the bubble.
 - (instancetype)initWithText:(NSString*)text
               arrowDirection:(BubbleArrowDirection)direction

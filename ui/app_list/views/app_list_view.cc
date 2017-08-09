@@ -12,7 +12,6 @@
 #include "base/profiler/scoped_tracker.h"
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
-#include "components/wallpaper/wallpaper_color_profile.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_model.h"
@@ -48,8 +47,6 @@
 #include "ui/views/views_delegate.h"
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/shadow_types.h"
-
-using wallpaper::ColorProfileType;
 
 namespace app_list {
 
@@ -192,16 +189,12 @@ AppListView::AppListView(AppListViewDelegate* delegate)
   CHECK(delegate);
   delegate_->GetSpeechUI()->AddObserver(this);
 
-  if (is_fullscreen_app_list_enabled_) {
+  if (is_fullscreen_app_list_enabled_)
     display_observer_.Add(display::Screen::GetScreen());
-    delegate_->AddObserver(this);
-  }
 }
 
 AppListView::~AppListView() {
   delegate_->GetSpeechUI()->RemoveObserver(this);
-  if (is_fullscreen_app_list_enabled_)
-    delegate_->RemoveObserver(this);
   animation_observer_.reset();
   // Remove child views first to ensure no remaining dependencies on delegate_.
   RemoveAllChildViews(true);
@@ -230,11 +223,11 @@ void AppListView::Initialize(gfx::NativeView parent,
   if (is_fullscreen_app_list_enabled_)
     SetState(app_list_state_);
 
-  delegate_->ViewInitialized();
+  if (delegate_)
+    delegate_->ViewInitialized();
 
   UMA_HISTOGRAM_TIMES("Apps.AppListCreationTime",
                       base::Time::Now() - start_time);
-  app_list_main_view_->model()->RecordItemsInFoldersForUMA();
 }
 
 void AppListView::SetBubbleArrow(views::BubbleBorder::Arrow arrow) {
@@ -351,8 +344,8 @@ void AppListView::InitContents(gfx::NativeView parent, int initial_apps_page) {
     // makes it transparent.
     app_list_background_shield_ = new views::View;
     app_list_background_shield_->SetPaintToLayer(ui::LAYER_SOLID_COLOR);
+    app_list_background_shield_->layer()->SetColor(SK_ColorBLACK);
     app_list_background_shield_->layer()->SetOpacity(kAppListOpacity);
-    SetBackgroundShieldColor();
     if (features::IsBackgroundBlurEnabled()) {
       app_list_background_shield_->layer()->SetBackgroundBlur(
           kAppListBlurRadius);
@@ -433,21 +426,16 @@ void AppListView::InitializeFullscreen(gfx::NativeView parent,
   const display::Display display_nearest_view = GetDisplayNearestView();
   const gfx::Rect display_work_area_bounds = display_nearest_view.work_area();
   const int bottom_of_screen = display_nearest_view.size().height();
-
-  // Set the widget height to the shelf height to replace the shelf background
-  // on show animation with no flicker. In shelf mode we set the bounds to the
-  // top of the screen because the widget does not animate.
-  const int overlay_view_bounds_y =
-      is_side_shelf_ ? 0 : (bottom_of_screen - kShelfSize);
-  const int overlay_view_bounds_x =
-      is_side_shelf_ ? 0 : display_work_area_bounds.x();
-  const int overlay_view_bounds_width =
-      display_work_area_bounds.width() + (is_side_shelf_ ? kShelfSize : 0);
-  const int overlay_view_bounds_height =
-      display_work_area_bounds.height() + (is_side_shelf_ ? 0 : kShelfSize);
+  // todo(crbug.com/750664): Modify animations and bounds of the launcher
+  // in side shelf mode.
   gfx::Rect app_list_overlay_view_bounds(
-      overlay_view_bounds_x, overlay_view_bounds_y, overlay_view_bounds_width,
-      overlay_view_bounds_height);
+      display_work_area_bounds.x(),
+      bottom_of_screen -
+          kShelfSize,  // Set the widget height to the shelf height to replace
+                       // the shelf background on show animation with no
+                       // flicker.
+      display_work_area_bounds.width(),
+      display_work_area_bounds.height() + kShelfSize);
 
   fullscreen_widget_ = new views::Widget;
   views::Widget::InitParams app_list_overlay_view_params(
@@ -553,8 +541,6 @@ void AppListView::EndDrag(const gfx::Point& location) {
           SetState(FULLSCREEN_SEARCH);
           break;
         case PEEKING:
-          UMA_HISTOGRAM_ENUMERATION(kAppListPeekingToFullscreenHistogram,
-                                    kSwipe, kMaxPeekingToFullscreen);
           SetState(FULLSCREEN_ALL_APPS);
           break;
         case CLOSED:
@@ -715,15 +701,11 @@ void AppListView::OnGestureEvent(ui::GestureEvent* event) {
       break;
     case ui::ET_SCROLL_FLING_START:
     case ui::ET_GESTURE_SCROLL_BEGIN:
-      if (is_side_shelf_)
-        return;
       processing_scroll_event_series_ = true;
       StartDrag(event->location());
       event->SetHandled();
       break;
     case ui::ET_GESTURE_SCROLL_UPDATE:
-      if (is_side_shelf_)
-        return;
       processing_scroll_event_series_ = true;
       last_fling_velocity_ = event->details().scroll_y();
       UpdateDrag(event->location());
@@ -732,8 +714,7 @@ void AppListView::OnGestureEvent(ui::GestureEvent* event) {
     case ui::ET_GESTURE_END:
       if (!processing_scroll_event_series_)
         break;
-      if (is_side_shelf_)
-        return;
+
       processing_scroll_event_series_ = false;
       EndDrag(event->location());
       event->SetHandled();
@@ -839,12 +820,6 @@ bool AppListView::HandleScroll(const ui::Event* event) {
     case ui::ET_MOUSEWHEEL:
       SetState(event->AsMouseWheelEvent()->y_offset() < 0 ? FULLSCREEN_ALL_APPS
                                                           : CLOSED);
-      if (app_list_state_ == FULLSCREEN_ALL_APPS) {
-        UMA_HISTOGRAM_ENUMERATION(kAppListPeekingToFullscreenHistogram,
-                                  kMousewheelScroll, kMaxPeekingToFullscreen);
-      }
-      // Return true unconditionally because all mousewheel events are large
-      // enough to transition the app list.
       return true;
     case ui::ET_SCROLL:
     case ui::ET_SCROLL_FLING_START: {
@@ -852,10 +827,6 @@ bool AppListView::HandleScroll(const ui::Event* event) {
           kAppListMinScrollToSwitchStates) {
         SetState(event->AsScrollEvent()->y_offset() < 0 ? FULLSCREEN_ALL_APPS
                                                         : CLOSED);
-        if (app_list_state_ == FULLSCREEN_ALL_APPS) {
-          UMA_HISTOGRAM_ENUMERATION(kAppListPeekingToFullscreenHistogram,
-                                    kMousepadScroll, kMaxPeekingToFullscreen);
-        }
         return true;
       }
       break;
@@ -880,6 +851,7 @@ void AppListView::SetState(AppListState new_state) {
     }
   }
 
+  StartAnimationForState(new_state_override);
   switch (new_state_override) {
     case PEEKING: {
       switch (app_list_state_) {
@@ -910,7 +882,7 @@ void AppListView::SetState(AppListState new_state) {
         apps_container_view->app_list_folder_view()->CloseFolderPage();
 
       app_list_main_view_->contents_view()->SetActiveState(
-          AppListModel::STATE_APPS, !is_side_shelf_);
+          AppListModel::STATE_APPS);
       break;
     }
     case FULLSCREEN_SEARCH:
@@ -920,14 +892,10 @@ void AppListView::SetState(AppListState new_state) {
       delegate_->Dismiss();
       break;
   }
-  StartAnimationForState(new_state_override);
   app_list_state_ = new_state_override;
 }
 
 void AppListView::StartAnimationForState(AppListState target_state) {
-  if (is_side_shelf_)
-    return;
-
   const int display_height = GetDisplayNearestView().size().height();
   int target_state_y = 0;
 
@@ -1119,37 +1087,6 @@ float AppListView::GetAppListBackgroundOpacityDuringDragging() {
   float coefficient =
       std::min(dragging_height / (kNumOfShelfSize * kShelfSize), 1.0f);
   return coefficient * kAppListOpacity;
-}
-
-void AppListView::GetWallpaperProminentColors(std::vector<SkColor>* colors) {
-  delegate_->GetWallpaperProminentColors(colors);
-}
-
-void AppListView::OnWallpaperColorsChanged() {
-  SetBackgroundShieldColor();
-}
-
-void AppListView::SetBackgroundShieldColor() {
-  // There is a chance when AppListView::OnWallpaperColorsChanged called from
-  // AppListViewDelegate and the app_list_background_shield_ is not initialized.
-  if (!is_fullscreen_app_list_enabled_ && !app_list_background_shield_)
-    return;
-
-  std::vector<SkColor> prominent_colors;
-  GetWallpaperProminentColors(&prominent_colors);
-
-  if (prominent_colors.empty()) {
-    app_list_background_shield_->layer()->SetColor(kDefaultBackgroundColor);
-  } else {
-    DCHECK_EQ(static_cast<size_t>(ColorProfileType::NUM_OF_COLOR_PROFILES),
-              prominent_colors.size());
-
-    const SkColor dark_muted =
-        prominent_colors[static_cast<int>(ColorProfileType::DARK_MUTED)];
-    const SkColor dark_muted_mixed = color_utils::AlphaBlend(
-        SK_ColorBLACK, dark_muted, kDarkMutedBlendAlpha);
-    app_list_background_shield_->layer()->SetColor(dark_muted_mixed);
-  }
 }
 
 }  // namespace app_list

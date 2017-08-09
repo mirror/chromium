@@ -35,7 +35,6 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/plugin_service.h"
 #include "content/public/common/content_switches.h"
-#include "extensions/browser/extension_file_task_runner.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_l10n_util.h"
@@ -86,7 +85,7 @@ std::string GenerateId(const base::DictionaryValue* manifest,
 std::unique_ptr<base::DictionaryValue> LoadManifestOnFileThread(
     const base::FilePath& root_directory,
     const base::FilePath::CharType* manifest_filename) {
-  DCHECK(GetExtensionFileTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
   std::string error;
   std::unique_ptr<base::DictionaryValue> manifest(
       file_util::LoadManifest(root_directory, manifest_filename, &error));
@@ -678,12 +677,14 @@ void ComponentLoader::AddComponentFromDir(
   const base::FilePath::CharType* manifest_filename =
       IsNormalSession() ? extensions::kManifestFilename
                         : extension_misc::kGuestManifestFilename;
-
-  base::PostTaskAndReplyWithResult(
-      GetExtensionFileTaskRunner().get(), FROM_HERE,
+  BrowserThread::PostTaskAndReplyWithResult(
+      BrowserThread::FILE,
+      FROM_HERE,
       base::Bind(&LoadManifestOnFileThread, root_directory, manifest_filename),
       base::Bind(&ComponentLoader::FinishAddComponentFromDir,
-                 weak_factory_.GetWeakPtr(), root_directory, extension_id,
+                 weak_factory_.GetWeakPtr(),
+                 root_directory,
+                 extension_id,
                  done_cb));
 }
 

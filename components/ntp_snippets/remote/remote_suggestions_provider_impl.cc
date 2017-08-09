@@ -29,7 +29,6 @@
 #include "components/ntp_snippets/pref_names.h"
 #include "components/ntp_snippets/remote/remote_suggestions_database.h"
 #include "components/ntp_snippets/remote/remote_suggestions_scheduler.h"
-#include "components/ntp_snippets/remote/remote_suggestions_status_service_impl.h"
 #include "components/ntp_snippets/switches.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -287,6 +286,12 @@ RemoteSuggestionsProviderImpl::RemoteSuggestionsProviderImpl(
     observer->OnCategoryStatusChanged(this, entry.first, entry.second.status);
   }
 
+  if (breaking_news_raw_data_provider_) {
+    breaking_news_raw_data_provider_->StartListening(
+        base::Bind(&RemoteSuggestionsProviderImpl::PrependArticleSuggestion,
+                   base::Unretained(this)));
+  }
+
   if (database_->IsErrorState()) {
     EnterState(State::ERROR_OCCURRED);
     UpdateAllCategoryStatus(CategoryStatus::LOADING_ERROR);
@@ -305,8 +310,7 @@ RemoteSuggestionsProviderImpl::RemoteSuggestionsProviderImpl(
 }
 
 RemoteSuggestionsProviderImpl::~RemoteSuggestionsProviderImpl() {
-  if (breaking_news_raw_data_provider_ &&
-      breaking_news_raw_data_provider_->IsListening()) {
+  if (breaking_news_raw_data_provider_) {
     breaking_news_raw_data_provider_->StopListening();
   }
 }
@@ -317,7 +321,7 @@ void RemoteSuggestionsProviderImpl::RegisterProfilePrefs(
   registry->RegisterListPref(prefs::kRemoteSuggestionCategories);
   registry->RegisterInt64Pref(prefs::kLastSuccessfulBackgroundFetchTime, 0);
 
-  RemoteSuggestionsStatusServiceImpl::RegisterProfilePrefs(registry);
+  RemoteSuggestionsStatusService::RegisterProfilePrefs(registry);
 }
 
 void RemoteSuggestionsProviderImpl::ReloadSuggestions() {
@@ -553,6 +557,11 @@ void RemoteSuggestionsProviderImpl::ClearDismissedSuggestionsForDebugging(
 // static
 int RemoteSuggestionsProviderImpl::GetMaxSuggestionCountForTesting() {
   return kMaxSuggestionCount;
+}
+
+void RemoteSuggestionsProviderImpl::PushArticleSuggestionToTheFrontForDebugging(
+    std::unique_ptr<RemoteSuggestion> suggestion) {
+  PrependArticleSuggestion(std::move(suggestion));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1080,21 +1089,10 @@ void RemoteSuggestionsProviderImpl::EnterStateReady() {
       UpdateCategoryStatus(category, CategoryStatus::AVAILABLE);
     }
   }
-
-  if (breaking_news_raw_data_provider_) {
-    DCHECK(!breaking_news_raw_data_provider_->IsListening());
-    breaking_news_raw_data_provider_->StartListening(
-        base::Bind(&RemoteSuggestionsProviderImpl::PrependArticleSuggestion,
-                   base::Unretained(this)));
-  }
 }
 
 void RemoteSuggestionsProviderImpl::EnterStateDisabled() {
   ClearSuggestions();
-  if (breaking_news_raw_data_provider_ &&
-      breaking_news_raw_data_provider_->IsListening()) {
-    breaking_news_raw_data_provider_->StopListening();
-  }
 }
 
 void RemoteSuggestionsProviderImpl::EnterStateError() {

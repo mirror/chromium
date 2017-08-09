@@ -133,6 +133,7 @@ const int kAppsGridLeftRightPaddingFullscreen = 28;
 // The padding around the outside of the search box (top and sides).
 const int kSearchBoxPadding = 16;
 const int kSearchBoxTopPadding = 24;
+const int kSearchBoxBottomPadding = 21;
 
 // The background border corner radius of the search box in fullscreen mode.
 const int kSearchBoxBorderCornerRadiusFullscreen = 24;
@@ -150,17 +151,6 @@ const size_t kMaxFolderNameChars = 80;
 // Font style for app item labels.
 const ui::ResourceBundle::FontStyle kItemTextFontStyle =
     ui::ResourceBundle::SmallFont;
-
-// The UMA histogram that logs usage of the original and redesigned folders.
-const char kAppListFolderOpenedHistogram[] = "Apps.AppListFolderOpened";
-
-// The UMA histogram that logs how the app list transitions from peeking to
-// fullscreen.
-const char kAppListPeekingToFullscreenHistogram[] =
-    "Apps.AppListPeekingToFullscreen";
-
-// The UMA histogram that logs how the app list is shown.
-const char kAppListToggleMethodHistogram[] = "Apps.AppListShowSource";
 
 // The UMA histogram that logs which page gets opened by the user.
 const char kPageOpenedHistogram[] = "Apps.AppListPageOpened";

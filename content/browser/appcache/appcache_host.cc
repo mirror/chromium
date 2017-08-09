@@ -210,13 +210,13 @@ bool AppCacheHost::MarkAsForeignEntry(const GURL& document_url,
   return true;
 }
 
-void AppCacheHost::GetStatusWithCallback(GetStatusCallback callback,
+void AppCacheHost::GetStatusWithCallback(const GetStatusCallback& callback,
                                          void* callback_param) {
   DCHECK(pending_start_update_callback_.is_null() &&
          pending_swap_cache_callback_.is_null() &&
          pending_get_status_callback_.is_null());
 
-  pending_get_status_callback_ = std::move(callback);
+  pending_get_status_callback_ = callback;
   pending_callback_param_ = callback_param;
   if (is_selection_pending())
     return;
@@ -227,8 +227,8 @@ void AppCacheHost::GetStatusWithCallback(GetStatusCallback callback,
 void AppCacheHost::DoPendingGetStatus() {
   DCHECK_EQ(false, pending_get_status_callback_.is_null());
 
-  std::move(pending_get_status_callback_)
-      .Run(GetStatus(), pending_callback_param_);
+  pending_get_status_callback_.Run(GetStatus(), pending_callback_param_);
+  pending_get_status_callback_.Reset();
   pending_callback_param_ = NULL;
 }
 
@@ -259,8 +259,8 @@ void AppCacheHost::DoPendingStartUpdate() {
     }
   }
 
-  std::move(pending_start_update_callback_)
-      .Run(success, pending_callback_param_);
+  pending_start_update_callback_.Run(success, pending_callback_param_);
+  pending_start_update_callback_.Reset();
   pending_callback_param_ = NULL;
 }
 
@@ -295,7 +295,8 @@ void AppCacheHost::DoPendingSwapCache() {
     }
   }
 
-  std::move(pending_swap_cache_callback_).Run(success, pending_callback_param_);
+  pending_swap_cache_callback_.Run(success, pending_callback_param_);
+  pending_swap_cache_callback_.Reset();
   pending_callback_param_ = NULL;
 }
 

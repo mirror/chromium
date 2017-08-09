@@ -124,8 +124,6 @@ static_library("test_support") {
     "../public/test/test_launcher.h",
     "../public/test/test_navigation_observer.cc",
     "../public/test/test_navigation_observer.h",
-    "../public/test/test_navigation_throttle_inserter.cc",
-    "../public/test/test_navigation_throttle_inserter.h",
     "../public/test/test_notification_tracker.cc",
     "../public/test/test_notification_tracker.h",
     "../public/test/test_renderer_host.cc",
@@ -182,7 +180,6 @@ static_library("test_support") {
     "mock_keyboard_driver_win.h",
     "mock_leveldb_database.cc",
     "mock_leveldb_database.h",
-    "mock_overscroll_observer.h",
     "mock_permission_manager.cc",
     "mock_permission_manager.h",
     "mock_platform_notification_service.cc",
@@ -371,11 +368,6 @@ static_library("test_support") {
   }
 
   if (use_aura) {
-    sources += [
-      "mock_overscroll_controller_delegate_aura.cc",
-      "mock_overscroll_controller_delegate_aura.h",
-    ]
-
     deps += [
       "//ui/aura:test_support",
       "//ui/resources:ui_test_pak",
@@ -410,11 +402,6 @@ static_library("test_support") {
   }
 
   if (is_android) {
-    sources += [
-      "mock_overscroll_refresh_handler_android.cc",
-      "mock_overscroll_refresh_handler_android.h",
-    ]
-
     deps += [
       "//device/geolocation:geolocation_java",
       "//media/capture/video/android:android",
@@ -945,7 +932,6 @@ test("content_browsertests") {
       "//content/shell/android:content_shell_assets",
       "//content/shell/android:content_shell_jni_headers",
       "//testing/android/native_test:native_test_support",
-      "//ui/android:android",
     ]
     android_manifest =
         "${target_gen_dir}/content_browsertests_manifest/AndroidManifest.xml"
@@ -1319,8 +1305,6 @@ test("content_unittests") {
     "../browser/renderer_host/media/video_capture_controller_unittest.cc",
     "../browser/renderer_host/media/video_capture_manager_unittest.cc",
     "../browser/renderer_host/media/video_capture_unittest.cc",
-    "../browser/renderer_host/mock_widget_impl.cc",
-    "../browser/renderer_host/mock_widget_impl.h",
     "../browser/renderer_host/offscreen_canvas_provider_impl_unittest.cc",
     "../browser/renderer_host/render_process_host_unittest.cc",
     "../browser/renderer_host/render_view_host_unittest.cc",
@@ -1340,7 +1324,6 @@ test("content_unittests") {
     "../browser/service_worker/service_worker_context_core_unittest.cc",
     "../browser/service_worker/service_worker_context_request_handler_unittest.cc",
     "../browser/service_worker/service_worker_context_unittest.cc",
-    "../browser/service_worker/service_worker_context_watcher_unittest.cc",
     "../browser/service_worker/service_worker_controllee_request_handler_unittest.cc",
     "../browser/service_worker/service_worker_data_pipe_reader_unittest.cc",
     "../browser/service_worker/service_worker_database_unittest.cc",
@@ -1404,7 +1387,6 @@ test("content_unittests") {
     "../child/notifications/notification_data_conversions_unittest.cc",
     "../child/resource_dispatcher_unittest.cc",
     "../child/service_worker/service_worker_dispatcher_unittest.cc",
-    "../child/service_worker/service_worker_provider_context_unittest.cc",
     "../child/shared_memory_data_consumer_handle_unittest.cc",
     "../child/shared_memory_received_data_factory_unittest.cc",
     "../child/site_isolation_stats_gatherer_unittest.cc",
@@ -1494,6 +1476,7 @@ test("content_unittests") {
     "../renderer/presentation/presentation_dispatcher_unittest.cc",
     "../renderer/presentation/test_presentation_connection.cc",
     "../renderer/presentation/test_presentation_connection.h",
+    "../renderer/previews_state_helper_unittest.cc",
     "../renderer/render_thread_impl_unittest.cc",
     "../renderer/render_widget_unittest.cc",
     "../renderer/scheduler/resource_dispatch_throttler_unittest.cc",

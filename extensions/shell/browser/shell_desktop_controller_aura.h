@@ -5,13 +5,12 @@
 #ifndef EXTENSIONS_SHELL_BROWSER_SHELL_DESKTOP_CONTROLLER_AURA_H_
 #define EXTENSIONS_SHELL_BROWSER_SHELL_DESKTOP_CONTROLLER_AURA_H_
 
-#include <list>
 #include <memory>
+#include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "build/build_config.h"
-#include "extensions/browser/app_window/app_window_registry.h"
 #include "extensions/shell/browser/desktop_controller.h"
 #include "ui/aura/client/window_parenting_client.h"
 #include "ui/aura/window_tree_host_observer.h"
@@ -31,7 +30,12 @@ class FocusClient;
 }
 }
 
+namespace content {
+class BrowserContext;
+}
+
 namespace gfx {
+class Rect;
 class Size;
 }
 
@@ -56,7 +60,6 @@ class ShellScreen;
 // primary display.
 class ShellDesktopControllerAura
     : public DesktopController,
-      public AppWindowRegistry::Observer,
       public aura::client::WindowParentingClient,
 #if defined(OS_CHROMEOS)
       public chromeos::PowerManagerClient::Observer,
@@ -71,13 +74,12 @@ class ShellDesktopControllerAura
   aura::WindowTreeHost* host() { return host_.get(); }
 
   // DesktopController:
+  gfx::Size GetWindowSize() override;
   AppWindow* CreateAppWindow(content::BrowserContext* context,
                              const Extension* extension) override;
   void AddAppWindow(gfx::NativeWindow window) override;
+  void RemoveAppWindow(AppWindow* window) override;
   void CloseAppWindows() override;
-
-  // AppWindowRegistry::Observer overrides:
-  void OnAppWindowRemoved(AppWindow* app_window) override;
 
   // aura::client::WindowParentingClient overrides:
   aura::Window* GetDefaultParent(aura::Window* window,
@@ -94,7 +96,7 @@ class ShellDesktopControllerAura
 #endif
 
   // aura::WindowTreeHostObserver overrides:
-  void OnHostCloseRequested(aura::WindowTreeHost* host) override;
+  void OnHostCloseRequested(const aura::WindowTreeHost* host) override;
 
   // ui::internal::InputMethodDelegate overrides:
   ui::EventDispatchDetails DispatchKeyEventPostIME(
@@ -140,7 +142,7 @@ class ShellDesktopControllerAura
   std::unique_ptr<AppWindowClient> app_window_client_;
 
   // NativeAppWindow::Close() deletes the AppWindow.
-  std::list<AppWindow*> app_windows_;
+  std::vector<AppWindow*> app_windows_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellDesktopControllerAura);
 };

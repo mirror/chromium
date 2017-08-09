@@ -1617,14 +1617,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Apps.AppListFolderOpened" enum="AppListFolderOpened">
-  <owner>newcomer@chromium.org</owner>
-  <summary>
-    The number of times folders are opened in the app list. This is logged when
-    the folder is clicked.
-  </summary>
-</histogram>
-
 <histogram name="Apps.AppListHowEnabled" enum="AppListEnableSource">
   <owner>tapted@chromium.org</owner>
   <summary>
@@ -1640,15 +1632,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The page that the app list goes to. This is gathered every time the user
     initiates a transition to another page in the launcher.
-  </summary>
-</histogram>
-
-<histogram name="Apps.AppListPeekingToFullscreenSource"
-    enum="AppListPeekingToFullscreenSource">
-  <owner>newcomer@chromium.org</owner>
-  <summary>
-    The source which transitions the app list from Peeking to Fullscreen. This
-    is logged when the transition method is used.
   </summary>
 </histogram>
 
@@ -1693,14 +1676,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Apps.AppListShowSource" enum="AppListShowSource">
-  <owner>newcomer@chromium.org</owner>
-  <summary>
-    The number of times the different sources for showing the app list are used.
-    This is logged when the app list is shown.
-  </summary>
-</histogram>
-
 <histogram name="Apps.AppListTimeToDiscover" units="ms">
   <owner>tapted@chromium.org</owner>
   <summary>
@@ -1733,18 +1708,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     call ChromeAppModeMain. For example, when Chrome updates from 32-bit to
     64-bit, an older shim will find the new framework version but fail to dyload
     it.
-  </summary>
-</histogram>
-
-<histogram name="Apps.AppsInFolders" units="Apps">
-<!-- Name completed by histogram_suffixes
-     name="AppListFolderExperiment" -->
-
-  <owner>newcomer@chromium.org</owner>
-  <summary>
-    The total number of apps in folders ignoring OEM folders. This is logged
-    each time the app list is initialized. The suffix denotes whether the
-    fullscreen app list feature has been enabled.
   </summary>
 </histogram>
 
@@ -5607,12 +5570,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Time spent updating compositing in the Blink document lifecyce.
   </summary>
-</histogram>
-
-<histogram name="Blink.CookieJar.SyncCookiesTime" units="microseconds">
-  <owner>kinuko@chromium.org</owner>
-  <owner>dcheng@chromium.org</owner>
-  <summary>Microseconds per sync IPC call to fetch cookies.</summary>
 </histogram>
 
 <histogram name="Blink.DecodedImage.CanvasExpanded"
@@ -14148,16 +14105,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="DnsProbe.ProbeResult" enum="DnsProbe.ProbeStatus">
   <owner>mgersh@chromium.org</owner>
   <summary>Result of DNS probes sent by the probe service.</summary>
-</histogram>
-
-<histogram name="Document.OutliveTimeAfterShutdown.DestroyedBeforeProcessDies">
-  <owner>hajimehoshi@chromium.org</owner>
-  <owner>keishi@chromium.org</owner>
-  <summary>
-    Records the GC count between the time when the document is shut down and and
-    the time when the document is actually destroyed. This only counts documents
-    that are destroyed before the process dies.
-  </summary>
 </histogram>
 
 <histogram name="DocumentActivity.Enabled" enum="RunningMode">
@@ -32344,23 +32291,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Various usage counts for media galleries.</summary>
 </histogram>
 
-<histogram name="MediaRouter.Cast.Discovery.ConnectedDevicesCount"
-    units="devices">
-  <owner>zhaobin@chromium.org</owner>
-  <summary>
-    The number of connected Cast devices. Recorded when browser finishes
-    discovering Cast devices. Recording happens roughly once per hour.
-  </summary>
-</histogram>
-
-<histogram name="MediaRouter.Cast.Discovery.KnownDevicesCount" units="devices">
-  <owner>zhaobin@chromium.org</owner>
-  <summary>
-    The number of known Cast devices. Recorded when browser finishes discovering
-    Cast devices. Recording happens roughly once per hour.
-  </summary>
-</histogram>
-
 <histogram name="MediaRouter.Dial.AvailableDevicesCount" units="devices">
   <owner>zhaobin@chromium.org</owner>
   <summary>
@@ -39107,9 +39037,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Net.HttpStreamFactoryJob.StreamReadyCallbackTime" units="ms">
-  <obsolete>
-    Deprecated 08/2017. No longer tracked.
-  </obsolete>
   <owner>zhongyi@chromium.org</owner>
   <summary>Time it takes for OnStreamReadyCallback to be called.</summary>
 </histogram>
@@ -47806,18 +47733,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Notifications.ExtensionNotificationIdLength"
-    units="characters">
-  <owner>peter@chromium.org</owner>
-  <summary>
-    The length, in characters, of the id given to an extension notification.
-    These can be automatically generated, in which case they will be either 36
-    bytes (GUID) or 16 bytes (random data) in length, or provided by the
-    developer. Measured when the notification is being displayed through the
-    chrome.notifications.create() extension API.
-  </summary>
-</histogram>
-
 <histogram name="Notifications.ExtensionNotificationType"
     enum="ExtensionNotificationType">
   <owner>dewittj@chromium.org</owner>
@@ -54361,17 +54276,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="PaymentRequest.CheckoutFunnel.Completed" enum="BooleanHit">
-  <obsolete>
-    M62+ Part of PaymentRequest.Events
-  </obsolete>
   <owner>sebsg@chromium.org</owner>
   <summary>When the merchant has processed the user's Payment Request.</summary>
 </histogram>
 
 <histogram name="PaymentRequest.CheckoutFunnel.Initiated" enum="BooleanHit">
-  <obsolete>
-    M62+ Part of PaymentRequest.Events
-  </obsolete>
   <owner>sebsg@chromium.org</owner>
   <summary>When a Payment Request gets initiated by the user.</summary>
 </histogram>
@@ -54385,9 +54294,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="PaymentRequest.CheckoutFunnel.PayClicked" enum="BooleanHit">
-  <obsolete>
-    M62+ Part of PaymentRequest.Events
-  </obsolete>
   <owner>sebsg@chromium.org</owner>
   <summary>
     When the user clicks the &quot;pay&quot; button in the Payment Request UI.
@@ -54396,9 +54302,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="PaymentRequest.CheckoutFunnel.ReceivedInstrumentDetails"
     enum="BooleanHit">
-  <obsolete>
-    M62+ Part of PaymentRequest.Events
-  </obsolete>
   <owner>sebsg@chromium.org</owner>
   <summary>
     When the browser retrieves the instrument details from the payment app to
@@ -54407,9 +54310,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="PaymentRequest.CheckoutFunnel.Shown" enum="BooleanHit">
-  <obsolete>
-    M62+ Part of PaymentRequest.Events
-  </obsolete>
   <owner>sebsg@chromium.org</owner>
   <summary>
     When the Payment Request UI gets shown after initialization.
@@ -54418,9 +54318,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="PaymentRequest.CheckoutFunnel.SkippedShow"
     enum="BooleanSkipped">
-  <obsolete>
-    M62+ Part of PaymentRequest.Events
-  </obsolete>
   <owner>sebsg@chromium.org</owner>
   <summary>
     When the Payment Request UI gets skipped to go directly to the payment app.
@@ -54465,9 +54362,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="PaymentRequest.RequestedInformation"
     enum="PaymentRequestRequestedInformation">
-  <obsolete>
-    M62+ Included in PaymentRequest.Events
-  </obsolete>
   <owner>sebsg@chromium.org</owner>
   <summary>
     Tracks what user information is required by merchants to complete a Payment
@@ -56703,13 +56597,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     reports to find that information.  For more details about this bug refer to
     http://crbug.com/338657 and http://crosbug.com/p/16009.  Note that we log
     retries on all 7 FETs even though we've only ever seen failures of FET1.
-  </summary>
-</histogram>
-
-<histogram name="Platform.Vpd.UnknownKeys">
-  <owner>tnagel@chromium.org</owner>
-  <summary>
-    Number of unknown RW_VPD entries on Chrome OS, sent once per boot.
   </summary>
 </histogram>
 
@@ -60604,14 +60491,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>vitalybuka@chromium.org</owner>
   <summary>
     Count of events in PrinterService on ChromeOS related to USB printers.
-  </summary>
-</histogram>
-
-<histogram name="Printing.CUPS.IppAttributesSuccess" enum="BooleanSuccess">
-  <owner>skau@chromium.org</owner>
-  <summary>
-    Record if the request for IPP attributes was successful during printer
-    setup.  This only occurs for setup attempts of IPP and IPPS printers.
   </summary>
 </histogram>
 
@@ -64880,17 +64759,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram
-    name="ResourceScheduler.NumDelayableRequestsInFlightAtStart.NonDelayable"
-    units="requests">
-  <owner>devdeepray@chromium.org</owner>
-  <owner>tbansal@chromium.org</owner>
-  <summary>
-    Records the number of delayable requests in-flight when a non-delayable
-    request is started.
-  </summary>
-</histogram>
-
 <histogram name="ResourceScheduler.NumSkippedScans.ScheduleStart"
     units="requests">
   <owner>csharrison@chromium.org</owner>
@@ -67295,14 +67163,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Records how often different file extensions are downloaded with schemes that
     aren't supported by Safe Browsing (e.g. ftp, gopher, content, cid, etc).
-  </summary>
-</histogram>
-
-<histogram name="SBClientDownload.ZipFileContainsAppDirectory" enum="Boolean">
-  <owner>jialiul@chromium.org</owner>
-  <summary>
-    A Mac-only metric that records whether a downloaded zip file contains an
-    .app directory, signifying the presence of installable software.
   </summary>
 </histogram>
 
@@ -71338,17 +71198,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="ServiceWorker.StartWorker.InstalledScriptsSender.Status"
-    enum="ServiceWorkerInstalledScriptsManager.FinishedReason">
-  <owner>shimazu@chromium.org</owner>
-  <summary>
-    The result of sending installed scripts over
-    ServiceWorkerInstalledScriptsSender. This is recorded after every start
-    worker attempt that sent the scripts through
-    ServiceWorkerInstalledScriptsSender.
-  </summary>
-</histogram>
-
 <histogram name="ServiceWorker.StartWorker.Purpose"
     enum="ServiceWorkerMetrics.EventType">
   <owner>falken@chromium.org</owner>
@@ -75292,23 +75141,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="SoftwareReporter.PromptShown" enum="Boolean">
-  <obsolete>
-    Replaced 2017-08-01 with SoftwareReporter.PromptShownWithType.
-  </obsolete>
   <owner>ftirelo@chromium.org</owner>
   <summary>
     Whether the user has been prompted to run the Chrome Cleanup Tool.
-  </summary>
-</histogram>
-
-<histogram name="SoftwareReporter.PromptShownWithType"
-    enum="SoftwareReporterPromptShownWithType">
-  <owner>ftirelo@chromium.org</owner>
-  <summary>
-    Whether the user has been prompted to run the Chrome Cleanup Tool and which
-    type of prompt has been shown.
-
-    This is logged once a prompt is presented to the user.
   </summary>
 </histogram>
 
@@ -80340,16 +80175,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Measures the time duration from when the tab is backgrounded to when audio
     starts to play. Only recorded when the tab is in the background.
-  </summary>
-</histogram>
-
-<histogram name="TabManager.Heuristics.FromBackgroundedToFirstTitleUpdated"
-    units="ms">
-  <owner>chrisha@chromium.org</owner>
-  <owner>lpy@chromium.org</owner>
-  <summary>
-    Measures the time duration from when the tab is backgrounded to when its
-    title is updated. Only recorded when the tab is in the background.
   </summary>
 </histogram>
 
@@ -90569,12 +90394,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Startup.AppListFirstPaintWarmStart"/>
 </histogram_suffixes>
 
-<histogram_suffixes name="AppListFolderExperiment" separator=".">
-  <suffix name="FullscreenAppListEnabled" label="Peeking Launcher Enabled"/>
-  <suffix name="FullscreenAppListDisabled" label="Peeking Launcher Disabled"/>
-  <affected-histogram name="Apps.AppsInFolders"/>
-</histogram_suffixes>
-
 <histogram_suffixes name="ArcUserTypes" separator=".">
   <suffix name="Managed" label="User with forced Play Store feature"/>
   <suffix name="Unmanaged" label="User with optional Play Store feature"/>
@@ -91486,7 +91305,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="ForeignTabs" label="Open tabs on other devices"/>
   <suffix name="Experimental" label="Experimental"/>
   <suffix name="ReadingList" label="Reading List entries"/>
-  <suffix name="Contextual" label="Contextual suggestions"/>
   <affected-histogram
       name="NewTabPage.ContentSuggestions.CountOnNtpOpenedIfVisible"/>
   <affected-histogram name="NewTabPage.ContentSuggestions.DismissedUnvisited"/>

@@ -13,7 +13,6 @@ import random
 from core import perf_benchmark
 
 from telemetry import benchmark
-from telemetry import story
 from telemetry.value import scalar
 from telemetry.page import legacy_page_test
 
@@ -52,10 +51,7 @@ class DummyBenchmarkOne(_DummyBenchmark):
     return 'dummy_benchmark.stable_benchmark_1'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return dummy_story_set.DummyStoryExpectations()
 
 
 @benchmark.Owner(emails=['nednguyen@google.com'])
@@ -70,7 +66,4 @@ class DummyBenchmarkTwo(_DummyBenchmark):
     return 'dummy_benchmark.noisy_benchmark_1'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return dummy_story_set.DummyStoryExpectations()

@@ -24,8 +24,6 @@
 #include "ui/app_list/views/search_result_page_view.h"
 #include "ui/app_list/views/search_result_tile_item_list_view.h"
 #include "ui/app_list/views/start_page_view.h"
-#include "ui/display/display.h"
-#include "ui/display/screen.h"
 #include "ui/events/event.h"
 #include "ui/views/view_model.h"
 #include "ui/views/widget/widget.h"
@@ -35,7 +33,7 @@ namespace app_list {
 namespace {
 
 // Layout constants.
-constexpr int kDefaultContentsViewHeight = 623;
+constexpr int kDefaultContentsViewHeight = 633;
 
 }  // namespace
 
@@ -467,9 +465,7 @@ gfx::Size ContentsView::CalculatePreferredSize() const {
       search_box_bounds.bottom_right().OffsetFromOrigin();
   bottom_right.SetToMax(
       default_contents_bounds.bottom_right().OffsetFromOrigin());
-  return gfx::Size(bottom_right.x(), is_fullscreen_app_list_enabled_
-                                         ? GetDisplayHeight()
-                                         : bottom_right.y());
+  return gfx::Size(bottom_right.x(), bottom_right.y());
 }
 
 void ContentsView::Layout() {
@@ -504,14 +500,10 @@ void ContentsView::Layout() {
 bool ContentsView::OnKeyPressed(const ui::KeyEvent& event) {
   if (app_list_pages_[GetActivePageIndex()]->OnKeyPressed(event))
     return true;
-  if (event.key_code() != ui::VKEY_TAB &&
-      !GetSearchBoxView()->IsArrowKey(event))
+  if (event.key_code() != ui::VKEY_TAB)
     return false;
   if (is_fullscreen_app_list_enabled_) {
-    if (event.key_code() == ui::VKEY_TAB)
-      GetSearchBoxView()->MoveTabFocus(event.IsShiftDown());
-    else
-      GetSearchBoxView()->MoveArrowFocus(event);
+    GetSearchBoxView()->MoveTabFocus(event.IsShiftDown());
     return true;
   }
   if (event.IsShiftDown()) {
@@ -540,13 +532,6 @@ void ContentsView::TransitionStarted() {}
 
 void ContentsView::TransitionChanged() {
   UpdatePageBounds();
-}
-
-int ContentsView::GetDisplayHeight() const {
-  return display::Screen::GetScreen()
-      ->GetDisplayNearestView(GetWidget()->GetNativeView())
-      .size()
-      .height();
 }
 
 }  // namespace app_list

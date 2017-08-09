@@ -12,7 +12,6 @@
 #include "extensions/renderer/bindings/api_event_listeners.h"
 #include "extensions/renderer/bindings/exception_handler.h"
 #include "gin/handle.h"
-#include "testing/gmock/include/gmock/gmock.h"
 
 namespace extensions {
 namespace {
@@ -127,8 +126,7 @@ TEST_F(EventEmitterUnittest, TestDispatchMethod) {
             V8ToString(dispatch_result, context));
 
   ASSERT_EQ(1u, logged_errors.size());
-  EXPECT_THAT(logged_errors[0],
-              testing::StartsWith("Error in event handler: Error: hahaha"));
+  EXPECT_EQ("Error in event handler: Uncaught Error: hahaha", logged_errors[0]);
 }
 
 }  // namespace extensions

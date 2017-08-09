@@ -191,7 +191,6 @@ class CaptureTestRenderViewHost : public TestRenderViewHost {
                                widget_delegate,
                                instance->GetProcess(),
                                routing_id,
-                               nullptr,
                                false /* This means: "Is not hidden." */),
                            delegate,
                            main_frame_routing_id,

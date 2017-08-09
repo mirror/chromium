@@ -27,7 +27,7 @@ class BackgroundFetchRegistration final
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  BackgroundFetchRegistration(String id,
+  BackgroundFetchRegistration(String tag,
                               HeapVector<IconDefinition> icons,
                               long long total_download_size,
                               String title);
@@ -37,7 +37,7 @@ class BackgroundFetchRegistration final
   // has been associated with.
   void SetServiceWorkerRegistration(ServiceWorkerRegistration*);
 
-  String id() const;
+  String tag() const;
   HeapVector<IconDefinition> icons() const;
   long long totalDownloadSize() const;
   String title() const;
@@ -51,7 +51,7 @@ class BackgroundFetchRegistration final
 
   Member<ServiceWorkerRegistration> registration_;
 
-  String id_;
+  String tag_;
   HeapVector<IconDefinition> icons_;
   long long total_download_size_;
   String title_;

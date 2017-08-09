@@ -9,7 +9,7 @@ interface BackgroundFetchClickEvent : BackgroundFetchEvent
     method constructor
 interface BackgroundFetchEvent : ExtendableEvent
     attribute @@toStringTag
-    getter id
+    getter tag
     method constructor
 interface BackgroundFetchFailEvent : BackgroundFetchEvent
     attribute @@toStringTag
@@ -24,11 +24,11 @@ interface BackgroundFetchManager
     method constructor
     method fetch
     method get
-    method getIds
+    method getTags
 interface BackgroundFetchRegistration
     attribute @@toStringTag
     getter icons
-    getter id
+    getter tag
     getter title
     getter totalDownloadSize
     method abort

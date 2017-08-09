@@ -128,7 +128,6 @@
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram_macros.h"
 #include "base/sys_info.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/trace_event/trace_event.h"
@@ -340,7 +339,6 @@ void Shell::RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
 void Shell::RegisterProfilePrefs(PrefRegistrySimple* registry) {
   LogoutButtonTray::RegisterProfilePrefs(registry);
   NightLightController::RegisterProfilePrefs(registry);
-  ShelfController::RegisterProfilePrefs(registry);
 }
 
 views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
@@ -427,16 +425,16 @@ void Shell::UpdateShelfVisibility() {
 
 PrefService* Shell::GetActiveUserPrefService() const {
   if (shell_port_->GetAshConfig() == Config::MASH)
-    return profile_pref_service_mash_.get();
+    return profile_pref_service_.get();
 
   return shell_delegate_->GetActiveUserPrefService();
 }
 
 PrefService* Shell::GetLocalStatePrefService() const {
   if (shell_port_->GetAshConfig() == Config::MASH)
-    return local_state_mash_.get();
+    return local_state_.get();
 
-  return local_state_non_mash_;
+  return shell_delegate_->GetLocalStatePrefService();
 }
 
 WebNotificationTray* Shell::GetWebNotificationTray() {
@@ -498,11 +496,7 @@ void Shell::RemoveShellObserver(ShellObserver* observer) {
   shell_observers_.RemoveObserver(observer);
 }
 
-void Shell::ShowAppList(app_list::AppListShowSource toggle_method) {
-  if (IsAppListVisible()) {
-    UMA_HISTOGRAM_ENUMERATION(app_list::kAppListToggleMethodHistogram,
-                              toggle_method, app_list::kMaxAppListToggleMethod);
-  }
+void Shell::ShowAppList() {
   // Show the app list on the default display for new windows.
   app_list_->Show(display::Screen::GetScreen()
                       ->GetDisplayNearestWindow(GetRootWindowForNewWindows())
@@ -520,11 +514,7 @@ void Shell::DismissAppList() {
   app_list_->Dismiss();
 }
 
-void Shell::ToggleAppList(app_list::AppListShowSource toggle_method) {
-  if (IsAppListVisible()) {
-    UMA_HISTOGRAM_ENUMERATION(app_list::kAppListToggleMethodHistogram,
-                              toggle_method, app_list::kMaxAppListToggleMethod);
-  }
+void Shell::ToggleAppList() {
   // Toggle the app list on the default display for new windows.
   app_list_->ToggleAppList(
       display::Screen::GetScreen()
@@ -602,15 +592,6 @@ void Shell::SetIsBrowserProcessWithMash() {
   g_is_browser_process_with_mash = true;
 }
 
-void Shell::SetLocalStatePrefService(PrefService* local_state) {
-  DCHECK(GetAshConfig() != Config::MASH);
-  DCHECK(local_state);
-  local_state_non_mash_ = local_state;
-
-  for (auto& observer : shell_observers_)
-    observer.OnLocalStatePrefServiceInitialized(local_state_non_mash_);
-}
-
 void Shell::NotifyAppListVisibilityChanged(bool visible,
                                            aura::Window* root_window) {
   for (auto& observer : shell_observers_)
@@ -643,6 +624,7 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       media_controller_(base::MakeUnique<MediaController>()),
       new_window_controller_(base::MakeUnique<NewWindowController>()),
       session_controller_(base::MakeUnique<SessionController>()),
+      shelf_controller_(base::MakeUnique<ShelfController>()),
       shell_delegate_(std::move(shell_delegate)),
       shutdown_controller_(base::MakeUnique<ShutdownController>()),
       system_tray_controller_(base::MakeUnique<SystemTrayController>()),
@@ -858,9 +840,7 @@ Shell::~Shell() {
   // NightLightController depeneds on the PrefService and must be destructed
   // before it. crbug.com/724231.
   night_light_controller_ = nullptr;
-  profile_pref_service_mash_.reset();
-  local_state_mash_.reset();
-  local_state_non_mash_ = nullptr;
+  profile_pref_service_ = nullptr;
   shell_delegate_.reset();
 
   for (auto& observer : shell_observers_)
@@ -872,8 +852,6 @@ Shell::~Shell() {
 
 void Shell::Init(const ShellInitParams& init_params) {
   const Config config = shell_port_->GetAshConfig();
-
-  shelf_controller_ = base::MakeUnique<ShelfController>();
 
   if (NightLightController::IsFeatureEnabled())
     night_light_controller_ = base::MakeUnique<NightLightController>();
@@ -1357,28 +1335,22 @@ void Shell::RegisterForeignPrefs(PrefRegistrySimple* registry) {
 
 void Shell::OnProfilePrefServiceInitialized(
     std::unique_ptr<PrefService> pref_service) {
-  DCHECK(GetAshConfig() == Config::MASH);
   // Keep the old PrefService object alive so OnActiveUserPrefServiceChanged()
   // clients can unregister pref observers on the old service.
-  std::unique_ptr<PrefService> old_service =
-      std::move(profile_pref_service_mash_);
-  profile_pref_service_mash_ = std::move(pref_service);
+  std::unique_ptr<PrefService> old_service = std::move(profile_pref_service_);
+  profile_pref_service_ = std::move(pref_service);
   // |pref_service| can be null if can't connect to Chrome (as happens when
   // running mash outside of chrome --mash and chrome isn't built).
   for (auto& observer : shell_observers_)
-    observer.OnActiveUserPrefServiceChanged(profile_pref_service_mash_.get());
+    observer.OnActiveUserPrefServiceChanged(profile_pref_service_.get());
   // |old_service| is deleted.
 }
 
 void Shell::OnLocalStatePrefServiceInitialized(
     std::unique_ptr<::PrefService> pref_service) {
-  DCHECK(GetAshConfig() == Config::MASH);
   // |pref_service| is null if can't connect to Chrome (as happens when
   // running mash outside of chrome --mash and chrome isn't built).
-  local_state_mash_ = std::move(pref_service);
-
-  for (auto& observer : shell_observers_)
-    observer.OnLocalStatePrefServiceInitialized(local_state_mash_.get());
+  local_state_ = std::move(pref_service);
 }
 
 }  // namespace ash

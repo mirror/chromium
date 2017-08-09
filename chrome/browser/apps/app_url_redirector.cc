@@ -34,34 +34,6 @@ using extensions::UrlHandlerInfo;
 
 namespace {
 
-bool ShouldOverrideNavigation(
-    const Extension* app,
-    content::WebContents* source,
-    const navigation_interception::NavigationParams& params) {
-  DVLOG(1) << "ShouldOverrideNavigation called for: " << params.url();
-
-  ui::PageTransition transition_type = params.transition_type();
-  if (!(PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK))) {
-    DVLOG(1) << "Don't override: Transition type is "
-             << PageTransitionGetCoreTransitionString(transition_type);
-    return false;
-  }
-
-  Browser* browser = chrome::FindBrowserWithWebContents(source);
-  if (browser == nullptr) {
-    DVLOG(1) << "Don't override: No browser, can't know if already in app.";
-    return false;
-  }
-
-  if (browser->app_name() ==
-      web_app::GenerateApplicationNameFromExtensionId(app->id())) {
-    DVLOG(1) << "Don't override: Already in app.";
-    return false;
-  }
-
-  return true;
-}
-
 bool LaunchAppWithUrl(
     const scoped_refptr<const Extension> app,
     const std::string& handler_id,
@@ -98,8 +70,17 @@ bool LaunchAppWithUrl(
       Profile::FromBrowserContext(source->GetBrowserContext());
 
   if (app->from_bookmark()) {
-    if (!ShouldOverrideNavigation(app.get(), source, params))
+    Browser* browser = chrome::FindBrowserWithWebContents(source);
+    if (browser == nullptr) {
+      DVLOG(1) << "Don't override: No browser, can't know if already in app.";
       return false;
+    }
+
+    if (browser->app_name() ==
+        web_app::GenerateApplicationNameFromExtensionId(app->id())) {
+      DVLOG(1) << "Don't override: Already in app.";
+      return false;
+    }
 
     AppLaunchParams launch_params(
         profile, app.get(), extensions::LAUNCH_CONTAINER_WINDOW,

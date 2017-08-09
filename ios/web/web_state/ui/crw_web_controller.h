@@ -105,9 +105,6 @@ class WebStateImpl;
 // |WebStateObserver::DidSuppressDialog| will be called.
 @property(nonatomic, assign) BOOL shouldSuppressDialogs;
 
-// YES if the web process backing WebView is believed to currently be crashed.
-@property(nonatomic, assign, getter=isWebProcessCrashed) BOOL webProcessCrashed;
-
 // Designated initializer. Initializes web controller with |webState|. The
 // calling code must retain the ownership of |webState|.
 - (instancetype)initWithWebState:(web::WebStateImpl*)webState;
@@ -198,7 +195,12 @@ class WebStateImpl;
 // Requires that the next load rebuild the web view. This is expensive, and
 // should be used only in the case where something has changed that the web view
 // only checks on creation, such that the whole object needs to be rebuilt.
+// TODO(crbug.com/736102): Merge this and reinitializeWebViewAndReload:. They
+// are currently subtly different in terms of implementation, but are for
+// fundamentally the same purpose.
 - (void)requirePageReconstruction;
+
+- (void)reinitializeWebViewAndReload:(BOOL)reload;
 
 // Requires that the next display reload the page, using a placeholder while
 // loading. This could be used, e.g., to handle a crash in a WebController that

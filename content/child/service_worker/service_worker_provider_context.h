@@ -12,7 +12,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner_helpers.h"
-#include "content/child/service_worker/service_worker_dispatcher.h"
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_provider_interfaces.mojom.h"
@@ -28,6 +27,7 @@ namespace content {
 class ServiceWorkerHandleReference;
 class ServiceWorkerRegistrationHandleReference;
 struct ServiceWorkerProviderContextDeleter;
+class ThreadSafeSender;
 
 // ServiceWorkerProviderContext has different roles depending on if it's for a
 // "controllee" (a Document or Worker execution context), or a "controller" (a
@@ -63,32 +63,30 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // context. |request| is an endpoint which is connected to
   // content::ServiceWorkerProviderHost which notifies changes of the
   // registration's and workers' status. |request| is bound with |binding_|.
-  // The new instance is registered to |dispatcher|, which is not owned.
   ServiceWorkerProviderContext(
       int provider_id,
       ServiceWorkerProviderType provider_type,
       mojom::ServiceWorkerProviderAssociatedRequest request,
-      ServiceWorkerDispatcher* dispatcher);
+      ThreadSafeSender* thread_safe_sender);
 
-  // For service worker execution contexts. Sets the registration for
-  // ServiceWorkerGlobalScope#registration. Called on the main thread.
-  void SetRegistration(
+  // Called from ServiceWorkerDispatcher.
+  void OnAssociateRegistration(
       std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration,
       std::unique_ptr<ServiceWorkerHandleReference> installing,
       std::unique_ptr<ServiceWorkerHandleReference> waiting,
       std::unique_ptr<ServiceWorkerHandleReference> active);
-
-  // For service worker clients. Sets the controller for
-  // ServiceWorkerContainer#controller. Called on the main thread.
   void OnSetControllerServiceWorker(
       std::unique_ptr<ServiceWorkerHandleReference> controller,
       const std::set<uint32_t>& used_features,
       mojom::ServiceWorkerEventDispatcherPtrInfo event_dispatcher_ptr_info);
 
   // Called on the worker thread. Used for initializing
-  // ServiceWorkerGlobalScope#registration.
-  void GetRegistration(ServiceWorkerRegistrationObjectInfo* info,
-                       ServiceWorkerVersionAttributes* attrs);
+  // ServiceWorkerGlobalScope.
+  void GetAssociatedRegistration(ServiceWorkerRegistrationObjectInfo* info,
+                                 ServiceWorkerVersionAttributes* attrs);
+
+  // May be called on the main or worker thread.
+  bool HasAssociatedRegistration();
 
   int provider_id() const { return provider_id_; }
 
@@ -115,13 +113,13 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
 
   const int provider_id_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
+  scoped_refptr<ThreadSafeSender> thread_safe_sender_;
   // Mojo binding for the |request| passed to the constructor. This keeps the
   // connection to the content::ServiceWorkerProviderHost in the browser process
   // alive.
   mojo::AssociatedBinding<mojom::ServiceWorkerProvider> binding_;
 
-  // Only used for controllee contexts. Used to dispatch events to the
-  // controller ServiceWorker.
+  // To dispatch events to the controller ServiceWorker.
   mojom::ServiceWorkerEventDispatcherPtr event_dispatcher_;
 
   std::unique_ptr<Delegate> delegate_;

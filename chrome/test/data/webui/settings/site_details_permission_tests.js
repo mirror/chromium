@@ -48,6 +48,16 @@ suite('SiteDetailsPermission', function() {
     document.body.appendChild(testElement);
   });
 
+  // Tests that the given value is converted to the expected value, for a
+  // given prefType.
+  function isAllowed(origin, exceptionList) {
+    for (var i = 0; i < exceptionList.length; ++i) {
+      if (exceptionList[i].origin == origin)
+        return exceptionList[i].setting == settings.ContentSetting.ALLOW;
+    }
+    return false;
+  };
+
   function validatePermissionFlipWorks(origin, expectedContentSetting) {
     browserProxy.resetResolver('setOriginPermissions');
 
@@ -208,7 +218,6 @@ suite('SiteDetailsPermission', function() {
           testElement.$.permissionItem.innerText.trim());
       assertTrue(testElement.$.permissionItem.classList.contains('two-line'));
       assertTrue(testElement.$.permission.disabled);
-      assertEquals(testSetting, testElement.$.permission.value);
     };
 
     // Permissions that have been set by enterprise policy.
@@ -232,7 +241,6 @@ suite('SiteDetailsPermission', function() {
           testElement.$.permissionItem.innerText.trim());
       assertTrue(testElement.$.permissionItem.classList.contains('two-line'));
       assertTrue(testElement.$.permission.disabled);
-      assertEquals(testSetting, testElement.$.permission.value);
     };
 
     // Finally, check if changing the source from a non-user-controlled setting

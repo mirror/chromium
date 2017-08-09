@@ -247,12 +247,12 @@ void ContentAutofillDriver::SetDataList(
   autofill_handler_->OnSetDataList(values, labels);
 }
 
-void ContentAutofillDriver::DidNavigateMainFrame(
+void ContentAutofillDriver::DidNavigateFrame(
     content::NavigationHandle* navigation_handle) {
-  if (navigation_handle->IsSameDocument())
-    return;
-
-  autofill_handler_->Reset();
+  if (navigation_handle->IsInMainFrame() &&
+      !navigation_handle->IsSameDocument()) {
+    autofill_handler_->Reset();
+  }
 }
 
 void ContentAutofillDriver::SetAutofillManager(

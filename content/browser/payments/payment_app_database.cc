@@ -90,12 +90,6 @@ std::unique_ptr<StoredPaymentApp> ToStoredPaymentApp(const std::string& input) {
   app->registration_id = app_proto.registration_id();
   app->origin = url::Origin(GURL(app_proto.origin()));
   app->name = app_proto.name();
-  app->prefer_related_applications = app_proto.prefer_related_applications();
-  for (const auto& related_app : app_proto.related_applications()) {
-    app->related_applications.emplace_back(StoredRelatedApplication());
-    app->related_applications.back().platform = related_app.platform();
-    app->related_applications.back().id = related_app.id();
-  }
 
   if (!app_proto.icon().empty()) {
     std::string icon_raw_data;
@@ -252,7 +246,8 @@ void PaymentAppDatabase::FetchAndWritePaymentAppInfo(
 void PaymentAppDatabase::FetchPaymentAppInfoCallback(
     const GURL& scope,
     FetchAndWritePaymentAppInfoCallback callback,
-    std::unique_ptr<PaymentAppInfoFetcher::PaymentAppInfo> app_info) {
+    const std::string& name,
+    const std::string& icon) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   payment_app_info_fetcher_ = nullptr;
@@ -261,13 +256,13 @@ void PaymentAppDatabase::FetchPaymentAppInfoCallback(
       scope,
       base::Bind(&PaymentAppDatabase::DidFindRegistrationToWritePaymentAppInfo,
                  weak_ptr_factory_.GetWeakPtr(),
-                 base::Passed(std::move(callback)),
-                 base::Passed(std::move(app_info))));
+                 base::Passed(std::move(callback)), name, icon));
 }
 
 void PaymentAppDatabase::DidFindRegistrationToWritePaymentAppInfo(
     FetchAndWritePaymentAppInfoCallback callback,
-    std::unique_ptr<PaymentAppInfoFetcher::PaymentAppInfo> app_info,
+    const std::string& name,
+    const std::string& icon,
     ServiceWorkerStatusCode status,
     scoped_refptr<ServiceWorkerRegistration> registration) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -280,17 +275,8 @@ void PaymentAppDatabase::DidFindRegistrationToWritePaymentAppInfo(
   payment_app_proto.set_registration_id(registration->id());
   payment_app_proto.set_origin(
       url::Origin(registration->pattern().GetOrigin()).Serialize());
-  payment_app_proto.set_name(app_info->name.empty() ? payment_app_proto.origin()
-                                                    : app_info->name);
-  payment_app_proto.set_icon(app_info->icon);
-  payment_app_proto.set_prefer_related_applications(
-      app_info->prefer_related_applications);
-  for (const auto& related_app : app_info->related_applications) {
-    StoredRelatedApplicationProto* related_app_proto =
-        payment_app_proto.add_related_applications();
-    related_app_proto->set_platform(related_app.platform);
-    related_app_proto->set_id(related_app.id);
-  }
+  payment_app_proto.set_name(name.empty() ? payment_app_proto.origin() : name);
+  payment_app_proto.set_icon(icon);
 
   std::string serialized_payment_app;
   bool success = payment_app_proto.SerializeToString(&serialized_payment_app);
@@ -303,7 +289,7 @@ void PaymentAppDatabase::DidFindRegistrationToWritePaymentAppInfo(
       base::Bind(&PaymentAppDatabase::DidWritePaymentApp,
                  weak_ptr_factory_.GetWeakPtr(),
                  base::Passed(std::move(callback)),
-                 app_info->name.empty() | app_info->icon.empty()));
+                 name.empty() | icon.empty()));
 }
 
 void PaymentAppDatabase::DidWritePaymentApp(

@@ -288,10 +288,14 @@ public class ChromeDownloadDelegate {
         if (window.hasPermission(permission.WRITE_EXTERNAL_STORAGE)) {
             onDownloadStartNoStream(downloadInfo);
         } else if (window.canRequestPermission(permission.WRITE_EXTERNAL_STORAGE)) {
-            PermissionCallback permissionCallback = (permissions, grantResults) -> {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    onDownloadStartNoStream(downloadInfo);
+            PermissionCallback permissionCallback = new PermissionCallback() {
+                @Override
+                public void onRequestPermissionsResult(
+                        String[] permissions, int[] grantResults) {
+                    if (grantResults.length > 0
+                            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        onDownloadStartNoStream(downloadInfo);
+                    }
                 }
             };
             window.requestPermissions(

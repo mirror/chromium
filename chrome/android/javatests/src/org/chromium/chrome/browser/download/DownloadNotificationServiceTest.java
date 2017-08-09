@@ -34,17 +34,6 @@ import java.util.UUID;
  */
 public class DownloadNotificationServiceTest extends
         ServiceTestCase<MockDownloadNotificationService> {
-    /**
-     * Implementation of DownloadBroadcastManager that skips loading the native to just propagate
-     * interactions through for testing purposes.
-     */
-    private static class MockDownloadBroadcastManager extends DownloadBroadcastManager {
-        @Override
-        void loadNativeAndPropagateInteraction(Context context, Intent intent) {
-            // Skip loading the native and just propagate interaction.
-            propagateInteraction(intent);
-        }
-    }
 
     private static class MockDownloadManagerService extends DownloadManagerService {
         final List<DownloadItem> mDownloads = new ArrayList<DownloadItem>();
@@ -109,8 +98,12 @@ public class DownloadNotificationServiceTest extends
 
     @Override
     protected void shutdownService() {
-        ThreadUtils.runOnUiThreadBlocking(
-                () -> DownloadNotificationServiceTest.super.shutdownService());
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                DownloadNotificationServiceTest.super.shutdownService();
+            }
+        });
     }
 
     @Override
@@ -123,9 +116,12 @@ public class DownloadNotificationServiceTest extends
     }
 
     private void startNotificationService() {
-        ThreadUtils.runOnUiThreadBlocking(() -> {
-            Intent intent = new Intent(getService(), MockDownloadNotificationService.class);
-            startService(intent);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getService(), MockDownloadNotificationService.class);
+                startService(intent);
+            }
         });
     }
 
@@ -142,7 +138,12 @@ public class DownloadNotificationServiceTest extends
     }
 
     private void resumeAllDownloads(final DownloadNotificationService service) throws Exception {
-        ThreadUtils.runOnUiThreadBlocking(() -> service.resumeAllPendingDownloads());
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                service.resumeAllPendingDownloads();
+            }
+        });
     }
 
     /**
@@ -154,7 +155,12 @@ public class DownloadNotificationServiceTest extends
     public void testPausingWithoutOngoingDownloads() {
         setupService();
         startNotificationService();
-        ThreadUtils.runOnUiThreadBlocking(() -> getService().updateNotificationsForShutdown());
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                getService().updateNotificationsForShutdown();
+            }
+        });
         assertTrue(getService().isPaused());
         assertTrue(getService().getNotificationIds().isEmpty());
     }
@@ -193,10 +199,13 @@ public class DownloadNotificationServiceTest extends
                 getSystemContext().getApplicationContext());
         DownloadResumptionScheduler.setDownloadResumptionScheduler(scheduler);
         setupService();
-        ThreadUtils.runOnUiThreadBlocking(() -> {
-            Intent intent = new Intent(getService(), MockDownloadNotificationService.class);
-            intent.setAction(DownloadNotificationService.ACTION_DOWNLOAD_RESUME_ALL);
-            startService(intent);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getService(), MockDownloadNotificationService.class);
+                intent.setAction(DownloadNotificationService.ACTION_DOWNLOAD_RESUME_ALL);
+                startService(intent);
+            }
         });
         assertFalse(scheduler.mScheduled);
     }
@@ -242,7 +251,12 @@ public class DownloadNotificationServiceTest extends
                 DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS, notifications);
         editor.apply();
         startNotificationService();
-        ThreadUtils.runOnUiThreadBlocking(() -> getService().updateNotificationsForShutdown());
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                getService().updateNotificationsForShutdown();
+            }
+        });
         assertTrue(getService().isPaused());
         assertEquals(2, getService().getNotificationIds().size());
         assertTrue(getService().getNotificationIds().contains(1));
@@ -271,7 +285,12 @@ public class DownloadNotificationServiceTest extends
                 DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS, notifications);
         editor.apply();
         startNotificationService();
-        ThreadUtils.runOnUiThreadBlocking(() -> getService().updateNotificationsForShutdown());
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                getService().updateNotificationsForShutdown();
+            }
+        });
         assertEquals(2, getService().getNotificationIds().size());
         assertTrue(getService().getNotificationIds().contains(3));
         assertTrue(getService().getNotificationIds().contains(4));
@@ -360,10 +379,13 @@ public class DownloadNotificationServiceTest extends
 
         final MockDownloadManagerService manager =
                 new MockDownloadManagerService(getSystemContext().getApplicationContext());
-        ThreadUtils.runOnUiThreadBlocking(
-                (Runnable) () -> DownloadManagerService.setDownloadManagerService(manager));
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                DownloadManagerService.setDownloadManagerService(manager);
+            }
+        });
         DownloadManagerService.setIsNetworkMeteredForTest(true);
-        service.setDownloadBroadcastManager(new MockDownloadBroadcastManager());
         resumeAllDownloads(service);
         assertEquals(1, manager.mDownloads.size());
         assertEquals(manager.mDownloads.get(0).getDownloadInfo().getDownloadGuid(), guid2);
@@ -395,7 +417,12 @@ public class DownloadNotificationServiceTest extends
         editor.apply();
         startNotificationService();
 
-        ThreadUtils.runOnUiThreadBlocking(() -> getService().onTaskRemoved(new Intent()));
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                getService().onTaskRemoved(new Intent());
+            }
+        });
 
         assertTrue(getService().isPaused());
         assertFalse(sharedPrefs.contains(

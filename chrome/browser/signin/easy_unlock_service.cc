@@ -329,7 +329,9 @@ bool EasyUnlockService::IsAllowed() const {
 }
 
 bool EasyUnlockService::IsEnabled() const {
-  return false;
+  // The feature is enabled iff there are any paired devices.
+  const base::ListValue* devices = GetRemoteDevices();
+  return devices && !devices->empty();
 }
 
 void EasyUnlockService::OpenSetupApp() {

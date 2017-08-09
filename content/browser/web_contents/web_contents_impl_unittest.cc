@@ -46,7 +46,6 @@
 #include "content/public/common/content_constants.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/mock_render_process_host.h"
-#include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_utils.h"
 #include "content/test/test_content_browser_client.h"
@@ -337,12 +336,11 @@ class FakeFullscreenDelegate : public WebContentsDelegate {
   DISALLOW_COPY_AND_ASSIGN(FakeFullscreenDelegate);
 };
 
-class FakeWebContentsDelegate : public WebContentsDelegate {
+class FakeValidationMessageDelegate : public WebContentsDelegate {
  public:
-  FakeWebContentsDelegate()
-      : hide_validation_message_was_called_(false),
-        loading_state_changed_was_called_(false) {}
-  ~FakeWebContentsDelegate() override {}
+  FakeValidationMessageDelegate()
+      : hide_validation_message_was_called_(false) {}
+  ~FakeValidationMessageDelegate() override {}
 
   void HideValidationMessage(WebContents* web_contents) override {
     hide_validation_message_was_called_ = true;
@@ -352,28 +350,16 @@ class FakeWebContentsDelegate : public WebContentsDelegate {
     return hide_validation_message_was_called_;
   }
 
-  void LoadingStateChanged(WebContents* source,
-                           bool to_different_document) override {
-    loading_state_changed_was_called_ = true;
-  }
-
-  bool loading_state_changed_was_called() const {
-    return loading_state_changed_was_called_;
-  }
-
  private:
   bool hide_validation_message_was_called_;
-  bool loading_state_changed_was_called_;
 
-  DISALLOW_COPY_AND_ASSIGN(FakeWebContentsDelegate);
+  DISALLOW_COPY_AND_ASSIGN(FakeValidationMessageDelegate);
 };
 
 }  // namespace
 
+// Test to make sure that title updates get stripped of whitespace.
 TEST_F(WebContentsImplTest, UpdateTitle) {
-  FakeWebContentsDelegate fake_delegate;
-  contents()->SetDelegate(&fake_delegate);
-
   NavigationControllerImpl& cont =
       static_cast<NavigationControllerImpl&>(controller());
   cont.LoadURL(GURL(url::kAboutBlankURL), Referrer(), ui::PAGE_TRANSITION_TYPED,
@@ -385,16 +371,10 @@ TEST_F(WebContentsImplTest, UpdateTitle) {
 
   main_test_rfh()->SendNavigateWithParams(&params);
 
-  EXPECT_TRUE(contents()->IsWaitingForResponse());
   contents()->UpdateTitle(main_test_rfh(),
                           base::ASCIIToUTF16("    Lots O' Whitespace\n"),
                           base::i18n::LEFT_TO_RIGHT);
-  // Make sure that title updates get stripped of whitespace.
   EXPECT_EQ(base::ASCIIToUTF16("Lots O' Whitespace"), contents()->GetTitle());
-  EXPECT_FALSE(contents()->IsWaitingForResponse());
-  EXPECT_TRUE(fake_delegate.loading_state_changed_was_called());
-
-  contents()->SetDelegate(nullptr);
 }
 
 TEST_F(WebContentsImplTest, UpdateTitleBeforeFirstNavigation) {
@@ -1042,7 +1022,10 @@ TEST_F(WebContentsImplTest, CrossSiteComparesAgainstCurrentPage) {
 
   // Simulate a link click in first contents to second site.  Doesn't switch
   // SiteInstances, because we don't intercept Blink navigations.
-  NavigationSimulator::NavigateAndCommitFromDocument(url2, orig_rfh);
+  orig_rfh->SendRendererInitiatedNavigationRequest(url2, true);
+  orig_rfh->PrepareForCommit();
+  contents()->TestDidNavigate(orig_rfh, 0, true, url2,
+                              ui::PAGE_TRANSITION_TYPED);
   SiteInstance* instance3 = contents()->GetSiteInstance();
   EXPECT_EQ(instance1, instance3);
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
@@ -1634,7 +1617,7 @@ TEST_F(WebContentsImplTest, HistoryNavigationExitsFullscreen) {
 }
 
 TEST_F(WebContentsImplTest, TerminateHidesValidationMessage) {
-  FakeWebContentsDelegate fake_delegate;
+  FakeValidationMessageDelegate fake_delegate;
   contents()->SetDelegate(&fake_delegate);
   EXPECT_FALSE(fake_delegate.hide_validation_message_was_called());
 
@@ -3193,9 +3176,18 @@ TEST_F(WebContentsImplTestWithSiteIsolation, StartStopEventsBalance) {
 
   // Navigate the frame to another URL, which will send again
   // DidStartLoading and DidStopLoading messages.
-  NavigationSimulator::NavigateAndCommitFromDocument(foo_url, subframe);
-  subframe->OnMessageReceived(
-      FrameHostMsg_DidStopLoading(subframe->GetRoutingID()));
+  {
+    subframe->SendRendererInitiatedNavigationRequest(foo_url, false);
+    subframe->PrepareForCommit();
+    if (!IsBrowserSideNavigationEnabled()) {
+      subframe->OnMessageReceived(
+          FrameHostMsg_DidStartLoading(subframe->GetRoutingID(), true));
+    }
+    subframe->SendNavigateWithTransition(10, false, foo_url,
+                                         ui::PAGE_TRANSITION_AUTO_SUBFRAME);
+    subframe->OnMessageReceived(
+        FrameHostMsg_DidStopLoading(subframe->GetRoutingID()));
+  }
 
   // Since the main frame hasn't sent any DidStopLoading messages, it is
   // expected that the WebContents is still in loading state.

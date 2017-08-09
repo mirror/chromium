@@ -1053,13 +1053,6 @@ const char kServiceWorkerNavigationPreloadDescription[] =
     "Enable web pages to use the experimental service worker navigation "
     "preload API.";
 
-const char kServiceWorkerScriptStreamingName[] =
-    "Service worker script streaming.";
-const char kServiceWorkerScriptStreamingDescription[] =
-    "Installed scripts for a service worker are sent over a dedicated "
-    "message pipe and data pipes, and that is never be blocked on the main "
-    "thread.";
-
 const char kSettingsWindowName[] = "Show settings in a window";
 const char kSettingsWindowDescription[] =
     "Settings will be shown in a dedicated window instead of as a browser tab.";
@@ -2391,11 +2384,6 @@ const char kVrCustomTabBrowsingDescription[] =
 const char kWebVrAutopresentName[] = "Enable WebVr auto presentation";
 const char kWebVrAutopresentDescription[] =
     "Allows auto presentation of WebVr content from trusted first-party apps";
-
-const char kWebVrVsyncAlignName[] = "Enable WebVR VSync-aligned timing";
-const char kWebVrVsyncAlignDescription[] =
-    "Enabling this option aligns WebVR application rendering with VSync "
-    "for smoother animations.";
 
 #endif  // defined(OS_ANDROID)
 

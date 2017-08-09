@@ -196,7 +196,6 @@ public class ExperimentalOptionsTest extends CronetTestBase {
         callback.blockForDone();
         assertNull(callback.mError);
         assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        context.shutdown();
     }
 
     // Sets a host cache entry with hostname "host-cache-test-host" and an AddressList containing

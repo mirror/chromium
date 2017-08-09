@@ -469,8 +469,7 @@ void BrowserChildProcessHostImpl::CreateMetricsAllocator() {
   base::StringPiece metrics_name;
   switch (data_.process_type) {
     case PROCESS_TYPE_UTILITY:
-      // This needs to be larger for the network service.
-      memory_size = 256 << 10;  // 256 KiB
+      memory_size = 64 << 10;  // 64 KiB
       metrics_name = "UtilityMetrics";
       break;
 

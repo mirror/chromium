@@ -872,9 +872,10 @@ void URLRequestHttpJob::ProcessExpectCTHeader() {
     return;
   }
 
+  // Only process the first Expect-CT header value.
   HttpResponseHeaders* headers = GetResponseHeaders();
   std::string value;
-  if (headers->GetNormalizedHeader("Expect-CT", &value)) {
+  if (headers->EnumerateHeader(nullptr, "Expect-CT", &value)) {
     security_state->ProcessExpectCTHeader(
         value, HostPortPair::FromURL(request_info_.url), ssl_info);
   }

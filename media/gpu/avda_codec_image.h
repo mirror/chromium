@@ -50,9 +50,7 @@ class AVDACodecImage : public gpu::gles2::GLStreamTextureImage {
   void GetTextureMatrix(float xform[16]) override;
   void NotifyPromotionHint(bool promotion_hint,
                            int display_x,
-                           int display_y,
-                           int display_width,
-                           int display_height) override;
+                           int display_y) override;
 
   enum class UpdateMode {
     // Discards the codec buffer, no UpdateTexImage().

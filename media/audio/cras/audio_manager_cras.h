@@ -27,6 +27,7 @@ class MEDIA_EXPORT AudioManagerCras : public AudioManagerBase {
   // AudioManager implementation.
   bool HasAudioOutputDevices() override;
   bool HasAudioInputDevices() override;
+  void ShowAudioInputSettings() override;
   void GetAudioInputDeviceNames(AudioDeviceNames* device_names) override;
   void GetAudioOutputDeviceNames(AudioDeviceNames* device_names) override;
   AudioParameters GetInputStreamParameters(

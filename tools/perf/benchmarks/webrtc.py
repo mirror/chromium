@@ -6,7 +6,6 @@ from core import perf_benchmark
 
 import page_sets
 from telemetry import benchmark
-from telemetry import story
 from telemetry.timeline import chrome_trace_category_filter
 from telemetry.web_perf import timeline_based_measurement
 
@@ -45,21 +44,4 @@ class WebrtcPerfBenchmark(perf_benchmark.PerfBenchmark):
     options.AppendExtraBrowserArgs('--use-fake-ui-for-media-stream')
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        # TODO(qyearsley, mcasas): Add webrtc.audio when http://crbug.com/468732
-        # is fixed, or revert https://codereview.chromium.org/1544573002/ when
-        # http://crbug.com/568333 is fixed.
-        self.DisableStory('audio_call_opus_10s',
-                          [story.expectations.ALL],
-                          'crbug.com/468732')
-        self.DisableStory('audio_call_g772_10s',
-                          [story.expectations.ALL],
-                          'crbug.com/468732')
-        self.DisableStory('audio_call_pcmu_10s',
-                          [story.expectations.ALL],
-                          'crbug.com/468732')
-        self.DisableStory('audio_call_isac/1600_10s',
-                          [story.expectations.ALL],
-                          'crbug.com/468732')
-    return StoryExpectations()
+    return page_sets.WebrtcExpectations()

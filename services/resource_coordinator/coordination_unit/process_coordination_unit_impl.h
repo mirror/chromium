@@ -26,7 +26,7 @@ class ProcessCoordinationUnitImpl : public CoordinationUnitImpl {
  private:
   // CoordinationUnitImpl implementation.
   void PropagateProperty(mojom::PropertyType property_type,
-                         int64_t value) override;
+                         const base::Value& value) override;
 
   DISALLOW_COPY_AND_ASSIGN(ProcessCoordinationUnitImpl);
 };

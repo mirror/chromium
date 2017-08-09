@@ -55,25 +55,12 @@ cr.define('downloads', function() {
       'itemsChanged_(items_.*)',
     ],
 
-    /** @private {?downloads.BrowserProxy} */
-    browserProxy_: null,
-
-    /** @private {?downloads.ActionService} */
-    actionService_: null,
-
-    /** @private {!PromiseResolver} */
-    loaded_: new PromiseResolver,
-
-    /** @override */
-    created: function() {
-      this.browserProxy_ = downloads.BrowserProxy.getInstance();
-      this.actionService_ = downloads.ActionService.getInstance();
-    },
-
-    /** @override */
     attached: function() {
       document.documentElement.classList.remove('loading');
     },
+
+    /** @private {!PromiseResolver} */
+    loaded_: new PromiseResolver,
 
     /** @private */
     clearAll_: function() {
@@ -155,9 +142,9 @@ cr.define('downloads', function() {
      */
     onCommand_: function(e) {
       if (e.command.id == 'clear-all-command')
-        this.browserProxy_.clearAll();
+        downloads.ActionService.getInstance().clearAll();
       else if (e.command.id == 'undo-command')
-        this.browserProxy_.undo();
+        downloads.ActionService.getInstance().undo();
       else if (e.command.id == 'find-command')
         this.$.toolbar.onFindCommand();
     },
@@ -167,7 +154,7 @@ cr.define('downloads', function() {
       const list = this.$['downloads-list'];
       if (list.scrollHeight - list.scrollTop - list.offsetHeight <= 100) {
         // Approaching the end of the scrollback. Attempt to load more items.
-        this.actionService_.loadMore();
+        downloads.ActionService.getInstance().loadMore();
       }
       this.hasShadow_ = list.scrollTop > 0;
     },
@@ -181,13 +168,13 @@ cr.define('downloads', function() {
       document.addEventListener('canExecute', this.onCanExecute_.bind(this));
       document.addEventListener('command', this.onCommand_.bind(this));
 
-      this.actionService_.loadMore();
+      downloads.ActionService.getInstance().loadMore();
       return this.loaded_.promise;
     },
 
     /** @private */
     onSearchChanged_: function() {
-      this.inSearchMode_ = this.actionService_.isSearching();
+      this.inSearchMode_ = downloads.ActionService.getInstance().isSearching();
     },
 
     /**

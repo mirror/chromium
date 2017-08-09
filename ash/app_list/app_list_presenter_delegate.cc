@@ -80,10 +80,7 @@ bool IsSideShelf(aura::Window* root_window) {
 AppListPresenterDelegate::AppListPresenterDelegate(
     app_list::AppListPresenterImpl* presenter,
     app_list::AppListViewDelegateFactory* view_delegate_factory)
-    : is_fullscreen_app_list_enabled_(
-          app_list::features::IsFullscreenAppListEnabled()),
-      presenter_(presenter),
-      view_delegate_factory_(view_delegate_factory) {
+    : presenter_(presenter), view_delegate_factory_(view_delegate_factory) {
   Shell::Get()->AddShellObserver(this);
   Shell::Get()->tablet_mode_controller()->AddObserver(this);
 }
@@ -123,7 +120,7 @@ void AppListPresenterDelegate::Init(app_list::AppListView* view,
                        ->IsTabletModeWindowManagerEnabled(),
                    IsSideShelf(root_window));
 
-  if (!is_fullscreen_app_list_enabled_) {
+  if (!app_list::features::IsFullscreenAppListEnabled()) {
     view->MaybeSetAnchorPoint(GetCenterOfDisplayForWindow(
         root_window, GetMinimumBoundsHeightForAppList(view)));
   }
@@ -174,11 +171,6 @@ gfx::Vector2d AppListPresenterDelegate::GetVisibilityAnimationOffset(
 
   // App list needs to know the new shelf layout in order to calculate its
   // UI layout when AppListView visibility changes.
-  if (is_fullscreen_app_list_enabled_) {
-    return gfx::Vector2d(
-        0, IsSideShelf(root_window) ? 0 : kAnimationOffsetFullscreen);
-  }
-
   Shelf* shelf = Shelf::ForWindow(root_window);
   shelf->UpdateAutoHideState();
 
@@ -193,16 +185,6 @@ gfx::Vector2d AppListPresenterDelegate::GetVisibilityAnimationOffset(
   }
   NOTREACHED();
   return gfx::Vector2d();
-}
-
-base::TimeDelta AppListPresenterDelegate::GetVisibilityAnimationDuration(
-    aura::Window* root_window,
-    bool is_visible) {
-  if (is_fullscreen_app_list_enabled_)
-    return animation_duration_fullscreen(IsSideShelf(root_window));
-
-  return is_visible ? base::TimeDelta::FromMilliseconds(0)
-                    : animation_duration();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -246,9 +228,7 @@ void AppListPresenterDelegate::OnMouseEvent(ui::MouseEvent* event) {
 }
 
 void AppListPresenterDelegate::OnGestureEvent(ui::GestureEvent* event) {
-  if (event->type() == ui::ET_GESTURE_TAP ||
-      event->type() == ui::ET_GESTURE_TWO_FINGER_TAP ||
-      event->type() == ui::ET_GESTURE_LONG_PRESS)
+  if (event->type() == ui::ET_GESTURE_SHOW_PRESS)
     ProcessLocatedEvent(event);
 }
 
@@ -271,14 +251,14 @@ void AppListPresenterDelegate::OnOverviewModeStarting() {
 }
 
 void AppListPresenterDelegate::OnTabletModeStarted() {
-  if (!is_fullscreen_app_list_enabled_)
+  if (!app_list::features::IsFullscreenAppListEnabled())
     return;
 
   view_->OnTabletModeChanged(true);
 }
 
 void AppListPresenterDelegate::OnTabletModeEnded() {
-  if (!is_fullscreen_app_list_enabled_)
+  if (!app_list::features::IsFullscreenAppListEnabled())
     return;
 
   view_->OnTabletModeChanged(false);

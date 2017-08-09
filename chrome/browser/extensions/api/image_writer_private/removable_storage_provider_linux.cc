@@ -42,16 +42,14 @@ static int get_device_blk_size(const std::string& path) {
   return blk_size;
 }
 
-// static
-scoped_refptr<StorageDeviceList>
-RemovableStorageProvider::PopulateDeviceList() {
+bool RemovableStorageProvider::PopulateDeviceList(
+    scoped_refptr<StorageDeviceList> device_list) {
   device::ScopedUdevPtr udev(device::udev_new());
   if (!udev) {
     DLOG(ERROR) << "Can't create udev";
-    return nullptr;
+    return false;
   }
 
-  scoped_refptr<StorageDeviceList> device_list(new StorageDeviceList());
   /* Create a list of the devices in the 'block' subsystem. */
   device::ScopedUdevEnumeratePtr enumerate(
       device::udev_enumerate_new(udev.get()));
@@ -108,7 +106,7 @@ RemovableStorageProvider::PopulateDeviceList() {
     device_list->data.push_back(std::move(device_item));
   }
 
-  return device_list;
+  return true;
 }
 
 }  // namespace extensions

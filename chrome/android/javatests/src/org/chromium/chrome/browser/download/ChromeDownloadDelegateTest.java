@@ -67,9 +67,14 @@ public class ChromeDownloadDelegateTest {
         final Tab tab = mActivityTestRule.getActivity().getActivityTab();
         mActivityTestRule.loadUrl("about:blank");
         ChromeDownloadDelegate delegate = ThreadUtils.runOnUiThreadBlockingNoException(
-                (Callable<ChromeDownloadDelegate>) () -> new MockChromeDownloadDelegate(
-                        InstrumentationRegistry.getInstrumentation().getTargetContext(),
-                        tab));
+                new Callable<ChromeDownloadDelegate>() {
+                    @Override
+                    public ChromeDownloadDelegate call() {
+                        return new MockChromeDownloadDelegate(
+                                InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                                tab);
+                    }
+                });
         Assert.assertFalse(delegate.shouldInterceptContextMenuDownload("file://test/test.html"));
         Assert.assertFalse(delegate.shouldInterceptContextMenuDownload("http://test/test.html"));
         Assert.assertFalse(delegate.shouldInterceptContextMenuDownload("ftp://test/test.dm"));

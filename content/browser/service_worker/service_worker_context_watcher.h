@@ -13,7 +13,6 @@
 #include "base/callback.h"
 #include "content/browser/service_worker/service_worker_context_core_observer.h"
 #include "content/browser/service_worker/service_worker_info.h"
-#include "content/common/content_export.h"
 
 namespace content {
 
@@ -22,7 +21,7 @@ enum class EmbeddedWorkerStatus;
 
 // Used to monitor the status change of the ServiceWorker registrations and
 // versions in the ServiceWorkerContext from UI thread.
-class CONTENT_EXPORT ServiceWorkerContextWatcher
+class ServiceWorkerContextWatcher
     : public ServiceWorkerContextCoreObserver,
       public base::RefCountedThreadSafe<ServiceWorkerContextWatcher> {
  public:
@@ -45,8 +44,6 @@ class CONTENT_EXPORT ServiceWorkerContextWatcher
 
  private:
   friend class base::RefCountedThreadSafe<ServiceWorkerContextWatcher>;
-  friend class ServiceWorkerContextWatcherTest;
-
   ~ServiceWorkerContextWatcher() override;
 
   void GetStoredRegistrationsOnIOThread();
@@ -67,15 +64,6 @@ class CONTENT_EXPORT ServiceWorkerContextWatcher
       const GURL& pattern,
       ServiceWorkerRegistrationInfo::DeleteFlag delete_flag);
   void SendVersionInfo(const ServiceWorkerVersionInfo& version);
-
-  void RunWorkerRegistrationUpdatedCallback(
-      std::unique_ptr<std::vector<ServiceWorkerRegistrationInfo>>
-          registrations);
-  void RunWorkerVersionUpdatedCallback(
-      std::unique_ptr<std::vector<ServiceWorkerVersionInfo>> versions);
-  void RunWorkerErrorReportedCallback(int64_t registration_id,
-                                      int64_t version_id,
-                                      std::unique_ptr<ErrorInfo> error_info);
 
   // ServiceWorkerContextCoreObserver implements
   void OnNewLiveRegistration(int64_t registration_id,
@@ -122,10 +110,6 @@ class CONTENT_EXPORT ServiceWorkerContextWatcher
   WorkerRegistrationUpdatedCallback registration_callback_;
   WorkerVersionUpdatedCallback version_callback_;
   WorkerErrorReportedCallback error_callback_;
-  // Should be used on UI thread only.
-  bool stop_called_ = false;
-  // Should be used on IO thread only.
-  bool is_stopped_ = false;
 };
 
 }  // namespace content

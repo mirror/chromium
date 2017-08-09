@@ -25,10 +25,6 @@ namespace cc {
 class CompositorFrameMetadata;
 }
 
-namespace net {
-class HttpRequestHeaders;
-}
-
 #if defined(OS_ANDROID)
 #include "services/device/public/interfaces/wake_lock.mojom.h"
 #endif
@@ -64,8 +60,8 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
   static std::unique_ptr<NavigationThrottle> CreateThrottleForNavigation(
       NavigationHandle* navigation_handle);
   static bool IsNetworkHandlerEnabled(FrameTreeNode* frame_tree_node);
-  static void AppendDevToolsHeaders(FrameTreeNode* frame_tree_node,
-                                    net::HttpRequestHeaders* headers);
+  static std::string UserAgentOverride(FrameTreeNode* frame_tree_node);
+
   static void WebContentsCreated(WebContents* web_contents);
 
   static void SignalSynchronousSwapCompositorFrame(

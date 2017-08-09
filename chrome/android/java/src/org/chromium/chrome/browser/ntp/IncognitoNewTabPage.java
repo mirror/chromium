@@ -34,7 +34,7 @@ public class IncognitoNewTabPage implements NativePage, InvalidationAwareThumbna
     private final String mTitle;
     private final int mBackgroundColor;
     private final int mThemeColor;
-    protected final IncognitoNewTabPageView mIncognitoNewTabPageView;
+    private final IncognitoNewTabPageView mIncognitoNewTabPageView;
 
     private boolean mIsLoaded;
 
@@ -87,8 +87,10 @@ public class IncognitoNewTabPage implements NativePage, InvalidationAwareThumbna
                 R.color.incognito_primary_color);
 
         LayoutInflater inflater = LayoutInflater.from(activity);
-        mIncognitoNewTabPageView =
-                (IncognitoNewTabPageView) inflater.inflate(getLayoutResource(), null);
+        mIncognitoNewTabPageView = (IncognitoNewTabPageView) inflater.inflate(useMDIncognitoNTP()
+                        ? R.layout.new_tab_page_incognito_md
+                        : R.layout.new_tab_page_incognito,
+                null);
         mIncognitoNewTabPageView.initialize(mIncognitoNewTabPageManager);
 
         if (!useMDIncognitoNTP()) {
@@ -99,12 +101,7 @@ public class IncognitoNewTabPage implements NativePage, InvalidationAwareThumbna
         }
     }
 
-    protected int getLayoutResource() {
-        return useMDIncognitoNTP() ? R.layout.new_tab_page_incognito_md
-                                   : R.layout.new_tab_page_incognito;
-    }
-
-    protected static boolean useMDIncognitoNTP() {
+    private static boolean useMDIncognitoNTP() {
         return ChromeFeatureList.isEnabled(ChromeFeatureList.MATERIAL_DESIGN_INCOGNITO_NTP);
     }
 

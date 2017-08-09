@@ -22,10 +22,6 @@
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "url/gurl.h"
 
-#if BUILDFLAG(ENABLE_MOJO_MEDIA)
-#include "media/mojo/interfaces/interface_factory.mojom.h"  // nogncheck
-#endif
-
 namespace blink {
 class WebContentDecryptionModule;
 class WebEncryptedMediaClient;
@@ -61,7 +57,7 @@ class InterfaceProvider;
 namespace content {
 
 class RenderFrameImpl;
-class MediaInterfaceFactory;
+class MediaInterfaceProvider;
 class MediaStreamRendererFactory;
 
 #if defined(OS_ANDROID)
@@ -138,10 +134,10 @@ class MediaFactory {
   media::CdmFactory* GetCdmFactory();
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
-  media::mojom::InterfaceFactory* GetMediaInterfaceFactory();
+  service_manager::mojom::InterfaceProvider* GetMediaInterfaceProvider();
 
   // The media interface provider attached to this frame, lazily initialized.
-  std::unique_ptr<MediaInterfaceFactory> media_interface_factory_;
+  std::unique_ptr<MediaInterfaceProvider> media_interface_provider_;
 #endif
 
   // The render frame we're helping. RenderFrameImpl owns this factory, so the

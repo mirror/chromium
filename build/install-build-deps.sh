@@ -208,7 +208,6 @@ dev_list="\
   subversion
   ttf-dejavu-core
   wdiff
-  x11-utils
   xcompmgr
   zip
   $chromeos_dev_list

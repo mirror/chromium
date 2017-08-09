@@ -352,7 +352,6 @@ class CONTENT_EXPORT WebContentsImpl
   int GetCapturerCount() const override;
   bool IsAudioMuted() const override;
   void SetAudioMuted(bool mute) override;
-  bool IsCurrentlyAudible() override;
   bool IsConnectedToBluetoothDevice() const override;
   bool IsCrashed() const override;
   void SetIsCrashed(base::TerminationStatus status, int error_code) override;
@@ -523,9 +522,12 @@ class CONTENT_EXPORT WebContentsImpl
   WebContents* GetAsWebContents() override;
   bool IsNeverVisible() override;
   ui::AXMode GetAccessibilityMode() const override;
-  void AccessibilityEventReceived(
-      const std::vector<AXEventNotificationDetails>& details) override;
+  void AccessibilityEventsReceived(
+      ui::AXTreeIDRegistry::AXTreeID ax_tree_id,
+      const ui::AXTreeUpdate& update,
+      const std::vector<AXEventNotificationDetails>& events) override;
   void AccessibilityLocationChangesReceived(
+      ui::AXTreeIDRegistry::AXTreeID ax_tree_id,
       const std::vector<AXLocationChangeNotificationDetails>& details) override;
   RenderFrameHost* GetGuestByInstanceID(
       RenderFrameHost* render_frame_host,
@@ -1165,9 +1167,9 @@ class CONTENT_EXPORT WebContentsImpl
                                const gfx::Rect& anchor_in_root_view);
 
   // Called by derived classes to indicate that we're no longer waiting for a
-  // response. Will inform |delegate_| of the change in status so that it may,
-  // for example, update the throbber.
-  void SetNotWaitingForResponse();
+  // response. This won't actually update the throbber, but it will get picked
+  // up at the next animation step if the throbber is going.
+  void SetNotWaitingForResponse() { waiting_for_response_ = false; }
 
   // Inner WebContents Helpers -------------------------------------------------
   //

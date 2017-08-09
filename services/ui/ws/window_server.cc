@@ -913,8 +913,7 @@ void WindowServer::OnGpuServiceInitialized() {
   delegate_->StartDisplayInit();
 }
 
-void WindowServer::OnFirstSurfaceActivation(
-    const viz::SurfaceInfo& surface_info) {
+void WindowServer::OnSurfaceCreated(const viz::SurfaceInfo& surface_info) {
   WindowId window_id(
       WindowIdFromTransportId(surface_info.id().frame_sink_id().client_id()));
   ServerWindow* window = GetWindow(window_id);
@@ -936,7 +935,7 @@ void WindowServer::OnFirstSurfaceActivation(
     // special case because ServerWindows created by the WindowServer are not
     // part of a WindowTree. Send the SurfaceId directly to FrameGenerator and
     // claim the temporary reference for the display root.
-    display->platform_display()->GetFrameGenerator()->OnFirstSurfaceActivation(
+    display->platform_display()->GetFrameGenerator()->OnSurfaceCreated(
         surface_info);
     display->root_window()
         ->GetOrCreateCompositorFrameSinkManager()

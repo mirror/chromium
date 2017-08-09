@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DimenRes;
-import android.support.annotation.StringRes;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,7 +19,7 @@ import org.chromium.chrome.browser.ChromeFeatureList;
 import javax.annotation.Nullable;
 
 /**
- * A controller for configuring the sign in promo. It sets up the sign in promo depending on the
+ * A mediator for configuring the sign in promo. It sets up the sign in promo depending on the
  * context: whether there are any Google accounts on the device which have been previously signed in
  * or not.
  */
@@ -35,53 +34,29 @@ public class SigninPromoController {
         void onDismiss();
     }
 
-    private static final String SIGNIN_PROMO_IMPRESSIONS_COUNT_BOOKMARKS =
-            "signin_promo_impressions_count_bookmarks";
-    private static final String SIGNIN_PROMO_IMPRESSIONS_COUNT_SETTINGS =
-            "signin_promo_impressions_count_settings";
+    private static final String SIGNIN_PROMO_IMPRESSIONS_COUNT = "signin_promo_impressions_count";
     private static final int MAX_IMPRESSIONS = 20;
 
     private String mAccountName;
     private final ProfileDataCache mProfileDataCache;
     private final @AccountSigninActivity.AccessPoint int mAccessPoint;
-    private final @Nullable String mImpressionCountName;
-    private final String mImpressionUserActionName;
-    private final @Nullable String mImpressionWithAccountUserActionName;
-    private final @Nullable String mImpressionWithNoAccountUserActionName;
-    private final @StringRes int mDescriptionStringId;
 
     /**
      * Determines whether the promo should be shown to the user or not.
-     * @param accessPoint The access point where the promo will be shown.
      * @return true if the promo is to be shown and false otherwise.
      */
-    public static boolean shouldShowPromo(@AccountSigninActivity.AccessPoint int accessPoint) {
+    public static boolean shouldShowPromo() {
         if (!ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_SIGNIN_PROMOS)) {
             return false;
         }
 
-        SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
-        switch (accessPoint) {
-            case SigninAccessPoint.BOOKMARK_MANAGER:
-                return sharedPreferences.getInt(SIGNIN_PROMO_IMPRESSIONS_COUNT_BOOKMARKS, 0)
-                        < MAX_IMPRESSIONS;
-            case SigninAccessPoint.NTP_CONTENT_SUGGESTIONS:
-                // There is no impression limit for NTP content suggestions.
-                return true;
-            case SigninAccessPoint.RECENT_TABS:
-                // There is no impression limit for Recent Tabs.
-                return true;
-            case SigninAccessPoint.SETTINGS:
-                return sharedPreferences.getInt(SIGNIN_PROMO_IMPRESSIONS_COUNT_SETTINGS, 0)
-                        < MAX_IMPRESSIONS;
-            default:
-                assert false : "Unexpected value for access point: " + accessPoint;
-                return false;
-        }
+        int numImpressions =
+                ContextUtils.getAppSharedPreferences().getInt(SIGNIN_PROMO_IMPRESSIONS_COUNT, 0);
+        return numImpressions < MAX_IMPRESSIONS;
     }
 
     /**
-     * Creates a new SigninPromoController.
+     * Creates a new SigninPromoMediator.
      * @param profileDataCache The profile data cache for the latest used account on the device.
      * @param accessPoint Specifies the AccessPoint from which the promo is to be shown.
      */
@@ -89,67 +64,21 @@ public class SigninPromoController {
             ProfileDataCache profileDataCache, @AccountSigninActivity.AccessPoint int accessPoint) {
         mProfileDataCache = profileDataCache;
         mAccessPoint = accessPoint;
-
-        switch (mAccessPoint) {
-            case SigninAccessPoint.BOOKMARK_MANAGER:
-                mImpressionCountName = SIGNIN_PROMO_IMPRESSIONS_COUNT_BOOKMARKS;
-                mImpressionUserActionName = "Signin_Impression_FromBookmarkManager";
-                mImpressionWithAccountUserActionName =
-                        "Signin_ImpressionWithAccount_FromBookmarkManager";
-                mImpressionWithNoAccountUserActionName =
-                        "Signin_ImpressionWithNoAccount_FromBookmarkManager";
-                mDescriptionStringId = R.string.signin_promo_description_bookmarks;
-                break;
-            case SigninAccessPoint.NTP_CONTENT_SUGGESTIONS:
-                // There is no impression limit for NTP content suggestions.
-                mImpressionCountName = null;
-                mImpressionUserActionName = "Signin_Impression_FromNTPContentSuggestions";
-                // TODO(iuliah): create Signin_ImpressionWithAccount_FromNTPContentSuggestions.
-                mImpressionWithAccountUserActionName = null;
-                // TODO(iuliah): create Signin_ImpressionWithNoAccount_FromNTPContentSuggestions.
-                mImpressionWithNoAccountUserActionName = null;
-                mDescriptionStringId = R.string.signin_promo_description_ntp_content_suggestions;
-                break;
-            case SigninAccessPoint.RECENT_TABS:
-                // There is no impression limit for Recent Tabs.
-                mImpressionCountName = null;
-                mImpressionUserActionName = "Signin_Impression_FromRecentTabs";
-                mImpressionWithAccountUserActionName =
-                        "Signin_ImpressionWithAccount_FromRecentTabs";
-                mImpressionWithNoAccountUserActionName =
-                        "Signin_ImpressionWithNoAccount_FromRecentTabs";
-                mDescriptionStringId = R.string.signin_promo_description_recent_tabs;
-                break;
-            case SigninAccessPoint.SETTINGS:
-                mImpressionCountName = SIGNIN_PROMO_IMPRESSIONS_COUNT_SETTINGS;
-                mImpressionUserActionName = "Signin_Impression_FromSettings";
-                mImpressionWithAccountUserActionName = "Signin_ImpressionWithAccount_FromSettings";
-                mImpressionWithNoAccountUserActionName =
-                        "Signin_ImpressionWithNoAccount_FromSettings";
-                mDescriptionStringId = R.string.signin_promo_description_settings;
-                break;
-            default:
-                throw new IllegalArgumentException(
-                        "Unexpected value for access point: " + mAccessPoint);
-        }
     }
 
     /**
      * Records user actions for promo impressions.
      */
     public void recordSigninPromoImpression() {
-        RecordUserAction.record(mImpressionUserActionName);
+        SharedPreferences preferences = ContextUtils.getAppSharedPreferences();
+        int numImpressions = preferences.getInt(SIGNIN_PROMO_IMPRESSIONS_COUNT, 0);
+        preferences.edit().putInt(SIGNIN_PROMO_IMPRESSIONS_COUNT, numImpressions + 1).apply();
+
+        recordSigninImpressionUserAction();
         if (mAccountName == null) {
             recordSigninImpressionWithNoAccountUserAction();
         } else {
             recordSigninImpressionWithAccountUserAction();
-        }
-
-        // If mImpressionCountName is not null then we should record impressions.
-        if (mImpressionCountName != null) {
-            SharedPreferences preferences = ContextUtils.getAppSharedPreferences();
-            int numImpressions = preferences.getInt(mImpressionCountName, 0);
-            preferences.edit().putInt(mImpressionCountName, numImpressions + 1).apply();
         }
     }
 
@@ -162,8 +91,6 @@ public class SigninPromoController {
      */
     public void setupSigninPromoView(Context context, SigninPromoView view,
             @Nullable final OnDismissListener onDismissListener) {
-        view.getDescription().setText(mDescriptionStringId);
-
         if (mAccountName == null) {
             setupColdState(context, view);
         } else {
@@ -192,15 +119,60 @@ public class SigninPromoController {
         mAccountName = accountName;
     }
 
+    private void recordSigninImpressionUserAction() {
+        switch (mAccessPoint) {
+            case SigninAccessPoint.BOOKMARK_MANAGER:
+                RecordUserAction.record("Signin_Impression_FromBookmarkManager");
+                break;
+            case SigninAccessPoint.NTP_CONTENT_SUGGESTIONS:
+                RecordUserAction.record("Signin_Impression_FromNTPContentSuggestions");
+                break;
+            case SigninAccessPoint.RECENT_TABS:
+                RecordUserAction.record("Signin_Impression_FromRecentTabs");
+                break;
+            case SigninAccessPoint.SETTINGS:
+                RecordUserAction.record("Signin_Impression_FromSettings");
+                break;
+            default:
+                throw new RuntimeException("Unexpected value for access point: " + mAccessPoint);
+        }
+    }
+
     private void recordSigninImpressionWithAccountUserAction() {
-        if (mImpressionWithAccountUserActionName != null) {
-            RecordUserAction.record(mImpressionWithAccountUserActionName);
+        switch (mAccessPoint) {
+            case SigninAccessPoint.BOOKMARK_MANAGER:
+                RecordUserAction.record("Signin_ImpressionWithAccount_FromBookmarkManager");
+                break;
+            case SigninAccessPoint.NTP_CONTENT_SUGGESTIONS:
+                // TODO(iuliah): record Signin_ImpressionWithAccount_FromNTPContentSuggestions.
+                break;
+            case SigninAccessPoint.RECENT_TABS:
+                RecordUserAction.record("Signin_ImpressionWithAccount_FromRecentTabs");
+                break;
+            case SigninAccessPoint.SETTINGS:
+                RecordUserAction.record("Signin_ImpressionWithAccount_FromSettings");
+                break;
+            default:
+                throw new RuntimeException("Unexpected value for access point: " + mAccessPoint);
         }
     }
 
     private void recordSigninImpressionWithNoAccountUserAction() {
-        if (mImpressionWithNoAccountUserActionName != null) {
-            RecordUserAction.record(mImpressionWithNoAccountUserActionName);
+        switch (mAccessPoint) {
+            case SigninAccessPoint.BOOKMARK_MANAGER:
+                RecordUserAction.record("Signin_ImpressionWithNoAccount_FromBookmarkManager");
+                break;
+            case SigninAccessPoint.NTP_CONTENT_SUGGESTIONS:
+                // TODO(iuliah): record Signin_ImpressionWithNoAccount_FromNTPContentSuggestions.
+                break;
+            case SigninAccessPoint.RECENT_TABS:
+                RecordUserAction.record("Signin_ImpressionWithNoAccount_FromRecentTabs");
+                break;
+            case SigninAccessPoint.SETTINGS:
+                RecordUserAction.record("Signin_ImpressionWithNoAccount_FromSettings");
+                break;
+            default:
+                throw new RuntimeException("Unexpected value for access point: " + mAccessPoint);
         }
     }
 
@@ -212,7 +184,8 @@ public class SigninPromoController {
         view.getSigninButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AccountSigninActivity.startFromAddAccountPage(context, mAccessPoint);
+                AccountSigninActivity.startAccountSigninActivity(context, mAccessPoint);
+                // TODO(iuliah): change to new account activity when available.
             }
         });
 

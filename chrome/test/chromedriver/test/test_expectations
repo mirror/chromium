@@ -141,12 +141,6 @@ _REVISION_NEGATIVE_FILTER['HEAD'] = [
     'AlertsTest.testPromptShouldUseDefaultValueIfNoKeysSent',
     'UnexpectedAlertBehaviorTest.canAcceptUnhandledAlert',
     'UnexpectedAlertBehaviorTest.canSpecifyUnhandledAlertBehaviourUsingCapabilities',
-    # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1918
-    'WindowTest.testGetsThePositionOfTheCurrentWindow',
-    'WindowTest.testGetsTheSizeOfTheCurrentWindow',
-    'WindowTest.testSetsThePositionOfTheCurrentWindow',
-    'WindowTest.testSetsTheSizeOfTheCurrentWindowFromIframe',
-    'WindowTest.testSetsTheSizeOfTheCurrentWindowFromFrame',
 ]
 
 _OS_NEGATIVE_FILTER = {}
@@ -274,8 +268,6 @@ _OS_NEGATIVE_FILTER['android:chrome_stable'] = (
     _OS_NEGATIVE_FILTER['android:chrome'] + [
          # https://bugs.chromium.org/p/chromedriver/issues/detail?id=998
         'ImplicitWaitTest.testShouldImplicitlyWaitForASingleElement',
-         # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1852
-        'CorrectEventFiringTest.testShouldFireMouseDownEventWhenClicking',
     ]
 )
 

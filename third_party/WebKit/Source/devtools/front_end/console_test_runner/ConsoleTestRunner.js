@@ -530,18 +530,3 @@ ConsoleTestRunner.selectConsoleMessages = function(fromMessage, fromTextOffset, 
 ConsoleTestRunner.addConsoleSniffer = function(override, opt_sticky) {
   TestRunner.addSniffer(ConsoleModel.ConsoleModel.prototype, 'addMessage', override, opt_sticky);
 };
-
-/**
- * @param {!Function} func
- * @return {!Function}
- */
-ConsoleTestRunner.wrapListener = function(func) {
-  /**
-   * @this {*}
-   */
-  async function wrapper() {
-    await Promise.resolve();
-    func.apply(this, arguments);
-  }
-  return wrapper;
-};

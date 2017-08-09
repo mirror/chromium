@@ -47,8 +47,7 @@ class DocumentAnimations {
   static void UpdateAnimationTimingIfNeeded(Document&);
 
   // Updates existing animations as part of generating a new (document
-  // lifecycle) frame. Note that this considers and updates state for
-  // both composited and non-composited animations.
+  // lifecycle) frame.
   static void UpdateAnimations(
       Document&,
       DocumentLifecycle::LifecycleState required_lifecycle_state,

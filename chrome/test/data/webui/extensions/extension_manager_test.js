@@ -22,10 +22,6 @@ cr.define('extension_manager_tests', function() {
     /** @type {extensions.Manager} */
     var manager;
 
-    function isActiveView(viewId) {
-      expectEquals(viewId, manager.$.viewManager.querySelector('.active').id);
-    }
-
     setup(function() {
       manager = document.querySelector('extensions-manager');
     });
@@ -128,35 +124,34 @@ cr.define('extension_manager_tests', function() {
 
     test(assert(TestNames.ChangePages), function() {
       // We start on the item list.
-      MockInteractions.tap(manager.sidebar.$['sections-extensions']);
-      Polymer.dom.flush();
-      isActiveView(Page.LIST);
+      var pages = manager.$.pages;
+      expectEquals(Page.LIST, pages.selected);
 
       // Switch: item list -> keyboard shortcuts.
       MockInteractions.tap(manager.sidebar.$['sections-shortcuts']);
       Polymer.dom.flush();
-      isActiveView(Page.SHORTCUTS);
+      expectEquals(Page.SHORTCUTS, pages.selected);
 
       // Switch: keyboard shortcuts -> item list.
       MockInteractions.tap(manager.sidebar.$['sections-apps']);
       Polymer.dom.flush();
-      isActiveView(Page.LIST);
+      expectEquals(Page.LIST, pages.selected);
 
       // Switch: item list -> detail view.
       var item = manager.$['items-list'].$$('extensions-item');
       assert(item);
       item.onDetailsTap_();
       Polymer.dom.flush();
-      isActiveView(Page.DETAILS);
+      expectEquals(Page.DETAILS, pages.selected);
 
       // Switch: detail view -> keyboard shortcuts.
       MockInteractions.tap(manager.sidebar.$['sections-shortcuts']);
       Polymer.dom.flush();
-      isActiveView(Page.SHORTCUTS);
+      expectEquals(Page.SHORTCUTS, pages.selected);
     });
 
     test(assert(TestNames.UrlNavigationToDetails), function() {
-      isActiveView(Page.DETAILS);
+      expectEquals(Page.DETAILS, manager.$.pages.selected);
       var detailsView = manager.$['details-view'];
       expectEquals('ldnnhddmnhbkjipkidpdiheffobcpfmf', detailsView.data.id);
     });

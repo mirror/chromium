@@ -9,8 +9,6 @@
 
 #include "base/macros.h"
 
-class PrefService;
-
 namespace ash {
 class NativeCursorManagerAsh;
 class DragDropController;
@@ -35,10 +33,6 @@ class ShellTestApi {
   TabletModeWindowManager* tablet_mode_window_manager();
 
   void SetPaletteDelegate(std::unique_ptr<PaletteDelegate> palette_delegate);
-
-  // Calls the private method.
-  void OnLocalStatePrefServiceInitialized(
-      std::unique_ptr<PrefService> pref_service);
 
  private:
   Shell* shell_;  // not owned

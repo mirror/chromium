@@ -16,6 +16,7 @@ struct PasswordForm;
 namespace password_manager {
 
 class PasswordManagerClient;
+class PasswordManagerDriver;
 
 // A delegate that is notified when CredentialManagerPasswordFormManager
 // finishes working with password forms.
@@ -39,6 +40,7 @@ class CredentialManagerPasswordFormManager : public PasswordFormManager {
   // This class does not take ownership of |delegate|.
   CredentialManagerPasswordFormManager(
       PasswordManagerClient* client,
+      base::WeakPtr<PasswordManagerDriver> driver,
       const autofill::PasswordForm& observed_form,
       std::unique_ptr<autofill::PasswordForm> saved_form,
       CredentialManagerPasswordFormManagerDelegate* delegate,

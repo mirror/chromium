@@ -7,7 +7,6 @@
 #include "base/containers/flat_map.h"
 #include "base/memory/ref_counted.h"
 #include "components/ukm/test_ukm_recorder.h"
-#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using GlobalMemoryDumpPtr = memory_instrumentation::mojom::GlobalMemoryDumpPtr;
@@ -23,11 +22,7 @@ namespace {
 // visibility.
 class ProcessMemoryMetricsEmitterFake : public ProcessMemoryMetricsEmitter {
  public:
-  ProcessMemoryMetricsEmitterFake(
-      ukm::TestAutoSetUkmRecorder& test_ukm_recorder)
-      : ukm_recorder_(&test_ukm_recorder) {
-    MarkServiceRequestsInProgress();
-  }
+  ProcessMemoryMetricsEmitterFake() { MarkServiceRequestsInProgress(); }
 
   void ReceivedMemoryDump(
       bool success,
@@ -43,12 +38,9 @@ class ProcessMemoryMetricsEmitterFake : public ProcessMemoryMetricsEmitter {
 
   bool IsResourceCoordinatorEnabled() override { return true; }
 
-  ukm::UkmRecorder* GetUkmRecorder() override { return ukm_recorder_; }
-
  private:
   ~ProcessMemoryMetricsEmitterFake() override {}
 
-  ukm::UkmRecorder* ukm_recorder_;
   DISALLOW_COPY_AND_ASSIGN(ProcessMemoryMetricsEmitterFake);
 };
 
@@ -182,7 +174,7 @@ base::flat_map<const char*, int64_t> GetExpectedProcessMetrics(
   return base::flat_map<const char*, int64_t>();
 }
 
-ProcessInfoVector GetProcessInfo(ukm::UkmRecorder& ukm_recorder) {
+ProcessInfoVector GetProcessInfo() {
   ProcessInfoVector process_infos;
 
   // Process 200 always has no URLs.
@@ -198,11 +190,9 @@ ProcessInfoVector GetProcessInfo(ukm::UkmRecorder& ukm_recorder) {
     ProcessInfoPtr process_info(
         resource_coordinator::mojom::ProcessInfo::New());
     process_info->pid = 201;
-    ukm::SourceId first_source_id = ukm::UkmRecorder::GetNewSourceID();
-    ukm_recorder.UpdateSourceURL(first_source_id,
-                                 GURL("http://www.url201.com/"));
-
-    process_info->ukm_source_ids.push_back(first_source_id);
+    std::vector<std::string> urls;
+    urls.push_back("http://www.url201.com/");
+    process_info->urls = std::move(urls);
     process_infos.push_back(std::move(process_info));
   }
 
@@ -211,16 +201,10 @@ ProcessInfoVector GetProcessInfo(ukm::UkmRecorder& ukm_recorder) {
     ProcessInfoPtr process_info(
         resource_coordinator::mojom::ProcessInfo::New());
     process_info->pid = 202;
-    ukm::SourceId first_source_id = ukm::UkmRecorder::GetNewSourceID();
-    ukm::SourceId second_source_id = ukm::UkmRecorder::GetNewSourceID();
-    ukm_recorder.UpdateSourceURL(first_source_id,
-                                 GURL("http://www.url2021.com/"));
-    ukm_recorder.UpdateSourceURL(second_source_id,
-                                 GURL("http://www.url2022.com/"));
-
-    process_info->ukm_source_ids.push_back(first_source_id);
-    process_info->ukm_source_ids.push_back(second_source_id);
-
+    std::vector<std::string> urls;
+    urls.push_back("http://www.url2021.com/");
+    urls.push_back("http://www.url2022.com/");
+    process_info->urls = std::move(urls);
     process_infos.push_back(std::move(process_info));
   }
   return process_infos;
@@ -265,7 +249,7 @@ TEST_P(ProcessMemoryMetricsEmitterTest, CollectsSingleProcessUKMs) {
   PopulateMetrics(global_dump, GetParam(), expected_metrics);
 
   scoped_refptr<ProcessMemoryMetricsEmitterFake> emitter(
-      new ProcessMemoryMetricsEmitterFake(test_ukm_recorder_));
+      new ProcessMemoryMetricsEmitterFake());
   emitter->ReceivedProcessInfos(ProcessInfoVector());
   emitter->ReceivedMemoryDump(true, dump_guid, std::move(global_dump));
 
@@ -296,7 +280,7 @@ TEST_F(ProcessMemoryMetricsEmitterTest, CollectsManyProcessUKMsSingleDump) {
   }
 
   scoped_refptr<ProcessMemoryMetricsEmitterFake> emitter(
-      new ProcessMemoryMetricsEmitterFake(test_ukm_recorder_));
+      new ProcessMemoryMetricsEmitterFake());
   emitter->ReceivedProcessInfos(ProcessInfoVector());
   emitter->ReceivedMemoryDump(true, dump_guid, std::move(global_dump));
 
@@ -315,7 +299,7 @@ TEST_F(ProcessMemoryMetricsEmitterTest, CollectsManyProcessUKMsManyDumps) {
   std::vector<base::flat_map<const char*, int64_t>> entries_metrics;
   for (int i = 0; i < 2; ++i) {
     scoped_refptr<ProcessMemoryMetricsEmitterFake> emitter(
-        new ProcessMemoryMetricsEmitterFake(test_ukm_recorder_));
+        new ProcessMemoryMetricsEmitterFake());
     GlobalMemoryDumpPtr global_dump(
         memory_instrumentation::mojom::GlobalMemoryDump::New());
     for (const auto& ptype : entries_ptypes[i]) {
@@ -341,24 +325,16 @@ TEST_F(ProcessMemoryMetricsEmitterTest, ReceiveProcessInfoFirst) {
   PopulateRendererMetrics(global_dump, expected_metrics, 201);
 
   scoped_refptr<ProcessMemoryMetricsEmitterFake> emitter(
-      new ProcessMemoryMetricsEmitterFake(test_ukm_recorder_));
-  emitter->ReceivedProcessInfos(GetProcessInfo(test_ukm_recorder_));
+      new ProcessMemoryMetricsEmitterFake());
+  emitter->ReceivedProcessInfos(GetProcessInfo());
   emitter->ReceivedMemoryDump(true, 0xBEEF, std::move(global_dump));
 
-  EXPECT_EQ(1,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url201.com/"),
-                "Memory.Experimental"));
-
-  EXPECT_EQ(0,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url2021.com/"),
-                "Memory.Experimental"));
-
-  EXPECT_EQ(0,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url2022.com/"),
-                "Memory.Experimental"));
+  EXPECT_NE(nullptr,
+            test_ukm_recorder_.GetSourceForUrl("http://www.url201.com/"));
+  EXPECT_EQ(nullptr,
+            test_ukm_recorder_.GetSourceForUrl("http://www.url2021.com/"));
+  EXPECT_EQ(nullptr,
+            test_ukm_recorder_.GetSourceForUrl("http://www.url2022.com/"));
 
   // The second entry is for total memory, which we don't care about in this
   // test.
@@ -374,24 +350,16 @@ TEST_F(ProcessMemoryMetricsEmitterTest, ReceiveProcessInfoSecond) {
   PopulateRendererMetrics(global_dump, expected_metrics, 201);
 
   scoped_refptr<ProcessMemoryMetricsEmitterFake> emitter(
-      new ProcessMemoryMetricsEmitterFake(test_ukm_recorder_));
+      new ProcessMemoryMetricsEmitterFake());
   emitter->ReceivedMemoryDump(true, 0xBEEF, std::move(global_dump));
-  emitter->ReceivedProcessInfos(GetProcessInfo(test_ukm_recorder_));
+  emitter->ReceivedProcessInfos(GetProcessInfo());
 
-  EXPECT_EQ(1,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url201.com/"),
-                "Memory.Experimental"));
-
-  EXPECT_EQ(0,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url2021.com/"),
-                "Memory.Experimental"));
-
-  EXPECT_EQ(0,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url2022.com/"),
-                "Memory.Experimental"));
+  EXPECT_NE(nullptr,
+            test_ukm_recorder_.GetSourceForUrl("http://www.url201.com/"));
+  EXPECT_EQ(nullptr,
+            test_ukm_recorder_.GetSourceForUrl("http://www.url2021.com/"));
+  EXPECT_EQ(nullptr,
+            test_ukm_recorder_.GetSourceForUrl("http://www.url2022.com/"));
 
   // The second entry is for total memory, which we don't care about in this
   // test.
@@ -409,23 +377,15 @@ TEST_F(ProcessMemoryMetricsEmitterTest, ProcessInfoHasTwoURLs) {
   PopulateRendererMetrics(global_dump, expected_metrics, 202);
 
   scoped_refptr<ProcessMemoryMetricsEmitterFake> emitter(
-      new ProcessMemoryMetricsEmitterFake(test_ukm_recorder_));
+      new ProcessMemoryMetricsEmitterFake());
   emitter->ReceivedMemoryDump(true, 0xBEEF, std::move(global_dump));
-  emitter->ReceivedProcessInfos(GetProcessInfo(test_ukm_recorder_));
+  emitter->ReceivedProcessInfos(GetProcessInfo());
 
   // Check that if there are two URLs, neither is emitted.
-  EXPECT_EQ(1,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url201.com/"),
-                "Memory.Experimental"));
-
-  EXPECT_EQ(0,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url2021.com/"),
-                "Memory.Experimental"));
-
-  EXPECT_EQ(0,
-            test_ukm_recorder_.CountEntries(
-                *test_ukm_recorder_.GetSourceForUrl("http://www.url2022.com/"),
-                "Memory.Experimental"));
+  EXPECT_NE(nullptr,
+            test_ukm_recorder_.GetSourceForUrl("http://www.url201.com/"));
+  EXPECT_EQ(nullptr,
+            test_ukm_recorder_.GetSourceForUrl("http://www.url2021.com/"));
+  EXPECT_EQ(nullptr,
+            test_ukm_recorder_.GetSourceForUrl("http://www.url2022.com/"));
 }

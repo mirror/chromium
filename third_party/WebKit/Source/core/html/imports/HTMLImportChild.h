@@ -50,10 +50,7 @@ class HTMLLinkElement;
 //
 class HTMLImportChild final : public HTMLImport {
  public:
-  HTMLImportChild(const KURL&,
-                  HTMLImportLoader*,
-                  HTMLImportChildClient*,
-                  SyncMode);
+  HTMLImportChild(const KURL&, HTMLImportLoader*, SyncMode);
   ~HTMLImportChild() final;
   void Dispose();
 
@@ -71,6 +68,12 @@ class HTMLImportChild final : public HTMLImport {
   void StateWillChange() final;
   void StateDidChange() final;
   DECLARE_VIRTUAL_TRACE();
+
+#if !defined(NDEBUG)
+  void ShowThis() final;
+#endif
+
+  void SetClient(HTMLImportChildClient*);
 
   void DidFinishLoading();
   void DidFinishUpgradingCustomElements();

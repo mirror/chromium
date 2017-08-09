@@ -34,10 +34,8 @@
 #include "content/common/frame.mojom.h"
 #include "content/common/frame_message_enums.h"
 #include "content/common/host_zoom.mojom.h"
-#include "content/common/possibly_associated_interface_ptr.h"
 #include "content/common/renderer.mojom.h"
 #include "content/common/unique_name_helper.h"
-#include "content/common/widget.mojom.h"
 #include "content/public/common/console_message_level.h"
 #include "content/public/common/javascript_dialog_type.h"
 #include "content/public/common/previews_state.h"
@@ -464,7 +462,6 @@ class CONTENT_EXPORT RenderFrameImpl
   void AddMessageToConsole(ConsoleMessageLevel level,
                            const std::string& message) override;
   void DetachDevToolsForTest() override;
-  void SetPreviewsState(PreviewsState previews_state) override;
   PreviewsState GetPreviewsState() const override;
   bool IsPasting() const override;
   blink::WebPageVisibilityState GetVisibilityState() const override;
@@ -1179,7 +1176,6 @@ class CONTENT_EXPORT RenderFrameImpl
 
   void UpdatePeakMemoryStats();
   void ReportPeakMemoryStats();
-  void BindWidget(mojom::WidgetRequest request);
 
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
@@ -1477,7 +1473,7 @@ class CONTENT_EXPORT RenderFrameImpl
   mojo::BindingSet<service_manager::mojom::InterfaceProvider>
       interface_provider_bindings_;
 
-  PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory> url_loader_factory_;
+  mojom::URLLoaderFactoryPtr url_loader_factory_;
 
   // AndroidOverlay routing token from the browser, if we have one yet.
   base::Optional<base::UnguessableToken> overlay_routing_token_;

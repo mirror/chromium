@@ -32,7 +32,7 @@ class CONTENT_EXPORT ArcTracingAgent : public base::trace_event::TracingAgent {
     virtual ~Delegate();
 
     // Starts tracing in ARC container.
-    virtual bool StartTracing(
+    virtual void StartTracing(
         const base::trace_event::TraceConfig& trace_config,
         base::ScopedFD write_fd,
         const StartTracingCallback& callback) = 0;

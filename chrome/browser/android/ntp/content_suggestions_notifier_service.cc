@@ -121,7 +121,7 @@ class ContentSuggestionsNotifierService::NotifyingObserver
     if (!ShouldNotifyInState(app_status_listener_.GetState())) {
       DVLOG(1) << "Suppressed notification because Chrome is frontmost";
       return;
-    } else if (!ContentSuggestionsNotificationHelper::IsEnabledForProfile(
+    } else if (ContentSuggestionsNotificationHelper::IsDisabledForProfile(
                    profile_)) {
       DVLOG(1) << "Suppressed notification due to opt-out";
       return;

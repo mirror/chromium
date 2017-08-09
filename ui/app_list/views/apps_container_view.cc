@@ -16,7 +16,6 @@
 #include "ui/app_list/views/app_list_item_view.h"
 #include "ui/app_list/views/app_list_main_view.h"
 #include "ui/app_list/views/apps_grid_view.h"
-#include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/folder_background_view.h"
 #include "ui/app_list/views/suggestions_container_view.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -84,8 +83,8 @@ void AppsContainerView::ResetForShowApps() {
 void AppsContainerView::SetDragAndDropHostOfCurrentAppList(
     ApplicationDragAndDropHost* drag_and_drop_host) {
   apps_grid_view()->SetDragAndDropHostOfCurrentAppList(drag_and_drop_host);
-  app_list_folder_view()->items_grid_view()->SetDragAndDropHostOfCurrentAppList(
-      drag_and_drop_host);
+  app_list_folder_view()->items_grid_view()->
+      SetDragAndDropHostOfCurrentAppList(drag_and_drop_host);
 }
 
 void AppsContainerView::ReparentFolderItemTransit(
@@ -150,27 +149,10 @@ void AppsContainerView::OnWillBeShown() {
 gfx::Rect AppsContainerView::GetPageBoundsForState(
     AppListModel::State state) const {
   gfx::Rect onscreen_bounds = GetDefaultContentsBounds();
-  if (state == AppListModel::STATE_APPS) {
-    if (is_fullscreen_app_list_enabled_)
-      onscreen_bounds.set_y(GetSearchBoxBounds().bottom());
+  if (state == AppListModel::STATE_APPS)
     return onscreen_bounds;
-  }
 
   return GetBelowContentsOffscreenBounds(onscreen_bounds.size());
-}
-
-gfx::Rect AppsContainerView::GetSearchBoxBounds() const {
-  if (!is_fullscreen_app_list_enabled_)
-    return AppListPage::GetSearchBoxBounds();
-
-  // Makes search box and content vertically centered in screen.
-  gfx::Rect search_box_bounds(contents_view()->GetDefaultSearchBoxBounds());
-  const int total_height =
-      GetDefaultContentsBounds().bottom() - search_box_bounds.y();
-  search_box_bounds.set_y(
-      std::max(search_box_bounds.y(),
-               (contents_view()->GetDisplayHeight() - total_height) / 2));
-  return search_box_bounds;
 }
 
 void AppsContainerView::OnTopIconAnimationsComplete() {
@@ -230,8 +212,8 @@ std::vector<gfx::Rect> AppsContainerView::GetTopItemIconBoundsInActiveFolder() {
   // Get the active folder's icon bounds relative to AppsContainerView.
   AppListItemView* folder_item_view =
       apps_grid_view_->activated_folder_item_view();
-  gfx::Rect to_grid_view =
-      folder_item_view->ConvertRectToParent(folder_item_view->GetIconBounds());
+  gfx::Rect to_grid_view = folder_item_view->ConvertRectToParent(
+      folder_item_view->GetIconBounds());
   gfx::Rect to_container = apps_grid_view_->ConvertRectToParent(to_grid_view);
 
   return FolderImage::GetTopIconsBounds(to_container);

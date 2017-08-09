@@ -1188,9 +1188,7 @@ void GLES2InterfaceStub::OverlayPromotionHintCHROMIUM(
     GLuint /* texture */,
     GLboolean /* promotion_hint */,
     GLint /* display_x */,
-    GLint /* display_y */,
-    GLint /* display_width */,
-    GLint /* display_height */) {}
+    GLint /* display_y */) {}
 void GLES2InterfaceStub::SwapBuffersWithBoundsCHROMIUM(
     GLsizei /* count */,
     const GLint* /* rects */) {}

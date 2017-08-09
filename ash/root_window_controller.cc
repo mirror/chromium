@@ -345,6 +345,7 @@ void RootWindowController::InitializeShelf() {
   if (shelf_initialized_)
     return;
   shelf_initialized_ = true;
+  shelf_->NotifyShelfInitialized();
 
   // TODO(jamescook): Pass |shelf_| into the constructors for these layout
   // managers.

@@ -6,10 +6,8 @@
 
 #include "ash/metrics/user_metrics_action.h"
 #include "ash/metrics/user_metrics_recorder.h"
-#include "ash/public/cpp/shelf_prefs.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/shelf/shelf.h"
-#include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 
@@ -49,29 +47,21 @@ bool ShelfAlignmentMenu::IsCommandIdEnabled(int command_id) const {
 }
 
 void ShelfAlignmentMenu::ExecuteCommand(int command_id, int event_flags) {
-  PrefService* prefs = Shell::Get()->GetActiveUserPrefService();
-  if (!prefs)  // Null during startup, user switch and tests.
-    return;
-
-  int64_t display_id =
-      display::Screen::GetScreen()
-          ->GetDisplayNearestWindow(shelf_->shelf_widget()->GetNativeWindow())
-          .id();
   switch (static_cast<MenuItem>(command_id)) {
     case MENU_ALIGN_LEFT:
       Shell::Get()->metrics()->RecordUserMetricsAction(
           UMA_SHELF_ALIGNMENT_SET_LEFT);
-      SetShelfAlignmentPref(prefs, display_id, SHELF_ALIGNMENT_LEFT);
+      shelf_->SetAlignment(SHELF_ALIGNMENT_LEFT);
       break;
     case MENU_ALIGN_BOTTOM:
       Shell::Get()->metrics()->RecordUserMetricsAction(
           UMA_SHELF_ALIGNMENT_SET_BOTTOM);
-      SetShelfAlignmentPref(prefs, display_id, SHELF_ALIGNMENT_BOTTOM);
+      shelf_->SetAlignment(SHELF_ALIGNMENT_BOTTOM);
       break;
     case MENU_ALIGN_RIGHT:
       Shell::Get()->metrics()->RecordUserMetricsAction(
           UMA_SHELF_ALIGNMENT_SET_RIGHT);
-      SetShelfAlignmentPref(prefs, display_id, SHELF_ALIGNMENT_RIGHT);
+      shelf_->SetAlignment(SHELF_ALIGNMENT_RIGHT);
       break;
   }
 }

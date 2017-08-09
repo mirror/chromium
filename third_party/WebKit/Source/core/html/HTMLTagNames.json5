@@ -439,10 +439,6 @@
       name: "thead",
       interfaceName: "HTMLTableSectionElement",
     },
-    {
-      name: "time",
-      interfaceName: "HTMLTimeElement",
-    },
     "title",
     {
       name: "tr",

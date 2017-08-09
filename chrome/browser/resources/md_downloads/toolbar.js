@@ -20,14 +20,6 @@ cr.define('downloads', function() {
       },
     },
 
-    /** @private {?downloads.BrowserProxy} */
-    browserProxy_: null,
-
-    /** @override */
-    ready: function() {
-      this.browserProxy_ = downloads.BrowserProxy.getInstance();
-    },
-
     /** @return {boolean} Whether removal can be undone. */
     canUndo: function() {
       return !this.$.toolbar.getSearchField().isSearchFocused();
@@ -55,7 +47,7 @@ cr.define('downloads', function() {
     /** @private */
     onClearAllTap_: function() {
       assert(this.canClearAll());
-      this.browserProxy_.clearAll();
+      downloads.ActionService.getInstance().clearAll();
       this.$.moreActionsMenu.close();
     },
 
@@ -77,7 +69,7 @@ cr.define('downloads', function() {
 
     /** @private */
     onOpenDownloadsFolderTap_: function() {
-      this.browserProxy_.openDownloadsFolder();
+      downloads.ActionService.getInstance().openDownloadsFolder();
       this.$.moreActionsMenu.close();
     },
 

@@ -10,10 +10,10 @@
 #include "base/mac/foundation_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "components/open_from_clipboard/clipboard_recent_content_impl_ios.h"
-#import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #include "ios/chrome/common/app_group/app_group_constants.h"
 #import "ios/chrome/search_widget_extension/copied_url_view.h"
 #import "ios/chrome/search_widget_extension/search_widget_view.h"
+#import "ios/chrome/search_widget_extension/ui_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -73,7 +73,7 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
   UIVibrancyEffect* primary;
   UIVibrancyEffect* secondary;
   CGFloat height =
-      self.extensionContext && base::ios::IsRunningOnIOS10OrLater()
+      self.extensionContext
           ? [self.extensionContext
                 widgetMaximumSizeForDisplayMode:NCWidgetDisplayModeCompact]
                 .height
@@ -93,25 +93,21 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
         primaryVibrancyEffect:primary
       secondaryVibrancyEffect:secondary
                 compactHeight:height
-             initiallyCompact:(base::ios::IsRunningOnIOS10OrLater() &&
-                               [self.extensionContext
+             initiallyCompact:([self.extensionContext
                                        widgetActiveDisplayMode] ==
-                                   NCWidgetDisplayModeCompact)];
+                               NCWidgetDisplayModeCompact)];
   self.widgetView = widgetView;
   [self.view addSubview:self.widgetView];
 
   if (base::ios::IsRunningOnIOS10OrLater()) {
     self.extensionContext.widgetLargestAvailableDisplayMode =
         NCWidgetDisplayModeExpanded;
-  } else {
-    self.preferredContentSize =
-        CGSizeMake([[UIScreen mainScreen] bounds].size.width,
-                   [self.widgetView widgetHeight]);
   }
 
   self.widgetView.translatesAutoresizingMaskIntoConstraints = NO;
 
-  AddSameConstraints(self.view, self.widgetView);
+  [NSLayoutConstraint activateConstraints:ui_util::CreateSameConstraints(
+                                              self.view, self.widgetView)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -141,9 +137,8 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
            (id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-  BOOL isCompact = base::ios::IsRunningOnIOS10OrLater() &&
-                   [self.extensionContext widgetActiveDisplayMode] ==
-                       NCWidgetDisplayModeCompact;
+  BOOL isCompact = [self.extensionContext widgetActiveDisplayMode] ==
+                   NCWidgetDisplayModeCompact;
 
   [coordinator
       animateAlongsideTransition:^(
@@ -177,7 +172,7 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
 }
 #endif
 
-#pragma mark - SearchWidgetViewActionTarget
+#pragma mark - WidgetViewActionTarget
 
 - (void)openSearch:(id)sender {
   [self openAppWithCommand:base::SysUTF8ToNSString(
@@ -214,7 +209,8 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
 }
 
 - (void)openAppWithCommand:(NSString*)command parameter:(NSString*)parameter {
-  NSUserDefaults* sharedDefaults = app_group::GetGroupUserDefaults();
+  NSUserDefaults* sharedDefaults =
+      [[NSUserDefaults alloc] initWithSuiteName:app_group::ApplicationGroup()];
   NSString* defaultsKey =
       base::SysUTF8ToNSString(app_group::kChromeAppGroupCommandPreference);
   [sharedDefaults

@@ -214,7 +214,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
 
   void Clear();
 
-  SelectionInDOMTree SelectionForCommand(Event*);
+  VisibleSelection SelectionForCommand(Event*);
 
   KillRing& GetKillRing() const { return *kill_ring_; }
 

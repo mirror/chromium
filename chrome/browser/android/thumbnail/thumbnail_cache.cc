@@ -122,9 +122,7 @@ ThumbnailCache::ThumbnailCache(size_t default_cache_size,
                                size_t compression_queue_max_size,
                                size_t write_queue_max_size,
                                bool use_approximation_thumbnail)
-    : file_sequenced_task_runner_(
-          base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()})),
-      compression_queue_max_size_(compression_queue_max_size),
+    : compression_queue_max_size_(compression_queue_max_size),
       write_queue_max_size_(write_queue_max_size),
       use_approximation_thumbnail_(use_approximation_thumbnail),
       compression_tasks_count_(0),
@@ -328,14 +326,17 @@ void ThumbnailCache::DecompressThumbnailFromFile(
       decompress_task = base::Bind(
           &ThumbnailCache::DecompressionTask, post_decompress_callback);
 
-  file_sequenced_task_runner_->PostTask(
+  content::BrowserThread::PostTask(
+      content::BrowserThread::FILE,
       FROM_HERE,
-      base::BindOnce(&ThumbnailCache::ReadTask, true, tab_id, decompress_task));
+      base::Bind(&ThumbnailCache::ReadTask, true, tab_id, decompress_task));
 }
 
 void ThumbnailCache::RemoveFromDisk(TabId tab_id) {
-  file_sequenced_task_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&ThumbnailCache::RemoveFromDiskTask, tab_id));
+  base::Closure task =
+      base::Bind(&ThumbnailCache::RemoveFromDiskTask, tab_id);
+  content::BrowserThread::PostTask(
+      content::BrowserThread::FILE, FROM_HERE, task);
 }
 
 void ThumbnailCache::RemoveFromDiskTask(TabId tab_id) {
@@ -356,10 +357,14 @@ void ThumbnailCache::WriteThumbnailIfNecessary(
 
   base::Callback<void()> post_write_task =
       base::Bind(&ThumbnailCache::PostWriteTask, weak_factory_.GetWeakPtr());
-  file_sequenced_task_runner_->PostTask(
-      FROM_HERE,
-      base::BindOnce(&ThumbnailCache::WriteTask, tab_id, compressed_data, scale,
-                     content_size, post_write_task));
+  content::BrowserThread::PostTask(content::BrowserThread::FILE,
+                                   FROM_HERE,
+                                   base::Bind(&ThumbnailCache::WriteTask,
+                                              tab_id,
+                                              compressed_data,
+                                              scale,
+                                              content_size,
+                                              post_write_task));
 }
 
 void ThumbnailCache::CompressThumbnailIfNecessary(
@@ -403,9 +408,10 @@ void ThumbnailCache::ReadNextThumbnail() {
       post_read_task = base::Bind(
           &ThumbnailCache::PostReadTask, weak_factory_.GetWeakPtr(), tab_id);
 
-  file_sequenced_task_runner_->PostTask(
+  content::BrowserThread::PostTask(
+      content::BrowserThread::FILE,
       FROM_HERE,
-      base::BindOnce(&ThumbnailCache::ReadTask, false, tab_id, post_read_task));
+      base::Bind(&ThumbnailCache::ReadTask, false, tab_id, post_read_task));
 }
 
 void ThumbnailCache::MakeSpaceForNewItemIfNecessary(TabId tab_id) {

@@ -4,7 +4,6 @@
 
 #include "ui/snapshot/snapshot_aura.h"
 
-#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -81,11 +80,12 @@ void GrabWindowSnapshotAndScaleAsyncAura(
     aura::Window* window,
     const gfx::Rect& source_rect,
     const gfx::Size& target_size,
+    scoped_refptr<base::TaskRunner> background_task_runner,
     const GrabWindowSnapshotAsyncCallback& callback) {
   MakeInitialAsyncCopyRequest(
       window, source_rect,
       base::BindOnce(&SnapshotAsync::ScaleCopyOutputResult, callback,
-                     target_size));
+                     target_size, background_task_runner));
 }
 
 void GrabWindowSnapshotAsyncAura(
@@ -116,9 +116,10 @@ void GrabWindowSnapshotAndScaleAsync(
     gfx::NativeWindow window,
     const gfx::Rect& source_rect,
     const gfx::Size& target_size,
+    scoped_refptr<base::TaskRunner> background_task_runner,
     const GrabWindowSnapshotAsyncCallback& callback) {
   GrabWindowSnapshotAndScaleAsyncAura(window, source_rect, target_size,
-                                      callback);
+                                      background_task_runner, callback);
 }
 
 void GrabWindowSnapshotAsync(gfx::NativeWindow window,

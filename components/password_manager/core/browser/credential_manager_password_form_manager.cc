@@ -21,14 +21,15 @@ namespace password_manager {
 
 CredentialManagerPasswordFormManager::CredentialManagerPasswordFormManager(
     PasswordManagerClient* client,
+    base::WeakPtr<PasswordManagerDriver> driver,
     const PasswordForm& observed_form,
     std::unique_ptr<autofill::PasswordForm> saved_form,
     CredentialManagerPasswordFormManagerDelegate* delegate,
     std::unique_ptr<FormSaver> form_saver,
     std::unique_ptr<FormFetcher> form_fetcher)
-    : PasswordFormManager(client->GetPasswordManager(),
+    : PasswordFormManager(driver->GetPasswordManager(),
                           client,
-                          nullptr,
+                          driver,
                           observed_form,
                           (form_saver ? std::move(form_saver)
                                       : base::MakeUnique<FormSaverImpl>(

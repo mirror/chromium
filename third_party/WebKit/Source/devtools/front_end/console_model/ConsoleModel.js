@@ -246,7 +246,7 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
         runtimeModel, ConsoleModel.ConsoleMessage.MessageSource.ConsoleAPI, level,
         /** @type {string} */ (message), call.type, callFrame ? callFrame.url : undefined,
         callFrame ? callFrame.lineNumber : undefined, callFrame ? callFrame.columnNumber : undefined, undefined,
-        call.args, call.stackTrace, call.timestamp, call.executionContextId, undefined, undefined, call.context);
+        call.args, call.stackTrace, call.timestamp, call.executionContextId, undefined);
     this.addMessage(consoleMessage);
   }
 
@@ -401,11 +401,10 @@ ConsoleModel.ConsoleMessage = class {
    * @param {!Protocol.Runtime.ExecutionContextId=} executionContextId
    * @param {?string=} scriptId
    * @param {?string=} workerId
-   * @param {string=} context
    */
   constructor(
       runtimeModel, source, level, messageText, type, url, line, column, requestId, parameters, stackTrace, timestamp,
-      executionContextId, scriptId, workerId, context) {
+      executionContextId, scriptId, workerId) {
     this._runtimeModel = runtimeModel;
     this.source = source;
     this.level = /** @type {?ConsoleModel.ConsoleMessage.MessageLevel} */ (level);
@@ -444,9 +443,15 @@ ConsoleModel.ConsoleMessage = class {
       else if (this.stackTrace)
         this.executionContextId = this._runtimeModel.executionContextForStackTrace(this.stackTrace);
     }
+  }
 
-    if (context)
-      this.context = context.match(/[^#]*/)[0];
+  /**
+   * @param {!ConsoleModel.ConsoleMessage} a
+   * @param {!ConsoleModel.ConsoleMessage} b
+   * @return {number}
+   */
+  static timestampComparator(a, b) {
+    return a.timestamp - b.timestamp;
   }
 
   /**

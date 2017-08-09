@@ -26,6 +26,10 @@ bool AudioManagerFuchsia::HasAudioInputDevices() {
   return false;
 }
 
+void AudioManagerFuchsia::ShowAudioInputSettings() {
+  NOTIMPLEMENTED();
+}
+
 void AudioManagerFuchsia::GetAudioInputDeviceNames(
     AudioDeviceNames* device_names) {
   device_names->clear();

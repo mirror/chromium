@@ -725,7 +725,6 @@ TEST_F(NGBlockLayoutAlgorithmTest, CollapsingMarginsEmptyBlockWithClearance) {
     body {
       position: relative;
       outline: solid purple 1px;
-      display: flow-root;
       width: 200px;
     }
     #float {
@@ -750,7 +749,6 @@ TEST_F(NGBlockLayoutAlgorithmTest, CollapsingMarginsEmptyBlockWithClearance) {
     }
     </style>
     <div id="float"></div>
-    <div id="zero-top"></div>
     <div id="zero">
       <!-- This exists to produce complex margin struts. -->
       <div id="zero-inner"></div>
@@ -763,15 +761,11 @@ TEST_F(NGBlockLayoutAlgorithmTest, CollapsingMarginsEmptyBlockWithClearance) {
   const NGPhysicalBoxFragment* abs;
   const NGPhysicalBoxFragment* inflow;
   RefPtr<const NGPhysicalBoxFragment> fragment;
-  auto run_test = [&](const Length& zero_top_margin_bottom,
-                      const Length& zero_inner_margin_top,
+  auto run_test = [&](const Length& zero_inner_margin_top,
                       const Length& zero_inner_margin_bottom,
                       const Length& zero_margin_bottom,
                       const Length& inflow_margin_top) {
     // Set the style of the elements we care about.
-    Element* zero_top = GetDocument().getElementById("zero-top");
-    zero_top->MutableComputedStyle()->SetMarginBottom(zero_top_margin_bottom);
-
     Element* zero_inner = GetDocument().getElementById("zero-inner");
     zero_inner->MutableComputedStyle()->SetMarginTop(zero_inner_margin_top);
     zero_inner->MutableComputedStyle()->SetMarginBottom(
@@ -789,6 +783,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, CollapsingMarginsEmptyBlockWithClearance) {
 
     // body
     const NGPhysicalBoxFragment* child = iterator.NextChild();
+    EXPECT_EQ(NGPhysicalOffset(LayoutUnit(8), LayoutUnit(8)), child->Offset());
 
     // #float
     iterator.SetParent(child);
@@ -797,7 +792,6 @@ TEST_F(NGBlockLayoutAlgorithmTest, CollapsingMarginsEmptyBlockWithClearance) {
     EXPECT_EQ(NGPhysicalOffset(LayoutUnit(0), LayoutUnit(0)), child->Offset());
 
     // We need to manually test the position of #zero, #abs, #inflow.
-    iterator.NextChild();  // #zero-top.
     zero = iterator.NextChild();
     inflow = iterator.NextChild();  // NOTE: Layout reordered the fragments.
     abs = iterator.NextChild();
@@ -805,7 +799,6 @@ TEST_F(NGBlockLayoutAlgorithmTest, CollapsingMarginsEmptyBlockWithClearance) {
 
   // Base case of no margins.
   run_test(
-      /* #zero-top margin-bottom */ Length(0, kFixed),
       /* #zero-inner margin-top */ Length(0, kFixed),
       /* #zero-inner margin-bottom */ Length(0, kFixed),
       /* #zero margin-bottom */ Length(0, kFixed),
@@ -819,7 +812,6 @@ TEST_F(NGBlockLayoutAlgorithmTest, CollapsingMarginsEmptyBlockWithClearance) {
   // A margin strut which resolves to -50 (-70 + 20) adjusts the position of
   // #zero to the float clearance.
   run_test(
-      /* #zero-top margin-bottom */ Length(0, kFixed),
       /* #zero-inner margin-top */ Length(-60, kFixed),
       /* #zero-inner margin-bottom */ Length(20, kFixed),
       /* #zero margin-bottom */ Length(-70, kFixed),
@@ -843,7 +835,6 @@ TEST_F(NGBlockLayoutAlgorithmTest, CollapsingMarginsEmptyBlockWithClearance) {
   // NOTE: This case below has wildly different results on different browsers,
   // we may have to change the behaviour here in the future for web compat.
   run_test(
-      /* #zero-top margin-bottom */ Length(0, kFixed),
       /* #zero-inner margin-top */ Length(70, kFixed),
       /* #zero-inner margin-bottom */ Length(-10, kFixed),
       /* #zero margin-bottom */ Length(-20, kFixed),
@@ -859,24 +850,6 @@ TEST_F(NGBlockLayoutAlgorithmTest, CollapsingMarginsEmptyBlockWithClearance) {
   // #inflow has similar behaviour to #abs, but includes its margin.
   // 60 = (0 + (-20 + 80))
   EXPECT_EQ(LayoutUnit(60), inflow->Offset().top);
-
-  // #zero-top produces a margin which needs to be ignored, as #zero is
-  // affected by clearance, it needs to have layout performed again, starting
-  // with an empty margin strut.
-  run_test(
-      /* #zero-top margin-bottom */ Length(30, kFixed),
-      /* #zero-inner margin-top */ Length(20, kFixed),
-      /* #zero-inner margin-bottom */ Length(-10, kFixed),
-      /* #zero margin-bottom */ Length(0, kFixed),
-      /* #inflow margin-top */ Length(25, kFixed));
-
-  // #zero is placed at the float, the margin strut is at:
-  // 40 = (50 - (-10 + 20)).
-  EXPECT_EQ(LayoutUnit(50), zero->Offset().top);
-
-  // The margin strut is now disjoint, this is placed at:
-  // 55 = (40 + (-10 + 25))
-  EXPECT_EQ(LayoutUnit(55), inflow->Offset().top);
 }
 
 // Verifies that a box's size includes its borders and padding, and that
@@ -2769,27 +2742,6 @@ TEST_F(NGBlockLayoutAlgorithmTest, NewFcFirstChildIsZeroBlockSize) {
   child = iterator.NextChild();
   EXPECT_EQ(NGPhysicalSize(LayoutUnit(90), LayoutUnit(20)), child->Size());
   EXPECT_EQ(NGPhysicalOffset(LayoutUnit(0), LayoutUnit(-10)), child->Offset());
-}
-
-// This test assumes that tables are not yet implemented in LayoutNG.
-TEST_F(NGBlockLayoutAlgorithmTest, RootFragmentOffsetInsideLegacy) {
-  SetBodyInnerHTML(R"HTML(
-    <!DOCTYPE html>
-    <div style="display:table-cell;">
-      <div id="innerNGRoot" style="margin-top:10px; margin-left:20px;"></div>
-    </div>
-  )HTML");
-
-  GetDocument().View()->UpdateAllLifecyclePhases();
-  const LayoutObject* innerNGRoot = GetLayoutObjectByElementId("innerNGRoot");
-
-  ASSERT_TRUE(innerNGRoot->IsLayoutNGBlockFlow());
-  RefPtr<NGPhysicalBoxFragment> fragment =
-      ToLayoutNGBlockFlow(innerNGRoot)->GetFragmentForTesting();
-
-  ASSERT_TRUE(fragment.Get());
-  EXPECT_EQ(NGPhysicalOffset(LayoutUnit(20), LayoutUnit(10)),
-            fragment->Offset());
 }
 
 }  // namespace

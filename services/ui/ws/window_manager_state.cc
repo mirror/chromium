@@ -810,13 +810,6 @@ void WindowManagerState::OnEventTargetNotFound(const ui::Event& event,
     UpdateNativeCursorFromDispatcher();
 }
 
-ServerWindow* WindowManagerState::GetFallbackTargetForEventBlockedByModal(
-    ServerWindow* window) {
-  DCHECK(window);
-  // TODO(sky): reevaluate when http://crbug.com/646998 is fixed.
-  return GetWindowManagerRootForDisplayRoot(window);
-}
-
 void WindowManagerState::OnEventOccurredOutsideOfModalWindow(
     ServerWindow* modal_window) {
   window_tree_->OnEventOccurredOutsideOfModalWindow(modal_window);

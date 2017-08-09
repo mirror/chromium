@@ -38,7 +38,7 @@
             android:singleLine="true"
             android:textAlignment="viewStart"
             android:textColor="@drawable/dropdown_label_color"
-            android:textSize="@dimen/text_size_large" />
+            android:textSize="@dimen/dropdown_item_label_font_size" />
 
         <TextView
             android:id="@+id/dropdown_sublabel"
@@ -50,7 +50,8 @@
             android:includeFontPadding="false"
             android:singleLine="true"
             android:textAlignment="viewStart"
-            android:textAppearance="@style/BlackCaption" />
+            android:textColor="#646464"
+            android:textSize="@dimen/dropdown_item_sublabel_font_size" />
     </LinearLayout>
 
     <ImageView

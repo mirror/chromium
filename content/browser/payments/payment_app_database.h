@@ -142,13 +142,14 @@ class CONTENT_EXPORT PaymentAppDatabase {
                                  ServiceWorkerStatusCode status);
 
   // FetchAndWritePaymentAppInfo callbacks.
-  void FetchPaymentAppInfoCallback(
-      const GURL& scope,
-      FetchAndWritePaymentAppInfoCallback callback,
-      std::unique_ptr<PaymentAppInfoFetcher::PaymentAppInfo> app_info);
+  void FetchPaymentAppInfoCallback(const GURL& scope,
+                                   FetchAndWritePaymentAppInfoCallback callback,
+                                   const std::string& name,
+                                   const std::string& icon);
   void DidFindRegistrationToWritePaymentAppInfo(
       FetchAndWritePaymentAppInfoCallback callback,
-      std::unique_ptr<PaymentAppInfoFetcher::PaymentAppInfo> app_info,
+      const std::string& name,
+      const std::string& icon,
       ServiceWorkerStatusCode status,
       scoped_refptr<ServiceWorkerRegistration> registration);
   void DidWritePaymentApp(FetchAndWritePaymentAppInfoCallback callback,

@@ -87,16 +87,13 @@ class NET_EXPORT BitString {
 NET_EXPORT bool ParseBitString(const Input& in,
                                BitString* bit_string) WARN_UNUSED_RESULT;
 
-struct NET_EXPORT GeneralizedTime {
+struct GeneralizedTime {
   uint16_t year;
   uint8_t month;
   uint8_t day;
   uint8_t hours;
   uint8_t minutes;
   uint8_t seconds;
-
-  // Returns true if the value is in UTCTime's range.
-  bool InUTCTimeRange() const;
 };
 
 NET_EXPORT_PRIVATE bool operator<(const GeneralizedTime& lhs,

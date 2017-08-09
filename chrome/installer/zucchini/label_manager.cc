@@ -118,16 +118,17 @@ void UnorderedLabelManager::Init(std::vector<offset_t>&& labels) {
 void UnorderedLabelManager::InsertNewOffset(offset_t offset) {
   DCHECK(labels_map_.find(offset) == labels_map_.end());
   // Look for unused entry in |labels_|.
-  auto pos = std::find(labels_.begin() + gap_idx_, labels_.end(), kUnusedIndex);
+  while (gap_idx_ < labels_.size() && labels_[gap_idx_] != kUnusedIndex)
+    ++gap_idx_;
   // Either replace the unused entry, or insert at end.
-  if (pos != labels_.end()) {
-    gap_idx_ = pos - labels_.begin();
-    *pos = offset;
+  if (gap_idx_ < labels_.size()) {
+    labels_map_[offset] = static_cast<offset_t>(gap_idx_);
+    labels_[gap_idx_] = offset;
   } else {
-    gap_idx_ = labels_.size();
+    labels_map_[offset] = static_cast<offset_t>(labels_.size());
     labels_.push_back(offset);
   }
-  labels_map_[offset] = static_cast<offset_t>(gap_idx_);
+  ++gap_idx_;
 }
 
 }  // namespace zucchini

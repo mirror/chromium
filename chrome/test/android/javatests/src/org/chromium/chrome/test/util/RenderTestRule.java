@@ -12,22 +12,18 @@ import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
 
-import junit.framework.Assert;
-
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
 import org.chromium.base.CommandLine;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.ui.UiUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -42,14 +38,11 @@ import java.util.concurrent.Callable;
  * @RunWith(ChromeJUnit4ClassRunner.class)
  * @CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE})
  * public class MyTest {
- *     // Provide RenderTestRule with the path from src/ to the golden directory.
  *     @Rule
  *     public RenderTestRule mRenderTestRule =
  *             new RenderTestRule("chrome/test/data/android/render_tests");
  *
  *     @Test
- *     // The test must have the feature "RenderTest" for the bots to display renders.
- *     @Feature({"RenderTest"})
  *     public void testViewAppearance() {
  *         // Setup the UI.
  *         ...
@@ -83,15 +76,13 @@ public class RenderTestRule extends TestWatcher {
     private enum ComparisonResult { MATCH, MISMATCH, GOLDEN_NOT_FOUND }
 
     // State for a test class.
-    private final String mOutputFolder;
+    private final String mOutputDirectory;
     private final String mGoldenFolder;
 
     // State for a test method.
     private String mTestClassName;
     private List<String> mMismatchIds = new LinkedList<>();
     private List<String> mGoldenMissingIds = new LinkedList<>();
-    private boolean mHasRenderTestFeature;
-
     /** Parameterized tests have a prefix inserted at the front of the test description. */
     private String mVariantPrefix;
 
@@ -106,11 +97,10 @@ public class RenderTestRule extends TestWatcher {
     }
 
     public RenderTestRule(String goldenFolder) {
-        // |goldenFolder| is relative to the src directory in the repository. |mGoldenFolder| will
-        // be the folder on the test device.
-        mGoldenFolder = UrlUtils.getIsolatedTestFilePath(goldenFolder);
-        // The output folder can be overridden with the --render-test-output-dir command.
-        mOutputFolder = CommandLine.getInstance().getSwitchValue("render-test-output-dir");
+        mGoldenFolder = goldenFolder;
+        // The output directory can be overridden with the --render-test-output-dir command.
+        mOutputDirectory =
+                CommandLine.getInstance().getSwitchValue("render-test-output-dir", goldenFolder);
     }
 
     @Override
@@ -120,10 +110,6 @@ public class RenderTestRule extends TestWatcher {
 
         mMismatchIds.clear();
         mGoldenMissingIds.clear();
-
-        Feature feature = desc.getAnnotation(Feature.class);
-        mHasRenderTestFeature =
-                (feature != null && Arrays.asList(feature.value()).contains("RenderTest"));
     }
 
     /**
@@ -135,8 +121,6 @@ public class RenderTestRule extends TestWatcher {
      * @throws IOException if the rendered image cannot be saved to the device.
      */
     public void render(final View view, String id) throws IOException {
-        Assert.assertTrue("Render Tests must have the RenderTest feature.", mHasRenderTestFeature);
-
         Bitmap testBitmap = ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Bitmap>() {
             @Override
             public Bitmap call() throws Exception {
@@ -264,16 +248,15 @@ public class RenderTestRule extends TestWatcher {
      * Convenience method to create a File pointing to |filename| in |mGoldenFolder|.
      */
     private File createGoldenPath(String filename) throws IOException {
-        return createPath(mGoldenFolder, filename);
+        return createPath(UrlUtils.getIsolatedTestFilePath(mGoldenFolder), filename);
     }
 
     /**
      * Convenience method to create a File pointing to |filename| in the |subfolder| in
-     * |mOutputFolder|.
+     * |mOutputDirectory|.
      */
     private File createOutputPath(String subfolder, String filename) throws IOException {
-        String folder = mOutputFolder != null ? mOutputFolder : mGoldenFolder;
-        return createPath(folder + subfolder, filename);
+        return createPath(mOutputDirectory + subfolder, filename);
     }
 
     private static File createPath(String folder, String filename) throws IOException {

@@ -50,8 +50,7 @@ public class PaymentRequestServiceWorkerPaymentAppTest {
                                 0 /* registrationId */, "BobPay" /* label */,
                                 "https://bobpay.com" /* sublabel */, null /* icon */,
                                 hasSupportedMethods ? supportedMethodNames
-                                                    : new String[0] /* methodNames */,
-                                new String[0] /* preferredRelatedApplicationIds */));
+                                                    : new String[0] /* methodNames */));
                         callback.onAllPaymentAppsCreated();
                     }
                 });

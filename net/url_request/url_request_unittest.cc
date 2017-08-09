@@ -44,7 +44,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
-#include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "build/buildflag.h"
@@ -6820,8 +6819,8 @@ class MockCTPolicyEnforcer : public CTPolicyEnforcer {
   ct::CertPolicyCompliance default_result_;
 };
 
-// Tests that Expect CT headers for the preload list are processed correctly.
-TEST_F(URLRequestTestHTTP, PreloadExpectCTHeader) {
+// Tests that Expect CT headers are processed correctly.
+TEST_F(URLRequestTestHTTP, ExpectCTHeader) {
 #if !BUILDFLAG(INCLUDE_TRANSPORT_SECURITY_STATE_PRELOAD_LIST)
   SetTransportSecurityStateSourceForTesting(&test0::kHSTSSource);
 #endif
@@ -6869,7 +6868,7 @@ TEST_F(URLRequestTestHTTP, PreloadExpectCTHeader) {
 
   // Now send a request to trigger the violation.
   TestDelegate d;
-  GURL url = https_test_server.GetURL("/expect-ct-header-preload.html");
+  GURL url = https_test_server.GetURL("/expect-ct-header.html");
   GURL::Replacements replace_host;
   replace_host.SetHostStr(kExpectCTStaticHostname);
   url = url.ReplaceComponents(replace_host);
@@ -6880,130 +6879,6 @@ TEST_F(URLRequestTestHTTP, PreloadExpectCTHeader) {
 
   EXPECT_EQ(1u, reporter.num_failures());
 }
-
-// Tests that Expect CT HTTP headers are processed correctly.
-TEST_F(URLRequestTestHTTP, ExpectCTHeader) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      TransportSecurityState::kDynamicExpectCTFeature);
-
-  EmbeddedTestServer https_test_server(net::EmbeddedTestServer::TYPE_HTTPS);
-  https_test_server.SetSSLConfig(
-      net::EmbeddedTestServer::CERT_COMMON_NAME_IS_DOMAIN);
-  https_test_server.ServeFilesFromSourceDirectory(
-      base::FilePath(kTestFilePath));
-  ASSERT_TRUE(https_test_server.Start());
-
-  MockExpectCTReporter reporter;
-  TransportSecurityState transport_security_state;
-  transport_security_state.SetExpectCTReporter(&reporter);
-
-  // Set up a MockCertVerifier to accept the certificate that the server sends.
-  scoped_refptr<X509Certificate> cert = https_test_server.GetCertificate();
-  ASSERT_TRUE(cert);
-  MockCertVerifier cert_verifier;
-  CertVerifyResult verify_result;
-  verify_result.verified_cert = cert;
-  verify_result.is_issued_by_known_root = true;
-  cert_verifier.AddResultForCert(cert.get(), verify_result, OK);
-
-  // Set up a DoNothingCTVerifier and MockCTPolicyEnforcer to simulate CT
-  // compliance.
-  DoNothingCTVerifier ct_verifier;
-  MockCTPolicyEnforcer ct_policy_enforcer;
-  ct_policy_enforcer.set_default_result(
-      ct::CertPolicyCompliance::CERT_POLICY_COMPLIES_VIA_SCTS);
-
-  TestNetworkDelegate network_delegate;
-  // Use a MockHostResolver (which by default maps all hosts to
-  // 127.0.0.1).
-  MockHostResolver host_resolver;
-  TestURLRequestContext context(true);
-  context.set_host_resolver(&host_resolver);
-  context.set_transport_security_state(&transport_security_state);
-  context.set_network_delegate(&network_delegate);
-  context.set_cert_verifier(&cert_verifier);
-  context.set_cert_transparency_verifier(&ct_verifier);
-  context.set_ct_policy_enforcer(&ct_policy_enforcer);
-  context.Init();
-
-  // Now send a request to trigger the header processing.
-  TestDelegate d;
-  GURL url = https_test_server.GetURL("/expect-ct-header.html");
-  std::unique_ptr<URLRequest> request(context.CreateRequest(
-      url, DEFAULT_PRIORITY, &d, TRAFFIC_ANNOTATION_FOR_TESTS));
-  request->Start();
-  base::RunLoop().Run();
-
-  TransportSecurityState::ExpectCTState state;
-  ASSERT_TRUE(
-      transport_security_state.GetDynamicExpectCTState(url.host(), &state));
-  EXPECT_TRUE(state.enforce);
-  EXPECT_EQ(GURL("https://example.test"), state.report_uri);
-}
-
-// Tests that if multiple Expect CT HTTP headers are sent, they are all
-// processed.
-TEST_F(URLRequestTestHTTP, MultipleExpectCTHeaders) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      TransportSecurityState::kDynamicExpectCTFeature);
-
-  EmbeddedTestServer https_test_server(net::EmbeddedTestServer::TYPE_HTTPS);
-  https_test_server.SetSSLConfig(
-      net::EmbeddedTestServer::CERT_COMMON_NAME_IS_DOMAIN);
-  https_test_server.ServeFilesFromSourceDirectory(
-      base::FilePath(kTestFilePath));
-  ASSERT_TRUE(https_test_server.Start());
-
-  MockExpectCTReporter reporter;
-  TransportSecurityState transport_security_state;
-  transport_security_state.SetExpectCTReporter(&reporter);
-
-  // Set up a MockCertVerifier to accept the certificate that the server sends.
-  scoped_refptr<X509Certificate> cert = https_test_server.GetCertificate();
-  ASSERT_TRUE(cert);
-  MockCertVerifier cert_verifier;
-  CertVerifyResult verify_result;
-  verify_result.verified_cert = cert;
-  verify_result.is_issued_by_known_root = true;
-  cert_verifier.AddResultForCert(cert.get(), verify_result, OK);
-
-  // Set up a DoNothingCTVerifier and MockCTPolicyEnforcer to simulate CT
-  // compliance.
-  DoNothingCTVerifier ct_verifier;
-  MockCTPolicyEnforcer ct_policy_enforcer;
-  ct_policy_enforcer.set_default_result(
-      ct::CertPolicyCompliance::CERT_POLICY_COMPLIES_VIA_SCTS);
-
-  TestNetworkDelegate network_delegate;
-  // Use a MockHostResolver (which by default maps all hosts to
-  // 127.0.0.1).
-  MockHostResolver host_resolver;
-  TestURLRequestContext context(true);
-  context.set_host_resolver(&host_resolver);
-  context.set_transport_security_state(&transport_security_state);
-  context.set_network_delegate(&network_delegate);
-  context.set_cert_verifier(&cert_verifier);
-  context.set_cert_transparency_verifier(&ct_verifier);
-  context.set_ct_policy_enforcer(&ct_policy_enforcer);
-  context.Init();
-
-  // Now send a request to trigger the header processing.
-  TestDelegate d;
-  GURL url = https_test_server.GetURL("/expect-ct-header-multiple.html");
-  std::unique_ptr<URLRequest> request(context.CreateRequest(
-      url, DEFAULT_PRIORITY, &d, TRAFFIC_ANNOTATION_FOR_TESTS));
-  request->Start();
-  base::RunLoop().Run();
-
-  TransportSecurityState::ExpectCTState state;
-  ASSERT_TRUE(
-      transport_security_state.GetDynamicExpectCTState(url.host(), &state));
-  EXPECT_TRUE(state.enforce);
-  EXPECT_EQ(GURL("https://example.test"), state.report_uri);
-}
-
 #endif  // !defined(OS_IOS)
 
 #if BUILDFLAG(ENABLE_REPORTING)
@@ -8070,12 +7945,12 @@ TEST_F(URLRequestTestHTTP, Post302RedirectGet) {
   // Check that the post-specific headers were stripped:
   EXPECT_FALSE(ContainsString(data, "Content-Length:"));
   EXPECT_FALSE(ContainsString(data, "Content-Type:"));
+  EXPECT_FALSE(ContainsString(data, "Origin:"));
 
   // These extra request headers should not have been stripped.
   EXPECT_TRUE(ContainsString(data, "Accept:"));
   EXPECT_TRUE(ContainsString(data, "Accept-Language:"));
   EXPECT_TRUE(ContainsString(data, "Accept-Charset:"));
-  EXPECT_TRUE(ContainsString(data, "Origin: http://localhost:1337"));
 }
 
 // The following tests check that we handle mutating the request for HTTP
@@ -8096,8 +7971,9 @@ TEST_F(URLRequestTestHTTP, Redirect301Tests) {
 
   HTTPRedirectOriginHeaderTest(url, "GET", "GET", url.GetOrigin().spec());
   HTTPRedirectOriginHeaderTest(https_redirect_url, "GET", "GET", "null");
-  HTTPRedirectOriginHeaderTest(url, "POST", "GET", url.GetOrigin().spec());
-  HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET", "null");
+  HTTPRedirectOriginHeaderTest(url, "POST", "GET", std::string());
+  HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET",
+                               std::string());
 }
 
 TEST_F(URLRequestTestHTTP, Redirect302Tests) {
@@ -8113,8 +7989,9 @@ TEST_F(URLRequestTestHTTP, Redirect302Tests) {
 
   HTTPRedirectOriginHeaderTest(url, "GET", "GET", url.GetOrigin().spec());
   HTTPRedirectOriginHeaderTest(https_redirect_url, "GET", "GET", "null");
-  HTTPRedirectOriginHeaderTest(url, "POST", "GET", url.GetOrigin().spec());
-  HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET", "null");
+  HTTPRedirectOriginHeaderTest(url, "POST", "GET", std::string());
+  HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET",
+                               std::string());
 }
 
 TEST_F(URLRequestTestHTTP, Redirect303Tests) {
@@ -8130,8 +8007,9 @@ TEST_F(URLRequestTestHTTP, Redirect303Tests) {
 
   HTTPRedirectOriginHeaderTest(url, "GET", "GET", url.GetOrigin().spec());
   HTTPRedirectOriginHeaderTest(https_redirect_url, "GET", "GET", "null");
-  HTTPRedirectOriginHeaderTest(url, "POST", "GET", url.GetOrigin().spec());
-  HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET", "null");
+  HTTPRedirectOriginHeaderTest(url, "POST", "GET", std::string());
+  HTTPRedirectOriginHeaderTest(https_redirect_url, "POST", "GET",
+                               std::string());
 }
 
 TEST_F(URLRequestTestHTTP, Redirect307Tests) {

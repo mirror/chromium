@@ -19,8 +19,8 @@ typedef RefCountedVector<api::image_writer_private::RemovableStorageDevice>
 // storage devices
 class RemovableStorageProvider {
  public:
-  using DeviceListReadyCallback =
-      base::OnceCallback<void(scoped_refptr<StorageDeviceList>)>;
+  typedef base::Callback<void(scoped_refptr<StorageDeviceList>, bool)>
+    DeviceListReadyCallback;
 
   // Gets the list of all available devices and returns it via callback.
   static void GetAllDevices(DeviceListReadyCallback callback);
@@ -34,9 +34,8 @@ class RemovableStorageProvider {
   static void ClearDeviceListForTesting();
 
  private:
-  // Returns available list of devices. If there is an error retrieving devices,
-  // then returns nullptr.
-  static scoped_refptr<StorageDeviceList> PopulateDeviceList();
+  // Fills the provided empty device list with the available devices.
+  static bool PopulateDeviceList(scoped_refptr<StorageDeviceList> device_list);
 };
 
 } // namespace extensions

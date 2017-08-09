@@ -10,6 +10,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/events/event_utils.h"
 #include "ui/events/test/event_generator.h"
+#include "ui/views/style/platform_style.h"
 #include "ui/views/test/views_test_base.h"
 
 namespace views {
@@ -94,7 +95,11 @@ TEST_F(ToggleButtonTest, ToggleButtonDestroyed) {
   button()->OnMousePressed(ui::MouseEvent(
       ui::ET_MOUSE_PRESSED, center, center, ui::EventTimeForNow(),
       ui::EF_LEFT_MOUSE_BUTTON, ui::EF_LEFT_MOUSE_BUTTON));
-  EXPECT_EQ(1, counter());
+  // On platforms with no ripples, there should never be an ink drop layer.
+  if (PlatformStyle::kUseRipples)
+    EXPECT_EQ(1, counter());
+  else
+    EXPECT_EQ(0, counter());
   delete button();
   EXPECT_EQ(0, counter());
 }
@@ -103,7 +108,10 @@ TEST_F(ToggleButtonTest, ToggleButtonDestroyed) {
 // ToggleButton has focus (and is showing a ripple).
 TEST_F(ToggleButtonTest, ShutdownWithFocus) {
   button()->RequestFocus();
-  EXPECT_EQ(1, counter());
+  if (PlatformStyle::kUseRipples)
+    EXPECT_EQ(1, counter());
+  else
+    EXPECT_EQ(0, counter());
 }
 
 // Verify that ToggleButton::accepts_events_ works as expected.

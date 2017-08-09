@@ -181,12 +181,8 @@ void AppListItemView::OnMouseDragTimer() {
   SetUIState(UI_STATE_DRAGGING);
 }
 
-void AppListItemView::OnTouchDragTimer(
-    const gfx::Point& tap_down_location,
-    const gfx::Point& tap_down_root_location) {
+void AppListItemView::OnTouchDragTimer() {
   DCHECK(apps_grid_view_->IsDraggedView(this));
-  apps_grid_view_->InitiateDrag(this, AppsGridView::TOUCH, tap_down_location,
-                                tap_down_root_location);
   apps_grid_view_->StartDragAndDropHostDragAfterLongPress(AppsGridView::TOUCH);
   SetTouchDragging(true);
 }
@@ -340,8 +336,7 @@ bool AppListItemView::OnMousePressed(const ui::MouseEvent& event) {
   if (!ShouldEnterPushedState(event))
     return true;
 
-  apps_grid_view_->InitiateDrag(this, AppsGridView::MOUSE, event.location(),
-                                event.root_location());
+  apps_grid_view_->InitiateDrag(this, AppsGridView::MOUSE, event);
 
   if (apps_grid_view_->IsDraggedView(this)) {
     mouse_drag_timer_.Start(FROM_HERE,
@@ -450,11 +445,6 @@ bool AppListItemView::OnMouseDragged(const ui::MouseEvent& event) {
 void AppListItemView::OnGestureEvent(ui::GestureEvent* event) {
   switch (event->type()) {
     case ui::ET_GESTURE_SCROLL_BEGIN:
-      if (touch_dragging_)
-        event->SetHandled();
-      else
-        touch_drag_timer_.Stop();
-      break;
     case ui::ET_GESTURE_LONG_PRESS:
       event->SetHandled();
       break;
@@ -475,12 +465,13 @@ void AppListItemView::OnGestureEvent(ui::GestureEvent* event) {
     case ui::ET_GESTURE_TAP_DOWN:
       if (state() != STATE_DISABLED) {
         SetState(STATE_PRESSED);
-        touch_drag_timer_.Start(
-            FROM_HERE,
-            base::TimeDelta::FromMilliseconds(kTouchLongpressDelayInMs),
-            base::Bind(&AppListItemView::OnTouchDragTimer,
-                       base::Unretained(this), event->location(),
-                       event->root_location()));
+        apps_grid_view_->InitiateDrag(this, AppsGridView::TOUCH, *event);
+        if (apps_grid_view_->has_dragged_view()) {
+          touch_drag_timer_.Start(
+              FROM_HERE,
+              base::TimeDelta::FromMilliseconds(kTouchLongpressDelayInMs), this,
+              &AppListItemView::OnTouchDragTimer);
+        }
         event->SetHandled();
       }
       break;
@@ -491,7 +482,6 @@ void AppListItemView::OnGestureEvent(ui::GestureEvent* event) {
       break;
     case ui::ET_GESTURE_LONG_TAP:
     case ui::ET_GESTURE_END:
-      touch_drag_timer_.Stop();
       SetTouchDragging(false);
       apps_grid_view_->EndDrag(false);
       break;

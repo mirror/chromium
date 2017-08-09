@@ -1597,6 +1597,8 @@ component("net") {
       "spdy/core/spdy_frame_reader.h",
       "spdy/core/spdy_framer.cc",
       "spdy/core/spdy_framer.h",
+      "spdy/core/spdy_framer_decoder_adapter.cc",
+      "spdy/core/spdy_framer_decoder_adapter.h",
       "spdy/core/spdy_header_block.cc",
       "spdy/core/spdy_header_block.h",
       "spdy/core/spdy_headers_handler_interface.h",
@@ -1820,10 +1822,7 @@ component("net") {
         sources -= [ "cert/x509_certificate_ios.cc" ]
       }
       if (is_mac) {
-        sources -= [
-          "cert/x509_cert_types_mac.cc",
-          "cert/x509_certificate_mac.cc",
-        ]
+        sources -= [ "cert/x509_certificate_mac.cc" ]
       }
       if (use_nss_certs) {
         sources -= [ "cert/x509_certificate_nss.cc" ]
@@ -1832,10 +1831,7 @@ component("net") {
         sources -= [ "cert/x509_certificate_openssl.cc" ]
       }
       if (is_win) {
-        sources -= [
-          "cert/x509_cert_types_win.cc",
-          "cert/x509_certificate_win.cc",
-        ]
+        sources -= [ "cert/x509_certificate_win.cc" ]
       }
     } else {
       sources -= [ "cert/x509_certificate_bytes.cc" ]
@@ -3614,10 +3610,6 @@ bundle_data("net_unittests_bundle_data") {
     "data/url_request_unittest/BullRunSpeech.txt",
     "data/url_request_unittest/content-type-normalization.html",
     "data/url_request_unittest/content-type-normalization.html.mock-http-headers",
-    "data/url_request_unittest/expect-ct-header-multiple.html",
-    "data/url_request_unittest/expect-ct-header-multiple.html.mock-http-headers",
-    "data/url_request_unittest/expect-ct-header-preload.html",
-    "data/url_request_unittest/expect-ct-header-preload.html.mock-http-headers",
     "data/url_request_unittest/expect-ct-header.html",
     "data/url_request_unittest/expect-ct-header.html.mock-http-headers",
     "data/url_request_unittest/filedir-sentinel",
@@ -4703,7 +4695,6 @@ test("net_unittests") {
     "cert/x509_cert_types_unittest.cc",
     "cert/x509_certificate_unittest.cc",
     "cert/x509_util_ios_and_mac_unittest.cc",
-    "cert/x509_util_nss_unittest.cc",
     "cert/x509_util_unittest.cc",
     "cert_net/cert_net_fetcher_impl_unittest.cc",
     "cert_net/nss_ocsp_unittest.cc",
@@ -4917,7 +4908,6 @@ test("net_unittests") {
     "nqe/socket_watcher_unittest.cc",
     "nqe/throughput_analyzer_unittest.cc",
     "ntlm/des_unittest.cc",
-    "ntlm/md4_unittest.cc",
     "ntlm/ntlm_buffer_reader_unittest.cc",
     "ntlm/ntlm_buffer_writer_unittest.cc",
     "ntlm/ntlm_client_unittest.cc",
@@ -5337,7 +5327,6 @@ test("net_unittests") {
     sources -= [
       "http/http_auth_handler_ntlm_portable_unittest.cc",
       "ntlm/des_unittest.cc",
-      "ntlm/md4_unittest.cc",
       "ntlm/ntlm_buffer_reader_unittest.cc",
       "ntlm/ntlm_buffer_writer_unittest.cc",
       "ntlm/ntlm_client_unittest.cc",
@@ -5350,7 +5339,6 @@ test("net_unittests") {
     sources -= [
       "cert/internal/trust_store_nss_unittest.cc",
       "cert/nss_cert_database_unittest.cc",
-      "cert/x509_util_nss_unittest.cc",
       "ssl/client_cert_store_nss_unittest.cc",
       "ssl/ssl_platform_key_nss_unittest.cc",
     ]

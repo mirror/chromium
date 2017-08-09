@@ -1127,9 +1127,6 @@ const FeatureEntry::Choice kAsyncImageDecodingChoices[] = {
 };
 
 #if defined(OS_ANDROID)
-const FeatureEntry::FeatureParam kUseDdljsonApiTest0[] = {
-    {search_provider_logos::features::kDdljsonOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_android0.json"}};
 const FeatureEntry::FeatureParam kUseDdljsonApiTest1[] = {
     {search_provider_logos::features::kDdljsonOverrideUrlParam,
      "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_android1.json"}};
@@ -1144,8 +1141,6 @@ const FeatureEntry::FeatureParam kUseDdljsonApiTest4[] = {
      "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_android4.json"}};
 
 const FeatureEntry::FeatureVariation kUseDdljsonApiVariations[] = {
-    {"(force test doodle 0)", kUseDdljsonApiTest0,
-     arraysize(kUseDdljsonApiTest0), nullptr},
     {"(force test doodle 1)", kUseDdljsonApiTest1,
      arraysize(kUseDdljsonApiTest1), nullptr},
     {"(force test doodle 2)", kUseDdljsonApiTest2,
@@ -1203,10 +1198,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kGlCompositedOverlayCandidateQuadBordersName,
      flag_descriptions::kGlCompositedOverlayCandidateQuadBordersDescription,
      kOsAll,
-     SINGLE_VALUE_TYPE(switches::kGlCompositedOverlayCandidateQuadBorder)},
+     SINGLE_VALUE_TYPE(cc::switches::kGlCompositedOverlayCandidateQuadBorder)},
     {"show-overdraw-feedback", flag_descriptions::kShowOverdrawFeedbackName,
      flag_descriptions::kShowOverdrawFeedbackDescription, kOsAll,
-     SINGLE_VALUE_TYPE(switches::kShowOverdrawFeedback)},
+     SINGLE_VALUE_TYPE(cc::switches::kShowOverdrawFeedback)},
     {"ui-disable-partial-swap", flag_descriptions::kUiPartialSwapName,
      flag_descriptions::kUiPartialSwapDescription, kOsAll,
      SINGLE_DISABLE_VALUE_TYPE(switches::kUIDisablePartialSwap)},
@@ -1657,10 +1652,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kServiceWorkerNavigationPreloadName,
      flag_descriptions::kServiceWorkerNavigationPreloadDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kServiceWorkerNavigationPreload)},
-    {"enable-service-worker-script-streaming",
-     flag_descriptions::kServiceWorkerScriptStreamingName,
-     flag_descriptions::kServiceWorkerScriptStreamingDescription, kOsAll,
-     FEATURE_VALUE_TYPE(features::kServiceWorkerScriptStreaming)},
     {"enable-suggestions-with-substring-match",
      flag_descriptions::kSuggestionsWithSubStringMatchName,
      flag_descriptions::kSuggestionsWithSubStringMatchDescription, kOsAll,
@@ -2188,9 +2179,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-webvr-autopresent", flag_descriptions::kWebVrAutopresentName,
      flag_descriptions::kWebVrAutopresentDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kWebVrAutopresent)},
-    {"enable-webvr-vsync-align", flag_descriptions::kWebVrVsyncAlignName,
-     flag_descriptions::kWebVrVsyncAlignDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(features::kWebVrVsyncAlign)},
 #endif  // OS_ANDROID
 #endif  // ENABLE_VR
 #if defined(OS_CHROMEOS)
@@ -3325,8 +3313,7 @@ const FeatureEntry kFeatureEntries[] = {
 
     {"enable-manual-fallbacks-filling",
      flag_descriptions::kEnableManualFallbacksFillingName,
-     flag_descriptions::kEnableManualFallbacksFillingDescription,
-     kOsDesktop | kOsAndroid,
+     flag_descriptions::kEnableManualFallbacksFillingDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(
          password_manager::features::kEnableManualFallbacksFilling)},
 

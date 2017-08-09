@@ -41,7 +41,7 @@
 #include "core/editing/iterators/SearchBuffer.h"
 #include "core/editing/markers/DocumentMarker.h"
 #include "core/editing/markers/DocumentMarkerController.h"
-#include "core/exported/WebViewImpl.h"
+#include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/layout/LayoutObject.h"
@@ -241,7 +241,9 @@ void TextFinder::SetFindEndstateFocusAndSelection() {
 
   // If the user has set the selection since the match was found, we
   // don't focus anything.
-  if (!GetFrame()->Selection().GetSelectionInDOMTree().IsNone())
+  VisibleSelection selection(
+      GetFrame()->Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
+  if (!selection.IsNone())
     return;
 
   // Need to clean out style and layout state before querying

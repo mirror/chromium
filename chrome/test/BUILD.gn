@@ -1427,7 +1427,6 @@ test("browser_tests") {
       "../browser/sessions/persistent_tab_restore_service_browsertest.cc",
       "../browser/sessions/session_restore_browsertest.cc",
       "../browser/sessions/session_restore_browsertest_chromeos.cc",
-      "../browser/sessions/session_restore_observer_browsertest.cc",
       "../browser/sessions/tab_restore_browsertest.cc",
       "../browser/site_details_browsertest.cc",
 
@@ -1630,7 +1629,6 @@ test("browser_tests") {
       "//components/dom_distiller/content/browser",
       "//components/dom_distiller/content/renderer",
       "//components/dom_distiller/core:test_support",
-      "//components/feature_engagement/test:test_support",
       "//components/policy:chrome_settings_proto_generated_compile",
       "//components/resources",
       "//components/safe_browsing_db:test_database_manager",
@@ -2000,7 +1998,6 @@ test("browser_tests") {
         "../browser/extensions/webstore_reinstaller_browsertest.cc",
         "../browser/extensions/webstore_startup_installer_browsertest.cc",
         "../browser/extensions/window_open_apitest.cc",
-        "../browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
         "../browser/safe_browsing/chrome_cleaner/settings_resetter_browsertest_win.cc",
         "../browser/safe_browsing/settings_reset_prompt/default_settings_fetcher_browsertest.cc",
         "../browser/safe_browsing/settings_reset_prompt/settings_reset_dependency_browsertest_win.cc",
@@ -2095,6 +2092,7 @@ test("browser_tests") {
         "../browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
         "../browser/ui/views/payments/payment_request_payment_app_browsertest.cc",
         "../browser/ui/views/payments/payment_request_payment_response_browsertest.cc",
+        "../browser/ui/views/payments/payment_request_requested_information_metric_browsertest.cc",
         "../browser/ui/views/payments/payment_request_use_stats_browsertest.cc",
         "../browser/ui/views/payments/payment_sheet_view_controller_browsertest.cc",
         "../browser/ui/views/payments/profile_list_view_controller_browsertest.cc",
@@ -2109,7 +2107,6 @@ test("browser_tests") {
       ]
       if (!is_chromeos && (!is_mac || mac_views_browser)) {
         sources += [
-          "../browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
           "../browser/ui/views/profiles/forced_reauthentication_dialog_view_browsertest.cc",
           "../browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
         ]
@@ -4634,6 +4631,7 @@ test("unit_tests") {
         "../browser/ui/cocoa/content_settings/collected_cookies_mac_unittest.mm",
         "../browser/ui/cocoa/content_settings/cookie_details_unittest.mm",
         "../browser/ui/cocoa/content_settings/cookie_details_view_controller_unittest.mm",
+        "../browser/ui/cocoa/custom_frame_view_unittest.mm",
         "../browser/ui/cocoa/download/download_item_button_unittest.mm",
         "../browser/ui/cocoa/download/download_item_cell_unittest.mm",
         "../browser/ui/cocoa/download/download_item_controller_unittest.mm",
@@ -4729,7 +4727,6 @@ test("unit_tests") {
         "../browser/ui/cocoa/styled_text_field_cell_unittest.mm",
         "../browser/ui/cocoa/styled_text_field_unittest.mm",
         "../browser/ui/cocoa/tab_contents/sad_tab_mac_unittest.mm",
-        "../browser/ui/cocoa/tabbed_browser_window_unittest.mm",
         "../browser/ui/cocoa/tabs/alert_indicator_button_cocoa_unittest.mm",
         "../browser/ui/cocoa/tabs/tab_controller_unittest.mm",
         "../browser/ui/cocoa/tabs/tab_strip_controller_unittest.mm",

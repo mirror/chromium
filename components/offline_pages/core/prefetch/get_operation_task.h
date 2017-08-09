@@ -5,7 +5,6 @@
 #ifndef COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_GET_OPERATION_TASK_H_
 #define COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_GET_OPERATION_TASK_H_
 
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -15,16 +14,11 @@
 
 namespace offline_pages {
 class PrefetchNetworkRequestFactory;
-class PrefetchStore;
 
-// Task that attempts to fetch results for a completed operation.  Searches the
-// URLs table for operations with rows in the appropriate state and fires off
-// concurrent GetOperation requests.
+// Task that attempts to fetch results for a completed operation.
 class GetOperationTask : public Task {
  public:
-  using OperationResultList = std::unique_ptr<std::vector<std::string>>;
-
-  GetOperationTask(PrefetchStore* store,
+  GetOperationTask(const std::string& operation_name,
                    PrefetchNetworkRequestFactory* request_factory,
                    const PrefetchRequestFinishedCallback& callback);
   ~GetOperationTask() override;
@@ -33,9 +27,9 @@ class GetOperationTask : public Task {
   void Run() override;
 
  private:
-  void StartGetOperationRequests(OperationResultList list);
+  void StartGetOperation(int updated_entry_count);
 
-  PrefetchStore* prefetch_store_;
+  const std::string& operation_name_;
   PrefetchNetworkRequestFactory* request_factory_;
   PrefetchRequestFinishedCallback callback_;
 

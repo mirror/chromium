@@ -135,12 +135,6 @@ WebTextInputInfo WebInputMethodControllerImpl::TextInputInfo() {
   return GetFrame()->GetInputMethodController().TextInputInfo();
 }
 
-int WebInputMethodControllerImpl::ComputeWebTextInputNextPreviousFlags() {
-  return GetFrame()
-      ->GetInputMethodController()
-      .ComputeWebTextInputNextPreviousFlags();
-}
-
 WebTextInputType WebInputMethodControllerImpl::TextInputType() {
   return GetFrame()->GetInputMethodController().TextInputType();
 }

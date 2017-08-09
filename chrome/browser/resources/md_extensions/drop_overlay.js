@@ -9,7 +9,7 @@ Polymer({
   is: 'extensions-drop-overlay',
   created: function() {
     this.hidden = true;
-    const dragTarget = document.documentElement;
+    var dragTarget = document.documentElement;
     this.dragWrapperHandler_ =
         new extensions.DragAndDropHandler(true, dragTarget);
     dragTarget.addEventListener('extension-drag-started', () => {

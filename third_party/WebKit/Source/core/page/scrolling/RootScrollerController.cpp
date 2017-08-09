@@ -200,20 +200,12 @@ void RootScrollerController::UpdateIFrameGeometryAndLayoutSize(
   DCHECK(document_->GetFrame());
   DCHECK(document_->GetFrame()->View());
 
-  LocalFrameView* child_view =
+  LocalFrameView* view =
       ToLocalFrameView(frame_owner.OwnedEmbeddedContentView());
-
-  // We can get here as a result of the "post layout resize" on the main frame.
-  // That happens from inside LocalFrameView::PerformLayout. Calling
-  // UpdateGeometry on the iframe causes it to layout which calls
-  // Document::UpdateStyleAndLayout. That tries to recurse up the hierarchy,
-  // reentering Layout on this Document. Thus, we avoid calling this here if
-  // we're in layout; it'll get called when this Document finishes laying out.
-  if (!document_->GetFrame()->View()->IsInPerformLayout())
-    child_view->UpdateGeometry();
+  view->UpdateGeometry();
 
   if (&EffectiveRootScroller() == frame_owner)
-    child_view->SetLayoutSize(document_->GetFrame()->View()->GetLayoutSize());
+    view->SetLayoutSize(document_->GetFrame()->View()->GetLayoutSize());
 }
 
 PaintLayer* RootScrollerController::RootScrollerPaintLayer() const {

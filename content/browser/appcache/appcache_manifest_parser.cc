@@ -60,7 +60,7 @@ bool HasPatternMatchingAnnotation(const wchar_t* line_p,
 
 bool ScopeMatches(const GURL& manifest_url, const GURL& namespace_url) {
   return base::StartsWith(namespace_url.spec(),
-                          manifest_url.GetWithoutFilename().spec(),
+                          manifest_url.Resolve(".").spec(),
                           base::CompareCase::SENSITIVE);
 }
 

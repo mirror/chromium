@@ -1088,9 +1088,6 @@ size_t BrowserAccessibilityAndroid::CommonSuffixLength(
   return i;
 }
 
-// TODO(nektar): Merge this function with
-// |BrowserAccessibilityCocoa::computeTextEdit|.
-//
 // static
 size_t BrowserAccessibilityAndroid::CommonEndLengths(
     const base::string16 a,

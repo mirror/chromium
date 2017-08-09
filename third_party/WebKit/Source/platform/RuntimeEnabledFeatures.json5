@@ -388,6 +388,10 @@
       status: "stable",
     },
     {
+      name: "DurableStorage",
+      status: "stable",
+    },
+    {
       name: "EmbedderCSPEnforcement",
       status: "stable",
     },
@@ -489,6 +493,10 @@
     },
     {
       name: "GetUserMedia",
+      status: "stable",
+    },
+    {
+      name: "GlobalCacheStorage",
       status: "stable",
     },
     {
@@ -1004,6 +1012,10 @@
       status: "experimental",
     },
     {
+      name: "StorageEstimate",
+      status: "stable",
+    },
+    {
       name: "Suborigins",
       status: "experimental",
     },
@@ -1026,7 +1038,6 @@
     // enabled since they're a feature always supported by Chrome.
     {
       name: "TouchEventFeatureDetection",
-      origin_trial_feature_name: "ForceTouchEventFeatureDetectionForInspector",
       status: "stable",
     },
     // This is set conditionally in SetRuntimeFeaturesDefaultsAndUpdateFromArgs

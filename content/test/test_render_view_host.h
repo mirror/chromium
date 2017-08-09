@@ -132,7 +132,7 @@ class TestRenderWidgetHostView
   }
 
   // viz::HostFrameSinkClient implementation.
-  void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) override;
+  void OnSurfaceCreated(const viz::SurfaceInfo& surface_info) override;
 
  protected:
   RenderWidgetHostImpl* rwh_;

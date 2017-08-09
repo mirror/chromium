@@ -210,23 +210,8 @@ WebState* WKBasedNavigationManagerImpl::GetWebState() const {
 }
 
 NavigationItem* WKBasedNavigationManagerImpl::GetVisibleItem() const {
-  NavigationItem* transient_item = GetTransientItem();
-  if (transient_item) {
-    return transient_item;
-  }
-
-  // Only return pending_item_ for new (non-history), user-initiated
-  // navigations in order to prevent URL spoof attacks.
-  NavigationItemImpl* pending_item = GetPendingItemImpl();
-  if (pending_item) {
-    bool is_user_initiated = pending_item->NavigationInitiationType() ==
-                             NavigationInitiationType::USER_INITIATED;
-    bool safe_to_show_pending = is_user_initiated && pending_item_index_ == -1;
-    if (safe_to_show_pending) {
-      return pending_item;
-    }
-  }
-  return GetLastCommittedItem();
+  DLOG(WARNING) << "Not yet implemented.";
+  return nullptr;
 }
 
 NavigationItem* WKBasedNavigationManagerImpl::GetLastCommittedItem() const {
@@ -235,7 +220,8 @@ NavigationItem* WKBasedNavigationManagerImpl::GetLastCommittedItem() const {
 }
 
 NavigationItem* WKBasedNavigationManagerImpl::GetPendingItem() const {
-  return GetPendingItemImpl();
+  return (pending_item_index_ == -1) ? pending_item_.get()
+                                     : GetItemAtIndex(pending_item_index_);
 }
 
 NavigationItem* WKBasedNavigationManagerImpl::GetTransientItem() const {
@@ -400,12 +386,6 @@ NavigationItemImpl* WKBasedNavigationManagerImpl::GetNavigationItemImplAtIndex(
           nullptr /* use default rewriters only */);
   SetNavigationItemInWKItem(wk_item, std::move(new_item));
   return GetNavigationItemFromWKItem(wk_item);
-}
-
-NavigationItemImpl* WKBasedNavigationManagerImpl::GetPendingItemImpl() const {
-  return (pending_item_index_ == -1)
-             ? pending_item_.get()
-             : GetNavigationItemImplAtIndex(pending_item_index_);
 }
 
 int WKBasedNavigationManagerImpl::GetWKCurrentItemIndex() const {

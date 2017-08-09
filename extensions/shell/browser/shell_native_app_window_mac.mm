@@ -10,9 +10,6 @@
 #include "base/mac/foundation_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "content/public/browser/web_contents.h"
-#include "ui/display/display.h"
-#include "ui/display/screen.h"
-#include "ui/gfx/geometry/size.h"
 #import "ui/gfx/mac/coordinate_conversion.h"
 
 @implementation ShellNativeAppWindowController
@@ -108,15 +105,6 @@ void ShellNativeAppWindowMac::Deactivate() {
 void ShellNativeAppWindowMac::SetBounds(const gfx::Rect& bounds) {
   // TODO(yoz): Windows should be fullscreen.
   NOTIMPLEMENTED();
-}
-
-gfx::Size ShellNativeAppWindowMac::GetContentMinimumSize() const {
-  // Content fills the display and cannot be resized.
-  return display::Screen::GetScreen()->GetPrimaryDisplay().bounds().size();
-}
-
-gfx::Size ShellNativeAppWindowMac::GetContentMaximumSize() const {
-  return GetContentMinimumSize();
 }
 
 void ShellNativeAppWindowMac::WindowWillClose() {

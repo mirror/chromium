@@ -218,34 +218,11 @@ function renderTheme() {
 
 
 /**
- * Updates the OneGoogleBar (if it is loaded) based on the current theme.
- * @private
- */
-function renderOneGoogleBarTheme() {
-  if (!window.gbar) {
-    return;
-  }
-  try {
-    var oneGoogleBarApi = window.gbar.a;
-    var oneGoogleBarPromise = oneGoogleBarApi.bf();
-    oneGoogleBarPromise.then(function(oneGoogleBar) {
-      var isThemeDark = getIsThemeDark(ntpApiHandle.themeBackgroundInfo);
-      var setForegroundStyle = oneGoogleBar.pc.bind(oneGoogleBar);
-      setForegroundStyle(isThemeDark ? 1 : 0);
-    });
-  } catch (err) {
-    console.log('Failed setting OneGoogleBar theme:\n' + err);
-  }
-}
-
-
-/**
  * Callback for embeddedSearch.newTabPage.onthemechange.
  * @private
  */
 function onThemeChange() {
   renderTheme();
-  renderOneGoogleBarTheme();
 }
 
 
@@ -434,7 +411,13 @@ function updateContentWidth() {
     return false;
 
   numColumnsShown = newNumColumns;
-  document.documentElement.style.setProperty('--column-count', numColumnsShown);
+  // We add an extra pixel because rounding errors on different zooms can
+  // make the width shorter than it should be.
+  var tilesContainerWidth = Math.ceil(numColumnsShown * tileRequiredWidth) + 1;
+  $(IDS.TILES).style.width = tilesContainerWidth + 'px';
+  // -2 to account for border.
+  var fakeboxWidth = (tilesContainerWidth - NTP_DESIGN.tileMargin - 2);
+  $(IDS.FAKEBOX).style.width = fakeboxWidth + 'px';
   return true;
 }
 
@@ -707,8 +690,6 @@ function injectOneGoogleBar(ogb) {
   inHeadScript.type = 'text/javascript';
   inHeadScript.appendChild(document.createTextNode(ogb.inHeadScript));
   document.head.appendChild(inHeadScript);
-
-  renderOneGoogleBarTheme();
 
   var ogElem = $('one-google');
   ogElem.innerHTML = ogb.barHtml;

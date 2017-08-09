@@ -17,8 +17,6 @@
 #include "url/gurl.h"
 
 namespace offline_pages {
-const int kPrefetchStoreCommandFailed = -1;
-
 namespace {
 
 // Comma separated list of all columns in the table, by convention following
@@ -39,15 +37,12 @@ const char* kSqlAllColumnNames =
     "requested_url, "
     "final_archived_url, "
     "operation_name, "
-    "archive_body_name, "
-    "title, "
-    "file_path, "
-    "file_size";
+    "archive_body_name";
 
 bool InsertPrefetchItemSync(const PrefetchItem& item, sql::Connection* db) {
   static const std::string kSql = base::StringPrintf(
       "INSERT INTO prefetch_items (%s)"
-      " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       kSqlAllColumnNames);
   sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql.c_str()));
   statement.BindInt64(0, item.offline_id);
@@ -66,9 +61,6 @@ bool InsertPrefetchItemSync(const PrefetchItem& item, sql::Connection* db) {
   statement.BindString(13, item.final_archived_url.spec());
   statement.BindString(14, item.operation_name);
   statement.BindString(15, item.archive_body_name);
-  statement.BindString16(16, item.title);
-  statement.BindString(17, item.file_path.AsUTF8Unsafe());
-  statement.BindInt64(18, item.file_size);
 
   return statement.Run();
 }
@@ -80,13 +72,13 @@ int CountPrefetchItemsSync(sql::Connection* db) {
   if (statement.Step())
     return statement.ColumnInt(0);
 
-  return kPrefetchStoreCommandFailed;
+  return PrefetchStoreTestUtil::kStoreCommandFailed;
 }
 
 // Populates the PrefetchItem with the data from the current row of the passed
 // in statement following the natural column ordering.
 void PopulatePrefetchItem(const sql::Statement& statement, PrefetchItem* item) {
-  DCHECK_EQ(19, statement.ColumnCount());
+  DCHECK_EQ(16, statement.ColumnCount());
   DCHECK(item);
 
   // Fields are assigned to the item in the order they are stored in the SQL
@@ -107,9 +99,6 @@ void PopulatePrefetchItem(const sql::Statement& statement, PrefetchItem* item) {
   item->final_archived_url = GURL(statement.ColumnString(13));
   item->operation_name = statement.ColumnString(14);
   item->archive_body_name = statement.ColumnString(15);
-  item->title = statement.ColumnString16(16);
-  item->file_path = base::FilePath::FromUTF8Unsafe(statement.ColumnString(17));
-  item->file_size = statement.ColumnInt64(18);
 }
 
 std::unique_ptr<PrefetchItem> GetPrefetchItemSync(int64_t offline_id,
@@ -158,7 +147,7 @@ int UpdateItemsStateSync(const std::string& name_space,
   if (statement.Run())
     return db->GetLastChangeCount();
 
-  return kPrefetchStoreCommandFailed;
+  return PrefetchStoreTestUtil::kStoreCommandFailed;
 }
 
 }  // namespace
@@ -248,17 +237,6 @@ int PrefetchStoreTestUtil::ZombifyPrefetchItems(const std::string& name_space,
 
 void PrefetchStoreTestUtil::RunUntilIdle() {
   task_runner_->RunUntilIdle();
-}
-
-int PrefetchStoreTestUtil::LastCommandChangeCount() {
-  int count = 0;
-  store_->Execute(
-      base::BindOnce([](sql::Connection* connection) {
-        return connection->GetLastChangeCount();
-      }),
-      base::BindOnce([](int* result, int count) { *result = count; }, &count));
-  RunUntilIdle();
-  return count;
 }
 
 }  // namespace offline_pages

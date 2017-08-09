@@ -5,8 +5,6 @@
 #include "chrome/browser/ui/webui/chromeos/certificate_manager_dialog_ui.h"
 
 #include <memory>
-#include <string>
-#include <utility>
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -26,7 +24,6 @@
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_message_handler.h"
 #include "ui/base/resource/resource_bundle.h"
-#include "ui/base/template_expressions.h"
 #include "ui/base/webui/jstemplate_builder.h"
 #include "ui/base/webui/web_ui_util.h"
 
@@ -93,15 +90,6 @@ void CertificateManagerDialogHTMLSource::StartDataRequest(
     // Return (and cache) the main options html page as the default.
     response_bytes = ui::ResourceBundle::GetSharedInstance().
         LoadDataResourceBytes(IDR_CERT_MANAGER_DIALOG_HTML);
-    // Pre-process i18n strings.
-    ui::TemplateReplacements replacements;
-    ui::TemplateReplacementsFromDictionaryValue(*localized_strings_,
-                                                &replacements);
-    std::string replaced = ui::ReplaceTemplateExpressions(
-        base::StringPiece(response_bytes->front_as<char>(),
-                          response_bytes->size()),
-        replacements);
-    response_bytes = base::RefCountedString::TakeString(&replaced);
   }
 
   callback.Run(response_bytes.get());

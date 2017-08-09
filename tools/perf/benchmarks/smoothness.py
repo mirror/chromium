@@ -124,6 +124,8 @@ class SmoothnessToughPathRenderingCases(_Smoothness):
     return StoryExpectations()
 
 
+@benchmark.Disabled('android')  # crbug.com/526901
+@benchmark.Disabled('linux')  # crbug.com/715607
 @benchmark.Owner(emails=['junov@chromium.org'])
 class SmoothnessToughCanvasCases(_Smoothness):
   """Measures frame rate and a variety of other statistics.
@@ -155,6 +157,8 @@ class SmoothnessToughCanvasCases(_Smoothness):
     return StoryExpectations()
 
 
+@benchmark.Disabled('android')  # crbug.com/373812
+@benchmark.Disabled('win-reference')  # crbug.com/612810
 @benchmark.Owner(emails=['kbr@chromium.org', 'zmo@chromium.org'])
 class SmoothnessToughWebGLCases(_Smoothness):
   page_set = page_sets.ToughWebglCasesPageSet
@@ -170,6 +174,8 @@ class SmoothnessToughWebGLCases(_Smoothness):
     return StoryExpectations()
 
 
+@benchmark.Disabled('win') # http://crbug.com/692663
+@benchmark.Disabled('android-webview')  # http://crbug.com/653933
 @benchmark.Owner(emails=['kbr@chromium.org', 'zmo@chromium.org'])
 class SmoothnessMaps(perf_benchmark.PerfBenchmark):
   page_set = page_sets.MapsPageSet
@@ -185,6 +191,8 @@ class SmoothnessMaps(perf_benchmark.PerfBenchmark):
     return StoryExpectations()
 
 
+@benchmark.Disabled('android',
+                    'mac')     # crbug.com/567802
 @benchmark.Owner(emails=['ssid@chromium.org'])
 class SmoothnessKeyDesktopMoveCases(_Smoothness):
   page_set = page_sets.KeyDesktopMoveCasesPageSet
@@ -192,6 +200,11 @@ class SmoothnessKeyDesktopMoveCases(_Smoothness):
   @classmethod
   def Name(cls):
     return 'smoothness.key_desktop_move_cases'
+
+  @classmethod
+  def ShouldDisable(cls, possible_browser):  # http://crbug.com/597656
+      return (possible_browser.browser_type == 'reference' and
+              possible_browser.platform.GetOSName() == 'win')
 
   def GetExpectations(self):
     class StoryExpectations(story_module.expectations.StoryExpectations):
@@ -227,6 +240,9 @@ class SmoothnessKeyMobileSites(_Smoothness):
     return StoryExpectations()
 
 
+@benchmark.Disabled('android')  # crbug.com/589580
+@benchmark.Disabled('android-reference')  # crbug.com/588786
+@benchmark.Disabled('mac')  # crbug.com/563615
 @benchmark.Owner(emails=['alancutter@chromium.org'])
 class SmoothnessToughAnimationCases(_Smoothness):
   page_set = page_sets.ToughAnimationCasesPageSet
@@ -271,15 +287,7 @@ class SmoothnessKeySilkCases(_Smoothness):
     return stories
 
   def GetExpectations(self):
-    class StoryExpectations(story_module.expectations.StoryExpectations):
-      def SetExpectations(self):
-        self.DisableStory('https://polymer-topeka.appspot.com/',
-                          [story_module.expectations.ALL], 'crbug.com/507865')
-        self.DisableStory('http://plus.google.com/app/basic/stream',
-                          [story_module.expectations.ALL], 'crbug.com/338838')
-        self.DisableStory('inbox_app.html?slide_drawer',
-                          [story_module.expectations.ALL], 'crbug.com/446332')
-    return StoryExpectations()
+     return page_sets.KeySilkCasesStoryExpectations()
 
 
 @benchmark.Enabled('android')
@@ -415,6 +423,7 @@ class SmoothnessSimpleMobilePages(_Smoothness):
     return StoryExpectations()
 
 
+@benchmark.Disabled('all') # http://crbug.com/631015
 @benchmark.Owner(emails=['bokan@chromium.org'])
 class SmoothnessToughPinchZoomCases(_Smoothness):
   """Measures rendering statistics for pinch-zooming in the tough pinch zoom
@@ -425,6 +434,14 @@ class SmoothnessToughPinchZoomCases(_Smoothness):
   @classmethod
   def Name(cls):
     return 'smoothness.tough_pinch_zoom_cases'
+
+  @classmethod
+  def ShouldDisable(cls, possible_browser):
+    return (
+       # http://crbug.com/564008
+       cls.IsSvelte(possible_browser) or
+       # http://crbug.com/630701
+       possible_browser.platform.GetDeviceTypeName() == 'Nexus 5X')
 
   def GetExpectations(self):
     class StoryExpectations(story_module.expectations.StoryExpectations):
@@ -452,7 +469,10 @@ class SmoothnessDesktopToughPinchZoomCases(_Smoothness):
     return StoryExpectations()
 
 
-@benchmark.Enabled('android')
+# This benchmark runs only on android by it is disabled on android as well
+# because of http://crbug.com/610021
+# @benchmark.Enabled('android')
+@benchmark.Disabled('all')
 @benchmark.Owner(emails=['ericrk@chromium.org'])
 class SmoothnessGpuRasterizationToughPinchZoomCases(_Smoothness):
   """Measures rendering statistics for pinch-zooming in the tough pinch zoom
@@ -468,6 +488,10 @@ class SmoothnessGpuRasterizationToughPinchZoomCases(_Smoothness):
   @classmethod
   def Name(cls):
     return 'smoothness.gpu_rasterization.tough_pinch_zoom_cases'
+
+  @classmethod
+  def ShouldDisable(cls, possible_browser):
+    return cls.IsSvelte(possible_browser)  # http://crbug.com/564008
 
   def GetExpectations(self):
     class StoryExpectations(story_module.expectations.StoryExpectations):
@@ -523,6 +547,7 @@ class SmoothnessToughScrollingCases(_Smoothness):
     return StoryExpectations()
 
 
+@benchmark.Disabled('all')  # crbug.com/667489
 @benchmark.Owner(emails=['ericrk@chromium.org'])
 class SmoothnessGpuRasterizationToughScrollingCases(_Smoothness):
   tag = 'gpu_rasterization'
@@ -543,6 +568,8 @@ class SmoothnessGpuRasterizationToughScrollingCases(_Smoothness):
     return StoryExpectations()
 
 
+@benchmark.Disabled('android')  # http://crbug.com/531593
+@benchmark.Disabled('win')  # http://crbug.com/652372
 class SmoothnessToughImageDecodeCases(_Smoothness):
   page_set = page_sets.ToughImageDecodeCasesPageSet
 
@@ -557,6 +584,7 @@ class SmoothnessToughImageDecodeCases(_Smoothness):
     return StoryExpectations()
 
 
+@benchmark.Disabled('android')  # http://crbug.com/610015
 @benchmark.Owner(emails=['cblume@chromium.org'])
 class SmoothnessImageDecodingCases(_Smoothness):
   """Measures decoding statistics for jpeg images.
@@ -571,6 +599,10 @@ class SmoothnessImageDecodingCases(_Smoothness):
   def Name(cls):
     return 'smoothness.image_decoding_cases'
 
+  @classmethod
+  def ShouldDisable(cls, possible_browser):
+    return cls.IsSvelte(possible_browser)  # http://crbug.com/563974
+
   def GetExpectations(self):
     class StoryExpectations(story_module.expectations.StoryExpectations):
       def SetExpectations(self):
@@ -578,6 +610,7 @@ class SmoothnessImageDecodingCases(_Smoothness):
     return StoryExpectations()
 
 
+@benchmark.Disabled('android')  # http://crbug.com/513699
 @benchmark.Owner(emails=['cblume@chromium.org'])
 class SmoothnessGpuImageDecodingCases(_Smoothness):
   """Measures decoding statistics for jpeg images with GPU rasterization.

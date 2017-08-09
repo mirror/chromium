@@ -34,8 +34,11 @@ DeviceCommandsFactoryChromeOS::BuildJobForType(em::RemoteCommand_Type type) {
       return base::WrapUnique<RemoteCommandJob>(new DeviceCommandRebootJob(
           chromeos::DBusThreadManager::Get()->GetPowerManagerClient()));
     case em::RemoteCommand_Type_DEVICE_SCREENSHOT:
-      return base::WrapUnique<RemoteCommandJob>(new DeviceCommandScreenshotJob(
-          base::MakeUnique<ScreenshotDelegate>()));
+      return base::WrapUnique<RemoteCommandJob>(
+          new DeviceCommandScreenshotJob(base::MakeUnique<ScreenshotDelegate>(
+              base::CreateSequencedTaskRunnerWithTraits(
+                  {base::MayBlock(), base::TaskPriority::BACKGROUND,
+                   base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN}))));
     case em::RemoteCommand_Type_DEVICE_SET_VOLUME:
       return base::WrapUnique<RemoteCommandJob>(
           new DeviceCommandSetVolumeJob());

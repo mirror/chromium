@@ -108,12 +108,8 @@ void TableSectionPainter::PaintRepeatingFooterGroup(
   header_group_offset += strut_on_first_row;
   LayoutUnit total_height_of_rows =
       sections_rect.Height() + IntMod(header_group_offset, page_height);
-  LayoutUnit first_row_strut =
-      layout_table_section_.FirstRow()
-          ? layout_table_section_.FirstRow()->PaginationStrut()
-          : LayoutUnit();
-  total_height_of_rows -=
-      layout_table_section_.LogicalHeight() - first_row_strut;
+  total_height_of_rows -= (layout_table_section_.LogicalHeight() -
+                           layout_table_section_.FirstRow()->PaginationStrut());
 
   // Move the offset to the top of the page the table starts on.
   LayoutPoint pagination_offset = paint_offset;

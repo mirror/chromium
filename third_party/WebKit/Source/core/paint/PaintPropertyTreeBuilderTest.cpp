@@ -59,12 +59,15 @@ const ScrollPaintPropertyNode* PaintPropertyTreeBuilderTest::FrameScroll(
   if (!frame_view)
     frame_view = GetDocument().View();
   if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
-    return frame_view->GetLayoutView()
-        ->FirstFragment()
-        ->PaintProperties()
-        ->Scroll();
+    const auto* scroll_translation = frame_view->GetLayoutView()
+                                         ->FirstFragment()
+                                         ->PaintProperties()
+                                         ->ScrollTranslation();
+    return scroll_translation ? scroll_translation->ScrollNode() : nullptr;
   }
-  return frame_view->ScrollNode();
+  return frame_view->ScrollTranslation()
+             ? frame_view->ScrollTranslation()->ScrollNode()
+             : nullptr;
 }
 
 const ObjectPaintProperties*
@@ -2748,6 +2751,7 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowHiddenScrollProperties) {
       "    overflow: hidden;"
       "    width: 5px;"
       "    height: 3px;"
+      "    border: 1px solid black;"
       "  }"
       "  .forceScroll {"
       "    height: 79px;"
@@ -2764,42 +2768,24 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowHiddenScrollProperties) {
 
   const ObjectPaintProperties* overflow_hidden_scroll_properties =
       overflow_hidden->GetLayoutObject()->FirstFragment()->PaintProperties();
-
-  // Because the overflow hidden does not scroll and only has a static scroll
-  // offset, there should be a scroll translation node but no scroll node.
+  // Because the frameView is does not scroll, overflowHidden's scroll should be
+  // under the root.
   auto* scroll_translation =
       overflow_hidden_scroll_properties->ScrollTranslation();
+  auto* overflow_hidden_scroll_node = scroll_translation->ScrollNode();
+  EXPECT_TRUE(overflow_hidden_scroll_node->Parent()->IsRoot());
   EXPECT_EQ(TransformationMatrix().Translate(0, -37),
             scroll_translation->Matrix());
-  EXPECT_EQ(nullptr, scroll_translation->ScrollNode());
-  EXPECT_EQ(nullptr, overflow_hidden_scroll_properties->Scroll());
-}
-
-TEST_P(PaintPropertyTreeBuilderTest, FrameOverflowHiddenScrollProperties) {
-  SetBodyInnerHTML(
-      "<style>"
-      "  html {"
-      "    margin: 0px;"
-      "    overflow: hidden;"
-      "    width: 300px;"
-      "    height: 300px;"
-      "  }"
-      "  .forceScroll {"
-      "    height: 5000px;"
-      "  }"
-      "</style>"
-      "<div class='forceScroll'></div>");
-
-  GetDocument().domWindow()->scrollTo(0, 37);
-
-  GetDocument().View()->UpdateAllLifecyclePhases();
-
-  // Because the overflow hidden does not scroll and only has a static scroll
-  // offset, there should be a scroll translation node but no scroll node.
-  EXPECT_EQ(TransformationMatrix().Translate(0, -37),
-            FrameScrollTranslation()->Matrix());
-  EXPECT_EQ(nullptr, FrameScrollTranslation()->ScrollNode());
-  EXPECT_EQ(nullptr, FrameScroll());
+  // This should match the overflow's dimensions and should not include the
+  // box's border.
+  EXPECT_EQ(IntSize(5, 3), overflow_hidden_scroll_node->ContainerBounds());
+  // The scrolling content's bounds should include both the overflow's
+  // dimensions (5x3) and the 0x79 "forceScroll" object.
+  EXPECT_EQ(IntSize(5, 79), overflow_hidden_scroll_node->Bounds());
+  // Although overflow: hidden is programmatically scrollable, it is not user
+  // scrollable.
+  EXPECT_FALSE(overflow_hidden_scroll_node->UserScrollableHorizontal());
+  EXPECT_FALSE(overflow_hidden_scroll_node->UserScrollableVertical());
 }
 
 TEST_P(PaintPropertyTreeBuilderTest, NestedScrollProperties) {
@@ -3397,19 +3383,15 @@ TEST_P(PaintPropertyTreeBuilderTest, FloatUnderInline) {
             target->FirstFragment()->LocalBorderBoxProperties()->Effect());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, ScrollNodeHasCompositorElementId) {
+TEST_P(PaintPropertyTreeBuilderTest, ScrollTranslationHasCompositorElementId) {
   SetBodyInnerHTML(
       "<div id='target' style='overflow: auto; width: 100px; height: 100px'>"
       "  <div style='width: 200px; height: 200px'></div>"
       "</div>");
 
   const ObjectPaintProperties* properties = PaintPropertiesForElement("target");
-  // The scroll translation node should not have the element id as it should be
-  // stored directly on the ScrollNode.
-  EXPECT_EQ(CompositorElementId(),
-            properties->ScrollTranslation()->GetCompositorElementId());
   EXPECT_NE(CompositorElementId(),
-            properties->Scroll()->GetCompositorElementId());
+            properties->ScrollTranslation()->GetCompositorElementId());
 }
 
 TEST_P(PaintPropertyTreeBuilderTest, OverflowClipSubpixelPosition) {
@@ -3666,60 +3648,6 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGRootBlending) {
   EXPECT_TRUE(svg_root_properties->Effect());
   EXPECT_EQ(EffectPaintPropertyNode::Root(),
             svg_root_properties->Effect()->Parent());
-}
-
-TEST_P(PaintPropertyTreeBuilderTest, ScrollBoundsOffset) {
-  SetBodyInnerHTML(
-      "<style>"
-      "  body {"
-      "    margin: 0px;"
-      "  }"
-      "  #scroller {"
-      "    overflow-y: scroll;"
-      "    width: 100px;"
-      "    height: 100px;"
-      "    margin-left: 7px;"
-      "    margin-top: 11px;"
-      "  }"
-      "  .forceScroll {"
-      "    height: 200px;"
-      "  }"
-      "</style>"
-      "<div id='scroller'>"
-      "  <div class='forceScroll'></div>"
-      "</div>");
-
-  Element* scroller = GetDocument().getElementById("scroller");
-  scroller->setScrollTop(42);
-
-  GetDocument().View()->UpdateAllLifecyclePhases();
-
-  const ObjectPaintProperties* scroll_properties =
-      scroller->GetLayoutObject()->FirstFragment()->PaintProperties();
-  // Because the frameView is does not scroll, overflowHidden's scroll should be
-  // under the root.
-  auto* scroll_translation = scroll_properties->ScrollTranslation();
-  auto* scroll_node = scroll_translation->ScrollNode();
-  EXPECT_TRUE(scroll_node->Parent()->IsRoot());
-  EXPECT_EQ(TransformationMatrix().Translate(0, -42),
-            scroll_translation->Matrix());
-  // The scroll node should be offset by the margin.
-  EXPECT_EQ(IntPoint(7, 11), scroll_node->Offset());
-
-  scroller->setAttribute(HTMLNames::styleAttr, "border: 20px solid black;");
-  GetDocument().View()->UpdateAllLifecyclePhases();
-  // The scroll node should be offset by both the margin and border.
-  EXPECT_EQ(IntPoint(27, 31), scroll_node->Offset());
-
-  scroller->setAttribute(HTMLNames::styleAttr,
-                         "border: 20px solid black;"
-                         "transform: translate(20px, 30px);");
-  GetDocument().View()->UpdateAllLifecyclePhases();
-  // The scroll node's offset should not include margin if it has already been
-  // included in a paint offset node.
-  EXPECT_EQ(IntPoint(20, 20), scroll_node->Offset());
-  EXPECT_EQ(TransformationMatrix().Translate(7, 11),
-            scroll_properties->PaintOffsetTranslation()->Matrix());
 }
 
 }  // namespace blink

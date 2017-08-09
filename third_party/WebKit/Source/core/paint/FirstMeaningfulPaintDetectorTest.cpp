@@ -4,7 +4,6 @@
 
 #include "core/paint/FirstMeaningfulPaintDetector.h"
 
-#include "core/paint/PaintEvent.h"
 #include "core/paint/PaintTiming.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/testing/TestingPlatformSupport.h"
@@ -74,38 +73,6 @@ class FirstMeaningfulPaintDetectorTest : public ::testing::Test {
   bool HadNetwork0Quiet() { return Detector().network0_quiet_reached_; }
   bool HadNetwork2Quiet() { return Detector().network2_quiet_reached_; }
 
-  void ClearFirstPaintSwapPromise() {
-    platform_->AdvanceClockSeconds(0.001);
-    GetPaintTiming().ReportSwapTime(PaintEvent::kFirstPaint, true,
-                                    MonotonicallyIncreasingTime());
-  }
-
-  void ClearFirstContentfulPaintSwapPromise() {
-    platform_->AdvanceClockSeconds(0.001);
-    GetPaintTiming().ReportSwapTime(PaintEvent::kFirstContentfulPaint, true,
-                                    MonotonicallyIncreasingTime());
-  }
-
-  void ClearProvisionalFirstMeaningfulPaintSwapPromise() {
-    platform_->AdvanceClockSeconds(0.001);
-    Detector().ReportSwapTime(PaintEvent::kProvisionalFirstMeaningfulPaint,
-                              true, MonotonicallyIncreasingTime());
-  }
-
-  unsigned OutstandingDetectorSwapPromiseCount() {
-    return Detector().outstanding_swap_promise_count_;
-  }
-
-  void MarkFirstContentfulPaintAndClearSwapPromise() {
-    GetPaintTiming().MarkFirstContentfulPaint();
-    ClearFirstContentfulPaintSwapPromise();
-  }
-
-  void MarkFirstPaintAndClearSwapPromise() {
-    GetPaintTiming().MarkFirstPaint();
-    ClearFirstPaintSwapPromise();
-  }
-
  protected:
   ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
       platform_;
@@ -121,67 +88,45 @@ class FirstMeaningfulPaintDetectorTest : public ::testing::Test {
 
 TEST_F(FirstMeaningfulPaintDetectorTest, NoFirstPaint) {
   SimulateLayoutAndPaint(1);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 0U);
   SimulateNetworkStable();
   EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
-  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaintSwap(), 0.0);
 }
 
 TEST_F(FirstMeaningfulPaintDetectorTest, OneLayout) {
-  MarkFirstContentfulPaintAndClearSwapPromise();
+  GetPaintTiming().MarkFirstContentfulPaint();
   SimulateLayoutAndPaint(1);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
   double after_paint = AdvanceClockAndGetTime();
   EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
-  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaintSwap(), 0.0);
   SimulateNetworkStable();
   EXPECT_GT(GetPaintTiming().FirstMeaningfulPaint(),
             GetPaintTiming().FirstPaint());
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            GetPaintTiming().FirstMeaningfulPaint());
   EXPECT_LT(GetPaintTiming().FirstMeaningfulPaint(), after_paint);
-  EXPECT_LT(GetPaintTiming().FirstMeaningfulPaintSwap(), after_paint);
 }
 
 TEST_F(FirstMeaningfulPaintDetectorTest, TwoLayoutsSignificantSecond) {
-  MarkFirstContentfulPaintAndClearSwapPromise();
+  GetPaintTiming().MarkFirstContentfulPaint();
   SimulateLayoutAndPaint(1);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
   double after_layout1 = AdvanceClockAndGetTime();
   SimulateLayoutAndPaint(10);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
   double after_layout2 = AdvanceClockAndGetTime();
   SimulateNetworkStable();
   EXPECT_GT(GetPaintTiming().FirstMeaningfulPaint(), after_layout1);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(), after_layout1);
   EXPECT_LT(GetPaintTiming().FirstMeaningfulPaint(), after_layout2);
-  EXPECT_LT(GetPaintTiming().FirstMeaningfulPaintSwap(), after_layout2);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            GetPaintTiming().FirstMeaningfulPaint());
 }
 
 TEST_F(FirstMeaningfulPaintDetectorTest, TwoLayoutsSignificantFirst) {
-  MarkFirstContentfulPaintAndClearSwapPromise();
+  GetPaintTiming().MarkFirstContentfulPaint();
   SimulateLayoutAndPaint(10);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
   double after_layout1 = AdvanceClockAndGetTime();
   SimulateLayoutAndPaint(1);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 0U);
   SimulateNetworkStable();
   EXPECT_GT(GetPaintTiming().FirstMeaningfulPaint(),
             GetPaintTiming().FirstPaint());
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            GetPaintTiming().FirstPaint());
   EXPECT_LT(GetPaintTiming().FirstMeaningfulPaint(), after_layout1);
-  EXPECT_LT(GetPaintTiming().FirstMeaningfulPaintSwap(), after_layout1);
 }
 
 TEST_F(FirstMeaningfulPaintDetectorTest, FirstMeaningfulPaintCandidate) {
-  MarkFirstContentfulPaintAndClearSwapPromise();
+  GetPaintTiming().MarkFirstContentfulPaint();
   EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaintCandidate(), 0.0);
   SimulateLayoutAndPaint(1);
   double after_paint = AdvanceClockAndGetTime();
@@ -198,7 +143,7 @@ TEST_F(FirstMeaningfulPaintDetectorTest, FirstMeaningfulPaintCandidate) {
 
 TEST_F(FirstMeaningfulPaintDetectorTest,
        OnlyOneFirstMeaningfulPaintCandidateBeforeNetworkStable) {
-  MarkFirstContentfulPaintAndClearSwapPromise();
+  GetPaintTiming().MarkFirstContentfulPaint();
   EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaintCandidate(), 0.0);
   double before_paint = AdvanceClockAndGetTime();
   SimulateLayoutAndPaint(1);
@@ -215,91 +160,58 @@ TEST_F(FirstMeaningfulPaintDetectorTest,
 
 TEST_F(FirstMeaningfulPaintDetectorTest,
        NetworkStableBeforeFirstContentfulPaint) {
-  MarkFirstPaintAndClearSwapPromise();
+  GetPaintTiming().MarkFirstPaint();
   SimulateLayoutAndPaint(1);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
   SimulateNetworkStable();
   EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
-  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaintSwap(), 0.0);
-  MarkFirstContentfulPaintAndClearSwapPromise();
+  GetPaintTiming().MarkFirstContentfulPaint();
   SimulateNetworkStable();
   EXPECT_NE(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
-  EXPECT_NE(GetPaintTiming().FirstMeaningfulPaintSwap(), 0.0);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            GetPaintTiming().FirstMeaningfulPaint());
 }
 
 TEST_F(FirstMeaningfulPaintDetectorTest,
        FirstMeaningfulPaintShouldNotBeBeforeFirstContentfulPaint) {
-  MarkFirstPaintAndClearSwapPromise();
+  GetPaintTiming().MarkFirstPaint();
   SimulateLayoutAndPaint(10);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
-  platform_->AdvanceClockSeconds(0.001);
-  MarkFirstContentfulPaintAndClearSwapPromise();
+  GetPaintTiming().MarkFirstContentfulPaint();
   SimulateNetworkStable();
   EXPECT_GE(GetPaintTiming().FirstMeaningfulPaint(),
             GetPaintTiming().FirstContentfulPaint());
-  EXPECT_GE(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            GetPaintTiming().FirstContentfulPaintSwap());
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            GetPaintTiming().FirstMeaningfulPaint());
 }
 
 TEST_F(FirstMeaningfulPaintDetectorTest, Network2QuietThen0Quiet) {
-  MarkFirstContentfulPaintAndClearSwapPromise();
+  GetPaintTiming().MarkFirstContentfulPaint();
 
   SimulateLayoutAndPaint(1);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
   double after_first_paint = AdvanceClockAndGetTime();
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
-  double after_first_paint_swap = AdvanceClockAndGetTime();
   SimulateNetwork2Quiet();
 
   SimulateLayoutAndPaint(10);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 0U);
   SimulateNetwork0Quiet();
 
   // The first paint is FirstMeaningfulPaint.
   EXPECT_GT(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(), 0.0);
   EXPECT_LT(GetPaintTiming().FirstMeaningfulPaint(), after_first_paint);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(), after_first_paint);
-  EXPECT_LT(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            after_first_paint_swap);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            GetPaintTiming().FirstMeaningfulPaint());
 }
 
 TEST_F(FirstMeaningfulPaintDetectorTest, Network0QuietThen2Quiet) {
-  MarkFirstContentfulPaintAndClearSwapPromise();
+  GetPaintTiming().MarkFirstContentfulPaint();
 
   SimulateLayoutAndPaint(1);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
   double after_first_paint = AdvanceClockAndGetTime();
   SimulateNetwork0Quiet();
 
   SimulateLayoutAndPaint(10);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
   double after_second_paint = AdvanceClockAndGetTime();
   SimulateNetwork2Quiet();
 
   // The second paint is FirstMeaningfulPaint.
   EXPECT_GT(GetPaintTiming().FirstMeaningfulPaint(), after_first_paint);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(), after_first_paint);
   EXPECT_LT(GetPaintTiming().FirstMeaningfulPaint(), after_second_paint);
-  EXPECT_LT(GetPaintTiming().FirstMeaningfulPaintSwap(), after_second_paint);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            GetPaintTiming().FirstMeaningfulPaint());
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            GetPaintTiming().FirstMeaningfulPaint());
 }
 
 TEST_F(FirstMeaningfulPaintDetectorTest, Network0QuietTimer) {
-  MarkFirstContentfulPaintAndClearSwapPromise();
+  GetPaintTiming().MarkFirstContentfulPaint();
 
   SetActiveConnections(1);
   EXPECT_FALSE(IsNetwork0QuietTimerActive());
@@ -319,7 +231,7 @@ TEST_F(FirstMeaningfulPaintDetectorTest, Network0QuietTimer) {
 }
 
 TEST_F(FirstMeaningfulPaintDetectorTest, Network2QuietTimer) {
-  MarkFirstContentfulPaintAndClearSwapPromise();
+  GetPaintTiming().MarkFirstContentfulPaint();
 
   SetActiveConnections(3);
   EXPECT_FALSE(IsNetwork2QuietTimerActive());
@@ -341,97 +253,19 @@ TEST_F(FirstMeaningfulPaintDetectorTest, Network2QuietTimer) {
 
 TEST_F(FirstMeaningfulPaintDetectorTest,
        FirstMeaningfulPaintAfterUserInteraction) {
-  MarkFirstContentfulPaintAndClearSwapPromise();
+  GetPaintTiming().MarkFirstContentfulPaint();
   SimulateUserInput();
   SimulateLayoutAndPaint(10);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
   SimulateNetworkStable();
   EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
-  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaintSwap(), 0.0);
 }
 
 TEST_F(FirstMeaningfulPaintDetectorTest, UserInteractionBeforeFirstPaint) {
   SimulateUserInput();
-  MarkFirstContentfulPaintAndClearSwapPromise();
-  SimulateLayoutAndPaint(10);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
-  SimulateNetworkStable();
-  EXPECT_NE(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
-  EXPECT_NE(GetPaintTiming().FirstMeaningfulPaintSwap(), 0.0);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            GetPaintTiming().FirstMeaningfulPaint());
-}
-
-TEST_F(FirstMeaningfulPaintDetectorTest,
-       WaitForSingleOutstandingSwapPromiseAfterNetworkStable) {
-  MarkFirstContentfulPaintAndClearSwapPromise();
-  SimulateLayoutAndPaint(10);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
-  SimulateNetworkStable();
-  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
-  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaintSwap(), 0.0);
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
-  EXPECT_NE(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
-  EXPECT_NE(GetPaintTiming().FirstMeaningfulPaintSwap(), 0.0);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            GetPaintTiming().FirstMeaningfulPaint());
-}
-
-TEST_F(FirstMeaningfulPaintDetectorTest,
-       WaitForMultipleOutstandingSwapPromisesAfterNetworkStable) {
-  MarkFirstContentfulPaintAndClearSwapPromise();
-  SimulateLayoutAndPaint(1);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
-  platform_->AdvanceClockSeconds(0.001);
-  SimulateLayoutAndPaint(10);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 2U);
-  // Having outstanding swap promises should defer setting FMP.
-  SimulateNetworkStable();
-  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
-  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaintSwap(), 0.0);
-  // Clearing the first swap promise should have no effect on FMP.
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
-  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
-  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaintSwap(), 0.0);
-  double after_first_swap = AdvanceClockAndGetTime();
-  // Clearing the last outstanding swap promise should set FMP.
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 0U);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(), 0.0);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(), after_first_swap);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            GetPaintTiming().FirstMeaningfulPaint());
-}
-
-TEST_F(FirstMeaningfulPaintDetectorTest,
-       WaitForFirstContentfulPaintSwapAfterNetworkStable) {
-  MarkFirstPaintAndClearSwapPromise();
-  SimulateLayoutAndPaint(10);
-  EXPECT_EQ(OutstandingDetectorSwapPromiseCount(), 1U);
-  ClearProvisionalFirstMeaningfulPaintSwapPromise();
-  double after_first_meaningful_paint_candidate = AdvanceClockAndGetTime();
-  platform_->AdvanceClockSeconds(0.001);
   GetPaintTiming().MarkFirstContentfulPaint();
-  // FCP > FMP candidate, but still waiting for FCP swap.
+  SimulateLayoutAndPaint(10);
   SimulateNetworkStable();
-  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
-  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaintSwap(), 0.0);
-  // Trigger notifying the detector about the FCP swap.
-  ClearFirstContentfulPaintSwapPromise();
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(), 0.0);
-  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaint(),
-            GetPaintTiming().FirstContentfulPaint());
-  EXPECT_EQ(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            GetPaintTiming().FirstContentfulPaintSwap());
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaint(),
-            after_first_meaningful_paint_candidate);
-  EXPECT_GT(GetPaintTiming().FirstMeaningfulPaintSwap(),
-            GetPaintTiming().FirstMeaningfulPaint());
+  EXPECT_NE(GetPaintTiming().FirstMeaningfulPaint(), 0.0);
 }
 
 }  // namespace blink

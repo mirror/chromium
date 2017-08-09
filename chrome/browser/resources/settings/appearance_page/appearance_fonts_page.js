@@ -118,8 +118,9 @@ Polymer({
    */
   setFontsData_: function(response) {
     var fontMenuOptions = [];
-    for (var fontData of response.fontList) {
-      fontMenuOptions.push({value: fontData[0], name: fontData[1]});
+    for (var i = 0; i < response.fontList.length; ++i) {
+      fontMenuOptions.push(
+          {value: response.fontList[i][0], name: response.fontList[i][1]});
     }
     this.fontOptions_ = fontMenuOptions;
     this.advancedExtensionUrl_ = response.extensionUrl;

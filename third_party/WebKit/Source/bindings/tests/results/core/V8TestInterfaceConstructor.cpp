@@ -74,8 +74,7 @@ namespace TestInterfaceConstructorV8Internal {
 
 static void constructor1(const v8::FunctionCallbackInfo<v8::Value>& info) {
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kConstructionContext, "TestInterfaceConstructor");
-  ScriptState* scriptState = ScriptState::From(
-      info.NewTarget().As<v8::Object>()->CreationContext());
+  ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   ExecutionContext* executionContext = ToExecutionContext(
       info.NewTarget().As<v8::Object>()->CreationContext());
@@ -92,8 +91,7 @@ static void constructor1(const v8::FunctionCallbackInfo<v8::Value>& info) {
 
 static void constructor2(const v8::FunctionCallbackInfo<v8::Value>& info) {
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kConstructionContext, "TestInterfaceConstructor");
-  ScriptState* scriptState = ScriptState::From(
-      info.NewTarget().As<v8::Object>()->CreationContext());
+  ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   double doubleArg;
   V8StringResource<> stringArg;
@@ -171,8 +169,7 @@ static void constructor2(const v8::FunctionCallbackInfo<v8::Value>& info) {
 
 static void constructor3(const v8::FunctionCallbackInfo<v8::Value>& info) {
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kConstructionContext, "TestInterfaceConstructor");
-  ScriptState* scriptState = ScriptState::From(
-      info.NewTarget().As<v8::Object>()->CreationContext());
+  ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   V8StringResource<> arg;
   V8StringResource<> optArg;
@@ -219,8 +216,7 @@ static void constructor3(const v8::FunctionCallbackInfo<v8::Value>& info) {
 
 static void constructor4(const v8::FunctionCallbackInfo<v8::Value>& info) {
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kConstructionContext, "TestInterfaceConstructor");
-  ScriptState* scriptState = ScriptState::From(
-      info.NewTarget().As<v8::Object>()->CreationContext());
+  ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   V8StringResource<> arg;
   V8StringResource<> arg2;
@@ -343,8 +339,7 @@ static void V8TestInterfaceConstructorConstructorCallback(const v8::FunctionCall
   }
 
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kConstructionContext, "TestInterfaceConstructor");
-  ScriptState* scriptState = ScriptState::From(
-      info.NewTarget().As<v8::Object>()->CreationContext());
+  ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   if (UNLIKELY(info.Length() < 1)) {
     exceptionState.ThrowTypeError(ExceptionMessages::NotEnoughArguments(1, info.Length()));

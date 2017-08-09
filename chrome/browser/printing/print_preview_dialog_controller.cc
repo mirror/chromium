@@ -241,6 +241,11 @@ void PrintPreviewDialogController::ForEachPreviewDialog(
 }
 
 // static
+bool PrintPreviewDialogController::IsPrintPreviewDialog(WebContents* contents) {
+  return IsPrintPreviewURL(contents->GetURL());
+}
+
+// static
 bool PrintPreviewDialogController::IsPrintPreviewURL(const GURL& url) {
   return (url.SchemeIs(content::kChromeUIScheme) &&
           url.host_piece() == chrome::kChromeUIPrintHost);

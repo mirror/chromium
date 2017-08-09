@@ -123,9 +123,7 @@ PaintImage DragImage::ResizeAndOrientImage(
   canvas->concat(AffineTransformToSkMatrix(transform));
   canvas->drawImage(image.GetSkImage(), 0, 0, &paint);
 
-  return PaintImageBuilder(std::move(image))
-      .set_image(surface->makeImageSnapshot())
-      .TakePaintImage();
+  return image.CloneWithSkImage(surface->makeImageSnapshot());
 }
 
 FloatSize DragImage::ClampedImageScale(const IntSize& image_size,

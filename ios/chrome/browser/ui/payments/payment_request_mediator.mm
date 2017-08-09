@@ -18,7 +18,6 @@
 #include "components/payments/core/strings_util.h"
 #include "components/prefs/pref_service.h"
 #include "components/strings/grit/components_strings.h"
-#include "ios/chrome/browser/payments/ios_payment_instrument.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #include "ios/chrome/browser/payments/payment_request_util.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_detail_item.h"
@@ -186,24 +185,13 @@ using ::payment_request_util::GetShippingSectionTitle;
 }
 
 - (CollectionViewItem*)paymentMethodItem {
-  payments::PaymentInstrument* paymentMethod =
+  const payments::PaymentInstrument* paymentMethod =
       self.paymentRequest->selected_payment_method();
   if (paymentMethod) {
     PaymentMethodItem* item = [[PaymentMethodItem alloc] init];
     item.methodID = base::SysUTF16ToNSString(paymentMethod->GetLabel());
     item.methodDetail = base::SysUTF16ToNSString(paymentMethod->GetSublabel());
-
-    switch (paymentMethod->type()) {
-      case payments::PaymentInstrument::Type::AUTOFILL:
-        item.methodTypeIcon = NativeImage(paymentMethod->icon_resource_id());
-        break;
-      case payments::PaymentInstrument::Type::NATIVE_MOBILE_APP:
-        payments::IOSPaymentInstrument* mobileApp =
-            static_cast<payments::IOSPaymentInstrument*>(paymentMethod);
-        item.methodTypeIcon = mobileApp->icon_image();
-        break;
-    }
-
+    item.methodTypeIcon = NativeImage(paymentMethod->icon_resource_id());
     item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
     return item;
   }

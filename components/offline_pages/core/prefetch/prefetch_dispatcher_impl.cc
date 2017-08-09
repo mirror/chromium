@@ -15,15 +15,11 @@
 #include "components/offline_pages/core/offline_event_logger.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/prefetch/add_unique_urls_task.h"
-#include "components/offline_pages/core/prefetch/download_completed_task.h"
 #include "components/offline_pages/core/prefetch/generate_page_bundle_task.h"
 #include "components/offline_pages/core/prefetch/get_operation_task.h"
-#include "components/offline_pages/core/prefetch/import_archives_task.h"
-#include "components/offline_pages/core/prefetch/import_completed_task.h"
 #include "components/offline_pages/core/prefetch/mark_operation_done_task.h"
 #include "components/offline_pages/core/prefetch/prefetch_background_task_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
-#include "components/offline_pages/core/prefetch/prefetch_importer.h"
 #include "components/offline_pages/core/prefetch/prefetch_network_request_factory.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
@@ -97,13 +93,6 @@ void PrefetchDispatcherImpl::BeginBackgroundTask(
 }
 
 void PrefetchDispatcherImpl::QueueActionTasks() {
-  std::unique_ptr<Task> get_operation_task = base::MakeUnique<GetOperationTask>(
-      service_->GetPrefetchStore(),
-      service_->GetPrefetchNetworkRequestFactory(),
-      base::Bind(&PrefetchDispatcherImpl::DidGetOperationRequest,
-                 weak_factory_.GetWeakPtr()));
-  task_queue_.AddTask(std::move(get_operation_task));
-
   std::unique_ptr<Task> generate_page_bundle_task =
       base::MakeUnique<GeneratePageBundleTask>(
           service_->GetPrefetchStore(), service_->GetPrefetchGCMHandler(),
@@ -111,11 +100,6 @@ void PrefetchDispatcherImpl::QueueActionTasks() {
           base::Bind(&PrefetchDispatcherImpl::DidGenerateBundleRequest,
                      weak_factory_.GetWeakPtr()));
   task_queue_.AddTask(std::move(generate_page_bundle_task));
-
-  std::unique_ptr<Task> import_archives_task =
-      base::MakeUnique<ImportArchivesTask>(service_->GetPrefetchStore(),
-                                           service_->GetPrefetchImporter());
-  task_queue_.AddTask(std::move(import_archives_task));
 }
 
 void PrefetchDispatcherImpl::StopBackgroundTask() {
@@ -169,37 +153,6 @@ void PrefetchDispatcherImpl::DidGetOperationRequest(
     const std::string& operation_name,
     const std::vector<RenderPageInfo>& pages) {
   LogRequestResult("GetOperationRequest", status, operation_name, pages);
-}
-
-void PrefetchDispatcherImpl::DownloadCompleted(
-    const PrefetchDownloadResult& download_result) {
-  if (!IsPrefetchingOfflinePagesEnabled())
-    return;
-
-  service_->GetLogger()->RecordActivity(
-      "Download " + download_result.download_id +
-      (download_result.success ? "succeeded" : "failed"));
-  if (download_result.success) {
-    service_->GetLogger()->RecordActivity(
-        "Download size: " + std::to_string(download_result.file_size));
-  }
-
-  PrefetchStore* prefetch_store = service_->GetPrefetchStore();
-  task_queue_.AddTask(
-      base::MakeUnique<DownloadCompletedTask>(prefetch_store, download_result));
-}
-
-void PrefetchDispatcherImpl::ImportCompleted(int64_t offline_id, bool success) {
-  if (!IsPrefetchingOfflinePagesEnabled())
-    return;
-
-  service_->GetLogger()->RecordActivity("Importing archive " +
-                                        std::to_string(offline_id) +
-                                        (success ? "succeeded" : "failed"));
-
-  PrefetchStore* prefetch_store = service_->GetPrefetchStore();
-  task_queue_.AddTask(base::MakeUnique<ImportCompletedTask>(
-      prefetch_store, offline_id, success));
 }
 
 void PrefetchDispatcherImpl::LogRequestResult(

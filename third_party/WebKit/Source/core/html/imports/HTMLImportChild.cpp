@@ -47,11 +47,9 @@ namespace blink {
 
 HTMLImportChild::HTMLImportChild(const KURL& url,
                                  HTMLImportLoader* loader,
-                                 HTMLImportChildClient* client,
                                  SyncMode sync)
-    : HTMLImport(sync), url_(url), loader_(loader), client_(client) {
-  DCHECK(loader_);
-  DCHECK(client_);
+    : HTMLImport(sync), url_(url), loader_(loader), client_(nullptr) {
+  DCHECK(loader);
 }
 
 HTMLImportChild::~HTMLImportChild() {}
@@ -152,6 +150,12 @@ HTMLImportLoader* HTMLImportChild::Loader() const {
   return loader_;
 }
 
+void HTMLImportChild::SetClient(HTMLImportChildClient* client) {
+  DCHECK(client);
+  DCHECK(!client_);
+  client_ = client;
+}
+
 HTMLLinkElement* HTMLImportChild::Link() const {
   if (!client_)
     return nullptr;
@@ -159,16 +163,14 @@ HTMLLinkElement* HTMLImportChild::Link() const {
 }
 
 // Ensuring following invariants against the import tree:
-// - HTMLImportLoader::FirstImport() is the "first import" of the DFS order of
-//   the import tree loaded by the loader.
-// - The "first import" manages all the children that are loaded by the
-// document.
+// - HTMLImportChild::firstImport() is the "first import" of the DFS order of
+//   the import tree.
+// - The "first import" manages all the children that is loaded by the document.
 void HTMLImportChild::Normalize() {
-  DCHECK(loader_);
-
-  if (!loader_->IsFirstImport(this) && this->Precedes(loader_->FirstImport())) {
-    HTMLImportChild* old_first = loader_->FirstImport();
-    loader_->MoveToFirst(this);
+  if (!Loader()->IsFirstImport(this) &&
+      this->Precedes(Loader()->FirstImport())) {
+    HTMLImportChild* old_first = Loader()->FirstImport();
+    Loader()->MoveToFirst(this);
     TakeChildrenFrom(old_first);
   }
 
@@ -179,6 +181,16 @@ void HTMLImportChild::Normalize() {
     child->Normalize();
   }
 }
+
+#if !defined(NDEBUG)
+void HTMLImportChild::ShowThis() {
+  bool is_first = Loader() ? Loader()->IsFirstImport(this) : false;
+  HTMLImport::ShowThis();
+  fprintf(stderr, " loader=%p first=%d, step=%p sync=%s url=%s", loader_.Get(),
+          is_first, custom_element_microtask_step_.Get(), IsSync() ? "Y" : "N",
+          Url().GetString().Utf8().data());
+}
+#endif
 
 DEFINE_TRACE(HTMLImportChild) {
   visitor->Trace(custom_element_microtask_step_);

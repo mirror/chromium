@@ -66,8 +66,8 @@ void AnswerCardSearchProvider::Start(bool is_voice_query,
   received_answer_ = false;
   OnResultAvailable(false);
   current_request_url_ = GURL();
-  result_url_.clear();
-  result_title_.clear();
+  result_url_.empty();
+  result_title_.empty();
   server_request_start_time_ = answer_loaded_time_ = base::TimeTicks();
 
   if (is_voice_query) {
@@ -83,6 +83,7 @@ void AnswerCardSearchProvider::Start(bool is_voice_query,
     return;
 
   // Start a request to the answer server.
+  result_url_ = GetResultUrl(query);
 
   // Lifetime of |prefixed_query| should be longer than the one of
   // |replacements|.
@@ -130,14 +131,13 @@ void AnswerCardSearchProvider::DidFinishNavigation(
   }
 
   if (!features::IsAnswerCardDarkRunEnabled()) {
-    if (!has_answer_card) {
+    if (!has_answer_card || result_title.empty()) {
       RecordRequestResult(SearchAnswerRequestResult::REQUEST_RESULT_NO_ANSWER);
       return;
     }
-    DCHECK(!result_title.empty());
-    DCHECK(!issued_query.empty());
     result_title_ = result_title;
-    result_url_ = GetResultUrl(base::UTF8ToUTF16(issued_query));
+    if (!issued_query.empty())
+      result_url_ = GetResultUrl(base::UTF8ToUTF16(issued_query));
   } else {
     // In the dark run mode, every other "server response" contains a card.
     dark_run_received_answer_ = !dark_run_received_answer_;

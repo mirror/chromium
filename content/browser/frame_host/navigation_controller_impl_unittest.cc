@@ -1399,6 +1399,7 @@ TEST_F(NavigationControllerTest, Reload) {
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
   ASSERT_TRUE(controller.GetVisibleEntry());
+  controller.GetVisibleEntry()->SetTitle(base::ASCIIToUTF16("Title"));
   entry_id = controller.GetLastCommittedEntry()->GetUniqueID();
 
   controller.Reload(ReloadType::NORMAL, true);
@@ -1415,6 +1416,10 @@ TEST_F(NavigationControllerTest, Reload) {
   EXPECT_TRUE(controller.GetPendingEntry());
   EXPECT_FALSE(controller.CanGoBack());
   EXPECT_FALSE(controller.CanGoForward());
+  // Make sure the title has been cleared (will be redrawn just after reload).
+  // Avoids a stale cached title when the new page being reloaded has no title.
+  // See http://crbug.com/96041.
+  EXPECT_TRUE(controller.GetVisibleEntry()->GetTitle().empty());
 
   main_test_rfh()->PrepareForCommit();
   main_test_rfh()->SendNavigate(entry_id, false, url1);
@@ -1539,6 +1544,7 @@ TEST_F(NavigationControllerTest, ReloadOriginalRequestURL) {
   EXPECT_EQ(final_url, controller.GetVisibleEntry()->GetURL());
 
   // Reload using the original URL.
+  controller.GetVisibleEntry()->SetTitle(base::ASCIIToUTF16("Title"));
   controller.Reload(ReloadType::ORIGINAL_REQUEST_URL, false);
   EXPECT_EQ(0U, notifications.size());
 
@@ -1551,6 +1557,11 @@ TEST_F(NavigationControllerTest, ReloadOriginalRequestURL) {
   EXPECT_TRUE(controller.GetPendingEntry());
   EXPECT_FALSE(controller.CanGoBack());
   EXPECT_FALSE(controller.CanGoForward());
+
+  // Make sure the title has been cleared (will be redrawn just after reload).
+  // Avoids a stale cached title when the new page being reloaded has no title.
+  // See http://crbug.com/96041.
+  EXPECT_TRUE(controller.GetVisibleEntry()->GetTitle().empty());
 
   // Send that the navigation has proceeded; say it got redirected again.
   main_test_rfh()->PrepareForCommitWithServerRedirect(final_url);

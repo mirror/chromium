@@ -93,12 +93,19 @@ class BaseResourceThrottle
 
   // Posts a task for StartDisplayingBlockingPage
   virtual void StartDisplayingBlockingPageHelper(
-      security_interstitials::UnsafeResource resource) = 0;
+      security_interstitials::UnsafeResource resource);
 
   // Called by OnBlockingPageComplete when proceed == false. This removes the
   // blocking page. This calls ResourceThrottle::Cancel() to show the previous
   // page, but may be overridden in a subclass.
   virtual void CancelResourceLoad();
+
+  // Starts displaying the safe browsing interstitial page. Called on the UI
+  // thread.
+  static void StartDisplayingBlockingPage(
+      const base::WeakPtr<BaseResourceThrottle>& throttle,
+      scoped_refptr<BaseUIManager> ui_manager,
+      const security_interstitials::UnsafeResource& resource);
 
   // Starts running |url| through the safe browsing check. Returns true if the
   // URL is safe to visit. Otherwise returns false and will call

@@ -467,3 +467,18 @@ class ToughVideoCasesPageSet(story.StorySet):
 
     # Background playback tests:
     self.AddStory(Page37(self))
+
+
+class ToughVideoCasesDesktopStoryExpectations(
+    story.expectations.StoryExpectations):
+
+  def SetExpectations(self):
+    self.PermanentlyDisableBenchmark(
+        [story.expectations.ALL_MOBILE], 'Desktop Benchmark')
+
+class ToughVideoCasesAndroidStoryExpectations(
+    story.expectations.StoryExpectations):
+
+  def SetExpectations(self):
+    self.PermanentlyDisableBenchmark(
+        [story.expectations.ALL_DESKTOP], 'Android Benchmark')

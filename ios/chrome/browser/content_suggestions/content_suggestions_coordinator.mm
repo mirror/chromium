@@ -122,7 +122,6 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=new_tab";
 
   self.headerController = [[ContentSuggestionsHeaderViewController alloc] init];
   self.headerController.dispatcher = self.dispatcher;
-  self.headerController.commandHandler = self;
   self.headerController.delegate = self;
   self.headerController.readingListModel =
       ReadingListModelFactory::GetForBrowserState(self.browserState);

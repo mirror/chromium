@@ -88,11 +88,14 @@ public class DownloadManagerServiceTest {
          * Helper method to simulate that the DownloadNotificationService is connected.
          */
         public void onServiceConnected() {
-            ThreadUtils.runOnUiThreadBlocking(() -> {
-                mService = new MockDownloadNotificationService();
-                mService.setContext(new AdvancedMockContext(
-                        mContext.getApplicationContext()));
-                mService.onCreate();
+            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+                @Override
+                public void run() {
+                    mService = new MockDownloadNotificationService();
+                    mService.setContext(new AdvancedMockContext(
+                            mContext.getApplicationContext()));
+                    mService.onCreate();
+                }
             });
             setDownloadNotificationService(mService);
         }
@@ -278,8 +281,12 @@ public class DownloadManagerServiceTest {
 
         @Override
         protected void scheduleUpdateIfNeeded() {
-            ThreadUtils.runOnUiThreadBlocking(
-                    () -> DownloadManagerServiceForTest.super.scheduleUpdateIfNeeded());
+            ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+                @Override
+                public void run() {
+                    DownloadManagerServiceForTest.super.scheduleUpdateIfNeeded();
+                }
+            });
         }
 
         @Override
@@ -405,8 +412,12 @@ public class DownloadManagerServiceTest {
         MockDownloadSnackbarController snackbarController = new MockDownloadSnackbarController();
         final DownloadManagerServiceForTest dService = new DownloadManagerServiceForTest(
                 getTestContext(), notifier, UPDATE_DELAY_FOR_TEST);
-        ThreadUtils.runOnUiThreadBlocking(
-                (Runnable) () -> DownloadManagerService.setDownloadManagerService(dService));
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                DownloadManagerService.setDownloadManagerService(dService);
+            }
+        });
         dService.setDownloadSnackbarController(snackbarController);
         // Try calling download completed directly.
         DownloadInfo successful = getDownloadInfo();
@@ -436,8 +447,12 @@ public class DownloadManagerServiceTest {
         MockDownloadSnackbarController snackbarController = new MockDownloadSnackbarController();
         final DownloadManagerServiceForTest dService = new DownloadManagerServiceForTest(
                 getTestContext(), notifier, UPDATE_DELAY_FOR_TEST);
-        ThreadUtils.runOnUiThreadBlocking(
-                (Runnable) () -> DownloadManagerService.setDownloadManagerService(dService));
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                DownloadManagerService.setDownloadManagerService(dService);
+            }
+        });
         dService.setDownloadSnackbarController(snackbarController);
         // Check that if an interrupted download cannot be resumed, it will trigger a download
         // failure.

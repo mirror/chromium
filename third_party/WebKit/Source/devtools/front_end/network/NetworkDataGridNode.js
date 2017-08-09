@@ -804,12 +804,10 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
   }
 
   /**
-   * @param {?RegExp} regexp
+   * @param {!RegExp=} regexp
    * @return {!Array.<!Object>}
    */
   highlightMatchedSubstring(regexp) {
-    if (!regexp)
-      return [];
     // Ensure element is created.
     this.element();
     var domChanges = [];

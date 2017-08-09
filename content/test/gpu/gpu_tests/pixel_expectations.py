@@ -72,3 +72,4 @@ class PixelExpectations(GpuTestExpectations):
 
     self.Flaky('Pixel_OffscreenCanvasWebGLSoftwareCompositingWorker',
         ['mac', ('nvidia', 0xfe9), 'debug'], bug=751328)
+

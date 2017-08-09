@@ -214,12 +214,13 @@
         <structure type="chrome_scaled_image" name="IDR_ICON_USER_MANAGER_TUTORIAL_FRIENDS" file="common/user_manager_tutorial/family_and_friends.png" />
         <structure type="chrome_scaled_image" name="IDR_ICON_USER_MANAGER_TUTORIAL_COMPLETE" file="common/user_manager_tutorial/complete.png" />
       </if>
-      <if expr="is_macosx">
-        <structure type="chrome_scaled_image" name="IDR_INFO" file="legacy/info_small.png" />
-      </if>
+      <structure type="chrome_scaled_image" name="IDR_INFO" file="common/info_small.png" />
       <structure type="chrome_scaled_image" name="IDR_INFOBAR_3D_BLOCKED" file="common/infobar_3d_blocked.png" />
       <structure type="chrome_scaled_image" name="IDR_INFOBAR_MEDIA_STREAM_CAMERA" file="common/infobar_media_stream_camera.png" />
       <structure type="chrome_scaled_image" name="IDR_INFOBAR_MEDIA_STREAM_MIC" file="common/infobar_media_stream_mic.png" />
+      <if expr="is_android">
+        <structure type="chrome_scaled_image" name="IDR_INFOBAR_SAVE_PASSWORD" file="common/infobar_save_password.png" />
+      </if>
       <if expr="is_macosx or is_android">
         <structure type="chrome_scaled_image" name="IDR_INFOBAR_TRANSLATE" file="common/infobar_translate.png" />
       </if>
@@ -264,10 +265,10 @@
         <structure type="chrome_scaled_image" name="IDR_NOTIFICATION_DRIVE" file="cros/notification_drive.png" />
         <structure type="chrome_scaled_image" name="IDR_NOTIFICATION_FINGERPRINT" file="cros/notification_fingerprint.png" />
         <structure type="chrome_scaled_image" name="IDR_NOTIFICATION_PERIPHERAL_BATTERY_LOW" file="cros/notification_peripheral_battery_low.png" />
-        <structure type="chrome_scaled_image" name="IDR_NOTIFICATION_STYLUS_BATTERY_LOW" file="cros/notification_peripheral_battery_low.png" />
         <structure type="chrome_scaled_image" name="IDR_PORTAL_DETECTION_ALERT" file="cros/captive_portal_icon.png" />
         <structure type="chrome_scaled_image" name="IDR_ARC_PLAY_STORE_NOTIFICATION" file="cros/notification_play_store.png" />
         <structure type="chrome_scaled_image" name="IDR_ARC_PLAY_STORE_OPTIN_IN_PROGRESS_NOTIFICATION" file="cros/notification_play_store_optin_in_progress.png" />
+        <structure type="chrome_scaled_image" name="IDR_NOTIFICATION_EXTENSION_INSTALLED" file="common/notification_extension_installed.png" />
         <structure type="chrome_scaled_image" name="IDR_NOTIFICATION_SCREENSHOT_ANNOTATE" file="cros/notification_screenshot_annotate.png" />
         <structure type="chrome_scaled_image" name="IDR_NOTIFICATION_SCREENSHOT_COPY_TO_CLIPBOARD" file="cros/notification_screenshot_copy_to_clipboard.png" />
         <structure type="chrome_scaled_image" name="IDR_NOTIFICATION_EASYUNLOCK_ENABLED" file="cros/notification_easyunlock_enabled.png" />
@@ -514,6 +515,7 @@
         <structure type="chrome_scaled_image" name="IDR_TRANSLATE" file="legacy/translate.png" />
       </if>
       <structure type="chrome_scaled_image" name="IDR_TRANSLATE_BUBBLE_ICON" file="common/translate_bubble_icon.png" />
+      <structure type="chrome_scaled_image" name="IDR_USB_NOTIFICATION_ICON" file="common/notification_usb_icon.png" />
       <if expr="chromeos">
         <structure type="chrome_scaled_image" name="IDR_USER_IMAGE_CAPTURE" file="cros/snapshot_wide.png" />
         <structure type="chrome_scaled_image" name="IDR_USER_IMAGE_RECYCLE" file="cros/discard_wide.png" />

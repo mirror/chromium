@@ -3225,14 +3225,11 @@ void UniformMatrix4fvStreamTextureMatrixCHROMIUMImmediate(
 void OverlayPromotionHintCHROMIUM(GLuint texture,
                                   GLboolean promotion_hint,
                                   GLint display_x,
-                                  GLint display_y,
-                                  GLint display_width,
-                                  GLint display_height) {
+                                  GLint display_y) {
   gles2::cmds::OverlayPromotionHintCHROMIUM* c =
       GetCmdSpace<gles2::cmds::OverlayPromotionHintCHROMIUM>();
   if (c) {
-    c->Init(texture, promotion_hint, display_x, display_y, display_width,
-            display_height);
+    c->Init(texture, promotion_hint, display_x, display_y);
   }
 }
 

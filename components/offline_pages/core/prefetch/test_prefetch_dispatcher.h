@@ -32,9 +32,6 @@ class TestPrefetchDispatcher : public PrefetchDispatcher {
   void SchedulePipelineProcessing() override;
   void GCMOperationCompletedMessageReceived(
       const std::string& operation_name) override;
-  void DownloadCompleted(
-      const PrefetchDownloadResult& download_result) override;
-  void ImportCompleted(int64_t offline_id, bool success) override;
   void RequestFinishBackgroundTaskForTest() override;
 
   std::string latest_name_space;

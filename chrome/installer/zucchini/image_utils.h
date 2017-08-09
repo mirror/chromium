@@ -16,7 +16,7 @@ namespace zucchini {
 // Files bigger than 4GB are not supported.
 using offset_t = uint32_t;
 
-// Used to uniquely identify a reference type.
+// Used to uniquely identify a reference group.
 // Strongly typed objects are used to avoid ambiguitees with PoolTag.
 struct TypeTag : public TypedValue<TypeTag, uint8_t> {
   // inheriting constructor:
@@ -29,7 +29,7 @@ struct PoolTag : public TypedValue<PoolTag, uint8_t> {
   using TypedValue<PoolTag, uint8_t>::TypedValue;
 };
 
-constexpr TypeTag kNoTypeTag(0xFF);  // Typically used to identify raw data.
+constexpr TypeTag kNoTypeTag(0xFF);
 constexpr PoolTag kNoPoolTag(0xFF);
 
 // Specification of references in an image file.
@@ -85,20 +85,17 @@ class ReferenceWriter {
   virtual void PutNext(Reference reference) = 0;
 };
 
-// Position of the most significant bit of offset_t.
-constexpr offset_t kIndexMarkBitPosition = sizeof(offset_t) * 8 - 1;
-
 // Helper functions to mark an offset_t, so we can distinguish file offsets from
-// Label indices. Implementation: Marking is flagged by the most significant bit
+// Label indexes. Implementation: Marking is flagged by the most significant bit
 // (MSB).
 constexpr inline bool IsMarked(offset_t value) {
-  return value >> kIndexMarkBitPosition != 0;
+  return value >> (sizeof(offset_t) * 8 - 1) != 0;
 }
 constexpr inline offset_t MarkIndex(offset_t value) {
-  return value | (offset_t(1) << kIndexMarkBitPosition);
+  return value | (offset_t(1) << (sizeof(offset_t) * 8 - 1));
 }
 constexpr inline offset_t UnmarkIndex(offset_t value) {
-  return value & ~(offset_t(1) << kIndexMarkBitPosition);
+  return value & ~(offset_t(1) << (sizeof(offset_t) * 8 - 1));
 }
 
 // An Equivalence is a block of length |length| that approximately match in
@@ -129,33 +126,19 @@ enum ExecutableType : uint32_t {
   kExeTypeElfArm32 = 4,
   kExeTypeElfAArch64 = 5,
   kExeTypeDex = 6,
-  kNumExeType
 };
 
-// Descibes a region in an image with associated executable type. Note that
-// |exe_type| can be kExeTypeNoOp, in which case the Element descibes a region
-// of raw data.
+// Descibes where to find an executable embedded in an image.
 struct Element {
   ExecutableType exe_type;
   offset_t offset;
   offset_t length;
-
-  // Returns the end offset of this element.
-  offset_t EndOffset() const { return offset + length; }
-
-  // Returns true if the element fits in an image of size |total_size|, false
-  // otherwise.
-  bool FitsIn(offset_t total_size) const {
-    return offset <= total_size && total_size - offset >= length;
-  }
 };
 
 // A matched pair of Elements.
 struct ElementMatch {
   Element old_element;
   Element new_element;
-
-  bool IsValid() const { return old_element.exe_type == new_element.exe_type; }
 };
 
 }  // namespace zucchini

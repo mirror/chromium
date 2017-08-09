@@ -42,7 +42,7 @@ ResourceCoordinatorWebContentsObserver::ResourceCoordinatorWebContentsObserver(
   // |tab_resource_coordinator_|.
   tab_resource_coordinator_->SetProperty(
       resource_coordinator::mojom::PropertyType::kVisible,
-      web_contents->IsVisible());
+      base::MakeUnique<base::Value>(web_contents->IsVisible()));
 
   connector->BindInterface(resource_coordinator::mojom::kServiceName,
                            mojo::MakeRequest(&service_callbacks_));
@@ -109,13 +109,19 @@ bool ResourceCoordinatorWebContentsObserver::IsEnabled() {
 }
 
 void ResourceCoordinatorWebContentsObserver::WasShown() {
+  tab_resource_coordinator_->SendEvent(
+      resource_coordinator::EventType::kOnWebContentsShown);
   tab_resource_coordinator_->SetProperty(
-      resource_coordinator::mojom::PropertyType::kVisible, true);
+      resource_coordinator::mojom::PropertyType::kVisible,
+      base::MakeUnique<base::Value>(true));
 }
 
 void ResourceCoordinatorWebContentsObserver::WasHidden() {
+  tab_resource_coordinator_->SendEvent(
+      resource_coordinator::EventType::kOnWebContentsHidden);
   tab_resource_coordinator_->SetProperty(
-      resource_coordinator::mojom::PropertyType::kVisible, false);
+      resource_coordinator::mojom::PropertyType::kVisible,
+      base::MakeUnique<base::Value>(false));
 }
 
 void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
@@ -141,29 +147,19 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
   process_resource_coordinator->AddChild(*frame_resource_coordinator);
 }
 
-void ResourceCoordinatorWebContentsObserver::TitleWasSet(
-    content::NavigationEntry* entry,
-    bool explicit_set) {
-  // Ignore first time title updated event, since it happens as part of loading
-  // process.
-  if (!first_time_title_updated_) {
-    first_time_title_updated_ = true;
-    return;
-  }
-  tab_resource_coordinator_->SendEvent(
-      resource_coordinator::mojom::Event::kTitleUpdated);
-}
-
 void ResourceCoordinatorWebContentsObserver::UpdateUkmRecorder(
     const GURL& url) {
   if (!base::FeatureList::IsEnabled(ukm::kUkmFeature)) {
     return;
   }
 
-  // TODO(oysteine): Use NavigationID instead of a new sourceID, when it
-  // lands (https://chromium-review.googlesource.com/c/580586).
   ukm_source_id_ = CreateUkmSourceId();
-  ukm::UkmRecorder::Get()->UpdateSourceURL(ukm_source_id_, url);
+  g_browser_process->ukm_recorder()->UpdateSourceURL(ukm_source_id_, url);
+  // ukm::SourceId types need to be converted to a string because base::Value
+  // does not guarrantee that its int type will be 64 bits. Instead
+  // std:string is used as a canonical format. base::Int64ToString
+  // and base::StringToInt64 are used for encoding/decoding respectively.
   tab_resource_coordinator_->SetProperty(
-      resource_coordinator::mojom::PropertyType::kUKMSourceId, ukm_source_id_);
+      resource_coordinator::mojom::PropertyType::kUkmSourceId,
+      base::MakeUnique<base::Value>(base::Int64ToString(ukm_source_id_)));
 }

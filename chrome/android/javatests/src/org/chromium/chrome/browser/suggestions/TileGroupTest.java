@@ -36,7 +36,6 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
 import org.chromium.chrome.test.util.NewTabPageTestUtils;
 import org.chromium.chrome.test.util.browser.RecyclerViewTestUtils;
-import org.chromium.chrome.test.util.browser.suggestions.FakeMostVisitedSites;
 import org.chromium.chrome.test.util.browser.suggestions.FakeSuggestionsSource;
 import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependenciesRule;
 import org.chromium.content.browser.test.util.Criteria;
@@ -105,23 +104,16 @@ public class TileGroupTest {
     @MediumTest
     @Feature({"NewTabPage"})
     public void testDismissTileWithContextMenu() throws InterruptedException, TimeoutException {
-        SiteSuggestion siteToDismiss = mMostVisitedSites.getCurrentSites().get(0);
-        final View tileView = getTileViewFor(siteToDismiss);
+        final View tileView = getTileViewForUrl(mSiteSuggestionUrls[0]);
 
         // Dismiss the tile using the context menu.
         invokeContextMenu(tileView, ContextMenuManager.ID_REMOVE);
         Assert.assertTrue(mMostVisitedSites.isUrlBlacklisted(mSiteSuggestionUrls[0]));
 
-        // Ensure that the removal is reflected in the ui.
+        // Ensure that undoing the removal is reflected in the ui.
         Assert.assertEquals(3, getTileGridLayout().getChildCount());
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mMostVisitedSites.setTileSuggestions(
-                        mSiteSuggestionUrls[1], mSiteSuggestionUrls[2]);
-            }
-        });
-        waitForTileRemoved(siteToDismiss);
+        mMostVisitedSites.setTileSuggestions(mSiteSuggestionUrls[1], mSiteSuggestionUrls[2]);
+        waitForTileRemoved(mSiteSuggestionUrls[0]);
         Assert.assertEquals(2, getTileGridLayout().getChildCount());
     }
 
@@ -129,23 +121,16 @@ public class TileGroupTest {
     @MediumTest
     @Feature({"NewTabPage"})
     public void testDismissTileUndo() throws InterruptedException, TimeoutException {
-        SiteSuggestion siteToDismiss = mMostVisitedSites.getCurrentSites().get(0);
         final ViewGroup tileContainer = getTileGridLayout();
-        final View tileView = getTileViewFor(siteToDismiss);
+        final View tileView = getTileViewForUrl(mSiteSuggestionUrls[0]);
         Assert.assertEquals(3, tileContainer.getChildCount());
 
         // Dismiss the tile using the context menu.
         invokeContextMenu(tileView, ContextMenuManager.ID_REMOVE);
 
         // Ensure that the removal update goes through.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mMostVisitedSites.setTileSuggestions(
-                        mSiteSuggestionUrls[1], mSiteSuggestionUrls[2]);
-            }
-        });
-        waitForTileRemoved(siteToDismiss);
+        mMostVisitedSites.setTileSuggestions(mSiteSuggestionUrls[1], mSiteSuggestionUrls[2]);
+        waitForTileRemoved(mSiteSuggestionUrls[0]);
         Assert.assertEquals(2, tileContainer.getChildCount());
         final View snackbarButton = waitForSnackbar(mActivityTestRule.getActivity());
 
@@ -160,13 +145,8 @@ public class TileGroupTest {
         Assert.assertFalse(mMostVisitedSites.isUrlBlacklisted(mSiteSuggestionUrls[0]));
 
         // Ensure that the removal of the update goes through.
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                mMostVisitedSites.setTileSuggestions(mSiteSuggestionUrls);
-            }
-        });
-        waitForTileAdded(siteToDismiss);
+        mMostVisitedSites.setTileSuggestions(mSiteSuggestionUrls);
+        waitForTileAdded(mSiteSuggestionUrls[0]);
         Assert.assertEquals(3, tileContainer.getChildCount());
     }
 
@@ -178,14 +158,15 @@ public class TileGroupTest {
         ViewGroup aboveTheFoldView = getRecyclerView().getAboveTheFoldView();
         Assert.assertNotNull("Unable to retrieve the AboveTheFold view.", aboveTheFoldView);
 
-        TileGridLayout tileGridLayout = aboveTheFoldView.findViewById(R.id.tile_grid_layout);
+        TileGridLayout tileGridLayout =
+                (TileGridLayout) aboveTheFoldView.findViewById(R.id.tile_grid_layout);
         Assert.assertNotNull("Unable to retrieve the TileGridLayout.", tileGridLayout);
         return tileGridLayout;
     }
 
-    private View getTileViewFor(SiteSuggestion suggestion) {
-        View tileView = getTileGridLayout().getTileView(suggestion);
-        Assert.assertNotNull("Tile not found for suggestion " + suggestion.url, tileView);
+    private View getTileViewForUrl(String url) {
+        View tileView = getTileGridLayout().getTileView(url);
+        Assert.assertNotNull("Tile not found for url " + url, tileView);
 
         return tileView;
     }
@@ -216,10 +197,10 @@ public class TileGroupTest {
         return activity.findViewById(R.id.snackbar_button);
     }
 
-    private void waitForTileRemoved(final SiteSuggestion suggestion)
+    private void waitForTileRemoved(final String url)
             throws TimeoutException, InterruptedException {
         TileGridLayout tileContainer = getTileGridLayout();
-        final TileView removedTile = tileContainer.getTileView(suggestion);
+        final TileView removedTile = tileContainer.getTileView(url);
         if (removedTile == null) return;
 
         final CallbackHelper callback = new CallbackHelper();
@@ -236,17 +217,16 @@ public class TileGroupTest {
         tileContainer.setOnHierarchyChangeListener(null);
     }
 
-    private void waitForTileAdded(final SiteSuggestion suggestion)
-            throws TimeoutException, InterruptedException {
+    private void waitForTileAdded(final String url) throws TimeoutException, InterruptedException {
         TileGridLayout tileContainer = getTileGridLayout();
-        if (tileContainer.getTileView(suggestion) != null) return;
+        if (tileContainer.getTileView(url) != null) return;
 
         final CallbackHelper callback = new CallbackHelper();
         tileContainer.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
             @Override
             public void onChildViewAdded(View parent, View child) {
                 if (!(child instanceof TileView)) return;
-                if (!((TileView) child).getData().equals(suggestion)) return;
+                if (!((TileView) child).getUrl().equals(url)) return;
 
                 callback.notifyCalled();
             }

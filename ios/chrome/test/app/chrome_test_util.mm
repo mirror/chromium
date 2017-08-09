@@ -168,6 +168,13 @@ void ClearPresentedState() {
   [GetMainController() dismissModalDialogsWithCompletion:nil];
 }
 
+void ResetAllWebViews() {
+  id<BrowserViewInformation> browser_view_info =
+      [GetMainController() browserViewInformation];
+  [[browser_view_info mainTabModel] resetAllWebViews];
+  [[browser_view_info otrTabModel] resetAllWebViews];
+}
+
 void SetBooleanLocalStatePref(const char* pref_name, bool value) {
   DCHECK(GetApplicationContext());
   DCHECK(GetApplicationContext()->GetLocalState());

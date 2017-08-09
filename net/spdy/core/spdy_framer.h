@@ -26,18 +26,19 @@
 
 namespace net {
 
-class Http2DecoderAdapter;
+class HttpProxyClientSocketPoolTest;
 class HttpNetworkLayer;
 class HttpNetworkTransactionTest;
-class HttpProxyClientSocketPoolTest;
-class SpdyFrameBuilder;
-class SpdyFramer;
-class SpdyFramerVisitorInterface;
 class SpdyHttpStreamTest;
 class SpdyNetworkTransactionTest;
 class SpdyProxyClientSocketTest;
 class SpdySessionTest;
 class SpdyStreamTest;
+
+class SpdyFramer;
+class SpdyFrameBuilder;
+class SpdyFramerDecoderAdapter;
+class SpdyFramerVisitorInterface;
 
 namespace test {
 
@@ -400,6 +401,11 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
     send_frame_size_limit_ = send_frame_size_limit;
   }
 
+  size_t recv_frame_size_limit() const { return recv_frame_size_limit_; }
+  void set_recv_frame_size_limit(size_t recv_frame_size_limit) {
+    recv_frame_size_limit_ = recv_frame_size_limit;
+  }
+
   void SetDecoderHeaderTableDebugVisitor(
       std::unique_ptr<HpackHeaderTable::DebugVisitorInterface> visitor);
 
@@ -628,6 +634,10 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
   // SETTINGS_MAX_FRAME_SIZE received from peer.
   size_t send_frame_size_limit_ = kSpdyInitialFrameSizeLimit;
 
+  // The limit on the size of received HTTP/2 payloads as specified in the
+  // SETTINGS_MAX_FRAME_SIZE advertised to peer.
+  size_t recv_frame_size_limit_ = kSpdyInitialFrameSizeLimit;
+
   std::unique_ptr<HpackEncoder> hpack_encoder_;
 
   SpdyFramerVisitorInterface* visitor_;
@@ -637,7 +647,7 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
   SpdyHeadersHandlerInterface* header_handler_;
 
   // Decoder to use instead of this instance.
-  std::unique_ptr<Http2DecoderAdapter> decoder_adapter_;
+  std::unique_ptr<SpdyFramerDecoderAdapter> decoder_adapter_;
 
   // Determines whether HPACK compression is used.
   const CompressionOption compression_option_;

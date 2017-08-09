@@ -23,7 +23,7 @@ class GraphicsLayer;
 class WebImage;
 class WebLayer;
 class WebLayerTreeView;
-class WebViewImpl;
+class WebViewBase;
 class HitTestResult;
 struct WebPoint;
 
@@ -109,7 +109,7 @@ class CORE_EXPORT WebFrameWidgetBase
   // Helper function to call VisualViewport::viewportToRootFrame().
   WebPoint ViewportToRootFrame(const WebPoint& point_in_viewport) const;
 
-  WebViewImpl* View() const;
+  WebViewBase* View() const;
 
   // Returns the page object associated with this widget. This may be null when
   // the page is shutting down, but will be valid at all other times.

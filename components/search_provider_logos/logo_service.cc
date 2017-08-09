@@ -108,17 +108,13 @@ LogoService::LogoService(
 LogoService::~LogoService() = default;
 
 void LogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
-  if (!template_url_service_) {
-    observer->OnObserverRemoved();
+  if (!template_url_service_)
     return;
-  }
 
   const TemplateURL* template_url =
       template_url_service_->GetDefaultSearchProvider();
-  if (!template_url) {
-    observer->OnObserverRemoved();
+  if (!template_url)
     return;
-  }
 
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   GURL logo_url;
@@ -133,7 +129,6 @@ void LogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
   if (!template_url->url_ref().HasGoogleBaseURLs(
           template_url_service_->search_terms_data()) &&
       !use_fixed_logo) {
-    observer->OnObserverRemoved();
     return;
   }
 

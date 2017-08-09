@@ -651,9 +651,6 @@ extern const char kSecondaryUiMdDescription[];
 extern const char kServiceWorkerNavigationPreloadName[];
 extern const char kServiceWorkerNavigationPreloadDescription[];
 
-extern const char kServiceWorkerScriptStreamingName[];
-extern const char kServiceWorkerScriptStreamingDescription[];
-
 extern const char kSettingsWindowName[];
 extern const char kSettingsWindowDescription[];
 
@@ -1534,9 +1531,6 @@ extern const char kVrCustomTabBrowsingDescription[];
 
 extern const char kWebVrAutopresentName[];
 extern const char kWebVrAutopresentDescription[];
-
-extern const char kWebVrVsyncAlignName[];
-extern const char kWebVrVsyncAlignDescription[];
 
 #endif  // OS_ANDROID
 

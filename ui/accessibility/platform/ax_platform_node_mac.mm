@@ -636,13 +636,14 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
 }
 
 - (id)AXValue {
-  ui::AXRole role = node_->GetData().role;
-  if (role == ui::AX_ROLE_TAB)
-    return [self AXSelected];
-
-  if (ui::IsNameExposedInAXValueForRole(role))
-    return [self getStringAttribute:ui::AX_ATTR_NAME];
-
+  switch (node_->GetData().role) {
+    case ui::AX_ROLE_TAB:
+      return [self AXSelected];
+    case ui::AX_ROLE_STATIC_TEXT:
+      return [self AXTitle];
+    default:
+      break;
+  }
   return [self getStringAttribute:ui::AX_ATTR_VALUE];
 }
 
@@ -692,9 +693,6 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
 }
 
 - (NSString*)AXTitle {
-  if (ui::IsNameExposedInAXValueForRole(node_->GetData().role))
-    return @"";
-
   return [self getStringAttribute:ui::AX_ATTR_NAME];
 }
 
@@ -860,18 +858,6 @@ void AXPlatformNodeMac::NotifyAccessibilityEvent(ui::AXEvent event_type) {
 int AXPlatformNodeMac::GetIndexInParent() {
   // TODO(dmazzoni): implement this.  http://crbug.com/396137
   return -1;
-}
-
-bool IsNameExposedInAXValueForRole(AXRole role) {
-  switch (role) {
-    case AX_ROLE_LIST_BOX_OPTION:
-    case AX_ROLE_LIST_MARKER:
-    case AX_ROLE_MENU_LIST_OPTION:
-    case AX_ROLE_STATIC_TEXT:
-      return true;
-    default:
-      return false;
-  }
 }
 
 }  // namespace ui

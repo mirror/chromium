@@ -185,14 +185,6 @@ bool ShaderTranslator::Init(GLenum shader_type,
       break;
   }
 
-  if (compiler_) {
-    options_affecting_compilation_ =
-        base::MakeRefCounted<OptionsAffectingCompilationString>(
-            std::string(":CompileOptions:" +
-                        base::Uint64ToString(GetCompileOptions())) +
-            sh::GetBuiltInResourcesString(compiler_));
-  }
-
   return compiler_ != NULL;
 }
 
@@ -245,9 +237,12 @@ bool ShaderTranslator::Translate(
   return success;
 }
 
-OptionsAffectingCompilationString*
-ShaderTranslator::GetStringForOptionsThatWouldAffectCompilation() const {
-  return options_affecting_compilation_.get();
+std::string ShaderTranslator::GetStringForOptionsThatWouldAffectCompilation()
+    const {
+  DCHECK(compiler_ != NULL);
+  return std::string(":CompileOptions:" +
+                     base::Uint64ToString(GetCompileOptions())) +
+         sh::GetBuiltInResourcesString(compiler_);
 }
 
 void ShaderTranslator::AddDestructionObserver(

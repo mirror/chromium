@@ -942,6 +942,13 @@ void URLRequest::Redirect(const RedirectInfo& redirect_info) {
 
   if (redirect_info.new_method != method_) {
     // TODO(davidben): This logic still needs to be replicated at the consumers.
+    if (method_ == "POST") {
+      // If being switched from POST, must remove Origin header.
+      // TODO(jww): This is Origin header removal is probably layering violation
+      // and
+      // should be refactored into //content. See https://crbug.com/471397.
+      extra_request_headers_.RemoveHeader(HttpRequestHeaders::kOrigin);
+    }
     // The inclusion of a multipart Content-Type header can cause problems with
     // some
     // servers:
@@ -958,10 +965,11 @@ void URLRequest::Redirect(const RedirectInfo& redirect_info) {
   // not set to "null", a POST request from origin A to a malicious origin M
   // could be redirected by M back to A.
   //
-  // This behavior is specified in step 10 of the HTTP-redirect fetch
-  // algorithm[1] (which supercedes the behavior outlined in RFC 6454[2].
+  // This behavior is specified in step 1 of step 10 of the 301, 302, 303, 307,
+  // 308 block of step 5 of Section 4.2 of Fetch[1] (which supercedes the
+  // behavior outlined in RFC 6454[2].
   //
-  // [1]: https://fetch.spec.whatwg.org/#http-redirect-fetch
+  // [1]: https://fetch.spec.whatwg.org/#concept-http-fetch
   // [2]: https://tools.ietf.org/html/rfc6454#section-7
   //
   // TODO(jww): This is a layering violation and should be refactored somewhere

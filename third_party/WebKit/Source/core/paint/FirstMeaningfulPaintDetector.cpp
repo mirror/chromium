@@ -4,7 +4,7 @@
 
 #include "core/paint/FirstMeaningfulPaintDetector.h"
 
-#include "core/css/FontFaceSetDocument.h"
+#include "core/css/FontFaceSet.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/paint/PaintTiming.h"
 #include "platform/Histogram.h"
@@ -72,7 +72,7 @@ void FirstMeaningfulPaintDetector::MarkNextPaintAsMeaningfulIfNeeded(
   // If the page has many blank characters, the significance value is
   // accumulated until the text become visible.
   int approximate_blank_character_count =
-      FontFaceSetDocument::ApproximateBlankCharacterCount(*GetDocument());
+      FontFaceSet::ApproximateBlankCharacterCount(*GetDocument());
   if (approximate_blank_character_count > kBlankCharactersThreshold) {
     accumulated_significance_while_having_blank_text_ += significance;
   } else {
@@ -94,12 +94,12 @@ void FirstMeaningfulPaintDetector::NotifyPaint() {
     return;
 
   provisional_first_meaningful_paint_ = MonotonicallyIncreasingTime();
+  had_user_input_before_provisional_first_meaningful_paint_ = had_user_input_;
   next_paint_is_meaningful_ = false;
 
   if (network2_quiet_reached_)
     return;
 
-  had_user_input_before_provisional_first_meaningful_paint_ = had_user_input_;
   provisional_first_meaningful_paint_swap_ = 0.0;
   RegisterNotifySwapTime(PaintEvent::kProvisionalFirstMeaningfulPaint);
 
@@ -190,29 +190,15 @@ void FirstMeaningfulPaintDetector::Network2QuietTimerFired(TimerBase*) {
       first_meaningful_paint2_quiet_ = paint_timing_->FirstContentfulPaint();
       first_meaningful_paint2_quiet_swap_ =
           paint_timing_->FirstContentfulPaintSwap();
-      // It's possible that this timer fires between when the first contentful
-      // paint is set and its SwapPromise is fulfilled. If this happens, defer
-      // until NotifyFirstContentfulPaint() is called.
-      if (first_meaningful_paint2_quiet_swap_ == 0.0)
-        defer_first_meaningful_paint_ = kDeferFirstContentfulPaintNotSet;
     } else {
       first_meaningful_paint2_quiet_ = provisional_first_meaningful_paint_;
       first_meaningful_paint2_quiet_swap_ =
           provisional_first_meaningful_paint_swap_;
-      // We might still be waiting for one or more swap promises, in which case
-      // we want to defer reporting first meaningful paint until they complete.
-      // Otherwise, we would either report the wrong swap timestamp or none at
-      // all.
-      if (outstanding_swap_promise_count_ > 0)
-        defer_first_meaningful_paint_ = kDeferOutstandingSwapPromises;
     }
-    if (defer_first_meaningful_paint_ == kDoNotDefer) {
-      // Report FirstMeaningfulPaint when the page reached network 2-quiet if
-      // we aren't waiting for a swap timestamp.
-      paint_timing_->SetFirstMeaningfulPaint(
-          first_meaningful_paint2_quiet_, first_meaningful_paint2_quiet_swap_,
-          had_user_input_before_provisional_first_meaningful_paint_);
-    }
+    // Report FirstMeaningfulPaint when the page reached network 2-quiet.
+    paint_timing_->SetFirstMeaningfulPaint(
+        first_meaningful_paint2_quiet_, first_meaningful_paint2_quiet_swap_,
+        had_user_input_before_provisional_first_meaningful_paint_);
   }
   ReportHistograms();
 }
@@ -261,7 +247,6 @@ void FirstMeaningfulPaintDetector::ReportHistograms() {
 }
 
 void FirstMeaningfulPaintDetector::RegisterNotifySwapTime(PaintEvent event) {
-  ++outstanding_swap_promise_count_;
   paint_timing_->RegisterNotifySwapTime(
       event, WTF::Bind(&FirstMeaningfulPaintDetector::ReportSwapTime,
                        WrapCrossThreadWeakPersistent(this), event));
@@ -270,37 +255,22 @@ void FirstMeaningfulPaintDetector::RegisterNotifySwapTime(PaintEvent event) {
 void FirstMeaningfulPaintDetector::ReportSwapTime(PaintEvent event,
                                                   bool did_swap,
                                                   double timestamp) {
-  DCHECK(event == PaintEvent::kProvisionalFirstMeaningfulPaint);
-  DCHECK_GT(outstanding_swap_promise_count_, 0U);
-  --outstanding_swap_promise_count_;
-
-  // TODO(shaseley): Add UMAs here to see how often swaps fail. If this happens,
-  // the FMP will be 0.0 if this is the provisional timestamp we end up using.
+  // TODO(shaseley): Add UMAs here to see how often either of the following
+  // happen. In the first case, the FMP will be 0.0 if this is the provisional
+  // timestamp we end up using. In the second case, a swap timestamp of 0.0 is
+  // reported to PaintTiming because the |network2_quiet_timer_| already fired.
   if (!did_swap)
     return;
-
-  provisional_first_meaningful_paint_swap_ = timestamp;
-
-  if (defer_first_meaningful_paint_ == kDeferOutstandingSwapPromises &&
-      outstanding_swap_promise_count_ == 0) {
-    DCHECK_GT(first_meaningful_paint2_quiet_, 0.0);
-    first_meaningful_paint2_quiet_swap_ =
-        provisional_first_meaningful_paint_swap_;
-    paint_timing_->SetFirstMeaningfulPaint(
-        first_meaningful_paint2_quiet_, first_meaningful_paint2_quiet_swap_,
-        had_user_input_before_provisional_first_meaningful_paint_);
-  }
-}
-
-void FirstMeaningfulPaintDetector::NotifyFirstContentfulPaint(
-    double swap_stamp) {
-  if (defer_first_meaningful_paint_ != kDeferFirstContentfulPaintNotSet)
+  if (network2_quiet_reached_)
     return;
-  DCHECK_EQ(first_meaningful_paint2_quiet_swap_, 0.0);
-  first_meaningful_paint2_quiet_swap_ = swap_stamp;
-  paint_timing_->SetFirstMeaningfulPaint(
-      first_meaningful_paint2_quiet_, first_meaningful_paint2_quiet_swap_,
-      had_user_input_before_provisional_first_meaningful_paint_);
+
+  switch (event) {
+    case PaintEvent::kProvisionalFirstMeaningfulPaint:
+      provisional_first_meaningful_paint_swap_ = timestamp;
+      return;
+    default:
+      NOTREACHED();
+  }
 }
 
 DEFINE_TRACE(FirstMeaningfulPaintDetector) {

@@ -67,8 +67,7 @@ BackgroundPrintingManager::~BackgroundPrintingManager() {
 void BackgroundPrintingManager::OwnPrintPreviewDialog(
     WebContents* preview_dialog) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK(PrintPreviewDialogController::IsPrintPreviewURL(
-      preview_dialog->GetURL()));
+  DCHECK(PrintPreviewDialogController::IsPrintPreviewDialog(preview_dialog));
   CHECK(!HasPrintPreviewDialog(preview_dialog));
 
   printing_contents_map_[preview_dialog] =

@@ -37,20 +37,20 @@
 
 namespace blink {
 
-LinkResource::LinkResource(HTMLLinkElement* owner) : owner_(owner) {
-  DCHECK(owner_);
-}
+LinkResource::LinkResource(HTMLLinkElement* owner) : owner_(owner) {}
 
 LinkResource::~LinkResource() {}
 
 bool LinkResource::ShouldLoadResource() const {
-  return GetDocument().GetFrame() || GetDocument().ImportsController();
+  return owner_->GetDocument().GetFrame() ||
+         owner_->GetDocument().ImportsController();
 }
 
 LocalFrame* LinkResource::LoadingFrame() const {
-  HTMLImportsController* imports_controller = GetDocument().ImportsController();
+  HTMLImportsController* imports_controller =
+      owner_->GetDocument().ImportsController();
   if (!imports_controller)
-    return GetDocument().GetFrame();
+    return owner_->GetDocument().GetFrame();
   return imports_controller->Master()->GetFrame();
 }
 
@@ -58,14 +58,10 @@ Document& LinkResource::GetDocument() {
   return owner_->GetDocument();
 }
 
-const Document& LinkResource::GetDocument() const {
-  return owner_->GetDocument();
-}
-
 WTF::TextEncoding LinkResource::GetCharset() const {
   AtomicString charset = owner_->getAttribute(HTMLNames::charsetAttr);
-  if (charset.IsEmpty() && GetDocument().GetFrame())
-    return GetDocument().Encoding();
+  if (charset.IsEmpty() && owner_->GetDocument().GetFrame())
+    return owner_->GetDocument().Encoding();
   return WTF::TextEncoding(charset);
 }
 

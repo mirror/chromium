@@ -41,6 +41,7 @@ class SVGPathElement final : public SVGGeometryElement {
 
   float getTotalLength() override;
   SVGPointTearOff* getPointAtLength(float distance) override;
+  unsigned getPathSegAtLength(float distance);
 
   SVGAnimatedPath* GetPath() const { return path_.Get(); }
   float ComputePathLength() const override;

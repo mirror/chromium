@@ -590,7 +590,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
 
         // Make sure the events were logged correctly.
         int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS | Event.REQUEST_SHIPPING;
+                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.Events", expectedSample));
@@ -635,8 +635,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                         + "EffectOnCompletion"));
 
         // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.REQUEST_SHIPPING;
+        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT;
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.Events", expectedSample));
@@ -681,8 +680,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                         + "EffectOnCompletion"));
 
         // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.REQUEST_SHIPPING;
+        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT;
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.Events", expectedSample));
@@ -727,7 +725,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                         + "EffectOnCompletion"));
 
         // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.REQUEST_SHIPPING;
+        int expectedSample = Event.SHOWN | Event.USER_ABORTED;
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.Events", expectedSample));
@@ -770,7 +768,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                         + "EffectOnCompletion"));
 
         // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.REQUEST_SHIPPING;
+        int expectedSample = Event.SHOWN | Event.USER_ABORTED;
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.Events", expectedSample));
@@ -813,7 +811,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                         + "EffectOnCompletion"));
 
         // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.REQUEST_SHIPPING;
+        int expectedSample = Event.SHOWN | Event.USER_ABORTED;
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.Events", expectedSample));
@@ -856,7 +854,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
 
         // Make sure the events were logged correctly.
         int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS | Event.REQUEST_SHIPPING;
+                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.Events", expectedSample));
@@ -901,8 +899,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                         + "EffectOnCompletion"));
 
         // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.REQUEST_SHIPPING;
+        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT;
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.Events", expectedSample));
@@ -948,7 +945,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
 
         // Make sure the events were logged correctly.
         int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS | Event.REQUEST_SHIPPING;
+                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.Events", expectedSample));
@@ -992,7 +989,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
 
         // Make sure the events were logged correctly.
         int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS | Event.REQUEST_SHIPPING;
+                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.Events", expectedSample));
@@ -1039,7 +1036,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
 
         // Make sure the events were logged correctly.
         int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS | Event.REQUEST_SHIPPING;
+                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.Events", expectedSample));
@@ -1080,7 +1077,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                         "PaymentRequest.UserHadCompleteSuggestions.EffectOnCompletion"));
 
         // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.REQUEST_SHIPPING;
+        int expectedSample = Event.SHOWN | Event.USER_ABORTED;
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.Events", expectedSample));

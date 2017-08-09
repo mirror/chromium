@@ -118,8 +118,7 @@ gfx::Size InkDropHostView::CalculateLargeInkDropSize(
 InkDropHostView::InkDropHostView()
     : ink_drop_mode_(InkDropMode::OFF),
       ink_drop_(nullptr),
-      ink_drop_visible_opacity_(
-          PlatformStyle::kUseRipples ? kInkDropVisibleOpacity : 0),
+      ink_drop_visible_opacity_(kInkDropVisibleOpacity),
       old_paint_to_layer_(false),
       destroying_(false) {}
 
@@ -278,7 +277,7 @@ bool InkDropHostView::HasInkDrop() const {
 
 InkDrop* InkDropHostView::GetInkDrop() {
   if (!ink_drop_) {
-    if (ink_drop_mode_ == InkDropMode::OFF)
+    if (ink_drop_mode_ == InkDropMode::OFF || !PlatformStyle::kUseRipples)
       ink_drop_ = base::MakeUnique<InkDropStub>();
     else
       ink_drop_ = CreateInkDrop();

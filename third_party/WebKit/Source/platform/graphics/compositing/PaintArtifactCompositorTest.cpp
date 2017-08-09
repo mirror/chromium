@@ -149,11 +149,6 @@ class PaintArtifactCompositorTestWithPropertyTrees
         .get();
   }
 
-  CompositorElementId ScrollElementId(unsigned id) {
-    return CompositorElementIdFromLayoutObjectId(
-        id, CompositorElementIdNamespace::kScroll);
-  }
-
   void AddSimpleRectChunk(TestPaintArtifact& artifact) {
     artifact
         .Chunk(TransformPaintPropertyNode::Root(),
@@ -734,16 +729,14 @@ class FakeScrollClient : public WebLayerScrollClient {
 TEST_F(PaintArtifactCompositorTestWithPropertyTrees, OneScrollNode) {
   FakeScrollClient scroll_client;
 
-  CompositorElementId expected_compositor_element_id = ScrollElementId(2);
-  RefPtr<ScrollPaintPropertyNode> scroll = ScrollPaintPropertyNode::Create(
-      ScrollPaintPropertyNode::Root(), IntPoint(), IntSize(11, 13),
-      IntSize(27, 31), true, false, 0 /* mainThreadScrollingReasons */,
-      expected_compositor_element_id, &scroll_client);
+  CompositorElementId expected_compositor_element_id = CompositorElementId(2);
   RefPtr<TransformPaintPropertyNode> scroll_translation =
-      TransformPaintPropertyNode::Create(
+      TransformPaintPropertyNode::CreateScrollTranslation(
           TransformPaintPropertyNode::Root(),
           TransformationMatrix().Translate(7, 9), FloatPoint3D(), false, 0,
-          kCompositingReasonNone, CompositorElementId(), scroll);
+          kCompositingReasonNone, expected_compositor_element_id,
+          ScrollPaintPropertyNode::Root(), IntSize(11, 13), IntSize(27, 31),
+          true, false, 0 /* mainThreadScrollingReasons */, &scroll_client);
 
   TestPaintArtifact artifact;
   artifact
@@ -795,15 +788,13 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, OneScrollNode) {
 }
 
 TEST_F(PaintArtifactCompositorTestWithPropertyTrees, TransformUnderScrollNode) {
-  RefPtr<ScrollPaintPropertyNode> scroll = ScrollPaintPropertyNode::Create(
-      ScrollPaintPropertyNode::Root(), IntPoint(), IntSize(11, 13),
-      IntSize(27, 31), true, false, 0 /* mainThreadScrollingReasons */,
-      CompositorElementId(), nullptr);
   RefPtr<TransformPaintPropertyNode> scroll_translation =
-      TransformPaintPropertyNode::Create(
+      TransformPaintPropertyNode::CreateScrollTranslation(
           TransformPaintPropertyNode::Root(),
           TransformationMatrix().Translate(7, 9), FloatPoint3D(), false, 0,
-          kCompositingReasonNone, CompositorElementId(), scroll);
+          kCompositingReasonNone, CompositorElementId(),
+          ScrollPaintPropertyNode::Root(), IntSize(11, 13), IntSize(27, 31),
+          true, false, 0 /* mainThreadScrollingReasons */, nullptr);
 
   RefPtr<TransformPaintPropertyNode> transform =
       TransformPaintPropertyNode::Create(
@@ -843,29 +834,25 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, NestedScrollNodes) {
   RefPtr<EffectPaintPropertyNode> effect =
       CreateOpacityOnlyEffect(EffectPaintPropertyNode::Root(), 0.5);
 
-  CompositorElementId expected_compositor_element_id_a = ScrollElementId(2);
-  RefPtr<ScrollPaintPropertyNode> scroll_a = ScrollPaintPropertyNode::Create(
-      ScrollPaintPropertyNode::Root(), IntPoint(), IntSize(2, 3), IntSize(5, 7),
-      false, true,
-      MainThreadScrollingReason::kHasBackgroundAttachmentFixedObjects,
-      expected_compositor_element_id_a, nullptr);
+  CompositorElementId expected_compositor_element_id_a = CompositorElementId(2);
   RefPtr<TransformPaintPropertyNode> scroll_translation_a =
-      TransformPaintPropertyNode::Create(
+      TransformPaintPropertyNode::CreateScrollTranslation(
           TransformPaintPropertyNode::Root(),
           TransformationMatrix().Translate(11, 13), FloatPoint3D(), false, 0,
-          kCompositingReasonLayerForScrollingContents, CompositorElementId(),
-          scroll_a);
+          kCompositingReasonLayerForScrollingContents,
+          expected_compositor_element_id_a, ScrollPaintPropertyNode::Root(),
+          IntSize(2, 3), IntSize(5, 7), false, true,
+          MainThreadScrollingReason::kHasBackgroundAttachmentFixedObjects,
+          nullptr);
 
-  CompositorElementId expected_compositor_element_id_b = ScrollElementId(3);
-  RefPtr<ScrollPaintPropertyNode> scroll_b = ScrollPaintPropertyNode::Create(
-      scroll_translation_a->ScrollNode(), IntPoint(), IntSize(19, 23),
-      IntSize(29, 31), true, false, 0 /* mainThreadScrollingReasons */,
-      expected_compositor_element_id_b, nullptr);
+  CompositorElementId expected_compositor_element_id_b = CompositorElementId(3);
   RefPtr<TransformPaintPropertyNode> scroll_translation_b =
-      TransformPaintPropertyNode::Create(
+      TransformPaintPropertyNode::CreateScrollTranslation(
           scroll_translation_a, TransformationMatrix().Translate(37, 41),
           FloatPoint3D(), false, 0, kCompositingReasonNone,
-          CompositorElementId(), scroll_b);
+          expected_compositor_element_id_b, scroll_translation_a->ScrollNode(),
+          IntSize(19, 23), IntSize(29, 31), true, false,
+          0 /* mainThreadScrollingReasons */, nullptr);
   TestPaintArtifact artifact;
   artifact.Chunk(scroll_translation_a, ClipPaintPropertyNode::Root(), effect)
       .RectDrawing(FloatRect(7, 11, 13, 17), Color::kWhite);

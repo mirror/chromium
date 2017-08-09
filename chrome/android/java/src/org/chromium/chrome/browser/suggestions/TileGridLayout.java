@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.suggestions;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -117,7 +118,7 @@ public class TileGridLayout extends FrameLayout {
      * @param tile The tile that holds the data to populate the tile view.
      */
     public void updateIconView(Tile tile) {
-        TileView tileView = getTileView(tile.getData());
+        TileView tileView = getTileView(tile.getUrl());
         if (tileView != null) tileView.renderIcon(tile);
     }
 
@@ -126,7 +127,7 @@ public class TileGridLayout extends FrameLayout {
      * @param tile The tile that holds the data to populate the tile view.
      */
     public void updateOfflineBadge(Tile tile) {
-        TileView tileView = getTileView(tile.getData());
+        TileView tileView = getTileView(tile.getUrl());
         if (tileView != null) tileView.renderOfflineBadge(tile);
     }
 
@@ -197,13 +198,13 @@ public class TileGridLayout extends FrameLayout {
         setMeasuredDimension(totalWidth, resolveSize(totalHeight, heightMeasureSpec));
     }
 
-    /** @return A tile view associated to the provided data, or {@code null} if none is found. */
+    /** @return A tile view associated to the provided URL, or {@code null} if none is found. */
     @VisibleForTesting
-    TileView getTileView(SiteSuggestion suggestion) {
+    TileView getTileView(String url) {
         int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
             TileView tileView = (TileView) getChildAt(i);
-            if (suggestion.equals(tileView.getData())) return tileView;
+            if (TextUtils.equals(url, tileView.getUrl())) return tileView;
         }
         return null;
     }

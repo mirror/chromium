@@ -8,7 +8,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "cc/paint/paint_image_builder.h"
 #include "cc/test/skia_common.h"
 #include "cc/tiles/image_controller.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -113,14 +112,8 @@ class CheckerImageTrackerTest : public testing::Test,
 
     sk_sp<SkImage> image =
         CreateDiscardableImage(gfx::Size(dimension, dimension));
-    return DrawImage(PaintImageBuilder()
-                         .set_id(PaintImage::GetNextId())
-                         .set_image(std::move(image))
-                         .set_animation_type(animation)
-                         .set_completion_state(completion)
-                         .set_frame_count(1)
-                         .set_is_multipart(is_multipart)
-                         .TakePaintImage(),
+    return DrawImage(PaintImage(PaintImage::GetNextId(), image, animation,
+                                completion, 1, is_multipart),
                      SkIRect::MakeWH(dimension, dimension),
                      kNone_SkFilterQuality, SkMatrix::I(), gfx::ColorSpace());
   }
@@ -436,10 +429,8 @@ TEST_F(CheckerImageTrackerTest, CheckersOnlyStaticCompletedImages) {
   gfx::Size image_size = gfx::Size(partial_image.image()->width(),
                                    partial_image.image()->height());
   DrawImage completed_paint_image =
-      DrawImage(PaintImageBuilder()
-                    .set_id(partial_image.paint_image().stable_id())
-                    .set_image(CreateDiscardableImage(image_size))
-                    .TakePaintImage(),
+      DrawImage(PaintImage(partial_image.paint_image().stable_id(),
+                           CreateDiscardableImage(image_size)),
                 SkIRect::MakeWH(image_size.width(), image_size.height()),
                 kNone_SkFilterQuality, SkMatrix::I(), gfx::ColorSpace());
   EXPECT_FALSE(checker_image_tracker_->ShouldCheckerImage(

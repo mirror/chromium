@@ -95,8 +95,7 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
 
   void InitiateDrag(AppListItemView* view,
                     Pointer pointer,
-                    const gfx::Point& location,
-                    const gfx::Point& root_location);
+                    const ui::LocatedEvent& event);
 
   void StartDragAndDropHostDragAfterLongPress(Pointer pointer);
   void TryStartDragAndDropHostDrag(Pointer pointer,
@@ -257,10 +256,14 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
     int slot;  // Which slot in the page an item view is in.
   };
 
+  // Creates indicator based on the indicator text message id.
+  IndicatorChipView* CreateIndicator(int indicator_text_message_id);
+
   // Updates suggestions from app list model.
   void UpdateSuggestions();
 
   // Helper method for layouting indicator based on the given bounds |rect|.
+  void LayoutSuggestedAppsIndicator(gfx::Rect* rect);
   void LayoutAllAppsIndicator(gfx::Rect* rect);
 
   // Returns all apps tiles per page based on |page|.
@@ -328,8 +331,8 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
                             bool animate_target,
                             const gfx::Rect& target);
 
-  // Extracts drag location info from |root_location| into |drag_point|.
-  void ExtractDragLocation(const gfx::Point& root_location,
+  // Extracts drag location info from |event| into |drag_point|.
+  void ExtractDragLocation(const ui::LocatedEvent& event,
                            gfx::Point* drag_point);
 
   // Updates |reorder_drop_target_|, |folder_drop_target_| and |drop_attempt_|
@@ -438,7 +441,10 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // slot if |point| is outside the page's bounds.
   Index GetNearestTileIndexForPoint(const gfx::Point& point) const;
 
-  // Gets height on top of the all apps tiles for |page|.
+  // Gets height on top of the all apps tiles for |page|. For the first page,
+  // that includes suggested apps indicator, suggested apps tiles, all apps
+  // indicator views; For the non-first pages, that include all apps indicator
+  // view only.
   int GetHeightOnTopOfAllAppsTiles(int page) const;
 
   // Gets the bounds of the tile located at |slot| on the current page.
@@ -506,6 +512,7 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   ContentsView* contents_view_ = nullptr;
 
   // Views below are owned by views hierarchy.
+  IndicatorChipView* suggested_apps_indicator_ = nullptr;
   SuggestionsContainerView* suggestions_container_ = nullptr;
   IndicatorChipView* all_apps_indicator_ = nullptr;
 

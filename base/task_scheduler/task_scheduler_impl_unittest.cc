@@ -205,10 +205,7 @@ class TaskSchedulerImplTest
          {kMaxNumForegroundBlockingThreads, kSuggestedReclaimTime}});
   }
 
-  void TearDown() override {
-    scheduler_.FlushForTesting();
-    scheduler_.JoinForTesting();
-  }
+  void TearDown() override { scheduler_.JoinForTesting(); }
 
   TaskSchedulerImpl scheduler_;
 

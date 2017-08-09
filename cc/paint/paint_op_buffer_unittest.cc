@@ -8,7 +8,6 @@
 #include "cc/paint/decoded_draw_image.h"
 #include "cc/paint/display_item_list.h"
 #include "cc/paint/image_provider.h"
-#include "cc/paint/paint_image_builder.h"
 #include "cc/paint/paint_op_reader.h"
 #include "cc/paint/paint_op_writer.h"
 #include "cc/test/skia_common.h"
@@ -72,8 +71,6 @@ class PaintOpSerializationTestUtils {
     EXPECT_EQ(one->tile_, two->tile_);
     EXPECT_EQ(one->start_point_, two->start_point_);
     EXPECT_EQ(one->end_point_, two->end_point_);
-    EXPECT_EQ(one->start_degrees_, two->start_degrees_);
-    EXPECT_EQ(one->end_degrees_, two->end_degrees_);
     EXPECT_THAT(one->colors_, testing::ElementsAreArray(two->colors_));
     EXPECT_THAT(one->positions_, testing::ElementsAreArray(two->positions_));
   }
@@ -128,8 +125,6 @@ class PaintOpSerializationTestUtils {
     shader->tile_ = SkRect::MakeXYWH(7, 77, 777, 7777);
     shader->start_point_ = SkPoint::Make(-1, -5);
     shader->end_point_ = SkPoint::Make(13, -13);
-    shader->start_degrees_ = 123;
-    shader->end_degrees_ = 456;
     // TODO(vmpstr): Add PaintImage/PaintRecord.
     shader->colors_ = {SkColorSetARGB(1, 2, 3, 4), SkColorSetARGB(5, 6, 7, 8),
                        SkColorSetARGB(9, 0, 1, 2)};
@@ -266,6 +261,45 @@ TEST_F(PaintOpAppendTest, MoveThenReappendOperatorEq) {
   // Should be possible to reappend to the original and get the same result.
   PushOps(&original);
   VerifyOps(&original);
+}
+
+// Verify that PaintOps with data are stored properly.
+TEST(PaintOpBufferTest, PaintOpData) {
+  PaintOpBuffer buffer;
+
+  buffer.push<SaveOp>();
+  PaintFlags flags;
+  char text1[] = "asdfasdf";
+  buffer.push_with_data<DrawTextOp>(text1, arraysize(text1), 0.f, 0.f, flags);
+
+  char text2[] = "qwerty";
+  buffer.push_with_data<DrawTextOp>(text2, arraysize(text2), 0.f, 0.f, flags);
+
+  ASSERT_EQ(buffer.size(), 3u);
+
+  // Verify iteration behavior and brief smoke test of op state.
+  PaintOpBuffer::Iterator iter(&buffer);
+  PaintOp* save_op = *iter;
+  EXPECT_EQ(save_op->GetType(), PaintOpType::Save);
+  ++iter;
+
+  PaintOp* op1 = *iter;
+  ASSERT_EQ(op1->GetType(), PaintOpType::DrawText);
+  DrawTextOp* draw_text_op1 = static_cast<DrawTextOp*>(op1);
+  EXPECT_EQ(draw_text_op1->bytes, arraysize(text1));
+  const void* data1 = draw_text_op1->GetData();
+  EXPECT_EQ(memcmp(data1, text1, arraysize(text1)), 0);
+  ++iter;
+
+  PaintOp* op2 = *iter;
+  ASSERT_EQ(op2->GetType(), PaintOpType::DrawText);
+  DrawTextOp* draw_text_op2 = static_cast<DrawTextOp*>(op2);
+  EXPECT_EQ(draw_text_op2->bytes, arraysize(text2));
+  const void* data2 = draw_text_op2->GetData();
+  EXPECT_EQ(memcmp(data2, text2, arraysize(text2)), 0);
+  ++iter;
+
+  EXPECT_FALSE(iter);
 }
 
 // Verify that PaintOps with arrays are stored properly.
@@ -531,14 +565,16 @@ TEST(PaintOpBufferTest, DiscardableImagesTracking_NoImageOp) {
 
 TEST(PaintOpBufferTest, DiscardableImagesTracking_DrawImage) {
   PaintOpBuffer buffer;
-  PaintImage image = CreateDiscardablePaintImage(gfx::Size(100, 100));
+  PaintImage image = PaintImage(PaintImage::GetNextId(),
+                                CreateDiscardableImage(gfx::Size(100, 100)));
   buffer.push<DrawImageOp>(image, SkIntToScalar(0), SkIntToScalar(0), nullptr);
   EXPECT_TRUE(buffer.HasDiscardableImages());
 }
 
 TEST(PaintOpBufferTest, DiscardableImagesTracking_DrawImageRect) {
   PaintOpBuffer buffer;
-  PaintImage image = CreateDiscardablePaintImage(gfx::Size(100, 100));
+  PaintImage image = PaintImage(PaintImage::GetNextId(),
+                                CreateDiscardableImage(gfx::Size(100, 100)));
   buffer.push<DrawImageRectOp>(
       image, SkRect::MakeWH(100, 100), SkRect::MakeWH(100, 100), nullptr,
       PaintCanvas::SrcRectConstraint::kFast_SrcRectConstraint);
@@ -548,7 +584,8 @@ TEST(PaintOpBufferTest, DiscardableImagesTracking_DrawImageRect) {
 TEST(PaintOpBufferTest, DiscardableImagesTracking_OpWithFlags) {
   PaintOpBuffer buffer;
   PaintFlags flags;
-  auto image = CreateDiscardablePaintImage(gfx::Size(100, 100));
+  auto image = PaintImage(PaintImage::GetNextId(),
+                          CreateDiscardableImage(gfx::Size(100, 100)));
   flags.setShader(PaintShader::MakeImage(std::move(image),
                                          SkShader::kClamp_TileMode,
                                          SkShader::kClamp_TileMode, nullptr));
@@ -685,7 +722,8 @@ TEST(PaintOpBufferTest, NonAAPaint) {
     auto buffer = sk_make_sp<PaintOpBuffer>();
     EXPECT_FALSE(buffer->HasNonAAPaint());
 
-    PaintImage image = CreateDiscardablePaintImage(gfx::Size(100, 100));
+    PaintImage image = PaintImage(PaintImage::GetNextId(),
+                                  CreateDiscardableImage(gfx::Size(100, 100)));
     PaintFlags non_aa_flags;
     non_aa_flags.setAntiAlias(true);
     buffer->push<DrawImageOp>(image, SkIntToScalar(0), SkIntToScalar(0),
@@ -1514,9 +1552,12 @@ std::vector<sk_sp<SkTextBlob>> test_blobs = {
 // ahead of time and not be bitmaps. These paint images should be fake
 // gpu resource paint images.
 std::vector<PaintImage> test_images = {
-    CreateDiscardablePaintImage(gfx::Size(5, 10)),
-    CreateDiscardablePaintImage(gfx::Size(1, 1)),
-    CreateDiscardablePaintImage(gfx::Size(50, 50)),
+    PaintImage(PaintImage::GetNextId(),
+               CreateDiscardableImage(gfx::Size(5, 10))),
+    PaintImage(PaintImage::GetNextId(),
+               CreateDiscardableImage(gfx::Size(1, 1))),
+    PaintImage(PaintImage::GetNextId(),
+               CreateDiscardableImage(gfx::Size(50, 50))),
 };
 
 // Writes as many ops in |buffer| as can fit in |output_size| to |output|.
@@ -1818,6 +1859,16 @@ void PushDrawRRectOps(PaintOpBuffer* buffer) {
     buffer->push<DrawRRectOp>(test_rrects[i], test_flags[i]);
 }
 
+void PushDrawTextOps(PaintOpBuffer* buffer) {
+  size_t len = std::min(std::min(test_strings.size(), test_flags.size()),
+                        test_floats.size() - 1);
+  for (size_t i = 0; i < len; ++i) {
+    buffer->push_with_data<DrawTextOp>(
+        test_strings[i].c_str(), test_strings[i].size() + 1, test_floats[i],
+        test_floats[i + 1], test_flags[i]);
+  }
+}
+
 void PushDrawTextBlobOps(PaintOpBuffer* buffer) {
   size_t len = std::min(std::min(test_blobs.size(), test_flags.size()),
                         test_floats.size() - 1);
@@ -2064,6 +2115,17 @@ void CompareDrawRRectOp(const DrawRRectOp* original,
   EXPECT_EQ(original->rrect, written->rrect);
 }
 
+void CompareDrawTextOp(const DrawTextOp* original, const DrawTextOp* written) {
+  EXPECT_TRUE(original->IsValid());
+  EXPECT_TRUE(written->IsValid());
+  CompareFlags(original->flags, written->flags);
+  EXPECT_EQ(original->x, written->x);
+  EXPECT_EQ(original->y, written->y);
+  ASSERT_EQ(original->bytes, written->bytes);
+  EXPECT_EQ(std::string(static_cast<const char*>(original->GetData())),
+            std::string(static_cast<const char*>(written->GetData())));
+}
+
 void CompareDrawTextBlobOp(const DrawTextBlobOp* original,
                            const DrawTextBlobOp* written) {
   EXPECT_TRUE(original->IsValid());
@@ -2238,6 +2300,9 @@ class PaintOpSerializationTest : public ::testing::TestWithParam<uint8_t> {
       case PaintOpType::DrawRRect:
         PushDrawRRectOps(&buffer_);
         break;
+      case PaintOpType::DrawText:
+        PushDrawTextOps(&buffer_);
+        break;
       case PaintOpType::DrawTextBlob:
         PushDrawTextBlobOps(&buffer_);
         break;
@@ -2356,6 +2421,10 @@ class PaintOpSerializationTest : public ::testing::TestWithParam<uint8_t> {
       case PaintOpType::DrawRRect:
         CompareDrawRRectOp(static_cast<const DrawRRectOp*>(original),
                            static_cast<const DrawRRectOp*>(written));
+        break;
+      case PaintOpType::DrawText:
+        CompareDrawTextOp(static_cast<const DrawTextOp*>(original),
+                          static_cast<const DrawTextOp*>(written));
         break;
       case PaintOpType::DrawTextBlob:
         CompareDrawTextBlobOp(static_cast<const DrawTextBlobOp*>(original),
@@ -2990,7 +3059,8 @@ TEST(PaintOpBufferTest, SkipsOpsOutsideClip) {
   buffer.push<SaveLayerAlphaOp>(&rect, alpha, false);
 
   PaintFlags flags;
-  PaintImage paint_image = CreateDiscardablePaintImage(gfx::Size(10, 10));
+  PaintImage paint_image = PaintImage(
+      PaintImage::GetNextId(), CreateDiscardableImage(gfx::Size(10, 10)));
   buffer.push<DrawImageOp>(paint_image, 105.0f, 105.0f, &flags);
   PaintFlags image_flags;
   image_flags.setShader(
@@ -3068,7 +3138,8 @@ TEST(PaintOpBufferTest, ReplacesImagesFromProvider) {
   SkRect rect = SkRect::MakeWH(10, 10);
   PaintFlags flags;
   flags.setFilterQuality(kLow_SkFilterQuality);
-  PaintImage paint_image = CreateDiscardablePaintImage(gfx::Size(10, 10));
+  PaintImage paint_image = PaintImage(
+      PaintImage::GetNextId(), CreateDiscardableImage(gfx::Size(10, 10)));
   buffer.push<DrawImageOp>(paint_image, 0.0f, 0.0f, &flags);
   buffer.push<DrawImageRectOp>(
       paint_image, rect, rect, &flags,

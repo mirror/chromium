@@ -12,11 +12,11 @@
 namespace blink {
 
 BackgroundFetchRegistration::BackgroundFetchRegistration(
-    String id,
+    String tag,
     HeapVector<IconDefinition> icons,
     long long total_download_size,
     String title)
-    : id_(id),
+    : tag_(tag),
       icons_(icons),
       total_download_size_(total_download_size),
       title_(title) {}
@@ -29,8 +29,8 @@ void BackgroundFetchRegistration::SetServiceWorkerRegistration(
   registration_ = registration;
 }
 
-String BackgroundFetchRegistration::id() const {
-  return id_;
+String BackgroundFetchRegistration::tag() const {
+  return tag_;
 }
 
 HeapVector<IconDefinition> BackgroundFetchRegistration::icons() const {
@@ -51,8 +51,8 @@ ScriptPromise BackgroundFetchRegistration::abort(ScriptState* script_state) {
 
   DCHECK(registration_);
   BackgroundFetchBridge::From(registration_)
-      ->Abort(id_, WTF::Bind(&BackgroundFetchRegistration::DidAbort,
-                             WrapPersistent(this), WrapPersistent(resolver)));
+      ->Abort(tag_, WTF::Bind(&BackgroundFetchRegistration::DidAbort,
+                              WrapPersistent(this), WrapPersistent(resolver)));
 
   return promise;
 }
@@ -64,10 +64,10 @@ void BackgroundFetchRegistration::DidAbort(
     case mojom::blink::BackgroundFetchError::NONE:
       resolver->Resolve(true /* success */);
       return;
-    case mojom::blink::BackgroundFetchError::INVALID_ID:
+    case mojom::blink::BackgroundFetchError::INVALID_TAG:
       resolver->Resolve(false /* success */);
       return;
-    case mojom::blink::BackgroundFetchError::DUPLICATED_ID:
+    case mojom::blink::BackgroundFetchError::DUPLICATED_TAG:
     case mojom::blink::BackgroundFetchError::INVALID_ARGUMENT:
       // Not applicable for this callback.
       break;

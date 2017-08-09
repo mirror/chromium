@@ -46,7 +46,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
-#include "content/renderer/media/media_interface_factory.h"
+#include "content/renderer/media/media_interface_provider.h"
 #endif
 
 #if BUILDFLAG(ENABLE_MOJO_CDM)
@@ -334,7 +334,7 @@ MediaFactory::CreateRendererFactorySelector(
         base::MakeUnique<media::MojoRendererFactory>(
             base::Bind(&RenderThreadImpl::GetGpuFactories,
                        base::Unretained(render_thread)),
-            GetMediaInterfaceFactory()));
+            GetMediaInterfaceProvider()));
 
     factory_selector->SetBaseFactoryType(
         media::RendererFactorySelector::FactoryType::MOJO);
@@ -436,7 +436,7 @@ media::DecoderFactory* MediaFactory::GetDecoderFactory() {
 #if BUILDFLAG(ENABLE_MOJO_AUDIO_DECODER) || BUILDFLAG(ENABLE_MOJO_VIDEO_DECODER)
   if (!decoder_factory_) {
     decoder_factory_.reset(
-        new media::MojoDecoderFactory(GetMediaInterfaceFactory()));
+        new media::MojoDecoderFactory(GetMediaInterfaceProvider()));
   }
 #endif
   return decoder_factory_.get();
@@ -472,13 +472,13 @@ media::CdmFactory* MediaFactory::GetCdmFactory() {
       BUILDFLAG(ENABLE_MOJO_CDM),
       "Mojo CDM should always be enabled when library CDM is enabled");
   if (base::FeatureList::IsEnabled(media::kMojoCdm)) {
-    cdm_factory_.reset(new media::MojoCdmFactory(GetMediaInterfaceFactory()));
+    cdm_factory_.reset(new media::MojoCdmFactory(GetMediaInterfaceProvider()));
   } else {
     cdm_factory_.reset(new RenderCdmFactory(
         base::Bind(&PepperCdmWrapperImpl::Create, web_frame)));
   }
 #elif BUILDFLAG(ENABLE_MOJO_CDM)
-  cdm_factory_.reset(new media::MojoCdmFactory(GetMediaInterfaceFactory()));
+  cdm_factory_.reset(new media::MojoCdmFactory(GetMediaInterfaceProvider()));
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
@@ -491,14 +491,15 @@ media::CdmFactory* MediaFactory::GetCdmFactory() {
 }
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
-media::mojom::InterfaceFactory* MediaFactory::GetMediaInterfaceFactory() {
-  if (!media_interface_factory_) {
+service_manager::mojom::InterfaceProvider*
+MediaFactory::GetMediaInterfaceProvider() {
+  if (!media_interface_provider_) {
     DCHECK(remote_interfaces_);
-    media_interface_factory_.reset(
-        new MediaInterfaceFactory(remote_interfaces_));
+    media_interface_provider_.reset(
+        new MediaInterfaceProvider(remote_interfaces_));
   }
 
-  return media_interface_factory_.get();
+  return media_interface_provider_.get();
 }
 #endif  // BUILDFLAG(ENABLE_MOJO_MEDIA)
 

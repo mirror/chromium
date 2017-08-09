@@ -7,7 +7,7 @@
  * This is the main code for the OOBE WebUI implementation.
  */
 
-// <include src="md_login_shared.js">
+// <include src="login_shared.js">
 // <include src="login_non_lock_shared.js">
 // <include src="oobe_screen_auto_enrollment_check.js">
 // <include src="oobe_screen_controller_pairing.js">
@@ -382,11 +382,16 @@ cr.define('cr.ui.Oobe', function() {
     setMDMode_: function() {
       if (loadTimeData.getString('newOobeUI') == 'on') {
         $('oobe').setAttribute('md-mode', 'true');
+        $('oobe-shield').setAttribute('md-mode', 'true');
         $('popup-overlay').setAttribute('md-mode', 'true');
       } else {
         $('oobe').removeAttribute('md-mode');
+        $('oobe-shield').removeAttribute('md-mode');
         $('popup-overlay').removeAttribute('md-mode');
       }
+
+      $('oobe-shield').hidden =
+          (loadTimeData.getString('hideOobeShield') == 'on');
     },
   };
 });

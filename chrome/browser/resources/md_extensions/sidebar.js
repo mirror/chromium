@@ -13,7 +13,7 @@ extensions.ShowingType = {
 
 cr.define('extensions', function() {
   /** @interface */
-  const SidebarListDelegate = function() {};
+  var SidebarListDelegate = function() {};
 
   SidebarListDelegate.prototype = {
     /**
@@ -26,7 +26,7 @@ cr.define('extensions', function() {
     showKeyboardShortcuts: assertNotReached,
   };
 
-  const Sidebar = Polymer({
+  var Sidebar = Polymer({
     is: 'extensions-sidebar',
 
     behaviors: [I18nBehavior],

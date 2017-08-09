@@ -103,7 +103,6 @@ public class SdchTest extends CronetTestBase {
         assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
         assertEquals("This is an index page.\n", callback.mResponseAsString);
         assertEquals(null, callback.mResponseInfo.getAllHeaders().get("Get-Dictionary"));
-        cronetEngine.shutdown();
     }
 
     @SmallTest
@@ -125,7 +124,6 @@ public class SdchTest extends CronetTestBase {
                 startAndWaitForComplete(cronetEngine, NativeTestServer.getSdchURL() + "/sdch/test");
         assertEquals(200, callback2.mResponseInfo.getHttpStatusCode());
         assertEquals("Sdch is not used.\n", callback2.mResponseAsString);
-        cronetEngine.shutdown();
     }
 
     private long getContextAdapter(CronetUrlRequestContext requestContext) {

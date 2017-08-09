@@ -37,10 +37,11 @@ PaintImage CreateDiscardablePaintImageWithColorSpace(
     sk_image = sk_image->makeColorSpace(color_space.ToSkColorSpace(),
                                         SkTransferFunctionBehavior::kIgnore);
   }
-  return PaintImageBuilder()
-      .set_id(PaintImage::GetNextId())
-      .set_image(std::move(sk_image))
-      .TakePaintImage();
+  return PaintImage(PaintImage::GetNextId(), sk_image);
+}
+
+PaintImage CreateDiscardablePaintImage(const gfx::Size& size) {
+  return CreateDiscardablePaintImageWithColorSpace(size, gfx::ColorSpace());
 }
 
 struct PositionScaleDrawImage {
@@ -590,10 +591,7 @@ TEST_F(DiscardableImageMapTest, GetDiscardableImagesInShader) {
                                              std::max(y * 0.5f, kMinScale));
         PaintFlags flags;
         flags.setShader(PaintShader::MakeImage(
-            PaintImageBuilder()
-                .set_id(y * 4 + x)
-                .set_image(discardable_image[y][x])
-                .TakePaintImage(),
+            PaintImage(y * 4 + x, discardable_image[y][x]),
             SkShader::kClamp_TileMode, SkShader::kClamp_TileMode, &scale));
         content_layer_client.add_draw_rect(
             gfx::Rect(x * 512 + 6, y * 512 + 6, 500, 500), flags);

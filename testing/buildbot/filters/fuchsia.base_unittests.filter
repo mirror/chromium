@@ -1,5 +1,8 @@
 # TODO(fuchsia): Being ported, see https://crbug.com/706592.
 
+-ActivityTrackerTest.CreateWithFileTest
+-ActivityTrackerTest.ProcessDeathTest
+-ActivityTrackerTest.ThreadDeathTest
 -FilePathWatcherTest.DeleteAndRecreate
 -FilePathWatcherTest.DeleteDuringNotify
 -FilePathWatcherTest.DeletedFile
@@ -15,16 +18,25 @@
 -FilePathWatcherTest.NonExistentDirectory
 -FilePathWatcherTest.RecursiveWatch
 -FilePathWatcherTest.WatchDirectory
+-FilePersistentMemoryAllocatorTest.AcceptableTest
+-FilePersistentMemoryAllocatorTest.CreationTest
+-FilePersistentMemoryAllocatorTest.ExtendTest
 -FileProxyTest.SetTimes
 -FileUtilProxyTest.Touch
 -FileUtilTest.FileToFILE
+-LoggingTest.CheckCausesDistinctBreakpoints
 -NativeLibraryTest.LoadLibrary
 -NativeLibraryTest.LoadLibraryPreferOwnSymbols
 -PathServiceTest.Get
+-PersistentHistogramAllocatorTest.CreateSpareFile
+-PersistentHistogramAllocatorTest.CreateWithFile
+-PersistentHistogramAllocatorTest.RangesDeDuplication
+-PersistentHistogramAllocatorTest.StatisticsRecorderMerge
 -PlatformThreadTest.ThreadPriorityCurrentThread
 -ProcessMemoryDumpTest.CountResidentBytes
 -ProcessMemoryDumpTest.CountResidentBytesInSharedMemory
 -ProcessMemoryDumpTest.TakeAllDumpsFrom
+-ProcessTest.Move
 -ProcessTest.Terminate
 -ProcessTest.TerminateCurrentProcessImmediatelyWithNonZeroExitCode
 -ProcessTest.TerminateCurrentProcessImmediatelyWithZeroExitCode
@@ -36,6 +48,11 @@
 -SysInfoTest.AmountOfMem
 -SysInfoTest.AmountOfTotalDiskSpace
 -TrackedObjectsTest.ReuseRetiredThreadData
+-VerifyPathControlledByUserTest.BadPaths
+-VerifyPathControlledByUserTest.GroupWriteTest
+-VerifyPathControlledByUserTest.OwnershipChecks
+-VerifyPathControlledByUserTest.Symlinks
+-VerifyPathControlledByUserTest.WriteBitChecks
 
 # CancelableSyncSocket tests fail: https://crbug.com/741783
 -CancelableSyncSocket*

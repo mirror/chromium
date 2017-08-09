@@ -129,8 +129,3 @@
 #gaia-signin:not(.v2) #signin-frame-dialog {
   display: none;
 }
-
-#gaia-signin.v2.saml #signin-frame {
-  height: 516px;
-  padding-top: 44px;
-}

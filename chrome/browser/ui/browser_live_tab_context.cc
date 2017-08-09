@@ -76,8 +76,7 @@ sessions::LiveTab* BrowserLiveTabContext::AddRestoredTab(
 
   WebContents* web_contents = chrome::AddRestoredTab(
       browser_, navigations, tab_index, selected_navigation, extension_app_id,
-      select, pin, from_last_session, storage_namespace, user_agent_override,
-      false /* from_session_restore */);
+      select, pin, from_last_session, storage_namespace, user_agent_override);
 
 #if BUILDFLAG(ENABLE_SESSION_SERVICE)
   // The focused tab will be loaded by Browser, and TabLoader will load the
@@ -116,8 +115,7 @@ sessions::LiveTab* BrowserLiveTabContext::ReplaceRestoredTab(
 
   WebContents* web_contents = chrome::ReplaceRestoredTab(
       browser_, navigations, selected_navigation, from_last_session,
-      extension_app_id, storage_namespace, user_agent_override,
-      false /* from_session_restore */);
+      extension_app_id, storage_namespace, user_agent_override);
 
   return sessions::ContentLiveTab::GetForWebContents(web_contents);
 }

@@ -42,3 +42,30 @@ SettingsAccessibilityTest.prototype = {
   },
 };
 
+/**
+ * Create a GTest unit test belonging into |testFixture| for every audit
+ * rule for |route| except for |rulesToSkip|.
+ * @param {string} testFixture Name of the test fixture associated with the
+ *    tests.
+ * @param {!AccessibilityTest.Definition} testDef Object configuring the test.
+ */
+SettingsAccessibilityTest.createTestF = function(testFixture, testDef) {
+  rulesToSkip = testDef.rulesToSkip || [];
+
+  // TODO(hcarmona): remove 'region from rulesToSkip after fixing violations
+  // across settings routes.
+  rulesToSkip.push('region');
+
+  // Define a unit test for every audit rule except rules to skip.
+  AccessibilityTest.ruleIds.forEach(function(ruleId) {
+    if (rulesToSkip.indexOf(ruleId) == -1) {
+      var testName = testDef.name + '_' + ruleId;
+      // Replace hyphens, which break the build.
+      var testName = testName.replace(new RegExp('-', 'g'), '_');
+      TEST_F(testFixture, testName, function() {
+            AccessibilityTest.define(testDef);
+            mocha.grep(testDef.name + '_' + ruleId).run();
+          });
+    }
+  });
+};

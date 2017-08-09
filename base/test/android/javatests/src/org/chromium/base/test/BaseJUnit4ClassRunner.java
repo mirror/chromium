@@ -4,14 +4,11 @@
 
 package org.chromium.base.test;
 
-import static org.chromium.base.test.BaseChromiumAndroidJUnitRunner.shouldListTests;
-
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import android.support.test.internal.util.AndroidRunnerParams;
 
-import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
@@ -130,21 +127,6 @@ public class BaseJUnit4ClassRunner extends AndroidJUnit4ClassRunner {
     @Override
     protected boolean isIgnored(FrameworkMethod method) {
         return super.isIgnored(method) || shouldSkip(method);
-    }
-
-    /**
-     * Run test with or without execution based on bundle arguments.
-     */
-    @Override
-    public void run(RunNotifier notifier) {
-        if (shouldListTests(InstrumentationRegistry.getArguments())) {
-            for (Description child : getDescription().getChildren()) {
-                notifier.fireTestStarted(child);
-                notifier.fireTestFinished(child);
-            }
-        } else {
-            super.run(notifier);
-        }
     }
 
     @Override

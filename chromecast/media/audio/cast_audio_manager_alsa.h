@@ -30,6 +30,7 @@ class CastAudioManagerAlsa : public CastAudioManager {
 
   // CastAudioManager implementation.
   bool HasAudioInputDevices() override;
+  void ShowAudioInputSettings() override;
   void GetAudioInputDeviceNames(
       ::media::AudioDeviceNames* device_names) override;
   ::media::AudioParameters GetInputStreamParameters(

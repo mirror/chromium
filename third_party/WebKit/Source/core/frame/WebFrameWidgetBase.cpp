@@ -6,7 +6,7 @@
 
 #include "core/dom/UserGestureIndicator.h"
 #include "core/events/WebInputEventConversion.h"
-#include "core/exported/WebViewImpl.h"
+#include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameImpl.h"
@@ -225,7 +225,7 @@ WebPoint WebFrameWidgetBase::ViewportToRootFrame(
   return GetPage()->GetVisualViewport().ViewportToRootFrame(point_in_viewport);
 }
 
-WebViewImpl* WebFrameWidgetBase::View() const {
+WebViewBase* WebFrameWidgetBase::View() const {
   return ToWebLocalFrameImpl(LocalRoot())->ViewImpl();
 }
 

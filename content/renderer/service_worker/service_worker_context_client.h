@@ -135,6 +135,7 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
   void ClearCachedMetadata(const blink::WebURL&) override;
   void WorkerReadyForInspection() override;
   void WorkerContextFailedToStart() override;
+  bool HasAssociatedRegistration() override;
   void WorkerScriptLoaded() override;
   void WorkerContextStarted(
       blink::WebServiceWorkerContextProxy* proxy) override;
@@ -367,6 +368,10 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
   const int64_t service_worker_version_id_;
   const GURL service_worker_scope_;
   const GURL script_url_;
+
+  // True if the scripts for the worker are installed and its scripts are
+  // streamed from the browser process instead of ResourceLoader.
+  const bool is_script_streaming_;
 
   scoped_refptr<ThreadSafeSender> sender_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;

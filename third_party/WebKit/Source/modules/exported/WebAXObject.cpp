@@ -36,7 +36,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/Node.h"
 #include "core/editing/markers/DocumentMarker.h"
-#include "core/exported/WebViewImpl.h"
+#include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameImpl.h"
@@ -463,13 +463,6 @@ bool WebAXObject::AriaHasPopup() const {
     return false;
 
   return private_->AriaHasPopup();
-}
-
-bool WebAXObject::IsEditableRoot() const {
-  if (IsDetached())
-    return false;
-
-  return private_->IsEditableRoot();
 }
 
 bool WebAXObject::IsEditable() const {
@@ -919,7 +912,7 @@ void WebAXObject::ShowContextMenu() const {
   if (!frame)
     return;
 
-  WebViewImpl* view = WebLocalFrameImpl::FromFrame(frame)->ViewImpl();
+  WebViewBase* view = WebLocalFrameImpl::FromFrame(frame)->ViewImpl();
   if (!view)
     return;
 

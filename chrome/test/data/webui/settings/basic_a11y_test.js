@@ -6,25 +6,22 @@
  * @fileoverview Define accessibility tests for the BASIC route.
  */
 
+ // Disable in debug and memory sanitizer modes because of timeouts.
+GEN('#if defined(NDEBUG)');
+
 /** @const {string} Path to root from chrome/test/data/webui/settings/. */
 var ROOT_PATH = '../../../../../';
 
-// SettingsAccessibilityTest fixture.
+// Polymer BrowserTest fixture and aXe-core accessibility audit.
 GEN_INCLUDE([
   ROOT_PATH + 'chrome/test/data/webui/settings/accessibility_browsertest.js',
 ]);
 
- // Disable in debug mode because of timeouts.
-GEN('#if defined(NDEBUG)');
-
-AccessibilityTest.define('SettingsAccessibilityTest', {
+/** @type {AccessibilityTest.Definition} */
+var testDef = {
   /** @override */
   name: 'BASIC',
-  axeOptions: {
-    'rules': {
-      'skip-link': {enabled: false}
-    }
-  },
+
   /** @override */
   tests: {
     'Accessible with No Changes': function() {}
@@ -40,6 +37,18 @@ AccessibilityTest.define('SettingsAccessibilityTest', {
       return nodeResult.element.hasAttribute('aria-active-attribute');
     },
   },
-});
+  rulesToSkip: ['skip-link']
+};
+/**
+ * Test fixture for BASIC
+ * @constructor
+ * @extends {PolymerTest}
+ */
+function SettingsA11yBasic() {}
+
+SettingsA11yBasic.prototype = {
+  __proto__: SettingsAccessibilityTest.prototype,
+};
+SettingsAccessibilityTest.createTestF('SettingsA11yBasic', testDef);
 
 GEN('#endif  // defined(NDEBUG)');

@@ -16,7 +16,6 @@
 #include "chrome/browser/signin/account_tracker_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
-#include "chrome/browser/sync/user_event_service_factory.h"
 #include "chrome/common/pref_names.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
@@ -28,17 +27,12 @@
 #include "components/signin/core/browser/account_info.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/signin_manager.h"
-#include "components/sync/protocol/user_event_specifics.pb.h"
-#include "components/sync/user_events/user_event_service.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 
 using content::BrowserThread;
-using sync_pb::UserEventSpecifics;
-using SafeBrowsingStatus = UserEventSpecifics::SyncPasswordReuseEvent::
-    PasswordReuseDetected::SafeBrowsingStatus;
 
 namespace safe_browsing {
 
@@ -50,10 +44,6 @@ const int kPasswordEventAttributionUserGestureLimit = 2;
 // If user specifically mark a site as legitimate, we will keep this decision
 // for 2 days.
 const int kOverrideVerdictCacheDurationSec = 2 * 24 * 60 * 60;
-
-int64_t GetMicrosecondsSinceWindowsEpoch(base::Time time) {
-  return (time - base::Time()).InMicroseconds();
-}
 
 }  // namespace
 
@@ -106,27 +96,24 @@ void ChromePasswordProtectionService::FillReferrerChain(
       SafeBrowsingNavigationObserverManager::ATTRIBUTION_FAILURE_TYPE_MAX);
 }
 
-PrefService* ChromePasswordProtectionService::GetPrefs() {
-  return profile_->GetPrefs();
-}
-
-bool ChromePasswordProtectionService::IsSafeBrowsingEnabled() {
-  return GetPrefs()->GetBoolean(prefs::kSafeBrowsingEnabled);
-}
-
 bool ChromePasswordProtectionService::IsExtendedReporting() {
-  return IsExtendedReportingEnabled(*GetPrefs());
+  return IsExtendedReportingEnabled(*profile_->GetPrefs());
 }
 
 bool ChromePasswordProtectionService::IsIncognito() {
+  DCHECK(profile_);
   return profile_->IsOffTheRecord();
 }
 
 bool ChromePasswordProtectionService::IsPingingEnabled(
     const base::Feature& feature,
     RequestOutcome* reason) {
-  if (!IsSafeBrowsingEnabled())
+  // Don't start pinging on an invalid profile, or if user turns off Safe
+  // Browsing service.
+  if (!profile_ ||
+      !profile_->GetPrefs()->GetBoolean(prefs::kSafeBrowsingEnabled)) {
     return false;
+  }
 
   DCHECK(feature.name == kProtectedPasswordEntryPinging.name ||
          feature.name == kPasswordFieldOnFocusPinging.name);
@@ -135,21 +122,31 @@ bool ChromePasswordProtectionService::IsPingingEnabled(
     return false;
   }
 
-  // Protected password entry pinging is enabled for all users.
-  if (feature.name == kProtectedPasswordEntryPinging.name)
-    return true;
-
-  // Password field on focus pinging is enabled for !incognito &&
-  // extended_reporting.
-  if (IsIncognito()) {
+  bool allowed_incognito =
+      base::GetFieldTrialParamByFeatureAsBool(feature, "incognito", false);
+  if (IsIncognito() && !allowed_incognito) {
     *reason = DISABLED_DUE_TO_INCOGNITO;
     return false;
   }
-  if (!IsExtendedReporting()) {
+
+  bool allowed_all_population =
+      base::GetFieldTrialParamByFeatureAsBool(feature, "all_population", false);
+  if (!allowed_all_population) {
+    bool allowed_extended_reporting = base::GetFieldTrialParamByFeatureAsBool(
+        feature, "extended_reporting", false);
+    if (IsExtendedReporting() && allowed_extended_reporting)
+      return true;  // Ping enabled because this user opted in extended
+                    // reporting.
+
+    bool allowed_history_sync =
+        base::GetFieldTrialParamByFeatureAsBool(feature, "history_sync", false);
+    if (IsHistorySyncEnabled() && allowed_history_sync)
+      return true;
+
     *reason = DISABLED_DUE_TO_USER_POPULATION;
-    return false;
   }
-  return true;
+
+  return allowed_all_population;
 }
 
 bool ChromePasswordProtectionService::IsHistorySyncEnabled() {
@@ -157,48 +154,6 @@ bool ChromePasswordProtectionService::IsHistorySyncEnabled() {
       ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile_);
   return sync && sync->IsSyncActive() && !sync->IsLocalSyncEnabled() &&
          sync->GetActiveDataTypes().Has(syncer::HISTORY_DELETE_DIRECTIVES);
-}
-
-void ChromePasswordProtectionService::MaybeLogPasswordReuseDetectedEvent(
-    content::WebContents* web_contents) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  if (!base::FeatureList::IsEnabled(safe_browsing::kSyncPasswordReuseEvent))
-    return;
-
-  syncer::UserEventService* user_event_service =
-      browser_sync::UserEventServiceFactory::GetForProfile(profile_);
-  content::NavigationEntry* navigation =
-      web_contents->GetController().GetLastCommittedEntry();
-  if (!user_event_service || !navigation)
-    return;
-
-  auto specifics = base::MakeUnique<UserEventSpecifics>();
-  specifics->set_event_time_usec(
-      GetMicrosecondsSinceWindowsEpoch(base::Time::Now()));
-  specifics->set_navigation_id(
-      GetMicrosecondsSinceWindowsEpoch(navigation->GetTimestamp()));
-  auto* const status = specifics->mutable_sync_password_reuse_event()
-                           ->mutable_reuse_detected()
-                           ->mutable_status();
-
-  status->set_enabled(IsSafeBrowsingEnabled());
-
-  safe_browsing::ExtendedReportingLevel erl =
-      safe_browsing::GetExtendedReportingLevel(*GetPrefs());
-  switch (erl) {
-    case safe_browsing::SBER_LEVEL_OFF:
-      status->set_safe_browsing_reporting_population(SafeBrowsingStatus::NONE);
-      break;
-    case safe_browsing::SBER_LEVEL_LEGACY:
-      status->set_safe_browsing_reporting_population(
-          SafeBrowsingStatus::EXTENDED_REPORTING);
-      break;
-    case safe_browsing::SBER_LEVEL_SCOUT:
-      status->set_safe_browsing_reporting_population(SafeBrowsingStatus::SCOUT);
-      break;
-  }
-  user_event_service->RecordUserEvent(std::move(specifics));
 }
 
 PasswordProtectionService::SyncAccountType

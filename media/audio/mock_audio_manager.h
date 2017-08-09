@@ -76,6 +76,8 @@ class MockAudioManager : public AudioManager {
 
   base::string16 GetAudioInputDeviceModel() override;
 
+  void ShowAudioInputSettings() override;
+
   void GetAudioInputDeviceDescriptions(
       media::AudioDeviceDescriptions* device_descriptions) override;
 

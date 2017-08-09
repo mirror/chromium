@@ -68,7 +68,7 @@ class ArcNotificationContentView
   void UpdatePinnedState();
   void UpdateSnapshot();
   void AttachSurface();
-  void Activate();
+  void ActivateToast();
   void UpdateAccessibleName();
 
   // views::NativeViewHost

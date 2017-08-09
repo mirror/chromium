@@ -86,7 +86,7 @@ class VisualViewportTest
       override_settings_func = &ConfigureSettings;
     helper_.Initialize(nullptr, &mock_web_view_client_, nullptr,
                        override_settings_func);
-    WebView()->SetDefaultPageScaleLimits(1, 4);
+    WebViewImpl()->SetDefaultPageScaleLimits(1, 4);
   }
 
   void InitializeWithAndroidSettings(
@@ -95,7 +95,7 @@ class VisualViewportTest
       override_settings_func = &ConfigureAndroidSettings;
     helper_.Initialize(nullptr, &mock_web_view_client_, nullptr,
                        override_settings_func);
-    WebView()->SetDefaultPageScaleLimits(0.25f, 5);
+    WebViewImpl()->SetDefaultPageScaleLimits(0.25f, 5);
   }
 
   ~VisualViewportTest() override {
@@ -105,10 +105,12 @@ class VisualViewportTest
   }
 
   void NavigateTo(const std::string& url) {
-    FrameTestHelpers::LoadFrame(WebView()->MainFrameImpl(), url);
+    FrameTestHelpers::LoadFrame(WebViewImpl()->MainFrameImpl(), url);
   }
 
-  void ForceFullCompositingUpdate() { WebView()->UpdateAllLifecyclePhases(); }
+  void ForceFullCompositingUpdate() {
+    WebViewImpl()->UpdateAllLifecyclePhases();
+  }
 
   void RegisterMockedHttpURLLoad(const std::string& fileName) {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
@@ -123,7 +125,7 @@ class VisualViewportTest
         blink::testing::CoreTestDataPath(WebString::FromUTF8(fileName)));
   }
 
-  WebViewImpl* WebView() const { return helper_.WebView(); }
+  WebViewBase* WebViewImpl() const { return helper_.WebView(); }
   LocalFrame* GetFrame() const { return helper_.LocalMainFrame()->GetFrame(); }
 
   static void ConfigureSettings(WebSettings* settings) {
@@ -153,28 +155,28 @@ INSTANTIATE_TEST_CASE_P(All, VisualViewportTest, ::testing::Bool());
 // WebView resizes the VisualViewport.
 TEST_P(VisualViewportTest, TestResize) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(320, 240));
+  WebViewImpl()->Resize(IntSize(320, 240));
 
   NavigateTo("about:blank");
   ForceFullCompositingUpdate();
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
 
-  IntSize web_view_size = WebView()->Size();
+  IntSize web_view_size = WebViewImpl()->Size();
 
   // Make sure the visual viewport was initialized.
   EXPECT_SIZE_EQ(web_view_size, visual_viewport.Size());
 
   // Resizing the WebView should change the VisualViewport.
   web_view_size = IntSize(640, 480);
-  WebView()->Resize(web_view_size);
-  EXPECT_SIZE_EQ(web_view_size, IntSize(WebView()->Size()));
+  WebViewImpl()->Resize(web_view_size);
+  EXPECT_SIZE_EQ(web_view_size, IntSize(WebViewImpl()->Size()));
   EXPECT_SIZE_EQ(web_view_size, visual_viewport.Size());
 
   // Resizing the visual viewport shouldn't affect the WebView.
   IntSize new_viewport_size = IntSize(320, 200);
   visual_viewport.SetSize(new_viewport_size);
-  EXPECT_SIZE_EQ(web_view_size, IntSize(WebView()->Size()));
+  EXPECT_SIZE_EQ(web_view_size, IntSize(WebViewImpl()->Size()));
   EXPECT_SIZE_EQ(new_viewport_size, visual_viewport.Size());
 }
 
@@ -191,10 +193,10 @@ TEST_P(VisualViewportTest, TestVisibleContentRect) {
   // Vertical scrollbar width and horizontal scrollbar height.
   IntSize scrollbar_size = IntSize(15, 15);
 
-  WebView()->Resize(size);
+  WebViewImpl()->Resize(size);
 
   // Scroll layout viewport and verify visibleContentRect.
-  WebView()->MainFrameImpl()->SetScrollOffset(WebSize(0, 50));
+  WebViewImpl()->MainFrameImpl()->SetScrollOffset(WebSize(0, 50));
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
   EXPECT_EQ(IntRect(IntPoint(0, 0), size - scrollbar_size),
@@ -202,7 +204,7 @@ TEST_P(VisualViewportTest, TestVisibleContentRect) {
   EXPECT_EQ(IntRect(IntPoint(0, 0), size),
             visual_viewport.VisibleContentRect(kIncludeScrollbars));
 
-  WebView()->SetPageScaleFactor(2.0);
+  WebViewImpl()->SetPageScaleFactor(2.0);
 
   // Scroll visual viewport and verify visibleContentRect.
   size.Scale(0.5);
@@ -221,12 +223,12 @@ TEST_P(VisualViewportTest, TestVisibleContentRect) {
 // make it appear to stay still). This caused bugs like crbug.com/453859.
 TEST_P(VisualViewportTest, TestResizeAtFullyScrolledPreservesViewportLocation) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(800, 600));
+  WebViewImpl()->Resize(IntSize(800, 600));
 
   RegisterMockedHttpURLLoad("content-width-1000.html");
   NavigateTo(base_url_ + "content-width-1000.html");
 
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
 
   visual_viewport.SetScale(2);
@@ -247,13 +249,13 @@ TEST_P(VisualViewportTest, TestResizeAtFullyScrolledPreservesViewportLocation) {
   // Shrink the WebView, this should cause both viewports to shrink and
   // WebView should do whatever it needs to do to preserve the visible
   // location.
-  WebView()->Resize(IntSize(700, 550));
+  WebViewImpl()->Resize(IntSize(700, 550));
 
   EXPECT_POINT_EQ(
       expected_location,
       frame_view.GetScrollableArea()->VisibleContentRect().Location());
 
-  WebView()->Resize(IntSize(800, 600));
+  WebViewImpl()->Resize(IntSize(800, 600));
 
   EXPECT_POINT_EQ(
       expected_location,
@@ -292,15 +294,15 @@ TEST_P(VisualViewportTest, TestResizeAfterVerticalScroll) {
   RegisterMockedHttpURLLoad("200-by-800-viewport.html");
   NavigateTo(base_url_ + "200-by-800-viewport.html");
 
-  WebView()->Resize(IntSize(100, 200));
+  WebViewImpl()->Resize(IntSize(100, 200));
 
   // Scroll main frame to the bottom of the document
-  WebView()->MainFrameImpl()->SetScrollOffset(WebSize(0, 400));
+  WebViewImpl()->MainFrameImpl()->SetScrollOffset(WebSize(0, 400));
   EXPECT_SIZE_EQ(
       ScrollOffset(0, 400),
       GetFrame()->View()->LayoutViewportScrollableArea()->GetScrollOffset());
 
-  WebView()->SetPageScaleFactor(2.0);
+  WebViewImpl()->SetPageScaleFactor(2.0);
 
   // Scroll visual viewport to the bottom of the main frame
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
@@ -312,7 +314,7 @@ TEST_P(VisualViewportTest, TestResizeAfterVerticalScroll) {
                        visual_viewport.VisibleRect().Size());
 
   // Perform the resizing
-  WebView()->Resize(IntSize(200, 100));
+  WebViewImpl()->Resize(IntSize(200, 100));
 
   // After resizing the scale changes 2.0 -> 4.0
   EXPECT_FLOAT_SIZE_EQ(FloatSize(50, 25), visual_viewport.VisibleRect().Size());
@@ -357,11 +359,11 @@ TEST_P(VisualViewportTest, TestResizeAfterHorizontalScroll) {
   RegisterMockedHttpURLLoad("200-by-800-viewport.html");
   NavigateTo(base_url_ + "200-by-800-viewport.html");
 
-  WebView()->Resize(IntSize(100, 200));
+  WebViewImpl()->Resize(IntSize(100, 200));
 
   // Outer viewport takes the whole width of the document.
 
-  WebView()->SetPageScaleFactor(2.0);
+  WebViewImpl()->SetPageScaleFactor(2.0);
 
   // Scroll visual viewport to the right edge of the frame
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
@@ -372,7 +374,7 @@ TEST_P(VisualViewportTest, TestResizeAfterHorizontalScroll) {
   EXPECT_FLOAT_SIZE_EQ(FloatSize(50, 100),
                        visual_viewport.VisibleRect().Size());
 
-  WebView()->Resize(IntSize(200, 100));
+  WebViewImpl()->Resize(IntSize(200, 100));
 
   // After resizing the scale changes 2.0 -> 4.0
   EXPECT_FLOAT_SIZE_EQ(FloatSize(50, 25), visual_viewport.VisibleRect().Size());
@@ -385,17 +387,17 @@ TEST_P(VisualViewportTest, TestResizeAfterHorizontalScroll) {
 // prior to the VisualViewport being attached to the layer tree.
 TEST_P(VisualViewportTest, TestWebViewResizedBeforeAttachment) {
   InitializeWithDesktopSettings();
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
 
   // Make sure that a resize that comes in while there's no root layer is
   // honoured when we attach to the layer tree.
   WebFrameWidgetBase* main_frame_widget =
-      WebView()->MainFrameImpl()->FrameWidget();
+      WebViewImpl()->MainFrameImpl()->FrameWidget();
   main_frame_widget->SetRootGraphicsLayer(nullptr);
-  WebView()->Resize(IntSize(320, 240));
+  WebViewImpl()->Resize(IntSize(320, 240));
 
   NavigateTo("about:blank");
-  WebView()->UpdateAllLifecyclePhases();
+  WebViewImpl()->UpdateAllLifecyclePhases();
   main_frame_widget->SetRootGraphicsLayer(
       frame_view.GetLayoutViewItem().Compositor()->RootGraphicsLayer());
 
@@ -408,7 +410,7 @@ TEST_P(VisualViewportTest, TestWebViewResizedBeforeAttachment) {
 // location of the viewport.
 TEST_P(VisualViewportTest, TestVisibleRect) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(320, 240));
+  WebViewImpl()->Resize(IntSize(320, 240));
 
   NavigateTo("about:blank");
   ForceFullCompositingUpdate();
@@ -416,12 +418,12 @@ TEST_P(VisualViewportTest, TestVisibleRect) {
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
 
   // Initial visible rect should be the whole frame.
-  EXPECT_SIZE_EQ(IntSize(WebView()->Size()), visual_viewport.Size());
+  EXPECT_SIZE_EQ(IntSize(WebViewImpl()->Size()), visual_viewport.Size());
 
   // Viewport is whole frame.
   IntSize size = IntSize(400, 200);
-  WebView()->Resize(size);
-  WebView()->UpdateAllLifecyclePhases();
+  WebViewImpl()->Resize(size);
+  WebViewImpl()->UpdateAllLifecyclePhases();
   visual_viewport.SetSize(size);
 
   // Scale the viewport to 2X; size should not change.
@@ -458,7 +460,7 @@ TEST_P(VisualViewportTest, TestVisibleRect) {
 // and scroll location of the viewport relative to the document.
 TEST_P(VisualViewportTest, TestVisibleRectInDocument) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(100, 400));
+  WebViewImpl()->Resize(IntSize(100, 400));
 
   RegisterMockedHttpURLLoad("200-by-800-viewport.html");
   NavigateTo(base_url_ + "200-by-800-viewport.html");
@@ -473,7 +475,7 @@ TEST_P(VisualViewportTest, TestVisibleRectInDocument) {
 
   // Scroll the layout viewport. Ensure its offset is reflected in
   // visibleRectInDocument().
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
   frame_view.LayoutViewportScrollableArea()->SetScrollOffset(
       ScrollOffset(40, 100), kProgrammaticScroll);
   EXPECT_FLOAT_RECT_EQ(FloatRect(50, 115, 50, 200),
@@ -486,12 +488,12 @@ TEST_P(VisualViewportTest, TestFractionalScrollOffsetIsNotOverwritten) {
   RuntimeEnabledFeatures::SetFractionalScrollOffsetsEnabled(true);
 
   InitializeWithAndroidSettings();
-  WebView()->Resize(IntSize(200, 250));
+  WebViewImpl()->Resize(IntSize(200, 250));
 
   RegisterMockedHttpURLLoad("200-by-800-viewport.html");
   NavigateTo(base_url_ + "200-by-800-viewport.html");
 
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
   frame_view.LayoutViewportScrollableArea()->SetScrollOffset(
       ScrollOffset(0, 10.5), kProgrammaticScroll);
   frame_view.LayoutViewportScrollableArea()->ScrollableArea::SetScrollOffset(
@@ -509,7 +511,7 @@ TEST_P(VisualViewportTest, TestFractionalScrollOffsetIsNotOverwritten) {
 // that the visual viewport always stays within the bounds of the main frame.
 TEST_P(VisualViewportTest, TestOffsetClamping) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(320, 240));
+  WebViewImpl()->Resize(IntSize(320, 240));
 
   NavigateTo("about:blank");
   ForceFullCompositingUpdate();
@@ -564,7 +566,7 @@ TEST_P(VisualViewportTest, TestOffsetClamping) {
 // keyboard came up.
 TEST_P(VisualViewportTest, TestOffsetClampingWithResize) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(320, 240));
+  WebViewImpl()->Resize(IntSize(320, 240));
 
   NavigateTo("about:blank");
   ForceFullCompositingUpdate();
@@ -632,7 +634,7 @@ TEST_P(VisualViewportTest, TestOffsetClampingWithResize) {
 // main frame when we apply both scaling and resizes.
 TEST_P(VisualViewportTest, TestOffsetClampingWithResizeAndScale) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(320, 240));
+  WebViewImpl()->Resize(IntSize(320, 240));
 
   NavigateTo("about:blank");
   ForceFullCompositingUpdate();
@@ -663,10 +665,10 @@ TEST_P(VisualViewportTest, TestOffsetClampingWithResizeAndScale) {
   EXPECT_SIZE_EQ(IntSize(330, 250), visual_viewport.Size());
 
   // Resize both the viewport and the frame to be larger.
-  WebView()->Resize(IntSize(640, 480));
-  WebView()->UpdateAllLifecyclePhases();
-  EXPECT_SIZE_EQ(IntSize(WebView()->Size()), visual_viewport.Size());
-  EXPECT_SIZE_EQ(IntSize(WebView()->Size()),
+  WebViewImpl()->Resize(IntSize(640, 480));
+  WebViewImpl()->UpdateAllLifecyclePhases();
+  EXPECT_SIZE_EQ(IntSize(WebViewImpl()->Size()), visual_viewport.Size());
+  EXPECT_SIZE_EQ(IntSize(WebViewImpl()->Size()),
                  GetFrame()->View()->FrameRect().Size());
   visual_viewport.SetLocation(FloatPoint(1000, 1000));
   EXPECT_FLOAT_POINT_EQ(FloatPoint(320, 240),
@@ -686,19 +688,19 @@ TEST_P(VisualViewportTest, TestOffsetClampingWithResizeAndScale) {
 // the aspect ratio.
 TEST_P(VisualViewportTest, TestFrameViewSizedToContent) {
   InitializeWithAndroidSettings();
-  WebView()->Resize(IntSize(320, 240));
+  WebViewImpl()->Resize(IntSize(320, 240));
 
   RegisterMockedHttpURLLoad("200-by-300-viewport.html");
   NavigateTo(base_url_ + "200-by-300-viewport.html");
 
-  WebView()->Resize(IntSize(600, 800));
-  WebView()->UpdateAllLifecyclePhases();
+  WebViewImpl()->Resize(IntSize(600, 800));
+  WebViewImpl()->UpdateAllLifecyclePhases();
 
   // Note: the size is ceiled and should match the behavior in CC's
   // LayerImpl::bounds().
   EXPECT_SIZE_EQ(
       IntSize(200, 267),
-      WebView()->MainFrameImpl()->GetFrameView()->FrameRect().Size());
+      WebViewImpl()->MainFrameImpl()->GetFrameView()->FrameRect().Size());
 }
 
 // The main LocalFrameView's size should be set such that its the size of the
@@ -706,30 +708,30 @@ TEST_P(VisualViewportTest, TestFrameViewSizedToContent) {
 // so make sure the LocalFrameView is sized to the viewport.
 TEST_P(VisualViewportTest, TestFrameViewSizedToMinimumScale) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(320, 240));
+  WebViewImpl()->Resize(IntSize(320, 240));
 
   RegisterMockedHttpURLLoad("200-by-300.html");
   NavigateTo(base_url_ + "200-by-300.html");
 
-  WebView()->Resize(IntSize(100, 160));
-  WebView()->UpdateAllLifecyclePhases();
+  WebViewImpl()->Resize(IntSize(100, 160));
+  WebViewImpl()->UpdateAllLifecyclePhases();
 
   EXPECT_SIZE_EQ(
       IntSize(100, 160),
-      WebView()->MainFrameImpl()->GetFrameView()->FrameRect().Size());
+      WebViewImpl()->MainFrameImpl()->GetFrameView()->FrameRect().Size());
 }
 
 // Test that attaching a new frame view resets the size of the inner viewport
 // scroll layer. crbug.com/423189.
 TEST_P(VisualViewportTest, TestAttachingNewFrameSetsInnerScrollLayerSize) {
   InitializeWithAndroidSettings();
-  WebView()->Resize(IntSize(320, 240));
+  WebViewImpl()->Resize(IntSize(320, 240));
 
   // Load a wider page first, the navigation should resize the scroll layer to
   // the smaller size on the second navigation.
   RegisterMockedHttpURLLoad("content-width-1000.html");
   NavigateTo(base_url_ + "content-width-1000.html");
-  WebView()->UpdateAllLifecyclePhases();
+  WebViewImpl()->UpdateAllLifecyclePhases();
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
   visual_viewport.SetScale(2);
@@ -760,28 +762,28 @@ TEST_P(VisualViewportTest, TestAttachingNewFrameSetsInnerScrollLayerSize) {
 // appropriately sized in the presence of a viewport <meta> tag.
 TEST_P(VisualViewportTest, TestFrameViewSizedToViewportMetaMinimumScale) {
   InitializeWithAndroidSettings();
-  WebView()->Resize(IntSize(320, 240));
+  WebViewImpl()->Resize(IntSize(320, 240));
 
   RegisterMockedHttpURLLoad("200-by-300-min-scale-2.html");
   NavigateTo(base_url_ + "200-by-300-min-scale-2.html");
 
-  WebView()->Resize(IntSize(100, 160));
-  WebView()->UpdateAllLifecyclePhases();
+  WebViewImpl()->Resize(IntSize(100, 160));
+  WebViewImpl()->UpdateAllLifecyclePhases();
 
   EXPECT_SIZE_EQ(
       IntSize(50, 80),
-      WebView()->MainFrameImpl()->GetFrameView()->FrameRect().Size());
+      WebViewImpl()->MainFrameImpl()->GetFrameView()->FrameRect().Size());
 }
 
 // Test that the visual viewport still gets sized in AutoSize/AutoResize mode.
 TEST_P(VisualViewportTest, TestVisualViewportGetsSizeInAutoSizeMode) {
   InitializeWithDesktopSettings();
 
-  EXPECT_SIZE_EQ(IntSize(0, 0), IntSize(WebView()->Size()));
+  EXPECT_SIZE_EQ(IntSize(0, 0), IntSize(WebViewImpl()->Size()));
   EXPECT_SIZE_EQ(IntSize(0, 0),
                  GetFrame()->GetPage()->GetVisualViewport().Size());
 
-  WebView()->EnableAutoResizeMode(WebSize(10, 10), WebSize(1000, 1000));
+  WebViewImpl()->EnableAutoResizeMode(WebSize(10, 10), WebSize(1000, 1000));
 
   RegisterMockedHttpURLLoad("200-by-300.html");
   NavigateTo(base_url_ + "200-by-300.html");
@@ -794,24 +796,24 @@ TEST_P(VisualViewportTest, TestVisualViewportGetsSizeInAutoSizeMode) {
 // viewport.
 TEST_P(VisualViewportTest, TestTextSelectionHandles) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(500, 800));
+  WebViewImpl()->Resize(IntSize(500, 800));
 
   RegisterMockedHttpURLLoad("pinch-viewport-input-field.html");
   NavigateTo(base_url_ + "pinch-viewport-input-field.html");
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
-  WebView()->SetInitialFocus(false);
+  WebViewImpl()->SetInitialFocus(false);
 
   WebRect original_anchor;
   WebRect original_focus;
-  WebView()->SelectionBounds(original_anchor, original_focus);
+  WebViewImpl()->SelectionBounds(original_anchor, original_focus);
 
-  WebView()->SetPageScaleFactor(2);
+  WebViewImpl()->SetPageScaleFactor(2);
   visual_viewport.SetLocation(FloatPoint(100, 400));
 
   WebRect anchor;
   WebRect focus;
-  WebView()->SelectionBounds(anchor, focus);
+  WebViewImpl()->SelectionBounds(anchor, focus);
 
   IntPoint expected(IntRect(original_anchor).Location());
   expected.MoveBy(-FlooredIntPoint(visual_viewport.VisibleRect().Location()));
@@ -828,13 +830,13 @@ TEST_P(VisualViewportTest, TestTextSelectionHandles) {
 // and scale.
 TEST_P(VisualViewportTest, TestSavedToHistoryItem) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(200, 300));
-  WebView()->UpdateAllLifecyclePhases();
+  WebViewImpl()->Resize(IntSize(200, 300));
+  WebViewImpl()->UpdateAllLifecyclePhases();
 
   RegisterMockedHttpURLLoad("200-by-300.html");
   NavigateTo(base_url_ + "200-by-300.html");
 
-  EXPECT_EQ(nullptr, ToLocalFrame(WebView()->GetPage()->MainFrame())
+  EXPECT_EQ(nullptr, ToLocalFrame(WebViewImpl()->GetPage()->MainFrame())
                          ->Loader()
                          .GetDocumentLoader()
                          ->GetHistoryItem()
@@ -843,7 +845,7 @@ TEST_P(VisualViewportTest, TestSavedToHistoryItem) {
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
   visual_viewport.SetScale(2);
 
-  EXPECT_EQ(2, ToLocalFrame(WebView()->GetPage()->MainFrame())
+  EXPECT_EQ(2, ToLocalFrame(WebViewImpl()->GetPage()->MainFrame())
                    ->Loader()
                    .GetDocumentLoader()
                    ->GetHistoryItem()
@@ -853,7 +855,7 @@ TEST_P(VisualViewportTest, TestSavedToHistoryItem) {
   visual_viewport.SetLocation(FloatPoint(10, 20));
 
   EXPECT_SIZE_EQ(ScrollOffset(10, 20),
-                 ToLocalFrame(WebView()->GetPage()->MainFrame())
+                 ToLocalFrame(WebViewImpl()->GetPage()->MainFrame())
                      ->Loader()
                      .GetDocumentLoader()
                      ->GetHistoryItem()
@@ -864,7 +866,7 @@ TEST_P(VisualViewportTest, TestSavedToHistoryItem) {
 // Test restoring a HistoryItem properly restores the visual viewport's state.
 TEST_P(VisualViewportTest, TestRestoredFromHistoryItem) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(200, 300));
+  WebViewImpl()->Resize(IntSize(200, 300));
 
   RegisterMockedHttpURLLoad("200-by-300.html");
 
@@ -875,7 +877,7 @@ TEST_P(VisualViewportTest, TestRestoredFromHistoryItem) {
   item.SetVisualViewportScrollOffset(WebFloatPoint(100, 120));
   item.SetPageScaleFactor(2);
 
-  FrameTestHelpers::LoadHistoryItem(WebView()->MainFrameImpl(), item,
+  FrameTestHelpers::LoadHistoryItem(WebViewImpl()->MainFrameImpl(), item,
                                     kWebHistoryDifferentDocumentLoad,
                                     WebCachePolicy::kUseProtocolCachePolicy);
 
@@ -891,7 +893,7 @@ TEST_P(VisualViewportTest, TestRestoredFromHistoryItem) {
 // viewport.
 TEST_P(VisualViewportTest, TestRestoredFromLegacyHistoryItem) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(100, 150));
+  WebViewImpl()->Resize(IntSize(100, 150));
 
   RegisterMockedHttpURLLoad("200-by-300-viewport.html");
 
@@ -906,7 +908,7 @@ TEST_P(VisualViewportTest, TestRestoredFromLegacyHistoryItem) {
   item.SetScrollOffset(WebPoint(120, 180));
   item.SetPageScaleFactor(2);
 
-  FrameTestHelpers::LoadHistoryItem(WebView()->MainFrameImpl(), item,
+  FrameTestHelpers::LoadHistoryItem(WebViewImpl()->MainFrameImpl(), item,
                                     kWebHistoryDifferentDocumentLoad,
                                     WebCachePolicy::kUseProtocolCachePolicy);
 
@@ -924,13 +926,13 @@ TEST_P(VisualViewportTest, TestRestoredFromLegacyHistoryItem) {
 TEST_P(VisualViewportTest,
        TestNavigateToSmallerFrameViewHistoryItemClobberBug) {
   InitializeWithAndroidSettings();
-  WebView()->Resize(IntSize(400, 400));
-  WebView()->UpdateAllLifecyclePhases();
+  WebViewImpl()->Resize(IntSize(400, 400));
+  WebViewImpl()->UpdateAllLifecyclePhases();
 
   RegisterMockedHttpURLLoad("content-width-1000.html");
   NavigateTo(base_url_ + "content-width-1000.html");
 
-  LocalFrameView* frame_view = WebView()->MainFrameImpl()->GetFrameView();
+  LocalFrameView* frame_view = WebViewImpl()->MainFrameImpl()->GetFrameView();
   frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
       ScrollOffset(0, 1000), kProgrammaticScroll);
 
@@ -940,7 +942,7 @@ TEST_P(VisualViewportTest,
   visual_viewport.SetScale(2);
   visual_viewport.SetLocation(FloatPoint(350, 350));
 
-  Persistent<HistoryItem> firstItem = WebView()
+  Persistent<HistoryItem> firstItem = WebViewImpl()
                                           ->MainFrameImpl()
                                           ->GetFrame()
                                           ->Loader()
@@ -953,9 +955,9 @@ TEST_P(VisualViewportTest,
   // navigating doesn't cause the history item to set a new scroll offset
   // before the item was replaced.
   NavigateTo("about:blank");
-  frame_view = WebView()->MainFrameImpl()->GetFrameView();
+  frame_view = WebViewImpl()->MainFrameImpl()->GetFrameView();
 
-  EXPECT_NE(firstItem, WebView()
+  EXPECT_NE(firstItem, WebViewImpl()
                            ->MainFrameImpl()
                            ->GetFrame()
                            ->Loader()
@@ -971,16 +973,16 @@ TEST_P(VisualViewportTest,
 TEST_P(VisualViewportTest,
        DISABLED_TestWebFrameRangeAccountsForVisualViewportScroll) {
   InitializeWithDesktopSettings();
-  WebView()->GetSettings()->SetDefaultFontSize(12);
-  WebView()->Resize(WebSize(640, 480));
+  WebViewImpl()->GetSettings()->SetDefaultFontSize(12);
+  WebViewImpl()->Resize(WebSize(640, 480));
   RegisterMockedHttpURLLoad("move_range.html");
   NavigateTo(base_url_ + "move_range.html");
 
   WebRect base_rect;
   WebRect extent_rect;
 
-  WebView()->SetPageScaleFactor(2);
-  WebLocalFrame* mainFrame = WebView()->MainFrameImpl();
+  WebViewImpl()->SetPageScaleFactor(2);
+  WebLocalFrame* mainFrame = WebViewImpl()->MainFrameImpl();
 
   // Select some text and get the base and extent rects (that's the start of
   // the range and its end). Do a sanity check that the expected text is
@@ -988,7 +990,7 @@ TEST_P(VisualViewportTest,
   mainFrame->ExecuteScript(WebScriptSource("selectRange();"));
   EXPECT_EQ("ir", mainFrame->SelectionAsText().Utf8());
 
-  WebView()->SelectionBounds(base_rect, extent_rect);
+  WebViewImpl()->SelectionBounds(base_rect, extent_rect);
   WebPoint initialPoint(base_rect.x, base_rect.y);
   WebPoint endPoint(extent_rect.x, extent_rect.y);
 
@@ -1005,16 +1007,16 @@ TEST_P(VisualViewportTest,
 // visual viewport.
 TEST_P(VisualViewportTest, DISABLED_TestScrollFocusedEditableElementIntoRect) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(500, 300));
+  WebViewImpl()->Resize(IntSize(500, 300));
 
   RegisterMockedHttpURLLoad("pinch-viewport-input-field.html");
   NavigateTo(base_url_ + "pinch-viewport-input-field.html");
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
-  WebView()->ResizeVisualViewport(IntSize(200, 100));
-  WebView()->SetInitialFocus(false);
+  WebViewImpl()->ResizeVisualViewport(IntSize(200, 100));
+  WebViewImpl()->SetInitialFocus(false);
   visual_viewport.SetLocation(FloatPoint());
-  WebView()->ScrollFocusedEditableElementIntoRect(IntRect(0, 0, 500, 200));
+  WebViewImpl()->ScrollFocusedEditableElementIntoRect(IntRect(0, 0, 500, 200));
 
   EXPECT_SIZE_EQ(
       ScrollOffset(0, GetFrame()->View()->MaximumScrollOffset().Height()),
@@ -1024,11 +1026,11 @@ TEST_P(VisualViewportTest, DISABLED_TestScrollFocusedEditableElementIntoRect) {
 
   // Try it again but with the page zoomed in
   GetFrame()->View()->SetScrollOffset(ScrollOffset(0, 0), kProgrammaticScroll);
-  WebView()->ResizeVisualViewport(IntSize(500, 300));
+  WebViewImpl()->ResizeVisualViewport(IntSize(500, 300));
   visual_viewport.SetLocation(FloatPoint(0, 0));
 
-  WebView()->SetPageScaleFactor(2);
-  WebView()->ScrollFocusedEditableElementIntoRect(IntRect(0, 0, 500, 200));
+  WebViewImpl()->SetPageScaleFactor(2);
+  WebViewImpl()->ScrollFocusedEditableElementIntoRect(IntRect(0, 0, 500, 200));
   EXPECT_SIZE_EQ(
       ScrollOffset(0, GetFrame()->View()->MaximumScrollOffset().Height()),
       GetFrame()->View()->GetScrollOffset());
@@ -1039,14 +1041,14 @@ TEST_P(VisualViewportTest, DISABLED_TestScrollFocusedEditableElementIntoRect) {
   // necessary.
   RegisterMockedHttpURLLoad("pinch-viewport-input-field-long-and-wide.html");
   NavigateTo(base_url_ + "pinch-viewport-input-field-long-and-wide.html");
-  WebView()->SetInitialFocus(false);
+  WebViewImpl()->SetInitialFocus(false);
   visual_viewport.SetLocation(FloatPoint());
   GetFrame()->View()->SetScrollOffset(ScrollOffset(0, 0), kProgrammaticScroll);
-  WebView()->ResizeVisualViewport(IntSize(500, 300));
+  WebViewImpl()->ResizeVisualViewport(IntSize(500, 300));
   visual_viewport.SetLocation(FloatPoint(30, 50));
 
-  WebView()->SetPageScaleFactor(2);
-  WebView()->ScrollFocusedEditableElementIntoRect(IntRect(0, 0, 500, 200));
+  WebViewImpl()->SetPageScaleFactor(2);
+  WebViewImpl()->ScrollFocusedEditableElementIntoRect(IntRect(0, 0, 500, 200));
   EXPECT_SIZE_EQ(ScrollOffset(200 - 30 - 75, 600 - 50 - 65),
                  GetFrame()->View()->GetScrollOffset());
   EXPECT_FLOAT_POINT_EQ(FloatPoint(30, 50),
@@ -1057,7 +1059,7 @@ TEST_P(VisualViewportTest, DISABLED_TestScrollFocusedEditableElementIntoRect) {
 // relayout.
 TEST_P(VisualViewportTest, TestWebViewResizeCausesViewportConstrainedLayout) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(500, 300));
+  WebViewImpl()->Resize(IntSize(500, 300));
 
   RegisterMockedHttpURLLoad("pinch-viewport-fixed-pos.html");
   NavigateTo(base_url_ + "pinch-viewport-fixed-pos.html");
@@ -1091,7 +1093,7 @@ MATCHER_P2(ContextMenuAtLocation,
 // viewport offset.
 TEST_P(VisualViewportTest, TestContextMenuShownInCorrectLocation) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(200, 300));
+  WebViewImpl()->Resize(IntSize(200, 300));
 
   RegisterMockedHttpURLLoad("200-by-300.html");
   NavigateTo(base_url_ + "200-by-300.html");
@@ -1108,7 +1110,7 @@ TEST_P(VisualViewportTest, TestContextMenuShownInCorrectLocation) {
   WebMouseEvent mouse_up_event(mouse_down_event);
   mouse_up_event.SetType(WebInputEvent::kMouseUp);
 
-  WebFrameClient* old_client = WebView()->MainFrameImpl()->Client();
+  WebFrameClient* old_client = WebViewImpl()->MainFrameImpl()->Client();
   VisualViewportMockWebFrameClient mock_web_frame_client;
   EXPECT_CALL(mock_web_frame_client,
               ShowContextMenu(ContextMenuAtLocation(
@@ -1116,18 +1118,18 @@ TEST_P(VisualViewportTest, TestContextMenuShownInCorrectLocation) {
                   mouse_down_event.PositionInWidget().y)));
 
   // Do a sanity check with no scale applied.
-  WebView()->MainFrameImpl()->SetClient(&mock_web_frame_client);
-  WebView()->HandleInputEvent(WebCoalescedInputEvent(mouse_down_event));
-  WebView()->HandleInputEvent(WebCoalescedInputEvent(mouse_up_event));
+  WebViewImpl()->MainFrameImpl()->SetClient(&mock_web_frame_client);
+  WebViewImpl()->HandleInputEvent(WebCoalescedInputEvent(mouse_down_event));
+  WebViewImpl()->HandleInputEvent(WebCoalescedInputEvent(mouse_up_event));
 
   Mock::VerifyAndClearExpectations(&mock_web_frame_client);
   mouse_down_event.button = WebMouseEvent::Button::kLeft;
-  WebView()->HandleInputEvent(WebCoalescedInputEvent(mouse_down_event));
+  WebViewImpl()->HandleInputEvent(WebCoalescedInputEvent(mouse_down_event));
 
   // Now pinch zoom into the page and move the visual viewport. The context menu
   // should still appear at the location of the event, relative to the WebView.
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
-  WebView()->SetPageScaleFactor(2);
+  WebViewImpl()->SetPageScaleFactor(2);
   EXPECT_CALL(mock_web_frame_client, DidChangeScrollOffset());
   visual_viewport.SetLocation(FloatPoint(60, 80));
   EXPECT_CALL(mock_web_frame_client,
@@ -1136,26 +1138,26 @@ TEST_P(VisualViewportTest, TestContextMenuShownInCorrectLocation) {
                   mouse_down_event.PositionInWidget().y)));
 
   mouse_down_event.button = WebMouseEvent::Button::kRight;
-  WebView()->HandleInputEvent(WebCoalescedInputEvent(mouse_down_event));
-  WebView()->HandleInputEvent(WebCoalescedInputEvent(mouse_up_event));
+  WebViewImpl()->HandleInputEvent(WebCoalescedInputEvent(mouse_down_event));
+  WebViewImpl()->HandleInputEvent(WebCoalescedInputEvent(mouse_up_event));
 
   // Reset the old client so destruction can occur naturally.
-  WebView()->MainFrameImpl()->SetClient(old_client);
+  WebViewImpl()->MainFrameImpl()->SetClient(old_client);
 }
 
 // Test that the client is notified if page scroll events.
 TEST_P(VisualViewportTest, TestClientNotifiedOfScrollEvents) {
   InitializeWithAndroidSettings();
-  WebView()->Resize(IntSize(200, 300));
+  WebViewImpl()->Resize(IntSize(200, 300));
 
   RegisterMockedHttpURLLoad("200-by-300.html");
   NavigateTo(base_url_ + "200-by-300.html");
 
-  WebFrameClient* old_client = WebView()->MainFrameImpl()->Client();
+  WebFrameClient* old_client = WebViewImpl()->MainFrameImpl()->Client();
   VisualViewportMockWebFrameClient mock_web_frame_client;
-  WebView()->MainFrameImpl()->SetClient(&mock_web_frame_client);
+  WebViewImpl()->MainFrameImpl()->SetClient(&mock_web_frame_client);
 
-  WebView()->SetPageScaleFactor(2);
+  WebViewImpl()->SetPageScaleFactor(2);
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
 
   EXPECT_CALL(mock_web_frame_client, DidChangeScrollOffset());
@@ -1172,7 +1174,7 @@ TEST_P(VisualViewportTest, TestClientNotifiedOfScrollEvents) {
   visual_viewport.SetLocation(FloatPoint(70, 90));
 
   // Reset the old client so destruction can occur naturally.
-  WebView()->MainFrameImpl()->SetClient(old_client);
+  WebViewImpl()->MainFrameImpl()->SetClient(old_client);
 }
 
 // Tests that calling scroll into view on a visible element doesn't cause
@@ -1180,22 +1182,22 @@ TEST_P(VisualViewportTest, TestClientNotifiedOfScrollEvents) {
 TEST_P(VisualViewportTest, ScrollIntoViewFractionalOffset) {
   InitializeWithAndroidSettings();
 
-  WebView()->Resize(IntSize(1000, 1000));
+  WebViewImpl()->Resize(IntSize(1000, 1000));
 
   RegisterMockedHttpURLLoad("scroll-into-view.html");
   NavigateTo(base_url_ + "scroll-into-view.html");
 
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
   ScrollableArea* layout_viewport_scrollable_area =
       frame_view.LayoutViewportScrollableArea();
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
   Element* inputBox = GetFrame()->GetDocument()->getElementById("box");
 
-  WebView()->SetPageScaleFactor(2);
+  WebViewImpl()->SetPageScaleFactor(2);
 
   // The element is already in the view so the scrollIntoView shouldn't move
   // the viewport at all.
-  WebView()->SetVisualViewportOffset(WebFloatPoint(250.25f, 100.25f));
+  WebViewImpl()->SetVisualViewportOffset(WebFloatPoint(250.25f, 100.25f));
   layout_viewport_scrollable_area->SetScrollOffset(ScrollOffset(0, 900.75),
                                                    kProgrammaticScroll);
   inputBox->scrollIntoViewIfNeeded(false);
@@ -1216,7 +1218,7 @@ TEST_P(VisualViewportTest, ScrollIntoViewFractionalOffset) {
                  visual_viewport.GetScrollOffset());
 
   // Repeat both tests above with the visual viewport at a high fractional.
-  WebView()->SetVisualViewportOffset(WebFloatPoint(250.875f, 100.875f));
+  WebViewImpl()->SetVisualViewportOffset(WebFloatPoint(250.875f, 100.875f));
   layout_viewport_scrollable_area->SetScrollOffset(ScrollOffset(0, 900.75),
                                                    kProgrammaticScroll);
   inputBox->scrollIntoViewIfNeeded(false);
@@ -1237,7 +1239,7 @@ TEST_P(VisualViewportTest, ScrollIntoViewFractionalOffset) {
                  visual_viewport.GetScrollOffset());
 
   // Both viewports with a 0.5 fraction.
-  WebView()->SetVisualViewportOffset(WebFloatPoint(250.5f, 100.5f));
+  WebViewImpl()->SetVisualViewportOffset(WebFloatPoint(250.5f, 100.5f));
   layout_viewport_scrollable_area->SetScrollOffset(ScrollOffset(0, 900.5),
                                                    kProgrammaticScroll);
   inputBox->scrollIntoViewIfNeeded(false);
@@ -1260,21 +1262,21 @@ static ScrollOffset expectedMaxFrameViewScrollOffset(
 
 TEST_P(VisualViewportTest, TestBrowserControlsAdjustment) {
   InitializeWithAndroidSettings();
-  WebView()->ResizeWithBrowserControls(IntSize(500, 450), 20, 0, false);
+  WebViewImpl()->ResizeWithBrowserControls(IntSize(500, 450), 20, 0, false);
 
   RegisterMockedHttpURLLoad("content-width-1000.html");
   NavigateTo(base_url_ + "content-width-1000.html");
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
 
   visual_viewport.SetScale(1);
   EXPECT_SIZE_EQ(IntSize(500, 450), visual_viewport.VisibleRect().Size());
   EXPECT_SIZE_EQ(IntSize(1000, 900), frame_view.FrameRect().Size());
 
   // Simulate bringing down the browser controls by 20px.
-  WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(), WebFloatSize(),
-                                 1, 1);
+  WebViewImpl()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
+                                     WebFloatSize(), 1, 1);
   EXPECT_SIZE_EQ(IntSize(500, 430), visual_viewport.VisibleRect().Size());
 
   // Test that the scroll bounds are adjusted appropriately: the visual viewport
@@ -1291,8 +1293,8 @@ TEST_P(VisualViewportTest, TestBrowserControlsAdjustment) {
                  frame_view.LayoutViewportScrollableArea()->GetScrollOffset());
 
   // Simulate bringing up the browser controls by 10.5px.
-  WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(), WebFloatSize(),
-                                 1, -10.5f / 20);
+  WebViewImpl()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
+                                     WebFloatSize(), 1, -10.5f / 20);
   EXPECT_FLOAT_SIZE_EQ(FloatSize(500, 440.5f),
                        visual_viewport.VisibleRect().Size());
 
@@ -1310,13 +1312,13 @@ TEST_P(VisualViewportTest, TestBrowserControlsAdjustment) {
 
 TEST_P(VisualViewportTest, TestBrowserControlsAdjustmentWithScale) {
   InitializeWithAndroidSettings();
-  WebView()->ResizeWithBrowserControls(IntSize(500, 450), 20, 0, false);
+  WebViewImpl()->ResizeWithBrowserControls(IntSize(500, 450), 20, 0, false);
 
   RegisterMockedHttpURLLoad("content-width-1000.html");
   NavigateTo(base_url_ + "content-width-1000.html");
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
 
   visual_viewport.SetScale(2);
   EXPECT_SIZE_EQ(IntSize(250, 225), visual_viewport.VisibleRect().Size());
@@ -1325,8 +1327,8 @@ TEST_P(VisualViewportTest, TestBrowserControlsAdjustmentWithScale) {
   // Simulate bringing down the browser controls by 20px. Since we're zoomed in,
   // the browser controls take up half as much space (in document-space) than
   // they do at an unzoomed level.
-  WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(), WebFloatSize(),
-                                 1, 1);
+  WebViewImpl()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
+                                     WebFloatSize(), 1, 1);
   EXPECT_SIZE_EQ(IntSize(250, 215), visual_viewport.VisibleRect().Size());
 
   // Test that the scroll bounds are adjusted appropriately.
@@ -1343,8 +1345,8 @@ TEST_P(VisualViewportTest, TestBrowserControlsAdjustmentWithScale) {
 
   // Scale back out, LocalFrameView max scroll shouldn't have changed. Visual
   // viewport should be moved up to accomodate larger view.
-  WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(), WebFloatSize(),
-                                 0.5f, 0);
+  WebViewImpl()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
+                                     WebFloatSize(), 0.5f, 0);
   EXPECT_EQ(1, visual_viewport.Scale());
   EXPECT_SIZE_EQ(expected,
                  frame_view.LayoutViewportScrollableArea()->GetScrollOffset());
@@ -1358,13 +1360,13 @@ TEST_P(VisualViewportTest, TestBrowserControlsAdjustmentWithScale) {
   EXPECT_SIZE_EQ(FloatSize(500, 860 - 430), visual_viewport.GetScrollOffset());
 
   // Scale out, use a scale that causes fractional rects.
-  WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(), WebFloatSize(),
-                                 0.8f, -1);
+  WebViewImpl()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
+                                     WebFloatSize(), 0.8f, -1);
   EXPECT_SIZE_EQ(FloatSize(625, 562.5), visual_viewport.VisibleRect().Size());
 
   // Bring out the browser controls by 11
-  WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(), WebFloatSize(),
-                                 1, 11 / 20.f);
+  WebViewImpl()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
+                                     WebFloatSize(), 1, 11 / 20.f);
   EXPECT_SIZE_EQ(FloatSize(625, 548.75), visual_viewport.VisibleRect().Size());
 
   // Ensure max scroll offsets are updated properly.
@@ -1391,16 +1393,16 @@ TEST_P(VisualViewportTest, TestBrowserControlsAdjustmentAndResize) {
   InitializeWithAndroidSettings();
 
   // Initialize with browser controls showing and shrinking the Blink size.
-  WebView()->ResizeWithBrowserControls(
+  WebViewImpl()->ResizeWithBrowserControls(
       WebSize(500, visual_viewport_height - browser_controls_height), 20, 0,
       true);
-  WebView()->GetBrowserControls().SetShownRatio(1);
+  WebViewImpl()->GetBrowserControls().SetShownRatio(1);
 
   RegisterMockedHttpURLLoad("content-width-1000.html");
   NavigateTo(base_url_ + "content-width-1000.html");
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
 
   visual_viewport.SetScale(page_scale);
   EXPECT_SIZE_EQ(
@@ -1418,7 +1420,7 @@ TEST_P(VisualViewportTest, TestBrowserControlsAdjustmentAndResize) {
   visual_viewport.Move(ScrollOffset(10000, 10000));
   frame_view.LayoutViewportScrollableArea()->ScrollBy(
       ScrollOffset(10000, 10000), kUserScroll);
-  WebView()->GetBrowserControls().SetShownRatio(0);
+  WebViewImpl()->GetBrowserControls().SetShownRatio(0);
 
   EXPECT_SIZE_EQ(IntSize(250, visual_viewport_height / page_scale),
                  visual_viewport.VisibleRect().Size());
@@ -1437,8 +1439,8 @@ TEST_P(VisualViewportTest, TestBrowserControlsAdjustmentAndResize) {
   // Resize the widget to match the browser controls adjustment. Ensure that the
   // total offset (i.e. what the user sees) doesn't change because of clamping
   // the offsets to valid values.
-  WebView()->ResizeWithBrowserControls(WebSize(500, visual_viewport_height), 20,
-                                       0, false);
+  WebViewImpl()->ResizeWithBrowserControls(WebSize(500, visual_viewport_height),
+                                           20, 0, false);
 
   EXPECT_SIZE_EQ(IntSize(500, visual_viewport_height), visual_viewport.Size());
   EXPECT_SIZE_EQ(IntSize(250, visual_viewport_height / page_scale),
@@ -1465,15 +1467,15 @@ TEST_P(VisualViewportTest, TestBrowserControlsShrinkAdjustmentAndResize) {
   InitializeWithAndroidSettings();
 
   // Initialize with browser controls hidden and not shrinking the Blink size.
-  WebView()->ResizeWithBrowserControls(IntSize(500, visual_viewport_height), 20,
-                                       0, false);
-  WebView()->GetBrowserControls().SetShownRatio(0);
+  WebViewImpl()->ResizeWithBrowserControls(IntSize(500, visual_viewport_height),
+                                           20, 0, false);
+  WebViewImpl()->GetBrowserControls().SetShownRatio(0);
 
   RegisterMockedHttpURLLoad("content-width-1000.html");
   NavigateTo(base_url_ + "content-width-1000.html");
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
 
   visual_viewport.SetScale(page_scale);
   EXPECT_SIZE_EQ(IntSize(250, visual_viewport_height / page_scale),
@@ -1485,7 +1487,7 @@ TEST_P(VisualViewportTest, TestBrowserControlsShrinkAdjustmentAndResize) {
   // Scroll all the way to the bottom, showing the the browser controls in the
   // process. (This could happen via window.scrollTo during a scroll, for
   // example).
-  WebView()->GetBrowserControls().SetShownRatio(1);
+  WebViewImpl()->GetBrowserControls().SetShownRatio(1);
   visual_viewport.Move(ScrollOffset(10000, 10000));
   frame_view.LayoutViewportScrollableArea()->ScrollBy(
       ScrollOffset(10000, 10000), kUserScroll);
@@ -1511,7 +1513,7 @@ TEST_P(VisualViewportTest, TestBrowserControlsShrinkAdjustmentAndResize) {
   // Resize the widget to match the browser controls adjustment. Ensure that the
   // total offset (i.e. what the user sees) doesn't change because of clamping
   // the offsets to valid values.
-  WebView()->ResizeWithBrowserControls(
+  WebViewImpl()->ResizeWithBrowserControls(
       WebSize(500, visual_viewport_height - browser_controls_height), 20, 0,
       true);
 
@@ -1534,10 +1536,11 @@ TEST_P(VisualViewportTest, TestBrowserControlsShrinkAdjustmentAndResize) {
 // the main frame's scroll offset. crbug.com/428193.
 TEST_P(VisualViewportTest, TestTopControlHidingResizeDoesntClampMainFrame) {
   InitializeWithAndroidSettings();
-  WebView()->ResizeWithBrowserControls(WebView()->Size(), 500, 0, false);
-  WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(), WebFloatSize(),
-                                 1, 1);
-  WebView()->ResizeWithBrowserControls(WebSize(1000, 1000), 500, 0, true);
+  WebViewImpl()->ResizeWithBrowserControls(WebViewImpl()->Size(), 500, 0,
+                                           false);
+  WebViewImpl()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
+                                     WebFloatSize(), 1, 1);
+  WebViewImpl()->ResizeWithBrowserControls(WebSize(1000, 1000), 500, 0, true);
 
   RegisterMockedHttpURLLoad("content-width-1000.html");
   NavigateTo(base_url_ + "content-width-1000.html");
@@ -1545,9 +1548,9 @@ TEST_P(VisualViewportTest, TestTopControlHidingResizeDoesntClampMainFrame) {
   // Scroll the LocalFrameView to the bottom of the page but "hide" the browser
   // controls on the compositor side so the max scroll position should account
   // for the full viewport height.
-  WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(), WebFloatSize(),
-                                 1, -1);
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  WebViewImpl()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
+                                     WebFloatSize(), 1, -1);
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
   frame_view.LayoutViewportScrollableArea()->SetScrollOffset(
       ScrollOffset(0, 10000), kProgrammaticScroll);
   EXPECT_EQ(
@@ -1555,7 +1558,7 @@ TEST_P(VisualViewportTest, TestTopControlHidingResizeDoesntClampMainFrame) {
       frame_view.LayoutViewportScrollableArea()->GetScrollOffset().Height());
 
   // Now send the resize, make sure the scroll offset doesn't change.
-  WebView()->ResizeWithBrowserControls(WebSize(1000, 1500), 500, 0, false);
+  WebViewImpl()->ResizeWithBrowserControls(WebSize(1000, 1500), 500, 0, false);
   EXPECT_EQ(
       500,
       frame_view.LayoutViewportScrollableArea()->GetScrollOffset().Height());
@@ -1571,7 +1574,7 @@ static void configureHiddenScrollbarsSettings(WebSettings* settings) {
 TEST_P(VisualViewportTest,
        TestScrollbarsNotAttachedWhenHideScrollbarsSettingIsTrue) {
   InitializeWithAndroidSettings(configureHiddenScrollbarsSettings);
-  WebView()->Resize(IntSize(100, 150));
+  WebViewImpl()->Resize(IntSize(100, 150));
   NavigateTo("about:blank");
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
@@ -1584,7 +1587,7 @@ TEST_P(VisualViewportTest,
 TEST_P(VisualViewportTest,
        TestScrollbarsAttachedWhenHideScrollbarsSettingIsFalse) {
   InitializeWithAndroidSettings();
-  WebView()->Resize(IntSize(100, 150));
+  WebViewImpl()->Resize(IntSize(100, 150));
   NavigateTo("about:blank");
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
@@ -1596,14 +1599,14 @@ TEST_P(VisualViewportTest,
 // compositing change update. crbug.com/423188.
 TEST_P(VisualViewportTest, TestChangingContentSizeAffectsScrollBounds) {
   InitializeWithAndroidSettings();
-  WebView()->Resize(IntSize(100, 150));
+  WebViewImpl()->Resize(IntSize(100, 150));
 
   RegisterMockedHttpURLLoad("content-width-1000.html");
   NavigateTo(base_url_ + "content-width-1000.html");
 
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
 
-  WebView()->MainFrameImpl()->ExecuteScript(
+  WebViewImpl()->MainFrameImpl()->ExecuteScript(
       WebScriptSource("var content = document.getElementById(\"content\");"
                       "content.style.width = \"1500px\";"
                       "content.style.height = \"2400px\";"));
@@ -1619,19 +1622,19 @@ TEST_P(VisualViewportTest, TestChangingContentSizeAffectsScrollBounds) {
 // viewport.
 TEST_P(VisualViewportTest, ResizeVisualViewportStaysWithinOuterViewport) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(100, 200));
+  WebViewImpl()->Resize(IntSize(100, 200));
 
   NavigateTo("about:blank");
-  WebView()->UpdateAllLifecyclePhases();
+  WebViewImpl()->UpdateAllLifecyclePhases();
 
-  WebView()->ResizeVisualViewport(IntSize(100, 100));
+  WebViewImpl()->ResizeVisualViewport(IntSize(100, 100));
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
   visual_viewport.Move(ScrollOffset(0, 100));
 
   EXPECT_EQ(100, visual_viewport.GetScrollOffset().Height());
 
-  WebView()->ResizeVisualViewport(IntSize(100, 200));
+  WebViewImpl()->ResizeVisualViewport(IntSize(100, 200));
 
   EXPECT_EQ(0, visual_viewport.GetScrollOffset().Height());
 }
@@ -1639,13 +1642,13 @@ TEST_P(VisualViewportTest, ResizeVisualViewportStaysWithinOuterViewport) {
 TEST_P(VisualViewportTest, ElementBoundsInViewportSpaceAccountsForViewport) {
   InitializeWithAndroidSettings();
 
-  WebView()->Resize(IntSize(500, 800));
+  WebViewImpl()->Resize(IntSize(500, 800));
 
   RegisterMockedHttpURLLoad("pinch-viewport-input-field.html");
   NavigateTo(base_url_ + "pinch-viewport-input-field.html");
 
-  WebView()->SetInitialFocus(false);
-  Element* input_element = WebView()->FocusedElement();
+  WebViewImpl()->SetInitialFocus(false);
+  Element* input_element = WebViewImpl()->FocusedElement();
 
   IntRect bounds = input_element->GetLayoutObject()->AbsoluteBoundingBoxRect();
 
@@ -1667,16 +1670,16 @@ TEST_P(VisualViewportTest, ElementBoundsInViewportSpaceAccountsForViewport) {
 
 TEST_P(VisualViewportTest, ElementVisibleBoundsInVisualViewport) {
   InitializeWithAndroidSettings();
-  WebView()->Resize(IntSize(640, 1080));
+  WebViewImpl()->Resize(IntSize(640, 1080));
   RegisterMockedHttpURLLoad("viewport-select.html");
   NavigateTo(base_url_ + "viewport-select.html");
 
-  ASSERT_EQ(2.0f, WebView()->PageScaleFactor());
-  WebView()->SetInitialFocus(false);
-  Element* element = WebView()->FocusedElement();
+  ASSERT_EQ(2.0f, WebViewImpl()->PageScaleFactor());
+  WebViewImpl()->SetInitialFocus(false);
+  Element* element = WebViewImpl()->FocusedElement();
   EXPECT_FALSE(element->VisibleBoundsInVisualViewport().IsEmpty());
 
-  WebView()->SetPageScaleFactor(4.0);
+  WebViewImpl()->SetPageScaleFactor(4.0);
   EXPECT_TRUE(element->VisibleBoundsInVisualViewport().IsEmpty());
 }
 
@@ -1684,7 +1687,7 @@ TEST_P(VisualViewportTest, ElementVisibleBoundsInVisualViewport) {
 // methods don't change with the visual viewport.
 TEST_P(VisualViewportTest, visualViewportIsInert) {
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewImpl* web_view_impl = web_view_helper.Initialize(
+  WebViewBase* web_view_impl = web_view_helper.Initialize(
       nullptr, nullptr, nullptr, &configureAndroidCompositing);
 
   web_view_impl->Resize(IntSize(200, 300));
@@ -1767,12 +1770,12 @@ TEST_P(VisualViewportTest, visualViewportIsInert) {
 TEST_P(VisualViewportTest, TestMainFrameInitializationSizing) {
   InitializeWithAndroidSettings();
 
-  WebView()->Resize(IntSize(100, 200));
+  WebViewImpl()->Resize(IntSize(100, 200));
 
   RegisterMockedHttpURLLoad("content-width-1000-min-scale.html");
   NavigateTo(base_url_ + "content-width-1000-min-scale.html");
 
-  WebLocalFrameImpl* local_frame = WebView()->MainFrameImpl();
+  WebLocalFrameImpl* local_frame = WebViewImpl()->MainFrameImpl();
   // The shutdown() calls are a hack to prevent this test from violating
   // invariants about frame state during navigation/detach.
   local_frame->GetFrame()->GetDocument()->Shutdown();
@@ -1786,16 +1789,16 @@ TEST_P(VisualViewportTest, TestMainFrameInitializationSizing) {
 // Tests that the maximum scroll offset of the viewport can be fractional.
 TEST_P(VisualViewportTest, FractionalMaxScrollOffset) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(101, 201));
+  WebViewImpl()->Resize(IntSize(101, 201));
   NavigateTo("about:blank");
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
   ScrollableArea* scrollable_area = &visual_viewport;
 
-  WebView()->SetPageScaleFactor(1.0);
+  WebViewImpl()->SetPageScaleFactor(1.0);
   EXPECT_SIZE_EQ(ScrollOffset(), scrollable_area->MaximumScrollOffset());
 
-  WebView()->SetPageScaleFactor(2);
+  WebViewImpl()->SetPageScaleFactor(2);
   EXPECT_SIZE_EQ(ScrollOffset(101. / 2., 201. / 2.),
                  scrollable_area->MaximumScrollOffset());
 }
@@ -1805,14 +1808,14 @@ TEST_P(VisualViewportTest, FractionalMaxScrollOffset) {
 // ScrollAnimatorBase class.
 TEST_P(VisualViewportTest, SlowScrollAfterImplScroll) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(800, 600));
+  WebViewImpl()->Resize(IntSize(800, 600));
   NavigateTo("about:blank");
 
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
 
   // Apply some scroll and scale from the impl-side.
-  WebView()->ApplyViewportDeltas(WebFloatSize(300, 200), WebFloatSize(0, 0),
-                                 WebFloatSize(0, 0), 2, 0);
+  WebViewImpl()->ApplyViewportDeltas(WebFloatSize(300, 200), WebFloatSize(0, 0),
+                                     WebFloatSize(0, 0), 2, 0);
 
   EXPECT_SIZE_EQ(FloatSize(300, 200), visual_viewport.GetScrollOffset());
 
@@ -1855,14 +1858,14 @@ TEST_P(VisualViewportTest, AccessibilityHitTestWhileZoomedIn) {
   RegisterMockedHttpURLLoad("hit-test.html");
   NavigateTo(base_url_ + "hit-test.html");
 
-  WebView()->Resize(IntSize(500, 500));
-  WebView()->UpdateAllLifecyclePhases();
+  WebViewImpl()->Resize(IntSize(500, 500));
+  WebViewImpl()->UpdateAllLifecyclePhases();
 
-  WebDocument web_doc = WebView()->MainFrameImpl()->GetDocument();
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  WebDocument web_doc = WebViewImpl()->MainFrameImpl()->GetDocument();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
 
-  WebView()->SetPageScaleFactor(2);
-  WebView()->SetVisualViewportOffset(WebFloatPoint(200, 230));
+  WebViewImpl()->SetPageScaleFactor(2);
+  WebViewImpl()->SetVisualViewportOffset(WebFloatPoint(200, 230));
   frame_view.LayoutViewportScrollableArea()->SetScrollOffset(
       ScrollOffset(400, 1100), kProgrammaticScroll);
 
@@ -1882,12 +1885,13 @@ TEST_P(VisualViewportTest, AccessibilityHitTestWhileZoomedIn) {
 // Tests that the maximum scroll offset of the viewport can be fractional.
 TEST_P(VisualViewportTest, TestCoordinateTransforms) {
   InitializeWithAndroidSettings();
-  WebView()->Resize(IntSize(800, 600));
+  WebViewImpl()->Resize(IntSize(800, 600));
   RegisterMockedHttpURLLoad("content-width-1000.html");
   NavigateTo(base_url_ + "content-width-1000.html");
 
-  VisualViewport& visual_viewport = WebView()->GetPage()->GetVisualViewport();
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  VisualViewport& visual_viewport =
+      WebViewImpl()->GetPage()->GetVisualViewport();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
 
   // At scale = 1 the transform should be a no-op.
   visual_viewport.SetScale(1);
@@ -1939,7 +1943,7 @@ TEST_P(VisualViewportTest, TestCoordinateTransforms) {
 TEST_P(VisualViewportTest, WindowDimensionsOnLoad) {
   InitializeWithAndroidSettings();
   RegisterMockedHttpURLLoad("window_dimensions.html");
-  WebView()->Resize(IntSize(800, 600));
+  WebViewImpl()->Resize(IntSize(800, 600));
   NavigateTo(base_url_ + "window_dimensions.html");
 
   Element* output = GetFrame()->GetDocument()->getElementById("output");
@@ -1955,7 +1959,7 @@ TEST_P(VisualViewportTest, WindowDimensionsOnLoad) {
 TEST_P(VisualViewportTest, WindowDimensionsOnLoadWideContent) {
   InitializeWithAndroidSettings();
   RegisterMockedHttpURLLoad("window_dimensions_wide_div.html");
-  WebView()->Resize(IntSize(800, 600));
+  WebViewImpl()->Resize(IntSize(800, 600));
   NavigateTo(base_url_ + "window_dimensions_wide_div.html");
 
   Element* output = GetFrame()->GetDocument()->getElementById("output");
@@ -1966,7 +1970,7 @@ TEST_P(VisualViewportTest, WindowDimensionsOnLoadWideContent) {
 
 TEST_P(VisualViewportTest, PinchZoomGestureScrollsVisualViewportOnly) {
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(100, 100));
+  WebViewImpl()->Resize(IntSize(100, 100));
 
   RegisterMockedHttpURLLoad("200-by-800-viewport.html");
   NavigateTo(base_url_ + "200-by-800-viewport.html");
@@ -1980,10 +1984,11 @@ TEST_P(VisualViewportTest, PinchZoomGestureScrollsVisualViewportOnly) {
   pinch_update.data.pinch_update.scale = 2;
   pinch_update.data.pinch_update.zoom_disabled = false;
 
-  WebView()->HandleInputEvent(WebCoalescedInputEvent(pinch_update));
+  WebViewImpl()->HandleInputEvent(WebCoalescedInputEvent(pinch_update));
 
-  VisualViewport& visual_viewport = WebView()->GetPage()->GetVisualViewport();
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  VisualViewport& visual_viewport =
+      WebViewImpl()->GetPage()->GetVisualViewport();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
 
   EXPECT_FLOAT_SIZE_EQ(FloatSize(50, 50), visual_viewport.GetScrollOffset());
   EXPECT_SIZE_EQ(ScrollOffset(0, 0),
@@ -1996,17 +2001,17 @@ TEST_P(VisualViewportTest, ResizeWithScrollAnchoring) {
   RuntimeEnabledFeatures::SetScrollAnchoringEnabled(true);
 
   InitializeWithDesktopSettings();
-  WebView()->Resize(IntSize(800, 600));
+  WebViewImpl()->Resize(IntSize(800, 600));
 
   RegisterMockedHttpURLLoad("icb-relative-content.html");
   NavigateTo(base_url_ + "icb-relative-content.html");
 
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
   frame_view.LayoutViewportScrollableArea()->SetScrollOffset(
       ScrollOffset(700, 500), kProgrammaticScroll);
-  WebView()->UpdateAllLifecyclePhases();
+  WebViewImpl()->UpdateAllLifecyclePhases();
 
-  WebView()->Resize(IntSize(800, 300));
+  WebViewImpl()->Resize(IntSize(800, 300));
   EXPECT_SIZE_EQ(ScrollOffset(700, 200),
                  frame_view.LayoutViewportScrollableArea()->GetScrollOffset());
 
@@ -2021,25 +2026,26 @@ TEST_P(VisualViewportTest, ResizeAnchoringWithRootScroller) {
   RuntimeEnabledFeatures::SetSetRootScrollerEnabled(true);
 
   InitializeWithAndroidSettings();
-  WebView()->Resize(IntSize(800, 600));
+  WebViewImpl()->Resize(IntSize(800, 600));
 
   RegisterMockedHttpURLLoad("root-scroller-div.html");
   NavigateTo(base_url_ + "root-scroller-div.html");
 
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
 
   Element* scroller = GetFrame()->GetDocument()->getElementById("rootScroller");
   NonThrowableExceptionState non_throw;
   GetFrame()->GetDocument()->setRootScroller(scroller, non_throw);
 
-  WebView()->SetPageScaleFactor(3.f);
+  WebViewImpl()->SetPageScaleFactor(3.f);
   frame_view.GetScrollableArea()->SetScrollOffset(ScrollOffset(0, 400),
                                                   kProgrammaticScroll);
 
-  VisualViewport& visual_viewport = WebView()->GetPage()->GetVisualViewport();
+  VisualViewport& visual_viewport =
+      WebViewImpl()->GetPage()->GetVisualViewport();
   visual_viewport.SetScrollOffset(ScrollOffset(0, 400), kProgrammaticScroll);
 
-  WebView()->Resize(IntSize(800, 500));
+  WebViewImpl()->Resize(IntSize(800, 500));
 
   EXPECT_SIZE_EQ(ScrollOffset(),
                  frame_view.LayoutViewportScrollableArea()->GetScrollOffset());
@@ -2055,21 +2061,21 @@ TEST_P(VisualViewportTest, RotationAnchoringWithRootScroller) {
   RuntimeEnabledFeatures::SetSetRootScrollerEnabled(true);
 
   InitializeWithAndroidSettings();
-  WebView()->Resize(IntSize(800, 600));
+  WebViewImpl()->Resize(IntSize(800, 600));
 
   RegisterMockedHttpURLLoad("root-scroller-div.html");
   NavigateTo(base_url_ + "root-scroller-div.html");
 
-  LocalFrameView& frame_view = *WebView()->MainFrameImpl()->GetFrameView();
+  LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
 
   Element* scroller = GetFrame()->GetDocument()->getElementById("rootScroller");
   NonThrowableExceptionState non_throw;
   GetFrame()->GetDocument()->setRootScroller(scroller, non_throw);
-  WebView()->UpdateAllLifecyclePhases();
+  WebViewImpl()->UpdateAllLifecyclePhases();
 
   scroller->setScrollTop(800);
 
-  WebView()->Resize(IntSize(600, 800));
+  WebViewImpl()->Resize(IntSize(600, 800));
 
   EXPECT_SIZE_EQ(ScrollOffset(),
                  frame_view.LayoutViewportScrollableArea()->GetScrollOffset());
@@ -2082,7 +2088,7 @@ TEST_P(VisualViewportTest, RotationAnchoringWithRootScroller) {
 // when using inert (non-layout affecting) browser controls.
 TEST_P(VisualViewportTest, ResizeCompositedAndFixedBackground) {
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewImpl* web_view_impl = web_view_helper.Initialize(
+  WebViewBase* web_view_impl = web_view_helper.Initialize(
       nullptr, nullptr, nullptr, &configureAndroidCompositing);
 
   int page_width = 640;
@@ -2164,7 +2170,7 @@ static void configureAndroidNonCompositing(WebSettings* settings) {
 // resized when using inert (non-layout affecting) browser controls.
 TEST_P(VisualViewportTest, ResizeNonCompositedAndFixedBackground) {
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewImpl* web_view_impl = web_view_helper.Initialize(
+  WebViewBase* web_view_impl = web_view_helper.Initialize(
       nullptr, nullptr, nullptr, &configureAndroidNonCompositing);
 
   int page_width = 640;
@@ -2262,7 +2268,7 @@ TEST_P(VisualViewportTest, ResizeNonCompositedAndFixedBackground) {
 // background doesn't cause invalidation or layout.
 TEST_P(VisualViewportTest, ResizeNonFixedBackgroundNoLayoutOrInvalidation) {
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewImpl* web_view_impl = web_view_helper.Initialize(
+  WebViewBase* web_view_impl = web_view_helper.Initialize(
       nullptr, nullptr, nullptr, &configureAndroidCompositing);
 
   int page_width = 640;
@@ -2337,7 +2343,7 @@ TEST_P(VisualViewportTest, ResizeNonFixedBackgroundNoLayoutOrInvalidation) {
 
 TEST_P(VisualViewportTest, InvalidateLayoutViewWhenDocumentSmallerThanView) {
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewImpl* web_view_impl = web_view_helper.Initialize(
+  WebViewBase* web_view_impl = web_view_helper.Initialize(
       nullptr, nullptr, nullptr, &configureAndroidCompositing);
 
   int page_width = 320;
@@ -2385,10 +2391,10 @@ TEST_P(VisualViewportTest, InvalidateLayoutViewWhenDocumentSmallerThanView) {
 // it doesn't crash.
 TEST_P(VisualViewportTest, AutoResizeNoHeightUsesMinimumHeight) {
   InitializeWithDesktopSettings();
-  WebView()->ResizeWithBrowserControls(WebSize(0, 0), 0, 0, false);
-  WebView()->EnableAutoResizeMode(WebSize(25, 25), WebSize(100, 100));
+  WebViewImpl()->ResizeWithBrowserControls(WebSize(0, 0), 0, 0, false);
+  WebViewImpl()->EnableAutoResizeMode(WebSize(25, 25), WebSize(100, 100));
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
-  FrameTestHelpers::LoadHTMLString(WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadHTMLString(WebViewImpl()->MainFrameImpl(),
                                    "<!DOCTYPE html>"
                                    "<style>"
                                    "  body {"

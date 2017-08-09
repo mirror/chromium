@@ -33,22 +33,37 @@ cr.define('offlineInternals', function() {
     var storedPagesTable = $('stored-pages');
     storedPagesTable.textContent = '';
 
-    var template = $('stored-pages-table-row');
-    var td = template.content.querySelectorAll('td');
     for (var i = 0; i < pages.length; i++) {
-      var checkbox = td[0].querySelector('input');
+      var row = document.createElement('tr');
+
+      var checkboxCell = document.createElement('td');
+      var checkbox = document.createElement('input');
+      checkbox.setAttribute('type', 'checkbox');
+      checkbox.setAttribute('name', 'stored');
       checkbox.setAttribute('value', pages[i].id);
 
-      var link = td[1].querySelector('a');
+      checkboxCell.appendChild(checkbox);
+      row.appendChild(checkboxCell);
+
+      var cell = document.createElement('td');
+      var link = document.createElement('a');
       link.setAttribute('href', pages[i].onlineUrl);
       link.textContent = pages[i].onlineUrl;
+      cell.appendChild(link);
+      row.appendChild(cell);
 
-      td[2].textContent = pages[i].namespace;
-      td[3].textContent = Math.round(pages[i].size / 1024);
-      td[4].textContent = pages[i].isExpired;
-      td[5].textContent = pages[i].requestOrigin;
+      cell = document.createElement('td');
+      cell.textContent = pages[i].namespace;
+      row.appendChild(cell);
 
-      var row = document.importNode(template.content, true);
+      cell = document.createElement('td');
+      cell.textContent = Math.round(pages[i].size / 1024);
+      row.appendChild(cell);
+
+      cell = document.createElement('td');
+      cell.textContent = pages[i].isExpired;
+      row.appendChild(cell);
+
       storedPagesTable.appendChild(row);
     }
     offlinePages = pages;
@@ -63,18 +78,30 @@ cr.define('offlineInternals', function() {
     var requestQueueTable = $('request-queue');
     requestQueueTable.textContent = '';
 
-    var template = $('request-queue-table-row');
-    var td = template.content.querySelectorAll('td');
     for (var i = 0; i < requests.length; i++) {
-      var checkbox = td[0].querySelector('input');
+      var row = document.createElement('tr');
+
+      var checkboxCell = document.createElement('td');
+      var checkbox = document.createElement('input');
+      checkbox.setAttribute('type', 'checkbox');
+      checkbox.setAttribute('name', 'requests');
       checkbox.setAttribute('value', requests[i].id);
 
-      td[1].textContent = requests[i].onlineUrl;
-      td[2].textContent = new Date(requests[i].creationTime);
-      td[3].textContent = requests[i].status;
-      td[4].textContent = requests[i].requestOrigin;
+      checkboxCell.appendChild(checkbox);
+      row.appendChild(checkboxCell);
 
-      var row = document.importNode(template.content, true);
+      var cell = document.createElement('td');
+      cell.textContent = requests[i].onlineUrl;
+      row.appendChild(cell);
+
+      cell = document.createElement('td');
+      cell.textContent = new Date(requests[i].creationTime);
+      row.appendChild(cell);
+
+      cell = document.createElement('td');
+      cell.textContent = requests[i].status;
+      row.appendChild(cell);
+
       requestQueueTable.appendChild(row);
     }
     savePageRequests = requests;

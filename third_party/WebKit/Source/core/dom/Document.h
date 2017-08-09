@@ -85,6 +85,7 @@ class CDATASection;
 class CSSStyleSheet;
 class CanvasFontCache;
 class ChromeClient;
+class CompositorPendingAnimations;
 class Comment;
 class ComputedStyle;
 class ConsoleMessage;
@@ -143,7 +144,6 @@ class NodeIterator;
 class NthIndexCache;
 class OriginAccessEntry;
 class Page;
-class PendingAnimations;
 class ProcessingInstruction;
 class PropertyRegistry;
 class QualifiedName;
@@ -1176,7 +1176,7 @@ class CORE_EXPORT Document : public ContainerNode,
   V0CustomElementMicrotaskRunQueue* CustomElementMicrotaskRunQueue();
 
   void ClearImportsController();
-  HTMLImportsController* EnsureImportsController();
+  void CreateImportsController();
   HTMLImportsController* ImportsController() const {
     return imports_controller_;
   }
@@ -1207,7 +1207,9 @@ class CORE_EXPORT Document : public ContainerNode,
 
   AnimationClock& GetAnimationClock();
   DocumentTimeline& Timeline() const { return *timeline_; }
-  PendingAnimations& GetPendingAnimations() { return *pending_animations_; }
+  CompositorPendingAnimations& GetCompositorPendingAnimations() {
+    return *compositor_pending_animations_;
+  }
 
   void AddToTopLayer(Element*, const Element* before = nullptr);
   void RemoveFromTopLayer(Element*);
@@ -1673,7 +1675,7 @@ class CORE_EXPORT Document : public ContainerNode,
   LocaleIdentifierToLocaleMap locale_cache_;
 
   Member<DocumentTimeline> timeline_;
-  Member<PendingAnimations> pending_animations_;
+  Member<CompositorPendingAnimations> compositor_pending_animations_;
 
   Member<Document> template_document_;
   Member<Document> template_document_host_;
@@ -1720,8 +1722,6 @@ class CORE_EXPORT Document : public ContainerNode,
   Member<NetworkStateObserver> network_state_observer_;
 
   bool has_high_media_engagement_;
-
-  int gc_age_when_document_detached_ = 0;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;

@@ -550,8 +550,8 @@
   },
   {
     "prefix": "outofblink-cors",
-    "base": "external/wpt/fetch",
-    "args": ["--enable-features=OutOfBlinkCORS,LoadingWithMojo"]
+    "base": "webexposed",
+    "args": ["--enable-features=OutOfBlinkCORS"]
   },
   {
     "prefix": "presentation",

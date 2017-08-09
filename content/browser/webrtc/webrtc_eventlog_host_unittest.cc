@@ -4,7 +4,6 @@
 
 #include "content/browser/webrtc/webrtc_eventlog_host.h"
 
-#include <set>
 #include <tuple>
 
 #include "base/files/file.h"
@@ -82,41 +81,12 @@ class WebRtcEventlogHostTest : public testing::Test {
     IPC::PlatformFileForTransitToFile(std::get<1>(start_params)).Close();
   }
 
-  // This version of the function returns the peer connection ID instead of
-  // validating it.
-  int ReadStartIPCMessageAndCloseFile(const IPC::Message* msg) {
-    EXPECT_TRUE(msg);
-    if (msg) {
-      std::tuple<int, IPC::PlatformFileForTransit> start_params;
-      PeerConnectionTracker_StartEventLog::Read(msg, &start_params);
-      EXPECT_NE(IPC::InvalidPlatformFileForTransit(),
-                std::get<1>(start_params));
-      if (std::get<1>(start_params) != IPC::InvalidPlatformFileForTransit()) {
-        IPC::PlatformFileForTransitToFile(std::get<1>(start_params)).Close();
-      }
-      return std::get<0>(start_params);
-    }
-    return -1;
-  }
-
   void ValidateStopIPCMessage(const IPC::Message* msg,
                               const int peer_connection_id) {
     ASSERT_TRUE(msg);
     std::tuple<int> stop_params;
     PeerConnectionTracker_StopEventLog::Read(msg, &stop_params);
     EXPECT_EQ(peer_connection_id, std::get<0>(stop_params));
-  }
-
-  // This version of the function returns the peer connection ID instead of
-  // validating it.
-  int ReadStopIPCMessage(const IPC::Message* msg) {
-    EXPECT_TRUE(msg);
-    if (msg) {
-      std::tuple<int> stop_params;
-      PeerConnectionTracker_StopEventLog::Read(msg, &stop_params);
-      return std::get<0>(stop_params);
-    }
-    return -1;
   }
 };
 
@@ -173,7 +143,14 @@ TEST_F(WebRtcEventlogHostTest, OnePeerConnectionTest) {
 // each of the Start and Stop calls, and that a file is created for both
 // PeerConnections.
 
-TEST_F(WebRtcEventlogHostTest, TwoPeerConnectionsTest) {
+// Test is flaky on Windpws: https://crbug.com/750708
+#if defined(OS_WIN)
+#define MAYBE_TwoPeerConnectionsTest DISABLED_TwoPeerConnectionsTest
+#else
+#define MAYBE_TwoPeerConnectionsTest TwoPeerConnectionsTest
+#endif
+
+TEST_F(WebRtcEventlogHostTest, MAYBE_TwoPeerConnectionsTest) {
   const int kTestPeerConnectionId1 = 123;
   const int kTestPeerConnectionId2 = 321;
   mock_render_process_host_->sink().ClearMessages();
@@ -187,15 +164,10 @@ TEST_F(WebRtcEventlogHostTest, TwoPeerConnectionsTest) {
   EXPECT_EQ(size_t(2), mock_render_process_host_->sink().message_count());
   const IPC::Message* start_msg1 =
       mock_render_process_host_->sink().GetMessageAt(0);
-  int start_msg1_id = ReadStartIPCMessageAndCloseFile(start_msg1);
+  ValidateStartIPCMessageAndCloseFile(start_msg1, kTestPeerConnectionId1);
   const IPC::Message* start_msg2 =
       mock_render_process_host_->sink().GetMessageAt(1);
-  int start_msg2_id = ReadStartIPCMessageAndCloseFile(start_msg2);
-
-  const std::set<int> expected_ids = {kTestPeerConnectionId1,
-                                      kTestPeerConnectionId2};
-  std::set<int> actual_start_ids = {start_msg1_id, start_msg2_id};
-  EXPECT_EQ(expected_ids, actual_start_ids);
+  ValidateStartIPCMessageAndCloseFile(start_msg2, kTestPeerConnectionId2);
 
   // Stop logging.
   mock_render_process_host_->sink().ClearMessages();
@@ -205,13 +177,10 @@ TEST_F(WebRtcEventlogHostTest, TwoPeerConnectionsTest) {
   EXPECT_EQ(size_t(2), mock_render_process_host_->sink().message_count());
   const IPC::Message* stop_msg1 =
       mock_render_process_host_->sink().GetMessageAt(0);
-  int stop_msg1_id = ReadStopIPCMessage(stop_msg1);
+  ValidateStopIPCMessage(stop_msg1, kTestPeerConnectionId1);
   const IPC::Message* stop_msg2 =
       mock_render_process_host_->sink().GetMessageAt(1);
-  int stop_msg2_id = ReadStopIPCMessage(stop_msg2);
-
-  std::set<int> actual_stop_ids = {stop_msg1_id, stop_msg2_id};
-  EXPECT_EQ(expected_ids, actual_stop_ids);
+  ValidateStopIPCMessage(stop_msg2, kTestPeerConnectionId2);
 
   // Clean up the logfiles.
   base::FilePath expected_file1 = GetExpectedEventLogFileName(
@@ -229,7 +198,7 @@ TEST_F(WebRtcEventlogHostTest, TwoPeerConnectionsTest) {
 // maximum allowed number of IPC messages and log files will be opened, but we
 // expect the number of stop IPC messages to be equal to the actual number of
 // PeerConnections.
-TEST_F(WebRtcEventlogHostTest, ExceedMaxPeerConnectionsTest) {
+TEST_F(WebRtcEventlogHostTest, DISABLED_ExceedMaxPeerConnectionsTest) {
 #if defined(OS_ANDROID)
   const int kMaxNumberLogFiles = 3;
 #else
@@ -244,18 +213,12 @@ TEST_F(WebRtcEventlogHostTest, ExceedMaxPeerConnectionsTest) {
   StartLogging();
 
   // Check that the correct IPC messages were sent.
-  {
-    std::set<int> actual_ids, expected_ids;
-    ASSERT_EQ(size_t(kMaxNumberLogFiles),
-              mock_render_process_host_->sink().message_count());
-    for (int i = 0; i < kMaxNumberLogFiles; ++i) {
-      const IPC::Message* start_msg =
-          mock_render_process_host_->sink().GetMessageAt(i);
-      int id = ReadStartIPCMessageAndCloseFile(start_msg);
-      actual_ids.insert(id);
-      expected_ids.insert(i);
-    }
-    EXPECT_EQ(actual_ids, expected_ids);
+  ASSERT_EQ(size_t(kMaxNumberLogFiles),
+            mock_render_process_host_->sink().message_count());
+  for (int i = 0; i < kMaxNumberLogFiles; ++i) {
+    const IPC::Message* start_msg =
+        mock_render_process_host_->sink().GetMessageAt(i);
+    ValidateStartIPCMessageAndCloseFile(start_msg, i);
   }
 
   // Stop logging.
@@ -263,18 +226,12 @@ TEST_F(WebRtcEventlogHostTest, ExceedMaxPeerConnectionsTest) {
   StopLogging();
 
   // Check that the correct IPC messages were sent.
-  {
-    std::set<int> actual_ids, expected_ids;
-    ASSERT_EQ(size_t(kNumberOfPeerConnections),
-              mock_render_process_host_->sink().message_count());
-    for (int i = 0; i < kNumberOfPeerConnections; ++i) {
-      const IPC::Message* stop_msg =
-          mock_render_process_host_->sink().GetMessageAt(i);
-      int id = ReadStopIPCMessage(stop_msg);
-      actual_ids.insert(id);
-      expected_ids.insert(i);
-    }
-    EXPECT_EQ(actual_ids, expected_ids);
+  ASSERT_EQ(size_t(kNumberOfPeerConnections),
+            mock_render_process_host_->sink().message_count());
+  for (int i = 0; i < kNumberOfPeerConnections; ++i) {
+    const IPC::Message* stop_msg =
+        mock_render_process_host_->sink().GetMessageAt(i);
+    ValidateStopIPCMessage(stop_msg, i);
   }
 
   // Clean up the logfiles.

@@ -52,7 +52,7 @@ struct CONTENT_EXPORT BackgroundFetchRegistration {
   BackgroundFetchRegistration(const BackgroundFetchRegistration& other);
   ~BackgroundFetchRegistration();
 
-  std::string id;
+  std::string tag;
   std::vector<IconDefinition> icons;
   std::string title;
   int64_t total_download_size = 0;

@@ -25,7 +25,6 @@
 #include "modules/fetch/BodyStreamBuffer.h"
 #include "modules/fetch/FormDataBytesConsumer.h"
 #include "modules/fetch/ResponseInit.h"
-#include "platform/HTTPNames.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8PrivateProperty.h"
 #include "platform/loader/fetch/FetchUtils.h"
@@ -33,7 +32,6 @@
 #include "platform/network/HTTPHeaderMap.h"
 #include "platform/network/NetworkUtils.h"
 #include "platform/wtf/RefPtr.h"
-#include "public/platform/WebCORS.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
 
 namespace blink {
@@ -75,7 +73,7 @@ FetchResponseData* CreateFetchResponseDataFromWebResponse(
       response = response->CreateBasicFilteredResponse();
       break;
     case mojom::FetchResponseType::kCORS: {
-      WebCORS::HTTPHeaderSet header_names;
+      HTTPHeaderSet header_names;
       for (const auto& header : web_response.CorsExposedHeaderNames())
         header_names.insert(String(header));
       response = response->CreateCORSFilteredResponse(header_names);

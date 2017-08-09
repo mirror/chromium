@@ -8,7 +8,6 @@
 #import <XCTest/XCTest.h>
 
 #import "base/ios/block_types.h"
-#include "base/ios/ios_util.h"
 #include "base/strings/sys_string_conversions.h"
 #import "ios/testing/earl_grey/matchers.h"
 #import "ios/web/public/test/http_server/http_server.h"
@@ -74,13 +73,6 @@ using testing::ElementToDismissContextMenu;
 
 // Tests context menu on element that has WebkitTouchCallout set to none.
 - (void)testContextMenuWebkitTouchCalloutNone {
-  // TODO(crbug.com/753119): Re-enable this test on iOS 11 iPad once the bug is
-  // fixed.
-  if (base::ios::IsRunningOnIOS11OrLater() &&
-      UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-    EARL_GREY_TEST_DISABLED(@"Test disabled on iOS 11.");
-  }
-
   // Create map of canned responses and set up the test HTML server.
   std::map<GURL, std::string> responses;
   GURL initialURL =
@@ -113,13 +105,6 @@ using testing::ElementToDismissContextMenu;
 // Tests context menu on element that has WebkitTouchCallout set to none from an
 // ancestor.
 - (void)testContextMenuWebkitTouchCalloutNoneFromAncestor {
-  // TODO(crbug.com/753119): Re-enable this test on iOS 11 iPad once the bug is
-  // fixed.
-  if (base::ios::IsRunningOnIOS11OrLater() &&
-      UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-    EARL_GREY_TEST_DISABLED(@"Test disabled on iOS 11.");
-  }
-
   // Create map of canned responses and set up the test HTML server.
   std::map<GURL, std::string> responses;
   GURL initialURL =

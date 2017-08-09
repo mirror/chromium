@@ -2002,8 +2002,7 @@ TEST_P(ParameterizedWebFrameTest, FrameOwnerPropertiesMargin) {
                     HTMLNames::marginheightAttr));
 
   LocalFrameView* frame_view = local_frame->GetFrameView();
-  frame_view->Resize(800, 600);
-  frame_view->SetNeedsLayout();
+  frame_view->SetLayoutSize(IntSize(800, 600));
   frame_view->UpdateAllLifecyclePhases();
   // Expect scrollbars to be enabled by default.
   EXPECT_NE(nullptr,
@@ -6038,27 +6037,14 @@ class CompositedSelectionBoundsTest : public ParameterizedWebFrameTest {
                                                .As<v8::Int32>()
                                                ->Value();
 
-    IntPoint hit_point;
-
-    if (expected_result.Length() >= 17) {
-      hit_point = IntPoint(expected_result.Get(context, 15)
-                               .ToLocalChecked()
-                               .As<v8::Int32>()
-                               ->Value(),
-                           expected_result.Get(context, 16)
-                               .ToLocalChecked()
-                               .As<v8::Int32>()
-                               ->Value());
-    } else {
-      hit_point =
-          IntPoint((start_edge_top_in_layer_x + start_edge_bottom_in_layer_x +
-                    end_edge_top_in_layer_x + end_edge_bottom_in_layer_x) /
-                       4,
-                   (start_edge_top_in_layer_y + start_edge_bottom_in_layer_y +
-                    end_edge_top_in_layer_y + end_edge_bottom_in_layer_y) /
-                           4 +
-                       3);
-    }
+    const IntPoint hit_point =
+        IntPoint((start_edge_top_in_layer_x + start_edge_bottom_in_layer_x +
+                  end_edge_top_in_layer_x + end_edge_bottom_in_layer_x) /
+                     4,
+                 (start_edge_top_in_layer_y + start_edge_bottom_in_layer_y +
+                  end_edge_top_in_layer_y + end_edge_bottom_in_layer_y) /
+                         4 +
+                     3);
 
     WebGestureEvent gesture_event(WebInputEvent::kGestureTap,
                                   WebInputEvent::kNoModifiers,
@@ -6131,26 +6117,11 @@ class CompositedSelectionBoundsTest : public ParameterizedWebFrameTest {
                              .As<v8::Int32>()
                              ->Value();
     }
-
     int y_bottom_deviation =
         start_edge_bottom_in_layer_y - select_start->edge_bottom_in_layer.y;
     EXPECT_GE(y_bottom_epsilon, std::abs(y_bottom_deviation));
     EXPECT_EQ(y_bottom_deviation,
               end_edge_bottom_in_layer_y - select_end->edge_bottom_in_layer.y);
-
-    if (expected_result.Length() >= 15) {
-      bool start_hidden = expected_result.Get(context, 13)
-                              .ToLocalChecked()
-                              .As<v8::Boolean>()
-                              ->Value();
-      bool end_hidden = expected_result.Get(context, 14)
-                            .ToLocalChecked()
-                            .As<v8::Boolean>()
-                            ->Value();
-
-      EXPECT_EQ(start_hidden, select_start->hidden);
-      EXPECT_EQ(end_hidden, select_end->hidden);
-    }
   }
 
   void RunTestWithMultipleFiles(const char* test_file, ...) {
@@ -6206,16 +6177,6 @@ TEST_P(CompositedSelectionBoundsTest, Editable) {
 TEST_P(CompositedSelectionBoundsTest, EditableDiv) {
   RunTest("composited_selection_bounds_editable_div.html");
 }
-#if defined(OS_LINUX)
-#if !defined(OS_ANDROID)
-TEST_P(CompositedSelectionBoundsTest, Input) {
-  RunTest("composited_selection_bounds_input.html");
-}
-TEST_P(CompositedSelectionBoundsTest, InputScrolled) {
-  RunTest("composited_selection_bounds_input_scrolled.html");
-}
-#endif
-#endif
 
 class DisambiguationPopupTestWebViewClient
     : public FrameTestHelpers::TestWebViewClient {
@@ -12145,37 +12106,6 @@ TEST_P(ParameterizedWebFrameTest, ContextMenuDataSelectedText) {
   RunPendingTasks();
   web_view_helper.Reset();
   EXPECT_EQ(frame.GetMenuData().selected_text, " ");
-}
-
-TEST_P(ParameterizedWebFrameTest, ContextMenuDataPasswordSelectedText) {
-  ContextMenuWebFrameClient frame;
-  FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewImpl* web_view = web_view_helper.Initialize(&frame);
-  const std::string& html = "<input type='password' value='password'>";
-  FrameTestHelpers::LoadHTMLString(web_view->MainFrameImpl(), html,
-                                   ToKURL("about:blank"));
-  web_view->Resize(WebSize(500, 300));
-  web_view->UpdateAllLifecyclePhases();
-  RunPendingTasks();
-  web_view->SetInitialFocus(false);
-  RunPendingTasks();
-
-  web_view->MainFrameImpl()->ExecuteCommand(WebString::FromUTF8("SelectAll"));
-
-  WebMouseEvent mouse_event(WebInputEvent::kMouseDown,
-                            WebInputEvent::kNoModifiers,
-                            WebInputEvent::kTimeStampForTesting);
-
-  mouse_event.button = WebMouseEvent::Button::kRight;
-  mouse_event.SetPositionInWidget(8, 8);
-  mouse_event.click_count = 1;
-  web_view->HandleInputEvent(WebCoalescedInputEvent(mouse_event));
-
-  RunPendingTasks();
-  web_view_helper.Reset();
-  EXPECT_EQ(frame.GetMenuData().input_field_type,
-            blink::WebContextMenuData::kInputFieldTypePassword);
-  EXPECT_FALSE(frame.GetMenuData().selected_text.IsEmpty());
 }
 
 TEST_P(ParameterizedWebFrameTest, LocalFrameWithRemoteParentIsTransparent) {

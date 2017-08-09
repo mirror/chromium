@@ -6,13 +6,11 @@ package org.chromium.chrome.browser.media.router;
 
 import android.support.v7.app.MediaRouteChooserDialogFragment;
 import android.support.v7.app.MediaRouteControllerDialogFragment;
-import android.support.v7.media.MediaRouteSelector;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.browser.media.router.cast.MediaSink;
 import org.chromium.chrome.browser.media.router.cast.MediaSource;
-import org.chromium.chrome.browser.media.router.cast.remoting.RemotingMediaSource;
 
 /**
  * Implements the JNI interface called from the C++ Media Router dialog controller implementation
@@ -45,30 +43,18 @@ public class ChromeMediaRouterDialogController implements MediaRouteDialogDelega
     public void openRouteChooserDialog(String[] sourceUrns) {
         if (isShowingDialog()) return;
 
-        String sourceId = null;
-        MediaRouteSelector routeSelector = null;
+        MediaSource source = null;
         for (String sourceUrn : sourceUrns) {
-            MediaSource source = MediaSource.from(sourceUrn);
-            if (source != null) {
-                sourceId = source.getUrn();
-                routeSelector = source.buildRouteSelector();
-                break;
-            }
-
-            RemotingMediaSource remotingSource = RemotingMediaSource.from(sourceUrn);
-            if (remotingSource != null) {
-                sourceId = remotingSource.getSourceId();
-                routeSelector = remotingSource.buildRouteSelector();
-                break;
-            }
+            source = MediaSource.from(sourceUrn);
+            if (source != null) break;
         }
 
-        if (sourceId == null || routeSelector == null) {
+        if (source == null) {
             nativeOnMediaSourceNotSupported(mNativeDialogController);
             return;
         }
 
-        mDialogManager = new MediaRouteChooserDialogManager(sourceId, routeSelector, this);
+        mDialogManager = new MediaRouteChooserDialogManager(source, this);
         mDialogManager.openDialog();
     }
 
@@ -81,28 +67,13 @@ public class ChromeMediaRouterDialogController implements MediaRouteDialogDelega
     public void openRouteControllerDialog(String sourceUrn, String mediaRouteId) {
         if (isShowingDialog()) return;
 
-        String sourceId = null;
-        MediaRouteSelector routeSelector = null;
-
         MediaSource source = MediaSource.from(sourceUrn);
-        if (source != null) {
-            sourceId = source.getUrn();
-            routeSelector = source.buildRouteSelector();
-        } else {
-            RemotingMediaSource remotingSource = RemotingMediaSource.from(sourceUrn);
-            if (remotingSource != null) {
-                sourceId = remotingSource.getSourceId();
-                routeSelector = remotingSource.buildRouteSelector();
-            }
-        }
-
-        if (sourceId == null || routeSelector == null) {
+        if (source == null) {
             nativeOnMediaSourceNotSupported(mNativeDialogController);
             return;
         }
 
-        mDialogManager =
-                new MediaRouteControllerDialogManager(sourceId, routeSelector, mediaRouteId, this);
+        mDialogManager = new MediaRouteControllerDialogManager(source, mediaRouteId, this);
         mDialogManager.openDialog();
     }
 

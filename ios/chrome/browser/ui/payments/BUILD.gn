@@ -223,12 +223,9 @@ source_set("eg_tests") {
   sources = [
     "payment_request_accessibility_egtest.mm",
     "payment_request_cancel_pay_abort_egtest.mm",
-    "payment_request_debit_egtest.mm",
     "payment_request_egtest_base.h",
     "payment_request_egtest_base.mm",
     "payment_request_misc_egtest.mm",
-    "payment_request_payment_method_identifier_egtest.mm",
-    "payment_request_payment_response_egtest.mm",
   ]
 
   deps = [
@@ -236,7 +233,6 @@ source_set("eg_tests") {
     "//base",
     "//components/autofill/core/browser",
     "//components/autofill/core/browser:test_support",
-    "//components/image_fetcher/core",
     "//components/payments/core",
     "//components/strings",
     "//ios/chrome/app:app_internal",
@@ -253,7 +249,6 @@ source_set("eg_tests") {
     "//ios/web/public/test",
     "//ios/web/public/test/http_server",
     "//testing/gtest",
-    "//url",
   ]
   libs = [
     "UIKit.framework",

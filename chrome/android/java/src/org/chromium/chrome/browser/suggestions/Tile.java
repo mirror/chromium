@@ -11,10 +11,16 @@ import android.support.annotation.Nullable;
  * Holds the details to populate a site suggestion tile.
  */
 public class Tile implements OfflinableSuggestion {
-    // TODO(dgn): maybe extend SiteSuggestion instead?
-    private final SiteSuggestion mSiteData;
-
+    private final String mTitle;
+    private final String mUrl;
+    private final String mWhitelistIconPath;
     private final int mIndex;
+
+    @TileGroup.TileSectionType
+    private final int mSectionType;
+
+    @TileSource
+    private final int mSource;
 
     @TileVisualType
     private int mType = TileVisualType.NONE;
@@ -26,21 +32,65 @@ public class Tile implements OfflinableSuggestion {
     private Long mOfflinePageOfflineId;
 
     /**
+     * @param title The tile title.
+     * @param url The site URL.
+     * @param whitelistIconPath The path to the icon image file, if this is a whitelisted tile.
+     * Empty otherwise.
+     * @param index The index of this tile in the list of tiles.
+     * @param source The {@code TileSource} that generated this tile.
+     * @deprecated Use {@link #Tile(SiteSuggestion, int)} instead.
+     */
+    @Deprecated
+    public Tile(
+            String title, String url, String whitelistIconPath, int index, @TileSource int source) {
+        // TODO(dgn): Remove once all the tests are updated.
+        mTitle = title;
+        mUrl = url;
+        mWhitelistIconPath = whitelistIconPath;
+        mIndex = index;
+        // TODO(dgn): get data from C++ after https://crrev/c/593659 lands.
+        mSectionType = TileGroup.TileSectionType.PERSONALIZED;
+        mSource = source;
+    }
+
+    /**
      * @param suggestion The site data we want to populate the tile with.
      * @param index The index of this tile in the list of tiles.
      */
     public Tile(SiteSuggestion suggestion, int index) {
-        mSiteData = suggestion;
-        mIndex = index;
+        this(suggestion.title, suggestion.url, suggestion.whitelistIconPath, index,
+                suggestion.source);
     }
 
-    public SiteSuggestion getData() {
-        return mSiteData;
+    /**
+     * Imports transient data from an old tile, and reports whether there is a significant
+     * difference between the two that would require a redraw.
+     * Assumes that the current tile and the old tile (if provided) both describe the same site,
+     * so the URLs have to be the same.
+     *
+     * @return Whether non-transient data is different and the tile should be redrawn.
+     */
+    public boolean importData(Tile tile) {
+        assert tile.getUrl().equals(mUrl);
+        assert tile.getSectionType() == mSectionType;
+
+        mType = tile.getType();
+        mIcon = tile.getIcon();
+        mOfflinePageOfflineId = tile.mOfflinePageOfflineId;
+
+        if (!tile.getTitle().equals(mTitle)) return true;
+        if (tile.getIndex() != mIndex) return true;
+
+        // Ignore the whitelist changes when we already have an icon, since we won't need to reload
+        // it. We also omit requesting a redraw when |mSource| changes, as it only affects UMA.
+        if (!tile.getWhitelistIconPath().equals(mWhitelistIconPath) && mIcon == null) return true;
+
+        return false;
     }
 
     @Override
     public String getUrl() {
-        return mSiteData.url;
+        return mUrl;
     }
 
     @Override
@@ -63,7 +113,14 @@ public class Tile implements OfflinableSuggestion {
      * @return The title of this tile.
      */
     public String getTitle() {
-        return mSiteData.title;
+        return mTitle;
+    }
+
+    /**
+     * @return The path of the whitelist icon associated with the URL.
+     */
+    public String getWhitelistIconPath() {
+        return mWhitelistIconPath;
     }
 
     /**
@@ -86,7 +143,7 @@ public class Tile implements OfflinableSuggestion {
      */
     @TileSource
     public int getSource() {
-        return mSiteData.source;
+        return mSource;
     }
 
     /**
@@ -122,6 +179,6 @@ public class Tile implements OfflinableSuggestion {
 
     @TileGroup.TileSectionType
     public int getSectionType() {
-        return mSiteData.sectionType;
+        return mSectionType;
     }
 }

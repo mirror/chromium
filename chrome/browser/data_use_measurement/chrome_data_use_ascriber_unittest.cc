@@ -9,7 +9,6 @@
 
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "build/build_config.h"
 #include "components/data_use_measurement/core/data_use_recorder.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/common/browser_side_navigation_policy.h"
@@ -21,8 +20,6 @@
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-
-#ifndef OS_MACOSX
 
 namespace {
 
@@ -460,5 +457,3 @@ TEST_F(ChromeDataUseAscriberTest, PageLoadObserverNotified) {
 }
 
 }  // namespace data_use_measurement
-
-#endif  // OS_MACOSX

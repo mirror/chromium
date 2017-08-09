@@ -7828,7 +7828,8 @@ class LayerTreeHostTestQueueImageDecode : public LayerTreeHostTest {
       return;
     first_ = false;
 
-    image_ = DrawImage(CreateDiscardablePaintImage(gfx::Size(400, 400)),
+    image_ = DrawImage(PaintImage(PaintImage::GetNextId(),
+                                  CreateDiscardableImage(gfx::Size(400, 400))),
                        SkIRect::MakeWH(400, 400), kNone_SkFilterQuality,
                        SkMatrix::I(), gfx::ColorSpace());
     auto callback =
@@ -7885,10 +7886,7 @@ class LayerTreeHostTestQueueImageDecodeNonLazy : public LayerTreeHostTest {
     first_ = false;
 
     bitmap_.allocN32Pixels(10, 10);
-    PaintImage image = PaintImageBuilder()
-                           .set_id(PaintImage::GetNextId())
-                           .set_image(SkImage::MakeFromBitmap(bitmap_))
-                           .TakePaintImage();
+    PaintImage image(PaintImage::GetNextId(), SkImage::MakeFromBitmap(bitmap_));
     auto callback = base::Bind(
         &LayerTreeHostTestQueueImageDecodeNonLazy::ImageDecodeFinished,
         base::Unretained(this));

@@ -6,10 +6,7 @@ import os
 import sys
 
 # Add //tools/perf/ to system path
-tools_perf_dir = os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                              '..', '..'))
-if tools_perf_dir not in sys.path:
-  sys.path.append(tools_perf_dir)
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 from chrome_telemetry_build import chromium_config
 from core import path_util

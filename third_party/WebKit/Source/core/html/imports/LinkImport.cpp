@@ -72,11 +72,23 @@ void LinkImport::Process() {
   if (!ShouldLoadResource())
     return;
 
+  if (!GetDocument().ImportsController()) {
+    // The document should be the master.
+    Document& master = GetDocument();
+    DCHECK(master.GetFrame());
+    master.CreateImportsController();
+  }
+
   const KURL& url = owner_->GetNonEmptyURLAttribute(HTMLNames::hrefAttr);
   if (url.IsEmpty() || !url.IsValid()) {
     DidFinish();
     return;
   }
+
+  HTMLImportsController* controller = GetDocument().ImportsController();
+  HTMLImportLoader* loader = GetDocument().ImportLoader();
+  HTMLImport* parent = loader ? static_cast<HTMLImport*>(loader->FirstImport())
+                              : static_cast<HTMLImport*>(controller->Root());
 
   ResourceRequest resource_request(GetDocument().CompleteURL(url));
   ReferrerPolicy referrer_policy = owner_->GetReferrerPolicy();
@@ -92,8 +104,7 @@ void LinkImport::Process() {
   params.SetCharset(GetCharset());
   params.SetContentSecurityPolicyNonce(owner_->nonce());
 
-  HTMLImportsController* controller = GetDocument().EnsureImportsController();
-  child_ = controller->Load(GetDocument(), this, params);
+  child_ = controller->Load(parent, this, params);
   if (!child_) {
     DidFinish();
     return;

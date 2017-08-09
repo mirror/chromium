@@ -34,7 +34,6 @@
 #include "content/public/common/resource_type.h"
 #include "content/public/test/cancelling_navigation_throttle.h"
 #include "content/public/test/navigation_simulator.h"
-#include "content/public/test/test_navigation_throttle_inserter.h"
 #include "content/public/test/test_renderer_host.h"
 #include "net/base/host_port_pair.h"
 #include "url/gurl.h"
@@ -69,11 +68,6 @@ const char kNonAdName[] = "foo";
 class ResourceLoadingCancellingThrottle
     : public content::CancellingNavigationThrottle {
  public:
-  static std::unique_ptr<content::NavigationThrottle> Create(
-      content::NavigationHandle* handle) {
-    return base::MakeUnique<ResourceLoadingCancellingThrottle>(handle);
-  }
-
   explicit ResourceLoadingCancellingThrottle(
       content::NavigationHandle* navigation_handle)
       : content::CancellingNavigationThrottle(
@@ -101,6 +95,23 @@ class ResourceLoadingCancellingThrottle
   }
 
   DISALLOW_COPY_AND_ASSIGN(ResourceLoadingCancellingThrottle);
+};
+
+// Registers a ResourceLoadingCancellingThrottle for every navigation.
+class CancellingThrottleInjector : public content::WebContentsObserver {
+ public:
+  explicit CancellingThrottleInjector(content::WebContents* contents)
+      : content::WebContentsObserver(contents) {}
+
+  // content::WebContentsObserver:
+  void DidStartNavigation(
+      content::NavigationHandle* navigation_handle) override {
+    navigation_handle->RegisterThrottleForTesting(
+        base::MakeUnique<ResourceLoadingCancellingThrottle>(navigation_handle));
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(CancellingThrottleInjector);
 };
 
 std::string AdTypeToString(AdType ad_type) {
@@ -684,9 +695,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, MainFrameResource) {
 TEST_F(AdsPageLoadMetricsObserverTest, NoHistogramWithoutCommit) {
   {
     // Once the metrics observer has the GlobalRequestID, throttle.
-    content::TestNavigationThrottleInserter throttle_inserter(
-        web_contents(),
-        base::BindRepeating(&ResourceLoadingCancellingThrottle::Create));
+    CancellingThrottleInjector cancelling_throttle_injector(web_contents());
 
     // Start main-frame navigation. The commit will defer after calling
     // WillProcessNavigationResponse, it will load a resource, and then the

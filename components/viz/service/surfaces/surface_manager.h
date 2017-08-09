@@ -96,7 +96,8 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   bool SurfaceModified(const SurfaceId& surface_id, const BeginFrameAck& ack);
 
   // Called when a surface has an active frame for the first time.
-  void FirstSurfaceActivation(const SurfaceInfo& surface_info);
+  // TODO(fsamuel,samans): Rename to OnFirstSurfaceActivation.
+  void SurfaceCreated(const SurfaceInfo& surface_info);
 
   // Called when a CompositorFrame within |surface| has activated.
   void SurfaceActivated(Surface* surface);

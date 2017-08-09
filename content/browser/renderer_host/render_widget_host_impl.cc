@@ -85,7 +85,6 @@
 #include "storage/browser/fileapi/isolated_context.h"
 #include "third_party/WebKit/public/web/WebCompositionUnderline.h"
 #include "ui/base/clipboard/clipboard.h"
-#include "ui/base/ui_base_switches.h"
 #include "ui/display/display_switches.h"
 #include "ui/events/blink/web_input_event_traits.h"
 #include "ui/events/event.h"
@@ -265,7 +264,6 @@ std::vector<DropData::Metadata> DropDataToMetaData(const DropData& drop_data) {
 RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
                                            RenderProcessHost* process,
                                            int32_t routing_id,
-                                           mojom::WidgetPtr widget,
                                            bool hidden)
     : renderer_initialized_(false),
       destroyed_(false),
@@ -2717,11 +2715,6 @@ void RenderWidgetHostImpl::DidAllocateSharedBitmap(uint32_t sequence_number) {
     compositor_frame_sink_binding_.ResumeIncomingMethodCallProcessing();
     TRACE_EVENT_ASYNC_END0("renderer_host", "PauseCompositorFrameSink", this);
   }
-}
-
-void RenderWidgetHostImpl::SetWidget(mojom::WidgetPtr widget) {
-  // TODO(dtapuska): Bind the WidgetInputHandler when that code has
-  // landed. crbug.com/722928
 }
 
 }  // namespace content

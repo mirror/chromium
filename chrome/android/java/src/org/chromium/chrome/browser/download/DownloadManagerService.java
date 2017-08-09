@@ -245,7 +245,12 @@ public class DownloadManagerService
     protected void init() {
         DownloadController.setDownloadNotificationService(this);
         // Post a delayed task to resume all pending downloads.
-        mHandler.postDelayed(() -> mDownloadNotifier.resumePendingDownloads(), RESUME_DELAY_MILLIS);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mDownloadNotifier.resumePendingDownloads();
+            }
+        }, RESUME_DELAY_MILLIS);
         parseUMAStatsEntriesFromSharedPrefs();
         Iterator<DownloadUmaStatsEntry> iterator = mUmaEntries.iterator();
         boolean hasChanges = false;
@@ -349,9 +354,13 @@ public class DownloadManagerService
         removeAutoResumableDownload(item.getId());
         // Post a delayed task to avoid an issue that when connectivity status just changed
         // to CONNECTED, immediately establishing a connection will sometimes fail.
-        mHandler.postDelayed(
-                () -> resumeDownload(LegacyHelpers.buildLegacyContentId(false, item.getId()),
-                        item, false), mUpdateDelayInMillis);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                resumeDownload(LegacyHelpers.buildLegacyContentId(false, item.getId()),
+                        item, false);
+            }
+        }, mUpdateDelayInMillis);
     }
 
     /**
@@ -569,9 +578,12 @@ public class DownloadManagerService
         }
         updateAllNotifications(progressPendingUpdate);
 
-        Runnable scheduleNextUpdateTask = () -> {
-            mIsUIUpdateScheduled = false;
-            scheduleUpdateIfNeeded();
+        Runnable scheduleNextUpdateTask = new Runnable(){
+            @Override
+            public void run() {
+                mIsUIUpdateScheduled = false;
+                scheduleUpdateIfNeeded();
+            }
         };
         mHandler.postDelayed(scheduleNextUpdateTask, mUpdateDelayInMillis);
     }

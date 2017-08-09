@@ -12,7 +12,6 @@ class Connection;
 }  // namespace sql
 
 namespace offline_pages {
-
 // Useful helper functions to implement PrefetchStore related operations.
 class PrefetchStoreUtils {
  public:

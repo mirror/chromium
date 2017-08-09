@@ -27,6 +27,7 @@ enum class CompositorElementIdNamespace {
   kEffectFilter,
   kEffectMask,
   kEffectRoot,
+  kScrollTranslation,
   // A sentinel to indicate the maximum representable namespace id
   // (the maximum is one less than this value).
   kMaxRepresentableNamespaceId = 1 << kCompositorNamespaceBitCount

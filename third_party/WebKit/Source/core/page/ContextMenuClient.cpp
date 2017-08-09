@@ -43,7 +43,7 @@
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/exported/WebDocumentLoaderImpl.h"
 #include "core/exported/WebPluginContainerImpl.h"
-#include "core/exported/WebViewImpl.h"
+#include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
@@ -348,8 +348,12 @@ bool ContextMenuClient::ShowContextMenu(const ContextMenu* default_menu,
   }
 
   // HitTestResult::isSelected() ensures clean layout by performing a hit test.
-  if (r.IsSelected())
-    data.selected_text = selected_frame->SelectedText();
+  if (r.IsSelected()) {
+    if (!isHTMLInputElement(*r.InnerNode()) ||
+        toHTMLInputElement(r.InnerNode())->type() != InputTypeNames::password) {
+      data.selected_text = selected_frame->SelectedText();
+    }
+  }
 
   if (r.IsContentEditable()) {
     data.is_editable = true;

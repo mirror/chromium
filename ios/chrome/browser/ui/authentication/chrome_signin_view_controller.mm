@@ -65,6 +65,9 @@ enum LayoutType {
   LAYOUT_COMPACT,
 };
 
+// Alpha threshold upon which a view is considered hidden.
+const CGFloat kHiddenAlphaThreshold = 0.1;
+
 // Minimum duration of the pending state in milliseconds.
 const int64_t kMinimunPendingStateDurationMs = 300;
 
@@ -105,6 +108,20 @@ enum AuthenticationState {
   IDENTITY_SELECTED_STATE,
   DONE_STATE,
 };
+
+// Fades in |button| on screen if not already visible.
+void ShowButton(UIButton* button) {
+  if (button.alpha > kHiddenAlphaThreshold)
+    return;
+  button.alpha = 1.0;
+}
+
+// Fades out |button| on screen if not already hidden.
+void HideButton(UIButton* button) {
+  if (button.alpha < kHiddenAlphaThreshold)
+    return;
+  button.alpha = 0.0;
+}
 
 }  // namespace
 
@@ -487,22 +504,14 @@ enum AuthenticationState {
   [_secondaryButton setTitle:self.skipSigninButtonTitle
                     forState:UIControlStateNormal];
   [self.view setNeedsLayout];
-  _primaryButton.hidden = YES;
-  _secondaryButton.hidden = YES;
-  [UIView transitionWithView:_primaryButton
-                    duration:kAnimationDuration
-                     options:UIViewAnimationOptionTransitionCrossDissolve
-                  animations:^{
-                    _primaryButton.hidden = NO;
-                  }
-                  completion:nil];
-  [UIView transitionWithView:_secondaryButton
-                    duration:kAnimationDuration
-                     options:UIViewAnimationOptionTransitionCrossDissolve
-                  animations:^{
-                    _secondaryButton.hidden = NO;
-                  }
-                  completion:nil];
+
+  HideButton(_primaryButton);
+  HideButton(_secondaryButton);
+  [UIView animateWithDuration:kAnimationDuration
+                   animations:^{
+                     ShowButton(_primaryButton);
+                     ShowButton(_secondaryButton);
+                   }];
 }
 
 - (void)reloadIdentityPickerState {
@@ -513,18 +522,10 @@ enum AuthenticationState {
 }
 
 - (void)leaveIdentityPickerState:(AuthenticationState)nextState {
-  [UIView transitionWithView:_primaryButton
-                    duration:kAnimationDuration
-                     options:UIViewAnimationOptionTransitionCrossDissolve
-                  animations:^{
-                    _primaryButton.hidden = YES;
-                  }
-                  completion:nil];
-  [UIView transitionWithView:_secondaryButton
-      duration:kAnimationDuration
-      options:UIViewAnimationOptionTransitionCrossDissolve
+  [UIView animateWithDuration:kAnimationDuration
       animations:^{
-        _secondaryButton.hidden = YES;
+        HideButton(_primaryButton);
+        HideButton(_secondaryButton);
       }
       completion:^(BOOL finished) {
         [_accountSelectorVC willMoveToParentViewController:nil];
@@ -543,7 +544,7 @@ enum AuthenticationState {
   [self.view setNeedsLayout];
 
   _pendingStateTimer.reset(new base::ElapsedTimer());
-  _secondaryButton.hidden = NO;
+  ShowButton(_secondaryButton);
   [_activityIndicator startAnimating];
 
   [self signIntoIdentity:self.selectedIdentity];
@@ -620,22 +621,15 @@ enum AuthenticationState {
   [_secondaryButton setTitle:secondaryButtonTitle
                     forState:UIControlStateNormal];
   [self.view setNeedsLayout];
-  _primaryButton.hidden = YES;
-  _secondaryButton.hidden = YES;
-  [UIView transitionWithView:_primaryButton
-                    duration:kAnimationDuration
-                     options:UIViewAnimationOptionTransitionCrossDissolve
-                  animations:^{
-                    _primaryButton.hidden = NO;
-                  }
-                  completion:nil];
-  [UIView transitionWithView:_secondaryButton
-                    duration:kAnimationDuration
-                     options:UIViewAnimationOptionTransitionCrossDissolve
-                  animations:^{
-                    _secondaryButton.hidden = NO;
-                  }
-                  completion:nil];
+
+  HideButton(_primaryButton);
+  HideButton(_secondaryButton);
+  [UIView animateWithDuration:kAnimationDuration
+                   animations:^{
+                     ShowButton(_primaryButton);
+                     ShowButton(_secondaryButton);
+                   }
+                   completion:nil];
 }
 
 - (void)reloadIdentitySelectedState {
@@ -654,8 +648,8 @@ enum AuthenticationState {
   [_confirmationVC removeFromParentViewController];
   _confirmationVC = nil;
   [self setPrimaryButtonStyling:_primaryButton];
-  _primaryButton.hidden = YES;
-  _secondaryButton.hidden = YES;
+  HideButton(_primaryButton);
+  HideButton(_secondaryButton);
   [self undoSignIn];
   [self enterState:nextState];
 }
@@ -671,7 +665,7 @@ enum AuthenticationState {
   [_primaryButton addTarget:self
                      action:@selector(onPrimaryButtonPressed:)
            forControlEvents:UIControlEventTouchUpInside];
-  _primaryButton.hidden = YES;
+  HideButton(_primaryButton);
   [self.view addSubview:_primaryButton];
 
   _secondaryButton = [[MDCFlatButton alloc] init];
@@ -680,7 +674,7 @@ enum AuthenticationState {
                        action:@selector(onSecondaryButtonPressed:)
              forControlEvents:UIControlEventTouchUpInside];
   [_secondaryButton setAccessibilityIdentifier:@"ic_close"];
-  _secondaryButton.hidden = YES;
+  HideButton(_secondaryButton);
   [self.view addSubview:_secondaryButton];
 
   _activityIndicator = [[MDCActivityIndicator alloc] initWithFrame:CGRectZero];

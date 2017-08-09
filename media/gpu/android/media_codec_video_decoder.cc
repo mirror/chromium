@@ -419,7 +419,8 @@ bool MediaCodecVideoDecoder::QueueInput() {
     return false;
 
   int input_buffer = -1;
-  MediaCodecStatus status = codec_->DequeueInputBuffer(&input_buffer);
+  MediaCodecStatus status =
+      codec_->DequeueInputBuffer(base::TimeDelta(), &input_buffer);
   if (status == MEDIA_CODEC_ERROR) {
     DVLOG(1) << "DequeueInputBuffer() error";
     HandleError();
@@ -479,8 +480,8 @@ bool MediaCodecVideoDecoder::DequeueOutput() {
   base::TimeDelta presentation_time;
   bool eos = false;
   std::unique_ptr<CodecOutputBuffer> output_buffer;
-  MediaCodecStatus status =
-      codec_->DequeueOutputBuffer(&presentation_time, &eos, &output_buffer);
+  MediaCodecStatus status = codec_->DequeueOutputBuffer(
+      base::TimeDelta(), &presentation_time, &eos, &output_buffer);
   if (status == MEDIA_CODEC_ERROR) {
     DVLOG(1) << "DequeueOutputBuffer() error";
     HandleError();

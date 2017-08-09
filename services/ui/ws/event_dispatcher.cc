@@ -339,9 +339,8 @@ LocationTarget EventDispatcher::AdjustLocationTargetForModal(
   LocationTarget updated_target = location_target;
   updated_target.deepest_window.in_non_client_area = true;
   updated_target.deepest_window.window =
-      location_target.deepest_window.window
-          ? delegate_->GetFallbackTargetForEventBlockedByModal(
-                location_target.deepest_window.window->GetRoot())
+      (fallback_to_root_ && location_target.deepest_window.window)
+          ? location_target.deepest_window.window->GetRoot()
           : nullptr;
   return updated_target;
 }

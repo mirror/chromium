@@ -374,10 +374,6 @@ GURL GURL::GetWithEmptyPath() const {
   return other;
 }
 
-GURL GURL::GetWithoutFilename() const {
-  return Resolve(".");
-}
-
 bool GURL::IsStandard() const {
   return url::IsStandard(spec_.data(), parsed_.scheme);
 }

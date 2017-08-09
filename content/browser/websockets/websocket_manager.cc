@@ -90,14 +90,15 @@ void WebSocketManager::CreateWebSocket(
 WebSocketManager::WebSocketManager(int process_id,
                                    StoragePartition* storage_partition)
     : process_id_(process_id),
+      storage_partition_(storage_partition),
       num_pending_connections_(0),
       num_current_succeeded_connections_(0),
       num_previous_succeeded_connections_(0),
       num_current_failed_connections_(0),
       num_previous_failed_connections_(0),
       context_destroyed_(false) {
-  if (storage_partition) {
-    url_request_context_getter_ = storage_partition->GetURLRequestContext();
+  if (storage_partition_) {
+    url_request_context_getter_ = storage_partition_->GetURLRequestContext();
     // This unretained pointer is safe because we destruct a WebSocketManager
     // only via WebSocketManager::Handle::RenderProcessHostDestroyed which
     // posts a deletion task to the IO thread.
@@ -198,8 +199,8 @@ int WebSocketManager::GetClientProcessId() {
   return process_id_;
 }
 
-net::URLRequestContext* WebSocketManager::GetURLRequestContext() {
-  return url_request_context_getter_->GetURLRequestContext();
+StoragePartition* WebSocketManager::GetStoragePartition() {
+  return storage_partition_;
 }
 
 void WebSocketManager::OnReceivedResponseFromServer(WebSocketImpl* impl) {

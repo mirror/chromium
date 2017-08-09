@@ -44,7 +44,6 @@
 #include "core/inspector/WorkerThreadDebugger.h"
 #include "core/loader/WorkerThreadableLoader.h"
 #include "core/probe/CoreProbes.h"
-#include "core/workers/InstalledScriptsManager.h"
 #include "core/workers/WorkerLocation.h"
 #include "core/workers/WorkerNavigator.h"
 #include "core/workers/WorkerReportingProxy.h"
@@ -52,7 +51,6 @@
 #include "core/workers/WorkerThread.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/InstanceCounters.h"
-#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
 #include "platform/scheduler/child/web_scheduler.h"
@@ -173,6 +171,7 @@ void WorkerGlobalScope::importScripts(const Vector<String>& urls,
   DCHECK(GetExecutionContext());
 
   ExecutionContext& execution_context = *this->GetExecutionContext();
+
   Vector<KURL> completed_urls;
   for (const String& url_string : urls) {
     const KURL& url = execution_context.CompleteURL(url_string);
@@ -192,35 +191,35 @@ void WorkerGlobalScope::importScripts(const Vector<String>& urls,
   }
 
   for (const KURL& complete_url : completed_urls) {
-    KURL response_url;
-    String source_code;
-    std::unique_ptr<Vector<char>> cached_meta_data;
-    LoadResult result = LoadResult::kNotHandled;
-    if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled()) {
-      result = LoadingScriptFromInstalledScriptsManager(
-          complete_url, &response_url, &source_code, &cached_meta_data);
-    }
+    RefPtr<WorkerScriptLoader> script_loader(WorkerScriptLoader::Create());
+    script_loader->LoadSynchronously(
+        execution_context, complete_url, WebURLRequest::kRequestContextScript,
+        execution_context.GetSecurityContext().AddressSpace());
 
-    // If the script wasn't provided by the InstalledScriptsManager, load from
-    // ResourceLoader.
-    if (result == LoadResult::kNotHandled) {
-      result = LoadingScriptFromWorkerScriptLoader(
-          complete_url, &response_url, &source_code, &cached_meta_data);
-    }
-
-    if (result != LoadResult::kSuccess) {
+    // If the fetching attempt failed, throw a NetworkError exception and
+    // abort all these steps.
+    if (script_loader->Failed()) {
       exception_state.ThrowDOMException(
           kNetworkError, "The script at '" + complete_url.ElidedString() +
                              "' failed to load.");
       return;
     }
 
+    probe::scriptImported(&execution_context, script_loader->Identifier(),
+                          script_loader->SourceText());
+
     ErrorEvent* error_event = nullptr;
+    std::unique_ptr<Vector<char>> cached_meta_data(
+        script_loader->ReleaseCachedMetadata());
     CachedMetadataHandler* handler(CreateWorkerScriptCachedMetadataHandler(
         complete_url, cached_meta_data.get()));
     GetThread()->GetWorkerReportingProxy().WillEvaluateImportedScript(
-        source_code.length(), cached_meta_data ? cached_meta_data->size() : 0);
-    ScriptController()->Evaluate(ScriptSourceCode(source_code, response_url),
+        script_loader->SourceText().length(),
+        script_loader->CachedMetadata()
+            ? script_loader->CachedMetadata()->size()
+            : 0);
+    ScriptController()->Evaluate(ScriptSourceCode(script_loader->SourceText(),
+                                                  script_loader->ResponseURL()),
                                  &error_event, handler, v8_cache_options_);
     if (error_event) {
       ScriptController()->RethrowExceptionFromImportedScript(error_event,
@@ -228,63 +227,6 @@ void WorkerGlobalScope::importScripts(const Vector<String>& urls,
       return;
     }
   }
-}
-
-WorkerGlobalScope::LoadResult
-WorkerGlobalScope::LoadingScriptFromInstalledScriptsManager(
-    const KURL& script_url,
-    KURL* out_response_url,
-    String* out_source_code,
-    std::unique_ptr<Vector<char>>* out_cached_meta_data) {
-  if (!GetThread()->GetInstalledScriptsManager() ||
-      !GetThread()->GetInstalledScriptsManager()->IsScriptInstalled(
-          script_url)) {
-    return LoadResult::kNotHandled;
-  }
-  InstalledScriptsManager::ScriptData script_data;
-  InstalledScriptsManager::ScriptStatus status =
-      GetThread()->GetInstalledScriptsManager()->GetScriptData(script_url,
-                                                               &script_data);
-  switch (status) {
-    case InstalledScriptsManager::ScriptStatus::kTaken:
-      return LoadResult::kNotHandled;
-    case InstalledScriptsManager::ScriptStatus::kFailed:
-      return LoadResult::kFailed;
-    case InstalledScriptsManager::ScriptStatus::kSuccess:
-      *out_response_url = script_url;
-      *out_source_code = script_data.TakeSourceText();
-      *out_cached_meta_data = script_data.TakeMetaData();
-      // TODO(shimazu): Add appropriate probes for inspector.
-      return LoadResult::kSuccess;
-  }
-
-  NOTREACHED();
-  return LoadResult::kFailed;
-}
-
-WorkerGlobalScope::LoadResult
-WorkerGlobalScope::LoadingScriptFromWorkerScriptLoader(
-    const KURL& script_url,
-    KURL* out_response_url,
-    String* out_source_code,
-    std::unique_ptr<Vector<char>>* out_cached_meta_data) {
-  ExecutionContext* execution_context = GetExecutionContext();
-  RefPtr<WorkerScriptLoader> script_loader(WorkerScriptLoader::Create());
-  script_loader->LoadSynchronously(
-      *execution_context, script_url, WebURLRequest::kRequestContextScript,
-      execution_context->GetSecurityContext().AddressSpace());
-
-  // If the fetching attempt failed, throw a NetworkError exception and
-  // abort all these steps.
-  if (script_loader->Failed())
-    return LoadResult::kFailed;
-
-  *out_response_url = script_loader->ResponseURL();
-  *out_source_code = script_loader->SourceText();
-  *out_cached_meta_data = script_loader->ReleaseCachedMetadata();
-  probe::scriptImported(execution_context, script_loader->Identifier(),
-                        script_loader->SourceText());
-  return LoadResult::kSuccess;
 }
 
 v8::Local<v8::Object> WorkerGlobalScope::Wrap(
@@ -405,7 +347,6 @@ void WorkerGlobalScope::ApplyContentSecurityPolicyFromVector(
 void WorkerGlobalScope::SetWorkerSettings(
     std::unique_ptr<WorkerSettings> worker_settings) {
   worker_settings_ = std::move(worker_settings);
-  worker_settings_->MakeGenericFontFamilySettingsAtomic();
 }
 
 void WorkerGlobalScope::ExceptionThrown(ErrorEvent* event) {

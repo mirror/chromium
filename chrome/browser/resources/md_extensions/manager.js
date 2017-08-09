@@ -11,7 +11,7 @@ cr.define('extensions', function() {
    * @param {chrome.developerPrivate.ExtensionInfo} b
    * @return {number}
    */
-  const compareExtensions = function(a, b) {
+  var compareExtensions = function(a, b) {
     function compare(x, y) {
       return x < y ? -1 : (x > y ? 1 : 0);
     }
@@ -29,7 +29,7 @@ cr.define('extensions', function() {
         compare(a.id, b.id);
   };
 
-  const Manager = Polymer({
+  var Manager = Polymer({
     is: 'extensions-manager',
 
     behaviors: [I18nBehavior],
@@ -78,6 +78,12 @@ cr.define('extensions', function() {
        */
       navigationHelper_: Object,
 
+      /**
+       * The current page being shown.
+       * @private {!PageState}
+       */
+      currentPage_: Object,
+
       /** @type {!Array<!chrome.developerPrivate.ExtensionInfo>} */
       extensions: {
         type: Array,
@@ -109,13 +115,6 @@ cr.define('extensions', function() {
       'items-list.extension-item-show-errors': 'onShouldShowItemErrors_',
     },
 
-    /**
-     * The current page being shown. Default to null, and initPage will figure
-     * out the initial page based on url.
-     * @private {?PageState}
-     */
-    currentPage_: null,
-
     created: function() {
       this.readyPromiseResolver = new PromiseResolver();
     },
@@ -129,6 +128,7 @@ cr.define('extensions', function() {
       this.listHelper_ = new ListHelper(this);
       this.sidebar.setListDelegate(this.listHelper_);
       this.readyPromiseResolver.resolve();
+      this.currentPage_ = {page: Page.LIST};
       this.navigationHelper_ = new extensions.NavigationHelper(newPage => {
         this.changePage(newPage, true);
       });
@@ -137,7 +137,7 @@ cr.define('extensions', function() {
         // still on the details page. We could be on a different page if the
         // user hit back while the options dialog was visible; in that case, the
         // new page is already correct.
-        if (this.currentPage_ && this.currentPage_.page == Page.DETAILS) {
+        if (this.currentPage_.page == Page.DETAILS) {
           // This will update the currentPage_ and the NavigationHelper; since
           // the active page is already the details page, no main page
           // transition occurs.
@@ -203,8 +203,8 @@ cr.define('extensions', function() {
      * @private
      */
     getListId_: function(type) {
-      let listId;
-      const ExtensionType = chrome.developerPrivate.ExtensionType;
+      var listId;
+      var ExtensionType = chrome.developerPrivate.ExtensionType;
       switch (type) {
         case ExtensionType.HOSTED_APP:
         case ExtensionType.LEGACY_PACKAGED_APP:
@@ -252,10 +252,10 @@ cr.define('extensions', function() {
      *     the new element is representing.
      */
     addItem: function(item) {
-      const listId = this.getListId_(item.type);
+      var listId = this.getListId_(item.type);
       // We should never try and add an existing item.
       assert(this.getIndexInList_(listId, item.id) == -1);
-      let insertBeforeChild = this[listId].findIndex(function(listEl) {
+      var insertBeforeChild = this[listId].findIndex(function(listEl) {
         return compareExtensions(listEl, item) > 0;
       });
       if (insertBeforeChild == -1)
@@ -268,8 +268,8 @@ cr.define('extensions', function() {
      *     item to update.
      */
     updateItem: function(item) {
-      const listId = this.getListId_(item.type);
-      const index = this.getIndexInList_(listId, item.id);
+      var listId = this.getListId_(item.type);
+      var index = this.getIndexInList_(listId, item.id);
       // We should never try and update a non-existent item.
       assert(index >= 0);
       this.set([listId, index], item);
@@ -280,11 +280,11 @@ cr.define('extensions', function() {
       // that the DOM will have stale data, but there's no point in causing the
       // extra work.
       if (this.detailViewItem_ && this.detailViewItem_.id == item.id &&
-          this.currentPage_.page == Page.DETAILS) {
+          this.$.pages.selected == Page.DETAILS) {
         this.detailViewItem_ = item;
       } else if (
           this.errorPageItem_ && this.errorPageItem_.id == item.id &&
-          this.currentPage_.page == Page.ERRORS) {
+          this.$.pages.selected == Page.ERRORS) {
         this.errorPageItem_ = item;
       }
     },
@@ -294,8 +294,8 @@ cr.define('extensions', function() {
      *     item to remove.
      */
     removeItem: function(item) {
-      const listId = this.getListId_(item.type);
-      const index = this.getIndexInList_(listId, item.id);
+      var listId = this.getListId_(item.type);
+      var index = this.getIndexInList_(listId, item.id);
       // We should never try and remove a non-existent item.
       assert(index >= 0);
       this.splice(listId, index, 1);
@@ -329,7 +329,7 @@ cr.define('extensions', function() {
      *     of the change.
      */
     changePage: function(newPage, isSilent) {
-      if (this.currentPage_ && this.currentPage_.page == newPage.page &&
+      if (this.currentPage_.page == newPage.page &&
           this.currentPage_.subpage == newPage.subpage &&
           this.currentPage_.extensionId == newPage.extensionId) {
         return;
@@ -339,9 +339,9 @@ cr.define('extensions', function() {
       if (this.optionsDialog.open)
         this.optionsDialog.close();
 
-      const fromPage = this.currentPage_ ? this.currentPage_.page : null;
-      const toPage = newPage.page;
-      let data;
+      var fromPage = this.$.pages.selected;
+      var toPage = newPage.page;
+      var data;
       if (newPage.extensionId)
         data = assert(this.getData_(newPage.extensionId));
 
@@ -351,8 +351,27 @@ cr.define('extensions', function() {
         this.errorPageItem_ = assert(data);
 
       if (fromPage != toPage) {
-        /** @type {extensions.ViewManager} */ (this.$.viewManager)
-            .switchView(toPage);
+        var entry;
+        var exit;
+        if (fromPage == Page.LIST &&
+            (toPage == Page.DETAILS || toPage == Page.ERRORS)) {
+          this.$['items-list'].willShowItemSubpage(data.id);
+          entry = [extensions.Animation.HERO];
+          // The item grid can be larger than the detail view that we're
+          // hero'ing into, so we want to also fade out to avoid any jarring.
+          exit = [extensions.Animation.HERO, extensions.Animation.FADE_OUT];
+        } else if (toPage == Page.LIST) {
+          entry = [extensions.Animation.FADE_IN];
+          exit = [extensions.Animation.SCALE_DOWN];
+        } else {
+          assert(toPage == Page.DETAILS || toPage == Page.SHORTCUTS);
+          entry = [extensions.Animation.FADE_IN];
+          exit = [extensions.Animation.FADE_OUT];
+        }
+
+        this.getPage_(fromPage).animationHelper.setExitAnimations(exit);
+        this.getPage_(toPage).animationHelper.setEntryAnimations(entry);
+        this.$.pages.selected = toPage;
       }
 
       if (newPage.subpage) {
@@ -414,7 +433,7 @@ cr.define('extensions', function() {
 
     /** @override */
     showType(type) {
-      let items;
+      var items;
       switch (type) {
         case extensions.ShowingType.EXTENSIONS:
           items = this.manager_.extensions;

@@ -9,7 +9,6 @@ import re
 from core import perf_benchmark
 
 from telemetry import benchmark
-from telemetry import story
 from telemetry.core import util
 from telemetry.page import legacy_page_test
 from telemetry.timeline import async_slice as async_slice_module
@@ -176,14 +175,10 @@ class ServiceWorkerPerfTest(perf_benchmark.PerfBenchmark):
     return 'service_worker.service_worker'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        self.DisableStory('first_load',
-                          [story.expectations.ANDROID_ONE],
-                          'crbug.com/736518')
-    return StoryExpectations()
+    return page_sets.ServiceWorkerStoryExpectations()
 
 
+@benchmark.Disabled('android-webview')  # http://crbug.com/653924
 @benchmark.Owner(emails=['horo@chromium.org'])
 class ServiceWorkerMicroBenchmarkPerfTest(perf_benchmark.PerfBenchmark):
   """This test is a microbenchmark of service worker.
@@ -199,8 +194,10 @@ class ServiceWorkerMicroBenchmarkPerfTest(perf_benchmark.PerfBenchmark):
   def Name(cls):
     return 'service_worker.service_worker_micro_benchmark'
 
+  @classmethod
+  def ShouldDisable(cls, possible_browser):  # http://crbug.com/597656
+      return (possible_browser.browser_type == 'reference' and
+              possible_browser.platform.GetDeviceTypeName() == 'Nexus 5X')
+
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.ServiceWorkerMicroBenchmarksStoryExpectations()

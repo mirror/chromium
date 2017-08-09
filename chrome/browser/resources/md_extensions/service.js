@@ -29,7 +29,7 @@ cr.define('extensions', function() {
       this.manager_ = manager;
       this.manager_.set('delegate', this);
 
-      const keyboardShortcuts = this.manager_.keyboardShortcuts;
+      var keyboardShortcuts = this.manager_.keyboardShortcuts;
       keyboardShortcuts.addEventListener(
           'shortcut-updated', this.onExtensionCommandUpdated_.bind(this));
       keyboardShortcuts.addEventListener(
@@ -67,11 +67,11 @@ cr.define('extensions', function() {
      * @private
      */
     onItemStateChanged_(eventData) {
-      const currentIndex = this.extensions_.findIndex(function(extension) {
+      var currentIndex = this.extensions_.findIndex(function(extension) {
         return extension.id == eventData.item_id;
       });
 
-      const EventType = chrome.developerPrivate.EventType;
+      var EventType = chrome.developerPrivate.EventType;
       switch (eventData.event_type) {
         case EventType.VIEW_REGISTERED:
         case EventType.VIEW_UNREGISTERED:
@@ -248,7 +248,7 @@ cr.define('extensions', function() {
 
     /** @override */
     showItemOptionsPage(id) {
-      const extension = this.extensions_.find(function(e) {
+      var extension = this.extensions_.find(function(e) {
         return e.id == id;
       });
       assert(extension && extension.optionsPage);

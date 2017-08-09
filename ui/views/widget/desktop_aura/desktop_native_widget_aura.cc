@@ -1150,11 +1150,12 @@ int DesktopNativeWidgetAura::OnPerformDrop(const ui::DropTargetEvent& event) {
 ////////////////////////////////////////////////////////////////////////////////
 // DesktopNativeWidgetAura, aura::WindowTreeHostObserver implementation:
 
-void DesktopNativeWidgetAura::OnHostCloseRequested(aura::WindowTreeHost* host) {
+void DesktopNativeWidgetAura::OnHostCloseRequested(
+    const aura::WindowTreeHost* host) {
   GetWidget()->Close();
 }
 
-void DesktopNativeWidgetAura::OnHostResized(aura::WindowTreeHost* host) {
+void DesktopNativeWidgetAura::OnHostResized(const aura::WindowTreeHost* host) {
   // Don't update the bounds of the child layers when animating closed. If we
   // did it would force a paint, which we don't want. We don't want the paint
   // as we can't assume any of the children are valid.
@@ -1167,12 +1168,12 @@ void DesktopNativeWidgetAura::OnHostResized(aura::WindowTreeHost* host) {
 }
 
 void DesktopNativeWidgetAura::OnHostWorkspaceChanged(
-    aura::WindowTreeHost* host) {
+    const aura::WindowTreeHost* host) {
   native_widget_delegate_->OnNativeWidgetWorkspaceChanged();
 }
 
 void DesktopNativeWidgetAura::OnHostMovedInPixels(
-    aura::WindowTreeHost* host,
+    const aura::WindowTreeHost* host,
     const gfx::Point& new_origin_in_pixels) {
   TRACE_EVENT1("views", "DesktopNativeWidgetAura::OnHostMovedInPixels",
                "new_origin_in_pixels", new_origin_in_pixels.ToString());

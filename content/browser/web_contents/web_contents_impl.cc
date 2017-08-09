@@ -1409,12 +1409,7 @@ void WebContentsImpl::SetAudioMuted(bool mute) {
   for (auto& observer : observers_)
     observer.DidUpdateAudioMutingState(mute);
 
-  // Notification for UI updates in response to the changed muting state.
-  NotifyNavigationStateChanged(INVALIDATE_TYPE_TAB);
-}
-
-bool WebContentsImpl::IsCurrentlyAudible() {
-  return audio_stream_monitor()->IsCurrentlyAudible();
+  OnAudioStateChanged(!mute && audio_stream_monitor_.IsCurrentlyAudible());
 }
 
 bool WebContentsImpl::IsConnectedToBluetoothDevice() const {
@@ -1478,9 +1473,6 @@ void WebContentsImpl::OnAudioStateChanged(bool is_audible) {
 
   // Notification for UI updates in response to the changed audio state.
   NotifyNavigationStateChanged(INVALIDATE_TYPE_TAB);
-
-  if (delegate_)
-    delegate_->OnAudioStateChanged(is_audible);
 }
 
 base::TimeTicks WebContentsImpl::GetLastActiveTime() const {
@@ -1721,9 +1713,10 @@ void WebContentsImpl::Init(const WebContents::CreateParams& params) {
         site_instance->GetProcess()->GetNextRoutingID();
   }
 
-  GetRenderManager()->Init(
-      site_instance.get(), view_routing_id, params.main_frame_routing_id,
-      main_frame_widget_routing_id, params.renderer_initiated_creation);
+  GetRenderManager()->Init(site_instance.get(), view_routing_id,
+                           params.main_frame_routing_id,
+                           main_frame_widget_routing_id,
+                           params.renderer_initiated_creation);
 
   // blink::FrameTree::setName always keeps |unique_name| empty in case of a
   // main frame - let's do the same thing here.
@@ -2428,8 +2421,8 @@ void WebContentsImpl::CreateNewWidget(int32_t render_process_id,
     return;
   }
 
-  RenderWidgetHostImpl* widget_host = new RenderWidgetHostImpl(
-      this, process, route_id, std::move(widget), IsHidden());
+  RenderWidgetHostImpl* widget_host =
+      new RenderWidgetHostImpl(this, process, route_id, IsHidden());
 
   RenderWidgetHostViewBase* widget_view =
       static_cast<RenderWidgetHostViewBase*>(
@@ -2658,16 +2651,19 @@ ui::AXMode WebContentsImpl::GetAccessibilityMode() const {
   return accessibility_mode_;
 }
 
-void WebContentsImpl::AccessibilityEventReceived(
-    const std::vector<AXEventNotificationDetails>& details) {
+void WebContentsImpl::AccessibilityEventsReceived(
+    ui::AXTreeIDRegistry::AXTreeID ax_tree_id,
+    const ui::AXTreeUpdate& update,
+    const std::vector<AXEventNotificationDetails>& events) {
   for (auto& observer : observers_)
-    observer.AccessibilityEventReceived(details);
+    observer.AccessibilityEventsReceived(ax_tree_id, update, events);
 }
 
 void WebContentsImpl::AccessibilityLocationChangesReceived(
+    ui::AXTreeIDRegistry::AXTreeID ax_tree_id,
     const std::vector<AXLocationChangeNotificationDetails>& details) {
   for (auto& observer : observers_)
-    observer.AccessibilityLocationChangesReceived(details);
+    observer.AccessibilityLocationChangesReceived(ax_tree_id, details);
 }
 
 RenderFrameHost* WebContentsImpl::GetGuestByInstanceID(
@@ -2744,15 +2740,6 @@ void WebContentsImpl::OnMoveValidationMessage(
   // TODO(nick): Should we consider |source| here or pass it to the delegate?
   if (delegate_)
     delegate_->MoveValidationMessage(this, anchor_in_root_view);
-}
-
-void WebContentsImpl::SetNotWaitingForResponse() {
-  if (waiting_for_response_ == false)
-    return;
-
-  waiting_for_response_ = false;
-  if (delegate_)
-    delegate_->LoadingStateChanged(this, is_load_to_different_document_);
 }
 
 void WebContentsImpl::SendScreenRects() {

@@ -39,7 +39,6 @@
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "third_party/skia/include/core/SkBitmap.h"
-#include "ui/base/ui_base_switches.h"
 #include "ui/compositor/compositor_observer.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/compositor/compositor_vsync_manager.h"
@@ -62,15 +61,13 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
                        scoped_refptr<base::SingleThreadTaskRunner> task_runner,
                        bool enable_surface_synchronization,
                        bool enable_pixel_canvas,
-                       bool external_begin_frames_enabled,
-                       bool force_software_compositor)
+                       bool external_begin_frames_enabled)
     : context_factory_(context_factory),
       context_factory_private_(context_factory_private),
       frame_sink_id_(frame_sink_id),
       task_runner_(task_runner),
       vsync_manager_(new CompositorVSyncManager()),
       external_begin_frames_enabled_(external_begin_frames_enabled),
-      force_software_compositor_(force_software_compositor),
       layer_animator_collection_(this),
       scheduled_timeout_(base::TimeTicks()),
       allow_locks_to_extend_timeout_(false),
@@ -171,7 +168,7 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
       gpu::MemoryAllocation::CUTOFF_ALLOW_NICE_TO_HAVE;
 
   settings.disallow_non_exact_resource_reuse =
-      command_line->HasSwitch(switches::kDisallowNonExactResourceReuse);
+      command_line->HasSwitch(cc::switches::kDisallowNonExactResourceReuse);
 
   settings.wait_for_all_pipeline_stages_before_draw =
       command_line->HasSwitch(cc::switches::kRunAllCompositorStagesBeforeDraw);
@@ -557,8 +554,7 @@ void Compositor::DidSubmitCompositorFrame() {
     observer.OnCompositingStarted(this, start_time);
 }
 
-void Compositor::OnFirstSurfaceActivation(
-    const viz::SurfaceInfo& surface_info) {
+void Compositor::OnSurfaceCreated(const viz::SurfaceInfo& surface_info) {
   // TODO(fsamuel): Once surface synchronization is turned on, the fallback
   // surface should be set here.
 }

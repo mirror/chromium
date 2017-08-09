@@ -4,8 +4,6 @@
 
 package org.chromium.chrome.browser.suggestions;
 
-import org.chromium.chrome.browser.suggestions.TileGroup.TileSectionType;
-
 /**
  * Data class that holds the site suggestion data provided by the tiles component.
  */
@@ -23,16 +21,11 @@ public class SiteSuggestion {
     @TileSource
     public final int source;
 
-    /** The {@link TileSectionType} the tile is contained in. */
-    @TileSectionType
-    public final int sectionType;
-
     public SiteSuggestion(String title, String url, String whitelistIconPath, int source) {
         this.title = title;
         this.url = url;
         this.whitelistIconPath = whitelistIconPath;
         this.source = source;
-        this.sectionType = TileSectionType.PERSONALIZED; // TODO(dgn): rebase and use real data.
     }
 
     @Override

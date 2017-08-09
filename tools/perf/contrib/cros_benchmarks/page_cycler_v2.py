@@ -13,7 +13,6 @@ import page_sets
 
 from benchmarks import loading_metrics_category
 from telemetry import benchmark
-from telemetry import story
 from telemetry.page import cache_temperature
 from telemetry.web_perf import timeline_based_measurement
 
@@ -60,11 +59,7 @@ class PageCyclerV2Typical25(_PageCyclerV2):
           cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
-
+    return page_sets.Typical25StoryExpectations()
 
 @benchmark.Owner(emails=['kouhei@chromium.org', 'ksakamoto@chromium.org'])
 class PageCyclerV2IntlArFaHe(_PageCyclerV2):
@@ -83,10 +78,7 @@ class PageCyclerV2IntlArFaHe(_PageCyclerV2):
           cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.IntlArFaHeStoryExpectations()
 
 
 @benchmark.Owner(emails=['kouhei@chromium.org', 'ksakamoto@chromium.org'])
@@ -106,10 +98,7 @@ class PageCyclerV2IntlEsFrPtBr(_PageCyclerV2):
           cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.IntlEsFrPtBrStoryExpectations()
 
 
 @benchmark.Owner(emails=['kouhei@chromium.org', 'ksakamoto@chromium.org'])
@@ -129,10 +118,7 @@ class PageCyclerV2IntlHiRu(_PageCyclerV2):
           cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.IntlHiRuStoryExpectations()
 
 
 @benchmark.Disabled('android')  # crbug.com/666898
@@ -152,10 +138,7 @@ class PageCyclerV2IntlJaZh(_PageCyclerV2):
           cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.IntlJaZhStoryExpectations()
 
 
 @benchmark.Owner(emails=['kouhei@chromium.org', 'ksakamoto@chromium.org'])
@@ -175,10 +158,7 @@ class PageCyclerV2IntlKoThVi(_PageCyclerV2):
           cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.IntlKoThViStoryExpectations()
 
 
 @benchmark.Enabled('android')
@@ -198,7 +178,4 @@ class PageCyclerV2Top10Mobile(_PageCyclerV2):
         cache_temperature.PCV1_COLD, cache_temperature.PCV1_WARM])
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.Top10MobileStoryExpectations()

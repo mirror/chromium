@@ -19,7 +19,6 @@
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #include "ios/chrome/browser/web_state_list/fake_web_state_list_delegate.h"
 #include "ios/chrome/browser/web_state_list/web_state_list.h"
-#import "ios/chrome/browser/web_state_list/web_state_opener.h"
 #include "ios/chrome/test/base/perf_test_ios.h"
 #include "ios/web/public/test/fakes/test_navigation_manager.h"
 #include "ios/web/public/test/fakes/test_web_state.h"
@@ -85,9 +84,7 @@ class OmniboxPerfTest : public PerfTest {
     std::unique_ptr<web::TestNavigationManager> navigation_manager =
         base::MakeUnique<web::TestNavigationManager>();
     web_state->SetNavigationManager(std::move(navigation_manager));
-    web_state_list_->InsertWebState(0, std::move(web_state),
-                                    WebStateList::INSERT_FORCE_INDEX,
-                                    WebStateOpener());
+    web_state_list_->InsertWebState(0, std::move(web_state));
 
     // Creates the Toolbar for testing and sizes it to the width of the screen.
     toolbar_model_delegate_.reset(

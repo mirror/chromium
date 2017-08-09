@@ -70,7 +70,9 @@ class TestCoordinationUnit : public mojom::CoordinationPolicyCallback {
   void ForcePolicyUpdates() {
     base::RunLoop callback;
     SetPolicyClosure(callback.QuitClosure());
-    coordination_unit_->SendEvent(mojom::Event::kTestEvent);
+    mojom::EventPtr event = mojom::Event::New();
+    event->type = mojom::EventType::kTestEvent;
+    coordination_unit_->SendEvent(std::move(event));
     callback.Run();
   }
 
@@ -129,7 +131,9 @@ TEST_F(CoordinationUnitImplTest, AddChild) {
     child_unit.SetPolicyClosure(child_callback.QuitClosure());
 
     // This event should force the policy to recalculated for all children.
-    parent_unit.interface()->SendEvent(mojom::Event::kTestEvent);
+    mojom::EventPtr event = mojom::Event::New();
+    event->type = mojom::EventType::kTestEvent;
+    parent_unit.interface()->SendEvent(std::move(event));
 
     parent_callback.Run();
     child_callback.Run();
@@ -228,16 +232,15 @@ TEST_F(CoordinationUnitImplTest, GetSetProperty) {
       CreateCoordinationUnit(CoordinationUnitType::kWebContents);
 
   // An empty value should be returned if property is not found
-  int64_t test_value;
-  EXPECT_FALSE(
-      coordination_unit->GetProperty(mojom::PropertyType::kTest, &test_value));
+  EXPECT_EQ(base::Value(),
+            coordination_unit->GetProperty(mojom::PropertyType::kTest));
 
   // Perform a valid storage property set
-  coordination_unit->SetProperty(mojom::PropertyType::kTest, 41);
+  coordination_unit->SetProperty(mojom::PropertyType::kTest,
+                                 base::MakeUnique<base::Value>(41));
   EXPECT_EQ(1u, coordination_unit->properties_for_testing().size());
-  EXPECT_TRUE(
-      coordination_unit->GetProperty(mojom::PropertyType::kTest, &test_value));
-  EXPECT_EQ(41, test_value);
+  EXPECT_EQ(base::Value(41),
+            coordination_unit->GetProperty(mojom::PropertyType::kTest));
 }
 
 TEST_F(CoordinationUnitImplTest,

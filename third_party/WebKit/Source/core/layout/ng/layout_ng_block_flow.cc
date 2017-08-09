@@ -88,25 +88,6 @@ void LayoutNGBlockFlow::UpdateBlockLayout(bool relayout_children) {
   for (NGOutOfFlowPositionedDescendant descendant :
        result->OutOfFlowPositionedDescendants())
     descendant.node.UseOldOutOfFlowPositioning();
-
-  NGPhysicalBoxFragment* fragment =
-      ToNGPhysicalBoxFragment(result->PhysicalFragment().Get());
-
-  // This object has already been positioned in legacy layout by our containing
-  // block. Copy the position and place the fragment.
-  const LayoutBlock* containing_block = ContainingBlock();
-  NGPhysicalOffset physical_offset;
-  if (containing_block) {
-    NGPhysicalSize containing_block_size(containing_block->Size().Width(),
-                                         containing_block->Size().Height());
-    NGLogicalOffset logical_offset(LogicalLeft(), LogicalTop());
-    physical_offset = logical_offset.ConvertToPhysical(
-        constraint_space->WritingMode(), constraint_space->Direction(),
-        containing_block_size, fragment->Size());
-  }
-  fragment->SetOffset(physical_offset);
-
-  physical_root_fragment_for_testing_ = fragment;
 }
 
 void LayoutNGBlockFlow::UpdateMargins(
@@ -120,9 +101,9 @@ void LayoutNGBlockFlow::UpdateMargins(
   SetMarginEnd(margins.inline_end);
 }
 
-NGInlineNodeData* LayoutNGBlockFlow::GetNGInlineNodeData() const {
+NGInlineNodeData& LayoutNGBlockFlow::GetNGInlineNodeData() const {
   DCHECK(ng_inline_node_data_);
-  return ng_inline_node_data_.get();
+  return *ng_inline_node_data_.get();
 }
 
 void LayoutNGBlockFlow::ResetNGInlineNodeData() {

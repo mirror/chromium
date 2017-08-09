@@ -23,7 +23,7 @@ class PLATFORM_EXPORT FrameResourceCoordinator final
   static FrameResourceCoordinator* Create(service_manager::InterfaceProvider*);
   virtual ~FrameResourceCoordinator();
   void SetProperty(const resource_coordinator::mojom::blink::PropertyType,
-                   int64_t);
+                   const bool);
 
   DECLARE_TRACE();
 

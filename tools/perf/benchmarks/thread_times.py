@@ -8,7 +8,6 @@ from benchmarks import silk_flags
 from measurements import thread_times
 import page_sets
 from telemetry import benchmark
-from telemetry import story
 
 
 class _ThreadTimes(perf_benchmark.PerfBenchmark):
@@ -46,15 +45,7 @@ class ThreadTimesKeySilkCases(_ThreadTimes):
     return 'thread_times.key_silk_cases'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        self.DisableStory('https://polymer-topeka.appspot.com/',
-                          [story.expectations.ALL], 'crbug.com/507865')
-        self.DisableStory('http://plus.google.com/app/basic/stream',
-                          [story.expectations.ALL], 'crbug.com/338838')
-        self.DisableStory('inbox_app.html?slide_drawer',
-                          [story.expectations.ALL], 'crbug.com/446332')
-    return StoryExpectations()
+    return page_sets.KeySilkCasesStoryExpectations()
 
 
 # This benchmark runs only on android & linux, but is disabled because the page
@@ -71,10 +62,7 @@ class ThreadTimesKeyHitTestCases(_ThreadTimes):
     return 'thread_times.key_hit_test_cases'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.KeyHitTestCasesStoryExpectations()
 
 
 @benchmark.Enabled('android')
@@ -90,19 +78,7 @@ class ThreadTimesFastPathMobileSites(_ThreadTimes):
     return 'thread_times.key_mobile_sites_smooth'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-        # TODO(rnephew): Uncomment when these stories is rerecorded.
-        # self.DisableStory(
-        #     'http://forecast.io', [story.expectations.ALL],
-        #     'crbug.com/249736')
-        # self.DisableStory(
-        #    'Twitter', [story.expectations.ALL],
-        #    'Forbidden (Rate Limit Exceeded)')
-        # self.DisableStory('ESPN', [story.expectations.ALL],
-        #                   'crbug.com/249722')
-    return StoryExpectations()
+    return page_sets.KeyMobileSitesStoryExpectations()
 
 
 @benchmark.Enabled('android')
@@ -117,11 +93,7 @@ class ThreadTimesSimpleMobileSites(_ThreadTimes):
     return 'thread_times.simple_mobile_sites'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        self.DisableStory('https://www.flickr.com/', [story.expectations.ALL],
-                          'crbug.com/752228')
-    return StoryExpectations()
+    return page_sets.SimpleMobileSitesStoryExpectations()
 
 
 @benchmark.Owner(emails=['vmiura@chromium.org'])
@@ -141,10 +113,7 @@ class ThreadTimesCompositorCases(_ThreadTimes):
     return 'thread_times.tough_compositor_cases'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.ToughCompositorCaseStoryExpectations()
 
 
 @benchmark.Enabled('android')
@@ -164,10 +133,7 @@ class ThreadTimesKeyIdlePowerCases(_ThreadTimes):
     return 'per_frame' not in value.name and 'mean_frame' not in value.name
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.KeyIdlePowerCasesStoryExpectations()
 
 
 @benchmark.Enabled('android')
@@ -186,10 +152,7 @@ class ThreadTimesKeyNoOpCases(_ThreadTimes):
     return 'per_frame' not in value.name and 'mean_frame' not in value.name
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.KeyNoOpCasesStoryExpectations()
 
 
 @benchmark.Owner(emails=['tdresser@chromium.org'])
@@ -203,7 +166,4 @@ class ThreadTimesToughScrollingCases(_ThreadTimes):
     return 'thread_times.tough_scrolling_cases'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.ToughScrollingCasesStoryExpectations()

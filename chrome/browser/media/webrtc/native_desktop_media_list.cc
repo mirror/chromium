@@ -325,6 +325,8 @@ void NativeDesktopMediaList::CaptureAuraWindowThumbnail(
   pending_aura_capture_requests_++;
   ui::GrabWindowSnapshotAndScaleAsyncAura(
       window, window_rect, scaled_rect.size(),
+      base::CreateTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE}),
       base::Bind(&NativeDesktopMediaList::OnAuraThumbnailCaptured,
                  weak_factory_.GetWeakPtr(), id));
 }

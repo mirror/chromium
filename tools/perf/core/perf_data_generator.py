@@ -589,7 +589,7 @@ def generate_isolate_script_entry(swarming_dimensions, test_args,
       # Always say this is true regardless of whether the tester
       # supports swarming. It doesn't hurt.
       'can_use_on_swarming_builders': True,
-      'expiration': 20 * 60 * 60, # 20 hour timeout for now (crbug.com/753367)
+      'expiration': 10 * 60 * 60, # 10 hour timeout for now (crbug.com/699312)
       'hard_timeout': swarming_timeout if swarming_timeout else 10800, # 3 hours
       'ignore_task_failure': ignore_task_failure,
       'io_timeout': 3600,
@@ -812,7 +812,6 @@ def generate_telemetry_tests(name, tester_config, benchmarks,
 
 # Overrides the default 2 hour timeout for swarming tasks.
 BENCHMARK_SWARMING_TIMEOUTS = {
-    'loading.desktop': 14400, # 4 hours (crbug.com/753798)
     'loading.mobile': 16200, # 4.5 hours
     'system_health.memory_mobile': 10800, # 3 hours
     'system_health.memory_desktop': 10800, # 3 hours

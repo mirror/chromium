@@ -122,7 +122,7 @@ void ProgrammaticScrollAnimator::UpdateCompositorAnimations() {
   }
 
   if (run_state_ == RunState::kWaitingToSendToCompositor) {
-    if (!element_id_)
+    if (!compositor_animation_attached_to_element_id_)
       ReattachCompositorPlayerIfNeeded(
           GetScrollableArea()->GetCompositorAnimationTimeline());
 

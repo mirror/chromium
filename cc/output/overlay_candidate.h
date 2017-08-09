@@ -126,8 +126,8 @@ class CC_EXPORT OverlayCandidateList : public std::vector<OverlayCandidate> {
   OverlayCandidateList& operator=(const OverlayCandidateList&);
   OverlayCandidateList& operator=(OverlayCandidateList&&);
 
-  // [id] == candidate's |display_rect| for all promotable resources.
-  using PromotionHintInfoMap = std::map<viz::ResourceId, gfx::RectF>;
+  // [id] == origin of candidate's |display_rect| for all promotable resources.
+  using PromotionHintInfoMap = std::map<viz::ResourceId, gfx::PointF>;
 
   // For android, this provides a set of resources that could be promoted to
   // overlay, if one backs them with a SurfaceView.

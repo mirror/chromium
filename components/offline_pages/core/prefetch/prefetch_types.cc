@@ -14,7 +14,7 @@ PrefetchDownloadResult::PrefetchDownloadResult() = default;
 
 PrefetchDownloadResult::PrefetchDownloadResult(const std::string& download_id,
                                                const base::FilePath& file_path,
-                                               int64_t file_size)
+                                               uint64_t file_size)
     : download_id(download_id),
       success(true),
       file_path(file_path),
@@ -22,16 +22,5 @@ PrefetchDownloadResult::PrefetchDownloadResult(const std::string& download_id,
 
 PrefetchDownloadResult::PrefetchDownloadResult(
     const PrefetchDownloadResult& other) = default;
-
-PrefetchArchiveInfo::PrefetchArchiveInfo() = default;
-
-PrefetchArchiveInfo::PrefetchArchiveInfo(const PrefetchArchiveInfo& other) =
-    default;
-
-PrefetchArchiveInfo::~PrefetchArchiveInfo() = default;
-
-bool PrefetchArchiveInfo::empty() const {
-  return offline_id == 0;
-}
 
 }  // namespace offline_pages

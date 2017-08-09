@@ -151,8 +151,11 @@ void AutofillPopupViewViews::DrawAutofillEntry(gfx::Canvas* canvas,
           controller_->GetBackgroundColorIDForRow(index)));
 
   const int frontend_id = controller_->GetSuggestionAt(index).frontend_id;
-  const bool icon_in_front_of_text =
+  const bool is_http_warning =
       (frontend_id == POPUP_ITEM_ID_HTTP_NOT_SECURE_WARNING_MESSAGE);
+  const bool icon_in_front_of_text =
+      (is_http_warning ||
+       frontend_id == POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY);
   const bool is_rtl = controller_->IsRTL();
   const int text_align =
       is_rtl ? gfx::Canvas::TEXT_ALIGN_RIGHT : gfx::Canvas::TEXT_ALIGN_LEFT;
@@ -219,7 +222,7 @@ void AutofillPopupViewViews::DrawAutofillEntry(gfx::Canvas* canvas,
         controller_->layout_model().GetLabelFontListForRow(index));
     int label_x_align_left = x_align_left;
 
-    if (icon_in_front_of_text) {
+    if (is_http_warning) {
       label_x_align_left =
           is_rtl ? value_rect.x() : value_rect.right() - label_width;
     } else {

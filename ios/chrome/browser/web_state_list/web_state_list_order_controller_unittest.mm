@@ -15,6 +15,7 @@
 #import "ios/web/public/test/fakes/test_web_state.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
+#include "ui/base/page_transition_types.h"
 
 namespace {
 const char kURL[] = "https://chromium.org/";
@@ -44,13 +45,13 @@ class WebStateListOrderControllerTest : public PlatformTest {
   WebStateList web_state_list_;
   WebStateListOrderController order_controller_;
 
-  void InsertNewWebState(int index, WebStateOpener opener) {
+  std::unique_ptr<web::WebState> CreateWebState() {
     auto test_web_state = base::MakeUnique<web::TestWebState>();
     test_web_state->SetCurrentURL(GURL(kURL));
     test_web_state->SetNavigationManager(
         base::MakeUnique<FakeNavigationManager>());
-    web_state_list_.InsertWebState(index, std::move(test_web_state),
-                                   WebStateList::INSERT_FORCE_INDEX, opener);
+    // TODO(crbug.com/703565): remove std::move() once Xcode 9.0+ is required.
+    return std::move(test_web_state);
   }
 
  private:
@@ -58,26 +59,38 @@ class WebStateListOrderControllerTest : public PlatformTest {
 };
 
 TEST_F(WebStateListOrderControllerTest, DetermineInsertionIndex) {
-  InsertNewWebState(0, WebStateOpener());
-  InsertNewWebState(1, WebStateOpener());
+  web_state_list_.InsertWebState(0, CreateWebState());
+  web_state_list_.InsertWebState(1, CreateWebState());
   web::WebState* opener = web_state_list_.GetWebStateAt(0);
 
   // Verify that first child WebState is inserted after |opener| if there are
   // no other children.
-  EXPECT_EQ(1, order_controller_.DetermineInsertionIndex(opener));
+  EXPECT_EQ(1, order_controller_.DetermineInsertionIndex(
+                   ui::PAGE_TRANSITION_LINK, opener));
+
+  // Verify that child WebState is inserted at the end if it is not a "LINK"
+  // transition.
+  EXPECT_EQ(2, order_controller_.DetermineInsertionIndex(
+                   ui::PAGE_TRANSITION_GENERATED, opener));
 
   // Verify that  WebState is inserted at the end if it has no opener.
-  EXPECT_EQ(2, order_controller_.DetermineInsertionIndex(nullptr));
+  EXPECT_EQ(2, order_controller_.DetermineInsertionIndex(
+                   ui::PAGE_TRANSITION_LINK, nullptr));
 
   // Add a child WebState to |opener|, and verify that a second child would be
   // inserted after the first.
-  InsertNewWebState(2, WebStateOpener(opener));
+  web_state_list_.InsertWebState(2, CreateWebState());
+  web_state_list_.SetOpenerOfWebStateAt(2, WebStateOpener(opener));
 
-  EXPECT_EQ(3, order_controller_.DetermineInsertionIndex(opener));
+  EXPECT_EQ(3, order_controller_.DetermineInsertionIndex(
+                   ui::PAGE_TRANSITION_LINK, opener));
 
   // Add a grand-child to |opener|, and verify that adding another child to
   // |opener| would be inserted before the grand-child.
-  InsertNewWebState(3, WebStateOpener(web_state_list_.GetWebStateAt(1)));
+  web_state_list_.InsertWebState(3, CreateWebState());
+  web_state_list_.SetOpenerOfWebStateAt(
+      3, WebStateOpener(web_state_list_.GetWebStateAt(1)));
 
-  EXPECT_EQ(3, order_controller_.DetermineInsertionIndex(opener));
+  EXPECT_EQ(3, order_controller_.DetermineInsertionIndex(
+                   ui::PAGE_TRANSITION_LINK, opener));
 }

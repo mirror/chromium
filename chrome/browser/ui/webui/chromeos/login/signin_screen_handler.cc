@@ -872,11 +872,14 @@ void SigninScreenHandler::SetSigninScreenColors(SkColor dark_muted_color) {
       SkColorSetA(ash::login_constants::kDefaultBaseColor,
                   ash::login_constants::kTranslucentColorDarkenAlpha),
       dark_muted_color);
+  SkColor background_color =
+      SkColorSetA(base_color, ash::login_constants::kTranslucentAlpha);
   SkColor scroll_color =
       SkColorSetA(base_color, ash::login_constants::kScrollTranslucentAlpha);
   CallJS("login.AccountPickerScreen.setOverlayColors",
          color_utils::SkColorToRgbaString(dark_muted_color),
-         color_utils::SkColorToRgbaString(scroll_color));
+         color_utils::SkColorToRgbaString(scroll_color),
+         color_utils::SkColorToRgbaString(background_color));
 }
 
 void SigninScreenHandler::Initialize() {

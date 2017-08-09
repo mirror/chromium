@@ -135,6 +135,7 @@
 #include "content/renderer/pepper/pepper_audio_controller.h"
 #include "content/renderer/pepper/plugin_instance_throttler_impl.h"
 #include "content/renderer/presentation/presentation_dispatcher.h"
+#include "content/renderer/previews_state_helper.h"
 #include "content/renderer/push_messaging/push_messaging_client.h"
 #include "content/renderer/render_frame_proxy.h"
 #include "content/renderer/render_process.h"
@@ -2845,10 +2846,6 @@ void RenderFrameImpl::DetachDevToolsForTest() {
     devtools_agent_->DetachAllSessions();
 }
 
-void RenderFrameImpl::SetPreviewsState(PreviewsState previews_state) {
-  previews_state_ = previews_state;
-}
-
 PreviewsState RenderFrameImpl::GetPreviewsState() const {
   return previews_state_;
 }
@@ -3714,7 +3711,8 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   if (is_main_frame_ && !navigation_state->WasWithinSameDocument()) {
     previews_state_ = PREVIEWS_OFF;
     if (extra_data) {
-      previews_state_ = extra_data->previews_state();
+      previews_state_ = GetPreviewsStateFromMainFrameResponse(
+          extra_data->previews_state(), web_url_response);
       effective_connection_type_ =
           EffectiveConnectionTypeToWebEffectiveConnectionType(
               extra_data->effective_connection_type());
@@ -5246,10 +5244,8 @@ void RenderFrameImpl::OnCommitNavigation(
       weak_factory_.GetWeakPtr());
 
   // Chrome doesn't use interface versioning.
-  mojom::URLLoaderFactoryPtr url_loader_factory;
-  url_loader_factory.Bind(mojom::URLLoaderFactoryPtrInfo(
+  url_loader_factory_.Bind(mojom::URLLoaderFactoryPtrInfo(
       mojo::ScopedMessagePipeHandle(commit_data.url_loader_factory), 0u));
-  url_loader_factory_ = std::move(url_loader_factory);
 
   // If the request was initiated in the context of a user gesture then make
   // sure that the navigation also executes in the context of a user gesture.
@@ -6768,9 +6764,6 @@ void RenderFrameImpl::RegisterMojoInterfaces() {
   registry_.AddInterface(base::Bind(&FrameInputHandlerImpl::CreateMojoService,
                                     weak_factory_.GetWeakPtr()));
 
-  registry_.AddInterface(
-      base::Bind(&RenderFrameImpl::BindWidget, weak_factory_.GetWeakPtr()));
-
   if (!frame_->Parent()) {
     // Only main frame have ImageDownloader service.
     registry_.AddInterface(base::Bind(&ImageDownloaderImpl::CreateMojoService,
@@ -6827,28 +6820,23 @@ std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
   UpdatePeakMemoryStats();
 
   ChildThreadImpl* child_thread = ChildThreadImpl::current();
-  if (!child_thread) {
-    return RenderThreadImpl::current()->blink_platform_impl()->CreateURLLoader(
-        request, task_runner);
+  if (base::FeatureList::IsEnabled(features::kNetworkService) && child_thread) {
+    // Use if per-frame or per-scheme URLLoaderFactory is given.
+    mojom::URLLoaderFactory* factory = url_loader_factory_.get();
+
+    if (request.Url().ProtocolIs(url::kBlobScheme))
+      factory = RenderThreadImpl::current()->GetBlobURLLoaderFactory();
+
+    if (factory) {
+      return base::MakeUnique<WebURLLoaderImpl>(
+          child_thread->resource_dispatcher(), task_runner, factory);
+    }
+    // Otherwise fallback to the platform one, which will use the default
+    // network service's URLLoaderFactory.
   }
 
-  mojom::URLLoaderFactory* factory = url_loader_factory_.get();
-  if (base::FeatureList::IsEnabled(features::kNetworkService) &&
-      request.Url().ProtocolIs(url::kBlobScheme)) {
-    factory = RenderThreadImpl::current()->GetBlobURLLoaderFactory();
-    DCHECK(factory);
-  }
-
-  if (!factory && !url_loader_factory_) {
-    url_loader_factory_ = RenderThreadImpl::current()
-                              ->blink_platform_impl()
-                              ->CreateURLLoaderFactory();
-    factory = url_loader_factory_.get();
-    DCHECK(factory);
-  }
-
-  return base::MakeUnique<WebURLLoaderImpl>(child_thread->resource_dispatcher(),
-                                            task_runner, factory);
+  return RenderThreadImpl::current()->blink_platform_impl()->CreateURLLoader(
+      request, task_runner);
 }
 
 void RenderFrameImpl::DraggableRegionsChanged() {
@@ -7117,9 +7105,5 @@ RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
       cache_disabled(info.is_cache_disabled),
       form(info.form),
       source_location(info.source_location) {}
-
-void RenderFrameImpl::BindWidget(mojom::WidgetRequest request) {
-  GetRenderWidget()->SetWidgetBinding(std::move(request));
-}
 
 }  // namespace content

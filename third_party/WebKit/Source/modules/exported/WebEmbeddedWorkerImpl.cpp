@@ -329,7 +329,13 @@ void WebEmbeddedWorkerImpl::OnScriptLoaderFinished() {
   if (asked_to_terminate_)
     return;
 
-  if (main_script_loader_->Failed()) {
+  // The browser is expected to associate a registration and then load the
+  // script. If there's no associated registration, the browser could not
+  // successfully handle the SetHostedVersionID IPC, and the script load came
+  // through the normal network stack rather than through service worker
+  // loading code.
+  if (!worker_context_client_->HasAssociatedRegistration() ||
+      main_script_loader_->Failed()) {
     TerminateWorkerContext();
     return;
   }

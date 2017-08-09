@@ -641,9 +641,10 @@ void WindowTreeHostManager::OnDisplayMetricsChanged(
   SetDisplayPropertiesOnHost(ash_host, display);
 }
 
-void WindowTreeHostManager::OnHostResized(aura::WindowTreeHost* host) {
+void WindowTreeHostManager::OnHostResized(const aura::WindowTreeHost* host) {
   display::Display display =
-      display::Screen::GetScreen()->GetDisplayNearestWindow(host->window());
+      display::Screen::GetScreen()->GetDisplayNearestWindow(
+          const_cast<aura::Window*>(host->window()));
 
   display::DisplayManager* display_manager = GetDisplayManager();
   if (display_manager->UpdateDisplayBounds(display.id(),
@@ -692,7 +693,8 @@ void WindowTreeHostManager::PreDisplayConfigurationChange(bool clear_focus) {
   cursor_location_in_native_coords_for_restore_ = point_in_native;
 }
 
-void WindowTreeHostManager::PostDisplayConfigurationChange() {
+void WindowTreeHostManager::PostDisplayConfigurationChange(
+    bool must_clear_window) {
   focus_activation_store_->Restore();
 
   display::DisplayManager* display_manager = GetDisplayManager();

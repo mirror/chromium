@@ -170,7 +170,7 @@ ChromePasswordManagerClient::ChromePasswordManagerClient(
       password_reuse_detection_manager_(this),
 #endif
       driver_factory_(nullptr),
-      content_credential_manager_(this),
+      credential_manager_impl_(web_contents, this),
       password_manager_client_bindings_(web_contents, this),
       observer_(nullptr),
       credentials_filter_(this,
@@ -445,14 +445,6 @@ void ChromePasswordManagerClient::CheckProtectedPasswordEntry(
         password_field_exists);
   }
 }
-
-void ChromePasswordManagerClient::LogPasswordReuseDetectedEvent() {
-  safe_browsing::PasswordProtectionService* pps =
-      GetPasswordProtectionService();
-  if (pps) {
-    pps->MaybeLogPasswordReuseDetectedEvent(web_contents());
-  }
-}
 #endif
 
 ukm::UkmRecorder* ChromePasswordManagerClient::GetUkmRecorder() {
@@ -487,12 +479,11 @@ void ChromePasswordManagerClient::DidFinishNavigation(
     metrics_recorder_.reset();
   }
 
-  // From this point on, the ContentCredentialManager will service API calls in
-  // the context of the new WebContents::GetLastCommittedURL, which may very
-  // well be cross-origin. Disconnect existing client, and drop pending
-  // requests.
+  // From this point on, the CredentialManagerImpl will service API calls in the
+  // context of the new WebContents::GetLastCommittedURL, which may very well be
+  // cross-origin. Disconnect existing client, and drop pending requests.
   if (!navigation_handle->IsSameDocument())
-    content_credential_manager_.DisconnectBinding();
+    credential_manager_impl_.DisconnectBinding();
 
 // TODO(crbug.com/706392): Fix password reuse detection for Android.
 #if !defined(OS_ANDROID)
@@ -772,7 +763,7 @@ void ChromePasswordManagerClient::BindCredentialManager(
   if (!instance)
     return;
 
-  instance->content_credential_manager_.BindRequest(std::move(request));
+  instance->credential_manager_impl_.BindRequest(std::move(request));
 }
 
 // static

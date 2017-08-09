@@ -19,8 +19,7 @@ namespace blink {
 
 // SelectionTemplate is used for representing a selection in DOM tree or Flat
 // tree with template parameter |Strategy|. Instances of |SelectionTemplate|
-// are "virtually" immutable objects, we change |SelectionTemplate| by copying
-// in |SelectionEdtior| and |InvalidSelectionResetter|.
+// are immutable objects, you can't change them once constructed.
 //
 // To construct |SelectionTemplate| object, please use |Builder| class.
 template <typename Strategy>
@@ -72,24 +71,6 @@ class CORE_EXPORT SelectionTemplate final {
     DISALLOW_COPY_AND_ASSIGN(Builder);
   };
 
-  // Resets selection at end of life time of the object when base and extent
-  // are disconnected or moved to another document.
-  class InvalidSelectionResetter final {
-    DISALLOW_NEW();
-
-   public:
-    explicit InvalidSelectionResetter(const SelectionTemplate&);
-    ~InvalidSelectionResetter();
-
-    DECLARE_TRACE();
-
-   private:
-    const Member<const Document> document_;
-    SelectionTemplate& selection_;
-
-    DISALLOW_COPY_AND_ASSIGN(InvalidSelectionResetter);
-  };
-
   SelectionTemplate(const SelectionTemplate& other);
   SelectionTemplate();
 
@@ -135,8 +116,6 @@ class CORE_EXPORT SelectionTemplate final {
   };
 
   Document* GetDocument() const;
-  bool IsValidFor(const Document&) const;
-  void ResetDirectionCache() const;
 
   PositionTemplate<Strategy> base_;
   PositionTemplate<Strategy> extent_;

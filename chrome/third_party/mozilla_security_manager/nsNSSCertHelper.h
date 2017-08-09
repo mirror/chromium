@@ -46,7 +46,6 @@
 #include <string>
 
 #include "net/cert/cert_database.h"
-#include "net/cert/cert_type.h"
 
 namespace mozilla_security_manager {
 

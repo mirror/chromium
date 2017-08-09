@@ -265,6 +265,10 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
     }
   }
 
+  void StopSearch() override {
+    // Nothing needs to be done.
+  }
+
   void ViewInitialized() override {
     // Nothing needs to be done.
   }
@@ -295,19 +299,6 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
   void CustomLauncherPagePopSubpage() override {}
 
   bool IsSpeechRecognitionEnabled() override { return false; }
-
-  void GetWallpaperProminentColors(std::vector<SkColor>* colors) override {
-    NOTIMPLEMENTED();
-  }
-
-  void AddObserver(app_list::AppListViewDelegateObserver* observer) override {
-    NOTIMPLEMENTED();
-  }
-
-  void RemoveObserver(
-      app_list::AppListViewDelegateObserver* observer) override {
-    NOTIMPLEMENTED();
-  }
 
   std::unique_ptr<app_list::AppListModel> model_;
   app_list::SpeechUIModel speech_ui_;

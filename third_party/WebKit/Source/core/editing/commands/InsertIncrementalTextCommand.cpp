@@ -98,16 +98,20 @@ const String ComputeTextForInsertion(const String& new_text,
       new_text.length() - common_prefix_length - common_suffix_length);
 }
 
-SelectionInDOMTree ComputeSelectionForInsertion(
+VisibleSelection ComputeSelectionForInsertion(
     const EphemeralRange& selection_range,
     const int offset,
-    const int length) {
+    const int length,
+    const bool is_directional) {
   CharacterIterator char_it(selection_range);
   const EphemeralRange& range_for_insertion =
       char_it.CalculateCharacterSubrange(offset, length);
-  return SelectionInDOMTree::Builder()
-      .SetBaseAndExtent(range_for_insertion)
-      .Build();
+  const VisibleSelection& selection =
+      CreateVisibleSelection(SelectionInDOMTree::Builder()
+                                 .SetBaseAndExtent(range_for_insertion)
+                                 .SetIsDirectional(is_directional)
+                                 .Build());
+  return selection;
 }
 
 }  // anonymous namespace
@@ -154,8 +158,9 @@ void InsertIncrementalTextCommand::DoApply(EditingState* editing_state) {
   const int offset = static_cast<int>(common_prefix_length);
   const int length = static_cast<int>(old_text_length - common_prefix_length -
                                       common_suffix_length);
-  const VisibleSelection& selection_for_insertion = CreateVisibleSelection(
-      ComputeSelectionForInsertion(selection_range, offset, length));
+  const VisibleSelection& selection_for_insertion =
+      ComputeSelectionForInsertion(selection_range, offset, length,
+                                   EndingSelection().IsDirectional());
 
   SetEndingSelectionWithoutValidation(selection_for_insertion.Start(),
                                       selection_for_insertion.End());

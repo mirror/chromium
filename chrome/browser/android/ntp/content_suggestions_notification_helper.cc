@@ -30,24 +30,9 @@ namespace ntp_snippets {
 
 namespace {
 
-// Whether auto opt out is enabled. Note that this does not disable collection
-// of data required for auto opt out.
-const bool kEnableAutoOptOutDefault = true;
-const char kEnableAutoOptOutParamName[] = "enable_auto_opt_out";
-
-bool IsAutoOptOutEnabled() {
-  return variations::GetVariationParamByFeatureAsBool(
-      ntp_snippets::kNotificationsFeature, kEnableAutoOptOutParamName,
-      kEnableAutoOptOutDefault);
-}
-
-bool IsEnabledForProfile(Profile* profile) {
+bool IsDisabledForProfile(Profile* profile) {
   PrefService* prefs = profile->GetPrefs();
   if (!prefs->GetBoolean(prefs::kContentSuggestionsNotificationsEnabled)) {
-    return false;
-  }
-
-  if (!IsAutoOptOutEnabled()) {
     return true;
   }
 
@@ -56,7 +41,7 @@ bool IsEnabledForProfile(Profile* profile) {
   int limit = variations::GetVariationParamByFeatureAsInt(
       kNotificationsFeature, kNotificationsIgnoredLimitParam,
       kNotificationsIgnoredDefaultLimit);
-  return current < limit;
+  return current >= limit;
 }
 
 }  // namespace
@@ -115,9 +100,9 @@ void ContentSuggestionsNotificationHelper::FlushCachedMetrics() {
   Java_ContentSuggestionsNotificationHelper_flushCachedMetrics(env);
 }
 
-bool ContentSuggestionsNotificationHelper::IsEnabledForProfile(
+bool ContentSuggestionsNotificationHelper::IsDisabledForProfile(
     Profile* profile) {
-  return ntp_snippets::IsEnabledForProfile(profile);
+  return ntp_snippets::IsDisabledForProfile(profile);
 }
 
 static void RecordNotificationOptOut(JNIEnv* env,
@@ -181,7 +166,7 @@ static void ReceiveFlushedMetrics(JNIEnv* env,
         CONTENT_SUGGESTIONS_HIDE_SHUTDOWN);
   }
 
-  const bool was_enabled = IsEnabledForProfile(profile);
+  const bool was_disabled = IsDisabledForProfile(profile);
   if (tap_count == 0) {
     // There were no taps, consecutive_ignored has not been reset and continues
     // from where it left off. If there was a tap, then Java has provided us
@@ -191,8 +176,8 @@ static void ReceiveFlushedMetrics(JNIEnv* env,
   }
   prefs->SetInteger(prefs::kContentSuggestionsConsecutiveIgnoredPrefName,
                     consecutive_ignored);
-  const bool is_enabled = IsEnabledForProfile(profile);
-  if (was_enabled && !is_enabled) {
+  const bool is_disabled = IsDisabledForProfile(profile);
+  if (!was_disabled && is_disabled) {
     RecordContentSuggestionsNotificationOptOut(CONTENT_SUGGESTIONS_IMPLICIT);
   }
 }

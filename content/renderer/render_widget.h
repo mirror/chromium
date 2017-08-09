@@ -464,7 +464,6 @@ class CONTENT_EXPORT RenderWidget
   // composition info (when in monitor mode).
   void OnRequestCompositionUpdates(bool immediate_request,
                                    bool monitor_updates);
-  void SetWidgetBinding(mojom::WidgetRequest request);
 
  protected:
   // Friend RefCounted so that the dtor can be non-public. Using this class
@@ -746,10 +745,6 @@ class CONTENT_EXPORT RenderWidget
 
   // Stores the current text input flags of |webwidget_|.
   int text_input_flags_;
-
-  // Indicates whether currently focused input field has next/previous focusable
-  // form input field.
-  int next_previous_flags_;
 
   // Stores the current type of composition text rendering of |webwidget_|.
   bool can_compose_inline_;

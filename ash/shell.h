@@ -18,7 +18,6 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
-#include "ui/app_list/app_list_constants.h"
 #include "ui/aura/window.h"
 #include "ui/display/screen.h"
 #include "ui/events/event_target.h"
@@ -38,7 +37,7 @@ class UserActivityForwarder;
 class Window;
 class WindowManagerClient;
 class WindowTreeClient;
-}  // namespace aura
+}
 
 namespace chromeos {
 class AudioA11yController;
@@ -46,13 +45,13 @@ class AudioA11yController;
 
 namespace app_list {
 class AppList;
-}  // namespace app_list
+}
 
 namespace display {
 class DisplayChangeObserver;
 class DisplayConfigurator;
 class DisplayManager;
-}  // namespace display
+}
 
 namespace gfx {
 class Insets;
@@ -61,7 +60,7 @@ class Insets;
 namespace ui {
 class UserActivityDetector;
 class UserActivityPowerManagerNotifier;
-}  // namespace ui
+}
 
 namespace views {
 class NonClientFrameView;
@@ -69,7 +68,7 @@ class Widget;
 namespace corewm {
 class TooltipController;
 }
-}  // namespace views
+}
 
 namespace wm {
 class AcceleratorFilter;
@@ -79,7 +78,7 @@ class FocusController;
 class ShadowController;
 class VisibilityController;
 class WindowModalityController;
-}  // namespace wm
+}
 
 namespace ash {
 
@@ -545,7 +544,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   void RemoveShellObserver(ShellObserver* observer);
 
   // Shows the app list on the active root window.
-  void ShowAppList(app_list::AppListShowSource toggle_method);
+  void ShowAppList();
 
   // Updates y position and opacity of app list. |is_end_gesture| means it is
   // the end of the gesture dragging of app list from shelf and should restore
@@ -558,7 +557,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   void DismissAppList();
 
   // Shows the app list if it's not visible. Dismisses it otherwise.
-  void ToggleAppList(app_list::AppListShowSource toggle_method);
+  void ToggleAppList();
 
   // Returns app list actual visibility. This might differ from
   // GetAppListTargetVisibility() when hiding animation is still in flight.
@@ -611,9 +610,6 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   // Used to provide better error messages for Shell::Get() under mash.
   static void SetIsBrowserProcessWithMash();
-
-  // Used when Chrome owns the pref service (not mash).
-  void SetLocalStatePrefService(PrefService* local_state);
 
   void NotifyAppListVisibilityChanged(bool visible, aura::Window* root_window);
 
@@ -740,13 +736,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   // Only initialized for mash. Can be null in ash_standalone (when chrome is
   // not running) or when reconnecting to the mojo pref service after
   // multiuser profile switch.
-  std::unique_ptr<PrefService> profile_pref_service_mash_;
-
-  // Used in non-mash. Owned by chrome.
-  PrefService* local_state_non_mash_ = nullptr;
-
-  // Used in mash.
-  std::unique_ptr<PrefService> local_state_mash_;
+  std::unique_ptr<::PrefService> profile_pref_service_;
+  std::unique_ptr<::PrefService> local_state_;
 
   std::unique_ptr<views::corewm::TooltipController> tooltip_controller_;
   LinkHandlerModelFactory* link_handler_model_factory_;

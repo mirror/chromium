@@ -4,11 +4,8 @@
 
 #import "ios/chrome/content_widget_extension/content_widget_view.h"
 
-#include "base/logging.h"
 #import "ios/chrome/browser/ui/favicon/favicon_view.h"
-#import "ios/chrome/browser/ui/ntp/ntp_tile.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
-#include "ios/chrome/common/app_group/app_group_constants.h"
 #import "ios/chrome/content_widget_extension/most_visited_tile_view.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -22,9 +19,6 @@ const CGFloat kTileSpacing = 16;
 const CGFloat kTileHeight = 100;
 // Icons to show per row.
 const int kIconsPerRow = 4;
-// Number of rows in the widget. Note that modifying this value will not add
-// extra rows and will break functionality unless additional changes are made.
-const int kRows = 2;
 }
 
 @interface ContentWidgetView ()
@@ -43,17 +37,13 @@ const int kRows = 2;
 @property(nonatomic, readonly) BOOL shouldShowSecondRow;
 // The number of sites to display.
 @property(nonatomic, assign) int siteCount;
-// The most visited tile views; tiles remain in this array even when hidden.
-@property(nonatomic, strong) NSArray<MostVisitedTileView*>* mostVisitedTiles;
-// The delegate for actions in the view.
-@property(nonatomic, weak) id<ContentWidgetViewDelegate> delegate;
 
 // Sets up the widget UI for an expanded or compact appearance based on
 // |compact|.
 - (void)createUI:(BOOL)compact;
 
-// Arranges |tiles| horizontally in a view and returns the view.
-- (UIView*)createRowFromTiles:(NSArray<MostVisitedTileView*>*)tiles;
+// Creates the view for a row of 4 sites.
+- (UIView*)createRowOfSites;
 
 // Returns the height to use for the first row, depending on the display mode.
 - (CGFloat)firstRowHeight:(BOOL)compact;
@@ -61,9 +51,6 @@ const int kRows = 2;
 // Returns the height to use for the second row (can be 0 if the row should not
 // be shown).
 - (CGFloat)secondRowHeight;
-
-// Opens the |mostVisitedTile|'s url, using the delegate.
-- (void)openURLFromMostVisited:(MostVisitedTileView*)mostVisitedTile;
 
 @end
 
@@ -74,16 +61,11 @@ const int kRows = 2;
 @synthesize compactHeight = _compactHeight;
 @synthesize firstRowHeightConstraint = _firstRowHeightConstraint;
 @synthesize siteCount = _siteCount;
-@synthesize mostVisitedTiles = _mostVisitedTiles;
-@synthesize delegate = _delegate;
 
-- (instancetype)initWithDelegate:(id<ContentWidgetViewDelegate>)delegate
-                   compactHeight:(CGFloat)compactHeight
-                initiallyCompact:(BOOL)compact {
+- (instancetype)initWithCompactHeight:(CGFloat)compactHeight
+                     initiallyCompact:(BOOL)compact {
   self = [super initWithFrame:CGRectZero];
   if (self) {
-    DCHECK(delegate);
-    _delegate = delegate;
     _compactHeight = compactHeight;
     [self createUI:compact];
   }
@@ -103,18 +85,8 @@ const int kRows = 2;
 #pragma mark - UI creation
 
 - (void)createUI:(BOOL)compact {
-  NSMutableArray* tiles = [[NSMutableArray alloc] init];
-  for (int i = 0; i < kIconsPerRow * kRows; i++) {
-    [tiles addObject:[[MostVisitedTileView alloc] init]];
-  }
-  _mostVisitedTiles = tiles;
-
-  _firstRow = [self
-      createRowFromTiles:[tiles
-                             subarrayWithRange:NSMakeRange(0, kIconsPerRow)]];
-  _secondRow = [self
-      createRowFromTiles:[tiles subarrayWithRange:NSMakeRange(kIconsPerRow,
-                                                              kIconsPerRow)]];
+  _firstRow = [self createRowOfSites];
+  _secondRow = [self createRowOfSites];
 
   [self addSubview:_firstRow];
   [self addSubview:_secondRow];
@@ -133,8 +105,14 @@ const int kRows = 2;
   ]];
 }
 
-- (UIView*)createRowFromTiles:(NSArray<MostVisitedTileView*>*)tiles {
-  UIStackView* stack = [[UIStackView alloc] initWithArrangedSubviews:tiles];
+- (UIView*)createRowOfSites {
+  NSMutableArray<MostVisitedTileView*>* cells = [[NSMutableArray alloc] init];
+  for (int i = 0; i < kIconsPerRow; i++) {
+    cells[i] = [[MostVisitedTileView alloc] init];
+    cells[i].translatesAutoresizingMaskIntoConstraints = NO;
+  }
+
+  UIStackView* stack = [[UIStackView alloc] initWithArrangedSubviews:cells];
   stack.translatesAutoresizingMaskIntoConstraints = NO;
   stack.axis = UILayoutConstraintAxisHorizontal;
   stack.alignment = UIStackViewAlignmentTop;
@@ -156,73 +134,19 @@ const int kRows = 2;
   return container;
 }
 
-- (void)updateSites:(NSDictionary<NSURL*, NTPTile*>*)sites {
-  for (NTPTile* site in sites.objectEnumerator) {
-    // If the site's position is > the # of tiles shown, there is no tile to
-    // update. Remember that sites is a dictionary and is not ordered by
-    // position.
-    if (static_cast<NSUInteger>(site.position) > self.mostVisitedTiles.count) {
-      continue;
-    }
-    MostVisitedTileView* tileView = self.mostVisitedTiles[site.position];
-    tileView.titleLabel.text = site.title;
-    tileView.URL = site.URL;
-
-    FaviconAttributes* attributes = nil;
-
-    if (site.faviconFileName) {
-      NSURL* filePath = [app_group::ContentWidgetFaviconsFolder()
-          URLByAppendingPathComponent:site.faviconFileName];
-      UIImage* faviconImage = [UIImage imageWithContentsOfFile:filePath.path];
-      if (faviconImage) {
-        attributes = [FaviconAttributes attributesWithImage:faviconImage];
-      }
-    } else {
-      attributes = [FaviconAttributes
-          attributesWithMonogram:site.fallbackMonogram
-                       textColor:site.fallbackTextColor
-                 backgroundColor:site.fallbackBackgroundColor
-          defaultBackgroundColor:site.fallbackIsDefaultColor];
-    }
-    [tileView.faviconView configureWithAttributes:attributes];
-    tileView.alpha = 1;
-    tileView.userInteractionEnabled = YES;
-    [tileView addTarget:self
-                  action:@selector(openURLFromMostVisited:)
-        forControlEvents:UIControlEventTouchUpInside];
-    tileView.accessibilityLabel = site.title;
-  }
-
-  self.siteCount = sites.count;
-  [self hideEmptyTiles];
-}
-
-- (void)openURLFromMostVisited:(MostVisitedTileView*)mostVisitedTile {
-  [self.delegate openURL:mostVisitedTile.URL];
-}
-
-- (void)hideEmptyTiles {
-  for (int i = self.siteCount; i < kRows * kIconsPerRow; i++) {
-    self.mostVisitedTiles[i].alpha = 0;
-    self.mostVisitedTiles[i].userInteractionEnabled = NO;
-  }
-}
-
 - (CGFloat)firstRowHeight:(BOOL)compact {
   if (compact) {
     return self.compactHeight;
   }
 
-  CGFloat firstRowHeight = kTileHeight + kRows * kTileSpacing;
+  CGFloat firstRowHeight = kTileHeight + 2 * kTileSpacing;
   CGFloat secondRowHeight = [self secondRowHeight];
   CGFloat totalHeight = firstRowHeight + secondRowHeight;
-  if (totalHeight > self.compactHeight) {
+  if (totalHeight >= self.compactHeight) {
     return firstRowHeight;
   }
 
-  // The expanded height should be strictly greater than compactHeight,
-  // otherwise iOS does not update the UI correctly.
-  return self.compactHeight - secondRowHeight + 1;
+  return self.compactHeight - secondRowHeight;
 }
 
 - (CGFloat)secondRowHeight {

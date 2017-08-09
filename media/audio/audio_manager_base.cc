@@ -323,6 +323,9 @@ AudioOutputStream* AudioManagerBase::MakeAudioOutputStreamProxy(
   return output_dispatchers_.back()->dispatcher->CreateStreamProxy();
 }
 
+void AudioManagerBase::ShowAudioInputSettings() {
+}
+
 void AudioManagerBase::GetAudioInputDeviceNames(
     AudioDeviceNames* device_names) {
 }

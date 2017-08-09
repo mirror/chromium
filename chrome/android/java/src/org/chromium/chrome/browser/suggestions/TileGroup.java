@@ -60,7 +60,7 @@ public class TileGroup implements MostVisitedSites.Observer {
          * and any dependent resources will have been loaded).
          * @param tiles The tiles owned by the {@link TileGroup}. Used to record metrics.
          */
-        void onLoadingComplete(List<Tile> tiles);
+        void onLoadingComplete(Tile[] tiles);
 
         /**
          * To be called before this instance is abandoned to the garbage collector so it can do any
@@ -171,17 +171,19 @@ public class TileGroup implements MostVisitedSites.Observer {
     private final OfflineModelObserver mOfflineModelObserver;
 
     /**
-     * Source of truth for the tile data. Avoid keeping a reference to a tile in long running
-     * callbacks, as it might be thrown out before it is called. Use URL or site data to look it up
-     * at the right time instead.
-     * @see #findTile(SiteSuggestion)
-     * @see #findTilesForUrl(String)
+     * Source of truth for the tile data. Since the objects can change when the data is updated,
+     * other objects should not hold references to them but keep track of the URL instead, and use
+     * it to retrieve a {@link Tile}.
+     * TODO(dgn): If we don't recreate them when loading native data we could keep them around and
+     * simplify a few things.
+     * @see #findTile(String, int)
+     * @see #findTiles(String)
      */
     private SparseArray<List<Tile>> mTileSections = createEmptyTileData();
 
     /** Most recently received tile data that has not been displayed yet. */
     @Nullable
-    private List<SiteSuggestion> mPendingTiles;
+    private List<Tile> mPendingTiles;
 
     /**
      * URL of the most recently removed tile. Used to identify when a tile removal is confirmed by
@@ -212,7 +214,7 @@ public class TileGroup implements MostVisitedSites.Observer {
     private final TileSetupDelegate mTileSetupDelegate = new TileSetupDelegate() {
         @Override
         public TileInteractionDelegate createInteractionDelegate(Tile tile) {
-            return new TileInteractionDelegate(tile.getData());
+            return new TileInteractionDelegate(tile.getUrl(), tile.getSectionType());
         }
 
         @Override
@@ -222,7 +224,7 @@ public class TileGroup implements MostVisitedSites.Observer {
             boolean trackLoad =
                     isLoadTracked() && tile.getSectionType() == TileSectionType.PERSONALIZED;
             if (trackLoad) addTask(TileTask.FETCH_ICON);
-            return new LargeIconCallbackImpl(tile.getData(), trackLoad);
+            return new LargeIconCallbackImpl(tile, trackLoad);
         }
     };
 
@@ -271,13 +273,14 @@ public class TileGroup implements MostVisitedSites.Observer {
             // initialization and not changed afterwards.
             if (suggestion.source == TileSource.HOMEPAGE) {
                 int homeTilePosition = Math.min(mPendingTiles.size(), mNumColumns - 1);
-                mPendingTiles.add(homeTilePosition, suggestion);
+                mPendingTiles.add(homeTilePosition, new Tile(suggestion, homeTilePosition));
             } else {
-                mPendingTiles.add(suggestion);
+                mPendingTiles.add(new Tile(suggestion, mPendingTiles.size()));
             }
 
+            // TODO(dgn): Rebase and enable code.
             // Only tiles in the personal section can be modified.
-            if (suggestion.sectionType != TileSectionType.PERSONALIZED) continue;
+            // if (suggestion.section != TileSectionType.PERSONALIZED) continue;
             if (suggestion.url.equals(mPendingRemovalUrl)) removalCompleted = false;
             if (suggestion.url.equals(mPendingInsertionUrl)) insertionCompleted = true;
         }
@@ -297,9 +300,9 @@ public class TileGroup implements MostVisitedSites.Observer {
 
     @Override
     public void onIconMadeAvailable(String siteUrl) {
-        for (Tile tile : findTilesForUrl(siteUrl)) {
-            mTileRenderer.updateIcon(tile.getData(),
-                    new LargeIconCallbackImpl(tile.getData(), /* trackLoadTask = */ false));
+        for (Tile tile : findTiles(siteUrl)) {
+            mTileRenderer.updateIcon(
+                    tile, new LargeIconCallbackImpl(tile, /* trackLoadTask = */ false));
         }
     }
 
@@ -331,7 +334,23 @@ public class TileGroup implements MostVisitedSites.Observer {
         if (isLoadTracked()) removeTask(TileTask.SCHEDULE_ICON_FETCH);
     }
 
-    /** @return All the tiles currently loaded in the group. */
+    /** @deprecated use {@link #getTiles(int)} or {@link #getAllTiles()} instead. */
+    @Deprecated
+    public Tile[] getTiles() {
+        return getTiles(TileSectionType.PERSONALIZED);
+    }
+
+    /** @return The tiles currently loaded in the group for the provided section. */
+    public Tile[] getTiles(@TileSectionType int section) {
+        List<Tile> sectionTiles = mTileSections.get(section);
+        if (sectionTiles == null) return new Tile[0];
+        return sectionTiles.toArray(new Tile[sectionTiles.size()]);
+    }
+
+    /**
+     * @return All the tiles currently loaded in the group. Multiple tiles might be returned for
+     * the same URL, but they would be in different sections.
+     */
     public List<Tile> getAllTiles() {
         List<Tile> tiles = new ArrayList<>();
         for (int i = 0; i < mTileSections.size(); ++i) tiles.addAll(mTileSections.valueAt(i));
@@ -345,7 +364,7 @@ public class TileGroup implements MostVisitedSites.Observer {
     /**
      * To be called when the view displaying the tile group becomes visible.
      * @param trackLoadTask whether the delegate should be notified that the load is completed
-     *      through {@link Delegate#onLoadingComplete(List)}.
+     *                      through {@link Delegate#onLoadingComplete(Tile[])}.
      */
     public void onSwitchToForeground(boolean trackLoadTask) {
         if (trackLoadTask) addTask(TileTask.FETCH_DATA);
@@ -365,25 +384,23 @@ public class TileGroup implements MostVisitedSites.Observer {
         int oldPersonalisedTilesCount = personalisedTiles == null ? 0 : personalisedTiles.size();
 
         SparseArray<List<Tile>> newSites = createEmptyTileData();
-        for (int i = 0; i < mPendingTiles.size(); ++i) {
-            SiteSuggestion suggestion = mPendingTiles.get(i);
-            Tile tile = findTile(suggestion);
-            if (tile == null) {
-                dataChanged = true;
-                tile = new Tile(suggestion, i);
-            }
+        for (Tile newTile : mPendingTiles) {
+            @TileSectionType
+            int category = newTile.getSectionType();
+            Tile matchingTile = findTile(newTile.getUrl(), category);
+            if (matchingTile == null || newTile.importData(matchingTile)) dataChanged = true;
 
-            List<Tile> sectionTiles = newSites.get(suggestion.sectionType);
+            List<Tile> sectionTiles = newSites.get(category);
             if (sectionTiles == null) {
-                sectionTiles = new ArrayList<>();
-                newSites.append(suggestion.sectionType, sectionTiles);
+                sectionTiles = new ArrayList<>(category);
+                newSites.append(category, sectionTiles);
             }
 
             // TODO(dgn): Do we know if it still ever happens? Remove or replace with an assert if
             // it never gets hit. See https://crbug.com/703628
-            if (findTile(suggestion.url, sectionTiles) != null) throw new IllegalStateException();
+            if (findTile(newTile.getUrl(), sectionTiles) != null) throw new IllegalStateException();
 
-            sectionTiles.add(tile);
+            sectionTiles.add(newTile);
         }
 
         mTileSections = newSites;
@@ -410,19 +427,17 @@ public class TileGroup implements MostVisitedSites.Observer {
         if (isInitialLoad) removeTask(TileTask.FETCH_DATA);
     }
 
+    /** @return A tile matching the provided URL and section, or {@code null} if none is found. */
     @Nullable
-    private Tile findTile(SiteSuggestion suggestion) {
-        if (mTileSections.get(suggestion.sectionType) == null) return null;
-        for (Tile tile : mTileSections.get(suggestion.sectionType)) {
-            if (tile.getData().equals(suggestion)) return tile;
+    private Tile findTile(String url, @TileSectionType int section) {
+        if (mTileSections.get(section) == null) return null;
+        for (Tile tile : mTileSections.get(section)) {
+            if (tile.getUrl().equals(url)) return tile;
         }
-        return null;
+        return findTile(url, mTileSections.get(section));
     }
 
-    /**
-     * @param url The URL to search for.
-     * @param tiles The section to search in, represented by the contained list of tiles.
-     * @return A tile matching the provided URL and section, or {@code null} if none is found. */
+    /** @return A tile matching the provided URL and section, or {@code null} if none is found. */
     private Tile findTile(String url, @Nullable List<Tile> tiles) {
         if (tiles == null) return null;
         for (Tile tile : tiles) {
@@ -432,7 +447,7 @@ public class TileGroup implements MostVisitedSites.Observer {
     }
 
     /** @return All tiles matching the provided URL, or an empty list if none is found. */
-    private List<Tile> findTilesForUrl(String url) {
+    private List<Tile> findTiles(String url) {
         List<Tile> tiles = new ArrayList<>();
         for (int i = 0; i < mTileSections.size(); ++i) {
             for (Tile tile : mTileSections.valueAt(i)) {
@@ -455,15 +470,13 @@ public class TileGroup implements MostVisitedSites.Observer {
             // wait for to be loaded. We also currently rely on the tile order in the returned
             // array as the reported position in UMA, but this is not accurate and would be broken
             // if we returned all the tiles regardless of sections.
-            List<Tile> personalTiles = mTileSections.get(TileSectionType.PERSONALIZED);
-            assert personalTiles != null;
-            mTileGroupDelegate.onLoadingComplete(personalTiles);
+            mTileGroupDelegate.onLoadingComplete(getTiles(TileSectionType.PERSONALIZED));
         }
     }
 
     /**
      * @return Whether the current load is being tracked. Unrequested task tracking updates should
-     * not be sent, as it would cause calling {@link Delegate#onLoadingComplete(List)} at the
+     * not be sent, as it would cause calling {@link Delegate#onLoadingComplete(Tile[])} at the
      * wrong moment.
      */
     private boolean isLoadTracked() {
@@ -501,18 +514,21 @@ public class TileGroup implements MostVisitedSites.Observer {
     // TODO(dgn): I would like to move that to TileRenderer, but setting the data on the tile,
     // notifying the observer and updating the tasks make it awkward.
     private class LargeIconCallbackImpl implements LargeIconBridge.LargeIconCallback {
-        private final SiteSuggestion mSiteData;
+        @TileSectionType
+        private final int mSection;
+        private final String mUrl;
         private final boolean mTrackLoadTask;
 
-        private LargeIconCallbackImpl(SiteSuggestion suggestion, boolean trackLoadTask) {
-            mSiteData = suggestion;
+        private LargeIconCallbackImpl(Tile tile, boolean trackLoadTask) {
+            mUrl = tile.getUrl();
+            mSection = tile.getSectionType();
             mTrackLoadTask = trackLoadTask;
         }
 
         @Override
         public void onLargeIconAvailable(
                 @Nullable Bitmap icon, int fallbackColor, boolean isFallbackColorDefault) {
-            Tile tile = findTile(mSiteData);
+            Tile tile = findTile(mUrl, mSection);
             if (tile != null) { // Do nothing if the tile was removed.
                 if (icon == null) {
                     mTileRenderer.setTileIconFromColor(tile, fallbackColor, isFallbackColorDefault);
@@ -533,15 +549,18 @@ public class TileGroup implements MostVisitedSites.Observer {
      */
     public class TileInteractionDelegate
             implements ContextMenuManager.Delegate, OnClickListener, OnCreateContextMenuListener {
-        private final SiteSuggestion mSuggestion;
+        @TileSectionType
+        private final int mSection;
+        private final String mUrl;
 
-        public TileInteractionDelegate(SiteSuggestion suggestion) {
-            mSuggestion = suggestion;
+        public TileInteractionDelegate(String url, int section) {
+            mUrl = url;
+            mSection = section;
         }
 
         @Override
         public void onClick(View view) {
-            Tile tile = findTile(mSuggestion);
+            Tile tile = findTile(mUrl, mSection);
             if (tile == null) return;
 
             SuggestionsMetrics.recordTileTapped();
@@ -550,7 +569,7 @@ public class TileGroup implements MostVisitedSites.Observer {
 
         @Override
         public void openItem(int windowDisposition) {
-            Tile tile = findTile(mSuggestion);
+            Tile tile = findTile(mUrl, mSection);
             if (tile == null) return;
 
             mTileGroupDelegate.openMostVisitedItem(windowDisposition, tile);
@@ -558,18 +577,18 @@ public class TileGroup implements MostVisitedSites.Observer {
 
         @Override
         public void removeItem() {
-            Tile tile = findTile(mSuggestion);
+            Tile tile = findTile(mUrl, mSection);
             if (tile == null) return;
 
             // Note: This does not track all the removals, but will track the most recent one. If
             // that removal is committed, it's good enough for change detection.
-            mPendingRemovalUrl = mSuggestion.url;
+            mPendingRemovalUrl = mUrl;
             mTileGroupDelegate.removeMostVisitedItem(tile, new RemovalUndoneCallback());
         }
 
         @Override
         public String getUrl() {
-            return mSuggestion.url;
+            return mUrl;
         }
 
         @Override

@@ -282,8 +282,7 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   input_bfc_block_offset += content_size_;
 
   NGPreviousInflowPosition previous_inflow_position = {
-      input_bfc_block_offset, content_size_, input_margin_strut,
-      /* empty_block_affected_by_clearance */ false};
+      input_bfc_block_offset, content_size_, input_margin_strut};
 
   NGBlockChildIterator child_iterator(Node().FirstChild(), BreakToken());
   for (auto entry = child_iterator.NextChild();
@@ -312,14 +311,11 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   NGMarginStrut end_margin_strut = previous_inflow_position.margin_strut;
   LayoutUnit end_bfc_block_offset = previous_inflow_position.bfc_block_offset;
 
-  // The end margin strut of an in-flow fragment contributes to the size of the
-  // current fragment if:
-  //  - There is block-end border/scrollbar/padding.
-  //  - There was empty block(s) affected by clearance.
-  //  - We are a new formatting context.
-  // Additionally this fragment produces no end margin strut.
+  // Margins collapsing:
+  //   Bottom margins of an in-flow block box doesn't collapse with its last
+  //   in-flow block-level child's bottom margin if the box has bottom
+  //   border/padding.
   if (border_scrollbar_padding_.block_end ||
-      previous_inflow_position.empty_block_affected_by_clearance ||
       ConstraintSpace().IsNewFormattingContext()) {
     // TODO(ikilpatrick): If we are a quirky container and our last child had a
     // quirky block end margin, we need to use the margin strut without the
@@ -352,7 +348,6 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   // Non-empty blocks always know their position in space.
   // TODO(ikilpatrick): This check for a break token seems error prone.
   if (size.block_size || BreakToken()) {
-    // TODO(ikilpatrick): This looks wrong with end_margin_strut above?
     end_bfc_block_offset += end_margin_strut.Sum();
     bool updated = MaybeUpdateFragmentBfcOffset(
         ConstraintSpace(), end_bfc_block_offset, &container_builder_);
@@ -575,43 +570,11 @@ bool NGBlockLayoutAlgorithm::HandleInflow(
   } else
     DCHECK(IsEmptyBlock(child, *layout_result));
 
-  // We need to re-layout a child if it was affected by clearance in order to
-  // produce a new margin strut. For example:
-  // <div style="margin-bottom: 50px;"></div>
-  // <div id="float" style="height: 50px;"></div>
-  // <div id="zero" style="clear: left; margin-top: -20px;">
-  //   <div id="zero-inner" style="margin-top: 40px; margin-bottom: -30px;">
-  // </div>
-  //
-  // The end margin strut for #zero will be {50, -30}. #zero will be affected
-  // by clearance (as 50 > {50, -30}).
-  //
-  // As #zero doesn't touch the incoming margin strut now we need to perform a
-  // relayout with an empty incoming margin strut.
-  //
-  // The resulting margin strut in the above example will be {40, -30}. See
-  // ComputeInflowPosition for how this end margin strut is used.
-  bool empty_block_affected_by_clearance_needs_relayout = false;
-  if (empty_block_affected_by_clearance) {
-    NGMarginStrut margin_strut;
-    margin_strut.Append(child_data.margins.block_start,
-                        child.Style().HasMarginBeforeQuirk());
-
-    // We only need to relayout if the new margin strut is different to the
-    // previous one.
-    if (child_data.margin_strut != margin_strut) {
-      child_data.margin_strut = margin_strut;
-      empty_block_affected_by_clearance_needs_relayout = true;
-    }
-  }
-
   // We need to layout a child if we know its BFC offset and:
   //  - It aborted its layout as it resolved its BFC offset.
   //  - It has some unpositioned floats.
-  //  - It was affected by clearance.
   if ((layout_result->Status() == NGLayoutResult::kBfcOffsetResolved ||
-       !layout_result->UnpositionedFloats().IsEmpty() ||
-       empty_block_affected_by_clearance_needs_relayout) &&
+       !layout_result->UnpositionedFloats().IsEmpty()) &&
       child_bfc_offset) {
     RefPtr<NGConstraintSpace> new_child_space =
         CreateConstraintSpaceForChild(child, child_data, child_bfc_offset);
@@ -630,16 +593,14 @@ bool NGBlockLayoutAlgorithm::HandleInflow(
   NGLogicalOffset logical_offset =
       CalculateLogicalOffset(child_data.margins, child_bfc_offset);
 
-  // Only modify content_size_ if the fragment is non-empty block.
-  //
-  // Empty blocks don't immediately contribute to our size, instead we wait to
-  // see what the final margin produced, e.g.
-  // <div style="display: flow-root">
-  //   <div style="margin-top: -8px"></div>
-  //   <div style="margin-top: 10px"></div>
-  // </div>
+  // Only modify content_size_ if the fragment is not an empty block. This is
+  // needed to prevent the situation when logical_offset is included in
+  // content_size_ for empty blocks. Example:
+  //   <div style="overflow:hidden">
+  //     <div style="margin-top: 8px"></div>
+  //     <div style="margin-top: 10px"></div>
+  //   </div>
   if (!IsEmptyBlock(child, *layout_result)) {
-    DCHECK(container_builder_.BfcOffset());
     content_size_ = std::max(
         content_size_, logical_offset.block_offset + fragment.BlockSize());
   }
@@ -694,15 +655,14 @@ NGPreviousInflowPosition NGBlockLayoutAlgorithm::ComputeInflowPosition(
   LayoutUnit child_end_bfc_block_offset;
   LayoutUnit logical_block_offset;
 
-  bool is_empty_block = IsEmptyBlock(child, layout_result);
-  if (is_empty_block) {
+  if (IsEmptyBlock(child, layout_result)) {
     if (empty_block_affected_by_clearance) {
       // If an empty block was affected by clearance (that is it got pushed
       // down past a float), we need to do something slightly bizarre.
       //
       // Instead of just passing through the previous inflow position, we make
       // the inflow position our new position (which was affected by the
-      // float), minus what the margin strut which the empty block produced.
+      // float), minus what the margin strut would be placed at.
       //
       // Another way of thinking about this is that when you *add* back the
       // margin strut, you end up with the same position as you started with.
@@ -734,23 +694,7 @@ NGPreviousInflowPosition NGBlockLayoutAlgorithm::ComputeInflowPosition(
   margin_strut.Append(child_data.margins.block_end,
                       child.Style().HasMarginAfterQuirk());
 
-  // This flag is subtle, but in order to determine our size correctly we need
-  // to check if our last child is an empty block, and it was affected by
-  // clearance *or* an adjoining empty sibling was affected by clearance. E.g.
-  // <div id="container">
-  //   <div id="float"></div>
-  //   <div id="zero-with-clearance"></div>
-  //   <div id="another-zero"></div>
-  // </div>
-  // In the above case #container's size will depend on the end margin strut of
-  // #another-zero, even though usually it wouldn't.
-  bool empty_or_sibling_empty_affected_by_clearance =
-      empty_block_affected_by_clearance ||
-      (previous_inflow_position.empty_block_affected_by_clearance &&
-       is_empty_block);
-
-  return {child_end_bfc_block_offset, logical_block_offset, margin_strut,
-          empty_or_sibling_empty_affected_by_clearance};
+  return {child_end_bfc_block_offset, logical_block_offset, margin_strut};
 }
 
 bool NGBlockLayoutAlgorithm::PositionNewFc(

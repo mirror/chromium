@@ -112,8 +112,7 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   SurfaceManager* surface_manager() { return &surface_manager_; }
 
   // SurfaceObserver implementation.
-  void OnFirstSurfaceActivation(const SurfaceInfo& surface_info) override;
-  void OnSurfaceActivated(const SurfaceId& surface_id) override;
+  void OnSurfaceCreated(const SurfaceInfo& surface_info) override;
   bool OnSurfaceDamaged(const SurfaceId& surface_id,
                         const BeginFrameAck& ack) override;
   void OnSurfaceDiscarded(const SurfaceId& surface_id) override;

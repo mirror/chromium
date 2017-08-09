@@ -118,12 +118,9 @@ bool AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetome
   // angles.
   DCHECK(fusion_sensor_);
 
-  // Not generating a new sensor value when the |fusion_sensor_|'s reporting
-  // mode is ON_CHANGE and the accelerometer reading doesn't change.
-  if (fusion_sensor_->GetReportingMode() == mojom::ReportingMode::ON_CHANGE &&
-      which_sensor_changed != mojom::SensorType::ACCELEROMETER) {
+  // Only generate a new sensor value when the accelerometer reading changes.
+  if (which_sensor_changed != mojom::SensorType::ACCELEROMETER)
     return false;
-  }
 
   SensorReading gravity_reading;
   SensorReading geomagnetic_reading;
@@ -132,12 +129,12 @@ bool AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetome
     return false;
   }
 
-  double gravity_x = gravity_reading.accel.x;
-  double gravity_y = gravity_reading.accel.y;
-  double gravity_z = gravity_reading.accel.z;
-  double geomagnetic_x = geomagnetic_reading.magn.x;
-  double geomagnetic_y = geomagnetic_reading.magn.y;
-  double geomagnetic_z = geomagnetic_reading.magn.z;
+  double gravity_x = gravity_reading.values[0].value();
+  double gravity_y = gravity_reading.values[1].value();
+  double gravity_z = gravity_reading.values[2].value();
+  double geomagnetic_x = geomagnetic_reading.values[0].value();
+  double geomagnetic_y = geomagnetic_reading.values[1].value();
+  double geomagnetic_z = geomagnetic_reading.values[2].value();
 
   double alpha, beta, gamma;
   if (!ComputeAbsoluteOrientationEulerAnglesFromGravityAndGeomagnetic(
@@ -146,10 +143,10 @@ bool AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetome
     return false;
   }
 
-  fused_reading->orientation_euler.x = beta;
-  fused_reading->orientation_euler.y = gamma;
-  fused_reading->orientation_euler.z = alpha;
-
+  fused_reading->values[0].value() = beta;
+  fused_reading->values[1].value() = gamma;
+  fused_reading->values[2].value() = alpha;
+  fused_reading->values[3].value() = 0.0;
   return true;
 }
 

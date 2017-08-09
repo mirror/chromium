@@ -220,7 +220,7 @@ viz::FrameSinkId TestRenderWidgetHostView::GetFrameSinkId() {
   return frame_sink_id_;
 }
 
-void TestRenderWidgetHostView::OnFirstSurfaceActivation(
+void TestRenderWidgetHostView::OnSurfaceCreated(
     const viz::SurfaceInfo& surface_info) {
   // TODO(fsamuel): Once surface synchronization is turned on, the fallback
   // surface should be set here.

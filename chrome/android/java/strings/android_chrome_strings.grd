@@ -487,20 +487,6 @@ CHAR-LIMIT guidelines:
         Open this page
       </message>
 
-      <!-- Notifications preferences -->
-      <message name="IDS_PREFS_NOTIFICATIONS" desc="Title for Notification preferences.">
-        Notifications
-      </message>
-      <message name="IDS_NOTIFICATIONS_CONTENT_SUGGESTIONS_TITLE" desc="Title for the preference to turn on/off content suggestions notifications.">
-        Content suggestions
-      </message>
-      <message name="IDS_NOTIFICATIONS_CONTENT_SUGGESTIONS_SUMMARY" desc="Summary for preference to turn on/off content suggestions notifications.">
-        Based on your browsing history
-      </message>
-      <message name="IDS_NOTIFICATIONS_FROM_WEBSITES_TITLE" desc="Summary for the preference to link to the per-website notification settings.">
-        From websites
-      </message>
-
       <!-- Privacy preferences -->
       <message name="IDS_PREFS_PRIVACY" desc="Title for the Privacy preferences. [CHAR-LIMIT=32]">
         Privacy
@@ -617,7 +603,7 @@ Your Google account may have other forms of browsing history like searches and a
         Signs you out of most sites.
       </message>
       <message name="IDS_CLEAR_COOKIES_AND_SITE_DATA_SIGNED_IN_SUMMARY_BASIC" desc="A summary for the 'Cookies and site data' option in the 'Clear Browsing Data' screen, explaining that deleting cookies and site data will sign the user out of most websites but you Google sign in will stay.">
-        Signs you out of most sites. You won't be signed out of your Google Account.
+        Signs you out of most sites. You won't be signed out of you Google Account.
       </message>
       <message name="IDS_CLEAR_BROWSING_HISTORY_SUMMARY" desc="A text for the basic tab explaining browsing history.">
         Clears history and autocompletions in the address bar.
@@ -723,6 +709,9 @@ Your Google account may have other forms of browsing history like searches and a
       </message>
       <message name="IDS_SUGGESTIONS_CAVEATS_DESCRIPTION" desc="Description text for suggestions usage caveats" translateable="false">
         When this feature is turned on, Chrome will use Google servers to provide browsing suggestions, e.g. when you open a new tab. This include popular websites, trending articles as well as personalized suggestions.
+      </message>
+      <message name="IDS_SUGGESTIONS_NOTIFICATIONS_SWITCH_TITLE" desc="Title for switch used to toggle the Content Suggestions notifications on or off." translateable="false">
+        Notifications
       </message>
 
       <!-- Accessibility preferences -->
@@ -1294,7 +1283,6 @@ To obtain new licenses, connect to the internet and play your downloaded content
       <message name="IDS_SYNC_YOUR_BOOKMARKS" desc="Title for the prompt to signin and enable sync to sync their bookmarks">
         Sync your bookmarks
       </message>
-      <!-- TODO(crbug.com/737743): Remove the old promo strings after the new signin promos roll out to 100%. -->
       <message name="IDS_BOOKMARK_SIGN_IN_PROMO_DESCRIPTION" desc="Description for bookmark UI sign-in promotion.">
         To get your bookmarks on all your devices, sign in to Chrome.
       </message>
@@ -2242,23 +2230,12 @@ To obtain new licenses, connect to the internet and play your downloaded content
       <message name="IDS_SIGNIN_GMS_UPDATING" desc="Message notifying user that Google Play Services is still updating.">
         Waiting for Google Play Services to finish updating
       </message>
-
-      <!-- New Signin Promos Strings -->
-      <message name="IDS_SIGNIN_PROMO_DESCRIPTION_BOOKMARKS" desc="Description string for 'Continue as' signin promo shown in Bookmarks screen.">
-        To get your bookmarks on all your devices, sign in to Chrome.
-      </message>
-      <message name="IDS_SIGNIN_PROMO_DESCRIPTION_NTP_CONTENT_SUGGESTIONS" desc="Description string for 'Continue as' signin promo shown in NTP content suggestions screen.">
-        To get personalized content suggested by Google, sign in to Chrome.
-      </message>
-      <message name="IDS_SIGNIN_PROMO_DESCRIPTION_RECENT_TABS" desc="Description string for 'Continue as' signin promo shown in Recent Tabs screen.">
-        To get your tabs on all your devices, sign in to Chrome.
-      </message>
-      <message name="IDS_SIGNIN_PROMO_DESCRIPTION_SETTINGS" desc="Description string for 'Continue as' signin promo shown in Settings screen.">
+      <message name="IDS_SIGNIN_PROMO_SETTINGS" desc="Text to inform the user that they can sign in to get personal settings.">
         Sign in to Chrome to get your bookmarks, passwords, and more on all your devices.
       </message>
       <message name="IDS_SIGNIN_PROMO_CONTINUE_AS" desc="Button that the user can press to login without asking the password and continue using Chrome with this acccount.">
         Continue as <ph name="USER_FULL_NAME">%1$s<ex>John Doe</ex></ph>
-      </message>
+     </message>
       <message name="IDS_SIGNIN_PROMO_CHOOSE_ACCOUNT" desc="Button that the user can press if they are not the profile that Chrome found (opposite of 'Continue as Joe Doe').">
         Not <ph name="EMAIL">%1$s<ex>john.doe@example.com</ex></ph>?
       </message>

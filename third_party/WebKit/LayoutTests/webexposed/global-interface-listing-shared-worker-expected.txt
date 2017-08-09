@@ -14,11 +14,11 @@ Starting worker: resources/global-interface-listing-worker.js
 [Worker]     method constructor
 [Worker]     method fetch
 [Worker]     method get
-[Worker]     method getIds
+[Worker]     method getTags
 [Worker] interface BackgroundFetchRegistration
 [Worker]     attribute @@toStringTag
 [Worker]     getter icons
-[Worker]     getter id
+[Worker]     getter tag
 [Worker]     getter title
 [Worker]     getter totalDownloadSize
 [Worker]     method abort

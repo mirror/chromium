@@ -12,7 +12,6 @@
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/paint_image.h"
-#include "cc/paint/paint_image_builder.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/capabilities.h"
@@ -433,14 +432,10 @@ void SkCanvasVideoRenderer::Paint(const scoped_refptr<VideoFrame>& video_frame,
     image = last_image_->makeNonTextureImage();
   else
     image = last_image_;
-  canvas->drawImage(
-      cc::PaintImageBuilder()
-          .set_id(renderer_stable_id_)
-          .set_image(std::move(image))
-          .set_animation_type(cc::PaintImage::AnimationType::VIDEO)
-          .set_completion_state(cc::PaintImage::CompletionState::DONE)
-          .TakePaintImage(),
-      0, 0, &video_flags);
+  canvas->drawImage(cc::PaintImage(renderer_stable_id_, std::move(image),
+                                   cc::PaintImage::AnimationType::VIDEO,
+                                   cc::PaintImage::CompletionState::DONE),
+                    0, 0, &video_flags);
 
   if (need_transform)
     canvas->restore();
@@ -831,27 +826,21 @@ void SkCanvasVideoRenderer::CopyVideoFrameSingleTextureToGLTexture(
   // value down to get the expected result.
   // "flip_y == true" means to reverse the video orientation while
   // "flip_y == false" means to keep the intrinsic orientation.
-  if (video_frame->visible_rect().size() != video_frame->coded_size()) {
-    // Must reallocate the destination texture and copy only a sub-portion.
-    gfx::Rect dest_rect = video_frame->visible_rect();
-#if DCHECK_IS_ON()
-    // There should always be enough data in the source texture to
-    // cover this copy.
-    DCHECK_LE(dest_rect.width(), video_frame->coded_size().width());
-    DCHECK_LE(dest_rect.height(), video_frame->coded_size().height());
-#endif
-    gl->TexImage2D(target, level, internal_format, dest_rect.width(),
-                   dest_rect.height(), 0, format, type, nullptr);
-    gl->CopySubTextureCHROMIUM(source_texture, 0, target, texture, level, 0, 0,
-                               dest_rect.x(), dest_rect.y(), dest_rect.width(),
-                               dest_rect.height(), flip_y, premultiply_alpha,
-                               false);
 
-  } else {
-    gl->CopyTextureCHROMIUM(source_texture, 0, target, texture, level,
-                            internal_format, type, flip_y, premultiply_alpha,
-                            false);
-  }
+  // Must reallocate the destination texture and copy only a sub-portion.
+  gfx::Rect dest_rect = video_frame->visible_rect();
+#if DCHECK_IS_ON()
+  // There should always be enough data in the source texture to
+  // cover this copy.
+  DCHECK_LE(dest_rect.width(), video_frame->coded_size().width());
+  DCHECK_LE(dest_rect.height(), video_frame->coded_size().height());
+#endif
+  gl->TexImage2D(target, level, internal_format, dest_rect.width(),
+                 dest_rect.height(), 0, format, type, nullptr);
+  gl->CopySubTextureCHROMIUM(source_texture, 0, target, texture, level, 0, 0,
+                             dest_rect.x(), dest_rect.y(), dest_rect.width(),
+                             dest_rect.height(), flip_y, premultiply_alpha,
+                             false);
 
   gl->DeleteTextures(1, &source_texture);
   gl->Flush();
@@ -909,9 +898,21 @@ bool SkCanvasVideoRenderer::CopyVideoFrameTexturesToGLTexture(
         destination_gl->CreateAndConsumeTextureCHROMIUM(
             mailbox_holder.texture_target, mailbox_holder.mailbox.name);
 
-    destination_gl->CopyTextureCHROMIUM(intermediate_texture, 0, target,
-                                        texture, level, internal_format, type,
-                                        flip_y, premultiply_alpha, false);
+    // Reallocate destination texture and copy only valid region.
+    gfx::Rect dest_rect = video_frame->visible_rect();
+#if DCHECK_IS_ON()
+    // There should always be enough data in the source texture to
+    // cover this copy.
+    DCHECK_LE(dest_rect.width(), video_frame->coded_size().width());
+    DCHECK_LE(dest_rect.height(), video_frame->coded_size().height());
+#endif
+    destination_gl->TexImage2D(target, level, internal_format,
+                               dest_rect.width(), dest_rect.height(), 0, format,
+                               type, nullptr);
+    destination_gl->CopySubTextureCHROMIUM(
+        intermediate_texture, 0, target, texture, level, 0, 0, dest_rect.x(),
+        dest_rect.y(), dest_rect.width(), dest_rect.height(), flip_y,
+        premultiply_alpha, false);
 
     destination_gl->DeleteTextures(1, &intermediate_texture);
 

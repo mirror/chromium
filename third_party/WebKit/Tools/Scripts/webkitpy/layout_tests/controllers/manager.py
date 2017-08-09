@@ -227,7 +227,8 @@ class Manager(object):
             else:
                 if initial_results.interrupted:
                     exit_code = exit_codes.EARLY_EXIT_STATUS
-                if self._options.show_results and (exit_code or initial_results.total_failures):
+                if self._options.show_results and (
+                        exit_code or (self._options.full_results_html and initial_results.total_failures)):
                     self._port.show_results_html_file(results_path)
                 self._printer.print_results(time.time() - start_time, initial_results)
 
@@ -280,6 +281,11 @@ class Manager(object):
         tests in parallel might cause some of them to time out.
         """
         return self._is_http_test(test_file) or self._is_perf_test(test_file)
+
+    def _test_is_expected_missing(self, test_file):
+        expectations = self._expectations.model().get_expectations(test_file)
+        return (test_expectations.MISSING in expectations or
+                test_expectations.NEEDS_MANUAL_REBASELINE in expectations)
 
     def _test_is_slow(self, test_file):
         expectations = self._expectations.model().get_expectations(test_file)

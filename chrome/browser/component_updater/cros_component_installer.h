@@ -95,11 +95,7 @@ class CrOSComponent {
 
  private:
   FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest,
-                           RegisterComponentSuccessEscpr);
-  FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest,
-                           RegisterComponentSuccessStarCupsDriver);
-  FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest,
-                           RegisterComponentSuccessTermina);
+                           RegisterComponentSuccess);
   FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest, RegisterComponentFail);
   CrOSComponent() {}
   static void RegisterResult(ComponentUpdateService* cus,

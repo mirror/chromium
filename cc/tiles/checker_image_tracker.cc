@@ -20,21 +20,21 @@ size_t kMinImageSizeToCheckerBytes = 512 * 1024;
 // Note that this enum is used to back a UMA histogram so should be treated as
 // append only.
 enum class CheckerImagingDecision {
-  kCanChecker = 0,
+  kCanChecker,
 
   // Animation State vetoes.
-  kVetoedAnimatedImage = 1,
-  kVetoedVideoFrame = 2,
-  // TODO(vmpstr): 3 used to be kVetoedAnimationUnknown, remove it somehow?
-  kVetoedMultipartImage = 4,
+  kVetoedAnimatedImage,
+  kVetoedVideoFrame,
+  kVetoedAnimationUnknown,
+  kVetoedMultipartImage,
 
   // Load state vetoes.
-  kVetoedPartiallyLoadedImage = 5,
-  // TODO(vmpstr): 6 used to be kVetoedLoadStateUnknown, remove it somehow?
+  kVetoedPartiallyLoadedImage,
+  kVetoedLoadStateUnknown,
 
   // Size associated vetoes.
-  kVetoedSmallerThanCheckeringSize = 7,
-  kVetoedLargerThanCacheSize = 8,
+  kVetoedSmallerThanCheckeringSize,
+  kVetoedLargerThanCacheSize,
 
   kCheckerImagingDecisionCount,
 };
@@ -52,6 +52,8 @@ CheckerImagingDecision GetAnimationDecision(const PaintImage& image) {
     return CheckerImagingDecision::kVetoedMultipartImage;
 
   switch (image.animation_type()) {
+    case PaintImage::AnimationType::UNKNOWN:
+      return CheckerImagingDecision::kVetoedAnimationUnknown;
     case PaintImage::AnimationType::ANIMATED:
       return CheckerImagingDecision::kVetoedAnimatedImage;
     case PaintImage::AnimationType::VIDEO:
@@ -66,6 +68,8 @@ CheckerImagingDecision GetAnimationDecision(const PaintImage& image) {
 
 CheckerImagingDecision GetLoadDecision(const PaintImage& image) {
   switch (image.completion_state()) {
+    case PaintImage::CompletionState::UNKNOWN:
+      return CheckerImagingDecision::kVetoedLoadStateUnknown;
     case PaintImage::CompletionState::DONE:
       return CheckerImagingDecision::kCanChecker;
     case PaintImage::CompletionState::PARTIALLY_DONE:

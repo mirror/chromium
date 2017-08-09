@@ -92,49 +92,14 @@ crbug.com/671048 virtual/color_space/fast/canvas/color-space/display_linear-rgb.
 
 crbug.com/693568 virtual/gpu/fast/canvas/canvas-imageSmoothingQuality.html [ Failure ]
 
-
 # Looks like a filuare to get a paint on time. Test could be changed to use runAfterLayoutAndPaint
 # instead of a timeout, which may fix things.
 crbug.com/713049 images/color-profile-reflection.html [ Failure Pass ]
 crbug.com/713049 virtual/gpu-rasterization/images/color-profile-reflection.html [ Failure Pass Timeout ]
 crbug.com/713049 virtual/exotic-color-space/images/color-profile-reflection.html [ Failure Pass ]
 
-# Reftest with slightly different pixels values.
-# Should make a pixel test to keep coverage.
-crbug.com/713891 virtual/exotic-color-space/images/animated-png.html [ Pass Failure ]
-
 crbug.com/717389 [ Linux Debug ] virtual/gpu/fast/canvas/canvas-clip-rule.html [ Crash ]
 crbug.com/717389 [ Win7 Debug ] virtual/gpu/fast/canvas/canvas-clip-rule.html [ Timeout ]
-
-# Flakily timing out or failing.
-# TODO(ccameron): Investigate this.
-crbug.com/730267 virtual/gpu-rasterization/images/color-profile-group.html [ Pass Timeout Failure ]
-crbug.com/730267 virtual/gpu-rasterization/images/color-profile-layer.html [ Pass Timeout Failure ]
-crbug.com/730267 virtual/gpu-rasterization/images/color-profile-layer-filter.html [ Pass Timeout Failure ]
-
-crbug.com/736052 compositing/overflow/composited-scroll-with-fractional-translation.html [ Failure ]
-crbug.com/736052 virtual/prefer_compositing_to_lcd_text/compositing/overflow/composited-scroll-with-fractional-translation.html [ Failure ]
-
-# Awaiting rebaseline after skia roll.
-crbug.com/739559 virtual/gpu-rasterization/images/color-profile-background-image-space.html [ Failure Pass ]
-crbug.com/739559 virtual/gpu-rasterization/images/color-profile-mask-image-svg.html [ Failure Pass ]
-crbug.com/739559 virtual/gpu-rasterization/images/color-profile-svg-fill-text.html [ Failure Pass ]
-crbug.com/739559 virtual/gpu-rasterization/images/color-profile-svg.html [ Failure Pass ]
-crbug.com/739559 virtual/gpu-rasterization/images/cross-fade-background-size.html [ Failure Pass ]
-crbug.com/739559 virtual/gpu-rasterization/images/cross-fade-overflow-position.html [ Failure Pass ]
-crbug.com/739559 virtual/gpu-rasterization/images/cross-fade-tiled.html [ Failure Pass ]
-
-crbug.com/746578 fast/css/transformed-mask.html [ NeedsManualRebaseline ]
-crbug.com/746578 fast/reflections/reflection-masks-opacity.html [ NeedsManualRebaseline ]
-crbug.com/746578 fast/reflections/reflection-masks.html [ NeedsManualRebaseline ]
-crbug.com/746578 svg/filters/feImage-preserveAspectratio.svg [ NeedsManualRebaseline ]
-
-crbug.com/747502 paint/roundedrects/input-with-rounded-rect-and-shadow.html [ NeedsManualRebaseline ]
-crbug.com/747502 fast/borders/border-radius-with-box-shadow.html [ NeedsManualRebaseline ]
-crbug.com/747502 paint/roundedrects/circle-with-shadow.html [ NeedsManualRebaseline ]
-
-crbug.com/749760 compositing/overflow/relpos-under-abspos-border-radius.html [ Failure ]
-crbug.com/749760 virtual/prefer_compositing_to_lcd_text/compositing/overflow/relpos-under-abspos-border-radius.html [ Failure ]
 
 # ====== Paint team owned tests to here ======
 
@@ -332,6 +297,7 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-repl
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floating-replaced-height-008.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-005.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-028.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-029.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-036.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-108.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-109.xht [ Skip ]
@@ -344,8 +310,16 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-130
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-131.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-137.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-143.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-collapse-018.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-collapse-027.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-collapse-033.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-collapse-034.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-collapse-035.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-collapse-157.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-collapse-clear-008.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-collapse-clear-012.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-collapse-clear-013.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-collapse-clear-014.xht [ Failure ]
 
 # Regressions while changing zero-block-size float behaviour.
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-009.xht [ Failure ]
@@ -1022,6 +996,9 @@ crbug.com/492664 external/wpt/css/css-writing-modes-3/clip-rect-vrl-006.xht [ Fa
 crbug.com/492664 external/wpt/css/css-writing-modes-3/clip-rect-vrl-008.xht [ Failure ]
 crbug.com/492664 external/wpt/css/css-writing-modes-3/line-box-direction-vrl-009.xht [ Failure ]
 
+crbug.com/749760 compositing/overflow/relpos-under-abspos-border-radius.html [ Failure ]
+crbug.com/749760 virtual/prefer_compositing_to_lcd_text/compositing/overflow/relpos-under-abspos-border-radius.html [ Failure ]
+
 crbug.com/637255 [ Win10 ] media/video-transformed.html [ Pass Failure ]
 
 # These tests pass but images do not match because tests are stricter than the spec.
@@ -1320,6 +1297,9 @@ crbug.com/660185 [ Mac ] fast/forms/datalist/input-appearance-range-with-transfo
 
 crbug.com/658304 [ Win Linux ] fast/forms/select/input-select-after-resize.html [ Crash Timeout Pass ]
 
+crbug.com/736052 compositing/overflow/composited-scroll-with-fractional-translation.html [ Failure ]
+crbug.com/736052 virtual/prefer_compositing_to_lcd_text/compositing/overflow/composited-scroll-with-fractional-translation.html [ Failure ]
+
 # We don't support requesting flex line breaks and it is not clear that we should.
 # See https://lists.w3.org/Archives/Public/www-style/2015May/0065.html
 crbug.com/473481 external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/flexbox/flexbox-break-request-horiz-001a.html [ Failure ]
@@ -1484,6 +1464,11 @@ crbug.com/474759 fast/writing-mode/vertical-rl-replaced-selection.html [ Failure
 crbug.com/353746 virtual/android/fullscreen/video-specified-size.html [ Failure Pass ]
 
 crbug.com/527270 accessibility/name-calc-img.html [ Failure Pass Timeout ]
+
+crbug.com/746578 fast/css/transformed-mask.html [ NeedsManualRebaseline ]
+crbug.com/746578 fast/reflections/reflection-masks-opacity.html [ NeedsManualRebaseline ]
+crbug.com/746578 fast/reflections/reflection-masks.html [ NeedsManualRebaseline ]
+crbug.com/746578 svg/filters/feImage-preserveAspectratio.svg [ NeedsManualRebaseline ]
 
 # Win7 does not support the needed DirectWrite APIs for font fallback
 crbug.com/459056 [ Win7 ] fast/text/font-fallback-win.html [ Failure ]
@@ -1816,7 +1801,6 @@ crbug.com/626703 external/wpt/encoding/eof-utf-8-three.html [ Failure ]
 crbug.com/626703 external/wpt/encoding/eof-utf-8-two.html [ Failure ]
 crbug.com/626703 external/wpt/fetch/api/abort/general.html [ Timeout ]
 crbug.com/626703 virtual/mojo-blobs/external/wpt/fetch/api/abort/general.html [ Timeout ]
-crbug.com/626703 virtual/outofblink-cors/external/wpt/fetch/api/abort/general.html [ Timeout ]
 crbug.com/626703 external/wpt/page-visibility/onvisibilitychange.html [ Timeout ]
 crbug.com/626703 external/wpt/webrtc/RTCIceTransport.html [ Timeout ]
 crbug.com/626703 external/wpt/webrtc/RTCPeerConnection-setLocalDescription-answer.html [ Timeout ]
@@ -2256,6 +2240,10 @@ crbug.com/675540 virtual/off-main-thread-fetch/external/wpt/service-workers/serv
 crbug.com/435547 http/tests/cachestorage/serviceworker/ignore-search-with-credentials.html [ Skip ]
 crbug.com/435547 virtual/mojo-loading/http/tests/cachestorage/serviceworker/ignore-search-with-credentials.html [ Skip ]
 
+crbug.com/747502 paint/roundedrects/input-with-rounded-rect-and-shadow.html [ NeedsManualRebaseline ]
+crbug.com/747502 fast/borders/border-radius-with-box-shadow.html [ NeedsManualRebaseline ]
+crbug.com/747502 paint/roundedrects/circle-with-shadow.html [ NeedsManualRebaseline ]
+
 crbug.com/697971 [ Mac10.12 ] fast/text/flexbox-selection-nested.html [ Skip ]
 crbug.com/697971 [ Mac10.12 ] fast/text/flexbox-selection.html [ Skip ]
 crbug.com/678481 http/tests/inspector/appcache/appcache-manifest-with-non-existing-file.html [ Skip ]
@@ -2326,6 +2314,15 @@ crbug.com/707359 [ Mac ] fast/css-grid-layout/grid-self-baseline-vertical-rl-02.
 crbug.com/707359 [ Mac ] fast/css-grid-layout/grid-self-baseline-vertical-rl-03.html [ Failure ]
 crbug.com/707359 [ Mac ] fast/css-grid-layout/grid-self-baseline-vertical-rl-04.html [ Failure ]
 crbug.com/707359 [ Mac ] fast/css-grid-layout/grid-self-baseline-vertical-rl-05.html [ Failure ]
+
+# Flakily timing out or failing.
+# TODO(ccameron): Investigate this.
+crbug.com/730267 virtual/gpu-rasterization/images/color-profile-group.html [ Pass Timeout Failure ]
+crbug.com/730267 virtual/gpu-rasterization/images/color-profile-layer.html [ Pass Timeout Failure ]
+crbug.com/730267 virtual/gpu-rasterization/images/color-profile-layer-filter.html [ Pass Timeout Failure ]
+
+# Reftest with slightly different pixels values, can be left disabled.
+crbug.com/713891 virtual/exotic-color-space/images/animated-png.html [ Pass Failure ]
 
 # [selectors-4]
 crbug.com/706118 external/wpt/css/selectors4/focus-within-004.html [ Failure ]
@@ -2608,6 +2605,7 @@ crbug.com/709227 external/wpt/offscreen-canvas/the-offscreen-canvas/size.attribu
 crbug.com/709227 external/wpt/offscreen-canvas/the-offscreen-canvas/size.attributes.parse.onlyspace.worker.html [ Failure ]
 crbug.com/709227 external/wpt/offscreen-canvas/the-offscreen-canvas/size.attributes.parse.percent.worker.html [ Failure ]
 crbug.com/709227 external/wpt/offscreen-canvas/the-offscreen-canvas/size.attributes.parse.trailingjunk.worker.html [ Failure ]
+crbug.com/709227 external/wpt/performance-timeline/po-disconnect.any.worker.html [ Failure ]
 crbug.com/709227 external/wpt/user-timing/invoke_with_timing_attributes.worker.html [ Failure ]
 crbug.com/709227 external/wpt/websockets/closing-handshake/002.html?wss [ Failure ]
 crbug.com/709227 external/wpt/websockets/closing-handshake/003.html?wss [ Failure ]
@@ -2663,6 +2661,7 @@ crbug.com/709227 external/wpt/websockets/unload-a-document/002.html [ Failure ]
 crbug.com/709227 external/wpt/websockets/unload-a-document/002.html?wss [ Failure ]
 crbug.com/709227 external/wpt/performance-timeline/po-callback-mutate.any.html [ Failure ]
 crbug.com/709227 external/wpt/performance-timeline/po-callback-mutate.any.worker.html [ Failure ]
+crbug.com/709227 external/wpt/performance-timeline/po-disconnect.any.html [ Failure ]
 
 # Timeouts
 crbug.com/709227 external/wpt/html/infrastructure/safe-passing-of-structured-data/shared-array-buffers/serialization-via-idb.any.worker.html [ Timeout ]
@@ -2741,15 +2740,12 @@ crbug.com/680407 [ Mac ] fast/forms/select/menulist-appearance-basic.html [ Need
 # Importing 'fetch' tests from WPT.
 crbug.com/705490 external/wpt/fetch/api/basic/error-after-response.html [ Timeout Pass ]
 crbug.com/705490 virtual/mojo-blobs/external/wpt/fetch/api/basic/error-after-response.html [ Timeout Pass ]
-crbug.com/705490 virtual/outofblink-cors/external/wpt/fetch/api/basic/error-after-response.html [ Timeout Pass ]
 
 # Non-deterministic output, as the failing subtests dump timestamps.
 crbug.com/705490 external/wpt/fetch/api/request/request-cache-reload.html [ Failure ]
 crbug.com/705490 external/wpt/fetch/api/request/request-cache-no-store.html [ Failure ]
 crbug.com/705490 virtual/mojo-blobs/external/wpt/fetch/api/request/request-cache-reload.html [ Failure ]
 crbug.com/705490 virtual/mojo-blobs/external/wpt/fetch/api/request/request-cache-no-store.html [ Failure ]
-crbug.com/705490 virtual/outofblink-cors/external/wpt/fetch/api/request/request-cache-reload.html [ Failure ]
-crbug.com/705490 virtual/outofblink-cors/external/wpt/fetch/api/request/request-cache-no-store.html [ Failure ]
 
 # This test has device ID strings in failure messages which change on every test run.
 crbug.com/679742 external/wpt/mediacapture-streams/MediaStreamTrack-getSettings.https.html [ Failure ]
@@ -2910,6 +2906,15 @@ crbug.com/737959 virtual/off-main-thread-fetch/http/tests/misc/video-poster-imag
 crbug.com/737959 virtual/off-main-thread-fetch/http/tests/misc/image-input-type-outlives-gc-without-crashing.html [ Failure Pass Crash ]
 crbug.com/737959 virtual/off-main-thread-fetch/http/tests/misc/embed-image-load-outlives-gc-without-crashing.html [ Failure Pass Crash ]
 
+# Awaiting rebaseline after skia roll.
+crbug.com/739559 virtual/gpu-rasterization/images/color-profile-background-image-space.html [ Failure Pass ]
+crbug.com/739559 virtual/gpu-rasterization/images/color-profile-mask-image-svg.html [ Failure Pass ]
+crbug.com/739559 virtual/gpu-rasterization/images/color-profile-svg-fill-text.html [ Failure Pass ]
+crbug.com/739559 virtual/gpu-rasterization/images/color-profile-svg.html [ Failure Pass ]
+crbug.com/739559 virtual/gpu-rasterization/images/cross-fade-background-size.html [ Failure Pass ]
+crbug.com/739559 virtual/gpu-rasterization/images/cross-fade-overflow-position.html [ Failure Pass ]
+crbug.com/739559 virtual/gpu-rasterization/images/cross-fade-tiled.html [ Failure Pass ]
+
 # These tests are failing on Mac-10.12 when using an Intel GPU.
 crbug.com/736177 [ Mac10.12 ] css2.1/t1202-counter-04-b.html [ Failure Pass ]
 crbug.com/736177 [ Mac10.12 ] css2.1/t1202-counters-04-b.html [ Failure Pass ]
@@ -2923,18 +2928,9 @@ crbug.com/736177 [ Mac10.12 ] fast/css/clip-zooming.html [ Failure Pass ]
 crbug.com/736177 [ Mac10.12 ] fast/css/h1-in-section-elements.html [ Failure Pass ]
 crbug.com/736177 [ Mac10.12 ] fast/css/rem-calc-dynamic-scaling.html [ Failure Pass ]
 crbug.com/736177 [ Mac10.12 ] fast/css/rem-dynamic-scaling.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/css/text-overflow-input.html [ Failure Pass ]
 crbug.com/736177 [ Mac10.12 ] fast/dom/HTMLMeterElement/meter-optimums.html [ Failure Pass ]
 crbug.com/736177 [ Mac10.12 ] fast/dynamic/012.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/forms/control-restrict-line-height.html [ Failure Pass ]
 crbug.com/736177 [ Mac10.12 ] fast/forms/form-element-geometry.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/forms/input-appearance-height.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/forms/placeholder-position.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/forms/search/search-appearance-basic.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/forms/search/search-cancel-button-style-sharing.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/forms/search/search-display-none-cancel-button.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/forms/search/search-rtl.html [ Failure Pass ]
-crbug.com/736177 [ Mac10.12 ] fast/forms/search/searchfield-heights.html [ Failure Pass ]
 crbug.com/736177 [ Mac10.12 ] fast/inline/absolute-positioned-inline-in-centred-block.html [ Failure Pass ]
 crbug.com/736177 [ Mac10.12 ] fast/inline/left-right-center-inline-alignment-in-ltr-and-rtl-blocks.html [ Failure Pass ]
 crbug.com/736177 [ Mac10.12 ] fast/lists/ordered-list-with-no-ol-tag.html [ Failure Pass ]
@@ -3002,6 +2998,11 @@ crbug.com/626703 [ Win7 Debug ] external/wpt/encoding/legacy-mb-korean/euc-kr/eu
 # module script lacks XHTML support
 crbug.com/717643 external/wpt/html/semantics/scripting-1/the-script-element/module/module-in-xhtml.xhtml [ Failure ]
 
+# Ganesh dither changes
+crbug.com/745776 virtual/gpu/fast/canvas/canvas-text-alignment.html [ NeedsManualRebaseline ]
+crbug.com/745776 virtual/gpu/fast/canvas/fillrect_gradient.html [ NeedsManualRebaseline ]
+crbug.com/745776 virtual/gpu/fast/canvas/gradient-add-second-start-end-stop.html [ NeedsManualRebaseline ]
+
 # Geolocation tests
 crbug.com/745079 external/wpt/geolocation-API/PositionOptions.https.html [ Failure ]
 
@@ -3022,6 +3023,8 @@ crbug.com/746128 [ Win7 Debug ] virtual/new-remote-playback-pipeline/media/contr
 crbug.com/626703 [ Win7 ] external/wpt/image-decodes/image-decode-path-changes.html [ Pass Crash ]
 
 # Sheriff failures 2017-07-20
+crbug.com/746926 [ Win Debug ] virtual/outofblink-cors/webexposed/global-interface-listing.html [ Timeout ]
+
 crbug.com/747163 [ Linux ] imagecapture/MediaStreamTrack-applyConstraints.html [ Pass Crash ]
 crbug.com/747163 [ Linux ] imagecapture/MediaStreamTrack-getSettings.html [ Pass Crash ]
 
@@ -3040,11 +3043,4 @@ crbug.com/626703 [ Win7 ] external/wpt/html/semantics/tabular-data/processing-mo
 
 # Sheriff failure 2017-08-07
 crbug.com/708499 [ Win7 Mac10.11 Retina Debug ] virtual/wheelscrolllatching/fast/compositor-wheel-scroll-latching/touchpad-scroll-impl-to-main.html [ Failure Pass ]
-crbug.com/752845 [ Win ] inspector/sha1.html [ Pass Crash ]
-
-# Ganesh dither changes
-crbug.com/753462 virtual/gpu/fast/canvas/canvas-text-alignment.html [ NeedsManualRebaseline ]
-crbug.com/753462 virtual/gpu/fast/canvas/fillrect_gradient.html [ NeedsManualRebaseline ]
-crbug.com/753462 virtual/gpu/fast/canvas/gradient-add-second-start-end-stop.html [ NeedsManualRebaseline ]
-
-crbug.com/746904 [ Win ] fast/text/ellipsis-in-relative-inline.html [ Failure Pass ]
+crbug.com/752845 [ Win7 Debug ] inspector/sha1.html [ Crash ]

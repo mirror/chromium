@@ -27,18 +27,27 @@ struct OfflinePageItem;
 // The implementation of PrefetchImporter.
 class PrefetchImporterImpl : public PrefetchImporter {
  public:
-  PrefetchImporterImpl(PrefetchDispatcher* dispatcher,
-                       content::BrowserContext* context,
+  PrefetchImporterImpl(content::BrowserContext* context,
                        scoped_refptr<base::TaskRunner> background_task_runner);
   ~PrefetchImporterImpl() override;
 
   // PrefetchImporter implementation.
-  void ImportArchive(const PrefetchArchiveInfo& archive) override;
+  void ImportFile(const GURL& url,
+                  const GURL& original_url,
+                  const base::string16& title,
+                  int64_t offline_id,
+                  const ClientId& client_id,
+                  const base::FilePath& file_path,
+                  int64_t file_size,
+                  const CompletedCallback& callback) override;
 
  private:
   void OnMoveFileDone(const OfflinePageItem& offline_page,
+                      const CompletedCallback& callback,
                       bool success);
-  void OnPageAdded(AddPageResult result, int64_t offline_id);
+  void OnFileImported(const CompletedCallback& callback,
+                      AddPageResult result,
+                      int64_t offline_id);
 
   content::BrowserContext* context_;
   scoped_refptr<base::TaskRunner> background_task_runner_;

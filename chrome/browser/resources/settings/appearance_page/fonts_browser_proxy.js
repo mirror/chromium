@@ -4,10 +4,7 @@
 
 /**
  * @typedef {{
- *   fontList: !Array<{
- *       0: string,
- *       1: (string|undefined),
- *       2: (string|undefined)}>,
+ *   fontList: Array<{0: string, 1: (string|undefined), 2: (string|undefined)}>,
  *   extensionUrl: string
  * }}
  */

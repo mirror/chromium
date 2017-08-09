@@ -29,7 +29,8 @@ CompositorElementId PLATFORM_EXPORT CompositorElementIdFromLayoutObjectId(
   DCHECK(namespace_id == CompositorElementIdNamespace::kPrimary ||
          namespace_id == CompositorElementIdNamespace::kScroll ||
          namespace_id == CompositorElementIdNamespace::kEffectFilter ||
-         namespace_id == CompositorElementIdNamespace::kEffectMask);
+         namespace_id == CompositorElementIdNamespace::kEffectMask ||
+         namespace_id == CompositorElementIdNamespace::kScrollTranslation);
   return CreateCompositorElementId(id, namespace_id);
 }
 

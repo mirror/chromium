@@ -21,13 +21,13 @@ class IntPoint;
 class IntRect;
 class TransformationMatrix;
 class WebInputEvent;
-class WebViewImpl;
+class WebViewBase;
 
 class CORE_EXPORT DevToolsEmulator final
     : public GarbageCollectedFinalized<DevToolsEmulator> {
  public:
   ~DevToolsEmulator();
-  static DevToolsEmulator* Create(WebViewImpl*);
+  static DevToolsEmulator* Create(WebViewBase*);
   DECLARE_TRACE();
 
   // Settings overrides.
@@ -65,7 +65,7 @@ class CORE_EXPORT DevToolsEmulator final
   WTF::Optional<IntRect> VisibleContentRectForPainting() const;
 
  private:
-  explicit DevToolsEmulator(WebViewImpl*);
+  explicit DevToolsEmulator(WebViewBase*);
 
   void EnableMobileEmulation();
   void DisableMobileEmulation();
@@ -78,7 +78,7 @@ class CORE_EXPORT DevToolsEmulator final
   void ApplyViewportOverride(TransformationMatrix*);
   void UpdateRootLayerTransform();
 
-  WebViewImpl* web_view_;
+  WebViewBase* web_view_;
 
   bool device_metrics_enabled_;
   bool emulate_mobile_enabled_;
@@ -109,6 +109,7 @@ class CORE_EXPORT DevToolsEmulator final
 
   bool touch_event_emulation_enabled_;
   bool double_tap_to_zoom_enabled_;
+  bool original_touch_event_feature_detection_enabled_;
   bool original_device_supports_touch_;
   int original_max_touch_points_;
   std::unique_ptr<IntPoint> last_pinch_anchor_css_;

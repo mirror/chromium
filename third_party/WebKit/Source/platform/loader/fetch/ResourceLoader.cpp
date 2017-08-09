@@ -32,6 +32,7 @@
 #include "platform/SharedBuffer.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/exported/WrappedResourceResponse.h"
+#include "platform/loader/fetch/CrossOriginAccessControl.h"
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceError.h"
@@ -43,7 +44,6 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebCORS.h"
 #include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebData.h"
 #include "public/platform/WebURLError.h"
@@ -276,14 +276,12 @@ bool ResourceLoader::WillFollowRedirect(
       RefPtr<SecurityOrigin> source_origin = options.security_origin;
       if (!source_origin.Get())
         source_origin = Context().GetSecurityOrigin();
-      WebSecurityOrigin source_web_origin(source_origin.Get());
-      WrappedResourceRequest new_request_wrapper(new_request);
-      WebString cors_error_msg;
-      if (!WebCORS::HandleRedirect(source_web_origin, new_request_wrapper,
-                                   WrappedResourceResponse(redirect_response),
-                                   fetch_credentials_mode,
-                                   resource_->MutableOptions(),
-                                   cors_error_msg)) {
+
+      String cors_error_msg;
+      if (!CrossOriginAccessControl::HandleRedirect(
+              source_origin, new_request, redirect_response,
+              fetch_credentials_mode, resource_->MutableOptions(),
+              cors_error_msg)) {
         resource_->SetCORSStatus(CORSStatus::kFailed);
 
         if (!unused_preload) {
@@ -295,8 +293,6 @@ bool ResourceLoader::WillFollowRedirect(
                                           ResourceRequestBlockedReason::kOther);
         return false;
       }
-
-      source_origin = source_web_origin;
     }
     if (resource_type == Resource::kImage &&
         fetcher_->ShouldDeferImageLoad(new_url)) {
@@ -431,12 +427,12 @@ CORSStatus ResourceLoader::DetermineCORSStatus(const ResourceResponse& response,
           ? resource_->GetResponse()
           : response;
 
-  WebCORS::AccessStatus cors_status =
-      WebCORS::CheckAccess(WrappedResourceResponse(response_for_access_control),
-                           initial_request.GetFetchCredentialsMode(),
-                           WebSecurityOrigin(source_origin));
+  CrossOriginAccessControl::AccessStatus cors_status =
+      CrossOriginAccessControl::CheckAccess(
+          response_for_access_control,
+          initial_request.GetFetchCredentialsMode(), source_origin);
 
-  if (cors_status == WebCORS::AccessStatus::kAccessAllowed)
+  if (cors_status == CrossOriginAccessControl::AccessStatus::kAccessAllowed)
     return CORSStatus::kSuccessful;
 
   String resource_type = Resource::ResourceTypeToString(
@@ -448,9 +444,10 @@ CORSStatus ResourceLoader::DetermineCORSStatus(const ResourceResponse& response,
   error_msg.Append("' from origin '");
   error_msg.Append(source_origin->ToString());
   error_msg.Append("' has been blocked by CORS policy: ");
-  error_msg.Append(WebCORS::AccessControlErrorString(
-      cors_status, WrappedResourceResponse(response_for_access_control),
-      WebSecurityOrigin(source_origin), initial_request.GetRequestContext()));
+
+  CrossOriginAccessControl::AccessControlErrorString(
+      error_msg, cors_status, response_for_access_control, source_origin,
+      initial_request.GetRequestContext());
 
   return CORSStatus::kFailed;
 }

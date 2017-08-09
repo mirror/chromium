@@ -6,6 +6,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/single_thread_task_runner.h"
 #include "base/sys_info.h"
 #include "base/threading/thread_checker.h"
 #include "build/build_config.h"
@@ -419,7 +420,9 @@ void ShaderClearHelper::DoClearShaderCache(int rv) {
 ////////////////////////////////////////////////////////////////////////////////
 // ShaderCacheFactory
 
-ShaderCacheFactory::ShaderCacheFactory() {}
+ShaderCacheFactory::ShaderCacheFactory(
+    scoped_refptr<base::SingleThreadTaskRunner> cache_task_runner)
+    : cache_task_runner_(std::move(cache_task_runner)) {}
 
 ShaderCacheFactory::~ShaderCacheFactory() {}
 
@@ -450,7 +453,7 @@ scoped_refptr<ShaderDiskCache> ShaderCacheFactory::GetByPath(
     return iter->second;
 
   ShaderDiskCache* cache = new ShaderDiskCache(this, path);
-  cache->Init();
+  cache->Init(cache_task_runner_);
   return cache;
 }
 
@@ -543,7 +546,8 @@ ShaderDiskCache::~ShaderDiskCache() {
   factory_->RemoveFromCache(cache_path_);
 }
 
-void ShaderDiskCache::Init() {
+void ShaderDiskCache::Init(
+    scoped_refptr<base::SingleThreadTaskRunner> cache_task_runner) {
   if (is_initialized_) {
     NOTREACHED();  // can't initialize disk cache twice.
     return;
@@ -552,8 +556,9 @@ void ShaderDiskCache::Init() {
 
   int rv = disk_cache::CreateCacheBackend(
       net::SHADER_CACHE, net::CACHE_BACKEND_DEFAULT,
-      cache_path_.Append(kGpuCachePath), CacheSizeBytes(), true, nullptr,
-      &backend_, base::Bind(&ShaderDiskCache::CacheCreatedCallback, this));
+      cache_path_.Append(kGpuCachePath), CacheSizeBytes(), true,
+      cache_task_runner, NULL, &backend_,
+      base::Bind(&ShaderDiskCache::CacheCreatedCallback, this));
 
   if (rv == net::OK)
     cache_available_ = true;

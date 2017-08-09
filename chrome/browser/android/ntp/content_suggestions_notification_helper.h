@@ -45,9 +45,9 @@ class ContentSuggestionsNotificationHelper {
   // is computed in turn from that.
   static void FlushCachedMetrics();
 
-  // False if auto opt out is enabled and the user has ignored enough
-  // notifications that we no longer think that the user is interested in them.
-  static bool IsEnabledForProfile(Profile* profile);
+  // True if the user has ignored enough notifications that we no longer think
+  // that the user is interested in them.
+  static bool IsDisabledForProfile(Profile* profile);
 
  private:
   DISALLOW_IMPLICIT_CONSTRUCTORS(ContentSuggestionsNotificationHelper);

@@ -212,7 +212,7 @@ class AudioOutputControllerTest : public testing::Test {
 
   void ReadDuplicatedAudioData(const std::vector<MockAudioPushSink*>& sinks) {
     for (size_t i = 0; i < sinks.size(); i++) {
-      EXPECT_CALL(*sinks[i], OnDataCheck(kBufferNonZeroData)).Times(AtLeast(1));
+      EXPECT_CALL(*sinks[i], OnDataCheck(kBufferNonZeroData));
     }
 
     std::unique_ptr<AudioBus> dest = AudioBus::Create(params_);

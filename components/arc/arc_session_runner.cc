@@ -165,14 +165,6 @@ void ArcSessionRunner::StartArcSession() {
   arc_session_->Start();
 }
 
-void ArcSessionRunner::RestartArcSession() {
-  VLOG(0) << "Restarting ARC instance";
-  // The order is important here. Call StartArcSession(), then notify observers.
-  StartArcSession();
-  for (auto& observer : observer_list_)
-    observer.OnSessionRestarting();
-}
-
 void ArcSessionRunner::OnSessionReady() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_EQ(state_, State::STARTING);
@@ -219,7 +211,7 @@ void ArcSessionRunner::OnSessionStopped(ArcStopReason stop_reason) {
     // PostTask, because observer callback may call RequestStart()/Stop().
     VLOG(0) << "ARC restarting";
     restart_timer_.Start(FROM_HERE, restart_delay_,
-                         base::Bind(&ArcSessionRunner::RestartArcSession,
+                         base::Bind(&ArcSessionRunner::StartArcSession,
                                     weak_ptr_factory_.GetWeakPtr()));
   }
 

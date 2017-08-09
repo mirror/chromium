@@ -52,6 +52,18 @@ class JourneyLogger {
     CAN_MAKE_PAYMENT_USE_MAX,
   };
 
+  // The information requested by the merchant.
+  // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser.payments
+  // GENERATED_JAVA_CLASS_NAME_OVERRIDE: RequestedInformation
+  enum RequestedInformation {
+    REQUESTED_INFORMATION_NONE = 0,
+    REQUESTED_INFORMATION_EMAIL = 1 << 0,
+    REQUESTED_INFORMATION_PHONE = 1 << 1,
+    REQUESTED_INFORMATION_SHIPPING = 1 << 2,
+    REQUESTED_INFORMATION_NAME = 1 << 3,
+    REQUESTED_INFORMATION_MAX = 16,
+  };
+
   // The payment method that was used by the user to complete the transaction.
   // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser.payments
   // GENERATED_JAVA_CLASS_NAME_OVERRIDE: SelectedPaymentMethod
@@ -99,13 +111,7 @@ class JourneyLogger {
     EVENT_OTHER_ABORTED = 1 << 6,
     EVENT_HAD_INITIAL_FORM_OF_PAYMENT = 1 << 7,
     EVENT_HAD_NECESSARY_COMPLETE_SUGGESTIONS = 1 << 8,
-    EVENT_CAN_MAKE_PAYMENT_TRUE = 1 << 9,
-    EVENT_CAN_MAKE_PAYMENT_FALSE = 1 << 10,
-    EVENT_REQUEST_SHIPPING = 1 << 11,
-    EVENT_REQUEST_PAYER_NAME = 1 << 12,
-    EVENT_REQUEST_PAYER_EMAIL = 1 << 13,
-    EVENT_REQUEST_PAYER_PHONE = 1 << 14,
-    EVENT_ENUM_MAX = 32768,
+    EVENT_ENUM_MAX = 512,
   };
 
   // The reason why the Payment Request was aborted.
@@ -219,8 +225,15 @@ class JourneyLogger {
   // either been completed or aborted.
   void RecordJourneyStatsHistograms(CompletionStatus completion_status);
 
+  // Records the histograms for all the steps of a complete checkout flow that
+  // were reached.
+  void RecordCheckoutFlowMetrics();
+
   // Records the metric about the selected payment method.
   void RecordPaymentMethodMetric();
+
+  // Records the user information that the merchant requested.
+  void RecordRequestedInformationMetrics();
 
   // Records the histograms for all the sections that were requested by the
   // merchant.
@@ -246,17 +259,11 @@ class JourneyLogger {
   // Records the Payment Request Url Keyed Metrics.
   void RecordUrlKeyedMetrics(CompletionStatus completion_status);
 
-  // Returns whether canMakePayment was used.
-  bool WasCanMakePaymentUsed();
-
-  // Returns whether the answer to canMakePayment was true or false;
-  bool CouldMakePayment();
-
-  // Returns whether this Payment Request was triggered (shown or skipped show).
-  bool WasPaymentRequestTriggered();
-
   SectionStats sections_[NUMBER_OF_SECTIONS];
   bool has_recorded_ = false;
+  bool was_can_make_payments_used_ = false;
+  bool could_make_payment_ = false;
+  bool was_payment_request_triggered_ = false;
   bool is_incognito_;
 
   // Accumulates the many events that have happened during the Payment Request.
@@ -264,6 +271,9 @@ class JourneyLogger {
 
   // To keep track of the selected payment method.
   SelectedPaymentMethod payment_method_ = SELECTED_PAYMENT_METHOD_MAX;
+
+  // Keeps track of the user information requested by the merchant.
+  int requested_information_ = REQUESTED_INFORMATION_MAX;
 
   const GURL url_;
 

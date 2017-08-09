@@ -774,7 +774,6 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
 
       this.classList.toggle('full-width', isSAML);
       $('saml-notice-container').hidden = !isSAML;
-      this.classList.toggle('saml', isSAML);
 
       if (Oobe.getInstance().currentScreen === this) {
         Oobe.getInstance().updateScreenSize(this);
@@ -1179,11 +1178,6 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
         var isManaged = opt_data && opt_data.enterpriseManaged;
         $('gaia-whitelist-error').textContent = loadTimeData.getValue(
             isManaged ? 'whitelistErrorEnterprise' : 'whitelistErrorConsumer');
-        // To make animations correct, we need to make sure Gaia is completely
-        // reloaded. Otherwise ChromeOS overlays hide and Gaia page is shown
-        // somewhere in the middle of animations.
-        if (this.screenMode_ == ScreenMode.DEFAULT)
-          this.gaiaAuthHost_.resetWebview();
       }
 
       this.classList.toggle('whitelist-error', show);
@@ -1203,7 +1197,6 @@ login.createScreen('GaiaSigninScreen', 'gaia-signin', function() {
       var adAuthUI = this.getSigninFrame_();
       adAuthUI.setUser(username);
       adAuthUI.setInvalid(errorState);
-      this.authCompleted_ = false;
       this.loading = false;
       Oobe.getInstance().headerHidden = false;
     }

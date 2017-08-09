@@ -1449,6 +1449,7 @@ enum WebFeature {
   kWebkitCSSMatrixConstructFromString = 1913,
   kCanRequestURLHTTPContainingNewline = 1914,
   kGetGamepads = 1916,
+  kV8SVGPathElement_GetPathSegAtLength_Method = 1917,
   kMediaStreamConstraintsAudio = 1918,
   kMediaStreamConstraintsAudioUnconstrained = 1919,
   kMediaStreamConstraintsVideo = 1920,
@@ -1601,7 +1602,6 @@ enum WebFeature {
   kPersistentClientHintHeader = 2065,
   kStyleSheetListNonNullAnonymousNamedGetter = 2066,
   kOffMainThreadFetch = 2067,
-  kHTMLOptionsCollectionNamedGetterReturnsNodeList = 2068,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.

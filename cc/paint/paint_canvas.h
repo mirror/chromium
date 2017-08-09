@@ -155,6 +155,11 @@ class CC_PAINT_EXPORT PaintCanvas {
     drawBitmap(bitmap, left, top, nullptr);
   }
 
+  virtual void drawText(const void* text,
+                        size_t byte_length,
+                        SkScalar x,
+                        SkScalar y,
+                        const PaintFlags& flags) = 0;
   virtual void drawPosText(const void* text,
                            size_t byte_length,
                            const SkPoint pos[],

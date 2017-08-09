@@ -359,6 +359,8 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
   // Set to YES when a hashchange event is manually dispatched for same-document
   // history navigations.
   BOOL _dispatchingSameDocumentHashChangeEvent;
+  // YES if the web process backing _wkWebView is believed to currently be dead.
+  BOOL _webProcessIsDead;
 
   // Object for loading POST requests with body.
   base::scoped_nsobject<CRWJSPOSTRequestLoader> _POSTRequestLoader;
@@ -942,7 +944,6 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 @synthesize usePlaceholderOverlay = _usePlaceholderOverlay;
 @synthesize loadPhase = _loadPhase;
 @synthesize shouldSuppressDialogs = _shouldSuppressDialogs;
-@synthesize webProcessCrashed = _webProcessCrashed;
 
 - (instancetype)initWithWebState:(WebStateImpl*)webState {
   self = [super init];
@@ -1130,8 +1131,23 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   _containerView.reset();
 }
 
+- (void)reinitializeWebViewAndReload:(BOOL)reload {
+  if (_webView) {
+    [self removeWebViewAllowingCachedReconstruction:NO];
+    if (reload) {
+      [self loadCurrentURLInWebView];
+    } else {
+      // Clear the space for the web view to lazy load when needed.
+      _usePlaceholderOverlay = YES;
+      _touchTrackingRecognizer.get().touchTrackingDelegate = nil;
+      _touchTrackingRecognizer.reset();
+      [self resetContainerView];
+    }
+  }
+}
+
 - (BOOL)isViewAlive {
-  return !_webProcessCrashed && [_containerView isViewAlive];
+  return !_webProcessIsDead && [_containerView isViewAlive];
 }
 
 - (BOOL)contentIsHTML {
@@ -1416,7 +1432,6 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 
 - (id<CRWWebViewNavigationProxy>)webViewNavigationProxy {
   DCHECK(
-      !self.webView ||
       [self.webView conformsToProtocol:@protocol(CRWWebViewNavigationProxy)]);
   return static_cast<id<CRWWebViewNavigationProxy>>(self.webView);
 }
@@ -1840,11 +1855,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
   // Mark pending item as created from hash change if necessary. This is needed
   // because window.hashchange message may not arrive on time.
-  // TODO(crbug.com/738020) Using static_cast for down-cast is not safe in the
-  // long run. Move this block to NavigationManager if the nav experiment is
-  // successful.
-  web::NavigationItemImpl* pendingItem = static_cast<web::NavigationItemImpl*>(
-      self.navigationManagerImpl->GetPendingItem());
+  web::NavigationItemImpl* pendingItem = self.sessionController.pendingItem;
   if (pendingItem) {
     GURL lastCommittedURL = _webStateImpl->GetLastCommittedURL();
     GURL pendingURL = pendingItem->GetURL();
@@ -1900,7 +1911,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
       // WebUI URLs can not be opened by DOM to prevent cross-site scripting as
       // they have increased power. WebUI URLs may only be opened when the user
       // types in the URL or use bookmarks.
-      self.navigationManagerImpl->DiscardNonCommittedItems();
+      [[self sessionController] discardNonCommittedItems];
       return;
     } else {
       [self createWebUIForURL:currentURL];
@@ -3145,7 +3156,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 - (void)handleCancelledError:(NSError*)error {
   if ([self shouldCancelLoadForCancelledError:error]) {
     [self loadCancelled];
-    self.navigationManagerImpl->DiscardNonCommittedItems();
+    [[self sessionController] discardNonCommittedItems];
     // If discarding the non-committed entries results in native content URL,
     // reload it in its native view.
     if (!self.nativeController) {
@@ -4090,7 +4101,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 }
 
 - (void)webViewWebProcessDidCrash {
-  _webProcessCrashed = YES;
+  _webProcessIsDead = YES;
   _webStateImpl->CancelDialogs();
   _webStateImpl->OnRenderProcessGone();
 }
@@ -4176,7 +4187,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   base::RecordAction(UserMetricsAction("Stop"));
   // Discard the pending and transient entried before notifying the tab model
   // observers of the change via |-abortLoad|.
-  self.navigationManagerImpl->DiscardNonCommittedItems();
+  [[self sessionController] discardNonCommittedItems];
   [self abortLoad];
   web::NavigationItem* item = self.currentNavItem;
   GURL navigationURL = item ? item->GetVirtualURL() : GURL::EmptyGURL();
@@ -4298,7 +4309,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     decidePolicyForNavigationAction:(WKNavigationAction*)action
                     decisionHandler:
                         (void (^)(WKNavigationActionPolicy))decisionHandler {
-  _webProcessCrashed = NO;
+  _webProcessIsDead = NO;
   if (_isBeingDestroyed) {
     decisionHandler(WKNavigationActionPolicyCancel);
     return;
@@ -4388,7 +4399,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     BOOL previousItemWasLoadedInNativeView =
         [self shouldLoadURLInNativeView:lastCommittedURL];
     if (!isFirstLoad && !previousItemWasLoadedInNativeView)
-      self.navigationManagerImpl->DiscardNonCommittedItems();
+      [self.sessionController discardNonCommittedItems];
   }
 
   handler(allowNavigation ? WKNavigationResponsePolicyAllow
@@ -4840,7 +4851,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 - (void)webViewTitleDidChange {
   // WKWebView's title becomes empty when the web process dies; ignore that
   // update.
-  if (_webProcessCrashed) {
+  if (_webProcessIsDead) {
     DCHECK_EQ([_webView title].length, 0U);
     return;
   }
@@ -5174,8 +5185,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     return;
   }
 
-  BOOL isBack =
-      pendingIndex < self.navigationManagerImpl->GetLastCommittedItemIndex();
+  BOOL isBack = pendingIndex < self.sessionController.lastCommittedItemIndex;
   BackForwardNavigationType type = BackForwardNavigationType::FAST_BACK;
   if (isBack) {
     type = isFast ? BackForwardNavigationType::FAST_BACK

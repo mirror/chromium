@@ -1141,8 +1141,6 @@ bool BrowserView::IsBookmarkBarVisible() const {
     return false;
   if (!bookmark_bar_view_.get())
     return false;
-  if (!bookmark_bar_view_->parent())
-    return false;
   if (bookmark_bar_view_->GetPreferredSize().height() == 0)
     return false;
   // New tab page needs visible bookmarks even when top-views are hidden.
@@ -2199,9 +2197,9 @@ ContentsLayoutManager* BrowserView::GetContentsLayoutManager() const {
 }
 
 bool BrowserView::MaybeShowBookmarkBar(WebContents* contents) {
-  const bool show_bookmark_bar =
-      contents && browser_->SupportsWindowFeature(Browser::FEATURE_BOOKMARKBAR);
-  if (!show_bookmark_bar && !bookmark_bar_view_.get())
+  bool show_bookmark_bar =
+      browser_->SupportsWindowFeature(Browser::FEATURE_BOOKMARKBAR);
+  if ((!show_bookmark_bar || !contents) && !bookmark_bar_view_.get())
     return false;
   if (!bookmark_bar_view_.get()) {
     bookmark_bar_view_.reset(new BookmarkBarView(browser_.get(), this));

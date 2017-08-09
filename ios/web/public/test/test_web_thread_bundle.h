@@ -32,8 +32,9 @@
 #include "base/macros.h"
 
 namespace base {
+class MessageLoop;
 namespace test {
-class ScopedTaskEnvironment;
+class ScopedAsyncTaskScheduler;
 }  // namespace test
 }  // namespace base
 
@@ -62,7 +63,9 @@ class TestWebThreadBundle {
  private:
   void Init(int options);
 
-  std::unique_ptr<base::test::ScopedTaskEnvironment> scoped_task_environment_;
+  std::unique_ptr<base::MessageLoop> message_loop_;
+  std::unique_ptr<base::test::ScopedAsyncTaskScheduler>
+      scoped_async_task_scheduler_;
   std::unique_ptr<TestWebThread> ui_thread_;
   std::unique_ptr<TestWebThread> db_thread_;
   std::unique_ptr<TestWebThread> file_thread_;

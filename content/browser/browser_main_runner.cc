@@ -26,7 +26,6 @@
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/browser_shutdown_profile_dumper.h"
 #include "content/browser/notification_service_impl.h"
-#include "content/common/content_switches_internal.h"
 #include "content/public/browser/tracing_controller.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
@@ -88,9 +87,6 @@ class BrowserMainRunnerImpl : public BrowserMainRunner {
 
       if (parameters.command_line.HasSwitch(switches::kWaitForDebugger))
         base::debug::WaitForDebugger(60, true);
-
-      if (parameters.command_line.HasSwitch(switches::kBrowserStartupDialog))
-        WaitForDebugger("Browser");
 
       base::StatisticsRecorder::Initialize();
 

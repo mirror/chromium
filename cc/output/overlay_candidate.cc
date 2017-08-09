@@ -380,7 +380,8 @@ OverlayCandidateList& OverlayCandidateList::operator=(
     OverlayCandidateList&& other) = default;
 
 void OverlayCandidateList::AddPromotionHint(const OverlayCandidate& candidate) {
-  promotion_hint_info_map_[candidate.resource_id] = candidate.display_rect;
+  promotion_hint_info_map_[candidate.resource_id] =
+      candidate.display_rect.origin();
 }
 
 }  // namespace cc

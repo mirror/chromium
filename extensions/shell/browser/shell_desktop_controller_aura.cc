@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <string>
+#include <vector>
 
 #include "base/command_line.h"
 #include "base/location.h"
@@ -217,15 +218,13 @@ ShellDesktopControllerAura::~ShellDesktopControllerAura() {
   extensions::AppWindowClient::Set(NULL);
 }
 
+gfx::Size ShellDesktopControllerAura::GetWindowSize() {
+  return host_->window()->bounds().size();
+}
+
 AppWindow* ShellDesktopControllerAura::CreateAppWindow(
     content::BrowserContext* context,
     const Extension* extension) {
-  // Start observing for OnAppWindowClosed. Note: We can't remove this observer
-  // later because this class expects to outlive the AppWindowRegistry.
-  AppWindowRegistry* registry = AppWindowRegistry::Get(context);
-  if (!registry->HasObserver(this))
-    registry->AddObserver(this);
-
   app_windows_.push_back(
       new AppWindow(context, new ShellAppDelegate, extension));
   return app_windows_.back();
@@ -236,19 +235,20 @@ void ShellDesktopControllerAura::AddAppWindow(gfx::NativeWindow window) {
   root_window->AddChild(window);
 }
 
-void ShellDesktopControllerAura::CloseAppWindows() {
-  // Move the original list into a temporary one: Closing the windows will
-  // trigger OnAppWindowRemoved, which would invalidate iterators into the
-  // original list.
-  std::list<AppWindow*> app_windows = std::move(app_windows_);
-  for (AppWindow* app_window : app_windows)
-    app_window->GetBaseWindow()->Close();  // Close() deletes |app_window|.
+void ShellDesktopControllerAura::RemoveAppWindow(AppWindow* window) {
+  auto iter = std::find(app_windows_.begin(), app_windows_.end(), window);
+  DCHECK(iter != app_windows_.end());
+  app_windows_.erase(iter);
 }
 
-void ShellDesktopControllerAura::OnAppWindowRemoved(AppWindow* window) {
-  // If we created this AppWindow, remove it from our list so we don't try to
-  // close it again later.
-  app_windows_.remove(window);
+void ShellDesktopControllerAura::CloseAppWindows() {
+  // Create a copy of the window vector, because closing the windows will
+  // trigger RemoveAppWindow, which will invalidate the iterator.
+  // This vector should be small enough that this should not be an issue.
+  std::vector<AppWindow*> app_windows(app_windows_);
+  for (AppWindow* app_window : app_windows)
+    app_window->GetBaseWindow()->Close();  // Close() deletes |app_window|.
+  app_windows_.clear();
 }
 
 aura::Window* ShellDesktopControllerAura::GetDefaultParent(
@@ -277,7 +277,7 @@ void ShellDesktopControllerAura::OnDisplayModeChanged(
 #endif
 
 void ShellDesktopControllerAura::OnHostCloseRequested(
-    aura::WindowTreeHost* host) {
+    const aura::WindowTreeHost* host) {
   DCHECK_EQ(host_.get(), host);
   CloseAppWindows();
   base::ThreadTaskRunnerHandle::Get()->PostTask(

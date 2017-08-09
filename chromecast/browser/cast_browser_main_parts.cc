@@ -21,6 +21,7 @@
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "cc/base/switches.h"
 #include "chromecast/base/cast_constants.h"
 #include "chromecast/base/cast_features.h"
 #include "chromecast/base/cast_paths.h"
@@ -65,7 +66,6 @@
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "media/base/media.h"
 #include "media/base/media_switches.h"
-#include "ui/base/ui_base_switches.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/gl/gl_switches.h"
 
@@ -79,8 +79,7 @@
 
 #if defined(OS_ANDROID)
 #include "chromecast/app/android/crash_handler.h"
-#include "components/crash/content/browser/child_process_crash_observer_android.h"
-#include "components/crash/content/browser/crash_dump_observer_android.h"
+#include "components/crash/content/browser/crash_dump_manager_android.h"
 #include "net/android/network_change_notifier_factory_android.h"
 #else
 #include "chromecast/net/network_change_notifier_factory_cast.h"
@@ -264,7 +263,7 @@ const DefaultCommandLineSwitch kDefaultSwitches[] = {
     // TODO(halliwell): Remove after fixing b/35422666.
     {switches::kEnableUseZoomForDSF, "false"},
     // TODO(halliwell): Revert after fix for b/63101386.
-    {switches::kDisallowNonExactResourceReuse, ""},
+    {cc::switches::kDisallowNonExactResourceReuse, ""},
 };
 
 void AddDefaultCommandLineSwitches(base::CommandLine* command_line) {
@@ -410,16 +409,16 @@ void CastBrowserMainParts::ToolkitInitialized() {
 
 int CastBrowserMainParts::PreCreateThreads() {
 #if defined(OS_ANDROID)
-  // GPU process is started immediately after threads are created,
-  // requiring ChildProcessCrashObserver to be initialized beforehand.
+  // GPU process is started immediately after threads are created, requiring
+  // CrashDumpManager to be initialized beforehand.
   base::FilePath crash_dumps_dir;
   if (!chromecast::CrashHandler::GetCrashDumpLocation(&crash_dumps_dir)) {
     LOG(ERROR) << "Could not find crash dump location.";
   }
   breakpad::CrashDumpObserver::Create();
   breakpad::CrashDumpObserver::GetInstance()->RegisterClient(
-      base::MakeUnique<breakpad::ChildProcessCrashObserver>(
-          crash_dumps_dir, kAndroidMinidumpDescriptor));
+      base::MakeUnique<breakpad::CrashDumpManager>(crash_dumps_dir,
+                                                   kAndroidMinidumpDescriptor));
 #else
   base::FilePath home_dir;
   CHECK(PathService::Get(DIR_CAST_HOME, &home_dir));

@@ -25,6 +25,7 @@
 #include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/custom_launcher_page_view.h"
 #include "ui/app_list/views/expand_arrow_view.h"
+#include "ui/app_list/views/indicator_chip_view.h"
 #include "ui/app_list/views/search_box_view.h"
 #include "ui/app_list/views/search_result_container_view.h"
 #include "ui/app_list/views/search_result_tile_item_view.h"
@@ -47,7 +48,6 @@ namespace {
 
 // Layout constants.
 constexpr int kInstantContainerSpacing = 24;
-constexpr int kSearchBoxBottomPadding = 12;
 constexpr int kSearchBoxAndTilesSpacing = 35;
 constexpr int kStartPageSearchBoxWidth = 480;
 constexpr int kStartPageSearchBoxWidthFullscreen = 544;
@@ -57,7 +57,7 @@ constexpr int kPreferredHeightFullscreen = 272;
 constexpr int kWebViewWidth = 700;
 constexpr int kWebViewHeight = 224;
 
-constexpr int kExpandArrowTopPadding = 29;
+constexpr int kExpandArrowTopPadding = 28;
 constexpr int kLauncherPageBackgroundWidth = 400;
 
 }  // namespace
@@ -122,6 +122,12 @@ StartPageView::StartPageView(AppListMainView* app_list_main_view,
   // The view containing the start page WebContents and SearchBoxSpacerView.
   InitInstantContainer();
   AddChildView(instant_container_);
+
+  if (is_fullscreen_app_list_enabled_) {
+    indicator_ = new IndicatorChipView(
+        l10n_util::GetStringUTF16(IDS_SUGGESTED_APPS_INDICATOR));
+    AddChildView(indicator_);
+  }
 
   // The view containing the start page tiles.
   AddChildView(suggestions_container_);
@@ -251,8 +257,17 @@ void StartPageView::Layout() {
   bounds.set_height(instant_container_->GetHeightForWidth(bounds.width()));
   instant_container_->SetBoundsRect(bounds);
 
-  // Tiles begin where the instant container ends.
+  // For old launcher, tiles begin where the instant container ends; for
+  // fullscreen app list launcher, tiles begin where the |indicator_| ends.
   bounds.set_y(bounds.bottom());
+  if (indicator_) {
+    gfx::Rect indicator_rect(bounds);
+    indicator_rect.Offset(
+        (indicator_rect.width() - indicator_->GetPreferredSize().width()) / 2,
+        0);
+    indicator_->SetBoundsRect(indicator_rect);
+    bounds.Inset(0, indicator_->GetPreferredSize().height(), 0, 0);
+  }
   bounds.set_height(suggestions_container_->GetHeightForWidth(bounds.width()));
   if (is_fullscreen_app_list_enabled_) {
     bounds.Offset((bounds.width() - kGridTileWidth) / 2 -
@@ -288,10 +303,33 @@ void StartPageView::Layout() {
 }
 
 bool StartPageView::OnKeyPressed(const ui::KeyEvent& event) {
-  if (is_fullscreen_app_list_enabled_)
-    return HandleKeyPressedFullscreen(event);
   const int forward_dir = base::i18n::IsRTL() ? -1 : 1;
   int selected_index = suggestions_container_->selected_index();
+
+  if (expand_arrow_view_ && expand_arrow_view_->selected()) {
+    if (expand_arrow_view_->OnKeyPressed(event)) {
+      expand_arrow_view_->SetSelected(false);
+      return true;
+    }
+
+    if (event.key_code() == ui::VKEY_RIGHT ||
+        (event.key_code() == ui::VKEY_TAB && !event.IsShiftDown())) {
+      expand_arrow_view_->SetSelected(false);
+      // Move focus from the last element in contents view to the first element
+      // in search box view.
+      return false;
+    }
+
+    if (event.key_code() == ui::VKEY_LEFT || event.key_code() == ui::VKEY_UP ||
+        (event.key_code() == ui::VKEY_TAB && event.IsShiftDown())) {
+      expand_arrow_view_->SetSelected(false);
+      suggestions_container_->SetSelectedIndex(
+          suggestions_container_->num_results() - 1);
+      return true;
+    }
+
+    return false;
+  }
 
   if (custom_launcher_page_background_->selected()) {
     selected_index = suggestions_container_->num_results();
@@ -314,9 +352,13 @@ bool StartPageView::OnKeyPressed(const ui::KeyEvent& event) {
       dir = -forward_dir;
       break;
     case ui::VKEY_RIGHT:
-      // Don't go to the custom launcher page from the All apps tile.
-      if (selected_index != suggestions_container_->num_results() - 1)
+      // For non-fullscreen app list, don't go to the custom launcher page from
+      // the All apps tile. For fullscreen app list, allow this so that expand
+      // arrow is selected.
+      if (is_fullscreen_app_list_enabled_ ||
+          selected_index != suggestions_container_->num_results() - 1) {
         dir = forward_dir;
+      }
       break;
     case ui::VKEY_UP:
       // Up selects the first tile if the custom launcher is selected.
@@ -328,7 +370,8 @@ bool StartPageView::OnKeyPressed(const ui::KeyEvent& event) {
     case ui::VKEY_DOWN:
       // Down selects the first tile if nothing is selected.
       dir = 1;
-      // If something is selected, select the custom launcher page.
+      // If something is selected, for non-fullscreen app list, it selects the
+      // custom launcher page; for fullscreen app list, it selects expand arrow.
       if (suggestions_container_->IsValidSelectionIndex(selected_index))
         selected_index = suggestions_container_->num_results() - 1;
       break;
@@ -343,6 +386,12 @@ bool StartPageView::OnKeyPressed(const ui::KeyEvent& event) {
     return false;
 
   if (selected_index == -1) {
+    if (expand_arrow_view_ && !expand_arrow_view_->selected() && dir == -1) {
+      // Move focus from the first element in search box view to the last
+      // element in contents view.
+      expand_arrow_view_->SetSelected(true);
+      return true;
+    }
     custom_launcher_page_background_->SetSelected(false);
     suggestions_container_->SetSelectedIndex(
         dir == -1 ? suggestions_container_->num_results() - 1 : 0);
@@ -353,6 +402,13 @@ bool StartPageView::OnKeyPressed(const ui::KeyEvent& event) {
   if (suggestions_container_->IsValidSelectionIndex(selection_index)) {
     custom_launcher_page_background_->SetSelected(false);
     suggestions_container_->SetSelectedIndex(selection_index);
+    return true;
+  }
+
+  if (expand_arrow_view_ &&
+      selection_index == suggestions_container_->num_results()) {
+    expand_arrow_view_->SetSelected(true);
+    suggestions_container_->ClearSelectedIndex();
     return true;
   }
 
@@ -427,6 +483,10 @@ void StartPageView::UpdateOpacity(float work_area_bottom, bool is_end_gesture) {
   work_area_bottom_ = work_area_bottom;
   is_end_gesture_ = is_end_gesture;
 
+  // Updates opacity of suggested apps indicator.
+  gfx::Rect indicator_bounds = indicator_->GetLabelBoundsInScreen();
+  UpdateOpacityOfItem(indicator_, indicator_bounds.CenterPoint().y());
+
   // Updates opacity of suggestions container.
   gfx::Rect suggestions_container_bounds =
       suggestions_container_->GetBoundsInScreen();
@@ -449,122 +509,6 @@ void StartPageView::UpdateOpacityOfItem(views::View* view_item,
   float opacity = std::min(
       delta_y / (AppListView::kNumOfShelfSize * AppListView::kShelfSize), 1.0f);
   view_item->layer()->SetOpacity(is_end_gesture_ ? 1.0f : opacity);
-}
-
-// static
-bool StartPageView::HandleKeyPressedFullscreen(const ui::KeyEvent& event) {
-  DCHECK(is_fullscreen_app_list_enabled_);
-  DCHECK(!!expand_arrow_view_);
-
-  const int forward_dir = base::i18n::IsRTL() ? -1 : 1;
-  const int selected_index = suggestions_container_->selected_index();
-
-  if (expand_arrow_view_->selected()) {
-    if (expand_arrow_view_->OnKeyPressed(event)) {
-      expand_arrow_view_->SetSelected(false);
-      return true;
-    }
-
-    if (event.key_code() == ui::VKEY_RIGHT ||
-        event.key_code() == ui::VKEY_DOWN ||
-        (event.key_code() == ui::VKEY_TAB && !event.IsShiftDown())) {
-      expand_arrow_view_->SetSelected(false);
-      // Move focus from expand arrow to search box.
-      return false;
-    }
-
-    if (event.key_code() == ui::VKEY_LEFT ||
-        (event.key_code() == ui::VKEY_TAB && event.IsShiftDown())) {
-      expand_arrow_view_->SetSelected(false);
-      if (suggestions_container_->num_results() == 0)
-        return false;
-      suggestions_container_->SetSelectedIndex(
-          suggestions_container_->num_results() - 1);
-      return true;
-    }
-
-    if (event.key_code() == ui::VKEY_UP) {
-      expand_arrow_view_->SetSelected(false);
-      if (suggestions_container_->num_results() == 0)
-        return false;
-      // Move focus to the suggestion app in the middle.
-      suggestions_container_->SetSelectedIndex(
-          suggestions_container_->num_results() / 2);
-      return true;
-    }
-
-    return false;
-  }
-
-  if (selected_index >= 0 &&
-      suggestions_container_->GetTileItemView(selected_index)
-          ->OnKeyPressed(event)) {
-    return true;
-  }
-
-  if (event.key_code() == ui::VKEY_UP) {
-    if (selected_index == -1) {
-      // Move focus from search box to expand arrow.
-      expand_arrow_view_->SetSelected(true);
-      return true;
-    }
-    // Move focus from suggestion app to search box.
-    suggestions_container_->ClearSelectedIndex();
-    return false;
-  }
-
-  if (event.key_code() == ui::VKEY_DOWN) {
-    if (selected_index == -1 && suggestions_container_->num_results() > 0) {
-      // Move focus from search box to the suggestion app in the middle.
-      suggestions_container_->SetSelectedIndex(
-          suggestions_container_->num_results() / 2);
-      return true;
-    }
-    // Move focus from suggestion app to expand arrow.
-    suggestions_container_->ClearSelectedIndex();
-    expand_arrow_view_->SetSelected(true);
-    return true;
-  }
-
-  int dir = 0;
-  switch (event.key_code()) {
-    case ui::VKEY_LEFT:
-      dir = -forward_dir;
-      break;
-    case ui::VKEY_RIGHT:
-      dir = forward_dir;
-      break;
-    case ui::VKEY_TAB:
-      dir = event.IsShiftDown() ? -1 : 1;
-      break;
-    default:
-      return false;
-  }
-
-  if (selected_index == -1) {
-    if (dir == -1) {
-      // Move focus from search box to expand arrow if moving backward.
-      expand_arrow_view_->SetSelected(true);
-      return true;
-    }
-    // Move focus from search box to the first suggestion app if moving forward.
-    suggestions_container_->SetSelectedIndex(0);
-    return true;
-  }
-
-  int selection_index = selected_index + dir;
-  if (suggestions_container_->IsValidSelectionIndex(selection_index)) {
-    suggestions_container_->SetSelectedIndex(selection_index);
-    return true;
-  }
-
-  suggestions_container_->ClearSelectedIndex();
-  if (selection_index == suggestions_container_->num_results()) {
-    // Move focus from the last suggestion app to expand arrow.
-    expand_arrow_view_->SetSelected(true);
-    return true;
-  }
-  return false;
 }
 
 }  // namespace app_list

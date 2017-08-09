@@ -129,7 +129,7 @@ class ChromeDataUseAscriber : public DataUseAscriber {
 
     DataUseRecorderEntry recorder_entry() { return entry_; }
 
-    static const void* const kDataUseAscriberUserDataKey;
+    static const void* const kUserDataKey;
 
    private:
     DataUseRecorderEntry entry_;

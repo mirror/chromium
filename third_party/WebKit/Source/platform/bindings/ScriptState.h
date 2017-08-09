@@ -97,22 +97,26 @@ class PLATFORM_EXPORT ScriptState : public RefCounted<ScriptState> {
     return From(isolate->GetCurrentContext());
   }
 
-  static ScriptState* ForCurrentRealm(
+  static ScriptState* ForFunctionObject(
       const v8::FunctionCallbackInfo<v8::Value>& info) {
+    // We're assuming that the current context is not yet changed since
+    // the callback function has got called back.
+    // TODO(yukishiino): Once info.GetFunctionContext() gets implemented,
+    // we should use it instead.
     return From(info.GetIsolate()->GetCurrentContext());
   }
 
-  static ScriptState* ForRelevantRealm(
+  static ScriptState* ForReceiverObject(
       const v8::FunctionCallbackInfo<v8::Value>& info) {
     return From(info.Holder()->CreationContext());
   }
 
-  static ScriptState* ForRelevantRealm(
+  static ScriptState* ForReceiverObject(
       const v8::PropertyCallbackInfo<v8::Value>& info) {
     return From(info.Holder()->CreationContext());
   }
 
-  static ScriptState* ForRelevantRealm(
+  static ScriptState* ForReceiverObject(
       const v8::PropertyCallbackInfo<void>& info) {
     return From(info.Holder()->CreationContext());
   }

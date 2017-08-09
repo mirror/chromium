@@ -79,7 +79,6 @@
   cell.isAccessibilityElement = YES;
   cell.accessibilityLabel = [self accessibilityLabel];
   cell.accessibilityCustomActions = [self customActions];
-  cell.accessibilityIdentifier = self.title;
 }
 
 - (void)setImage:(UIImage*)image {

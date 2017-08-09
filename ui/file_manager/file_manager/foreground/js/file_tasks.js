@@ -384,13 +384,10 @@ FileTasks.annotateTasks_ = function(tasks, entries) {
           break;
         case chrome.fileManagerPrivate.Verb.SHARE_WITH:
           // Even when the task has SHARE_WITH verb, we don't prefix the title
-          // with "Share with" when the task is from SEND/SEND_MULTIPLE intent
-          // handlers from Android apps, since the title can already have an
-          // appropriate verb.
-          if (!(taskParts[1] == 'arc' &&
-                (taskParts[2] == 'send' || taskParts[2] == 'send_multiple'))) {
+          // with "Share with" when the task is from SEND intent handlers from
+          // Android apps, since the title can already have an appropriate verb.
+          if (!(taskParts[1] == 'arc' && taskParts[2] == 'send'))
             verb_button_label = 'SHARE_WITH_VERB_BUTTON_LABEL';
-          }
           break;
         case chrome.fileManagerPrivate.Verb.OPEN_WITH:
           verb_button_label = 'OPEN_WITH_VERB_BUTTON_LABEL';

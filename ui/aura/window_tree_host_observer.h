@@ -17,17 +17,17 @@ class WindowTreeHost;
 class AURA_EXPORT WindowTreeHostObserver {
  public:
   // Called when the host's client size has changed.
-  virtual void OnHostResized(WindowTreeHost* host) {}
+  virtual void OnHostResized(const WindowTreeHost* host) {}
 
   // Called when the host is moved on screen.
-  virtual void OnHostMovedInPixels(WindowTreeHost* host,
+  virtual void OnHostMovedInPixels(const WindowTreeHost* host,
                                    const gfx::Point& new_origin_in_pixels) {}
 
   // Called when the host is moved to a different workspace.
-  virtual void OnHostWorkspaceChanged(WindowTreeHost* host) {}
+  virtual void OnHostWorkspaceChanged(const WindowTreeHost* host) {}
 
   // Called when the native window system sends the host request to close.
-  virtual void OnHostCloseRequested(WindowTreeHost* host) {}
+  virtual void OnHostCloseRequested(const WindowTreeHost* host) {}
 
  protected:
   virtual ~WindowTreeHostObserver() {}

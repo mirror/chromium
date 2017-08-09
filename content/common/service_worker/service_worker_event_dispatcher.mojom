@@ -93,17 +93,17 @@ interface ServiceWorkerEventDispatcher {
   DispatchActivateEvent()
       => (blink.mojom.ServiceWorkerEventStatus status,
           mojo.common.mojom.Time dispatch_event_time);
-  DispatchBackgroundFetchAbortEvent(string id)
+  DispatchBackgroundFetchAbortEvent(string tag)
       => (blink.mojom.ServiceWorkerEventStatus status,
           mojo.common.mojom.Time dispatch_event_time);
-  DispatchBackgroundFetchClickEvent(string id, BackgroundFetchState state)
+  DispatchBackgroundFetchClickEvent(string tag, BackgroundFetchState state)
       => (blink.mojom.ServiceWorkerEventStatus status,
           mojo.common.mojom.Time dispatch_event_time);
-  DispatchBackgroundFetchFailEvent(string id,
+  DispatchBackgroundFetchFailEvent(string tag,
                                    array<BackgroundFetchSettledFetch> fetches)
       => (blink.mojom.ServiceWorkerEventStatus status,
           mojo.common.mojom.Time dispatch_event_time);
-  DispatchBackgroundFetchedEvent(string id,
+  DispatchBackgroundFetchedEvent(string tag,
                                  array<BackgroundFetchSettledFetch> fetches)
       => (blink.mojom.ServiceWorkerEventStatus status,
           mojo.common.mojom.Time dispatch_event_time);
@@ -134,7 +134,7 @@ interface ServiceWorkerEventDispatcher {
           mojo.common.mojom.Time dispatch_event_time);
   // Arguments are passed to the event handler as parameters of SyncEvent.
   // Ref: https://wicg.github.io/BackgroundSync/spec/#sync-event
-  DispatchSyncEvent(string id,
+  DispatchSyncEvent(string tag,
                     blink.mojom.BackgroundSyncEventLastChance last_chance)
       => (blink.mojom.ServiceWorkerEventStatus status,
           mojo.common.mojom.Time dispatch_event_time);

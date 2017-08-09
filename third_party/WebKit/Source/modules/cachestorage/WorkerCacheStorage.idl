@@ -4,7 +4,8 @@
 
 // https://w3c.github.io/ServiceWorker/#self-caches
 [
+    RuntimeEnabled=GlobalCacheStorage,
     ImplementedAs=GlobalCacheStorage
 ] partial interface WorkerGlobalScope {
-    [MeasureAs=GlobalCacheStorage, RaisesException] readonly attribute CacheStorage caches;
+    [MeasureAs=GlobalCacheStorage, RuntimeEnabled=GlobalCacheStorage, RaisesException] readonly attribute CacheStorage caches;
 };

@@ -49,9 +49,6 @@ class TaskTestBase : public testing::Test {
 
   MockPrefetchItemGenerator* item_generator() { return &item_generator_; }
 
-  int64_t InsertPrefetchItemInStateWithOperation(std::string operation_name,
-                                                 PrefetchItemState state);
-
  private:
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;

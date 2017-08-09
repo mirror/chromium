@@ -33,7 +33,6 @@ include_rules = [
     "+base/timer",
     "+base/trace_event",
     "+base/values.h",
-    "+net/http/http_util.h",
     "+device",
     "+gpu/GLES2",
     "+mojo/public",

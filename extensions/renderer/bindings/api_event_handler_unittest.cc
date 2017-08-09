@@ -597,9 +597,8 @@ TEST_F(APIEventHandlerTest, TestEventListenersThrowingExceptions) {
   EXPECT_EQ("[42]", GetStringPropertyFromObject(context->Global(), context,
                                                 "eventArgs"));
   ASSERT_EQ(1u, logged_errors.size());
-  EXPECT_THAT(logged_errors[0],
-              testing::StartsWith("Error in event handler: Error: "
-                                  "Event handler error"));
+  EXPECT_EQ("Error in event handler: Uncaught Error: Event handler error",
+            logged_errors[0]);
 }
 
 // Tests being notified as listeners are added or removed from events.

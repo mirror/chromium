@@ -65,8 +65,8 @@ class TestImporter(object):
 
         _log.debug('Noting the current Chromium commit.')
         # TODO(qyearsley): Use Git (self.host.git) to run git commands.
-        _, show_ref_output = self.run(['git', 'show-ref', '--verify', '--head', '--hash', 'HEAD'])
-        chromium_commit = show_ref_output.strip()
+        _, show_ref_output = self.run(['git', 'show-ref', 'HEAD'])
+        chromium_commit = show_ref_output.split()[0]
 
         local_wpt.fetch()
 
@@ -74,11 +74,9 @@ class TestImporter(object):
             _log.info('Checking out %s', options.revision)
             self.run(['git', 'checkout', options.revision], cwd=local_wpt.path)
 
-        _log.debug('Noting the revision we are importing.')
+        _log.info('Noting the revision we are importing.')
         _, show_ref_output = self.run(['git', 'show-ref', 'origin/master'], cwd=local_wpt.path)
         import_commit = 'wpt@%s' % show_ref_output.split()[0]
-
-        _log.info('Importing wpt@%s to Chromium %s', import_commit, chromium_commit)
 
         commit_message = self._commit_message(chromium_commit, import_commit)
 

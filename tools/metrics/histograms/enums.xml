@@ -1131,23 +1131,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="5" label="Second packaged app installed without showing"/>
 </enum>
 
-<enum name="AppListFolderOpened">
-  <int value="0" label="Original Folder Design"/>
-  <int value="1" label="Peeking App List Folder Design"/>
-</enum>
-
 <enum name="AppListPage">
   <int value="0" label="APPS"/>
   <int value="1" label="SEARCH_RESULTS"/>
   <int value="2" label="START"/>
   <int value="3" label="CUSTOM_LAUNCHER_PAGE"/>
-</enum>
-
-<enum name="AppListPeekingToFullscreenSource">
-  <int value="0" label="Swiped Up On Launcher"/>
-  <int value="1" label="Clicked Expand Arrow"/>
-  <int value="2" label="Scrolled With Mousepad"/>
-  <int value="3" label="Scrolled With Mouse"/>
 </enum>
 
 <enum name="AppListSearchResult">
@@ -1167,12 +1155,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="LIST"/>
   <int value="2" label="TILE"/>
   <int value="3" label="RECOMMENDATION"/>
-</enum>
-
-<enum name="AppListShowSource">
-  <int value="0" label="Search Key"/>
-  <int value="1" label="Shelf Button"/>
-  <int value="2" label="Swipe Up From Shelf"/>
 </enum>
 
 <enum name="AppLoadedInTabSource">
@@ -2590,7 +2572,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="161" label="BDH_INVALID_DESCRIPTOR_ID"/>
   <int value="162" label="RWH_INVALID_BEGIN_FRAME_ACK_DID_NOT_SWAP"/>
   <int value="163" label="RWH_INVALID_BEGIN_FRAME_ACK_COMPOSITOR_FRAME"/>
-  <int value="164" label="BFSI_INVALID_ID"/>
+  <int value="164" label="BFSI_INVALID_TAG"/>
   <int value="165" label="BFSI_INVALID_REQUESTS"/>
   <int value="166" label="BFSI_INVALID_TITLE"/>
   <int value="167" label="RWH_INVALID_FRAME_TOKEN"/>
@@ -12010,7 +11992,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="408" label="MEDIA_PERCEPTION_PRIVATE_ON_MEDIA_PERCEPTION"/>
   <int value="409" label="NETWORKING_PRIVATE_ON_CERTIFICATE_LISTS_CHANGED"/>
   <int value="410" label="LOCK_SCREEN_DATA_ON_DATA_ITEMS_AVAILABLE"/>
-  <int value="411" label="WEB_VIEW_INTERNAL_ON_AUDIO_STATE_CHANGED"/>
 </enum>
 
 <enum name="ExtensionFileWriteResult">
@@ -13246,9 +13227,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1183" label="LOCKSCREENDATA_SETCONTENT"/>
   <int value="1184" label="LOCKSCREENDATA_DELETE"/>
   <int value="1185" label="BLUETOOTHLOWENERGY_RESETADVERTISING"/>
-  <int value="1186" label="WEBVIEWINTERNAL_SETAUDIOMUTED"/>
-  <int value="1187" label="WEBVIEWINTERNAL_ISAUDIOMUTED"/>
-  <int value="1188" label="WEBVIEWINTERNAL_GETAUDIOSTATE"/>
 </enum>
 
 <enum name="ExtensionIconState">
@@ -16019,7 +15997,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2065" label="PersistentClientHintHeader"/>
   <int value="2066" label="StyleSheetListNonNullAnonymousNamedGetter"/>
   <int value="2067" label="OffMainThreadFetch"/>
-  <int value="2068" label="HTMLOptionsCollectionNamedGetterReturnsNodeList"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -22699,7 +22676,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1972312724" label="OfflinePagesLoadSignalCollecting:enabled"/>
   <int value="-1972219399" label="NTPSaveToOffline:enabled"/>
   <int value="-1971086581" label="print-scaling"/>
-  <int value="-1964261747" label="WebVrVsyncAlign:disabled"/>
   <int value="-1963427770" label="EmojiHandwritingVoiceInput:disabled"/>
   <int value="-1963402827" label="enable-topchrome-md"/>
   <int value="-1961648833" label="show_summary"/>
@@ -23207,7 +23183,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-345838366" label="enable-hosted-apps-in-windows"/>
   <int value="-345324571" label="enable-quirks-client"/>
   <int value="-344343842" label="disable-experimental-app-list"/>
-  <int value="-343769596" label="ServiceWorkerScriptStreaming:disabled"/>
   <int value="-340622848" label="disable-javascript-harmony-shipping"/>
   <int value="-340255045" label="allow-nacl-socket-api"/>
   <int value="-340023285" label="WebNFC:enabled"/>
@@ -23452,7 +23427,6 @@ from previous Chrome versions.
   <int value="477967119" label="enable-unified-media-pipeline"/>
   <int value="479906041" label="RunAllFlashInAllowMode:disabled"/>
   <int value="480544447" label="NonValidatingReloadOnRefreshContentV2:enabled"/>
-  <int value="481506759" label="ServiceWorkerScriptStreaming:enabled"/>
   <int value="492113129" label="ExperimentalAppBanners:enabled"/>
   <int value="493903641" label="disable-appcontainer"/>
   <int value="494733611" label="disable-drop-sync-credential"/>
@@ -23908,7 +23882,6 @@ from previous Chrome versions.
   <int value="1928407249" label="NewPhotoPicker:enabled"/>
   <int value="1930901873" label="disable-sync-app-list"/>
   <int value="1931309368" label="fill-on-account-select:disabled"/>
-  <int value="1936810062" label="WebVrVsyncAlign:enabled"/>
   <int value="1939413645" label="enable-invalid-cert-collection"/>
   <int value="1942911276" label="enable-grouped-history"/>
   <int value="1944156526" label="sync-url"/>
@@ -33762,16 +33735,6 @@ from previous Chrome versions.
   <int value="2" label="All"/>
 </enum>
 
-<enum name="ServiceWorkerInstalledScriptsManager.FinishedReason">
-  <int value="0" label="NOT_FINISHED"/>
-  <int value="1" label="SUCCESS"/>
-  <int value="2" label="NO_HTTP_INFO_ERROR"/>
-  <int value="3" label="CREATE_DATA_PIPE_ERROR"/>
-  <int value="4" label="CONNECTION_ERROR"/>
-  <int value="5" label="RESPONSE_READER_ERROR"/>
-  <int value="6" label="META_DATA_SENDER_ERROR"/>
-</enum>
-
 <enum name="ServiceWorkerMetrics.EventType">
   <int value="0" label="ACTIVATE"/>
   <int value="1" label="INSTALL"/>
@@ -34894,10 +34857,9 @@ from previous Chrome versions.
   <int value="2" label="Nothing found"/>
   <int value="3" label="Already prompted"/>
   <int value="4" label="Cleaner download failed"/>
-  <int value="5" label="Browser not available (deprecated)"/>
+  <int value="5" label="Browser not available"/>
   <int value="6" label="Not on idle state"/>
   <int value="7" label="IPC connection broken"/>
-  <int value="8" label="Waiting for browser"/>
 </enum>
 
 <enum name="SoftwareReporterPromptDialogResponse">
@@ -34906,12 +34868,6 @@ from previous Chrome versions.
   <int value="2" label="Cancelled"/>
   <int value="3" label="Dismissed"/>
   <int value="4" label="Closed without user interaction"/>
-</enum>
-
-<enum name="SoftwareReporterPromptShownWithType">
-  <int value="0" label="Legacy prompt shown"/>
-  <int value="1" label="On transition to infected state"/>
-  <int value="2" label="On browser window available"/>
 </enum>
 
 <enum name="SpareWebContentsStatus">

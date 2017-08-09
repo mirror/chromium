@@ -26,8 +26,6 @@
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "ui/app_list/app_list_view_delegate.h"
-#include "ui/app_list/app_list_view_delegate_observer.h"
-#include "ui/app_list/views/app_list_view.h"
 
 namespace app_list {
 class CustomLauncherPageContents;
@@ -69,6 +67,7 @@ class AppListViewDelegate : public app_list::AppListViewDelegate,
   app_list::AppListModel* GetModel() override;
   app_list::SpeechUIModel* GetSpeechUI() override;
   void StartSearch() override;
+  void StopSearch() override;
   void OpenSearchResult(app_list::SearchResult* result,
                         bool auto_launch,
                         int event_flags) override;
@@ -88,9 +87,6 @@ class AppListViewDelegate : public app_list::AppListViewDelegate,
   void CustomLauncherPageAnimationChanged(double progress) override;
   void CustomLauncherPagePopSubpage() override;
   bool IsSpeechRecognitionEnabled() override;
-  void GetWallpaperProminentColors(std::vector<SkColor>* colors) override;
-  void AddObserver(app_list::AppListViewDelegateObserver* observer) override;
-  void RemoveObserver(app_list::AppListViewDelegateObserver* observer) override;
 
   // Overridden from TemplateURLServiceObserver:
   void OnTemplateURLServiceChanged() override;
@@ -163,10 +159,6 @@ class AppListViewDelegate : public app_list::AppListViewDelegate,
 
   // Ash's mojom::WallpaperController.
   ash::mojom::WallpaperControllerPtr wallpaper_controller_ptr_;
-
-  std::vector<SkColor> wallpaper_prominent_colors_;
-
-  base::ObserverList<app_list::AppListViewDelegateObserver> observers_;
 
   base::WeakPtrFactory<AppListViewDelegate> weak_ptr_factory_;
 

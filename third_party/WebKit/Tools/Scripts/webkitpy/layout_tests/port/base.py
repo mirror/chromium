@@ -234,6 +234,10 @@ class Port(object):
             return 1
         return max_locked_shards
 
+    def baseline_platform_dir(self):
+        """Returns the absolute path to the default (version-independent) platform-specific results."""
+        return self._filesystem.join(self.layout_tests_dir(), 'platform', self.port_name)
+
     def baseline_version_dir(self):
         """Returns the absolute path to the platform-and-version-specific results."""
         baseline_search_paths = self.baseline_search_path()
@@ -679,8 +683,7 @@ class Port(object):
         suites = self.virtual_test_suites()
         if paths:
             tests.extend(self._virtual_tests_matching_paths(paths, suites))
-            if any('external' in path for path in paths):
-                tests.extend(self._wpt_test_urls_matching_paths(paths))
+            tests.extend(self._wpt_test_urls_matching_paths(paths))
         else:
             tests.extend(self._all_virtual_tests(suites))
             tests.extend(['external/wpt' + test for test in self._wpt_manifest().all_urls()])

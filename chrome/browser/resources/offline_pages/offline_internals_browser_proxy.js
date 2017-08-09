@@ -12,8 +12,7 @@
  *   filePath: string,
  *   lastAccessTime: number,
  *   accessCount: number,
- *   isExpired: string,
- *   requestOrigin: string
+ *   isExpired: string
  * }}
  */
 var OfflinePage;
@@ -25,8 +24,7 @@ var OfflinePage;
  *   creationTime: number,
  *   id: string,
  *   namespace: string,
- *   lastAttempt: number,
- *   requestOrigin: string
+ *   lastAttempt: number
  * }}
  */
 var SavePageRequest;

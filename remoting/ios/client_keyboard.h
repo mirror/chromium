@@ -14,9 +14,7 @@
 @end
 
 // A class for capturing keyboard inputs and forwarding them to the delegate.
-// It should remain first responder in order to capture all key inputs. Note
-// that it will hide the soft keyboard and refuse to resign first responder if
-// you try to resign first responder when the soft keyboard is showing.
+// It should remain first responder in order to capture all key inputs.
 @interface ClientKeyboard : UIView<UIKeyInput, UITextInputTraits>
 
 @property(nonatomic) UIKeyboardAppearance keyboardAppearance;

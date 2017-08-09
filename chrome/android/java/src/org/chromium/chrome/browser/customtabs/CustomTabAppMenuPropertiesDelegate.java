@@ -147,6 +147,12 @@ public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegat
                 openInChromeItem.setVisible(false);
             }
 
+            if (requestDesktopSiteVisible) {
+                updateRequestDesktopSiteMenuItem(menu, currentTab);
+            } else {
+                menu.findItem(R.id.request_desktop_site_row_menu_id).setVisible(false);
+            }
+
             // Add custom menu items. Make sure they are only added once.
             if (!mIsCustomEntryAdded) {
                 mIsCustomEntryAdded = true;
@@ -156,7 +162,6 @@ public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegat
                 }
             }
 
-            updateRequestDesktopSiteMenuItem(menu, currentTab, requestDesktopSiteVisible);
             prepareAddToHomescreenMenuItem(menu, currentTab, addToHomeScreenVisible);
         }
     }

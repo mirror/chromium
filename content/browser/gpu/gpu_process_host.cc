@@ -22,6 +22,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/sha1.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
@@ -65,7 +66,6 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/service_manager/runner/common/client_util.h"
-#include "ui/base/ui_base_switches.h"
 #include "ui/display/display_switches.h"
 #include "ui/gfx/color_space_switches.h"
 #include "ui/gfx/switches.h"
@@ -97,6 +97,10 @@
 
 #if defined(OS_MACOSX) || defined(OS_ANDROID)
 #include "gpu/ipc/common/gpu_surface_tracker.h"
+#endif
+
+#if defined(OS_MACOSX)
+#include "ui/base/ui_base_switches.h"
 #endif
 
 namespace content {
@@ -960,7 +964,7 @@ void GpuProcessHost::StoreShaderToDisk(int32_t client_id,
   // If the cache doesn't exist then this is an off the record profile.
   if (iter == client_id_to_shader_cache_.end())
     return;
-  iter->second->Cache(GetShaderPrefixKey() + ":" + key, shader);
+  iter->second->Cache(GetShaderPrefixKey(shader) + ":" + key, shader);
 }
 
 void GpuProcessHost::RecordLogMessage(int32_t severity,
@@ -1171,29 +1175,37 @@ void GpuProcessHost::RecordProcessCrash() {
   }
 }
 
-std::string GpuProcessHost::GetShaderPrefixKey() {
-  if (shader_prefix_key_.empty()) {
+std::string GpuProcessHost::GetShaderPrefixKey(const std::string& shader) {
+  if (shader_prefix_key_info_.empty()) {
     gpu::GPUInfo info = GpuDataManagerImpl::GetInstance()->GetGPUInfo();
 
-    shader_prefix_key_ = GetContentClient()->GetProduct() + "-" +
-                         info.gl_vendor + "-" + info.gl_renderer + "-" +
-                         info.driver_version + "-" + info.driver_vendor;
+    shader_prefix_key_info_ =
+        GetContentClient()->GetProduct() + "-" +
+        info.gl_vendor + "-" + info.gl_renderer + "-" + info.driver_version +
+        "-" + info.driver_vendor;
 
 #if defined(OS_ANDROID)
     std::string build_fp =
         base::android::BuildInfo::GetInstance()->android_build_fp();
     // TODO(ericrk): Remove this after it's up for a few days. crbug.com/699122
     CHECK(!build_fp.empty());
-    shader_prefix_key_ += "-" + build_fp;
+    shader_prefix_key_info_ += "-" + build_fp;
 #endif
   }
 
-  return shader_prefix_key_;
+  // The shader prefix key is a SHA1 hash of a set of per-machine info, such as
+  // driver version and os version, as well as the shader data being cached.
+  // This ensures both that the shader was not corrupted on disk, as well as
+  // that the shader is correctly configured for the current hardware.
+  std::string prefix;
+  base::Base64Encode(base::SHA1HashString(shader_prefix_key_info_ + shader),
+                     &prefix);
+  return prefix;
 }
 
 void GpuProcessHost::LoadedShader(const std::string& key,
                                   const std::string& data) {
-  std::string prefix = GetShaderPrefixKey();
+  std::string prefix = GetShaderPrefixKey(data);
   bool prefix_ok = !key.compare(0, prefix.length(), prefix);
   UMA_HISTOGRAM_BOOLEAN("GPU.ShaderLoadPrefixOK", prefix_ok);
   if (prefix_ok) {

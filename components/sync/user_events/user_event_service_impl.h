@@ -38,11 +38,7 @@ class UserEventServiceImpl : public UserEventService {
       sync_pb::UserEventSpecifics::EventCase event_case) override;
   base::WeakPtr<ModelTypeSyncBridge> GetSyncBridge() override;
 
-  // Checks known (and immutable) conditions that should not change at runtime.
-  static bool MightRecordEvents(bool off_the_record, SyncService* sync_service);
-
  private:
-  // Checks dynamic or event specific conditions.
   bool ShouldRecordEvent(const sync_pb::UserEventSpecifics& specifics);
 
   SyncService* sync_service_;

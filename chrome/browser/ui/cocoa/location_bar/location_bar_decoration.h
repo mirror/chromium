@@ -18,10 +18,6 @@ namespace gfx {
 struct VectorIcon;
 }
 
-namespace test {
-class LocationBarDecorationTestApi;
-}
-
 // Base class for decorations at the left and right of the location
 // bar.  For instance, the location icon.
 
@@ -194,8 +190,6 @@ class LocationBarDecoration {
                    CGFloat alpha) const;
 
  private:
-  friend class test::LocationBarDecorationTestApi;
-
   // Called when the state of the decoration is updated.
   void UpdateDecorationState();
 

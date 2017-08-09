@@ -11,7 +11,6 @@
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_restrictions.h"
 #include "chrome/browser/extensions/extension_error_reporter.h"
 #include "chrome/browser/extensions/extension_install_prompt.h"
@@ -23,7 +22,6 @@
 #include "components/crx_file/id_util.h"
 #include "components/sync/model/string_ordinal.h"
 #include "content/public/browser/browser_thread.h"
-#include "extensions/browser/extension_file_task_runner.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/install/extension_install_ui.h"
@@ -131,8 +129,9 @@ UnpackedInstaller::~UnpackedInstaller() {
 void UnpackedInstaller::Load(const base::FilePath& path_in) {
   DCHECK(extension_path_.empty());
   extension_path_ = path_in;
-  GetExtensionFileTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&UnpackedInstaller::GetAbsolutePath, this));
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
+      base::BindOnce(&UnpackedInstaller::GetAbsolutePath, this));
 }
 
 bool UnpackedInstaller::LoadFromCommandLine(const base::FilePath& path_in,
@@ -302,7 +301,7 @@ bool UnpackedInstaller::IsLoadingUnpackedAllowed() const {
 }
 
 void UnpackedInstaller::GetAbsolutePath() {
-  base::ThreadRestrictions::AssertIOAllowed();
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   extension_path_ = base::MakeAbsoluteFilePath(extension_path_);
 
@@ -329,13 +328,13 @@ void UnpackedInstaller::CheckExtensionFileAccess() {
     return;
   }
 
-  GetExtensionFileTaskRunner()->PostTask(
-      FROM_HERE,
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
       base::BindOnce(&UnpackedInstaller::LoadWithFileAccess, this, GetFlags()));
 }
 
 void UnpackedInstaller::LoadWithFileAccess(int flags) {
-  base::ThreadRestrictions::AssertIOAllowed();
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   std::string error;
   extension_ = file_util::LoadExtension(extension_path_, Manifest::UNPACKED,

@@ -7,7 +7,6 @@ from core import perf_benchmark
 from measurements import power
 import page_sets
 from telemetry import benchmark
-from telemetry import story
 from telemetry.timeline import chrome_trace_category_filter
 from telemetry.web_perf import timeline_based_measurement
 
@@ -37,10 +36,7 @@ class PowerTypical10Mobile(perf_benchmark.PerfBenchmark):
     return 'power.typical_10_mobile'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.Typical10MobileStoryExpectations()
 
 
 @benchmark.Enabled('mac')
@@ -55,10 +51,7 @@ class PowerScrollingTrivialPage(perf_benchmark.PerfBenchmark):
     return 'power.trivial_pages'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.TrivialStoryExpectations()
 
 
 @benchmark.Enabled('mac')
@@ -73,11 +66,7 @@ class PowerSteadyStatePages(perf_benchmark.PerfBenchmark):
     return 'power.steady_state'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        self.DisableStory('http://abcnews.go.com/', [story.expectations.ALL],
-                          'crbug.com/505990')
-    return StoryExpectations()
+    return page_sets.IdleAfterLoadingStoryExpectations()
 
 
 class IdlePlatformBenchmark(perf_benchmark.PerfBenchmark):
@@ -114,8 +103,4 @@ class IdlePlatformBenchmark(perf_benchmark.PerfBenchmark):
     return 'power.idle_platform'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
-
+    return page_sets.IdleStoryExpectations()

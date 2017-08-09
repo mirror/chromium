@@ -305,7 +305,7 @@ int PageInfoUI::GetPermissionIconID(ContentSettingsType type,
       return use_blocked ? info.blocked_icon_id : info.allowed_icon_id;
   }
   NOTREACHED();
-  return 0;
+  return IDR_INFO;
 }
 
 // static

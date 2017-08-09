@@ -121,7 +121,6 @@ source_set("scheduler") {
     "//cc",
     "//device/base/synchronization",
     "//skia",
-    "//third_party/WebKit/Source/platform:make_platform_generated",
     "//third_party/WebKit/Source/platform/wtf",
   ]
 

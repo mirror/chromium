@@ -58,7 +58,6 @@ class SurfacelessGlRenderer : public GlRenderer {
   std::unique_ptr<BufferWrapper> buffers_[2];
 
   std::unique_ptr<BufferWrapper> overlay_buffer_;
-  bool disable_primary_plane_ = false;
 
   std::unique_ptr<OverlayCandidatesOzone> overlay_checker_;
 

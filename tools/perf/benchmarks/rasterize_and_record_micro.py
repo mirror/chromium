@@ -75,7 +75,4 @@ class RasterizeAndRecordMicroPartialInvalidation(_RasterizeAndRecordMicro):
     return 'rasterize_and_record_micro.partial_invalidation'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.PartialInvalidationCasesStoryExpectations()

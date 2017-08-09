@@ -4170,8 +4170,10 @@ cr.define('login', function() {
      * wallpaper.
      * @param {string} maskColor Color for the gradient mask.
      * @param {string} scrollColor Color for the small pods container.
+     * @param {string} backgroundColor Color for the whole background.
      */
-    setOverlayColors: function(maskColor, scrollColor) {
+    setOverlayColors: function(maskColor, scrollColor, backgroundColor) {
+      $('login-shield').style.backgroundColor = backgroundColor;
       if (this.smallPodsContainer.classList.contains('scroll'))
         this.smallPodsContainer.style.backgroundColor = scrollColor;
       if (!this.topMask.hidden) {

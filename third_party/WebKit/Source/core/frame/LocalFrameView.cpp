@@ -31,7 +31,7 @@
 #include "core/HTMLNames.h"
 #include "core/MediaTypeNames.h"
 #include "core/animation/DocumentAnimations.h"
-#include "core/css/FontFaceSetDocument.h"
+#include "core/css/FontFaceSet.h"
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/DOMNodeIds.h"
 #include "core/dom/ElementVisibilityObserver.h"
@@ -1013,9 +1013,9 @@ std::unique_ptr<TracedValue> LocalFrameView::AnalyzerCounters() {
   value->SetInteger("contentsHeightAfterLayout",
                     GetLayoutViewItem().DocumentRect().Height());
   value->SetInteger("visibleHeight", VisibleHeight());
-  value->SetInteger("approximateBlankCharacterCount",
-                    FontFaceSetDocument::ApproximateBlankCharacterCount(
-                        *frame_->GetDocument()));
+  value->SetInteger(
+      "approximateBlankCharacterCount",
+      FontFaceSet::ApproximateBlankCharacterCount(*frame_->GetDocument()));
   return value;
 }
 
@@ -2026,10 +2026,9 @@ void LocalFrameView::UpdateLayersAndCompositingAfterScrollIfNeeded() {
     if (!layer->AncestorOverflowLayer())
       continue;
 
-    const StickyConstraintsMap& constraints_map =
-        layer->AncestorOverflowLayer()
-            ->GetScrollableArea()
-            ->GetStickyConstraintsMap();
+    StickyConstraintsMap constraints_map = layer->AncestorOverflowLayer()
+                                               ->GetScrollableArea()
+                                               ->GetStickyConstraintsMap();
     if (constraints_map.Contains(layer) &&
         !constraints_map.at(layer).HasAncestorStickyElement()) {
       // TODO(skobes): Resolve circular dependency between scroll offset and
@@ -2070,14 +2069,12 @@ bool LocalFrameView::ComputeCompositedSelection(
   VisiblePosition visible_start(visible_selection.VisibleStart());
   RenderedPosition rendered_start(visible_start);
   rendered_start.PositionInGraphicsLayerBacking(selection.start, true);
-  selection.start.hidden = !rendered_start.IsVisible(true);
   if (!selection.start.layer)
     return false;
 
   VisiblePosition visible_end(visible_selection.VisibleEnd());
   RenderedPosition rendered_end(visible_end);
   rendered_end.PositionInGraphicsLayerBacking(selection.end, false);
-  selection.end.hidden = !rendered_end.IsVisible(false);
   if (!selection.end.layer)
     return false;
 
@@ -2570,7 +2567,7 @@ void LocalFrameView::PerformPostLayoutTasks() {
 
   DCHECK(frame_->GetDocument());
 
-  FontFaceSetDocument::DidLayout(*frame_->GetDocument());
+  FontFaceSet::DidLayout(*frame_->GetDocument());
   // Cursor update scheduling is done by the local root, which is the main frame
   // if there are no RemoteFrame ancestors in the frame tree. Use of
   // localFrameRoot() is discouraged but will change when cursor update
@@ -2813,16 +2810,6 @@ void LocalFrameView::NotifyPageThatContentAreaWillPaint() const {
       continue;
 
     scrollable_area->ContentAreaWillPaint();
-  }
-}
-
-CompositorElementId LocalFrameView::GetCompositorElementId() const {
-  if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
-    return CompositorElementIdFromDOMNodeId(
-        DOMNodeIds::IdForNode(&GetLayoutView()->GetDocument()),
-        CompositorElementIdNamespace::kRootScroll);
-  } else {
-    return PaintInvalidationCapableScrollableArea::GetCompositorElementId();
   }
 }
 
@@ -3210,7 +3197,6 @@ void LocalFrameView::UpdateLifecyclePhasesInternal(
         Optional<CompositorElementIdSet> composited_element_ids =
             CompositorElementIdSet();
         PushPaintArtifactToCompositor(composited_element_ids.value());
-        // TODO(wkorman): Add a call to UpdateCompositorScrollAnimations here.
         DocumentAnimations::UpdateAnimations(GetLayoutView()->GetDocument(),
                                              DocumentLifecycle::kPaintClean,
                                              composited_element_ids);

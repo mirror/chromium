@@ -8,7 +8,6 @@
 
 #include "ash/public/cpp/shelf_model.h"
 #include "ash/shell.h"
-#include "ui/app_list/app_list_constants.h"
 
 namespace ash {
 
@@ -21,7 +20,7 @@ void AppListShelfItemDelegate::ItemSelected(std::unique_ptr<ui::Event> event,
                                             int64_t display_id,
                                             ShelfLaunchSource source,
                                             ItemSelectedCallback callback) {
-  Shell::Get()->ToggleAppList(app_list::kShelfButton);
+  Shell::Get()->ToggleAppList();
   std::move(callback).Run(SHELF_ACTION_APP_LIST_SHOWN, base::nullopt);
 }
 

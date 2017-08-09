@@ -184,9 +184,11 @@ Editor::RevealSelectionScope::~RevealSelectionScope() {
 
 // When an event handler has moved the selection outside of a text control
 // we should use the target control's selection for this editing operation.
-SelectionInDOMTree Editor::SelectionForCommand(Event* event) {
-  const SelectionInDOMTree selection =
-      GetFrame().Selection().GetSelectionInDOMTree();
+// TODO(yosin): We should make |Editor::selectionForCommand()| to return
+// |SelectionInDOMTree| instead of |VisibleSelection|.
+VisibleSelection Editor::SelectionForCommand(Event* event) {
+  const VisibleSelection selection =
+      GetFrame().Selection().ComputeVisibleSelectionInDOMTree();
   if (!event)
     return selection;
   // If the target is a text control, and the current selection is outside of
@@ -194,16 +196,16 @@ SelectionInDOMTree Editor::SelectionForCommand(Event* event) {
   if (!IsTextControlElement(*event->target()->ToNode()))
     return selection;
   TextControlElement* text_control_of_selection_start =
-      EnclosingTextControl(selection.Base());
+      EnclosingTextControl(selection.Start());
   TextControlElement* text_control_of_target =
       ToTextControlElement(event->target()->ToNode());
-  if (!selection.IsNone() &&
+  if (selection.Start().IsNotNull() &&
       text_control_of_target == text_control_of_selection_start)
     return selection;
   const SelectionInDOMTree& select = text_control_of_target->Selection();
   if (select.IsNone())
     return selection;
-  return select;
+  return CreateVisibleSelection(select);
 }
 
 // Function considers Mac editing behavior a fallback when Page or Settings is
@@ -1051,8 +1053,7 @@ bool Editor::InsertTextWithoutSendingTextEvent(
     bool select_inserted_text,
     TextEvent* triggering_event,
     InputEvent::InputType input_type) {
-  const VisibleSelection& selection =
-      CreateVisibleSelection(SelectionForCommand(triggering_event));
+  const VisibleSelection& selection = SelectionForCommand(triggering_event);
   if (!selection.IsContentEditable())
     return false;
 

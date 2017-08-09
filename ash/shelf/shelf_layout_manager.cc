@@ -29,8 +29,6 @@
 #include "base/auto_reset.h"
 #include "base/command_line.h"
 #include "base/i18n/rtl.h"
-#include "base/metrics/histogram_macros.h"
-#include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/views/app_list_view.h"
 #include "ui/base/ui_base_switches.h"
@@ -502,6 +500,12 @@ ShelfBackgroundType ShelfLayoutManager::GetShelfBackgroundType() const {
   if (state_.session_state != session_manager::SessionState::ACTIVE)
     return SHELF_BACKGROUND_OVERLAP;
 
+  // If the app list is active and the shelf is oriented vertically, enable the
+  // shelf background.
+  if (is_app_list_visible_ && !shelf_->IsHorizontalAlignment() &&
+      is_fullscreen_app_list_enabled)
+    return SHELF_BACKGROUND_OVERLAP;
+
   // If the app list is active, hide the shelf background to prevent overlap.
   if (is_app_list_visible_ && is_fullscreen_app_list_enabled)
     return SHELF_BACKGROUND_DEFAULT;
@@ -743,9 +747,8 @@ void ShelfLayoutManager::CalculateTargetBounds(const State& state,
     status_size.set_width(kShelfSize);
 
   gfx::Point status_origin = SelectValueForShelfAlignment(
-      gfx::Point(0, 0),
-      gfx::Point(shelf_width - status_size.width(),
-                 shelf_height - status_size.height()),
+      gfx::Point(0, 0), gfx::Point(shelf_width - status_size.width(),
+                                   shelf_height - status_size.height()),
       gfx::Point(0, shelf_height - status_size.height()));
   if (shelf_->IsHorizontalAlignment() && !base::i18n::IsRTL())
     status_origin.set_x(shelf_width - status_size.width());
@@ -1114,7 +1117,7 @@ void ShelfLayoutManager::StartGestureDrag(
   if (CanStartFullscreenAppListDrag(
           gesture_in_screen.details().scroll_y_hint())) {
     gesture_drag_status_ = GESTURE_DRAG_APPLIST_IN_PROGRESS;
-    Shell::Get()->ShowAppList(app_list::kSwipeFromShelf);
+    Shell::Get()->ShowAppList();
     Shell::Get()->UpdateAppListYPositionAndOpacity(
         gesture_in_screen.location().y(),
         GetAppListBackgroundOpacityOnShelfOpacity(),
@@ -1236,10 +1239,6 @@ void ShelfLayoutManager::CompleteAppListDrag(
             .work_area()
             .y(),
         GetAppListBackgroundOpacityOnShelfOpacity(), true /* is_end_gesture */);
-    UMA_HISTOGRAM_ENUMERATION(app_list::kAppListToggleMethodHistogram,
-                              app_list::kSwipeFromShelf,
-                              app_list::kMaxAppListToggleMethod);
-
   } else {
     Shell::Get()->DismissAppList();
   }

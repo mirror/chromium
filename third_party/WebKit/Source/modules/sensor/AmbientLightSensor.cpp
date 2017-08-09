@@ -35,8 +35,7 @@ AmbientLightSensor::AmbientLightSensor(ExecutionContext* execution_context,
              SensorType::AMBIENT_LIGHT) {}
 
 double AmbientLightSensor::illuminance(bool& is_null) const {
-  INIT_IS_NULL_AND_RETURN(is_null, 0.0);
-  return proxy()->reading().als.value;
+  return ReadingValue(0, is_null);
 }
 
 DEFINE_TRACE(AmbientLightSensor) {

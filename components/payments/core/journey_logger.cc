@@ -72,7 +72,7 @@ JourneyLogger::JourneyLogger(bool is_incognito,
       ukm_recorder_(ukm_recorder) {}
 
 JourneyLogger::~JourneyLogger() {
-  if (WasPaymentRequestTriggered())
+  if (was_payment_request_triggered_)
     DCHECK(has_recorded_);
 }
 
@@ -101,12 +101,15 @@ void JourneyLogger::SetNumberOfSuggestionsShown(Section section,
 }
 
 void JourneyLogger::SetCanMakePaymentValue(bool value) {
-  SetEventOccurred(value ? EVENT_CAN_MAKE_PAYMENT_TRUE
-                         : EVENT_CAN_MAKE_PAYMENT_FALSE);
+  was_can_make_payments_used_ = true;
+  could_make_payment_ |= value;
 }
 
 void JourneyLogger::SetEventOccurred(Event event) {
   events_ |= event;
+
+  if (event == EVENT_SHOWN || event == EVENT_SKIPPED_SHOW)
+    was_payment_request_triggered_ = true;
 }
 
 void JourneyLogger::SetSelectedPaymentMethod(
@@ -119,26 +122,24 @@ void JourneyLogger::SetRequestedInformation(bool requested_shipping,
                                             bool requested_phone,
                                             bool requested_name) {
   // This method should only be called once per Payment Request.
-  if (requested_shipping)
-    SetEventOccurred(EVENT_REQUEST_SHIPPING);
+  DCHECK(requested_information_ == REQUESTED_INFORMATION_MAX);
 
-  if (requested_email)
-    SetEventOccurred(EVENT_REQUEST_PAYER_EMAIL);
-
-  if (requested_phone)
-    SetEventOccurred(EVENT_REQUEST_PAYER_PHONE);
-
-  if (requested_name)
-    SetEventOccurred(EVENT_REQUEST_PAYER_NAME);
+  requested_information_ =
+      (requested_shipping ? REQUESTED_INFORMATION_SHIPPING : 0) |
+      (requested_email ? REQUESTED_INFORMATION_EMAIL : 0) |
+      (requested_phone ? REQUESTED_INFORMATION_PHONE : 0) |
+      (requested_name ? REQUESTED_INFORMATION_NAME : 0);
 }
 
 void JourneyLogger::SetCompleted() {
+  UMA_HISTOGRAM_BOOLEAN("PaymentRequest.CheckoutFunnel.Completed", true);
+
   RecordJourneyStatsHistograms(COMPLETION_STATUS_COMPLETED);
 }
 
 void JourneyLogger::SetAborted(AbortReason reason) {
-  // Don't log abort reasons if the Payment Request was not triggered.
-  if (WasPaymentRequestTriggered()) {
+  // Don't log abort reasons if the Payment Request was triggered.
+  if (was_payment_request_triggered_) {
     base::UmaHistogramEnumeration("PaymentRequest.CheckoutFunnel.Aborted",
                                   reason, ABORT_REASON_MAX);
   }
@@ -153,6 +154,10 @@ void JourneyLogger::SetAborted(AbortReason reason) {
 void JourneyLogger::SetNotShown(NotShownReason reason) {
   base::UmaHistogramEnumeration("PaymentRequest.CheckoutFunnel.NoShow", reason,
                                 NOT_SHOWN_REASON_MAX);
+
+  // Record that that Payment Request was initiated here, because nothing else
+  // will be recorded for a Payment Request that was not shown to the user.
+  UMA_HISTOGRAM_BOOLEAN("PaymentRequest.CheckoutFunnel.Initiated", true);
 }
 
 void JourneyLogger::RecordJourneyStatsHistograms(
@@ -160,21 +165,48 @@ void JourneyLogger::RecordJourneyStatsHistograms(
   DCHECK(!has_recorded_);
   has_recorded_ = true;
 
+  RecordCheckoutFlowMetrics();
   RecordCanMakePaymentStats(completion_status);
   RecordUrlKeyedMetrics(completion_status);
   RecordEventsMetric(completion_status);
 
   // These following metrics only make sense if the Payment Request was
   // triggered.
-  if (WasPaymentRequestTriggered()) {
+  if (was_payment_request_triggered_) {
     RecordPaymentMethodMetric();
+    RecordRequestedInformationMetrics();
     RecordSectionSpecificStats(completion_status);
   }
+}
+
+void JourneyLogger::RecordCheckoutFlowMetrics() {
+  UMA_HISTOGRAM_BOOLEAN("PaymentRequest.CheckoutFunnel.Initiated", true);
+
+  if (events_ & EVENT_SHOWN)
+    UMA_HISTOGRAM_BOOLEAN("PaymentRequest.CheckoutFunnel.Shown", true);
+
+  if (events_ & EVENT_PAY_CLICKED)
+    UMA_HISTOGRAM_BOOLEAN("PaymentRequest.CheckoutFunnel.PayClicked", true);
+
+  if (events_ & EVENT_RECEIVED_INSTRUMENT_DETAILS)
+    UMA_HISTOGRAM_BOOLEAN(
+        "PaymentRequest.CheckoutFunnel.ReceivedInstrumentDetails", true);
+
+  if (events_ & EVENT_SKIPPED_SHOW)
+    UMA_HISTOGRAM_BOOLEAN("PaymentRequest.CheckoutFunnel.SkippedShow", true);
 }
 
 void JourneyLogger::RecordPaymentMethodMetric() {
   base::UmaHistogramEnumeration("PaymentRequest.SelectedPaymentMethod",
                                 payment_method_, SELECTED_PAYMENT_METHOD_MAX);
+}
+
+void JourneyLogger::RecordRequestedInformationMetrics() {
+  DCHECK(requested_information_ != REQUESTED_INFORMATION_MAX);
+  UMA_HISTOGRAM_ENUMERATION(
+      "PaymentRequest.RequestedInformation",
+      static_cast<RequestedInformation>(requested_information_),
+      REQUESTED_INFORMATION_MAX);
 }
 
 void JourneyLogger::RecordSectionSpecificStats(
@@ -255,8 +287,9 @@ void JourneyLogger::RecordCanMakePaymentStats(
 
   // Record CanMakePayment usage.
   UMA_HISTOGRAM_ENUMERATION("PaymentRequest.CanMakePayment.Usage",
-                            WasCanMakePaymentUsed() ? CAN_MAKE_PAYMENT_USED
-                                                    : CAN_MAKE_PAYMENT_NOT_USED,
+                            was_can_make_payments_used_
+                                ? CAN_MAKE_PAYMENT_USED
+                                : CAN_MAKE_PAYMENT_NOT_USED,
                             CAN_MAKE_PAYMENT_USE_MAX);
 
   RecordCanMakePaymentEffectOnShow();
@@ -264,13 +297,13 @@ void JourneyLogger::RecordCanMakePaymentStats(
 }
 
 void JourneyLogger::RecordCanMakePaymentEffectOnShow() {
-  if (!WasCanMakePaymentUsed())
+  if (!was_can_make_payments_used_)
     return;
 
   int effect_on_trigger = 0;
-  if (WasPaymentRequestTriggered())
+  if (was_payment_request_triggered_)
     effect_on_trigger |= CMP_EFFECT_ON_SHOW_DID_SHOW;
-  if (CouldMakePayment())
+  if (could_make_payment_)
     effect_on_trigger |= CMP_EFFECT_ON_SHOW_COULD_MAKE_PAYMENT;
 
   UMA_HISTOGRAM_ENUMERATION("PaymentRequest.CanMakePayment.Used.EffectOnShow",
@@ -280,13 +313,13 @@ void JourneyLogger::RecordCanMakePaymentEffectOnShow() {
 
 void JourneyLogger::RecordCanMakePaymentEffectOnCompletion(
     CompletionStatus completion_status) {
-  if (!WasPaymentRequestTriggered())
+  if (!was_payment_request_triggered_)
     return;
 
   std::string histogram_name = "PaymentRequest.CanMakePayment.";
-  if (!WasCanMakePaymentUsed()) {
+  if (!was_can_make_payments_used_) {
     histogram_name += "NotUsed.WithShowEffectOnCompletion";
-  } else if (CouldMakePayment()) {
+  } else if (could_make_payment_) {
     histogram_name += "Used.TrueWithShowEffectOnCompletion";
   } else {
     histogram_name += "Used.FalseWithShowEffectOnCompletion";
@@ -347,19 +380,6 @@ void JourneyLogger::RecordUrlKeyedMetrics(CompletionStatus completion_status) {
   builder->AddMetric(internal::kUKMCompletionStatusMetricName,
                      completion_status);
   builder->AddMetric(internal::kUKMEventsMetricName, events_);
-}
-
-bool JourneyLogger::WasCanMakePaymentUsed() {
-  return (events_ & EVENT_CAN_MAKE_PAYMENT_FALSE) > 0 ||
-         (events_ & EVENT_CAN_MAKE_PAYMENT_TRUE) > 0;
-}
-
-bool JourneyLogger::CouldMakePayment() {
-  return (events_ & EVENT_CAN_MAKE_PAYMENT_TRUE) > 0;
-}
-
-bool JourneyLogger::WasPaymentRequestTriggered() {
-  return (events_ & EVENT_SHOWN) > 0 || (events_ & EVENT_SKIPPED_SHOW) > 0;
 }
 
 }  // namespace payments

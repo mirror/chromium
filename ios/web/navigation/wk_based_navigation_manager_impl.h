@@ -113,9 +113,6 @@ class WKBasedNavigationManagerImpl : public NavigationManagerImpl {
   // NavigationManagerImpl methods used by SessionStorageBuilder.
   NavigationItemImpl* GetNavigationItemImplAtIndex(size_t index) const override;
 
-  // NavigationManagerImpl version of GetPendingItem().
-  NavigationItemImpl* GetPendingItemImpl() const;
-
   // Returns the absolute index of WKBackForwardList's |currentItem|. Returns -1
   // if |currentItem| is nil.
   int GetWKCurrentItemIndex() const;

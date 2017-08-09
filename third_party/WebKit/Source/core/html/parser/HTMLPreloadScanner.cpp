@@ -242,12 +242,7 @@ class TokenPreloadScanner::StartTagScanner {
     request->SetNonce(nonce_);
     request->SetCharset(Charset());
     request->SetDefer(defer_);
-
-    // The only link tags that should keep the integrity metadata are
-    // stylesheets until crbug.com/677022 is resolved.
-    if (link_is_style_sheet_ || !Match(tag_impl_, linkTag))
-      request->SetIntegrityMetadata(integrity_metadata_);
-
+    request->SetIntegrityMetadata(integrity_metadata_);
     if (scanner_type_ == ScannerType::kInsertion)
       request->SetFromInsertionScanner(true);
 
@@ -269,6 +264,12 @@ class TokenPreloadScanner::StartTagScanner {
       SetDefer(FetchParameters::kLazyLoad);
     else if (Match(attribute_name, deferAttr))
       SetDefer(FetchParameters::kLazyLoad);
+    // Note that only scripts need to have the integrity metadata set on
+    // preloads. This is because script resources fetches, and only script
+    // resource fetches, need to re-request resources if a cached version has
+    // different metadata (including empty) from the metadata on the request.
+    // See the comment before the call to mustRefetchDueToIntegrityMismatch() in
+    // Source/core/fetch/ResourceFetcher.cpp for a more complete explanation.
     else if (Match(attribute_name, integrityAttr))
       SubresourceIntegrity::ParseIntegrityAttribute(attribute_value,
                                                     integrity_metadata_);
@@ -354,9 +355,6 @@ class TokenPreloadScanner::StartTagScanner {
       SecurityPolicy::ReferrerPolicyFromString(
           attribute_value, kDoNotSupportReferrerPolicyLegacyKeywords,
           &referrer_policy_);
-    } else if (Match(attribute_name, integrityAttr)) {
-      SubresourceIntegrity::ParseIntegrityAttribute(attribute_value,
-                                                    integrity_metadata_);
     }
   }
 

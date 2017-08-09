@@ -79,9 +79,6 @@ class CORE_EXPORT PaintTiming final
   // firstMeaningfulPaint returns the first time that page's primary content
   // was painted.
   double FirstMeaningfulPaint() const { return first_meaningful_paint_; }
-  double FirstMeaningfulPaintSwap() const {
-    return first_meaningful_paint_swap_;
-  }
 
   // firstMeaningfulPaintCandidate indicates the first time we considered a
   // paint to qualify as the potentially first meaningful paint. Unlike

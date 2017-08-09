@@ -308,13 +308,6 @@ public class SingleCategoryPreferences extends PreferenceFragment
     }
 
     /**
-     * Returns the category being displayed. For testing.
-     */
-    public SiteSettingsCategory getCategoryForTest() {
-        return mCategory;
-    }
-
-    /**
      * This clears all the storage for websites that are displayed to the user. This happens
      * asynchronously, and then we call {@link #getInfoForOrigins()} when we're done.
      */

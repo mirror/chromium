@@ -9,6 +9,7 @@
 #include <iterator>
 #include <vector>
 
+#include "base/test/gtest_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace zucchini {
@@ -37,16 +38,16 @@ void TestEncodeDecodeVarUInt(const std::vector<T>& data) {
   for (T expected : values) {
     T value = T(-1);
     auto res = DecodeVarUInt(it, buffer.end(), &value);
-    EXPECT_NE(0, res);
+    EXPECT_TRUE(res.has_value());
     EXPECT_EQ(expected, value);
-    it += res;
+    it = res.value();
   }
   EXPECT_EQ(it, buffer.end());
 
-  T value = T(-1);
-  auto res = DecodeVarUInt(it, buffer.end(), &value);
-  EXPECT_EQ(0, res);
-  EXPECT_EQ(T(-1), value);
+  T dummy = T(-1);
+  auto res = DecodeVarUInt(it, buffer.end(), &dummy);
+  EXPECT_EQ(base::nullopt, res);
+  EXPECT_EQ(T(-1), dummy);
 }
 
 template <class T>
@@ -73,21 +74,19 @@ void TestEncodeDecodeVarInt(const std::vector<T>& data) {
   for (T expected : values) {
     T value = T(-1);
     auto res = DecodeVarInt(it, buffer.end(), &value);
-    EXPECT_NE(0, res);
+    EXPECT_TRUE(res.has_value());
     EXPECT_EQ(expected, value);
-    it += res;
+    it = res.value();
   }
-  EXPECT_EQ(it, buffer.end());
-
-  T value = T(-1);
-  auto res = DecodeVarInt(it, buffer.end(), &value);
-  EXPECT_EQ(0, res);
-  EXPECT_EQ(T(-1), value);
+  T dummy = T(-1);
+  auto res = DecodeVarInt(it, buffer.end(), &dummy);
+  EXPECT_EQ(base::nullopt, res);
+  EXPECT_EQ(T(-1), dummy);
 }
 
 TEST(PatchUtilsTest, EncodeDecodeVarUInt32) {
   TestEncodeDecodeVarUInt<uint32_t>({0, 64, 128, 8192, 16384, 1 << 20, 1 << 21,
-                                     1 << 22, 1 << 27, 1 << 28, 0x7FFFFFFFU,
+                                     1 << 22, 1 << 27, 1 << 28, 0x7FFFFFFF,
                                      UINT32_MAX});
 }
 
@@ -100,7 +99,7 @@ TEST(PatchUtilsTest, EncodeDecodeVarInt32) {
 TEST(PatchUtilsTest, EncodeDecodeVarUInt64) {
   TestEncodeDecodeVarUInt<uint64_t>({0, 64, 128, 8192, 16384, 1 << 20, 1 << 21,
                                      1 << 22, 1ULL << 55, 1ULL << 56,
-                                     0x7FFFFFFFFFFFFFFFULL, UINT64_MAX});
+                                     0x7FFFFFFFFFFFFFFF, UINT64_MAX});
 }
 
 TEST(PatchUtilsTest, EncodeDecodeVarInt64) {
@@ -110,62 +109,55 @@ TEST(PatchUtilsTest, EncodeDecodeVarInt64) {
 }
 
 TEST(PatchUtilsTest, DecodeVarUInt32Malformed) {
-  constexpr uint32_t kUninit = static_cast<uint32_t>(-1LL);
-
-  // Output variable to ensure that on failure, the output variable is not
+  // Dummy variable to ensure that on failure, the output variable is not
   // written to.
-  uint32_t value = uint32_t(-1);
+  uint32_t dummy = uint32_t(-1);
 
-  auto TestDecodeVarInt = [&value,
-                           kUninit](const std::vector<uint8_t>& buffer) {
-    value = kUninit;
-    return DecodeVarUInt(buffer.begin(), buffer.end(), &value);
+  auto TestDecodeVarInt = [&dummy](const std::vector<uint8_t>& buffer) {
+    dummy = uint32_t(-1);
+    return DecodeVarUInt(buffer.begin(), buffer.end(), &dummy);
   };
 
   // Exhausted.
-  EXPECT_EQ(0, TestDecodeVarInt(std::vector<uint8_t>{}));
-  EXPECT_EQ(kUninit, value);
-  EXPECT_EQ(0, TestDecodeVarInt(std::vector<uint8_t>(4, 128)));
-  EXPECT_EQ(kUninit, value);
+  EXPECT_EQ(base::nullopt, TestDecodeVarInt(std::vector<uint8_t>{}));
+  EXPECT_EQ(uint32_t(-1), dummy);
+  EXPECT_EQ(base::nullopt, TestDecodeVarInt(std::vector<uint8_t>(4, 128)));
+  EXPECT_EQ(uint32_t(-1), dummy);
 
   // Overflow.
-  EXPECT_EQ(0, TestDecodeVarInt(std::vector<uint8_t>(6, 128)));
-  EXPECT_EQ(kUninit, value);
-  EXPECT_EQ(0, TestDecodeVarInt({128, 128, 128, 128, 128, 42}));
-  EXPECT_EQ(kUninit, value);
+  EXPECT_EQ(base::nullopt, TestDecodeVarInt(std::vector<uint8_t>(6, 128)));
+  EXPECT_EQ(uint32_t(-1), dummy);
+  EXPECT_EQ(base::nullopt, TestDecodeVarInt({128, 128, 128, 128, 128, 42}));
+  EXPECT_EQ(uint32_t(-1), dummy);
 
   // Following are pathological cases that are not handled for simplicity,
   // hence decoding is expected to be successful.
-  EXPECT_NE(0, TestDecodeVarInt({128, 128, 128, 128, 16}));
-  EXPECT_EQ(uint32_t(0), value);
-  EXPECT_NE(0, TestDecodeVarInt({128, 128, 128, 128, 32}));
-  EXPECT_EQ(uint32_t(0), value);
-  EXPECT_NE(0, TestDecodeVarInt({128, 128, 128, 128, 64}));
-  EXPECT_EQ(uint32_t(0), value);
+  EXPECT_NE(base::nullopt, TestDecodeVarInt({128, 128, 128, 128, 16}));
+  EXPECT_EQ(uint32_t(0), dummy);
+  EXPECT_NE(base::nullopt, TestDecodeVarInt({128, 128, 128, 128, 32}));
+  EXPECT_EQ(uint32_t(0), dummy);
+  EXPECT_NE(base::nullopt, TestDecodeVarInt({128, 128, 128, 128, 64}));
+  EXPECT_EQ(uint32_t(0), dummy);
 }
 
 TEST(PatchUtilsTest, DecodeVarUInt64Malformed) {
-  constexpr uint64_t kUninit = static_cast<uint64_t>(-1);
-
-  uint64_t value = kUninit;
-  auto TestDecodeVarInt = [&value,
-                           kUninit](const std::vector<uint8_t>& buffer) {
-    value = kUninit;
-    return DecodeVarUInt(buffer.begin(), buffer.end(), &value);
+  uint64_t dummy = uint64_t(-1);
+  auto TestDecodeVarInt = [&dummy](const std::vector<uint8_t>& buffer) {
+    return DecodeVarUInt(buffer.begin(), buffer.end(), &dummy);
   };
 
   // Exhausted.
-  EXPECT_EQ(0, TestDecodeVarInt(std::vector<uint8_t>{}));
-  EXPECT_EQ(kUninit, value);
-  EXPECT_EQ(0, TestDecodeVarInt(std::vector<uint8_t>(9, 128)));
-  EXPECT_EQ(kUninit, value);
+  EXPECT_EQ(base::nullopt, TestDecodeVarInt(std::vector<uint8_t>{}));
+  EXPECT_EQ(uint64_t(-1), dummy);
+  EXPECT_EQ(base::nullopt, TestDecodeVarInt(std::vector<uint8_t>(9, 128)));
+  EXPECT_EQ(uint64_t(-1), dummy);
 
   // Overflow.
-  EXPECT_EQ(0, TestDecodeVarInt(std::vector<uint8_t>(10, 128)));
-  EXPECT_EQ(kUninit, value);
-  EXPECT_EQ(0, TestDecodeVarInt(
-                   {128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 42}));
-  EXPECT_EQ(kUninit, value);
+  EXPECT_EQ(base::nullopt, TestDecodeVarInt(std::vector<uint8_t>(10, 128)));
+  EXPECT_EQ(uint64_t(-1), dummy);
+  EXPECT_EQ(base::nullopt, TestDecodeVarInt({128, 128, 128, 128, 128, 128, 128,
+                                             128, 128, 128, 42}));
+  EXPECT_EQ(uint64_t(-1), dummy);
 }
 
 }  // namespace zucchini

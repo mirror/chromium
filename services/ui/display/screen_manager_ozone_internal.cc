@@ -314,7 +314,8 @@ void ScreenManagerOzoneInternal::PreDisplayConfigurationChange(
   DVLOG(1) << "PreDisplayConfigurationChange";
 }
 
-void ScreenManagerOzoneInternal::PostDisplayConfigurationChange() {
+void ScreenManagerOzoneInternal::PostDisplayConfigurationChange(
+    bool must_clear_window) {
   // Set primary display if not set yet.
   if (primary_display_id_ == kInvalidDisplayId) {
     const Display& primary_display =

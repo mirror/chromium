@@ -27,7 +27,6 @@
 #include "bindings/core/v8/HTMLOptionElementOrHTMLOptGroupElement.h"
 #include "bindings/core/v8/NodeListOrElement.h"
 #include "core/dom/StaticNodeList.h"
-#include "core/frame/UseCounter.h"
 #include "core/html/HTMLOptionElement.h"
 #include "core/html/HTMLSelectElement.h"
 
@@ -112,9 +111,6 @@ void HTMLOptionsCollection::namedGetter(const AtomicString& name,
 
   // FIXME: The spec and Firefox do not return a NodeList. They always return
   // the first matching Element.
-  UseCounter::Count(
-      GetDocument(),
-      WebFeature::kHTMLOptionsCollectionNamedGetterReturnsNodeList);
   return_value.setNodeList(StaticElementList::Adopt(named_items));
 }
 

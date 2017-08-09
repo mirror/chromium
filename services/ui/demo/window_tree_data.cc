@@ -68,6 +68,7 @@ aura::Window* WindowTreeData::bitmap_window() {
 
 void WindowTreeData::Init(
     std::unique_ptr<aura::WindowTreeHostMus> window_tree_host) {
+  window_tree_host->InitHost();
   window_tree_host->Show();
   // Take ownership of the WTH.
   window_tree_host_ = std::move(window_tree_host);

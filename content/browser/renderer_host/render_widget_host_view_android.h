@@ -44,7 +44,6 @@
 
 namespace ui {
 class MotionEventAndroid;
-class OverscrollRefreshHandler;
 struct DidOverscrollParams;
 }
 
@@ -144,8 +143,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
                               InputEventAckState ack_result) override;
   InputEventAckState FilterInputEvent(
       const blink::WebInputEvent& input_event) override;
-  InputEventAckState FilterChildGestureEvent(
-      const blink::WebGestureEvent& gesture_event) override;
   void GestureEventAck(const blink::WebGestureEvent& event,
                        InputEventAckState ack_result) override;
   BrowserAccessibilityManager* CreateBrowserAccessibilityManager(
@@ -322,9 +319,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   GetSelectionControllerClientManagerForTesting();
   void SetSelectionControllerClientForTesting(
       std::unique_ptr<ui::TouchSelectionControllerClient> client);
-
-  void SetOverscrollControllerForTesting(
-      ui::OverscrollRefreshHandler* overscroll_refresh_handler);
 
   void GotFocus();
   void LostFocus();

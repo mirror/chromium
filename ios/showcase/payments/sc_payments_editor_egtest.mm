@@ -4,7 +4,6 @@
 
 #import <EarlGrey/EarlGrey.h>
 
-#include "base/ios/ios_util.h"
 #import "base/mac/foundation_util.h"
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/ui/autofill/autofill_edit_accessory_view.h"
@@ -208,12 +207,6 @@ id<GREYMatcher> UIAlertViewMessageForDelegateCallWithArgument(
 // states depending on the focused textfield and that they can be used to
 // navigate between the textfields.
 - (void)testInputAccessoryViewNavigationButtons {
-  // TODO(crbug.com/753098): Re-enable this test on iOS 11 iPad once
-  // grey_typeText works on iOS 11.
-  if (base::ios::IsRunningOnIOS11OrLater() && IsIPadIdiom()) {
-    EARL_GREY_TEST_DISABLED(@"Test disabled on iOS 11.");
-  }
-
   // Initially, no error message is showing.
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
                                           kWarningMessageAccessibilityID)]

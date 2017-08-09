@@ -10473,6 +10473,7 @@
   "Fuchsia": {
     "additional_compile_targets": [
       "gl_unittests",
+      "media_unittests",
       "net_unittests"
     ],
     "gtest_tests": [
@@ -10499,15 +10500,6 @@
           "can_use_on_swarming_builders": false
         },
         "test": "ipc_tests"
-      },
-      {
-        "args": [
-          "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.media_unittests.filter"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": false
-        },
-        "test": "media_unittests"
       },
       {
         "swarming": {
@@ -10592,15 +10584,6 @@
           "can_use_on_swarming_builders": false
         },
         "test": "ipc_tests"
-      },
-      {
-        "args": [
-          "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.media_unittests.filter"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": false
-        },
-        "test": "media_unittests"
       },
       {
         "swarming": {
@@ -10772,8 +10755,7 @@
         ],
         "swarming": {
           "can_use_on_swarming_builders": true,
-          "hard_timeout": 1800,
-          "shards": 5
+          "hard_timeout": 1800
         },
         "test": "mash_browser_tests"
       },

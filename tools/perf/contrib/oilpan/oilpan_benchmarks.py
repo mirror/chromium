@@ -46,10 +46,7 @@ class OilpanGCTimesSmoothnessAnimation(perf_benchmark.PerfBenchmark):
     return 'oilpan_gc_times.tough_animation_cases'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.ToughAnimationCasesStoryExpectations()
 
 
 @benchmark.Enabled('android')
@@ -62,16 +59,7 @@ class OilpanGCTimesKeySilkCases(perf_benchmark.PerfBenchmark):
     return 'oilpan_gc_times.key_silk_cases'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        self.DisableStory('https://polymer-topeka.appspot.com/',
-                          [story.expectations.ALL], 'crbug.com/507865')
-        self.DisableStory('http://plus.google.com/app/basic/stream',
-                          [story.expectations.ALL], 'crbug.com/338838')
-        self.DisableStory('inbox_app.html?slide_drawer',
-                          [story.expectations.ALL], 'crbug.com/446332')
-    return StoryExpectations()
-
+    return page_sets.KeySilkCasesStoryExpectations()
 
 @benchmark.Enabled('android')
 class OilpanGCTimesSyncScrollKeyMobileSites(perf_benchmark.PerfBenchmark):
@@ -87,7 +75,4 @@ class OilpanGCTimesSyncScrollKeyMobileSites(perf_benchmark.PerfBenchmark):
     return 'oilpan_gc_times.sync_scroll.key_mobile_sites_smooth'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.KeyMobileSitesSmoothStoryExpectations()

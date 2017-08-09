@@ -12,6 +12,7 @@ import android.support.v7.app.MediaRouteChooserDialogFragment;
 import android.support.v7.media.MediaRouteSelector;
 
 import org.chromium.chrome.browser.media.router.cast.MediaSink;
+import org.chromium.chrome.browser.media.router.cast.MediaSource;
 
 /**
  * Manages the dialog responsible for selecting a {@link MediaSink}.
@@ -21,9 +22,8 @@ public class MediaRouteChooserDialogManager extends BaseMediaRouteDialogManager 
     private static final String DIALOG_FRAGMENT_TAG =
             "android.support.v7.mediarouter:MediaRouteChooserDialogFragment";
 
-    public MediaRouteChooserDialogManager(
-            String sourceId, MediaRouteSelector routeSelector, MediaRouteDialogDelegate delegate) {
-        super(sourceId, routeSelector, delegate);
+    public MediaRouteChooserDialogManager(MediaSource source, MediaRouteDialogDelegate delegate) {
+        super(source, delegate);
     }
 
     /**
@@ -80,7 +80,7 @@ public class MediaRouteChooserDialogManager extends BaseMediaRouteDialogManager 
 
             MediaSink newSink =
                     MediaSink.fromRoute(mManager.androidMediaRouter().getSelectedRoute());
-            mManager.delegate().onSinkSelected(mManager.sourceId(), newSink);
+            mManager.delegate().onSinkSelected(mManager.mediaSource().getUrn(), newSink);
         }
     }
 
@@ -89,7 +89,10 @@ public class MediaRouteChooserDialogManager extends BaseMediaRouteDialogManager 
         if (fm.findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) return null;
 
         Fragment fragment = new Fragment(this);
-        fragment.setRouteSelector(routeSelector());
+        MediaRouteSelector selector = mediaSource().buildRouteSelector();
+        if (selector == null) return null;
+
+        fragment.setRouteSelector(selector);
         fragment.show(fm, DIALOG_FRAGMENT_TAG);
         fm.executePendingTransactions();
 

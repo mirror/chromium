@@ -18,10 +18,7 @@ _LOWERCASE_NAME_FN = lambda n: n.attributes['name'].value.lower()
 
 _METRIC_TYPE =  models.ObjectNodeType(
     'metric',
-    attributes=[
-      ('name', unicode),
-      ('semantic_type', unicode),
-    ],
+    attributes=[('name', unicode)],
     children=[
         models.ChildType('obsolete', _OBSOLETE_TYPE, False),
         models.ChildType('owners', _OWNER_TYPE, True),

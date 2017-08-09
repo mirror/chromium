@@ -118,10 +118,6 @@ class TestScheduler : public Scheduler {
     state_machine_.SetCriticalBeginMainFrameToActivateIsFast(is_fast);
   }
 
-  bool ImplLatencyTakesPriority() const {
-    return state_machine_.ImplLatencyTakesPriority();
-  }
-
  protected:
   // Overridden from Scheduler.
   base::TimeTicks Now() const override;

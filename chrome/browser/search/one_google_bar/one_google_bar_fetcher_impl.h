@@ -41,6 +41,8 @@ class OneGoogleBarFetcherImpl : public OneGoogleBarFetcher {
  private:
   class AuthenticatedURLFetcher;
 
+  void IssueRequestIfNoneOngoing();
+
   void FetchDone(const net::URLFetcher* source);
 
   void JsonParsed(std::unique_ptr<base::Value> value);

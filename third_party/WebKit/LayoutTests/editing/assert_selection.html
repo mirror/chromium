@@ -147,7 +147,7 @@ test(() => assert_selection(
             '<b id="abc">abc</b>',
             '<b id="def">def</b>',
         '</div>',
-    ],
+    ].join(''),
     selection => {
       const document = selection.document;
       const host = document.getElementById('host');
@@ -170,7 +170,7 @@ test(() => assert_selection(
             '<b id="abc">^abc</b>',
             '<span id="mno">mno</span>',
         '</div>',
-    ],
+    ].join(''),
     {dumpAs: 'flattree'}), 'dump flat tree for shadow DOM V0');
 
 test(() => assert_selection(

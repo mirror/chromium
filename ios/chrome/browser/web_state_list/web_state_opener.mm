@@ -22,8 +22,6 @@ int NavigationIndexFromWebState(web::WebState* web_state) {
 }
 }  // namespace
 
-WebStateOpener::WebStateOpener() : WebStateOpener(nullptr) {}
-
 WebStateOpener::WebStateOpener(web::WebState* opener)
     : WebStateOpener(opener, NavigationIndexFromWebState(opener)) {}
 

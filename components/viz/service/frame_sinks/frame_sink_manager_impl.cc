@@ -10,10 +10,10 @@
 #include "base/logging.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display_embedder/display_provider.h"
-#include "components/viz/service/frame_sinks/compositor_frame_sink_impl.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_client.h"
+#include "components/viz/service/frame_sinks/gpu_compositor_frame_sink.h"
+#include "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.h"
 #include "components/viz/service/frame_sinks/primary_begin_frame_source.h"
-#include "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.h"
 
 #if DCHECK_IS_ON()
 #include <sstream>
@@ -98,7 +98,7 @@ void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
       frame_sink_id, surface_handle, renderer_settings, &begin_frame_source);
 
   compositor_frame_sinks_[frame_sink_id] =
-      base::MakeUnique<RootCompositorFrameSinkImpl>(
+      base::MakeUnique<GpuRootCompositorFrameSink>(
           this, frame_sink_id, std::move(display),
           std::move(begin_frame_source), std::move(request), std::move(client),
           std::move(display_private_request));
@@ -112,7 +112,7 @@ void FrameSinkManagerImpl::CreateCompositorFrameSink(
   DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
 
   compositor_frame_sinks_[frame_sink_id] =
-      base::MakeUnique<CompositorFrameSinkImpl>(
+      base::MakeUnique<GpuCompositorFrameSink>(
           this, frame_sink_id, std::move(request), std::move(client));
 }
 
@@ -320,8 +320,7 @@ bool FrameSinkManagerImpl::ChildContains(
   return false;
 }
 
-void FrameSinkManagerImpl::OnFirstSurfaceActivation(
-    const SurfaceInfo& surface_info) {
+void FrameSinkManagerImpl::OnSurfaceCreated(const SurfaceInfo& surface_info) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_GT(surface_info.device_scale_factor(), 0.0f);
 
@@ -331,10 +330,8 @@ void FrameSinkManagerImpl::OnFirstSurfaceActivation(
   // temporary reference was created. It could be useful to let |client_| know
   // if it should find an owner.
   if (client_)
-    client_->OnFirstSurfaceActivation(surface_info);
+    client_->OnSurfaceCreated(surface_info);
 }
-
-void FrameSinkManagerImpl::OnSurfaceActivated(const SurfaceId& surface_id) {}
 
 bool FrameSinkManagerImpl::OnSurfaceDamaged(const SurfaceId& surface_id,
                                             const BeginFrameAck& ack) {

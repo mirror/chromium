@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #include "content/child/service_worker/service_worker_dispatcher.h"
-
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "content/child/service_worker/service_worker_handle_reference.h"
@@ -72,6 +71,13 @@ class ServiceWorkerDispatcherTest : public testing::Test {
 
   bool ContainsRegistration(int registration_handle_id) {
     return ContainsKey(dispatcher_->registrations_, registration_handle_id);
+  }
+
+  void OnAssociateRegistrationForController(
+      int provider_id,
+      const ServiceWorkerRegistrationObjectInfo& info,
+      const ServiceWorkerVersionAttributes& attrs) {
+    dispatcher_->OnAssociateRegistrationForController(provider_id, info, attrs);
   }
 
   void OnSetControllerServiceWorker(int thread_id,
@@ -157,6 +163,62 @@ class MockWebServiceWorkerProviderClientImpl
   std::set<uint32_t> used_features_;
 };
 
+TEST_F(ServiceWorkerDispatcherTest, OnAssociateRegistration_NoProviderContext) {
+  // Assume that these objects are passed from the browser process and own
+  // references to browser-side registration/worker representations.
+  ServiceWorkerRegistrationObjectInfo info;
+  ServiceWorkerVersionAttributes attrs;
+  CreateObjectInfoAndVersionAttributes(&info, &attrs);
+
+  // The passed references should be adopted but immediately released because
+  // there is no provider context to own the references.
+  const int kProviderId = 10;
+  OnAssociateRegistrationForController(kProviderId, info, attrs);
+  ASSERT_EQ(4UL, ipc_sink()->message_count());
+  EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
+            ipc_sink()->GetMessageAt(0)->type());
+  EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
+            ipc_sink()->GetMessageAt(1)->type());
+  EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
+            ipc_sink()->GetMessageAt(2)->type());
+  EXPECT_EQ(ServiceWorkerHostMsg_DecrementRegistrationRefCount::ID,
+            ipc_sink()->GetMessageAt(3)->type());
+}
+
+TEST_F(ServiceWorkerDispatcherTest,
+       OnAssociateRegistration_ProviderContextForController) {
+  // Assume that these objects are passed from the browser process and own
+  // references to browser-side registration/worker representations.
+  ServiceWorkerRegistrationObjectInfo info;
+  ServiceWorkerVersionAttributes attrs;
+  CreateObjectInfoAndVersionAttributes(&info, &attrs);
+
+  // Set up ServiceWorkerProviderContext for ServiceWorkerGlobalScope.
+  const int kProviderId = 10;
+  scoped_refptr<ServiceWorkerProviderContext> provider_context(
+      new ServiceWorkerProviderContext(
+          kProviderId, SERVICE_WORKER_PROVIDER_FOR_CONTROLLER,
+          mojom::ServiceWorkerProviderAssociatedRequest(),
+          thread_safe_sender()));
+
+  // The passed references should be adopted and owned by the provider context.
+  OnAssociateRegistrationForController(kProviderId, info, attrs);
+  EXPECT_EQ(0UL, ipc_sink()->message_count());
+
+  // Destruction of the provider context should release references to the
+  // associated registration and its versions.
+  provider_context = nullptr;
+  ASSERT_EQ(4UL, ipc_sink()->message_count());
+  EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
+            ipc_sink()->GetMessageAt(0)->type());
+  EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
+            ipc_sink()->GetMessageAt(1)->type());
+  EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
+            ipc_sink()->GetMessageAt(2)->type());
+  EXPECT_EQ(ServiceWorkerHostMsg_DecrementRegistrationRefCount::ID,
+            ipc_sink()->GetMessageAt(3)->type());
+}
+
 TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker) {
   const int kProviderId = 10;
   bool should_notify_controllerchange = true;
@@ -181,9 +243,11 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker) {
   // (2) In the case there is no WebSWProviderClient but SWProviderContext for
   // the provider, the passed referecence should be adopted and owned by the
   // provider context.
-  auto provider_context = base::MakeRefCounted<ServiceWorkerProviderContext>(
-      kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-      mojom::ServiceWorkerProviderAssociatedRequest(), dispatcher());
+  scoped_refptr<ServiceWorkerProviderContext> provider_context(
+      new ServiceWorkerProviderContext(
+          kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
+          mojom::ServiceWorkerProviderAssociatedRequest(),
+          thread_safe_sender()));
   ipc_sink()->ClearMessages();
   OnSetControllerServiceWorker(kDocumentMainThreadId, kProviderId, attrs.active,
                                should_notify_controllerchange,
@@ -226,9 +290,9 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker) {
   // provider context. In addition, the new reference should be created for the
   // provider client and immediately released due to limitation of the mock
   // implementation.
-  provider_context = base::MakeRefCounted<ServiceWorkerProviderContext>(
+  provider_context = new ServiceWorkerProviderContext(
       kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-      mojom::ServiceWorkerProviderAssociatedRequest(), dispatcher());
+      mojom::ServiceWorkerProviderAssociatedRequest(), thread_safe_sender());
   provider_client.reset(
       new MockWebServiceWorkerProviderClientImpl(kProviderId, dispatcher()));
   ASSERT_FALSE(provider_client->is_set_controlled_called());
@@ -256,9 +320,11 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker_Null) {
 
   std::unique_ptr<MockWebServiceWorkerProviderClientImpl> provider_client(
       new MockWebServiceWorkerProviderClientImpl(kProviderId, dispatcher()));
-  auto provider_context = base::MakeRefCounted<ServiceWorkerProviderContext>(
-      kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-      mojom::ServiceWorkerProviderAssociatedRequest(), dispatcher());
+  scoped_refptr<ServiceWorkerProviderContext> provider_context(
+      new ServiceWorkerProviderContext(
+          kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
+          mojom::ServiceWorkerProviderAssociatedRequest(),
+          thread_safe_sender()));
 
   // Set the controller to kInvalidServiceWorkerHandle.
   OnSetControllerServiceWorker(

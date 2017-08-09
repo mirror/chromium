@@ -176,10 +176,6 @@ double TestWebState::GetLoadingProgress() const {
   return 0.0;
 }
 
-bool TestWebState::IsCrashed() const {
-  return false;
-}
-
 bool TestWebState::IsBeingDestroyed() const {
   return false;
 }

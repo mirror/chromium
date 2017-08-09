@@ -19,6 +19,7 @@ SNAPSHOT_EXPORT void GrabWindowSnapshotAndScaleAsyncAura(
     aura::Window* window,
     const gfx::Rect& source_rect,
     const gfx::Size& target_size,
+    scoped_refptr<base::TaskRunner> background_task_runner,
     const GrabWindowSnapshotAsyncCallback& callback);
 
 SNAPSHOT_EXPORT void GrabWindowSnapshotAsyncAura(

@@ -938,8 +938,7 @@ void CompositorImpl::RemoveChildFrameSink(
                                                           frame_sink_id);
 }
 
-void CompositorImpl::OnFirstSurfaceActivation(
-    const viz::SurfaceInfo& surface_info) {
+void CompositorImpl::OnSurfaceCreated(const viz::SurfaceInfo& surface_info) {
   // TODO(fsamuel): Once surface synchronization is turned on, the fallback
   // surface should be set here.
 }

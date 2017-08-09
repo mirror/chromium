@@ -252,30 +252,6 @@ TEST_F(AppListPresenterDelegateTest, TinyDisplay) {
   EXPECT_GE(app_list_view_top, kMinimalAppListMargin);
 }
 
-// Tests that the app list is not draggable in side shelf alignment.
-TEST_F(FullscreenAppListPresenterDelegateTest, SideShelfAlignmentDragDisabled) {
-  SetShelfAlignment(ShelfAlignment::SHELF_ALIGNMENT_RIGHT);
-  app_list_presenter_impl()->Show(GetPrimaryDisplayId());
-  const app_list::AppListView* app_list = app_list_presenter_impl()->GetView();
-  EXPECT_TRUE(app_list->is_fullscreen());
-  EXPECT_EQ(app_list::AppListView::FULLSCREEN_ALL_APPS,
-            app_list->app_list_state());
-
-  // Drag the widget across the screen over an arbitrary 100Ms, this would
-  // normally result in the app list transitioning to PEEKING but will now
-  // result in no state change.
-  ui::test::EventGenerator& generator = GetEventGenerator();
-  generator.GestureScrollSequence(GetPointOutsideSearchbox(),
-                                  gfx::Point(10, 900),
-                                  base::TimeDelta::FromMilliseconds(100), 10);
-  EXPECT_EQ(app_list::AppListView::FULLSCREEN_ALL_APPS,
-            app_list->app_list_state());
-
-  // Tap the app list body. This should still close the app list.
-  generator.GestureTapAt(GetPointOutsideSearchbox());
-  EXPECT_EQ(app_list::AppListView::CLOSED, app_list->app_list_state());
-}
-
 // Tests that the app list initializes in fullscreen with side shelf alignment
 // and that the state transitions via text input act properly.
 TEST_F(FullscreenAppListPresenterDelegateTest,
@@ -543,41 +519,6 @@ TEST_P(FullscreenAppListPresenterDelegateTest,
   EXPECT_FALSE(app_list_presenter_impl()->IsVisible());
 }
 
-TEST_P(FullscreenAppListPresenterDelegateTest, LongPressOutsideCloseAppList) {
-  app_list_presenter_impl()->Show(GetPrimaryDisplayId());
-  EXPECT_TRUE(app_list_presenter_impl()->IsVisible());
-
-  // |outside_point| is outside the bounds of app list.
-  gfx::Point outside_point =
-      app_list_presenter_impl()->GetView()->bounds().origin();
-  outside_point.Offset(0, -10);
-
-  // Dispatch LONG_PRESS to ash::AppListPresenterDelegate.
-  ui::TouchEvent long_press(
-      ui::ET_GESTURE_LONG_PRESS, outside_point, base::TimeTicks::Now(),
-      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH));
-  GetEventGenerator().Dispatch(&long_press);
-  EXPECT_FALSE(app_list_presenter_impl()->IsVisible());
-}
-
-TEST_P(FullscreenAppListPresenterDelegateTest,
-       TwoFingerTapOutsideCloseAppList) {
-  app_list_presenter_impl()->Show(GetPrimaryDisplayId());
-  EXPECT_TRUE(app_list_presenter_impl()->IsVisible());
-
-  // |outside_point| is outside the bounds of app list.
-  gfx::Point outside_point =
-      app_list_presenter_impl()->GetView()->bounds().origin();
-  outside_point.Offset(0, -10);
-
-  // Dispatch TWO_FINGER_TAP to ash::AppListPresenterDelegate.
-  ui::TouchEvent two_finger_tap(
-      ui::ET_GESTURE_TWO_FINGER_TAP, outside_point, base::TimeTicks::Now(),
-      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH));
-  GetEventGenerator().Dispatch(&two_finger_tap);
-  EXPECT_FALSE(app_list_presenter_impl()->IsVisible());
-}
-
 // Tests that a keypress activates the searchbox and that clearing the
 // searchbox, the searchbox remains active.
 TEST_F(FullscreenAppListPresenterDelegateTest, KeyPressEnablesSearchBox) {
@@ -756,7 +697,7 @@ TEST_F(AppListPresenterDelegateTest,
   EXPECT_TRUE(app_list::features::IsFullscreenAppListEnabled());
   EXPECT_FALSE(GetPrimaryShelf()->IsHorizontalAlignment());
   EXPECT_EQ(GetPrimaryShelf()->shelf_layout_manager()->GetShelfBackgroundType(),
-            SHELF_BACKGROUND_DEFAULT);
+            SHELF_BACKGROUND_OVERLAP);
 }
 
 // Tests that the app list in HALF with an active search transitions to PEEKING

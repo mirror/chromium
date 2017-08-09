@@ -144,9 +144,8 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   // the constructor.
   CachedImageFetcher& GetImageFetcherForTesting() { return image_fetcher_; }
 
-  BreakingNewsListener* breaking_news_listener_for_debugging() {
-    return breaking_news_raw_data_provider_.get();
-  }
+  void PushArticleSuggestionToTheFrontForDebugging(
+      std::unique_ptr<RemoteSuggestion> suggestion);
 
  private:
   friend class RemoteSuggestionsProviderImplTest;

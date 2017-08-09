@@ -6,7 +6,6 @@
 
 #include "base/bind.h"
 #include "base/run_loop.h"
-#include "base/test/scoped_task_environment.h"
 #include "chrome/browser/extensions/api/image_writer_private/removable_storage_provider.h"
 #include "chromeos/disks/mock_disk_mount_manager.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -34,9 +33,6 @@ const char kUnknownUSBDiskModel[] = "USB Drive";
 
 class RemovableStorageProviderChromeOsUnitTest : public testing::Test {
  public:
-  RemovableStorageProviderChromeOsUnitTest()
-      : scoped_task_environment_(
-            base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
   void SetUp() override {
     disk_mount_manager_mock_ = new MockDiskMountManager();
     DiskMountManager::InitializeForTesting(disk_mount_manager_mock_);
@@ -45,7 +41,7 @@ class RemovableStorageProviderChromeOsUnitTest : public testing::Test {
 
   void TearDown() override { DiskMountManager::Shutdown(); }
 
-  void DevicesCallback(scoped_refptr<StorageDeviceList> devices) {
+  void DevicesCallback(scoped_refptr<StorageDeviceList> devices, bool success) {
     devices_ = devices;
   }
 
@@ -113,7 +109,6 @@ class RemovableStorageProviderChromeOsUnitTest : public testing::Test {
     EXPECT_EQ(capacity, device->capacity);
   }
 
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
   MockDiskMountManager* disk_mount_manager_mock_;
   scoped_refptr<StorageDeviceList> devices_;
 
@@ -137,7 +132,7 @@ TEST_F(RemovableStorageProviderChromeOsUnitTest, GetAllDevices) {
       base::Bind(&RemovableStorageProviderChromeOsUnitTest::DevicesCallback,
                  base::Unretained(this)));
 
-  scoped_task_environment_.RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   ASSERT_EQ(2U, devices_->data.size());
 
@@ -158,7 +153,7 @@ TEST_F(RemovableStorageProviderChromeOsUnitTest, EmptyProductAndModel) {
       base::Bind(&RemovableStorageProviderChromeOsUnitTest::DevicesCallback,
                  base::Unretained(this)));
 
-  scoped_task_environment_.RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   ASSERT_EQ(2U, devices_->data.size());
 

@@ -20,10 +20,10 @@ BackgroundFetchEmbeddedWorkerTestHelper::
     ~BackgroundFetchEmbeddedWorkerTestHelper() = default;
 
 void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchAbortEvent(
-    const std::string& id,
+    const std::string& tag,
     mojom::ServiceWorkerEventDispatcher::
         DispatchBackgroundFetchAbortEventCallback callback) {
-  last_id_ = id;
+  last_tag_ = tag;
 
   if (fail_abort_event_) {
     std::move(callback).Run(SERVICE_WORKER_ERROR_EVENT_WAITUNTIL_REJECTED,
@@ -37,11 +37,11 @@ void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchAbortEvent(
 }
 
 void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchClickEvent(
-    const std::string& id,
+    const std::string& tag,
     mojom::BackgroundFetchState state,
     mojom::ServiceWorkerEventDispatcher::
         DispatchBackgroundFetchClickEventCallback callback) {
-  last_id_ = id;
+  last_tag_ = tag;
   last_state_ = state;
 
   if (fail_click_event_) {
@@ -56,11 +56,11 @@ void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchClickEvent(
 }
 
 void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchFailEvent(
-    const std::string& id,
+    const std::string& tag,
     const std::vector<BackgroundFetchSettledFetch>& fetches,
     mojom::ServiceWorkerEventDispatcher::
         DispatchBackgroundFetchFailEventCallback callback) {
-  last_id_ = id;
+  last_tag_ = tag;
   last_fetches_ = fetches;
 
   if (fail_fetch_fail_event_) {
@@ -75,11 +75,11 @@ void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchFailEvent(
 }
 
 void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchedEvent(
-    const std::string& id,
+    const std::string& tag,
     const std::vector<BackgroundFetchSettledFetch>& fetches,
     mojom::ServiceWorkerEventDispatcher::DispatchBackgroundFetchedEventCallback
         callback) {
-  last_id_ = id;
+  last_tag_ = tag;
   last_fetches_ = fetches;
 
   if (fail_fetched_event_) {

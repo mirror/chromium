@@ -481,10 +481,6 @@ TEST(JourneyLoggerTest,
   EXPECT_TRUE(buckets[0].min & JourneyLogger::EVENT_COMPLETED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_USER_ABORTED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_OTHER_ABORTED);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_SHIPPING);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_NAME);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_PHONE);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_EMAIL);
 }
 
 // Tests that the completion status metrics based on whether the user had
@@ -532,10 +528,6 @@ TEST(JourneyLoggerTest,
   EXPECT_TRUE(buckets[0].min & JourneyLogger::EVENT_USER_ABORTED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_COMPLETED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_OTHER_ABORTED);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_SHIPPING);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_NAME);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_PHONE);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_EMAIL);
 }
 
 // Tests that the completion status metrics based on whether the user had
@@ -583,10 +575,6 @@ TEST(JourneyLoggerTest,
   EXPECT_TRUE(buckets[0].min & JourneyLogger::EVENT_OTHER_ABORTED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_COMPLETED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_USER_ABORTED);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_SHIPPING);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_NAME);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_PHONE);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_EMAIL);
 }
 
 // Tests that the completion status metrics based on whether the user had
@@ -635,10 +623,6 @@ TEST(JourneyLoggerTest,
   EXPECT_TRUE(buckets[0].min & JourneyLogger::EVENT_COMPLETED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_USER_ABORTED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_OTHER_ABORTED);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_SHIPPING);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_NAME);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_PHONE);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_EMAIL);
 }
 
 // Tests that the completion status metrics based on whether the user had
@@ -687,10 +671,6 @@ TEST(JourneyLoggerTest,
   EXPECT_TRUE(buckets[0].min & JourneyLogger::EVENT_COMPLETED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_USER_ABORTED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_OTHER_ABORTED);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_SHIPPING);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_NAME);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_PHONE);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_EMAIL);
 }
 
 // Tests that the completion status metrics based on whether the user had
@@ -739,10 +719,6 @@ TEST(JourneyLoggerTest,
   EXPECT_TRUE(buckets[0].min & JourneyLogger::EVENT_USER_ABORTED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_COMPLETED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_OTHER_ABORTED);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_SHIPPING);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_NAME);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_PHONE);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_EMAIL);
 }
 
 // Tests that the completion status metrics based on whether the user had
@@ -791,10 +767,6 @@ TEST(JourneyLoggerTest,
   EXPECT_TRUE(buckets[0].min & JourneyLogger::EVENT_OTHER_ABORTED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_COMPLETED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_USER_ABORTED);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_SHIPPING);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_NAME);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_PHONE);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_EMAIL);
 }
 
 // Tests that the completion status metrics based on whether the user had
@@ -844,10 +816,6 @@ TEST(JourneyLoggerTest,
   EXPECT_TRUE(buckets[0].min & JourneyLogger::EVENT_USER_ABORTED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_COMPLETED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_OTHER_ABORTED);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_SHIPPING);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_NAME);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_PHONE);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_EMAIL);
 }
 
 // Tests that the completion status metrics based on whether the user had
@@ -898,10 +866,6 @@ TEST(
   EXPECT_TRUE(buckets[0].min & JourneyLogger::EVENT_OTHER_ABORTED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_COMPLETED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_USER_ABORTED);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_SHIPPING);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_NAME);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_PHONE);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_EMAIL);
 }
 
 // Tests that the completion status metrics based on whether the user had
@@ -954,10 +918,6 @@ TEST(
   EXPECT_TRUE(buckets[0].min & JourneyLogger::EVENT_OTHER_ABORTED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_COMPLETED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_USER_ABORTED);
-  EXPECT_TRUE(buckets[0].min & JourneyLogger::EVENT_REQUEST_SHIPPING);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_NAME);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_PHONE);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_EMAIL);
 }
 
 // Tests that the completion status metrics based on whether the user had
@@ -1011,10 +971,6 @@ TEST(
   EXPECT_TRUE(buckets[0].min & JourneyLogger::EVENT_OTHER_ABORTED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_COMPLETED);
   EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_USER_ABORTED);
-  EXPECT_TRUE(buckets[0].min & JourneyLogger::EVENT_REQUEST_SHIPPING);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_NAME);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_PHONE);
-  EXPECT_FALSE(buckets[0].min & JourneyLogger::EVENT_REQUEST_PAYER_EMAIL);
 }
 
 // Tests that the metrics are logged correctly for two simultaneous Payment
@@ -1110,9 +1066,7 @@ TEST(JourneyLoggerTest,
   const ukm::mojom::UkmMetric* step_metric =
       ukm::TestUkmRecorder::FindMetric(entry, internal::kUKMEventsMetricName);
   ASSERT_NE(nullptr, step_metric);
-  EXPECT_EQ(JourneyLogger::EVENT_SHOWN | JourneyLogger::EVENT_PAY_CLICKED |
-                JourneyLogger::EVENT_REQUEST_SHIPPING |
-                JourneyLogger::EVENT_REQUEST_PAYER_EMAIL,
+  EXPECT_EQ(JourneyLogger::EVENT_SHOWN | JourneyLogger::EVENT_PAY_CLICKED,
             step_metric->value);
 }
 
@@ -1153,9 +1107,7 @@ TEST(JourneyLoggerTest,
   const ukm::mojom::UkmMetric* step_metric =
       ukm::TestUkmRecorder::FindMetric(entry, internal::kUKMEventsMetricName);
   ASSERT_NE(nullptr, step_metric);
-  EXPECT_EQ(JourneyLogger::EVENT_SHOWN | JourneyLogger::EVENT_REQUEST_SHIPPING |
-                JourneyLogger::EVENT_REQUEST_PAYER_EMAIL,
-            step_metric->value);
+  EXPECT_EQ(JourneyLogger::EVENT_SHOWN, step_metric->value);
 }
 
 }  // namespace payments

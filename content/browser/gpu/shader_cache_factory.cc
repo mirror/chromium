@@ -13,19 +13,22 @@ namespace {
 
 gpu::ShaderCacheFactory* factory_instance = nullptr;
 
-void CreateFactoryInstance() {
+void CreateFactoryInstance(
+    scoped_refptr<base::SingleThreadTaskRunner> cache_task_runner) {
   DCHECK(!factory_instance);
-  factory_instance = new gpu::ShaderCacheFactory();
+  factory_instance = new gpu::ShaderCacheFactory(std::move(cache_task_runner));
 }
 
 }  // namespace
 
 void InitShaderCacheFactorySingleton(
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> cache_task_runner) {
   if (task_runner->BelongsToCurrentThread()) {
-    CreateFactoryInstance();
+    CreateFactoryInstance(std::move(cache_task_runner));
   } else {
-    task_runner->PostTask(FROM_HERE, base::Bind(&CreateFactoryInstance));
+    task_runner->PostTask(FROM_HERE, base::Bind(&CreateFactoryInstance,
+                                                std::move(cache_task_runner)));
   }
 }
 

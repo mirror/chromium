@@ -4,8 +4,6 @@
 
 #include "chrome/browser/chromeos/policy/remote_commands/screenshot_delegate.h"
 
-#include <string>
-
 #include "base/memory/ptr_util.h"
 #include "base/syslog_logging.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -20,7 +18,10 @@
 
 namespace policy {
 
-ScreenshotDelegate::ScreenshotDelegate() : weak_ptr_factory_(this) {}
+ScreenshotDelegate::ScreenshotDelegate(
+    scoped_refptr<base::TaskRunner> blocking_task_runner)
+    : blocking_task_runner_(blocking_task_runner), weak_ptr_factory_(this) {
+}
 
 ScreenshotDelegate::~ScreenshotDelegate() {
 }
@@ -42,7 +43,7 @@ void ScreenshotDelegate::TakeSnapshot(
     const gfx::Rect& source_rect,
     const ui::GrabWindowSnapshotAsyncPNGCallback& callback) {
   ui::GrabWindowSnapshotAsyncPNG(
-      window, source_rect,
+      window, source_rect, blocking_task_runner_,
       base::Bind(&ScreenshotDelegate::StoreScreenshot,
                  weak_ptr_factory_.GetWeakPtr(), callback));
 }

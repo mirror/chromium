@@ -5,7 +5,7 @@
 #include "core/inspector/DevToolsEmulator.h"
 
 #include "core/events/WebInputEventConversion.h"
-#include "core/exported/WebViewImpl.h"
+#include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
@@ -59,7 +59,7 @@ static float calculateDeviceScaleAdjustment(int width,
 
 namespace blink {
 
-DevToolsEmulator::DevToolsEmulator(WebViewImpl* web_view)
+DevToolsEmulator::DevToolsEmulator(WebViewBase* web_view)
     : web_view_(web_view),
       device_metrics_enabled_(false),
       emulate_mobile_enabled_(false),
@@ -94,6 +94,7 @@ DevToolsEmulator::DevToolsEmulator(WebViewImpl* web_view)
               .GetMainFrameResizesAreOrientationChanges()),
       touch_event_emulation_enabled_(false),
       double_tap_to_zoom_enabled_(false),
+      original_touch_event_feature_detection_enabled_(false),
       original_device_supports_touch_(false),
       original_max_touch_points_(0),
       embedder_script_enabled_(
@@ -102,7 +103,7 @@ DevToolsEmulator::DevToolsEmulator(WebViewImpl* web_view)
 
 DevToolsEmulator::~DevToolsEmulator() {}
 
-DevToolsEmulator* DevToolsEmulator::Create(WebViewImpl* web_view_base) {
+DevToolsEmulator* DevToolsEmulator::Create(WebViewBase* web_view_base) {
   return new DevToolsEmulator(web_view_base);
 }
 
@@ -476,14 +477,15 @@ void DevToolsEmulator::SetTouchEventEmulationEnabled(bool enabled) {
   if (touch_event_emulation_enabled_ == enabled)
     return;
   if (!touch_event_emulation_enabled_) {
+    original_touch_event_feature_detection_enabled_ =
+        RuntimeEnabledFeatures::TouchEventFeatureDetectionEnabled();
     original_device_supports_touch_ =
         web_view_->GetPage()->GetSettings().GetDeviceSupportsTouch();
     original_max_touch_points_ =
         web_view_->GetPage()->GetSettings().GetMaxTouchPoints();
   }
-  web_view_->GetPage()
-      ->GetSettings()
-      .SetForceTouchEventFeatureDetectionForInspector(enabled);
+  RuntimeEnabledFeatures::SetTouchEventFeatureDetectionEnabled(
+      enabled ? true : original_touch_event_feature_detection_enabled_);
   if (!original_device_supports_touch_) {
     if (enabled && web_view_->MainFrameImpl()) {
       web_view_->MainFrameImpl()

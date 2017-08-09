@@ -34,9 +34,6 @@
 #error "This file requires ARC support."
 #endif
 
-NSString* const kSigninConfirmationCollectionViewId =
-    @"SigninConfirmationCollectionView";
-
 namespace {
 const CGFloat kAccountImageDimension = 64.;
 const CGFloat kHeaderViewMinHeight = 170.;
@@ -117,7 +114,6 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view.accessibilityIdentifier = kSigninConfirmationCollectionViewId;
 
   // Configure the header.
   MDCFlexibleHeaderView* headerView =

@@ -14,7 +14,6 @@
 #include <vector>
 
 #include "base/compiler_specific.h"
-#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/sequence_checker.h"
 #include "content/common/content_export.h"
@@ -129,11 +128,16 @@ class CONTENT_EXPORT ResourceScheduler {
   // Public for tests.
   static MaxRequestsForBDPRanges
   GetMaxDelayableRequestsExperimentConfigForTests() {
-    return MaxDelayableRequestsNetworkOverrideExperiment::GetConfig();
+    return GetMaxDelayableRequestsExperimentConfig();
+  }
+
+  // Public for tests
+  static net::EffectiveConnectionType
+  GetMaxDelayableRequestsExperimentMaxECTForTests() {
+    return GetMaxDelayableRequestsExperimentMaxECT();
   }
 
  private:
-  class Client;
   class RequestQueue;
   class ScheduledResourceRequest;
   struct RequestPriorityParams;
@@ -141,78 +145,7 @@ class CONTENT_EXPORT ResourceScheduler {
     bool operator()(const ScheduledResourceRequest* a,
                     const ScheduledResourceRequest* b) const;
   };
-
-  // Experiment parameters and helper functions for the throttling of delayable
-  // requests in the presence of non-delayable requests in-flight.
-  class NonDelayableThrottlesDelayableExperiment {
-   public:
-    NonDelayableThrottlesDelayableExperiment();
-
-    // This method computes the correct weight for the non-delayable requests
-    // based on the current effective connection type. If it is out of bounds,
-    // it returns 0, effectively disabling the experiment.
-    double GetCurrentNonDelayableWeight(
-        const net::NetworkQualityEstimator* network_quality_estimator) const;
-
-   private:
-    // The maximum effective connection type for which the experiment should be
-    // enabled.
-    const net::EffectiveConnectionType max_effective_connection_type_;
-
-    // The weight of a non-delayable request when counting the effective number
-    // of non-delayable requests in-flight.
-    const double non_delayable_weight_;
-  };
-
-  // Experiment parameters and helper functions for varying the maximum number
-  // of delayable requests in-flight based on the observed bandwidth delay
-  // product (BDP).
-  class MaxDelayableRequestsNetworkOverrideExperiment {
-   public:
-    MaxDelayableRequestsNetworkOverrideExperiment();
-
-    ~MaxDelayableRequestsNetworkOverrideExperiment();
-
-    // Returns the maximum delayable requests based on the current
-    // value of the bandwidth delay product (BDP). It falls back to the default
-    // limit on three conditions:
-    // 1. |network_quality_estimator| is null.
-    // 2. The current effective connection type is
-    // net::EFFECTIVE_CONNECTION_TYPE_OFFLINE or
-    // net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN.
-    // 3. The current value of the BDP is not in any of the ranges in
-    // |max_requests_for_bdp_ranges_|.
-    size_t GetMaxDelayableRequests(
-        const net::NetworkQualityEstimator* network_quality_estimator) const;
-
-   private:
-    // Friend for tests.
-    friend class ResourceScheduler;
-
-    // Reads experiment parameters and creates a vector  of
-    // |MaxRequestsForBDPRange| to populate |max_requests_for_bdp_ranges_|. It
-    // looks for configuration parameters with sequential numeric suffixes, and
-    // stops looking after the first failure to find an experimetal parameter.
-    // The BDP values are specified in kilobits. A sample configuration is given
-    // below:
-    // "MaxBDPKbits1": "150",
-    // "MaxDelayableRequests1": "2",
-    // "MaxBDPKbits2": "200",
-    // "MaxDelayableRequests2": "4",
-    // "MaxEffectiveConnectionType": "3G"
-    // This config implies that when BDP <= 150, then the maximum number of
-    // non-delayable requests should be limited to 2. When BDP > 150 and <= 200,
-    // it should be limited to 4. For BDP > 200, the default value should be
-    // used.
-    static MaxRequestsForBDPRanges GetConfig();
-
-    // The number of delayable requests in-flight for different ranges of the
-    // bandwidth delay product (BDP).
-    const MaxRequestsForBDPRanges max_requests_for_bdp_ranges_;
-
-    // The maximum ECT for which the experiment should be enabled.
-    const net::EffectiveConnectionType max_effective_connection_type_;
-  };
+  class Client;
 
   typedef int64_t ClientId;
   typedef std::map<ClientId, Client*> ClientMap;
@@ -227,6 +160,36 @@ class CONTENT_EXPORT ResourceScheduler {
   // Returns the client for the given |child_id| and |route_id| combo.
   Client* GetClient(int child_id, int route_id);
 
+  // Reads experiment parameters and creates a vector  of
+  // |MaxRequestsForBDPRange| with pairs of a BDP threshold and the number of
+  // delayable requests. It looks for configuration parameters with sequential
+  // numeric suffixes, and stops looking after the first failure to find an
+  // experimetal parameter. The BDP values are specified in kilobits. A sample
+  // configuration is given below: "MaxBDPKbits1" = "150";
+  // "MaxDelayableRequests1" = "2"
+  // "MaxBDPKbits2" = "200";
+  // "MaxDelayableRequests2" = "4"
+  static MaxRequestsForBDPRanges GetMaxDelayableRequestsExperimentConfig();
+
+  // Reads the experiment parameters to determine the maximum effective
+  // connection type for which the experiment should be run.
+  static net::EffectiveConnectionType GetMaxDelayableRequestsExperimentMaxECT();
+
+  // This function computes the maximum number of delayable requests to allow
+  // based on the configuration of the experiment
+  // |kMaxDelayableRequestsNetworkOverride| and the current effective connection
+  // type. Based on the observed BDP, the maximum number of delayable requests
+  // allowed in-flight is chosen based on the experiment parameters. If the
+  // conditions for overriding the number of requests are not met, fall back
+  // to the default value, which is |kDefaultMaxNumDelayableRequestsPerClient|.
+  size_t ComputeMaxDelayableRequestsNetworkOverride(
+      const net::NetworkQualityEstimator* network_quality_estimator) const;
+
+  // Returns the value of the number of delayable requests for the first
+  // |MaxRequestsForBDPRange| entry for which the value of |max_bdp_kbits| is
+  // greater than or equal to the input BDP value.
+  int GetNumberOfDelayableRequestsForBDP(int64_t bdp_in_kbits) const;
+
   ClientMap client_map_;
   RequestSet unowned_requests_;
 
@@ -239,13 +202,13 @@ class CONTENT_EXPORT ResourceScheduler {
   bool yielding_scheduler_enabled_;
   int max_requests_before_yielding_;
 
-  const MaxDelayableRequestsNetworkOverrideExperiment
-      max_delayable_requests_network_override_experiment_;
+  // The BDP ranges for which the maximum delayable requests in flight must be
+  // overridden.
+  const MaxRequestsForBDPRanges max_requests_for_bdp_ranges_;
 
-  // Parameters for the throttling of non-delayable requests in the
-  // presence of delayable requests.
-  const NonDelayableThrottlesDelayableExperiment
-      non_delayable_throttles_delayable_experiment_;
+  // The maximum ECT for which the maximum delayable requests in flight should
+  // be overridden.
+  const net::EffectiveConnectionType max_delayable_requests_threshold_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

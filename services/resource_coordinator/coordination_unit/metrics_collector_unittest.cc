@@ -33,39 +33,52 @@ TEST_F(MetricsCollectorTest, FromBackgroundedToFirstAudioStartsUMA) {
                                std::string());
   CoordinationUnitID frame_cu_id(CoordinationUnitType::kFrame, std::string());
 
-  auto web_contents_cu = CreateCoordinationUnit(tab_cu_id);
-  auto frame_cu = CreateCoordinationUnit(frame_cu_id);
-  coordination_unit_manager().OnCoordinationUnitCreated(web_contents_cu.get());
-  coordination_unit_manager().OnCoordinationUnitCreated(frame_cu.get());
+  auto tab_coordination_unit = CreateCoordinationUnit(tab_cu_id);
+  auto frame_coordination_unit = CreateCoordinationUnit(frame_cu_id);
+  coordination_unit_manager().OnCoordinationUnitCreated(
+      tab_coordination_unit.get());
+  coordination_unit_manager().OnCoordinationUnitCreated(
+      frame_coordination_unit.get());
 
-  web_contents_cu->AddChild(frame_cu->id());
+  tab_coordination_unit->AddChild(frame_coordination_unit->id());
 
-  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, true);
-  frame_cu->SetProperty(mojom::PropertyType::kAudible, true);
+  tab_coordination_unit->SetProperty(mojom::PropertyType::kVisible,
+                                     base::MakeUnique<base::Value>(true));
+  frame_coordination_unit->SetProperty(mojom::PropertyType::kAudible,
+                                       base::MakeUnique<base::Value>(true));
   // The tab is not backgrounded, thus no metrics recorded.
   histogram_tester_.ExpectTotalCount(kTabFromBackgroundedToFirstAudioStartsUMA,
                                      0);
-  frame_cu->SetProperty(mojom::PropertyType::kAudible, false);
+  frame_coordination_unit->SetProperty(mojom::PropertyType::kAudible,
+                                       base::MakeUnique<base::Value>(false));
 
-  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, false);
-  frame_cu->SetProperty(mojom::PropertyType::kAudible, true);
+  tab_coordination_unit->SetProperty(mojom::PropertyType::kVisible,
+                                     base::MakeUnique<base::Value>(false));
+  frame_coordination_unit->SetProperty(mojom::PropertyType::kAudible,
+                                       base::MakeUnique<base::Value>(true));
   // The tab was recently audible, thus no metrics recorded.
   histogram_tester_.ExpectTotalCount(kTabFromBackgroundedToFirstAudioStartsUMA,
                                      0);
-  frame_cu->SetProperty(mojom::PropertyType::kAudible, false);
+  frame_coordination_unit->SetProperty(mojom::PropertyType::kAudible,
+                                       base::MakeUnique<base::Value>(false));
 
   AdvanceClock(base::TimeDelta::FromMinutes(1));
-  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, true);
-  frame_cu->SetProperty(mojom::PropertyType::kAudible, true);
+  tab_coordination_unit->SetProperty(mojom::PropertyType::kVisible,
+                                     base::MakeUnique<base::Value>(true));
+  frame_coordination_unit->SetProperty(mojom::PropertyType::kAudible,
+                                       base::MakeUnique<base::Value>(true));
   // The tab was not recently audible but it is not backgrounded, thus no
   // metrics recorded.
   histogram_tester_.ExpectTotalCount(kTabFromBackgroundedToFirstAudioStartsUMA,
                                      0);
-  frame_cu->SetProperty(mojom::PropertyType::kAudible, false);
+  frame_coordination_unit->SetProperty(mojom::PropertyType::kAudible,
+                                       base::MakeUnique<base::Value>(false));
 
-  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, false);
+  tab_coordination_unit->SetProperty(mojom::PropertyType::kVisible,
+                                     base::MakeUnique<base::Value>(false));
   AdvanceClock(base::TimeDelta::FromSeconds(61));
-  frame_cu->SetProperty(mojom::PropertyType::kAudible, true);
+  frame_coordination_unit->SetProperty(mojom::PropertyType::kAudible,
+                                       base::MakeUnique<base::Value>(true));
   // The tab was not recently audible and it is backgrounded, thus metrics
   // recorded.
   histogram_tester_.ExpectTotalCount(kTabFromBackgroundedToFirstAudioStartsUMA,
@@ -77,70 +90,48 @@ TEST_F(MetricsCollectorTest, ReportMetricsOneTimeOnlyPerBackgrounded) {
                                std::string());
   CoordinationUnitID frame_cu_id(CoordinationUnitType::kFrame, std::string());
 
-  auto web_contents_cu = CreateCoordinationUnit(tab_cu_id);
-  auto frame_cu = CreateCoordinationUnit(frame_cu_id);
-  coordination_unit_manager().OnCoordinationUnitCreated(web_contents_cu.get());
-  coordination_unit_manager().OnCoordinationUnitCreated(frame_cu.get());
+  auto tab_coordination_unit = CreateCoordinationUnit(tab_cu_id);
+  auto frame_coordination_unit = CreateCoordinationUnit(frame_cu_id);
+  coordination_unit_manager().OnCoordinationUnitCreated(
+      tab_coordination_unit.get());
+  coordination_unit_manager().OnCoordinationUnitCreated(
+      frame_coordination_unit.get());
 
-  web_contents_cu->AddChild(frame_cu->id());
+  tab_coordination_unit->AddChild(frame_coordination_unit->id());
 
-  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, false);
+  tab_coordination_unit->SetProperty(mojom::PropertyType::kVisible,
+                                     base::MakeUnique<base::Value>(false));
 
-  frame_cu->SetProperty(mojom::PropertyType::kAudible, false);
+  frame_coordination_unit->SetProperty(mojom::PropertyType::kAudible,
+                                       base::MakeUnique<base::Value>(false));
   AdvanceClock(base::TimeDelta::FromSeconds(61));
-  frame_cu->SetProperty(mojom::PropertyType::kAudible, true);
+  frame_coordination_unit->SetProperty(mojom::PropertyType::kAudible,
+                                       base::MakeUnique<base::Value>(true));
   // The tab was not recently audible and it is backgrounded, thus metrics
   // recorded.
   histogram_tester_.ExpectTotalCount(kTabFromBackgroundedToFirstAudioStartsUMA,
                                      1);
 
-  frame_cu->SetProperty(mojom::PropertyType::kAudible, false);
+  frame_coordination_unit->SetProperty(mojom::PropertyType::kAudible,
+                                       base::MakeUnique<base::Value>(false));
   AdvanceClock(base::TimeDelta::FromSeconds(61));
-  frame_cu->SetProperty(mojom::PropertyType::kAudible, true);
+  frame_coordination_unit->SetProperty(mojom::PropertyType::kAudible,
+                                       base::MakeUnique<base::Value>(true));
   // Only record the metrics once.
   histogram_tester_.ExpectTotalCount(kTabFromBackgroundedToFirstAudioStartsUMA,
                                      1);
 
-  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, true);
-  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, false);
-  frame_cu->SetProperty(mojom::PropertyType::kAudible, false);
+  tab_coordination_unit->SetProperty(mojom::PropertyType::kVisible,
+                                     base::MakeUnique<base::Value>(true));
+  tab_coordination_unit->SetProperty(mojom::PropertyType::kVisible,
+                                     base::MakeUnique<base::Value>(false));
+  frame_coordination_unit->SetProperty(mojom::PropertyType::kAudible,
+                                       base::MakeUnique<base::Value>(false));
   AdvanceClock(base::TimeDelta::FromSeconds(61));
-  frame_cu->SetProperty(mojom::PropertyType::kAudible, true);
+  frame_coordination_unit->SetProperty(mojom::PropertyType::kAudible,
+                                       base::MakeUnique<base::Value>(true));
   // The tab becomes visible and then invisible again, thus metrics recorded.
   histogram_tester_.ExpectTotalCount(kTabFromBackgroundedToFirstAudioStartsUMA,
-                                     2);
-}
-
-TEST_F(MetricsCollectorTest, FromBackgroundedToFirstTitleUpdatedUMA) {
-  CoordinationUnitID tab_cu_id(CoordinationUnitType::kWebContents,
-                               std::string());
-  CoordinationUnitID frame_cu_id(CoordinationUnitType::kFrame, std::string());
-
-  auto web_contents_cu = CreateCoordinationUnit(tab_cu_id);
-  coordination_unit_manager().OnCoordinationUnitCreated(web_contents_cu.get());
-
-  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, true);
-  web_contents_cu->SendEvent(mojom::Event::kTitleUpdated);
-  // The tab is not backgrounded, thus no metrics recorded.
-  histogram_tester_.ExpectTotalCount(kTabFromBackgroundedToFirstTitleUpdatedUMA,
-                                     0);
-
-  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, false);
-  web_contents_cu->SendEvent(mojom::Event::kTitleUpdated);
-  // The tab is backgrounded, thus metrics recorded.
-  histogram_tester_.ExpectTotalCount(kTabFromBackgroundedToFirstTitleUpdatedUMA,
-                                     1);
-  web_contents_cu->SendEvent(mojom::Event::kTitleUpdated);
-  // Metrics should only be recorded once per background period, thus metrics
-  // not recorded.
-  histogram_tester_.ExpectTotalCount(kTabFromBackgroundedToFirstTitleUpdatedUMA,
-                                     1);
-
-  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, true);
-  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, false);
-  web_contents_cu->SendEvent(mojom::Event::kTitleUpdated);
-  // The tab is backgrounded from foregrounded, thus metrics recorded.
-  histogram_tester_.ExpectTotalCount(kTabFromBackgroundedToFirstTitleUpdatedUMA,
                                      2);
 }
 

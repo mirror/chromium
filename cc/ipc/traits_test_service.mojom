@@ -5,6 +5,7 @@
 module cc.mojom;
 
 import "cc/ipc/begin_frame_args.mojom";
+import "cc/ipc/compositor_frame.mojom";
 import "cc/ipc/compositor_frame_metadata.mojom";
 import "cc/ipc/copy_output_request.mojom";
 import "cc/ipc/copy_output_result.mojom";
@@ -12,6 +13,7 @@ import "cc/ipc/filter_operation.mojom";
 import "cc/ipc/filter_operations.mojom";
 import "cc/ipc/quads.mojom";
 import "cc/ipc/render_pass.mojom";
+import "cc/ipc/returned_resource.mojom";
 import "cc/ipc/selection.mojom";
 import "cc/ipc/shared_quad_state.mojom";
 import "cc/ipc/surface_id.mojom";
@@ -27,6 +29,9 @@ interface TraitsTestService {
 
   [Sync]
   EchoBeginFrameAck(BeginFrameAck b) => (BeginFrameAck pass);
+
+  [Sync]
+  EchoCompositorFrame(CompositorFrame c) => (CompositorFrame pass);
 
   [Sync]
   EchoCompositorFrameMetadata(CompositorFrameMetadata c) =>
@@ -46,6 +51,9 @@ interface TraitsTestService {
 
   [Sync]
   EchoRenderPass(RenderPass r) => (RenderPass pass);
+
+  [Sync]
+  EchoReturnedResource(ReturnedResource r) => (ReturnedResource pass);
 
   [Sync]
   EchoSelection(Selection s) => (Selection pass);

@@ -4,7 +4,7 @@
 
 (function() {
 'use strict';
-const manager = /** @type {extensions.Manager} */ (
+var manager = /** @type {extensions.Manager} */ (
     document.querySelector('extensions-manager'));
 manager.readyPromiseResolver.promise.then(function() {
   extensions.Service.getInstance().managerReady(manager);

@@ -76,10 +76,6 @@ WebViewEvents.prototype.__proto__ = GuestViewEvents.prototype;
 // dictionary augments |GuestViewEvents.EVENTS| in guest_view_events.js. See the
 // documentation there for details.
 WebViewEvents.EVENTS = {
-  'audiostatechanged': {
-    evt: CreateEvent('webViewInternal.onAudioStateChanged'),
-    fields: ['audible']
-  },
   'close': {
     evt: CreateEvent('webViewInternal.onClose')
   },

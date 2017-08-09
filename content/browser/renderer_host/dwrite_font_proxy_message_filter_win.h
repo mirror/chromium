@@ -14,7 +14,6 @@
 
 #include "base/location.h"
 #include "base/macros.h"
-#include "base/memory/ref_counted.h"
 #include "base/strings/string16.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/browser_message_filter.h"
@@ -23,10 +22,6 @@
 
 struct DWriteFontStyle;
 struct MapCharactersResult;
-
-namespace base {
-class SequencedTaskRunner;
-}
 
 namespace content {
 
@@ -40,7 +35,8 @@ class CONTENT_EXPORT DWriteFontProxyMessageFilter
 
   // BrowserMessageFilter:
   bool OnMessageReceived(const IPC::Message& message) override;
-  base::TaskRunner* OverrideTaskRunnerForMessage(const IPC::Message&) override;
+  void OverrideThreadForMessage(const IPC::Message& message,
+                                content::BrowserThread::ID* thread) override;
 
   void SetWindowsFontsPathForTesting(base::string16 path);
 
@@ -84,7 +80,6 @@ class CONTENT_EXPORT DWriteFontProxyMessageFilter
   Microsoft::WRL::ComPtr<IDWriteFontFallback> font_fallback_;
   base::string16 windows_fonts_path_;
   CustomFontFileLoadingMode custom_font_file_loading_mode_;
-  scoped_refptr<base::SequencedTaskRunner> dwrite_io_task_runner_;
 
   // Temp code to help track down crbug.com/561873
   std::vector<uint32_t> last_resort_fonts_;

@@ -35,7 +35,11 @@ PlatformSensorFusion::PlatformSensorFusion(
 }
 
 mojom::ReportingMode PlatformSensorFusion::GetReportingMode() {
-  return reporting_mode_;
+  for (const auto& sensor : source_sensors_) {
+    if (sensor->GetReportingMode() == mojom::ReportingMode::ON_CHANGE)
+      return mojom::ReportingMode::ON_CHANGE;
+  }
+  return mojom::ReportingMode::CONTINUOUS;
 }
 
 PlatformSensorConfiguration PlatformSensorFusion::GetDefaultConfiguration() {
@@ -90,8 +94,7 @@ bool PlatformSensorFusion::CheckSensorConfiguration(
 
 void PlatformSensorFusion::OnSensorReadingChanged(mojom::SensorType type) {
   SensorReading reading;
-  reading.raw.timestamp =
-      (base::TimeTicks::Now() - base::TimeTicks()).InSecondsF();
+  reading.timestamp = (base::TimeTicks::Now() - base::TimeTicks()).InSecondsF();
 
   if (!fusion_algorithm_->GetFusedData(type, &reading))
     return;
@@ -147,13 +150,8 @@ void PlatformSensorFusion::CreateSensorSucceeded() {
   if (num_sensors_created_ != source_sensors_.size())
     return;
 
-  reporting_mode_ = mojom::ReportingMode::CONTINUOUS;
-
-  for (const auto& sensor : source_sensors_) {
+  for (const auto& sensor : source_sensors_)
     sensor->AddClient(this);
-    if (sensor->GetReportingMode() == mojom::ReportingMode::ON_CHANGE)
-      reporting_mode_ = mojom::ReportingMode::ON_CHANGE;
-  }
 
   fusion_algorithm_->set_fusion_sensor(this);
 

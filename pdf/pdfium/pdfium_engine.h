@@ -339,8 +339,13 @@ class PDFiumEngine : public PDFEngine,
   // the plugin's text selection.
   void SetFormSelectedText(FPDF_FORMHANDLE form_handle, FPDF_PAGE page);
 
-  // Given |point|, returns which page and character location it's closest to,
-  // as well as extra information about objects at that point.
+  // Given a mouse event, returns which page and character location it's closest
+  // to.
+  PDFiumPage::Area GetCharIndex(const pp::MouseInputEvent& event,
+                                int* page_index,
+                                int* char_index,
+                                int* form_type,
+                                PDFiumPage::LinkTarget* target);
   PDFiumPage::Area GetCharIndex(const pp::Point& point,
                                 int* page_index,
                                 int* char_index,

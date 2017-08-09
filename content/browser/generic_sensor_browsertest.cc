@@ -106,9 +106,9 @@ class FakeAmbientLightSensor : public device::mojom::Sensor {
             GetBufferOffset());
 
     device::SensorReading reading;
-    reading.als.timestamp =
+    reading.timestamp =
         (base::TimeTicks::Now() - base::TimeTicks()).InSecondsF();
-    reading.als.value = 50;
+    reading.values[0] = 50;
 
     device::SensorReadingSharedBuffer* buffer =
         static_cast<device::SensorReadingSharedBuffer*>(shared_buffer.get());

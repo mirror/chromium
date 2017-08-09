@@ -38,7 +38,6 @@ namespace blink {
 class FontData;
 class FontDescription;
 class FontSelectorClient;
-class GenericFontFamilySettings;
 
 class PLATFORM_EXPORT FontSelector : public FontCacheClient {
  public:
@@ -61,12 +60,6 @@ class PLATFORM_EXPORT FontSelector : public FontCacheClient {
 
   virtual void RegisterForInvalidationCallbacks(FontSelectorClient*) = 0;
   virtual void UnregisterForInvalidationCallbacks(FontSelectorClient*) = 0;
-
- protected:
-  static AtomicString FamilyNameFromSettings(
-      const GenericFontFamilySettings&,
-      const FontDescription&,
-      const AtomicString& generic_family_name);
 };
 
 }  // namespace blink

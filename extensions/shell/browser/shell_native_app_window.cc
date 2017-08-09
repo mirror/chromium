@@ -52,6 +52,7 @@ void ShellNativeAppWindow::ShowInactive() {
 }
 
 void ShellNativeAppWindow::Close() {
+  DesktopController::instance()->RemoveAppWindow(app_window_);
   app_window_->OnNativeClose();
 }
 
@@ -167,6 +168,16 @@ void ShellNativeAppWindow::ShowWithApp() {
 
 void ShellNativeAppWindow::HideWithApp() {
   NOTIMPLEMENTED();
+}
+
+gfx::Size ShellNativeAppWindow::GetContentMinimumSize() const {
+  // Content fills the desktop and cannot be resized.
+  return DesktopController::instance()->GetWindowSize();
+}
+
+gfx::Size ShellNativeAppWindow::GetContentMaximumSize() const {
+  // Content fills the desktop and cannot be resized.
+  return DesktopController::instance()->GetWindowSize();
 }
 
 void ShellNativeAppWindow::SetContentSizeConstraints(

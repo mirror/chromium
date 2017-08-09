@@ -126,7 +126,7 @@ suite('SiteDetails', function() {
           {
             embeddingOrigin: 'https://foo.com:443',
             origin: 'https://foo.com:443',
-            setting: settings.ContentSetting.ASK,
+            setting: settings.ContentSetting.BLOCK,
             source: settings.SiteSettingSource.POLICY,
           },
         ],
@@ -272,19 +272,20 @@ suite('SiteDetails', function() {
         .then(() => {
           // Make sure initial state is as expected.
           assertEquals(
-              settings.ContentSetting.ASK, siteDetailsPermission.site.setting);
+              settings.ContentSetting.BLOCK,
+              siteDetailsPermission.site.setting);
           assertEquals(
               settings.SiteSettingSource.POLICY,
               siteDetailsPermission.site.source);
           assertEquals(
-              settings.ContentSetting.ASK,
+              settings.ContentSetting.BLOCK,
               siteDetailsPermission.$.permission.value);
 
           // Set new prefs and make sure only that permission is updated.
           var newException = {
             embeddingOrigin: testElement.origin,
             origin: testElement.origin,
-            setting: settings.ContentSetting.BLOCK,
+            setting: settings.ContentSetting.ASK,
             source: settings.SiteSettingSource.DEFAULT,
           };
           browserProxy.resetResolver('getOriginPermissions');
@@ -300,8 +301,7 @@ suite('SiteDetails', function() {
 
           // Check |siteDetailsPermission| now shows the new permission value.
           assertEquals(
-              settings.ContentSetting.BLOCK,
-              siteDetailsPermission.site.setting);
+              settings.ContentSetting.ASK, siteDetailsPermission.site.setting);
           assertEquals(
               settings.SiteSettingSource.DEFAULT,
               siteDetailsPermission.site.source);

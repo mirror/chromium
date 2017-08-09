@@ -27,10 +27,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 /**
  * @implements {UI.Searchable}
  * @implements {SDK.SDKModelObserver<!SDK.NetworkManager>}
+ * @unrestricted
  */
 Network.NetworkLogView = class extends UI.VBox {
   /**
@@ -43,26 +43,14 @@ Network.NetworkLogView = class extends UI.VBox {
     this.setMinimumSize(50, 64);
     this.registerRequiredCSS('network/networkLogView.css');
 
-    this.element.id = 'network-container';
-
     this._networkHideDataURLSetting = Common.settings.createSetting('networkHideDataURL', false);
     this._networkResourceTypeFiltersSetting = Common.settings.createSetting('networkResourceTypeFilters', {});
 
+    this._filterBar = filterBar;
     this._rawRowHeight = 0;
     this._progressBarContainer = progressBarContainer;
     this._networkLogLargeRowsSetting = networkLogLargeRowsSetting;
     this._networkLogLargeRowsSetting.addChangeListener(updateRowHeight.bind(this), this);
-
-    /**
-     * @this {Network.NetworkLogView}
-     */
-    function updateRowHeight() {
-      this._rawRowHeight = !!this._networkLogLargeRowsSetting.get() ? 41 : 21;
-      this._rowHeight = this._computeRowHeight();
-    }
-    this._rawRowHeight = 0;
-    this._rowHeight = 0;
-    updateRowHeight.call(this);
 
     /** @type {!Network.NetworkTransferTimeCalculator} */
     this._timeCalculator = new Network.NetworkTransferTimeCalculator();
@@ -70,9 +58,18 @@ Network.NetworkLogView = class extends UI.VBox {
     this._durationCalculator = new Network.NetworkTransferDurationCalculator();
     this._calculator = this._timeCalculator;
 
+    /**
+     * @this {Network.NetworkLogView}
+     */
+    function updateRowHeight() {
+      /** @type {number} */
+      this._rawRowHeight = !!this._networkLogLargeRowsSetting.get() ? 41 : 21;
+      this._updateRowHeight();
+    }
+    updateRowHeight.call(this);
+
     this._columns = new Network.NetworkLogViewColumns(
         this, this._timeCalculator, this._durationCalculator, networkLogLargeRowsSetting);
-    this._columns.show(this.element);
 
     /** @type {!Set<!SDK.NetworkRequest>} */
     this._staleRequests = new Set();
@@ -89,14 +86,6 @@ Network.NetworkLogView = class extends UI.VBox {
     this._timeFilter = null;
     /** @type {?Network.NetworkNode} */
     this._hoveredNode = null;
-    /** @type {?Element} */
-    this._recordingHint = null;
-    /** @type {?number} */
-    this._refreshRequestId = null;
-    /** @type {?RegExp} */
-    this._searchRegex = null;
-    /** @type {?Network.NetworkRequestNode} */
-    this._highlightedNode = null;
 
     this._currentMatchedRequestNode = null;
     this._currentMatchedRequestIndex = -1;
@@ -105,7 +94,6 @@ Network.NetworkLogView = class extends UI.VBox {
     this.badgePool = new ProductRegistry.BadgePool();
 
     this._recording = false;
-    this._needsRefresh = false;
 
     this._headerHeight = 0;
 
@@ -116,30 +104,9 @@ Network.NetworkLogView = class extends UI.VBox {
     /** @type {?Network.GroupLookupInterface} */
     this._activeGroupLookup = null;
 
-    this._textFilterUI = new UI.TextFilterUI(true);
-    this._textFilterUI.addEventListener(UI.FilterUI.Events.FilterChanged, this._filterChanged, this);
-    filterBar.addFilter(this._textFilterUI);
-
-    this._dataURLFilterUI = new UI.CheckboxFilterUI(
-        'hide-data-url', Common.UIString('Hide data URLs'), true, this._networkHideDataURLSetting);
-    this._dataURLFilterUI.addEventListener(UI.FilterUI.Events.FilterChanged, this._filterChanged.bind(this), this);
-    filterBar.addFilter(this._dataURLFilterUI);
-
-    var filterItems = Object.values(Common.resourceCategories)
-                          .map(category => ({name: category.title, label: category.shortTitle, title: category.title}));
-    this._resourceCategoryFilterUI = new UI.NamedBitSetFilterUI(filterItems, this._networkResourceTypeFiltersSetting);
-    this._resourceCategoryFilterUI.addEventListener(
-        UI.FilterUI.Events.FilterChanged, this._filterChanged.bind(this), this);
-    filterBar.addFilter(this._resourceCategoryFilterUI);
-
-    this._suggestionBuilder = new Network.FilterSuggestionBuilder(Network.NetworkLogView._searchKeys);
+    this._addFilters();
     this._resetSuggestionBuilder();
-
-    this._dataGrid = this._columns.dataGrid();
-    this._setupDataGrid();
-    this._columns.sortByCurrentColumn();
-
-    this._summaryBarElement = this.element.createChild('div', 'network-summary-bar');
+    this._initializeView();
 
     new UI.DropTarget(
         this.element, [UI.DropTarget.Types.Files], Common.UIString('Drop HAR files here'), this._handleDrop.bind(this));
@@ -470,11 +437,8 @@ Network.NetworkLogView = class extends UI.VBox {
     this._invalidateAllItems();
   }
 
-  /**
-   * @return {number}
-   */
-  _computeRowHeight() {
-    return Math.floor(this._rawRowHeight * window.devicePixelRatio) / window.devicePixelRatio;
+  _updateRowHeight() {
+    this._rowHeight = Math.floor(this._rawRowHeight * window.devicePixelRatio) / window.devicePixelRatio;
   }
 
   /**
@@ -551,7 +515,30 @@ Network.NetworkLogView = class extends UI.VBox {
       this._dataGrid.selectedNode.deselect();
   }
 
+  _addFilters() {
+    this._textFilterUI = new UI.TextFilterUI(true);
+    this._textFilterUI.addEventListener(UI.FilterUI.Events.FilterChanged, this._filterChanged, this);
+    this._filterBar.addFilter(this._textFilterUI);
+
+    var dataURLSetting = this._networkHideDataURLSetting;
+    this._dataURLFilterUI =
+        new UI.CheckboxFilterUI('hide-data-url', Common.UIString('Hide data URLs'), true, dataURLSetting);
+    this._dataURLFilterUI.addEventListener(UI.FilterUI.Events.FilterChanged, this._filterChanged.bind(this), this);
+    this._filterBar.addFilter(this._dataURLFilterUI);
+
+    var filterItems = [];
+    for (var categoryId in Common.resourceCategories) {
+      var category = Common.resourceCategories[categoryId];
+      filterItems.push({name: category.title, label: category.shortTitle, title: category.title});
+    }
+    this._resourceCategoryFilterUI = new UI.NamedBitSetFilterUI(filterItems, this._networkResourceTypeFiltersSetting);
+    this._resourceCategoryFilterUI.addEventListener(
+        UI.FilterUI.Events.FilterChanged, this._filterChanged.bind(this), this);
+    this._filterBar.addFilter(this._resourceCategoryFilterUI);
+  }
+
   _resetSuggestionBuilder() {
+    this._suggestionBuilder = new Network.FilterSuggestionBuilder(Network.NetworkLogView._searchKeys);
     this._suggestionBuilder.addItem(Network.NetworkLogView.FilterType.Is, Network.NetworkLogView.IsFilterType.Running);
     this._suggestionBuilder.addItem(
         Network.NetworkLogView.FilterType.Is, Network.NetworkLogView.IsFilterType.FromCache);
@@ -568,6 +555,17 @@ Network.NetworkLogView = class extends UI.VBox {
     this.removeAllNodeHighlights();
     this._parseFilterQuery(this._textFilterUI.value());
     this._filterRequests();
+  }
+
+  _initializeView() {
+    this.element.id = 'network-container';
+    this._setupDataGrid();
+
+    this._columns.show(this.element);
+
+    this._summaryBarElement = this.element.createChild('div', 'network-summary-bar');
+
+    this._columns.sortByCurrentColumn();
   }
 
   _showRecordingHint() {
@@ -594,7 +592,7 @@ Network.NetworkLogView = class extends UI.VBox {
   _hideRecordingHint() {
     if (this._recordingHint)
       this._recordingHint.remove();
-    this._recordingHint = null;
+    delete this._recordingHint;
   }
 
   /**
@@ -612,6 +610,8 @@ Network.NetworkLogView = class extends UI.VBox {
   }
 
   _setupDataGrid() {
+    /** @type {!DataGrid.SortableDataGrid<!Network.NetworkNode>} */
+    this._dataGrid = this._columns.dataGrid();
     this._dataGrid.setRowContextMenuCallback((contextMenu, node) => {
       var request = node.request();
       if (request)
@@ -624,7 +624,6 @@ Network.NetworkLogView = class extends UI.VBox {
     this._dataGrid.element.addEventListener('mousedown', this._dataGridMouseDown.bind(this), true);
     this._dataGrid.element.addEventListener('mousemove', this._dataGridMouseMove.bind(this), true);
     this._dataGrid.element.addEventListener('mouseleave', () => this._setHoveredNode(null), true);
-    return this._dataGrid;
   }
 
   /**
@@ -867,7 +866,7 @@ Network.NetworkLogView = class extends UI.VBox {
    * @override
    */
   onResize() {
-    this._rowHeight = this._computeRowHeight();
+    this._updateRowHeight();
   }
 
   /**
@@ -886,7 +885,7 @@ Network.NetworkLogView = class extends UI.VBox {
 
     if (this._refreshRequestId) {
       this.element.window().cancelAnimationFrame(this._refreshRequestId);
-      this._refreshRequestId = null;
+      delete this._refreshRequestId;
     }
 
     this.removeAllNodeHighlights();
@@ -991,6 +990,7 @@ Network.NetworkLogView = class extends UI.VBox {
   }
 
   _reset() {
+    this._requestWithHighlightedInitiators = null;
     this.dispatchEventToListeners(Network.NetworkLogView.Events.RequestSelected, null);
 
     this._clearSearchMatchedList();
@@ -1585,7 +1585,7 @@ Network.NetworkLogView = class extends UI.VBox {
    * @override
    */
   searchCanceled() {
-    this._searchRegex = null;
+    delete this._searchRegex;
     this._clearSearchMatchedList();
     this.dispatchEventToListeners(Network.NetworkLogView.Events.SearchCountUpdated, 0);
   }
@@ -1597,7 +1597,7 @@ Network.NetworkLogView = class extends UI.VBox {
     this.removeAllNodeHighlights();
 
     var node = request[Network.NetworkLogView._networkNodeSymbol];
-    if (node && node.attached()) {
+    if (node && this.attached) {
       node.reveal();
       this._highlightNode(node);
     }
@@ -1606,7 +1606,7 @@ Network.NetworkLogView = class extends UI.VBox {
   removeAllNodeHighlights() {
     if (this._highlightedNode) {
       this._highlightedNode.element().classList.remove('highlighted-row');
-      this._highlightedNode = null;
+      delete this._highlightedNode;
     }
   }
 

@@ -354,7 +354,6 @@ AXObject::AXObject(AXObjectCacheImpl& ax_object_cache)
       cached_has_inherited_presentational_role_(false),
       cached_is_presentational_child_(false),
       cached_ancestor_exposes_active_descendant_(false),
-      cached_is_editable_root_(false),
       cached_live_region_root_(nullptr),
       ax_object_cache_(&ax_object_cache) {
   ++number_of_live_ax_objects_;
@@ -683,14 +682,11 @@ void AXObject::UpdateCachedAttributeValuesIfNeeded() const {
   cached_is_presentational_child_ =
       (AncestorForWhichThisIsAPresentationalChild() != 0);
   cached_is_ignored_ = ComputeAccessibilityIsIgnored();
-  cached_is_editable_root_ =
-      GetNode() ? IsNativeTextControl() || IsRootEditableElement(*GetNode())
-                : false;
   cached_live_region_root_ =
       IsLiveRegion()
           ? const_cast<AXObject*>(this)
           : (ParentObjectIfExists() ? ParentObjectIfExists()->LiveRegionRoot()
-                                    : nullptr);
+                                    : 0);
   cached_ancestor_exposes_active_descendant_ =
       ComputeAncestorExposesActiveDescendant();
 }
@@ -1464,11 +1460,6 @@ int AXObject::IndexInParent() const {
 bool AXObject::IsLiveRegion() const {
   const AtomicString& live_region = LiveRegionStatus();
   return !live_region.IsEmpty() && !EqualIgnoringASCIICase(live_region, "off");
-}
-
-bool AXObject::IsEditableRoot() const {
-  UpdateCachedAttributeValuesIfNeeded();
-  return cached_is_editable_root_;
 }
 
 AXObject* AXObject::LiveRegionRoot() const {

@@ -277,10 +277,7 @@ void DisplayScheduler::OnBeginFrameSourcePausedChanged(bool paused) {
     NOTIMPLEMENTED();
 }
 
-void DisplayScheduler::OnFirstSurfaceActivation(
-    const SurfaceInfo& surface_info) {}
-
-void DisplayScheduler::OnSurfaceActivated(const SurfaceId& surface_id) {}
+void DisplayScheduler::OnSurfaceCreated(const SurfaceInfo& surface_info) {}
 
 void DisplayScheduler::OnSurfaceDestroyed(const SurfaceId& surface_id) {
   auto it = surface_states_.find(surface_id);

@@ -7,7 +7,6 @@ from telemetry.timeline import chrome_trace_category_filter
 from telemetry.web_perf import timeline_based_measurement
 import page_sets
 from telemetry import benchmark
-from telemetry import story
 
 
 # TODO(rnephew): Remove BattOr naming from all benchmarks once the BattOr tests
@@ -46,10 +45,7 @@ class BattOrTrivialPages(_BattOrBenchmark):
     return 'battor.trivial_pages'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # Nothing disabled.
-    return StoryExpectations()
+    return page_sets.TrivialStoryExpectations()
 
 
 @benchmark.Enabled('mac')
@@ -65,8 +61,4 @@ class BattOrSteadyStatePages(_BattOrBenchmark):
     return 'battor.steady_state'
 
   def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        self.DisableStory('http://abcnews.go.com/', [story.expectations.ALL],
-                          'crbug.com/505990')
-    return StoryExpectations()
+    return page_sets.IdleAfterLoadingStoryExpectations()

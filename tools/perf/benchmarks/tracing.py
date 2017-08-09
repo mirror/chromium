@@ -37,6 +37,9 @@ class TracingWithDebugOverhead(perf_benchmark.PerfBenchmark):
     return StoryExpectations()
 
 
+# TODO(ssid): Enable on reference builds once stable browser starts supporting
+# background mode memory-infra. crbug.com/621195.
+@benchmark.Disabled('reference')
 @benchmark.Owner(emails=['ssid@chromium.org'])
 class TracingWithBackgroundMemoryInfra(perf_benchmark.PerfBenchmark):
   """Measures the overhead of background memory-infra dumps"""

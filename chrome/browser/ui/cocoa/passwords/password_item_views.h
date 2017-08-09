@@ -77,6 +77,7 @@ enum ManagePasswordItemState {
 @end
 
 @interface PendingPasswordItemView (Testing)
+@property(readonly) NSTextField* usernameField;
 @property(readonly) NSSecureTextField* passwordField;
 @end
 

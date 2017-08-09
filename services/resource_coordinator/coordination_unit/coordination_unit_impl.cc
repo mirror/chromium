@@ -165,23 +165,22 @@ void CoordinationUnitImpl::RecalcCoordinationPolicy() {
   policy_callback_->SetCoordinationPolicy(std::move(policy));
 }
 
-void CoordinationUnitImpl::SendEvent(mojom::Event event) {
-  OnEventReceived(event);
+void CoordinationUnitImpl::SendEvent(mojom::EventPtr event) {
   // TODO(crbug.com/691886) Consider removing the following code.
-  switch (event) {
-    case mojom::Event::kOnWebContentsShown:
+  switch (event->type) {
+    case mojom::EventType::kOnWebContentsShown:
       state_flags_[kTabVisible] = true;
       break;
-    case mojom::Event::kOnWebContentsHidden:
+    case mojom::EventType::kOnWebContentsHidden:
       state_flags_[kTabVisible] = false;
       break;
-    case mojom::Event::kOnProcessAudioStarted:
+    case mojom::EventType::kOnProcessAudioStarted:
       state_flags_[kAudioPlaying] = true;
       break;
-    case mojom::Event::kOnProcessAudioStopped:
+    case mojom::EventType::kOnProcessAudioStopped:
       state_flags_[kAudioPlaying] = false;
       break;
-    case mojom::Event::kTestEvent:
+    case mojom::EventType::kTestEvent:
       state_flags_[kTestState] = true;
       break;
     default:
@@ -370,27 +369,24 @@ CoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
   return std::set<CoordinationUnitImpl*>();
 }
 
-bool CoordinationUnitImpl::GetProperty(const mojom::PropertyType property_type,
-                                       int64_t* result) const {
+base::Value CoordinationUnitImpl::GetProperty(
+    const mojom::PropertyType property_type) const {
   auto value_it = properties_.find(property_type);
 
-  if (value_it != properties_.end()) {
-    *result = value_it->second;
-    return true;
-  }
-
-  return false;
+  return value_it != properties_.end() ? base::Value(*value_it->second)
+                                       : base::Value();
 }
 
 void CoordinationUnitImpl::SetProperty(mojom::PropertyType property_type,
-                                       int64_t value) {
+                                       std::unique_ptr<base::Value> value) {
   // The |CoordinationUnitGraphObserver| API specification dictates that
   // the property is guarranteed to be set on the |CoordinationUnitImpl|
   // and propagated to the appropriate associated |CoordianationUnitImpl|
   // before |OnPropertyChanged| is invoked on all of the registered observers.
-  properties_[property_type] = value;
-  PropagateProperty(property_type, value);
-  OnPropertyChanged(property_type, value);
+  const base::Value& property =
+      *(properties_[property_type] = std::move(value));
+  PropagateProperty(property_type, property);
+  OnPropertyChanged(property_type, property);
 }
 
 void CoordinationUnitImpl::BeforeDestroyed() {
@@ -408,14 +404,9 @@ void CoordinationUnitImpl::RemoveObserver(
   observers_.RemoveObserver(observer);
 }
 
-void CoordinationUnitImpl::OnEventReceived(const mojom::Event event) {
-  for (auto& observer : observers_)
-    observer.OnEventReceived(this, event);
-}
-
 void CoordinationUnitImpl::OnPropertyChanged(
     const mojom::PropertyType property_type,
-    int64_t value) {
+    const base::Value& value) {
   for (auto& observer : observers_)
     observer.OnPropertyChanged(this, property_type, value);
 }

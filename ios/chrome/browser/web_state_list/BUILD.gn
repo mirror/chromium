@@ -26,6 +26,7 @@ source_set("web_state_list") {
     "//base",
     "//ios/chrome/browser/sessions:serialisation",
     "//ios/web",
+    "//ui/base",
   ]
   libs = [ "Foundation.framework" ]
   configs += [ "//build/config/compiler:enable_arc" ]
@@ -62,6 +63,7 @@ source_set("unit_tests") {
     "//ios/web/public/test/fakes",
     "//net",
     "//testing/gtest",
+    "//ui/base",
     "//url",
   ]
   configs += [ "//build/config/compiler:enable_arc" ]

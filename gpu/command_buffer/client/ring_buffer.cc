@@ -179,18 +179,4 @@ unsigned int RingBuffer::GetTotalFreeSizeNoWaiting() {
   }
 }
 
-void RingBuffer::ShrinkLastBlock(unsigned int new_size) {
-  if (blocks_.empty())
-    return;
-  auto& block = blocks_.back();
-  DCHECK_LT(new_size, block.size);
-  DCHECK_EQ(block.state, IN_USE);
-
-  // Can't shrink to size 0, see comments in Alloc.
-  new_size = std::max(new_size, 1u);
-
-  free_offset_ = block.offset + new_size;
-  block.size = new_size;
-}
-
 }  // namespace gpu

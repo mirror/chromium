@@ -37,7 +37,6 @@ class CORE_EXPORT PaintInvalidationCapableScrollableArea
   }
 
   void DidScrollWithScrollbar(ScrollbarPart, ScrollbarOrientation) override;
-  CompositorElementId GetCompositorElementId() const override;
 
  private:
   virtual LayoutScrollbarPart* ScrollCorner() const = 0;

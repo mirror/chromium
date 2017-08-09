@@ -218,7 +218,6 @@ void PaintTiming::ReportSwapTime(PaintEvent event,
       first_contentful_paint_swap_ = timestamp;
       if (performance)
         performance->AddFirstContentfulPaintTiming(first_contentful_paint_);
-      fmp_detector_->NotifyFirstContentfulPaint(timestamp);
       return;
     default:
       NOTREACHED();

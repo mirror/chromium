@@ -12,6 +12,8 @@ import android.support.v7.app.MediaRouteControllerDialogFragment;
 import android.support.v7.media.MediaRouteSelector;
 import android.support.v7.media.MediaRouter;
 
+import org.chromium.chrome.browser.media.router.cast.MediaSource;
+
 /**
  * Manages the dialog responsible for controlling an existing media route.
  */
@@ -29,9 +31,9 @@ public class MediaRouteControllerDialogManager extends BaseMediaRouteDialogManag
         }
     };
 
-    public MediaRouteControllerDialogManager(String sourceId, MediaRouteSelector routeSelector,
-            String mediaRouteId, MediaRouteDialogDelegate delegate) {
-        super(sourceId, routeSelector, delegate);
+    public MediaRouteControllerDialogManager(MediaSource source, String mediaRouteId,
+            MediaRouteDialogDelegate delegate) {
+        super(source, delegate);
         mMediaRouteId = mediaRouteId;
     }
 
@@ -86,7 +88,10 @@ public class MediaRouteControllerDialogManager extends BaseMediaRouteDialogManag
         if (fm.findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) return null;
 
         Fragment fragment = new Fragment(this, mCallback);
-        androidMediaRouter().addCallback(routeSelector(), mCallback);
+        MediaRouteSelector selector = mediaSource().buildRouteSelector();
+        if (selector == null) return null;
+
+        androidMediaRouter().addCallback(selector, mCallback);
 
         fragment.show(fm, DIALOG_FRAGMENT_TAG);
         fm.executePendingTransactions();

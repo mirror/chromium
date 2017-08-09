@@ -69,7 +69,6 @@
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebSelection.h"
 #include "third_party/skia/include/core/SkImage.h"
-#include "ui/base/ui_base_switches.h"
 #include "ui/gfx/color_space_switches.h"
 #include "ui/gfx/switches.h"
 #include "ui/gl/gl_switches.h"
@@ -187,7 +186,6 @@ cc::LayerSelectionBound ConvertWebSelectionBound(
   cc_bound.layer_id = web_bound.layer_id;
   cc_bound.edge_top = gfx::Point(web_bound.edge_top_in_layer);
   cc_bound.edge_bottom = gfx::Point(web_bound.edge_bottom_in_layer);
-  cc_bound.hidden = web_bound.hidden;
   return cc_bound;
 }
 
@@ -551,7 +549,7 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
       base::SharedMemory::GetHandleLimit() / 3;
 
   settings.disallow_non_exact_resource_reuse =
-      cmd.HasSwitch(switches::kDisallowNonExactResourceReuse);
+      cmd.HasSwitch(cc::switches::kDisallowNonExactResourceReuse);
 
   settings.wait_for_all_pipeline_stages_before_draw =
       cmd.HasSwitch(cc::switches::kRunAllCompositorStagesBeforeDraw);

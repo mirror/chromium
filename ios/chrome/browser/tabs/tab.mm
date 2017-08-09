@@ -254,6 +254,9 @@ class TabHistoryContext : public history::Context {
   // Handles autofill.
   AutofillController* _autofillController;
 
+  // Handles caching and retrieving of snapshots.
+  SnapshotManager* _snapshotManager;
+
   // Handles retrieving, generating and updating snapshots of CRWWebController's
   // web page.
   WebControllerSnapshotHelper* _webControllerSnapshotHelper;
@@ -290,9 +293,6 @@ class TabHistoryContext : public history::Context {
 // Returns the tab's reader mode controller. May contain nil if the feature is
 // disabled.
 @property(nonatomic, readonly) ReaderModeController* readerModeController;
-
-// Handles caching and retrieving of snapshots.
-@property(nonatomic, strong) SnapshotManager* snapshotManager;
 
 // Returns a list of FormSuggestionProviders to be queried for suggestions
 // in order of priority.
@@ -442,7 +442,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 @synthesize tabHeadersDelegate = tabHeadersDelegate_;
 @synthesize fullScreenControllerDelegate = fullScreenControllerDelegate_;
 @synthesize dispatcher = _dispatcher;
-@synthesize snapshotManager = _snapshotManager;
 
 - (instancetype)initWithWebState:(web::WebState*)webState {
   DCHECK(webState);
@@ -997,11 +996,9 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   [readerModeController_ detachFromWebState];
   readerModeController_ = nil;
 
-  if (!GetApplicationContext()->IsShuttingDown()) {
-    // Invalidate any snapshot stored for this session.
-    DCHECK(self.tabId);
-    [self.snapshotManager removeImageWithSessionID:self.tabId];
-  }
+  // Invalidate any snapshot stored for this session.
+  DCHECK(self.tabId);
+  [_snapshotManager removeImageWithSessionID:self.tabId];
 
   // Cancel any queued dialogs.
   [self.dialogDelegate cancelDialogForTab:self];
@@ -1610,8 +1607,8 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   // In other cases, such as during startup, either disk access or a greyspace
   // conversion is required, as there will be no grey snapshots in memory.
   if (useGreyImageCache_) {
-    [self.snapshotManager greyImageForSessionID:sessionID
-                                       callback:completionHandler];
+    [_snapshotManager greyImageForSessionID:sessionID
+                                   callback:completionHandler];
   } else {
     [_webControllerSnapshotHelper
         retrieveGreySnapshotForWebController:self.webController

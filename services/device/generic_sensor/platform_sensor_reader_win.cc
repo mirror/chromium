@@ -65,7 +65,7 @@ std::unique_ptr<ReaderInitParams> CreateAmbientLightReaderInitParams() {
                                         report, &lux)) {
           return E_FAIL;
         }
-        reading->als.value = lux;
+        reading->values[0] = lux;
         return S_OK;
       };
   return params;
@@ -92,9 +92,9 @@ std::unique_ptr<ReaderInitParams> CreateAccelerometerReaderInitParams() {
         // Windows uses coordinate system where Z axis points down from device
         // screen, therefore, using right hand notation, we have to reverse
         // sign for each axis. Values are converted from G/s^2 to m/s^2.
-        reading->accel.x = -x * kMeanGravity;
-        reading->accel.y = -y * kMeanGravity;
-        reading->accel.z = -z * kMeanGravity;
+        reading->values[0] = -x * kMeanGravity;
+        reading->values[1] = -y * kMeanGravity;
+        reading->values[2] = -z * kMeanGravity;
         return S_OK;
       };
   return params;
@@ -124,9 +124,9 @@ std::unique_ptr<ReaderInitParams> CreateGyroscopeReaderInitParams() {
         // Windows uses coordinate system where Z axis points down from device
         // screen, therefore, using right hand notation, we have to reverse
         // sign for each axis. Values are converted from deg to rad.
-        reading->gyro.x = -x * kRadiansInDegrees;
-        reading->gyro.y = -y * kRadiansInDegrees;
-        reading->gyro.z = -z * kRadiansInDegrees;
+        reading->values[0] = -x * kRadiansInDegrees;
+        reading->values[1] = -y * kRadiansInDegrees;
+        reading->values[2] = -z * kRadiansInDegrees;
         return S_OK;
       };
   return params;
@@ -157,9 +157,9 @@ std::unique_ptr<ReaderInitParams> CreateMagnetometerReaderInitParams() {
         // screen, therefore, using right hand notation, we have to reverse
         // sign for each axis. Values are converted from Milligaus to
         // Microtesla.
-        reading->magn.x = -x * kMicroteslaInMilligauss;
-        reading->magn.y = -y * kMicroteslaInMilligauss;
-        reading->magn.z = -z * kMicroteslaInMilligauss;
+        reading->values[0] = -x * kMicroteslaInMilligauss;
+        reading->values[1] = -y * kMicroteslaInMilligauss;
+        reading->values[2] = -z * kMicroteslaInMilligauss;
         return S_OK;
       };
   return params;
@@ -184,9 +184,9 @@ CreateAbsoluteOrientationEulerAnglesReaderInitParams() {
           return E_FAIL;
         }
 
-        reading->orientation_euler.x = x;
-        reading->orientation_euler.y = y;
-        reading->orientation_euler.z = z;
+        reading->values[0] = x;
+        reading->values[1] = y;
+        reading->values[2] = z;
         return S_OK;
       };
   return params;
@@ -212,10 +212,10 @@ CreateAbsoluteOrientationQuaternionReaderInitParams() {
         // Windows uses coordinate system where Z axis points down from device
         // screen, therefore, using right hand notation, we have to reverse
         // sign for each quaternion component.
-        reading->orientation_quat.x = -quat[0];  // x*sin(Theta/2)
-        reading->orientation_quat.y = -quat[1];  // y*sin(Theta/2)
-        reading->orientation_quat.z = -quat[2];  // z*sin(Theta/2)
-        reading->orientation_quat.w = quat[3];   // cos(Theta/2)
+        reading->values[0] = -quat[0];  // x*sin(Theta/2)
+        reading->values[1] = -quat[1];  // y*sin(Theta/2)
+        reading->values[2] = -quat[2];  // z*sin(Theta/2)
+        reading->values[3] = quat[3];   // cos(Theta/2)
         return S_OK;
       };
   return params;
@@ -333,11 +333,10 @@ class EventListener : public ISensorEvents, public base::win::IUnknownImpl {
     base::TimeDelta delta = time_now - timestamp;
 
     SensorReading reading;
-    reading.raw.timestamp =
-        ((ticks_now - delta) - base::TimeTicks()).InSecondsF();
+    reading.timestamp = ((ticks_now - delta) - base::TimeTicks()).InSecondsF();
 
     // Discard update events that have non-monotonically increasing timestamp.
-    if (last_sensor_reading_.raw.timestamp > reading.timestamp())
+    if (last_sensor_reading_.timestamp > reading.timestamp)
       return E_FAIL;
 
     hr = platform_sensor_reader_->SensorReadingChanged(report, &reading);

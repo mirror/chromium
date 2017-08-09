@@ -26,7 +26,6 @@
 #ifndef InputMethodController_h
 #define InputMethodController_h
 
-#include "base/gtest_prod_util.h"
 #include "core/CoreExport.h"
 #include "core/dom/SynchronousMutationObserver.h"
 #include "core/editing/CompositionUnderline.h"
@@ -101,10 +100,6 @@ class CORE_EXPORT InputMethodController final
   void DeleteSurroundingText(int before, int after);
   void DeleteSurroundingTextInCodePoints(int before, int after);
   WebTextInputInfo TextInputInfo() const;
-  // For finding NEXT/PREVIOUS everytime during frame update is a costly
-  // operation, so making it specific whenever needed by splitting from
-  // TextInputFlags()
-  int ComputeWebTextInputNextPreviousFlags() const;
   WebTextInputType TextInputType() const;
 
   // Call this when we will change focus.
@@ -171,9 +166,6 @@ class CORE_EXPORT InputMethodController final
 
   // Returns true if selection offsets were successfully set.
   bool SetSelectionOffsets(const PlainTextRange&, TypingContinuation);
-
-  FRIEND_TEST_ALL_PREFIXES(InputMethodControllerTest,
-                           InputModeOfFocusedElement);
 };
 
 }  // namespace blink

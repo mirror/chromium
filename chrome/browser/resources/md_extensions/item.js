@@ -4,7 +4,7 @@
 
 cr.define('extensions', function() {
   /** @interface */
-  const ItemDelegate = function() {};
+  var ItemDelegate = function() {};
 
   ItemDelegate.prototype = {
     /** @param {string} id */
@@ -56,7 +56,7 @@ cr.define('extensions', function() {
     showItemOptionsPage: assertNotReached,
   };
 
-  const Item = Polymer({
+  var Item = Polymer({
     is: 'extensions-item',
 
     behaviors: [I18nBehavior],
@@ -95,7 +95,7 @@ cr.define('extensions', function() {
     /** @private */
     observeIdVisibility_: function(inDevMode, showingDetails, id) {
       Polymer.dom.flush();
-      const idElement = this.$$('#extension-id');
+      var idElement = this.$$('#extension-id');
       if (idElement) {
         assert(this.data);
         idElement.innerHTML = this.i18n('itemId', this.data.id);
@@ -204,7 +204,7 @@ cr.define('extensions', function() {
      * @private
      */
     computeClasses_: function() {
-      let classes = this.isEnabled_() ? 'enabled' : 'disabled';
+      var classes = this.isEnabled_() ? 'enabled' : 'disabled';
       if (this.inDevMode)
         classes += ' dev-mode';
       return classes;
@@ -233,7 +233,7 @@ cr.define('extensions', function() {
      * @private
      */
     computeSourceIndicatorText_: function() {
-      const sourceType = extensions.getItemSource(this.data);
+      var sourceType = extensions.getItemSource(this.data);
       return sourceType == SourceType.WEBSTORE ?
           '' :
           extensions.getItemSourceString(sourceType);
@@ -259,7 +259,7 @@ cr.define('extensions', function() {
       // need to handle the case gracefully.
       if (this.data.views.length == 0)
         return '';
-      let label = extensions.computeInspectableViewLabel(this.data.views[0]);
+      var label = extensions.computeInspectableViewLabel(this.data.views[0]);
       if (this.data.views.length > 1)
         label += ',';
       return label;
@@ -281,7 +281,7 @@ cr.define('extensions', function() {
       // Only display the reload spinner if the extension is unpacked and
       // not terminated (since if it's terminated, we'll show a crashed reload
       // buton).
-      const showIcon =
+      var showIcon =
           this.data.location == chrome.developerPrivate.Location.UNPACKED &&
           this.data.state != chrome.developerPrivate.ExtensionState.TERMINATED;
       return !showIcon;

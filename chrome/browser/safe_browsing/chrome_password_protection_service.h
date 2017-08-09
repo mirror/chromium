@@ -7,7 +7,6 @@
 
 #include "components/safe_browsing/password_protection/password_protection_service.h"
 
-class PrefService;
 class Profile;
 
 namespace content {
@@ -51,9 +50,6 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   // If user enabled history syncing.
   bool IsHistorySyncEnabled() override;
 
-  void MaybeLogPasswordReuseDetectedEvent(
-      content::WebContents* web_contents) override;
-
   void ShowPhishingInterstitial(const GURL& phishing_url,
                                 const std::string& token,
                                 content::WebContents* web_contents) override;
@@ -66,26 +62,23 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   void UpdateSecurityState(SBThreatType threat_type,
                            content::WebContents* web_contents) override;
 
+  FRIEND_TEST_ALL_PREFIXES(
+      ChromePasswordProtectionServiceTest,
+      VerifyFinchControlForLowReputationPingSBEROnlyNoIncognito);
+  FRIEND_TEST_ALL_PREFIXES(
+      ChromePasswordProtectionServiceTest,
+      VerifyFinchControlForLowReputationPingSBERAndHistorySyncNoIncognito);
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
-                           VerifyUserPopulationForPasswordOnFocusPing);
-  FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
-                           VerifyUserPopulationForProtectedPasswordEntryPing);
-  FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
-                           VerifyPasswordReuseUserEventNotRecorded);
-  FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
-                           VerifyPasswordReuseUserEventRecorded);
+                           VerifyFinchControlForLowReputationPingAll);
+  FRIEND_TEST_ALL_PREFIXES(
+      ChromePasswordProtectionServiceTest,
+      VerifyFinchControlForLowReputationPingAllButNoIncognito);
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
                            VerifyGetSyncAccountType);
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
                            VerifyUpdateSecurityState);
 
  private:
-  // Gets prefs associated with |profile_|.
-  PrefService* GetPrefs();
-
-  // Returns whether the profile is valid and has safe browsing service enabled.
-  bool IsSafeBrowsingEnabled();
-
   friend class MockChromePasswordProtectionService;
   // Constructor used for tests only.
   ChromePasswordProtectionService(

@@ -4,12 +4,12 @@
 
 #include "core/css/FontFaceSource.h"
 
-#include "core/css/FontFaceSetDocument.h"
+#include "core/css/FontFaceSet.h"
 
 namespace blink {
 
 FontFaceSet* FontFaceSource::fonts(Document& document) {
-  return FontFaceSetDocument::From(document);
+  return FontFaceSet::From(document);
 }
 
 }  // namespace blink

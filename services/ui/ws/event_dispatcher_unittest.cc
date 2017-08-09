@@ -66,8 +66,6 @@ class TestEventDispatcherDelegate : public EventDispatcherDelegate {
         last_accelerator_(0) {}
   ~TestEventDispatcherDelegate() override {}
 
-  void EnableFallbackToRoot() { fallback_to_root_ = true; }
-
   ui::Event* last_event_target_not_found() {
     return last_event_target_not_found_.get();
   }
@@ -177,10 +175,6 @@ class TestEventDispatcherDelegate : public EventDispatcherDelegate {
                              int64_t display_id) override {
     last_event_target_not_found_ = ui::Event::Clone(event);
   }
-  ServerWindow* GetFallbackTargetForEventBlockedByModal(
-      ServerWindow* window) override {
-    return fallback_to_root_ ? root_ : nullptr;
-  }
   void OnEventOccurredOutsideOfModalWindow(
       ServerWindow* modal_transient) override {
     window_that_blocked_event_ = modal_transient;
@@ -196,9 +190,6 @@ class TestEventDispatcherDelegate : public EventDispatcherDelegate {
   std::unique_ptr<ui::Event> last_event_target_not_found_;
   base::Optional<bool> last_cursor_visibility_;
   ServerWindow* window_that_blocked_event_ = nullptr;
-
-  // If true events blocked by a modal window are sent to |root_|.
-  bool fallback_to_root_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(TestEventDispatcherDelegate);
 };
@@ -1650,7 +1641,7 @@ TEST_P(EventDispatcherTest, ModalWindowEventOnDescendantOfModalParent) {
 // enabled.
 TEST_P(EventDispatcherTest,
        ModalWindowEventOnDescendantOfModalParentWithFallback) {
-  test_event_dispatcher_delegate()->EnableFallbackToRoot();
+  event_dispatcher()->set_fallback_to_root(true);
 
   std::unique_ptr<ServerWindow> w1 = CreateChildWindow(WindowId(1, 3));
   std::unique_ptr<ServerWindow> w11 =
@@ -1736,9 +1727,9 @@ TEST_P(EventDispatcherTest, ModalWindowEventOutsideSystemModal) {
 }
 
 // Variant of ModalWindowEventOutsideSystemModal with
-// EnableFallbackToRoot().
+// set_fallback_to_root(true).
 TEST_P(EventDispatcherTest, ModalWindowEventOutsideSystemModalWithFallback) {
-  test_event_dispatcher_delegate()->EnableFallbackToRoot();
+  event_dispatcher()->set_fallback_to_root(true);
 
   std::unique_ptr<ServerWindow> w1 = CreateChildWindow(WindowId(1, 3));
 

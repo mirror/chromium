@@ -138,12 +138,12 @@ class TestPlugin : public FakeWebPlugin {
   TestPluginWebFrameClient* const test_client_;
 };
 
-// Subclass of FakeWebPlugin used for testing edit commands, so HasSelection()
-// and CanEditText() return true by default.
+// Subclass of FakeWebPlugin used for testing the Cut edit command, so
+// HasSelection() and CanEditText() return true by default.
 class TestPluginWithEditableText : public FakeWebPlugin {
  public:
   explicit TestPluginWithEditableText(const WebPluginParams& params)
-      : FakeWebPlugin(params), cut_called_(false), paste_called_(false) {}
+      : FakeWebPlugin(params), cut_called_(false) {}
 
   bool HasSelection() const override { return true; }
   bool CanEditText() const override { return true; }
@@ -153,25 +153,16 @@ class TestPluginWithEditableText : public FakeWebPlugin {
       cut_called_ = true;
       return true;
     }
-    if (name == "Paste" || name == "PasteAndMatchStyle") {
-      paste_called_ = true;
-      return true;
-    }
     return false;
   }
 
   bool IsCutCalled() const { return cut_called_; }
-  bool IsPasteCalled() const { return paste_called_; }
-  void ResetEditCommandState() {
-    cut_called_ = false;
-    paste_called_ = false;
-  }
+  void ResetCutStatus() { cut_called_ = false; }
 
  private:
   ~TestPluginWithEditableText() override {}
 
   bool cut_called_;
-  bool paste_called_;
 };
 
 class TestPluginWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
@@ -234,17 +225,6 @@ void ClearClipboardBuffer() {
   Platform::Current()->Clipboard()->WritePlainText(WebString());
   EXPECT_EQ(WebString(), Platform::Current()->Clipboard()->ReadPlainText(
                              WebClipboard::Buffer()));
-}
-
-void CreateAndHandleKeyboardEvent(WebElement* plugin_container_one_element,
-                                  WebInputEvent::Modifiers modifier_key,
-                                  int key_code) {
-  WebKeyboardEvent web_keyboard_event(WebInputEvent::kRawKeyDown, modifier_key,
-                                      WebInputEvent::kTimeStampForTesting);
-  web_keyboard_event.windows_key_code = key_code;
-  KeyboardEvent* key_event = KeyboardEvent::Create(web_keyboard_event, 0);
-  ToWebPluginContainerImpl(plugin_container_one_element->PluginContainer())
-      ->HandleEvent(key_event);
 }
 
 }  // namespace
@@ -486,15 +466,26 @@ TEST_F(WebPluginContainerTest, CopyInsertKeyboardEventsTest) {
       WebInputEvent::kMetaKey | WebInputEvent::kNumLockOn |
       WebInputEvent::kIsLeft);
 #endif
-  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
-                               VKEY_C);
+  WebKeyboardEvent web_keyboard_event_c(WebInputEvent::kRawKeyDown,
+                                        modifier_key,
+                                        WebInputEvent::kTimeStampForTesting);
+  web_keyboard_event_c.windows_key_code = 67;
+  KeyboardEvent* key_event_c = KeyboardEvent::Create(web_keyboard_event_c, 0);
+  ToWebPluginContainerImpl(plugin_container_one_element.PluginContainer())
+      ->HandleEvent(key_event_c);
   EXPECT_EQ(WebString("x"), Platform::Current()->Clipboard()->ReadPlainText(
                                 WebClipboard::Buffer()));
 
   ClearClipboardBuffer();
 
-  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
-                               VKEY_INSERT);
+  WebKeyboardEvent web_keyboard_event_insert(
+      WebInputEvent::kRawKeyDown, modifier_key,
+      WebInputEvent::kTimeStampForTesting);
+  web_keyboard_event_insert.windows_key_code = 45;
+  KeyboardEvent* key_event_insert =
+      KeyboardEvent::Create(web_keyboard_event_insert, 0);
+  ToWebPluginContainerImpl(plugin_container_one_element.PluginContainer())
+      ->HandleEvent(key_event_insert);
   EXPECT_EQ(WebString("x"), Platform::Current()->Clipboard()->ReadPlainText(
                                 WebClipboard::Buffer()));
 
@@ -509,7 +500,7 @@ TEST_F(WebPluginContainerTest, CutDeleteKeyboardEventsTest) {
   TestPluginWebFrameClient plugin_web_frame_client;
   FrameTestHelpers::WebViewHelper web_view_helper;
 
-  // Use TestPluginWithEditableText for testing "Cut".
+  // Use TestPluginWithEditableText for testing Cut().
   plugin_web_frame_client.SetHasEditableText(true);
 
   WebViewImpl* web_view = web_view_helper.InitializeAndLoad(
@@ -534,117 +525,35 @@ TEST_F(WebPluginContainerTest, CutDeleteKeyboardEventsTest) {
       WebInputEvent::kMetaKey | WebInputEvent::kNumLockOn |
       WebInputEvent::kIsLeft);
 #endif
-  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
-                               VKEY_X);
+  WebKeyboardEvent web_keyboard_event_x(WebInputEvent::kRawKeyDown,
+                                        modifier_key,
+                                        WebInputEvent::kTimeStampForTesting);
+  web_keyboard_event_x.windows_key_code = VKEY_X;
+  KeyboardEvent* key_event_x = KeyboardEvent::Create(web_keyboard_event_x, 0);
+  ToWebPluginContainerImpl(plugin_container_one_element.PluginContainer())
+      ->HandleEvent(key_event_x);
 
   // Check that "Cut" command is invoked.
   EXPECT_TRUE(test_plugin->IsCutCalled());
 
   // Reset Cut status for next time.
-  test_plugin->ResetEditCommandState();
+  test_plugin->ResetCutStatus();
 
   modifier_key = static_cast<WebInputEvent::Modifiers>(
       WebInputEvent::kShiftKey | WebInputEvent::kNumLockOn |
       WebInputEvent::kIsLeft);
 
-  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
-                               VKEY_DELETE);
+  WebKeyboardEvent web_keyboard_event_delete(
+      WebInputEvent::kRawKeyDown, modifier_key,
+      WebInputEvent::kTimeStampForTesting);
+  web_keyboard_event_delete.windows_key_code = VKEY_DELETE;
+  KeyboardEvent* key_event_delete =
+      KeyboardEvent::Create(web_keyboard_event_delete, 0);
+  ToWebPluginContainerImpl(plugin_container_one_element.PluginContainer())
+      ->HandleEvent(key_event_delete);
 
   // Check that "Cut" command is invoked.
   EXPECT_TRUE(test_plugin->IsCutCalled());
-}
-
-// Verifies |Ctrl-V| and |Shift-Insert| keyboard events, results in the "Paste"
-// command being invoked.
-TEST_F(WebPluginContainerTest, PasteInsertKeyboardEventsTest) {
-  RegisterMockedURL("plugin_container.html");
-  // Must outlive |web_view_helper|.
-  TestPluginWebFrameClient plugin_web_frame_client;
-  FrameTestHelpers::WebViewHelper web_view_helper;
-
-  // Use TestPluginWithEditableText for testing "Paste".
-  plugin_web_frame_client.SetHasEditableText(true);
-
-  WebViewImpl* web_view = web_view_helper.InitializeAndLoad(
-      base_url_ + "plugin_container.html", &plugin_web_frame_client);
-  EnablePlugins(web_view, WebSize(300, 300));
-
-  WebElement plugin_container_one_element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
-          WebString::FromUTF8("translated-plugin"));
-
-  WebPlugin* plugin =
-      ToWebPluginContainerImpl(plugin_container_one_element.PluginContainer())
-          ->Plugin();
-  TestPluginWithEditableText* test_plugin =
-      static_cast<TestPluginWithEditableText*>(plugin);
-
-  WebInputEvent::Modifiers modifier_key = static_cast<WebInputEvent::Modifiers>(
-      WebInputEvent::kControlKey | WebInputEvent::kNumLockOn |
-      WebInputEvent::kIsLeft);
-#if defined(OS_MACOSX)
-  modifier_key = static_cast<WebInputEvent::Modifiers>(
-      WebInputEvent::kMetaKey | WebInputEvent::kNumLockOn |
-      WebInputEvent::kIsLeft);
-#endif
-  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
-                               VKEY_V);
-
-  // Check that "Paste" command is invoked.
-  EXPECT_TRUE(test_plugin->IsPasteCalled());
-
-  // Reset Paste status for next time.
-  test_plugin->ResetEditCommandState();
-
-  modifier_key = static_cast<WebInputEvent::Modifiers>(
-      WebInputEvent::kShiftKey | WebInputEvent::kNumLockOn |
-      WebInputEvent::kIsLeft);
-
-  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
-                               VKEY_INSERT);
-
-  // Check that "Paste" command is invoked.
-  EXPECT_TRUE(test_plugin->IsPasteCalled());
-}
-
-// Verifies |Ctrl-Shift-V| keyboard event results in the "PasteAndMatchStyle"
-// command being invoked.
-TEST_F(WebPluginContainerTest, PasteAndMatchStyleKeyboardEventsTest) {
-  RegisterMockedURL("plugin_container.html");
-  // Must outlive |web_view_helper|.
-  TestPluginWebFrameClient plugin_web_frame_client;
-  FrameTestHelpers::WebViewHelper web_view_helper;
-
-  // Use TestPluginWithEditableText for testing "PasteAndMatchStyle".
-  plugin_web_frame_client.SetHasEditableText(true);
-
-  WebViewImpl* web_view = web_view_helper.InitializeAndLoad(
-      base_url_ + "plugin_container.html", &plugin_web_frame_client);
-  EnablePlugins(web_view, WebSize(300, 300));
-
-  WebElement plugin_container_one_element =
-      web_view->MainFrameImpl()->GetDocument().GetElementById(
-          WebString::FromUTF8("translated-plugin"));
-
-  WebPlugin* plugin =
-      ToWebPluginContainerImpl(plugin_container_one_element.PluginContainer())
-          ->Plugin();
-  TestPluginWithEditableText* test_plugin =
-      static_cast<TestPluginWithEditableText*>(plugin);
-
-  WebInputEvent::Modifiers modifier_key = static_cast<WebInputEvent::Modifiers>(
-      WebInputEvent::kControlKey | WebInputEvent::kShiftKey |
-      WebInputEvent::kNumLockOn | WebInputEvent::kIsLeft);
-#if defined(OS_MACOSX)
-  modifier_key = static_cast<WebInputEvent::Modifiers>(
-      WebInputEvent::kMetaKey | WebInputEvent::kShiftKey |
-      WebInputEvent::kNumLockOn | WebInputEvent::kIsLeft);
-#endif
-  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
-                               VKEY_V);
-
-  // Check that "PasteAndMatchStyle" command is invoked.
-  EXPECT_TRUE(test_plugin->IsPasteCalled());
 }
 
 // A class to facilitate testing that events are correctly received by plugins.

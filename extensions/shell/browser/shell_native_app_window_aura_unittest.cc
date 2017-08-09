@@ -15,10 +15,10 @@
 #include "extensions/browser/extensions_test.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_builder.h"
+#include "extensions/shell/browser/desktop_controller.h"
 #include "extensions/shell/browser/shell_app_delegate.h"
 #include "extensions/shell/browser/shell_app_window_client.h"
 #include "ui/gfx/geometry/rect.h"
-#include "ui/gfx/geometry/size.h"
 
 namespace extensions {
 
@@ -47,12 +47,10 @@ TEST_F(ShellNativeAppWindowAuraTest, Bounds) {
 
   AppWindow* app_window =
       new AppWindow(browser_context(), new ShellAppDelegate, extension.get());
-
-  std::unique_ptr<content::WebContents> web_contents(
-      content::WebContents::Create(
-          content::WebContents::CreateParams(browser_context())));
+  content::WebContents* web_contents = content::WebContents::Create(
+      content::WebContents::CreateParams(browser_context()));
   app_window->SetAppWindowContentsForTesting(
-      base::MakeUnique<TestAppWindowContents>(std::move(web_contents)));
+      base::MakeUnique<TestAppWindowContents>(web_contents));
 
   AppWindow::BoundsSpecification window_spec;
   window_spec.bounds = gfx::Rect(100, 200, 300, 400);
@@ -63,10 +61,6 @@ TEST_F(ShellNativeAppWindowAuraTest, Bounds) {
 
   gfx::Rect bounds = window.GetBounds();
   EXPECT_EQ(window_spec.bounds, bounds);
-
-  // The window should not be resizable from the extension API.
-  EXPECT_EQ(bounds.size(), window.GetContentMinimumSize());
-  EXPECT_EQ(bounds.size(), window.GetContentMaximumSize());
 
   // Delete the AppWindow.
   app_window->OnNativeClose();

@@ -12,7 +12,6 @@
 #include "base/strings/string_tokenizer.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
-#include "build/build_config.h"
 #include "media/base/media_switches.h"
 
 namespace {
@@ -208,8 +207,6 @@ void FakeVideoCaptureDeviceFactory::GetDeviceDescriptors(
         VideoCaptureApi::WIN_DIRECT_SHOW
 #elif defined(OS_ANDROID)
         VideoCaptureApi::ANDROID_API2_LEGACY
-#elif defined(OS_FUCHSIA)
-        VideoCaptureApi::UNKNOWN
 #endif
         );
     entry_index++;

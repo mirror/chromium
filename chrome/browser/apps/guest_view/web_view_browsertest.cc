@@ -1049,12 +1049,6 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, AudioMutesOnAttach) {
   EXPECT_TRUE(guest->IsAudioMuted());
 }
 
-IN_PROC_BROWSER_TEST_P(WebViewTest, AudioStateJavascriptAPI) {
-  ASSERT_TRUE(StartEmbeddedTestServer());  // For serving guest pages.
-  ASSERT_TRUE(RunPlatformAppTest("platform_apps/web_view/audio_state_api"))
-      << message_;
-}
-
 // This test verifies that hiding the guest triggers WebContents::WasHidden().
 IN_PROC_BROWSER_TEST_P(WebViewVisibilityTest, GuestVisibilityChanged) {
   LoadAppWithGuest("web_view/visibility_changed");
@@ -3571,13 +3565,14 @@ class WebContentsAccessibilityEventWatcher
     }
   }
 
-  void AccessibilityEventReceived(
-      const std::vector<content::AXEventNotificationDetails>& details_vector)
-          override {
-    for (auto& details : details_vector) {
-      if (details.event_type == event_ && details.update.nodes.size() > 0) {
+  void AccessibilityEventsReceived(
+      ui::AXTreeIDRegistry::AXTreeID ax_tree_id,
+      const ui::AXTreeUpdate& update,
+      const std::vector<content::AXEventNotificationDetails>& events) override {
+    for (auto& event : events) {
+      if (event.event_type == event_ && update.nodes.size() > 0) {
         count_++;
-        node_data_ = details.update.nodes[0];
+        node_data_ = update.nodes[0];
         loop_runner_->Quit();
       }
     }

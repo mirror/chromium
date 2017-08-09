@@ -862,8 +862,6 @@ component("base") {
     "threading/platform_thread_win.cc",
     "threading/post_task_and_reply_impl.cc",
     "threading/post_task_and_reply_impl.h",
-    "threading/scoped_may_block.cc",
-    "threading/scoped_may_block.h",
     "threading/sequence_local_storage_map.cc",
     "threading/sequence_local_storage_map.h",
     "threading/sequence_local_storage_slot.cc",
@@ -1838,6 +1836,19 @@ if (!is_ios) {
   }
 }
 
+source_set("message_loop_tests") {
+  testonly = true
+  sources = [
+    "message_loop/message_loop_test.cc",
+    "message_loop/message_loop_test.h",
+  ]
+
+  deps = [
+    ":base",
+    "//testing/gtest",
+  ]
+}
+
 if (is_win) {
   # Target to manually rebuild pe_image_test.dll which is checked into
   # base/test/data/pe_image.
@@ -2254,6 +2265,7 @@ test("base_unittests") {
   deps = [
     ":base",
     ":i18n",
+    ":message_loop_tests",
     "//base/allocator:features",
     "//base/test:native_library_test_utils",
     "//base/test:run_all_base_unittests",
@@ -2693,7 +2705,6 @@ if (is_android) {
       "test/android/javatests/src/org/chromium/base/test/util/TestFileUtil.java",
       "test/android/javatests/src/org/chromium/base/test/util/TestThread.java",
       "test/android/javatests/src/org/chromium/base/test/util/TimeoutScale.java",
-      "test/android/javatests/src/org/chromium/base/test/util/UserActionTester.java",
       "test/android/javatests/src/org/chromium/base/test/util/UrlUtils.java",
       "test/android/javatests/src/org/chromium/base/test/util/parameter/CommandLineParameter.java",
       "test/android/javatests/src/org/chromium/base/test/util/parameter/SkipCommandLineParameterization.java",

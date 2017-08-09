@@ -40,12 +40,12 @@ class MODULES_EXPORT BackgroundFetchManager final
   // Web Exposed methods defined in the IDL file.
   ScriptPromise fetch(
       ScriptState*,
-      const String& id,
+      const String& tag,
       const RequestOrUSVStringOrRequestOrUSVStringSequence& requests,
       const BackgroundFetchOptions&,
       ExceptionState&);
-  ScriptPromise get(ScriptState*, const String& id);
-  ScriptPromise getIds(ScriptState*);
+  ScriptPromise get(ScriptState*, const String& tag);
+  ScriptPromise getTags(ScriptState*);
 
   DECLARE_TRACE();
 
@@ -67,9 +67,9 @@ class MODULES_EXPORT BackgroundFetchManager final
   void DidGetRegistration(ScriptPromiseResolver*,
                           mojom::blink::BackgroundFetchError,
                           BackgroundFetchRegistration*);
-  void DidGetIds(ScriptPromiseResolver*,
-                 mojom::blink::BackgroundFetchError,
-                 const Vector<String>& ids);
+  void DidGetTags(ScriptPromiseResolver*,
+                  mojom::blink::BackgroundFetchError,
+                  const Vector<String>& tags);
 
   Member<ServiceWorkerRegistration> registration_;
   Member<BackgroundFetchBridge> bridge_;

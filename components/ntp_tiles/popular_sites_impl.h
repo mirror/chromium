@@ -5,7 +5,6 @@
 #ifndef COMPONENTS_NTP_TILES_POPULAR_SITES_IMPL_H_
 #define COMPONENTS_NTP_TILES_POPULAR_SITES_IMPL_H_
 
-#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -60,7 +59,7 @@ class PopularSitesImpl : public PopularSites, public net::URLFetcherDelegate {
   // PopularSites implementation.
   bool MaybeStartFetch(bool force_download,
                        const FinishedCallback& callback) override;
-  const std::map<SectionType, SitesVector>& sections() const override;
+  const SitesVector& sites() const override;
   GURL GetLastURLFetched() const override;
   GURL GetURLToFetch() override;
   std::string GetDirectoryToFetch() override;
@@ -96,9 +95,8 @@ class PopularSitesImpl : public PopularSites, public net::URLFetcherDelegate {
 
   std::unique_ptr<net::URLFetcher> fetcher_;
   bool is_fallback_;
-  std::map<SectionType, SitesVector> sections_;
+  SitesVector sites_;
   GURL pending_url_;
-  int version_in_pending_url_;
 
   base::WeakPtrFactory<PopularSitesImpl> weak_ptr_factory_;
 

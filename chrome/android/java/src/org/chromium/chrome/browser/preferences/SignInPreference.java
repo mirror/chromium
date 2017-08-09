@@ -97,7 +97,7 @@ public class SignInPreference
         if (SigninManager.get(getContext()).isSigninDisabledByPolicy()) {
             setupSigninDisabled();
         } else if (accountName == null) {
-            if (SigninPromoController.shouldShowPromo(SigninAccessPoint.SETTINGS)) {
+            if (SigninPromoController.shouldShowPromo()) {
                 setupNewPromo();
             } else {
                 setupOldPromo();

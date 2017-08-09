@@ -51,7 +51,7 @@
 #endif
 
 #if !defined(OS_ANDROID)
-#include "chrome/browser/ui/blocked_content/popunder_preventer.h"
+#include "chrome/browser/ui/blocked_content/app_modal_dialog_helper.h"
 #endif
 
 using autofill::PasswordForm;
@@ -338,7 +338,7 @@ void LoginHandler::AddObservers() {
 #if !defined(OS_ANDROID)
   WebContents* requesting_contents = GetWebContentsForLogin();
   if (requesting_contents)
-    popunder_preventer_.reset(new PopunderPreventer(requesting_contents));
+    dialog_helper_.reset(new AppModalDialogHelper(requesting_contents));
 #endif
 }
 
@@ -449,7 +449,7 @@ void LoginHandler::CloseContentsDeferred() {
   if (interstitial_delegate_)
     interstitial_delegate_->Proceed();
 #if !defined(OS_ANDROID)
-  popunder_preventer_.reset();
+  dialog_helper_.reset();
 #endif
 }
 

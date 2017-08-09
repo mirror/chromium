@@ -313,13 +313,13 @@ Node::Node(TreeScope* tree_scope, ConstructionType type)
 #if !defined(NDEBUG) || (defined(DUMP_NODE_STATISTICS) && DUMP_NODE_STATISTICS)
   TrackForDebugging();
 #endif
-  InstanceCounters::IncrementCounter(InstanceCounters::kNodeCounter);
+  InstanceCounters::IncrementNodeCounter();
 }
 
 Node::~Node() {
   if (!HasRareData() && !data_.node_layout_data_->IsSharedEmptyData())
     delete data_.node_layout_data_;
-  InstanceCounters::DecrementCounter(InstanceCounters::kNodeCounter);
+  InstanceCounters::DecrementNodeCounter();
 }
 
 NodeRareData* Node::RareData() const {

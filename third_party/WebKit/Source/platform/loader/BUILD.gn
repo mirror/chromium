@@ -31,6 +31,8 @@ source_set("loader") {
     "fetch/CachedMetadataHandler.h",
     "fetch/ClientHintsPreferences.cpp",
     "fetch/ClientHintsPreferences.h",
+    "fetch/CrossOriginAccessControl.cpp",
+    "fetch/CrossOriginAccessControl.h",
     "fetch/FetchContext.cpp",
     "fetch/FetchContext.h",
     "fetch/FetchInitiatorInfo.h",
@@ -97,7 +99,6 @@ source_set("loader") {
     "//components/link_header_util:link_header_util",
     "//mojo/public/cpp/system:system",
     "//storage/public/interfaces:interfaces_blink__generator",
-    "//third_party/WebKit/public:mojo_bindings_blink",
   ]
 
   public_deps = [
@@ -121,6 +122,7 @@ source_set("unit_tests") {
     "SubresourceIntegrityTest.cpp",
     "fetch/BufferingDataPipeWriterTest.cpp",
     "fetch/ClientHintsPreferencesTest.cpp",
+    "fetch/CrossOriginAccessControlTest.cpp",
     "fetch/FetchUtilsTest.cpp",
     "fetch/MemoryCacheCorrectnessTest.cpp",
     "fetch/MemoryCacheTest.cpp",

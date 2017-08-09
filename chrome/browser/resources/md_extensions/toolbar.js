@@ -6,7 +6,7 @@ cr.exportPath('extensions');
 
 cr.define('extensions', function() {
   /** @interface */
-  const ToolbarDelegate = function() {};
+  var ToolbarDelegate = function() {};
 
   ToolbarDelegate.prototype = {
     /**
@@ -22,7 +22,7 @@ cr.define('extensions', function() {
     updateAllExtensions: assertNotReached,
   };
 
-  const Toolbar = Polymer({
+  var Toolbar = Polymer({
     is: 'extensions-toolbar',
 
     behaviors: [I18nBehavior],

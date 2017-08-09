@@ -69,10 +69,12 @@ class MEDIA_EXPORT SkCanvasVideoRenderer {
                                            void* rgb_pixels,
                                            size_t row_bytes);
 
-  // Copy the visible rect size contents of texture of |video_frame| to
-  // texture |texture|. |level|, |internal_format|, |type| specify target
-  // texture |texture|. The format of |video_frame| must be
-  // VideoFrame::NATIVE_TEXTURE.
+  // Copy the contents of texture of |video_frame| to texture |texture|.
+  // |level|, |internal_format|, |type| specify target texture |texture|.
+  // The format of |video_frame| must be VideoFrame::NATIVE_TEXTURE.
+  // |copy_mode| alters how the copy is done, and takes into consideration
+  // whether the caller will clip the texture to the frame's |visible_rect|,
+  // or expects this to be done internally.
   static void CopyVideoFrameSingleTextureToGLTexture(
       gpu::gles2::GLES2Interface* gl,
       VideoFrame* video_frame,
@@ -90,8 +92,7 @@ class MEDIA_EXPORT SkCanvasVideoRenderer {
   // |level|, |internal_format|, |type| specify target texture |texture|.
   // The format of |video_frame| must be VideoFrame::NATIVE_TEXTURE.
   // |context_3d| has a GrContext that may be used during the copy.
-  // CorrectLastImageDimensions() insures that the source texture will be
-  // cropped to |visible_rect|. Returns true on success.
+  // Returns true on success.
   bool CopyVideoFrameTexturesToGLTexture(
       const Context3D& context_3d,
       gpu::gles2::GLES2Interface* destination_gl,

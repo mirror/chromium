@@ -174,9 +174,8 @@ bool AddDeviceInfo(HANDLE interface_enumerator,
 
 }  // namespace
 
-// static
-scoped_refptr<StorageDeviceList>
-RemovableStorageProvider::PopulateDeviceList() {
+bool RemovableStorageProvider::PopulateDeviceList(
+    scoped_refptr<StorageDeviceList> device_list) {
   HDEVINFO interface_enumerator = SetupDiGetClassDevs(
       &DiskClassGuid,
       NULL, // Enumerator.
@@ -186,14 +185,13 @@ RemovableStorageProvider::PopulateDeviceList() {
 
   if (interface_enumerator == INVALID_HANDLE_VALUE) {
     DPLOG(ERROR) << "SetupDiGetClassDevs failed.";
-    return nullptr;
+    return false;
   }
 
   DWORD index = 0;
   SP_DEVICE_INTERFACE_DATA interface_data;
   interface_data.cbSize = sizeof(SP_INTERFACE_DEVICE_DATA);
 
-  scoped_refptr<StorageDeviceList> device_list(new StorageDeviceList());
   while (SetupDiEnumDeviceInterfaces(
       interface_enumerator,
       NULL,                    // Device Info data.
@@ -209,11 +207,11 @@ RemovableStorageProvider::PopulateDeviceList() {
   if (error_code != ERROR_NO_MORE_ITEMS) {
     PLOG(ERROR) << "SetupDiEnumDeviceInterfaces failed";
     SetupDiDestroyDeviceInfoList(interface_enumerator);
-    return nullptr;
+    return false;
   }
 
   SetupDiDestroyDeviceInfoList(interface_enumerator);
-  return device_list;
+  return true;
 }
 
 } // namespace extensions

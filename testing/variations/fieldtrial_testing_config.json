@@ -659,7 +659,6 @@
                 {
                     "name": "Enabled",
                     "params": {
-                        "enable_quic_non_core_proxies": "true",
                         "enable_warmup": "true"
                     }
                 }
@@ -956,6 +955,25 @@
             "experiments": [
                 {
                     "name": "Enforce"
+                }
+            ]
+        }
+    ],
+    "FasterLocationReload": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "FasterLocationReload"
+                    ]
                 }
             ]
         }
@@ -1314,21 +1332,6 @@
             ]
         }
     ],
-    "MacV2Sandbox": [
-        {
-            "platforms": [
-                "mac"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "MacV2Sandbox"
-                    ]
-                }
-            ]
-        }
-    ],
     "MaxDelayableRequestsNetworkOverride": [
         {
             "platforms": [
@@ -1342,8 +1345,8 @@
                 {
                     "name": "MaxDelayable4",
                     "params": {
-                        "MaxBDPKbits1": "10",
-                        "MaxBDPKbits2": "5000",
+                        "MaxBDPKBits1": "10",
+                        "MaxBDPKBits2": "5000",
                         "MaxDelayableRequests1": "10",
                         "MaxDelayableRequests2": "4",
                         "MaxEffectiveConnectionType": "3G"
@@ -1745,29 +1748,6 @@
             ]
         }
     ],
-    "NonDelayableThrottlesDelayable": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "NonDelayableWeight2",
-                    "params": {
-                        "MaxEffectiveConnectionType": "3G",
-                        "NonDelayableWeight": "2.0"
-                    },
-                    "enable_features": [
-                        "NonDelayableThrottlesDelayable"
-                    ]
-                }
-            ]
-        }
-    ],
     "OffMainThreadFetch": [
         {
             "platforms": [
@@ -2038,6 +2018,51 @@
                     "name": "Enabled",
                     "enable_features": [
                         "PasswordMetadataFilling"
+                    ]
+                }
+            ]
+        }
+    ],
+    "PasswordProtectionPasswordFieldOnFocusPing": [
+        {
+            "platforms": [
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "SBEROnlyNoIncognito2",
+                    "params": {
+                        "extended_reporting": "true",
+                        "history_sync": "false",
+                        "incognito": "false"
+                    },
+                    "enable_features": [
+                        "PasswordFieldOnFocusPinging"
+                    ]
+                }
+            ]
+        }
+    ],
+    "PasswordProtectionProtectedPasswordEntryPing": [
+        {
+            "platforms": [
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "AllPopulation",
+                    "params": {
+                        "all_population": "true",
+                        "incognito": "true"
+                    },
+                    "enable_features": [
+                        "ProtectedPasswordEntryPinging"
                     ]
                 }
             ]
@@ -2900,24 +2925,6 @@
             ]
         }
     ],
-    "SyncPasswordReuseEvent": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "SyncPasswordReuseEvent"
-                    ]
-                }
-            ]
-        }
-    ],
     "SyncUSSAutocomplete": [
         {
             "platforms": [
@@ -2933,6 +2940,25 @@
                     "name": "Enabled",
                     "enable_features": [
                         "SyncUSSAutocomplete"
+                    ]
+                }
+            ]
+        }
+    ],
+    "SyncUserEvents": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "SyncUserEvents"
                     ]
                 }
             ]
@@ -3142,27 +3168,6 @@
                 },
                 {
                     "name": "EnabledTranslateLanguage"
-                }
-            ]
-        }
-    ],
-    "TranslateUserEvents": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "ios",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "SyncUserLanguageDetectionEvents",
-                        "SyncUserTranslationEvents"
-                    ]
                 }
             ]
         }

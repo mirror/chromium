@@ -3,15 +3,15 @@
 // found in the LICENSE file.
 
 /** @typedef {chrome.developerPrivate.ManifestError} */
-let ManifestError;
+var ManifestError;
 /** @typedef {chrome.developerPrivate.RuntimeError} */
-let RuntimeError;
+var RuntimeError;
 
 cr.define('extensions', function() {
   'use strict';
 
   /** @interface */
-  const ErrorPageDelegate = function() {};
+  var ErrorPageDelegate = function() {};
 
   ErrorPageDelegate.prototype = {
     /**
@@ -28,8 +28,10 @@ cr.define('extensions', function() {
     requestFileSource: assertNotReached,
   };
 
-  const ErrorPage = Polymer({
+  var ErrorPage = Polymer({
     is: 'extensions-error-page',
+
+    behaviors: [Polymer.NeonAnimatableBehavior],
 
     properties: {
       /** @type {!chrome.developerPrivate.ExtensionInfo|undefined} */
@@ -47,6 +49,14 @@ cr.define('extensions', function() {
       'onSelectedErrorChanged_(selectedError_)',
     ],
 
+    ready: function() {
+      /** @type {!extensions.AnimationHelper} */
+      this.animationHelper = new extensions.AnimationHelper(this, this.$.main);
+      this.animationHelper.setEntryAnimations([extensions.Animation.FADE_IN]);
+      this.animationHelper.setExitAnimations([extensions.Animation.SCALE_DOWN]);
+      this.sharedElements = {hero: this.$.main};
+    },
+
     /**
      * Watches for changes to |data| in order to fetch the corresponding
      * file source.
@@ -54,7 +64,7 @@ cr.define('extensions', function() {
      */
     observeDataChanges_: function() {
       assert(this.data);
-      const e = this.data.manifestErrors[0] || this.data.runtimeErrors[0];
+      var e = this.data.manifestErrors[0] || this.data.runtimeErrors[0];
       if (e)
         this.selectedError_ = e;
     },
@@ -100,7 +110,7 @@ cr.define('extensions', function() {
     onDeleteErrorTap_: function(event) {
       // TODO(devlin): It would be cleaner if we could cast this to a
       // PolymerDomRepeatEvent-type thing, but that doesn't exist yet.
-      const e = /** @type {!{model:Object}} */ (event);
+      var e = /** @type {!{model:Object}} */ (event);
       this.delegate.deleteErrors(this.data.id, [e.model.item.id]);
     },
 
@@ -109,8 +119,8 @@ cr.define('extensions', function() {
      * @private
      */
     onSelectedErrorChanged_: function() {
-      const error = this.selectedError_;
-      const args = {
+      var error = this.selectedError_;
+      var args = {
         extensionId: error.extensionId,
         message: error.message,
       };

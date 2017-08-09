@@ -226,13 +226,13 @@ static SelectionInFlatTree ExtendSelectionAsDirectional(
 
 static SelectionInFlatTree ExtendSelectionAsNonDirectional(
     const PositionInFlatTree& position,
-    const SelectionInFlatTree& selection,
+    const VisibleSelectionInFlatTree& selection,
     TextGranularity granularity) {
   DCHECK(!selection.IsNone());
   DCHECK(position.IsNotNull());
   // Shift+Click deselects when selection was created right-to-left
-  const PositionInFlatTree& start = selection.ComputeStartPosition();
-  const PositionInFlatTree& end = selection.ComputeEndPosition();
+  const PositionInFlatTree& start = selection.Start();
+  const PositionInFlatTree& end = selection.End();
   if (position < start) {
     return SelectionInFlatTree::Builder()
         .SetBaseAndExtent(
@@ -334,8 +334,7 @@ bool SelectionController::HandleSingleClick(
         frame_->GetEditor().Behavior().ShouldConsiderSelectionAsDirectional()
             ? ExtendSelectionAsDirectional(pos, selection.AsSelection(),
                                            granularity)
-            : ExtendSelectionAsNonDirectional(pos, selection.AsSelection(),
-                                              granularity),
+            : ExtendSelectionAsNonDirectional(pos, selection, granularity),
         granularity, HandleVisibility::kNotVisible);
     return false;
   }
@@ -485,21 +484,20 @@ bool SelectionController::UpdateSelectionForMouseDownDispatchingSelectStart(
       !target_node->GetLayoutObject()->IsSelectable())
     return false;
 
-  {
-    SelectionInFlatTree::InvalidSelectionResetter resetter(selection);
-    if (DispatchSelectStart(target_node) != DispatchEventResult::kNotCanceled)
-      return false;
-  }
+  // TODO(editing-dev): We should compute visible selection after dispatching
+  // "selectstart", once we have |SelectionInFlatTree::IsValidFor()|.
+  const VisibleSelectionInFlatTree& visible_selection =
+      CreateVisibleSelection(selection);
+
+  if (DispatchSelectStart(target_node) != DispatchEventResult::kNotCanceled)
+    return false;
 
   // |dispatchSelectStart()| can change document hosted by |m_frame|.
   if (!this->Selection().IsAvailable())
     return false;
 
-  // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
-  // needs to be audited.  See http://crbug.com/590369 for more details.
-  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-  const VisibleSelectionInFlatTree& visible_selection =
-      CreateVisibleSelection(selection);
+  if (!visible_selection.IsValidFor(this->Selection().GetDocument()))
+    return false;
 
   if (visible_selection.IsRange()) {
     selection_state_ = SelectionState::kExtendedSelection;

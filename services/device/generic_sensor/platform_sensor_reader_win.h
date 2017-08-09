@@ -14,7 +14,7 @@ namespace device {
 
 class PlatformSensorConfiguration;
 struct ReaderInitParams;
-union SensorReading;
+struct SensorReading;
 
 // Generic class that uses ISensor interface to fetch sensor data. Used
 // by PlatformSensorWin and delivers notifications via Client interface.

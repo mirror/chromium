@@ -58,11 +58,27 @@ void CompositorFrameSinkSupport::SetDestructionCallback(
 }
 
 void CompositorFrameSinkSupport::OnSurfaceActivated(Surface* surface) {
-  DCHECK(surface);
   DCHECK(surface->HasActiveFrame());
+  const cc::CompositorFrame& frame = surface->GetActiveFrame();
+  if (!seen_first_frame_activation_) {
+    // SurfaceCreated only applies for the first Surface activation.
+    seen_first_frame_activation_ = true;
+
+    gfx::Size frame_size = frame.render_pass_list.back()->output_rect.size();
+    surface_manager_->SurfaceCreated(SurfaceInfo(
+        surface->surface_id(), frame.metadata.device_scale_factor, frame_size));
+  }
+  // Fire SurfaceCreated first so that a temporary reference is added before
+  // it is potentially transformed into a real reference by the client.
   DCHECK(surface->active_referenced_surfaces());
   UpdateSurfaceReferences(surface->surface_id().local_surface_id(),
                           *surface->active_referenced_surfaces());
+  if (!surface_manager_->SurfaceModified(surface->surface_id(),
+                                         frame.metadata.begin_frame_ack)) {
+    TRACE_EVENT_INSTANT0("cc", "Damage not visible.", TRACE_EVENT_SCOPE_THREAD);
+    surface->RunDrawCallback();
+  }
+  surface_manager_->SurfaceActivated(surface);
 }
 
 void CompositorFrameSinkSupport::RefResources(
@@ -329,6 +345,7 @@ void CompositorFrameSinkSupport::UpdateNeedsBeginFramesInternal() {
 
 Surface* CompositorFrameSinkSupport::CreateSurface(
     const SurfaceInfo& surface_info) {
+  seen_first_frame_activation_ = false;
   return surface_manager_->CreateSurface(
       weak_factory_.GetWeakPtr(), surface_info,
       frame_sink_manager_->GetPrimaryBeginFrameSource(), needs_sync_tokens_);

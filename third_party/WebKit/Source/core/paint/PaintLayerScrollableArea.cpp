@@ -597,6 +597,31 @@ IntRect PaintLayerScrollableArea::VisibleContentRect(
                          border_height)));
 }
 
+LayoutSize PaintLayerScrollableArea::ClientSize() const {
+  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+    bool is_main_frame_root_layer =
+        layer_.IsRootLayer() && Box().GetDocument().GetFrame()->IsMainFrame();
+    if (is_main_frame_root_layer) {
+      LayoutSize result(Box().GetFrameView()->GetLayoutSize());
+      result -= IntSize(VerticalScrollbarWidth(), HorizontalScrollbarHeight());
+      return result;
+    }
+  }
+  return LayoutSize(Box().ClientWidth(), Box().ClientHeight());
+}
+
+IntSize PaintLayerScrollableArea::PixelSnappedClientSize() const {
+  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+    bool is_main_frame_root_layer =
+        layer_.IsRootLayer() && Box().GetDocument().GetFrame()->IsMainFrame();
+    if (is_main_frame_root_layer) {
+      return ExcludeScrollbars(Box().GetFrameView()->GetLayoutSize());
+    }
+  }
+  return IntSize(Box().PixelSnappedClientWidth(),
+                 Box().PixelSnappedClientHeight());
+}
+
 IntSize PaintLayerScrollableArea::ContentsSize() const {
   return IntSize(PixelSnappedScrollWidth(), PixelSnappedScrollHeight());
 }
@@ -702,8 +727,9 @@ bool PaintLayerScrollableArea::ShouldPlaceVerticalScrollbarOnLeft() const {
 }
 
 int PaintLayerScrollableArea::PageStep(ScrollbarOrientation orientation) const {
-  int length =
-      (orientation == kHorizontalScrollbar) ? VisibleWidth() : VisibleHeight();
+  int length = (orientation == kHorizontalScrollbar)
+                   ? Box().PixelSnappedClientWidth()
+                   : Box().PixelSnappedClientHeight();
   int min_page_step = static_cast<float>(length) *
                       ScrollableArea::MinFractionToStepWhenPaging();
   int page_step =
@@ -867,11 +893,13 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
 
     // Set up the range (and page step/line step).
     if (Scrollbar* horizontal_scrollbar = this->HorizontalScrollbar()) {
-      horizontal_scrollbar->SetProportion(VisibleWidth(),
+      int client_width = PixelSnappedClientSize().Width();
+      horizontal_scrollbar->SetProportion(client_width,
                                           OverflowRect().Width().ToInt());
     }
     if (Scrollbar* vertical_scrollbar = this->VerticalScrollbar()) {
-      vertical_scrollbar->SetProportion(VisibleHeight(),
+      int client_height = PixelSnappedClientSize().Height();
+      vertical_scrollbar->SetProportion(client_height,
                                         OverflowRect().Height().ToInt());
     }
   }
@@ -977,19 +1005,14 @@ bool PaintLayerScrollableArea::HasHorizontalOverflow() const {
   // converse problem seems to happen much less frequently in practice, so we
   // bias the logic towards preventing unwanted horizontal scrollbars, which
   // are more common and annoying.
-  int client_width =
-      VisibleContentRect(kIncludeScrollbars).Width() -
-      VerticalScrollbarWidth(kIgnorePlatformAndCSSOverlayScrollbarSize);
+  int client_width = PixelSnappedClientSize().Width();
   if (NeedsRelayout() && !HadVerticalScrollbarBeforeRelayout())
     client_width += VerticalScrollbarWidth();
   return PixelSnappedScrollWidth() > client_width;
 }
 
 bool PaintLayerScrollableArea::HasVerticalOverflow() const {
-  int client_height =
-      VisibleContentRect(kIncludeScrollbars).Height() -
-      HorizontalScrollbarHeight(kIgnorePlatformAndCSSOverlayScrollbarSize);
-  return PixelSnappedScrollHeight() > client_height;
+  return PixelSnappedScrollHeight() > PixelSnappedClientSize().Height();
 }
 
 // This function returns true if the given box requires overflow scrollbars (as
@@ -1088,12 +1111,12 @@ bool PaintLayerScrollableArea::UpdateAfterCompositingChange() {
 void PaintLayerScrollableArea::UpdateAfterOverflowRecalc() {
   UpdateScrollDimensions();
   if (Scrollbar* horizontal_scrollbar = this->HorizontalScrollbar()) {
-    int client_width = VisibleWidth();
+    int client_width = PixelSnappedClientSize().Width();
     horizontal_scrollbar->SetProportion(client_width,
                                         OverflowRect().Width().ToInt());
   }
   if (Scrollbar* vertical_scrollbar = this->VerticalScrollbar()) {
-    int client_height = VisibleHeight();
+    int client_height = PixelSnappedClientSize().Height();
     vertical_scrollbar->SetProportion(client_height,
                                       OverflowRect().Height().ToInt());
   }
@@ -1173,14 +1196,15 @@ int PaintLayerScrollableArea::HorizontalScrollbarStart(int min_x) const {
 IntSize PaintLayerScrollableArea::ScrollbarOffset(
     const Scrollbar& scrollbar) const {
   if (&scrollbar == VerticalScrollbar()) {
-    return IntSize(VerticalScrollbarStart(0, Layer()->size().Width()),
+    return IntSize(VerticalScrollbarStart(0, Box().Size().Width().ToInt()),
                    Box().BorderTop().ToInt());
   }
 
-  if (&scrollbar == HorizontalScrollbar()) {
-    return IntSize(HorizontalScrollbarStart(0),
-                   Box().BorderTop().ToInt() + VisibleHeight());
-  }
+  if (&scrollbar == HorizontalScrollbar())
+    return IntSize(
+        HorizontalScrollbarStart(0),
+        (Box().Size().Height() - Box().BorderBottom() - scrollbar.Height())
+            .ToInt());
 
   NOTREACHED();
   return IntSize();
@@ -1275,15 +1299,16 @@ void PaintLayerScrollableArea::ComputeScrollbarExistence(
       needs_horizontal_scrollbar &= HasHorizontalScrollbar();
     needs_horizontal_scrollbar &=
         Box().IsRooted() && this->HasHorizontalOverflow() &&
-        VisibleContentRect(kIncludeScrollbars).Height();
+        Box().PixelSnappedClientHeight() + Box().HorizontalScrollbarHeight() >
+            0;
   }
 
   if (Box().HasAutoVerticalScrollbar()) {
     if (option == kForbidAddingAutoBars)
       needs_vertical_scrollbar &= HasVerticalScrollbar();
-    needs_vertical_scrollbar &= Box().IsRooted() &&
-                                this->HasVerticalOverflow() &&
-                                VisibleContentRect(kIncludeScrollbars).Width();
+    needs_vertical_scrollbar &=
+        Box().IsRooted() && this->HasVerticalOverflow() &&
+        Box().PixelSnappedClientWidth() + Box().VerticalScrollbarWidth() > 0;
   }
 
   // Look for the scrollbarModes and reset the needs Horizontal & vertical
@@ -1472,13 +1497,14 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
   int resize_control_size = max(resize_control_rect.Height(), 0);
   if (HasVerticalScrollbar() &&
       VerticalScrollbar()->ShouldParticipateInHitTesting()) {
-    LayoutRect v_bar_rect(VerticalScrollbarStart(0, Layer()->size().Width()),
-                          Box().BorderTop().ToInt(),
-                          VerticalScrollbar()->ScrollbarThickness(),
-                          VisibleContentRect(kIncludeScrollbars).Height() -
-                              (HasHorizontalScrollbar()
-                                   ? HorizontalScrollbar()->ScrollbarThickness()
-                                   : resize_control_size));
+    LayoutRect v_bar_rect(
+        VerticalScrollbarStart(0, Box().Size().Width().ToInt()),
+        Box().BorderTop().ToInt(), VerticalScrollbar()->ScrollbarThickness(),
+        Box().Size().Height().ToInt() -
+            (Box().BorderTop() + Box().BorderBottom()).ToInt() -
+            (HasHorizontalScrollbar()
+                 ? HorizontalScrollbar()->ScrollbarThickness()
+                 : resize_control_size));
     if (v_bar_rect.Contains(local_point)) {
       result.SetScrollbar(VerticalScrollbar());
       return true;
@@ -1491,10 +1517,13 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
     // TODO(crbug.com/638981): Are the conversions to int intentional?
     LayoutRect h_bar_rect(
         HorizontalScrollbarStart(0),
-        Box().BorderTop().ToInt() + VisibleHeight(),
-        VisibleContentRect(kIncludeScrollbars).Width() -
-            (HasVerticalScrollbar() ? VerticalScrollbar()->ScrollbarThickness()
-                                    : resize_control_size),
+        (Box().Size().Height() - Box().BorderBottom() -
+         HorizontalScrollbar()->ScrollbarThickness())
+            .ToInt(),
+        (Box().Size().Width() - (Box().BorderLeft() + Box().BorderRight()) -
+         (HasVerticalScrollbar() ? VerticalScrollbar()->ScrollbarThickness()
+                                 : resize_control_size))
+            .ToInt(),
         HorizontalScrollbar()->ScrollbarThickness());
     if (h_bar_rect.Contains(local_point)) {
       result.SetScrollbar(HorizontalScrollbar());
@@ -1549,7 +1578,8 @@ bool PaintLayerScrollableArea::IsPointInResizeControl(
 
   IntPoint local_point =
       RoundedIntPoint(Box().AbsoluteToLocal(absolute_point, kUseTransforms));
-  IntRect local_bounds(IntPoint(), Layer()->size());
+  IntRect local_bounds(0, 0, Box().PixelSnappedWidth(),
+                       Box().PixelSnappedHeight());
   return ResizerCornerRect(local_bounds, resizer_hit_test_type)
       .Contains(local_point);
 }
@@ -1751,7 +1781,7 @@ LayoutRect PaintLayerScrollableArea::ScrollLocalRectIntoView(
     bool is_for_scroll_sequence) {
   LayoutRect local_expose_rect(rect);
   local_expose_rect.Move(-Box().BorderLeft(), -Box().BorderTop());
-  LayoutRect visible_rect(IntPoint(), VisibleContentRect().Size());
+  LayoutRect visible_rect(LayoutPoint(), ClientSize());
   LayoutRect r = ScrollAlignment::GetRectToExpose(
       visible_rect, local_expose_rect, align_x, align_y);
 
@@ -1787,7 +1817,7 @@ LayoutRect PaintLayerScrollableArea::ScrollIntoView(
   local_expose_rect =
       ScrollLocalRectIntoView(local_expose_rect, align_x, align_y, is_smooth,
                               scroll_type, is_for_scroll_sequence);
-  LayoutRect visible_rect(IntPoint(), VisibleContentRect().Size());
+  LayoutRect visible_rect(LayoutPoint(), ClientSize());
   LayoutRect intersect =
       LocalToAbsolute(Box(), Intersection(visible_rect, local_expose_rect));
   if (intersect.IsEmpty() && !visible_rect.IsEmpty() &&

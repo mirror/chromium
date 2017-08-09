@@ -359,8 +359,7 @@ void PushMessagingServiceImpl::DeliverMessageCallback(
               switches::kAllowSilentPush)) {
         notification_manager_.EnforceUserVisibleOnlyRequirements(
             requesting_origin, service_worker_registration_id,
-            base::AdaptCallbackForRepeating(
-                completion_closure_runner.Release()));
+            completion_closure_runner.Release());
       }
       break;
     case content::mojom::PushDeliveryStatus::SERVICE_WORKER_ERROR:
@@ -391,8 +390,7 @@ void PushMessagingServiceImpl::DeliverMessageCallback(
             : app_identifier.service_worker_registration_id(),
         app_id, message.sender_id,
         base::Bind(&UnregisterCallbackToClosure,
-                   base::AdaptCallbackForRepeating(
-                       completion_closure_runner.Release())));
+                   completion_closure_runner.Release()));
   }
 }
 

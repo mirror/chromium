@@ -13,7 +13,6 @@
 #include "base/compiler_specific.h"
 #include "cc/layers/content_layer_client.h"
 #include "cc/paint/paint_flags.h"
-#include "cc/paint/paint_image_builder.h"
 #include "third_party/skia/include/core/SkImage.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 #include "ui/gfx/geometry/rect.h"
@@ -67,11 +66,8 @@ class FakeContentLayerClient : public ContentLayerClient {
   void add_draw_image(sk_sp<SkImage> image,
                       const gfx::Point& point,
                       const PaintFlags& flags) {
-    add_draw_image(PaintImageBuilder()
-                       .set_id(PaintImage::GetNextId())
-                       .set_image(std::move(image))
-                       .TakePaintImage(),
-                   point, flags);
+    add_draw_image(PaintImage(PaintImage::GetNextId(), std::move(image)), point,
+                   flags);
   }
   void add_draw_image(PaintImage image,
                       const gfx::Point& point,
@@ -83,10 +79,7 @@ class FakeContentLayerClient : public ContentLayerClient {
   void add_draw_image_with_transform(sk_sp<SkImage> image,
                                      const gfx::Transform& transform,
                                      const PaintFlags& flags) {
-    ImageData data(PaintImageBuilder()
-                       .set_id(PaintImage::GetNextId())
-                       .set_image(std::move(image))
-                       .TakePaintImage(),
+    ImageData data(PaintImage(PaintImage::GetNextId(), std::move(image)),
                    transform, flags);
     draw_images_.push_back(data);
   }

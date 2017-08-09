@@ -230,20 +230,26 @@ public class DownloadTestRule extends ChromeActivityTestRule<ChromeActivity> {
         ApplicationUtils.waitForLibraryDependencies(getInstrumentation());
         final Context context = getInstrumentation().getTargetContext().getApplicationContext();
 
-        ThreadUtils.runOnUiThreadBlocking(() -> {
-            mSavedDownloadManagerService = DownloadManagerService.setDownloadManagerService(
-                    new TestDownloadManagerService(context, new SystemDownloadNotifier(context),
-                            new Handler(), UPDATE_DELAY_MILLIS));
-            DownloadController.setDownloadNotificationService(
-                    DownloadManagerService.getDownloadManagerService());
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mSavedDownloadManagerService = DownloadManagerService.setDownloadManagerService(
+                        new TestDownloadManagerService(context, new SystemDownloadNotifier(context),
+                                new Handler(), UPDATE_DELAY_MILLIS));
+                DownloadController.setDownloadNotificationService(
+                        DownloadManagerService.getDownloadManagerService());
+            }
         });
     }
 
     private void tearDown() throws Exception {
         cleanUpAllDownloads();
-        ThreadUtils.runOnUiThreadBlocking(() -> {
-            DownloadManagerService.setDownloadManagerService(mSavedDownloadManagerService);
-            DownloadController.setDownloadNotificationService(mSavedDownloadManagerService);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                DownloadManagerService.setDownloadManagerService(mSavedDownloadManagerService);
+                DownloadController.setDownloadNotificationService(mSavedDownloadManagerService);
+            }
         });
     }
 

@@ -87,9 +87,10 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
       * wallpaper.
       * @param {string} maskColor Color for the gradient mask.
       * @param {string} scrollColor Color for the small pods container.
+      * @param {string} backgroundColor Color for the whole background.
       */
-     setOverlayColors: function(maskColor, scrollColor) {
-      $('pod-row').setOverlayColors(maskColor, scrollColor);
+     setOverlayColors: function(maskColor, scrollColor, backgroundColor) {
+      $('pod-row').setOverlayColors(maskColor, scrollColor, backgroundColor);
      },
 
     /**
@@ -493,22 +494,14 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
         return;
       }
 
-      var wasForeground =
-          this.lockScreenAppsState_ === LOCK_SCREEN_APPS_STATE.FOREGROUND;
       this.lockScreenAppsState_ = state;
-
       $('login-header-bar').lockScreenAppsState = state;
       $('top-header-bar').lockScreenAppsState = state;
 
       // Reset the focused pod if app window is being shown on top of the user
       // pods. Main goal is to clear any credentials the user might have input.
-      if (state === LOCK_SCREEN_APPS_STATE.FOREGROUND) {
+      if (state === LOCK_SCREEN_APPS_STATE.FOREGROUND)
         $('pod-row').clearFocusedPod();
-      } else if (wasForeground) {
-        // If the app window was moved to background, ensure the active pod is
-        // focused.
-        $('pod-row').refocusCurrentPod();
-      }
     },
 
     /**

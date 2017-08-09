@@ -47,14 +47,14 @@
 #include "core/SVGNames.h"
 #include "core/XMLNSNames.h"
 #include "core/XMLNames.h"
+#include "core/animation/CompositorPendingAnimations.h"
 #include "core/animation/DocumentAnimations.h"
 #include "core/animation/DocumentTimeline.h"
-#include "core/animation/PendingAnimations.h"
 #include "core/css/CSSFontSelector.h"
 #include "core/css/CSSStyleDeclaration.h"
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/CSSTiming.h"
-#include "core/css/FontFaceSetDocument.h"
+#include "core/css/FontFaceSet.h"
 #include "core/css/MediaQueryMatcher.h"
 #include "core/css/PropertyRegistry.h"
 #include "core/css/StylePropertySet.h"
@@ -197,7 +197,6 @@
 #include "core/loader/NavigationScheduler.h"
 #include "core/loader/PrerendererClient.h"
 #include "core/loader/appcache/ApplicationCacheHost.h"
-#include "core/origin_trials/OriginTrials.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/EventWithHitTestResults.h"
 #include "core/page/FocusController.h"
@@ -586,7 +585,7 @@ Document::Document(const DocumentInit& initializer,
           this,
           &Document::ElementDataCacheClearTimerFired),
       timeline_(DocumentTimeline::Create(this)),
-      pending_animations_(new PendingAnimations(*this)),
+      compositor_pending_animations_(new CompositorPendingAnimations(*this)),
       template_document_host_(nullptr),
       did_associate_form_controls_timer_(
           TaskRunnerHelper::Get(TaskType::kUnspecedLoading, this),
@@ -666,20 +665,6 @@ Document::~Document() {
   // If a top document with a cache, verify that it was comprehensively
   // cleared during detach.
   DCHECK(!ax_object_cache_);
-
-  // As not all documents are destroyed before the process dies, this might miss
-  // some long-lived documents or leaked documents.
-  // TODO(hajimehoshi): Record outlive time of documents that are not destroyed
-  // before the process dies.
-  // TODO(hajimehoshi): There are some cases that a document can live after
-  // shutting down because the document can still be reffed (e.g. a document
-  // opened via window.open can be reffed by the opener even after shutting
-  // down). Detect those cases and record them independently.
-  UMA_HISTOGRAM_EXACT_LINEAR(
-      "Document.OutliveTimeAfterShutdown.DestroyedBeforeProcessDies",
-      ThreadState::Current()->GcAge() - gc_age_when_document_detached_ + 1,
-      101);
-
   InstanceCounters::DecrementCounter(InstanceCounters::kDocumentCounter);
 }
 
@@ -1055,18 +1040,14 @@ void Document::ClearImportsController() {
   imports_controller_ = nullptr;
 }
 
-HTMLImportsController* Document::EnsureImportsController() {
-  if (!imports_controller_) {
-    DCHECK(frame_);
-    imports_controller_ = HTMLImportsController::Create(*this);
-  }
-
-  return imports_controller_;
+void Document::CreateImportsController() {
+  DCHECK(!imports_controller_);
+  imports_controller_ = HTMLImportsController::Create(*this);
 }
 
 HTMLImportLoader* Document::ImportLoader() const {
   if (!imports_controller_)
-    return nullptr;
+    return 0;
   return imports_controller_->LoaderFor(*this);
 }
 
@@ -2025,6 +2006,24 @@ void Document::InheritHtmlAndBodyElementStyles(StyleRecalcChange change) {
     GetLayoutViewItem().SetStyle(new_style);
     SetupFontBuilder(*new_style);
   }
+
+  if (body) {
+    if (const ComputedStyle* style = body->GetComputedStyle()) {
+      if (style->Direction() != root_direction ||
+          style->GetWritingMode() != root_writing_mode)
+        body->SetNeedsStyleRecalc(kSubtreeStyleChange,
+                                  StyleChangeReasonForTracing::Create(
+                                      StyleChangeReason::kWritingModeChange));
+    }
+  }
+
+  if (const ComputedStyle* style = documentElement()->GetComputedStyle()) {
+    if (style->Direction() != root_direction ||
+        style->GetWritingMode() != root_writing_mode)
+      documentElement()->SetNeedsStyleRecalc(
+          kSubtreeStyleChange, StyleChangeReasonForTracing::Create(
+                                   StyleChangeReason::kWritingModeChange));
+  }
 }
 
 #if DCHECK_IS_ON()
@@ -2740,8 +2739,6 @@ void Document::Shutdown() {
   // should be renamed, or this setting of the frame to 0 could be made
   // explicit in each of the callers of Document::detachLayoutTree().
   frame_ = nullptr;
-
-  gc_age_when_document_detached_ = ThreadState::Current()->GcAge();
 }
 
 void Document::RemoveAllEventListeners() {
@@ -4804,7 +4801,7 @@ Event* Document::createEvent(ScriptState* script_state,
       // createEvent for TouchEvent should throw DOM exception if touch event
       // feature detection is not enabled. See crbug.com/392584#c22
       if (DeprecatedEqualIgnoringCase(event_type, "TouchEvent") &&
-          !OriginTrials::touchEventFeatureDetectionEnabled(execution_context))
+          !RuntimeEnabledFeatures::TouchEventFeatureDetectionEnabled())
         break;
       return event;
     }
@@ -6428,12 +6425,16 @@ TouchList* Document::createTouchList(HeapVector<Member<Touch>>& touches) const {
 
 DocumentLoader* Document::Loader() const {
   if (!frame_)
-    return nullptr;
+    return 0;
+
+  DocumentLoader* loader = frame_->Loader().GetDocumentLoader();
+  if (!loader)
+    return 0;
 
   if (frame_->GetDocument() != this)
-    return nullptr;
+    return 0;
 
-  return frame_->Loader().GetDocumentLoader();
+  return loader;
 }
 
 Node* EventTargetNodeForDocument(Document* doc) {
@@ -6952,7 +6953,7 @@ DEFINE_TRACE(Document) {
   visitor->Trace(user_action_elements_);
   visitor->Trace(svg_extensions_);
   visitor->Trace(timeline_);
-  visitor->Trace(pending_animations_);
+  visitor->Trace(compositor_pending_animations_);
   visitor->Trace(context_document_);
   visitor->Trace(canvas_font_cache_);
   visitor->Trace(intersection_observer_controller_);
@@ -6996,9 +6997,8 @@ DEFINE_TRACE_WRAPPERS(Document) {
   // Cannot trace in Supplementable<Document> as it is part of platform/ and
   // thus cannot refer to ScriptWrappableVisitor.
   visitor->TraceWrappersWithManualWriteBarrier(
-      static_cast<FontFaceSetDocument*>(
-          Supplementable<Document>::supplements_.at(
-              FontFaceSetDocument::SupplementName())));
+      static_cast<FontFaceSet*>(Supplementable<Document>::supplements_.at(
+          FontFaceSet::SupplementName())));
   ContainerNode::TraceWrappers(visitor);
 }
 

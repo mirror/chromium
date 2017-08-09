@@ -25,7 +25,6 @@ const CGFloat kTileWidth = 73;
 
 @synthesize faviconView = _faviconView;
 @synthesize titleLabel = _titleLabel;
-@synthesize URL = _URL;
 
 #pragma mark - Public
 
@@ -51,8 +50,6 @@ const CGFloat kTileWidth = 73;
     stack.spacing = kSpaceFaviconTitle;
     stack.alignment = UIStackViewAlignmentCenter;
     stack.translatesAutoresizingMaskIntoConstraints = NO;
-    stack.isAccessibilityElement = NO;
-    stack.userInteractionEnabled = NO;
     [self addSubview:stack];
     AddSameConstraints(self, stack);
 
@@ -61,8 +58,6 @@ const CGFloat kTileWidth = 73;
       [_faviconView.widthAnchor constraintEqualToConstant:kFaviconSize],
       [_faviconView.heightAnchor constraintEqualToConstant:kFaviconSize],
     ]];
-
-    self.translatesAutoresizingMaskIntoConstraints = NO;
   }
   return self;
 }

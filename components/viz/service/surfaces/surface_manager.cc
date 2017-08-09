@@ -431,24 +431,14 @@ bool SurfaceManager::SurfaceModified(const SurfaceId& surface_id,
   return changed;
 }
 
-void SurfaceManager::FirstSurfaceActivation(const SurfaceInfo& surface_info) {
+void SurfaceManager::SurfaceCreated(const SurfaceInfo& surface_info) {
   CHECK(thread_checker_.CalledOnValidThread());
 
   for (auto& observer : observer_list_)
-    observer.OnFirstSurfaceActivation(surface_info);
+    observer.OnSurfaceCreated(surface_info);
 }
 
 void SurfaceManager::SurfaceActivated(Surface* surface) {
-  // Trigger a display frame if necessary.
-  const cc::CompositorFrame& frame = surface->GetActiveFrame();
-  if (!SurfaceModified(surface->surface_id(), frame.metadata.begin_frame_ack)) {
-    TRACE_EVENT_INSTANT0("cc", "Damage not visible.", TRACE_EVENT_SCOPE_THREAD);
-    surface->RunDrawCallback();
-  }
-
-  for (auto& observer : observer_list_)
-    observer.OnSurfaceActivated(surface->surface_id());
-
   dependency_tracker_.OnSurfaceActivated(surface);
 }
 

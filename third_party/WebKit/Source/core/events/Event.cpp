@@ -272,10 +272,8 @@ void Event::InitEventPath(Node& node) {
   }
 }
 
-ScriptValue Event::path(ScriptState* script_state) const {
-  return ScriptValue(
-      script_state,
-      ToV8(PathInternal(script_state, kNonEmptyAfterDispatch), script_state));
+HeapVector<Member<EventTarget>> Event::path(ScriptState* script_state) const {
+  return PathInternal(script_state, kNonEmptyAfterDispatch);
 }
 
 HeapVector<Member<EventTarget>> Event::composedPath(

@@ -107,6 +107,7 @@ class MEDIA_EXPORT AudioManagerBase : public AudioManager {
   // AudioManager:
   void ShutdownOnAudioThread() override;
   base::string16 GetAudioInputDeviceModel() override;
+  void ShowAudioInputSettings() override;
 
   void GetAudioInputDeviceDescriptions(
       AudioDeviceDescriptions* device_descriptions) final;

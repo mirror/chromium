@@ -69,17 +69,8 @@ public interface PaymentApp {
     boolean supportsMethodsAndData(Map<String, PaymentMethodData> methodDataMap);
 
     /**
-     * Gets the preferred related application Ids of this app. This app will be hidden if the
-     * preferred applications are exist. The return, for example, could be {"com.bobpay",
-     * "com.alicepay"}.
-     */
-    @Nullable
-    Set<String> getPreferredRelatedApplicationIds();
-
-    /**
-     * Returns the identifier for this payment app to be saved in user preferences. For
-     * example, this can be "autofill", "https://android.com/pay", or
-     * "com.example.app.ExamplePaymentApp".
+     * Returns the identifier for this payment app to be saved in user preferences. For example,
+     * this can be "autofill", "https://android.com/pay", or "com.example.app.ExamplePaymentApp".
      *
      * @return The identifier for this payment app.
      */

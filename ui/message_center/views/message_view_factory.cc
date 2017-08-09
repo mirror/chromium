@@ -5,7 +5,7 @@
 #include "ui/message_center/views/message_view_factory.h"
 
 #include "base/command_line.h"
-#include "ui/message_center/message_center.h"
+#include "ui/message_center/message_center_switches.h"
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/views/notification_view.h"
 #include "ui/message_center/views/notification_view_md.h"
@@ -26,13 +26,23 @@ MessageView* MessageViewFactory::Create(MessageCenterController* controller,
     case NOTIFICATION_TYPE_IMAGE:
     case NOTIFICATION_TYPE_MULTIPLE:
     case NOTIFICATION_TYPE_SIMPLE:
-    case NOTIFICATION_TYPE_PROGRESS:
+    case NOTIFICATION_TYPE_PROGRESS: {
+      bool new_style_notification_enabled = false;  // default value
+      if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+              switches::kEnableMessageCenterNewStyleNotification)) {
+        new_style_notification_enabled = true;
+      } else if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+                     switches::kDisableMessageCenterNewStyleNotification)) {
+        new_style_notification_enabled = false;
+      }
+
       // All above roads lead to the generic NotificationView.
-      if (MessageCenter::IsNewStyleNotificationEnabled())
+      if (new_style_notification_enabled)
         notification_view = new NotificationViewMD(controller, notification);
       else
         notification_view = new NotificationView(controller, notification);
       break;
+    }
 #if defined(TOOLKIT_VIEWS) && !defined(OS_MACOSX)
     case NOTIFICATION_TYPE_CUSTOM:
       notification_view =

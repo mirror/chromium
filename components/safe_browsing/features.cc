@@ -31,17 +31,20 @@ const base::Feature kLocalDatabaseManagerEnabled{
     base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kPasswordFieldOnFocusPinging{
-    "PasswordFieldOnFocusPinging", base::FEATURE_ENABLED_BY_DEFAULT};
+    "PasswordFieldOnFocusPinging", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kPasswordProtectionInterstitial{
     "PasswordProtectionInterstitial", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kProtectedPasswordEntryPinging{
-    "ProtectedPasswordEntryPinging", base::FEATURE_ENABLED_BY_DEFAULT};
+    "ProtectedPasswordEntryPinging", base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kSyncPasswordReuseEvent{"SyncPasswordReuseEvent",
-                                            base::FEATURE_DISABLED_BY_DEFAULT};
-
+// Specifies which non-resource HTML Elements to collect based on their tag and
+// attributes. It's a single param containing a comma-separated list of pairs.
+// For example: "tag1,id,tag1,height,tag2,foo" - this will collect elements with
+// tag "tag1" that have attribute "id" or "height" set, and elements of tag
+// "tag2" if they have attribute "foo" set. All tag names and attributes should
+// be lower case.
 const base::Feature kThreatDomDetailsTagAndAttributeFeature{
     "ThreatDomDetailsTagAttributes", base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -63,7 +66,6 @@ constexpr struct {
     {&kPasswordFieldOnFocusPinging, true},
     {&kPasswordProtectionInterstitial, false},
     {&kProtectedPasswordEntryPinging, true},
-    {&kSyncPasswordReuseEvent, true},
     {&kThreatDomDetailsTagAndAttributeFeature, false},
     {&kV4OnlyEnabled, true},
 };

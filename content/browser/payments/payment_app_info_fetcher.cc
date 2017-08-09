@@ -27,13 +27,8 @@ const int kPaymentAppMinimumIconSize = 0;
 
 }  // namespace
 
-PaymentAppInfoFetcher::PaymentAppInfo::PaymentAppInfo() {}
-PaymentAppInfoFetcher::PaymentAppInfo::~PaymentAppInfo() {}
-
 PaymentAppInfoFetcher::PaymentAppInfoFetcher()
-    : context_process_id_(-1),
-      context_frame_id_(-1),
-      fetched_payment_app_info_(base::MakeUnique<PaymentAppInfo>()) {}
+    : context_process_id_(-1), context_frame_id_(-1) {}
 PaymentAppInfoFetcher::~PaymentAppInfoFetcher() {}
 
 void PaymentAppInfoFetcher::Start(
@@ -98,29 +93,10 @@ void PaymentAppInfoFetcher::FetchPaymentAppManifestCallback(
     return;
   }
 
-  fetched_payment_app_info_->prefer_related_applications =
-      manifest.prefer_related_applications;
-  for (const auto& related_application : manifest.related_applications) {
-    fetched_payment_app_info_->related_applications.emplace_back(
-        StoredRelatedApplication());
-    if (!related_application.platform.is_null()) {
-      base::UTF16ToUTF8(
-          related_application.platform.string().c_str(),
-          related_application.platform.string().length(),
-          &(fetched_payment_app_info_->related_applications.back().platform));
-    }
-    if (!related_application.id.is_null()) {
-      base::UTF16ToUTF8(
-          related_application.id.string().c_str(),
-          related_application.id.string().length(),
-          &(fetched_payment_app_info_->related_applications.back().id));
-    }
-  }
-
   if (manifest.name.is_null() ||
       !base::UTF16ToUTF8(manifest.name.string().c_str(),
                          manifest.name.string().length(),
-                         &(fetched_payment_app_info_->name))) {
+                         &fetched_payment_app_name_)) {
     PostPaymentAppInfoFetchResultToIOThread();
     return;
   }
@@ -167,16 +143,17 @@ void PaymentAppInfoFetcher::OnIconFetched(const SkBitmap& icon) {
   scoped_refptr<base::RefCountedMemory> raw_data = decoded_image.As1xPNGBytes();
   base::Base64Encode(
       base::StringPiece(raw_data->front_as<char>(), raw_data->size()),
-      &(fetched_payment_app_info_->icon));
+      &fetched_payment_app_icon_);
   PostPaymentAppInfoFetchResultToIOThread();
 }
 
 void PaymentAppInfoFetcher::PostPaymentAppInfoFetchResultToIOThread() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                          base::BindOnce(std::move(callback_),
-                                         std::move(fetched_payment_app_info_)));
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(std::move(callback_), fetched_payment_app_name_,
+                     fetched_payment_app_icon_));
 }
 
 }  // namespace content

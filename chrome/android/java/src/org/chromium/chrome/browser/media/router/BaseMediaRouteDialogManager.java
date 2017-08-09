@@ -8,12 +8,12 @@ import android.app.Activity;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.media.MediaRouteSelector;
 import android.support.v7.media.MediaRouter;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import org.chromium.base.ApplicationStatus;
+import org.chromium.chrome.browser.media.router.cast.MediaSource;
 
 import javax.annotation.Nullable;
 
@@ -56,8 +56,7 @@ public abstract class BaseMediaRouteDialogManager implements MediaRouteDialogMan
         }
     }
 
-    private final String mSourceId;
-    private final MediaRouteSelector mRouteSelector;
+    private final MediaSource mMediaSource;
     private final MediaRouter mAndroidMediaRouter;
     private final MediaRouteDialogDelegate mDelegate;
 
@@ -103,10 +102,8 @@ public abstract class BaseMediaRouteDialogManager implements MediaRouteDialogMan
         return mDialogFragment != null && mDialogFragment.isVisible();
     }
 
-    protected BaseMediaRouteDialogManager(
-            String sourceId, MediaRouteSelector routeSelector, MediaRouteDialogDelegate delegate) {
-        mSourceId = sourceId;
-        mRouteSelector = routeSelector;
+    protected BaseMediaRouteDialogManager(MediaSource source, MediaRouteDialogDelegate delegate) {
+        mMediaSource = source;
         mAndroidMediaRouter = ChromeMediaRouter.getAndroidMediaRouter();
         mDelegate = delegate;
     }
@@ -129,11 +126,7 @@ public abstract class BaseMediaRouteDialogManager implements MediaRouteDialogMan
         return mAndroidMediaRouter;
     }
 
-    protected String sourceId() {
-        return mSourceId;
-    }
-
-    protected MediaRouteSelector routeSelector() {
-        return mRouteSelector;
+    protected MediaSource mediaSource() {
+        return mMediaSource;
     }
 }

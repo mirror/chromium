@@ -28,8 +28,7 @@ class BrowserSideSender {
     return scripts_info;
   }
 
-  const GURL& TransferInstalledScript(int64_t body_size,
-                                      int64_t meta_data_size) {
+  const GURL& TransferInstalledScript() {
     EXPECT_FALSE(body_handle_.is_valid());
     EXPECT_FALSE(meta_data_handle_.is_valid());
     auto script_info = mojom::ServiceWorkerScriptInfo::New();
@@ -39,8 +38,6 @@ class BrowserSideSender {
               mojo::CreateDataPipe(nullptr, &body_handle_, &script_info->body));
     EXPECT_EQ(MOJO_RESULT_OK, mojo::CreateDataPipe(nullptr, &meta_data_handle_,
                                                    &script_info->meta_data));
-    script_info->body_size = body_size;
-    script_info->meta_data_size = meta_data_size;
     manager_->TransferInstalledScript(std::move(script_info));
     next_transfer_index_++;
     return transferring_url;
@@ -58,15 +55,13 @@ class BrowserSideSender {
 
   void FinishTransferMetaData() { meta_data_handle_.reset(); }
 
-  void ResetManager() { manager_.reset(); }
-
   const std::vector<GURL>& installed_urls() const { return installed_urls_; }
 
  private:
   void PushDataPipe(const std::string& data,
                     const mojo::DataPipeProducerHandle& handle) {
-    // Send |data| with null terminator.
     ASSERT_TRUE(handle.is_valid());
+    // Send |data| with null terminator.
     uint32_t written_bytes = data.size() + 1;
     MojoResult rv = handle.WriteData(data.c_str(), &written_bytes,
                                      MOJO_WRITE_DATA_FLAG_NONE);
@@ -201,10 +196,8 @@ TEST_F(WebServiceWorkerInstalledScriptsManagerImplTest, GetRawScriptData) {
     base::WaitableEvent* get_raw_script_data_waiter =
         GetRawScriptDataOnWorkerThread(kScriptUrl, &script_data);
 
-    // Start transferring the script. +1 for null terminator.
-    EXPECT_EQ(kScriptUrl,
-              sender.TransferInstalledScript(kExpectedBody.size() + 1,
-                                             kExpectedMetaData.size() + 1));
+    // Start transferring the script.
+    EXPECT_EQ(kScriptUrl, sender.TransferInstalledScript());
     sender.PushBody(kExpectedBody);
     sender.PushMetaData(kExpectedMetaData);
     // GetRawScriptData should be blocked until body and meta data transfer are
@@ -216,7 +209,6 @@ TEST_F(WebServiceWorkerInstalledScriptsManagerImplTest, GetRawScriptData) {
     // Wait for the script's arrival.
     get_raw_script_data_waiter->Wait();
     ASSERT_TRUE(script_data);
-    EXPECT_TRUE(script_data->IsValid());
     ASSERT_EQ(1u, script_data->ScriptTextChunks().size());
     ASSERT_EQ(kExpectedBody.size() + 1,
               script_data->ScriptTextChunks()[0].size());
@@ -233,132 +225,7 @@ TEST_F(WebServiceWorkerInstalledScriptsManagerImplTest, GetRawScriptData) {
     std::unique_ptr<RawScriptData> script_data;
     GetRawScriptDataOnWorkerThread(kScriptUrl, &script_data)->Wait();
     // This should not be blocked because the script has already been received.
-    // nullptr will be returned after the data has already been taken.
-    EXPECT_EQ(nullptr, script_data.get());
-  }
-}
-
-TEST_F(WebServiceWorkerInstalledScriptsManagerImplTest,
-       EarlyDisconnectionBody) {
-  const GURL kScriptUrl = GURL("https://example.com/installed1.js");
-  const GURL kUnknownScriptUrl = GURL("https://example.com/not_installed.js");
-
-  BrowserSideSender sender({kScriptUrl});
-  CreateInstalledScriptsManager(sender.CreateAndBind());
-
-  {
-    std::unique_ptr<RawScriptData> script_data;
-    const std::string kExpectedBody = "This is a script body.";
-    const std::string kExpectedMetaData = "This is a meta data.";
-    base::WaitableEvent* get_raw_script_data_waiter =
-        GetRawScriptDataOnWorkerThread(kScriptUrl, &script_data);
-
-    // Start transferring the script.
-    // Body is expected to be 100 bytes larger than kExpectedBody, but sender
-    // only sends kExpectedBody and a null byte (kExpectedBody.size() + 1 bytes
-    // in total).
-    EXPECT_EQ(kScriptUrl,
-              sender.TransferInstalledScript(kExpectedBody.size() + 100,
-                                             kExpectedMetaData.size() + 1));
-    sender.PushBody(kExpectedBody);
-    sender.PushMetaData(kExpectedMetaData);
-    // GetRawScriptData should be blocked until body and meta data transfer are
-    // finished.
-    EXPECT_FALSE(get_raw_script_data_waiter->IsSignaled());
-    sender.FinishTransferBody();
-    sender.FinishTransferMetaData();
-
-    // Wait for the script's arrival.
-    get_raw_script_data_waiter->Wait();
-    // script_data->IsValid() should return false since the data pipe for body
-    // gets disconnected during sending.
-    ASSERT_TRUE(script_data);
-    EXPECT_FALSE(script_data->IsValid());
-  }
-
-  {
-    std::unique_ptr<RawScriptData> script_data;
-    GetRawScriptDataOnWorkerThread(kScriptUrl, &script_data)->Wait();
-    // This should not be blocked because the script won't arrive. nullptr will
-    // be returned when reading again.
-    EXPECT_EQ(nullptr, script_data.get());
-  }
-}
-
-TEST_F(WebServiceWorkerInstalledScriptsManagerImplTest,
-       EarlyDisconnectionMetaData) {
-  const GURL kScriptUrl = GURL("https://example.com/installed1.js");
-  const GURL kUnknownScriptUrl = GURL("https://example.com/not_installed.js");
-
-  BrowserSideSender sender({kScriptUrl});
-  CreateInstalledScriptsManager(sender.CreateAndBind());
-
-  {
-    std::unique_ptr<RawScriptData> script_data;
-    const std::string kExpectedBody = "This is a script body.";
-    const std::string kExpectedMetaData = "This is a meta data.";
-    base::WaitableEvent* get_raw_script_data_waiter =
-        GetRawScriptDataOnWorkerThread(kScriptUrl, &script_data);
-
-    // Start transferring the script.
-    // Meta data is expected to be 100 bytes larger than kExpectedMetaData, but
-    // sender only sends kExpectedMetaData and a null byte
-    // (kExpectedMetaData.size() + 1 bytes in total).
-    EXPECT_EQ(kScriptUrl,
-              sender.TransferInstalledScript(kExpectedBody.size() + 1,
-                                             kExpectedMetaData.size() + 100));
-    sender.PushBody(kExpectedBody);
-    sender.PushMetaData(kExpectedMetaData);
-    // GetRawScriptData should be blocked until body and meta data transfer are
-    // finished.
-    EXPECT_FALSE(get_raw_script_data_waiter->IsSignaled());
-    sender.FinishTransferBody();
-    sender.FinishTransferMetaData();
-
-    // Wait for the script's arrival.
-    get_raw_script_data_waiter->Wait();
-    // script_data->IsValid() should return false since the data pipe for meta
-    // data gets disconnected during sending.
-    ASSERT_TRUE(script_data);
-    EXPECT_FALSE(script_data->IsValid());
-  }
-
-  {
-    std::unique_ptr<RawScriptData> script_data;
-    GetRawScriptDataOnWorkerThread(kScriptUrl, &script_data)->Wait();
-    // This should not be blocked because the script won't arrive. nullptr will
-    // be returned when reading again.
-    EXPECT_EQ(nullptr, script_data.get());
-  }
-}
-
-TEST_F(WebServiceWorkerInstalledScriptsManagerImplTest,
-       EarlyDisconnectionManager) {
-  const GURL kScriptUrl = GURL("https://example.com/installed1.js");
-  const GURL kUnknownScriptUrl = GURL("https://example.com/not_installed.js");
-
-  BrowserSideSender sender({kScriptUrl});
-  CreateInstalledScriptsManager(sender.CreateAndBind());
-
-  {
-    std::unique_ptr<RawScriptData> script_data;
-    base::WaitableEvent* get_raw_script_data_waiter =
-        GetRawScriptDataOnWorkerThread(kScriptUrl, &script_data);
-
-    // Reset the Mojo connection before sending the script.
-    EXPECT_FALSE(get_raw_script_data_waiter->IsSignaled());
-    sender.ResetManager();
-
-    // Wait for the script's arrival.
-    get_raw_script_data_waiter->Wait();
-    // |script_data| should be nullptr since no data will arrive.
-    EXPECT_FALSE(script_data);
-  }
-
-  {
-    std::unique_ptr<RawScriptData> script_data;
-    GetRawScriptDataOnWorkerThread(kScriptUrl, &script_data)->Wait();
-    // This should not be blocked because data will not arrive anymore.
+    // nullptr will be served after the data has already been taken.
     EXPECT_EQ(nullptr, script_data.get());
   }
 }
