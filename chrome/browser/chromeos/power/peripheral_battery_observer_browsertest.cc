@@ -63,76 +63,67 @@ IN_PROC_BROWSER_TEST_F(PeripheralBatteryObserverTest, Basic) {
   base::SimpleTestTickClock clock;
   observer_->set_testing_clock(&clock);
 
-  NotificationUIManager* notification_manager =
-      g_browser_process->notification_ui_manager();
+  message_center::MessageCenter* message_center =
+      message_center::MessageCenter::Get();
 
   // Level 50 at time 100, no low-battery notification.
   clock.Advance(base::TimeDelta::FromSeconds(100));
   observer_->PeripheralBatteryStatusReceived(kTestBatteryPath,
                                              kTestDeviceName, 50);
-  EXPECT_EQ(observer_->batteries_.count(kTestBatteryAddress), 1u);
+  EXPECT_EQ(1u, observer_->batteries_.count(kTestBatteryAddress));
 
   const PeripheralBatteryObserver::BatteryInfo& info =
       observer_->batteries_[kTestBatteryAddress];
 
-  EXPECT_EQ(info.name, kTestDeviceName);
-  EXPECT_EQ(info.level, 50);
-  EXPECT_EQ(info.last_notification_timestamp, base::TimeTicks());
-  EXPECT_FALSE(notification_manager->FindById(
-                   kTestBatteryAddress,
-                   NotificationUIManager::GetProfileID(
-                       ProfileManager::GetPrimaryUserProfile())) != NULL);
+  EXPECT_EQ(kTestDeviceName, info.name);
+  EXPECT_EQ(50, info.level);
+  EXPECT_EQ(base::TimeTicks(), info.last_notification_timestamp);
+  EXPECT_FALSE(message_center->FindVisibleNotificationById(
+                   kTestBatteryAddress) != nullptr);
 
   // Level 5 at time 110, low-battery notification.
   clock.Advance(base::TimeDelta::FromSeconds(10));
   observer_->PeripheralBatteryStatusReceived(kTestBatteryPath,
                                              kTestDeviceName, 5);
-  EXPECT_EQ(info.level, 5);
-  EXPECT_EQ(info.last_notification_timestamp, clock.NowTicks());
-  EXPECT_TRUE(notification_manager->FindById(
-                  kTestBatteryAddress,
-                  NotificationUIManager::GetProfileID(
-                      ProfileManager::GetPrimaryUserProfile())) != NULL);
+  EXPECT_EQ(5, info.level);
+  EXPECT_EQ(clock.NowTicks(), info.last_notification_timestamp);
+  EXPECT_TRUE(message_center->FindVisibleNotificationById(
+                  kTestBatteryAddress) != nullptr);
 
   // Verify that the low-battery notification for stylus does not show up.
-  EXPECT_TRUE(message_center::MessageCenter::Get()->FindVisibleNotificationById(
-                  PeripheralBatteryObserver::kStylusNotificationId) == nullptr);
+  EXPECT_FALSE(message_center->FindVisibleNotificationById(
+                   PeripheralBatteryObserver::kStylusNotificationId) !=
+               nullptr);
 
   // Level -1 at time 115, cancel previous notification
   clock.Advance(base::TimeDelta::FromSeconds(5));
   observer_->PeripheralBatteryStatusReceived(kTestBatteryPath,
                                              kTestDeviceName, -1);
-  EXPECT_EQ(info.level, 5);
-  EXPECT_EQ(info.last_notification_timestamp,
-            clock.NowTicks() - base::TimeDelta::FromSeconds(5));
-  EXPECT_FALSE(notification_manager->FindById(
-                   kTestBatteryAddress,
-                   NotificationUIManager::GetProfileID(
-                       ProfileManager::GetPrimaryUserProfile())) != NULL);
+  EXPECT_EQ(5, info.level);
+  EXPECT_EQ(clock.NowTicks() - base::TimeDelta::FromSeconds(5),
+            info.last_notification_timestamp);
+  EXPECT_FALSE(message_center->FindVisibleNotificationById(
+                   kTestBatteryAddress) != nullptr);
 
   // Level 50 at time 120, no low-battery notification.
   clock.Advance(base::TimeDelta::FromSeconds(5));
   observer_->PeripheralBatteryStatusReceived(kTestBatteryPath,
                                              kTestDeviceName, 50);
-  EXPECT_EQ(info.level, 50);
-  EXPECT_EQ(info.last_notification_timestamp,
-            clock.NowTicks() - base::TimeDelta::FromSeconds(10));
-  EXPECT_FALSE(notification_manager->FindById(
-                   kTestBatteryAddress,
-                   NotificationUIManager::GetProfileID(
-                       ProfileManager::GetPrimaryUserProfile())) != NULL);
+  EXPECT_EQ(50, info.level);
+  EXPECT_EQ(clock.NowTicks() - base::TimeDelta::FromSeconds(10),
+            info.last_notification_timestamp);
+  EXPECT_FALSE(message_center->FindVisibleNotificationById(
+                   kTestBatteryAddress) != nullptr);
 
   // Level 5 at time 130, no low-battery notification (throttling).
   clock.Advance(base::TimeDelta::FromSeconds(10));
   observer_->PeripheralBatteryStatusReceived(kTestBatteryPath,
                                              kTestDeviceName, 5);
-  EXPECT_EQ(info.level, 5);
-  EXPECT_EQ(info.last_notification_timestamp,
-            clock.NowTicks() - base::TimeDelta::FromSeconds(20));
-  EXPECT_FALSE(notification_manager->FindById(
-                   kTestBatteryAddress,
-                   NotificationUIManager::GetProfileID(
-                       ProfileManager::GetPrimaryUserProfile())) != NULL);
+  EXPECT_EQ(5, info.level);
+  EXPECT_EQ(clock.NowTicks() - base::TimeDelta::FromSeconds(20),
+            info.last_notification_timestamp);
+  EXPECT_FALSE(message_center->FindVisibleNotificationById(
+                   kTestBatteryAddress) != nullptr);
 }
 
 IN_PROC_BROWSER_TEST_F(PeripheralBatteryObserverTest, InvalidBatteryInfo) {
@@ -158,22 +149,18 @@ IN_PROC_BROWSER_TEST_F(PeripheralBatteryObserverTest, InvalidBatteryInfo) {
 }
 
 IN_PROC_BROWSER_TEST_F(PeripheralBatteryObserverTest, DeviceRemove) {
-  NotificationUIManager* notification_manager =
-      g_browser_process->notification_ui_manager();
+  message_center::MessageCenter* message_center =
+      message_center::MessageCenter::Get();
 
   observer_->PeripheralBatteryStatusReceived(kTestBatteryPath,
                                              kTestDeviceName, 5);
-  EXPECT_EQ(observer_->batteries_.count(kTestBatteryAddress), 1u);
-  EXPECT_TRUE(notification_manager->FindById(
-                  kTestBatteryAddress,
-                  NotificationUIManager::GetProfileID(
-                      ProfileManager::GetPrimaryUserProfile())) != NULL);
+  EXPECT_EQ(1u, observer_->batteries_.count(kTestBatteryAddress));
+  EXPECT_TRUE(message_center->FindVisibleNotificationById(
+                  kTestBatteryAddress) != nullptr);
 
   observer_->RemoveBattery(kTestBatteryAddress);
-  EXPECT_FALSE(notification_manager->FindById(
-                   kTestBatteryAddress,
-                   NotificationUIManager::GetProfileID(
-                       ProfileManager::GetPrimaryUserProfile())) != NULL);
+  EXPECT_FALSE(message_center->FindVisibleNotificationById(
+                   kTestBatteryAddress) != nullptr);
 }
 
 IN_PROC_BROWSER_TEST_F(PeripheralBatteryObserverTest, StylusNotification) {
@@ -196,8 +183,9 @@ IN_PROC_BROWSER_TEST_F(PeripheralBatteryObserverTest, StylusNotification) {
   // notification is shown.
   observer_->PeripheralBatteryStatusReceived(kTestBatteryPath, kTestStylusName,
                                              50);
-  EXPECT_TRUE(message_center->FindVisibleNotificationById(
-                  PeripheralBatteryObserver::kStylusNotificationId) == nullptr);
+  EXPECT_FALSE(message_center->FindVisibleNotificationById(
+                   PeripheralBatteryObserver::kStylusNotificationId) !=
+               nullptr);
 
   // Verify that when the battery level is 5, a stylus low battery notification
   // is shown. Also check that a non stylus device low battery notification will
@@ -206,15 +194,16 @@ IN_PROC_BROWSER_TEST_F(PeripheralBatteryObserverTest, StylusNotification) {
                                              5);
   EXPECT_TRUE(message_center->FindVisibleNotificationById(
                   PeripheralBatteryObserver::kStylusNotificationId) != nullptr);
-  EXPECT_TRUE(message_center->FindVisibleNotificationById(
-                  kTestBatteryAddress) == nullptr);
+  EXPECT_FALSE(message_center->FindVisibleNotificationById(
+                   kTestBatteryAddress) != nullptr);
 
   // Verify that when the battery level is -1, the previous stylus low battery
   // notification is cancelled.
   observer_->PeripheralBatteryStatusReceived(kTestBatteryPath, kTestStylusName,
                                              -1);
-  EXPECT_TRUE(message_center->FindVisibleNotificationById(
-                  PeripheralBatteryObserver::kStylusNotificationId) == nullptr);
+  EXPECT_FALSE(message_center->FindVisibleNotificationById(
+                   PeripheralBatteryObserver::kStylusNotificationId) !=
+               nullptr);
 }
 
 }  // namespace chromeos
