@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "14c6d0b1_e2304105",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-09T16:24:50Z",
+      "side": 1,
+      "message": "Yes, this is wanted. Because\n1.Otherwise we would need to send request on each onFocus that\u0027s expensive.\n2.Bling has very bad support of multiple forms on a page, so it doesn\u0027t make big sense.\n3.The current logic just duplicates upstream version.\n\nIs it answered your question? What\u0027s from that you would like to see in comments?",
+      "parentUuid": "d4da2be3_f892ff31",
+      "range": {
+        "startLine": 276,
+        "startChar": 7,
+        "endLine": 276,
+        "endChar": 29
+      },
+      "revId": "ba8e5ab9ae4334902a0128e29ec9e03be1e4f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be54af62_7c1d7b97",
         "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
         "patchSetId": 12
