@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b518065e_52b66b8a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-09T23:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65a37f40_c293243d",
+      "range": {
+        "startLine": 148,
+        "startChar": 61,
+        "endLine": 148,
+        "endChar": 96
+      },
+      "revId": "782988e8585dc61f0ae2ba119759f46d7f138ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5a3230d_c49e132f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "782988e8585dc61f0ae2ba119759f46d7f138ad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594ef5c8_bced4fe0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-09T23:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5a3230d_c49e132f",
+      "range": {
+        "startLine": 203,
+        "startChar": 8,
+        "endLine": 203,
+        "endChar": 37
+      },
+      "revId": "782988e8585dc61f0ae2ba119759f46d7f138ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
