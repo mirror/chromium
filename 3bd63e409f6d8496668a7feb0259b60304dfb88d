@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52fde78b_7424b791",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-09T19:09:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ca39668_8edee4c3",
+      "range": {
+        "startLine": 147,
+        "startChar": 6,
+        "endLine": 150,
+        "endChar": 74
+      },
+      "revId": "3bd63e409f6d8496668a7feb0259b60304dfb88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7b03f51_fc9f2b32",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 7
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5baf532f_c263862c",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-09T19:09:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7b03f51_fc9f2b32",
+      "revId": "3bd63e409f6d8496668a7feb0259b60304dfb88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ec74724_3b7fc552",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
         "patchSetId": 7
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-09T09:09:46Z",
       "side": 1,
       "message": "Nit: if",
+      "range": {
+        "startLine": 464,
+        "startChar": 15,
+        "endLine": 464,
+        "endChar": 17
+      },
+      "revId": "3bd63e409f6d8496668a7feb0259b60304dfb88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce4628e_851534a8",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-09T19:09:14Z",
+      "side": 1,
+      "message": "Just deleted the comment and added static.",
+      "parentUuid": "1ec74724_3b7fc552",
       "range": {
         "startLine": 464,
         "startChar": 15,
@@ -85,6 +151,30 @@
       "revId": "3bd63e409f6d8496668a7feb0259b60304dfb88d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5e4211_6e4c0b29",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-09T19:09:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3702e4e_10143a6e",
+      "range": {
+        "startLine": 69,
+        "startChar": 35,
+        "endLine": 69,
+        "endChar": 60
+      },
+      "revId": "3bd63e409f6d8496668a7feb0259b60304dfb88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
