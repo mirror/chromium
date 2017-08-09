@@ -188,9 +188,14 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
 
     @Override
     public void startPendingPrint(PrintingContextInterface printingContext) {
-        if (mIsBusy || mPrintManager == null) {
-            if (mIsBusy) Log.d(TAG, "Pending print can't be started. PrintingController is busy.");
-            else Log.d(TAG, "Pending print can't be started. No PrintManager provided.");
+        if (mIsBusy || mPrintManager == null || !mPrintable.canPrint()) {
+            if (mIsBusy) {
+                Log.d(TAG, "Pending print can't be started. PrintingController is busy.");
+            } else if (mPrintManager == null) {
+                Log.d(TAG, "Pending print can't be started. No PrintManager provided.");
+            } else {
+                Log.d(TAG, "Pending print can't be started. Printable can not perform printing.");
+            }
 
             if (printingContext != null) printingContext.showSystemDialogDone();
             return;
