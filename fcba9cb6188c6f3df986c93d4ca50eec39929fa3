@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a4bd07f_876b3e42",
+        "filename": "content/test/data/content-sniffer-test0.html.mock-http-headers",
+        "patchSetId": 14
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-09T15:02:23Z",
+      "side": 0,
+      "message": "I presume these are the tests that are failing?  I think it\u0027s worth some comments somewhere in this CL (in response to this comment is fine) as to why these values needed to be removed and what the plan, if any, for dealing in the future is.",
+      "range": {
+        "startLine": 2,
+        "startChar": 16,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "fcba9cb6188c6f3df986c93d4ca50eec39929fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

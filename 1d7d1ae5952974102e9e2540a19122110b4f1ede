@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a815dda_0dd83192",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-09T15:02:23Z",
+      "side": 1,
+      "message": "nit: response",
+      "range": {
+        "startLine": 148,
+        "startChar": 44,
+        "endLine": 148,
+        "endChar": 52
+      },
+      "revId": "1d7d1ae5952974102e9e2540a19122110b4f1ede",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b2d2a0_15f57e83",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-09T15:02:23Z",
+      "side": 1,
+      "message": "Confused by the comment, since this test is not checking that the two strings are different?  Did you mean two size values?",
+      "range": {
+        "startLine": 334,
+        "startChar": 36,
+        "endLine": 334,
+        "endChar": 37
+      },
+      "revId": "1d7d1ae5952974102e9e2540a19122110b4f1ede",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5dc2dd_bb585021",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-09T15:02:23Z",
+      "side": 1,
+      "message": "Worth having a test where the request delivers some bytes and then fails, making sure we get the bytes?",
+      "range": {
+        "startLine": 365,
+        "startChar": 13,
+        "endLine": 365,
+        "endChar": 14
+      },
+      "revId": "1d7d1ae5952974102e9e2540a19122110b4f1ede",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
