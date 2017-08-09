@@ -100,7 +100,57 @@ const char* const kKnownSettings[] = {
     kVariationsRestrictParameter,
     kDeviceLoginScreenLocales,
     kDeviceLoginScreenInputMethods,
+    kDeviceOffHours,
 };
+
+// Parse Timestamp to Dictionary
+std::unique_ptr<base::DictionaryValue> ParseWeeklyTime(
+    const em::WeeklyTimeProto& weekly_time) {
+  auto weekly_time_res = base::MakeUnique<base::DictionaryValue>();
+  bool is_valid = true;
+  if (weekly_time.has_weekday() && weekly_time.weekday().has_day()) {
+    weekly_time_res->SetInteger("weekday", weekly_time.weekday().day());
+  } else {
+    LOG(ERROR) << "Day of week in interval can't be absent.";
+    is_valid = false;
+  }
+  if (weekly_time.has_time()) {
+    auto time_of_day = weekly_time.time();
+    auto cur_time = base::MakeUnique<base::DictionaryValue>();
+    if (time_of_day.has_hours()) {
+      int hours = time_of_day.hours();
+      if (!(hours >= 0 && hours <= 23)) {
+        LOG(ERROR) << "Invalid hours value: " << hours
+                   << ", the value should be in [0; 23].";
+        is_valid = false;
+      }
+      cur_time->SetInteger("hours", hours);
+    } else {
+      LOG(ERROR) << "Hours in interval can't be absent.";
+      is_valid = false;
+    }
+    if (time_of_day.has_minutes()) {
+      int minutes = time_of_day.minutes();
+      if (!(minutes >= 0 && minutes <= 59)) {
+        LOG(ERROR) << "Invalid minutes value: " << minutes
+                   << ", the value should be in [0; 59].";
+        is_valid = false;
+      }
+      cur_time->SetInteger("minutes", minutes);
+    } else {
+      LOG(ERROR) << "Minutes in interval can't be absent.";
+      is_valid = false;
+    }
+    weekly_time_res->SetDictionary("time", std::move(cur_time));
+  } else {
+    LOG(ERROR) << "Time in interval can't be absent.";
+    is_valid = false;
+  }
+  if (is_valid) {
+    return weekly_time_res;
+  }
+  return nullptr;
+}
 
 void DecodeLoginPolicies(
     const em::ChromeDeviceSettingsProto& policy,
@@ -583,6 +633,47 @@ void DecodeLogUploadPolicies(const em::ChromeDeviceSettingsProto& policy,
   }
 }
 
+void DecodeOffHoursPolicy(const em::ChromeDeviceSettingsProto& policy,
+                          PrefValueMap* new_values_cache) {
+  if (!policy.has_device_off_hours())
+    return;
+  const em::DeviceOffHoursProto& container(policy.device_off_hours());
+  auto off_hours = base::MakeUnique<base::DictionaryValue>();
+  auto intervals = base::MakeUnique<base::ListValue>();
+  for (const auto& entry : container.interval()) {
+    auto interval = base::MakeUnique<base::DictionaryValue>();
+    if (entry.has_start()) {
+      auto start = ParseWeeklyTime(entry.start());
+      if (start) {
+        interval->SetDictionary("start", std::move(start));
+      } else {
+        continue;
+      }
+    }
+    if (entry.has_end()) {
+      auto end = ParseWeeklyTime(entry.end());
+      if (end) {
+        interval->SetDictionary("end", std::move(end));
+      } else {
+        continue;
+      }
+    }
+    intervals->Append(std::move(interval));
+  }
+  off_hours->SetList("intervals", std::move(intervals));
+  auto ignored_policy = base::MakeUnique<base::ListValue>();
+  for (const auto& entry : container.policy()) {
+    ignored_policy->AppendString(entry);
+  }
+  std::string timezone = "GMT";
+  if (container.has_timezone()) {
+    timezone = container.timezone();
+  }
+  off_hours->SetString("timezone", std::move(timezone));
+  off_hours->SetList("policies", std::move(ignored_policy));
+  new_values_cache->SetValue(kDeviceOffHours, std::move(off_hours));
+}
+
 void DecodeDeviceState(const em::PolicyData& policy_data,
                        PrefValueMap* new_values_cache) {
   if (!policy_data.has_device_state())
@@ -774,6 +865,7 @@ void DeviceSettingsProvider::UpdateValuesCache(
   DecodeHeartbeatPolicies(settings, &new_values_cache);
   DecodeGenericPolicies(settings, &new_values_cache);
   DecodeLogUploadPolicies(settings, &new_values_cache);
+  DecodeOffHoursPolicy(settings, &new_values_cache);
   DecodeDeviceState(policy_data, &new_values_cache);
 
   // Collect all notifications but send them only after we have swapped the

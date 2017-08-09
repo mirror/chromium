@@ -12,6 +12,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/sequenced_task_runner.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
+#include "chrome/browser/chromeos/policy/device_off_hours_controller.h"
 #include "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chrome/browser/chromeos/settings/install_attributes.h"
@@ -161,7 +162,6 @@ void DeviceCloudPolicyStoreChromeOS::UpdateFromService() {
     const em::PolicyData* policy_data = device_settings_service_->policy_data();
     if (policy_data)
       policy_->MergeFrom(*policy_data);
-
     PolicyMap new_policy_map;
     if (is_managed()) {
       DecodeDevicePolicy(*device_settings_service_->device_settings(),
