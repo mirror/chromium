@@ -64,6 +64,7 @@
 #include "core/html/HTMLSelectElement.h"
 #include "core/html/TextControlElement.h"
 #include "core/input/EventHandler.h"
+#include "core/layout/LayoutBoxModelObject.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutFlexibleBox.h"
 #include "core/layout/LayoutScrollbar.h"
@@ -923,6 +924,14 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
   Node* node = Box().GetNode();
   if (isHTMLSelectElement(node))
     toHTMLSelectElement(node)->ScrollToOptionAfterLayout(*this);
+
+  LOG(INFO) << "Start loop";
+  for (const LayoutBoxModelObject* sticky_element : registered_stickys_) {
+    LOG(INFO) << "Would compute constraints for "
+              << sticky_element->DebugName();
+  }
+  LOG(INFO) << "Done with loop";
+  registered_stickys_.clear();
 }
 
 void PaintLayerScrollableArea::ClampScrollOffsetAfterOverflowChange() {
@@ -1639,6 +1648,10 @@ void PaintLayerScrollableArea::UpdateResizerStyle() {
     resizer_->Destroy();
     resizer_ = nullptr;
   }
+}
+
+void PaintLayerScrollableArea::RegisterStickyElement(LayoutBoxModelObject* o) {
+  registered_stickys_.push_back(o);
 }
 
 void PaintLayerScrollableArea::InvalidateAllStickyConstraints() {
