@@ -78,8 +78,13 @@ class ArcNotificationContentView::EventForwarder : public ui::EventHandler {
       ui::LocatedEvent* located_event = event->AsLocatedEvent();
       located_event->target()->ConvertEventToTarget(widget->GetNativeWindow(),
                                                     located_event);
-      if (located_event->type() == ui::ET_MOUSE_ENTERED ||
-          located_event->type() == ui::ET_MOUSE_EXITED) {
+      if (located_event->type() == ui::ET_MOUSE_ENTERED) {
+        owner_->is_mouse_hovered_ = true;
+        owner_->UpdateControlButtonsVisibility();
+        return;
+      }
+      if (located_event->type() == ui::ET_MOUSE_EXITED) {
+        owner_->is_mouse_hovered_ = false;
         owner_->UpdateControlButtonsVisibility();
         return;
       }
@@ -227,7 +232,6 @@ ArcNotificationContentView::ArcNotificationContentView(
       notification_key_(item->GetNotificationKey()),
       event_forwarder_(new EventForwarder(this)) {
   SetFocusBehavior(FocusBehavior::ALWAYS);
-  set_notify_enter_exit_on_child(true);
 
   item_->IncrementWindowRefCount();
   item_->AddObserver(this);
@@ -375,10 +379,8 @@ void ArcNotificationContentView::UpdateControlButtonsVisibility() {
   if (!control_buttons_view_)
     return;
 
-  DCHECK(floating_control_buttons_widget_);
-
   const bool target_visiblity =
-      IsMouseHovered() || (control_buttons_view_->IsCloseButtonFocused()) ||
+      is_mouse_hovered_ || (control_buttons_view_->IsCloseButtonFocused()) ||
       (control_buttons_view_->IsSettingsButtonFocused());
 
   if (target_visiblity == floating_control_buttons_widget_->IsVisible())
@@ -526,14 +528,6 @@ void ArcNotificationContentView::OnPaint(gfx::Canvas* canvas) {
                        item_->GetSnapshot().height(), contents_bounds.x(),
                        contents_bounds.y(), contents_bounds.width(),
                        contents_bounds.height(), false);
-}
-
-void ArcNotificationContentView::OnMouseEntered(const ui::MouseEvent&) {
-  UpdateControlButtonsVisibility();
-}
-
-void ArcNotificationContentView::OnMouseExited(const ui::MouseEvent&) {
-  UpdateControlButtonsVisibility();
 }
 
 void ArcNotificationContentView::OnFocus() {

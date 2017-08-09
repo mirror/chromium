@@ -102,6 +102,12 @@ class MESSAGE_CENTER_EXPORT NotificationView
   // Describes whether the view should display a hand pointer or not.
   bool clickable_;
 
+#if defined(OS_CHROMEOS)
+  // Flag if the mouse cursor is placed on this view. True if the cursor is on
+  // this view. False otherwise.
+  bool is_mouse_hovered_ = false;
+#endif
+
   // Weak references to NotificationView descendants owned by their parents.
   views::View* top_view_ = nullptr;
   BoundedLabel* title_view_ = nullptr;

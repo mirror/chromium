@@ -346,11 +346,17 @@ void NotificationView::OnMouseMoved(const ui::MouseEvent& event) {
 }
 
 void NotificationView::OnMouseEntered(const ui::MouseEvent& event) {
+#if defined(OS_CHROMEOS)
+  is_mouse_hovered_ = true;
+#endif
   MessageView::OnMouseEntered(event);
   UpdateControlButtonsVisibility();
 }
 
 void NotificationView::OnMouseExited(const ui::MouseEvent& event) {
+#if defined(OS_CHROMEOS)
+  is_mouse_hovered_ = true;
+#endif
   MessageView::OnMouseExited(event);
   UpdateControlButtonsVisibility();
 }
@@ -664,8 +670,16 @@ void NotificationView::UpdateControlButtonsVisibility() {
   // On Chrome OS, the settings button and the close button are shown when:
   // (1) the mouse is hovering on the notification.
   // (2) the focus is on the control buttons.
+  //
+  // We use |is_mouse_hovered_| flag which is set by OnMouseEntered/Exited
+  // events instead of Views#IsMouseHovered() method. That is because:
+  // (1) The timing between OnMouseEntred/Exited and IsMouseHovered() change may
+  //     differ if an inset is set to aura::WindowTargeter#SetInsets().
+  //     OnMouseEntered/Exited consider about the inset, but IsMouseHovered
+  //     does not.
+  // (2) OnMouseEntered/Exited support visibility change of the mouse cursor
   const bool target_visibility =
-      IsMouseHovered() || control_buttons_view_->IsCloseButtonFocused() ||
+      is_mouse_hovered_ || control_buttons_view_->IsCloseButtonFocused() ||
       control_buttons_view_->IsSettingsButtonFocused();
 #else
   // On non Chrome OS, the settings button and the close button are always
