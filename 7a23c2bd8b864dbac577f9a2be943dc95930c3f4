@@ -16,6 +16,63 @@
       "revId": "7a23c2bd8b864dbac577f9a2be943dc95930c3f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380a704a_132bcec6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/protocol/InspectorBackend.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T20:47:21Z",
+      "side": 1,
+      "message": "Just allow console.context in eslint config?",
+      "range": {
+        "startLine": 422,
+        "startChar": 71,
+        "endLine": 422,
+        "endChar": 101
+      },
+      "revId": "7a23c2bd8b864dbac577f9a2be943dc95930c3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5456b8b4_9b587b0e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/protocol/InspectorBackend.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T20:47:21Z",
+      "side": 1,
+      "message": "console.context(context) || console",
+      "revId": "7a23c2bd8b864dbac577f9a2be943dc95930c3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12cd19e_7970e7aa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/protocol/InspectorBackend.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T20:47:21Z",
+      "side": 1,
+      "message": "To support older Chrome:\nconsole.context(\u0027...\u0027) || console",
+      "revId": "7a23c2bd8b864dbac577f9a2be943dc95930c3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
