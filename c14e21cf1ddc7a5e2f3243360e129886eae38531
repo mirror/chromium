@@ -16,6 +16,23 @@
       "revId": "c14e21cf1ddc7a5e2f3243360e129886eae38531",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5763dff5_98b05822",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-09T00:41:27Z",
+      "side": 1,
+      "message": "Comment that this soft failure is only temporary.",
+      "revId": "c14e21cf1ddc7a5e2f3243360e129886eae38531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
