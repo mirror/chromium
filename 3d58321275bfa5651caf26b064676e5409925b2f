@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "287bf062_8666a8d7",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:31:09Z",
+      "side": 1,
+      "message": "nit: An html file that enters fullscreen when the \"S\" key is pressed.",
+      "revId": "3d58321275bfa5651caf26b064676e5409925b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424c3aaa_eb9d9303",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:31:09Z",
+      "side": 1,
+      "message": "I know you got feedback from sky@ to use this pattern, but I suggest that you some effectively equivalent and simpler code (and sky@ agreed). Replace this class with a helper function that does the following (or just inline these two lines in the test):\nwhile (BrowserList::GetInstance()-\u003esize() !\u003d initial_browser_count)\n  content::RunAllPendingInMessageLoop();",
+      "revId": "3d58321275bfa5651caf26b064676e5409925b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34183f9_6cdcec73",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:31:09Z",
+      "side": 1,
+      "message": "Ditto, replace this class with a simple helper function:\nvoid WaitForTabCount(Browser* browser, int expected) {\n  while (browser-\u003etab_strip_model()-\u003ecount() !\u003d expected)\n    content::RunAllPendingInMessageLoop();\n}",
+      "revId": "3d58321275bfa5651caf26b064676e5409925b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213ddd2f_22a57ca5",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:31:09Z",
+      "side": 1,
+      "message": "Ditto, use a helper with a flag (or two helpers WaitFor[Ina|A]ctiveTabIndex:\n// Spin a run loop until the expected tab index is made active or inactive.\nvoid WaitForActiveTabIndex(Browser* browser, int expected, bool active) {\n  while ((browser-\u003etab_strip_model()-\u003eactive_index() !\u003d expected) \u003d\u003d active)\n    content::RunAllPendingInMessageLoop();\n}",
+      "revId": "3d58321275bfa5651caf26b064676e5409925b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf5a95f_6e365975",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:31:09Z",
+      "side": 1,
+      "message": "nit: \"HTML| page in\" or this one-liner:\n// Starts |kFullscreenKeyboardLockHTML| in a new tab and waits for load.",
+      "revId": "3d58321275bfa5651caf26b064676e5409925b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42369b68_b04c150b",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:31:09Z",
+      "side": 1,
+      "message": "nit: \"in the current tab\", consider this one-liner:\n// Starts |kFullscreenTriggerHTML| in the current tab and waits for load.",
+      "revId": "3d58321275bfa5651caf26b064676e5409925b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0333fd7c_4215c0c1",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:31:09Z",
+      "side": 1,
+      "message": "nit: if the function calls a CamelCase (non-trivial/inlined) function, then itself should be named with CamelCase (but leaving the definition inlined here is fine). ie. rename this GetActiveWebContents().",
+      "revId": "3d58321275bfa5651caf26b064676e5409925b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cd9b8d_34d7e05f",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:31:09Z",
+      "side": 1,
+      "message": "Ditto, rename this GetLastActiveBrowser (or GetActiveBrowser to parallel GetActiveWebContents)?",
+      "revId": "3d58321275bfa5651caf26b064676e5409925b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c111fc0_183bbc45",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:31:09Z",
+      "side": 1,
+      "message": "no semicolon",
+      "revId": "3d58321275bfa5651caf26b064676e5409925b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f5c1ac_7fd31572",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:31:09Z",
+      "side": 1,
+      "message": "Please inline this function\u0027s body in the test.",
+      "revId": "3d58321275bfa5651caf26b064676e5409925b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce9636a_365cb7f1",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:31:09Z",
+      "side": 1,
+      "message": "Please inline this function\u0027s body in the test.",
+      "revId": "3d58321275bfa5651caf26b064676e5409925b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b789ebd4_fcefe7ad",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:31:09Z",
+      "side": 1,
+      "message": "Please inline this function\u0027s body in the test.",
+      "revId": "3d58321275bfa5651caf26b064676e5409925b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac777b1_05e43a3b",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:31:09Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused, but it sounds like there are two issues:\n1) We\u0027d need to disable or wait for an OS window manager animation (we should attempt to do this if possible, +tapted@)\n2) Some of the commands exit fullscreen on Mac but not on other platforms (???) and we don\u0027t want to check that behavior (???) I\u0027m a bit confused about this... can you elaborate on the second half of the comment?\n\nIf we do keep this test disabled on Mac, just exclude the definition like this:\n#if !defined(OS_MACOSX)\nIN_PROC_BROWSER_TEST_F(...) { ... }\n#endif  // !defined(OS_MACOSX)",
+      "revId": "3d58321275bfa5651caf26b064676e5409925b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aed1193_9982cdda",
+        "filename": "chrome/test/data/fullscreen_trigger.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:31:09Z",
+      "side": 1,
+      "message": "Can you reuse content/test/data/fullscreen_frame.html and do:\nEXPECT_TRUE(ExecuteScript(child, \"activateFullscreen()\"));\n\nOr just load any page and call:\nEXPECT_TRUE(ExecuteScript(root-\u003ecurrent_frame_host(), \"document.body.webkitRequestFullscreen()\"));",
+      "revId": "3d58321275bfa5651caf26b064676e5409925b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
