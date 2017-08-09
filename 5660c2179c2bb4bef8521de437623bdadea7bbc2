@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ddb63798_ce1b2650",
+        "filename": "components/offline_pages/core/client_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-09T00:28:36Z",
+      "side": 1,
+      "message": "This is git-cl-format\u0027s doing. My formatting was considerably different/better. :)",
+      "parentUuid": "481949f1_fb3ddbc9",
+      "revId": "5660c2179c2bb4bef8521de437623bdadea7bbc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6fc7551_8c6e0b18",
         "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "70fdfa36_a4f9b155",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-09T00:28:36Z",
+      "side": 1,
+      "message": "Having 1000 as the start point makes it easier for a human to immediately recognize the generated values as being offline IDs (among many other integers that are 0-based). The choice is indeed arbitrary so I updated the comment to reflect that.",
+      "parentUuid": "e6fc7551_8c6e0b18",
+      "revId": "5660c2179c2bb4bef8521de437623bdadea7bbc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f98deb2d_d391dbc9",
         "filename": "components/offline_pages/core/prefetch/prefetch_item.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-08T23:21:41Z",
       "side": 1,
       "message": "This is nice. Could you also move prefetch_item.[h,cc] to \"test_support\" target of components/offline_pages/core/prefetch/BUILD.gn, so we surely avoid building the code for it into production Chrome? It is only used in test files and looks like this is going to stay this way.",
+      "revId": "5660c2179c2bb4bef8521de437623bdadea7bbc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d908e6_a84d0575",
+        "filename": "components/offline_pages/core/prefetch/prefetch_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-09T00:28:36Z",
+      "side": 1,
+      "message": "Done.\n\nThere\u0027s still a chance this might be used in runtime code (UMA reporting is the current main contender) but as moving this to/from test-only builds is easy I went ahead and made the move.",
+      "parentUuid": "f98deb2d_d391dbc9",
       "revId": "5660c2179c2bb4bef8521de437623bdadea7bbc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
