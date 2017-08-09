@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13029058_decdc10c",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T07:56:47Z",
+      "side": 1,
+      "message": "This is all a bit ugly because we have to use the exported short names. Happy to give more context in person.",
+      "range": {
+        "startLine": 225,
+        "startChar": 57,
+        "endLine": 225,
+        "endChar": 0
+      },
+      "revId": "eb2987a7f51236d251ecfc5dfad8b9ed9c0981db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
