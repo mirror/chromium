@@ -45,7 +45,7 @@ void PipelineController::Start(Demuxer* demuxer,
                                bool is_streaming,
                                bool is_static) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK(state_ == State::CREATED);
+  DCHECK(state_ == State::CREATED || state_ == State::STOPPED);
   DCHECK(demuxer);
 
   // Once the pipeline is started, we want to call the seeked callback but
@@ -247,13 +247,18 @@ void PipelineController::Dispatch() {
 }
 
 void PipelineController::Stop() {
-  // For the moment, Stop() is only called on WMPI destruction, and updating the
-  // state of |this| is not relevant. Eventually, Start()/Stop() will be called
-  // in order to swap between demuxer types, and this will need to be adressed.
-  //
-  // TODO(tguilbert): Clarify the appropriate state changes when Stop() is
-  // called. See crbug.com/695734.
+  if (state_ == State::STOPPED)
+    return;
+
   pipeline_->Stop();
+  demuxer_ = nullptr;
+  waiting_for_seek_ = false;
+  pending_seeked_cb_ = false;
+  pending_time_updated_ = false;
+  pending_seek_ = false;
+  pending_suspend_ = false;
+  pending_resume_ = false;
+  state_ = State::STOPPED;
 }
 
 bool PipelineController::IsPipelineRunning() const {

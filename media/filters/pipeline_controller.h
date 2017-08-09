@@ -37,6 +37,7 @@ class MEDIA_EXPORT PipelineController {
     SUSPENDING,
     SUSPENDED,
     RESUMING,
+    STOPPED,
   };
 
   using RendererFactoryCB = base::Callback<std::unique_ptr<Renderer>(void)>;
