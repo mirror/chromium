@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "e0843475_78d2739e",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-09T06:48:02Z",
+      "side": 1,
+      "message": "+1, HasAuthorBackground doesn\u0027t need to be not-static, and it seems reasonable to me to pass StyleResolverState into AdjustComputedStyle.",
+      "parentUuid": "3580f392_e0e5182c",
+      "revId": "78fd62fd85def2cfe7338eecaab6251f9222c14f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2db05096_37c13021",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
         "patchSetId": 2
