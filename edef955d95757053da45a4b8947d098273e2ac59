@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b12cd5a_6059205b",
+        "filename": "content/browser/web_contents/web_contents_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-09T08:23:15Z",
+      "side": 0,
+      "message": "PAGE_TRANSITION_TYPE for a link click? The default page transition of the NavigationSimulator (PAGE_TRANSITION_LINK) will match better.",
+      "range": {
+        "startLine": 1028,
+        "startChar": 34,
+        "endLine": 1028,
+        "endChar": 55
+      },
+      "revId": "edef955d95757053da45a4b8947d098273e2ac59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
