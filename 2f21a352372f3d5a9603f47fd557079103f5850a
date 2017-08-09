@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77928cf5_4f81c2f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-09T19:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1596650_a41f2014",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "2f21a352372f3d5a9603f47fd557079103f5850a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03dae9aa_1002534f",
         "filename": "device/bluetooth/bluetooth_advertisement.h",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d6f611b9_e204176e",
+        "filename": "device/bluetooth/bluetooth_advertisement.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-09T19:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03dae9aa_1002534f",
+      "range": {
+        "startLine": 139,
+        "startChar": 21,
+        "endLine": 139,
+        "endChar": 31
+      },
+      "revId": "2f21a352372f3d5a9603f47fd557079103f5850a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "372e0d52_881e21ed",
         "filename": "device/bluetooth/bluez/bluetooth_advertisement_bluez_unittest.cc",
         "patchSetId": 7
@@ -62,6 +110,24 @@
       "revId": "2f21a352372f3d5a9603f47fd557079103f5850a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f110ee_46935c40",
+        "filename": "device/bluetooth/bluez/bluetooth_advertisement_bluez_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-09T19:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "372e0d52_881e21ed",
+      "revId": "2f21a352372f3d5a9603f47fd557079103f5850a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "526528d6_aa3621ea",
+        "filename": "device/bluetooth/dbus/bluetooth_le_advertising_manager_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-09T19:31:45Z",
+      "side": 1,
+      "message": "Ah, forgot to revert this one. Done.",
+      "parentUuid": "2b7406ef_d8fa89da",
+      "range": {
+        "startLine": 83,
+        "startChar": 23,
+        "endLine": 83,
+        "endChar": 46
+      },
+      "revId": "2f21a352372f3d5a9603f47fd557079103f5850a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c409c30e_91bc61b4",
         "filename": "device/bluetooth/dbus/bluetooth_le_advertising_manager_client.h",
         "patchSetId": 7
@@ -108,6 +198,30 @@
       "revId": "2f21a352372f3d5a9603f47fd557079103f5850a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5c6075_2f8bb243",
+        "filename": "device/bluetooth/dbus/bluetooth_le_advertising_manager_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-09T19:31:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c409c30e_91bc61b4",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 23
+      },
+      "revId": "2f21a352372f3d5a9603f47fd557079103f5850a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
