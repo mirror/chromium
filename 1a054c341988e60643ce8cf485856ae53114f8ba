@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93db9e83_cb651fc8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-08-09T00:19:28Z",
+      "side": 1,
+      "message": "\"AdjustWidthsForCollapsedColumns\"?",
+      "range": {
+        "startLine": 804,
+        "startChar": 18,
+        "endLine": 804,
+        "endChar": 40
+      },
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7d0984_b30d14ab",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-08-09T00:19:28Z",
+      "side": 1,
+      "message": "I suspect you need to check the outer colgroup here too. If so, probably worth refactoring into a LayoutTable::IsEffectiveColumnCollapsed(unsigned effective_column_index) that contains the logic from lines 811-\u003e819",
+      "range": {
+        "startLine": 832,
+        "startChar": 13,
+        "endLine": 832,
+        "endChar": 35
+      },
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88e1ebb_4ca62277",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-08-09T00:19:28Z",
+      "side": 1,
+      "message": "I suspect the 2nd and 3rd loop can be combined and you still get correct values. But let me know if I\u0027m missing something.\n\nfor (size_t i \u003d 0; i \u003c n_eff_cols; ++i) {\n  if (IsEffectiveColumnCollapsed(i)) {\n    total_collapsed_width +\u003d EffectiveColumnPositions()[i + 1] -\n                                     EffectiveColumnPositions()[i];\n  }\n  SetEffectiveColumnPosition(\n      i + 1, EffectiveColumnPositions()[i + 1] - total_collapsed_width);\n}\n\nAnd I think is_any_col_collapsed_ can be updated in UpdateColumnCache()? So you may not need the first loop at all?",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
