@@ -59,6 +59,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/timer/timer.h"
 #include "ui/base/accelerators/accelerator.h"
+#include "ui/base/accelerators/accelerator_manager.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/compositor/layer.h"
 #include "ui/display/display.h"
@@ -603,11 +604,11 @@ void SystemTray::OnMouseExitedView() {
     system_bubble_->bubble()->RestartAutoCloseTimer();
 }
 
-void SystemTray::RegisterAccelerators(
+void SystemTray::RegisterPriorityAccelerators(
     const std::vector<ui::Accelerator>& accelerators,
     views::TrayBubbleView* tray_bubble_view) {
-  Shell::Get()->accelerator_controller()->Register(accelerators,
-                                                   tray_bubble_view);
+  Shell::Get()->accelerator_controller()->Register(
+      accelerators, ui::AcceleratorManager::kHighPriority, tray_bubble_view);
 }
 
 void SystemTray::UnregisterAllAccelerators(
