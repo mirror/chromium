@@ -8,16 +8,19 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #include "base/mac/bind_objc_block.h"
+#include "base/mac/foundation_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/task/cancelable_task_tracker.h"
 #include "components/favicon/core/fallback_url_util.h"
 #include "components/favicon/core/large_icon_service.h"
 #include "components/favicon_base/fallback_icon_style.h"
 #include "components/favicon_base/favicon_types.h"
+#include "ios/chrome/common/x_callback_url.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 #include "ios/public/provider/chrome/browser/spotlight/spotlight_provider.h"
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
+#include "net/base/escape.h"
 #import "net/base/mac/url_conversions.h"
 #include "skia/ext/skia_utils_ios.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -148,7 +151,20 @@ UIImage* GetFallbackImageWithStringAndColor(NSString* string,
                           favicon:(UIImage*)favicon
                      defaultTitle:(NSString*)defaultTitle {
   DCHECK(defaultTitle);
-  NSURL* nsURL = net::NSURLWithGURL(indexedURL);
+
+  GURL urlToOpen = indexedURL;
+  NSString* scheme = base::mac::ObjCCast<NSString>([[NSBundle mainBundle]
+      objectForInfoDictionaryKey:@"KSChannelChromeScheme"]);
+
+  if (scheme) {
+    std::map<std::string, std::string> parameters;
+    parameters["url"] = urlToOpen.spec();
+    urlToOpen = CreateXCallbackURLWithParameters(
+        base::SysNSStringToUTF8(scheme), "open", GURL::EmptyGURL(),
+        GURL::EmptyGURL(), GURL::EmptyGURL(), parameters);
+  }
+
+  NSURL* nsURL = net::NSURLWithGURL(urlToOpen);
   std::string description = indexedURL.SchemeIsCryptographic()
                                 ? indexedURL.GetOrigin().spec()
                                 : indexedURL.spec();
