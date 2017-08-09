@@ -219,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "532a7121_bea2e4ef",
+        "filename": "content/common/dom_storage/dom_storage_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-09T23:05:54Z",
+      "side": 1,
+      "message": "Yeah the todo was for exposing that private method through the dom_storage_database_adapter interface. But, it\u0027s not worth it since the read is almost always needed for the ExtractValues() method. Removed.",
+      "parentUuid": "38af2b9e_73c12283",
+      "revId": "73a2470d34e7b690e6bb123485ba6fff32758d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb446a0a_8c79738b",
         "filename": "content/common/dom_storage/dom_storage_map.h",
         "patchSetId": 6
