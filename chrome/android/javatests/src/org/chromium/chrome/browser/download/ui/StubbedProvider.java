@@ -167,6 +167,11 @@ public class StubbedProvider implements BackendProvider {
         public void getThumbnail(ThumbnailRequest request) {}
 
         @Override
+        public boolean removeThumbnailsFromDisk(String contentId) {
+            return false;
+        }
+
+        @Override
         public void cancelRetrieval(ThumbnailRequest request) {}
     }
 

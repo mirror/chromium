@@ -354,6 +354,11 @@ public class ArticleSnippetsTest {
         }
 
         @Override
+        public boolean removeThumbnailsFromDisk(String contentId) {
+            return false;
+        }
+
+        @Override
         public void cancelRetrieval(ThumbnailRequest request) {
             boolean removed = mRequests.remove(request);
             Assert.assertTrue(
