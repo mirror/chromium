@@ -144,6 +144,7 @@ specific_include_rules = {
     "+content/browser/blob_storage/chrome_blob_storage_context.h",
     "+content/browser/browsing_data/clear_site_data_throttle.h",
     "+content/browser/child_process_security_policy_impl.h",
+    "+content/browser/frame_host/frame_tree_node.h",
     "+content/browser/frame_host/navigation_request_info.h",
     "+content/browser/loader/cross_site_resource_handler.h",
     "+content/browser/loader/detachable_resource_handler.h",

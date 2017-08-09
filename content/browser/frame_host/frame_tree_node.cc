@@ -26,6 +26,11 @@
 
 namespace content {
 
+namespace features {
+const base::Feature kFrameSizeFeature{"FrameSizeFeature",
+                                      base::FEATURE_DISABLED_BY_DEFAULT};
+}
+
 namespace {
 
 // This is a global map between frame_tree_node_ids and pointers to
@@ -118,6 +123,9 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
       pending_sandbox_flags_(blink::WebSandboxFlags::kNone),
       frame_owner_properties_(frame_owner_properties),
       loading_progress_(kLoadingProgressNotStarted),
+      size_policy_feature_enabled_(
+          base::FeatureList::IsEnabled(features::kFrameSizeFeature)),
+      size_policy_ancestor_frame_(nullptr),
       blame_context_(frame_tree_node_id_, parent) {
   std::pair<FrameTreeNodeIdMap::iterator, bool> result =
       g_frame_tree_node_id_map.Get().insert(
@@ -125,6 +133,16 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
   CHECK(result.second);
 
   RecordUniqueNameLength(unique_name.size());
+
+  // Find the nearest size-policy ancestor (if any).
+  FrameTreeNode* cur_parent_node = parent_;
+  while (cur_parent_node) {
+    if (cur_parent_node->size_policy_bytes_remaining_) {
+      size_policy_ancestor_frame_ = cur_parent_node;
+      break;
+    }
+    cur_parent_node = cur_parent_node->parent();
+  }
 
   // Note: this should always be done last in the constructor.
   blame_context_.Initialize();
@@ -571,6 +589,30 @@ void FrameTreeNode::BeforeUnloadCanceled() {
 void FrameTreeNode::OnSetHasReceivedUserGesture() {
   render_manager_.OnSetHasReceivedUserGesture();
   replication_state_.has_received_user_gesture = true;
+}
+
+void FrameTreeNode::NotifyNetworkBytesRead(int network_response_bytes_read) {
+  FrameTreeNode* cur_frame = this;
+
+  while (cur_frame) {
+    if (cur_frame->size_policy_bytes_remaining_) {
+      bool already_violated =
+          cur_frame->size_policy_bytes_remaining_.value() < 0;
+      cur_frame->size_policy_bytes_remaining_.value() -=
+          network_response_bytes_read;
+      if (size_policy_feature_enabled_ && !already_violated &&
+          cur_frame->size_policy_bytes_remaining_.value() < 0) {
+        // The frame has just violated its size policy. Pause the frame.
+        RenderFrameHostImpl* render_frame_host = current_frame_host();
+        if (render_frame_host) {
+          render_frame_host->BlockRequestsForFrame();
+        }
+      }
+    }
+    // Rather than walk up the entire frame tree for each request, only visit
+    // the ancestor frames that have size policies on them (usually none).
+    cur_frame = cur_frame->size_policy_ancestor_frame_;
+  }
 }
 
 FrameTreeNode* FrameTreeNode::GetSibling(int relative_offset) const {
