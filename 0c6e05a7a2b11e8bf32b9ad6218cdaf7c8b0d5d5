@@ -51,6 +51,24 @@
       "revId": "0c6e05a7a2b11e8bf32b9ad6218cdaf7c8b0d5d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3984fb_3eeb5ca6",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-08-09T06:15:45Z",
+      "side": 1,
+      "message": "And base on above analysis, if we PostDelayedTask with 1ms in ServiceWorkerRegistration::ActivateWaitingVersion instead of ContinueActivation directly, the output will be \"install\"-\u003e\"skipWaiting resolved\"-\u003e\"activate\". But I don\u0027t think this is a right change, WDYT?",
+      "parentUuid": "532be34c_7a38a22b",
+      "revId": "0c6e05a7a2b11e8bf32b9ad6218cdaf7c8b0d5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
