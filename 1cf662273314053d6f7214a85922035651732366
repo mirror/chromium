@@ -235,6 +235,30 @@
       "revId": "1cf662273314053d6f7214a85922035651732366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aaf6e2c_91ef27ac",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-09T20:07:47Z",
+      "side": 1,
+      "message": "For this particular test this will make everything more clear. Especially if we already use constants in other places here. So, please consider this as \u0027not nit\u0027 if you ask this way.",
+      "parentUuid": "894c12b9_7b3bca1c",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 75
+      },
+      "revId": "1cf662273314053d6f7214a85922035651732366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
