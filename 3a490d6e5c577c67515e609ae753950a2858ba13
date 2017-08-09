@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd7c61ec_ce4bae53",
+        "filename": "chrome/browser/chromeos/device_uma.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T16:28:50Z",
+      "side": 0,
+      "message": "Can you ping this bug? I think there\u0027s some lower-level chromeos code that could removed too.\n\nYou should probably mark the metric as deprecated in histograms.xml\n\nThere aren\u0027t any reports of this metric since M55, so it\u0027s safe to say no one is using it.",
+      "revId": "3a490d6e5c577c67515e609ae753950a2858ba13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
