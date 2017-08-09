@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f63d8ef4_225f8420",
+        "filename": "net/http/http_network_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-09T21:24:14Z",
+      "side": 1,
+      "message": "Why isn\u0027t break enough here?",
+      "range": {
+        "startLine": 1547,
+        "startChar": 8,
+        "endLine": 1547,
+        "endChar": 42
+      },
+      "revId": "c0c38d90c883fd3d89c8b4a4ce0a7fde18875e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
