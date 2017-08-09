@@ -12,9 +12,10 @@
 #include "third_party/WebKit/public/platform/WebCredentialManagerError.h"
 #include "third_party/WebKit/public/platform/WebCredentialMediationRequirement.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
+//#include
+//"third_party/WebKit/Source/modules/credentialmanager/MakeCredentialOptions.h"
 
 namespace blink {
-class WebCredential;
 class WebURL;
 }
 
@@ -27,6 +28,7 @@ class MockCredentialManagerClient : public blink::WebCredentialManagerClient {
 
   // We take ownership of the |credential|.
   void SetResponse(blink::WebCredential* credential);
+
   void SetError(const std::string& error);
 
   // blink::WebCredentialManager:
