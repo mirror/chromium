@@ -161,7 +161,6 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
     const VisiblePosition& new_end =
         PreviousPositionOf(visible_end, kCannotCrossEditingBoundary);
     SelectionInDOMTree::Builder builder;
-    builder.SetIsDirectional(EndingSelection().IsDirectional());
     builder.Collapse(visible_start.ToPositionWithAffinity());
     if (new_end.IsNotNull())
       builder.Extend(new_end.DeepEquivalent());
@@ -222,10 +221,11 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
         // and use it as the end of the new selection.
         if (!start_of_last_paragraph.IsConnected())
           return;
-        SetEndingSelection(
+
+        SetEndingSelection(SelectionForUndoStep::From(
             SelectionInDOMTree::Builder()
                 .Collapse(start_of_current_paragraph.DeepEquivalent())
-                .Build());
+                .Build()));
 
         // Save and restore visibleEndOfSelection and startOfLastParagraph when
         // necessary since moveParagraph and movePragraphWithClones can remove
@@ -263,10 +263,10 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
         start_of_current_paragraph =
             StartOfNextParagraph(EndingVisibleSelection().VisibleStart());
       }
-      SetEndingSelection(
+      SetEndingSelection(SelectionForUndoStep::From(
           SelectionInDOMTree::Builder()
               .Collapse(visible_end_of_selection.DeepEquivalent())
-              .Build());
+              .Build()));
     }
     DoApplyForSingleParagraph(force_list_creation, list_tag, *current_selection,
                               editing_state);
@@ -299,7 +299,6 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
                            .SetBaseAndExtentDeprecated(
                                visible_start_of_selection.DeepEquivalent(),
                                visible_end_of_selection.DeepEquivalent())
-                           .SetIsDirectional(EndingSelection().IsDirectional())
                            .Build());
     return;
   }
@@ -427,9 +426,10 @@ bool InsertListCommand::DoApplyForSingleParagraph(
                                  IGNORE_EXCEPTION_FOR_TESTING);
       }
 
-      SetEndingSelection(SelectionInDOMTree::Builder()
-                             .Collapse(Position::FirstPositionInNode(*new_list))
-                             .Build());
+      SetEndingSelection(SelectionForUndoStep::From(
+          SelectionInDOMTree::Builder()
+              .Collapse(Position::FirstPositionInNode(*new_list))
+              .Build()));
 
       return true;
     }

@@ -937,12 +937,16 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
       undo_step->EndingRootEditableElement(), cmd->GetInputType(),
       cmd->TextDataForInputEvent(), IsComposingFromCommand(cmd));
 
+  bool directional = cmd->EndingSelection().IsDirectional();
+
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->EndingSelection(), GetFrame().GetDocument());
 
   // Don't clear the typing style with this selection change. We do those things
   // elsewhere if necessary.
-  ChangeSelectionAfterCommand(new_selection, SetSelectionData());
+  ChangeSelectionAfterCommand(
+      new_selection,
+      SetSelectionData::Builder().SetIsDirectional(directional).Build());
 
   if (!cmd->PreservesTypingStyle())
     ClearTypingStyle();
@@ -979,12 +983,15 @@ void Editor::UnappliedEditing(UndoStep* cmd) {
       InputEvent::InputType::kHistoryUndo, g_null_atom,
       InputEvent::EventIsComposing::kNotComposing);
 
+  bool directional = cmd->EndingSelection().IsDirectional();
+
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->StartingSelection(), GetFrame().GetDocument());
   ChangeSelectionAfterCommand(new_selection,
                               SetSelectionData::Builder()
                                   .SetShouldCloseTyping(true)
                                   .SetShouldClearTypingStyle(true)
+                                  .SetIsDirectional(directional)
                                   .Build());
 
   last_edit_command_ = nullptr;
@@ -1002,12 +1009,15 @@ void Editor::ReappliedEditing(UndoStep* cmd) {
       InputEvent::InputType::kHistoryRedo, g_null_atom,
       InputEvent::EventIsComposing::kNotComposing);
 
+  bool directional = cmd->EndingSelection().IsDirectional();
+
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->EndingSelection(), GetFrame().GetDocument());
   ChangeSelectionAfterCommand(new_selection,
                               SetSelectionData::Builder()
                                   .SetShouldCloseTyping(true)
                                   .SetShouldClearTypingStyle(true)
+                                  .SetIsDirectional(directional)
                                   .Build());
 
   last_edit_command_ = nullptr;
@@ -1462,6 +1472,8 @@ void Transpose(LocalFrame& frame) {
       SelectionInDOMTree::Builder().SetBaseAndExtent(new_range).Build();
 
   // Select the two characters.
+  // Fixme: Tanvir Comparision operator for visible selection, isdirectional
+  // needs to be checked ?
   if (CreateVisibleSelection(new_selection) !=
       frame.Selection().ComputeVisibleSelectionInDOMTree())
     frame.Selection().SetSelection(new_selection);
@@ -1490,7 +1502,9 @@ void Editor::ChangeSelectionAfterCommand(
   // See <rdar://problem/5729315> Some shouldChangeSelectedDOMRange contain
   // Ranges for selections that are no longer valid
   bool selection_did_not_change_dom_position =
-      new_selection == GetFrame().Selection().GetSelectionInDOMTree();
+      new_selection == GetFrame().Selection().GetSelectionInDOMTree() &&
+      options.IsDirectional() == GetFrame().Selection().IsDirectional();
+
   GetFrame().Selection().SetSelection(
       new_selection,
       SetSelectionData::Builder(options)
