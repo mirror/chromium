@@ -76,6 +76,8 @@ class VIEWS_EXPORT PaintInfo {
     return paint_recording_bounds_;
   }
 
+  gfx::Size ScaleToPaintRecordingSize(const gfx::Size& size) const;
+
  private:
   friend class PaintInfoTest;
 
