@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1fd3228_f0e9ad78",
+        "filename": "content/network/cookie_manager_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-09T17:40:52Z",
+      "side": 1,
+      "message": "nit: here and in the cc file, drop the \"content::\"",
+      "revId": "98d4b503823f15c3f8e0794b42f725c5946d758d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31997452_34432be8",
+        "filename": "content/network/cookie_manager_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-09T17:40:52Z",
+      "side": 1,
+      "message": "nit: no blank lines between overridden methods",
+      "revId": "98d4b503823f15c3f8e0794b42f725c5946d758d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

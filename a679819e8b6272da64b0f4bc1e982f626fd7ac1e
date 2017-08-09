@@ -470,6 +470,24 @@
     },
     {
       "key": {
+        "uuid": "83f7e05e_16b83076",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-09T17:40:52Z",
+      "side": 1,
+      "message": "Thanks, yes that helps a lot.",
+      "parentUuid": "abece89a_a22dc00c",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37c2d7f7_38d0ccbe",
         "filename": "content/public/common/cookie_service.h",
         "patchSetId": 4
