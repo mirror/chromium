@@ -16,6 +16,24 @@
       "revId": "0773893cd5ba21857afec3e9624f48a3ce0effcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbfd8e34_de4f8289",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1870,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-09T20:37:40Z",
+      "side": 1,
+      "message": "I\u0027ll take a look at all the callers and see if GetCharIndex() can be refactored. Fun fact - all the out params are required, except |target|, but this caller actually needs |target|. \u003e:-|",
+      "parentUuid": "cb18c501_15e19c1c",
+      "revId": "0773893cd5ba21857afec3e9624f48a3ce0effcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
