@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "065fa6b4_34788554",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12983,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T19:42:49Z",
+      "side": 1,
+      "message": "Dialog.Delegate.Duration to match Dialog.Delegate.Creation?",
+      "revId": "aba4e8e4f022b35f76ff0bdb2a41df51c589a123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2381913_facc2313",
+        "filename": "ui/views/window/dialog_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T19:42:49Z",
+      "side": 1,
+      "message": "nit: not needed (included in header)",
+      "revId": "aba4e8e4f022b35f76ff0bdb2a41df51c589a123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c0b399_2f1b6689",
+        "filename": "ui/views/window/dialog_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T19:42:49Z",
+      "side": 1,
+      "message": "This will also record bubbles, like the bookmark bubble (as BubbleDialogDelegateView is an indirect subclass of DialogDelegate). I think it might also record other \u0027dialogs\u0027 like the task manager window. Are you sure that\u0027s what we want? If so, the UMA comment (and name) should make that very clear.",
+      "revId": "aba4e8e4f022b35f76ff0bdb2a41df51c589a123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3499a1c2_6facf137",
+        "filename": "ui/views/window/dialog_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T19:42:49Z",
+      "side": 1,
+      "message": "nit: please add DISALLOW_COPY_AND_ASSIGN, I guess that was an oversight...",
+      "revId": "aba4e8e4f022b35f76ff0bdb2a41df51c589a123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
