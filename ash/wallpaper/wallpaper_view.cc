@@ -263,8 +263,10 @@ views::Widget* CreateWallpaper(aura::Window* root_window, int container_id) {
 
   aura::Window* container = root_window->GetChildById(container_id);
   wallpaper_widget->SetBounds(container->bounds());
-  if (Shell::Get()->session_controller()->IsUserSessionBlocked())
+  if (Shell::Get()->session_controller()->IsUserSessionBlocked()) {
     wallpaper_widget->GetLayer()->SetLayerBlur(login_constants::kBlurSigma);
+    container->layer()->SetCacheRenderSurface(true);
+  }
 
   return wallpaper_widget;
 }

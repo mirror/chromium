@@ -411,6 +411,12 @@ void WallpaperController::OnColorCalculationComplete() {
 }
 
 void WallpaperController::InstallDesktopController(aura::Window* root_window) {
+  // Unsets the cache render surface that might be set earlier when blur was
+  // needed. This is a no-op if cache render surface was not set.
+  aura::Window* lock_container =
+      root_window->GetChildById(GetWallpaperContainerId(true));
+  lock_container->layer()->SetCacheRenderSurface(false);
+
   WallpaperWidgetController* component = nullptr;
   int container_id = GetWallpaperContainerId(locked_);
 
