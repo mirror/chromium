@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2a9c29fe_4bedf360",
+        "filename": "headless/public/util/testing/generic_url_request_mocks.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-09T17:42:33Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "4a846e98_35645e12",
+      "range": {
+        "startLine": 165,
+        "startChar": 15,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "a1a5fcb06a84d23b252951236733de08e1d5f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31904738_f238dc2c",
         "filename": "net/cookies/cookie_store_unittest.h",
         "patchSetId": 8
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Done.  Also split up the above into separate tests for better readability.",
       "parentUuid": "846a3b17_e7f64f73",
+      "range": {
+        "startLine": 1762,
+        "startChar": 53,
+        "endLine": 1762,
+        "endChar": 0
+      },
+      "revId": "a1a5fcb06a84d23b252951236733de08e1d5f784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "342599d9_5de67c4f",
+        "filename": "net/cookies/cookie_store_unittest.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1762,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-09T17:42:33Z",
+      "side": 1,
+      "message": "Did you add a case where there\u0027s a change that a registered cookie subscription should not see?",
+      "parentUuid": "0c6f7fab_d80622a4",
       "range": {
         "startLine": 1762,
         "startChar": 53,
