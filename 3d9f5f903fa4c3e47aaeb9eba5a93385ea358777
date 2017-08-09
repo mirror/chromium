@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c903a52_e75b252b",
+        "filename": "third_party/WebKit/Source/core/editing/markers/ActiveSuggestionMarkerListImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-09T01:13:54Z",
+      "side": 1,
+      "message": "Is this old Text::data()? If so, could you call it |old_text| as |old_length|?",
+      "revId": "3d9f5f903fa4c3e47aaeb9eba5a93385ea358777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
