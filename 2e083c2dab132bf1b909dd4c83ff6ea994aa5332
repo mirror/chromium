@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d5a0beb_d39b4b05",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadActivityTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-09T14:11:44Z",
+      "side": 1,
+      "message": "why does this one need a cast?",
+      "range": {
+        "startLine": 298,
+        "startChar": 17,
+        "endLine": 298,
+        "endChar": 25
+      },
+      "revId": "2e083c2dab132bf1b909dd4c83ff6ea994aa5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
