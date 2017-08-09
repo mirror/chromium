@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b16a381e_2c67e2d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionDataUseItem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-09T16:32:54Z",
+      "side": 1,
+      "message": "I would add \", which users found to be confusing. Note that aggregate savings calculations will still include all per-site data savings figures, even if negative.\"",
+      "range": {
+        "startLine": 50,
+        "startChar": 72,
+        "endLine": 50,
+        "endChar": 77
+      },
+      "revId": "d3f6e4d00ac1bf5aabaad5daef773905f20831d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
