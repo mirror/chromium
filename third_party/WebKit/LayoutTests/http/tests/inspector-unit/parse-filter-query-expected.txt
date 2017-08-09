@@ -1,0 +1,92 @@
+This tests a utility's ability to parse filter queries.
+
+Query: text
+Text: ["text"]
+Regex: []
+Filters: []
+
+Query: text with spaces
+Text: ["text","with","spaces"]
+Regex: []
+Filters: []
+
+Query: /regex/
+Text: []
+Regex: ["regex"]
+Filters: []
+
+Query: /regex/ /another/
+Text: []
+Regex: ["regex","another"]
+Filters: []
+
+Query: /complex/regex/
+Text: []
+Regex: ["complex\\/regex"]
+Filters: []
+
+Query: /regex/ text
+Text: ["text"]
+Regex: ["regex"]
+Filters: []
+
+Query: key1:value
+Text: []
+Regex: []
+Filters: [{"type":"key1","data":"value","negative":false}]
+
+Query: -key1:value
+Text: []
+Regex: []
+Filters: [{"type":"key1","data":"value","negative":true}]
+
+Query: key1:/regex/ outerText
+Text: ["outerText"]
+Regex: []
+Filters: [{"type":"key1","data":"/regex/","negative":false}]
+
+Query: key1:"" outerText
+Text: ["outerText"]
+Regex: []
+Filters: [{"type":"key1","data":"\"\"","negative":false}]
+
+Query: key1:"value with spaces"
+Text: []
+Regex: []
+Filters: [{"type":"key1","data":"value with spaces","negative":false}]
+
+Query: key1:"valueX:valueY"
+Text: []
+Regex: []
+Filters: [{"type":"key1","data":"valueX:valueY","negative":false}]
+
+Query: key1:"value outerText
+Text: ["outerText"]
+Regex: []
+Filters: [{"type":"key1","data":"\"value","negative":false}]
+
+Query: key1:abc" " outerText
+Text: ["\"","outerText"]
+Regex: []
+Filters: [{"type":"key1","data":"abc\"","negative":false}]
+
+Query: -key1:value key2:value2
+Text: []
+Regex: []
+Filters: [{"type":"key1","data":"value","negative":true},{"type":"key2","data":"value2","negative":false}]
+
+Query: -key1:value -key2:value2
+Text: []
+Regex: []
+Filters: [{"type":"key1","data":"value","negative":true},{"type":"key2","data":"value2","negative":true}]
+
+Query: key1:value innerText key2:value2
+Text: ["innerText"]
+Regex: []
+Filters: [{"type":"key1","data":"value","negative":false},{"type":"key2","data":"value2","negative":false}]
+
+Query: outerText1 key1:value outerText2
+Text: ["outerText1","outerText2"]
+Regex: []
+Filters: [{"type":"key1","data":"value","negative":false}]
+

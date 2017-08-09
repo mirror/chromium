@@ -978,6 +978,10 @@ Console.ConsoleView = class extends UI.VBox {
 
 Console.ConsoleView.persistedHistorySize = 300;
 
+Console.ConsoleView.FilterType = {
+  Url: 'url'
+};
+
 Console.ConsoleViewFilter = class {
   /**
    * @param {function()} filterChangedCallback
@@ -1000,9 +1004,12 @@ Console.ConsoleViewFilter = class {
 
     this._textFilterUI = new UI.ToolbarInput(Common.UIString('Filter'), 0.2, 1, true);
     this._textFilterUI.addEventListener(UI.ToolbarInput.Event.TextChanged, this._textFilterChanged, this);
-    this._filterText = this._textFilterUI.value();
-    /** @type {?RegExp} */
-    this._filterRegex = null;
+    /** @type {!Array<string>} */
+    this._filterTexts = [];
+    /** @type {!Array<!RegExp>} */
+    this._filterRegexes = [];
+    /** @type {!Array<!TextUtils.TextUtils.ParsedFilter>} */
+    this._filters = [];
 
     this._levelLabels = {};
     this._levelLabels[ConsoleModel.ConsoleMessage.MessageLevel.Verbose] = Common.UIString('Verbose');
@@ -1093,14 +1100,11 @@ Console.ConsoleViewFilter = class {
   }
 
   _textFilterChanged() {
-    this._filterText = this._textFilterUI.value();
-    this._filterRegex = null;
-    if (this._filterText.startsWith('/') && this._filterText.endsWith('/')) {
-      try {
-        this._filterRegex = new RegExp(this._filterText.substring(1, this._filterText.length - 1), 'i');
-      } catch (e) {
-      }
-    }
+    var parsedQuery =
+        TextUtils.TextUtils.parseFilterQuery(this._textFilterUI.value(), Object.values(Console.ConsoleView.FilterType));
+    this._filters = parsedQuery.filters;
+    this._filterTexts = parsedQuery.text;
+    this._filterRegexes = parsedQuery.regex;
     this._filterChanged();
   }
 
@@ -1167,17 +1171,25 @@ Console.ConsoleViewFilter = class {
     if (!levels[message.level])
       return false;
 
-    if (this._filterRegex) {
-      if (!viewMessage.matchesFilterRegex(this._filterRegex))
-        return false;
-    } else if (this._filterText) {
-      if (!viewMessage.matchesFilterText(this._filterText))
-        return false;
-    }
-
     if (this._filterByConsoleAPISetting.get() &&
         message.source !== ConsoleModel.ConsoleMessage.MessageSource.ConsoleAPI)
       return false;
+
+    if (this._filterRegexes.length && !viewMessage.matchesFilterRegex(this._filterRegexes))
+      return false;
+    if (this._filterTexts.length && !viewMessage.matchesFilterText(this._filterTexts))
+      return false;
+
+    for (var filter of this._filters) {
+      switch (filter.type) {
+        case Console.ConsoleView.FilterType.Url:
+          if (!message.url && !filter.negative)
+            return false;
+          if (message.url && message.url.includes(filter.data) === filter.negative)
+            return false;
+          break;
+      }
+    }
 
     return true;
   }

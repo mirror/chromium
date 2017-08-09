@@ -1434,7 +1434,7 @@ Network.NetworkLogView = class extends UI.VBox {
     if (this._textFilterUI.isRegexChecked() && query !== '')
       parsedQuery = {text: [query], filters: []};
     else
-      parsedQuery = this._suggestionBuilder.parseQuery(query);
+      parsedQuery = TextUtils.TextUtils.parseFilterQuery(query, Network.NetworkLogView._searchKeys);
 
     this._filters = parsedQuery.text.map(this._createTextFilter, this);
 

@@ -181,9 +181,54 @@ TextUtils.TextUtils = {
       if (stringAfterMatches)
         doSplit(stringAfterMatches, regexIndex + 1, startIndex + currentIndex);
     }
+  },
+
+  /**
+   * @param {string} query
+   * @param {!Array<string>} keys
+   * @return {{text: !Array<string>, regex: !Array<!RegExp>, filters: !Array<!TextUtils.TextUtils.ParsedFilter>}}
+   */
+  parseFilterQuery(query, keys) {
+    var splitResult = TextUtils.TextUtils.splitStringByRegexes(query, [
+      TextUtils.TextUtils._keyValueWithQuotesRegex, TextUtils.TextUtils._keyValueRegex,
+      TextUtils.TextUtils._SpaceCharRegex
+    ]);
+    var filters = [];
+    var regex = [];
+    var text = [];
+    var result;
+    for (var i = 0; i < splitResult.length; i++) {
+      var regexIndex = splitResult[i].regexIndex;
+      var value = splitResult[i].value;
+      if (regexIndex === 0) {
+        result = TextUtils.TextUtils._keyValueWithQuotesRegex.exec(value);
+        filters.push({type: result[2], data: result[3], negative: !!result[1]});
+      } else if (regexIndex === 1) {
+        result = TextUtils.TextUtils._keyValueRegex.exec(value);
+        filters.push({type: result[2], data: result[3], negative: !!result[1]});
+      } else {
+        var trimmedValue = value.trim();
+        if (trimmedValue) {
+          if (trimmedValue.startsWith('/') && trimmedValue.endsWith('/')) {
+            try {
+              regex.push(new RegExp(trimmedValue.substring(1, trimmedValue.length - 1), 'i'));
+            } catch (e) {
+            }
+          } else {
+            text.push(trimmedValue);
+          }
+        }
+      }
+    }
+    return {text: text, regex: regex, filters: filters};
   }
 };
 
+/** @typedef {{type: string, data: string, negative: boolean}} */
+TextUtils.TextUtils.ParsedFilter;
+
+TextUtils.TextUtils._keyValueRegex = /(\-)?([\w\-]+):([^\s]+)/;
+TextUtils.TextUtils._keyValueWithQuotesRegex = /(\-)?([\w\-]+):"([^"]+)"/;
 TextUtils.TextUtils._SpaceCharRegex = /\s/;
 
 /**
