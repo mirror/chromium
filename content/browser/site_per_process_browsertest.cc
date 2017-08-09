@@ -2477,10 +2477,8 @@ class FailingLoadFactory : public mojom::URLLoaderFactory {
                                 traffic_annotation) override {
     new FailingURLLoaderImpl(std::move(client));
   }
-  void SyncLoad(int32_t routing_id,
-                int32_t request_id,
-                const ResourceRequest& request,
-                SyncLoadCallback callback) override {}
+
+  void Clone(mojom::URLLoaderFactoryRequest request) override { NOTREACHED(); }
 };
 }
 
