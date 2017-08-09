@@ -10,6 +10,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "build/build_config.h"
 #include "content/public/app/content_main_delegate.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/renderer/content_renderer_client.h"
@@ -52,8 +53,11 @@ class HEADLESS_EXPORT HeadlessContentMainDelegate
   friend class HeadlessBrowserTest;
 
   void InitLogging(const base::CommandLine& command_line);
-  void InitCrashReporter(const base::CommandLine& command_line);
   static void InitializeResourceBundle();
+
+#if !defined(OS_FUCHSIA)
+  void InitCrashReporter(const base::CommandLine& command_line);
+#endif
 
   static HeadlessContentMainDelegate* GetInstance();
 
