@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b66b43c5_37bd620c",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-09T02:18:04Z",
+      "side": 1,
+      "message": "Also need to check here, since the handler registers for Cookie changes before getInitialSettings is received from JS.",
+      "revId": "869c36d9ac4cb0d71709c35ff627d1c8211d9f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
