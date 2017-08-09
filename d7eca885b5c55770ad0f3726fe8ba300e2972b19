@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a5858284_e8a0ee31",
+        "filename": "services/network/public/interfaces/fetch_api.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-09T23:31:41Z",
+      "side": 1,
+      "message": "Regarding first moving it to WebKit/common, if content::ResourceResponse uses it and it moves to services/network as is then we\u0027re still in the same situation (i.e. services/network uses a struct with a web platform enum member that it shouldn\u0027t know about).\n\nIt\u0027s a bit hard now to see how this is used in blink because code search is down :)",
+      "parentUuid": "cac47ad7_686f2ac8",
+      "revId": "d7eca885b5c55770ad0f3726fe8ba300e2972b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "470d6b58_08922129",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h",
         "patchSetId": 4
