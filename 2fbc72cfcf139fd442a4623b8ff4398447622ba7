@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d04f64dc_5cbf7c5b",
+        "filename": "components/security_interstitials/core/controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-09T18:00:48Z",
+      "side": 1,
+      "message": "tiny nit: drop should, it\u0027s cleaner :)",
+      "revId": "2fbc72cfcf139fd442a4623b8ff4398447622ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
