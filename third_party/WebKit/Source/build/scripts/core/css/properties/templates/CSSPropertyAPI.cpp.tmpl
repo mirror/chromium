@@ -16,17 +16,12 @@ namespace blink {
 
 namespace {
 
-static constexpr CSSPropertyAPI base_api;
-{% for api_class in api_classnames %}
-static constexpr {{api_class}} api_{{api_class.lower()}};
-{% endfor %}
-
-static constexpr const CSSPropertyAPI* const property_apis[] = {
+static constexpr CSSPropertyAPI property_apis[] = {
   {% for api_class_data in api_classes_by_property_id %}
     {% if api_class_data.classname %}
-  &api_{{api_class_data.classname.lower()}},  // {{api_class_data.property_id}}
+  {{api_class_data.classname}}(),  // {{api_class_data.property_id}}
     {% else %}
-  &base_api,  // API for {{api_class_data.property_id}} not implemented yet.
+  CSSPropertyAPI(),  // API for {{api_class_data.property_id}} not implemented yet.
     {% endif %}
   {% endfor %}
 };
@@ -36,7 +31,7 @@ static constexpr const CSSPropertyAPI* const property_apis[] = {
 const CSSPropertyAPI& CSSPropertyAPI::Get(CSSPropertyID id) {
   DCHECK_GE(id, {{first_property_id}});  // first_property_id
   DCHECK_LE(id, {{last_property_id}});  // last_property_id
-  return *property_apis[id - {{first_property_id}}];
+  return property_apis[id - {{first_property_id}}];
 }
 
 }  // namespace blink
