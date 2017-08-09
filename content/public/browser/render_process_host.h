@@ -135,6 +135,11 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   virtual void OnAudioStreamAdded() = 0;
   virtual void OnAudioStreamRemoved() = 0;
 
+  // Called when a video capture stream is added or removed and used to
+  // determine if the process should be backgrounded or not.
+  virtual void OnVideoCaptureStreamAdded() = 0;
+  virtual void OnVideoCaptureStreamRemoved() = 0;
+
   // Indicates whether the current RenderProcessHost is exclusively hosting
   // guest RenderFrames. Not all guest RenderFrames are created equal.  A guest,
   // as indicated by BrowserPluginGuest::IsGuest, may coexist with other
