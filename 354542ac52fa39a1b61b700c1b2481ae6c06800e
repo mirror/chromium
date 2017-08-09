@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "9b087520_07c709c1",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-09T20:14:58Z",
+      "side": 1,
+      "message": "Disregard what I said about the race condition. Actually it is still possible to have a race condition, but the only race condition that is important to the Arc Clipboard, is the one that can occur between the desctructors of the two scoped objects. \n\nAdded a comment in the new CL",
+      "parentUuid": "8b793161_5734df81",
+      "revId": "354542ac52fa39a1b61b700c1b2481ae6c06800e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7555b9d4_ec7083c1",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 15
