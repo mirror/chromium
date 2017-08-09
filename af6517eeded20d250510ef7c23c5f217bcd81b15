@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "874278c3_1de75598",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-09T21:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26e814ad_5215b24d",
+      "range": {
+        "startLine": 67,
+        "startChar": 69,
+        "endLine": 67,
+        "endChar": 80
+      },
+      "revId": "af6517eeded20d250510ef7c23c5f217bcd81b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2158c64_173e0f3f",
         "filename": "components/loader/simple_url_loader_unittest.cc",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3a50cfa4_e7900381",
+        "filename": "components/loader/simple_url_loader_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-09T21:02:40Z",
+      "side": 1,
+      "message": "Both styles are allowed - I find this much more readable.  Types should always be before variable names, as the Flying Spaghetti Monster intended!",
+      "parentUuid": "e2158c64_173e0f3f",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 54
+      },
+      "revId": "af6517eeded20d250510ef7c23c5f217bcd81b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b415210_14c055f3",
         "filename": "components/loader/simple_url_loader_unittest.cc",
         "patchSetId": 11
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-09T20:42:01Z",
       "side": 1,
       "message": "nit: auto is also appropriate for the ::New() function on Mojo types.",
+      "range": {
+        "startLine": 206,
+        "startChar": 4,
+        "endLine": 206,
+        "endChar": 43
+      },
+      "revId": "af6517eeded20d250510ef7c23c5f217bcd81b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860661b1_36a92c4c",
+        "filename": "components/loader/simple_url_loader_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-09T21:02:40Z",
+      "side": 1,
+      "message": "That makes it less clear that this is a smart pointer than the \"Ptr\" suffix does, IMHO.",
+      "parentUuid": "5b415210_14c055f3",
       "range": {
         "startLine": 206,
         "startChar": 4,
