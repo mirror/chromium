@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/views/harmony/textfield_layout.h"
 
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
+#include "ui/views/controls/combobox/combobox.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/layout/grid_layout.h"
@@ -16,6 +17,19 @@ namespace {
 // GridLayout "resize percent" constants.
 constexpr float kFixed = 0.f;
 constexpr float kStretchy = 1.f;
+
+void AddLabelAndField(views::GridLayout* layout,
+                      const base::string16& label_text,
+                      views::View* field,
+                      int column_set_id,
+                      int row_height) {
+  layout->StartRow(kFixed, column_set_id, row_height);
+  views::Label* label = new views::Label(
+      label_text, views::style::CONTEXT_LABEL, views::style::STYLE_PRIMARY);
+
+  layout->AddView(label);
+  layout->AddView(field);
+}
 
 }  // namespace
 
@@ -38,19 +52,13 @@ views::ColumnSet* ConfigureTextfieldStack(GridLayout* layout,
 }
 
 views::Textfield* AddFirstTextfieldRow(GridLayout* layout,
-                                       const base::string16& label_text,
+                                       const base::string16& label,
                                        int column_set_id) {
   views::Textfield* textfield = new views::Textfield();
-  layout->StartRow(
-      kFixed, column_set_id,
+  textfield->SetAccessibleName(label);
+  AddLabelAndField(
+      layout, label, textfield, column_set_id,
       ChromeLayoutProvider::GetControlHeightForFont(textfield->GetFontList()));
-  views::Label* label = new views::Label(
-      label_text, views::style::CONTEXT_LABEL, views::style::STYLE_PRIMARY);
-  textfield->SetAccessibleName(label_text);
-
-  layout->AddView(label);
-  layout->AddView(textfield);
-
   return textfield;
 }
 
@@ -60,4 +68,15 @@ views::Textfield* AddTextfieldRow(GridLayout* layout,
   layout->AddPaddingRow(kFixed, ChromeLayoutProvider::Get()->GetDistanceMetric(
                                     DISTANCE_CONTROL_LIST_VERTICAL));
   return AddFirstTextfieldRow(layout, label, column_set_id);
+}
+
+void AddComboboxRow(views::GridLayout* layout,
+                    const base::string16& label,
+                    views::Combobox* combobox,
+                    int column_set_id) {
+  layout->AddPaddingRow(kFixed, ChromeLayoutProvider::Get()->GetDistanceMetric(
+                                    DISTANCE_CONTROL_LIST_VERTICAL));
+  AddLabelAndField(layout, label, combobox, column_set_id,
+                   ChromeLayoutProvider::GetControlHeightForFont(
+                       views::Combobox::GetFontList()));
 }
