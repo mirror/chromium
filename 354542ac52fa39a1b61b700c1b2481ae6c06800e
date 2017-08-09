@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52405a2d_87adc6b9",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-09T01:36:37Z",
+      "side": 1,
+      "message": "Perhaps I didn\u0027t understand correctly the comment.\n\nI think it is better to filter it in ArcClipboardBridge so that we don\u0027t add ARC logic in the ClipboardMonitor. And also ClipboardMonitor knows nothing about the Clipboard.",
+      "parentUuid": "37d34ca6_39fa169c",
+      "revId": "354542ac52fa39a1b61b700c1b2481ae6c06800e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7555b9d4_ec7083c1",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 15
@@ -39,6 +57,30 @@
       "revId": "354542ac52fa39a1b61b700c1b2481ae6c06800e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5bb0db7_b97a6b25",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-09T01:36:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7555b9d4_ec7083c1",
+      "range": {
+        "startLine": 145,
+        "startChar": 64,
+        "endLine": 145,
+        "endChar": 66
+      },
+      "revId": "354542ac52fa39a1b61b700c1b2481ae6c06800e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
