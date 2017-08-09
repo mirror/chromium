@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f19ca8b_fd4b6f19",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-09T15:31:48Z",
+      "side": 1,
+      "message": "After an offline discussion, we\u0027re going to leave these blank lines here and elsewhere to make the distinction between text and formulas clearer.",
+      "parentUuid": "c94dd8f8_009e5866",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 2
+      },
+      "revId": "f78602693295c5fb9b64d930b2c59864e41c741e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cb7bc83_a8e5a210",
         "filename": "third_party/WebKit/Source/platform/audio/VectorMath.h",
         "patchSetId": 2
@@ -163,6 +187,30 @@
     },
     {
       "key": {
+        "uuid": "5bf29fc4_4826aea6",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-09T15:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "086cf12c_7c8ea6a4",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 2
+      },
+      "revId": "f78602693295c5fb9b64d930b2c59864e41c741e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d06c72a_a313ee9c",
         "filename": "third_party/WebKit/Source/platform/audio/VectorMath.h",
         "patchSetId": 2
@@ -174,6 +222,30 @@
       "writtenOn": "2017-08-08T22:28:05Z",
       "side": 1,
       "message": "Redundant empty lines. Early line wrapping.",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 2
+      },
+      "revId": "f78602693295c5fb9b64d930b2c59864e41c741e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5436568d_90ba5d6b",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-09T15:31:48Z",
+      "side": 1,
+      "message": "Wrapping fixed; empty line retained as discussed.",
+      "parentUuid": "4d06c72a_a313ee9c",
       "range": {
         "startLine": 109,
         "startChar": 0,
