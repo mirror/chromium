@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "574295b4_4ea1cb43",
+        "filename": "ios/chrome/browser/payments/origin_security_checker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-09T20:04:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d5386af_f7300473",
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef79ecc0_bcb67562",
         "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.h",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "53ec2fa1_2c1b083c",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-09T20:04:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef79ecc0_bcb67562",
+      "range": {
+        "startLine": 29,
+        "startChar": 67,
+        "endLine": 30,
+        "endChar": 66
+      },
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b32b27a_d77db1d0",
         "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.mm",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-09T15:15:47Z",
       "side": 1,
       "message": "Are we checking the secure context in both JS and ObjC? Otherwise can be spoofed in JS",
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1282188_c6f227ed",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-09T20:04:16Z",
+      "side": 1,
+      "message": "Done. Replaced the call to IsOriginSecure with IsContextSecure in ObjC.\n\nHowever at that point we will reject the show promise or resolve the canMakePayment promise with false since it\u0027s not possible to throw an exception from the constructor anymore.",
+      "parentUuid": "6b32b27a_d77db1d0",
       "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "0a7ecca7_7fdd9981",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_can_make_payment_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-09T20:04:16Z",
+      "side": 1,
+      "message": "Ack. Will do that for all the tests in one sweep.",
+      "parentUuid": "da3de160_b13fb7d8",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 44
+      },
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be6329c1_38249c1b",
         "filename": "ios/chrome/browser/ui/payments/payment_request_can_make_payment_egtest.mm",
         "patchSetId": 5
@@ -93,6 +177,24 @@
       "writtenOn": "2017-08-09T15:15:47Z",
       "side": 1,
       "message": "In our C++ browsertests the derived class provides the URL to be tested in the constructor...\n\ne.g., PaymentRequestWebContentsManagerTest()\n      : PaymentRequestBrowserTestBase(\n            \"/payment_request_multiple_requests.html\") {}\n\nThen the base class loads that URL before the test starts. Would it be possible/worthwhile here?",
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1303fade_61ad4835",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_can_make_payment_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-09T20:04:16Z",
+      "side": 1,
+      "message": "Ack. I\u0027m not sure about the benefits of that. That way every test that needs to load a different URL will require a separate test class. Right now tests that are logically related are grouped into one test class and each can load distinct URLs at any point during the test.",
+      "parentUuid": "be6329c1_38249c1b",
       "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -113,6 +215,24 @@
       "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0fb59c8_06b77ec1",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-09T20:04:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8855b226_c5c8a761",
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
