@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24a45fc4_69108448",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-08-09T20:49:52Z",
+      "side": 1,
+      "message": "nit: please wrap the CL description at 80 chars per line",
+      "range": {
+        "startLine": 9,
+        "startChar": 69,
+        "endLine": 9,
+        "endChar": 81
+      },
+      "revId": "c7a185fda8284ce718fda19d5229f31ea392d5bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0579cf10_b7d79ae4",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-08-09T20:49:52Z",
+      "side": 1,
+      "message": "Instead of a direct call to Layout() on |view|, does setting needs_relayout_ \u003d true; here fix the bug?",
+      "range": {
+        "startLine": 543,
+        "startChar": 8,
+        "endLine": 543,
+        "endChar": 14
+      },
+      "revId": "c7a185fda8284ce718fda19d5229f31ea392d5bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
