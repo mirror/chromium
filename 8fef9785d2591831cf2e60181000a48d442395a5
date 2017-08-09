@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06be3b46_e0a7125d",
+        "filename": "chrome/browser/resources/chromeos/emulator/device_emulator.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-09T20:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2f0f779_0901bd8b",
+      "revId": "8fef9785d2591831cf2e60181000a48d442395a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2105fe52_d91cab55",
         "filename": "chrome/browser/resources/chromeos/login/active_directory_password_change.html",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-09T19:08:33Z",
       "side": 1,
       "message": "This is not necessary IIUC. Only chrome://resources/html/polymer.html needs to be at the top, since it is the only file where we configure polymer.",
+      "revId": "8fef9785d2591831cf2e60181000a48d442395a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0362032_5a1961dc",
+        "filename": "chrome/browser/resources/chromeos/login/active_directory_password_change.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-09T20:51:40Z",
+      "side": 1,
+      "message": "Moving these to a separate CL.",
+      "parentUuid": "2105fe52_d91cab55",
       "revId": "8fef9785d2591831cf2e60181000a48d442395a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
