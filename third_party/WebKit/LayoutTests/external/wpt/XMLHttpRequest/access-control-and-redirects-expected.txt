@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+FAIL Local redirect to remote origin Failed to execute 'send' on 'XMLHttpRequest': Failed to load 'http://web-platform.test:8001/XMLHttpRequest/resources/redirect.py?location=http://www1.web-platform.test:8001/XMLHttpRequest/resources/access-control-basic-allow.py'.
+FAIL Remote redirect to local origin Failed to execute 'send' on 'XMLHttpRequest': Failed to load 'http://www1.web-platform.test:8001/XMLHttpRequest/resources/redirect.py?location=http://web-platform.test:8001/XMLHttpRequest/resources/access-control-basic-allow.py&allow_origin=true'.
+FAIL Remote redirect to same remote origin Failed to execute 'send' on 'XMLHttpRequest': Failed to load 'http://www1.web-platform.test:8001/XMLHttpRequest/resources/redirect.py?location=http://www1.web-platform.test:8001/XMLHttpRequest/resources/access-control-basic-allow.py&allow_origin=true'.
+Harness: the test ran to completion.
+

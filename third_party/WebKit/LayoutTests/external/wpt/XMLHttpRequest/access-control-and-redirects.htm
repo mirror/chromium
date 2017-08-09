@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tests that redirect between origins are allowed when access control is involved.</title>
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+    <script src="/common/get-host-info.sub.js"></script>
+  </head>
+  <body>
+    <script>
+    function runTest(test, url)
+    {
+      let xhr = new XMLHttpRequest();
+      xhr.open("GET", url, false);
+      xhr.send(null);
+      assert_equals(xhr.responseText, "PASS: Cross-domain access allowed.", "Sync request");
+
+      xhr = new XMLHttpRequest();
+      xhr.open("GET", url, true);
+      xhr.onload = test.step_func_done(function() {
+        assert_equals(xhr.responseText, "PASS: Cross-domain access allowed.", "Async request");
+      });
+      xhr.onerror = test.unreached_func("Network error");
+      xhr.send(null);
+    }
+
+    async_test(t => {
+      runTest(t, "resources/redirect.py?location=" + get_host_info().HTTP_REMOTE_ORIGIN +
+          "/XMLHttpRequest/resources/access-control-basic-allow.py")
+    }, "Local redirect to remote origin");
+    async_test(t => {
+      runTest(t, get_host_info().HTTP_REMOTE_ORIGIN +
+          "/XMLHttpRequest/resources/redirect.py?location=" + get_host_info().HTTP_ORIGIN +
+          "/XMLHttpRequest/resources/access-control-basic-allow.py&allow_origin=true")
+    }, "Remote redirect to local origin");
+    async_test(t => {
+      runTest(t, get_host_info().HTTP_REMOTE_ORIGIN +
+          "/XMLHttpRequest/resources/redirect.py?location=" + get_host_info().HTTP_REMOTE_ORIGIN +
+          "/XMLHttpRequest/resources/access-control-basic-allow.py&allow_origin=true")
+    }, "Remote redirect to same remote origin");
+    </script>
+  </body>
+</html>
