@@ -76,6 +76,7 @@
 #include "core/probe/CoreProbes.h"
 #include "core/svg/SVGDocumentExtensions.h"
 #include "core/timing/Performance.h"
+#include "core/web_agent/agent.h"
 #include "platform/Histogram.h"
 #include "platform/PluginScriptForbiddenScope.h"
 #include "platform/RuntimeEnabledFeatures.h"
@@ -224,6 +225,7 @@ DEFINE_TRACE(LocalFrame) {
   visitor->Trace(input_method_controller_);
   visitor->Trace(frame_resource_coordinator_);
   visitor->Trace(text_suggestion_controller_);
+  visitor->Trace(web_agents_);
   Frame::Trace(visitor);
   Supplementable<LocalFrame>::Trace(visitor);
 }
@@ -1104,6 +1106,15 @@ void LocalFrame::SetViewportIntersectionFromParent(
     if (View())
       View()->ScheduleAnimation();
   }
+}
+
+void LocalFrame::AddWebAgent(web::Agent& web_agent) {
+  web_agents_.push_back(web_agent);
+}
+
+void LocalFrame::DidMeaningfulLayout(WebMeaningfulLayout layout_type) {
+  for (auto& web_agent : web_agents_)
+    web_agent->DidMeaningfulLayout(layout_type);
 }
 
 }  // namespace blink

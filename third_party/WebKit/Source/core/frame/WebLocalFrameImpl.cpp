@@ -174,6 +174,8 @@
 #include "core/paint/TransformRecorder.h"
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
+#include "core/web_agent/dom_distiller/dom_distiller_agent.h"
+#include "core/web_agent/sample/sample_agent.h"
 #include "platform/ScriptForbiddenScope.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/bindings/DOMWrapperWorld.h"
@@ -1893,6 +1895,14 @@ void WebLocalFrameImpl::SetDevToolsAgentClient(
 
 WebDevToolsAgent* WebLocalFrameImpl::DevToolsAgent() {
   return dev_tools_agent_.Get();
+}
+
+void WebLocalFrameImpl::StartAgents() {
+  LocalFrame* frame = GetFrame();
+  if (!frame)
+    return;
+  frame->AddWebAgent(*new web::SampleAgent(new web::Frame(frame)));
+  frame->AddWebAgent(*new web::DomDistillerAgent(new web::Frame(frame)));
 }
 
 WebLocalFrameImpl* WebLocalFrameImpl::LocalRoot() {
