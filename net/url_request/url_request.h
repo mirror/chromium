@@ -34,6 +34,7 @@
 #include "net/log/net_log_with_source.h"
 #include "net/proxy/proxy_server.h"
 #include "net/socket/connection_attempts.h"
+#include "net/socket/socket_tag.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_status.h"
 #include "url/gurl.h"
@@ -667,6 +668,12 @@ class NET_EXPORT URLRequest : public base::SupportsUserData {
     return traffic_annotation_;
   }
 
+  // Sets tag to be placed on socket used to execute this request. Note that
+  // setting a tag disallows sharing of sockets with requests with other tags,
+  // which may adversely effect performance by prohibiting connection sharing.
+  void set_socket_tag(const SocketTag& socket_tag) { socket_tag_ = socket_tag; }
+  SocketTag socket_tag() const { return socket_tag_; }
+
  protected:
   // Allow the URLRequestJob class to control the is_pending() flag.
   void set_is_pending(bool value) { is_pending_ = value; }
@@ -870,6 +877,8 @@ class NET_EXPORT URLRequest : public base::SupportsUserData {
   int raw_header_size_;
 
   const NetworkTrafficAnnotationTag traffic_annotation_;
+
+  SocketTag socket_tag_;
 
   THREAD_CHECKER(thread_checker_);
 

@@ -29,6 +29,7 @@
 #include "net/proxy/proxy_service.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/next_proto.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/spdy_session.h"
 #include "net/spdy/chromium/spdy_session_pool.h"
@@ -97,7 +98,8 @@ class SSLClientSocketPoolTest : public testing::Test {
             HostPortPair("host", 443),
             false,
             OnHostResolutionCallback(),
-            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT)),
+            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+            SocketTag())),
         transport_socket_pool_(kMaxSockets,
                                kMaxSocketsPerGroup,
                                &socket_factory_),
@@ -105,7 +107,8 @@ class SSLClientSocketPoolTest : public testing::Test {
             HostPortPair("proxy", 443),
             false,
             OnHostResolutionCallback(),
-            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT)),
+            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+            SocketTag())),
         socks_socket_params_(
             new SOCKSSocketParams(proxy_transport_socket_params_,
                                   true,
@@ -838,7 +841,7 @@ TEST_F(SSLClientSocketPoolTest, IPPooling) {
     // Setup a SpdySessionKey
     test_hosts[i].key = SpdySessionKey(
         HostPortPair(test_hosts[i].name, kTestPort), ProxyServer::Direct(),
-        PRIVACY_MODE_DISABLED);
+        PRIVACY_MODE_DISABLED, SocketTag());
   }
 
   MockRead reads[] = {
@@ -898,7 +901,7 @@ void SSLClientSocketPoolTest::TestIPPoolingDisabled(
     // Setup a SpdySessionKey
     test_hosts[i].key = SpdySessionKey(
         HostPortPair(test_hosts[i].name, kTestPort), ProxyServer::Direct(),
-        PRIVACY_MODE_DISABLED);
+        PRIVACY_MODE_DISABLED, SocketTag());
   }
 
   MockRead reads[] = {
