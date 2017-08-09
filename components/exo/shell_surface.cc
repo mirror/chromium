@@ -912,8 +912,14 @@ bool ShellSurface::WidgetHasHitTestMask() const {
 void ShellSurface::GetWidgetHitTestMask(gfx::Path* mask) const {
   DCHECK(WidgetHasHitTestMask());
   GetHitTestMask(mask);
+
   gfx::Point origin = host_window()->bounds().origin();
-  mask->offset(SkIntToScalar(origin.x()), SkIntToScalar(origin.y()));
+  SkMatrix matrix;
+  matrix.setScaleTranslate(
+      SkFloatToScalar(1.0f / root_surface()->GetDeviceScaleFactor()),
+      SkFloatToScalar(1.0f / root_surface()->GetDeviceScaleFactor()),
+      SkIntToScalar(origin.x()), SkIntToScalar(origin.y()));
+  mask->transform(matrix);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

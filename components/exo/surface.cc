@@ -400,6 +400,10 @@ void Surface::SetDeviceScaleFactor(float device_scale_factor) {
   device_scale_factor_ = device_scale_factor;
 }
 
+float Surface::GetDeviceScaleFactor() const {
+  return device_scale_factor_;
+}
+
 void Surface::Commit() {
   TRACE_EVENT0("exo", "Surface::Commit");
 

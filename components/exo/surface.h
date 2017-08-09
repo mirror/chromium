@@ -128,6 +128,9 @@ class Surface : public ui::PropertyHandler {
   // This sets the device scale factor sent in CompositorFrames.
   void SetDeviceScaleFactor(float device_scale_factor);
 
+  // This obtains the device scale factor.
+  float GetDeviceScaleFactor() const;
+
   // Surface state (damage regions, attached buffers, etc.) is double-buffered.
   // A Commit() call atomically applies all pending state, replacing the
   // current state. Commit() is not guaranteed to be synchronous. See
