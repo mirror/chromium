@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb109cb2_fbaca6d7",
+        "filename": "content/browser/blob_storage/blob_url_loader_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-09T21:13:33Z",
+      "side": 1,
+      "message": "Mentioned that this happens at the end of Start()",
+      "parentUuid": "1893dafa_3f81133d",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 78
+      },
+      "revId": "1a6dc85b8233928aa49ee6bd6421a284009e047b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b40eef6_49f58251",
         "filename": "content/browser/blob_storage/blob_url_loader_factory.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e97ce266_dd4e1681",
+        "filename": "content/browser/blob_storage/blob_url_loader_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-09T21:13:33Z",
+      "side": 1,
+      "message": "At the end of this method we WrapUnique ourselves and pass ownership of this over to the MojoBlobReader (which itself owns itself, and then us, and deletes both when finshed).",
+      "parentUuid": "9b40eef6_49f58251",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 18
+      },
+      "revId": "1a6dc85b8233928aa49ee6bd6421a284009e047b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75c53602_53596394",
         "filename": "storage/browser/blob/mojo_blob_reader.h",
         "patchSetId": 8
@@ -59,6 +107,24 @@
       "writtenOn": "2017-08-01T19:10:07Z",
       "side": 1,
       "message": "Please comment that the object can be deleted after this call. Also maybe comment that this is the one and only place this object is destroyed.",
+      "revId": "1a6dc85b8233928aa49ee6bd6421a284009e047b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c613e6_e5da4f06",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-09T21:13:33Z",
+      "side": 1,
+      "message": "I renamed the method to NotifyCompletedAndDeleteIfNeeded. Do you still want me to add a comment as well, or is that clear enough?",
+      "parentUuid": "75c53602_53596394",
       "revId": "1a6dc85b8233928aa49ee6bd6421a284009e047b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -79,6 +145,24 @@
       "revId": "1a6dc85b8233928aa49ee6bd6421a284009e047b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935464a8_d9fd5056",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-09T21:13:33Z",
+      "side": 1,
+      "message": "Oops, there is no such method, deleted.",
+      "parentUuid": "9d5978df_caaa2f27",
+      "revId": "1a6dc85b8233928aa49ee6bd6421a284009e047b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
