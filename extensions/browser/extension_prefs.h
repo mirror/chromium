@@ -194,6 +194,10 @@ class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
   // Note that blacklisted extensions are NOT marked as disabled!
   bool IsExtensionDisabled(const std::string& id) const;
 
+  // Checks whether |extension_id| is blocked due to management policy. If
+  // there's no state pref for the extension, this will return false.
+  bool IsExtensionBlockedByPolicy(const std::string& id) const;
+
   // Get/Set the order that the browser actions appear in the toolbar.
   ExtensionIdList GetToolbarOrder() const;
   void SetToolbarOrder(const ExtensionIdList& extension_ids);
@@ -231,6 +235,9 @@ class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
   // is preserved (but the disable reasons are still set).
   void SetExtensionDisabled(const std::string& extension_id,
                             int disable_reasons);
+
+  // Sets the extension's state to BLOCKED_BY_POLICY.
+  void SetExtensionBlockedByPolicy(const std::string& extension_id);
 
   // Called to change the extension's BlacklistState. Currently only used for
   // non-malicious extensions.

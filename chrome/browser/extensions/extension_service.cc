@@ -1203,7 +1203,7 @@ bool ExtensionService::is_ready() {
 }
 
 void ExtensionService::CheckManagementPolicy() {
-  std::vector<std::string> to_unload;
+  std::vector<std::string> block_due_to_policy;
   std::map<std::string, Extension::DisableReason> to_disable;
   std::vector<std::string> to_enable;
 
@@ -1211,7 +1211,7 @@ void ExtensionService::CheckManagementPolicy() {
   // disable.
   for (const auto& extension : registry_->enabled_extensions()) {
     if (!system_->management_policy()->UserMayLoad(extension.get(), nullptr))
-      to_unload.push_back(extension->id());
+      block_due_to_policy.push_back(extension->id());
     Extension::DisableReason disable_reason = Extension::DISABLE_NONE;
     if (system_->management_policy()->MustRemainDisabled(
             extension.get(), &disable_reason, nullptr))
@@ -1238,8 +1238,8 @@ void ExtensionService::CheckManagementPolicy() {
 
   // Loop through the disabled extension list, find extensions to re-enable
   // automatically. These extensions are exclusive from the |to_disable| and
-  // |to_unload| lists constructed above, since disabled_extensions() and
-  // enabled_extensions() are supposed to be mutually exclusive.
+  // |block_due_to_policy| lists constructed above, since disabled_extensions()
+  // and enabled_extensions() are supposed to be mutually exclusive.
   for (const auto& extension : registry_->disabled_extensions()) {
     // Find all disabled extensions disabled due to minimum version requirement,
     // but now satisfying it.
@@ -1258,14 +1258,18 @@ void ExtensionService::CheckManagementPolicy() {
     }
   }
 
-  for (const std::string& id : to_unload)
+  for (const std::string& id : block_due_to_policy) {
     UnloadExtension(id, UnloadedExtensionReason::DISABLE);
+    DCHECK(!registry_->GetInstalledExtension(id));
+    extension_prefs_->SetExtensionBlockedByPolicy(id);
+  }
 
   for (const auto& i : to_disable)
     DisableExtension(i.first, i.second);
 
   // No extension is getting re-enabled here after disabling/unloading
-  // because to_enable is mutually exclusive to to_disable + to_unload.
+  // because to_enable is mutually exclusive to to_disable +
+  // block_due_to_policy.
   for (const std::string& id : to_enable)
     EnableExtension(id);
 

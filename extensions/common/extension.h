@@ -52,6 +52,8 @@ class Extension : public base::RefCountedThreadSafe<Extension> {
     // DEPRECATED: Special state for component extensions.
     // Maintained as a placeholder since states may be stored to disk.
     ENABLED_COMPONENT_DEPRECATED,
+    // The extension is blocked due to management policy.
+    BLOCKED_BY_POLICY,
     // Add new states here as this enum is stored in prefs.
     NUM_STATES
   };

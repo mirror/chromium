@@ -1062,6 +1062,10 @@ bool ExtensionPrefs::IsExtensionDisabled(const std::string& id) const {
   return DoesExtensionHaveState(id, Extension::DISABLED);
 }
 
+bool ExtensionPrefs::IsExtensionBlockedByPolicy(const std::string& id) const {
+  return DoesExtensionHaveState(id, Extension::BLOCKED_BY_POLICY);
+}
+
 ExtensionIdList ExtensionPrefs::GetToolbarOrder() const {
   ExtensionIdList id_list_out;
   GetUserExtensionPrefIntoContainer(pref_names::kToolbar, &id_list_out);
@@ -1129,6 +1133,16 @@ void ExtensionPrefs::SetExtensionDisabled(const std::string& extension_id,
   }
   UpdateExtensionPref(extension_id, kPrefDisableReasons,
                       base::MakeUnique<base::Value>(disable_reasons));
+  for (auto& observer : observer_list_)
+    observer.OnExtensionStateChanged(extension_id, false);
+}
+
+void ExtensionPrefs::SetExtensionBlockedByPolicy(
+    const std::string& extension_id) {
+  extension_pref_value_map_->SetExtensionState(extension_id, false);
+  UpdateExtensionPref(
+      extension_id, kPrefState,
+      base::MakeUnique<base::Value>(Extension::BLOCKED_BY_POLICY));
   for (auto& observer : observer_list_)
     observer.OnExtensionStateChanged(extension_id, false);
 }
@@ -1866,7 +1880,8 @@ void ExtensionPrefs::InitExtensionControlledPrefs(
        extension_id != extension_ids.end();
        ++extension_id) {
     base::Time install_time = GetInstallTime(*extension_id);
-    bool is_enabled = !IsExtensionDisabled(*extension_id);
+    bool is_enabled = !IsExtensionDisabled(*extension_id) &&
+                      !IsExtensionBlockedByPolicy(*extension_id);
     bool is_incognito_enabled = IsIncognitoEnabled(*extension_id);
     value_map->RegisterExtension(
         *extension_id, install_time, is_enabled, is_incognito_enabled);

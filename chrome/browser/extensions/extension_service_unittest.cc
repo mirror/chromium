@@ -3879,14 +3879,18 @@ TEST_F(ExtensionServiceTest, ManagementPolicyProhibitsUninstall) {
 }
 
 // Tests that previously installed extensions that are now prohibited from
-// being installed are removed.
+// being installed are unloaded and marked as BLOCKED_BY_POLICY.
 TEST_F(ExtensionServiceTest, ManagementPolicyUnloadsAllProhibited) {
   InitializeEmptyExtensionService();
 
   InstallCRX(data_dir().AppendASCII("good.crx"), INSTALL_NEW);
   InstallCRX(data_dir().AppendASCII("page_action.crx"), INSTALL_NEW);
+
   EXPECT_EQ(2u, registry()->enabled_extensions().size());
   EXPECT_EQ(0u, registry()->disabled_extensions().size());
+  ValidatePrefKeyCount(2);
+  ValidateIntegerPref(good_crx, "state", Extension::ENABLED);
+  ValidateIntegerPref(page_action, "state", Extension::ENABLED);
 
   GetManagementPolicy()->UnregisterAllProviders();
   extensions::TestManagementPolicyProvider provider(
@@ -3895,8 +3899,12 @@ TEST_F(ExtensionServiceTest, ManagementPolicyUnloadsAllProhibited) {
 
   // Run the policy check.
   service()->CheckManagementPolicy();
+
   EXPECT_EQ(0u, registry()->enabled_extensions().size());
   EXPECT_EQ(0u, registry()->disabled_extensions().size());
+  ValidatePrefKeyCount(2);
+  ValidateIntegerPref(good_crx, "state", Extension::BLOCKED_BY_POLICY);
+  ValidateIntegerPref(page_action, "state", Extension::BLOCKED_BY_POLICY);
 }
 
 // Tests that previously disabled extensions that are now required to be
