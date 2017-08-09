@@ -96,6 +96,24 @@
     },
     {
       "key": {
+        "uuid": "317c97e8_2f1ba8f7",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-09T18:12:17Z",
+      "side": 1,
+      "message": "Oh cool, I guess that\u0027s definitely the behavior we want to use then.",
+      "parentUuid": "452980da_fac4c62f",
+      "revId": "adaa1b7df247c2fb561c69309eb6ee51113e7415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c72b0e7a_b74c2542",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.h",
         "patchSetId": 3
