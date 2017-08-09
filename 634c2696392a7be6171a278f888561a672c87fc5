@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c7585a2_dcfc25eb",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-09T03:16:31Z",
+      "side": 0,
+      "message": "Could you exclude this file from this patch?\nIt seems this file comes from the patch[1].\n\n[1] http://crrev.com/c/604769: This patch changes function |assert_selecction()|",
+      "revId": "634c2696392a7be6171a278f888561a672c87fc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
