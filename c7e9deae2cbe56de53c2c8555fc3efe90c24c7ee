@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "32f51f02_6dd26fc0",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-08-09T14:48:04Z",
+      "side": 1,
+      "message": "nit: actual types instead of auto, here (std::unique_ptr\u003cUserEventSpecifics\u003e) and below (PasswordReuseLookup*). Maybe just me but I find auto only increases readability in for-loops. And the two types used here aren\u0027t overly long.",
+      "range": {
+        "startLine": 268,
+        "startChar": 2,
+        "endLine": 268,
+        "endChar": 6
+      },
+      "revId": "c7e9deae2cbe56de53c2c8555fc3efe90c24c7ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef4f457d_528edbb3",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 3
@@ -18,6 +41,29 @@
         "startChar": 0,
         "endLine": 339,
         "endChar": 48
+      },
+      "revId": "c7e9deae2cbe56de53c2c8555fc3efe90c24c7ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed35ed6_3695210d",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-08-09T14:48:04Z",
+      "side": 1,
+      "message": "nit: move up 2 lines to stay alphabetical",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 25
       },
       "revId": "c7e9deae2cbe56de53c2c8555fc3efe90c24c7ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
