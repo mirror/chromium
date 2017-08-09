@@ -1198,7 +1198,7 @@ void DXVAVideoDecodeAccelerator::Reset() {
 
 void DXVAVideoDecodeAccelerator::Destroy() {
   DCHECK(main_thread_task_runner_->BelongsToCurrentThread());
-  Invalidate();
+  Invalidate(false);
   delete this;
 }
 
@@ -2014,11 +2014,11 @@ void DXVAVideoDecodeAccelerator::StopOnError(
   client_ = NULL;
 
   if (GetState() != kUninitialized) {
-    Invalidate();
+    Invalidate(false);
   }
 }
 
-void DXVAVideoDecodeAccelerator::Invalidate() {
+void DXVAVideoDecodeAccelerator::Invalidate(bool for_config_change) {
   if (GetState() == kUninitialized)
     return;
 
@@ -2037,7 +2037,7 @@ void DXVAVideoDecodeAccelerator::Invalidate() {
   // output picture buffers may need to be recreated in case the video
   // resolution changes. We already handle that in the
   // HandleResolutionChanged() function.
-  if (GetState() != kConfigChange) {
+  if (!for_config_change) {
     output_picture_buffers_.clear();
     stale_output_picture_buffers_.clear();
     // We want to continue processing pending input after detecting a config
@@ -2115,6 +2115,8 @@ void DXVAVideoDecodeAccelerator::NotifyFlushDone() {
     }
 
     client_->NotifyFlushDone();
+    Invalidate(true);
+    Initialize(config_, client_);
   }
 }
 
@@ -3038,7 +3040,7 @@ void DXVAVideoDecodeAccelerator::ConfigChanged(const Config& config) {
   DCHECK(main_thread_task_runner_->BelongsToCurrentThread());
 
   SetState(kConfigChange);
-  Invalidate();
+  Invalidate(true);
   Initialize(config_, client_);
   decoder_thread_task_runner_->PostTask(
       FROM_HERE,

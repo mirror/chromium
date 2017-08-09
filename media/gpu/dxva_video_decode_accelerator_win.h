@@ -244,8 +244,9 @@ class MEDIA_GPU_EXPORT DXVAVideoDecodeAccelerator
   void StopOnError(VideoDecodeAccelerator::Error error);
 
   // Transitions the decoder to the uninitialized state. The decoder will stop
-  // accepting requests in this state.
-  void Invalidate();
+  // accepting requests in this state. When invalidating for a config change,
+  // only the decoder needs to be destroyed - other things can stick around.
+  void Invalidate(bool for_config_change);
 
   // Stop and join on the decoder thread.
   void StopDecoderThread();
