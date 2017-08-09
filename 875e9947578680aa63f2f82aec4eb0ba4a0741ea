@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "3e948df3_2a28da6f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T09:32:10Z",
+      "side": 1,
+      "message": "you could use test() for sync ones.",
+      "revId": "875e9947578680aa63f2f82aec4eb0ba4a0741ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "268c6c3b_46637ffc",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-allow.py",
         "patchSetId": 11
