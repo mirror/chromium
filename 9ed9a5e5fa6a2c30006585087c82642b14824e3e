@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a1d9f26_7013cb1f",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-09T04:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdff2ca2_b4391025",
+      "revId": "9ed9a5e5fa6a2c30006585087c82642b14824e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a56e605e_62146d54",
         "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/RendererResourceCoordinator.cpp",
         "patchSetId": 25
@@ -33,6 +51,24 @@
       "revId": "9ed9a5e5fa6a2c30006585087c82642b14824e3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "013b8774_367dc227",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/RendererResourceCoordinator.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-09T04:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a56e605e_62146d54",
+      "revId": "9ed9a5e5fa6a2c30006585087c82642b14824e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
