@@ -1089,11 +1089,14 @@ void GraphicsContext::FillEllipse(const FloatRect& ellipse) {
   DrawOval(ellipse, ImmutableState()->FillFlags());
 }
 
-void GraphicsContext::StrokePath(const Path& path_to_stroke) {
+void GraphicsContext::StrokePath(const Path& path_to_stroke,
+                                 const int length,
+                                 const int dash_thickness) {
   if (ContextDisabled() || path_to_stroke.IsEmpty())
     return;
 
-  DrawPath(path_to_stroke.GetSkPath(), ImmutableState()->StrokeFlags());
+  DrawPath(path_to_stroke.GetSkPath(),
+           ImmutableState()->StrokeFlags(length, dash_thickness));
 }
 
 void GraphicsContext::StrokeRect(const FloatRect& rect, float line_width) {
