@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "872a3b58_7910ca4d",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-09T03:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e9a8427_a861ae9a",
+      "revId": "531e02ffeb2e360baca5c4127409f89ff6d77177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51176a32_3ba7aa32",
         "filename": "chrome/browser/printing/print_view_manager_base.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-09T02:43:54Z",
       "side": 1,
       "message": "Can this be moved into PrintViewMananger? Then you don\u0027t need to check BUILDFLAG(ENABLE_PRINT_PREVIEW).",
+      "revId": "531e02ffeb2e360baca5c4127409f89ff6d77177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809bef58_5a727e51",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-09T03:33:11Z",
+      "side": 1,
+      "message": "Need access to a few private methods of PrintViewManagerBase (ReleasePrinterQuery and TerminatePrintJob), and PrintViewManagerBase is already using the notification service (would need to add the include to PrintViewManager).",
+      "parentUuid": "51176a32_3ba7aa32",
       "revId": "531e02ffeb2e360baca5c4127409f89ff6d77177",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "531e02ffeb2e360baca5c4127409f89ff6d77177",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059a5c88_23ca0cc5",
+        "filename": "chrome/browser/printing/printing_message_filter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-09T03:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9109940d_df79c380",
+      "revId": "531e02ffeb2e360baca5c4127409f89ff6d77177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
