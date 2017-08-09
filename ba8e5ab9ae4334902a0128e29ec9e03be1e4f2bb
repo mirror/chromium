@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ae3e7ce_a0757d28",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-09T14:29:19Z",
+      "side": 1,
+      "message": "Thanks, removed.",
+      "parentUuid": "2d371cdd_e5bec881",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 12
+      },
+      "revId": "ba8e5ab9ae4334902a0128e29ec9e03be1e4f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd17d3e6_7a56d84b",
         "filename": "ios/chrome/browser/passwords/password_controller.mm",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "ba8e5ab9ae4334902a0128e29ec9e03be1e4f2bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291f5602_918c7e8f",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-09T14:29:19Z",
+      "side": 1,
+      "message": "Thanks, it makes sense. That\u0027s why articles are sometimes required. For specifity I\u0027ve added to \"the password\" store",
+      "parentUuid": "dd17d3e6_7a56d84b",
+      "range": {
+        "startLine": 107,
+        "startChar": 53,
+        "endLine": 107,
+        "endChar": 58
+      },
+      "revId": "ba8e5ab9ae4334902a0128e29ec9e03be1e4f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "08b4d027_6908764e",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-09T14:29:19Z",
+      "side": 1,
+      "message": "I\u0027ve added the comment. store here means noun, namely PasswordStore. It looks that this is the main reason of confusing: for example about logic, we should send requests to the store as soon as find a password form.",
+      "parentUuid": "18decf60_fe875617",
+      "range": {
+        "startLine": 276,
+        "startChar": 7,
+        "endLine": 276,
+        "endChar": 29
+      },
+      "revId": "ba8e5ab9ae4334902a0128e29ec9e03be1e4f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be54af62_7c1d7b97",
         "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "ba8e5ab9ae4334902a0128e29ec9e03be1e4f2bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a84c68bb_fe71fd3e",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 1396,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-09T14:29:19Z",
+      "side": 1,
+      "message": "__block can\u0027t be captured in Lambda. I\u0027ve added a comment, not sure how it\u0027s helpful.",
+      "parentUuid": "be54af62_7c1d7b97",
+      "range": {
+        "startLine": 1396,
+        "startChar": 8,
+        "endLine": 1396,
+        "endChar": 27
+      },
+      "revId": "ba8e5ab9ae4334902a0128e29ec9e03be1e4f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a0451c16_caaa3bdc",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 1397,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-09T14:29:19Z",
+      "side": 1,
+      "message": "Thanks, it makes sense",
+      "parentUuid": "9dd174df_ac514f55",
+      "range": {
+        "startLine": 1397,
+        "startChar": 2,
+        "endLine": 1397,
+        "endChar": 9
+      },
+      "revId": "ba8e5ab9ae4334902a0128e29ec9e03be1e4f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3360b635_6b71a3bf",
         "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "ba8e5ab9ae4334902a0128e29ec9e03be1e4f2bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473af037_1b32828e",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 1404,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-09T14:29:19Z",
+      "side": 1,
+      "message": "It makes sense",
+      "parentUuid": "3360b635_6b71a3bf",
+      "range": {
+        "startLine": 1404,
+        "startChar": 33,
+        "endLine": 1404,
+        "endChar": 34
+      },
+      "revId": "ba8e5ab9ae4334902a0128e29ec9e03be1e4f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
