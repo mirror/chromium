@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ba03d93_521c456a",
+        "filename": "ios/chrome/browser/ui/reading_list/number_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-09T15:59:10Z",
+      "side": 1,
+      "message": "Does this comment add value?",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4aa3adf_93524af7",
         "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
         "patchSetId": 1
@@ -30,6 +47,91 @@
       "writtenOn": "2017-08-09T06:46:03Z",
       "side": 1,
       "message": "Please comment label property.",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc2deb4_f2245929",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-09T15:59:10Z",
+      "side": 1,
+      "message": "How do you feel about inverting this logic to didAddSubviews? It initializes to false, and seems more analogous to terms like \"didLoad\".",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1faf0a_87de430c",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-09T15:59:10Z",
+      "side": 1,
+      "message": "The default value should be published as a constant so that users of the class can know whether they want to modify it.",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c24fdff_328f8c8e",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-09T15:59:10Z",
+      "side": 1,
+      "message": "This comment is probably not necessary.",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc708230_02c0393f",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-09T15:59:10Z",
+      "side": 1,
+      "message": "This comment is probably not necessary.",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541e59b4_715ebee3",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-09T15:59:10Z",
+      "side": 1,
+      "message": "Comments are redundant with actual code. These can be removed.",
       "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
