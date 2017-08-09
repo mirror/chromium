@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8a99d8b8_d4758a4d",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-09T20:55:15Z",
+      "side": 1,
+      "message": "Wait... don\u0027t the histogram macros expand to a static that is initialized once? Which means the first call to this will bind to a histogram, and subsequent calls will report to that first histogram.\n\nLooks to be true from a quick spelunking in\nhttps://cs.chromium.org/chromium/src/base/metrics/histogram_macros_internal.h?sq\u0026l\u003d49\n\nIf you want this to be flexible and run time dynamic then you shouldn\u0027t use the histogram macros but rather use the metrics API directly.",
+      "revId": "7541caf570e3dffaab79cea3ed346f753d68ebe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35694907_22585705",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 3
