@@ -252,6 +252,9 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
 
   virtual void PopulateImageForCurrentFrame(PaintImageBuilder&) = 0;
 
+  // Initializes a PaintImageBuilder with the metadata flags for the PaintImage.
+  void InitPaintImageBuilder(PaintImageBuilder&);
+
  private:
   bool image_observer_disabled_;
   RefPtr<SharedBuffer> encoded_image_data_;
