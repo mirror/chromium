@@ -494,6 +494,24 @@
     },
     {
       "key": {
+        "uuid": "732f6eb2_c4187444",
+        "filename": "android_webview/browser/aw_variations_service_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T20:58:26Z",
+      "side": 1,
+      "message": "I\u0027m trying to create an experiment config using the tool. It gives an error if you don\u0027t select a channel, so this isn\u0027t actually true.",
+      "parentUuid": "8175e403_c74754fa",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72e0b8d3_a148ff0e",
         "filename": "android_webview/browser/aw_variations_service_client.h",
         "patchSetId": 7
