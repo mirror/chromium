@@ -28,6 +28,7 @@
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
 #include "ash/shell_port.h"
+#include "ash/system/session/logout_confirmation_controller.h"
 #include "ash/system/status_area_layout_manager.h"
 #include "ash/system/status_area_widget.h"
 #include "ash/system/tray/system_tray_delegate.h"
@@ -705,6 +706,8 @@ void RootWindowController::Init(RootWindowType root_window_type) {
 
   CreateContainers();
   ShellPort::Get()->OnCreatedRootWindowContainers(this);
+  Shell::Get()->logout_confirmation_controller()->ObserveForLastWindowClosed(
+      GetRootWindow());
 
   CreateSystemWallpaper(root_window_type);
 

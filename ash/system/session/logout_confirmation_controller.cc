@@ -7,37 +7,42 @@
 #include <utility>
 
 #include "ash/login_status.h"
+#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/system/session/logout_confirmation_dialog.h"
-#include "ash/system/tray/system_tray_notifier.h"
 #include "base/location.h"
 #include "base/time/default_tick_clock.h"
 #include "base/time/tick_clock.h"
+#include "ui/aura/window.h"
 #include "ui/views/widget/widget.h"
 
 namespace ash {
 namespace {
 const int kLogoutConfirmationDelayInSeconds = 20;
+
+// Shell window containers monitored for when the last window closes.
+const int kLastWindowClosedContainerIds[] = {
+    kShellWindowId_DefaultContainer, kShellWindowId_AlwaysOnTopContainer};
 }
 
 LogoutConfirmationController::LogoutConfirmationController(
     const base::Closure& logout_closure)
     : clock_(new base::DefaultTickClock),
       logout_closure_(logout_closure),
-      dialog_(NULL),
       logout_timer_(false, false),
-      scoped_session_observer_(this) {
-  if (Shell::HasInstance())
-    Shell::Get()->system_tray_notifier()->AddLastWindowClosedObserver(this);
-}
+      scoped_session_observer_(this) {}
 
 LogoutConfirmationController::~LogoutConfirmationController() {
-  if (Shell::HasInstance())
-    Shell::Get()->system_tray_notifier()->RemoveLastWindowClosedObserver(this);
-
   if (dialog_)
     dialog_->ControllerGone();
+}
+
+void LogoutConfirmationController::ObserveForLastWindowClosed(
+    aura::Window* root) {
+  for (int id : kLastWindowClosedContainerIds) {
+    root->GetChildById(id)->AddObserver(this);
+  }
 }
 
 void LogoutConfirmationController::ConfirmLogout(base::TimeTicks logout_time) {
@@ -89,17 +94,39 @@ void LogoutConfirmationController::OnDialogClosed() {
   logout_timer_.Stop();
 }
 
-void LogoutConfirmationController::OnLastWindowClosed() {
+void LogoutConfirmationController::OnWindowHierarchyChanging(
+    const HierarchyChangeParams& params) {
+  if (!params.new_parent && params.old_parent) {
+    // A window is being removed (and not moved to another container).
+    ShowDialogIfLastWindowClosing();
+  }
+}
+
+void LogoutConfirmationController::OnWindowDestroying(aura::Window* window) {
+  // Stop observing the container window when it closes.
+  window->RemoveObserver(this);
+}
+
+void LogoutConfirmationController::ShowDialogIfLastWindowClosing() {
+  // Only ask the user to confirm logout if a public session is in progress
+  // (which implies the screen is not locked).
   if (Shell::Get()->session_controller()->login_status() !=
       LoginStatus::PUBLIC) {
     return;
   }
 
-  // Ask the user to confirm logout if a public session is in progress and the
-  // screen is not locked.
-  ConfirmLogout(
-      base::TimeTicks::Now() +
-      base::TimeDelta::FromSeconds(kLogoutConfirmationDelayInSeconds));
+  int window_count = 0;
+  for (aura::Window* root : Shell::GetAllRootWindows()) {
+    for (int id : kLastWindowClosedContainerIds)
+      window_count += root->GetChildById(id)->children().size();
+  }
+
+  // Prompt if the Last window is closing.
+  if (window_count == 1) {
+    ConfirmLogout(
+        base::TimeTicks::Now() +
+        base::TimeDelta::FromSeconds(kLogoutConfirmationDelayInSeconds));
+  }
 }
 
 }  // namespace ash
