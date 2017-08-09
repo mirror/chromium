@@ -46,6 +46,29 @@
       "revId": "559177a464320fcc1c641e63deaeeff82d7028b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9c1bfe8_6dd2dd06",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-09T11:22:29Z",
+      "side": 1,
+      "message": "Is there a link to the relevant crbug or github issue? Are we trying to overcome a serious privacy concern here or is this just meant as a deterrent?",
+      "range": {
+        "startLine": 76,
+        "startChar": 29,
+        "endLine": 76,
+        "endChar": 79
+      },
+      "revId": "559177a464320fcc1c641e63deaeeff82d7028b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
