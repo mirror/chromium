@@ -22826,6 +22826,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1607691647" label="MojoVideoEncodeAccelerator:disabled"/>
   <int value="-1605567628" label="disable-overlay-scrollbar"/>
   <int value="-1604051051" label="SpecialLocale:disabled"/>
+  <int value="-1599784593" label="SitesExplorationFeature:enabled"/>
   <int value="-1599538279" label="enable-md-policy-page"/>
   <int value="-1596559650" label="max-tiles-for-interest-area"/>
   <int value="-1594298767" label="FullscreenToolbarReveal:enabled"/>
@@ -22842,6 +22843,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1557527869" label="LoadingWithMojo:disabled"/>
   <int value="-1553477903" label="ash-disable-text-filtering-in-overview-mode"/>
   <int value="-1549871007" label="OneGoogleBarOnLocalNtp:disabled"/>
+  <int value="-1547670726" label="SitesExplorationFeature:disabled"/>
   <int value="-1546903171" label="enable-touch-drag-drop"/>
   <int value="-1544248549" label="ArcUseAuthEndpoint:enabled"/>
   <int value="-1543316040"
