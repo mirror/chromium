@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a252e5d_2649eff0",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-09T00:02:59Z",
+      "side": 1,
+      "message": "nit: comment /*   \u003d*/nullptr",
+      "revId": "0fb5f2f41875b8226d32c394875b24c63ed877ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
