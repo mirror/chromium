@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8c97aeeb_7f9ee25a",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-09T16:00:24Z",
+      "side": 1,
+      "message": "nit: is base::Passed() required with unique_ptr?",
+      "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2068db82_a9f46d45",
         "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer.cc",
         "patchSetId": 4
