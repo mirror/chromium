@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fa97d5c_e9038cd6",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T22:51:55Z",
+      "side": 0,
+      "message": "FYI - The Initialize() method goes away in another part of the CL.",
+      "revId": "610ec6f9d3fb9ba54632036eaf2fdf2413860a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

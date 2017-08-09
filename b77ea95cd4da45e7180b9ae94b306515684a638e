@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c70d4dc7_24082d78",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T22:51:55Z",
+      "side": 1,
+      "message": "I looked at trying to make LogoutConfirmationController a ShellObserver and track both shell initialization and the addition of extra monitors, but this seemed a little clearer. (For example, doing it with ShellObserver means having to reason about the case where ash starts up with two displays connected -- I don\u0027t know how root window init vs. shell init happens in that case.)",
+      "revId": "b77ea95cd4da45e7180b9ae94b306515684a638e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75975b5_13958ddc",
+        "filename": "chrome/browser/ui/ash/system_tray_delegate_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T22:51:55Z",
+      "side": 1,
+      "message": "Just cleanup after deleting the comment (which isn\u0027t relevant anymore).",
+      "revId": "b77ea95cd4da45e7180b9ae94b306515684a638e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
