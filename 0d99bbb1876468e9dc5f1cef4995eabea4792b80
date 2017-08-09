@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aa09de3_d40379b7",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-09T00:43:56Z",
+      "side": 1,
+      "message": "The root_window is used to determine if this notification is for this displays(or shelfs) app_list. \n\nSee here:\nhttps://cs.chromium.org/chromium/src/ash/shelf/app_list_button.cc?sq\u003dpackage:chromium\u0026l\u003d449",
+      "revId": "0d99bbb1876468e9dc5f1cef4995eabea4792b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
