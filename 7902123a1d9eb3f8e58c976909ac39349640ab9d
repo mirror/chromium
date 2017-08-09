@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a497bb6b_f9a6abba",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T21:49:37Z",
+      "side": 1,
+      "message": "Any reason not to use mojo.common.mojom.TimeTicks or something like that?",
+      "revId": "7902123a1d9eb3f8e58c976909ac39349640ab9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b14276d9_0e51819c",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T21:49:37Z",
+      "side": 1,
+      "message": "Should we consider expressing the errors as enum values instead of a generic string?",
+      "revId": "7902123a1d9eb3f8e58c976909ac39349640ab9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5f32a3_4b40ce4e",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T21:49:37Z",
+      "side": 1,
+      "message": "Seems redundant to |success|? I\u0027m guessing this was meant to be a string (but see previous question)",
+      "revId": "7902123a1d9eb3f8e58c976909ac39349640ab9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e631a00_67e1c248",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T21:49:37Z",
+      "side": 1,
+      "message": "Can we do the same thing here? Leave this empty, and add methods as we implement?",
+      "revId": "7902123a1d9eb3f8e58c976909ac39349640ab9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
