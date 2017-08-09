@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8c00251_d414034c",
+        "filename": "ash/shell.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:02:24Z",
+      "side": 1,
+      "message": "Why does this register the shelf prefs as foreign? They should be owned by ash.",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f10ed04_f94149cb",
+        "filename": "ash/shell.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:02:24Z",
+      "side": 1,
+      "message": "I\u0027m also confused about this; the shelf prefs should be owned by ash.",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38716eb7_043966e9",
+        "filename": "ash/shell.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:02:24Z",
+      "side": 1,
+      "message": "Should existing overrides that check for null now DCHECK(profile_prefs)?",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ce2671_e1283bd0",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T18:02:24Z",
+      "side": 1,
+      "message": "Ditto confusion; are you moving shelf prefs back to chrome?\nMaybe you were hitting a mash crash? I just fixed http://crbug.com/753823",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
