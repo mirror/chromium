@@ -36,6 +36,10 @@ static jlong Init(JNIEnv* env,
   if (!rfhi->IsCurrent() || web_contents_impl->IsHidden())
     return 0;
 
+  // Dialog-based overlays are not supported for persistent video.
+  if (web_contents_impl->HasPersistentVideo())
+    return 0;
+
   ContentViewCore* cvc = ContentViewCore::FromWebContents(web_contents_impl);
 
   if (!cvc)
@@ -57,8 +61,6 @@ DialogOverlayImpl::DialogOverlayImpl(const JavaParamRef<jobject>& obj,
   JNIEnv* env = AttachCurrentThread();
   obj_ = JavaObjectWeakGlobalRef(env, obj);
 
-  cvc_->AddObserver(this);
-
   // Note that we're not allowed to call back into |obj| before it calls
   // CompleteInit.  However, the observer won't actually call us back until the
   // token changes.  As long as the java side calls us from the ui thread before
@@ -68,6 +70,9 @@ DialogOverlayImpl::DialogOverlayImpl(const JavaParamRef<jobject>& obj,
 void DialogOverlayImpl::CompleteInit(JNIEnv* env,
                                      const JavaParamRef<jobject>& obj) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  rfhi_->AddOverlay(this);
+  cvc_->AddObserver(this);
 
   // Note: It's ok to call SetOverlayMode() directly here, because there can be
   // at most one overlay alive at the time. This logic needs to be updated if
@@ -134,6 +139,8 @@ void DialogOverlayImpl::UnregisterForTokensIfNeeded() {
 
   cvc_->RemoveObserver(this);
   cvc_ = nullptr;
+
+  rfhi_->RemoveOverlay(this);
   rfhi_ = nullptr;
 }
 
@@ -189,6 +196,11 @@ void DialogOverlayImpl::OnDetachedFromWindow() {
   ScopedJavaLocalRef<jobject> obj = obj_.get(env);
   if (!obj.is_null())
     Java_DialogOverlayImpl_onWindowToken(env, obj, nullptr);
+}
+
+void DialogOverlayImpl::PersistentVideoRequested(bool want_persistent_video) {
+  if (want_persistent_video)
+    Stop();
 }
 
 static jint RegisterSurface(JNIEnv* env,
