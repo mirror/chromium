@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4570be15_4cb1cbab",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-09T15:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a815dda_0dd83192",
+      "range": {
+        "startLine": 148,
+        "startChar": 44,
+        "endLine": 148,
+        "endChar": 52
+      },
+      "revId": "1d7d1ae5952974102e9e2540a19122110b4f1ede",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4b2d2a0_15f57e83",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "11d6f496_253cf247",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-09T15:17:34Z",
+      "side": 1,
+      "message": "clarified",
+      "parentUuid": "e4b2d2a0_15f57e83",
+      "range": {
+        "startLine": 334,
+        "startChar": 36,
+        "endLine": 334,
+        "endChar": 37
+      },
+      "revId": "1d7d1ae5952974102e9e2540a19122110b4f1ede",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e5dc2dd_bb585021",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 14
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-09T15:02:23Z",
       "side": 1,
       "message": "Worth having a test where the request delivers some bytes and then fails, making sure we get the bytes?",
+      "range": {
+        "startLine": 365,
+        "startChar": 13,
+        "endLine": 365,
+        "endChar": 14
+      },
+      "revId": "1d7d1ae5952974102e9e2540a19122110b4f1ede",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba18fa5d_e43e1d5d",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-09T15:17:34Z",
+      "side": 1,
+      "message": "Yes, it is, but I\u0027ll do that in another CL - I basically want to rewrite these tests to be more like my SimpleURLLoader tests (Which I\u0027ll be sending out shortly).  I want to get out proxy configuration support first, and then circle back here in a week or two (Mostly because the proxy code will be used on trunk, so want to get that change out farther away from branch, and want to get SimpleURLLoader\u0027s test fixture reviewed before writing another that\u0027s similar to it).",
+      "parentUuid": "3e5dc2dd_bb585021",
       "range": {
         "startLine": 365,
         "startChar": 13,

@@ -22,6 +22,30 @@
       "revId": "fcba9cb6188c6f3df986c93d4ca50eec39929fa3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bbe1372_9ed4eca2",
+        "filename": "content/test/data/content-sniffer-test0.html.mock-http-headers",
+        "patchSetId": 14
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-09T15:17:34Z",
+      "side": 0,
+      "message": "I made one in an earlier patch set, but then ran into another bug and had to upload another (Which is perhaps a commentary about discoverability of old comments in gerrit).\n\nAnyhow, the issue is that these content lengths are all incorrect, and now that we fail when a read ends in ERR_CONTENT_LENGTH_MISMATCH, instead of claiming success, these caused problems.",
+      "parentUuid": "7a4bd07f_876b3e42",
+      "range": {
+        "startLine": 2,
+        "startChar": 16,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "fcba9cb6188c6f3df986c93d4ca50eec39929fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
