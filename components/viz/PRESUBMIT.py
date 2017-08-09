@@ -11,16 +11,14 @@ for more details about the presubmit API built into depot_tools.
 import re
 import string
 
-VIZ_SOURCE_FILES=(r'^components[\\/]viz[\\/].*\.(cc|h)$',)
-
-def CheckChangeLintsClean(input_api, output_api):
+def CheckChangeLintsClean(input_api, output_api, white_list, black_list=None):
   source_filter = lambda x: input_api.FilterSourceFile(
-    x, white_list=VIZ_SOURCE_FILES, black_list=None)
+    x, white_list=white_list, black_list=black_list)
 
   return input_api.canned_checks.CheckChangeLintsClean(
       input_api, output_api, source_filter, lint_filters=[], verbose_level=1)
 
-def CheckAsserts(input_api, output_api, white_list=VIZ_SOURCE_FILES, black_list=None):
+def CheckAsserts(input_api, output_api, white_list, black_list=None):
   black_list = tuple(black_list or input_api.DEFAULT_BLACK_LIST)
   source_file_filter = lambda x: input_api.FilterSourceFile(x, white_list, black_list)
 
@@ -39,7 +37,7 @@ def CheckAsserts(input_api, output_api, white_list=VIZ_SOURCE_FILES, black_list=
   return []
 
 def CheckStdAbs(input_api, output_api,
-                white_list=VIZ_SOURCE_FILES, black_list=None):
+                white_list, black_list=None):
   black_list = tuple(black_list or input_api.DEFAULT_BLACK_LIST)
   source_file_filter = lambda x: input_api.FilterSourceFile(x,
                                                             white_list,
@@ -86,7 +84,7 @@ def CheckStdAbs(input_api, output_api,
 
 def CheckPassByValue(input_api,
                      output_api,
-                     white_list=VIZ_SOURCE_FILES,
+                     white_list,
                      black_list=None):
   black_list = tuple(black_list or input_api.DEFAULT_BLACK_LIST)
   source_file_filter = lambda x: input_api.FilterSourceFile(x,
@@ -128,7 +126,7 @@ def CheckTodos(input_api, output_api):
       items=errors)]
   return []
 
-def CheckDoubleAngles(input_api, output_api, white_list=VIZ_SOURCE_FILES,
+def CheckDoubleAngles(input_api, output_api, white_list,
                       black_list=None):
   errors = []
 
@@ -145,7 +143,7 @@ def CheckDoubleAngles(input_api, output_api, white_list=VIZ_SOURCE_FILES,
   return []
 
 def CheckUniquePtr(input_api, output_api,
-                   white_list=VIZ_SOURCE_FILES, black_list=None):
+                   white_list, black_list=None):
   black_list = tuple(black_list or input_api.DEFAULT_BLACK_LIST)
   source_file_filter = lambda x: input_api.FilterSourceFile(x,
                                                             white_list,
@@ -252,7 +250,7 @@ def CheckNamespace(input_api, output_api):
 
 def CheckForUseOfWrongClock(input_api,
                             output_api,
-                            white_list=VIZ_SOURCE_FILES,
+                            white_list,
                             black_list=None):
   """Make sure new lines of code don't use a clock susceptible to skew."""
   black_list = tuple(black_list or input_api.DEFAULT_BLACK_LIST)
@@ -303,16 +301,20 @@ def CheckForUseOfWrongClock(input_api,
   else:
     return []
 
-def CheckChangeOnUpload(input_api, output_api):
+def RunAllChecks(input_api, output_api, white_list):
   results = []
-  results += CheckAsserts(input_api, output_api)
-  results += CheckStdAbs(input_api, output_api)
-  results += CheckPassByValue(input_api, output_api)
-  results += CheckChangeLintsClean(input_api, output_api)
+  results += CheckAsserts(input_api, output_api, white_list)
+  results += CheckStdAbs(input_api, output_api, white_list)
+  results += CheckPassByValue(input_api, output_api, white_list)
+  results += CheckChangeLintsClean(input_api, output_api, white_list)
   results += CheckTodos(input_api, output_api)
-  results += CheckDoubleAngles(input_api, output_api)
-  results += CheckUniquePtr(input_api, output_api)
+  results += CheckDoubleAngles(input_api, output_api, white_list)
+  results += CheckUniquePtr(input_api, output_api, white_list)
   results += CheckNamespace(input_api, output_api)
-  results += CheckForUseOfWrongClock(input_api, output_api)
+  results += CheckForUseOfWrongClock(input_api, output_api, white_list)
   results += FindUselessIfdefs(input_api, output_api)
   return results
+
+def CheckChangeOnUpload(input_api, output_api):
+    white_list=(r'^components[\\/]viz[\\/].*\.(cc|h)$',)
+    return RunAllChecks(input_api, output_api, white_list)
