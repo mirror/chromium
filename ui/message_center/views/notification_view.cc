@@ -290,6 +290,14 @@ void NotificationView::Layout() {
   int top_height = top_view_->GetHeightForWidth(content_width);
   top_view_->SetBounds(insets.left(), insets.top(), content_width, top_height);
 
+  // Reduce width of the top most view not to be covered by the control buttons
+  if (top_view_->child_count() > 0) {
+    gfx::Rect bounds = top_view_->child_at(0)->bounds();
+    bounds.set_width(content_width -
+                     control_buttons_view_->GetPreferredSize().width());
+    top_view_->child_at(0)->SetBoundsRect(bounds);
+  }
+
   // Icon.
   icon_view_->SetBounds(insets.left(), insets.top(), kNotificationIconSize,
                         kNotificationIconSize);
