@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "c238861f_7c187b95",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-09T21:47:47Z",
+      "side": 1,
+      "message": "Add a simple comment on why we don\u0027t need fullscreen for voice interaction oobe.",
+      "range": {
+        "startLine": 1171,
+        "startChar": 2,
+        "endLine": 1171,
+        "endChar": 34
+      },
+      "revId": "023ce7aa42cdcccf6dec09cd40b917fed294e82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9db344_c35e5d07",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-09T21:47:47Z",
+      "side": 1,
+      "message": "Please update the comment.",
+      "range": {
+        "startLine": 1199,
+        "startChar": 34,
+        "endLine": 1199,
+        "endChar": 41
+      },
+      "revId": "023ce7aa42cdcccf6dec09cd40b917fed294e82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c26caf01_e1245fc7",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
         "patchSetId": 1
