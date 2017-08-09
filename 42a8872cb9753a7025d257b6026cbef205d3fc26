@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78e6e741_4f8de43f",
+        "filename": "extensions/browser/api/serial/serial_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-09T10:17:04Z",
+      "side": 1,
+      "message": "Several questions here:\n 1. Is there already some one similar mechanism to do the same thing?\n 2. What\u0027s the best place to put these codes? This is supposed to be used later for my SerialIoHandler servicification, and I think this may be generally useful to all extensions using mojo calls, to avoid extensions hanging in case of unexpected disconnection of underlying mojo message pipe.\n 3. Currently these templates impl are still rough and maybe can\u0027t satisfy some use cases later, although I\u0027ve tried my best for it.. Any comments/suggestions are big welcome :)",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 1
+      },
+      "revId": "42a8872cb9753a7025d257b6026cbef205d3fc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
