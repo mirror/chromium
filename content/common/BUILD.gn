@@ -252,7 +252,6 @@ source_set("common") {
     "origin_trials/trial_token_validator.cc",
     "origin_trials/trial_token_validator.h",
     "origin_util.cc",
-    "p2p_messages.h",
     "p2p_socket_type.h",
     "page_message_enums.h",
     "page_messages.h",
@@ -424,8 +423,6 @@ source_set("common") {
     "//storage/common",
     "//third_party/boringssl",
     "//third_party/icu",
-    "//third_party/webrtc/rtc_base:rtc_base",
-    "//third_party/webrtc_overrides",
     "//ui/accessibility",
     "//ui/base",
     "//ui/base/ime",
@@ -453,6 +450,14 @@ source_set("common") {
     ":mojo_bindings",
     "//content/public/common:interfaces",
   ]
+
+  if (!is_fuchsia) {
+    sources += [ "p2p_messages.h" ]
+    deps += [
+      "//third_party/webrtc/rtc_base:rtc_base",
+      "//third_party/webrtc_overrides",
+    ]
+  }
 
   if (is_android && use_seccomp_bpf) {
     set_sources_assignment_filter([])
@@ -501,7 +506,7 @@ source_set("common") {
     deps += [ "//third_party/fontconfig" ]
   }
 
-  if (is_mac || is_win || is_android) {
+  if (is_mac || is_win || is_android || is_fuchsia) {
     sources -= [ "font_list_fontconfig.cc" ]
   }
 
