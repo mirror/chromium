@@ -74,6 +74,9 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
 
   friend class NotificationViewMDTest;
 
+  void UpdateControlButtonsVisibilityWithNotification(
+      const Notification& notification);
+
   void CreateOrUpdateViews(const Notification& notification);
 
   void CreateOrUpdateContextTitleView(const Notification& notification);
@@ -87,12 +90,12 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   void CreateOrUpdateSmallIconView(const Notification& notification);
   void CreateOrUpdateImageView(const Notification& notification);
   void CreateOrUpdateActionButtonViews(const Notification& notification);
-  void CreateOrUpdateCloseButtonView(const Notification& notification);
-  void CreateOrUpdateSettingsButtonView(const Notification& notification);
 
   bool IsExpandable();
   void ToggleExpanded();
   void UpdateViewForExpandedState(bool expanded);
+
+  std::unique_ptr<NotificationControlButtonsView> control_buttons_view_;
 
   // Whether this notification is expanded or not.
   bool expanded_ = false;
