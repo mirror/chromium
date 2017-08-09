@@ -6,6 +6,7 @@
 
 #include <string>
 
+#include "base/optional.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace net {
@@ -19,21 +20,17 @@ TEST(EffectiveConnectionTypeTest, NameConnectionTypeConversion) {
   // EFFECTIVE_CONNECTION_TYPE_UNKNOWN, and verify that it is set to
   // EFFECTIVE_CONNECTION_TYPE_UNKNOWN when an invalid effective connection
   // type name is provided.
-  EffectiveConnectionType converted_effective_connection_type =
+  base::Optional<EffectiveConnectionType> converted_effective_connection_type =
       EFFECTIVE_CONNECTION_TYPE_SLOW_2G;
-  EXPECT_FALSE(
-      GetEffectiveConnectionTypeForName("InvalidEffectiveConnectionTypeName",
-                                        &converted_effective_connection_type));
-  EXPECT_EQ(EFFECTIVE_CONNECTION_TYPE_UNKNOWN,
-            converted_effective_connection_type);
+  converted_effective_connection_type =
+      GetEffectiveConnectionTypeForName("InvalidEffectiveConnectionTypeName");
+  EXPECT_FALSE(converted_effective_connection_type.has_value());
 
   // Reset |converted_effective_connection_type| to a value other than
   // EFFECTIVE_CONNECTION_TYPE_UNKNOWN.
-  converted_effective_connection_type = EFFECTIVE_CONNECTION_TYPE_SLOW_2G;
-  EXPECT_FALSE(GetEffectiveConnectionTypeForName(
-      std::string(), &converted_effective_connection_type));
-  EXPECT_EQ(EFFECTIVE_CONNECTION_TYPE_UNKNOWN,
-            converted_effective_connection_type);
+  converted_effective_connection_type =
+      GetEffectiveConnectionTypeForName(std::string());
+  EXPECT_FALSE(converted_effective_connection_type.has_value());
 
   for (size_t i = 0; i < EFFECTIVE_CONNECTION_TYPE_LAST; ++i) {
     const EffectiveConnectionType effective_connection_type =
@@ -51,24 +48,25 @@ TEST(EffectiveConnectionTypeTest, NameConnectionTypeConversion) {
                     effective_connection_type));
     }
 
-    EXPECT_TRUE(GetEffectiveConnectionTypeForName(
-        connection_type_name, &converted_effective_connection_type));
+    converted_effective_connection_type =
+        GetEffectiveConnectionTypeForName(connection_type_name);
+
+    EXPECT_TRUE(converted_effective_connection_type.has_value());
     EXPECT_EQ(effective_connection_type, converted_effective_connection_type);
   }
 }
 // Tests that the Slow 2G effective connection type is converted correctly to a
 // descriptive string name, and vice-versa.
 TEST(EffectiveConnectionTypeTest, Slow2GTypeConversion) {
-  EffectiveConnectionType type;
-
   // GetEffectiveConnectionTypeForName should return Slow2G as effective
   // connection type for both the deprecated and the current string
   // representation.
-  EXPECT_TRUE(GetEffectiveConnectionTypeForName("Slow2G", &type));
-  EXPECT_EQ(EFFECTIVE_CONNECTION_TYPE_SLOW_2G, type);
+  base::Optional<EffectiveConnectionType> type =
+      GetEffectiveConnectionTypeForName("Slow2G");
+  EXPECT_EQ(EFFECTIVE_CONNECTION_TYPE_SLOW_2G, type.value());
 
-  EXPECT_TRUE(GetEffectiveConnectionTypeForName("Slow-2G", &type));
-  EXPECT_EQ(EFFECTIVE_CONNECTION_TYPE_SLOW_2G, type);
+  type = GetEffectiveConnectionTypeForName("Slow-2G");
+  EXPECT_EQ(EFFECTIVE_CONNECTION_TYPE_SLOW_2G, type.value());
 
   EXPECT_EQ("Slow-2G", std::string(GetNameForEffectiveConnectionType(
                            EFFECTIVE_CONNECTION_TYPE_SLOW_2G)));

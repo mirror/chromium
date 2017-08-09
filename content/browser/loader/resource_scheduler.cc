@@ -1235,16 +1235,11 @@ ResourceScheduler::GetMaxDelayableRequestsExperimentMaxECT() {
   if (!base::FeatureList::IsEnabled(kMaxDelayableRequestsNetworkOverride))
     return net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
 
-  net::EffectiveConnectionType ect;
-  if (!net::GetEffectiveConnectionTypeForName(
-          base::GetFieldTrialParamValueByFeature(
-              kMaxDelayableRequestsNetworkOverride,
-              kMaxEffectiveConnectionType),
-          &ect)) {
-    return net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
-  }
-
-  return ect;
+  return net::GetEffectiveConnectionTypeForName(
+             base::GetFieldTrialParamValueByFeature(
+                 kMaxDelayableRequestsNetworkOverride,
+                 kMaxEffectiveConnectionType))
+      .value_or(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN);
 }
 
 size_t ResourceScheduler::ComputeMaxDelayableRequestsNetworkOverride(
