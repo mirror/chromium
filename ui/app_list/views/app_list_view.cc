@@ -249,6 +249,7 @@ void AppListView::SetDragAndDropHostOfCurrentAppList(
 }
 
 void AppListView::ShowWhenReady() {
+  SetState(app_list_state_);
   app_list_main_view_->ShowAppListWhenReady();
 }
 
@@ -939,6 +940,10 @@ void AppListView::StartAnimationForState(AppListState target_state) {
   }
 
   gfx::Rect target_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
+  // if (target_state == PEEKING && target_bounds.y() == 0) {
+  //   target_bounds.set_y(display_height);
+  //   fullscreen_widget_->SetBounds(target_bounds);
+  // }
   target_bounds.set_y(target_state_y);
 
   std::unique_ptr<ui::LayerAnimationElement> bounds_animation_element =

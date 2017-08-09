@@ -46,6 +46,8 @@ namespace {
 
 // Choose a set that is 3 regular app list pages and 2 landscape app list pages.
 constexpr int kInitialItems = 34;
+// Default peeking y value for the app list.
+constexpr int kPeekingYValue = 280;
 
 template <class T>
 size_t GetVisibleViews(const std::vector<T*>& tiles) {
@@ -196,8 +198,6 @@ class AppListViewFullscreenTest : public AppListViewTest {
 
     view_->Initialize(parent, initial_apps_page, is_tablet_mode, is_side_shelf);
     // Initialize around a point that ensures the window is wholly shown.
-    const gfx::Size size = view_->bounds().size();
-    view_->MaybeSetAnchorPoint(gfx::Point(size.width() / 2, size.height() / 2));
     EXPECT_FALSE(view_->GetWidget()->IsVisible());
   }
 
@@ -368,6 +368,20 @@ TEST_F(AppListViewFullscreenTest, TypingFullscreenToFullscreenSearch) {
   ASSERT_EQ(view_->app_list_state(), AppListView::FULLSCREEN_SEARCH);
 }
 
+// Tests that in tablet mode, typing changes the state to fullscreen search.
+TEST_F(AppListViewFullscreenTest, TypingTabletModeFullscreenSearch) {
+  Initialize(0, true, false);
+  AppListMainView* main_view = view_->app_list_main_view();
+  SearchBoxView* search_box_view = main_view->search_box_view();
+  const base::string16 new_search_text = base::UTF8ToUTF16("cool!");
+
+  Show();
+  search_box_view->search_box()->SetText(base::string16());
+  search_box_view->search_box()->InsertText(new_search_text);
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::FULLSCREEN_SEARCH);
+}
+
 // Tests that pressing escape when in peeking closes the app list.
 TEST_F(AppListViewFullscreenTest, EscapeKeyPeekingToClosed) {
   Initialize(0, false, false);
@@ -415,6 +429,17 @@ TEST_F(AppListViewFullscreenTest, EscapeKeySideShelfFullscreenToClosed) {
   ASSERT_EQ(view_->app_list_state(), AppListView::CLOSED);
 }
 
+// Tests that pressing escape when in tablet mode closes the app list.
+TEST_F(AppListViewFullscreenTest, EscapeKeyTabletModeFullscreenToClosed) {
+  // Put into fullscreen by using tablet mode.
+  Initialize(0, true, false);
+
+  Show();
+  view_->AcceleratorPressed(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::CLOSED);
+}
+
 // Tests that pressing escape when in fullscreen search changes to fullscreen.
 TEST_F(AppListViewFullscreenTest, EscapeKeyFullscreenSearchToFullscreen) {
   Initialize(0, false, false);
@@ -438,7 +463,7 @@ TEST_F(AppListViewFullscreenTest, EscapeKeySideShelfSearchToFullscreen) {
   Initialize(0, false, true);
   AppListMainView* main_view = view_->app_list_main_view();
   SearchBoxView* search_box_view = main_view->search_box_view();
-  base::string16 new_search_text = base::UTF8ToUTF16("kitty");
+  const base::string16 new_search_text = base::UTF8ToUTF16("kitty");
 
   Show();
   search_box_view->search_box()->SetText(base::string16());
@@ -475,6 +500,139 @@ TEST_F(AppListViewFullscreenTest, MultiplePagesAlwaysReinitializeOnFirstPage) {
   Show();
 
   ASSERT_EQ(view_->GetAppsPaginationModel()->selected_page(), 0);
+}
+
+// Tests that pressing escape when in tablet search changes to fullscreen.
+TEST_F(AppListViewFullscreenTest, EscapeKeyTabletModeSearchToFullscreen) {
+  // Put into fullscreen using tablet mode.
+  Initialize(0, true, false);
+  AppListMainView* main_view = view_->app_list_main_view();
+  SearchBoxView* search_box_view = main_view->search_box_view();
+  const base::string16 new_search_text = base::UTF8ToUTF16("yay");
+
+  Show();
+  search_box_view->search_box()->SetText(base::string16());
+  search_box_view->search_box()->InsertText(new_search_text);
+  view_->AcceleratorPressed(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::FULLSCREEN_ALL_APPS);
+}
+
+// Tests that leaving tablet mode when in tablet search causes no change.
+TEST_F(AppListViewFullscreenTest, LeaveTabletModeNoChange) {
+  // Put into fullscreen using tablet mode.
+  Initialize(0, true, false);
+  AppListMainView* main_view = view_->app_list_main_view();
+  SearchBoxView* search_box_view = main_view->search_box_view();
+  const base::string16 new_search_text = base::UTF8ToUTF16("something");
+
+  Show();
+  search_box_view->search_box()->SetText(base::string16());
+  search_box_view->search_box()->InsertText(new_search_text);
+  view_->OnTabletModeChanged(false);
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::FULLSCREEN_SEARCH);
+}
+
+// Tests that escape works after leaving tablet mode from search.
+TEST_F(AppListViewFullscreenTest, LeaveTabletModeEscapeKeyToFullscreen) {
+  // Put into fullscreen using tablet mode.
+  Initialize(0, true, false);
+  AppListMainView* main_view = view_->app_list_main_view();
+  SearchBoxView* search_box_view = main_view->search_box_view();
+  const base::string16 new_search_text = base::UTF8ToUTF16("nothing");
+
+  Show();
+  search_box_view->search_box()->SetText(base::string16());
+  search_box_view->search_box()->InsertText(new_search_text);
+  view_->OnTabletModeChanged(false);
+  view_->AcceleratorPressed(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::FULLSCREEN_ALL_APPS);
+}
+
+// Tests that escape twice closes after leaving tablet mode from search.
+TEST_F(AppListViewFullscreenTest, LeaveTabletModeEscapeKeyTwiceToClosed) {
+  // Put into fullscreen using tablet mode.
+  Initialize(0, true, false);
+  AppListMainView* main_view = view_->app_list_main_view();
+  SearchBoxView* search_box_view = main_view->search_box_view();
+  const base::string16 new_search_text = base::UTF8ToUTF16("nothing");
+
+  Show();
+  search_box_view->search_box()->SetText(base::string16());
+  search_box_view->search_box()->InsertText(new_search_text);
+  view_->OnTabletModeChanged(false);
+  view_->AcceleratorPressed(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
+  view_->AcceleratorPressed(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::CLOSED);
+}
+
+// Tests that closing and reopening while changing tablet mode works.
+TEST_F(AppListViewFullscreenTest, LeaveTabletModeCloseAndReopenInPeeking) {
+  // Put into fullscreen using tablet mode.
+  Initialize(0, true, false);
+  AppListMainView* main_view = view_->app_list_main_view();
+  SearchBoxView* search_box_view = main_view->search_box_view();
+  const base::string16 new_search_text = base::UTF8ToUTF16("nothing");
+
+  Show();
+  search_box_view->search_box()->SetText(base::string16());
+  search_box_view->search_box()->InsertText(new_search_text);
+  view_->OnTabletModeChanged(false);
+  view_->GetWidget()->Close();
+  view_ = new AppListView(delegate_.get());
+  view_->Initialize(GetContext(), 0, false, false);
+  Show();
+
+  ASSERT_EQ(view_->app_list_state(), AppListView::PEEKING);
+}
+
+// Tests that opening in peeking mode sets the correct height.
+TEST_F(AppListViewFullscreenTest, OpenInPeekingCorrectHeight) {
+  Initialize(0, false, false);
+
+  Show();
+  view_->SetState(AppListView::PEEKING);
+  const views::Widget* widget = view_->get_fullscreen_widget_for_test();
+  const int y = widget->GetWindowBoundsInScreen().y();
+
+  ASSERT_EQ(y, kPeekingYValue);
+}
+
+// Tests that opening in peeking mode sets the correct height.
+TEST_F(AppListViewFullscreenTest, OpenInFullscreenCorrectHeight) {
+  Initialize(0, false, false);
+
+  Show();
+  view_->SetState(AppListView::FULLSCREEN_ALL_APPS);
+  const views::Widget* widget = view_->get_fullscreen_widget_for_test();
+  const int y = widget->GetWindowBoundsInScreen().y();
+
+  ASSERT_EQ(y, 0);
+}
+
+// Tests that closing and reopening while changing tablet mode works.
+TEST_F(AppListViewFullscreenTest, LeaveTabletModeCloseAndReopenCorrectHeight) {
+  // Put into fullscreen using tablet mode.
+  Initialize(0, true, false);
+  AppListMainView* main_view = view_->app_list_main_view();
+  SearchBoxView* search_box_view = main_view->search_box_view();
+  const base::string16 new_search_text = base::UTF8ToUTF16("nothing");
+
+  Show();
+  search_box_view->search_box()->SetText(base::string16());
+  search_box_view->search_box()->InsertText(new_search_text);
+  view_->OnTabletModeChanged(false);
+  view_->GetWidget()->Close();
+  view_ = new AppListView(delegate_.get());
+  view_->Initialize(GetContext(), 0, false, false);
+  Show();
+  const views::Widget* widget = view_->get_fullscreen_widget_for_test();
+  const int y = widget->GetWindowBoundsInScreen().y();
+
+  ASSERT_EQ(y, kPeekingYValue);
 }
 
 // Tests the focus change in search box view and start page view triggered by

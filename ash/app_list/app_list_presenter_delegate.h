@@ -59,6 +59,7 @@ class ASH_EXPORT AppListPresenterDelegate
 
  private:
   void ProcessLocatedEvent(ui::LocatedEvent* event);
+  void HandleIncorrectBounds(aura::Window* root_window);
 
   // ui::EventHandler overrides:
   void OnMouseEvent(ui::MouseEvent* event) override;
