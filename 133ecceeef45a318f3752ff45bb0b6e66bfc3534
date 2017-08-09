@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1da04a33_0ecd605c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppHooks.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T09:57:07Z",
+      "side": 1,
+      "message": "How are the apps identified?",
+      "range": {
+        "startLine": 300,
+        "startChar": 24,
+        "endLine": 300,
+        "endChar": 40
+      },
+      "revId": "133ecceeef45a318f3752ff45bb0b6e66bfc3534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b5fc74_7b214bf5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppHooks.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T09:57:07Z",
+      "side": 1,
+      "message": "Maybe return an actual Set\u003cString\u003e, to better express the set-ness. Collections.emptySet() will return a convenient immutable empty set.",
+      "range": {
+        "startLine": 303,
+        "startChar": 11,
+        "endLine": 303,
+        "endChar": 19
+      },
+      "revId": "133ecceeef45a318f3752ff45bb0b6e66bfc3534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bcf41aa_d1354e8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/CctOfflinePageModelObserver.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T09:57:07Z",
+      "side": 1,
+      "message": "Maybe you want to log something different for a non-whitelisted app? And at that point it might be easier to move the checks first and return if one of them fails.",
+      "range": {
+        "startLine": 41,
+        "startChar": 24,
+        "endLine": 41,
+        "endChar": 54
+      },
+      "revId": "133ecceeef45a318f3752ff45bb0b6e66bfc3534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01cc0053_2ccd3a3f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T09:57:07Z",
+      "side": 1,
+      "message": "You could replace this with isChrome() now.",
+      "range": {
+        "startLine": 86,
+        "startChar": 11,
+        "endLine": 86,
+        "endChar": 63
+      },
+      "revId": "133ecceeef45a318f3752ff45bb0b6e66bfc3534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cde54ee_84e78737",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T09:57:07Z",
+      "side": 1,
+      "message": "Nit: \"Chrome\" is capitalized.",
+      "range": {
+        "startLine": 97,
+        "startChar": 38,
+        "endLine": 97,
+        "endChar": 39
+      },
+      "revId": "133ecceeef45a318f3752ff45bb0b6e66bfc3534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
