@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dccfb8f_eac2b465",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-09T23:41:00Z",
+      "side": 1,
+      "message": "CHECK/DCHECK if the account_id is the primary user.",
+      "revId": "57b1674be4d3c54c9eb56d6774b2a911665cbb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc102c3_7d8bc30f",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-09T23:41:00Z",
+      "side": 1,
+      "message": "base::MakeUnique.",
+      "revId": "57b1674be4d3c54c9eb56d6774b2a911665cbb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
