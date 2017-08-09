@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39af6217_d3b9f9f2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 75597,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-08-09T16:54:45Z",
+      "side": 1,
+      "message": "Who should be owners for this? It looks like nick@ and jamescook@ own most of Stability.BadMessageTerminated.*, but would it be better to have guest_view owners here? Or both?",
+      "revId": "97a777a27a8b44aec50caed5f3f8f966538be97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
