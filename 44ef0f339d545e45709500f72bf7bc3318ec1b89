@@ -52,6 +52,24 @@
       "revId": "44ef0f339d545e45709500f72bf7bc3318ec1b89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58bcecd_774b73a0",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-09T02:35:47Z",
+      "side": 1,
+      "message": "It looks the idea of WaylandGamepadDelegate is disjointing the lifetime of GamepadDelegate and wl_resource, and letting the parent object (GamingSeat) manage the lifetime of WaylandGamepadDelegate.\n\nI think DataOffer is a bit different from Gamepad.\nWhile a gamepad only handles \u0027destroy\u0027 requests, a DataOffer needs to handle for example \u0027receive\u0027 requests after OnPerformDrop. So we cannot disjoint the lifetime of wl_resource and DataOffer.\n\nIs there another preferred approach here, or we can keep the weak pointer?",
+      "parentUuid": "9e3f2b5d_7df038ae",
+      "revId": "44ef0f339d545e45709500f72bf7bc3318ec1b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
