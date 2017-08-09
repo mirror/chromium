@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bba370a0_4d39c033",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-09T08:16:50Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/text/WTFString.h?type\u003dcs\u0026q\u003dDeprecatedLower+file:%5Esrc/third_party/WebKit/+package:%5Echromium$\u0026l\u003d307\n// Returns a lowercase version of the string. This function might convert\n// non-ASCII characters to ASCII characters. For example, DeprecatedLower()\n// for U+212A is \u0027k\u0027.\nString DeprecatedLower() const;\n\nFollowing comment, not only \u0027k\u0027 is matter but all characters of non-ASCII is.\nIf |params.new_value| must not contain such characters, that\u0027s O.K.",
+      "revId": "8ba6c945e90e50050f44c6f57e48c6a155e63ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
