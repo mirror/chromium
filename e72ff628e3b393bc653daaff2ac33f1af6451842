@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61f54ef7_f72e5e75",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T02:27:21Z",
+      "side": 1,
+      "message": "For objective-C delegates \"should\" implies that result is BOOL, which is not the case here.\n\nA better name would be \n- (void)paymentRequest:(PaymentRequest*)paymentRequest\n  launchAppWithUniversalLink:(std::string)link\n          instrumentDelegate:(PaymentInstrument::Delegate*)delegate;\n\nSame comment for the previous method.",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 54
+      },
+      "revId": "e72ff628e3b393bc653daaff2ac33f1af6451842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

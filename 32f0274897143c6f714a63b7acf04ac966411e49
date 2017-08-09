@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "caeca9e4_ebec565f",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T02:27:21Z",
+      "side": 1,
+      "message": "From Coding Guidelines for Cocoa: \"Start the name by identifying the class of the object that’s sending the message:\"\n\nSo your last method would be - (void)paymentRequestDidFetchPaymentMethods:(PaymentRequest*)paymentRequest.",
+      "parentUuid": "a20f3045_99448e4d",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 29
+      },
+      "revId": "32f0274897143c6f714a63b7acf04ac966411e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ac24efa_56907bb4",
         "filename": "ios/chrome/browser/payments/payment_request.h",
         "patchSetId": 12
