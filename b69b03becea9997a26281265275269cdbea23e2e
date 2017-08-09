@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e231756_76ad03bc",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-09T10:33:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33322f3e_b117882f",
+      "range": {
+        "startLine": 426,
+        "startChar": 38,
+        "endLine": 426,
+        "endChar": 39
+      },
+      "revId": "b69b03becea9997a26281265275269cdbea23e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c238dad0_83d26b60",
         "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.h",
         "patchSetId": 3
