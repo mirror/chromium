@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19785298_86e74477",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-09T21:11:32Z",
+      "side": 1,
+      "message": "Thanks.  Can you reference https://crbug.com/752667 as well?",
+      "revId": "0245f4ab537ca8e22e5b63957b2b020db5bd3a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e815003_dffd11f3",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-09T21:11:32Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "0245f4ab537ca8e22e5b63957b2b020db5bd3a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
