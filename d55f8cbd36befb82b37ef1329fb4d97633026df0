@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "838704aa_32dd590f",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-09T14:34:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f9d50c1_355b9907",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 8
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4121dd6b_2c25f4e3",
         "filename": "components/autofill/core/browser/address_validation_util.cc",
         "patchSetId": 25
@@ -45,6 +69,30 @@
       "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e76abce_79633808",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-09T14:34:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4121dd6b_2c25f4e3",
+      "range": {
+        "startLine": 86,
+        "startChar": 34,
+        "endLine": 86,
+        "endChar": 49
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "92d95c6b_532bd5bb",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-09T14:34:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4f6ceca_55aed0ed",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 9
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a656af5e_7d32bcc3",
         "filename": "components/autofill/core/browser/address_validation_util.cc",
         "patchSetId": 25
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d9055d91_18e9f6a7",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-09T14:34:09Z",
+      "side": 1,
+      "message": "That\u0027s where status \u003d SUCCESS. This is when we can\u0027t access the rules, because of connection or .. . Do you think the comment is unclear?",
+      "parentUuid": "a656af5e_7d32bcc3",
+      "range": {
+        "startLine": 132,
+        "startChar": 24,
+        "endLine": 132,
+        "endChar": 37
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a71f7db7_811f71a3",
         "filename": "components/autofill/core/browser/address_validation_util.cc",
         "patchSetId": 25
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-08T21:47:04Z",
       "side": 1,
       "message": "I don\u0027t understand whyc the fields are either UNVALIDATED or INVALID here. Couldn\u0027t the ZIP, for example, be valid while the City is invalid?\n\nOr am I missing something? Is this just setup for the problems loop?",
+      "range": {
+        "startLine": 134,
+        "startChar": 18,
+        "endLine": 134,
+        "endChar": 47
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11479a8a_e5ec2632",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-09T14:34:09Z",
+      "side": 1,
+      "message": "This is the setup. We initialize all fields to UNVALIDATED, some of them may end up being INVALID (because UNEXPECTED_FIELD, MISSING_REQUIRED_FIELD can be checked for), but other problems can\u0027t be checked for, so we can\u0027t say VALID for any of them, except for the country code.\n\nEx:  ZIP can\u0027t be valid, because we can\u0027t read the rule, and see how a valid zip code looks like, but if the zip is missing, it\u0027s invalid.",
+      "parentUuid": "a71f7db7_811f71a3",
       "range": {
         "startLine": 134,
         "startChar": 18,
