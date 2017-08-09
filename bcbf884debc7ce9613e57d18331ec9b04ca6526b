@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ab71a3a_1f777013",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-09T14:55:12Z",
+      "side": 1,
+      "message": "I am not waiting for the child coordinator to start as I cannot initialize everything util it starts.\nBut I have to call [super start] in my own start method... So I cannot wait for childCoordinatorDidStart to finish the initialization and call [super start]. Is that expected?",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "bcbf884debc7ce9613e57d18331ec9b04ca6526b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
