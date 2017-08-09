@@ -52,6 +52,24 @@
       "revId": "c4e7d60dbd4c6f33878f0c53c32d54a5e8ca84d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5321ba_fd026573",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-09T07:13:58Z",
+      "side": 1,
+      "message": "I was confused between ShellSurface::scale_ and Surface::State::buffer_scale. ShellSurface::scale_ was 2 when I obtained the window bounds.\n\nSo this is how it works.\n\n1. ShellSurface sets window transformation (scaling by 1 / |scale_|) to host_window_ (ExoShellSurfaceHost).\n\nhttps://cs.chromium.org/chromium/src/components/exo/shell_surface.cc?rcl\u003d9bbe7a205ff644938c80b07aa119d88e92f5c81f\u0026l\u003d804\n\n2. Thus Surface#GetHitTestMask() returns a mask scaled by |scale_| to cancel window_host_\u0027s transformation.\n\n3. ShellSurface::GetHitTestMask() also needs to apply scale 1 / |scale_| after getting the mask from Surface, as well as host_window_ does with window transformation. (this is what the CL fixes)",
+      "parentUuid": "0585867e_63262f41",
+      "revId": "c4e7d60dbd4c6f33878f0c53c32d54a5e8ca84d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
