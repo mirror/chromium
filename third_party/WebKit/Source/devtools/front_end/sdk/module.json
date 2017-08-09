@@ -252,6 +252,7 @@
         "DOMDebuggerModel.js",
         "DOMModel.js",
         "DebuggerModel.js",
+        "AnalysisModel.js",
         "EmulationModel.js",
         "LayerTreeBase.js",
         "LogModel.js",

@@ -485,6 +485,7 @@ all_devtools_files = [
   "front_end/screencast/ScreencastApp.js",
   "front_end/screencast/screencastView.css",
   "front_end/screencast/ScreencastView.js",
+  "front_end/sdk/AnalysisModel.js",
   "front_end/sdk/Connections.js",
   "front_end/sdk/ContentProviders.js",
   "front_end/sdk/CookieModel.js",
