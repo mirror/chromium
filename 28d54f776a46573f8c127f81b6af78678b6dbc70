@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa97b0e_8e988324",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-09T01:35:35Z",
+      "side": 1,
+      "message": "\u003c\u003d or \u003c ?\n\nSame question for \u003e\u003d.",
+      "revId": "28d54f776a46573f8c127f81b6af78678b6dbc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
