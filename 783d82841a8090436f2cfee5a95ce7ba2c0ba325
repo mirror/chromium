@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d555a216_585a4b07",
+        "filename": "ui/events/platform/platform_event_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1225834
+      },
+      "writtenOn": "2017-08-09T14:08:59Z",
+      "side": 1,
+      "message": "Changed so it always returns true. I could protect the function call with the macro, but I figure if you ever add functionality for other OS\u0027s this is where the macro would need to go.",
+      "parentUuid": "c7d0d7ce_88f39f82",
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cd0d2ea_4bc1687b",
         "filename": "ui/events/platform/platform_event_recorder.h",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ded82339_83975c39",
+        "filename": "ui/events/platform/platform_event_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1225834
+      },
+      "writtenOn": "2017-08-09T14:08:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cd0d2ea_4bc1687b",
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11c8bc44_28b8c86a",
         "filename": "ui/events/platform/platform_event_recorder.h",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0383e57_4fadfd13",
+        "filename": "ui/events/platform/platform_event_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1225834
+      },
+      "writtenOn": "2017-08-09T14:08:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11c8bc44_28b8c86a",
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "68d56756_48c97581",
+        "filename": "ui/events/platform/platform_event_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1225834
+      },
+      "writtenOn": "2017-08-09T14:08:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6b93e53f_fdc64051",
+      "range": {
+        "startLine": 86,
+        "startChar": 49,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "535a4f3c_0b260fd8",
         "filename": "ui/events/platform/platform_event_source.h",
         "patchSetId": 4
@@ -87,6 +165,30 @@
       "writtenOn": "2017-08-08T21:05:03Z",
       "side": 1,
       "message": "Consider a style like EnablePlatformEvenRecorder(bool enabled)",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2777488b_10e28131",
+        "filename": "ui/events/platform/platform_event_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1225834
+      },
+      "writtenOn": "2017-08-09T14:08:59Z",
+      "side": 1,
+      "message": "I don\u0027t think this style works in this context. This function is called from the hot key code to turn the recorder on/off, so that hotkey code would need to keep a state of if it is on or off in order to pass an enabled bool. I think it makes more sense to maintain that information in the PlatformEventSource code instead.\n\nI did change the name of the function to specify that it\u0027s used to turn the tool both on and off.",
+      "parentUuid": "535a4f3c_0b260fd8",
       "range": {
         "startLine": 50,
         "startChar": 7,
@@ -113,6 +215,24 @@
       "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6336a6be_dafe09af",
+        "filename": "ui/views/test/recorder_files/README.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1225834
+      },
+      "writtenOn": "2017-08-09T14:08:59Z",
+      "side": 1,
+      "message": "Removed the directory for now. I can add it back later when I upload replaying. I\u0027ll look into making a spec for the tool that can be more easily viewed within the codebase.",
+      "parentUuid": "380f378b_8f63b240",
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
