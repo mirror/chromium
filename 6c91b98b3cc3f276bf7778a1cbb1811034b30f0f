@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "672eb627_80bf337b",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-09T18:02:28Z",
+      "side": 1,
+      "message": "Perhaps too strong a word? I\u0027d actually just remove the second sentence.",
+      "range": {
+        "startLine": 106,
+        "startChar": 59,
+        "endLine": 106,
+        "endChar": 68
+      },
+      "revId": "6c91b98b3cc3f276bf7778a1cbb1811034b30f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
