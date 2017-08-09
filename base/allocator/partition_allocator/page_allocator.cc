@@ -9,6 +9,7 @@
 #include <atomic>
 
 #include "base/allocator/partition_allocator/address_space_randomization.h"
+#include "base/allocator/partition_allocator/spin_lock.h"
 #include "base/base_export.h"
 #include "base/logging.h"
 #include "build/build_config.h"
@@ -30,23 +31,43 @@
 #define MAP_ANONYMOUS MAP_ANON
 #endif
 
+namespace {
+
 // On POSIX |mmap| uses a nearby address if the hint address is blocked.
 static const bool kHintIsAdvisory = true;
-static std::atomic<int32_t> s_allocPageErrorCode{0};
+static int32_t s_allocPageErrorCode{0};
+
+}  // namespace
 
 #elif defined(OS_WIN)
 
 #include <windows.h>
 
+namespace {
+
 // |VirtualAlloc| will fail if allocation at the hint address is blocked.
 static const bool kHintIsAdvisory = false;
-static std::atomic<int32_t> s_allocPageErrorCode{ERROR_SUCCESS};
+static int32_t s_allocPageErrorCode{ERROR_SUCCESS};
+
+}  // namespace
 
 #else
 #error Unknown OS
 #endif  // defined(OS_POSIX)
 
 namespace base {
+
+namespace {
+
+static subtle::SpinLock s_memoryLock;
+// We need a separate spinlock for reserving address space, since this may
+// cause an allocation failure, which would deadlock.
+static subtle::SpinLock s_reserveLock;
+static AllocFailureCallback s_allocFailureCB = nullptr;
+static void* s_reservation_address = nullptr;
+static size_t s_reservation_size = 0;
+
+}  // namespace
 
 // This internal function wraps the OS-specific page allocation call:
 // |VirtualAlloc| on Windows, and |mmap| on POSIX.
@@ -58,12 +79,24 @@ static void* SystemAllocPages(
   DCHECK(!(reinterpret_cast<uintptr_t>(hint) &
            kPageAllocationGranularityOffsetMask));
   void* ret;
+  // Retry failed allocations once if the memory pressure callback is set.
+  int retries = 0;
 #if defined(OS_WIN)
   DWORD access_flag =
       page_accessibility == PageAccessible ? PAGE_READWRITE : PAGE_NOACCESS;
-  ret = VirtualAlloc(hint, length, MEM_RESERVE | MEM_COMMIT, access_flag);
-  if (!ret)
-    s_allocPageErrorCode = GetLastError();
+  while (true) {
+    ret = VirtualAlloc(hint, length, MEM_RESERVE | MEM_COMMIT, access_flag);
+    if (ret)
+      break;
+    {
+      subtle::SpinLock::Guard guard(s_memoryLock);
+      if ((s_allocFailureCB == nullptr) || retries++ == 1) {
+        s_allocPageErrorCode = GetLastError();
+        break;
+      }
+      (*s_allocFailureCB)();
+    }
+  }
 #else
 
 #if defined(OS_MACOSX)
@@ -73,14 +106,22 @@ static void* SystemAllocPages(
 #else
   int fd = -1;
 #endif
-
   int access_flag = page_accessibility == PageAccessible
                         ? (PROT_READ | PROT_WRITE)
                         : PROT_NONE;
-  ret = mmap(hint, length, access_flag, MAP_ANONYMOUS | MAP_PRIVATE, fd, 0);
-  if (ret == MAP_FAILED) {
-    s_allocPageErrorCode = errno;
-    ret = 0;
+  while (true) {
+    ret = mmap(hint, length, access_flag, MAP_ANONYMOUS | MAP_PRIVATE, fd, 0);
+    if (ret != MAP_FAILED)
+      break;
+    {
+      subtle::SpinLock::Guard guard(s_memoryLock);
+      if ((s_allocFailureCB == nullptr) || retries++ == 1) {
+        s_allocPageErrorCode = errno;
+        ret = 0;
+        break;
+      }
+      (*s_allocFailureCB)();
+    }
   }
 #endif
   return ret;
@@ -292,7 +333,46 @@ void DiscardSystemPages(void* address, size_t length) {
 #endif
 }
 
+bool ReserveAddressSpace(size_t size, size_t alignment) {
+  base::subtle::SpinLock::Guard guard(s_reserveLock);
+  if (s_reservation_address == nullptr) {
+    s_reservation_address =
+        AllocPages(nullptr, size, alignment, base::PageInaccessible);
+    if (s_reservation_address != nullptr) {
+      s_reservation_size = size;
+      return true;
+    }
+  }
+  return false;
+}
+
+void ReleaseReservation() {
+  base::subtle::SpinLock::Guard guard(s_reserveLock);
+  if (s_reservation_address != nullptr) {
+    FreePages(s_reservation_address, s_reservation_size);
+    s_reservation_address = nullptr;
+    s_reservation_size = 0;
+  }
+}
+
+bool SetAllocFailureCallback(AllocFailureCallback cb) {
+  subtle::SpinLock::Guard guard(s_memoryLock);
+  if (s_allocFailureCB == nullptr) {
+    s_allocFailureCB = cb;
+    return true;
+  }
+  return false;
+}
+
+void OnAllocFailure() {
+  subtle::SpinLock::Guard guard(s_memoryLock);
+  if (s_allocFailureCB != nullptr) {
+    (*s_allocFailureCB)();
+  }
+}
+
 uint32_t GetAllocPageErrorCode() {
+  subtle::SpinLock::Guard guard(s_memoryLock);
   return s_allocPageErrorCode;
 }
 
