@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6453099a_7ac0baaa",
+        "filename": "content/browser/service_worker/service_worker_context_watcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-09T06:29:45Z",
+      "side": 1,
+      "message": "could we use the modern base::BindOnce, then we don\u0027t need base::Passed?",
+      "range": {
+        "startLine": 105,
+        "startChar": 22,
+        "endLine": 105,
+        "endChar": 23
+      },
+      "revId": "bf44304ca35e9cd52366ea0361b4f8707268e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36bbc023_ac1fa253",
+        "filename": "content/browser/service_worker/service_worker_context_watcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-09T06:29:45Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bf44304ca35e9cd52366ea0361b4f8707268e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78030e15_fad12384",
+        "filename": "content/browser/service_worker/service_worker_context_watcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-09T06:29:45Z",
+      "side": 1,
+      "message": "does ASSERT_TRUE work here?",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 8
+      },
+      "revId": "bf44304ca35e9cd52366ea0361b4f8707268e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ba4cc8_6dc13844",
+        "filename": "content/browser/service_worker/service_worker_context_watcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-09T06:29:45Z",
+      "side": 1,
+      "message": "Unregistered -\u003e Unregister",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "bf44304ca35e9cd52366ea0361b4f8707268e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c766be26_9d1fc7fe",
+        "filename": "content/browser/service_worker/service_worker_context_watcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-09T06:29:45Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bf44304ca35e9cd52366ea0361b4f8707268e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d269ac_a6402f3c",
+        "filename": "content/browser/service_worker/service_worker_context_watcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-09T06:29:45Z",
+      "side": 1,
+      "message": "int64_t /* registration_id */",
+      "revId": "bf44304ca35e9cd52366ea0361b4f8707268e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e55aa96_1106200d",
+        "filename": "content/browser/service_worker/service_worker_context_watcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-09T06:29:45Z",
+      "side": 1,
+      "message": "/* registration_id */, /* version_id */",
+      "revId": "bf44304ca35e9cd52366ea0361b4f8707268e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a0d636_3501e337",
+        "filename": "content/browser/service_worker/service_worker_context_watcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-09T06:29:45Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bf44304ca35e9cd52366ea0361b4f8707268e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f2e478_6b6ac122",
+        "filename": "content/browser/service_worker/service_worker_context_watcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-09T06:29:45Z",
+      "side": 1,
+      "message": "maybe just remove InitailizeTestHelper() and do it in SetUp()?",
+      "range": {
+        "startLine": 124,
+        "startChar": 26,
+        "endLine": 124,
+        "endChar": 46
+      },
+      "revId": "bf44304ca35e9cd52366ea0361b4f8707268e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0009f5a3_3d6439fc",
+        "filename": "content/browser/service_worker/service_worker_context_watcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-09T06:29:45Z",
+      "side": 1,
+      "message": "can the comment explain why these are called? This test doesn\u0027t look like it\u0027s registering anything.",
+      "revId": "bf44304ca35e9cd52366ea0361b4f8707268e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
