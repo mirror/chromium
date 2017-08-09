@@ -30,6 +30,7 @@ import org.chromium.chrome.browser.ntp.ForeignSessionHelper.ForeignSessionTab;
 import org.chromium.chrome.browser.ntp.ForeignSessionHelper.ForeignSessionWindow;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninAndSyncView;
+import org.chromium.chrome.browser.signin.SigninPromoView;
 import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.mojom.WindowOpenDisposition;
 
@@ -43,9 +44,7 @@ import java.util.List;
 public class RecentTabsRowAdapter extends BaseExpandableListAdapter {
     private static final int MAX_NUM_FAVICONS_TO_CACHE = 256;
 
-    private enum ChildType {
-        NONE, DEFAULT_CONTENT, SYNC_PROMO
-    }
+    private enum ChildType { NONE, DEFAULT_CONTENT, SYNC_PROMO, SIGNIN_PROMO }
 
     private enum GroupType {
         CONTENT, VISIBLE_SEPARATOR, INVISIBLE_SEPARATOR
@@ -535,16 +534,7 @@ public class RecentTabsRowAdapter extends BaseExpandableListAdapter {
         View getChildView(int childPosition, boolean isLastChild, View convertView,
                 ViewGroup parent) {
             if (convertView == null) {
-                SigninAndSyncView.Listener listener = new SigninAndSyncView.Listener() {
-                    @Override
-                    public void onViewDismissed() {
-                        mRecentTabsManager.setSigninPromoDeclined();
-                        notifyDataSetChanged();
-                    }
-                };
-
-                convertView =
-                        SigninAndSyncView.create(parent, listener, SigninAccessPoint.RECENT_TABS);
+                convertView = SigninAndSyncView.create(parent, null, SigninAccessPoint.RECENT_TABS);
             }
             if (!mRecentTabsManager.isSignedIn()) {
                 RecordUserAction.record("Signin_Impression_FromRecentTabs");
@@ -559,12 +549,60 @@ public class RecentTabsRowAdapter extends BaseExpandableListAdapter {
 
         @Override
         public void setCollapsed(boolean isCollapsed) {
-            mRecentTabsManager.setSyncPromoCollapsed(isCollapsed);
+            mRecentTabsManager.setPromoCollapsed(isCollapsed);
         }
 
         @Override
         public boolean isCollapsed() {
-            return mRecentTabsManager.isSyncPromoCollapsed();
+            return mRecentTabsManager.isPromoCollapsed();
+        }
+    }
+
+    /**
+     * A group containing the signin promo.
+     */
+    class SigninPromoGroup extends Group {
+        @Override
+        GroupType getGroupType() {
+            return GroupType.CONTENT;
+        }
+
+        @Override
+        ChildType getChildType() {
+            return ChildType.SIGNIN_PROMO;
+        }
+
+        @Override
+        int getChildrenCount() {
+            return 1;
+        }
+
+        @Override
+        View getChildView(
+                int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView =
+                        LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.signin_promo_view_recent_tabs, parent, false);
+                mRecentTabsManager.recordSigninPromoMetrics();
+            }
+            mRecentTabsManager.setupSigninPromo((SigninPromoView) convertView);
+            return convertView;
+        }
+
+        @Override
+        void configureGroupView(RecentTabsGroupView groupView, boolean isExpanded) {
+            groupView.configureForSyncPromo(isExpanded);
+        }
+
+        @Override
+        void setCollapsed(boolean isCollapsed) {
+            mRecentTabsManager.setPromoCollapsed(isCollapsed);
+        }
+
+        @Override
+        boolean isCollapsed() {
+            return mRecentTabsManager.isPromoCollapsed();
         }
     }
 
@@ -761,6 +799,11 @@ public class RecentTabsRowAdapter extends BaseExpandableListAdapter {
             }
             addGroup(new ForeignSessionGroup(session));
         }
+
+        if (mRecentTabsManager.shouldDisplayNewSigninPromo()) {
+            addGroup(new SigninPromoGroup());
+        }
+
         if (mRecentTabsManager.shouldDisplaySyncPromo()) {
             addGroup(new SyncPromoGroup());
         }
