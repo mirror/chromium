@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83d477d1_eb78f483",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:00:32Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1441c9_03e6d303",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:00:32Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae6e6438_0bf82d76",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:00:32Z",
+      "side": 1,
+      "message": "violation_data_container",
+      "range": {
+        "startLine": 463,
+        "startChar": 26,
+        "endLine": 463,
+        "endChar": 51
+      },
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7921c621_be99f1c8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:00:32Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 468,
+        "startChar": 4,
+        "endLine": 468,
+        "endChar": 39
+      },
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c7029a3_ef859e57",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:00:32Z",
+      "side": 1,
+      "message": "violation_data_container_.AppendVector(violation_data_container);",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac1905d_8abaa561",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceRequest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:00:32Z",
+      "side": 1,
+      "message": "Whether a resource should handle violation event shouldn\u0027t belong to ResourceRequest. Can you rename it, or move this to ResourceLoaderOptions?",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c851e3a2_6c50e703",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:00:32Z",
+      "side": 1,
+      "message": "LICENSE",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d8483c_a219a332",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:00:32Z",
+      "side": 1,
+      "message": "#include \"platform/wtf/Vector.h\"",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4e654f_3fa70e18",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:00:32Z",
+      "side": 1,
+      "message": "\u003d 0;",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3d0b33_29087212",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:00:32Z",
+      "side": 1,
+      "message": "\u003d 0;",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e290433b_f7a22cee",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicyViolationEventData.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:00:32Z",
+      "side": 1,
+      "message": "\u003d 0;",
+      "revId": "9ecb6c93d9209a4d4da55f1501375e31c4d95a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

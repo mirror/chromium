@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "4789c747_6ea563e1",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-09T07:00:32Z",
+      "side": 1,
+      "message": "A resource can be shared by multiple clients when the resource is reused (e.g., MemoryCache). It\u0027s generally not good to handle clients differently because it will be very confusing.",
+      "parentUuid": "058d20fc_b55076f3",
+      "range": {
+        "startLine": 463,
+        "startChar": 26,
+        "endLine": 463,
+        "endChar": 51
+      },
+      "revId": "92f8760de65279fa992d1e5ee869da63ddeff7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5acd29a8_fbd588ad",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 3
