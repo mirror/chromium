@@ -58,6 +58,10 @@ class CC_PAINT_EXPORT PaintImageBuilder {
     paint_image_.is_multipart_ = is_multipart;
     return *this;
   }
+  PaintImageBuilder& set_is_static(bool is_static) {
+    paint_image_.is_static_ = is_static;
+    return *this;
+  }
 
   // |unique_id| is the id used when constructing an SkImage representation for
   // a generator backed image. Returns the id used in the resulting image.
@@ -72,6 +76,11 @@ class CC_PAINT_EXPORT PaintImageBuilder {
         SkImage::MakeFromGenerator(base::MakeUnique<SkiaPaintImageGenerator>(
             paint_image_.paint_image_generator_, unique_id));
     return paint_image_.cached_sk_image_->uniqueID();
+  }
+
+  PaintImageBuilder& set_paint_image(PaintImage image) {
+    paint_image_ = std::move(image);
+    return *this;
   }
 
   PaintImage TakePaintImage() const;
