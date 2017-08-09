@@ -8,11 +8,14 @@
 #include <utility>
 
 #include "base/run_loop.h"
+#include "chrome/browser/media/router/event_page_request_manager_factory.h"
 #include "chrome/browser/media/router/mock_media_router.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_test.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using ::testing::_;
+using ::testing::Invoke;
 using ::testing::Mock;
 using ::testing::StrictMock;
 
@@ -30,6 +33,8 @@ class MediaRouteControllerTest : public ::testing::Test {
   ~MediaRouteControllerTest() override {}
 
   void SetUp() override {
+    SetUpMockObjects();
+
     mojom::MediaControllerPtr media_controller_ptr;
     mojom::MediaControllerRequest media_controller_request =
         mojo::MakeRequest(&media_controller_ptr);
@@ -37,8 +42,10 @@ class MediaRouteControllerTest : public ::testing::Test {
 
     observer_ = base::MakeUnique<MockMediaRouteControllerObserver>(
         base::MakeRefCounted<MediaRouteController>(
-            kRouteId, std::move(media_controller_ptr), &router_));
+            kRouteId, std::move(media_controller_ptr), &profile_));
   }
+
+  void TearDown() override { observer_.reset(); }
 
   scoped_refptr<MediaRouteController> GetController() const {
     return observer_->controller();
@@ -52,13 +59,33 @@ class MediaRouteControllerTest : public ::testing::Test {
         GetController());
   }
 
-  MockMediaRouter router_;
-  MockMediaController mock_media_controller_;
-  std::unique_ptr<MockMediaRouteControllerObserver> observer_;
-
   content::TestBrowserThreadBundle test_thread_bundle_;
 
+  MockMediaRouter* router_ = nullptr;
+  MockMediaController mock_media_controller_;
+  std::unique_ptr<MockMediaRouteControllerObserver> observer_;
+  TestingProfile profile_;
+
  private:
+  void SetUpMockObjects() {
+    EventPageRequestManagerFactory::GetInstance()->SetTestingFactory(
+        &profile_, &MockEventPageRequestManager::Create);
+    MockEventPageRequestManager* request_manager =
+        static_cast<MockEventPageRequestManager*>(
+            EventPageRequestManagerFactory::GetApiForBrowserContext(&profile_));
+    request_manager->set_mojo_connections_ready_for_test(true);
+    // ON_CALL(*request_manager, RunOrDeferInternal(_, _))
+    //     .WillByDefault(Invoke([](base::OnceClosure& request,
+    //                              MediaRouteProviderWakeReason wake_reason) {
+    //       std::move(request).Run();
+    //     }));
+
+    MediaRouterFactory::GetInstance()->SetTestingFactory(
+        &profile_, &MockMediaRouter::Create);
+    router_ = static_cast<MockMediaRouter*>(
+        MediaRouterFactory::GetApiForBrowserContext(&profile_));
+  }
+
   DISALLOW_COPY_AND_ASSIGN(MediaRouteControllerTest);
 };
 
@@ -76,6 +103,8 @@ TEST_F(MediaRouteControllerTest, ForwardControllerCommands) {
   GetController()->SetVolume(volume);
   EXPECT_CALL(mock_media_controller_, Seek(time));
   GetController()->Seek(time);
+
+  base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(MediaRouteControllerTest, NotifyMediaRouteControllerObservers) {
@@ -104,17 +133,6 @@ TEST_F(MediaRouteControllerTest, NotifyMediaRouteControllerObservers) {
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_F(MediaRouteControllerTest, DestroyControllerOnDisconnect) {
-  // DetachRouteController() should be called when the connection to
-  // |mock_media_controller_| is invalidated.
-  EXPECT_CALL(router_, DetachRouteController(kRouteId, GetController().get()))
-      .Times(1);
-  mock_media_controller_.CloseBinding();
-
-  base::RunLoop().RunUntilIdle();
-  EXPECT_TRUE(Mock::VerifyAndClearExpectations(&router_));
-}
-
 TEST_F(MediaRouteControllerTest, DestroyControllerOnNoObservers) {
   auto observer1 = CreateObserver();
   auto observer2 = CreateObserver();
@@ -123,14 +141,14 @@ TEST_F(MediaRouteControllerTest, DestroyControllerOnNoObservers) {
   // Get rid of |observer_| and its reference to the controller.
   observer_.reset();
 
-  EXPECT_CALL(router_, DetachRouteController(kRouteId, controller)).Times(0);
+  EXPECT_CALL(*router_, DetachRouteController(kRouteId, controller)).Times(0);
   observer1.reset();
 
   // DetachRouteController() should be called when the controller no longer
   // has any observers.
-  EXPECT_CALL(router_, DetachRouteController(kRouteId, controller)).Times(1);
+  EXPECT_CALL(*router_, DetachRouteController(kRouteId, controller)).Times(1);
   observer2.reset();
-  EXPECT_TRUE(Mock::VerifyAndClearExpectations(&router_));
+  EXPECT_TRUE(Mock::VerifyAndClearExpectations(router_));
 }
 
 }  // namespace media_router

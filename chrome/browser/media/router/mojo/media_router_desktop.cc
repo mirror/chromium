@@ -7,6 +7,7 @@
 #include "chrome/browser/media/router/event_page_request_manager.h"
 #include "chrome/browser/media/router/event_page_request_manager_factory.h"
 #include "chrome/browser/media/router/media_router_factory.h"
+#include "chrome/browser/media/router/mojo/media_route_controller.h"
 #include "chrome/common/media_router/media_source_helper.h"
 #include "extensions/common/extension.h"
 #if defined(OS_WIN)
@@ -354,6 +355,7 @@ void MediaRouterDesktop::RegisterMediaRouteProvider(
   // ExecutePendingRequests().
   is_mdns_enabled_ = false;
 #endif
+  BindRouteControllers();
   request_manager_->OnMojoConnectionsReady();
 }
 
@@ -370,6 +372,21 @@ void MediaRouterDesktop::BindToMojoRequest(
   if (!provider_version_was_recorded_) {
     MediaRouterMojoMetrics::RecordMediaRouteProviderVersion(extension);
     provider_version_was_recorded_ = true;
+  }
+}
+
+void MediaRouterDesktop::BindRouteControllers() {
+  for (const auto& pair : route_controllers_) {
+    const MediaRoute::Id& route_id = pair.first;
+    MediaRouteController* route_controller = pair.second;
+    mojom::MediaControllerPtr mojo_media_controller;
+    mojom::MediaControllerRequest mojo_media_controller_request =
+        mojo::MakeRequest(&mojo_media_controller);
+
+    route_controller->RegisterMojoController(std::move(mojo_media_controller));
+    DoCreateMediaRouteController(route_id,
+                                 std::move(mojo_media_controller_request),
+                                 route_controller->BindObserverPtr());
   }
 }
 
