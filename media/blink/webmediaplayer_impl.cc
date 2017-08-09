@@ -1324,6 +1324,9 @@ void WebMediaPlayerImpl::OnError(PipelineStatus status) {
   }
 
   UpdatePlayState();
+
+  // PipelineController::Stop() is idempotent.
+  pipeline_controller_.Stop();
 }
 
 void WebMediaPlayerImpl::OnEnded() {
