@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bdcd5c0_c22b92f6",
+        "filename": "components/viz/service/surfaces/surface_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-09T13:10:40Z",
+      "side": 1,
+      "message": "What do you think about changing SurfaceObserver to have a no-op implementation for each method, similar to something like display::DisplayObserver? That way we can avoid modifying every implementation when adding/removing methods that most implementations don\u0027t care about?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "9f2624f331e6ea0ba7eba13d2d35ab4724c4c929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
