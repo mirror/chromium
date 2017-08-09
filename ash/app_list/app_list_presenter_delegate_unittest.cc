@@ -901,4 +901,26 @@ TEST_P(FullscreenAppListPresenterDelegateTest, UnhandledEventOnPeeking) {
   EXPECT_EQ(view->app_list_state(), app_list::AppListView::CLOSED);
 }
 
+// Tests that opening in peeking mode sets the correct height.
+TEST_F(FullscreenAppListPresenterDelegateTest, OpenInPeekingCorrectHeight) {
+  app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+  app_list::AppListView* view = app_list_presenter_impl()->GetView();
+  const views::Widget* widget = view->get_fullscreen_widget_for_test();
+  const int y = widget->GetWindowBoundsInScreen().y();
+
+  ASSERT_EQ(y, 448);
+}
+
+// Tests that making a search query in tablet mode sets the right state.
+TEST_F(FullscreenAppListPresenterDelegateTest, QueryInTabletModeCorrectState) {
+  EnableTabletMode(true);
+  app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+  app_list::AppListView* view = app_list_presenter_impl()->GetView();
+  ui::test::EventGenerator& generator = GetEventGenerator();
+
+  generator.PressKey(ui::VKEY_0, 0);
+
+  ASSERT_EQ(view->app_list_state(), app_list::AppListView::FULLSCREEN_SEARCH);
+}
+
 }  // namespace ash
