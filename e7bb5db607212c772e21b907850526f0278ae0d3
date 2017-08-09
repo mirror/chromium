@@ -70,6 +70,23 @@
       "revId": "e7bb5db607212c772e21b907850526f0278ae0d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2a290e_fcc34782",
+        "filename": "mojo/public/cpp/bindings/array_traits_carray.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-09T18:02:44Z",
+      "side": 1,
+      "message": "Why is this needed? This is a method used only by deserialization.\nPreviously this traits specialization doesn\u0027t have any method to modify the state and is only used for serialization (but not deserialization).",
+      "revId": "e7bb5db607212c772e21b907850526f0278ae0d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
