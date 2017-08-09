@@ -22,6 +22,30 @@
       "revId": "eb2987a7f51236d251ecfc5dfad8b9ed9c0981db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10ae49bc_5b5793b6",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-09T09:40:34Z",
+      "side": 1,
+      "message": "\u003e This is all a bit ugly because we have to use the exported short names. Happy to give more context in person.\n\nMy questions would be:\n\n* Are we guaranteed that they\u0027re stable? I assume they are produced by some kind of Javascript compiler, and my understanding was that such compilers could often produce different names if fields were added/removed.\n\n* Can you write this in such a way that \"giving context in person\" is not necessary? You already introduce a name for gbar.a.bf, and you could do that for gbar.a and bar.pc too.\n\n* Can you avoid \"bar\" as a name? With all the obfuscation, I immediately assumed that it was \"bar\" as in \"foo bar baz\", not \"bar\" as in \"One Google Bar\" :)",
+      "parentUuid": "13029058_decdc10c",
+      "range": {
+        "startLine": 225,
+        "startChar": 57,
+        "endLine": 225,
+        "endChar": 0
+      },
+      "revId": "eb2987a7f51236d251ecfc5dfad8b9ed9c0981db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
