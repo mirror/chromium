@@ -595,6 +595,11 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
             if (surroundingText.length() == 0) {
                 mInternalStateController.reset(StateChangeReason.UNKNOWN);
             } else {
+                System.out.printf("ctxs surrounding text of length %s:'%s'\n", surroundingText.length(),
+                        surroundingText); 
+                for (int i = 0; i < surroundingText.length(); i++) {
+                    System.out.printf("ctxs %s:'%s'\n", i, surroundingText.substring(i, i + 1)); 
+                }
                 mContext.setSurroundingText(encoding, surroundingText, startOffset, endOffset);
                 mInternalStateController.notifyFinishedWorkOn(InternalState.GATHERING_SURROUNDINGS);
             }

@@ -190,6 +190,8 @@ WebInputEventResult GestureManager::HandleGestureTap(
       FlooredIntPoint(gesture_event.PositionInRootFrame());
   Node* tapped_node = current_hit_test.InnerNode();
   Element* tapped_element = current_hit_test.InnerElement();
+  DVLOG(0) << "ctxs GestureManager tapped node: " << tapped_node->nodeName()
+      << " element: " << tapped_element->nodeName();
   UserGestureIndicator gesture_indicator(UserGestureToken::Create(
       tapped_node ? &tapped_node->GetDocument() : nullptr));
 

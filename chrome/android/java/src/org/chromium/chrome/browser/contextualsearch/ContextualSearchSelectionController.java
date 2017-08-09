@@ -322,6 +322,7 @@ public class ContextualSearchSelectionController {
      * @param y The y coordinate in px.
      */
     void handleShowUnhandledTapUIIfNeeded(int x, int y) {
+        System.out.printf("ctxs handleShowUnhandledTapUIIfNeeded at %s, %s\n", x, y  ); 
         mWasTapGestureDetected = false;
         // TODO(donnd): refactor to avoid needing a new handler API method as suggested by Pedro.
         if (mSelectionType != SelectionType.LONG_PRESS) {
