@@ -16,6 +16,24 @@
       "revId": "cbca52956f2312bc519ba53b442d742927562d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fcd6d9e_c05d554c",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2214,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-09T02:49:54Z",
+      "side": 1,
+      "message": "bool does_not_need_layout_or_paint_invalidation \u003d !parent_;\nLayoutView are never parented. This hack seems to be added for other reasons that no longer apply, but it became a piece of hard-to-remove legacy...\n\nI\u0027d prefer to avoid adding similar invalidation for SVGs. Background style are subject to adjustment when copied from the root element. It could be subtle. Also code duplication is bad in general.\n\nI forgot where the html hack was, but IMO we should remove that instead, if LayoutView learns how to invalidate itself... (Or keep it as is if things need it to not break.)",
+      "parentUuid": "d9ed23b5_857e5929",
+      "revId": "cbca52956f2312bc519ba53b442d742927562d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
