@@ -60,12 +60,12 @@ FileTableList.prototype.mergeItems = function(beginIndex, endIndex) {
   if (this.onMergeItems_) {
     this.onMergeItems_(beginIndex, endIndex);
   }
-}
+};
 
 /** @override */
 FileTableList.prototype.createSelectionController = function(sm) {
   return new FileListSelectionController(assert(sm));
-}
+};
 
 /**
  * Selection controller for the file table list.
@@ -77,6 +77,20 @@ FileTableList.prototype.createSelectionController = function(sm) {
  */
 function FileListSelectionController(selectionModel) {
   cr.ui.ListSelectionController.call(this, selectionModel);
+
+  /**
+   * Whether to allow touch-specific interaction.
+   * @type {boolean}
+   */
+  this.enableTouchMode_ = false;
+  util.isTouchModeEnabled(function(enabled) {
+    this.enableTouchMode_ = enabled;
+  }.bind(this));
+
+  /**
+   * @type {!FileTapHandler}
+   */
+  this.tapHandler_ = new FileTapHandler();
 }
 
 FileListSelectionController.prototype = /** @struct */ {
@@ -86,6 +100,13 @@ FileListSelectionController.prototype = /** @struct */ {
 /** @override */
 FileListSelectionController.prototype.handlePointerDownUp = function(e, index) {
   filelist.handlePointerDownUp.call(this, e, index);
+};
+
+/** @override */
+FileListSelectionController.prototype.handleTouchEvents = function(e, index) {
+  if (!this.enableTouchMode_)
+    return;
+  this.tapHandler_.handleTouchEvents(e, index, filelist.handleTap.bind(this));
 };
 
 /** @override */
@@ -194,6 +215,56 @@ filelist.updateListItemExternalProps = function(li, externalProps) {
 
   if (li.classList.contains('directory'))
     iconDiv.classList.toggle('shared', !!externalProps.shared);
+};
+
+/**
+ * Handles tap events on file list to change the selection state.
+ *
+ * @param {!Event} e The browser mouse event.
+ * @param {number} index The index that was under the mouse pointer, -1 if
+ *     none.
+ * @param {!FileTapHandler.TapEvent} event_type
+ * @return True if conducted any action. False when if did nothing special for
+ *     tap.
+ * @this {cr.ui.ListSelectionController}
+ */
+filelist.handleTap = function(e, index, event_type) {
+  if (index == -1) {
+    return false;
+  }
+  var sm = /** @type {!FileListSelectionModel|!FileListSingleSelectionModel} */
+      (this.selectionModel);
+  var isTap = event_type == FileTapHandler.TapEvent.TAP ||
+      event_type == FileTapHandler.TapEvent.LONG_TAP;
+  if (sm.multiple && sm.getCheckSelectMode() && isTap && !e.shiftKey) {
+    // toggle item selection. Equivalent to mouse click on checkbox.
+    sm.beginChange();
+    sm.setIndexSelected(index, !sm.getIndexSelected(index));
+    // Toggle the current one and make it anchor index.
+    sm.leadIndex = index;
+    sm.anchorIndex = index;
+    sm.endChange();
+    return true;
+  } else if (sm.multiple && event_type == FileTapHandler.TapEvent.LONG_PRESS) {
+    if (!sm.getIndexSelected(index)) {
+      sm.beginChange();
+      sm.setIndexSelected(index, true);
+      sm.setCheckSelectMode(true);
+      sm.endChange();
+      return true;
+    } else {
+      // Do nothing, so as to avoid unselecting before drag.
+    }
+  } else if (
+      sm.multiple && !sm.getCheckSelectMode() &&
+      event_type == FileTapHandler.TapEvent.TAP && !e.shiftKey) {
+    sm.beginChange();
+    sm.setIndexSelected(index, true);
+    sm.leadIndex = index;
+    sm.anchorIndex = index;
+    sm.endChange();
+  }
+  return false;
 };
 
 /**

@@ -110,6 +110,18 @@ function MainWindowComponent(
   ui.listContainer.grid.addEventListener(
       'dblclick', this.onDoubleClick_.bind(this));
   ui.listContainer.table.list.addEventListener(
+      'touchstart', this.handleTouchEvents_.bind(this));
+  ui.listContainer.grid.addEventListener(
+      'touchstart', this.handleTouchEvents_.bind(this));
+  ui.listContainer.table.list.addEventListener(
+      'touchend', this.handleTouchEvents_.bind(this));
+  ui.listContainer.grid.addEventListener(
+      'touchend', this.handleTouchEvents_.bind(this));
+  ui.listContainer.table.list.addEventListener(
+      'touchmove', this.handleTouchEvents_.bind(this));
+  ui.listContainer.grid.addEventListener(
+      'touchmove', this.handleTouchEvents_.bind(this));
+  ui.listContainer.table.list.addEventListener(
       'focus', this.onFileListFocus_.bind(this));
   ui.listContainer.grid.addEventListener(
       'focus', this.onFileListFocus_.bind(this));
@@ -125,7 +137,44 @@ function MainWindowComponent(
   this.onDriveConnectionChanged_();
   document.addEventListener('keydown', this.onKeyDown_.bind(this));
   document.addEventListener('keyup', this.onKeyUp_.bind(this));
+
+  /**
+   * Whether to allow touch-specific interaction.
+   * @type {boolean}
+   */
+  this.enableTouchMode_ = false;
+  util.isTouchModeEnabled(function(enabled) {
+    this.enableTouchMode_ = enabled;
+  }.bind(this));
+
+  /**
+   * @type {!FileTapHandler}
+   */
+  this.tapHandler_ = new FileTapHandler();
 }
+
+/**
+ * @param {!Event} event
+ */
+MainWindowComponent.prototype.handleTouchEvents_ = function(event) {
+  if (!this.enableTouchMode_)
+    return false;
+  var result = this.tapHandler_.handleTouchEvents(
+      event, -1, function(e, index, event_type) {
+        if (event_type == FileTapHandler.TapEvent.TAP) {
+          // The selection model has the single selection.
+          // When using touchscreen, the selection should be cleared because
+          // we don't want show the file selected when not in check-select
+          // mode.
+          this.handleOpenDefault(
+              event, true /* clear_selection_after_launch */);
+          return true;
+        }
+        return false;
+      }.bind(this));
+  if (result)
+    event.preventDefault();
+};
 
 /**
  * @param {Event} event Click event.
@@ -158,9 +207,22 @@ MainWindowComponent.prototype.onFileListFocus_ = function() {
  * @private
  */
 MainWindowComponent.prototype.onDoubleClick_ = function(event) {
+  this.handleOpenDefault(event, false);
+};
+
+/**
+ * Handles a double click event.
+ *
+ * @param {Event} event The dblclick event.
+ * @param {boolean} clear_selection_after_launch
+ * @return {boolean} true if successfully opened the item.
+ * @private
+ */
+MainWindowComponent.prototype.handleOpenDefault = function(
+    event, clear_selection_after_launch) {
   if (this.namingController_.isRenamingInProgress()) {
     // Don't pay attention to clicks during a rename.
-    return;
+    return false;
   }
 
   var listItem = this.ui_.listContainer.findListItemForNode(
@@ -169,7 +231,7 @@ MainWindowComponent.prototype.onDoubleClick_ = function(event) {
   // LiseSelectionController.handlePointerDownUp on preceding mousedown event.
   var selection = this.selectionHandler_.selection;
   if (!listItem || !listItem.selected || selection.totalCount != 1) {
-    return;
+    return false;
   }
 
   var entry = selection.entries[0];
@@ -177,21 +239,28 @@ MainWindowComponent.prototype.onDoubleClick_ = function(event) {
     this.directoryModel_.changeDirectoryEntry(
         /** @type {!DirectoryEntry} */ (entry));
   } else {
-    this.acceptSelection_();
+    this.acceptSelection_(clear_selection_after_launch);
+    return true;
   }
+  return false;
 };
 
 /**
  * Accepts the current selection depending on the mode.
+ * @param {boolean} clear_selection_after_launch
  * @private
  */
-MainWindowComponent.prototype.acceptSelection_ = function() {
+MainWindowComponent.prototype.acceptSelection_ =
+    function(clear_selection_after_launch) {
   var selection = this.selectionHandler_.selection;
   if (this.dialogType_ == DialogType.FULL_PAGE) {
     this.taskController_.getFileTasks()
         .then(function(tasks) {
           tasks.executeDefault();
-        })
+          if (clear_selection_after_launch) {
+            this.directoryModel_.selectEntries([]);
+          }
+        }.bind(this))
         .catch(function(error) {
           if (error)
             console.error(error.stack || error);
@@ -205,12 +274,12 @@ MainWindowComponent.prototype.acceptSelection_ = function() {
   return false;
 }
 
-/**
- * Handles click event on the toggle-view button.
- * @param {Event} event Click event.
- * @private
- */
-MainWindowComponent.prototype.onToggleViewButtonClick_ = function(event) {
+    /**
+     * Handles click event on the toggle-view button.
+     * @param {Event} event Click event.
+     * @private
+     */
+    MainWindowComponent.prototype.onToggleViewButtonClick_ = function(event) {
   var listType =
       this.ui_.listContainer.currentListType === ListContainer.ListType.DETAIL ?
       ListContainer.ListType.THUMBNAIL :
@@ -317,7 +386,7 @@ MainWindowComponent.prototype.onListKeyDown_ = function(event) {
           this.directoryModel_.changeDirectoryEntry(
               /** @type {!DirectoryEntry} */ (selection.entries[0]));
         }
-      } else if (this.acceptSelection_()) {
+      } else if (this.acceptSelection_(false)) {
         event.preventDefault();
       }
       break;

@@ -98,6 +98,7 @@ cr.define('cr.ui', function() {
 
       switch (e.type) {
         case 'mousedown':
+        case 'touchstart':
           if (e.currentTarget == this.ownerDocument) {
             if (e.target instanceof Node && !this.contains(e.target) &&
                 !this.menu.contains(e.target)) {
@@ -197,6 +198,7 @@ cr.define('cr.ui', function() {
       var win = doc.defaultView;
       this.showingEvents_.add(doc, 'keydown', this, true);
       this.showingEvents_.add(doc, 'mousedown', this, true);
+      this.showingEvents_.add(doc, 'touchstart', this, true);
       this.showingEvents_.add(doc, 'focus', this, true);
       this.showingEvents_.add(doc, 'scroll', this, true);
       this.showingEvents_.add(win, 'popstate', this);
