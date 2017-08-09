@@ -703,6 +703,8 @@ crbug.com/518883 crbug.com/390452 virtual/mojo-loading/http/tests/security/isola
 crbug.com/518987 http/tests/xmlhttprequest/navigation-abort-detaches-frame.html [ Pass Timeout ]
 crbug.com/518989 [ Mac ] external/wpt/css/css-writing-modes-3/writing-mode-vertical-rl-002.xht [ Failure Pass Timeout ]
 
+# 
+
 # These performance-sensitive user-timing tests are flaky in debug on all platforms, and flaky on all configurations of windows.
 # See: crbug.com/567965, crbug.com/518992, and crbug.com/518993
 
@@ -1816,6 +1818,7 @@ crbug.com/626703 external/wpt/encoding/eof-utf-8-three.html [ Failure ]
 crbug.com/626703 external/wpt/encoding/eof-utf-8-two.html [ Failure ]
 crbug.com/626703 external/wpt/fetch/api/abort/general.html [ Timeout ]
 crbug.com/626703 virtual/mojo-blobs/external/wpt/fetch/api/abort/general.html [ Timeout ]
+crbug.com/626703 virtual/outofblink-cors/external/wpt/fetch/api/abort/general.html [ Timeout ]
 crbug.com/626703 external/wpt/page-visibility/onvisibilitychange.html [ Timeout ]
 crbug.com/626703 external/wpt/webrtc/RTCIceTransport.html [ Timeout ]
 crbug.com/626703 external/wpt/webrtc/RTCPeerConnection-setLocalDescription-answer.html [ Timeout ]
@@ -2740,12 +2743,15 @@ crbug.com/680407 [ Mac ] fast/forms/select/menulist-appearance-basic.html [ Need
 # Importing 'fetch' tests from WPT.
 crbug.com/705490 external/wpt/fetch/api/basic/error-after-response.html [ Timeout Pass ]
 crbug.com/705490 virtual/mojo-blobs/external/wpt/fetch/api/basic/error-after-response.html [ Timeout Pass ]
+crbug.com/705490 virtual/outofblink/external/wpt/fetch/api/basic/error-after-response.html [ Timeout Pass ]
 
 # Non-deterministic output, as the failing subtests dump timestamps.
 crbug.com/705490 external/wpt/fetch/api/request/request-cache-reload.html [ Failure ]
 crbug.com/705490 external/wpt/fetch/api/request/request-cache-no-store.html [ Failure ]
 crbug.com/705490 virtual/mojo-blobs/external/wpt/fetch/api/request/request-cache-reload.html [ Failure ]
 crbug.com/705490 virtual/mojo-blobs/external/wpt/fetch/api/request/request-cache-no-store.html [ Failure ]
+crbug.com/705490 virtual/outofblink-cors/external/wpt/fetch/api/request/request-cache-reload.html [ Failure ]
+crbug.com/705490 virtual/outofblink-cors/external/wpt/fetch/api/request/request-cache-no-store.html [ Failure ]
 
 # This test has device ID strings in failure messages which change on every test run.
 crbug.com/679742 external/wpt/mediacapture-streams/MediaStreamTrack-getSettings.https.html [ Failure ]
@@ -3009,8 +3015,6 @@ crbug.com/746128 [ Win7 Debug ] virtual/new-remote-playback-pipeline/media/contr
 crbug.com/626703 [ Win7 ] external/wpt/image-decodes/image-decode-path-changes.html [ Pass Crash ]
 
 # Sheriff failures 2017-07-20
-crbug.com/746926 [ Win Debug ] virtual/outofblink-cors/webexposed/global-interface-listing.html [ Timeout ]
-
 crbug.com/747163 [ Linux ] imagecapture/MediaStreamTrack-applyConstraints.html [ Pass Crash ]
 crbug.com/747163 [ Linux ] imagecapture/MediaStreamTrack-getSettings.html [ Pass Crash ]
 
