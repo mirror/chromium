@@ -164,6 +164,10 @@ void WebRuntimeFeatures::EnableLoadingWithMojo(bool enable) {
   RuntimeEnabledFeatures::SetLoadingWithMojoEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableLongTaskV2(bool enable) {
+  RuntimeEnabledFeatures::SetLongTaskV2Enabled(enable);
+}
+
 void WebRuntimeFeatures::EnableMediaCapture(bool enable) {
   RuntimeEnabledFeatures::SetMediaCaptureEnabled(enable);
 }

@@ -22736,6 +22736,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1749176684" label="PauseBackgroundTabs:disabled"/>
   <int value="-1746767834" label="ssl-interstitial-v2-gray"/>
   <int value="-1740519217" label="disable-software-rasterizer"/>
+  <int value="-1739048309" label="LongTaskV2:disabled"/>
   <int value="-1735643253" label="enable-display-list-2d-canvas"/>
   <int value="-1734254845" label="ash-enable-night-light"/>
   <int value="-1732561795" label="ConsistentOmniboxGeolocation:enabled"/>
@@ -23056,6 +23057,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-699767107" label="enable-sync-app-list"/>
   <int value="-697751423" label="disable-quickoffice-component-app"/>
   <int value="-684900739" label="disable-merge-key-char-events"/>
+  <int value="-684393781" label="LongTaskV2:enabled"/>
   <int value="-684223908" label="enable-android-wallpapers-app"/>
   <int value="-680589442" label="MacRTL:disabled"/>
   <int value="-667517406" label="overscroll-history-navigation"/>
