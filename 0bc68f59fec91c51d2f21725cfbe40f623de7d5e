@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7273e513_8da4c26b",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T18:34:45Z",
+      "side": 1,
+      "message": "This seems to be Android-only functionality looking above.",
+      "range": {
+        "startLine": 1085,
+        "startChar": 23,
+        "endLine": 1085,
+        "endChar": 43
+      },
+      "revId": "0bc68f59fec91c51d2f21725cfbe40f623de7d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
