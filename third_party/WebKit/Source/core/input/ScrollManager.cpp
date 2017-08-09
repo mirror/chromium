@@ -520,6 +520,60 @@ WebInputEventResult ScrollManager::HandleGestureScrollEnd(
   return WebInputEventResult::kNotHandled;
 }
 
+bool ScrollManager::VerticalKeyboardScroll(ScrollDirection direction,
+                                           ScrollGranularity scroll_granularity,
+                                           Node* possible_focused_node) {
+  Node* node = frame_->GetDocument()->FocusedElement();
+  if (!node)
+    node = possible_focused_node;
+  if ((!node || !node->GetLayoutObject()) &&
+      !frame_->View()->GetLayoutViewItem().IsNull())
+    node = frame_->View()->GetLayoutViewItem().GetNode();
+  if (!node)
+    return false;
+
+  LayoutBox* cur_box = node->GetLayoutObject()->EnclosingBox();
+  if (!cur_box)
+    return false;
+
+  ScrollDirectionPhysical physical_direction =
+      ToPhysicalDirection(direction, cur_box->IsHorizontalWritingMode(),
+                          cur_box->Style()->IsFlippedBlocksWritingMode());
+
+  ScrollOffset scroll_offset = ToScrollDelta(physical_direction, 1.5f);
+  if (scroll_offset.Width() != 0.0f)
+    return false;
+
+  // Begin
+  current_scroll_chain_.clear();
+  std::unique_ptr<ScrollStateData> scroll_state_data =
+      WTF::MakeUnique<ScrollStateData>();
+  scroll_state_data->is_beginning = true;
+  scroll_state_data->from_user_input = true;
+  ScrollState* scroll_state = ScrollState::Create(std::move(scroll_state_data));
+  RecomputeScrollChain(*node, *scroll_state, current_scroll_chain_);
+  if (current_scroll_chain_.empty())
+    return false;
+  CustomizedScroll(*scroll_state);
+
+  // Update
+  scroll_state_data = WTF::MakeUnique<ScrollStateData>();
+  scroll_state_data->delta_x = scroll_offset.Width();
+  scroll_state_data->delta_y = scroll_offset.Height();
+  scroll_state_data->delta_granularity = scroll_granularity;
+  scroll_state_data->from_user_input = true;
+  scroll_state_data->is_direct_manipulation = false;
+  scroll_state = ScrollState::Create(std::move(scroll_state_data));
+  CustomizedScroll(*scroll_state);
+
+  DCHECK(scroll_state->deltaX() == 0.0f);
+  if (scroll_state->deltaY() != 1.0f) {
+    SetFrameWasScrolledByUser();
+    return true;
+  }
+  return false;
+}
+
 Page* ScrollManager::GetPage() const {
   return frame_->GetPage();
 }
