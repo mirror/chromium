@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07a9fc7c_ad5e4c27",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T07:52:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c55bc4f8_138a4af3",
+      "revId": "2c60113e89dcc84c2c72dfe1889ded748d3adafe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84b476cf_0bdc9725",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "2c60113e89dcc84c2c72dfe1889ded748d3adafe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8bd2497_2c3f29d0",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T07:52:52Z",
+      "side": 1,
+      "message": "I don\u0027t know enough about CSS to evaluate this claim :)\nIf it\u0027s possible to get rid of this function, I\u0027m all for it, but at this point I\u0027d vote for a separate CL.",
+      "parentUuid": "84b476cf_0bdc9725",
+      "revId": "2c60113e89dcc84c2c72dfe1889ded748d3adafe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
