@@ -67,6 +67,13 @@ const kIFrameBorderSize = 2;
 /** @const @type {string} */
 const kTextArea = 'TEXTAREA';
 
+/**
+ * @param {*} actual
+ * @param {*} expected
+ * @param {string=} opt_description
+ */
+var assert_not_equals;
+
 class Traversal {
   /**
    * @param {!Node} node
@@ -86,7 +93,7 @@ class Traversal {
   }
 
   /**
-   * @param {!DOMSelection} selection
+   * @param {!Selection} selection
    * @return !SampleSelection
    */
   fromDOMSelection(selection) {
@@ -109,7 +116,7 @@ class DOMTreeTraversal extends Traversal {
   firstChildOf(node) { return node.firstChild; }
 
   /**
-   * @param {!DOMSelection} selection
+   * @param {!Selection} selection
    * @return !SampleSelection
    */
   fromDOMSelection(selection) {
@@ -129,10 +136,10 @@ class FlatTreeTraversal extends Traversal {
    * @param {!Node} node
    * @return {Node}
    */
-  firstChildOf(node) { return internals.firstChildInFlatTree(node); }
+  firstChildOf(node) { return window.internals.firstChildInFlatTree(node); }
 
   /**
-   * @param {!DOMSelection} selection
+   * @param {!Selection} selection
    * @return !SampleSelection
    */
   fromDOMSelection(selection) {
@@ -145,7 +152,7 @@ class FlatTreeTraversal extends Traversal {
    * @param {!Node} node
    * @return {Node}
    */
-  nextSiblingOf(node) { return internals.nextSiblingInFlatTree(node); }
+  nextSiblingOf(node) { return window.internals.nextSiblingInFlatTree(node); }
 }
 
 /**
@@ -478,7 +485,7 @@ class Serializer {
   constructor(selection, traversal) {
     /** @type {!SampleSelection} */
     this.selection_ = selection;
-    /** @type {!Array<strings>} */
+    /** @type {!Array<string>} */
     this.strings_ = [];
     /** @type {!Traversal} */
     this.traversal_ = traversal;
@@ -593,7 +600,7 @@ class Serializer {
 
   /**
    * @private
-   * @param {!HTMLTextArea}
+   * @param {!HTMLTextAreaElement} textArea
    */
   handleTextArea(textArea) {
     /** @type {string} */
@@ -690,7 +697,7 @@ function computeTop(element) {
 }
 
 /**
- * @this {!DOMSelection}
+ * @this {!Selection}
  * @param {string} html
  * @param {string=} opt_text
  */
@@ -721,7 +728,7 @@ class Sample {
    * @param {string} sampleText
    */
   constructor(sampleText) {
-    /** @const @type {!HTMLIFame} */
+    /** @const @type {!HTMLIFrameElement} */
     this.iframe_ = document.createElement('iframe');
     if (!document.body)
         document.body = document.createElement("body");
@@ -894,7 +901,7 @@ function commonPrefixOf(str1, str2) {
 
 /**
  * @param {string} passedInputText
- * @param {function(!Selection)|string}
+ * @param {function(!Selection)|string} tester
  * @param {string} expectedText
  * @param {Object=} opt_options
  * @return {!Sample}
