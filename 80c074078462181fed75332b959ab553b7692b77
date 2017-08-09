@@ -69,6 +69,30 @@
       "revId": "80c074078462181fed75332b959ab553b7692b77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a0d0b3_c8c1ead5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-09T04:39:06Z",
+      "side": 1,
+      "message": "Alrighty...this should happen after the browser process is fully initialized, so the profile should be here.  I think we\u0027re ok here.",
+      "parentUuid": "f28cb213_30f4c93c",
+      "range": {
+        "startLine": 871,
+        "startChar": 16,
+        "endLine": 871,
+        "endChar": 27
+      },
+      "revId": "80c074078462181fed75332b959ab553b7692b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
