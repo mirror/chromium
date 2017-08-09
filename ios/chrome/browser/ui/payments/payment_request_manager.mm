@@ -721,20 +721,28 @@ struct PendingPaymentResponse {
 #pragma mark - PaymentRequestUIDelegate
 
 - (void)
-requestFullCreditCard:(const autofill::CreditCard&)creditCard
-       resultDelegate:
-           (base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>)
-               resultDelegate {
+paymentRequestShouldRequestFullCreditCard:
+    (const autofill::CreditCard&)creditCard
+                       withResultDelegate:
+                           (base::WeakPtr<autofill::payments::FullCardRequest::
+                                              ResultDelegate>)resultDelegate {
   [_paymentRequestCoordinator requestFullCreditCard:creditCard
                                      resultDelegate:resultDelegate];
 }
 
-- (void)launchAppWithUniversalLink:(std::string)universalLink
-                instrumentDelegate:
-                    (payments::PaymentInstrument::Delegate*)instrumentDelegate {
+- (void)paymentRequestShouldLaunchAppWithUniversalLink:
+            (std::string)universalLink
+                                withInstrumentDelegate:
+                                    (payments::PaymentInstrument::Delegate*)
+                                        instrumentDelegate {
   // TODO(crbug.com/748556): Implement this function to use a native app's
   // universal link to open it from Chrome with several arguments supplied
   // from the Payment Request object.
+}
+
+- (void)paymentRequestDidFetchPaymentMethods {
+  [_paymentRequestCoordinator setPending:NO];
+  [_paymentRequestCoordinator setCancellable:YES];
 }
 
 #pragma mark - PaymentRequestCoordinatorDelegate methods
@@ -809,6 +817,7 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 
 - (void)paymentResponseHelperDidReceivePaymentMethodDetails {
   [_paymentRequestCoordinator setPending:YES];
+  [_paymentRequestCoordinator setCancellable:NO];
 }
 
 - (void)paymentResponseHelperDidCompleteWithPaymentResponse:

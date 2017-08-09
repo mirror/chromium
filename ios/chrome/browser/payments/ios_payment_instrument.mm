@@ -49,8 +49,9 @@ IOSPaymentInstrument::~IOSPaymentInstrument() {}
 void IOSPaymentInstrument::InvokePaymentApp(
     PaymentInstrument::Delegate* delegate) {
   DCHECK(delegate);
-  [payment_request_ui_delegate_ launchAppWithUniversalLink:universal_link_
-                                        instrumentDelegate:delegate];
+  [payment_request_ui_delegate_
+      paymentRequestShouldLaunchAppWithUniversalLink:universal_link_
+                              withInstrumentDelegate:delegate];
 }
 
 bool IOSPaymentInstrument::IsCompleteForPayment() const {
