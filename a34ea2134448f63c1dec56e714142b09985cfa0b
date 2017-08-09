@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d595374_f9769273",
+        "filename": "cc/resources/video_resource_updater_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-09T02:23:23Z",
+      "side": 1,
+      "message": "VideoResourceUpdaterTest.CreateForHardwarePlanes_SingleNV12 is already testing what we need.\nPlease revert this file.",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66de1e4c_f66e582e",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-09T02:23:23Z",
+      "side": 1,
+      "message": "Why is this needed and how is this related to this CL?",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333fc5ea_f5be2276",
+        "filename": "media/gpu/vaapi_drm_picture.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-09T02:23:23Z",
+      "side": 1,
+      "message": "Please, leave this as it was. SCANOUT should work.",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318baf58_89192f1d",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-09T02:23:23Z",
+      "side": 1,
+      "message": "Why is this needed? Are NV12 buffers always tiled? If that\u0027s the case, should we write an helper function that returns the flags given the buffer format?",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
