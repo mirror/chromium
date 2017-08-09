@@ -451,12 +451,12 @@
 
     <!-- Bottom sheet dimensions -->
     <dimen name="bottom_sheet_help_bubble_inset">10dp</dimen>
-    <dimen name="bottom_nav_height">56dp</dimen>
-    <dimen name="bottom_nav_height_inverse">-56dp</dimen>
-    <dimen name="bottom_nav_space_from_toolbar">96dp</dimen>
+    <dimen name="bottom_nav_height">40dp</dimen>
+    <dimen name="bottom_nav_height_inverse">-40dp</dimen>
+    <dimen name="bottom_nav_space_from_toolbar">96dp</dimen>    
     <!-- The following two dimensions override defaults in Android's BottomNavigationView -->
-    <dimen name="design_bottom_navigation_text_size">12sp</dimen>
-    <dimen name="design_bottom_navigation_active_text_size">14sp</dimen>
+    <dimen name="design_bottom_navigation_text_size">10sp</dimen>
+    <dimen name="design_bottom_navigation_active_text_size">10sp</dimen>
 
     <!-- Chrome Home dimensions -->
     <dimen name="chrome_home_empty_view_top_padding">16dp</dimen>
