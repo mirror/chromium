@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "be10ce0a_b0b4feeb",
+        "filename": "ui/events/platform/platform_event_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1225834
+      },
+      "writtenOn": "2017-08-09T15:09:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7767f3c3_461cf688",
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cd0d2ea_4bc1687b",
         "filename": "ui/events/platform/platform_event_recorder.h",
         "patchSetId": 4
