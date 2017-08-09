@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "b129c4c8_ed603e6f",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T20:15:56Z",
+      "side": 1,
+      "message": "I guess as a further improvement we could have a \"soft-check\" on the JS side using this mechanism to throw an interesting error to the developer. Then a more serious check (non-spoofable) in ObjC?",
+      "parentUuid": "d1282188_c6f227ed",
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da3de160_b13fb7d8",
         "filename": "ios/chrome/browser/ui/payments/payment_request_can_make_payment_egtest.mm",
         "patchSetId": 5
@@ -195,6 +213,24 @@
       "side": 1,
       "message": "Ack. I\u0027m not sure about the benefits of that. That way every test that needs to load a different URL will require a separate test class. Right now tests that are logically related are grouped into one test class and each can load distinct URLs at any point during the test.",
       "parentUuid": "be6329c1_38249c1b",
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4375700_ee912d07",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_can_make_payment_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T20:15:56Z",
+      "side": 1,
+      "message": "Can you have multiple classes in one file? If so, I think the grouping around which base URL the tests are using works quite well. \n\nFor example in C++\n\nPaymentRequestNoShippingTest : PaymentRequestBrowserTestBase(\n            \"/payment_request_no_shipping.html\").\n\nI would advocate for it being the raw string so that it reads better (and not a constant).",
+      "parentUuid": "1303fade_61ad4835",
       "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
