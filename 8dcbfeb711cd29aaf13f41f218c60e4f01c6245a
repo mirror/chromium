@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60afbb7e_a82b1817",
+        "filename": "chrome/common/extensions/api/file_manager_private.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-09T01:57:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "932c1414_31a1aeaa",
+      "revId": "8dcbfeb711cd29aaf13f41f218c60e4f01c6245a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "974887ee_8804cbb4",
         "filename": "chromeos/dbus/cros_disks_client.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "8dcbfeb711cd29aaf13f41f218c60e4f01c6245a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c559ae88_be601e7c",
+        "filename": "chromeos/dbus/cros_disks_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-09T01:57:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "974887ee_8804cbb4",
+      "revId": "8dcbfeb711cd29aaf13f41f218c60e4f01c6245a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
