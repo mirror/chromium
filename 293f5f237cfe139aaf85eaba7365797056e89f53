@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e87572_178f36b3",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-09T18:31:31Z",
+      "side": 0,
+      "message": "This comment accidentally got separated from the DCHECK below.",
+      "range": {
+        "startLine": 848,
+        "startChar": 0,
+        "endLine": 848,
+        "endChar": 63
+      },
+      "revId": "293f5f237cfe139aaf85eaba7365797056e89f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeaade48_94d5010e",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-09T18:31:31Z",
+      "side": 0,
+      "message": "We can do better, since GetAlternativeServiceInfoInternal() has an early return if scheme is not https.",
+      "range": {
+        "startLine": 854,
+        "startChar": 44,
+        "endLine": 854,
+        "endChar": 54
+      },
+      "revId": "293f5f237cfe139aaf85eaba7365797056e89f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbff2d51_768b783e",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-09T18:31:31Z",
+      "side": 0,
+      "message": "|main_job_| is already checked a few lines above.",
+      "range": {
+        "startLine": 938,
+        "startChar": 8,
+        "endLine": 938,
+        "endChar": 17
+      },
+      "revId": "293f5f237cfe139aaf85eaba7365797056e89f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
