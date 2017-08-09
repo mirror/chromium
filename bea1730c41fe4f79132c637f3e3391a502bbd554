@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c59a55bb_48dc1cf0",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-09T03:58:52Z",
+      "side": 1,
+      "message": "In the new approach, android_key_systems only expose its internal method. I think there\u0027s no need to split the patch.",
+      "parentUuid": "df40c0c1_580f47bc",
+      "revId": "bea1730c41fe4f79132c637f3e3391a502bbd554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e910ea6_49338680",
         "filename": "chromecast/renderer/media/key_systems_cast.cc",
         "patchSetId": 1
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "335bbdbd_258e6634",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-09T03:58:52Z",
+      "side": 1,
+      "message": "Keep the old sequence which matches order in our internal code.",
+      "parentUuid": "b6f4bade_7bb646cd",
+      "revId": "bea1730c41fe4f79132c637f3e3391a502bbd554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f8edf35_adb0f62b",
         "filename": "chromecast/renderer/media/key_systems_cast.cc",
         "patchSetId": 1
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Seems like which key systems should be added is controlled by MediaDrmBridgeClient. CastMediaDrmBridgeClient registered PlayReady for Cast. Is AW using auto-discovery solution for this?\n\nSince PlayReady is explicitly added, can we re-use this function?",
       "parentUuid": "4f8edf35_adb0f62b",
+      "revId": "bea1730c41fe4f79132c637f3e3391a502bbd554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5501a55b_d0268970",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-09T03:58:52Z",
+      "side": 1,
+      "message": "Just realized that adding Playready here could save a IPC call and avoid the changes to webview codes. The new approach is to call the query before creating Playready key systems, just like what we do for Widevine.",
+      "parentUuid": "ebb236e2_6ebec39b",
       "revId": "bea1730c41fe4f79132c637f3e3391a502bbd554",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
