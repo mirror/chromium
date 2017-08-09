@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de94d295_c6365cc5",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-09T03:18:37Z",
+      "side": 1,
+      "message": "Presumably, this should do std::move() to avoid the additional refcounting?",
+      "range": {
+        "startLine": 1452,
+        "startChar": 20,
+        "endLine": 1452,
+        "endChar": 0
+      },
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3c97f4_a4487329",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-09T03:18:37Z",
+      "side": 1,
+      "message": "Consider moving this, and the method which uses it, into an anon namespace.",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a667fd_1df5419f",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-09T03:18:37Z",
+      "side": 1,
+      "message": "IOBuffer has capacity, but doesn\u0027t expose an accessor? Lame :)",
+      "range": {
+        "startLine": 27,
+        "startChar": 26,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf75d26_f833e5e6",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-09T03:18:37Z",
+      "side": 1,
+      "message": "nit: CHECK_LE(buf_len, capacity_);",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 15
+      },
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb57e35_35a32693",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-09T03:18:37Z",
+      "side": 1,
+      "message": "Oh, clever! Please add this to the CL description.",
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db83d10a_3543fd3f",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-09T03:18:37Z",
+      "side": 1,
+      "message": "Class comment, please?",
+      "range": {
+        "startLine": 25,
+        "startChar": 63,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502e35a9_d66b9493",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-09T03:18:37Z",
+      "side": 1,
+      "message": "Comment, please. Does this allocate a new underlying buffer, or does it memcpy? If the latter, what happens if buf_len is larger than capacity?",
+      "range": {
+        "startLine": 32,
+        "startChar": 49,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26fe4722_78c2f379",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-09T03:18:37Z",
+      "side": 1,
+      "message": "nit: What would you think of\n\n  Is moved to the delegate in the case of a write error.",
+      "range": {
+        "startLine": 91,
+        "startChar": 5,
+        "endLine": 91,
+        "endChar": 11
+      },
+      "revId": "6d56583d7fd44d2bc4fae920c0389f4f2ef17454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
