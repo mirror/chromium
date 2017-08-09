@@ -296,6 +296,16 @@ Configuration Configuration::MakePresetForPerformanceTestingDryRunOnAllSites() {
   return config;
 }
 
+// static
+Configuration Configuration::MakeForForcedActivation() {
+  // This is a strange configuration, but it is generated on-the-fly rather than
+  // via finch configs, and is separate from the standard activation computation
+  // (which is why scope is no_sites).
+  Configuration config(ActivationLevel::ENABLED, ActivationScope::NO_SITES);
+  config.activation_conditions.forced_activation = true;
+  return config;
+}
+
 Configuration::Configuration() = default;
 Configuration::Configuration(ActivationLevel activation_level,
                              ActivationScope activation_scope,
@@ -315,6 +325,7 @@ bool Configuration::operator==(const Configuration& rhs) const {
     return std::tie(config.activation_conditions.activation_scope,
                     config.activation_conditions.activation_list,
                     config.activation_conditions.priority,
+                    config.activation_conditions.forced_activation,
                     config.activation_options.activation_level,
                     config.activation_options.performance_measurement_rate,
                     config.activation_options.should_whitelist_site_on_reload,
@@ -336,6 +347,7 @@ Configuration::ActivationConditions::ToTracedValue() const {
   value->SetString("activation_scope", StreamToString(activation_scope));
   value->SetString("activation_list", StreamToString(activation_list));
   value->SetInteger("priority", priority);
+  value->SetBoolean("forced_activation", forced_activation);
   return value;
 }
 
@@ -361,6 +373,11 @@ std::unique_ptr<base::trace_event::TracedValue> Configuration::ToTracedValue()
   return value;
 }
 
+std::ostream& operator<<(std::ostream& os, const Configuration& config) {
+  os << config.ToTracedValue()->ToString();
+  return os;
+}
+
 // ConfigurationList ----------------------------------------------------------
 
 ConfigurationList::ConfigurationList(std::vector<Configuration> configs)
@@ -378,6 +395,11 @@ scoped_refptr<ConfigurationList> GetEnabledConfigurations() {
         base::MakeRefCounted<ConfigurationList>(ParseEnabledConfigurations());
   }
   return g_active_configurations.Get();
+}
+
+bool HasEnabledConfiguration(const Configuration& config) {
+  return base::ContainsValue(
+      GetEnabledConfigurations()->configs_by_decreasing_priority(), config);
 }
 
 namespace testing {
