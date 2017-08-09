@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdff2ca2_b4391025",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-09T01:25:14Z",
+      "side": 1,
+      "message": "Drop explicit.",
+      "revId": "9ed9a5e5fa6a2c30006585087c82642b14824e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56e605e_62146d54",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/RendererResourceCoordinator.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-09T01:25:14Z",
+      "side": 1,
+      "message": "Add DCHECK(IsMainThread()).",
+      "revId": "9ed9a5e5fa6a2c30006585087c82642b14824e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
