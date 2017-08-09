@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "4afea4a3_3c62b8af",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1911,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-09T19:04:17Z",
+      "side": 1,
+      "message": "Hmmm... I think you should be about to use SKIP_ON_SHUTDOWN here because on next startup, if there is not database file, any existing disk_cache should be deleted. However I\"m not so sure that\u0027s happening properly on next startup?\n\nBLOCK_SHUTDOWN retains the existing behavior so i think that\u0027s the safer option for this migration.",
+      "parentUuid": "549ca66b_34453558",
+      "range": {
+        "startLine": 1911,
+        "startChar": 32,
+        "endLine": 1911,
+        "endChar": 68
+      },
+      "revId": "e719e6cc69fbd3dacbab30398774a09dade15d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "736d46c5_62b4318e",
         "filename": "content/browser/service_worker/service_worker_storage.h",
         "patchSetId": 4
