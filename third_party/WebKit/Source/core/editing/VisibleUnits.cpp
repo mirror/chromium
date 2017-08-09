@@ -1644,8 +1644,6 @@ static bool IsVisuallyEquivalentCandidateAlgorithm(
     // still need to support legacy positions.
     if (position.IsAfterAnchor())
       return false;
-    if (position.ComputeEditingOffset())
-      return false;
     const Node* parent = Strategy::Parent(*anchor_node);
     return parent->GetLayoutObject() &&
            parent->GetLayoutObject()->IsSelectable();
