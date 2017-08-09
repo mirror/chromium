@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39584e90_c747ca32",
+        "filename": "ui/android/java/src/org/chromium/ui/base/SelectFileDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T13:00:52Z",
+      "side": 1,
+      "message": "nit: drop the visibility keyword altogether. That\u0027ll make it package private, which is what we want here.",
+      "revId": "f3bc510230bec482b0eb672e35b1920f40467033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006b1c12_51977322",
+        "filename": "ui/android/java/src/org/chromium/ui/base/SelectFileDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T13:00:52Z",
+      "side": 1,
+      "message": "I\u0027d focus on the contract as opposed to the observed crash. The mechanism through which a user can select a file is expected to return a (list of) absolute paths. This check makes sure that we adhere to that contract.\n\nWhat about:\n\n// The selected files must be returned as a list of absolute paths. A MIUI 8.5\n// device was observed to return a file:// URI instead, so convert if necessary.\n// See https://crbug.com/752834 for context.",
+      "revId": "f3bc510230bec482b0eb672e35b1920f40467033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9eb382c_4d9ee2c7",
+        "filename": "ui/android/junit/src/org/chromium/ui/base/SelectFileDialogTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T13:00:52Z",
+      "side": 1,
+      "message": "We should probably call:\n\nContextUtils.initApplicationContextForTests(RuntimeEnvironment.application);",
+      "revId": "f3bc510230bec482b0eb672e35b1920f40467033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
