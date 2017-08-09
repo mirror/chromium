@@ -62,13 +62,9 @@ class ContentSubresourceFilterDriverFactory
     return activation_decision_;
   }
 
-  // Returns the |ActivationOptions| for the current main frame
-  // document. Do not rely on this API, it is only temporary.
-  // TODO(csharrison): Remove this and |activation_options_| in place of adding
-  // |should_suppress_notifications| on ActivationState.
-  const Configuration::ActivationOptions&
-  GetActivationOptionsForLastCommittedPageLoad() const {
-    return activation_options();
+  // Returns the Configuration for the current main frame document.
+  const Configuration& GetMatchedConfigurationForLastCommittedPageLoad() const {
+    return matched_configuration_;
   }
 
   // ContentSubresourceFilterThrottleManager::Delegate:

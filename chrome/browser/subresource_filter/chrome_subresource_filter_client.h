@@ -122,6 +122,8 @@ class ChromeSubresourceFilterClient
 
  private:
   void WhitelistByContentSettings(const GURL& url);
+  void ShowUI(const GURL& url);
+
   std::set<std::string> whitelisted_hosts_;
 
   // Owned by the profile.
