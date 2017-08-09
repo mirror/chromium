@@ -465,6 +465,8 @@ class CONTENT_EXPORT RenderWidget
   void OnRequestCompositionUpdates(bool immediate_request,
                                    bool monitor_updates);
 
+  void ShowDeferredContextMenu(const ContextMenuParams& params, int routing_id);
+
  protected:
   // Friend RefCounted so that the dtor can be non-public. Using this class
   // without ref-counting is an error.
@@ -860,6 +862,8 @@ class CONTENT_EXPORT RenderWidget
                          InputEventAckState ack_state,
                          const ui::LatencyInfo& latency_info,
                          std::unique_ptr<ui::DidOverscrollParams>);
+
+  void ShowContextMenu(const ContextMenuParams& params, int routing_id);
 
   // Indicates whether this widget has focus.
   bool has_focus_;
