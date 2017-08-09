@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff5335c3_316a27c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T13:02:47Z",
+      "side": 1,
+      "message": "Could you please reorder constants and add a small comment here? Like:\n\n// New signin promo preferences.\nPREF_NEW_SIGNIN_PROMO_DECLINED\n// Old signin promo preferences.\nPREF_OLD_SIGNIN_PROMO_DECLINED\nPREF_SIGNIN_PROMO_SHOW_COUNT\nMAX_SIGNIN_PROMO_SHOW_COUNT",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 99
+      },
+      "revId": "30c273a30ddc0324d7c19f6e95caf04f81a790a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "868f8723_24df5067",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T13:02:47Z",
+      "side": 1,
+      "message": "Nit: s/wasNewSigninPromoDismissed/wasNewSigninPromoDeclined/ to be consistent with the preference name.",
+      "range": {
+        "startLine": 210,
+        "startChar": 20,
+        "endLine": 210,
+        "endChar": 46
+      },
+      "revId": "30c273a30ddc0324d7c19f6e95caf04f81a790a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a8e60a_0cb862ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T13:02:47Z",
+      "side": 1,
+      "message": "This check will no longer work when we fix old promo for the case when sync is disabled in Chrome. Could you please fix that issue in this CL? It will be way faster than waiting for the fix to land and changing this CL accordingly.",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 83
+      },
+      "revId": "30c273a30ddc0324d7c19f6e95caf04f81a790a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7313d1_3ea0286a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T13:02:47Z",
+      "side": 1,
+      "message": "Nit: could you extract this as a local variable, please?",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 57
+      },
+      "revId": "30c273a30ddc0324d7c19f6e95caf04f81a790a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
