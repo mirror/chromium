@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb19674f_54eeb68e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4273,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T21:29:27Z",
+      "side": 1,
+      "message": "Ah... I guess there\u0027s no way around it.\n\nFWIW, this std::move() doesn\u0027t do anything. I guess we can just unconditionally call Close() here",
+      "revId": "1a73cd608284a631d874bd9896886d348d3800b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
