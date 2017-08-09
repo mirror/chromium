@@ -16,6 +16,24 @@
       "revId": "d5f9c38729889a5084ca49ebf1592627f41f7480",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32509da1_fa524857",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-09T14:57:15Z",
+      "side": 1,
+      "message": "I think with running on the browser UI thread it won\u0027t be an issue, since the thread is super active anyways. We could also only run the timer when there are temporary references (after collecting UMA for a while to show there are no issues), which if this is as infrequent as I think means the timer will essentially never run it\u0027s task.",
+      "parentUuid": "07e95544_aff4c0bd",
+      "revId": "d5f9c38729889a5084ca49ebf1592627f41f7480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
