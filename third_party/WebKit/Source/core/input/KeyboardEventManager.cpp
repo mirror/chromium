@@ -368,11 +368,18 @@ void KeyboardEventManager::DefaultArrowEventHandler(
                            &scroll_use_uma))
     return;
 
-  if (scroll_manager_->BubblingScroll(scroll_direction, scroll_granularity,
-                                      nullptr, possible_focused_node)) {
-    UseCounter::Count(frame_->GetDocument(), scroll_use_uma);
-    event->SetDefaultHandled();
-    return;
+  if (event->keyCode() == VKEY_LEFT || event->keyCode() == VKEY_RIGHT) {
+    if (scroll_manager_->BubblingScroll(scroll_direction, scroll_granularity,
+                                        nullptr, possible_focused_node)) {
+      UseCounter::Count(frame_->GetDocument(), scroll_use_uma);
+      event->SetDefaultHandled();
+    }
+  } else {
+    if (scroll_manager_->VerticalKeyboardScroll(
+            scroll_direction, scroll_granularity, possible_focused_node)) {
+      UseCounter::Count(frame_->GetDocument(), scroll_use_uma);
+      event->SetDefaultHandled();
+    }
   }
 }
 

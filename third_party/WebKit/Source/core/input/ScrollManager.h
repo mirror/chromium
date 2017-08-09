@@ -79,6 +79,11 @@ class CORE_EXPORT ScrollManager
 
   WebInputEventResult HandleGestureScrollEnd(const WebGestureEvent&);
 
+  // Handle the provided horizontal keyboard scroll event.
+  bool VerticalKeyboardScroll(ScrollDirection,
+                              ScrollGranularity,
+                              Node* possible_focused_node);
+
   bool IsScrollbarHandlingGestures() const;
 
   // Returns true if the gesture event should be handled in ScrollManager.
