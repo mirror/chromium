@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "cfe632b4_15186b4f",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-09T21:43:46Z",
+      "side": 1,
+      "message": "mmm... disregard everything that I said... if the clipboard runs on the UI thread only, then there will be no race condition at all.",
+      "parentUuid": "9b087520_07c709c1",
+      "revId": "354542ac52fa39a1b61b700c1b2481ae6c06800e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7555b9d4_ec7083c1",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 15
