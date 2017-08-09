@@ -15,6 +15,7 @@
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
 #include "net/socket/connection_attempts.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/stream_socket.h"
 #include "net/socket/tcp_socket.h"
 
@@ -84,6 +85,7 @@ class NET_EXPORT TCPClientSocket : public StreamSocket {
   void ClearConnectionAttempts() override;
   void AddConnectionAttempts(const ConnectionAttempts& attempts) override;
   int64_t GetTotalReceivedBytes() const override;
+  void Tag(const SocketTag& tag) override;
 
  private:
   // State machine for connecting the socket.
@@ -157,6 +159,10 @@ class NET_EXPORT TCPClientSocket : public StreamSocket {
 
   // Total number of bytes received by the socket.
   int64_t total_received_bytes_;
+
+  // Current socket tag if |socket_| is valid, otherwise the tag to apply when
+  // |socket_| is opened.
+  SocketTag tag_;
 
   DISALLOW_COPY_AND_ASSIGN(TCPClientSocket);
 };

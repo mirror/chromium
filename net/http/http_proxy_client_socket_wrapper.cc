@@ -280,6 +280,11 @@ int64_t HttpProxyClientSocketWrapper::GetTotalReceivedBytes() const {
   return transport_socket_->GetTotalReceivedBytes();
 }
 
+void HttpProxyClientSocketWrapper::Tag(const SocketTag& tag) {
+  if (transport_socket_)
+    transport_socket_->Tag(tag);
+}
+
 int HttpProxyClientSocketWrapper::Read(IOBuffer* buf,
                                        int buf_len,
                                        const CompletionCallback& callback) {
@@ -430,7 +435,7 @@ int HttpProxyClientSocketWrapper::DoTransportConnectComplete(int result) {
 int HttpProxyClientSocketWrapper::DoSSLConnect() {
   if (tunnel_) {
     SpdySessionKey key(GetDestination().host_port_pair(), ProxyServer::Direct(),
-                       PRIVACY_MODE_DISABLED);
+                       PRIVACY_MODE_DISABLED, transport_params_->socket_tag());
     if (spdy_session_pool_->FindAvailableSession(
             key, GURL(),
             /* enable_ip_based_pooling = */ true, net_log_)) {
@@ -543,7 +548,7 @@ int HttpProxyClientSocketWrapper::DoSpdyProxyCreateStream() {
   DCHECK(using_spdy_);
   DCHECK(tunnel_);
   SpdySessionKey key(GetDestination().host_port_pair(), ProxyServer::Direct(),
-                     PRIVACY_MODE_DISABLED);
+                     PRIVACY_MODE_DISABLED, transport_params_->socket_tag());
   base::WeakPtr<SpdySession> spdy_session =
       spdy_session_pool_->FindAvailableSession(
           key, GURL(),
