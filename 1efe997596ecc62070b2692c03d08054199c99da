@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd065e38_d3900721",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-09T00:37:46Z",
+      "side": 0,
+      "message": "We don\u0027t clear weak_pipeline_ on Stop(), but it immediately gets replaced in Start(). I don\u0027t know if there would be any advantage in clearing it on Stop(), or if it can ever be used after RendererWrapper::Stop() is called.",
+      "range": {
+        "startLine": 235,
+        "startChar": 2,
+        "endLine": 235,
+        "endChar": 26
+      },
+      "revId": "1efe997596ecc62070b2692c03d08054199c99da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
