@@ -295,7 +295,7 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
   bg_flags.setAntiAlias(true);
   bg_flags.setStyle(cc::PaintFlags::kFill_Style);
 
-  if (is_tablet_mode || current_animation_value > 0.0) {
+  if (is_tablet_mode || shelf_view_->is_tablet_mode_animation_running()) {
     // Draw the tablet mode app list background. It will look something like
     // [1] when the shelf is horizontal and [2] when the shelf is vertical,
     // where 1. is the back button and 2. is the app launcher circle.
@@ -410,8 +410,7 @@ gfx::Point AppListButton::GetAppListButtonCenterPoint() const {
   const bool is_tablet_mode = Shell::Get()
                                   ->tablet_mode_controller()
                                   ->IsTabletModeWindowManagerEnabled();
-  const bool is_animating =
-      shelf_view_->GetAppListButtonAnimationCurrentValue() > 0.0;
+  const bool is_animating = shelf_view_->is_tablet_mode_animation_running();
 
   ShelfAlignment alignment = shelf_->alignment();
   if (alignment == SHELF_ALIGNMENT_BOTTOM ||
