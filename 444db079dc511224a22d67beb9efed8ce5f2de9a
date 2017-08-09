@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "a3f5843c_1912d0b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T19:25:05Z",
+      "side": 1,
+      "message": "The comment is a part of the CL. It explains why we need the map. Dominick, do you have a suggestion:\n- for where to put an explanatory comment\n- what the explanatory comment should say?",
+      "parentUuid": "157c7509_98674d1c",
+      "range": {
+        "startLine": 156,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 30
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6233e55_5f28ae56",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 15

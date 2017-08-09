@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a2bfd3d_d4cb8612",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T19:25:05Z",
+      "side": 1,
+      "message": "Nit: Maybe rename addWebappInfo() to putWebappInfo() and popWebappInfo() to removeWebappInfo() to match HashMap API\n\nTo me, \"add\" and \"pop\" are confusing in the context of a HashMap",
+      "revId": "94799becf2954487c3dc96d6cea5baac31ac2f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad284e8_9c88a8fa",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T19:25:05Z",
+      "side": 1,
+      "message": "Can you make the test comment more descriptive. How about:\n\n\"Test that a WebappActivity uses WebappInfo set via WebappActivity#putWebappInfo() if available instead of constructing the WebappInfo from the launch intent.\"",
+      "revId": "94799becf2954487c3dc96d6cea5baac31ac2f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9176fb_51cb2db8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T19:25:05Z",
+      "side": 1,
+      "message": "Can you use the version of WebappActivityTestRule#startWebappActivity() which takes an intent as a parameter. This way you can use an intent with different information to create the WebappActivity and verify that intent\u0027s information is ignored",
+      "revId": "94799becf2954487c3dc96d6cea5baac31ac2f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77631dc_7522e60a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T19:25:05Z",
+      "side": 1,
+      "message": "Nit: I would prefer if you compared a property of WebappInfo e.g. WebappInfo#backgroundColor()",
+      "revId": "94799becf2954487c3dc96d6cea5baac31ac2f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
