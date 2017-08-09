@@ -53,6 +53,227 @@
     },
     {
       "key": {
+        "uuid": "ebc34fd5_2a9901db",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T08:21:28Z",
+      "side": 1,
+      "message": "yes, please.",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6ad31a_39e3e2a1",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T08:21:28Z",
+      "side": 1,
+      "message": "let\u0027s work on this in the next CL.",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e98a0d3_8e27c691",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T08:21:28Z",
+      "side": 1,
+      "message": "It\u0027s safer that we keep this done by Find() for now.",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0656dfd9_8d65e72b",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T08:21:28Z",
+      "side": 1,
+      "message": "please remove this obsolete comment using this opportunity",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12192815_70f83a35",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T08:21:28Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e98bb5_4fdba50a",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T08:21:28Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b07607d_9e77ee76",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T08:21:28Z",
+      "side": 1,
+      "message": "please replace this with EqualIgnoringASCIICase() using this opportunity.\n\nit\u0027s ok to do it as a separate CL.",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f34b9cc_c872dbc6",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T08:21:28Z",
+      "side": 1,
+      "message": "can\u0027t we merge these two?",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "718ece06_7f996557",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T08:21:28Z",
+      "side": 1,
+      "message": "can this also be without WTF::String()?",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63731df7_b2565c6a",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T08:21:28Z",
+      "side": 1,
+      "message": "join these two?",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42a180ef_8555b645",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T08:21:28Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7afd0cd4_c2bc57ff",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T08:21:28Z",
+      "side": 1,
+      "message": "cors -\u003e Cors",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4645988_b93cf7b4",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORSTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T08:21:28Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "886e6730_43d70355",
         "filename": "third_party/WebKit/public/platform/WebCORS.h",
         "patchSetId": 4
