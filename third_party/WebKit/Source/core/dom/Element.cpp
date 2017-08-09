@@ -1817,6 +1817,7 @@ void Element::AttachLayoutTree(AttachContext& context) {
   }
 
   if (!IsActiveSlotOrActiveV0InsertionPoint()) {
+    context.resolved_style = GetNonAttachedStyle();
     LayoutTreeBuilderForElement builder(*this, context.resolved_style);
     builder.CreateLayoutObjectIfNeeded();
 
@@ -1837,6 +1838,8 @@ void Element::AttachLayoutTree(AttachContext& context) {
   }
 
   SelectorFilterParentScope filter_scope(*this);
+
+  ClearNeedsReattachLayoutTree();
 
   CreatePseudoElementIfNeeded(kPseudoIdBefore);
 
@@ -2088,6 +2091,11 @@ StyleRecalcChange Element::RecalcOwnStyle(StyleRecalcChange change) {
   if (local_change == kReattach) {
     SetNonAttachedStyle(std::move(new_style));
     SetNeedsReattachLayoutTree();
+    ComputedStyle* non_attached_style = GetNonAttachedStyle();
+    if (LayoutObjectIsNeeded(*non_attached_style) ||
+        non_attached_style->Display() == EDisplay::kContents) {
+      RecalcContainedStyleForReattach();
+    }
     return kReattach;
   }
 
@@ -2134,6 +2142,33 @@ StyleRecalcChange Element::RecalcOwnStyle(StyleRecalcChange change) {
   }
 
   return local_change;
+}
+
+void Element::RecalcStyleForReattach() {
+  RefPtr<ComputedStyle> non_attached_style = StyleForLayoutObject();
+  if (LayoutObjectIsNeeded(*non_attached_style) ||
+      non_attached_style->Display() == EDisplay::kContents) {
+    SetNonAttachedStyle(non_attached_style);
+    SetNeedsReattachLayoutTree();
+    RecalcContainedStyleForReattach();
+  }
+}
+
+void Element::RecalcContainedStyleForReattach() {
+  if (!ChildrenCanHaveStyle())
+    return;
+  if (HasCustomStyleCallbacks())
+    return;
+  SelectorFilterParentScope filterScope(*this);
+  RecalcShadowRootStylesForReattach();
+  RecalcDescendantStylesForReattach();
+}
+
+void Element::RecalcShadowRootStylesForReattach() {
+  for (ShadowRoot* root = YoungestShadowRoot(); root;
+       root = root->OlderShadowRoot()) {
+    root->RecalcStylesForReattach();
+  }
 }
 
 void Element::RebuildLayoutTree(WhitespaceAttacher& whitespace_attacher) {
@@ -3330,6 +3365,9 @@ const ComputedStyle* Element::EnsureComputedStyle(
 }
 
 const ComputedStyle* Element::NonLayoutObjectComputedStyle() const {
+  if (NeedsReattachLayoutTree())
+    return GetNonAttachedStyle();
+
   if (GetLayoutObject() || !HasRareData())
     return nullptr;
 
