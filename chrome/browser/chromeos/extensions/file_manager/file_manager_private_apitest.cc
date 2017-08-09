@@ -50,6 +50,7 @@ struct TestDiskInfo {
   bool on_boot_device;
   bool on_removable_device;
   bool is_hidden;
+  const char* disk_file_system_type;
 };
 
 struct TestMountPoint {
@@ -82,7 +83,8 @@ TestDiskInfo kTestDisks[] = {
     false,
     false,
     false,
-    false
+    false,
+    "exfat"
   },
   {
     "system_path2",
@@ -103,7 +105,8 @@ TestDiskInfo kTestDisks[] = {
     true,
     true,
     false,
-    false
+    false,
+    "exfat"
   },
   {
     "system_path3",
@@ -124,7 +127,8 @@ TestDiskInfo kTestDisks[] = {
     false,
     true,
     false,
-    false
+    false,
+    "exfat"
   }
 };
 
@@ -292,7 +296,8 @@ class FileManagerPrivateApiTest : public ExtensionApiTest {
                 kTestDisks[disk_info_index].has_media,
                 kTestDisks[disk_info_index].on_boot_device,
                 kTestDisks[disk_info_index].on_removable_device,
-                kTestDisks[disk_info_index].is_hidden)));
+                kTestDisks[disk_info_index].is_hidden,
+                kTestDisks[disk_info_index].disk_file_system_type)));
       }
     }
   }
