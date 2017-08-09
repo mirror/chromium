@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "100cb2d3_9de8f6aa",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-09T19:52:03Z",
+      "side": 1,
+      "message": "Don\u0027t get you here. Could you please provide an example?",
+      "parentUuid": "fe17284e_567bffaf",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 20
+      },
+      "revId": "1cf662273314053d6f7214a85922035651732366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2314cf60_86850b7c",
         "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
         "patchSetId": 3
@@ -130,6 +154,30 @@
       "side": 1,
       "message": "In tests, it makes sense to reduce relying on calculations like this. An error may sneak into calculations, and there is no test to verify tests.\nIf you are OK, I\u0027ll keep these long constants.",
       "parentUuid": "f7ba82e1_6b191610",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 75
+      },
+      "revId": "1cf662273314053d6f7214a85922035651732366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d081f2_562a462a",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-09T19:52:03Z",
+      "side": 1,
+      "message": "I would prefer reduce using of the same string constants and just use one constexpr char k...",
+      "parentUuid": "91e6a305_ac55f13b",
       "range": {
         "startLine": 234,
         "startChar": 0,
