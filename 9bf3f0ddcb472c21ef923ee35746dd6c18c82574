@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "356e2379_c2a86fbe",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-09T02:13:17Z",
+      "side": 1,
+      "message": "minor suggestion: this can be changed to:\n\n  constexpr base::TimeDelta kNotificationInterval \u003d\n      base::TimeDelta::FromSeconds(60);",
+      "revId": "9bf3f0ddcb472c21ef923ee35746dd6c18c82574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194562ac_ef2fd6a1",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-09T02:13:17Z",
+      "side": 1,
+      "message": "nit: you can probably remove some includes now",
+      "revId": "9bf3f0ddcb472c21ef923ee35746dd6c18c82574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eda670d_54b823ba",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-09T02:13:17Z",
+      "side": 1,
+      "message": "does this still need to be a browser test, or can it be a unit test now?",
+      "revId": "9bf3f0ddcb472c21ef923ee35746dd6c18c82574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d20cb1f6_64f0ab25",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-09T02:13:17Z",
+      "side": 1,
+      "message": "nit: instead of a double-negative here and elsewhere, consider:\n\n  EXPECT_TRUE(... \u003d\u003d nullptr);",
+      "revId": "9bf3f0ddcb472c21ef923ee35746dd6c18c82574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
