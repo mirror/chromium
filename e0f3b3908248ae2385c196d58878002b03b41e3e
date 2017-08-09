@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e464ffba_a4e62e91",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-08-09T17:51:01Z",
+      "side": 1,
+      "message": "You can use TimeUnit.MINUTES.toMillis(3).",
+      "range": {
+        "startLine": 38,
+        "startChar": 59,
+        "endLine": 38,
+        "endChar": 63
+      },
+      "revId": "e0f3b3908248ae2385c196d58878002b03b41e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7e8a52_58cf9975",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-08-09T17:51:01Z",
+      "side": 1,
+      "message": "I think you should move this to onGotManifestData. Did I miss anything?",
+      "range": {
+        "startLine": 205,
+        "startChar": 34,
+        "endLine": 205,
+        "endChar": 49
+      },
+      "revId": "e0f3b3908248ae2385c196d58878002b03b41e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
