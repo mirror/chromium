@@ -34,6 +34,24 @@
       "revId": "3d9f5f903fa4c3e47aaeb9eba5a93385ea358777",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d819efd_977be990",
+        "filename": "third_party/WebKit/Source/core/editing/markers/ActiveSuggestionMarkerListImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-09T22:35:45Z",
+      "side": 1,
+      "message": "I think it\u0027s better to add a comment about the meaning of each parameter.\n\n|new_text| is also ambiguous, as it can be either the text of the entire node, or just the newly inserted text (in offset range [offset_, new_length]).",
+      "parentUuid": "100dd5d6_46756172",
+      "revId": "3d9f5f903fa4c3e47aaeb9eba5a93385ea358777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
