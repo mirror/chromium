@@ -1367,7 +1367,7 @@ void QuicChromiumClientSession::OnSuccessfulVersionNegotiation(
 
 int QuicChromiumClientSession::HandleWriteError(
     int error_code,
-    scoped_refptr<StringIOBuffer> packet) {
+    scoped_refptr<QuicChromiumPacketWriter::ReusableIOBuffer> packet) {
   if (stream_factory_ == nullptr ||
       !stream_factory_->migrate_sessions_on_network_change()) {
     return error_code;
@@ -1448,7 +1448,7 @@ void QuicChromiumClientSession::WriteToNewSocket() {
 
   // Set packet_ to null first before calling WritePacketToSocket since
   // that method may set packet_ if there is a write error.
-  scoped_refptr<StringIOBuffer> packet = packet_;
+  scoped_refptr<QuicChromiumPacketWriter::ReusableIOBuffer> packet = packet_;
   packet_ = nullptr;
 
   // The connection is waiting for the original write to complete
