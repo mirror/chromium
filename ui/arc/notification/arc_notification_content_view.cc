@@ -336,7 +336,7 @@ void ArcNotificationContentView::SetSurface(ArcNotificationSurface* surface) {
     DCHECK(surface_->GetWindow());
     DCHECK(surface_->GetContentWindow());
     surface_->GetContentWindow()->AddObserver(this);
-    surface_->GetWindow()->AddPreTargetHandler(event_forwarder_.get());
+    surface_->GetWindow()->PrependPreTargetHandler(event_forwarder_.get());
 
     if (GetWidget()) {
       // Force to detach the surface.
