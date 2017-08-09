@@ -5749,6 +5749,10 @@ void WebContentsImpl::SetHasPersistentVideo(bool has_persistent_video) {
   has_persistent_video_ = has_persistent_video;
   NotifyPreferencesChanged();
   media_web_contents_observer()->RequestPersistentVideo(has_persistent_video);
+  for (RenderFrameHost* rfh : GetAllFrames()) {
+    static_cast<RenderFrameHostImpl*>(rfh)->PersistentVideoRequested(
+        has_persistent_video);
+  }
 }
 
 void WebContentsImpl::BrowserPluginGuestWillDetach() {

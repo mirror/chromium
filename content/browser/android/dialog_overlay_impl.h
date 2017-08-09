@@ -61,6 +61,9 @@ class DialogOverlayImpl : public ContentViewCoreObserver,
   // Unregister for tokens if we're registered, and clear |cvc_|.
   void UnregisterForTokensIfNeeded();
 
+  // Called by |rfhi_| when persistent video is requested for our WebContents.
+  void PersistentVideoRequested(bool want_persistent_video);
+
  private:
   // Signals the overlay should be cleaned up and no longer used.
   void Stop();

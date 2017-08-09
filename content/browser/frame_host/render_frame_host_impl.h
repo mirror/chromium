@@ -89,6 +89,9 @@ class Range;
 namespace content {
 class AssociatedInterfaceProviderImpl;
 class AssociatedInterfaceRegistryImpl;
+#if defined(OS_ANDROID)
+class DialogOverlayImpl;
+#endif
 class LegacyIPCFrameInputHandler;
 class FeaturePolicy;
 class FrameTree;
@@ -653,6 +656,16 @@ class CONTENT_EXPORT RenderFrameHostImpl
   const StreamHandle* stream_handle_for_testing() const {
     return stream_handle_.get();
   }
+
+#if defined(OS_ANDROID)
+  // Add / remove an overlay from this RFH.
+  void AddOverlay(DialogOverlayImpl* overlay);
+  void RemoveOverlay(DialogOverlayImpl* overlay);
+#endif
+
+  // Called when this RFH's WebContents is going to switch to persistent video
+  // mode.  Used to notify overlays.
+  void PersistentVideoRequested(bool want_persistent_video);
 
  protected:
   friend class RenderFrameHostFactory;
@@ -1255,6 +1268,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // to Java code in the browser process.
   class JavaInterfaceProvider;
   std::unique_ptr<JavaInterfaceProvider> java_interface_registry_;
+
+  // Overlays that are attached to this RFH.
+  std::unordered_set<DialogOverlayImpl*> overlays_;
 #endif
 
   mojo::BindingSet<service_manager::mojom::InterfaceProvider>
