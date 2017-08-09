@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3e3c5d8_2c6d97fe",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-09T19:11:37Z",
+      "side": 1,
+      "message": "Remove MITM_SOFTWARE_CERT_FOUND enum",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 28
+      },
+      "revId": "8494ec6db037a6af563fde2627e6e2101fcb123b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43af9e2c_5b9d309b",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-09T19:11:37Z",
+      "side": 1,
+      "message": "Don\u0027t forget to rename this too :)",
+      "range": {
+        "startLine": 83,
+        "startChar": 11,
+        "endLine": 83,
+        "endChar": 24
+      },
+      "revId": "8494ec6db037a6af563fde2627e6e2101fcb123b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c1b90f_42d88e6f",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-09T19:11:37Z",
+      "side": 1,
+      "message": "nit: Remove blank line (or add one after line 1207 and 1217 to make them consistent)",
+      "revId": "8494ec6db037a6af563fde2627e6e2101fcb123b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
