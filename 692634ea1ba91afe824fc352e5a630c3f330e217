@@ -22,6 +22,40 @@
       "revId": "692634ea1ba91afe824fc352e5a630c3f330e217",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604ff655_c299bba2",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-09T14:26:04Z",
+      "side": 1,
+      "message": "capture |handle| in a base::win::ScopedHandle. i think this function should return a ScopedHandle so that ownership is clear.",
+      "revId": "692634ea1ba91afe824fc352e5a630c3f330e217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83db2a46_0fdb7e27",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-09T14:26:04Z",
+      "side": 1,
+      "message": "is there a guarantee that this will return the same string as discovered by toolhelp or the loader notification? there are many ways to name the same file on windows...",
+      "revId": "692634ea1ba91afe824fc352e5a630c3f330e217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
