@@ -5,14 +5,15 @@
 #include "extensions/browser/api/serial/serial_api.h"
 
 #include <algorithm>
+#include <utility>
 #include <vector>
 
 #include "base/task_scheduler/post_task.h"
+#include "base/tuple.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/service_manager_connection.h"
-#include "device/serial/serial_device_enumerator.h"
 #include "extensions/browser/api/serial/serial_connection.h"
 #include "extensions/browser/api/serial/serial_event_dispatcher.h"
 #include "extensions/common/api/serial.h"
@@ -53,6 +54,58 @@ void SetDefaultScopedPtrValue(std::unique_ptr<T>& ptr, const T& value) {
     ptr.reset(new T(value));
 }
 
+template <typename RespCallback, typename Tuple, size_t... Ns>
+void RunCallbackWithTupleImpl(RespCallback callback,
+                              Tuple&& args,
+                              base::IndexSequence<Ns...>) {
+  std::move(callback).Run(std::get<Ns>(std::forward<Tuple>(args))...);
+}
+
+template <typename RespCallback, typename Tuple>
+void RunCallbackWithTuple(RespCallback callback, Tuple&& args) {
+  RunCallbackWithTupleImpl(std::move(callback), std::forward<Tuple>(args),
+                           base::MakeIndexSequenceForTuple<Tuple>());
+}
+
+template <typename RespCallback, typename... Args>
+class RespCallbackWrapper {
+ public:
+  RespCallbackWrapper(RespCallback callback, Args... args_upon_failure)
+      : callback_(std::move(callback)),
+        args_upon_failure_(std::move(args_upon_failure)...) {
+    DCHECK(!callback_.is_null());
+  }
+
+  RespCallbackWrapper(RespCallbackWrapper&& other)
+      : callback_(std::move(other.callback_)),
+        args_upon_failure_(std::move(other.args_upon_failure_)) {}
+
+  ~RespCallbackWrapper() {
+    // In case of no response gotten. This is to ensure |callback_| be fired
+    // anyway.
+    if (!callback_.is_null())
+      RunCallbackWithTuple(std::move(callback_), std::move(args_upon_failure_));
+  }
+
+  void OnGotResp(Args... args) { std::move(callback_).Run(std::move(args)...); }
+
+ private:
+  RespCallback callback_;
+  std::tuple<Args...> args_upon_failure_;
+
+  DISALLOW_COPY_AND_ASSIGN(RespCallbackWrapper);
+};
+
+template <typename RespCallback, typename... Args>
+RespCallback WrapRespCallbackAndBind(RespCallback callback, Args... args) {
+  using Wrapper = RespCallbackWrapper<RespCallback, Args...>;
+  return base::BindOnce(
+      [](Wrapper wrapper, Args... resps) {
+        wrapper.OnGotResp(std::move(resps)...);
+      },
+      Wrapper(std::move(callback), std::move(args)...));
+}
+
 }  // namespace
 
 SerialAsyncApiFunction::SerialAsyncApiFunction() : manager_(NULL) {}
@@ -89,11 +142,9 @@ ExtensionFunction::ResponseAction SerialGetDevicesFunction::Run() {
       ->GetConnector()
       ->BindInterface(device::mojom::kServiceName,
                       mojo::MakeRequest(&enumerator_));
-  enumerator_.set_connection_error_handler(
-      base::BindOnce(&SerialGetDevicesFunction::OnGotDevices, this,
-                     std::vector<device::mojom::SerialDeviceInfoPtr>()));
-  enumerator_->GetDevices(
-      base::BindOnce(&SerialGetDevicesFunction::OnGotDevices, this));
+  enumerator_->GetDevices(WrapRespCallbackAndBind(
+      base::BindOnce(&SerialGetDevicesFunction::OnGotDevices, this),
+      std::vector<device::mojom::SerialDeviceInfoPtr>()));
   return RespondLater();
 }
 
