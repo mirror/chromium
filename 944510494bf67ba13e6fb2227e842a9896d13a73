@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b09ca51_b20467fe",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T14:31:31Z",
+      "side": 1,
+      "message": "Each macro expands to a lot of code. Can you make a helper function to log this and call it from both places?",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 29
+      },
+      "revId": "944510494bf67ba13e6fb2227e842a9896d13a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc4dba5_abe25371",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15743,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T14:31:31Z",
+      "side": 1,
+      "message": "We generally discourage adding a new top-level prefix unless it will be used a lot.\n\nMaybe nest this one under IOS.*?",
+      "range": {
+        "startLine": 15743,
+        "startChar": 17,
+        "endLine": 15743,
+        "endChar": 28
+      },
+      "revId": "944510494bf67ba13e6fb2227e842a9896d13a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
