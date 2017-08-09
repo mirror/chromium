@@ -736,7 +736,7 @@ Shell::~Shell() {
   for (aura::Window* root : GetAllRootWindows())
     Shelf::ForWindow(root)->ShutdownShelfWidget();
   tray_bluetooth_helper_.reset();
-  DeleteSystemTrayDelegate();
+  system_tray_delegate_.reset();
 
   // Drag-and-drop must be canceled prior to close all windows.
   drag_drop_controller_.reset();
@@ -808,6 +808,9 @@ Shell::~Shell() {
 
   // ShelfWindowWatcher has window observers and a pointer to the shelf model.
   shelf_window_watcher_.reset();
+
+  // Must outlive root windows because it has window observers.
+  logout_confirmation_controller_.reset();
 
   // ShelfItemDelegate subclasses it owns have complex cleanup to run (e.g. ARC
   // shelf items in Chrome) so explicitly shutdown early.
@@ -1115,8 +1118,12 @@ void Shell::Init(const ShellInitParams& init_params) {
   resize_shadow_controller_.reset(new ResizeShadowController());
   shadow_controller_.reset(new ::wm::ShadowController(focus_controller_.get()));
 
-  SetSystemTrayDelegate(
-      base::WrapUnique(shell_delegate_->CreateSystemTrayDelegate()));
+  system_tray_delegate_ =
+      base::WrapUnique(shell_delegate_->CreateSystemTrayDelegate());
+
+  logout_confirmation_controller_.reset(new LogoutConfirmationController(
+      base::Bind(&SystemTrayController::SignOut,
+                 base::Unretained(system_tray_controller_.get()))));
 
   // May trigger initialization of the Bluetooth adapter.
   tray_bluetooth_helper_->Initialize();
@@ -1199,24 +1206,6 @@ void Shell::InitRootWindow(aura::Window* root_window) {
   ::wm::SetWindowMoveClient(root_window, toplevel_window_event_handler_.get());
   root_window->AddPreTargetHandler(toplevel_window_event_handler_.get());
   root_window->AddPostTargetHandler(toplevel_window_event_handler_.get());
-}
-
-void Shell::SetSystemTrayDelegate(
-    std::unique_ptr<SystemTrayDelegate> delegate) {
-  DCHECK(delegate);
-  system_tray_delegate_ = std::move(delegate);
-  system_tray_delegate_->Initialize();
-  // Accesses ShellPort in its constructor.
-  logout_confirmation_controller_.reset(new LogoutConfirmationController(
-      base::Bind(&SystemTrayController::SignOut,
-                 base::Unretained(system_tray_controller_.get()))));
-}
-
-void Shell::DeleteSystemTrayDelegate() {
-  DCHECK(system_tray_delegate_);
-  // Accesses ShellPort in its destructor.
-  logout_confirmation_controller_.reset();
-  system_tray_delegate_.reset();
 }
 
 void Shell::CloseAllRootWindowChildWindows() {

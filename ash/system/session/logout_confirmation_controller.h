@@ -9,11 +9,15 @@
 
 #include "ash/ash_export.h"
 #include "ash/session/session_observer.h"
-#include "ash/system/session/last_window_closed_observer.h"
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
+#include "ui/aura/window_observer.h"
+
+namespace aura {
+class Window;
+}
 
 namespace base {
 class TickClock;
@@ -33,15 +37,20 @@ class LogoutConfirmationDialog;
 //
 // In public sessions, asks the user to end the session when the last window is
 // closed.
-class ASH_EXPORT LogoutConfirmationController
-    : public SessionObserver,
-      public LastWindowClosedObserver {
+//
+// Tested both here and in chrome's DeviceLocalAccountTest.
+class ASH_EXPORT LogoutConfirmationController : public SessionObserver,
+                                                public aura::WindowObserver {
  public:
   // The |logout_closure| must be safe to call as long as |this| is alive.
   explicit LogoutConfirmationController(const base::Closure& logout_closure);
   ~LogoutConfirmationController() override;
 
   base::TickClock* clock() const { return clock_.get(); }
+
+  // Observes containers in the |root| window for the last browser and/or app
+  // window being closed. The observers are removed automatically.
+  void ObserveForLastWindowClosed(aura::Window* root);
 
   // Shows a LogoutConfirmationDialog. If a confirmation dialog is already being
   // shown, it is closed and a new one opened if |logout_time| is earlier than
@@ -59,17 +68,20 @@ class ASH_EXPORT LogoutConfirmationController
   // Called by the |dialog_| when it is closed.
   void OnDialogClosed();
 
+  // aura::WindowObserver:
+  void OnWindowHierarchyChanging(const HierarchyChangeParams& params) override;
+  void OnWindowDestroying(aura::Window* window) override;
+
   LogoutConfirmationDialog* dialog_for_testing() const { return dialog_; }
 
  private:
-  // LastWindowClosedObserver:
-  void OnLastWindowClosed() override;
+  void ShowDialogIfLastWindowClosing();
 
   std::unique_ptr<base::TickClock> clock_;
   base::Closure logout_closure_;
 
   base::TimeTicks logout_time_;
-  LogoutConfirmationDialog* dialog_;  // Owned by the Views hierarchy.
+  LogoutConfirmationDialog* dialog_ = nullptr;  // Owned by the Views hierarchy.
   base::Timer logout_timer_;
 
   ScopedSessionObserver scoped_session_observer_;
