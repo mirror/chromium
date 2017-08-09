@@ -4073,7 +4073,6 @@ interface SVGNumberList
     method replaceItem
 interface SVGPathElement : SVGGeometryElement
     method constructor
-    method getPathSegAtLength
 interface SVGPatternElement : SVGElement
     getter height
     getter href
