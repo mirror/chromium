@@ -51,7 +51,7 @@ namespace {
 constexpr int kWallpaperReloadDelayMs = 100;
 
 // How long to wait for resizing of the the wallpaper.
-constexpr int kCompositorLockTimeoutMs = 750;
+//constexpr int kCompositorLockTimeoutMs = 750;
 
 // Caches color calculation results in local state pref service.
 void CacheProminentColors(const std::vector<SkColor>& colors,
@@ -551,16 +551,16 @@ bool WallpaperController::MoveToUnlockedContainer() {
 }
 
 void WallpaperController::GetInternalDisplayCompositorLock() {
-  if (display::Display::HasInternalDisplay()) {
-    aura::Window* root_window =
-        Shell::GetRootWindowForDisplayId(display::Display::InternalDisplayId());
-    if (root_window) {
-      compositor_lock_ =
-          root_window->layer()->GetCompositor()->GetCompositorLock(
-              this,
-              base::TimeDelta::FromMilliseconds(kCompositorLockTimeoutMs));
-    }
-  }
+ // if (display::Display::HasInternalDisplay()) {
+ //   aura::Window* root_window =
+ //       Shell::GetRootWindowForDisplayId(display::Display::InternalDisplayId());
+ //   if (root_window) {
+ //     compositor_lock_ =
+ //         root_window->layer()->GetCompositor()->GetCompositorLock(
+ //             this,
+ //             base::TimeDelta::FromMilliseconds(kCompositorLockTimeoutMs));
+ //   }
+ // }
 }
 
 void WallpaperController::CompositorLockTimedOut() {

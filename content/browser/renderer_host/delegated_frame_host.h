@@ -67,6 +67,7 @@ class CONTENT_EXPORT DelegatedFrameHostClient {
   virtual bool DelegatedFrameCanCreateResizeLock() const = 0;
   virtual std::unique_ptr<CompositorResizeLock>
   DelegatedFrameHostCreateResizeLock() = 0;
+  virtual viz::LocalSurfaceId GetLocalSurfaceId() const = 0;
 
   virtual void OnBeginFrame() = 0;
   virtual bool IsAutoResizeEnabled() const = 0;
@@ -292,9 +293,9 @@ class CONTENT_EXPORT DelegatedFrameHost
   // size. It keeps track of the size we expect from the renderer, and locks the
   // compositor, as well as the UI for a short time to give a chance to the
   // renderer of producing a frame of the right size.
-  std::unique_ptr<CompositorResizeLock> resize_lock_;
-  bool create_resize_lock_after_commit_ = false;
-  bool allow_one_renderer_frame_during_resize_lock_ = false;
+  //std::unique_ptr<CompositorResizeLock> resize_lock_;
+  //bool create_resize_lock_after_commit_ = false;
+  //bool allow_one_renderer_frame_during_resize_lock_ = false;
 
   // Keeps track of the current frame size.
   gfx::Size current_frame_size_in_dip_;

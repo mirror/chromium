@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "ui/aura/aura_export.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/ime/input_method_delegate.h"
@@ -255,6 +256,8 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
   std::unique_ptr<WindowEventDispatcher> dispatcher_;
 
   std::unique_ptr<ui::Compositor> compositor_;
+  gfx::Size last_size_in_pixels_;
+  viz::LocalSurfaceIdAllocator local_surface_id_allocator_;
 
   // Last cursor set.  Used for testing.
   gfx::NativeCursor last_cursor_;

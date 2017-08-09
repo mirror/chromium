@@ -83,30 +83,30 @@ void DelegatedFrameHost::WasHidden() {
 }
 
 void DelegatedFrameHost::MaybeCreateResizeLock() {
-  DCHECK(!resize_lock_);
+  //DCHECK(!resize_lock_);
 
-  if (!compositor_)
-    return;
+  //if (!compositor_)
+  //  return;
 
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableResizeLock))
-    return;
+  //if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+  //        switches::kDisableResizeLock))
+  //  return;
 
-  if (!has_frame_)
-    return;
+  //if (!has_frame_)
+  //  return;
 
-  if (!client_->DelegatedFrameCanCreateResizeLock())
-    return;
+  //if (!client_->DelegatedFrameCanCreateResizeLock())
+  //  return;
 
-  gfx::Size desired_size = client_->DelegatedFrameHostDesiredSizeInDIP();
-  if (desired_size.IsEmpty())
-    return;
-  if (desired_size == current_frame_size_in_dip_)
-    return;
+  //gfx::Size desired_size = client_->DelegatedFrameHostDesiredSizeInDIP();
+  //if (desired_size.IsEmpty())
+  //  return;
+  //if (desired_size == current_frame_size_in_dip_)
+  //  return;
 
-  resize_lock_ = client_->DelegatedFrameHostCreateResizeLock();
-  bool locked = resize_lock_->Lock();
-  DCHECK(locked);
+  //resize_lock_ = client_->DelegatedFrameHostCreateResizeLock();
+  //bool locked = resize_lock_->Lock();
+  //DCHECK(locked);
 }
 
 void DelegatedFrameHost::CopyFromCompositingSurface(
@@ -229,15 +229,16 @@ void DelegatedFrameHost::DidNotProduceFrame(const viz::BeginFrameAck& ack) {
 }
 
 bool DelegatedFrameHost::ShouldSkipFrame(const gfx::Size& size_in_dip) {
-  if (!resize_lock_)
-    return false;
-  // Allow a single renderer frame through even though there's a resize lock
-  // currently in place.
-  if (allow_one_renderer_frame_during_resize_lock_) {
-    allow_one_renderer_frame_during_resize_lock_ = false;
-    return false;
-  }
-  return size_in_dip != resize_lock_->expected_size();
+  return false;
+  //if (!resize_lock_)
+  //  return false;
+  //// Allow a single renderer frame through even though there's a resize lock
+  //// currently in place.
+  //if (allow_one_renderer_frame_during_resize_lock_) {
+  //  allow_one_renderer_frame_during_resize_lock_ = false;
+  //  return false;
+  //}
+  //return size_in_dip != resize_lock_->expected_size();
 }
 
 void DelegatedFrameHost::WasResized() {
@@ -245,11 +246,22 @@ void DelegatedFrameHost::WasResized() {
           current_frame_size_in_dip_ &&
       !client_->DelegatedFrameHostIsVisible())
     EvictDelegatedFrame();
+  //fprintf(stderr, ">>>Updating size\n");
+  gfx::Size desired_size = client_->DelegatedFrameHostDesiredSizeInDIP();
+
+  viz::SurfaceId surface_id(frame_sink_id_, client_->GetLocalSurfaceId());
+  viz::SurfaceInfo surface_info(surface_id, 1.0f,
+                                desired_size);
+  ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
+    viz::FrameSinkManagerImpl* manager =
+        factory->GetContextFactoryPrivate()->GetFrameSinkManager();
+  client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
+      surface_info, manager->surface_manager()->reference_factory());
   // If |create_resize_lock_after_commit_| is true, we're waiting to recreate
   // an expired resize lock after the next UI frame is submitted, so don't
   // make a lock here.
-  if (!resize_lock_ && !create_resize_lock_after_commit_)
-    MaybeCreateResizeLock();
+  //if (!resize_lock_ && !create_resize_lock_after_commit_)
+  //  MaybeCreateResizeLock();
   UpdateGutters();
 }
 
@@ -261,11 +273,11 @@ SkColor DelegatedFrameHost::GetGutterColor() const {
 }
 
 void DelegatedFrameHost::UpdateGutters() {
-  if (!has_frame_) {
-    right_gutter_.reset();
-    bottom_gutter_.reset();
-    return;
-  }
+  //if (!has_frame_) {
+  //  right_gutter_.reset();
+  //  bottom_gutter_.reset();
+  //  return;
+  //}
 
   if (current_frame_size_in_dip_.width() <
       client_->DelegatedFrameHostDesiredSizeInDIP().width()) {
@@ -299,21 +311,21 @@ void DelegatedFrameHost::UpdateGutters() {
 }
 
 gfx::Size DelegatedFrameHost::GetRequestedRendererSize() const {
-  if (resize_lock_)
-    return resize_lock_->expected_size();
-  else
-    return client_->DelegatedFrameHostDesiredSizeInDIP();
+  //if (resize_lock_)
+  //  return resize_lock_->expected_size();
+  //else
+  return client_->DelegatedFrameHostDesiredSizeInDIP();
 }
 
 void DelegatedFrameHost::CheckResizeLock() {
-  if (!resize_lock_ ||
-      resize_lock_->expected_size() != current_frame_size_in_dip_)
-    return;
+  //if (!resize_lock_ ||
+  //    resize_lock_->expected_size() != current_frame_size_in_dip_)
+  //  return;
 
-  // Since we got the size we were looking for, unlock the compositor. But delay
-  // the release of the lock until we've kicked a frame with the new texture, to
-  // avoid resizing the UI before we have a chance to draw a "good" frame.
-  resize_lock_->UnlockCompositor();
+  //// Since we got the size we were looking for, unlock the compositor. But delay
+  //// the release of the lock until we've kicked a frame with the new texture, to
+  //// avoid resizing the UI before we have a chance to draw a "good" frame.
+  //resize_lock_->UnlockCompositor();
 }
 
 void DelegatedFrameHost::AttemptFrameSubscriberCapture(
@@ -384,8 +396,9 @@ void DelegatedFrameHost::DidCreateNewRendererCompositorFrameSink(
 void DelegatedFrameHost::SubmitCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
     cc::CompositorFrame frame) {
+  //fprintf(stderr, ">>>SubmitCompositorFrame(%s)\n", local_surface_id.ToString().c_str());
 #if defined(OS_CHROMEOS)
-  DCHECK(!resize_lock_ || !client_->IsAutoResizeEnabled());
+  //DCHECK(!resize_lock_ || !client_->IsAutoResizeEnabled());
 #endif
   float frame_device_scale_factor = frame.metadata.device_scale_factor;
   viz::BeginFrameAck ack(frame.metadata.begin_frame_ack);
@@ -423,7 +436,7 @@ void DelegatedFrameHost::SubmitCompositorFrame(
   // gets through even if we regrab the lock after the UI compositor makes one
   // frame. If the renderer frame beats the UI compositor, then we don't need to
   // allow any more, though.
-  allow_one_renderer_frame_during_resize_lock_ = false;
+  //allow_one_renderer_frame_during_resize_lock_ = false;
 
   if (skipped_frames_) {
     skipped_frames_ = false;
@@ -441,9 +454,7 @@ void DelegatedFrameHost::SubmitCompositorFrame(
     DCHECK(frame.resource_list.empty());
     EvictDelegatedFrame();
   } else {
-    ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
-    viz::FrameSinkManagerImpl* manager =
-        factory->GetContextFactoryPrivate()->GetFrameSinkManager();
+    //ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
 
     frame.metadata.latency_info.insert(frame.metadata.latency_info.end(),
                                        skipped_latency_info_list_.begin(),
@@ -454,17 +465,17 @@ void DelegatedFrameHost::SubmitCompositorFrame(
         support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
     DCHECK(result);
 
-    if (local_surface_id != local_surface_id_ || !has_frame_) {
+    //if (local_surface_id != local_surface_id_ || !has_frame_) {
       // manager must outlive compositors using it.
       viz::SurfaceId surface_id(frame_sink_id_, local_surface_id);
       viz::SurfaceInfo surface_info(surface_id, frame_device_scale_factor,
                                     frame_size);
-      client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
-          surface_info, manager->surface_manager()->reference_factory());
+      //client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
+      //    surface_info, manager->surface_manager()->reference_factory());
       client_->DelegatedFrameHostGetLayer()->SetFallbackSurface(surface_info);
       current_surface_size_ = frame_size;
       current_scale_factor_ = frame_device_scale_factor;
-    }
+    //}
 
     has_frame_ = true;
   }
@@ -531,7 +542,7 @@ void DelegatedFrameHost::EvictDelegatedFrame() {
   client_->DelegatedFrameHostGetLayer()->SetShowSolidColorContent();
   support_->EvictCurrentSurface();
   has_frame_ = false;
-  resize_lock_.reset();
+  //resize_lock_.reset();
   frame_evictor_->DiscardedFrame();
   UpdateGutters();
 }
@@ -705,19 +716,19 @@ void DelegatedFrameHost::CopyFromCompositingSurfaceHasResultForVideo(
 void DelegatedFrameHost::OnCompositingDidCommit(ui::Compositor* compositor) {
   // If |create_resize_lock_after_commit_| then we should have popped the old
   // lock already.
-  DCHECK(!resize_lock_ || !create_resize_lock_after_commit_);
+  //DCHECK(!resize_lock_ || !create_resize_lock_after_commit_);
 
-  if (resize_lock_ &&
-      resize_lock_->expected_size() == current_frame_size_in_dip_) {
-    resize_lock_.reset();
-    // We had a lock but the UI may have resized in the meantime.
-    create_resize_lock_after_commit_ = true;
-  }
+  //if (resize_lock_ &&
+  //    resize_lock_->expected_size() == current_frame_size_in_dip_) {
+  //  resize_lock_.reset();
+  //  // We had a lock but the UI may have resized in the meantime.
+  //  create_resize_lock_after_commit_ = true;
+  //}
 
-  if (create_resize_lock_after_commit_) {
-    create_resize_lock_after_commit_ = false;
-    MaybeCreateResizeLock();
-  }
+  //if (create_resize_lock_after_commit_) {
+  //  create_resize_lock_after_commit_ = false;
+  //  MaybeCreateResizeLock();
+  //}
 }
 
 void DelegatedFrameHost::OnCompositingStarted(ui::Compositor* compositor,
@@ -729,22 +740,22 @@ void DelegatedFrameHost::OnCompositingEnded(ui::Compositor* compositor) {}
 
 void DelegatedFrameHost::OnCompositingLockStateChanged(
     ui::Compositor* compositor) {
-  if (resize_lock_ && resize_lock_->timed_out()) {
-    // A compositor lock that is part of a resize lock timed out. We allow
-    // the UI to produce a frame before locking it again, so we don't lock here.
-    // We release the |resize_lock_| though to allow any other resizes that are
-    // desired at the same time since we're allowing the UI to make a frame
-    // which will gutter anyways.
-    resize_lock_.reset();
-    create_resize_lock_after_commit_ = true;
-    // Because this timed out, we're going to allow the UI to update and lock
-    // again. We would allow renderer frames through during this time if they
-    // came late, but would stop them again once the UI finished its frame. We
-    // want to allow the slow renderer to show us one frame even if its wrong
-    // since we're guttering anyways, but not unlimited number of frames as that
-    // would be a waste of power.
-    allow_one_renderer_frame_during_resize_lock_ = true;
-  }
+  //if (resize_lock_ && resize_lock_->timed_out()) {
+  //  // A compositor lock that is part of a resize lock timed out. We allow
+  //  // the UI to produce a frame before locking it again, so we don't lock here.
+  //  // We release the |resize_lock_| though to allow any other resizes that are
+  //  // desired at the same time since we're allowing the UI to make a frame
+  //  // which will gutter anyways.
+  //  resize_lock_.reset();
+  //  create_resize_lock_after_commit_ = true;
+  //  // Because this timed out, we're going to allow the UI to update and lock
+  //  // again. We would allow renderer frames through during this time if they
+  //  // came late, but would stop them again once the UI finished its frame. We
+  //  // want to allow the slow renderer to show us one frame even if its wrong
+  //  // since we're guttering anyways, but not unlimited number of frames as that
+  //  // would be a waste of power.
+  //  allow_one_renderer_frame_during_resize_lock_ = true;
+  //}
 }
 
 void DelegatedFrameHost::OnCompositingShuttingDown(ui::Compositor* compositor) {
@@ -801,7 +812,7 @@ void DelegatedFrameHost::SetCompositor(ui::Compositor* compositor) {
 void DelegatedFrameHost::ResetCompositor() {
   if (!compositor_)
     return;
-  resize_lock_.reset();
+  //resize_lock_.reset();
   if (compositor_->HasObserver(this))
     compositor_->RemoveObserver(this);
   if (vsync_manager_) {
