@@ -28,9 +28,10 @@ class CONTENT_EXPORT VideoCaptureHost
     : public VideoCaptureControllerEventHandler,
       public mojom::VideoCaptureHost {
  public:
-  explicit VideoCaptureHost(MediaStreamManager* media_stream_manager);
+  explicit VideoCaptureHost(int render_process_id, MediaStreamManager* media_stream_manager);
 
-  static void Create(MediaStreamManager* media_stream_manager,
+  static void Create(int render_process_id,
+                     MediaStreamManager* media_stream_manager,
                      mojom::VideoCaptureHostRequest request);
 
   ~VideoCaptureHost() override;
@@ -89,6 +90,14 @@ class CONTENT_EXPORT VideoCaptureHost
   // VideoCaptureControllerEventHandler::OnError.
   void DeleteVideoCaptureController(VideoCaptureControllerID controller_id,
                                     bool on_error);
+
+  // Helper functions that are used for notifying Browser-side RenderProcessHost
+  // if renderer is currently consuming video capture. This information is then
+  // used to deteremine if the renderer process should be backgrounded or not.
+  void NotifyRenderProcessHostStreamAdded();
+  void NotifyRenderProcessHostStreamRemoved();
+
+  int render_process_id_;
 
   MediaStreamManager* const media_stream_manager_;
 

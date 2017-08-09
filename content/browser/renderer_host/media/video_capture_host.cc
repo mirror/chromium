@@ -12,27 +12,30 @@
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
 #include "content/browser/renderer_host/media/video_capture_manager.h"
+#include "content/public/browser/render_process_host.h"
 #include "mojo/common/values_struct_traits.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
 namespace content {
 
-VideoCaptureHost::VideoCaptureHost(MediaStreamManager* media_stream_manager)
-    : media_stream_manager_(media_stream_manager),
+VideoCaptureHost::VideoCaptureHost(int render_process_id,
+                                   MediaStreamManager* media_stream_manager)
+    : render_process_id_(render_process_id),
+      media_stream_manager_(media_stream_manager),
       weak_factory_(this) {
   DVLOG(1) << __func__;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 }
 
 // static
-void VideoCaptureHost::Create(
-    MediaStreamManager* media_stream_manager,
-    mojom::VideoCaptureHostRequest request) {
+void VideoCaptureHost::Create(int render_process_id,
+                              MediaStreamManager* media_stream_manager,
+                              mojom::VideoCaptureHostRequest request) {
   DVLOG(1) << __func__;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  mojo::MakeStrongBinding(
-      base::MakeUnique<VideoCaptureHost>(media_stream_manager),
-      std::move(request));
+  mojo::MakeStrongBinding(base::MakeUnique<VideoCaptureHost>(
+                              render_process_id, media_stream_manager),
+                          std::move(request));
 }
 
 VideoCaptureHost::~VideoCaptureHost() {
@@ -118,6 +121,7 @@ void VideoCaptureHost::OnStarted(VideoCaptureControllerID controller_id) {
   if (base::ContainsKey(device_id_to_observer_map_, controller_id)) {
     device_id_to_observer_map_[controller_id]->OnStateChanged(
         mojom::VideoCaptureState::STARTED);
+    NotifyRenderProcessHostStreamAdded();
   }
 }
 
@@ -139,6 +143,7 @@ void VideoCaptureHost::Start(int32_t device_id,
   if (controllers_.find(controller_id) != controllers_.end()) {
     device_id_to_observer_map_[device_id]->OnStateChanged(
         mojom::VideoCaptureState::STARTED);
+    NotifyRenderProcessHostStreamAdded();
     return;
   }
 
@@ -162,6 +167,7 @@ void VideoCaptureHost::Stop(int32_t device_id) {
   device_id_to_observer_map_.erase(controller_id);
 
   DeleteVideoCaptureController(controller_id, false);
+  NotifyRenderProcessHostStreamRemoved();
 }
 
 void VideoCaptureHost::Pause(int32_t device_id) {
@@ -286,6 +292,7 @@ void VideoCaptureHost::DoEnded(VideoCaptureControllerID controller_id) {
   }
 
   DeleteVideoCaptureController(controller_id, false);
+  NotifyRenderProcessHostStreamRemoved();
 }
 
 void VideoCaptureHost::OnControllerAdded(
@@ -330,6 +337,20 @@ void VideoCaptureHost::DeleteVideoCaptureController(
 
   media_stream_manager_->video_capture_manager()->DisconnectClient(
       controller.get(), controller_id, this, on_error);
+}
+
+void VideoCaptureHost::NotifyRenderProcessHostStreamAdded() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  RenderProcessHost* host = RenderProcessHost::FromID(render_process_id_);
+  if (host)
+    host->OnVideoStreamAdded();
+}
+
+void VideoCaptureHost::NotifyRenderProcessHostStreamRemoved() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  RenderProcessHost* host = RenderProcessHost::FromID(render_process_id_);
+  if (host)
+    host->OnVideoStreamRemoved();
 }
 
 }  // namespace content

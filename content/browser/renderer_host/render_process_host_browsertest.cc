@@ -55,6 +55,8 @@ class RenderProcessHostTest : public ContentBrowserTest,
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitch(switches::kIgnoreAutoplayRestrictionsForTests);
+    command_line->AppendSwitch(switches::kUseFakeDeviceForMediaStream);
+    command_line->AppendSwitch(switches::kUseFakeUIForMediaStream);
   }
 
  protected:
@@ -510,6 +512,39 @@ IN_PROC_BROWSER_TEST_F(RenderProcessHostTest, KillProcessZerosAudioStreams) {
   EXPECT_EQ(0, host_destructions_);
   if (!host_destructions_)
     rph->RemoveObserver(this);
+}
+
+class MediaStartObserver : public WebContentsObserver {
+ public:
+  MediaStartObserver(WebContents* web_contents, base::Closure quit_closure)
+      : WebContentsObserver(web_contents),
+        quit_closure_(std::move(quit_closure)) {}
+  ~MediaStartObserver() override {}
+
+  void MediaStartedPlaying(
+      const WebContentsObserver::MediaPlayerInfo& media_info,
+      const WebContentsObserver::MediaPlayerId& id) override {
+    quit_closure_.Run();
+  }
+
+ private:
+  base::Closure quit_closure_;
+};
+
+IN_PROC_BROWSER_TEST_F(RenderProcessHostTest, KillProcessZerosVideoStreams) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  NavigateToURL(shell(),
+                embedded_test_server()->GetURL("/media/getusermedia.html"));
+  RenderProcessHostImpl* rph = static_cast<RenderProcessHostImpl*>(
+      shell()->web_contents()->GetMainFrame()->GetProcess());
+  {
+    base::RunLoop run_loop;
+    MediaStartObserver start_observer(shell()->web_contents(),
+                                      run_loop.QuitClosure());
+    run_loop.Run();
+    // No point in running the rest of the test if this is wrong.
+    ASSERT_EQ(1, rph->get_video_stream_count_for_testing());
+  }
 }
 
 }  // namespace
