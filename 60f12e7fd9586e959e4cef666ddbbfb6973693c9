@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e6b4ae3_1c64abd1",
+        "filename": "ios/web/public/web_state/web_state_policy_decider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T15:43:13Z",
+      "side": 1,
+      "message": "Remove this",
+      "range": {
+        "startLine": 9,
+        "startChar": 9,
+        "endLine": 9,
+        "endChar": 15
+      },
+      "revId": "60f12e7fd9586e959e4cef666ddbbfb6973693c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c486f3c4_aa8e2c87",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T15:43:13Z",
+      "side": 1,
+      "message": "From Coding Guidelines for Cocoa: \"Use “get” only for methods that return objects and values indirectly. You should use this form for methods only when multiple items need to be returned.\"",
+      "range": {
+        "startLine": 661,
+        "startChar": 22,
+        "endLine": 661,
+        "endChar": 57
+      },
+      "revId": "60f12e7fd9586e959e4cef666ddbbfb6973693c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbc5e9d_6c79a4ab",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T15:43:13Z",
+      "side": 1,
+      "message": "Please remove default and move |NOTREACHED| out of this switch. default silences compiler error for unhandled case.",
+      "range": {
+        "startLine": 1545,
+        "startChar": 4,
+        "endLine": 1545,
+        "endChar": 11
+      },
+      "revId": "60f12e7fd9586e959e4cef666ddbbfb6973693c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2cea65a_3808ff3a",
+        "filename": "ios/web/web_state/web_state_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T15:43:13Z",
+      "side": 1,
+      "message": "Remove this",
+      "range": {
+        "startLine": 16,
+        "startChar": 16,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "60f12e7fd9586e959e4cef666ddbbfb6973693c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e968d5_7d7d3d3a",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T15:43:13Z",
+      "side": 1,
+      "message": "Could you please test that correct transitions are actually passed in EXPECT_CALL",
+      "range": {
+        "startLine": 602,
+        "startChar": 54,
+        "endLine": 602,
+        "endChar": 74
+      },
+      "revId": "60f12e7fd9586e959e4cef666ddbbfb6973693c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2221240f_d116598f",
+        "filename": "ios/web_view/internal/web_view_web_state_policy_decider.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T15:43:13Z",
+      "side": 1,
+      "message": "bool user_initiated \u003d",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "60f12e7fd9586e959e4cef666ddbbfb6973693c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91d4d02_1dc3345c",
+        "filename": "ios/web_view/internal/web_view_web_state_policy_decider.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T15:43:13Z",
+      "side": 1,
+      "message": "s/CWVAction/action",
+      "range": {
+        "startLine": 25,
+        "startChar": 25,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "60f12e7fd9586e959e4cef666ddbbfb6973693c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0933b8_96ca7b4e",
+        "filename": "ios/web_view/public/cwv_navigation_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T15:43:13Z",
+      "side": 1,
+      "message": "Please remove this",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 22
+      },
+      "revId": "60f12e7fd9586e959e4cef666ddbbfb6973693c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4b80de_da13ec5a",
+        "filename": "ios/web_view/public/cwv_navigation_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T15:43:13Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "60f12e7fd9586e959e4cef666ddbbfb6973693c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
