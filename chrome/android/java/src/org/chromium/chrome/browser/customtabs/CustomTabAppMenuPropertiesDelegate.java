@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.customtabs;
 import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER;
 import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_PAYMENT_REQUEST;
 
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -110,7 +111,7 @@ public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegat
             String url = currentTab.getUrl();
             boolean isChromeScheme = url.startsWith(UrlConstants.CHROME_URL_PREFIX)
                     || url.startsWith(UrlConstants.CHROME_NATIVE_URL_PREFIX);
-            if (isChromeScheme) {
+            if (isChromeScheme || TextUtils.isEmpty(url)) {
                 addToHomeScreenVisible = false;
             }
 
