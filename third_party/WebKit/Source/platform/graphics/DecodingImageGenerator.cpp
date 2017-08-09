@@ -154,7 +154,7 @@ bool DecodingImageGenerator::onGetYUV8Planes(const SkYUVSizeInfo& size_info,
   return decoded;
 }
 
-SkImageGenerator* DecodingImageGenerator::Create(SkData* data) {
+std::unique_ptr<SkImageGenerator> DecodingImageGenerator::Create(SkData* data) {
   RefPtr<SegmentReader> segment_reader =
       SegmentReader::CreateFromSkData(sk_ref_sp(data));
   // We just need the size of the image, so we have to temporarily create an
@@ -177,8 +177,8 @@ SkImageGenerator* DecodingImageGenerator::Create(SkData* data) {
   if (!frame)
     return nullptr;
 
-  return new DecodingImageGenerator(frame, info, std::move(segment_reader),
-                                    true, 0);
+  return WTF::WrapUnique(new DecodingImageGenerator(
+      frame, info, std::move(segment_reader), true, 0));
 }
 
 }  // namespace blink
