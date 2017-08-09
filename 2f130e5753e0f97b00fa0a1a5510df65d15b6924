@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba819b9b_82ce208f",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-09T02:30:27Z",
+      "side": 1,
+      "message": "\"as\" determined?",
+      "range": {
+        "startLine": 590,
+        "startChar": 45,
+        "endLine": 590,
+        "endChar": 47
+      },
+      "revId": "2f130e5753e0f97b00fa0a1a5510df65d15b6924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
