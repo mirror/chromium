@@ -174,7 +174,8 @@ class EventDispatcher : public ServerWindowObserver,
         : window(nullptr),
           is_mouse_event(false),
           in_nonclient_area(false),
-          is_pointer_down(false) {}
+          is_pointer_down(false),
+          last_event_flags(0) {}
 
     // The target window, which may be null. null is used in two situations:
     // when there is no valid window target, or there was a target but the
@@ -187,6 +188,8 @@ class EventDispatcher : public ServerWindowObserver,
     bool in_nonclient_area;
 
     bool is_pointer_down;
+
+    int last_event_flags;
   };
 
   // EventTargeter returns the deepest window based on hit-test data. If the
