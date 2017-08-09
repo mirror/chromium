@@ -78,6 +78,24 @@
     },
     {
       "key": {
+        "uuid": "452980da_fac4c62f",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-09T18:09:42Z",
+      "side": 1,
+      "message": "Actually Android does it correctly... It calls codePointBefore() for the prepended text, if that\u0027s what you meant. For the text boundary change check before the marked text, you can use U16_PREV directly or wrap it inside TextBoundaries / WordBreakIterator level.",
+      "parentUuid": "754a2ae8_fe826b40",
+      "revId": "adaa1b7df247c2fb561c69309eb6ee51113e7415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c72b0e7a_b74c2542",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.h",
         "patchSetId": 3
