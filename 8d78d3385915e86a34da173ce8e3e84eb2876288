@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b832ade1_b54c15fa",
+        "filename": "ui/gl/gl_gl_api_implementation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1165541
+      },
+      "writtenOn": "2017-08-09T05:27:44Z",
+      "side": 1,
+      "message": "You can directly use \u0027if ( gl_workarounds_.reset_teximage2d_base_level \u0026\u0026 ...)\u0027\n\nBTW, please verify whether other target types have similar issue? Such as: GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP",
+      "range": {
+        "startLine": 360,
+        "startChar": 6,
+        "endLine": 360,
+        "endChar": 57
+      },
+      "revId": "8d78d3385915e86a34da173ce8e3e84eb2876288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fbabefd_ef84abef",
+        "filename": "ui/gl/gl_workarounds.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1165541
+      },
+      "writtenOn": "2017-08-09T05:27:44Z",
+      "side": 1,
+      "message": "Maybe you can add a comment for it like above one.",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "8d78d3385915e86a34da173ce8e3e84eb2876288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
