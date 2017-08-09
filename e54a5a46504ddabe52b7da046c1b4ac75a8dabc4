@@ -498,6 +498,30 @@
     },
     {
       "key": {
+        "uuid": "ba6f477e_ca40d88e",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-09T02:52:00Z",
+      "side": 1,
+      "message": "OK, I think now I understand your concern.\n\nThen how about this:\n- Leave Document struct unmodified.\n- Add an extra argument to GetRecentDocuments(): bool exclude_downloads_files_in_media_provider. If it\u0027s true, files in Downloads are excluded when querying to MediaDocumentsProvider (in other providers the flag is ignored).\n\nNote that hard-coding the logic to exclude Downloads files in Android side without the flag is too misleading considering that the current definition of GetRecentDocuments() looks to simply proxy to Android DocumentsProvider.queryRecentDocuments() (and I actually intended to do so). If we ever want to do so, we must rename it to getRecentDocumentsInMediaDocumentsProviderExcludingDownloads(), but it\u0027s super ugly because when add support of generic DocumentsProvider to Recent in the future we need to add yet another Mojo IPC. I also don\u0027t think security team likes to having two similar but different IPC methods.\n\nIf you don\u0027t agree, please suggest an alternative.",
+      "parentUuid": "b5134e34_1aaa8c45",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa255e1d_75dd3ab0",
         "filename": "components/arc/common/file_system.mojom",
         "patchSetId": 4
