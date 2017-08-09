@@ -57,7 +57,7 @@ class VariationsFieldTrialCreator {
   // Sets up field trials based on stored variations seed data.
   // |kEnableGpuBenchmarking|, |kEnableFeatures|, |kDisableFeatures| are
   // feature controlling flags not directly accesible from variations.
-  // |unforcable_field_trials| contains the list of trials that can not be
+  // |unforceable_field_trials| contains the list of trials that can not be
   // overridden.
   // |low_entropy_provider| allows for field trial randomization.
   // |feature_list| contains the list of all active features for this client.
@@ -73,6 +73,16 @@ class VariationsFieldTrialCreator {
                             low_entropy_provider,
                         std::unique_ptr<base::FeatureList> feature_list,
                         std::vector<std::string>* variation_ids,
+                        PlatformFieldTrials* platform_field_trials);
+
+  // Allows SetupFieldTrials above to be called without
+  // |unforceable_field_trials| and |variation_ids|
+  bool SetupFieldTrials(const char* kEnableGpuBenchmarking,
+                        const char* kEnableFeatures,
+                        const char* kDisableFeatures,
+                        std::unique_ptr<const base::FieldTrial::EntropyProvider>
+                            low_entropy_provider,
+                        std::unique_ptr<base::FeatureList> feature_list,
                         PlatformFieldTrials* platform_field_trials);
 
   // Returns all of the client state used for filtering studies.
