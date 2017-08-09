@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58cf625b_2bc904ef",
+        "filename": "components/search_provider_logos/logo_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T15:18:33Z",
+      "side": 1,
+      "message": "nit: I wouldn\u0027t mention launch review or its current state; that\u0027s bound to be out of date soon. How about just \"Non-Google default search engine logos are currently enabled on Android only\" plus bug link?",
+      "revId": "2c81c984f28115e46b3a42cdc2493f06798ac741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
