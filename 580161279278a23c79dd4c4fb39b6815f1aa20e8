@@ -16,6 +16,24 @@
       "revId": "580161279278a23c79dd4c4fb39b6815f1aa20e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8646ca5_f5ec60ee",
+        "filename": "media/ffmpeg/ffmpeg_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1144579
+      },
+      "writtenOn": "2017-08-09T18:15:34Z",
+      "side": 1,
+      "message": "Sure, I\u0027ve moved it and added some details.",
+      "parentUuid": "0e2ba906_28e60bb2",
+      "revId": "580161279278a23c79dd4c4fb39b6815f1aa20e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
