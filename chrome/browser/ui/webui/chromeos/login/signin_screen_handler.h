@@ -18,6 +18,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/scoped_observer.h"
+#include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
 #include "chrome/browser/chromeos/lock_screen_apps/state_observer.h"
 #include "chrome/browser/chromeos/login/screens/error_screen.h"
 #include "chrome/browser/chromeos/login/signin_specifics.h"
@@ -369,6 +370,15 @@ class SigninScreenHandler
   // lock_screen_apps::StateObserver:
   void OnLockScreenNoteStateChanged(ash::mojom::TrayActionState state) override;
 
+  // Called when accessibility status changes.
+  void OnAccessibilityStateChanged(
+      const AccessibilityStatusEventDetails& details);
+
+  // Called when the accessibility panel height is updated. The height change
+  // is reported to the UI, so it can be update accordingly (note that the
+  // accessibility panel is shown on top of the login/lock screen).
+  void OnAccessibilityPanelHeightChanged(int panel_height);
+
   void UpdateAddButtonStatus();
 
   // Restore input focus to current user pod.
@@ -563,6 +573,8 @@ class SigninScreenHandler
                  lock_screen_apps::StateObserver>
       lock_screen_apps_observer_;
 
+  std::unique_ptr<AccessibilityStatusSubscription>
+      accessibility_status_subscription_;
   base::WeakPtrFactory<SigninScreenHandler> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(SigninScreenHandler);

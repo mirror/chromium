@@ -25,7 +25,8 @@ class ChromeVoxPanel : public views::WidgetDelegate,
                        public display::DisplayObserver {
  public:
   ChromeVoxPanel(content::BrowserContext* browser_context,
-                 bool for_blocked_user_session);
+                 bool for_blocked_user_session,
+                 const base::Callback<void(int)>& height_change_callback);
   ~ChromeVoxPanel() override;
 
   aura::Window* GetRootWindow();
@@ -57,13 +58,15 @@ class ChromeVoxPanel : public views::WidgetDelegate,
  private:
   // Sends the height of the ChromeVox panel, which takes away space from the
   // available window manager work area at the top of the screen.
-  void SendPanelHeightToAsh(int panel_height);
+  void NotifyPanelHeightChanged(int panel_height);
 
   views::Widget* widget_;
   std::unique_ptr<ChromeVoxPanelWebContentsObserver> web_contents_observer_;
   views::View* web_view_;
   bool panel_fullscreen_;
   const bool for_blocked_user_session_;
+  // Callback to be called when the panel height changes.
+  base::Callback<void(int)> height_change_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeVoxPanel);
 };
