@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a298464b_c8dd1a45",
+        "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-09T14:47:33Z",
+      "side": 1,
+      "message": "nit: Drop viz.mojom here and elsewhere in the file?",
+      "revId": "6e32b497e86c142424a5f7a4fee1562c4e606b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b852e88_571caeda",
+        "filename": "third_party/WebKit/public/platform/modules/offscreencanvas/offscreen_canvas_surface.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-09T14:47:33Z",
+      "side": 1,
+      "message": "I don\u0027t think offscreen canvas actually needs this, does it?",
+      "revId": "6e32b497e86c142424a5f7a4fee1562c4e606b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
