@@ -70,6 +70,24 @@
       "revId": "f280242d2ce5678e3c960d33e5e69bae3d0eca26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2d8aa1_8234b33a",
+        "filename": "tools/v8_context_snapshot/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-09T21:26:13Z",
+      "side": 1,
+      "message": "If you can wait two more days, it\u0027s likely that lld will just support --icf\u003dnone by then (star https://bugs.chromium.org/p/chromium/issues/detail?id\u003d753944 for progress). Would that be an option?",
+      "parentUuid": "93110cf1_d35bcaa9",
+      "revId": "f280242d2ce5678e3c960d33e5e69bae3d0eca26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
