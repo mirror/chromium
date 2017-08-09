@@ -271,6 +271,34 @@ public class WebappModeTest {
         });
     }
 
+    /**
+     * Ensure WebappInfo instances are properly reused in WebappActivities.
+     */
+    @Test
+    @MediumTest
+    @Feature({"Webapps"})
+    public void testWebappInfoReuse() throws Exception {
+        Intent intent = createIntent(
+                WebappActivityTestRule.WEBAPP_ID, WEBAPP_2_URL, WEBAPP_2_TITLE, WEBAPP_ICON, true);
+        WebappInfo webappInfo = WebappInfo.create(intent);
+        WebappActivity.addWebappInfo(WebappActivityTestRule.WEBAPP_ID, webappInfo);
+
+        WebappActivityTestRule mActivityTestRule = new WebappActivityTestRule();
+        mActivityTestRule.startWebappActivity();
+
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return isWebappActivityReady(ApplicationStatus.getLastTrackedFocusedActivity());
+            }
+        });
+
+        Activity lastActivity = ApplicationStatus.getLastTrackedFocusedActivity();
+        WebappActivity lastWebappActivity = (WebappActivity) lastActivity;
+
+        Assert.assertEquals(webappInfo, lastWebappActivity.getWebappInfo());
+    }
+
     /** Test that on first launch {@link WebappDataStorage#hasBeenLaunched()} is set. */
     // Flaky even with RetryOnFailure: http://crbug.com/749375
     @DisabledTest
