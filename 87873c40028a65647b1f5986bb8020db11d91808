@@ -69,6 +69,30 @@
       "revId": "87873c40028a65647b1f5986bb8020db11d91808",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f6ceef_cf778854",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-09T20:42:47Z",
+      "side": 1,
+      "message": "Oops, thank you.",
+      "parentUuid": "bbc57144_ea9020b7",
+      "range": {
+        "startLine": 154,
+        "startChar": 43,
+        "endLine": 154,
+        "endChar": 53
+      },
+      "revId": "87873c40028a65647b1f5986bb8020db11d91808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
