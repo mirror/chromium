@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0cde871_6ff41481",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T23:38:54Z",
+      "side": 1,
+      "message": "nit: does this need to be virtual?",
+      "revId": "f384cc7e41ae9c9d53db01ade8843dce0a98e17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6666cd08_527b58e4",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T23:38:54Z",
+      "side": 1,
+      "message": "Is this going to break if the TODO in https://cs.chromium.org/chromium/src/ash/system/network/network_icon.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d887 is fixed?\n\nYou might want to file a bug and reference it in both places.\n\n(Aside: It\u0027s kind of odd that you\u0027re relying a string ID to get the state of something -- it\u0027s unfortunate there\u0027s no actual data-model-y state for this kind of thing.)",
+      "revId": "f384cc7e41ae9c9d53db01ade8843dce0a98e17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72523e41_58267152",
+        "filename": "ash/system/network/network_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T23:38:54Z",
+      "side": 1,
+      "message": "nit: document and/or rename. It sounds like this is toggling the visibility state. Maybe it should be |show_toggle| or |show_toggle_button| or similar?",
+      "revId": "f384cc7e41ae9c9d53db01ade8843dce0a98e17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
