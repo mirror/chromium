@@ -2795,6 +2795,9 @@
   "EcryptfsMigrationStrategy": {
     "os": ["chromeos"],
     "test_policy": { "EcryptfsMigrationStrategy": 1 }
+    "pref_mappings": [
+      { "pref": "ecryptfs_migration_strategy" }
+    ]
   },
 
   "----- Chrome OS device policies ---------------------------------------": {},
