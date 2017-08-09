@@ -483,6 +483,21 @@
         },
         "test": "wm_unittests"
       }
+    ],
+    "isolated_scripts": [
+      {
+        "args": [
+          "--browser=exact",
+          "--browser-executable=./test_chrome",
+          "--jobs=1"
+        ],
+        "isolate_name": "telemetry_unittests",
+        "name": "telemetry_unittests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "shards": 4
+        }
+      }
     ]
   },
   "Linux ChromiumOS Tests (1)": {
