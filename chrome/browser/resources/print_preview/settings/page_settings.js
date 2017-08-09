@@ -68,7 +68,8 @@ cr.define('print_preview', function() {
     ALL_RADIO: 'page-settings-all-radio',
     CUSTOM_HINT: 'page-settings-custom-hint',
     CUSTOM_INPUT: 'page-settings-custom-input',
-    CUSTOM_RADIO: 'page-settings-custom-radio'
+    CUSTOM_RADIO: 'page-settings-custom-radio',
+    CUSTOM_WRAPPER: 'page-settings-print-pages-div'
   };
 
   /**
@@ -115,6 +116,9 @@ cr.define('print_preview', function() {
       this.tracker.add(
           customInput, 'input', this.onCustomInputChange_.bind(this));
       this.tracker.add(
+          assert(this.customInputWrapper_), 'focus',
+          this.onCustomWrapperFocus_.bind(this));
+      this.tracker.add(
           this.pageRangeTicketItem_,
           print_preview.ticket_items.TicketItem.EventType.CHANGE,
           this.onPageRangeTicketItemChange_.bind(this));
@@ -127,6 +131,7 @@ cr.define('print_preview', function() {
       this.customRadio_ = null;
       this.allRadio_ = null;
       this.customHintEl_ = null;
+      this.customInputWrapper_ = null;
     },
 
     /** @override */
@@ -139,6 +144,8 @@ cr.define('print_preview', function() {
           PageSettings.Classes_.CUSTOM_RADIO)[0];
       this.customHintEl_ = this.getElement().getElementsByClassName(
           PageSettings.Classes_.CUSTOM_HINT)[0];
+      this.customInputWrapper_ = this.getElement().getElementsByClassName(
+          PageSettings.Classes_.CUSTOM_WRAPPER)[0];
     },
 
     /**
@@ -193,6 +200,7 @@ cr.define('print_preview', function() {
      */
     onCustomInputBlur_: function(event) {
       if (this.customInput_.value == '' &&
+          event.relatedTarget != this.customInputWrapper_ &&
           event.relatedTarget != this.customRadio_) {
         this.allRadio_.checked = true;
       }
@@ -205,6 +213,18 @@ cr.define('print_preview', function() {
     onCustomInputFocus_: function() {
       this.customRadio_.checked = true;
       this.pageRangeTicketItem_.updateValue(this.customInput_.value);
+    },
+
+    /**
+     * Called when the custom input wrapper div is blurred.
+     * @param {Event} event Contains the element that was previously focused.
+     * @private
+     */
+    onCustomWrapperFocus_: function(event) {
+      if (event.relatedTarget != this.customRadio_)
+        this.customInput_.focus();
+      else
+        this.allRadio_.focus();
     },
 
     /**
