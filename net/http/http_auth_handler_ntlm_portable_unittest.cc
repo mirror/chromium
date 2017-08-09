@@ -142,6 +142,11 @@ class HttpAuthHandlerNtlmPortableTest : public PlatformTest {
     memset(output, 0xaa, n);
   }
 
+  static uint64_t MockGetMSTime() {
+    // Tue, 23 May 2017 20:13:07 +0000
+    return 131400439870000000;
+  }
+
   static std::string MockGetHostName() { return ntlm::test::kHostnameAscii; }
 
  private:
@@ -340,7 +345,7 @@ TEST_F(HttpAuthHandlerNtlmPortableTest, NoTargetNameOverflowFromLength) {
 }
 
 TEST_F(HttpAuthHandlerNtlmPortableTest, Type3RespectsUnicode) {
-  HttpAuthHandlerNTLM::ScopedProcSetter proc_setter(MockRandom,
+  HttpAuthHandlerNTLM::ScopedProcSetter proc_setter(MockGetMSTime, MockRandom,
                                                     MockGetHostName);
   ASSERT_EQ(OK, CreateHandler());
   ASSERT_EQ(OK, GetGenerateAuthTokenResult());
@@ -390,7 +395,7 @@ TEST_F(HttpAuthHandlerNtlmPortableTest, Type3RespectsUnicode) {
 }
 
 TEST_F(HttpAuthHandlerNtlmPortableTest, Type3WithoutUnicode) {
-  HttpAuthHandlerNTLM::ScopedProcSetter proc_setter(MockRandom,
+  HttpAuthHandlerNTLM::ScopedProcSetter proc_setter(MockGetMSTime, MockRandom,
                                                     MockGetHostName);
   ASSERT_EQ(OK, CreateHandler());
   ASSERT_EQ(OK, GetGenerateAuthTokenResult());
@@ -438,140 +443,6 @@ TEST_F(HttpAuthHandlerNtlmPortableTest, Type3WithoutUnicode) {
   ASSERT_EQ(ntlm::NegotiateFlags::kNone,
             flags & ntlm::NegotiateFlags::kUnicode);
   ASSERT_EQ(ntlm::NegotiateFlags::kOem, flags & ntlm::NegotiateFlags::kOem);
-}
-
-TEST_F(HttpAuthHandlerNtlmPortableTest, Type3UnicodeNoSessionSecurity) {
-  // Verify that the client won't be downgraded if the server clears
-  // the session security flag.
-  HttpAuthHandlerNTLM::ScopedProcSetter proc_setter(MockRandom,
-                                                    MockGetHostName);
-  ASSERT_EQ(OK, CreateHandler());
-  ASSERT_EQ(OK, GetGenerateAuthTokenResult());
-
-  // Generate the type 2 message from the server.
-  ntlm::NtlmBufferWriter writer(ntlm::kChallengeHeaderLen);
-  ASSERT_TRUE(writer.WriteMessageHeader(ntlm::MessageType::kChallenge));
-  // No target name. It is never used.
-  ASSERT_TRUE(writer.WriteSecurityBuffer(
-      ntlm::SecurityBuffer(ntlm::kChallengeHeaderLen, 0)));
-  // Set the unicode but not the session security flag.
-  ASSERT_TRUE(writer.WriteFlags(ntlm::NegotiateFlags::kUnicode));
-
-  ASSERT_TRUE(
-      writer.WriteBytes(ntlm::test::kServerChallenge, ntlm::kChallengeLen));
-  ASSERT_TRUE(writer.IsEndOfBuffer());
-
-  std::string token;
-  ASSERT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            HandleAnotherChallenge(CreateNtlmAuthHeader(writer.GetBuffer())));
-  ASSERT_EQ(OK, GenerateAuthToken(&token));
-
-  // Validate the type 3 message
-  std::string decoded;
-  ASSERT_TRUE(DecodeChallenge(token, &decoded));
-  ntlm::NtlmBufferReader reader(decoded);
-  ASSERT_TRUE(reader.MatchMessageHeader(ntlm::MessageType::kAuthenticate));
-
-  // Read the LM and NTLM Response Payloads.
-  uint8_t actual_lm_response[ntlm::kResponseLenV1];
-  uint8_t actual_ntlm_response[ntlm::kResponseLenV1];
-  ASSERT_TRUE(
-      ReadBytesPayload(&reader, actual_lm_response, ntlm::kResponseLenV1));
-  ASSERT_TRUE(
-      ReadBytesPayload(&reader, actual_ntlm_response, ntlm::kResponseLenV1));
-
-  // Verify that the client still generated a response that uses
-  // session security.
-  ASSERT_EQ(0, memcmp(ntlm::test::kExpectedLmResponseWithV1SS,
-                      actual_lm_response, ntlm::kResponseLenV1));
-  ASSERT_EQ(0, memcmp(ntlm::test::kExpectedNtlmResponseWithV1SS,
-                      actual_ntlm_response, ntlm::kResponseLenV1));
-
-  base::string16 domain;
-  base::string16 username;
-  base::string16 hostname;
-  ReadString16Payload(&reader, &domain);
-  ASSERT_EQ(ntlm::test::kNtlmDomain, domain);
-  ReadString16Payload(&reader, &username);
-  ASSERT_EQ(ntlm::test::kUser, username);
-  ReadString16Payload(&reader, &hostname);
-  ASSERT_EQ(ntlm::test::kHostname, hostname);
-
-  // The session key is not used for the NTLM scheme in HTTP. Since
-  // NTLMSSP_NEGOTIATE_KEY_EXCH was not sent this is empty.
-  ASSERT_TRUE(reader.SkipSecurityBufferWithValidation());
-
-  // Verify the unicode flag is set.
-  ntlm::NegotiateFlags flags;
-  ASSERT_TRUE(reader.ReadFlags(&flags));
-  ASSERT_EQ(ntlm::NegotiateFlags::kUnicode,
-            flags & ntlm::NegotiateFlags::kUnicode);
-}
-
-TEST_F(HttpAuthHandlerNtlmPortableTest, Type3UnicodeWithSessionSecurity) {
-  HttpAuthHandlerNTLM::ScopedProcSetter proc_setter(MockRandom,
-                                                    MockGetHostName);
-  ASSERT_EQ(OK, CreateHandler());
-  ASSERT_EQ(OK, GetGenerateAuthTokenResult());
-
-  // Generate the type 2 message from the server.
-  ntlm::NtlmBufferWriter writer(ntlm::kChallengeHeaderLen);
-  ASSERT_TRUE(writer.WriteMessageHeader(ntlm::MessageType::kChallenge));
-  // No target name. It is never used.
-  ASSERT_TRUE(writer.WriteSecurityBuffer(
-      ntlm::SecurityBuffer(ntlm::kChallengeHeaderLen, 0)));
-  // Set the unicode and session security flag.
-  ASSERT_TRUE(
-      writer.WriteFlags((ntlm::NegotiateFlags::kUnicode |
-                         ntlm::NegotiateFlags::kExtendedSessionSecurity)));
-
-  ASSERT_TRUE(
-      writer.WriteBytes(ntlm::test::kServerChallenge, ntlm::kChallengeLen));
-  ASSERT_TRUE(writer.IsEndOfBuffer());
-
-  std::string token;
-  ASSERT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            HandleAnotherChallenge(CreateNtlmAuthHeader(writer.GetBuffer())));
-  ASSERT_EQ(OK, GenerateAuthToken(&token));
-
-  // Validate the type 3 message
-  std::string decoded;
-  ASSERT_TRUE(DecodeChallenge(token, &decoded));
-  ntlm::NtlmBufferReader reader(decoded);
-  ASSERT_TRUE(reader.MatchMessageHeader(ntlm::MessageType::kAuthenticate));
-
-  // Read the LM and NTLM Response Payloads.
-  uint8_t actual_lm_response[ntlm::kResponseLenV1];
-  uint8_t actual_ntlm_response[ntlm::kResponseLenV1];
-  ASSERT_TRUE(
-      ReadBytesPayload(&reader, actual_lm_response, ntlm::kResponseLenV1));
-  ASSERT_TRUE(
-      ReadBytesPayload(&reader, actual_ntlm_response, ntlm::kResponseLenV1));
-
-  ASSERT_EQ(0, memcmp(ntlm::test::kExpectedLmResponseWithV1SS,
-                      actual_lm_response, ntlm::kResponseLenV1));
-  ASSERT_EQ(0, memcmp(ntlm::test::kExpectedNtlmResponseWithV1SS,
-                      actual_ntlm_response, ntlm::kResponseLenV1));
-
-  base::string16 domain;
-  base::string16 username;
-  base::string16 hostname;
-  ReadString16Payload(&reader, &domain);
-  ASSERT_EQ(ntlm::test::kNtlmDomain, domain);
-  ReadString16Payload(&reader, &username);
-  ASSERT_EQ(ntlm::test::kUser, username);
-  ReadString16Payload(&reader, &hostname);
-  ASSERT_EQ(ntlm::test::kHostname, hostname);
-
-  // The session key is not used for the NTLM scheme in HTTP. Since
-  // NTLMSSP_NEGOTIATE_KEY_EXCH was not sent this is empty.
-  ASSERT_TRUE(reader.SkipSecurityBufferWithValidation());
-
-  // Verify the unicode flag is set.
-  ntlm::NegotiateFlags flags;
-  ASSERT_TRUE(reader.ReadFlags(&flags));
-  ASSERT_EQ(ntlm::NegotiateFlags::kUnicode,
-            flags & ntlm::NegotiateFlags::kUnicode);
 }
 
 }  // namespace net
