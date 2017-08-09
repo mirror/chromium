@@ -142,6 +142,24 @@
       "revId": "ae5212df5054d45a05dfc23b3f8066afe7870351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2492fd_be3d2ac2",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-09T18:49:42Z",
+      "side": 1,
+      "message": "\u003e i don\u0027t think that RFH should create overlays.  i can imagine uses of overlays that aren\u0027t tied to any RFH; we might want to use one for the compositor output, for example.  plus, there are going to be at least two implementations of overlays (VR and non-VR), so it\u0027s quite a bit of complexity.\n\nFor compositor case, that\u0027s not a web platform implementation anymore, so makes sense that it\u0027s not tied to RFH. I imagine that also means it doesn\u0027t care about this setting either. I dunno, maybe the compositor use case deserves a separate creation code path, because clearly the current code that just returns 0 if there is no RFH/WC won\u0027t work.\n\nVR/non-VR is an implementation detail though. Should just hide all of that from RFH?\n\n\u003e \n\u003e i\u0027ll try making the overlay register with its RFH, and broadcast the notification the way you suggest.",
+      "parentUuid": "ced3379d_6f12ecef",
+      "revId": "ae5212df5054d45a05dfc23b3f8066afe7870351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
