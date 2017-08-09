@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7db7c9d_aa842b70",
+        "filename": "chromeos/system/statistics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-08-09T10:55:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "961454d7_f32fe690",
+      "range": {
+        "startLine": 91,
+        "startChar": 33,
+        "endLine": 91,
+        "endChar": 42
+      },
+      "revId": "30b29ae46ef462abb3c16d31c47a737e50864bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "722fdd20_8a657519",
         "filename": "chromeos/system/statistics_provider.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "153b5a0b_871cb543",
+        "filename": "chromeos/system/statistics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-08-09T10:55:49Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "722fdd20_8a657519",
+      "range": {
+        "startLine": 93,
+        "startChar": 3,
+        "endLine": 93,
+        "endChar": 8
+      },
+      "revId": "30b29ae46ef462abb3c16d31c47a737e50864bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5162ed1_c7d20918",
         "filename": "chromeos/system/statistics_provider.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-09T10:12:20Z",
       "side": 1,
       "message": "supposed to be not present (or renamed to other value) on caroline",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 61
+      },
+      "revId": "30b29ae46ef462abb3c16d31c47a737e50864bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ba87b1f_b397bd00",
+        "filename": "chromeos/system/statistics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-08-09T10:55:49Z",
+      "side": 1,
+      "message": "I checked on my caroline PVT that it\u0027s not present. Would you consider that sufficient confirmation?",
+      "parentUuid": "b5162ed1_c7d20918",
       "range": {
         "startLine": 102,
         "startChar": 23,
