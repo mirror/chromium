@@ -9,8 +9,11 @@
 // ChromeWebView. Framework style imports can't be used because multiple
 // frameworks are built from ios/web_view with different output names.
 
+#import "cwv_authentication_controller.h"
+#import "cwv_authentication_controller_delegate.h"
 #import "cwv_export.h"
 #import "cwv_html_element.h"
+#import "cwv_identity.h"
 #import "cwv_navigation_action.h"
 #import "cwv_navigation_delegate.h"
 #import "cwv_preferences.h"

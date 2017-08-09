@@ -15,6 +15,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/prefs/pref_service_factory.h"
 #include "components/proxy_config/pref_proxy_config_tracker_impl.h"
+#include "components/signin/core/browser/signin_manager_base.h"
 #include "components/ssl_config/ssl_config_service_manager.h"
 #include "components/translate/core/browser/translate_download_manager.h"
 #include "ios/web/public/web_thread.h"
@@ -73,6 +74,7 @@ PrefService* ApplicationContext::GetLocalState() {
     flags_ui::PrefServiceFlagsStorage::RegisterPrefs(pref_registry.get());
     PrefProxyConfigTrackerImpl::RegisterPrefs(pref_registry.get());
     ssl_config::SSLConfigServiceManager::RegisterPrefs(pref_registry.get());
+    SigninManagerBase::RegisterPrefs(pref_registry.get());
 
     scoped_refptr<PersistentPrefStore> user_pref_store = new JsonPrefStore(
         GetLocalStatePath(), local_state_task_runner_, nullptr);
