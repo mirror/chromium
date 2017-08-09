@@ -52,7 +52,7 @@ class PLATFORM_EXPORT DecodingImageGenerator final : public SkImageGenerator {
   // Make SkImageGenerator::kNeedNewImageUniqueID accessible.
   enum { kNeedNewImageUniqueID = SkImageGenerator::kNeedNewImageUniqueID };
 
-  static SkImageGenerator* Create(SkData*);
+  static std::unique_ptr<SkImageGenerator> Create(SkData*);
 
   DecodingImageGenerator(PassRefPtr<ImageFrameGenerator>,
                          const SkImageInfo&,
