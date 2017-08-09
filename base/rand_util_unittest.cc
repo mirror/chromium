@@ -154,17 +154,21 @@ TEST(RandUtilTest, RandBytesLonger) {
 // does not test anything that isn't already tested by the existing RandBytes()
 // tests.
 TEST(RandUtilTest, DISABLED_RandBytesPerf) {
-  // Benchmark the performance of |kTestIterations| of RandBytes() using a
-  // buffer size of |kTestBufferSize|.
-  const int kTestIterations = 10;
-  const size_t kTestBufferSize = 1 * 1024 * 1024;
-
-  std::unique_ptr<uint8_t[]> buffer(new uint8_t[kTestBufferSize]);
-  const base::TimeTicks now = base::TimeTicks::Now();
-  for (int i = 0; i < kTestIterations; ++i)
-    base::RandBytes(buffer.get(), kTestBufferSize);
-  const base::TimeTicks end = base::TimeTicks::Now();
-
-  LOG(INFO) << "RandBytes(" << kTestBufferSize << ") took: "
-            << (end - now).InMicroseconds() << "µs";
+  // Independently benchmark the performance of small and large RandBytes()
+  // calls. Performance of large calls may be interesting, but RandBytes() is
+  // used much more often in practice with very small values (i.e. 8 or 16
+  // bytes at a time).
+  constexpr size_t kTestBufferSizes[] = {8, 16, 1024 * 1024};
+  constexpr size_t kTestBufferIterations[] = {1000000, 1000000, 10};
+  static_assert(arraysize(kTestBufferSizes) == arraysize(kTestBufferIterations),
+                "Test array size mismatch.");
+  for (size_t i = 0; i < arraysize(kTestBufferSizes); ++i) {
+    std::unique_ptr<uint8_t[]> buffer(new uint8_t[kTestBufferSizes[i]]);
+    const base::TimeTicks now = base::TimeTicks::Now();
+    for (size_t j = 0; j < kTestBufferIterations[i]; ++j)
+      base::RandBytes(buffer.get(), kTestBufferSizes[i]);
+    const base::TimeTicks end = base::TimeTicks::Now();
+    LOG(INFO) << "RandBytes(" << kTestBufferSizes[i]
+              << ") took: " << (end - now).InMicroseconds() << "µs";
+  }
 }
