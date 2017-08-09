@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "65aa2ebd_18412dfe",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-09T18:13:39Z",
+      "side": 1,
+      "message": "Can you not use https://cs.chromium.org/chromium/src/ui/webui/resources/js/promise_resolver.js instead?",
+      "revId": "0ed128042a8ddac421913962357e992e2520f046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78bbf9a5_c2cbaa9a",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 7
@@ -42,6 +59,74 @@
         "endLine": 59,
         "endChar": 20
       },
+      "revId": "0ed128042a8ddac421913962357e992e2520f046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc219f1_4508bd58",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-09T18:13:39Z",
+      "side": 1,
+      "message": "Would Object.assign() work here (taking into account iOS9)?\n\nhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign",
+      "revId": "0ed128042a8ddac421913962357e992e2520f046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0edd63_6dd01f83",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-09T18:13:39Z",
+      "side": 1,
+      "message": "Are you implementing an interface (@implements), or extending a super class? I am confused by the comment and the @extends annotation.\n\nWhen you use @extends, you also need to set the prototype chain correctly, which is not done here. See example at https://cs.chromium.org/chromium/src/chrome/browser/resources/extensions/extension_loader.js?l\u003d32,42.",
+      "revId": "0ed128042a8ddac421913962357e992e2520f046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b269ec7c_2a3085f4",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-09T18:13:39Z",
+      "side": 1,
+      "message": "This should be defined right after the Credential constructor. Why is it so far from it?",
+      "revId": "0ed128042a8ddac421913962357e992e2520f046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f875b650_570ccdbe",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-09T18:13:39Z",
+      "side": 1,
+      "message": "Same with these methods.\n\nfunction Foo() {...}\n\nFoo.prototype.bar \u003d ...;\n\nFoo.prototype.baz \u003d ...;\n\nfunction OtherFoo() {...}\n...",
       "revId": "0ed128042a8ddac421913962357e992e2520f046",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
