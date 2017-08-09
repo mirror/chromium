@@ -125,10 +125,12 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     int provider_id,
     ServiceWorkerProviderType provider_type,
     mojom::ServiceWorkerProviderAssociatedRequest request,
-    ServiceWorkerDispatcher* dispatcher)
+    ServiceWorkerDispatcher* dispatcher,
+    mojom::URLLoaderFactory* blob_loader_factory)
     : provider_id_(provider_id),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      binding_(this, std::move(request)) {
+      binding_(this, std::move(request)),
+      blob_loader_factory_(blob_loader_factory) {
   if (provider_type == SERVICE_WORKER_PROVIDER_FOR_CONTROLLER)
     delegate_.reset(new ControllerDelegate);
   else

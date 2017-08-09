@@ -25,6 +25,10 @@ class SingleThreadTaskRunner;
 
 namespace content {
 
+namespace mojom {
+class URLLoaderFactory;
+}
+
 class ServiceWorkerHandleReference;
 class ServiceWorkerRegistrationHandleReference;
 struct ServiceWorkerProviderContextDeleter;
@@ -64,11 +68,15 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // content::ServiceWorkerProviderHost which notifies changes of the
   // registration's and workers' status. |request| is bound with |binding_|.
   // The new instance is registered to |dispatcher|, which is not owned.
+  // |blob_loader_factory| is used to load a blob returned as a response
+  // by the controller ServiceWorker (non-null only if network service is
+  // enabled).
   ServiceWorkerProviderContext(
       int provider_id,
       ServiceWorkerProviderType provider_type,
       mojom::ServiceWorkerProviderAssociatedRequest request,
-      ServiceWorkerDispatcher* dispatcher);
+      ServiceWorkerDispatcher* dispatcher,
+      mojom::URLLoaderFactory* blob_loader_factory);
 
   // For service worker execution contexts. Sets the registration for
   // ServiceWorkerGlobalScope#registration. Called on the main thread.
@@ -94,6 +102,10 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
 
   mojom::ServiceWorkerEventDispatcher* event_dispatcher() {
     return event_dispatcher_.get();
+  }
+
+  mojom::URLLoaderFactory* blob_loader_factory() {
+    return blob_loader_factory;
   }
 
   ServiceWorkerHandleReference* controller();
@@ -123,6 +135,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // Only used for controllee contexts. Used to dispatch events to the
   // controller ServiceWorker.
   mojom::ServiceWorkerEventDispatcherPtr event_dispatcher_;
+
+  mojom::URLLoaderFactory* blob_loader_factory_;
 
   std::unique_ptr<Delegate> delegate_;
 
