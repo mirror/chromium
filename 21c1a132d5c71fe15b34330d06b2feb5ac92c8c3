@@ -1,0 +1,340 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b44db88_ec00406b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "Update method name",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 40
+      },
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d9e4ea_dc5c6408",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "All inheritance should be public: https://google.github.io/styleguide/cppguide.html#Inheritance\n\nYou can put the overrides in the private section though to indicate they\u0027re not meant to be called by the owner of instances of this class",
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6462cbcd_a0f2e643",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "This bug fix can go in a standalone CL. It\u0027s important for (1) getting it in ASAP and (2) not conflate bug fixes with feature impls",
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab672a7_520cfd70",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "are",
+      "range": {
+        "startLine": 373,
+        "startChar": 65,
+        "endLine": 373,
+        "endChar": 74
+      },
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32149105_9955fe20",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "Only need |shared_transaction| for this part, would be nice to not lock the transaction for the full phase. I understand that this is currently forced by the current lock precedence scheme but looking at usage of |shared_priority_queue_| I don\u0027t think this precedence is required anymore, can we try to get rid of it (at least add a TODO in this CL if not doing it as a precursor)?",
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "407f9c9a_a43a781e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "Don\u0027t we also need the Cleanup() logic and the |idle_start_time_| logic here? i.e. same logic as |shared_transaction-\u003eIsEmpty()|?",
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6adcfa87_c75977f4",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "I\u0027d expect this to already be false per not allowing nested ScopedMayBlock (can DCHECK)",
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656545b3_0798a998",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "Also reset increased_worker_capacity_since_blocked_ \u003d false;",
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "231fbbc4_911567e1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "if (... contains... )\n  return;\n\n(rest of logic non-indented -- fine to DCHECK only in !contains cases)\n\nThe early-return-for-exception paradigm is prefered in chromium",
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e98f031_73e5aa76",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "are",
+      "range": {
+        "startLine": 771,
+        "startChar": 33,
+        "endLine": 771,
+        "endChar": 38
+      },
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45a0352_76383d3e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "Aren\u0027t all idle workers also \"suspended\" workers (i.e. we\u0027re happy they\u0027re suspended whether that\u0027s the initial reason they began sleeping or not)?\n\nCan we check a bit on the delegate instead of going through the (potentially deep) |idle_workers_stack_|? (I feel Francois/Rob and I have had this discuss before but perhaps things are different now that the idle stack can grow to bigger sizes?)",
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f402ef_e6066459",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "Can we add a histogram on how often an \"unblocker\" thread gets to process work? e.g. similar to existing histogram about tasks before detach but suffixed specifically for threads over initial capacity?",
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "596962e9_0c72b28a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "acquiring",
+      "range": {
+        "startLine": 150,
+        "startChar": 26,
+        "endLine": 150,
+        "endChar": 34
+      },
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c59ca32_d439c61e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "_for_testing_",
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f996b96b_7e3e15d9",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "friend decls usually go at the top of the section (i.e. right after private:)",
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af688e6_b7fa71c0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "Maybe retry on failure up to say 3 times GetWorkerCapacityChangeSleepTime()? Timings are never guaranteed and this test will always be flaky as designed.\n\nOr one way to make it not flaky would be to post kNumWorkersInWorkerPool more tasks which increment a counter and then also block on another WaitableEvent. Then you can resume the test after the counter has reached kNumWorkersInWorkerPool (a BarrierClosure may be well suited to count before unblocking)",
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f53dcb_192b1e22",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "Only if timer doesn\u0027t expire, right? Should this worker_pool_-\u003eMaximizeBlockedThresholdForTesting(); above?",
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e565a7_3ecda338",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:33:27Z",
+      "side": 1,
+      "message": "\" workers \" ?",
+      "range": {
+        "startLine": 990,
+        "startChar": 43,
+        "endLine": 990,
+        "endChar": 44
+      },
+      "revId": "21c1a132d5c71fe15b34330d06b2feb5ac92c8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
