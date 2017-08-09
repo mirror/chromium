@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ce5d6ef_42313dfa",
+        "filename": "content/browser/web_contents/web_contents_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-09T22:13:57Z",
+      "side": 1,
+      "message": "Can you put something like a EXPECT_TRUE(observer.observed_response_start()) here to make sure that we actually hit the code in the DidGetResourceResponseStartObserver?",
+      "revId": "35c4e633666be5ce8913eb18f5496ebf17e27ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5bbac9f_bf414fd2",
+        "filename": "content/browser/web_contents/web_contents_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-09T22:13:57Z",
+      "side": 1,
+      "message": "nit: Can you move this closer to the LoadingStateChanged / LoadProgress tests just a little ways down?",
+      "revId": "35c4e633666be5ce8913eb18f5496ebf17e27ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3c9909_03fb522f",
+        "filename": "content/browser/web_contents/web_contents_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-09T22:13:57Z",
+      "side": 1,
+      "message": "Looks like these are now failing due to your changes in https://chromium-review.googlesource.com/c/601249, since SetNotWaitingForResponse() now generates a LoadingStateChanged.\n\nIf that\u0027s not a problem in practice, then we can probably update these expectations and the comment above them.",
+      "revId": "35c4e633666be5ce8913eb18f5496ebf17e27ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
