@@ -11,6 +11,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "components/ntp_tiles/tile_source.h"
 #include "url/gurl.h"
 
 namespace base {
@@ -37,6 +38,7 @@ class PopularSites {
     GURL favicon_url;
     GURL large_icon_url;
     GURL thumbnail_url;
+    TileSource source;
     int default_icon_resource;  // < 0 if there is none. Used for popular sites.
   };
 

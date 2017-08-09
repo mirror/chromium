@@ -249,6 +249,7 @@ TEST_F(PopularSitesTest, PopulatesWithDefaultResoucesOnFailure) {
   EXPECT_THAT(sites.size(), Eq(GetNumberOfDefaultPopularSitesForPlatform()));
 }
 
+#if defined(OS_ANDROID) || defined(OS_IOS)
 TEST_F(PopularSitesTest, AddsIconResourcesToDefaultPages) {
   scoped_refptr<net::TestURLRequestContextGetter> url_request_context(
       new net::TestURLRequestContextGetter(
@@ -256,13 +257,15 @@ TEST_F(PopularSitesTest, AddsIconResourcesToDefaultPages) {
   std::unique_ptr<PopularSites> popular_sites =
       CreatePopularSites(url_request_context.get());
 
-#if defined(GOOGLE_CHROME_BUILD) && (defined(OS_ANDROID) || defined(OS_IOS))
   ASSERT_FALSE(popular_sites->sites().empty());
   for (const auto& site : popular_sites->sites()) {
+    EXPECT_THAT(site.source, TileSource::BAKED_IN_SITE);
+#if defined(GOOGLE_CHROME_BUILD)
     EXPECT_THAT(site.default_icon_resource, Gt(0));
-  }
 #endif
+  }
 }
+#endif
 
 TEST_F(PopularSitesTest, ProvidesDefaultSitesUntilCallbackReturns) {
   SetCountryAndVersion("ZZ", "9");
