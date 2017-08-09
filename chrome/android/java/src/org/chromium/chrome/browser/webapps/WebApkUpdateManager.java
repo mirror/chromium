@@ -9,6 +9,7 @@ import static org.chromium.webapk.lib.common.WebApkConstants.WEBAPK_PACKAGE_PREF
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.text.TextUtils;
 
 import org.chromium.base.ActivityState;
@@ -32,6 +33,9 @@ import java.util.Map;
  */
 public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     private static final String TAG = "WebApkUpdateManager";
+
+    // Maximum wait time for WebAPK update to be scheduled.
+    private static final int UPDATE_TIMEOUT_MILLISECONDS = 1000 * 30;
 
     /**
      * Number of times to wait for updating the WebAPK after it is moved to the background prior
@@ -58,6 +62,17 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     private final WebappDataStorage mStorage;
 
     private WebApkUpdateDataFetcher mFetcher;
+
+    /** Run failure callback if WebAPK update is not scheduled within deadline. */
+    private Handler mUpdateFailureHandler;
+
+    /** Failure callback if WebAPK update is not scheduled within deadline. */
+    private final Runnable mUpdateFailureCallback = new Runnable() {
+        @Override
+        public void run() {
+            onGotManifestData(null, null, null);
+        }
+    };
 
     /**
      * Contains all the data which is cached for a pending update request once the WebAPK is no
@@ -97,6 +112,8 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
 
         mFetcher = buildFetcher();
         mFetcher.start(tab, mInfo, this);
+        mUpdateFailureHandler = new Handler();
+        mUpdateFailureHandler.postDelayed(mUpdateFailureCallback, UPDATE_TIMEOUT_MILLISECONDS);
     }
 
     /**
@@ -121,11 +138,6 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
 
     public static void setUpdatesEnabledForTesting(boolean enabled) {
         sUpdatesEnabled = enabled;
-    }
-
-    @Override
-    public void onWebManifestForInitialUrlNotWebApkCompatible() {
-        onGotManifestData(null, null, null);
     }
 
     @Override
@@ -189,6 +201,10 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     /** Builds proto to send to the WebAPK server. */
     protected void buildProtoAndScheduleUpdate(final WebApkInfo info, String primaryIconUrl,
             String badgeIconUrl, boolean isManifestStale) {
+        if (mUpdateFailureHandler != null) {
+            mUpdateFailureHandler.removeCallbacks(mUpdateFailureCallback);
+        }
+
         int versionCode = readVersionCodeFromAndroidManifest(info.webApkPackageName());
         int size = info.iconUrlToMurmur2HashMap().size();
         String[] iconUrls = new String[size];
