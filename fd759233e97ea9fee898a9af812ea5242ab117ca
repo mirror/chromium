@@ -22,6 +22,30 @@
       "revId": "fd759233e97ea9fee898a9af812ea5242ab117ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363ef22e_3d3d4d16",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-08-09T14:26:57Z",
+      "side": 1,
+      "message": "We do want is_paused here too as this matches our current OOM-stripped stats.\n\nI worked out with Ran why this actually records what we want, which is user-visible renderer crashes. I\u0027ll add more details in the doc and give an update when it\u0027s ready. The stats do record slightly different things, but the way they overlap in the new stat actually reflects what we want. We didn\u0027t consider WebappActivity, will also add a section to consider that.",
+      "parentUuid": "51d29cff_591e3da1",
+      "range": {
+        "startLine": 121,
+        "startChar": 28,
+        "endLine": 121,
+        "endChar": 38
+      },
+      "revId": "fd759233e97ea9fee898a9af812ea5242ab117ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
