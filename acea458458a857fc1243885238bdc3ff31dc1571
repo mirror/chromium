@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b234d277_3745f4df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-09T17:55:59Z",
+      "side": 1,
+      "message": "Nit: We like to target 72 or 80 (72 preferred) characters per line for descriptions.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa8c306_ef3848f2",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-09T17:55:59Z",
+      "side": 1,
+      "message": "This is implied in the previous clause. Remove.",
+      "range": {
+        "startLine": 21,
+        "startChar": 13,
+        "endLine": 21,
+        "endChar": 75
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e1417d_7c02c288",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-09T17:55:59Z",
+      "side": 1,
+      "message": "Move this below ShouldShowPromo.\n\nThis can still be private if the unit tests use FeatureTracker* instead.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 35
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bca975_e30b9641",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-09T17:55:59Z",
+      "side": 1,
+      "message": "Single colon only",
+      "range": {
+        "startLine": 65,
+        "startChar": 39,
+        "endLine": 65,
+        "endChar": 40
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8437bef8_2ff5a6e7",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-09T17:55:59Z",
+      "side": 1,
+      "message": "Remove. NewTabTrackerEventTest\u0027s destructor will take care of this.",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 37
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04440d1_2d19788c",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-09T17:55:59Z",
+      "side": 1,
+      "message": "This check isn\u0027t necessary by virtue of the previous statement.",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a963fc7_12d864e6",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-09T17:55:59Z",
+      "side": 1,
+      "message": "If everyone removes their observer, shouldn\u0027t we call RemoveDurationTrackerObserver() here too?",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 1
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed51c71_8ef3bdae",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-09T17:55:59Z",
+      "side": 1,
+      "message": "Change to \" and \"",
+      "range": {
+        "startLine": 21,
+        "startChar": 30,
+        "endLine": 21,
+        "endChar": 41
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa75de72_3a2d0780",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-09T17:55:59Z",
+      "side": 1,
+      "message": "Needs a \"// SessionDurationUpdater::Observer:\"",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 69
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527c4bee_0375c6b5",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-09T17:55:59Z",
+      "side": 1,
+      "message": "The destructor will get this.",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 37
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b35ef00_77a051a3",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-09T17:55:59Z",
+      "side": 1,
+      "message": "AddSessionDurationObserver() should really be part of SetUp as all tests below call this as the first statement.",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 52
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdcb9dde_c24c8e84",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-09T17:55:59Z",
+      "side": 1,
+      "message": "elapses",
+      "range": {
+        "startLine": 151,
+        "startChar": 45,
+        "endLine": 151,
+        "endChar": 53
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f3085f_3bbf2b94",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-09T17:55:59Z",
+      "side": 1,
+      "message": "This clause is an implementation detail, right? Remove this clause.",
+      "range": {
+        "startLine": 152,
+        "startChar": 3,
+        "endLine": 152,
+        "endChar": 79
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
