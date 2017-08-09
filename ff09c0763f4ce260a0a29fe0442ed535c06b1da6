@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9eaf0db_389242d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-09T09:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a5df6d8_5a1af79e",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "ff09c0763f4ce260a0a29fe0442ed535c06b1da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7cb21d1_6de3bfd7",
         "filename": "ios/chrome/browser/drag_and_drop/drop_and_navigate_interaction.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3dcbdb8f_b41240a9",
+        "filename": "ios/chrome/browser/drag_and_drop/drop_and_navigate_interaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-09T09:23:22Z",
+      "side": 1,
+      "message": "Done.\nBetter tests are coming once I\u0027ve landed this.",
+      "parentUuid": "f7cb21d1_6de3bfd7",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "ff09c0763f4ce260a0a29fe0442ed535c06b1da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34ca9411_72ff2c14",
         "filename": "ios/chrome/browser/drag_and_drop/drop_and_navigate_interaction.mm",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-09T08:51:33Z",
       "side": 1,
       "message": "Should this be \"[self canAcceptDropSession:session]\"?",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "ff09c0763f4ce260a0a29fe0442ed535c06b1da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6008900_9bd8ff73",
+        "filename": "ios/chrome/browser/drag_and_drop/drop_and_navigate_interaction.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-09T09:23:22Z",
+      "side": 1,
+      "message": "No, because in the future |canAcceptDropSession| will also return true for |canLoadObjectsOfClass:[NSString class]|.",
+      "parentUuid": "34ca9411_72ff2c14",
       "range": {
         "startLine": 40,
         "startChar": 6,
