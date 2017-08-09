@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68a350a9_c42b95e3",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-09T19:22:35Z",
+      "side": 1,
+      "message": "If I understand it correctly, the PlatformSensorFusion::CreateSensorCallback() callback order is not guaranteed. For example, if the source sensors are sensor 1, 2, 3, the actual PlatformSensorFusion::CreateSensorCallback() call order for them might be sensor 2, 3, 1, and in that order the sensors are stored in the |source_sensors_| by using the push_back() here. So their order is not the same as stored in the |source_types_| in PlatformSensorFusionAlgorithm. And then the concrete fusion algorithm then can not just use number index to get sensor data.\n\nBTW, I am working on an issue that is related to this retrieving sensor data by index:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d742408\nAnd it seems that it will eventually remove the index, and just use sensor type to retrieve data. This will make it less error-prone and more clear.",
+      "revId": "1fa2a3431ccdf28c2c004d8f5bdcb41c1c365dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
