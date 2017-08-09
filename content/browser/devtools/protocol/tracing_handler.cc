@@ -126,6 +126,7 @@ TracingHandler::TracingHandler(TracingHandler::Target target,
       frame_tree_node_id_(frame_tree_node_id),
       did_initiate_recording_(false),
       return_as_stream_(false),
+      trace_data_buffer_(""),
       weak_factory_(this) {}
 
 TracingHandler::~TracingHandler() {
@@ -150,19 +151,78 @@ Response TracingHandler::Disable() {
 }
 
 void TracingHandler::OnTraceDataCollected(const std::string& trace_fragment) {
+  const std::string valid_trace_fragment =
+      UpdateTraceDataBuffer(trace_fragment);
+  if (valid_trace_fragment.empty())
+    return;
+
   // Hand-craft protocol notification message so we can substitute JSON
   // that we already got as string as a bare object, not a quoted string.
   std::string message(
       "{ \"method\": \"Tracing.dataCollected\", \"params\": { \"value\": [");
   const size_t messageSuffixSize = 10;
-  message.reserve(message.size() + trace_fragment.size() + messageSuffixSize);
-  message += trace_fragment;
+  message.reserve(message.size() + valid_trace_fragment.size() +
+                  messageSuffixSize);
+  message += valid_trace_fragment;
   message += "] } }";
   frontend_->sendRawNotification(message);
 }
 
 void TracingHandler::OnTraceComplete() {
+  if (!trace_data_buffer_.empty())
+    OnTraceDataCollected("");
+  DCHECK(trace_data_buffer_.empty());
   frontend_->TracingComplete();
+}
+
+std::string TracingHandler::UpdateTraceDataBuffer(
+    const std::string& trace_fragment) {
+  const std::string trace_str = trace_data_buffer_ + trace_fragment;
+  size_t start = 0;
+  while (start < trace_str.size() && trace_str[start] != '{') {
+    start++;
+  }
+  size_t end = start;
+  size_t pos = start + 1;
+  size_t opens = 1;
+  bool in_string = false;
+  bool slashed = false;
+  while (pos < trace_str.size()) {
+    auto c = trace_str[pos];
+    switch (c) {
+      case '{':
+        if (!in_string && !slashed)
+          opens++;
+        break;
+      case '}':
+        if (!in_string && !slashed) {
+          DCHECK_GT(opens, 0u);
+          opens--;
+          if (opens == 0)
+            end = pos + 1;
+        }
+        break;
+      case '"':
+        if (!slashed)
+          in_string = !in_string;
+        break;
+      case 'u':
+        if (slashed)
+          pos += 4;
+        break;
+    }
+
+    if (c == '\\') {
+      slashed = !slashed;
+    } else {
+      slashed = false;
+    }
+
+    pos++;
+  }
+
+  trace_data_buffer_ = trace_str.substr(end);
+  return trace_str.substr(start, end - start);
 }
 
 void TracingHandler::OnTraceToStreamComplete(const std::string& stream_handle) {

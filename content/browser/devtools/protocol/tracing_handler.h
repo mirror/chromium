@@ -31,8 +31,8 @@ class DevToolsIOContext;
 
 namespace protocol {
 
-class TracingHandler : public DevToolsDomainHandler,
-                       public Tracing::Backend {
+class CONTENT_EXPORT TracingHandler : public DevToolsDomainHandler,
+                                      public Tracing::Backend {
  public:
   enum Target { Browser, Renderer };
   TracingHandler(Target target,
@@ -65,6 +65,8 @@ class TracingHandler : public DevToolsDomainHandler,
   bool did_initiate_recording() { return did_initiate_recording_; }
 
  private:
+  friend class TracingHandlerTest;  // For testing.
+
   void OnRecordingEnabled(std::unique_ptr<StartCallback> callback);
   void OnBufferUsage(float percent_full, size_t approximate_event_count);
   void OnCategoriesReceived(std::unique_ptr<GetCategoriesCallback> callback,
@@ -73,14 +75,18 @@ class TracingHandler : public DevToolsDomainHandler,
                             bool success,
                             uint64_t dump_id);
 
+  // Assuming that the input is a potentially incomplete string representation
+  // of a comma separated list of JSON objects, return the longest prefix that
+  // is a valid list and store the rest to be used in subsequent calls.
+  std::string UpdateTraceDataBuffer(const std::string& trace_fragment);
+
   void SetupTimer(double usage_reporting_interval);
   void StopTracing(
       const scoped_refptr<TracingController::TraceDataSink>& trace_data_sink);
   bool IsTracing() const;
   static bool IsStartupTracingActive();
-  CONTENT_EXPORT static base::trace_event::TraceConfig
-      GetTraceConfigFromDevToolsConfig(
-          const base::DictionaryValue& devtools_config);
+  static base::trace_event::TraceConfig GetTraceConfigFromDevToolsConfig(
+      const base::DictionaryValue& devtools_config);
 
   std::unique_ptr<base::Timer> buffer_usage_poll_timer_;
   Target target_;
@@ -90,6 +96,7 @@ class TracingHandler : public DevToolsDomainHandler,
   int frame_tree_node_id_;
   bool did_initiate_recording_;
   bool return_as_stream_;
+  std::string trace_data_buffer_;
   base::WeakPtrFactory<TracingHandler> weak_factory_;
 
   FRIEND_TEST_ALL_PREFIXES(TracingHandlerTest,
