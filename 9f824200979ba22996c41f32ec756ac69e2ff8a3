@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4fe87bda_92960b71",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-09T17:11:02Z",
+      "side": 1,
+      "message": "We should create a bug for this.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 4
+      },
+      "revId": "9f824200979ba22996c41f32ec756ac69e2ff8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b47228be_38343690",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 6
