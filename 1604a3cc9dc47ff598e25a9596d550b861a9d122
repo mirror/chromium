@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bbe485e_aa249d95",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 1411,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-09T16:49:51Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 1411,
+        "startChar": 3,
+        "endLine": 1411,
+        "endChar": 0
+      },
+      "revId": "1604a3cc9dc47ff598e25a9596d550b861a9d122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c6b875_bf7a15c2",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 1416,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-09T16:49:51Z",
+      "side": 1,
+      "message": "It seems to me that your test can pass without this line too.\nThe page loads, then it tries to request the forms, once the forms are available we make a request to the store.",
+      "range": {
+        "startLine": 1416,
+        "startChar": 2,
+        "endLine": 1416,
+        "endChar": 19
+      },
+      "revId": "1604a3cc9dc47ff598e25a9596d550b861a9d122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
