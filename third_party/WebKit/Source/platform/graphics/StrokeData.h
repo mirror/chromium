@@ -74,8 +74,10 @@ class PLATFORM_EXPORT StrokeData final {
   // Sets everything on the paint except the pattern, gradient and color.
   // If a non-zero length is provided, the number of dashes/dots on a
   // dashed/dotted line will be adjusted to start and end that length with a
-  // dash/dot.
-  void SetupPaint(PaintFlags*, int length = 0) const;
+  // dash/dot. If non-zero, dash_thickness is the thickness to use when
+  // deciding on dash sizes. Used in border painting when we stroke thick
+  // to allow for clipping at corners, but still want small dashes.
+  void SetupPaint(PaintFlags*, int length = 0, int dash_thickess = 0) const;
 
   // Setup any DashPathEffect on the paint. If a non-zero length is provided,
   // and no line dash has been set, the number of dashes/dots on a dashed/dotted
