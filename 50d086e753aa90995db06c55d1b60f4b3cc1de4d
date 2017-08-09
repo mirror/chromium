@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4583099f_2117c6ba",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T22:22:21Z",
+      "side": 1,
+      "message": "Initialize platform_override_ too, as otherwise tools can complain that it\u0027s never initialized in ctor.",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 130,
+        "endChar": 28
+      },
+      "revId": "50d086e753aa90995db06c55d1b60f4b3cc1de4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19669a54_4e6f28fe",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T22:22:21Z",
+      "side": 1,
+      "message": "Comment please and on the field above.",
+      "range": {
+        "startLine": 142,
+        "startChar": 17,
+        "endLine": 142,
+        "endChar": 18
+      },
+      "revId": "50d086e753aa90995db06c55d1b60f4b3cc1de4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
