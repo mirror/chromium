@@ -11,6 +11,7 @@
 #import "ios/chrome/browser/ui/material_components/utils.h"
 #import "ios/third_party/material_components_ios/src/components/AppBar/src/MaterialAppBar.h"
 #import "ios/third_party/material_components_ios/src/components/CollectionCells/src/MaterialCollectionCells.h"
+#import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -46,6 +47,23 @@
         self.collectionView;
     // After all other views have been registered.
     [self.appBar addSubviewsToParent];
+
+    // If |self.title| is already set, replace the nav bar's title with a label
+    // that adapts its font size to fit in the available space.
+    if (self.title) {
+      UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+      titleLabel.text = self.title;
+      titleLabel.font = [MDCTypography titleFont];
+      titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
+      titleLabel.textAlignment = NSTextAlignmentCenter;
+      titleLabel.autoresizingMask =
+          UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+      titleLabel.numberOfLines = 1;
+      titleLabel.minimumScaleFactor = 0.6;
+      titleLabel.adjustsFontSizeToFitWidth = YES;
+      titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+      self.appBar.navigationBar.titleView = titleLabel;
+    }
   }
 }
 

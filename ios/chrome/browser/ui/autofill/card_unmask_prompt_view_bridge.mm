@@ -25,7 +25,6 @@
 #import "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/third_party/material_components_ios/src/components/AppBar/src/MaterialAppBar.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
-#import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -152,6 +151,7 @@ void CardUnmaskPromptViewBridge::DeleteSelf() {
       [super initWithLayout:layout style:CollectionViewControllerStyleAppBar];
   if (self) {
     _bridge = bridge;
+    self.title = SysUTF16ToNSString(_bridge->GetController()->GetWindowTitle());
   }
   return self;
 }
@@ -163,19 +163,6 @@ void CardUnmaskPromptViewBridge::DeleteSelf() {
       kCardUnmaskPromptCollectionViewAccessibilityID;
 
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;
-
-  UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  titleLabel.text =
-      SysUTF16ToNSString(_bridge->GetController()->GetWindowTitle());
-  titleLabel.font = [MDCTypography titleFont];
-  titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
-  titleLabel.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  titleLabel.numberOfLines = 1;
-  titleLabel.minimumScaleFactor = 0.6;
-  titleLabel.adjustsFontSizeToFitWidth = YES;
-  titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-  self.appBar.navigationBar.titleView = titleLabel;
 
   [self showCVCInputForm];
 
