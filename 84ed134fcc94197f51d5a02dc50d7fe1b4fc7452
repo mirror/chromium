@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "0dd6bf13_b3b78972",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-09T04:22:08Z",
+      "side": 1,
+      "message": "Right now, _linkifyWithCustomLinkifier() just takes in a string and outputs slightly formatted text.  I think it might be cleaner to separate the DOM-message building into its own function, and call it here.  Similar to how the Network source message branch above gets its custom formatting instead _format().\n\nThat way, we could keep _linkifyWithCustomLinkifier and its clients static, and you could still call upon it to linkify the text part of the message.  What do you think about bypassing _format()?",
+      "range": {
+        "startLine": 266,
+        "startChar": 63,
+        "endLine": 266,
+        "endChar": 0
+      },
+      "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "512b28b5_e2b289a2",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 1
@@ -47,6 +70,46 @@
       "writtenOn": "2017-08-09T00:05:30Z",
       "side": 1,
       "message": "I think this should not be needed, if you instead pass warning level for the console message.",
+      "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2d4697_793c9315",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-09T04:22:08Z",
+      "side": 1,
+      "message": "With dgozman@\u0027s suggestion, we shouldn\u0027t need to have a regex to extract the nodeId!",
+      "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ce5832_5ba56b46",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-09T04:22:08Z",
+      "side": 1,
+      "message": "dgozman@, maybe we want to attach some objectGroup name like \u0027domMessage\u0027 to all of these, and then release the object group upon console clear?",
+      "range": {
+        "startLine": 1294,
+        "startChar": 42,
+        "endLine": 1294,
+        "endChar": 43
+      },
       "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
