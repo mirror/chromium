@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59ab17b1_d62c0e40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-09T00:42:13Z",
+      "side": 1,
+      "message": "Could you add a brief explanation why?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "ef1f585a93eba23d75f2f6c20907fd01cbcd6b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2628cd_e3153a12",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-09T00:42:13Z",
+      "side": 1,
+      "message": "Add an explanation here too. I\u0027m guessing this is because otherwise only messages on the main interface are dumped.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 34
+      },
+      "revId": "ef1f585a93eba23d75f2f6c20907fd01cbcd6b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
