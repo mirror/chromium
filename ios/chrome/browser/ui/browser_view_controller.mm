@@ -3215,7 +3215,12 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 
 - (id)nativeControllerForTab:(Tab*)tab {
-  id nativeController = [_nativeControllersForTabIDs objectForKey:tab.tabId];
+  // Do not rely on _nativeControllersForTabIDs for looking up native
+  // controller, becase in ARC runtime _nativeControllersForTabIDs may contain
+  // alive native controller, even if CRWWebController's native controller is
+  // nil. |tab.webController.nativeController| is the only correct source of
+  // truth under ARC.
+  id nativeController = tab.webController.nativeController;
   if (!nativeController) {
     // If there is no controller, check for a native controller stored under
     // the temporary key.
