@@ -20,7 +20,7 @@ DomRepeatEvent.prototype.model;
 Polymer({
   is: 'site-data',
 
-  behaviors: [CookieTreeBehavior, I18nBehavior],
+  behaviors: [CookieTreeBehavior, I18nBehavior, settings.RouteObserverBehavior],
 
   properties: {
     /**
@@ -62,9 +62,23 @@ Polymer({
     }
   },
 
-  /** @override */
-  ready: function() {
-    this.loadCookies();
+  /** @private */
+  last_route_: undefined,
+
+  /**
+   * Reload cookies when the cookie page is visited.
+   * To avoid loading cookies twice on first visit, last_route_ is used.
+   *
+   * settings.RouteObserverBehavior
+   * @param {!settings.Route} current_route
+   * @protected
+   */
+  currentRouteChanged: function(current_route) {
+    if (current_route == settings.routes.SITE_SETTINGS_COOKIES &&
+        current_route != this.last_route_) {
+      this.loadCookies();
+    }
+    this.last_route_ = current_route;
   },
 
   /**
