@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "5d854425_8cbc52c5",
+        "filename": "ios/chrome/browser/drag_and_drop/drop_and_navigate_interaction_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-09T09:56:58Z",
+      "side": 1,
+      "message": "This needs to be behind #if ... to only be compiled with iOS 11 SDK.",
+      "revId": "45f5bf4c5aa82e539d59008d748de735183e0b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2d61ad7_bc94203e",
         "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
         "patchSetId": 6
