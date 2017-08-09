@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a263a443_3f6d6708",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-09T06:33:27Z",
+      "side": 1,
+      "message": "That\u0027s a good point, though we should do mojo::ReportBadMessage in this case (the renderer could be malicious)",
+      "parentUuid": "3e40327a_022d6e5b",
+      "revId": "9ded55400fa74f8259e2c5b118b6f5fa543cb9f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fc4cf41_59031f13",
         "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
         "patchSetId": 9
