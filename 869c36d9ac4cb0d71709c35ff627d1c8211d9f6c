@@ -16,6 +16,24 @@
       "revId": "869c36d9ac4cb0d71709c35ff627d1c8211d9f6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "384967a7_44abfea6",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-09T23:04:59Z",
+      "side": 1,
+      "message": "Should this also be as follows?\n\nif (!IsJavascriptAllowed) {\n  BadMessageReceived();\n  return;\n}\n\nFireWebUIListener(\"reload-printer-list\");",
+      "parentUuid": "b66b43c5_37bd620c",
+      "revId": "869c36d9ac4cb0d71709c35ff627d1c8211d9f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
