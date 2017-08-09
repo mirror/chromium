@@ -67,6 +67,9 @@ class CONTENT_EXPORT TouchActionFilter {
   // and the next DoubleTap.
   bool allow_current_double_tap_event_;
 
+  // Android Accessibility setting: Force enable zoom
+  bool force_enable_zoom_;
+
   // What touch actions are currently permitted.
   cc::TouchAction allowed_touch_action_;
 
