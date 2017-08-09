@@ -37,6 +37,10 @@ public final class SuggestionsConfig {
         return ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT);
     }
 
+    public static boolean useExplore() {
+        return ChromeFeatureList.isEnabled(ChromeFeatureList.SITES_EXPLORATION);
+    }
+
     /**
      * @param resources The resources to fetch the color from.
      * @return The background color for the suggestions sheet content.
