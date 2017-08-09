@@ -1,0 +1,12 @@
+{
+  "dependencies": [
+    "test_runner",
+    "integration_test_runner"
+  ],
+  "scripts": [
+    "CoverageTestRunner.js"
+  ],
+  "skip_compilation": [
+    "CoverageTestRunner.js"
+  ]
+}

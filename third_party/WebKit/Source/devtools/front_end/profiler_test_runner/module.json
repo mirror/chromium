@@ -1,0 +1,14 @@
+{
+  "dependencies": [
+    "test_runner",
+    "integration_test_runner"
+  ],
+  "scripts": [
+    "HeapSnapshotTestRunner.js",
+    "ProfilerTestRunner.js"
+  ],
+  "skip_compilation": [
+    "HeapSnapshotTestRunner.js",
+    "ProfilerTestRunner.js"
+  ]
+}
