@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8696cacb_b5525d0b",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T15:57:26Z",
+      "side": 1,
+      "message": "Perhaps we should do this before deciding to call into ValidateAddress? Perhaps I\u0027m misunderstanding all the possible states...",
+      "range": {
+        "startLine": 121,
+        "startChar": 13,
+        "endLine": 124,
+        "endChar": 63
+      },
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4c25a4_047a859f",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T15:57:26Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment... where is MISSING_REQUIRED_FIELD set for example?",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 48
+      },
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d86d5b2_17687748",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T15:57:26Z",
+      "side": 1,
+      "message": "small case l",
+      "range": {
+        "startLine": 56,
+        "startChar": 23,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe98571_77a8ba47",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T15:57:26Z",
+      "side": 1,
+      "message": "nit: remove \"the\"",
+      "range": {
+        "startLine": 64,
+        "startChar": 61,
+        "endLine": 64,
+        "endChar": 64
+      },
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5298f5_6fd0df86",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T15:57:26Z",
+      "side": 1,
+      "message": "update comment",
+      "range": {
+        "startLine": 145,
+        "startChar": 58,
+        "endLine": 145,
+        "endChar": 80
+      },
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
