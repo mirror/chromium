@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "13a03467_63b8e00f",
+        "filename": "chrome/common/extensions/api/file_manager_private.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-09T06:28:02Z",
+      "side": 1,
+      "message": "nit: remove trailing spaces (perhaps warned by presubmit scripts)",
+      "revId": "8dcbfeb711cd29aaf13f41f218c60e4f01c6245a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "932c1414_31a1aeaa",
         "filename": "chrome/common/extensions/api/file_manager_private.idl",
         "patchSetId": 1
