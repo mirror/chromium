@@ -26,6 +26,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "build/build_config.h"
 #include "gin/array_buffer.h"
 #include "gin/public/gin_embedders.h"
 #include "gin/public/isolate_holder.h"
@@ -1738,6 +1739,20 @@ PDFiumPage::Area PDFiumEngine::GetCharIndex(const pp::Point& point,
 }
 
 bool PDFiumEngine::OnMouseDown(const pp::MouseInputEvent& event) {
+#if defined(OS_MACOSX)
+  uint32_t modifiers = event.GetModifiers();
+  if ((modifiers & PP_INPUTEVENT_MODIFIER_CONTROLKEY) &&
+      event.GetButton() == PP_INPUTEVENT_MOUSEBUTTON_LEFT) {
+    // Send a fake mouse down to trigger a right click.
+    uint32_t new_modifiers = modifiers & ~PP_INPUTEVENT_MODIFIER_CONTROLKEY;
+    pp::MouseInputEvent right_click_event(
+        client_->GetPluginInstance(), PP_INPUTEVENT_TYPE_MOUSEDOWN,
+        event.GetTimeStamp(), new_modifiers, PP_INPUTEVENT_MOUSEBUTTON_RIGHT,
+        event.GetPosition(), 1, event.GetMovement());
+    return OnMouseDown(right_click_event);
+  }
+#endif
+
   if (event.GetButton() == PP_INPUTEVENT_MOUSEBUTTON_RIGHT) {
     if (selection_.empty())
       return false;
