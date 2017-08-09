@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b38dfecc_036043b9",
+        "filename": "mojo/edk/system/core.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-09T20:22:20Z",
+      "side": 1,
+      "message": "Is my understanding correct that these message-contents-related methods are not thread safe?",
+      "revId": "b9c0ea244c2f15421cf559c6884329e981f45350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c45b84_41bd4061",
+        "filename": "mojo/edk/system/user_message_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-09T20:22:20Z",
+      "side": 1,
+      "message": "I noticed that handles are used to populate fields in this event message in the \"Attach\" and \"Commit\" stage, but not the \"Extend\" stage. What is the reason to do it this way? For example, why not only doing it in the \"Commit\" stage?",
+      "revId": "b9c0ea244c2f15421cf559c6884329e981f45350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338b8663_dc705a2c",
+        "filename": "mojo/public/c/system/message_pipe.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-09T20:22:20Z",
+      "side": 1,
+      "message": "If the user cannot use the part of buffer |*buffer_size| - |payload_size| without MESMP anyway, why is it useful to have this |buffer_size| param? Does it make sense to remove it from all the three methods below?",
+      "revId": "b9c0ea244c2f15421cf559c6884329e981f45350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5c2078_869e90db",
+        "filename": "mojo/public/c/system/message_pipe.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-09T20:22:20Z",
+      "side": 1,
+      "message": "nit: please remove the extra \"is\".",
+      "revId": "b9c0ea244c2f15421cf559c6884329e981f45350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc522737_8d8be04d",
+        "filename": "mojo/public/c/system/message_pipe.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-09T20:22:20Z",
+      "side": 1,
+      "message": "[optional, just for discussion] So it is illegal to allocate a big buffer and at the end only commit part of it. I don\u0027t have any existing use case in mind, but it seems a reasonable way to use the API.",
+      "range": {
+        "startLine": 378,
+        "startChar": 50,
+        "endLine": 378,
+        "endChar": 64
+      },
+      "revId": "b9c0ea244c2f15421cf559c6884329e981f45350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
