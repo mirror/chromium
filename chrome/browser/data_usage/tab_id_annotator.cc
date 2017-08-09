@@ -75,8 +75,8 @@ void TabIdAnnotator::Annotate(net::URLRequest* request,
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(data_use);
 
-  TabIdProvider* existing_tab_id_provider = reinterpret_cast<TabIdProvider*>(
-      request->GetUserData(TabIdProvider::kTabIdProviderUserDataKey));
+  TabIdProvider* existing_tab_id_provider = static_cast<TabIdProvider*>(
+      request->GetUserData(TabIdProvider::kUserDataKey));
   if (existing_tab_id_provider) {
     existing_tab_id_provider->ProvideTabId(
         base::Bind(&AnnotateDataUse, base::Passed(&data_use), callback));
