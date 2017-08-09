@@ -91,6 +91,17 @@ LocalFrame* ToFrame(ExecutionContext* context) {
     return ToMainThreadWorkletGlobalScope(context)->GetFrame();
   return nullptr;
 }
+
+void BuildAuxData(StringBuilder& aux_data_builder,
+                  const String& prefix,
+                  const String& is_right_world,
+                  LocalFrame* frame) {
+  aux_data_builder.Append(prefix);
+  aux_data_builder.Append(is_right_world);
+  aux_data_builder.Append(",\"frameId\":\"");
+  aux_data_builder.Append(IdentifiersFactory::FrameId(frame));
+  aux_data_builder.Append("\"}");
+}
 }
 
 MainThreadDebugger* MainThreadDebugger::instance_ = nullptr;
@@ -144,11 +155,12 @@ void MainThreadDebugger::ContextCreated(ScriptState* script_state,
   v8::HandleScope handles(script_state->GetIsolate());
   DOMWrapperWorld& world = script_state->World();
   StringBuilder aux_data_builder;
-  aux_data_builder.Append("{\"isDefault\":");
-  aux_data_builder.Append(world.IsMainWorld() ? "true" : "false");
-  aux_data_builder.Append(",\"frameId\":\"");
-  aux_data_builder.Append(IdentifiersFactory::FrameId(frame));
-  aux_data_builder.Append("\"}");
+  BuildAuxData(aux_data_builder,
+               "{\"isDefault\":", world.IsMainWorld() ? "true" : "false",
+               frame);
+  BuildAuxData(aux_data_builder,
+               "{\"isWorklet\":", world.IsWorkerWorld() ? "true" : "false",
+               frame);
   String aux_data = aux_data_builder.ToString();
   String human_readable_name =
       !world.IsMainWorld() ? world.NonMainWorldHumanReadableName() : String();
