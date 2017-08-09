@@ -7,6 +7,7 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_home_handset_view_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_home_tablet_ntp_controller.h"
+#import "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -14,12 +15,12 @@
 
 @implementation BookmarkControllerFactory
 
-- (BookmarkHomeHandsetViewController*)
+- (BookmarkHomeViewController*)
 bookmarkControllerWithBrowserState:(ios::ChromeBrowserState*)browserState
                             loader:(id<UrlLoader>)loader {
-  return
-      [[BookmarkHomeHandsetViewController alloc] initWithLoader:loader
-                                                   browserState:browserState];
+  return (BookmarkHomeViewController*)[[BookmarkHomeHandsetViewController alloc]
+      initWithLoader:loader
+        browserState:browserState];
 }
 
 - (BookmarkHomeTabletNTPController*)

@@ -117,10 +117,6 @@ class BookmarkNode;
 
 #pragma mark - Subclass overrides
 
-// Navigates to the bookmark URL that was tapped. MUST be overridden
-// by subclasses.
-- (void)navigateToBookmarkURL:(const GURL&)url;
-
 // Creates and returns actionSheetCoordinator. MUST
 // be overridden by subclass.
 - (ActionSheetCoordinator*)createActionSheetCoordinatorOnView:(UIView*)view;

@@ -24,7 +24,7 @@
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_controller_factory.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_edit_view_controller.h"
-#import "ios/chrome/browser/ui/bookmarks/bookmark_home_handset_view_controller.h"
+#import "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_navigation_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h"
 #include "ios/chrome/browser/ui/uikit_ui_util.h"
@@ -47,7 +47,7 @@ const int64_t kLastUsedFolderNone = -1;
 
 @interface BookmarkInteractionController ()<
     BookmarkEditViewControllerDelegate,
-    BookmarkHomeHandsetViewControllerDelegate> {
+    BookmarkHomeViewControllerDelegate> {
   // The browser state of the current user.
   ios::ChromeBrowserState* _currentBrowserState;  // weak
 
@@ -66,7 +66,7 @@ const int64_t kLastUsedFolderNone = -1;
 @property(nonatomic, assign) BookmarkModel* bookmarkModel;
 
 // A reference to the potentially presented bookmark browser.
-@property(nonatomic, strong) BookmarkHomeHandsetViewController* bookmarkBrowser;
+@property(nonatomic, strong) BookmarkHomeViewController* bookmarkBrowser;
 
 // A reference to the potentially presented single bookmark editor.
 @property(nonatomic, strong) BookmarkEditViewController* bookmarkEditor;
@@ -141,7 +141,7 @@ const int64_t kLastUsedFolderNone = -1;
 }
 
 - (void)dealloc {
-  _bookmarkBrowser.delegate = nil;
+  _bookmarkBrowser.bookmarkDelegate = nil;
   _bookmarkEditor.delegate = nil;
 }
 
@@ -227,7 +227,7 @@ const int64_t kLastUsedFolderNone = -1;
   self.bookmarkBrowser = [bookmarkControllerFactory
       bookmarkControllerWithBrowserState:_currentBrowserState
                                   loader:_loader];
-  self.bookmarkBrowser.delegate = self;
+  self.bookmarkBrowser.bookmarkDelegate = self;
   self.bookmarkBrowser.modalPresentationStyle = UIModalPresentationFormSheet;
   [_parentController presentViewController:self.bookmarkBrowser
                                   animated:YES
@@ -239,11 +239,12 @@ const int64_t kLastUsedFolderNone = -1;
     return;
 
   [self.bookmarkBrowser dismissModals:animated];
-  [_parentController dismissViewControllerAnimated:animated
-                                        completion:^{
-                                          self.bookmarkBrowser.delegate = nil;
-                                          self.bookmarkBrowser = nil;
-                                        }];
+  [_parentController
+      dismissViewControllerAnimated:animated
+                         completion:^{
+                           self.bookmarkBrowser.bookmarkDelegate = nil;
+                           self.bookmarkBrowser = nil;
+                         }];
 }
 
 - (void)dismissBookmarkEditorAnimated:(BOOL)animated {
@@ -279,11 +280,11 @@ const int64_t kLastUsedFolderNone = -1;
   [self dismissBookmarkEditorAnimated:YES];
 }
 
-#pragma mark - BookmarkHomeHandsetViewControllerDelegate
+#pragma mark - BookmarkHomeViewControllerDelegate
 
-- (void)bookmarkHomeHandsetViewControllerWantsDismissal:
-            (BookmarkHomeHandsetViewController*)controller
-                                        navigationToUrl:(const GURL&)url {
+- (void)bookmarkHomeViewControllerWantsDismissal:
+            (BookmarkHomeViewController*)controller
+                                 navigationToUrl:(const GURL&)url {
   [self dismissBookmarkBrowserAnimated:YES];
 
   if (url != GURL()) {
