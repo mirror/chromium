@@ -16,6 +16,24 @@
       "revId": "54fc5b7fa3fc14669226f2a93444ab893951850b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc24d6f_3fde2dd5",
+        "filename": "services/viz/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-09T18:14:48Z",
+      "side": 1,
+      "message": "Can you take another look please? I followed the pattern used in the file you linked and the code is cleaner now IMO.",
+      "parentUuid": "d40457f1_634f7f31",
+      "revId": "54fc5b7fa3fc14669226f2a93444ab893951850b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
