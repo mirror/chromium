@@ -146,6 +146,26 @@ void AppListPresenterDelegate::OnShown(int64_t display_id) {
   is_visible_ = true;
   aura::Window* root_window = Shell::GetRootWindowForDisplayId(display_id);
   Shell::Get()->NotifyAppListVisibilityChanged(is_visible_, root_window);
+
+  if (view_->GetWidget()->GetWindowBoundsInScreen().y() == 0 &&
+      view_->app_list_state() == app_list::AppListView::PEEKING) {
+    // This fixes the bug where closing with ESC after activating tablet mode
+    gfx::Rect b = view_->GetWidget()->GetWindowBoundsInScreen();
+    gfx::Rect bounds = ScreenUtil::GetDisplayBoundsWithShelf(root_window);
+    ::wm::ConvertRectToScreen(root_window, &bounds);
+
+    b.set_y(bounds.height());
+    view_->GetWidget()->SetBounds(b);
+
+    view_->SetState(app_list::AppListView::PEEKING);
+    // Next step of the fix:
+    // Put all of this behind a flag.
+    // 1. Call ScheduleAnimation in OnDismissed (only for
+    // is_fullscreen_app_list_enabled_) -- I recommend trying this first because
+    // I think it will have less side effects. or 2. Remove the close animation
+    // in ScheduleAnimation Explicitly call SetState(CLOSED) in OnDismissed
+    // Implement the close animation in AppListView
+  }
 }
 
 void AppListPresenterDelegate::OnDismissed() {
