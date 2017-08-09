@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a218ddb_c5c33f5a",
+        "filename": "ash/accelerators/accelerator_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-09T10:41:04Z",
+      "side": 1,
+      "message": "Done. Updated all callers as well. It wasn\u0027t much.",
+      "parentUuid": "d9ea03d6_d4e8444b",
+      "range": {
+        "startLine": 66,
+        "startChar": 9,
+        "endLine": 66,
+        "endChar": 27
+      },
+      "revId": "15c1d1e6f7fd6a106c44bc4fff3e630fe8a2dbed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d083fdbf_b30d902a",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2ca0383a_d1a0e318",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-09T10:41:04Z",
+      "side": 1,
+      "message": "Moved the logic to ash code.",
+      "parentUuid": "d083fdbf_b30d902a",
+      "range": {
+        "startLine": 206,
+        "startChar": 10,
+        "endLine": 206,
+        "endChar": 36
+      },
+      "revId": "15c1d1e6f7fd6a106c44bc4fff3e630fe8a2dbed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79f0961f_377aefc1",
         "filename": "ui/views/bubble/tray_bubble_view.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "15c1d1e6f7fd6a106c44bc4fff3e630fe8a2dbed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f101b27f_28671a1f",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-09T10:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79f0961f_377aefc1",
+      "range": {
+        "startLine": 394,
+        "startChar": 3,
+        "endLine": 394,
+        "endChar": 8
+      },
+      "revId": "15c1d1e6f7fd6a106c44bc4fff3e630fe8a2dbed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +211,30 @@
       "revId": "15c1d1e6f7fd6a106c44bc4fff3e630fe8a2dbed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5711e852_9279f38b",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-09T10:41:04Z",
+      "side": 1,
+      "message": "Yes, it goes. Moved the login into ash code. Thank you!",
+      "parentUuid": "e4e7df34_cb0207e9",
+      "range": {
+        "startLine": 56,
+        "startChar": 23,
+        "endLine": 56,
+        "endChar": 40
+      },
+      "revId": "15c1d1e6f7fd6a106c44bc4fff3e630fe8a2dbed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

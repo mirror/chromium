@@ -16,6 +16,24 @@
       "revId": "7e71c0565db2079adb2ab819e5c31ac7a4c494d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18922942_895360b2",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-09T10:41:04Z",
+      "side": 1,
+      "message": "kReservedAccelerators are accelerators which we always want to send them to Chrome if shell surface is active. Global high priority accelerators are for different purpose. Global high priority accelerator should be handled regardless of which window is active.\n\nFor our tray bubble view use case, we want to handle them only when system tray is shown and not activated yet. But we want to handle them regardless of current active window.",
+      "parentUuid": "e28d07a0_e1bcda31",
+      "revId": "7e71c0565db2079adb2ab819e5c31ac7a4c494d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
