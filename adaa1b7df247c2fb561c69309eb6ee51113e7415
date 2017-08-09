@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "754a2ae8_fe826b40",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-09T17:45:35Z",
+      "side": 1,
+      "message": "Android uses Character.codePointAt():\nhttps://android.googlesource.com/platform/frameworks/base/+/4cdeeadd42bc11f6f5f60f5301c09025cabfc65f/core/java/android/widget/SpellChecker.java#762\n\nMy reading of the code together with the Character.codePointAt() documentation:\nhttps://docs.oracle.com/javase/7/docs/api/java/lang/Character.html#codePointAt(char[],%20int)\n\nis that it\u0027s implemented correctly for text appended to the marker (where we look up the leading surrogate) but not for text prepended to the marker (where we look up the trailing surrogate, which I don\u0027t think Character.codePointAt() supports).\n\nIt looks like if we use U16_GET():\nhttps://cs.chromium.org/chromium/src/third_party/icu/source/common/unicode/utf16.h?l\u003d200\n\nit will work properly for either case (since it can apparently start on either surrogate). I think I\u0027d rather implement the Unicode handling correctly than try to match the potential Android bug exactly.",
+      "parentUuid": "73966c0f_250ee34f",
+      "revId": "adaa1b7df247c2fb561c69309eb6ee51113e7415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c72b0e7a_b74c2542",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.h",
         "patchSetId": 3
