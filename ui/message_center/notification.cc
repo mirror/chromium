@@ -204,18 +204,7 @@ std::unique_ptr<Notification> Notification::CreateSystemNotification(
     scoped_refptr<NotificationDelegate> delegate,
     const gfx::VectorIcon& small_image,
     SystemNotificationWarningLevel color_type) {
-  SkColor color = message_center::kSystemNotificationColorNormal;
-  switch (color_type) {
-    case SystemNotificationWarningLevel::NORMAL:
-      color = message_center::kSystemNotificationColorNormal;
-      break;
-    case SystemNotificationWarningLevel::WARNING:
-      color = message_center::kSystemNotificationColorWarning;
-      break;
-    case SystemNotificationWarningLevel::CRITICAL_WARNING:
-      color = message_center::kSystemNotificationColorCriticalWarning;
-      break;
-  }
+  SkColor color = GetAccentColorOfWarningLevel(color_type);
   base::string16 display_source_or_default = display_source;
   if (display_source_or_default.empty()) {
     display_source_or_default = l10n_util::GetStringFUTF16(
@@ -231,6 +220,24 @@ std::unique_ptr<Notification> Notification::CreateSystemNotification(
           ? gfx::Image()
           : gfx::Image(gfx::CreateVectorIcon(small_image, color)));
   return notification;
+}
+
+// static
+SkColor Notification::GetAccentColorOfWarningLevel(
+    SystemNotificationWarningLevel warning_level) {
+  SkColor color = message_center::kSystemNotificationColorNormal;
+  switch (warning_level) {
+    case SystemNotificationWarningLevel::NORMAL:
+      color = message_center::kSystemNotificationColorNormal;
+      break;
+    case SystemNotificationWarningLevel::WARNING:
+      color = message_center::kSystemNotificationColorWarning;
+      break;
+    case SystemNotificationWarningLevel::CRITICAL_WARNING:
+      color = message_center::kSystemNotificationColorCriticalWarning;
+      break;
+  }
+  return color;
 }
 
 }  // namespace message_center

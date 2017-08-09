@@ -50,6 +50,7 @@
 #include "ui/gfx/image/image_skia_rep.h"
 #include "ui/gfx/skia_util.h"
 #include "ui/message_center/message_center_style.h"
+#include "ui/message_center/notification.h"
 #include "ui/message_center/notifier_settings.h"
 #include "url/gurl.h"
 
@@ -336,6 +337,15 @@ bool NotificationsApiFunction::CreateNotification(
   if (options->is_clickable.get())
     optional_fields.clickable = *options->is_clickable;
 
+  // TODO(tetsui): Only allow using this attribute to whitelisted extensions.
+  // The color means the notification is from system, so it might not be
+  // appropriate that any extensions can use the color.
+  if (options->warning_level !=
+      api::notifications::SYSTEM_NOTIFICATION_WARNING_LEVEL_NONE) {
+    optional_fields.accent_color = Notification::GetAccentColorOfWarningLevel(
+        MapApiSystemNotificationWarningLevel(options->warning_level));
+  }
+
   // Create the notification api delegate. Ownership passed to the notification.
   NotificationDelegate* api_delegate = new WebNotificationDelegate(
       NotificationCommon::EXTENSION, GetProfile(),
@@ -541,6 +551,20 @@ NotificationsApiFunction::MapApiTemplateTypeToType(
       // Gracefully handle newer application code that is running on an older
       // runtime that doesn't recognize the requested template.
       return message_center::NOTIFICATION_TYPE_BASE_FORMAT;
+  }
+}
+
+message_center::SystemNotificationWarningLevel
+NotificationsApiFunction::MapApiSystemNotificationWarningLevel(
+    api::notifications::SystemNotificationWarningLevel type) {
+  switch (type) {
+    case api::notifications::SYSTEM_NOTIFICATION_WARNING_LEVEL_NONE:
+    case api::notifications::SYSTEM_NOTIFICATION_WARNING_LEVEL_NORMAL:
+      return message_center::SystemNotificationWarningLevel::NORMAL;
+    case api::notifications::SYSTEM_NOTIFICATION_WARNING_LEVEL_WARNING:
+      return message_center::SystemNotificationWarningLevel::WARNING;
+    case api::notifications::SYSTEM_NOTIFICATION_WARNING_LEVEL_CRITICAL_WARNING:
+      return message_center::SystemNotificationWarningLevel::CRITICAL_WARNING;
   }
 }
 

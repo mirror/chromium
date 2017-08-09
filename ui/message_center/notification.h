@@ -417,6 +417,10 @@ class MESSAGE_CENTER_EXPORT Notification {
       const gfx::VectorIcon& small_image,
       SystemNotificationWarningLevel color_type);
 
+  // Get accent color corresponds to the given warning level.
+  static SkColor GetAccentColorOfWarningLevel(
+      SystemNotificationWarningLevel warning_level);
+
  protected:
   // The type of notification we'd like displayed.
   NotificationType type_;

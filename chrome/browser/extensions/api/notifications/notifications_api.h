@@ -12,6 +12,7 @@
 #include "chrome/browser/extensions/chrome_extension_function.h"
 #include "chrome/common/extensions/api/notifications.h"
 #include "extensions/browser/extension_function.h"
+#include "ui/message_center/notification.h"
 #include "ui/message_center/notification_types.h"
 
 class Notification;
@@ -56,6 +57,10 @@ class NotificationsApiFunction : public ChromeAsyncExtensionFunction {
 
   message_center::NotificationType MapApiTemplateTypeToType(
       api::notifications::TemplateType type);
+
+  message_center::SystemNotificationWarningLevel
+  MapApiSystemNotificationWarningLevel(
+      api::notifications::SystemNotificationWarningLevel type);
 };
 
 class NotificationsCreateFunction : public NotificationsApiFunction {
