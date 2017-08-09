@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5240be2d_bc1347b0",
+        "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-09T19:03:31Z",
+      "side": 1,
+      "message": "Nit: This implementation would also work for HTMLCanvasElement (it would always take the document\u0027s FS).  So why don\u0027t we just put this implementation in CanvasRenderingContextHost, and make this method non-virtual?",
+      "range": {
+        "startLine": 415,
+        "startChar": 31,
+        "endLine": 415,
+        "endChar": 46
+      },
+      "revId": "81fc98bba6f8796596d2ae17e735a72f74b4d431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
