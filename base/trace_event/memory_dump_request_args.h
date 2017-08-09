@@ -32,7 +32,9 @@ enum class MemoryDumpType {
   EXPLICITLY_TRIGGERED,  // Non maskable dump request.
   PEAK_MEMORY_USAGE,     // Dumping memory at detected peak total memory usage.
   SUMMARY_ONLY,          // Calculate just the summary & don't add to the trace.
-  LAST = SUMMARY_ONLY
+  VM_REGIONS_ONLY,       // Retrieve only memory maps & don't add to the trace.
+                         // Used only for the heap profiler.
+  LAST = VM_REGIONS_ONLY
 };
 
 // Tells the MemoryDumpProvider(s) how much detailed their dumps should be.
@@ -63,6 +65,11 @@ enum class MemoryDumpLevelOfDetail : uint32_t {
 // MemoryDumpManager::RequestGlobalMemoryDump()). Keep this consistent with
 // memory_instrumentation.mojo and memory_instrumentation_struct_traits.{h,cc}
 struct BASE_EXPORT MemoryDumpRequestArgs {
+  MemoryDumpRequestArgs() = default;
+  MemoryDumpRequestArgs(uint64_t dump_guid,
+                        MemoryDumpType dump_type,
+                        MemoryDumpLevelOfDetail level_of_detail);
+
   // Globally unique identifier. In multi-process dumps, all processes issue a
   // local dump with the same guid. This allows the trace importers to
   // reconstruct the global dump.
