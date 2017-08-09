@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75fad2e7_c1ab71bb",
+        "filename": "mojo/public/cpp/bindings/array_traits_carray.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-09T17:18:21Z",
+      "side": 1,
+      "message": "This is the only iffy bit in my opinion. Looking at https://github.com/Microsoft/GSL/blob/master/include/gsl/span no such function is present and it seems pretty trivial to do something along the lines of \n\nConstCArray\u003cFoo\u003e new_span(old_span.data() + pos, count);\n\n(as opposed to auto new_span \u003d old_span.subspan(pos, count);)\n\nI\u0027m not too opposed to it here, but it\u0027s something to consider from the minimalistic type of view.",
+      "range": {
+        "startLine": 51,
+        "startChar": 24,
+        "endLine": 51,
+        "endChar": 31
+      },
+      "revId": "e7bb5db607212c772e21b907850526f0278ae0d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
