@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a26f2733_01118c93",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-09T21:03:33Z",
+      "side": 1,
+      "message": "The PDF Viewer does not get the left mouse up later, as described on line 11.",
+      "parentUuid": "1341748b_0aea4f32",
+      "revId": "35d5baba7218b2946d53df50b1465006484a3e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61bfaf55_f6c0efc3",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e543d7eb_da58eb72",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1748,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-09T21:03:33Z",
+      "side": 1,
+      "message": "So I sent this out separately from the OnRightMouseDown() CL. Maybe I\u0027ll just call that here? Let me rebase...",
+      "parentUuid": "61bfaf55_f6c0efc3",
+      "revId": "35d5baba7218b2946d53df50b1465006484a3e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e65bdbef_c9f58802",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-09T13:44:31Z",
       "side": 1,
       "message": "This may end up clearing the selection, is that intended?",
+      "revId": "35d5baba7218b2946d53df50b1465006484a3e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17ccebf_80b8e7fd",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1752,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-09T21:03:33Z",
+      "side": 1,
+      "message": "As a result of going through the right click handling code? If so, then yes. For instance, on a mac laptop without a mouse, ctrl + (left and only) click is the only way to right click.",
+      "parentUuid": "e65bdbef_c9f58802",
       "revId": "35d5baba7218b2946d53df50b1465006484a3e1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
