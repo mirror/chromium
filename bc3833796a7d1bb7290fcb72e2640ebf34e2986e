@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0e6d992_1817b026",
+        "filename": "content/browser/renderer_host/media/audio_sync_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-09T21:23:38Z",
+      "side": 1,
+      "message": "Add a note about what happens when zero\u0027d data is output to bitstream? Garbage? Silence?",
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec5bdc4_af5589b3",
+        "filename": "media/base/audio_bus.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-09T21:23:38Z",
+      "side": 1,
+      "message": "Comment about why we allow this and what it does to a bitstream...",
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

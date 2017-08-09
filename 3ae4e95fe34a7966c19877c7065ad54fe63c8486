@@ -282,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "8586454c_8887651a",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-09T21:23:38Z",
+      "side": 1,
+      "message": "Correct, we haven\u0027t finished / started yet.",
+      "parentUuid": "0bb05f7f_3a86b950",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20350349_b472f447",
         "filename": "media/audio/audio_output_device.cc",
         "patchSetId": 7
@@ -457,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "65373e91_6a7ac9fa",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-09T21:23:38Z",
+      "side": 1,
+      "message": "Probably worth adding that statement as a comment.",
+      "parentUuid": "30228639_ae8b06ad",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9150e965_c982e492",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 7
@@ -521,6 +557,24 @@
       "side": 1,
       "message": "I thought Clank wants to support API level 16+. Has it changed?",
       "parentUuid": "8b2e07ec_7970905f",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636c228c_f0b2d919",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-09T21:23:38Z",
+      "side": 1,
+      "message": "Clank does, but are you going to support Cast on 16+? Otherwise we can just limit bitstream output support to L+. Chrome\u0027s media client will disable bitstream output, so it\u0027s up to your needs.",
+      "parentUuid": "c5933073_ea202a79",
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -626,6 +680,24 @@
       "side": 1,
       "message": "I added DCHECK() on several methods.\nIt seems that we do need Zero(): https://cs.chromium.org/chromium/src/content/browser/renderer_host/media/audio_sync_reader.cc?l\u003d157",
       "parentUuid": "ca771dd7_d0ef45b8",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b3f05eb_736ca991",
+        "filename": "media/base/audio_bus.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-09T21:23:38Z",
+      "side": 1,
+      "message": "What does that do to bitstream output? Have you tested what happens audibly if zeros are sent? Should we just allow AudioSyncReader to block indefinitely for bitstream output?",
+      "parentUuid": "e038be58_7431a87a",
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
