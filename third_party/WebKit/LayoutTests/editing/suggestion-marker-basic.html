@@ -1,0 +1,96 @@
+<!doctype html>
+<script src="../resources/run-after-layout-and-paint.js"></script>
+<!-- Tests various permutations of active suggestion underlines in LTR and RTL
+     text. -->
+<div dir="rtl" style="float: right;">
+    <p>RTL</p>
+    <div id="markRtlAll" dir="rtl">abcdef</div>
+    <div id="markRtlAllThick">abcdef</div>
+    <div id="markRtlBeginning">abcdef</div>
+    <div id="markRtlAllExceptFirstAndLast">abcdef</div>
+    <div id="markRtlEnd">abcdef</div>
+    <div id="markRtlAcrossNodes"><div>abcdef<span>ghijkl</span></div><div>mnopqr</div></div>
+</div>
+
+<div style="float: left;">
+    <p>LTR</p>
+    <div id="markAll">abcdef</div>
+    <div id="markAllThick">abcdef</div>
+    <div id="markAllDifferentColors">abcdef</div>
+    <div id="markBeginning">abcdef</div>
+    <div id="markAllExceptFirstAndLast">abcdef</div>
+    <div id="markEnd">abcdef</div>
+    <div id="markNothingZero">abcdef</div>
+    <div id="markNothingEnd">abcdef</div>
+    <div id="markAcrossNodes"><div>abcdef<span>ghijkl</span></div><div>mnopqr</div></div>
+    <div id="overridingSpellingMarker">abcdef</div>
+    <div id="overridingCompositionMarker">abcdef</div>
+</div>
+
+<script>
+function addSuggestionMarker(elem, start, end, underlineColor, thick, backgroundColor) {
+    var range = document.createRange();
+    var textNode = elem.firstChild;
+    range.setStart(textNode, start);
+    range.setEnd(textNode, end);
+    if (typeof internals !== 'undefined')
+        internals.addSuggestionMarker(range, [], 'white', underlineColor, thick, backgroundColor);
+};
+
+function addCompositionMarker(elem, start, end, underlineColor, thick, backgroundColor) {
+    var range = document.createRange();
+    var textNode = elem.firstChild;
+    range.setStart(textNode, start);
+    range.setEnd(textNode, end);
+    if (typeof internals !== 'undefined')
+        internals.addCompositionMarker(range, underlineColor, thick, backgroundColor);
+};
+
+function addSpellingMarker(elem, start, end) {
+    var range = document.createRange();
+    var textNode = elem.firstChild;
+    range.setStart(textNode, start);
+    range.setEnd(textNode, end);
+    if (typeof internals !== 'undefined')
+        internals.setMarker(document, range, 'spelling');
+}
+
+function addSuggestionMarkerSimple(elem, start, end) {
+    addSuggestionMarker(elem, start, end, 'orange', 'thin', 'lightBlue');
+};
+
+function highlightAcrossNodes(startNode, start, endNode, end) {
+    var range = document.createRange();
+    range.setStart(startNode, start);
+    range.setEnd(endNode, end);
+    if (typeof internals !== 'undefined')
+        internals.addSuggestionMarker(range, [], 'white', 'orange', 'thin', 'lightBlue');
+};
+
+onload = runAfterLayoutAndPaint(function() {
+    addSuggestionMarkerSimple(markAll, 0, 6);
+    addSuggestionMarker(markAllThick, 0, 6, 'orange', 'thick', 'lightBlue');
+    addSuggestionMarker(markAllDifferentColors, 0, 6, 'purple', 'thick', 'lightYellow');
+    addSuggestionMarkerSimple(markBeginning, 0, 3);
+    addSuggestionMarkerSimple(markAllExceptFirstAndLast, 1, 5);
+    addSuggestionMarkerSimple(markEnd, 3, 6);
+    addSuggestionMarkerSimple(markNothingZero, 0, 0);
+    addSuggestionMarkerSimple(markNothingEnd, 6, 6);
+
+    addSuggestionMarkerSimple(markRtlAll, 0, 6);
+    addSuggestionMarker(markRtlAllThick, 0, 6, 'orange', 'thick', 'lightBlue');
+    addSuggestionMarkerSimple(markRtlBeginning, 0, 3);
+    addSuggestionMarkerSimple(markRtlAllExceptFirstAndLast, 1, 5);
+    addSuggestionMarkerSimple(markRtlEnd, 3, 6);
+
+    highlightAcrossNodes(markAcrossNodes.childNodes[0].firstChild, 3,
+        markAcrossNodes.childNodes[1].firstChild, 3);
+    highlightAcrossNodes(markRtlAcrossNodes.childNodes[0].firstChild, 3,
+    markRtlAcrossNodes.childNodes[1].firstChild, 3);
+
+    addSuggestionMarkerSimple(overridingSpellingMarker, 0, 6);
+    addSpellingMarker(overridingSpellingMarker, 0, 6);
+    addSuggestionMarkerSimple(overridingCompositionMarker, 0, 6);
+    addCompositionMarker(overridingCompositionMarker, 0, 6, 'purple', 'thick', 'lightYellow');
+}, true);
+</script>
