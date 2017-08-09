@@ -220,10 +220,8 @@ class IncidentReportingServiceTest : public testing::Test {
   }
 
   void CreateIncidentReportingService() {
-#if !defined(GOOGLE_CHROME_BUILD)
     scoped_feature_list_.InitAndDisableFeature(
         safe_browsing::kIncidentReportingDisableUpload);
-#endif
 
     instance_.reset(new TestIncidentReportingService(
         base::ThreadTaskRunnerHandle::Get(),
