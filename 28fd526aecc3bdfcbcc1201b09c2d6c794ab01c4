@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0a8bbb9_f3443cb6",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-09T08:26:41Z",
+      "side": 1,
+      "message": "style: I think this condition is complex enough to require braces (multi-lines).",
+      "revId": "28fd526aecc3bdfcbcc1201b09c2d6c794ab01c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12d85df0_b9c40e99",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_signin_promo_cell.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-09T08:26:41Z",
+      "side": 1,
+      "message": "nit: put in anonymous namespace to avoid having this variable visible from other compilation units.",
+      "revId": "28fd526aecc3bdfcbcc1201b09c2d6c794ab01c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
