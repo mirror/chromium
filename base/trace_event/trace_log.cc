@@ -681,6 +681,26 @@ void TraceLog::SetDisabledWhileLocked(uint8_t modes_to_disable) {
     return;
   }
 
+  dispatching_to_observer_list_ = true;
+  std::vector<EnabledStateObserver*> observer_list =
+      enabled_state_observer_list_;
+  std::map<AsyncEnabledStateObserver*, RegisteredAsyncObserver> observer_map =
+      async_observers_;
+
+  {
+    // Dispatch to observers outside the lock in case the observer triggers a
+    // trace event.
+    AutoUnlock unlock(lock_);
+    for (EnabledStateObserver* observer : observer_list)
+      observer->OnTraceLogDisabled();
+    for (const auto& it : observer_map) {
+      it.second.task_runner->PostTask(
+          FROM_HERE, BindOnce(&AsyncEnabledStateObserver::OnTraceLogDisabled,
+                              it.second.observer));
+    }
+  }
+  dispatching_to_observer_list_ = false;
+
   bool is_recording_mode_disabled =
       (enabled_modes_ & RECORDING_MODE) && (modes_to_disable & RECORDING_MODE);
   enabled_modes_ &= ~modes_to_disable;
@@ -702,26 +722,6 @@ void TraceLog::SetDisabledWhileLocked(uint8_t modes_to_disable) {
 
   // Remove metadata events so they will not get added to a subsequent trace.
   metadata_events_.clear();
-
-  dispatching_to_observer_list_ = true;
-  std::vector<EnabledStateObserver*> observer_list =
-      enabled_state_observer_list_;
-  std::map<AsyncEnabledStateObserver*, RegisteredAsyncObserver> observer_map =
-      async_observers_;
-
-  {
-    // Dispatch to observers outside the lock in case the observer triggers a
-    // trace event.
-    AutoUnlock unlock(lock_);
-    for (EnabledStateObserver* observer : observer_list)
-      observer->OnTraceLogDisabled();
-    for (const auto& it : observer_map) {
-      it.second.task_runner->PostTask(
-          FROM_HERE, BindOnce(&AsyncEnabledStateObserver::OnTraceLogDisabled,
-                              it.second.observer));
-    }
-  }
-  dispatching_to_observer_list_ = false;
 }
 
 int TraceLog::GetNumTracesRecorded() {
