@@ -361,21 +361,7 @@ base::Optional<EffectiveConnectionType> GetForcedEffectiveConnectionType(
     const std::map<std::string, std::string>& params) {
   std::string forced_value = GetStringValueForVariationParamWithDefaultValue(
       params, kForceEffectiveConnectionType, "");
-  if (forced_value.empty())
-    return base::Optional<EffectiveConnectionType>();
-
-  EffectiveConnectionType forced_effective_connection_type =
-      EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
-
-  bool effective_connection_type_available = GetEffectiveConnectionTypeForName(
-      forced_value, &forced_effective_connection_type);
-
-  DCHECK(effective_connection_type_available);
-
-  // Silence unused variable warning in release builds.
-  (void)effective_connection_type_available;
-
-  return forced_effective_connection_type;
+  return GetEffectiveConnectionTypeForName(forced_value);
 }
 
 }  // namespace
