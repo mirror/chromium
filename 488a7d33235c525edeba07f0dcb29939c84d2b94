@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "708ed158_68ecdfad",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-09T22:59:58Z",
+      "side": 1,
+      "message": "What if it was not visible, for example user called setVisible(false) before you focused your input... You need to either add \u0027hidden\u0027 style or split setVisible into setVisible and _innerSplitVisible",
+      "revId": "488a7d33235c525edeba07f0dcb29939c84d2b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
