@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46db9d5a_a26db8fe",
+        "filename": "base/android/java_handler_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-09T17:48:57Z",
+      "side": 1,
+      "message": "I had to move message loop destruction here - it was being deleted on the wrong thread when the JavaHandlerThread object was deleted.",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 15
+      },
+      "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
