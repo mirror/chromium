@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "8d4399fc_b008a04b",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-09T00:20:10Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "91168688_c28f7d89",
+      "range": {
+        "startLine": 307,
+        "startChar": 36,
+        "endLine": 307,
+        "endChar": 42
+      },
+      "revId": "db597f11dbed85a792650a58506fd640b8d6bbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a98f1580_d1674c6d",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule_unittest.cc",
         "patchSetId": 14
