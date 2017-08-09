@@ -11,11 +11,13 @@
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/search_result.h"
+#include "ui/app_list/vector_icons/vector_icons.h"
 #include "ui/app_list/views/search_result_actions_view.h"
 #include "ui/app_list/views/search_result_list_view.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/font.h"
 #include "ui/gfx/image/image_skia_operations.h"
+#include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/render_text.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/image_view.h"
@@ -39,6 +41,10 @@ constexpr int kBorderSize = 1;
 // Extra margin at the right of the rightmost action icon.
 constexpr int kActionButtonRightMargin = 8;
 
+constexpr int kAppendButtonSize = 40;
+constexpr int kAppendRightPadding = 8;
+constexpr int kAppendVerticalPadding = 4;
+
 constexpr SkColor kSeparatorColor = SkColorSetARGBMacro(0xFF, 0xE1, 0xE1, 0xE1);
 // Matched text color, #000 87%.
 constexpr SkColor kMatchedTextColor =
@@ -51,6 +57,9 @@ constexpr SkColor kUrlColor = SkColorSetARGBMacro(0xFF, 0x33, 0x67, 0xD6);
 // Row selected color, #000 8%.
 constexpr SkColor kRowSelectedColor =
     SkColorSetARGBMacro(0x14, 0x00, 0x00, 0x00);
+// Append button icon color, #000 87%.
+constexpr SkColor kAppendIconColor =
+    SkColorSetARGBMacro(0xDE, 0x00, 0x00, 0x00);
 
 int GetIconViewWidth() {
   if (!features::IsFullscreenAppListEnabled())
@@ -103,6 +112,16 @@ SearchResultView::SearchResultView(SearchResultListView* list_view)
   AddChildView(badge_icon_);
   AddChildView(actions_view_);
   AddChildView(progress_bar_);
+  if (is_fullscreen_app_list_enabled_) {
+    append_button_ = new views::ImageButton(this);
+    AddChildView(append_button_);
+    append_button_->SetImage(
+        views::Button::STATE_NORMAL,
+        gfx::CreateVectorIcon(kIcAppendIcon, kListIconSizeFullscreen,
+                              kAppendIconColor));
+    append_button_->SetImageAlignment(views::ImageButton::ALIGN_CENTER,
+                                      views::ImageButton::ALIGN_MIDDLE);
+  }
   set_context_menu_controller(this);
 }
 
@@ -122,6 +141,7 @@ void SearchResultView::SetResult(SearchResult* result) {
   OnActionsChanged();
   UpdateTitleText();
   UpdateDetailsText();
+  UpdateAppendButton();
   OnIsInstallingChanged();
   OnPercentDownloadedChanged();
   SchedulePaint();
@@ -167,6 +187,11 @@ void SearchResultView::UpdateDetailsText() {
   UpdateAccessibleName();
 }
 
+void SearchResultView::UpdateAppendButton() {
+  if (append_button_)
+    append_button_->SetVisible(IsOmniboxSearchResult());
+}
+
 base::string16 SearchResultView::ComputeAccessibleName() const {
   if (!result_)
     return base::string16();
@@ -193,18 +218,17 @@ void SearchResultView::CreateTitleRenderText() {
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
   render_text->SetFontList(
       rb.GetFontList(ui::ResourceBundle::BaseFont).DeriveWithSizeDelta(2));
-  // Empty details indicate omnibox non-url search type. When true, the matched
-  // tag indicates proposed query. When false, the matched tag indicates typed
-  // search query.
-  const bool is_omnibox_search = result_->details().empty();
-  render_text->SetColor(is_omnibox_search ? kDefaultTextColor
-                                          : kMatchedTextColor);
+  // When |IsOmniboxSearchResult()|, the matched tag indicates proposed query.
+  // Otherwise, the matched tag indicates typed search query.
+  render_text->SetColor(IsOmniboxSearchResult() ? kDefaultTextColor
+                                                : kMatchedTextColor);
   const SearchResult::Tags& tags =
       result_->is_url() ? result_->details_tags() : result_->title_tags();
   for (const auto& tag : tags) {
     if (tag.styles & SearchResult::Tag::MATCH)
       render_text->ApplyColor(
-          is_omnibox_search ? kMatchedTextColor : kDefaultTextColor, tag.range);
+          IsOmniboxSearchResult() ? kMatchedTextColor : kDefaultTextColor,
+          tag.range);
   }
   title_text_ = std::move(render_text);
 }
@@ -220,6 +244,11 @@ void SearchResultView::CreateDetailsRenderText() {
   render_text->SetFontList(rb.GetFontList(ui::ResourceBundle::BaseFont));
   render_text->SetColor(result_->is_url() ? kUrlColor : kDefaultTextColor);
   details_text_ = std::move(render_text);
+}
+
+bool SearchResultView::IsOmniboxSearchResult() const {
+  // Empty details indicate omnibox non-url search type.
+  return result_ && result_->details().empty();
 }
 
 const char* SearchResultView::GetClassName() const {
@@ -267,6 +296,16 @@ void SearchResultView::Layout() {
   }
   badge_icon_bounds.Intersect(rect);
   badge_icon_->SetBoundsRect(badge_icon_bounds);
+
+  if (append_button_) {
+    gfx::Rect append_button_bounds(rect);
+    const int left =
+        append_button_bounds.right() - kAppendRightPadding - kAppendButtonSize;
+    append_button_bounds.Inset(left - append_button_bounds.x(),
+                               kAppendVerticalPadding, kAppendRightPadding,
+                               kAppendVerticalPadding);
+    append_button_->SetBoundsRect(append_button_bounds);
+  }
 
   const int max_actions_width =
       (rect.right() - kActionButtonRightMargin - icon_bounds.right()) / 2;

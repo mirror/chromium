@@ -24,6 +24,7 @@ class RenderText;
 }
 
 namespace views {
+class ImageButton;
 class ImageView;
 class MenuRunner;
 class ProgressBar;
@@ -72,11 +73,14 @@ class APP_LIST_EXPORT SearchResultView
 
   void UpdateTitleText();
   void UpdateDetailsText();
+  void UpdateAppendButton();
   void UpdateAccessibleName();
 
   // Creates title/details render text.
   void CreateTitleRenderText();
   void CreateDetailsRenderText();
+
+  bool IsOmniboxSearchResult() const;
 
   // views::View overrides:
   const char* GetClassName() const override;
@@ -118,6 +122,7 @@ class APP_LIST_EXPORT SearchResultView
 
   views::ImageView* icon_;        // Owned by views hierarchy.
   views::ImageView* badge_icon_;  // Owned by views hierarchy.
+  views::ImageButton* append_button_ = nullptr;  // Owned by views hierarchy.
   std::unique_ptr<gfx::RenderText> title_text_;
   std::unique_ptr<gfx::RenderText> details_text_;
   SearchResultActionsView* actions_view_;  // Owned by the views hierarchy.
