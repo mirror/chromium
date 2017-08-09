@@ -762,14 +762,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     }
 
     /**
-     * @return Last frame viewport width.
-     */
-    @VisibleForTesting
-    public float getLastFrameViewportWidthCss() {
-        return mRenderCoordinates.getLastFrameViewportWidthCss();
-    }
-
-    /**
      * @return The selected text (empty if no text selected).
      */
     @VisibleForTesting
