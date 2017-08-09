@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "53521fe9_a80ef285",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-09T16:36:06Z",
+      "side": 1,
+      "message": "I\u0027m afraid I\u0027m not following, exactly what are you suggesting? Only painting the children here?",
+      "parentUuid": "d9fcec63_a3a3ad9f",
+      "range": {
+        "startLine": 479,
+        "startChar": 6,
+        "endLine": 479,
+        "endChar": 28
+      },
+      "revId": "3e22b18fb3835e7e76671e1b2ac5dd1b3dce55ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bcb7521_31adb6cc",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.h",
         "patchSetId": 4
@@ -202,6 +226,24 @@
       "writtenOn": "2017-08-08T08:46:13Z",
       "side": 1,
       "message": "layout/ng/ uses Chromium-style file names and .extensions. Shouldn\u0027t we do the same here?",
+      "revId": "3e22b18fb3835e7e76671e1b2ac5dd1b3dce55ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4754e7f_fd91c8fd",
+        "filename": "third_party/WebKit/Source/core/paint/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-09T16:36:06Z",
+      "side": 1,
+      "message": "Ah, good catch. Yes we should. I\u0027ll rename them.\n\nThanks!",
+      "parentUuid": "3c494581_f0fdce18",
       "revId": "3e22b18fb3835e7e76671e1b2ac5dd1b3dce55ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
