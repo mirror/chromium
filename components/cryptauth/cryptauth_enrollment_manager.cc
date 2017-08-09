@@ -57,6 +57,7 @@ CryptAuthEnrollmentManager::CryptAuthEnrollmentManager(
       device_info_(device_info),
       gcm_manager_(gcm_manager),
       pref_service_(pref_service),
+      scheduler_(CreateSyncScheduler()),
       weak_ptr_factory_(this) {}
 
 CryptAuthEnrollmentManager::~CryptAuthEnrollmentManager() {
@@ -89,7 +90,6 @@ void CryptAuthEnrollmentManager::Start() {
   base::TimeDelta elapsed_time_since_last_sync =
       clock_->Now() - last_successful_enrollment;
 
-  scheduler_ = CreateSyncScheduler();
   scheduler_->Start(elapsed_time_since_last_sync,
                     is_recovering_from_failure
                         ? SyncScheduler::Strategy::AGGRESSIVE_RECOVERY
