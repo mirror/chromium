@@ -2,9 +2,18 @@
   "dependencies": [
     "test_runner",
     "sdk",
-    "network_log"
+    "network_log",
+    "workspace"
   ],
   "scripts": [
-    "IntegrationTestRunner.js"
+    "IntegrationTestRunner.js",
+    "PageMockTestRunner.js",
+    "EditorTestRunner.js",
+    "SyntaxHighlightTestRunner.js"
+  ],
+  "skip_compilation": [
+    "PageMockTestRunner.js",
+    "EditorTestRunner.js",
+    "SyntaxHighlightTestRunner.js"
   ]
 }
