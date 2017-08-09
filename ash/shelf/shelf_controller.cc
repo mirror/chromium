@@ -124,6 +124,16 @@ void ShelfController::RegisterProfilePrefs(PrefRegistrySimple* registry) {
                                    PrefRegistry::PUBLIC);
 }
 
+// static
+void ShelfController::RegisterForeignProfilePrefs(
+    PrefRegistrySimple* registry) {
+  registry->RegisterForeignPref(prefs::kShelfAutoHideBehavior);
+  registry->RegisterForeignPref(prefs::kShelfAutoHideBehaviorLocal);
+  registry->RegisterForeignPref(prefs::kShelfAlignment);
+  registry->RegisterForeignPref(prefs::kShelfAlignmentLocal);
+  registry->RegisterForeignPref(prefs::kShelfPreferences);
+}
+
 void ShelfController::BindRequest(mojom::ShelfControllerRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
