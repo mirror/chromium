@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "842ae5f9_018e527d",
+        "filename": "content/child/sync_load_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-09T17:40:21Z",
+      "side": 1,
+      "message": "I need to be able to access |context| in the same statement where I am moving it. I prefer using WrapUnique over creating an additional local pointer that will not be moved.",
+      "parentUuid": "b83886af_f8fb4040",
+      "revId": "97983ca42a8f44c4117409e398c3f90fb0e16e3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54526ff6_3ae0134d",
         "filename": "content/child/sync_load_context.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "97983ca42a8f44c4117409e398c3f90fb0e16e3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "021bd541_d61a0810",
+        "filename": "content/child/sync_load_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-09T17:40:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54526ff6_3ae0134d",
+      "revId": "97983ca42a8f44c4117409e398c3f90fb0e16e3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "515747d9_c2786d1b",
+        "filename": "content/child/sync_load_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-09T17:40:21Z",
+      "side": 1,
+      "message": "This log statement is copied from SyncResourceHandler.",
+      "parentUuid": "3378cc80_b67e4a6a",
+      "revId": "97983ca42a8f44c4117409e398c3f90fb0e16e3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fdc2dc0_310f9e71",
         "filename": "content/child/sync_load_context.cc",
         "patchSetId": 5
@@ -84,6 +138,24 @@
       "revId": "97983ca42a8f44c4117409e398c3f90fb0e16e3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e5e521_a170e2c5",
+        "filename": "content/child/sync_load_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-09T17:40:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fdc2dc0_310f9e71",
+      "revId": "97983ca42a8f44c4117409e398c3f90fb0e16e3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
