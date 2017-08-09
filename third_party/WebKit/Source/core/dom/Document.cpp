@@ -2161,6 +2161,8 @@ void Document::UpdateStyle() {
   HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
   lifecycle_.AdvanceTo(DocumentLifecycle::kInStyleRecalc);
 
+  RefPtr<const ComputedStyle> old_style = GetLayoutViewItem().Style();
+
   StyleRecalcChange change = kNoChange;
   if (GetStyleChangeType() >= kSubtreeStyleChange)
     change = kForce;
@@ -2207,6 +2209,16 @@ void Document::UpdateStyle() {
       WhitespaceAttacher whitespace_attacher;
       document_element->RebuildLayoutTree(whitespace_attacher);
     }
+  }
+
+  // LayoutView bypasses normal style-based invalidation during SetStyle().
+  // It is because its style can be set multiple times in an update cycle
+  // due to back-inheritance from <html>/<body>.
+  // Fortunately LayoutView only uses a small set of properties, specifically,
+  // the background. Detect the mutation here and invalidate if needed.
+  if (old_style->VisualInvalidationDiff(GetLayoutViewItem().StyleRef())
+          .NeedsFullPaintInvalidation()) {
+    GetLayoutViewItem().SetShouldDoFullPaintInvalidation();
   }
 
   View()->RecalcOverflowAfterStyleChange();
