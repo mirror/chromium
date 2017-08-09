@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d5386af_f7300473",
+        "filename": "ios/chrome/browser/payments/origin_security_checker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T15:15:47Z",
+      "side": 1,
+      "message": "From reading the comment I don\u0027t know what is the difference. Can you elaborate a bit?",
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef79ecc0_bcb67562",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T15:15:47Z",
+      "side": 1,
+      "message": "This comment is unclear... why are we talking about the constructor here?",
+      "range": {
+        "startLine": 29,
+        "startChar": 67,
+        "endLine": 30,
+        "endChar": 66
+      },
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b32b27a_d77db1d0",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T15:15:47Z",
+      "side": 1,
+      "message": "Are we checking the secure context in both JS and ObjC? Otherwise can be spoofed in JS",
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3de160_b13fb7d8",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_can_make_payment_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T15:15:47Z",
+      "side": 1,
+      "message": "This should probably be a constant at some level",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 44
+      },
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6329c1_38249c1b",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_can_make_payment_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T15:15:47Z",
+      "side": 1,
+      "message": "In our C++ browsertests the derived class provides the URL to be tested in the constructor...\n\ne.g., PaymentRequestWebContentsManagerTest()\n      : PaymentRequestBrowserTestBase(\n            \"/payment_request_multiple_requests.html\") {}\n\nThen the base class loads that URL before the test starts. Would it be possible/worthwhile here?",
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8855b226_c5c8a761",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-09T15:15:47Z",
+      "side": 1,
+      "message": "A link to the spec would be good too?",
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
