@@ -34,6 +34,24 @@
       "revId": "869c36d9ac4cb0d71709c35ff627d1c8211d9f6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c2909c_f292e19e",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-09T23:22:19Z",
+      "side": 1,
+      "message": "The reason for not killing the renderer here is that \"OnAddAccountToCookieCompleted\" is not triggered by the renderer the same way the other functions are (the others are called as a direct result of IPC messages). It is called here instead: https://cs.chromium.org/chromium/src/components/signin/core/browser/gaia_cookie_manager_service.cc?l\u003d595\n\nWe could use a CHECK to kill the browser, but it seems like it might be legitimate (though unlikely) for the user to sign in in between the handler being created and registering for this event and the \"getInitialSettings\" message from print preview arriving. In this case, it seems like doing nothing will have the expected effect since the printers will be loaded on initialization and do not need to be reloaded. What do you think?",
+      "parentUuid": "384967a7_44abfea6",
+      "revId": "869c36d9ac4cb0d71709c35ff627d1c8211d9f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
