@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86746c0d_1fe07e78",
+        "filename": "ios/chrome/browser/drag_and_drop/drop_and_navigate_interaction.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-09T09:35:25Z",
+      "side": 1,
+      "message": "Remove line.",
+      "revId": "45f5bf4c5aa82e539d59008d748de735183e0b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d61ad7_bc94203e",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-09T09:35:25Z",
+      "side": 1,
+      "message": "Since DropAndNavigateDelegate exists even if compiled for iOS SDK 10 or below, I would move this to the @interface below. Otherwise you risk to see your code deleted by mistake when the TODO above is fixed.\n\nSo, short: remove DropAndNavigateDelegate here and add to line 240 instead.",
+      "range": {
+        "startLine": 236,
+        "startChar": 35,
+        "endLine": 236,
+        "endChar": 58
+      },
+      "revId": "45f5bf4c5aa82e539d59008d748de735183e0b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
