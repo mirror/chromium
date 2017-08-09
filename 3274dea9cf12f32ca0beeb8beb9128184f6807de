@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa0fb5e5_b58d2e82",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-09T18:23:12Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be used anywhere. Maybe delete?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 2
+      },
+      "revId": "3274dea9cf12f32ca0beeb8beb9128184f6807de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7301861a_1d72a63c",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-09T18:23:12Z",
+      "side": 1,
+      "message": "Maybe reword now that we do create a test for each rule even if runOnly is specified:\n \n * Defines a GTest for each audit rule.",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 26
+      },
+      "revId": "3274dea9cf12f32ca0beeb8beb9128184f6807de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f08332_89695bc4",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-09T18:23:12Z",
+      "side": 1,
+      "message": "Should this be done right after 139 and stored into |newTestDef.name| so it\u0027s the same everywhere?",
+      "range": {
+        "startLine": 147,
+        "startChar": 22,
+        "endLine": 147,
+        "endChar": 72
+      },
+      "revId": "3274dea9cf12f32ca0beeb8beb9128184f6807de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7743bf8e_41db08a3",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-09T18:23:12Z",
+      "side": 1,
+      "message": "Nit: indent 2 spaces",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "3274dea9cf12f32ca0beeb8beb9128184f6807de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f124344_0893a93b",
+        "filename": "chrome/test/data/webui/settings/basic_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-09T18:23:12Z",
+      "side": 1,
+      "message": "Move this inside the define function, this way people writing tests don\u0027t need to put it and we have the option of removing it in the future if it makes sense :-)",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 27
+      },
+      "revId": "3274dea9cf12f32ca0beeb8beb9128184f6807de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac956568_5c3e52d5",
+        "filename": "chrome/test/data/webui/settings/basic_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-09T18:23:12Z",
+      "side": 1,
+      "message": "/** @override */",
+      "revId": "3274dea9cf12f32ca0beeb8beb9128184f6807de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b78600_ea3ac6be",
+        "filename": "chrome/test/data/webui/settings/basic_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-09T18:23:12Z",
+      "side": 1,
+      "message": "/** @override */",
+      "revId": "3274dea9cf12f32ca0beeb8beb9128184f6807de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
