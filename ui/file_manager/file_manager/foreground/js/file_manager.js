@@ -158,6 +158,12 @@ function FileManager() {
    */
   this.launchParams_ = null;
 
+  /**
+   * Whether to allow touch-specific interaction.
+   * @type {boolean}
+   */
+  this.enableTouchMode_ = false;
+
   // --------------------------------------------------------------------------
   // Controllers.
 
@@ -643,11 +649,12 @@ FileManager.prototype = /** @struct */ {
 
     this.ui_.decorateFilesMenuItems();
 
-    chrome.commandLinePrivate.hasSwitch(
-        'disable-file-manager-touch-mode', function(isDisabled) {
-          if (!isDisabled)
-            this.ui_.selectionMenuButton.hidden = false;
-        }.bind(this));
+    util.isTouchModeEnabled(function(isEnabled) {
+      if (isEnabled) {
+        this.ui_.selectionMenuButton.hidden = false;
+        this.enableTouchMode_ = true;
+      }
+    }.bind(this));
   };
 
   /**
@@ -707,6 +714,29 @@ FileManager.prototype = /** @struct */ {
     this.document_.addEventListener(
         'command',
         this.ui_.listContainer.clearHover.bind(this.ui_.listContainer));
+
+    // Overwrite the function to prevent opening context menu in file list by
+    // tap.
+    var originalContextMenuHandlerHandleEvent =
+        cr.ui.contextMenuHandler.handleEvent.bind(cr.ui.contextMenuHandler);
+    cr.ui.contextMenuHandler.handleEvent = function(e) {
+      if (this.enableTouchMode_ && e.type == 'contextmenu' &&
+          e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents) {
+        var isDescendantOf = function(child, ancestor) {
+          var node = child;
+          while (node && node != ancestor)
+            node = node.parentElement;
+          return !!node;
+        };
+        if (isDescendantOf(
+                e.target, document.querySelector('#list-container'))) {
+          // Do not show context menu because toolbar has it.
+          // Also, it collides with file selection by long-tap.
+          return;
+        }
+      }
+      originalContextMenuHandlerHandleEvent(e);
+    }.bind(this);
   };
 
   /**
