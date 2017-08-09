@@ -216,6 +216,16 @@ DelegatedFrameHost* BrowserCompositorMac::GetDelegatedFrameHost() {
   return delegated_frame_host_.get();
 }
 
+void BrowserCompositorMac::ClearCompositorFrame() {
+  // Un-suspend to ensure that we no longer hold a compositor lock, since that
+  // will prevent us from clearing the current frame.
+  // https://crbug.com/739621
+  if (recyclable_compositor_)
+    recyclable_compositor_->Unsuspend();
+  if (delegated_frame_host_)
+    delegated_frame_host_->ClearDelegatedFrame();
+}
+
 void BrowserCompositorMac::CopyCompleted(
     base::WeakPtr<BrowserCompositorMac> browser_compositor,
     const ReadbackRequestCallback& callback,

@@ -51,6 +51,10 @@ class BrowserCompositorMac : public DelegatedFrameHostClient {
   // These will not return nullptr until Destroy is called.
   DelegatedFrameHost* GetDelegatedFrameHost();
 
+  // Ensure that the currect compositor frame be cleared (even if it is
+  // potentially visible).
+  void ClearCompositorFrame();
+
   // This may return nullptr, if this has detached itself from its
   // ui::Compositor.
   ui::AcceleratedWidgetMac* GetAcceleratedWidgetMac();
