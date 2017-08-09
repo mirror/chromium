@@ -282,6 +282,30 @@
       "revId": "4dcf5b0a192e84f056f9794df4da5206e5700dd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e6ca8b_69f1ec29",
+        "filename": "chrome/browser/ui/app_list/search/search_controller_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T20:51:55Z",
+      "side": 1,
+      "message": "Ah, I thought you wanted a new API, GetNextNResultsStartingWith(....).\n\nWhat would you think if I just added the number of all Google apps to max_results, which would be then 6 + 21 \u003d 27?\n\n21 is the size of arc_app_to_extensions_map_.\n\nThen you are guaranteed to fill all 6 positions, assuming that there are enough matching apps.",
+      "parentUuid": "1e51ff35_3e3001bf",
+      "range": {
+        "startLine": 47,
+        "startChar": 75,
+        "endLine": 48,
+        "endChar": 54
+      },
+      "revId": "4dcf5b0a192e84f056f9794df4da5206e5700dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

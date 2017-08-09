@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad9f0fc6_8f308f33",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T20:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f9a2e7b_3e90d822",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 70
+      },
+      "revId": "7609fa5e588573926bd6b1f3da89ee2b8dd9acc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b8f623a_ad52de2f",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "827c6e5d_7286bd32",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T20:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b8f623a_ad52de2f",
+      "range": {
+        "startLine": 89,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 14
+      },
+      "revId": "7609fa5e588573926bd6b1f3da89ee2b8dd9acc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9ba4bcf_f2488b94",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "7609fa5e588573926bd6b1f3da89ee2b8dd9acc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddee0d41_aaf5b719",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T20:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9ba4bcf_f2488b94",
+      "range": {
+        "startLine": 90,
+        "startChar": 5,
+        "endLine": 90,
+        "endChar": 12
+      },
+      "revId": "7609fa5e588573926bd6b1f3da89ee2b8dd9acc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
