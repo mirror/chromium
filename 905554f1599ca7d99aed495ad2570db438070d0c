@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "8a29024b_a2f51d7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-09T00:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c132e499_da6234af",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 68
+      },
+      "revId": "905554f1599ca7d99aed495ad2570db438070d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f126b1e0_dba4c2ec",
         "filename": "chrome/browser/chromeos/tether/tether_service.h",
         "patchSetId": 8
