@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79022b8f_cb827c0a",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T19:44:08Z",
+      "side": 1,
+      "message": "Won\u0027t work, as we want to std::move this result below.",
+      "parentUuid": "d587b1be_34bf2b10",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 12
+      },
+      "revId": "4dcf5b0a192e84f056f9794df4da5206e5700dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "331d815c_1a900ebe",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4dcf5b0a192e84f056f9794df4da5206e5700dd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3275eb6f_ffff7eff",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T19:44:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "331d815c_1a900ebe",
+      "range": {
+        "startLine": 72,
+        "startChar": 31,
+        "endLine": 72,
+        "endChar": 33
+      },
+      "revId": "4dcf5b0a192e84f056f9794df4da5206e5700dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8f8e4eb9_627d4de4",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T19:44:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba2d45f6_27fa9656",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 24
+      },
+      "revId": "4dcf5b0a192e84f056f9794df4da5206e5700dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9f58e9b_9db65a97",
         "filename": "chrome/browser/ui/app_list/search/search_controller_factory.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "07b601a5_180c8b40",
+        "filename": "chrome/browser/ui/app_list/search/search_controller_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T19:44:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9f58e9b_9db65a97",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 28
+      },
+      "revId": "4dcf5b0a192e84f056f9794df4da5206e5700dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a732c82_33898bca",
         "filename": "chrome/browser/ui/app_list/search/search_controller_factory.cc",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-09T16:11:06Z",
       "side": 1,
       "message": "Not sure if this reliable way.\nI think you might want to implement progressive algorithm. For example, start from 6. If you have number of results filtered, increase request to number of filtered results.",
+      "range": {
+        "startLine": 47,
+        "startChar": 75,
+        "endLine": 48,
+        "endChar": 54
+      },
+      "revId": "4dcf5b0a192e84f056f9794df4da5206e5700dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f89d8e8_e8a46e9e",
+        "filename": "chrome/browser/ui/app_list/search/search_controller_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T19:44:08Z",
+      "side": 1,
+      "message": "Created an internal bug for this. For V1, this is not an option, because it would require changing Playstore API.",
+      "parentUuid": "7a732c82_33898bca",
       "range": {
         "startLine": 47,
         "startChar": 75,
