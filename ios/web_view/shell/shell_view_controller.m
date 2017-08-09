@@ -7,6 +7,9 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #import "ios/web_view/shell/shell_translation_delegate.h"
+//#import "ios_internal/google_internal/piper/src/google3/googlemac/iPhone/Shared/SSOAuth/SSOConfiguration.h"
+//#import "ios_internal/google_internal/piper/src/google3/googlemac/iPhone/Shared/SSOAuth/SSOIdentity.h"
+//#import "ios_internal/google_internal/piper/src/google3/googlemac/iPhone/Shared/SSOAuth/SSOService.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -44,7 +47,9 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 - (void)resetTranslateSettings;
 @end
 
-@implementation ShellViewController
+@implementation ShellViewController {
+  SSOService* _service;
+}
 
 @synthesize backButton = _backButton;
 @synthesize containerView = _containerView;
@@ -135,6 +140,21 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 
   [self createWebViewWithConfiguration:[CWVWebViewConfiguration
                                            defaultConfiguration]];
+
+//  SSOConfiguration* configuration = [[SSOConfiguration alloc]
+//      initWithClientID:
+//          @"1005135349943-fo4kt6713ep4nq5ra0bkvoqf8covc62b.apps."
+//          @"googleusercontent.com"];
+//  _service = [[SSOService alloc] initWithConfiguration:configuration];
+//
+//  SSOIdentity* identity = [[_service identitiesSortedForDisplay] firstObject];
+//  CWVIdentity* cwvIdentity = [[CWVIdentity alloc] init];
+//  cwvIdentity.gaiaID = [identity userID];
+//  cwvIdentity.userEmail = [identity userEmail];
+//  cwvIdentity.userFullName = [identity userFullName];
+//  cwvIdentity.hashedGaiaID = [identity hashedUserID];
+//  [[CWVWebViewConfiguration defaultConfiguration]
+//      signInWithIdentity:cwvIdentity];
 }
 
 - (void)observeValueForKeyPath:(NSString*)keyPath
