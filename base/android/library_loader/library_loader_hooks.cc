@@ -9,6 +9,7 @@
 #include "base/android/library_loader/library_load_from_apk_status_codes.h"
 #include "base/android/library_loader/library_prefetcher.h"
 #include "base/at_exit.h"
+#include "base/files/file_path.h"
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_macros.h"
 #include "jni/LibraryLoader_jni.h"
@@ -199,6 +200,23 @@ static jint PercentageOfResidentNativeLibraryCode(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz) {
   return NativeLibraryPrefetcher::PercentageOfResidentNativeLibraryCode();
+}
+
+static jboolean CollectResidency(JNIEnv* env,
+                                 const JavaParamRef<jclass>& clazz,
+                                 const JavaParamRef<jstring>& j_filename) {
+  std::string filename;
+  ConvertJavaStringToUTF8(env, j_filename.obj(), &filename);
+  FilePath path(filename);
+  return NativeLibraryPrefetcher::CollectResidency(path);
+}
+
+static jboolean Purge(JNIEnv* env,
+                      const JavaParamRef<jclass>& clazz,
+                      const JavaParamRef<jstring>& j_path) {
+  std::string path;
+  ConvertJavaStringToUTF8(env, j_path.obj(), &path);
+  return NativeLibraryPrefetcher::Purge(path);
 }
 
 void SetVersionNumber(const char* version_number) {
