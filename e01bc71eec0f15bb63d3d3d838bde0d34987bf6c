@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "05ad7498_9d20772b",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-09T19:34:32Z",
+      "side": 1,
+      "message": "This will not work, unless you declare \"reflectToAttribute: true\" for hasTabs.\n\nBut most importantly, why is it necessary for cr_dialog to be aware of whether the contents of the dialog have any tabs? It seems a bit odd (layering violation). Can\u0027t you simply override the title\u0027s padding from CBD directly?",
+      "revId": "e01bc71eec0f15bb63d3d3d838bde0d34987bf6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efb1539b_463d8c68",
         "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.js",
         "patchSetId": 3
